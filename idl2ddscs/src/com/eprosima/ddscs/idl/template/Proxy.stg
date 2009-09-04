@@ -1,0 +1,33 @@
+group proxy;
+
+functionDef(type,name,args) ::= << 
+$type$ $name$($args; separator=","$); 
+>>
+
+include(funNames) ::= <<
+#include "$funNames$RequestUtils.h"
+#include "$funNames$ReplyUtils.h"
+>>
+
+header(interfaceName,funNames, funDefs) ::= <<
+#ifndef _$interfaceName;format="toUpper"$PROXY_H_
+#define _$interfaceName$PROXY_H_
+
+#include "client/DDSCSClient.h"
+$include(funNames); separator="\n"$
+
+class $interfaceName$Proxy : public DDSCSClient
+{
+    public:
+
+        /// \brief The default constructor.
+        $interfaceName$Proxy();
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$Proxy(){}
+
+        $funDefs; separator="\n"$
+};
+
+#endif // _$interfaceName$PROXY_H_
+>>
