@@ -1,0 +1,116 @@
+group server;
+
+functionDef(name,args) ::= << 
+void $name$($args; separator=","$); 
+>>
+
+include(funNames) ::= <<
+#include "$funNames$RequestUtils.h"
+#include "$funNames$ReplyUtils.h"
+>>
+
+headerServer(interfaceName,funNames, funDefs) ::= <<
+#ifndef _$interfaceName;format="toUpper"$SKELETON_H_
+#define _$interfaceName;format="toUpper"$SKELETON_H_
+
+#include "client/DDSCSServer.h"
+$include(funNames); separator="\n"$
+
+class $interfaceName$Skeleton : public DDSCSServer
+{
+    private: 
+      $interfaceName$Impl _impl;
+    public:
+
+        /// \brief The default constructor.
+        $interfaceName$Server();
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$Server(){}
+
+        $funDefs; separator="\n"$
+};
+
+#endif // _$interfaceName$SKELETON_H_
+>>
+
+headerImpl(interfaceName, funNames, funDefs) ::= <<
+#ifndef _$interfaceName;format="toUpper"$IMPL_H_
+#define _$interfaceName;format="toUpper"$IMPL_H_
+
+class $interfaceName$Impl
+{
+    public:
+
+        /// \brief The default constructor.
+        $interfaceName$Impl();
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$Impl(){}
+
+        $funDefs; separator="\n"$
+};
+
+#endif // _$interfaceName$SKELETON_H_
+>>
+
+emptyFunctionImpl(interfaceName, name,args, params) ::= <<
+void $interfaceName$Impl::$name$($args; separator=", "$, $name$Reply &returnedValue) 
+{
+  returnedValue.retCode = SERVER_ERROR;
+} 
+>>
+
+VarDecl(type, name) ::= <<
+    $type$ $name$;
+>>
+
+functionImpl(interfaceName, name, inputTypes, inputParams, outputTypes, outputParams) ::= << 
+void $interfaceName$Server::$name$(DDCSServer *server, void* requestData) 
+{ 
+    $VarDecl(inputTypes, inputParams); separator="\n"$   
+    $VarDecl(outputTypes, outputParams); separator="\n"$   
+    $name$Reply *replyData = NULL;
+
+    $name$RequestUtils::extractTypeData(($name$Request*)requestData, $inputParams; separator=","$);
+    $name$($inputParams; separator=","$, $outputParams; separator=","$);
+    replyData = $funNames$ReplyUtils::createTypeData($outputParams; separator=","$);
+    server->sendReply("$funNames$", requestData, replyData);
+    $name$RequestUtils::deleteData(requestData);
+    $name$RequestUtils::deleteData(replyData);
+}
+>>
+
+createRemoteService(interfaceName, funNames) ::= <<
+    this->createRemoteService("$funNames$", $funNames$RequestUtils::registerType(getParticipant()),
+            $funNames$ReplyUtils::registerType(getParticipant()),
+            $funNames$RequestUtils::createEmptyData, $funNames$RequestUtils::deleteData,
+            $funNames$ReplyUtils::createEmptyData, $funNames$ReplyUtils::deleteData,
+            $interfaceName$Server::$funNames$);
+>>
+
+
+
+definitionServer(interfaceName, ,funNames, funImpls) ::== <<
+#include "client/$interfaceName$Server.h"
+
+$interfaceName$Server::$interfaceName$Server() : DDSCSServer()
+{
+    $createRemoteService(interfaceName,funNames); separator="\n"$
+}
+
+$funImpls; separator="\n"$
+>>
+
+definitionImpl(interfaceName, ,funNames, funImpls) ::== <<
+#include "client/$interfaceName$Impl.h"
+
+$interfaceName$Impl::$interfaceName$Impl() : DDSCSClient()
+{
+    $proxy_createRemoteService(funNames); separator="\n"$
+}
+
+$funImpls; separator="\n"$
+>>
+
+

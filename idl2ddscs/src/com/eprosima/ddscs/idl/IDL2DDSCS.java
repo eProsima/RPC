@@ -34,16 +34,37 @@ public class IDL2DDSCS {
 		header.setAttribute("interfaceName", "Test");
 		header.setAttribute("funNames", "function1");
 		
-		StringTemplate funDef = proxyTemplates.getInstanceOf("functionDef");
-		funDef.setAttribute("type", "void");
-		funDef.setAttribute("name", "function1");
-		funDef.setAttribute("args", "DDS_Long param1");
-		funDef.setAttribute("args", "DDS_Octet param2");
-		funDef.setAttribute("args", "DDS_Long &returnedValue");
+		StringTemplate funDecl = proxyTemplates.getInstanceOf("functionDecl");
+		funDecl.setAttribute("type", "int");
+		funDecl.setAttribute("name", "function1");
+		funDecl.setAttribute("inputType", "DDS_Long");
+		funDecl.setAttribute("inputParam", "param1");
+		funDecl.setAttribute("inoutType", "DDS_Octet&");
+		funDecl.setAttribute("inoutParam", "param2");
+		funDecl.setAttribute("outputType", "DDS_Long&");
+		funDecl.setAttribute("outputParam", "returnedValue");
 		
-		header.setAttribute("funDefs", funDef.toString());
+		header.setAttribute("funDefs", funDecl.toString());
 		
 		System.out.println(header.toString());
+		
+		StringTemplate definition = proxyTemplates.getInstanceOf("definition");
+		header.setAttribute("interfaceName", "Test");
+		header.setAttribute("funNames", "function1");
+		
+		StringTemplate funDef = proxyTemplates.getInstanceOf("functionDecl");
+		funDef.setAttribute("type", "int");
+		funDef.setAttribute("name", "function1");
+		funDef.setAttribute("inputType", "DDS_Long");
+		funDef.setAttribute("inputParam", "param1");
+		funDef.setAttribute("inoutType", "DDS_Octet&");
+		funDef.setAttribute("inoutParam", "param2");
+		funDef.setAttribute("outputType", "DDS_Long&");
+		funDef.setAttribute("outputParam", "returnedValue");
+		
+		definition.setAttribute("funDefs", funDef.toString());
+		
+		System.out.println(definition.toString());
 	}
 	
 	public static void parse(String[]args) {
