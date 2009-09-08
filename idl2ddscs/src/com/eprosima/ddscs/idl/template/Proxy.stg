@@ -1,23 +1,8 @@
-group Proxy;
-
-argDecl(inputType, name) ::= <<
-$inputType$ $name$
->>
-
-functionDecl(type,name,inputTypes, inputParams, inoutTypes, inoutParams, outputTypes, outputParams) ::= << 
-$type$ $name$($argDecl(inputTypes, inputParams); separator=","$,
-            $argDecl(inoutTypes, inoutParams); separator=","$,
-            $argDecl(outputTypes, outputParams); separator=","$); 
->>
-
-include(funNames) ::= <<
-#include "$funNames$RequestUtils.h"
-#include "$funNames$ReplyUtils.h"
->>
+group proxy : cplusplus;
 
 header(interfaceName,funNames, funDefs) ::= <<
 #ifndef _$interfaceName;format="toUpper"$PROXY_H_
-#define _$interfaceName$PROXY_H_
+#define _$interfaceName;format="toUpper"$PROXY_H_
 
 #include "client/DDSCSClient.h"
 $include(funNames); separator="\n"$
@@ -32,22 +17,21 @@ class $interfaceName$Proxy : public DDSCSClient
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy(){}
 
-        $funDefs; separator="\n"$
+        $funDefs; separator=";\n"$;
 };
 
 #endif // _$interfaceName$PROXY_H_
 >>
 
-functionImpl(interfaceName,type,name,inputTypes, inputParams, inoutTypes, inoutParams, outputTypes, outputParams) ::= << 
-$type$ $interfaceName$Proxy::$name$($argDecl(inputTypes, inputParams); separator=","$,
-            $argDecl(inoutTypes, inoutParams); separator=","$,
-            $argDecl(outputTypes, outputParams); separator=","$)
+functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
+$functionHeader(class=interfaceName,...)$ 
 {
     DDSCSMessages retValue;
     const char serviceName[50] = "$name$";
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
-    instance = $name$RequestUtils::createTypeData($inputParams; separator=", "$,$inoutParams; separator=", "$);
+    instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=", "$ $if(inoutParams)$,
+                                                  $endif$$inoutParams:{$it.name$}; separator=", "$);
     retValue = executeRemoteService(instance, serviceName, retInstance);
 
     switch (retValue)
@@ -68,7 +52,8 @@ $type$ $interfaceName$Proxy::$name$($argDecl(inputTypes, inputParams); separator
             printf("SERVER WITHOUT RESOURCES\n");
             break;
         case OPERATION_SUCCESSFUL:
-            $name$ReplyUtils::extractTypeData(retInstance, $inoutParams; separator=", "$,$outputParams; separator=", "$);
+            $name$ReplyUtils::extractTypeData(retInstance, $inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
+                                                  $endif$$outputParams:{$it.name$}; separator=", "$);
             $name$ReplyTypeSupport::print_data(retInstance);
             break;
     };
@@ -85,7 +70,7 @@ createRemoteService(funNames) ::= <<
 
 
 
-definition(interfaceName, ,funNames, funImpls) ::== <<
+definition(interfaceName,funNames, funImpls) ::= <<
 #include "client/$interfaceName$Proxy.h"
 
 $interfaceName$Proxy::$interfaceName$Proxy() : DDSCSClient()

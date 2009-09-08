@@ -1,0 +1,9 @@
+group idl;
+
+type(file, name, type="Request", fields) ::= <<
+$file:{#include "$it$"}$
+
+struct $name$$type${
+    $fields:{$it.type$ $it.name$;};separator="\n"$
+};
+>>

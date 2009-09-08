@@ -1,0 +1,16 @@
+group cplusplus;
+
+argDecl(arg) ::= <<
+$arg:{n | $n.type$ $n.name$};separator=", "$
+>>
+
+functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
+$type$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
+              $endif$$argDecl(inoutParams);separator=", "$$if(outputParams)$,
+              $endif$$argDecl(outputParams);separator=", "$)
+>>
+
+include(funNames) ::= <<
+#include "$funNames$RequestUtils.h"
+#include "$funNames$ReplyUtils.h"
+>>

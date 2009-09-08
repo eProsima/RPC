@@ -26,45 +26,142 @@ public class IDL2DDSCS {
 		StringTemplateGroupLoader loader = 
 		    new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
 		StringTemplateGroup.registerGroupLoader(loader);
-
+		//genProxy(loader);
+		//genServer(loader);
+		genIdl(loader);
+	}
+	
+	public static void genProxy(StringTemplateGroupLoader loader)
+	{
 		// first load main language template
-		StringTemplateGroup proxyTemplates = StringTemplateGroup.loadGroup("Proxy", DefaultTemplateLexer.class, null);
+		StringTemplateGroup proxyTemplates = StringTemplateGroup.loadGroup("proxy", DefaultTemplateLexer.class, null);
 		
 		StringTemplate header = proxyTemplates.getInstanceOf("header");
 		header.setAttribute("interfaceName", "Test");
 		header.setAttribute("funNames", "function1");
 		
-		StringTemplate funDecl = proxyTemplates.getInstanceOf("functionDecl");
+		StringTemplate funDecl = proxyTemplates.getInstanceOf("functionHeader");
 		funDecl.setAttribute("type", "int");
 		funDecl.setAttribute("name", "function1");
-		funDecl.setAttribute("inputType", "DDS_Long");
-		funDecl.setAttribute("inputParam", "param1");
-		funDecl.setAttribute("inoutType", "DDS_Octet&");
-		funDecl.setAttribute("inoutParam", "param2");
-		funDecl.setAttribute("outputType", "DDS_Long&");
-		funDecl.setAttribute("outputParam", "returnedValue");
+		funDecl.setAttribute("inputParams.{type, name}", "DDS_Long", "param1");
+		funDecl.setAttribute("inputParams.{type, name}", "DDS_Long", "param2");
+		funDecl.setAttribute("inoutParams.{type, name}", "DDS_Octet&", "param3");
+		//funDecl.setAttribute("outputParams.{type, name}", "DDS_Long&", "returnedValue");
 		
 		header.setAttribute("funDefs", funDecl.toString());
 		
 		System.out.println(header.toString());
 		
 		StringTemplate definition = proxyTemplates.getInstanceOf("definition");
+		definition.setAttribute("interfaceName", "Test");
+		definition.setAttribute("funNames", "function1");
+		
+		StringTemplate funDef = proxyTemplates.getInstanceOf("functionImpl");
+		funDef.setAttribute("type", "int");
+		funDef.setAttribute("interfaceName", "Test");
+		funDef.setAttribute("name", "function1");
+		funDef.setAttribute("inputParams.{type, name}", "DDS_Long", "param1");
+		funDef.setAttribute("inputParams.{type, name}", "DDS_Long", "param2");
+		funDef.setAttribute("inoutParams.{type, name}", "DDS_Octet&", "param3");
+		//funDef.setAttribute("outputParams.{type, name}", "DDS_Long&", "returnedValue");
+		
+		definition.setAttribute("funImpls", funDef.toString());
+		
+		System.out.println(definition.toString());
+
+	}
+	
+	public static void genServer(StringTemplateGroupLoader loader)
+	{
+		// first load main language template
+		StringTemplateGroup proxyTemplates = StringTemplateGroup.loadGroup("server", DefaultTemplateLexer.class, null);
+		
+		StringTemplate header = proxyTemplates.getInstanceOf("headerServer");
 		header.setAttribute("interfaceName", "Test");
 		header.setAttribute("funNames", "function1");
 		
-		StringTemplate funDef = proxyTemplates.getInstanceOf("functionDecl");
-		funDef.setAttribute("type", "int");
-		funDef.setAttribute("name", "function1");
-		funDef.setAttribute("inputType", "DDS_Long");
-		funDef.setAttribute("inputParam", "param1");
-		funDef.setAttribute("inoutType", "DDS_Octet&");
-		funDef.setAttribute("inoutParam", "param2");
-		funDef.setAttribute("outputType", "DDS_Long&");
-		funDef.setAttribute("outputParam", "returnedValue");
+		StringTemplate funDecl = proxyTemplates.getInstanceOf("functionHeader");
+		funDecl.setAttribute("type", "int");
+		funDecl.setAttribute("name", "function1");
+		funDecl.setAttribute("inputParams.{type, name}", "DDS_Long", "param1");
+		funDecl.setAttribute("inputParams.{type, name}", "DDS_Long", "param2");
+		funDecl.setAttribute("inoutParams.{type, name}", "DDS_Octet&", "param3");
+		//funDecl.setAttribute("outputParams.{type, name}", "DDS_Long&", "returnedValue");
 		
-		definition.setAttribute("funDefs", funDef.toString());
+		header.setAttribute("funDefs", funDecl.toString());
+		
+		System.out.println(header.toString());
+		
+		header = proxyTemplates.getInstanceOf("headerImpl");
+		header.setAttribute("interfaceName", "Test");
+		header.setAttribute("funNames", "function1");
+		
+		funDecl.reset();
+		funDecl.setAttribute("type", "int");
+		funDecl.setAttribute("name", "function1");
+		funDecl.setAttribute("inputParams.{type, name}", "DDS_Long", "param1");
+		funDecl.setAttribute("inputParams.{type, name}", "DDS_Long", "param2");
+		funDecl.setAttribute("inoutParams.{type, name}", "DDS_Octet&", "param3");
+		//funDecl.setAttribute("outputParams.{type, name}", "DDS_Long&", "returnedValue");
+		
+		header.setAttribute("funDefs", funDecl.toString());
+		
+		System.out.println(header.toString());
+		
+		StringTemplate definition = proxyTemplates.getInstanceOf("definitionServer");
+		definition.setAttribute("interfaceName", "Test");
+		definition.setAttribute("funNames", "function1");
+		
+		StringTemplate funDef = proxyTemplates.getInstanceOf("functionImpl");
+		funDef.setAttribute("type", "int");
+		funDef.setAttribute("interfaceName", "Test");
+		funDef.setAttribute("name", "function1");
+		funDef.setAttribute("inputParams.{type, name}", "DDS_Long", "param1");
+		funDef.setAttribute("inputParams.{type, name}", "DDS_Long", "param2");
+		funDef.setAttribute("inoutParams.{type, name}", "DDS_Octet&", "param3");
+		//funDef.setAttribute("outputParams.{type, name}", "DDS_Long&", "returnedValue");
+		
+		definition.setAttribute("funImpls", funDef.toString());
 		
 		System.out.println(definition.toString());
+		definition = proxyTemplates.getInstanceOf("definitionImpl");
+		definition.setAttribute("interfaceName", "Test");
+		definition.setAttribute("funNames", "function1");
+		
+		funDef = proxyTemplates.getInstanceOf("emptyFunctionImpl");
+		funDef.setAttribute("type", "int");
+		funDef.setAttribute("interfaceName", "Test");
+		funDef.setAttribute("name", "function1");
+		funDef.setAttribute("inputParams.{type, name}", "DDS_Long", "param1");
+		funDef.setAttribute("inputParams.{type, name}", "DDS_Long", "param2");
+		funDef.setAttribute("inoutParams.{type, name}", "DDS_Octet&", "param3");
+		//funDef.setAttribute("outputParams.{type, name}", "DDS_Long&", "returnedValue");
+		
+		definition.setAttribute("funImpls", funDef.toString());
+		
+		System.out.println(definition.toString());
+
+	}	public static void genIdl(StringTemplateGroupLoader loader)
+	{
+		// first load main language template
+		StringTemplateGroup proxyTemplates = StringTemplateGroup.loadGroup("idl", DefaultTemplateLexer.class, null);
+		
+		StringTemplate type = proxyTemplates.getInstanceOf("type");
+		type.setAttribute("name", "function1");
+		type.setAttribute("fields.{type, name}", "DDS_Long", "param1");
+		type.setAttribute("fields.{type, name}", "DDS_Long", "param2");
+		type.setAttribute("fields.{type, name}", "DDS_Octet&", "param3");
+		
+		System.out.println(type.toString());
+		
+		type.reset();
+		type.setAttribute("file", "user.idl");
+		type.setAttribute("name", "function1");
+		type.setAttribute("type", "Reply");
+		type.setAttribute("fields.{type, name}", "userDefined", "param2");
+		type.setAttribute("fields.{type, name}", "DDS_Long", "returnedValue");
+		
+		System.out.println(type.toString());
 	}
 	
 	public static void parse(String[]args) {
