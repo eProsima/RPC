@@ -18,8 +18,8 @@ public class IDL2DDSCS {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//parse(args);
-		gen();		
+		parse(args);
+		//gen();		
 	}
 	public static void gen() {
 		// get a group loader containing main templates dir and target subdir
