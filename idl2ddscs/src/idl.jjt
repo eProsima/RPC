@@ -476,12 +476,15 @@ void complex_declarator() :
 
 /* Production 38 */
 
-void floating_pt_type() :
-{}
+void floating_pt_type() #SimpleType:
+{Token t;}
 {
-  "float"
+(    
+  t = "float"  
 |
-  "double"
+  t = "double"
+)
+{ jjtThis.jjtSetValue(t.image);}
 }
 
 /* Production 39 */
@@ -506,18 +509,21 @@ void signed_int() :
 
 /* Production 41 */
 
-void signed_long_int() :
+void signed_long_int() #SimpleType :
 {}
 {
   "long"
+  { jjtThis.jjtSetValue("long");}         
+  
 }
 
 /* Production 42 */
 
-void signed_short_int() :
+void signed_short_int() #SimpleType:
 {}
 {
   "short"
+  { jjtThis.jjtSetValue("short");}         
 }
 
 /* Production 43 */
@@ -533,50 +539,56 @@ void unsigned_int() :
 
 /* Production 44 */
 
-void unsigned_long_int() :
+void unsigned_long_int() #SimpleType:
 {}
 {
   "unsigned" "long"
+  { jjtThis.jjtSetValue("unsigned long");}         
 }
 
 /* Production 45 */
 
-void unsigned_short_int() :
+void unsigned_short_int() #SimpleType:
 {}
 {
   "unsigned" "short"
+  { jjtThis.jjtSetValue("unsigned short");}         
 }
 
 /* Production 46 */
 
-void char_type() :
+void char_type() #SimpleType:
 {}
 {
   "char"
+  { jjtThis.jjtSetValue("char");}         
 }
 
 /* Production 47 */
 
-void boolean_type() :
+void boolean_type() #SimpleType:
 {}
 {
   "boolean"
+  { jjtThis.jjtSetValue("boolean");}         
 }
 
 /* Production 48 */
 
-void octet_type() :
+void octet_type() #SimpleType:
 {}
 {
   "octet"
+  { jjtThis.jjtSetValue("octet");}         
 }
 
 /* Production 49 */
 
-void any_type() :
+void any_type() #SimpleType:
 {}
 {
   "any"
+  { jjtThis.jjtSetValue("octet");}         
 }
 
 /* Production 50 */
@@ -770,16 +782,16 @@ void param_dcl() #param:
 /* Production 72 */
 
 void param_attribute() #param_attr :
-{}
+{Token t;}
 {
-  "in"
-  { jjtThis.jjtSetValue("in");}         
+(      
+  t="in"
 |
-  "out"
-  { jjtThis.jjtSetValue("out");}         
+  t="out"
 |
-  "inout"
-  { jjtThis.jjtSetValue("inout");}         
+  t="inout"
+) 
+{ jjtThis.jjtSetValue(t.image);}         
 }
 
 /* Production 73 */
