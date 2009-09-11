@@ -109,7 +109,8 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	public Object visit(ASTID node, Object data) {
 		// TODO Auto-generated method stub
 		node.dump("  ");
-		return node.value != null ? node.value.toString() : data;
+		Object value = node.jjtGetValue();
+		return value != null ? value.toString() : data;
 	}
 
 	/* (non-Javadoc)
@@ -118,11 +119,12 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	@Override
 	public Object visit(ASTscoped_name node, Object data){
 		StringBuilder scopedName = null;
-	    if (node.children != null) {
+		
+	    if (node.jjtGetNumChildren() > 0) {
 	    	scopedName = new StringBuilder();
-	        for (int i = 0; i < node.children.length; ++i) {
-	        	scopedName.append(node.children[i].jjtAccept(this, data));
-	        	if(i < node.children.length - 1)
+	        for (int i = 0; i < node.jjtGetNumChildren(); ++i) {
+	        	scopedName.append(node.jjtGetChild(i).jjtAccept(this, data));
+	        	if(i < node.jjtGetNumChildren() - 1)
 	        	{
 	        		scopedName.append("::");
 	        	}

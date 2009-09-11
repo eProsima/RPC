@@ -38,6 +38,7 @@ options {
 }
 
 PARSER_BEGIN(IDLParser)
+package com.eprosima.ddscs.idl;
 
 public class IDLParser {
   public static void main(String args[]) {
