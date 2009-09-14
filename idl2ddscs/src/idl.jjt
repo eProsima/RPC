@@ -41,38 +41,7 @@ PARSER_BEGIN(IDLParser)
 package com.eprosima.ddscs.idl;
 
 public class IDLParser {
-  public static void main(String args[]) {
-    IDLParser parser;
-    if (args.length == 0) {
-      System.out.println("IDL Parser Version 0.1:  Reading from standard input . . .");
-      parser = new IDLParser(System.in);
-    } else if (args.length == 1) {
-      System.out.println("IDL Parser Version 0.1:  Reading from file " + args[0] + " . . .");
-      try {
-        parser = new IDLParser(new java.io.FileInputStream(args[0]));
-      } catch (java.io.FileNotFoundException e) {
-        System.out.println("IDL Parser Version 0.1:  File " + args[0] + " not found.");
-        return;
-      }
-    } else {
-      System.out.println("IDL Parser Version 0.1:  Usage is one of:");
-      System.out.println("         java IDLParser < inputfile");
-      System.out.println("OR");
-      System.out.println("         java IDLParser inputfile");
-      return;
-    }
-    try {
-      ASTStart n = parser.Start();
-      n.dump("");
-      CplusplusVisitor visitor = new CplusplusVisitor();
-      n.jjtAccept(visitor, null);
-      System.out.println("Thank you.");
-    } catch (Exception e) {
-      System.out.println("Oops.");
-      System.out.println(e.getMessage());
-    }
-  }
-
+ 
 }
 
 PARSER_END(IDLParser)
@@ -135,7 +104,7 @@ void module() #module :
 
 /* Production 4 */
 
-void interfacex() #interfaceNode :
+void interfacex():
 {}
 {
   LOOKAHEAD(3)
@@ -146,7 +115,7 @@ void interfacex() #interfaceNode :
 
 /* Production 5 */
 
-void interface_dcl() :
+void interface_dcl()  #interfaceNode :
 {}
 {
   interface_header() "{" interface_body() "}"
@@ -588,7 +557,7 @@ void any_type() #SimpleType:
 {}
 {
   "any"
-  { jjtThis.jjtSetValue("octet");}         
+  { jjtThis.jjtSetValue("any");}         
 }
 
 /* Production 50 */

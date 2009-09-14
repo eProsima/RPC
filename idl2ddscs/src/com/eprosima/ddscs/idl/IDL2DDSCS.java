@@ -5,9 +5,10 @@ import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateErrorListener;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.StringTemplateGroupLoader;
-import org.antlr.stringtemplate.language.AngleBracketTemplateLexer;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 import com.eprosima.ddscs.idl.ast.*;
+import com.eprosima.ddscs.idl.tree.Interface;
+
 import java.io.*;
 
 public class IDL2DDSCS
@@ -73,7 +74,7 @@ public class IDL2DDSCS
 			printHelp();
 		}
 		
-		//parse(args);
+		parse(args);
 		//gen();		
 	}
 	public static void gen() {
@@ -243,9 +244,9 @@ public class IDL2DDSCS
 	    try 
 	    {
 	        ASTStart n = parser.Start();
-	        n.dump("");
 	        CplusplusVisitor visitor = new CplusplusVisitor();
-	        n.jjtAccept(visitor, null);
+	        Interface ifc = (Interface)n.jjtAccept(visitor, null);
+	        ifc.getName();
 	        System.out.println("Thank you.");
 	    } catch (Exception e) {
 	        System.out.println("Oops.");
