@@ -7,18 +7,73 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.StringTemplateGroupLoader;
 import org.antlr.stringtemplate.language.AngleBracketTemplateLexer;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
+import com.eprosima.ddscs.idl.ast.*;
+import java.io.*;
 
-import com.eprosima.ddscs.idl.syntaxtree.NodeToken;
-import com.eprosima.ddscs.idl.syntaxtree.Start;
-import com.eprosima.ddscs.idl.visitor.DepthFirstVisitor;
-import com.eprosima.ddscs.idl.visitor.Visitor;
-
-public class IDL2DDSCS {
+public class IDL2DDSCS
+{
+	private static String languageOption = null;
+	private static boolean ppDisable = false;
+	private static String ppPath = null;
+	private static String externalDir = null;
+	private static String idlFile = null;
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		parse(args);
+	public static void main(String[] args)
+	{
+		if(getOptions(args))
+		{
+			String arguments = "";
+			String ndds_home = System.getenv("NDDSHOME");
+			
+			if(ndds_home != null)
+			{
+				if(languageOption != null)
+					arguments += " -language " + languageOption;
+				if(ppDisable == true)
+				{
+					arguments += " -ppDisable ";
+				}
+				else
+				{
+					if(ppPath != null)
+						arguments += " -ppPath " + ppPath;
+				}
+				if(externalDir != null)
+					arguments += " -d " + externalDir;
+
+				try
+				{
+					Process rtiddsgen = Runtime.getRuntime().exec("rtiddsgen.bat " + arguments + " " + idlFile);
+					InputStream is = rtiddsgen.getInputStream();
+					BufferedReader br = new BufferedReader(new InputStreamReader(is));
+					String aux = br.readLine();
+					
+
+					while(aux != null)
+					{
+						System.out.println(aux);
+						aux = br.readLine();
+					}
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+			else
+			{
+				System.out.println("ERROR: Cannot find the environment variable NDDSHOME");
+			}
+		}
+		else
+		{
+			printHelp();
+		}
+		
+		//parse(args);
 		//gen();		
 	}
 	public static void gen() {
@@ -185,21 +240,75 @@ public class IDL2DDSCS {
 	    	return;
 	    }
 
-	    try {
-	      	Start start = parser.Start();
-	      	Visitor v = new MyVisitor();
-	      	start.accept(v);
-	      	System.out.println("Thank you.");
+	    try 
+	    {
+	        ASTStart n = parser.Start();
+	        n.dump("");
+	        CplusplusVisitor visitor = new CplusplusVisitor();
+	        n.jjtAccept(visitor, null);
+	        System.out.println("Thank you.");
 	    } catch (Exception e) {
-	    	System.out.println("Oops.");
-	    	System.out.println(e.getMessage());
+	        System.out.println("Oops.");
+	        System.out.println(e.getMessage());
 	    }
 		
 	}
-}
-class MyVisitor extends DepthFirstVisitor {
-	public void visit(NodeToken n) { 
-		System.out.println("visit "+n.tokenImage);
+	
+	public static boolean getOptions(String args[])
+	{
+		int count = 0;
+		String arg;
+		
+		while((count < args.length) && (args[count].startsWith("-")))
+		{
+			arg = args[count++];
+			
+			if(arg.equals("-language"))
+			{
+				languageOption = args[count++];
+				
+				if(!languageOption.equals("C++"))
+				{
+					System.out.println("ERROR: Unknown language " +  languageOption);
+					return false;
+				}
+			}
+			else if(arg.equals("-ppPath"))
+			{
+				ppPath = args[count++];
+			}
+			else if(arg.equalsIgnoreCase("-ppDisable"))
+			{
+				ppDisable = true;
+			}
+			else if(arg.equals("-d"))
+			{
+				externalDir = args[count++];
+			}
+			else
+			{
+				System.out.println("ERROR: Unknown argument " + arg);
+				return false;
+			}
+		}
+		
+		if(count < args.length)
+		{
+			idlFile = args[count];
+		}
+		else
+		{
+			System.out.println("ERROR: The program expects a IDL file");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static void printHelp()
+	{
+		System.out.print("idl2ddscs help:\n\nUsage: idl2ddscs [options] <IDL file>\n" +
+				"Options:\n   -language : Programming language.\n");
 	}
 }
 
