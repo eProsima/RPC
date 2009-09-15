@@ -11,6 +11,8 @@ $type$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $
 >>
 
 include(funNames) ::= <<
-#include "$funNames$RequestUtils.h"
-#include "$funNames$ReplyUtils.h"
+$funNames:{
+#include "$it$RequestUtils.h"
+#include "$it$ReplyUtils.h"
+}$
 >>

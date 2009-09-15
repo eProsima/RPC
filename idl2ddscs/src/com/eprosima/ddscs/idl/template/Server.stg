@@ -1,6 +1,6 @@
 group server : cplusplus;
 
-headerServer(interfaceName,funNames, funDefs) ::= <<
+headerServer(interfaceName,funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$SKELETON_H_
 #define _$interfaceName;format="toUpper"$SKELETON_H_
 
@@ -19,13 +19,13 @@ class $interfaceName$Skeleton : public DDSCSServer
         /// \brief The default destructor.
         virtual ~$interfaceName$Server(){}
 
-        $funDefs; separator=";\n"$;
+        $funDecls; separator=";\n"$;
 };
 
 #endif // _$interfaceName$SKELETON_H_
 >>
 
-headerImpl(interfaceName, funNames, funDefs) ::= <<
+headerImpl(interfaceName, funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$IMPL_H_
 #define _$interfaceName;format="toUpper"$IMPL_H_
 
@@ -39,7 +39,7 @@ class $interfaceName$Impl
         /// \brief The default destructor.
         virtual ~$interfaceName$Impl(){}
 
-        $funDefs; separator=";\n"$;
+        $funDecls; separator=";\n"$;
 };
 
 #endif // _$interfaceName$IMPL_H_

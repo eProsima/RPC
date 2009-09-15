@@ -1,6 +1,6 @@
 group proxy : cplusplus;
 
-header(interfaceName,funNames, funDefs) ::= <<
+header(interfaceName,funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$PROXY_H_
 #define _$interfaceName;format="toUpper"$PROXY_H_
 
@@ -17,7 +17,7 @@ class $interfaceName$Proxy : public DDSCSClient
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy(){}
 
-        $funDefs; separator=";\n"$;
+        $funDecls; separator=";\n"$;
 };
 
 #endif // _$interfaceName$PROXY_H_
@@ -63,9 +63,11 @@ $functionHeader(class=interfaceName,...)$
 >>
 
 createRemoteService(funNames) ::= <<
-    this->createRemoteService("$funNames$", 
-                              $funNames$RequestUtils::registerType(getParticipant()),
-                              $funNames$ReplyUtils::registerType(getParticipant()));
+$funNames:{
+    this->createRemoteService("$it$", 
+                              $it$RequestUtils::registerType(getParticipant()),
+                              $it$ReplyUtils::registerType(getParticipant()));
+}$
 >>
 
 
