@@ -1,11 +1,29 @@
 group cplusplus;
 
+typeInitMap ::= [
+        "char":"DDS_Char",
+        "wchar":"DDS_Wchar",
+        "octet":"DDS_Octet",
+        "short":"DDS_Short",
+        "unsigned short":"DDS_UnsignedShort",
+        "long":"DDS_Long",
+        "unsigned long":"DDS_UnsignedLong",
+        "long long":"DDS_LongLong",
+        "unsigned long long":"DDS_UnsignedLongLong",
+        "float":"DDS_Float",
+        "double":"DDS_Double",
+        "long double":"DDS_LongDouble",
+        "boolean":"DDS_Boolean",
+        "string":"char*",
+        default:key // anything other than an atomic type
+]
+
 argDecl(arg) ::= <<
-$arg:{n | $n.type$ $n.name$};separator=", "$
+$arg:{n | $typeInitMap.(n.type)$ $n.name$};separator=", "$
 >>
 
 functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
-$type$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
+$typeInitMap.(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
               $endif$$argDecl(inoutParams);separator=", "$$if(outputParams)$,
               $endif$$argDecl(outputParams);separator=", "$)
 >>

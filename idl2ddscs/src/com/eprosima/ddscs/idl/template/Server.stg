@@ -55,9 +55,9 @@ $functionHeader(class=interfaceName,...)$
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $functionHeader(class=interfaceName,...)$ 
 { 
-    $inputParams:{$it.type$ $it.name$;}; separator="\n"$   
-    $inoutParams:{$it.type$ $it.name$;}; separator="\n"$   
-    $outputParams:{$it.type$ $it.name$;}; separator="\n"$   
+    $inputParams:{$typeInitMap.(it.type)$ $it.name$;}; separator="\n"$   
+    $inoutParams:{$typeInitMap.(it.type)$ $it.name$;}; separator="\n"$   
+    $outputParams:{$typeInitMap.(it.type)$ $it.name$;}; separator="\n"$   
     $name$Reply *replyData = NULL;
 
     $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(inputParams)$,
