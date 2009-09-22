@@ -15,6 +15,7 @@ typeInitMap ::= [
         "long double":"DDS_LongDouble",
         "boolean":"DDS_Boolean",
         "string":"char*",
+        "void":,
         default:key // anything other than an atomic type
 ]
 
@@ -22,10 +23,22 @@ argDecl(arg) ::= <<
 $arg:{n | $typeInitMap.(n.type)$ $n.name$};separator=", "$
 >>
 
+argDeclRef(arg) ::= <<
+$arg:{n | $typeInitMap.(n.type)$ &$n.name$};separator=", "$
+>>
+
+functionReturnType(type) ::= <<
+$if(typeInitMap.(type))$
+$typeInitMap.(type)$
+$else$
+void
+$endif$
+>>
+
 functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
-$typeInitMap.(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
-              $endif$$argDecl(inoutParams);separator=", "$$if(outputParams)$,
-              $endif$$argDecl(outputParams);separator=", "$)
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
+              $endif$$argDeclRef(inoutParams);separator=", "$$if(outputParams)$,
+              $endif$$argDeclRef(outputParams);separator=", "$)
 >>
 
 include(funNames) ::= <<

@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Interface implements Named{
 	private String name;
-	private List<Operation> operations;
+	private List operations;
 	
 	public Interface(){
-		operations = new ArrayList<Operation>();
+		operations = new ArrayList();
 	}
 	public String getName() {
 		return name;
@@ -16,7 +16,7 @@ public class Interface implements Named{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Operation> getOperations() {
+	public List getOperations() {
 		return operations;
 	}
 

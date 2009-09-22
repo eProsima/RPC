@@ -1,19 +1,20 @@
 #ifndef _DDSCSSERVER_H_
 #define _DDSCSSERVER_H_
 
-#include "dds_cpp/dds_cpp_domain.h"
-#include "server/ServerRemoteService.h"
+#include <map>
+#include "ndds/ndds_cpp.h"
+#include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
 #include "utils/ThreadPoolManager.h"
 #include "utils/DDSCSTypedefs.h"
-#include <map>
+#include "server/ServerRemoteService.h"
 
 
 /**
  * \file
  * \brief This file contains the definition of the class DDSCSServer
  */
-class DDSCSServer
+class DDSCS_WIN32_DLL_API DDSCSServer
 {
 
     public:

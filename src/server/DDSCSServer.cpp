@@ -1,5 +1,8 @@
 #include "server/DDSCSServer.h"
-#include "ndds_utility_cpp.h"
+
+#ifndef ndds_utility_cpp_h
+	#include "ndds_utility_cpp.h"
+#endif
 
 using namespace std;
 

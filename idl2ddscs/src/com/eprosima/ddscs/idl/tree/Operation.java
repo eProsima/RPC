@@ -6,14 +6,14 @@ import java.util.List;
 public class Operation implements Named{
 	private String returnType;
 	private String name;
-	private List<InputParam> inputParams;
-	private List<InoutParam> inoutParams;
-	private List<OutputParam> outputParams;
+	private List inputParams;
+	private List inoutParams;
+	private List outputParams;
 	
 	public Operation(){
-		inputParams = new ArrayList<InputParam>();
-		inoutParams = new ArrayList<InoutParam>();
-		outputParams = new ArrayList<OutputParam>();
+		inputParams = new ArrayList();
+		inoutParams = new ArrayList();
+		outputParams = new ArrayList();
 	}
 	
 	public String getReturnType() {
@@ -28,13 +28,13 @@ public class Operation implements Named{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<InputParam> getInputParams() {
+	public List getInputParams() {
 		return inputParams;
 	}
-	public List<InoutParam> getInoutParams() {
+	public List getInoutParams() {
 		return inoutParams;
 	}
-	public List<OutputParam> getOutputParams() {
+	public List getOutputParams() {
 		return outputParams;
 	}
 	

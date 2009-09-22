@@ -1,7 +1,8 @@
 #ifndef _CLIENTREMOTESERVICE_H_
 #define _CLIENTREMOTESERVICE_H_
 
-#include "dds_cpp/dds_cpp_domain.h"
+#include "ndds/ndds_cpp.h"
+
 #include "utils/RemoteServiceWriter.h"
 #include "utils/RemoteServiceReader.h"
 #include "utils/DDSCSMessages.h"

@@ -1,4 +1,4 @@
-group proxy : cplusplus;
+group Proxy : cplusplus;
 
 header(interfaceName,funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$PROXY_H_
@@ -24,9 +24,12 @@ class $interfaceName$Proxy : public DDSCSClient
 >>
 
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
-$functionHeader(class=interfaceName,...)$ 
+$functionHeader(class={$interfaceName$Proxy},...)$ 
 {
     DDSCSMessages retValue;
+    $if(typeInitMap.(type))$
+    $typeInitMap.(type)$ returnedValue;
+    $endif$
     const char serviceName[50] = "$name$";
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
@@ -52,13 +55,19 @@ $functionHeader(class=interfaceName,...)$
             printf("SERVER WITHOUT RESOURCES\n");
             break;
         case OPERATION_SUCCESSFUL:
-            $name$ReplyUtils::extractTypeData(retInstance, $inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
-                                                  $endif$$outputParams:{$it.name$}; separator=", "$);
+            $name$ReplyUtils::extractTypeData(retInstance$if(inoutParams)$,
+                                                  $endif$ $inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
+                                                  $endif$$outputParams:{$it.name$}; separator=", "$$if(typeInitMap.(type))$,
+                                                  returnedValue$endif$);
             $name$ReplyTypeSupport::print_data(retInstance);
             break;
     };
     $name$ReplyUtils::deleteData(retInstance);
     $name$RequestUtils::deleteData(instance);
+
+    $if(typeInitMap.(type))$
+    return returnedValue;
+    $endif$
 }
 >>
 
@@ -73,7 +82,7 @@ $funNames:{
 
 
 definition(interfaceName,funNames, funImpls) ::= <<
-#include "client/$interfaceName$Proxy.h"
+#include "$interfaceName$Proxy.h"
 
 $interfaceName$Proxy::$interfaceName$Proxy() : DDSCSClient()
 {

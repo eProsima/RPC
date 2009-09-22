@@ -1,0 +1,75 @@
+group Utils : cplusplus;
+
+
+header(funName, type="Request", params) ::= <<
+#ifndef _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
+#define _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
+
+#include "dds_cpp/dds_cpp_domain.h"
+#include "$funName$$type$Support.h"
+
+class $funName$$type$Utils
+{
+    public:
+
+        static const char* registerType(DDSDomainParticipant *clientParticipant);
+        
+        static void* createEmptyData();
+        
+        static void deleteData(void *data);
+ 
+        static $funName$$type$* createTypeData($argDecl(params);separator=", "$);
+        
+        static void extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$);
+};
+
+#endif // _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
+>>
+
+definition(funName, type="Request", params) ::= <<
+#include "$funName$$type$Utils.h"
+
+const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParticipant)
+{
+    const char *typeName = NULL;
+
+    if(clientParticipant != NULL)
+    {
+        typeName = $funName$$type$TypeSupport::get_type_name();
+
+        if($funName$$type$TypeSupport::register_type(clientParticipant, typeName) != DDS_RETCODE_OK)
+        {
+            return NULL;
+        }
+    }
+
+    return typeName;
+}
+
+void* $funName$$type$Utils::createEmptyData()
+{
+    return $funName$$type$TypeSupport::create_data();
+}
+
+void $funName$$type$Utils::deleteData(void *data)
+{
+    $funName$$type$TypeSupport::delete_data(($funName$$type$*)data);
+}
+
+$funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$)
+{
+    $funName$$type$* instance = $funName$$type$TypeSupport::create_data();
+
+    $params:{n | instance->$n.name$ = $n.name$;};separator="\n"$
+    
+    return instance;
+}
+
+void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$)
+{
+    $params:{n | $n.name$ = data->$n.name$;};separator="\n"$
+}
+
+>>
+
+

@@ -1,0 +1,12 @@
+struct tickConsumer{
+  long id;
+  string name;
+ };
+
+typedef sequence<octet,64> Cookie;
+
+interface RateGen 
+{
+    Cookie subscribe_Pulse(in tickConsumer c, in long i, inout long kk, out octet ret);
+	tickConsumer unsubscribe_Pulse  (in Cookie ck);
+ };

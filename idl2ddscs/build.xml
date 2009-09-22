@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+
+<!-- ===================================================================== -->
+<!-- StringTemplate build file (contributed by Dieter Wimberger)           -->
+<!-- Terence says: I have no idea whether this does anything useful.       -->
+<!-- Somebody can fix it; seems to be almost right                         -->
+<!-- ===================================================================== -->
+<project name="idl2ddscs" default="jar" basedir=".">
+
+  <target name="init">
+    <tstamp>
+      <format property="src.timestamp" pattern="dd/MM/yyyy"/>
+      <format property="year" pattern="2009-yyyy"/>
+    </tstamp>
+
+    <!-- Allow any user specific values to override the defaults -->
+    <property file="./build.properties"/>
+  	<property environment="env"/>
+  	
+    <property name="Name" value="${ant.project.name}"/>
+    <property name="name" value="${ant.project.name}"/>
+    <property name="copyright" value="${year} Proyectos y Sistema de Mantenimiento S.L"/>
+
+    <!-- Filters -->
+    <filter token="date" value="${src.timestamp}"/>
+    <filter token="version" value="${version}"/>
+    <filter token="copyright" value="${copyright}"/>
+
+    <!-- Source related properties -->
+    <property name="src.dir" value="${basedir}${file.separator}src"/>
+    <property name="src.java" value="${src.dir}"/>
+    <property name="lib.dir" value="${basedir}${file.separator}lib${file.separator}"/>
+    <property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}"/>
+    <property name="src.excludes" value=""/>
+
+    <!-- Build related properties -->
+    <property name="build.dir" value="${basedir}${file.separator}build"/>
+    <property name="build.src" value="${build.dir}${file.separator}src"/>
+    <property name="build.classes" value="${build.dir}${file.separator}classes"/>
+    <property name="build.javadocs" value="${basedir}${file.separator}docs${file.separator}api"/>
+    <property name="build.jar" value="${lib.dir}${file.separator}${name}.jar"/>
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="antlr-2.7.7.jar" />
+            <include name="stringtemplate.jar" />
+        </fileset>
+    </path>
+
+  	<path id="run.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <property name="build.dist" value="${build.dir}${file.separator}${name}-${version}"/>
+
+    <property name="dist.basedir" value="${build.dir}"/>
+    <property name="dist.includes" value="${name}${file.separator}**"/>
+    <property name="dist.excludes"
+      value="**/prj/**,
+            **/dist/**,
+             **/test/**,
+             **/model/**,
+             **/build/**,
+             **/.DS_Store"
+      />
+    <property name="packages" value="${build.packages}"/>
+    <property name="library.includes" value="${bundle.includes}"/>
+
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Basic build targets                                                 -->
+  <!-- =================================================================== -->
+  <target name="prepare-sources" depends="init">
+    <mkdir dir="${build.dir}"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Compiles the source code                                            -->
+  <!-- =================================================================== -->
+  <target name="compile" depends="init, prepare-sources" description="Compiles the sources. (Default)">
+    <!-- Echo compilation properties -->
+
+    <mkdir dir="${build.classes}"/>
+    <javac srcdir="${src.java}"
+      destdir="${build.classes}"
+      compiler="javac1.4"
+	  source="1.4"
+	  target="1.4"
+      >
+      <classpath refid="build.classpath"/>
+      </javac>
+  	<copy todir="${build.classes}">
+  		<fileset dir="${src.dir}" includes="**/*.stg"/>
+  	</copy>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the jar archive                                             -->
+  <!-- =================================================================== -->
+  <target name="jar" depends="init,compile" description="Builds the library (.jar).">
+    <jar jarfile="${build.jar}"
+      basedir="${build.classes}"
+      manifest="manifest">
+    	<fileset dir="${src.java}">
+    		<include name="**/*.class"/>
+    		<include name="**/*.stg"/>
+    	</fileset>
+    </jar>
+  	
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- install                                                             -->
+  <!-- =================================================================== -->
+  <target name="install" depends="init,compile,jar">
+  	<copy todir="${env.NDDSHOME}/ddscs" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir="${lib.dir}" includes="*.jar"/>
+  	</copy>
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Cleans up generated classes                                         -->
+  <!-- =================================================================== -->
+  <target name="clean-classes" depends="init">
+    <delete dir="${build.classes}"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- launch tests                                         -->
+  <!-- =================================================================== -->
+  <target name="test" depends="jar">
+    <java 
+    	fork="true"
+  		classpathref="run.classpath"
+  		dir="${test.dir}"
+  		classname="com.eprosima.ddscs.idl.IDL2DDSCS"
+  	>
+  		<jvmarg value="-DNDDSHOME=${env.NDDSHOME}"/>
+  		<arg value="-ppDisable"/>
+  		<arg value="RateGen.idl"/>
+    </java>
+  </target>
+
+</project>
+

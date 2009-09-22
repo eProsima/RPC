@@ -1,16 +1,17 @@
 #ifndef _DDSCSCLIENT_H_
 #define _DDSCSCLIENT_H_
 
-#include "dds_cpp/dds_cpp_domain.h"
+#include <map>
+#include "ndds/ndds_cpp.h"
 #include "client/ClientRemoteService.h"
 #include "utils/DDSCSMessages.h"
-#include <map>
+#include "utils/ddscs.h"
 
 /**
  * \file
  * \brief This file contains the definition of the class DDSCSClient.
  */
-class DDSCSClient
+class DDSCS_WIN32_DLL_API DDSCSClient
 {
     protected:
 

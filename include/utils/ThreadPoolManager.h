@@ -1,10 +1,7 @@
 #ifndef _THREADPOOLMANAGER_H_
 #define _THREADPOOLMANAGER_H_
 
-#ifndef osapi_h
-#define osapi_h
-#include "osapi/osapi_threadFactory.h"
-#endif // osapi_h
+#include "ndds/ndds_cpp.h"
 
 #include <vector>
 #include "DDSCSMessages.h"

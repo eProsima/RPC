@@ -1,4 +1,4 @@
-group idl;
+group IDL;
 
 type(file, name, type="Request", fields) ::= <<
 $file:{#include "$it$"}$

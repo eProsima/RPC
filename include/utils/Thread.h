@@ -1,10 +1,8 @@
 #ifndef _THREAD_H_
 #define _THREAD_H_
 
-#ifndef osapi_h
-#define osapi_h
-#include "osapi/osapi_threadFactory.h"
-#endif // osapi_h
+#include "ndds/ndds_cpp.h"
+
 
 class DDSCSServer;
 

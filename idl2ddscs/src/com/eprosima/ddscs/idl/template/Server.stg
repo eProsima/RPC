@@ -1,4 +1,4 @@
-group server : cplusplus;
+group Server : cplusplus;
 
 headerServer(interfaceName,funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$SKELETON_H_
@@ -85,7 +85,7 @@ createRemoteService(interfaceName, funNames) ::= <<
 
 
 definitionServer(interfaceName, funNames, funImpls) ::= <<
-#include "client/$interfaceName$Server.h"
+#include "$interfaceName$Server.h"
 
 $interfaceName$Server::$interfaceName$Server() : DDSCSServer()
 {

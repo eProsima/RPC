@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="idl2ddscs/lib/idl2ddscs.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/idl2ddscs/idl2ddscs.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{IDL2DDSCS.java[IDL2DDSCS" manifestLocation="/idl2ddscs/manifest" manifestVersion="1.0" reuseManifest="false" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/idl2ddscs/src/com/eprosima/ddscs/idl/template/Server.stg"/>
+        <file path="/idl2ddscs/src/com/eprosima/ddscs/idl/template/cplusplus.stg"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{InputParam.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{IDLParser.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{IDLParserTokenManager.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{IDLParserConstants.java"/>
+        <file path="/idl2ddscs/src/idl.jjt"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{CplusplusVisitor.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{DumpVisitor.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{Token.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{ParseException.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{IDL2DDSCS.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{Operation.java"/>
+        <file path="/idl2ddscs/src/com/eprosima/ddscs/idl/idl.jj"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{SimpleCharStream.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{Named.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{OutputParam.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl{TokenMgrError.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{Interface.java"/>
+        <file path="/idl2ddscs/src/com/eprosima/ddscs/idl/template/IDL.stg"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{Param.java"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.ast"/>
+        <javaElement handleIdentifier="=idl2ddscs/src&lt;com.eprosima.ddscs.idl.tree{InoutParam.java"/>
+        <file path="/idl2ddscs/src/com/eprosima/ddscs/idl/template/Proxy.stg"/>
+    </selectedElements>
+    <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
+</jardesc>
