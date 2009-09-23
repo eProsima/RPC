@@ -1,9 +1,9 @@
+typedef sequence<octet,64> Cookie;
+
 struct tickConsumer{
   long id;
   string name;
  };
-
-typedef sequence<octet,64> Cookie;
 
 interface RateGen 
 {

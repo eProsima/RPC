@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="RateGen_client"
-	ProjectGUID="{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}"
+	Name="RateGen_server"
+	ProjectGUID="{A5BEA237-A1F9-4A2A-90F8-A4045F860464}"
 	RootNamespace="RateGen"
 	>
 	<Platforms>
@@ -37,7 +37,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\objs\i86Win32VS2005\Hello_publisher.tlb"
+				TypeLibraryName=".\objs\i86Win32VS2005\Hello_subscriber.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -71,12 +71,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="nddscppzd.lib nddsczd.lib nddscorezd.lib netapi32.lib advapi32.lib user32.lib WS2_32.lib odbc32.lib odbccp32.lib"
-				OutputFile=".\objs\i86Win32VS2005\Hello_publisher.exe"
+				OutputFile=".\objs\i86Win32VS2005\Hello_subscriber.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(NDDSHOME)\lib\i86Win32VS2005"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\objs\i86Win32VS2005\Hello_publisher.pdb"
+				ProgramDatabaseFile=".\objs\i86Win32VS2005\Hello_subscriber.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -128,7 +128,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\objs\i86Win32VS2005\RateGenClient.tlb"
+				TypeLibraryName=".\objs\i86Win32VS2005\RateGenSrv.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -162,12 +162,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="nddscppd.lib nddscd.lib nddscored.lib ddscsd.lib netapi32.lib advapi32.lib user32.lib WS2_32.lib"
-				OutputFile=".\objs\i86Win32VS2005\RateGenClient.exe"
+				OutputFile=".\objs\i86Win32VS2005\RateGenSrv.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;$(NDDSHOME)\lib\i86Win32VS2005&quot;;D:\desarrollo\ddscs\lib\i86win32vs2005"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\objs\i86Win32VS2005\RateGenClient.pdb"
+				ProgramDatabaseFile=".\objs\i86Win32VS2005\RateGenSrv.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -219,7 +219,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\objs\i86Win32VS2005\Hello_publisher.tlb"
+				TypeLibraryName=".\objs\i86Win32VS2005\Hello_subscriber.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -254,11 +254,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="nddscppz.lib nddscz.lib nddscorez.lib netapi32.lib advapi32.lib user32.lib WS2_32.lib odbc32.lib odbccp32.lib"
-				OutputFile=".\objs\i86Win32VS2005\Hello_publisher.exe"
+				OutputFile=".\objs\i86Win32VS2005\Hello_subscriber.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(NDDSHOME)\lib\i86Win32VS2005"
-				ProgramDatabaseFile=".\objs\i86Win32VS2005\Hello_publisher.pdb"
+				ProgramDatabaseFile=".\objs\i86Win32VS2005\Hello_subscriber.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -310,7 +310,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\objs\i86Win32VS2005\Hello_publisher.tlb"
+				TypeLibraryName=".\objs\i86Win32VS2005\Hello_subscriber.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -345,11 +345,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="nddscpp.lib nddsc.lib nddscore.lib netapi32.lib advapi32.lib user32.lib WS2_32.lib odbc32.lib odbccp32.lib"
-				OutputFile=".\objs\i86Win32VS2005\Hello_publisher.exe"
+				OutputFile=".\objs\i86Win32VS2005\Hello_subscriber.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(NDDSHOME)\lib\i86Win32VS2005"
-				ProgramDatabaseFile=".\objs\i86Win32VS2005\Hello_publisher.pdb"
+				ProgramDatabaseFile=".\objs\i86Win32VS2005\Hello_subscriber.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -391,104 +391,23 @@
 				>
 			</File>
 			<File
-				RelativePath=".\RateGenClient.cxx"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\RateGenPlugin.cxx"
 				>
 			</File>
 			<File
-				RelativePath=".\RateGenProxy.cxx"
+				RelativePath=".\RateGenServer.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\RateGenServerImpl.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\RateGenSrv.cxx"
 				>
 			</File>
 			<File
 				RelativePath=".\RateGenSupport.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReply.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReplyPlugin.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReplySupport.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReplyUtils.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequest.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequestPlugin.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequestSupport.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequestUtils.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReply.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReplyPlugin.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReplySupport.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReplyUtils.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequest.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequestPlugin.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequestSupport.cxx"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequestUtils.cxx"
 				>
 			</File>
 		</Filter>
@@ -505,75 +424,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\RateGenProxy.h"
+				RelativePath=".\RateGenServer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RateGenServerImpl.h"
 				>
 			</File>
 			<File
 				RelativePath=".\RateGenSupport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReply.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReplyPlugin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReplySupport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseReplyUtils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequest.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequestPlugin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequestSupport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\subscribe_PulseRequestUtils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReply.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReplyPlugin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReplySupport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseReplyUtils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequest.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequestPlugin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequestSupport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\unsubscribe_PulseRequestUtils.h"
 				>
 			</File>
 		</Filter>
@@ -581,18 +440,6 @@
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
-			<File
-				RelativePath=".\RateGen.idl"
-				>
-				<FileConfiguration
-					Name="Debug DLL|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCMIDLTool"
-					/>
-				</FileConfiguration>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

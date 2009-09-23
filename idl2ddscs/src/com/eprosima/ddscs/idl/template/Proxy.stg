@@ -72,10 +72,10 @@ $functionHeader(class={$interfaceName$Proxy},...)$
 >>
 
 createRemoteService(funNames) ::= <<
-$funNames:{
-    this->createRemoteService("$it$", 
-                              $it$RequestUtils::registerType(getParticipant()),
-                              $it$ReplyUtils::registerType(getParticipant()));
+$funNames:{funName |
+    this->createRemoteService("$funName$", 
+                              $funName$RequestUtils::registerType(getParticipant()),
+                              $funName$ReplyUtils::registerType(getParticipant()));
 }$
 >>
 
