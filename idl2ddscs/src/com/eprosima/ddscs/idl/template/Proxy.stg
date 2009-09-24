@@ -27,9 +27,7 @@ functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <
 $functionHeader(class={$interfaceName$Proxy},...)$ 
 {
     DDSCSMessages retValue;
-    $if(typeInitMap.(type))$
-    $typeInitMap.(type)$ returnedValue;
-    $endif$
+    $returnVarDecl(type)$    
     const char serviceName[50] = "$name$";
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
@@ -57,15 +55,15 @@ $functionHeader(class={$interfaceName$Proxy},...)$
         case OPERATION_SUCCESSFUL:
             $name$ReplyUtils::extractTypeData(retInstance$if(inoutParams)$,
                                                   $endif$ $inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
-                                                  $endif$$outputParams:{$it.name$}; separator=", "$$if(typeInitMap.(type))$,
-                                                  returnedValue$endif$);
+                                                  $endif$$outputParams:{$it.name$}; separator=", "$$if(!voidInitMap.(type))$,
+                                                  $if(!typeInitMap.(type))$*$endif$returnedValue$endif$);
             $name$ReplyTypeSupport::print_data(retInstance);
             break;
     };
     $name$ReplyUtils::deleteData(retInstance);
     $name$RequestUtils::deleteData(instance);
 
-    $if(typeInitMap.(type))$
+    $if(!voidInitMap.(type))$
     return returnedValue;
     $endif$
 }
@@ -83,6 +81,8 @@ $funNames:{funName |
 
 definition(interfaceName,funNames, funImpls) ::= <<
 #include "$interfaceName$Proxy.h"
+#include "$interfaceName$Plugin.h"
+
 
 $interfaceName$Proxy::$interfaceName$Proxy() : DDSCSClient()
 {

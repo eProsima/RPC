@@ -104,13 +104,13 @@ public class IDL2DDSCS
 		StringTemplateGroup.registerGroupLoader(loader);
 		genIdl(ifc);
 		genUtils(ifc);
-		genHeaderAndImpl("Proxy", "Proxy", "header", "definition", "functionImpl", ifc);
-		genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer", "functionImpl", ifc);
-		genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl", "emptyFunctionImpl", ifc);
+		genHeaderAndImpl("Proxy", "Proxy", "header", "definition", "functionImpl", "functionHeader", ifc);
+		genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer", "functionImpl", "exFunctionHeader", ifc);
+		genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl", "emptyFunctionImpl", "functionHeader", ifc);
 	}
 	
 	public static void genHeaderAndImpl(String suffix, String templateGroupId, String headerTemplateId,
-			String definitionTemplateId, String functionTemplateId, Interface ifc)
+			String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId, Interface ifc)
 	{
 		// first load main language template
 		StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
@@ -125,7 +125,7 @@ public class IDL2DDSCS
 
 
 		//Template for function declaration:
-		StringTemplate funDecl = templatesGroup.getInstanceOf("functionHeader");
+		StringTemplate funDecl = templatesGroup.getInstanceOf(functionHeaderTemplateId);
 		
 		//Template for function Definition:
 		StringTemplate funDef = templatesGroup.getInstanceOf(functionTemplateId);
@@ -188,6 +188,7 @@ public class IDL2DDSCS
 		InputParam ip = null;
 		for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
 			ip = (InputParam)paramIter.next();
+			
 			request.setAttribute(attribute, ip.getType(), ip.getName());
 		}
 		InoutParam iop = null;
@@ -201,7 +202,6 @@ public class IDL2DDSCS
 			oup = (OutputParam)paramIter.next();
 			reply.setAttribute(attribute, oup.getType(), oup.getName());
 		}
-		reply.setAttribute(attribute, op.getReturnType(), "returnedValue");					
 	}
 	
 	public static void genUtils(Interface ifc)
@@ -223,15 +223,21 @@ public class IDL2DDSCS
 			op = (Operation) iter.next();
 			headerRequest.setAttribute("funName", op.getName());
 			definitionRequest.setAttribute("funName", op.getName());
+			definitionRequest.setAttribute("interfaceName", ifc.getName());
 			
 			headerReply.setAttribute("funName", op.getName());
 			headerReply.setAttribute("type", "Reply");
 			
 			definitionReply.setAttribute("funName", op.getName());
 			definitionReply.setAttribute("type", "Reply");
+			definitionReply.setAttribute("interfaceName", ifc.getName());
 						
 			setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name}");
 			setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name}");
+			if(!"void".equals(op.getReturnType())){
+				headerReply.setAttribute("returnType", op.getReturnType());					
+				definitionReply.setAttribute("returnType", op.getReturnType());
+			}
 
 			//System.out.println(request.toString());
 			externalDir.append(op.getName()).append("RequestUtils.h");
@@ -279,6 +285,10 @@ public class IDL2DDSCS
 			reply.setAttribute("type", "Reply");
 						
 			setRequestReplyParams(request, reply, op, "fields.{type, name}");
+			if(!"void".equals(op.getReturnType())){
+				reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
+			}
+
 			//System.out.println(request.toString());
 			externalDir.append(op.getName()).append("Request.idl");
 			writeFile(externalDir.toString(), request);

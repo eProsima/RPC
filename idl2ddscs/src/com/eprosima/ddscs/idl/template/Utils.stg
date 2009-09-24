@@ -1,7 +1,19 @@
 group Utils : cplusplus;
 
 
-header(funName, type="Request", params) ::= <<
+check(returnType) ::= <<
+$if(typeInitMap.(returnType))$
+$typeInitMap.(returnType)$
+$else$
+$returnType$&
+$endif$
+>>
+
+lastParam(params, returnType) ::= <<
+$if(params)$, $endif$$check(returnType)$ returnedValue
+>>
+
+header(funName, type="Request", params, returnType) ::= <<
 #ifndef _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 #define _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 
@@ -18,16 +30,34 @@ class $funName$$type$Utils
         
         static void deleteData(void *data);
  
-        static $funName$$type$* createTypeData($argDecl(params);separator=", "$);
+        static $funName$$type$* createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
         
-        static void extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$);
+        static void extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
 };
 
 #endif // _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 >>
 
-definition(funName, type="Request", params) ::= <<
+createDataHelper(type, name) ::= <<
+$if(typeInitMap.(type))$
+instance->$name$ = $name$;
+$else$
+$type$PluginSupport_copy_data(&instance->$name$, &$name$);
+$endif$
+>>    
+
+extractDataHelper(param) ::= <<
+$if(typeInitMap.(param.type))$
+$param.name$ = instance->$param.name$;
+$else$
+$param.type$PluginSupport_copy_data(&$param.name$, &instance->$param.name$);
+$endif$
+>>    
+
+
+definition(interfaceName,funName, type="Request", params, returnType) ::= <<
 #include "$funName$$type$Utils.h"
+#include "$interfaceName$Plugin.h"
 
 const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParticipant)
 {
@@ -56,18 +86,24 @@ void $funName$$type$Utils::deleteData(void *data)
     $funName$$type$TypeSupport::delete_data(($funName$$type$*)data);
 }
 
-$funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$)
+$funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
 {
     $funName$$type$* instance = $funName$$type$TypeSupport::create_data();
 
-    $params:{n | instance->$n.name$ = $n.name$;};separator="\n"$
+    $params:{$createDataHelper(type=it.type, name=it.name)$};separator="\n"$
     
+    $if(returnType)$
+    $createDataHelper(type=returnType, name="returnedValue")$        
+    $endif$    
     return instance;
 }
 
-void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$)
+void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
 {
     $params:{n | $n.name$ = data->$n.name$;};separator="\n"$
+    $if(returnType)$
+    returnedValue = data->returnedValue;
+    $endif$    
 }
 
 >>

@@ -49,41 +49,59 @@ class $interfaceName$Impl
 #endif // _$interfaceName$IMPL_H_
 >>
 
+returnType(type) ::= <<
+$if(voidInitMap.(type))$
+$elseif(typeInitMap.(type))$
+$typeInitMap.(type)$ _ret_value_;
+return _ret_value_;
+$else$
+$type$* _ret_value_ = new $type$();
+return _ret_value_;
+$endif$  
+>>
+
 emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $functionHeader(class={$interfaceName$Impl},...)$ 
 {
-  returnedValue.retCode = SERVER_ERROR;
+  $returnType(type)$
 } 
 >>
 
-exFunctionHeader(interfaceName, name) ::= <<
-void $interfaceName$Server::$name$(DDSCSServer *server, void *requestData) 
+exFunctionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= <<
+$if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(DDSCSServer *server, void *requestData)
+>>
+
+lastParam(params, type) ::= <<
+$if(params)$
+$if(!voidInitMap.(type))$, $endif$
+$endif$
+$if(!voidInitMap.(type))$
+$if(!typeInitMap.(type))$*$endif$returnedValue$endif$
+$endif$
 >>
 
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
-$exFunctionHeader(interfaceName = interfaceName, name= name)$ 
+$exFunctionHeader(class=interfaceName,...)$ 
 { 
-    $inputParams:{$typeInitMap.(it.type)$ $it.name$;}; separator="\n"$   
-    $inoutParams:{$typeInitMap.(it.type)$ $it.name$;}; separator="\n"$   
-    $outputParams:{$typeInitMap.(it.type)$ $it.name$;}; separator="\n"$   
-    $if(typeInitMap.(type))$
-    $typeInitMap.(type)$ returnedValue;
-    $endif$    
+    $interfaceName$Server *srv = ($interfaceName$Server*)server;
+    $inputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
+    $inoutParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
+    $outputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
+    $returnVarDecl(type)$    
     $name$Reply *replyData = NULL;
 
     $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(inputParams)$,
                                          $endif$$inputParams:{$it.name$}; separator=", "$$if(inoutParams)$,
                                          $endif$$inoutParams:{$it.name$}; separator=", "$);
                                          
-    _impl->$name$($inputParams:{$it.name$}; separator=","$$if(inoutParams)$,
+    srv->_impl->$name$($inputParams:{$it.name$}; separator=","$$if(inoutParams)$,
            $endif$$inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
            $endif$$outputParams:{$it.name$}; separator=", "$);
            
-    replyData = $funNames$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
-                                                      $endif$$outputParams:{$it.name$}; separator=", "$$if(typeInitMap.(type))$,
-                                                     returnedValue$endif$);
+    replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
+                                                      $endif$$outputParams:{$it.name$}; separator=", "$$lastParam(params=[inoutParams,outputParams],type=type)$);
                                                   
-    server->sendReply("$funNames$", requestData, replyData);
+    server->sendReply("$name$", requestData, replyData);
     $name$RequestUtils::deleteData(requestData);
     $name$RequestUtils::deleteData(replyData);
 }
@@ -103,6 +121,7 @@ $funNames:{funName |
 
 definitionServer(interfaceName, funNames, funImpls) ::= <<
 #include "$interfaceName$Server.h"
+#include "$interfaceName$Plugin.h"
 
 $interfaceName$Server::$interfaceName$Server() : DDSCSServer()
 {

@@ -15,23 +15,46 @@ typeInitMap ::= [
         "long double":"DDS_LongDouble",
         "boolean":"DDS_Boolean",
         "string":"char*",
-        "void":,
-        default:key // anything other than an atomic type
+        default:
 ]
 
+voidInitMap ::= [
+        "void":"void",
+        default: // anything other than an atomic type
+]
+
+returnVarDecl(type) ::= <<
+$if(!voidInitMap.(type))$
+$if(typeInitMap.(type))$
+$typeInitMap.(type)$  returnedValue;
+$else$
+$type$ *returnedValue = $type$PluginSupport_create_data();
+$endif$    
+$endif$
+>>
+argType(type) ::= <<
+$if(typeInitMap.(type))$
+$typeInitMap.(type)$
+$else$
+$type$
+$endif$
+>>
+
 argDecl(arg) ::= <<
-$arg:{n | $typeInitMap.(n.type)$ $n.name$};separator=", "$
+$arg:{n | $argType(n.type)$ $n.name$};separator=", "$
 >>
 
 argDeclRef(arg) ::= <<
-$arg:{n | $typeInitMap.(n.type)$ &$n.name$};separator=", "$
+$arg:{n | $argType(n.type)$ &$n.name$};separator=", "$
 >>
 
 functionReturnType(type) ::= <<
 $if(typeInitMap.(type))$
 $typeInitMap.(type)$
+$elseif(voidInitMap.(type))$
+$voidInitMap.(type)$
 $else$
-void
+$type$*
 $endif$
 >>
 

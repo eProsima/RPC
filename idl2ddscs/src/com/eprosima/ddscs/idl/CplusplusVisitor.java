@@ -79,7 +79,10 @@ public class CplusplusVisitor implements IDLParserVisitor {
 		Operation op = new Operation();
 		visit(((SimpleNode) node), op);
 		if (data != null && data instanceof Interface) {
-			((Interface) data).add(op);
+			if(op.getReturnType() == null){
+				op.setReturnType("void");
+			}
+			((Interface) data).add(op);			
 		}
 		return data;
 	}

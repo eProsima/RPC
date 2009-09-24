@@ -387,6 +387,38 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath=".\noReturnFunctionReply.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionReplyPlugin.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionReplySupport.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionReplyUtils.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequest.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequestPlugin.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequestSupport.cxx"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequestUtils.cxx"
+				>
+			</File>
+			<File
 				RelativePath=".\RateGen.cxx"
 				>
 			</File>
@@ -497,6 +529,38 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
+				RelativePath=".\noReturnFunctionReply.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionReplyPlugin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionReplySupport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionReplyUtils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequest.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequestPlugin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequestSupport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequestUtils.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RateGen.h"
 				>
 			</File>
@@ -582,7 +646,79 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 			<File
+				RelativePath=".\noReturnFunctionReply.idl"
+				>
+				<FileConfiguration
+					Name="Debug DLL|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCMIDLTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\noReturnFunctionRequest.idl"
+				>
+				<FileConfiguration
+					Name="Debug DLL|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCMIDLTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\RateGen.idl"
+				>
+				<FileConfiguration
+					Name="Debug DLL|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCMIDLTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\subscribe_PulseReply.idl"
+				>
+				<FileConfiguration
+					Name="Debug DLL|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCMIDLTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\subscribe_PulseRequest.idl"
+				>
+				<FileConfiguration
+					Name="Debug DLL|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCMIDLTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\unsubscribe_PulseReply.idl"
+				>
+				<FileConfiguration
+					Name="Debug DLL|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCMIDLTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\unsubscribe_PulseRequest.idl"
 				>
 				<FileConfiguration
 					Name="Debug DLL|Win32"
