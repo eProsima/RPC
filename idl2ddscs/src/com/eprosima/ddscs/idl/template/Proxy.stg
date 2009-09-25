@@ -23,6 +23,10 @@ class $interfaceName$Proxy : public DDSCSClient
 #endif // _$interfaceName$PROXY_H_
 >>
 
+extractTypeDataParams(type, inputParams, inoutParams, outputParams) ::= <<
+$[nextParam(params=inoutParams),nextParam(previous=inoutParams, params=outputParams),lastParam(params=[inoutParams,outputParams],type=type)]$
+>>
+
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $functionHeader(class={$interfaceName$Proxy},...)$ 
 {
@@ -31,8 +35,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     const char serviceName[50] = "$name$";
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
-    instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=", "$ $if(inoutParams)$,
-                                                  $endif$$inoutParams:{$it.name$}; separator=", "$);
+    instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
     retValue = executeRemoteService(instance, serviceName, retInstance);
 
     switch (retValue)
@@ -53,10 +56,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             printf("SERVER WITHOUT RESOURCES\n");
             break;
         case OPERATION_SUCCESSFUL:
-            $name$ReplyUtils::extractTypeData(retInstance$if(inoutParams)$,
-                                                  $endif$ $inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
-                                                  $endif$$outputParams:{$it.name$}; separator=", "$$if(!voidInitMap.(type))$,
-                                                  $if(!typeInitMap.(type))$*$endif$returnedValue$endif$);
+            $name$ReplyUtils::extractTypeData(retInstance$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
             $name$ReplyTypeSupport::print_data(retInstance);
             break;
     };

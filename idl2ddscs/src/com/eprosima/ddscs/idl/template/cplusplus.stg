@@ -58,6 +58,23 @@ $type$*
 $endif$
 >>
 
+lastParam(params, type) ::= <<
+$if(params)$
+$if(!voidInitMap.(type))$, $endif$
+$endif$
+$if(!voidInitMap.(type))$
+$if(!typeInitMap.(type))$*$endif$returnedValue$endif$
+$endif$
+>>
+
+nextParam(previous, params) ::= <<
+$if(previous)$
+$if(params)$, 
+$endif$
+$endif$
+$params:{$it.name$}; separator=", "$
+>>
+
 functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
 $functionReturnType(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
               $endif$$argDeclRef(inoutParams);separator=", "$$if(outputParams)$,

@@ -41,7 +41,7 @@ class $interfaceName$Impl
         $interfaceName$Impl();
 
         /// \brief The default destructor.
-        virtual ~$interfaceName$Impl(){}
+        virtual ~$interfaceName$Impl();
 
         $funDecls; separator=";\n"$;
 };
@@ -71,13 +71,8 @@ exFunctionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= <<
 $if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(DDSCSServer *server, void *requestData)
 >>
 
-lastParam(params, type) ::= <<
-$if(params)$
-$if(!voidInitMap.(type))$, $endif$
-$endif$
-$if(!voidInitMap.(type))$
-$if(!typeInitMap.(type))$*$endif$returnedValue$endif$
-$endif$
+extractTypeDataParams(type, inputParams, inoutParams, outputParams) ::= <<
+$[nextParam(params=inputParams),nextParam(previous=inputParams, params=inoutParams)]$
 >>
 
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
@@ -90,16 +85,11 @@ $exFunctionHeader(class=interfaceName,...)$
     $returnVarDecl(type)$    
     $name$Reply *replyData = NULL;
 
-    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(inputParams)$,
-                                         $endif$$inputParams:{$it.name$}; separator=", "$$if(inoutParams)$,
-                                         $endif$$inoutParams:{$it.name$}; separator=", "$);
+    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
                                          
-    srv->_impl->$name$($inputParams:{$it.name$}; separator=","$$if(inoutParams)$,
-           $endif$$inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
-           $endif$$outputParams:{$it.name$}; separator=", "$);
+    srv->_impl->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
            
-    replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$if(outputParams)$,
-                                                      $endif$$outputParams:{$it.name$}; separator=", "$$lastParam(params=[inoutParams,outputParams],type=type)$);
+    replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$nextParam(previous=inoutParams, params=outputParams)$$lastParam(params=[inoutParams,outputParams],type=type)$);
                                                   
     server->sendReply("$name$", requestData, replyData);
     $name$RequestUtils::deleteData(requestData);
@@ -139,6 +129,13 @@ $funImpls; separator="\n"$
 
 definitionImpl(interfaceName, funNames, funImpls) ::= <<
 #include "$interfaceName$ServerImpl.h"
+
+$interfaceName$Impl::$interfaceName$Impl()
+{
+}
+$interfaceName$Impl::~$interfaceName$Impl()
+{
+}
 
 $funImpls; separator="\n"$
 >>
