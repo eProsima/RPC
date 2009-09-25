@@ -20,6 +20,7 @@ public class IDL2DDSCS
 {
 	private static String languageOption = null;
 	private static boolean ppDisable = false;
+	private static boolean replace = false;
 	private static String ppPath = null;
 	private static StringBuffer externalDir = null;
 	private static int externalDirLength = 0;
@@ -48,13 +49,16 @@ public class IDL2DDSCS
 					if(ppPath != null)
 						command.append(" -ppPath ").append(ppPath);
 				}
+				if(replace == true)
+				{
+					command.append(" -replace ");
+				}
 				if(externalDirLength > 0){
 					command.append(" -d ").append(externalDir);
 				}
 				command.append(" ");
-				String example = "-example i86Win32VS2005 " + idlFile; 
 
-				ddsGen(command, example);
+				ddsGen(command, idlFile);
 			}
 			else
 			{
@@ -364,6 +368,10 @@ public class IDL2DDSCS
 			else if(arg.equalsIgnoreCase("-ppDisable"))
 			{
 				ppDisable = true;
+			}
+			else if(arg.equalsIgnoreCase("-replace"))
+			{
+				replace = true;
 			}
 			else if(arg.equals("-d"))
 			{

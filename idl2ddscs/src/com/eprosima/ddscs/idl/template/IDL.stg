@@ -4,6 +4,8 @@ type(file, name, type="Request", fields) ::= <<
 $file:{#include "$it$"}$
 
 struct $name$$type${
+    long clientId; //@key
+    long numSec;
     $fields:{$it.type$ $it.name$;};separator="\n"$
 };
 >>

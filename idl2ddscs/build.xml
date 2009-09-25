@@ -142,6 +142,7 @@
   	>
   		<jvmarg value="-DNDDSHOME=${env.NDDSHOME}"/>
   		<arg value="-ppDisable"/>
+  		<arg value="-replace"/>
   		<arg value="RateGen.idl"/>
     </java>
   </target>

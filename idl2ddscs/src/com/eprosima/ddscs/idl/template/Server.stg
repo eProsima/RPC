@@ -93,7 +93,7 @@ $exFunctionHeader(class=interfaceName,...)$
                                                   
     server->sendReply("$name$", requestData, replyData);
     $name$RequestUtils::deleteData(requestData);
-    $name$RequestUtils::deleteData(replyData);
+    $name$ReplyUtils::deleteData(replyData);
 }
 >>
 
