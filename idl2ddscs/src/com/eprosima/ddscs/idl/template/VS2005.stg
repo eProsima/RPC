@@ -1,0 +1,222 @@
+group VS2005;
+
+
+projectRef(project) ::= <<
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.name$-vs2005.vcproj", "{$project.guid$}"
+EndProject
+>>
+
+postSolution(guid, conf) ::= <<
+{$guid$}.$conf$.ActiveCfg = $conf$
+{$guid$}.$conf$.Build.0 = $conf$
+>>
+
+projectConfigurationPlatforms(guid, configurations) ::= <<
+$configurations:{conf | $postSolution(guid = guid, conf = conf)$};separator="\n"$
+>>
+
+solution(projects, configurations) ::= <<
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+$projects:{$projectRef(it)$};separator="\n"$
+Global
+  GlobalSection(SolutionConfigurationPlatforms) = preSolution
+    $configurations:{conf | $conf$ = $conf$};separator="\n"$
+  EndGlobalSection
+  GlobalSection(ProjectConfigurationPlatforms) = postSolution
+    $projects:{$projectConfigurationPlatforms(guid=it.guid, configurations=configurations)$};separator="\n"$
+  EndGlobalSection
+  GlobalSection(SolutionProperties) = preSolution
+    HideSolutionNode = FALSE
+  EndGlobalSection
+EndGlobal
+
+>>
+
+generateDebugInformation(debugDll, releaseDll, debug, release) ::= <<
+$if(debugDll)$
+GenerateDebugInformation="true"
+$elseif(releaseDll)$
+GenerateDebugInformation="false"
+$elseif(debug)$
+GenerateDebugInformation="true"
+$elseif(release)$
+GenerateDebugInformation="false"
+$endif$
+>>
+
+preprocessorDefs(debugDll, releaseDll, debug, release) ::= <<
+$if(debugDll)$
+NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG
+$elseif(releaseDll)$
+NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG
+$elseif(debug)$
+_DEBUG
+$elseif(release)$
+_DEBUG
+$endif$
+>>
+
+runtimeLibrary(debugDll, releaseDll, debug, release) ::= <<
+$if(debugDll)$
+RuntimeLibrary="3"
+$elseif(releaseDll)$
+RuntimeLibrary="2"
+$elseif(debug)$
+RuntimeLibrary="1"
+$elseif(release)$
+RuntimeLibrary="0"
+$endif$
+>>
+
+dependencies(debugDll, releaseDll, debug, release) ::= <<
+$if(debugDll)$
+nddscppd.lib nddscd.lib nddscored.lib ddscsd.lib
+$elseif(releaseDll)$
+nddscpp.lib nddsc.lib nddscore.lib ddscs.lib
+$elseif(debug)$
+nddscppzd.lib nddsczd.lib nddscorezd.lib ddscszd.lib
+$elseif(release)$
+nddscppz.lib nddscz.lib nddscorez.lib ddscsz.lib
+$endif$
+>>
+
+
+configuration(target, name, debugDll, releaseDll, debug, release) ::= <<
+    <Configuration
+      Name="$name$"
+      OutputDirectory=".\\objs\\i86Win32VS2005"
+      IntermediateDirectory=".\\objs\\i86Win32VS2005"
+      ConfigurationType="1"
+      UseOfMFC="0"
+      ATLMinimizesCRunTimeLibraryUsage="false"
+      CharacterSet="2"
+      >
+      <Tool
+        Name="VCPreBuildEventTool"
+      />
+      <Tool
+        Name="VCCustomBuildTool"
+      />
+      <Tool
+        Name="VCXMLDataGeneratorTool"
+      />
+      <Tool
+        Name="VCWebServiceProxyGeneratorTool"
+      />
+      <Tool
+        Name="VCMIDLTool"
+        TypeLibraryName=".\\objs\\i86Win32VS2005\\RateGenClient.tlb"
+        HeaderFileName=""
+      />
+      <Tool
+        Name="VCCLCompilerTool"
+        Optimization="0"
+        AdditionalIncludeDirectories="&quot;\$(NDDSHOME)\\include&quot;;&quot;\$(NDDSHOME)\\include\\ndds&quot;;&quot;\$(NDDSHOME)\\ddscs\\include&quot;"
+        PreprocessorDefinitions="WIN32;RTI_WIN32;_CONSOLE;$preprocessorDefs(debugDll=debugDll,...)$"
+        BasicRuntimeChecks="3"
+        $runtimeLibrary(debugDll=debugDll,...)$
+        UsePrecompiledHeader="0"
+        PrecompiledHeaderFile=""
+        AssemblerListingLocation=".\\objs\\i86Win32VS2005\\"
+        ObjectFile=".\\objs\\i86Win32VS2005\\"
+        ProgramDataBaseFileName=".\\objs\\i86Win32VS2005\\"
+        WarningLevel="3"
+        SuppressStartupBanner="true"
+        DebugInformationFormat="4"
+        CompileAs="0"
+      />
+      <Tool
+        Name="VCManagedResourceCompilerTool"
+      />
+      <Tool
+        Name="VCResourceCompilerTool"
+      />
+      <Tool
+        Name="VCPreLinkEventTool"
+      />
+      <Tool
+        Name="VCLinkerTool"
+        AdditionalDependencies="$dependencies(debugDll=debugDll,...)$ netapi32.lib advapi32.lib user32.lib WS2_32.lib"
+        OutputFile=".\\objs\\i86Win32VS2005\\$target$.exe"
+        LinkIncremental="0"
+        SuppressStartupBanner="true"
+        AdditionalLibraryDirectories="&quot;\$(NDDSHOME)\\lib\\i86Win32VS2005&quot;;&quot;\$(NDDSHOME)\\ddscs\\lib\\i86win32vs2005&quot;"
+        $generateDebugInformation(debugDll=debugDll,...)$
+        ProgramDatabaseFile=".\\objs\\i86Win32VS2005\\$target$.pdb"
+        SubSystem="1"
+        TargetMachine="1"
+      />
+      <Tool
+        Name="VCALinkTool"
+      />
+      <Tool
+        Name="VCManifestTool"
+      />
+      <Tool
+        Name="VCXDCMakeTool"
+      />
+      <Tool
+        Name="VCBscMakeTool"
+      />
+      <Tool
+        Name="VCFxCopTool"
+      />
+      <Tool
+        Name="VCAppVerifierTool"
+      />
+      <Tool
+        Name="VCWebDeploymentTool"
+      />
+      <Tool
+        Name="VCPostBuildEventTool"
+      />
+    </Configuration>
+>>
+
+
+file(fileName) ::= <<
+      <File
+        RelativePath=".\\$fileName$"
+        >
+      </File>
+>>
+
+filter(files, filterName, filterString) ::= <<
+    <Filter
+      Name="$filterName$"
+      Filter="$filterString$"
+      >
+      $files:{fileName | $file(fileName)$};separator="\n"$
+    </Filter>
+>>
+
+project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+  ProjectType="Visual C++"
+  Version="8.00"
+  Name="$name$"
+  ProjectGUID="{$guid$}"
+  RootNamespace="$interfaceName$"
+  >
+  <Platforms>
+    <Platform
+      Name="Win32"
+    />
+  </Platforms>
+  <ToolFiles>
+  </ToolFiles>
+  <Configurations>
+    $configurations:{conf |$configuration(target=name, name=conf.name, debugDll=conf.debug, releaseDll=conf.releaseDll, debug=conf.debug, release=conf.release)$};separator="\n"$
+  </Configurations>
+  <References>
+  </References>
+  <Files>
+$filter(files=sourceFiles,filterName="Source Files",filterString="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat")$ 
+$filter(files=headerFiles,filterName="Header Files",filterString="h;hpp;hxx;hm;inl")$ 
+  </Files>
+  <Globals>
+  </Globals>
+</VisualStudioProject>
+>>

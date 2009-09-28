@@ -26,6 +26,12 @@ public class IDL2DDSCS
 	private static int externalDirLength = 0;
 	private static String idlFile = null;
 	private static StringBuffer command = null;	
+	
+	//TO_DO: ¿external properties?
+	private static String configurationNames[]={"Debug DLL|Win32","Release DLL|Win32","Debug|Win32","Release|Win32"};	
+	private static String configurationAttr[]={"debugDll", "releaseDll", "debug", "release"};	
+	private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};	
+	
 	/**
 	 * @param args
 	 */
@@ -106,6 +112,7 @@ public class IDL2DDSCS
 		StringTemplateGroupLoader loader = 
 		    new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
 		StringTemplateGroup.registerGroupLoader(loader);
+		genVS2005(ifc);
 		genIdl(ifc);
 		genUtils(ifc);
 		genHeaderAndImpl("Proxy", "Proxy", "header", "definition", "functionImpl", "functionHeader", ifc);
@@ -311,6 +318,136 @@ public class IDL2DDSCS
 			request.reset();
 			reply.reset();
 		}
+	}
+	
+	private static void setProjectFiles(StringBuffer buf, StringTemplate client, StringTemplate server, boolean withoutUtils){
+		int nameBufLen = buf.length();
+		int extBufLen = 0;
+		int limit = withoutUtils ? operationFileSuffixes.length -1 : operationFileSuffixes.length; 
+		for(int i = 0; i < limit; i++){			
+			buf.append(operationFileSuffixes[i]);
+			extBufLen = buf.length();
+			buf.append(".h");
+			client.setAttribute("headerFiles", buf.toString());
+			server.setAttribute("headerFiles", buf.toString());
+			buf.delete(extBufLen, buf.length());
+			buf.append(".cxx");
+			client.setAttribute("sourceFiles", buf.toString());
+			server.setAttribute("sourceFiles", buf.toString());
+			buf.delete(nameBufLen, buf.length());
+		}
+	}
+	
+	private static void setProjectFile(StringBuffer buf, StringTemplate project, String suffix, int start){		
+		buf.delete(start, buf.length());
+		buf.append(suffix);
+		buf.append(".h");
+		project.setAttribute("headerFiles", buf.toString());
+		buf.delete(buf.length() -2, buf.length());
+		buf.append(".cxx");
+		project.setAttribute("sourceFiles", buf.toString());
+	}
+	
+	public static void genVS2005(Interface ifc)
+	{
+		// first load main language template
+		StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2005", DefaultTemplateLexer.class, null);
+		
+		StringTemplate solution = idlTemplates.getInstanceOf("solution");
+		StringTemplate projectClient = idlTemplates.getInstanceOf("project");
+		StringTemplate projectServer = idlTemplates.getInstanceOf("project");
+				
+		if(externalDirLength > 0){
+			externalDir.append("/");	
+		}
+		StringBuffer stringBuf = new StringBuffer(ifc.getName());
+		stringBuf.append("Client");
+		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
+		solution.setAttribute("projects.{name, guid}", stringBuf.toString(),clientGuid);
+		projectClient.setAttribute("guid", clientGuid);
+		projectClient.setAttribute("name",stringBuf.toString());
+		
+		stringBuf.delete(ifc.getName().length(), stringBuf.length());
+		stringBuf.append("Server");
+		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
+		solution.setAttribute("projects.{name, guid}", stringBuf.toString(), serverGuid);
+		projectServer.setAttribute("guid", serverGuid);
+		projectServer.setAttribute("name",stringBuf.toString());
+						
+		// project configurations
+		stringBuf.delete(0, stringBuf.length());
+		stringBuf.append("configurations.{name");	
+		int stringBufLen = stringBuf.length();
+		int index = 0;
+		for(index = 0; index < configurationAttr.length; index++){
+			stringBuf.append(", ");
+			stringBuf.append(configurationAttr[index]);
+		}
+		stringBuf.append('}');
+		
+		// stringBuf: "configurations.{name,debugDll,releaseDll,debug,release}"
+		
+		System.out.println(stringBuf.toString());
+		for(index = 0; index < configurationNames.length; index++){
+			solution.setAttribute("configurations", configurationNames[index]);
+			projectClient.setAttribute(stringBuf.toString(), configurationNames[index],
+					index == 0? "true": null,
+					index == 1? "true": null,
+					index == 2? "true": null,
+					index == 3? "true": null);
+			projectServer.setAttribute(stringBuf.toString(), configurationNames[index],
+					index == 0? "true": null,
+					index == 1? "true": null,
+					index == 2? "true": null,
+					index == 3? "true": null);
+			stringBuf.delete(stringBufLen, stringBuf.length());
+		}
+
+		externalDir.append(ifc.getName()).append("-vs2005.sln");
+		writeFile(externalDir.toString(), solution);
+		externalDir.delete(externalDirLength, externalDir.length());
+		
+		// Server and client common files
+		Operation op = null;		
+		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
+			op = (Operation) iter.next();
+			stringBuf.delete(0, stringBuf.length());
+			stringBuf.append(op.getName()).append("Request");
+			setProjectFiles(stringBuf, projectClient, projectServer, false);
+			stringBuf.delete(op.getName().length(), stringBuf.length());
+			stringBuf.append("Reply");
+			setProjectFiles(stringBuf, projectClient, projectServer, false);
+		}
+		stringBuf.delete(2, stringBuf.length());
+		stringBuf.append(ifc.getName());
+		setProjectFiles(stringBuf, projectClient, projectClient, true);
+		
+		// Client exclusive files
+		setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length()+2);
+		
+		
+		stringBuf.delete(ifc.getName().length(), stringBuf.length());
+		stringBuf.append("Client.cxx");
+		projectClient.setAttribute("sourceFiles", stringBuf.toString());
+
+		// Server exclusive files
+		setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
+		setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
+
+		stringBuf.delete(ifc.getName().length(), stringBuf.length());
+		stringBuf.append("Srv.cxx");
+		projectServer.setAttribute("sourceFiles", stringBuf.toString());
+
+		//System.out.println(request.toString());
+		externalDir.append(ifc.getName()).append("Client-vs2005.vcproj");
+		writeFile(externalDir.toString(), projectClient);
+
+		//System.out.println(reply.toString());
+		externalDir.delete(externalDirLength + ifc.getName().length(), externalDir.length());
+		externalDir.append("Server-vs2005.vcproj");
+		writeFile(externalDir.toString(), projectServer);
+
+		externalDir.delete(externalDirLength, externalDir.length());
 	}
 	
 	public static Interface parse(String file) {
