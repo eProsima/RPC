@@ -31,6 +31,7 @@
     <property name="src.java" value="${src.dir}"/>
     <property name="lib.dir" value="${basedir}${file.separator}lib${file.separator}"/>
     <property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}"/>
+    <property name="tmp.dir" value="./tmp"/>
     <property name="src.excludes" value=""/>
 
     <!-- Build related properties -->
@@ -117,11 +118,45 @@
   <!-- install                                                             -->
   <!-- =================================================================== -->
   <target name="install" depends="init,compile,jar">
-  	<copy todir="${env.NDDSHOME}/ddscs" overwrite="yes" preservelastmodified="yes">
+  	<mkdir dir="${env.NDDSHOME}/ddscs"/>
+  	
+  	<copy todir="${env.NDDSHOME}/ddscs/include" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir="../include" includes="**/*.h" excludes="**/.svn"/>
+  	</copy>
+  	<copy todir="${env.NDDSHOME}/ddscs/lib" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir="../lib" includes="**/*" excludes="**/.svn"/>
+  	</copy>
+  	<copy todir="${env.NDDSHOME}/scripts" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir="../scripts" includes="*.bat"/>
+  	</copy>
+  	<copy todir="${env.NDDSHOME}/ddscs/classes" overwrite="yes" preservelastmodified="yes">
   		<fileset dir="${lib.dir}" includes="*.jar"/>
   	</copy>
   </target>
 
+  <!-- =================================================================== -->
+  <!-- package                                                             -->
+  <!-- =================================================================== -->
+  <target name="package" depends="init,compile,jar">
+  	<mkdir dir="${tmp.dir}/ddscs"/>
+  	
+  	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir=".." includes="include/**/*.h" excludes="**/.svn"/>
+  	</copy>
+  	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir=".." includes="lib/**/*" excludes="**/.svn"/>
+  	</copy>
+  	<copy todir="${tmp.dir}" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir=".." includes="scripts/**/*"/>
+  	</copy>
+  	<copy todir="${tmp.dir}/ddscs/classes" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir="${lib.dir}" includes="*.jar"/>
+  	</copy>
+  	<zip destfile="../ddscs.zip" basedir="./tmp" compress="true" >
+  		<include name="**/*"/>
+  	</zip>
+  	<delete dir="${tmp.dir}"/>
+  </target>
 
   <!-- =================================================================== -->
   <!-- Cleans up generated classes                                         -->

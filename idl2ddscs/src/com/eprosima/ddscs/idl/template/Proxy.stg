@@ -31,7 +31,7 @@ functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <
 $functionHeader(class={$interfaceName$Proxy},...)$ 
 {
     DDSCSMessages retValue;
-    $returnVarDecl(type)$    
+    $returnVarDecl(type=type, retName="returnedValue")$    
     const char serviceName[50] = "$name$";
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
@@ -92,4 +92,25 @@ $interfaceName$Proxy::$interfaceName$Proxy() : DDSCSClient()
 $funImpls; separator="\n"$
 >>
 
+functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
+    $inputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
+    $inoutParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
+    $outputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
+    $returnVarDecl(type=type, retName=[name,"RetValue"])$    
 
+    $if(!voidInitMap.(type))$
+    $name$RetValue = 
+    $endif$
+    proxy->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
+
+>>
+main(interfaceName, invocations) ::= <<
+#include "$interfaceName$Proxy.h"
+#include "$interfaceName$Plugin.h"
+
+int main()
+{
+    $interfaceName$Proxy *proxy = new $interfaceName$Proxy();
+$invocations; separator="\n"$
+}
+>>

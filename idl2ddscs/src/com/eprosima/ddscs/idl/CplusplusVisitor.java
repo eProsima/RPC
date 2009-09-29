@@ -20,7 +20,7 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(SimpleNode node, Object data) {
-		System.out.println(node.toString());
+		//System.out.println(node.toString());
 		node.childrenAccept(this, data);
 		return data;
 	}

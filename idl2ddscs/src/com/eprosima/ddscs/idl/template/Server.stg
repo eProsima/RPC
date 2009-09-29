@@ -82,7 +82,7 @@ $exFunctionHeader(class=interfaceName,...)$
     $inputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
     $inoutParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
     $outputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
-    $returnVarDecl(type)$    
+    $returnVarDecl(type=type, retName="returnedValue")$    
     $name$Reply *replyData = NULL;
 
     $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
@@ -140,4 +140,19 @@ $interfaceName$Impl::~$interfaceName$Impl()
 $funImpls; separator="\n"$
 >>
 
+functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
+>>
 
+main(interfaceName, invocations) ::= <<
+#include "$interfaceName$Server.h"
+
+int main()
+{
+    int returnedValue = 0;
+    $interfaceName$Server *server = new $interfaceName$Server();
+    server->executeServer();
+
+    delete server;
+}
+
+>>

@@ -3,12 +3,17 @@ group VS2005;
 
 projectRef(project) ::= <<
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.name$-vs2005.vcproj", "{$project.guid$}"
+$if(project.dependsOn)$
+$\t$ProjectSection(ProjectDependencies) = postProject
+$\t$$\t${$project.dependsOn$} = {$project.dependsOn$}
+$\t$EndProjectSection
+$endif$
 EndProject
 >>
 
 postSolution(guid, conf) ::= <<
-{$guid$}.$conf$.ActiveCfg = $conf$
-{$guid$}.$conf$.Build.0 = $conf$
+$\t$$\t${$guid$}.$conf$.ActiveCfg = $conf$
+$\t$$\t${$guid$}.$conf$.Build.0 = $conf$
 >>
 
 projectConfigurationPlatforms(guid, configurations) ::= <<
@@ -20,71 +25,43 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 $projects:{$projectRef(it)$};separator="\n"$
 Global
-  GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    $configurations:{conf | $conf$ = $conf$};separator="\n"$
-  EndGlobalSection
-  GlobalSection(ProjectConfigurationPlatforms) = postSolution
-    $projects:{$projectConfigurationPlatforms(guid=it.guid, configurations=configurations)$};separator="\n"$
-  EndGlobalSection
-  GlobalSection(SolutionProperties) = preSolution
-    HideSolutionNode = FALSE
-  EndGlobalSection
+$\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
+$configurations:{conf |$\t$$\t$$conf$ = $conf$};separator="\n"$
+$\t$EndGlobalSection
+$\t$GlobalSection(ProjectConfigurationPlatforms) = postSolution
+$projects:{$projectConfigurationPlatforms(guid=it.guid, configurations=configurations)$};separator="\n"$
+$\t$EndGlobalSection
+$\t$GlobalSection(SolutionProperties) = preSolution
+$\t$$\t$HideSolutionNode = FALSE
+$\t$EndGlobalSection
 EndGlobal
 
 >>
 
-generateDebugInformation(debugDll, releaseDll, debug, release) ::= <<
-$if(debugDll)$
-GenerateDebugInformation="true"
-$elseif(releaseDll)$
-GenerateDebugInformation="false"
-$elseif(debug)$
-GenerateDebugInformation="true"
-$elseif(release)$
-GenerateDebugInformation="false"
-$endif$
+ignoreDefaultLibraryNames(conf) ::= <<
+$if(conf.debugDll)$IgnoreDefaultLibraryNames="LIBCMT"$elseif(conf.releaseDll)$IgnoreDefaultLibraryNames=""$elseif(conf.debug)$IgnoreDefaultLibraryNames="LIBCMTD"$elseif(conf.release)$IgnoreDefaultLibraryNames="LIBCMT"$endif$
 >>
 
-preprocessorDefs(debugDll, releaseDll, debug, release) ::= <<
-$if(debugDll)$
-NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG
-$elseif(releaseDll)$
-NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG
-$elseif(debug)$
-_DEBUG
-$elseif(release)$
-_DEBUG
-$endif$
+generateDebugInformation(conf) ::= <<
+$if(conf.debugDll)$GenerateDebugInformation="true"$elseif(conf.releaseDll)$GenerateDebugInformation="false"$elseif(conf.debug)$GenerateDebugInformation="true"$elseif(conf.release)$GenerateDebugInformation="false"$endif$
 >>
 
-runtimeLibrary(debugDll, releaseDll, debug, release) ::= <<
-$if(debugDll)$
-RuntimeLibrary="3"
-$elseif(releaseDll)$
-RuntimeLibrary="2"
-$elseif(debug)$
-RuntimeLibrary="1"
-$elseif(release)$
-RuntimeLibrary="0"
-$endif$
+preprocessorDefs(conf) ::= <<
+$if(conf.debugDll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG$elseif(conf.releaseDll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG$elseif(conf.debug)$_DEBUG$elseif(conf.release)$NDEBUG$endif$
 >>
 
-dependencies(debugDll, releaseDll, debug, release) ::= <<
-$if(debugDll)$
-nddscppd.lib nddscd.lib nddscored.lib ddscsd.lib
-$elseif(releaseDll)$
-nddscpp.lib nddsc.lib nddscore.lib ddscs.lib
-$elseif(debug)$
-nddscppzd.lib nddsczd.lib nddscorezd.lib ddscszd.lib
-$elseif(release)$
-nddscppz.lib nddscz.lib nddscorez.lib ddscsz.lib
-$endif$
+runtimeLibrary(conf) ::= <<
+$if(conf.debugDll)$RuntimeLibrary="3"$elseif(conf.releaseDll)$RuntimeLibrary="2"$elseif(conf.debug)$RuntimeLibrary="1"$elseif(conf.release)$RuntimeLibrary="0"$endif$
+>>
+
+dependencies(conf) ::= <<
+$if(conf.debugDll)$nddscppd.lib nddscd.lib nddscored.lib ddscsd.lib$elseif(conf.releaseDll)$nddscpp.lib nddsc.lib nddscore.lib ddscs.lib$elseif(conf.debug)$nddscppzd.lib nddsczd.lib nddscorezd.lib ddscszd.lib$elseif(conf.release)$nddscppz.lib nddscz.lib nddscorez.lib ddscsz.lib$endif$
 >>
 
 
-configuration(target, name, debugDll, releaseDll, debug, release) ::= <<
+configuration(target, conf) ::= <<
     <Configuration
-      Name="$name$"
+      Name="$conf.name$"
       OutputDirectory=".\\objs\\i86Win32VS2005"
       IntermediateDirectory=".\\objs\\i86Win32VS2005"
       ConfigurationType="1"
@@ -113,9 +90,9 @@ configuration(target, name, debugDll, releaseDll, debug, release) ::= <<
         Name="VCCLCompilerTool"
         Optimization="0"
         AdditionalIncludeDirectories="&quot;\$(NDDSHOME)\\include&quot;;&quot;\$(NDDSHOME)\\include\\ndds&quot;;&quot;\$(NDDSHOME)\\ddscs\\include&quot;"
-        PreprocessorDefinitions="WIN32;RTI_WIN32;_CONSOLE;$preprocessorDefs(debugDll=debugDll,...)$"
+        PreprocessorDefinitions="WIN32;RTI_WIN32;_CONSOLE;$preprocessorDefs(conf)$"
         BasicRuntimeChecks="3"
-        $runtimeLibrary(debugDll=debugDll,...)$
+        $runtimeLibrary(conf)$ 
         UsePrecompiledHeader="0"
         PrecompiledHeaderFile=""
         AssemblerListingLocation=".\\objs\\i86Win32VS2005\\"
@@ -137,12 +114,13 @@ configuration(target, name, debugDll, releaseDll, debug, release) ::= <<
       />
       <Tool
         Name="VCLinkerTool"
-        AdditionalDependencies="$dependencies(debugDll=debugDll,...)$ netapi32.lib advapi32.lib user32.lib WS2_32.lib"
+        AdditionalDependencies="$dependencies(conf)$ netapi32.lib advapi32.lib user32.lib WS2_32.lib"
         OutputFile=".\\objs\\i86Win32VS2005\\$target$.exe"
         LinkIncremental="0"
         SuppressStartupBanner="true"
         AdditionalLibraryDirectories="&quot;\$(NDDSHOME)\\lib\\i86Win32VS2005&quot;;&quot;\$(NDDSHOME)\\ddscs\\lib\\i86win32vs2005&quot;"
-        $generateDebugInformation(debugDll=debugDll,...)$
+        $ignoreDefaultLibraryNames(conf)$ 
+        $generateDebugInformation(conf)$ 
         ProgramDatabaseFile=".\\objs\\i86Win32VS2005\\$target$.pdb"
         SubSystem="1"
         TargetMachine="1"
@@ -198,7 +176,7 @@ project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
   Version="8.00"
   Name="$name$"
   ProjectGUID="{$guid$}"
-  RootNamespace="$interfaceName$"
+  RootNamespace="$name$"
   >
   <Platforms>
     <Platform
@@ -208,7 +186,7 @@ project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
   <ToolFiles>
   </ToolFiles>
   <Configurations>
-    $configurations:{conf |$configuration(target=name, name=conf.name, debugDll=conf.debug, releaseDll=conf.releaseDll, debug=conf.debug, release=conf.release)$};separator="\n"$
+    $configurations:{$configuration(target=name, conf=it)$};separator="\n"$
   </Configurations>
   <References>
   </References>

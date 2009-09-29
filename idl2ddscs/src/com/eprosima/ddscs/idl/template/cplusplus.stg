@@ -23,12 +23,12 @@ voidInitMap ::= [
         default: // anything other than an atomic type
 ]
 
-returnVarDecl(type) ::= <<
+returnVarDecl(type, retName) ::= <<
 $if(!voidInitMap.(type))$
 $if(typeInitMap.(type))$
-$typeInitMap.(type)$  returnedValue;
+$typeInitMap.(type)$  $retName$;
 $else$
-$type$ *returnedValue = $type$PluginSupport_create_data();
+$type$ *$retName$ = $type$PluginSupport_create_data();
 $endif$    
 $endif$
 >>

@@ -28,8 +28,10 @@ public class IDL2DDSCS
 	private static StringBuffer command = null;	
 	
 	//TO_DO: ¿external properties?
-	private static String configurationNames[]={"Debug DLL|Win32","Release DLL|Win32","Debug|Win32","Release|Win32"};	
-	private static String configurationAttr[]={"debugDll", "releaseDll", "debug", "release"};	
+	private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL|Win32", true, true),
+											new VSConfiguration("Release DLL|Win32", false, true),
+											new VSConfiguration("Debug|Win32", true, false),
+											new VSConfiguration("Release|Win32", false, false)};	
 	private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};	
 	
 	/**
@@ -109,23 +111,40 @@ public class IDL2DDSCS
 	}
 	public static void gen(Interface ifc) {
 		// get a group loader containing main templates dir and target subdir
+        System.out.println("Loading Templates...");		
 		StringTemplateGroupLoader loader = 
 		    new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
 		StringTemplateGroup.registerGroupLoader(loader);
+		
+        System.out.println("Generating VS2005 solution...");
 		genVS2005(ifc);
+        System.out.println("Generating Request/Response Topics...");
 		genIdl(ifc);
+        System.out.println("Generating Utils...");
 		genUtils(ifc);
-		genHeaderAndImpl("Proxy", "Proxy", "header", "definition", "functionImpl", "functionHeader", ifc);
-		genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer", "functionImpl", "exFunctionHeader", ifc);
-		genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl", "emptyFunctionImpl", "functionHeader", ifc);
+        System.out.println("Generating Client Code...");
+		genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
+				"functionImpl", "functionHeader", "Client", ifc);
+
+        System.out.println("Generating Server Code...");
+        genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
+				"functionImpl", "exFunctionHeader", "Server", ifc);
+		genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
+				"emptyFunctionImpl", "functionHeader", null, ifc);
+        System.out.println("Finished.");
+		
 	}
 	
 	public static void genHeaderAndImpl(String suffix, String templateGroupId, String headerTemplateId,
-			String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId, Interface ifc)
+			String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId, String main, Interface ifc)
 	{
 		// first load main language template
 		StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
 				
+		// Templates for main program generation
+		StringTemplate mainTemplate = templatesGroup.getInstanceOf("main");
+		StringTemplate funCall = templatesGroup.getInstanceOf("functionCall");
+		
 		//Template for Header generation
 		StringTemplate header = templatesGroup.getInstanceOf(headerTemplateId);
 		header.setAttribute("interfaceName", ifc.getName());
@@ -155,29 +174,38 @@ public class IDL2DDSCS
 			funDef.setAttribute("type", op.getReturnType());
 			funDef.setAttribute("name", op.getName());
 			funDef.setAttribute("interfaceName", ifc.getName());
+
+			funCall.setAttribute("type", op.getReturnType());
+			funCall.setAttribute("name", op.getName());
+
 			ListIterator paramIter = null;
 			InputParam ip = null;
 			for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
 				ip = (InputParam)paramIter.next();
 				funDecl.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());				
 				funDef.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
+				funCall.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
 			}
 			InoutParam iop = null;
 			for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
 				iop = (InoutParam)paramIter.next();
 				funDecl.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
 				funDef.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
+				funCall.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
 			}
 			OutputParam oup = null;
 			for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
 				oup = (OutputParam)paramIter.next();
 				funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
 				funDef.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
+				funCall.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
 			}
 			header.setAttribute("funDecls", funDecl.toString());
 			definition.setAttribute("funImpls", funDef.toString());
+			mainTemplate.setAttribute("invocations", funCall.toString());
 			funDecl.reset();
 			funDef.reset();
+			funCall.reset();
 		}
 		if(externalDirLength > 0){
 			externalDir.append("/");	
@@ -190,6 +218,14 @@ public class IDL2DDSCS
 		externalDir.append("cxx");
 		writeFile(externalDir.toString(), definition);
 		externalDir.delete(externalDirLength, externalDir.length());
+		
+		// Main
+		if(main != null){
+			mainTemplate.setAttribute("interfaceName", ifc.getName());
+			externalDir.append(main).append(".cxx");
+			writeFile(externalDir.toString(), mainTemplate);
+			externalDir.delete(externalDirLength, externalDir.length());						
+		}
 	}
 
 	
@@ -361,46 +397,25 @@ public class IDL2DDSCS
 			externalDir.append("/");	
 		}
 		StringBuffer stringBuf = new StringBuffer(ifc.getName());
+		stringBuf.append("Server");
+		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
+		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(), serverGuid, null);
+		projectServer.setAttribute("guid", serverGuid);
+		projectServer.setAttribute("name",stringBuf.toString());
+
+		stringBuf.delete(ifc.getName().length(), stringBuf.length());
 		stringBuf.append("Client");
 		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
-		solution.setAttribute("projects.{name, guid}", stringBuf.toString(),clientGuid);
+		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(),clientGuid, serverGuid);
 		projectClient.setAttribute("guid", clientGuid);
 		projectClient.setAttribute("name",stringBuf.toString());
 		
-		stringBuf.delete(ifc.getName().length(), stringBuf.length());
-		stringBuf.append("Server");
-		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
-		solution.setAttribute("projects.{name, guid}", stringBuf.toString(), serverGuid);
-		projectServer.setAttribute("guid", serverGuid);
-		projectServer.setAttribute("name",stringBuf.toString());
 						
-		// project configurations
-		stringBuf.delete(0, stringBuf.length());
-		stringBuf.append("configurations.{name");	
-		int stringBufLen = stringBuf.length();
-		int index = 0;
-		for(index = 0; index < configurationAttr.length; index++){
-			stringBuf.append(", ");
-			stringBuf.append(configurationAttr[index]);
-		}
-		stringBuf.append('}');
-		
-		// stringBuf: "configurations.{name,debugDll,releaseDll,debug,release}"
-		
-		System.out.println(stringBuf.toString());
-		for(index = 0; index < configurationNames.length; index++){
-			solution.setAttribute("configurations", configurationNames[index]);
-			projectClient.setAttribute(stringBuf.toString(), configurationNames[index],
-					index == 0? "true": null,
-					index == 1? "true": null,
-					index == 2? "true": null,
-					index == 3? "true": null);
-			projectServer.setAttribute(stringBuf.toString(), configurationNames[index],
-					index == 0? "true": null,
-					index == 1? "true": null,
-					index == 2? "true": null,
-					index == 3? "true": null);
-			stringBuf.delete(stringBufLen, stringBuf.length());
+		// project configurations	
+		for(int index = 0; index < configurations.length; index++){
+			solution.setAttribute("configurations", configurations[index].getName());
+			projectClient.setAttribute("configurations", configurations[index]);
+			projectServer.setAttribute("configurations", configurations[index]);
 		}
 
 		externalDir.append(ifc.getName()).append("-vs2005.sln");
@@ -418,25 +433,20 @@ public class IDL2DDSCS
 			stringBuf.append("Reply");
 			setProjectFiles(stringBuf, projectClient, projectServer, false);
 		}
-		stringBuf.delete(2, stringBuf.length());
+		stringBuf.delete(0, stringBuf.length());
 		stringBuf.append(ifc.getName());
-		setProjectFiles(stringBuf, projectClient, projectClient, true);
+		setProjectFiles(stringBuf, projectClient, projectServer, true);
 		
 		// Client exclusive files
-		setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length()+2);
-		
-		
-		stringBuf.delete(ifc.getName().length(), stringBuf.length());
-		stringBuf.append("Client.cxx");
-		projectClient.setAttribute("sourceFiles", stringBuf.toString());
+		setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
+				
+		projectClient.setAttribute("sourceFiles", "Client.cxx");
 
 		// Server exclusive files
 		setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
 		setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
 
-		stringBuf.delete(ifc.getName().length(), stringBuf.length());
-		stringBuf.append("Srv.cxx");
-		projectServer.setAttribute("sourceFiles", stringBuf.toString());
+		projectServer.setAttribute("sourceFiles", "Server.cxx");
 
 		//System.out.println(request.toString());
 		externalDir.append(ifc.getName()).append("Client-vs2005.vcproj");
@@ -470,9 +480,9 @@ public class IDL2DDSCS
 	        ASTStart n = parser.Start();
 	        CplusplusVisitor visitor = new CplusplusVisitor();
 	        ifc = (Interface)n.jjtAccept(visitor, null);
-	        System.out.println("Thank you.");
+	        System.out.println(file + " Parsing Complete.");
 	    } catch (Exception e) {
-	        System.out.println("Oops.");
+	        System.out.println("Oops. Parser Error");
 	        System.out.println(e.getMessage());
 	    }
 	   

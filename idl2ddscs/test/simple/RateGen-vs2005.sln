@@ -1,33 +1,35 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RateGen_client", "RateGen_client-vs2005.vcproj", "{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RateGenServer", "RateGenServer-vs2005.vcproj", "{CE34456D-1AFC-21CC-C0DA-57C34A192C39}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RateGen_server", "RateGen_server-vs2005 .vcproj", "{A5BEA237-A1F9-4A2A-90F8-A4045F860464}"
-EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RateGenClient", "RateGenClient-vs2005.vcproj", "{0F375C92-2574-89C6-6F4E-9A6FFAE95223}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39} = {CE34456D-1AFC-21CC-C0DA-57C34A192C39}
+	EndProjectSectionEndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|Win32 = Debug DLL|Win32
-		Debug|Win32 = Debug|Win32
 		Release DLL|Win32 = Release DLL|Win32
+		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Debug|Win32.Build.0 = Debug|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Release DLL|Win32.Build.0 = Release DLL|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Release|Win32.ActiveCfg = Release|Win32
-		{D3B02E52-8B50-4C9C-9022-3DBE9EC3768D}.Release|Win32.Build.0 = Release|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Debug|Win32.Build.0 = Debug|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Release DLL|Win32.Build.0 = Release DLL|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Release|Win32.ActiveCfg = Release|Win32
-		{A5BEA237-A1F9-4A2A-90F8-A4045F860464}.Release|Win32.Build.0 = Release|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug|Win32.Build.0 = Debug|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release|Win32.ActiveCfg = Release|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release|Win32.Build.0 = Release|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug|Win32.Build.0 = Debug|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release|Win32.ActiveCfg = Release|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
