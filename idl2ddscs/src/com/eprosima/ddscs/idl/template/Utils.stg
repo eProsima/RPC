@@ -1,3 +1,19 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
 group Utils : cplusplus;
 
 
@@ -16,6 +32,8 @@ $if(params)$, $endif$$check(returnType)$ returnedValue
 header(funName, type="Request", params, returnType) ::= <<
 #ifndef _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 #define _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
+
+$doNotEditC()$
 
 #include "dds_cpp/dds_cpp_domain.h"
 #include "$funName$$type$Support.h"
@@ -56,6 +74,8 @@ $endif$
 
 
 definition(interfaceName,funName, type="Request", params, returnType) ::= <<
+$doNotEditC()$
+
 #include "$funName$$type$Utils.h"
 #include "$interfaceName$Plugin.h"
 
