@@ -16,19 +16,27 @@
 
 group Utils : cplusplus;
 
-
-check(returnType) ::= <<
-$if(typeInitMap.(returnType))$
-$typeInitMap.(returnType)$
-$else$
-$returnType$&
-$endif$
->>
-
-lastParam(params, returnType) ::= <<
-$if(params)$, $endif$$check(returnType)$ returnedValue
->>
-
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Common Templates for C++ code generation       *
+ *                                                                      *
+ ************************************************************************
+ */
+/**
+ * header: External Template
+ * Produces header file for Request&Reply Topic data type Utils
+ * 
+ * Params:
+ *   funName    : name of the function the generated Request/Reply topic data utils belongs to.
+ *   type       : Request/Reply
+ *   params     : List of previous arguments in the function call. Nullable.
+ *   returnType : function return type.
+ *
+ * Uses:
+ *   argDecl    - inherited(cplusplus)
+ *   argDeclRef - inherited(cplusplus)
+ *   lastParam  - local
+ */ 
 header(funName, type="Request", params, returnType) ::= <<
 #ifndef _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 #define _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
@@ -56,24 +64,26 @@ class $funName$$type$Utils
 #endif // _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 >>
 
-createDataHelper(type, name) ::= <<
-$if(typeInitMap.(type))$
-instance->$name$ = $name$;
-$else$
-$type$PluginSupport_copy_data(&instance->$name$, &$name$);
-$endif$
->>    
-
-extractDataHelper(param) ::= <<
-$if(typeInitMap.(param.type))$
-$param.name$ = instance->$param.name$;
-$else$
-$param.type$PluginSupport_copy_data(&$param.name$, &instance->$param.name$);
-$endif$
->>    
-
-
-definition(interfaceName,funName, type="Request", params, returnType) ::= <<
+/**
+ * definition: External Template
+ * Produces Implementation file for Request&Reply Topic data type Utils
+ * 
+ * Params:
+ *   interfaceName : name of the interface and also should be the name of the idl file
+ *                   that contains it. 
+ *   funName       : name of the function the generated Request/Reply topic data utils belongs to.
+ *   type          : Request/Reply
+ *   params        : List of previous arguments in the function call. Nullable.
+ *   returnType    : function return type.
+ *
+ * Uses:
+ *   argDecl           - inherited(cplusplus)
+ *   argDeclRef        - inherited(cplusplus)
+ *   lastParam         - local
+ *   createDataHelper  - local
+ *   extractDataHelper - local
+ */ 
+ definition(interfaceName,funName, type="Request", params, returnType) ::= <<
 $doNotEditC()$
 
 #include "$funName$$type$Utils.h"
@@ -120,12 +130,92 @@ $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator
 
 void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
 {
-    $params:{n | $n.name$ = data->$n.name$;};separator="\n"$
+    $params:{$extractDataHelper(type=it.type, name=it.name)$};separator="\n"$
+    
     $if(returnType)$
-    returnedValue = data->returnedValue;
+    $extractDataHelper(type=returnType, name="returnedValue")$        
     $endif$    
 }
 
 >>
 
+/************************************************************************
+ *                                                                      *
+ *   Internal Templates: For internal use only.                         *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * check: Internal Template
+ * Checks if the returned value should be passed by value or by reference
+ *  
+ * Params:
+ *   returnType   : return type of a function. Should not be null nor "void"
+ *
+ * Uses:
+ *  typeInitMap - inherited(cplusplus)
+ */ 
+check(returnType) ::= <<
+$if(typeInitMap.(returnType))$
+$typeInitMap.(returnType)$
+$else$
+$returnType$&
+$endif$
+>>
+
+/**
+ * lastParam: Internal Template
+ * Determines if the return value of the function should be included
+ * in a call to Utils extractTypeData or createTypeData methods.
+ * Params:
+ *   params     : List of previous arguments in the function call. Nullable.
+ *   returnType : function return type.
+ *
+ * Uses:
+ *   check - local
+ */ 
+lastParam(params, returnType) ::= <<
+$if(params)$, $endif$$check(returnType)$ returnedValue
+>>
+
+/**
+ * createDataHelper: Internal Template
+ * Produces code to fill a field of a newly created topic data.
+ * Determines if it can be just assigned (basic type)
+ * or has to be copied using PluginSupport_copy_data()
+ * Params:
+ *   type : param/field type.
+ *   name : param/field name.
+ *
+ * Uses:
+ *   typeInitMap - inherited(cplusplus)
+ */ 
+createDataHelper(type, name) ::= <<
+$if(typeInitMap.(type))$
+instance->$name$ = $name$;
+$else$
+$type$PluginSupport_copy_data(&instance->$name$, &$name$);
+$endif$
+>>    
+
+/**
+ * extractDataHelper: Internal Template
+ * Produces code to extract field values from a receivedtopic data.
+ * Determines if it can be just assigned (basic type)
+ * or has to be copied using PluginSupport_copy_data()
+ * Params:
+ *   type : param/field type.
+ *   name : param/field name.
+ *
+ * Uses:
+ *   typeInitMap - inherited(cplusplus)
+ */ 
+extractDataHelper(type, name) ::= <<
+$if(typeInitMap.(type))$
+$name$ = instance->$name$;
+$else$
+$type$PluginSupport_copy_data(&$name$, &instance->$name$);
+$endif$
+>>    
 

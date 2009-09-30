@@ -16,6 +16,26 @@
 
 group IDL : cplusplus;
 
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Common Templates for C++ code generation       *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * type: External Template
+ * Produces an IDL file for Request/Reply types for corresponding topics. 
+ * Params:
+ *   file   : list of other IDL files (with user defined types) to include.
+ *   name   : function name.
+ *   type   : Request/Reply
+ *   fields : list of function parameters. In and inout parameters for Request,
+ *            inout, out and return type for Reply.
+ *
+ * Uses:
+ *  doNotEditCplusplus - inherited(cplusplus)
+ */ 
 type(file, name, type="Request", fields) ::= <<
 $doNotEditCplusplus()$
 

@@ -16,25 +16,24 @@
 
 group VS2005;
 
-projectRef(project) ::= <<
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.name$-vs2005.vcproj", "{$project.guid$}"
-$if(project.dependsOn)$
-$\t$ProjectSection(ProjectDependencies) = postProject
-$\t$$\t${$project.dependsOn$} = {$project.dependsOn$}
-$\t$EndProjectSection
-$endif$
-EndProject
->>
-
-postSolution(guid, conf) ::= <<
-$\t$$\t${$guid$}.$conf$.ActiveCfg = $conf$
-$\t$$\t${$guid$}.$conf$.Build.0 = $conf$
->>
-
-projectConfigurationPlatforms(guid, configurations) ::= <<
-$configurations:{conf | $postSolution(guid = guid, conf = conf)$};separator="\n"$
->>
-
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Common Templates for C++ code generation       *
+ *                                                                      *
+ ************************************************************************
+ */
+/**
+ * solution: External Template
+ * Produces a VS2005 solution file 
+ * 
+ * Params:
+ *   projects       : Lis of objects with name, guid and dependsOn properties.
+ *   configurations : List of configuration names. 
+ *
+ * Uses:
+ *   projectRef                    - local
+ *   projectConfigurationPlatforms - local
+ */ 
 solution(projects, configurations) ::= <<
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
@@ -53,27 +52,198 @@ EndGlobal
 
 >>
 
+/**
+ * project: External Template
+ * Produces a VS2005 C++ project file (.vcproj)  
+ * 
+ * Params:
+ *   guid           : GUID for this project.
+ *   name           : project name. 
+ *   configurations : List of VSConfiguration objects that 
+ *                    have name string property and
+ *                    boolean debugDll, releaseDll, debug & release properties.
+ *   sourceFiles    : List with the sources of this project.
+ *   headerFiles    : List with the headers of this project.
+ * Uses:
+ *   configuration - local
+ *   filter        - local
+ */ 
+project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+  ProjectType="Visual C++"
+  Version="8.00"
+  Name="$name$"
+  ProjectGUID="{$guid$}"
+  RootNamespace="$name$"
+  >
+  <Platforms>
+    <Platform
+      Name="Win32"
+    />
+  </Platforms>
+  <ToolFiles>
+  </ToolFiles>
+  <Configurations>
+    $configurations:{$configuration(target=name, conf=it)$};separator="\n"$
+  </Configurations>
+  <References>
+  </References>
+  <Files>
+$filter(files=sourceFiles,filterName="Source Files",filterString="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat")$ 
+$filter(files=headerFiles,filterName="Header Files",filterString="h;hpp;hxx;hm;inl")$ 
+  </Files>
+  <Globals>
+  </Globals>
+</VisualStudioProject>
+>>
+
+/************************************************************************
+ *                                                                      *
+ *   Internal Templates: For internal use only.                         *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * projectRef: Internal Template
+ * Produces Project Reference in a VS2005/2008 solution file. 
+ * 
+ * Params:
+ *   project : Object with name, guid and dependsOn properties.
+ *
+ * Uses:
+ */ 
+projectRef(project) ::= <<
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.name$-vs2005.vcproj", "{$project.guid$}"
+$if(project.dependsOn)$
+$\t$ProjectSection(ProjectDependencies) = postProject
+$\t$$\t${$project.dependsOn$} = {$project.dependsOn$}
+$\t$EndProjectSection
+$endif$
+EndProject
+>>
+
+/**
+ * projectConfigurationPlatforms: Internal Template
+ * Produces the ProjectConfigurationPlatforms section content of a VS2005 solution file
+ * for the project guid provided 
+ * 
+ * Params:
+ *   guid           : Project GUID.
+ *   configurations : List of configuration names. 
+ *
+ * Uses:
+ *   postSolution - local
+ */ 
+projectConfigurationPlatforms(guid, configurations) ::= <<
+$configurations:{conf | $postSolution(guid = guid, conf = conf)$};separator="\n"$
+>>
+
+
+/**
+ * postSolution: Internal Template
+ * Produces the Active and Build.0 attributes in projectConfigurationPlatforms section
+ * of a VS2005 solution file, for the given project guid and configuration name.
+ * and configuration name.
+ * 
+ * Params:
+ *   guid : Project GUID.
+ *   conf : Configuration name. 
+ *
+ * Uses:
+ */ 
+postSolution(guid, conf) ::= <<
+$\t$$\t${$guid$}.$conf$.ActiveCfg = $conf$
+$\t$$\t${$guid$}.$conf$.Build.0 = $conf$
+>>
+
+/**
+ * ignoreDefaultLibraryNames: Internal Template
+ * Produces the IgnoreDefaultLibraryNames attribute of VCLinkerTool 
+ * in a configuration section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   conf : VSCOnfiguration object. 
+ *
+ * Uses:
+ */ 
 ignoreDefaultLibraryNames(conf) ::= <<
 $if(conf.debugDll)$IgnoreDefaultLibraryNames="LIBCMT"$elseif(conf.releaseDll)$IgnoreDefaultLibraryNames=""$elseif(conf.debug)$IgnoreDefaultLibraryNames="LIBCMTD"$elseif(conf.release)$IgnoreDefaultLibraryNames="LIBCMT"$endif$
 >>
 
+/**
+ * generateDebugInformation: Internal Template
+ * Produces the GenerateDebugInformation attribute of VCLinkerTool 
+ * in a configuration section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   conf : VSCOnfiguration object. 
+ *
+ * Uses:
+ */ 
 generateDebugInformation(conf) ::= <<
 $if(conf.debugDll)$GenerateDebugInformation="true"$elseif(conf.releaseDll)$GenerateDebugInformation="false"$elseif(conf.debug)$GenerateDebugInformation="true"$elseif(conf.release)$GenerateDebugInformation="false"$endif$
 >>
 
+/**
+ * preprocessorDefs: Internal Template
+ * Adds the suitable definitons to PreprocessorDefinitions attribute of VCCLCompilerTool 
+ * in a configuration section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   conf : VSCOnfiguration object. 
+ *
+ * Uses:
+ */ 
 preprocessorDefs(conf) ::= <<
 $if(conf.debugDll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG$elseif(conf.releaseDll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG$elseif(conf.debug)$_DEBUG$elseif(conf.release)$NDEBUG$endif$
 >>
 
+/**
+ * runtimeLibrary: Internal Template
+ * Produces the RuntimeLibrary attribute of VCCLCompilerTool 
+ * in a configuration section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   conf : VSCOnfiguration object. 
+ *
+ * Uses:
+ */ 
 runtimeLibrary(conf) ::= <<
 $if(conf.debugDll)$RuntimeLibrary="3"$elseif(conf.releaseDll)$RuntimeLibrary="2"$elseif(conf.debug)$RuntimeLibrary="1"$elseif(conf.release)$RuntimeLibrary="0"$endif$
 >>
 
+/**
+ * dependencies: Internal Template
+ * Adds the suitable libraries to AdditionalDependencies attribute of VCLinkerTool 
+ * in a configuration section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   conf : VSCOnfiguration object. 
+ *
+ * Uses:
+ */ 
 dependencies(conf) ::= <<
 $if(conf.debugDll)$nddscppd.lib nddscd.lib nddscored.lib ddscsd.lib$elseif(conf.releaseDll)$nddscpp.lib nddsc.lib nddscore.lib ddscs.lib$elseif(conf.debug)$nddscppzd.lib nddsczd.lib nddscorezd.lib ddscszd.lib$elseif(conf.release)$nddscppz.lib nddscz.lib nddscorez.lib ddscsz.lib$endif$
 >>
 
 
+/**
+ * configuration: Internal Template
+ * Produces a configuration section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   target : Executable file name. 
+ *   conf   : VSCOnfiguration object. 
+ *
+ * Uses:
+ *   ignoreDefaultLibraryNames - local
+ *   generateDebugInformation  - local
+ *   preprocessorDefs          - local
+ *   runtimeLibrary            - local
+ *   dependencies              - local
+ */ 
 configuration(target, conf) ::= <<
     <Configuration
       Name="$conf.name$"
@@ -167,7 +337,15 @@ configuration(target, conf) ::= <<
     </Configuration>
 >>
 
-
+/**
+ * file: Internal Template
+ * Produces a file entry in a Filter section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   fileName : The file name. 
+ *
+ * Uses:
+ */ 
 file(fileName) ::= <<
       <File
         RelativePath=".\\$fileName$"
@@ -175,6 +353,18 @@ file(fileName) ::= <<
       </File>
 >>
 
+/**
+ * file: Internal Template
+ * Produces a Filter section of a VS2005 .vcproj file. 
+ * 
+ * Params:
+ *   files        : List of fileNames belonging to this filter.
+ *   filterName   : The filter name. 
+ *   filterString : Set of file extensions. 
+ *
+ * Uses:
+ *   file - local
+ */ 
 filter(files, filterName, filterString) ::= <<
     <Filter
       Name="$filterName$"
@@ -182,34 +372,4 @@ filter(files, filterName, filterString) ::= <<
       >
       $files:{fileName | $file(fileName)$};separator="\n"$
     </Filter>
->>
-
-project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
-<?xml version="1.0" encoding="Windows-1252"?>
-<VisualStudioProject
-  ProjectType="Visual C++"
-  Version="8.00"
-  Name="$name$"
-  ProjectGUID="{$guid$}"
-  RootNamespace="$name$"
-  >
-  <Platforms>
-    <Platform
-      Name="Win32"
-    />
-  </Platforms>
-  <ToolFiles>
-  </ToolFiles>
-  <Configurations>
-    $configurations:{$configuration(target=name, conf=it)$};separator="\n"$
-  </Configurations>
-  <References>
-  </References>
-  <Files>
-$filter(files=sourceFiles,filterName="Source Files",filterString="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat")$ 
-$filter(files=headerFiles,filterName="Header Files",filterString="h;hpp;hxx;hm;inl")$ 
-  </Files>
-  <Globals>
-  </Globals>
-</VisualStudioProject>
 >>

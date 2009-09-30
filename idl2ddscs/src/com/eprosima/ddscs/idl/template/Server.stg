@@ -16,7 +16,27 @@
 
 group Server : cplusplus;
 
-
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Common Templates for C++ code generation       *
+ *                                                                      *
+ ************************************************************************
+ */
+/**
+ * headerServer: External Template
+ * Produces header file for a Server that handles requests and replies for an object that 
+ * implements the interface defined in IDL.
+ * 
+ * Params:
+ *   interfaceName : name of the interface.
+ *   funNames      : List with the names of the interface methods.
+ *   funDecls      : List whith the function headers - produced by 
+ *                   exFunctionHeader template.
+ *
+ * Uses:
+ *   include    - inherited(cplusplus)
+ *   doNotEditC - inherited(cplusplus)
+ */ 
 headerServer(interfaceName,funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$SKELETON_H_
 #define _$interfaceName;format="toUpper"$SKELETON_H_
@@ -45,6 +65,19 @@ class $interfaceName$Server : public DDSCSServer
 #endif // _$interfaceName$SKELETON_H_
 >>
 
+/**
+ * headerImpl: External Template
+ * Produces header file for a class that implements the interface defined in IDL.
+ * 
+ * Params:
+ *   interfaceName : name of the interface.
+ *   funNames      : List with the names of the interface methods.
+ *   funDecls      : List whith the function headers - produced by 
+ *                   inherited functionHeader template.
+ *
+ * Uses:
+ *   doNotEditC - inherited(cplusplus)
+ */ 
 headerImpl(interfaceName, funNames, funDecls) ::= <<
 #ifndef _$interfaceName;format="toUpper"$IMPL_H_
 #define _$interfaceName;format="toUpper"$IMPL_H_
@@ -69,17 +102,21 @@ class $interfaceName$Impl
 #endif // _$interfaceName$IMPL_H_
 >>
 
-returnType(type) ::= <<
-$if(voidInitMap.(type))$
-$elseif(typeInitMap.(type))$
-$typeInitMap.(type)$ _ret_value_;
-return _ret_value_;
-$else$
-$type$* _ret_value_ = new $type$();
-return _ret_value_;
-$endif$  
->>
-
+/**
+ * emptyFunctionImpl: External Template
+ * Empty implementation for a function. To be filled with user application code.
+ * Params:
+ *   interfaceName: Name of the interface whose this function belongs to.
+ *   type:         function return type.
+ *   name:         function name. 
+ *   inputParams:  list of input params objects.
+ *   inoutParams:  list of inout params objects.
+ *   outputParams: list of output params objects.
+ *
+ * Uses:
+ *  functionHeader - inherited(cplusplus)
+ *  returnType     - local
+ */ 
 emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $functionHeader(class={$interfaceName$Impl},...)$ 
 {
@@ -87,14 +124,26 @@ $functionHeader(class={$interfaceName$Impl},...)$
 } 
 >>
 
-exFunctionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= <<
-$if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(DDSCSServer *server, void *requestData)
->>
-
-extractTypeDataParams(type, inputParams, inoutParams, outputParams) ::= <<
-$[nextParam(params=inputParams),nextParam(previous=inputParams, params=inoutParams)]$
->>
-
+/**
+ * functionImpl: External Template
+ * Produces the code required to handle a request: 
+ * Extracts request Data to local variables and use them to call implementation object.
+ * Creates a reply Data object and fills it with the output values and sends it 
+ *
+ * Params:
+ *   interfaceName: Name of the interface whose this function belongs to.
+ *   type:         function return type.
+ *   name:         function name. 
+ *   inputParams:  list of input params objects.
+ *   inoutParams:  list of inout params objects.
+ *   outputParams: list of output params objects.
+ *
+ * Uses:
+ *  returnVarDecl         - inherited(cplusplus)
+ *  nextParam             - inherited(cplusplus)
+ *  lastParam             - inherited(cplusplus)
+ *  extractTypeDataParams - inherited(cplusplus)
+ */ 
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
@@ -117,18 +166,18 @@ $exFunctionHeader(class=interfaceName,...)$
 }
 >>
 
-createRemoteService(interfaceName, funNames) ::= <<
-$funNames:{funName |
-    this->createRemoteService("$funName$", $funName$RequestUtils::registerType(getParticipant()),
-            $funName$ReplyUtils::registerType(getParticipant()),
-            $funName$RequestUtils::createEmptyData, $funName$RequestUtils::deleteData,
-            $funName$ReplyUtils::createEmptyData, $funName$ReplyUtils::deleteData,
-            &$interfaceName$Server::$funName$);
-}$
->>
-
-
-
+/**
+ * definitionServer: External Template
+ * Produces the Server implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   funNames     : list of the interface function names. 
+ *   funImpls     : list of functionImpl template outputs.
+ *
+ * Uses:
+ *   doNotEditC - inherited(cplusplus)
+ *   createRemoteService - local
+ */ 
 definitionServer(interfaceName, funNames, funImpls) ::= <<
 $doNotEditC()$
 
@@ -149,6 +198,16 @@ $interfaceName$Server::~$interfaceName$Server()
 $funImpls; separator="\n"$
 >>
 
+/**
+ * definitionImpl: External Template
+ * Produces the interface implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   funNames     : list of the interface function names. 
+ *   funImpls     : list of emptyFunctionImpl template outputs.
+ *
+ * Uses:
+ */ 
 definitionImpl(interfaceName, funNames, funImpls) ::= <<
 /** 
  * Generated by DDSCS                                               *
@@ -167,9 +226,29 @@ $interfaceName$Impl::~$interfaceName$Impl()
 $funImpls; separator="\n"$
 >>
 
+/**
+ * functionCall: External Template
+ * Do nothing, just required to let the same code generating Proxy and Server.
+ * Params:
+ *   type:         function return type.
+ *   name:         function name. 
+ *   inputParams:  list of input params objects.
+ *   inoutParams:  list of inout params objects.
+ *   outputParams: list of output params objects.
+ *
+ * Uses:
+ */ 
 functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
 >>
 
+/**
+ * main: External Template
+ * Generates an example server program
+ * Params:
+ *   interfaceName: Name of the interface this server provides.
+ *   invocations  : Not used. Just to have a common signature with functionHeader template. 
+ *
+ */ 
 main(interfaceName, invocations) ::= <<
 /** 
  * Generated by DDSCS    *
@@ -188,3 +267,105 @@ int main()
 }
 
 >>
+
+/************************************************************************
+ *                                                                      *
+ *   Internal Templates: For internal use only.                         *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * returnType: Internal Template
+ * Declares a variable of function Return Type if not void.
+ * If it is an user defined type also initializes it;
+ * Params:
+ *   type     : Variable type.
+ *
+ * Uses:
+ *   voidInitMap - local
+ *   typeInitMap - local
+ */ 
+returnType(type) ::= <<
+$if(voidInitMap.(type))$
+$elseif(typeInitMap.(type))$
+$typeInitMap.(type)$ _ret_value_;
+return _ret_value_;
+$else$
+$type$* _ret_value_ = new $type$();
+return _ret_value_;
+$endif$  
+>>
+
+/**
+ * lastParam: Internal Template
+ * Determines if the return value of the function should be included
+ * in a call to ReplyUtils createTypeData method.
+ * Params:
+ *   params   : List of previous arguments in the function call. Nullable.
+ *   type     :         function return type.
+ *
+ * Uses:
+ *   voidInitMap - inherited(cplusplus)
+ *   typeInitMap - inherited(cplusplus) 
+ */ 
+lastParam(params, type) ::= <<
+$if(params)$
+$if(!voidInitMap.(type))$, $endif$
+$endif$
+$if(!voidInitMap.(type))$
+$if(!typeInitMap.(type))$*$endif$returnedValue$endif$
+$endif$
+>>
+
+
+/**
+ * exFunctionHeader: External Template
+ * Produces a function header to be used in declaration & implementation 
+ * Params:
+ *   type         : function return type.
+ *   class        : Class name. Must be null for declaration and not null for implementation
+ *   inputParams  : not used. Just to have a common signature with functionHeader template.
+ *   inoutParams  : not used. Just to have a common signature with functionHeader template.
+ *   outputParams : not used. Just to have a common signature with functionHeader template.
+ *
+ * Uses:
+ */ 
+exFunctionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= <<
+$if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(DDSCSServer *server, void *requestData)
+>>
+
+/**
+ * extractTypeDataParams: Internal Template
+ * Produces the params for calling Utils extractTypeData method 
+ * Params:
+ *   type         : function return type.
+ *   inputParams  : list of input params objects.
+ *   inoutParams  : list of inout params objects.
+ *   outputParams : list of output params objects.
+ *
+ * Uses:
+ *  nextParam - inherited(cplusplus)
+ */ 
+extractTypeDataParams(type, inputParams, inoutParams, outputParams) ::= <<
+$[nextParam(params=inputParams),nextParam(previous=inputParams, params=inoutParams)]$
+>>
+
+/**
+ * createRemoteService: Internal Template
+ * Produces a list of DDSCSServer inherited createRemoteService  method calls.
+ * required to initialize this server object.
+ * Params:
+ *   funNames     : list of the interface function names. 
+ *
+ * Uses:
+ */ createRemoteService(interfaceName, funNames) ::= <<
+$funNames:{funName |
+    this->createRemoteService("$funName$", $funName$RequestUtils::registerType(getParticipant()),
+            $funName$ReplyUtils::registerType(getParticipant()),
+            $funName$RequestUtils::createEmptyData, $funName$RequestUtils::deleteData,
+            $funName$ReplyUtils::createEmptyData, $funName$ReplyUtils::deleteData,
+            &$interfaceName$Server::$funName$);
+}$
+>>
+
