@@ -564,8 +564,12 @@ public class IDL2DDSCS
 	
 	public static void printHelp()
 	{
-		System.out.print("idl2ddscs help:\n\nUsage: idl2ddscs [options] <IDL file>\n" +
-				"Options:\n   -language : Programming language.\n");
+		System.out.print("ddscs help:\n\nUsage: ddscs [options] <IDL file>\nOptions:\n" +
+				"   -language : Programming language.\n" +
+				"   -ppPath   : C/C++ Preprocessor path.\n" +
+				"   -ppDisable: Do not use C/C++ preprocessor.\n" +
+				"   -replace  : replace rtiddsgen generated files (ddscs files are replaced always).\n" +
+				"   -d        : Output directory.\n");
 	}
 
 	public static void writeFile(String file, StringTemplate template)

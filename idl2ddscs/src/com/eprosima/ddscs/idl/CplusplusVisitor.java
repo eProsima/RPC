@@ -227,9 +227,7 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(ASTstring node, Object data) {
-		// TODO Auto-generated method stub
-		visit(((SimpleNode) node), data);
-		return data;
+		return "string";
 	}
 
 	/*

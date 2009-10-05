@@ -213,7 +213,7 @@ $endif$
  */ 
 extractDataHelper(type, name) ::= <<
 $if(typeInitMap.(type))$
-$name$ = instance->$name$;
+$name$ = data->$name$;
 $else$
 $type$PluginSupport_copy_data(&$name$, &instance->$name$);
 $endif$
