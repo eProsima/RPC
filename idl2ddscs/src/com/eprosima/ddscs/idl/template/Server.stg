@@ -156,7 +156,8 @@ $exFunctionHeader(class=interfaceName,...)$
 
     $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
                                          
-    srv->_impl->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
+    $if(!voidInitMap.(type))$
+    returnedValue = $endif$srv->_impl->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
            
     replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$nextParam(previous=inoutParams, params=outputParams)$$lastParam(params=[inoutParams,outputParams],type=type)$);
                                                   

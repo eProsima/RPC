@@ -165,10 +165,13 @@ functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
     $outputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
     $returnVarDecl(type=type, retName=[name,"RetValue"])$    
 
+    /**
+     * Dynamic memory passed to the proxy will be freed before return *
+     * Pass a copy if you want to keep it                             *
+     */
     $if(!voidInitMap.(type))$
     $name$RetValue = 
-    $endif$
-    proxy->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
+    $endif$proxy->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
 
 >>
 

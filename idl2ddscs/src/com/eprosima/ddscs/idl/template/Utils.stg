@@ -157,8 +157,7 @@ void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(pa
  *  typeInitMap - inherited(cplusplus)
  */ 
 check(returnType) ::= <<
-$if(typeInitMap.(returnType))$
-$typeInitMap.(returnType)$
+$if(!voidInitMap.(type))$$typeInitMap.(returnType)$&
 $else$
 $returnType$&
 $endif$
@@ -166,8 +165,8 @@ $endif$
 
 /**
  * lastParam: Internal Template
- * Determines if the return value of the function should be included
- * in a call to Utils extractTypeData or createTypeData methods.
+ * Includes the return value of the function in a call to
+ * Utils extractTypeData or createTypeData methods.
  * Params:
  *   params     : List of previous arguments in the function call. Nullable.
  *   returnType : function return type.

@@ -143,6 +143,7 @@ $type$ *$retName$ = $type$PluginSupport_create_data();
 $endif$    
 $endif$
 >>
+
 argType(type) ::= <<
 $if(typeInitMap.(type))$
 $typeInitMap.(type)$

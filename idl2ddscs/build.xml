@@ -150,12 +150,16 @@
   <!-- =================================================================== -->
   <target name="package" depends="init,compile,jar">
   	<mkdir dir="${tmp.dir}/ddscs"/>
+  	<delete file="../ddscs.zip"/>
   	
   	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
   		<fileset dir=".." includes="include/**/*.h" excludes="**/.svn"/>
   	</copy>
   	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
   		<fileset dir=".." includes="lib/**/*" excludes="**/.svn"/>
+  	</copy>
+  	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
+  		<fileset dir=".." includes="doc/UserManual.doc" excludes="**/.svn"/>
   	</copy>
   	<copy todir="${tmp.dir}" overwrite="yes" preservelastmodified="yes">
   		<fileset dir=".." includes="scripts/**/*"/>

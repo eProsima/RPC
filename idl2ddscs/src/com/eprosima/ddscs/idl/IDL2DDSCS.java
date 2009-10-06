@@ -87,18 +87,17 @@ public class IDL2DDSCS
 			{
 				System.out.println("ERROR: Cannot find the environment variable NDDSHOME");
 			}
+			// TO_DO: May be more than one interface defined in the idl...
+			// TO_DO: modules/namespaces
+			Interface ifc = parse(idlFile);
+			if(ifc != null){
+				gen(ifc);
+			}
 		}
 		else
 		{
 			printHelp();
-		}
-		
-		// TO_DO: May be more than one interface defined in the idl...
-		// TO_DO: modules/namespaces
-		Interface ifc = parse(idlFile);
-		if(ifc != null){
-			gen(ifc);
-		}
+		}		
 	}
 	
 	public static void ddsGen(StringBuffer c, String file){
@@ -329,8 +328,8 @@ public class IDL2DDSCS
 		// first load main language template
 		StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, null);
 		
-		StringTemplate request = idlTemplates.getInstanceOf("type");
-		StringTemplate reply = idlTemplates.getInstanceOf("type");
+		StringTemplate request = idlTemplates.getInstanceOf("request");
+		StringTemplate reply = idlTemplates.getInstanceOf("reply");
 				
 		if(externalDirLength > 0){
 			externalDir.append("/");	
@@ -344,7 +343,6 @@ public class IDL2DDSCS
 			
 			reply.setAttribute("file", idlFile);
 			reply.setAttribute("name", op.getName());
-			reply.setAttribute("type", "Reply");
 						
 			setRequestReplyParams(request, reply, op, "fields.{type, name}");
 			if(!"void".equals(op.getReturnType())){
@@ -478,17 +476,12 @@ public class IDL2DDSCS
 	public static Interface parse(String file) {
 		IDLParser parser = null;
 		Interface ifc = null;
-	    if (file == null) {
-	    	System.out.println("IDL Parser Version 0.1:  Reading from standard input . . .");
-	    	parser = new IDLParser(System.in);
-	    } else {
-	    	System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
-	    	try {
-	    		parser = new IDLParser(new java.io.FileInputStream(file));
-	    	} catch (java.io.FileNotFoundException e) {
-	    		System.out.println("IDL Parser Version 0.1:  File " + file + " not found.");
-	    	}
-	    }
+    	System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
+    	try {
+    		parser = new IDLParser(new java.io.FileInputStream(file));
+    	} catch (java.io.FileNotFoundException e) {
+    		System.out.println("IDL Parser Version 0.1:  File " + file + " not found.");
+    	}
 
 	    try 
 	    {
@@ -553,7 +546,7 @@ public class IDL2DDSCS
 		}
 		else
 		{
-			System.out.println("ERROR: The program expects a IDL file");
+			System.out.println("ERROR: The program expects an IDL file");
 			return false;
 		}
 
@@ -565,11 +558,11 @@ public class IDL2DDSCS
 	public static void printHelp()
 	{
 		System.out.print("ddscs help:\n\nUsage: ddscs [options] <IDL file>\nOptions:\n" +
-				"   -language : Programming language.\n" +
-				"   -ppPath   : C/C++ Preprocessor path.\n" +
-				"   -ppDisable: Do not use C/C++ preprocessor.\n" +
-				"   -replace  : replace rtiddsgen generated files (ddscs files are replaced always).\n" +
-				"   -d        : Output directory.\n");
+				"   -language                : Programming language (C|C++|C#|java).\n" +
+				"   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +
+				"   -ppDisable               : Do not use C/C++ preprocessor.\n" +
+				"   -replace                 : replace rtiddsgen generated files.\n" +
+				"   -d <path>                : Output directory.\n");
 	}
 
 	public static void writeFile(String file, StringTemplate template)
