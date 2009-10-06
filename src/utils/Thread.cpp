@@ -75,7 +75,6 @@ ThreadStatus Thread::getThreadStatus()
 int Thread::executeJob(void (*execFunction)(DDSCSServer*, void*), void *data, DDSCSServer *server)
 {
     int returnedValue = -1;
-
     if(m_status == THREAD_WAITING)
     {
         m_dataToProcess = data;

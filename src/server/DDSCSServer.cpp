@@ -170,8 +170,7 @@ void DDSCSServer::executeServer()
     DDS_Duration_t period = {0, 100};
     void *requestData = NULL;
     DDSCSMessages retValue;
-
-    while(1)
+	while(1)
     {
         for(it = m_remoteServices.begin(); it != m_remoteServices.end(); ++it)
         {
@@ -187,9 +186,8 @@ void DDSCSServer::executeServer()
                         }
                     }
                 }
-            }
+			}
         }
-
         NDDSUtility::sleep(period);
     }
 }

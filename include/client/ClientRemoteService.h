@@ -74,10 +74,20 @@ class ClientRemoteService
          */
         DDSCondition *m_replyCondition;
 
+		/**
+         * \brief The status condition used to wait for a matching publication (server).
+         */
+        DDSStatusCondition *m_matchingCondition;
+
         /**
          * \brief The waitset used to receive server replies.
          */
         DDSWaitSet *m_replyWaitset;
+
+		/**
+         * \brief The waitset used to wait for a matching publication (server).
+         */
+        DDSWaitSet *m_matchingPubWaitset;
 
         /**
          * \brief This function initialize the condition and waitset used to received server communications.
