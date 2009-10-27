@@ -42,9 +42,7 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, long ser
                                     strncat(topicNames, requestTypeName, 49); topicNames[49] = '\0';
                                     if((m_requestTopic = serverParticipant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                                     {
-										m_requestSubscriber->get_default_datareader_qos(requestReaderQos);
-							            requestReaderQos.history.kind = DDS_KEEP_ALL_HISTORY_QOS;
-                                        if((m_requestDataReader = (RemoteServiceReader*)serverParticipant->create_datareader(m_requestTopic, requestReaderQos, this, DDS_DATA_AVAILABLE_STATUS)) != NULL)
+										if((m_requestDataReader = (RemoteServiceReader*)serverParticipant->create_datareader(m_requestTopic, DDS_DATAREADER_QOS_DEFAULT, this, DDS_DATA_AVAILABLE_STATUS)) != NULL)
                                         {
                                             strncpy(m_remoteServiceName, remoteServiceName, 50);
                                             return;

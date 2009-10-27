@@ -5,14 +5,22 @@
 
 
 class DDSCSServer;
+class Thread;
 
 typedef enum ThreadStatus
 {
     THREAD_WAITING = 0,
     THREAD_GETREADY,
     THREAD_RUNNING,
-    THREAD_NOT_INITIALIZED
+    THREAD_NOT_INITIALIZED, 
+	THREAD_DIE
 } ThreadStatus;
+
+typedef struct ThreadNode
+{
+	REDAInlineListNode parent;
+	Thread *thread;
+} ThreadNode;
 
 class Thread
 {
@@ -24,27 +32,39 @@ class Thread
 
         ThreadStatus getThreadStatus();
 
-        int executeJob(void (*execFunction)(DDSCSServer*, void*), void *data, DDSCSServer *server);
+		int executeJob(void (*execFunction)(DDSCSServer*, void*), void *data, DDSCSServer *server);
+
+		REDAInlineListNode* getParent()
+		{
+			return (REDAInlineListNode*)&listNode;
+		}
+
+		void stop();
 
     private:
+        unsigned int id;
 
-        unsigned int m_identifier;
+		ThreadStatus status;
 
-        char m_threadName[20];
+		char threadName[20];
 
-        struct RTIOsapiThread *m_thread;
+        struct RTIOsapiThread *osThread;
 
-        ThreadStatus m_status;
+	    struct ThreadNode listNode;
 
-        void *m_dataToProcess;
+		struct RTIOsapiSemaphore *waitSemaphore;
 
-        DDSCSServer *m_server;
+		struct RTIOsapiSemaphore *mutex;
 
-        void (*m_execFunction)(DDSCSServer*, void*);
+        void *execFunctionData;
+
+        DDSCSServer *server;
+
+        void (*execFunction)(DDSCSServer*, void*);
 
         void run();
 
-        static void* execute(void *threadObject);
+        static void* execute(void *threadObject);		
 };
 
 #endif // _THREAD_H_
