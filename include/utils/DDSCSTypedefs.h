@@ -1,9 +1,9 @@
 #ifndef _DDSCSTYPEDEFS_H_
 #define _DDSCSTYPEDEFS_H_
 
-class DDSCSServer;
+class ServerRemoteService;
 
-typedef void(*fExecFunction)(DDSCSServer*, void*);
+typedef void(*fExecFunction)(ServerRemoteService*, void*);
 
 typedef void (*fDeleteRequestData)(void*);
 

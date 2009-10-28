@@ -3,25 +3,23 @@
 
 #include "ndds/ndds_cpp.h"
 
-#include "DDSCSMessages.h"
-
 #define DDSCS_MAX_THREADS_DEFAULT	20
 #define DDSCS_MIN_THREADS_DEFAULT	 5
 
 #define DDSCS_END_THREAD_WAIT {10,0}
 
 class Thread;
-class DDSCSServer;
+class ServerRemoteService;
 
 class ThreadPoolManager
 {
     public:
 
-		ThreadPoolManager(unsigned int maxThreads = DDSCS_MAX_THREADS_DEFAULT);
+		ThreadPoolManager(unsigned int maxThreads = DDSCS_MIN_THREADS_DEFAULT);
 
         ~ThreadPoolManager();
 
-        DDSCSMessages executeJob(void (*execFunction)(DDSCSServer*, void*), void *data, DDSCSServer *server);
+        void schedule(void (*execFunction)(ServerRemoteService*, void*), void *data, ServerRemoteService *service);
 
 		// Thread safe: To be called by each thread after serving a request.
 		int threadReady(Thread *thread);
@@ -57,5 +55,6 @@ class ThreadPoolManager
 		// Thread unsafe: internal use after aquiring mutexes
 		void deleteThreads(REDAInlineList *list);
 };
+
 
 #endif // _THREADPOOLMANAGER_H_

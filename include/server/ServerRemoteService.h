@@ -7,9 +7,17 @@
 #include "utils/DDSCSTypedefs.h"
 #include "utils/DDSCSMessages.h"
 
-class DDSCSServer;
+class ThreadPoolManager;
+class ServerRemoteService;
 
-typedef void(*execFunction)(DDSCSServer*, void*);
+typedef void(*execFunction)(ServerRemoteService*, void*);
+
+typedef struct ServiceNode
+{
+	REDAInlineListNode parent;
+	ServerRemoteService *service;
+} ServiceNode;
+
 
 class ServerRemoteService : public DDSDataReaderListener
 {
@@ -23,17 +31,20 @@ class ServerRemoteService : public DDSDataReaderListener
          * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
          * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
          */
-        ServerRemoteService(const char *remoteServiceName, long serverId, const char *requestTypeName, const char *replyTypeName,
+        ServerRemoteService(const char *remoteServiceName, ThreadPoolManager* pool, const char *requestTypeName, const char *replyTypeName,
                 fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData,
                 fCreateReplyData createReplyData, fDeleteReplyData deleteReplyData,
                 fExecFunction execFunction, DDSDomainParticipant *clientParticipant);
 
-        bool getDataAvailable();
-
         char* getRemoteServiceName();
 
-        void* getClientRequest();
+		REDAInlineListNode* getNode()
+		{
+			return (REDAInlineListNode*)&listNode;
+		}
 
+
+		int sendReply(void* requestData, void *replyData);
         int sendReply(void *replyData);
 
         execFunction getExecFunction();
@@ -68,52 +79,57 @@ class ServerRemoteService : public DDSDataReaderListener
 
     private:
 
+		struct ServiceNode listNode;
+
         /**
          * \brief This field stores the name of the service.
          */
-        char m_remoteServiceName[50];
+        char remoteServiceName[50];
 
+        /**
+         * \brief This field stores a pointer to the ThreadPoolManager.
+         */
+		ThreadPoolManager *threadPoolManager;
         /**
          * \brief The subscriber used to communicate with the client. Client -> Server
          */
-        DDSSubscriber *m_requestSubscriber;
+        DDSSubscriber *requestSubscriber;
 
         /**
          * \brief The publisher used to communicate with the client. Server -> Client.
          */
-        DDSPublisher *m_replyPublisher;
+        DDSPublisher *replyPublisher;
 
         /**
          * \brief The topic used to communicate with the server. Client -> Server
          */
-        DDSTopic *m_requestTopic;
+        DDSTopic *requestTopic;
 
         /**
          * \brief The topic used to communicate with the server. Server -> Client
          */
-        DDSTopic *m_replyTopic;
+        DDSTopic *replyTopic;
 
         /**
          * \brief The data reader used to communicate with the client. Client -> Server
          */
-        RemoteServiceReader *m_requestDataReader;
+        RemoteServiceReader *requestDataReader;
         
         /**
          * \brief The data writer used to communicate with the client. Server -> Client
          */
-        RemoteServiceWriter *m_replyDataWriter;
+        RemoteServiceWriter *replyDataWriter;
 
-        bool m_dataAvailable;
 
-        fCreateRequestData m_createRequestData;
+        fCreateRequestData createRequestData;
 
-        fDeleteRequestData m_deleteRequestData;
+        fDeleteRequestData deleteRequestData;
 
-        fCreateReplyData m_createReplyData;
+        fCreateReplyData createReplyData;
 
-        fDeleteReplyData m_deleteReplyData;
+        fDeleteReplyData deleteReplyData;
 
-        fExecFunction m_execFunction;
+        fExecFunction execFunction;
 
 };
 

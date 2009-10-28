@@ -1,7 +1,6 @@
 #ifndef _DDSCSSERVER_H_
 #define _DDSCSSERVER_H_
 
-#include <map>
 #include "ndds/ndds_cpp.h"
 #include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
@@ -9,6 +8,8 @@
 #include "utils/DDSCSTypedefs.h"
 #include "server/ServerRemoteService.h"
 
+#define DDSCS_DEFAULT_PERIOD_SEC 5
+#define DDSCS_DEFAULT_PERIOD_NSEC 0
 
 /**
  * \file
@@ -19,27 +20,16 @@ class DDSCS_WIN32_DLL_API DDSCSServer
 
     public:
 
-        void executeServer();
-
-        int sendReply(const char *remoteServiceName, void *requestData, void *replyData);
+		void executeServer(DDS_Long seconds = DDSCS_DEFAULT_PERIOD_SEC, DDS_UnsignedLong nanoseconds = DDSCS_DEFAULT_PERIOD_NSEC);
 
     protected:
 
         /**
-         * \brief The default constructor. The server is created with the domain id's value as zero.
-         * In the contructor, the associated domain participant is created.
-         *
-         * \param The server identifier.
-         */
-        DDSCSServer();
-
-        /**
          * \brief A constructor. The associated domain participant is created.
          *
-         * \param The client identifier.
          * \param domainId The domain id's value that the client will have.
          */
-        DDSCSServer(int domainId);
+        DDSCSServer(int domainId = 0);
 
         /// \brief The default destructor.
         virtual ~DDSCSServer();
@@ -58,27 +48,22 @@ class DDSCS_WIN32_DLL_API DDSCSServer
 
         DDSDomainParticipant* getParticipant();
 
-        long getServerId();
-
     private:
 
         /**
          * \brief Each client is associated with a DDSDomainParticipant. This participant have to be created in the client creation.
          * This pointer should never be NULL.
          */
-        DDSDomainParticipant *m_participant;
-
-        long m_serverId;
+        DDSDomainParticipant *participant;
 
         /// \brief The domain identifier.
-        int m_domainId;
+        int domainId;
         
-        /// \brief The map contains all the remote services.
-        std::map<long, ServerRemoteService*> m_remoteServices;
+        /// \brief The list that contains all the remote services.
+        REDAInlineList remoteServicesList;
 
-        ThreadPoolManager *m_threadPoolManager;
+        ThreadPoolManager *threadPoolManager;
 
-        // Return the hast number of a service.
-        long getHashNumberOfService(const char *remoteServiceName);
+		void deleteServices();
 };
 #endif // _DDSCSSERVER_H_

@@ -1,10 +1,11 @@
-#ifndef _THREAD_H_
-#define _THREAD_H_
+#ifndef _DDSCS_THREAD_H_
+#define _DDSCS_THREAD_H_
 
 #include "ndds/ndds_cpp.h"
 
 
-class DDSCSServer;
+class ServerRemoteService;
+class ThreadPoolManager;
 class Thread;
 
 typedef enum ThreadStatus
@@ -26,15 +27,15 @@ class Thread
 {
     public:
 
-        Thread(unsigned int identifier, struct RTIOsapiThreadFactory *threadFactory);
+        Thread(unsigned int identifier, struct RTIOsapiThreadFactory *threadFactory, ThreadPoolManager *manager);
 
         ~Thread();
 
-        ThreadStatus getThreadStatus();
+        int setThreadStatus(ThreadStatus s);
 
-		int executeJob(void (*execFunction)(DDSCSServer*, void*), void *data, DDSCSServer *server);
+		int executeJob(void (*execFunction)(ServerRemoteService*, void*), void *data, ServerRemoteService *service);
 
-		REDAInlineListNode* getParent()
+		REDAInlineListNode* getNode()
 		{
 			return (REDAInlineListNode*)&listNode;
 		}
@@ -45,6 +46,8 @@ class Thread
         unsigned int id;
 
 		ThreadStatus status;
+
+		ThreadPoolManager *manager;
 
 		char threadName[20];
 
@@ -58,13 +61,15 @@ class Thread
 
         void *execFunctionData;
 
-        DDSCSServer *server;
+        ServerRemoteService *service;
 
-        void (*execFunction)(DDSCSServer*, void*);
+        void (*execFunction)(ServerRemoteService*, void*);
 
         void run();
+		
+		void cleanup();
 
         static void* execute(void *threadObject);		
 };
 
-#endif // _THREAD_H_
+#endif // _DDSCS_THREAD_H_
