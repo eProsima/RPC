@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="ddscs"
 	ProjectGUID="{F7D9B1F2-168C-422E-8680-D9C86C394CEE}"
 	RootNamespace="ddscs"
@@ -47,7 +47,6 @@
 				RuntimeLibrary="3"
 				AssemblerListingLocation=".\objs\Debug DDSDyn\"
 				ObjectFile=".\objs\Debug DDSDyn\"
-				ProgramDataBaseFileName=".\objs\Debug DDSDyn\"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
@@ -69,7 +68,9 @@
 				AdditionalDependencies="nddscppd.lib nddscd.lib nddscored.lib"
 				OutputFile="$(SolutionDir)..\..\lib\i86Win32VS2005\$(ProjectName)d.dll"
 				AdditionalLibraryDirectories="$(NDDSHOME)\lib\i86Win32VS2005"
+				GenerateDebugInformation="true"
 				AssemblyDebug="2"
+				ProgramDatabaseFile="$(SolutionDir)..\..\lib\i86Win32VS2005\$(TargetName).pdb"
 				OptimizeReferences="1"
 				EnableCOMDATFolding="1"
 				OptimizeForWindows98="1"

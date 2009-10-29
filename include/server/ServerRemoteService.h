@@ -2,15 +2,17 @@
 #define _SERVERREMOTESERVICE_H_
 
 #include "ndds/ndds_cpp.h"
+#include "utils/ddscs.h"
 #include "utils/RemoteServiceWriter.h"
 #include "utils/RemoteServiceReader.h"
 #include "utils/DDSCSTypedefs.h"
 #include "utils/DDSCSMessages.h"
 
+class DDSCSServer;
 class ThreadPoolManager;
 class ServerRemoteService;
 
-typedef void(*execFunction)(ServerRemoteService*, void*);
+typedef void(*execFunction)(DDSCSServer*, void*, ServerRemoteService*);
 
 typedef struct ServiceNode
 {
@@ -19,7 +21,7 @@ typedef struct ServiceNode
 } ServiceNode;
 
 
-class ServerRemoteService : public DDSDataReaderListener
+class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 {
     public:
 
@@ -31,7 +33,7 @@ class ServerRemoteService : public DDSDataReaderListener
          * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
          * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
          */
-        ServerRemoteService(const char *remoteServiceName, ThreadPoolManager* pool, const char *requestTypeName, const char *replyTypeName,
+        ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
                 fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData,
                 fCreateReplyData createReplyData, fDeleteReplyData deleteReplyData,
                 fExecFunction execFunction, DDSDomainParticipant *clientParticipant);
@@ -45,7 +47,6 @@ class ServerRemoteService : public DDSDataReaderListener
 
 
 		int sendReply(void* requestData, void *replyData);
-        int sendReply(void *replyData);
 
         execFunction getExecFunction();
         
@@ -89,7 +90,7 @@ class ServerRemoteService : public DDSDataReaderListener
         /**
          * \brief This field stores a pointer to the ThreadPoolManager.
          */
-		ThreadPoolManager *threadPoolManager;
+		DDSCSServer *server;
         /**
          * \brief The subscriber used to communicate with the client. Client -> Server
          */
@@ -131,6 +132,7 @@ class ServerRemoteService : public DDSDataReaderListener
 
         fExecFunction execFunction;
 
+        int sendReply(void *replyData);
 };
 
 #endif // _SERVERREMOTESERVICE_H_

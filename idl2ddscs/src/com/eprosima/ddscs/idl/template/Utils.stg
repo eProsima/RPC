@@ -157,7 +157,7 @@ void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(pa
  *  typeInitMap - inherited(cplusplus)
  */ 
 check(returnType) ::= <<
-$if(!voidInitMap.(type))$$typeInitMap.(returnType)$&
+$if(typeInitMap.(returnType))$$typeInitMap.(returnType)$&
 $else$
 $returnType$&
 $endif$
@@ -214,7 +214,7 @@ extractDataHelper(type, name) ::= <<
 $if(typeInitMap.(type))$
 $name$ = data->$name$;
 $else$
-$type$PluginSupport_copy_data(&$name$, &instance->$name$);
+$type$PluginSupport_copy_data(&$name$, &data->$name$);
 $endif$
 >>    
 

@@ -182,7 +182,7 @@ int ThreadPoolManager::threadReady(Thread *thread)
 	return result;
 }
 
-void ThreadPoolManager::schedule(void (*execFunction)(ServerRemoteService*, void*), void *data, ServerRemoteService *service)
+void ThreadPoolManager::schedule(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, DDSCSServer *server, ServerRemoteService *service)
 {
     DDSCSMessages result = WITHOUT_RESOURCES;
 	Thread *thread;
@@ -210,7 +210,7 @@ void ThreadPoolManager::schedule(void (*execFunction)(ServerRemoteService*, void
 				thread = getThread();
 				if(thread != NULL)
 				{
-					if(thread->executeJob(execFunction, data, service) == 0)
+					if(thread->executeJob(execFunction, data, server, service) == 0)
 					{
 						result = OPERATION_SUCCESSFUL;
 					}

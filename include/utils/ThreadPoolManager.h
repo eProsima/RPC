@@ -8,6 +8,7 @@
 
 #define DDSCS_END_THREAD_WAIT {10,0}
 
+class DDSCSServer;
 class Thread;
 class ServerRemoteService;
 
@@ -19,7 +20,7 @@ class ThreadPoolManager
 
         ~ThreadPoolManager();
 
-        void schedule(void (*execFunction)(ServerRemoteService*, void*), void *data, ServerRemoteService *service);
+        void schedule(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, DDSCSServer *server, ServerRemoteService *service);
 
 		// Thread safe: To be called by each thread after serving a request.
 		int threadReady(Thread *thread);

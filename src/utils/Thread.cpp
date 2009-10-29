@@ -4,9 +4,10 @@
 
 Thread::Thread(unsigned int identifier, struct RTIOsapiThreadFactory *threadFactory, ThreadPoolManager *manager) :
 id(identifier), manager(manager), status(THREAD_NOT_INITIALIZED), osThread(NULL), execFunctionData(NULL),
-    execFunction(NULL), service(NULL)
+    execFunction(NULL), server(NULL), service(NULL)
 {
 	REDAInlineListNode_init(&listNode.parent);
+	listNode.thread = this;
 	if(threadFactory != NULL)
 	{
 		_snprintf(threadName, 20, "thread %lu", id); 
@@ -94,6 +95,7 @@ void Thread::cleanup()
 {
 	// Clean up execution always
 	execFunctionData = NULL;
+	server = NULL;
 	service = NULL;
 	execFunction = NULL;
 	status = THREAD_WAITING;
@@ -119,7 +121,7 @@ void Thread::run()
 				{
 					printf("Thread %lu\n", id);
 
-					execFunction(service, execFunctionData);
+					execFunction(server, execFunctionData, service);
 				}
 			}
 			catch(...)
@@ -187,7 +189,7 @@ int Thread::setThreadStatus(ThreadStatus s)
 	return retCode;
 }
 
-int Thread::executeJob(void (*execFunction)(ServerRemoteService*, void*), void *data, ServerRemoteService *service)
+int Thread::executeJob(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, DDSCSServer *server, ServerRemoteService *service)
 {
     int returnedValue = -1;
 
@@ -200,6 +202,7 @@ int Thread::executeJob(void (*execFunction)(ServerRemoteService*, void*), void *
 	    if(status == THREAD_WAITING)
 		{
 			execFunctionData = data;
+			this->server = server;
 			this->service = service;
 			this->execFunction = execFunction;
 			status = THREAD_GETREADY;

@@ -72,7 +72,7 @@ class $interfaceName$Proxy : public DDSCSClient
  *
  * Uses:
  *  voidInitMap           - inherited(cplusplus)
- *  returnVarDecl         - inherited(cplusplus)
+ *  varDecl               - inherited(cplusplus)
  *  nextParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
@@ -80,7 +80,7 @@ functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <
 $functionHeader(class={$interfaceName$Proxy},...)$ 
 {
     DDSCSMessages retValue;
-    $returnVarDecl(type=type, retName="returnedValue")$    
+    $varDecl(type=type, name="returnedValue", create="yes")$    
     const char serviceName[50] = "$name$";
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
@@ -157,13 +157,13 @@ $funImpls; separator="\n"$
  *
  * Uses:
  *  voidInitMap   - inherited(cplusplus)
- *  returnVarDecl - inherited(cplusplus)
+ *  varDecl       - inherited(cplusplus)
  */ 
 functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
-    $inputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
-    $inoutParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
-    $outputParams:{$argType(it.type)$ $it.name$;}; separator="\n"$   
-    $returnVarDecl(type=type, retName=[name,"RetValue"])$    
+    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes")$}; separator="\n"$   
+    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes")$}; separator="\n"$   
+    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes")$}; separator="\n"$   
+    $varDecl(type=type, name=[name,"RetValue"])$    
 
     /**
      * Dynamic memory passed to the proxy will be freed before return *
@@ -171,7 +171,7 @@ functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
      */
     $if(!voidInitMap.(type))$
     $name$RetValue = 
-    $endif$proxy->$name$($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
+    $endif$proxy->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
 
 >>
 
@@ -206,7 +206,6 @@ $invocations; separator="\n"$
  ************************************************************************
  */
 
-
 /**
  * createRemoteService: Internal Template
  * Produces a list of DDSCSClient inherited createRemoteService  method calls.
@@ -223,6 +222,7 @@ $funNames:{funName |
                               $funName$ReplyUtils::registerType(getParticipant()));
 }$
 >>
+
 
 /**
  * lastParam: Internal Template

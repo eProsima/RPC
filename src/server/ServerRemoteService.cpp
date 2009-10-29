@@ -1,4 +1,5 @@
 #include "server/ServerRemoteService.h"
+#include "server/DDSCSServer.h"
 #include "utils/ThreadPoolManager.h"
 
 void ServerRemoteService::on_data_available(DDSDataReader* reader)
@@ -18,7 +19,7 @@ void ServerRemoteService::on_data_available(DDSDataReader* reader)
 		}
 		else
 		{
-			threadPoolManager->schedule(getExecFunction(), data, this);
+			server->getPool()->schedule(getExecFunction(), data, server, this);
 		}
     }
     else
@@ -27,17 +28,20 @@ void ServerRemoteService::on_data_available(DDSDataReader* reader)
     }
 }
 
-ServerRemoteService::ServerRemoteService(const char *remoteServiceName, ThreadPoolManager* pool, const char *requestTypeName, const char *replyTypeName,
+ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
         fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData,
         fCreateReplyData createReplyData, fDeleteReplyData deleteReplyData,
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
-    threadPoolManager(pool), requestSubscriber(NULL), requestTopic(NULL), requestDataReader(NULL),
+    server(server), requestSubscriber(NULL), requestTopic(NULL), requestDataReader(NULL),
     replyPublisher(NULL), createRequestData(createRequestData),
     deleteRequestData(deleteRequestData), execFunction(execFunction),
     createReplyData(createReplyData), deleteReplyData(deleteReplyData)
 {
     char topicNames[100];
 	DDS_DataReaderQos requestReaderQos;
+
+	REDAInlineListNode_init(&listNode.parent);
+	listNode.service = this;
 
     if(serverParticipant != NULL)
     {

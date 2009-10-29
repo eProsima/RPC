@@ -1,9 +1,10 @@
+
 #ifndef _DDSCS_THREAD_H_
 #define _DDSCS_THREAD_H_
 
 #include "ndds/ndds_cpp.h"
 
-
+class DDSCSServer;
 class ServerRemoteService;
 class ThreadPoolManager;
 class Thread;
@@ -33,7 +34,7 @@ class Thread
 
         int setThreadStatus(ThreadStatus s);
 
-		int executeJob(void (*execFunction)(ServerRemoteService*, void*), void *data, ServerRemoteService *service);
+		int executeJob(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, DDSCSServer *server, ServerRemoteService *service);
 
 		REDAInlineListNode* getNode()
 		{
@@ -63,7 +64,9 @@ class Thread
 
         ServerRemoteService *service;
 
-        void (*execFunction)(ServerRemoteService*, void*);
+		DDSCSServer* server;
+
+        void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*);
 
         void run();
 		

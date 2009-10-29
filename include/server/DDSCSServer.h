@@ -20,8 +20,9 @@ class DDSCS_WIN32_DLL_API DDSCSServer
 
     public:
 
-		void executeServer(DDS_Long seconds = DDSCS_DEFAULT_PERIOD_SEC, DDS_UnsignedLong nanoseconds = DDSCS_DEFAULT_PERIOD_NSEC);
+		ThreadPoolManager* getPool();
 
+		void executeServer(DDS_Long seconds = DDSCS_DEFAULT_PERIOD_SEC, DDS_UnsignedLong nanoseconds = DDSCS_DEFAULT_PERIOD_NSEC);
     protected:
 
         /**

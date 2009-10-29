@@ -86,6 +86,11 @@ DDSDomainParticipant* DDSCSServer::getParticipant()
     return participant;
 }
 
+ThreadPoolManager* DDSCSServer::getPool()
+{ 
+	return threadPoolManager;
+}
+
 int DDSCSServer::createRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName,
         fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData,
         fCreateReplyData createReplyData, fDeleteReplyData deleteReplyData,
@@ -101,7 +106,7 @@ int DDSCSServer::createRemoteService(const char *remoteServiceName, const char *
         {
             if(replyTypeName != NULL)
             {
-				if((newRemoteService = new ServerRemoteService(remoteServiceName, threadPoolManager, requestTypeName, replyTypeName,
+				if((newRemoteService = new ServerRemoteService(remoteServiceName, this, requestTypeName, replyTypeName,
                                 createRequestData, deleteRequestData, createReplyData,
                                 deleteReplyData, execFunction, participant)) != NULL)
                 {
