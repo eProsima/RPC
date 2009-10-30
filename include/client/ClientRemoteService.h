@@ -3,11 +3,12 @@
 
 #include "ndds/ndds_cpp.h"
 
+#include "utils/ddscs.h"
 #include "utils/RemoteServiceWriter.h"
 #include "utils/RemoteServiceReader.h"
 #include "utils/DDSCSMessages.h"
 
-class ClientRemoteService
+class DDSCS_WIN32_DLL_API ClientRemoteService
 {
     public:
 
@@ -25,7 +26,7 @@ class ClientRemoteService
 
         /**
          */
-        DDSCSMessages execute(void *data, int timeout);
+        DDSCSMessages execute(void *data, int timeout = 3);
 
         /**
          * 
@@ -101,6 +102,7 @@ class ClientRemoteService
         DDSContentFilteredTopic *m_replyFilter;
 
         unsigned long m_numSec;
+		long clientID;
 
 };
 #endif // _CLIENTREMOTESERVICE_H_

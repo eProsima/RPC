@@ -1,9 +1,7 @@
 #ifndef _DDSCSCLIENT_H_
 #define _DDSCSCLIENT_H_
 
-#include <map>
 #include "ndds/ndds_cpp.h"
-#include "client/ClientRemoteService.h"
 #include "utils/DDSCSMessages.h"
 #include "utils/ddscs.h"
 
@@ -16,20 +14,12 @@ class DDSCS_WIN32_DLL_API DDSCSClient
     protected:
 
         /**
-         * \brief The default constructor. The client is created with the domain id's value as zero.
-         * In the contructor, the associated domain participant is created.
-         *
-         * \param The client identifier.
-         */
-        DDSCSClient();
-
-        /**
          * \brief A constructor. The associated domain participant is created.
          *
          * \param The client identifier.
          * \param domainId The domain id's value that the client will have.
          */
-        DDSCSClient(int domainId);
+        DDSCSClient(int domainId = 0);
 
         /// \brief The default destructor.
         virtual ~DDSCSClient();
@@ -42,9 +32,6 @@ class DDSCS_WIN32_DLL_API DDSCSClient
          * \param replyTypeName The name of the type used to receiver the function's return values. Cannot be NULL.
          * \return If the function works succesfully, 0 is returned. In other case, -1 is returned.
          */
-        int createRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName);
-
-        DDSCSMessages executeRemoteService(void *requestData, const char *remoteServiceName, void *replyData, int timeout = 2);
 
         DDSDomainParticipant* getParticipant();
 
@@ -62,12 +49,6 @@ class DDSCS_WIN32_DLL_API DDSCSClient
 
         /// \brief The domain identifier.
         int m_domainId;
-
-        /// \brief The map contains all the remote services.
-        std::map<long, ClientRemoteService*> m_remoteServices;
-
-        // Return the hast number of a service.
-        long getHashNumberOfService(const char *remoteServiceName);
 };
 
 #endif // _DDSCSCLIENT_H_

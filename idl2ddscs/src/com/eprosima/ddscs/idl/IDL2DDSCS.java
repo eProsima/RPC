@@ -30,6 +30,7 @@ import com.eprosima.ddscs.idl.tree.OutputParam;
 
 import java.io.*;
 import java.util.ListIterator;
+import java.util.Map;
 
 public class IDL2DDSCS
 {
@@ -154,7 +155,7 @@ public class IDL2DDSCS
 	{
 		// first load main language template
 		StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
-				
+		
 		// Templates for main program generation
 		StringTemplate mainTemplate = templatesGroup.getInstanceOf("main");
 		StringTemplate funCall = templatesGroup.getInstanceOf("functionCall");

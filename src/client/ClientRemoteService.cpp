@@ -1,7 +1,7 @@
 #include "client/ClientRemoteService.h"
 
 ClientRemoteService::ClientRemoteService(const char *remoteServiceName, long clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
-m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_replyWaitset(NULL), m_requestInstanceHandle(DDS_HANDLE_NIL), m_replyFilter(NULL), m_numSec(0)
+m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_replyWaitset(NULL), m_requestInstanceHandle(DDS_HANDLE_NIL), m_replyFilter(NULL), m_numSec(0), clientID(clientId)
 {
 	char topicNames[100];
 	char filterLine[100];
@@ -127,6 +127,7 @@ DDSCSMessages ClientRemoteService::execute(void *data, int timeout)
 
 	if(data != NULL)
 	{
+		*(long*)data = clientID;
 		((long*)data)[1] = m_numSec;
 		if(m_replyFilter->get_expression_parameters(parameters) == DDS_RETCODE_OK)
 		{
