@@ -20,7 +20,7 @@ package com.eprosima.ddscs.idl.ast;
 
 import com.eprosima.ddscs.idl.*;
 
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public class ASTparam_attr extends SimpleNode {
   public ASTparam_attr(int id) {
     super(id);

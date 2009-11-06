@@ -349,7 +349,7 @@ void type_dcl() #Type:
 
 /* Production 28 */
 
-void type_declarator() :
+void type_declarator() #Typedef:
 {}
 {
   type_spec() declarators()
@@ -397,7 +397,7 @@ void base_type_spec() :
 
 /* Production 32 */
 
-void template_type_spec() :
+void template_type_spec():
 {}
 {
   sequence_type()
@@ -407,7 +407,7 @@ void template_type_spec() :
 
 /* Production 33 */
 
-void constr_type_spec() :
+void constr_type_spec():
 {}
 {
   struct_type()
@@ -480,6 +480,9 @@ void integer_type() :
 void signed_int() :
 {}
 {
+  LOOKAHEAD(2)
+  signed_long_long_int()
+|
   signed_long_int()
 |
   signed_short_int()
@@ -487,6 +490,13 @@ void signed_int() :
 
 /* Production 41 */
 
+void signed_long_long_int() #SimpleType :
+{}
+{
+  "long" "long"
+  { jjtThis.jjtSetValue("long long");}         
+  
+}
 void signed_long_int() #SimpleType :
 {}
 {
@@ -509,6 +519,9 @@ void signed_short_int() #SimpleType:
 void unsigned_int() :
 {}
 {
+  LOOKAHEAD(3)
+  unsigned_long_long_int()
+|
   LOOKAHEAD(2)
   unsigned_long_int()
 |
@@ -517,6 +530,12 @@ void unsigned_int() :
 
 /* Production 44 */
 
+void unsigned_long_long_int() #SimpleType:
+{}
+{
+  "unsigned" "long" "long"
+  { jjtThis.jjtSetValue("unsigned long long");}         
+}
 void unsigned_long_int() #SimpleType:
 {}
 {
@@ -571,7 +590,7 @@ void any_type() #SimpleType:
 
 /* Production 50 */
 
-void struct_type() :
+void struct_type() #ConstructedType:
 {}
 {
   "struct" identifier() "{" member_list() "}"
@@ -595,7 +614,7 @@ void member() :
 
 /* Production 53 */
 
-void union_type() :
+void union_type() #ConstructedType:
 {}
 {
   "union" identifier() "switch" "(" switch_type_spec() ")" "{" switch_body() "}"
@@ -653,7 +672,7 @@ void element_spec() :
 
 /* Production 59 */
 
-void enum_type() :
+void enum_type() #ConstructedType:
 {}
 {
   "enum" identifier() "{" enumerator() ( "," enumerator() )* "}"
@@ -669,7 +688,7 @@ void enumerator() :
 
 /* Production 61 */
 
-void sequence_type() :
+void sequence_type() #sequence:
 {}
 {
   "sequence" "<" simple_type_spec() [ "," positive_int_const() ] ">"

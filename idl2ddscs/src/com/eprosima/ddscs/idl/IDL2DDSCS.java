@@ -27,11 +27,14 @@ import com.eprosima.ddscs.idl.tree.InputParam;
 import com.eprosima.ddscs.idl.tree.Interface;
 import com.eprosima.ddscs.idl.tree.Operation;
 import com.eprosima.ddscs.idl.tree.OutputParam;
+import com.eprosima.ddscs.idl.tree.Module;
+import com.eprosima.ddscs.idl.tree.SimpleTypedef;
 
 import java.io.*;
 import java.util.ListIterator;
 import java.util.Map;
 
+// TO_DO: string constants...
 public class IDL2DDSCS
 {
 	private static String languageOption = null;
@@ -90,9 +93,9 @@ public class IDL2DDSCS
 			}
 			// TO_DO: May be more than one interface defined in the idl...
 			// TO_DO: modules/namespaces
-			Interface ifc = parse(idlFile);
-			if(ifc != null){
-				gen(ifc);
+			Module root = parse(idlFile);
+			if(root != null){
+				gen(root);
 			}
 		}
 		else
@@ -124,12 +127,27 @@ public class IDL2DDSCS
 		}
 		
 	}
-	public static void gen(Interface ifc) {
+	public static void gen(Module root) {
 		// get a group loader containing main templates dir and target subdir
         System.out.println("Loading Templates...");		
 		StringTemplateGroupLoader loader = 
 		    new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
 		StringTemplateGroup.registerGroupLoader(loader);
+		
+		StringTemplateGroup baseTemplate = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, null);
+		Map typeInitMap = baseTemplate.getMap("typeInitMap");
+		
+		// Adds Simple type redefinitions to typeInitMap, so the generation logic
+		// would treat them as simple types instead of constructed/template types.
+		SimpleTypedef typedef = null;
+		StringTemplate template = null;
+		for(ListIterator iter = root.getTypes().listIterator(); iter.hasNext(); ){						
+			typedef = (SimpleTypedef) iter.next();
+			template = new StringTemplate(baseTemplate, typedef.getAlias());
+			typeInitMap.put(typedef.getAlias(), template);
+		}
+				
+		Interface ifc = root.getIfc();
 		
         System.out.println("Generating VS2005 solution...");
 		genVS2005(ifc);
@@ -474,9 +492,9 @@ public class IDL2DDSCS
 		externalDir.delete(externalDirLength, externalDir.length());
 	}
 	
-	public static Interface parse(String file) {
+	public static Module parse(String file) {
 		IDLParser parser = null;
-		Interface ifc = null;
+		Module root = null;
     	System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
     	try {
     		parser = new IDLParser(new java.io.FileInputStream(file));
@@ -488,14 +506,14 @@ public class IDL2DDSCS
 	    {
 	        ASTStart n = parser.Start();
 	        CplusplusVisitor visitor = new CplusplusVisitor();
-	        ifc = (Interface)n.jjtAccept(visitor, null);
+	        root = (Module)n.jjtAccept(visitor, null);
 	        System.out.println(file + " Parsing Complete.");
 	    } catch (Exception e) {
 	        System.out.println("Oops. Parser Error");
 	        System.out.println(e.getMessage());
 	    }
 	   
-	    return ifc;		
+	    return root;		
 	}
 	
 	public static boolean getOptions(String args[])

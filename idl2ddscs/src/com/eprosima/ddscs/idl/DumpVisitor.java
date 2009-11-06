@@ -171,6 +171,15 @@ public class DumpVisitor implements IDLParserVisitor {
 		return data;
 	}
 	/* (non-Javadoc)
+	 * @see IDLParserVisitor#visit(ASTsequence, java.lang.Object)
+	 */
+	
+	public Object visit(ASTsequence node, Object data) {
+		// TODO Auto-generated method stub
+		visit(((SimpleNode)node), data);
+		return data;
+	}
+	/* (non-Javadoc)
 	 * @see IDLParserVisitor#visit(ASTarray, java.lang.Object)
 	 */
 	
@@ -199,6 +208,22 @@ public class DumpVisitor implements IDLParserVisitor {
 	 */
 	
 	public Object visit(ASTType node, Object data) {
+		// TODO Auto-generated method stub		
+		return data;
+	}
+	/* (non-Javadoc)
+	 * @see IDLParserVisitor#visit(ASTTypedef, java.lang.Object)
+	 */
+	
+	public Object visit(ASTTypedef node, Object data) {
+		// TODO Auto-generated method stub		
+		return data;
+	}
+	/* (non-Javadoc)
+	 * @see IDLParserVisitor#visit(ASTConstructedType, java.lang.Object)
+	 */
+	
+	public Object visit(ASTConstructedType node, Object data) {
 		// TODO Auto-generated method stub		
 		return data;
 	}

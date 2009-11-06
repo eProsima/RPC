@@ -19,7 +19,7 @@
 package com.eprosima.ddscs.idl;
 
 /** Token Manager Error. */
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public class TokenMgrError extends Error
 {
 

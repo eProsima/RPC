@@ -21,7 +21,7 @@ package com.eprosima.ddscs.idl;
  * Describes the input token stream.
  */
 
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public class Token {
 
   /**

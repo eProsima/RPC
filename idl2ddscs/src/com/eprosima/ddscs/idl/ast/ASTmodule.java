@@ -20,7 +20,7 @@ package com.eprosima.ddscs.idl.ast;
 
 import com.eprosima.ddscs.idl.*;
 
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public class ASTmodule extends SimpleNode {
   public ASTmodule(int id) {
     super(id);

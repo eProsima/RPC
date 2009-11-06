@@ -45,7 +45,7 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(ASTStart node, Object data) {
-		// TODO Auto-generated method stub
+		data = new Module();
 		if (node.jjtGetNumChildren() > 0) {
 			for (int i = 0; i < node.jjtGetNumChildren(); ++i) {
 				data = node.jjtGetChild(i).jjtAccept(this, data);
@@ -77,7 +77,11 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	public Object visit(ASTinterfaceNode node, Object data) {
 		Interface ifc = new Interface();
 		visit(((SimpleNode) node), ifc);
-		return ifc;
+		if(data instanceof Module)
+		{
+			((Module)data).setIfc(ifc);
+		}
+		return data;
 	}
 
 	/*
@@ -229,6 +233,15 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	public Object visit(ASTstring node, Object data) {
 		return "string";
 	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see IDLParserVisitor#visit(ASTsequence, java.lang.Object)
+	 */
+
+	public Object visit(ASTsequence node, Object data) {
+		return "sequence";
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -263,6 +276,36 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(ASTType node, Object data) {
+		data = node.jjtGetChild(0).jjtAccept(this, data);
+
+		return data;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see IDLParserVisitor#visit(ASTType, java.lang.Object)
+	 */
+
+	public Object visit(ASTTypedef node, Object data) {
+		Node child = node.jjtGetChild(0);
+		SimpleTypedef def = null;
+		if(child instanceof ASTSimpleType || child instanceof ASTstring)
+		{
+			def = new SimpleTypedef();			
+			def.setBase(child.jjtAccept(this, data).toString());
+			def.setAlias(node.jjtGetChild(1).jjtAccept(this, def).toString());
+			((Module)data).add(def);
+		}
+		return data;
+	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see IDLParserVisitor#visit(ASTType, java.lang.Object)
+	 */
+
+	public Object visit(ASTConstructedType node, Object data) {
 		return data;
 	}
 }

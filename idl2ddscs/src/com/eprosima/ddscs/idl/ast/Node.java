@@ -22,7 +22,7 @@ package com.eprosima.ddscs.idl.ast;
    machinery for constructing the parent and child relationships
    between nodes. */
 
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public interface Node {
 
   /** This method is called after the node has been made the current

@@ -23,7 +23,7 @@ package com.eprosima.ddscs.idl;
  * contain only ASCII characters (without unicode processing).
  */
 
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public class SimpleCharStream
 {
 /** Whether parser is static. */

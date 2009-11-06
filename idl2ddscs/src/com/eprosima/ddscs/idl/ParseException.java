@@ -13,7 +13,7 @@ package com.eprosima.ddscs.idl;
  * You can modify this class to customize your error reporting
  * mechanisms so long as you retain the public fields.
  */
-////@SuppressWarnings("all")
+//////@SuppressWarnings("all")
 public class ParseException extends Exception {
 
   /**

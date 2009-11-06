@@ -20,7 +20,7 @@ package com.eprosima.ddscs.idl.ast;
 
 import com.eprosima.ddscs.idl.*;
 
-//@SuppressWarnings("all")
+////@SuppressWarnings("all")
 public class ASTID extends SimpleNode {
   public ASTID(int id) {
     super(id);

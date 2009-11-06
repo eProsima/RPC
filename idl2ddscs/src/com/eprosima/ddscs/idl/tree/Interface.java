@@ -32,6 +32,7 @@ public class Interface implements Named{
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public List getOperations() {
 		return operations;
 	}
