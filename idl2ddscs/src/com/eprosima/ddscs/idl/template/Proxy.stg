@@ -89,13 +89,15 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
     instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
+    // Protects from multithread access
+    $name$_Service->take();
     retValue = $name$_Service->execute(instance);
     if(retValue == OPERATION_SUCCESSFUL)
     {
       int ret = $name$_Service->getServerReply(instance, retInstance);
       retValue = (ret == 0 ? (DDSCSMessages)((long*)retInstance)[2]: RECEIVED_OTHER_REQUEST);
     }
-
+    $name$_Service->give();
     switch (retValue)
     {
         case CLIENT_ERROR:

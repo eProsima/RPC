@@ -12,97 +12,105 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 
 	if(clientParticipant != NULL)
 	{
-		if(remoteServiceName != NULL)
+		mutex =  RTIOsapiSemaphore_new(RTI_OSAPI_SEMAPHORE_KIND_MUTEX, NULL);
+		if(mutex != NULL)
 		{
-			if((m_requestPublisher = clientParticipant->create_publisher(DDS_PUBLISHER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+			if(remoteServiceName != NULL)
 			{
-				if(requestTypeName != NULL)
+				if((m_requestPublisher = clientParticipant->create_publisher(DDS_PUBLISHER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 				{
-					strncpy(topicNames, remoteServiceName, 49); topicNames[49] = '\0';
-					strncat(topicNames, "-", 1);
-					strncat(topicNames, requestTypeName, 49); topicNames[99] = '\0';
-					if((m_requestTopic = clientParticipant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+					if(requestTypeName != NULL)
 					{
-						if((m_requestDataWriter = (RemoteServiceWriter*)clientParticipant->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+						strncpy(topicNames, remoteServiceName, 49); topicNames[49] = '\0';
+						strncat(topicNames, "-", 1);
+						strncat(topicNames, requestTypeName, 49); topicNames[99] = '\0';
+						if((m_requestTopic = clientParticipant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 						{
-							if((m_replySubscriber = clientParticipant->create_subscriber(DDS_SUBSCRIBER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+							if((m_requestDataWriter = (RemoteServiceWriter*)clientParticipant->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 							{
-								if(replyTypeName != NULL)
+								if((m_replySubscriber = clientParticipant->create_subscriber(DDS_SUBSCRIBER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 								{
-									strncpy(topicNames, remoteServiceName, 49); topicNames[49] = '\0';
-									strncat(topicNames, "-", 1);
-									strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
-									if((m_replyTopic = clientParticipant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+									if(replyTypeName != NULL)
 									{
-										_snprintf(filterLine, 100, "%s%ld and %s", "clientId = ", clientId, "numSec = %0");
-										if((m_replyFilter = clientParticipant->create_contentfilteredtopic(remoteServiceName, m_replyTopic, filterLine, parameters)) != NULL)
+										strncpy(topicNames, remoteServiceName, 49); topicNames[49] = '\0';
+										strncat(topicNames, "-", 1);
+										strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
+										if((m_replyTopic = clientParticipant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 										{
-											if((m_replyDataReader = (RemoteServiceReader*)clientParticipant->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+											_snprintf(filterLine, 100, "%s%ld and %s", "clientId = ", clientId, "numSec = %0");
+											if((m_replyFilter = clientParticipant->create_contentfilteredtopic(remoteServiceName, m_replyTopic, filterLine, parameters)) != NULL)
 											{
-												if(createConditionAndWaitset() == 0)
+												if((m_replyDataReader = (RemoteServiceReader*)clientParticipant->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 												{
-													strncpy(m_remoteServiceName, remoteServiceName, 50);
-													return;
-												}
-												else
-												{
-													printf("ERROR <ClientRemoteService>: Cannot create waitset\n");
+													if(createConditionAndWaitset() == 0)
+													{
+														strncpy(m_remoteServiceName, remoteServiceName, 50);
+														return;
+													}
+													else
+													{
+														printf("ERROR <ClientRemoteService>: Cannot create waitset\n");
+													}
+
+													clientParticipant->delete_datareader(m_replyDataReader);
 												}
 
-												clientParticipant->delete_datareader(m_replyDataReader);
+												clientParticipant->delete_contentfilteredtopic(m_replyFilter);
 											}
 
-											clientParticipant->delete_contentfilteredtopic(m_replyFilter);
+											clientParticipant->delete_topic(m_replyTopic);
 										}
-
-										clientParticipant->delete_topic(m_replyTopic);
+										else
+										{
+											printf("ERROR <ClientRemoteService>: Cannot create the reply topic\n");
+										}
 									}
 									else
 									{
-										printf("ERROR <ClientRemoteService>: Cannot create the reply topic\n");
+										printf("ERROR <ClientRemoteService>: Bad parameter (replyTypeName)\n");
 									}
+
+									clientParticipant->delete_subscriber(m_replySubscriber);
 								}
 								else
 								{
-									printf("ERROR <ClientRemoteService>: Bad parameter (replyTypeName)\n");
+									printf("ERROR <ClientRemoteService>: Cannot create the reply subscriber\n");
 								}
 
-								clientParticipant->delete_subscriber(m_replySubscriber);
+								clientParticipant->delete_datawriter(m_requestDataWriter);
 							}
 							else
 							{
-								printf("ERROR <ClientRemoteService>: Cannot create the reply subscriber\n");
+								printf("ERROR <ClientRemoteService>: Cannot create the request data writer\n");
 							}
 
-							clientParticipant->delete_datawriter(m_requestDataWriter);
+							clientParticipant->delete_topic(m_requestTopic);
 						}
 						else
 						{
-							printf("ERROR <ClientRemoteService>: Cannot create the request data writer\n");
+							printf("ERROR <ClientRemoteService>: Cannot create the request topic\n");
 						}
-
-						clientParticipant->delete_topic(m_requestTopic);
 					}
 					else
 					{
-						printf("ERROR <ClientRemoteService>: Cannot create the request topic\n");
+						printf("ERROR <ClientRemoteService>: Bad parameter (requestTypeName)\n");
 					}
+
+					clientParticipant->delete_publisher(m_requestPublisher);
 				}
 				else
 				{
-					printf("ERROR <ClientRemoteService>: Bad parameter (requestTypeName)\n");
+					printf("ERROR <ClientRemoteService>: Cannot create the request publisher\n");
 				}
-
-				clientParticipant->delete_publisher(m_requestPublisher);
 			}
 			else
 			{
-				printf("ERROR <ClientRemoteService>: Cannot create the request publisher\n");
+				printf("ERROR <ClientRemoteService>: Bad parameter (remoteServiceName)\n");
 			}
 		}
 		else
 		{
-			printf("ERROR <ClientRemoteService>: Bad parameter (remoteServiceName)\n");
+			printf("ERROR <ClientRemoteService>: Cannot create mutex\n");
 		}
 	}
 	else
@@ -113,6 +121,11 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 
 ClientRemoteService::~ClientRemoteService()
 {
+	if(mutex != NULL)
+	{
+		RTIOsapiSemaphore_delete(mutex);
+		mutex = NULL;
+	}
 }
 
 DDSCSMessages ClientRemoteService::execute(void *data, int timeout)
@@ -145,7 +158,7 @@ DDSCSMessages ClientRemoteService::execute(void *data, int timeout)
 		{
 			m_requestInstanceHandle = m_requestDataWriter->register_instance(*(const char*)data);
 		}
-		
+
 		// Matching server (Request DataReader) detection.
 		// Drawbacks:
 		//		1.- If the publication matched status is triggered between get_publication_matched_status()
@@ -204,10 +217,26 @@ DDSCSMessages ClientRemoteService::execute(void *data, int timeout)
 	return returnedValue;
 }
 
+void ClientRemoteService::take()
+{
+	if(RTIOsapiSemaphore_take(mutex, NULL) != RTI_OSAPI_SEMAPHORE_STATUS_OK)
+	{
+		printf("ERROR <execute>: failed to take mutex\n");
+	}
+}
+
+void ClientRemoteService::give()
+{
+	if(RTIOsapiSemaphore_give(mutex) != RTI_OSAPI_SEMAPHORE_STATUS_OK)
+	{
+		printf("ERROR <ClientRemoteService::give>: failed to give mutex\n");
+	}
+}
+
 int ClientRemoteService::createConditionAndWaitset()
 {
 	int returnedValue = -1;
-	
+
 	m_replyWaitset = new DDSWaitSet();
 
 	if(m_replyWaitset != NULL)

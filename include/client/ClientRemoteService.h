@@ -24,6 +24,10 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 
         virtual ~ClientRemoteService();
 
+		// Prevents multiThreaded execution
+		void take();
+		void give();
+
         /**
          */
         DDSCSMessages execute(void *data, int timeout = 3);
@@ -104,5 +108,6 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
         unsigned long m_numSec;
 		long clientID;
 
+		RTIOsapiSemaphore *mutex;
 };
 #endif // _CLIENTREMOTESERVICE_H_
