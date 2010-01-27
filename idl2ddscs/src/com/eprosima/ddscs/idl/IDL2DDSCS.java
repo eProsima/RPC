@@ -31,8 +31,11 @@ import com.eprosima.ddscs.idl.tree.Module;
 import com.eprosima.ddscs.idl.tree.SimpleTypedef;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Map;
+
+
 
 // TO_DO: string constants...
 public class IDL2DDSCS
@@ -44,7 +47,8 @@ public class IDL2DDSCS
 	private static StringBuffer externalDir = null;
 	private static int externalDirLength = 0;
 	private static String idlFile = null;
-	private static StringBuffer command = null;	
+	private static ArrayList command = null;	
+	private static StringBuffer env = null;	
 	
 	//TO_DO: ¿external properties?
 	private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL|Win32", true, true),
@@ -60,32 +64,53 @@ public class IDL2DDSCS
 	{
 		if(getOptions(args))
 		{
-			command = new StringBuffer("rtiddsgen.bat ");
 			String ndds_home = System.getProperty("NDDSHOME");
 			
 			if(ndds_home != null)
-			{
+			{				
+				env = new StringBuffer();
+				// TO_DO: Check OS for space character handling in commands				
+				env.append("PATH=");	
+				env.append(ndds_home).append(File.separatorChar).append("scripts");				
+				
+				command = new ArrayList();
+				command.add("rtiddsgen.bat");
 				if(languageOption != null)
-					command .append(" -language ").append(languageOption);
+				{
+					command.add("-language");
+					command.add(languageOption);
+				}
 				if(ppDisable == true)
 				{
-					command.append(" -ppDisable ");
+					command.add("-ppDisable");
 				}
 				else
 				{
-					if(ppPath != null)
-						command.append(" -ppPath ").append(ppPath);
+					if(ppPath != null){
+						command.add("-ppPath");
+						command.add(ppPath);
+					}
 				}
 				if(replace == true)
 				{
-					command.append(" -replace ");
+					command.add("-replace");
 				}
 				if(externalDirLength > 0){
-					command.append(" -d ").append(externalDir);
+					command.add("-d");
+					command.add(externalDir);
 				}
-				command.append(" ");
-
-				ddsGen(command, idlFile);
+				
+				try{
+					ddsGen(command, idlFile);
+					Module root = parse(idlFile);
+					if(root != null){
+						gen(root);
+					}
+				}
+				catch(Exception ioe){
+					System.out.println("ERROR generating files");
+					ioe.printStackTrace();
+				}
 			}
 			else
 			{
@@ -93,41 +118,39 @@ public class IDL2DDSCS
 			}
 			// TO_DO: May be more than one interface defined in the idl...
 			// TO_DO: modules/namespaces
-			Module root = parse(idlFile);
-			if(root != null){
-				gen(root);
-			}
 		}
 		else
 		{
 			printHelp();
 		}		
 	}
-	
-	public static void ddsGen(StringBuffer c, String file){
-		try
-		{
-			c.append(file);
-			Process rtiddsgen = Runtime.getRuntime().exec(c.toString());
-			InputStream is = rtiddsgen.getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			String aux = br.readLine();
-			
-			while(aux != null)
+	// Need to use envp to pass a Path environment variable pointing to $NDDSHOME/scripts
+	// if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
+	// even using the well known solution of using double quotes
+	// May be a problem with the Java Version deployed with RTI DDS.
+	public static void ddsGen(ArrayList c, String file) throws Exception{
+		String[] commandArray = new String[c.size() + 1];
+		String[] envp = {env.toString()};
+			c.add(file);			
+			commandArray = (String[])c.toArray(commandArray);
+			Process rtiddsgen = Runtime.getRuntime().exec(commandArray, envp);
+			ProcessOutput errorOutput = new ProcessOutput(rtiddsgen.getErrorStream(), "ERROR");
+			ProcessOutput normalOutput = new ProcessOutput(rtiddsgen.getInputStream(), "OUTPUT");
+			errorOutput.start();
+			normalOutput.start();
+			int exitVal = rtiddsgen.waitFor();
+			if(exitVal != 0)
 			{
-				System.out.println(aux);
-				aux = br.readLine();
+				throw new Exception();
 			}
-		}
-		catch(Exception ex)
-		{
-			ex.printStackTrace();
-		}finally{
-			c.delete(c.length() - file.length(), c.length());
-		}
-		
+			//TO_DO: check rtiddsgen has been correctly called it may return exitVal of 0 without
+			// generating nothing, for example due to missing preprocessor.
+			//The best way to do this is checking for output files existence and modification times (if -replace)
+			//ddsGenRunCheck(file);
+			c.remove(c.size() - 1);		
 	}
-	public static void gen(Module root) {
+	
+	public static void gen(Module root) throws Exception{
 		// get a group loader containing main templates dir and target subdir
         System.out.println("Loading Templates...");		
 		StringTemplateGroupLoader loader = 
@@ -342,7 +365,7 @@ public class IDL2DDSCS
 			definitionReply.reset();
 		}
 	}
-	public static void genIdl(Interface ifc)
+	public static void genIdl(Interface ifc) throws Exception
 	{
 		// first load main language template
 		StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, null);
@@ -521,11 +544,14 @@ public class IDL2DDSCS
 		int count = 0;
 		String arg;
 		
-		while((count < args.length) && (args[count].startsWith("-")))
+		while(count < args.length)
 		{
 			arg = args[count++];
-			
-			if(arg.equals("-language"))
+			if(!arg.startsWith("-"))
+			{
+				idlFile = arg;
+			}
+			else if(arg.equals("-language"))
 			{
 				languageOption = args[count++];
 				
@@ -559,11 +585,7 @@ public class IDL2DDSCS
 			}
 		}
 		
-		if(count < args.length)
-		{
-			idlFile = args[count];
-		}
-		else
+		if(idlFile == null)
 		{
 			System.out.println("ERROR: The program expects an IDL file");
 			return false;
@@ -610,3 +632,29 @@ class MyErrorListener implements StringTemplateErrorListener {
 	
 }
 
+class ProcessOutput extends Thread
+{
+    InputStream is;
+    String type;
+    
+    ProcessOutput(InputStream is, String type)
+    {
+        this.is = is;
+        this.type = type;
+    }
+    
+    public void run()
+    {
+        try
+        {
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line=null;
+            while ( (line = br.readLine()) != null)
+                System.out.println(line);    
+            } catch (IOException ioe)
+              {
+                ioe.printStackTrace();  
+              }
+    }
+}
