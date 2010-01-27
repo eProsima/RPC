@@ -370,6 +370,9 @@ public class IDL2DDSCS
 		// first load main language template
 		StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, null);
 		
+		StringTemplate theFile = idlTemplates.getInstanceOf("idlFile");
+		theFile.setAttribute("file", idlFile);
+		
 		StringTemplate request = idlTemplates.getInstanceOf("request");
 		StringTemplate reply = idlTemplates.getInstanceOf("reply");
 				
@@ -380,35 +383,27 @@ public class IDL2DDSCS
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
-			request.setAttribute("file", idlFile);
-			request.setAttribute("name", op.getName());
-			
-			reply.setAttribute("file", idlFile);
+			request.setAttribute("name", op.getName());		
 			reply.setAttribute("name", op.getName());
 						
 			setRequestReplyParams(request, reply, op, "fields.{type, name}");
 			if(!"void".equals(op.getReturnType())){
 				reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
 			}
-
-			//System.out.println(request.toString());
-			externalDir.append(op.getName()).append("Request.idl");
-			writeFile(externalDir.toString(), request);
-			
-			ddsGen(command, externalDir.substring(externalDirLength));
-
-			//System.out.println(reply.toString());
-			externalDir.delete(externalDirLength + op.getName().length(), externalDir.length());
-			externalDir.append("Reply.idl");
-			writeFile(externalDir.toString(), reply);
-
-			ddsGen(command, externalDir.substring(externalDirLength));
-			
-			externalDir.delete(externalDirLength, externalDir.length());
-
+			theFile.setAttribute("types", request.toString());
+			theFile.setAttribute("types", reply.toString());
 			request.reset();
 			reply.reset();
 		}
+
+		//System.out.println(reply.toString());
+		externalDir.append(ifc.getName()).append("RequestReply.idl");
+		writeFile(externalDir.toString(), theFile);
+
+		ddsGen(command, externalDir.substring(externalDirLength));
+		
+		externalDir.delete(externalDirLength, externalDir.length());
+
 	}
 	
 	private static void setProjectFiles(StringBuffer buf, StringTemplate client, StringTemplate server, boolean withoutUtils){

@@ -18,56 +18,64 @@ group IDL : cplusplus;
 
 /************************************************************************
  *                                                                      *
- *   External Templates: Common Templates for C++ code generation       *
+ *   External Templates: Common Templates for IDL types definition      *
  *                                                                      *
  ************************************************************************
  */
 
 /**
- * request: External Template
- * Produces an IDL file for Request types. 
+ * idlFile: External Template
+ * Produces IDL file with type definitions 
  * Params:
  *   file   : list of other IDL files (with user defined types) to include.
- *   name   : function name.
- *   fields : list of function parameters. In and inout parameters for Request,
- *            inout, out and return type for Reply.
+ *   types  : list of IDL types definitions (structs, sequences...)
  *
  * Uses:
  *  doNotEditCplusplus - inherited(cplusplus)
  */ 
-request(file, name, fields) ::= <<
+idlFile(file, types) ::= <<
 $doNotEditCplusplus()$
 
 $file:{#include "$it$"}$
+
+$types:{$it$};separator="\n"$
+
+>>
+
+
+
+/**
+ * request: External Template
+ * Produces an IDL file for Request types. 
+ * Params:
+ *   name   : function name.
+ *   fields : list of function parameters. In and inout parameters for Request,
+ *            inout, out and return type for Reply.
+ *
+ */ 
+request(name, fields) ::= <<
 
 struct $name$Request{
     long clientId; //@key
     long numSec;
     $fields:{$it.type$ $it.name$;};separator="\n"$
-};
+}; //@top-level true
 >>
 
 /**
  * reply: External Template
  * Produces an IDL file for Reply types. 
  * Params:
- *   file   : list of other IDL files (with user defined types) to include.
  *   name   : function name.
  *   fields : list of function parameters. In and inout parameters for Request,
  *            inout, out and return type for Reply.
- *
- * Uses:
- *  doNotEditCplusplus - inherited(cplusplus)
  */ 
-reply(file, name, fields) ::= <<
-$doNotEditCplusplus()$
-
-$file:{#include "$it$"}$
+reply(name, fields) ::= <<
 
 struct $name$Reply{
     long clientId; //@key
     long numSec;
     long ddscsRetCode;
     $fields:{$it.type$ $it.name$;};separator="\n"$
-};
+}; //@top-level true
 >>
