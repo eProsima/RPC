@@ -22,6 +22,53 @@ group Utils : cplusplus;
  *                                                                      *
  ************************************************************************
  */
+
+/**
+ * headerFile: External Template
+ * Produces header file for Request&Reply Topic data type Utils
+ * 
+ * Params:
+ *   name       : interface Name.
+ *   type       : Request_Reply
+ *   classes    : List of class headers.
+ * Uses:
+ */ 
+headerFile(name, classes) ::= <<
+
+#ifndef _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+#define _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+
+$doNotEditC()$
+
+#include "dds_cpp/dds_cpp_domain.h"
+#include "$name$RequestReplySupport.h"
+
+$classes:{$it$};separator="\n"$
+ 
+#endif // _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+
+>>
+
+/**
+ * definitionFile: External Template
+ * Produces definition file for Request&Reply Topic data type Utils
+ * 
+ * Params:
+ *   name       : interface Name.
+ *   type       : Request_Reply
+ *   classes    : List of class Implementations.
+ * Uses:
+ */ 
+definitionFile(name, classes) ::= <<
+$doNotEditC()$
+
+#include "$name$RequestReplyUtils.h"
+#include "$name$Plugin.h"
+
+$classes:{$it$};separator="\n"$
+ 
+>>
+
 /**
  * header: External Template
  * Produces header file for Request&Reply Topic data type Utils
@@ -38,13 +85,6 @@ group Utils : cplusplus;
  *   lastParam  - local
  */ 
 header(funName, type="Request", params, returnType) ::= <<
-#ifndef _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
-#define _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
-
-$doNotEditC()$
-
-#include "dds_cpp/dds_cpp_domain.h"
-#include "$funName$$type$Support.h"
 
 class $funName$$type$Utils
 {
@@ -61,7 +101,6 @@ class $funName$$type$Utils
         static void extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
 };
 
-#endif // _$funName;format="toUpper"$_$type;format="toUpper"$_UTILS_H_
 >>
 
 /**
@@ -69,8 +108,6 @@ class $funName$$type$Utils
  * Produces Implementation file for Request&Reply Topic data type Utils
  * 
  * Params:
- *   interfaceName : name of the interface and also should be the name of the idl file
- *                   that contains it. 
  *   funName       : name of the function the generated Request/Reply topic data utils belongs to.
  *   type          : Request/Reply
  *   params        : List of previous arguments in the function call. Nullable.
@@ -83,11 +120,7 @@ class $funName$$type$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
- definition(interfaceName,funName, type="Request", params, returnType) ::= <<
-$doNotEditC()$
-
-#include "$funName$$type$Utils.h"
-#include "$interfaceName$Plugin.h"
+ definition(funName, type="Request", params, returnType) ::= <<
 
 const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParticipant)
 {

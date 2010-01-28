@@ -106,17 +106,17 @@ int DDSCSServer::createRemoteService(const char *remoteServiceName, const char *
         {
             if(replyTypeName != NULL)
             {
-				if((newRemoteService = new ServerRemoteService(remoteServiceName, this, requestTypeName, replyTypeName,
-                                createRequestData, deleteRequestData, createReplyData,
-                                deleteReplyData, execFunction, participant)) != NULL)
-                {
-					REDAInlineList_addNodeToBackEA(&remoteServicesList, newRemoteService->getNode());
-                    returnedValue = 0;
-                }
-                else
-                {
-                    printf("ERROR <createRemoteService>: Cannot create the structure of the new remote service\n");
-                }
+				//if((newRemoteService = new ServerRemoteService(remoteServiceName, this, requestTypeName, replyTypeName,
+    //                            createRequestData, deleteRequestData, createReplyData,
+    //                            deleteReplyData, execFunction, participant)) != NULL)
+    //            {
+				//	REDAInlineList_addNodeToBackEA(&remoteServicesList, newRemoteService->getNode());
+    //                returnedValue = 0;
+    //            }
+    //            else
+    //            {
+    //                printf("ERROR <createRemoteService>: Cannot create the structure of the new remote service\n");
+    //            }
             }
             else
             {

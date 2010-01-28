@@ -35,15 +35,14 @@ group Proxy : cplusplus;
  *  include - inherited(cplusplus)
  */ 
 header(interfaceName,funNames, funDecls) ::= <<
-#ifndef _$interfaceName;format="toUpper"$PROXY_H_
-#define _$interfaceName;format="toUpper"$PROXY_H_
+#ifndef _$interfaceName;format="toUpper"$_PROXY_H_
+#define _$interfaceName;format="toUpper"$_PROXY_H_
 
 $doNotEditC()$
 
 #include "client/DDSCSClient.h"
-$include(funNames); separator="\n"$
-
-class ClientRemoteService;
+#include "$interfaceName$RequestReplyUtils.h"
+#include "$interfaceName$ClientRemoteServiceSupport.h"
 
 class $interfaceName$Proxy : public DDSCSClient
 {
@@ -61,7 +60,7 @@ class $interfaceName$Proxy : public DDSCSClient
         $funNames:{ClientRemoteService *$it$_Service;};separator="\n"$ 
 };
 
-#endif // _$interfaceName$PROXY_H_
+#endif // _$interfaceName$_PROXY_H_
 >>
 
 /**
@@ -89,15 +88,12 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
     instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
-    // Protects from multithread access
-    $name$_Service->take();
     retValue = $name$_Service->execute(instance);
     if(retValue == OPERATION_SUCCESSFUL)
     {
       int ret = $name$_Service->getServerReply(instance, retInstance);
-      retValue = (ret == 0 ? (DDSCSMessages)((long*)retInstance)[2]: RECEIVED_OTHER_REQUEST);
+      retValue = (ret == 0 ? (DDSCSMessages)((long*)retInstance)[3]: RECEIVED_OTHER_REQUEST);
     }
-    $name$_Service->give();
     switch (retValue)
     {
         case CLIENT_ERROR:
@@ -223,6 +219,7 @@ $invocations; separator="\n"$
  *                                                                      *
  ************************************************************************
  */
+
 
 /**
  * createRemoteService: Internal Template

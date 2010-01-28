@@ -1,0 +1,120 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group RemoteServiceSupport : cplusplus;
+
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Templates required to generate the Proxy       *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * clientHeader: External Template
+ * Produces the ClientRemoteServiceSupport header file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   funNames     : list of the interface function names. 
+ *
+ * Uses:
+ *  doNotEditC                - inherited(cplusplus)
+ *  clientRemoteServiceHeader - local
+ */ 
+clientHeader(interfaceName,funNames) ::= <<
+#ifndef _$interfaceName;format="toUpper"$_CLIENT_REMOTE_SERVICE_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_CLIENT_REMOTE_SERVICE_SUPPORT_H_
+
+$doNotEditC()$
+
+#include "client/GenericClientRemoteService.h"
+
+$funNames:{clientRemoteServiceHeader($it$)};separator="\n"$
+
+>>
+
+/**
+ * clientDefinition: External Template
+ * Produces the ClientRemoteServiceSupport implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   funNames     : list of the interface function names. 
+ *
+ * Uses:
+ *  doNotEditC                - inherited(cplusplus)
+ *  clientRemoteServiceHeader - local
+ */ 
+clientDefinition(interfaceName,funNames) ::= <<
+$doNotEditC()$
+
+#include "client/GenericClientRemoteService.h"
+
+$funNames:{clientRemoteServiceImpl($it$)};separator="\n"$
+
+>>
+
+
+/************************************************************************
+ *                                                                      *
+ *   Internal Templates: For internal use only.                         *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * clientRemoteServiceHeader: Internal Template
+
+ * Params:
+ *   name     :function name 
+ *
+ * Uses:
+ */ 
+clientRemoteServiceHeader(name) ::= <<
+
+GENERIC_CLIENT_REMOTE_SERVICE($name$ClientRemoteService, $name$RequestDataWriter, $name$ReplyDataReader);
+
+>>
+
+/**
+ * clientRemoteServiceImpl: Internal Template
+ * 
+ * Params:
+ *   name     :function name 
+ *
+ * Uses:
+ */ 
+clientRemoteServiceImpl(name) ::= <<
+
+#if defined(TName) && defined(TDataWriter) && defined(TDataReader) && defined(TDataTypeSupport) && defined(TDataSeq)
+
+/* Defines */
+#define TName            $name$ClientRemoteService
+#define TDataTypeSupport $name$ReplyTypeSupport
+#define TDataSeq         $name$ReplySeq
+#define TDataReader      $name$ReplyDataReader
+#define TDataWriter      $name$RequestDataWriter
+
+
+#include "client/GenericClientRemoteService.gen"
+
+
+#undef TName
+#undef TDataTypeSupport
+#undef TDataSeq
+#undef TDataReader
+#undef TDataWriter
+
+>>

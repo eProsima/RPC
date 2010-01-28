@@ -4,9 +4,9 @@
 #include "ndds/ndds_cpp.h"
 
 #include "utils/ddscs.h"
-#include "utils/RemoteServiceWriter.h"
-#include "utils/RemoteServiceReader.h"
 #include "utils/DDSCSMessages.h"
+
+typedef struct ThreadLocalInfo ThreadLocalInfo;
 
 class DDSCS_WIN32_DLL_API ClientRemoteService
 {
@@ -24,20 +24,26 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 
         virtual ~ClientRemoteService();
 
+        /**
+         */
+        DDSCSMessages execute(void *request, void* reply, int timeout = 3);
+        void* getServerReply();
+
+		// Clean Thread local resources
+		void removeInfo();
+    protected:
 		// Prevents multiThreaded execution
-		void take();
+		bool take();
 		void give();
+		// Should be called only after take()
+		ThreadLocalInfo * newInfo(RTI_UINT32 id);
+		ThreadLocalInfo * getInfo(RTI_UINT32 id);
+		ThreadLocalInfo * getInfo();
 
-        /**
-         */
-        DDSCSMessages execute(void *data, int timeout = 3);
-
-        /**
-         * 
-         */
-        int getServerReply(void *requestData, void *replyData);
-
-    private:
+		// Foo dependent methods
+		virtual DDS_ReturnCode_t write(void *data) = 0;
+		virtual DDSCSMessages handleNewInstance(ThreadLocalInfo *info, DDSConditionSeq& conditionSeq) = 0;
+		virtual DDSCSMessages handleNewSample(ThreadLocalInfo *info, void *request, DDSConditionSeq& conditionSeq) = 0;
 
         /**
          * \brief This field stores the name of the service.
@@ -67,14 +73,19 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
         /**
          * \brief The data writer used to communicate with the server. Client -> Server
          */
-        RemoteServiceWriter *m_requestDataWriter;
+		DDSDataWriter *m_requestDataWriter;
         
         /**
          * \brief The data reader used to communicate with the server. Server -> Client
          */
-        RemoteServiceReader *m_replyDataReader;
+		DDSDataReader *m_replyDataReader;
 
         /**
+         * \brief The read condition used to detect new Reply Topic instances.
+         */
+        DDSCondition *m_newReplyInstanceCondition;
+
+		/**
          * \brief The read condition used to receive server's replies.
          */
         DDSCondition *m_replyCondition;
@@ -99,9 +110,7 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          *
          * \return If the function works successful then returns 0. In other case -1 is returned.
          */
-        int createConditionAndWaitset();
-
-        DDS_InstanceHandle_t m_requestInstanceHandle;
+        int createConditions();
 
         DDSContentFilteredTopic *m_replyFilter;
 
@@ -109,5 +118,9 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 		long clientID;
 
 		RTIOsapiSemaphore *mutex;
+
+		//Multithreaded client handling
+		REDAInlineList threadLocalInfoList;
+
 };
 #endif // _CLIENTREMOTESERVICE_H_

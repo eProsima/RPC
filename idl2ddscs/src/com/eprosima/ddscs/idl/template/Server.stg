@@ -45,7 +45,7 @@ $doNotEditC()$
 
 #include "server/DDSCSServer.h"
 #include "$interfaceName$ServerImpl.h"
-$include(funNames); separator="\n"$
+#include "$interfaceName$RequestReplyUtils.h"
 
 class $interfaceName$Server : public DDSCSServer
 {

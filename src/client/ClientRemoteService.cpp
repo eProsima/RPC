@@ -1,10 +1,20 @@
 #include "client/ClientRemoteService.h"
 
+struct ThreadLocalInfo{
+	struct REDAInlineListNode parent;
+	RTI_UINT32 localId;
+	void * data;
+	DDS_Boolean freshData;
+	DDS_InstanceHandle_t instanceHandle;
+	DDSWaitSet *waitSet;
+};
+
 ClientRemoteService::ClientRemoteService(const char *remoteServiceName, long clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
-m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_replyWaitset(NULL), m_requestInstanceHandle(DDS_HANDLE_NIL), m_replyFilter(NULL), m_numSec(0), clientID(clientId)
+m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_replyWaitset(NULL), m_replyFilter(NULL), m_numSec(0), clientID(clientId)
 {
 	char topicNames[100];
 	char filterLine[100];
+	char threadName[100];
 	DDS_StringSeq parameters;
 
 	parameters.ensure_length(1 , 1);
@@ -26,7 +36,7 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 						strncat(topicNames, requestTypeName, 49); topicNames[99] = '\0';
 						if((m_requestTopic = clientParticipant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 						{
-							if((m_requestDataWriter = (RemoteServiceWriter*)clientParticipant->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+							if((m_requestDataWriter = clientParticipant->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 							{
 								if((m_replySubscriber = clientParticipant->create_subscriber(DDS_SUBSCRIBER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 								{
@@ -37,18 +47,18 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 										strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
 										if((m_replyTopic = clientParticipant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 										{
-											_snprintf(filterLine, 100, "%s%ld and %s", "clientId = ", clientId, "numSec = %0");
+											_snprintf(filterLine, 100, "%s%ld", "clientId = ", clientId);
 											if((m_replyFilter = clientParticipant->create_contentfilteredtopic(remoteServiceName, m_replyTopic, filterLine, parameters)) != NULL)
 											{
-												if((m_replyDataReader = (RemoteServiceReader*)clientParticipant->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+												if((m_replyDataReader = clientParticipant->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 												{
-													if(createConditionAndWaitset() == 0)
-													{
+													if(createConditions() == 0){
 														strncpy(m_remoteServiceName, remoteServiceName, 50);
+														_snprintf(threadName, 100, "%s_%ld", "ClientRemoteServiceThread", clientId);
+														REDAInlineList_init(&threadLocalInfoList);
 														return;
 													}
-													else
-													{
+													else{
 														printf("ERROR <ClientRemoteService>: Cannot create waitset\n");
 													}
 
@@ -60,61 +70,47 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 
 											clientParticipant->delete_topic(m_replyTopic);
 										}
-										else
-										{
+										else{
 											printf("ERROR <ClientRemoteService>: Cannot create the reply topic\n");
 										}
 									}
-									else
-									{
+									else{
 										printf("ERROR <ClientRemoteService>: Bad parameter (replyTypeName)\n");
 									}
-
 									clientParticipant->delete_subscriber(m_replySubscriber);
 								}
-								else
-								{
+								else{
 									printf("ERROR <ClientRemoteService>: Cannot create the reply subscriber\n");
 								}
-
 								clientParticipant->delete_datawriter(m_requestDataWriter);
 							}
-							else
-							{
+							else{
 								printf("ERROR <ClientRemoteService>: Cannot create the request data writer\n");
 							}
-
 							clientParticipant->delete_topic(m_requestTopic);
 						}
-						else
-						{
+						else{
 							printf("ERROR <ClientRemoteService>: Cannot create the request topic\n");
 						}
 					}
-					else
-					{
+					else{
 						printf("ERROR <ClientRemoteService>: Bad parameter (requestTypeName)\n");
 					}
-
 					clientParticipant->delete_publisher(m_requestPublisher);
 				}
-				else
-				{
+				else{
 					printf("ERROR <ClientRemoteService>: Cannot create the request publisher\n");
 				}
 			}
-			else
-			{
+			else{
 				printf("ERROR <ClientRemoteService>: Bad parameter (remoteServiceName)\n");
 			}
 		}
-		else
-		{
+		else{
 			printf("ERROR <ClientRemoteService>: Cannot create mutex\n");
 		}
 	}
-	else
-	{
+	else{
 		printf("ERROR <ClientRemoteService>: Bad parameter (clientParticipant)\n");
 	}
 }
@@ -128,146 +124,170 @@ ClientRemoteService::~ClientRemoteService()
 	}
 }
 
-DDSCSMessages ClientRemoteService::execute(void *data, int timeout)
+
+
+ThreadLocalInfo* ClientRemoteService::newInfo(RTI_UINT32 id)
+{
+	ThreadLocalInfo *info = new ThreadLocalInfo();
+	info->localId = id;
+	info->data = NULL;
+	info->freshData = DDS_BOOLEAN_FALSE;
+	info->waitSet = new DDSWaitSet();
+	info->waitSet->attach_condition(m_newReplyInstanceCondition);
+	info->instanceHandle = DDS_HANDLE_NIL;		
+	REDAInlineList_addNodeToBackEA(&threadLocalInfoList, &info->parent);
+
+	return info;
+}
+
+ThreadLocalInfo* ClientRemoteService::getInfo(RTI_UINT32 id)
+{
+	ThreadLocalInfo *info = NULL;
+	info = (ThreadLocalInfo *)REDAInlineList_getFirst(&threadLocalInfoList);
+	while(info != NULL && info->localId != id)
+	{
+		info = (ThreadLocalInfo *)info->parent.next;
+	}
+	return info;
+}
+
+ThreadLocalInfo* ClientRemoteService::getInfo()
+{
+	RTI_UINT32 id = RTIOsapiThread_getCurrentThreadID();
+
+	ThreadLocalInfo *info = getInfo(id);
+
+	return info != NULL ? info : newInfo(id);
+
+}
+
+void ClientRemoteService::removeInfo()
+{
+	ThreadLocalInfo *info = NULL;
+	RTI_UINT32 id = RTIOsapiThread_getCurrentThreadID();
+	info = (ThreadLocalInfo *)REDAInlineList_getFirst(&threadLocalInfoList);
+	while(info != NULL && info->localId != id)
+	{
+		info = (ThreadLocalInfo *)info->parent.next;
+	}
+	if(info != NULL)
+	{
+		info->waitSet->detach_condition(m_newReplyInstanceCondition);
+		info->waitSet->detach_condition(m_replyCondition);
+		delete(info->waitSet);
+		info->waitSet = NULL;
+		info->data = NULL;
+		info->instanceHandle = DDS_HANDLE_NIL;
+		delete(info);
+	}
+}
+
+DDSCSMessages ClientRemoteService::execute(void *request, void *reply, int timeout)
 {
 	DDSCSMessages returnedValue = CLIENT_ERROR;
 	DDSConditionSeq replyActiveConditions;
 	DDSConditionSeq noServerConditions;
 	DDS_ReturnCode_t retCode;
 	DDS_Duration_t tTimeout = {timeout, 0};
-	DDS_StringSeq parameters;
-	DDS_Char paramValue[25];
+	ThreadLocalInfo *info;
 
-	if(data != NULL)
+	if(request != NULL)
 	{
-		*(long*)data = clientID;
-		((long*)data)[1] = m_numSec;
-		if(m_replyFilter->get_expression_parameters(parameters) == DDS_RETCODE_OK)
+		*(long*)request = clientID;
+		((long*)request)[1] = RTIOsapiThread_getCurrentThreadID();
+		if(take())
 		{
-			_snprintf(paramValue, 25, "%lu", m_numSec);
-			DDS_String_free(parameters[0]);
-			parameters[0] = DDS_String_dup(paramValue);
-			if(m_replyFilter->set_expression_parameters(parameters) != DDS_RETCODE_OK)
-			{
-				printf("ERROR <execute>: Setting the filter parameters\n");
-			}
-		}
-		m_numSec++;
+			info = getInfo();
+			/* Thread safe num_Sec handling */
+			((long*)request)[2] = m_numSec;
+			m_numSec++;
+			give();
+			info->data = reply;
+			// Matching server (Request DataReader) detection.
+			// Drawbacks:
+			//		1.- If the publication matched status is triggered between get_publication_matched_status()
+			//          and wait() calls it will be missed.
+			//      2.- If there is no matched entity the total wait time may be up to 2* tTimeout
+			DDS_PublicationMatchedStatus pms;
+			m_requestDataWriter->get_publication_matched_status(pms);
+			if(pms.current_count < 1){
+				retCode = m_matchingPubWaitset->wait(noServerConditions, tTimeout);
 
-		if(DDS_InstanceHandle_equals(&m_requestInstanceHandle, &DDS_HANDLE_NIL) == DDS_BOOLEAN_FALSE)
-		{
-			m_requestInstanceHandle = m_requestDataWriter->register_instance(*(const char*)data);
-		}
-
-		// Matching server (Request DataReader) detection.
-		// Drawbacks:
-		//		1.- If the publication matched status is triggered between get_publication_matched_status()
-		//          and wait() calls it will be missed.
-		//      2.- If there is no matched entity the total wait time may be up to 2* tTimeout
-		DDS_PublicationMatchedStatus pms;
-		m_requestDataWriter->get_publication_matched_status(pms);
-		if(pms.current_count < 1)
-		{
-			retCode = m_matchingPubWaitset->wait(noServerConditions, tTimeout);
-
-			if(retCode == DDS_RETCODE_OK)
-			{
-				if(noServerConditions.length() == 0)
-				{
-					printf("WARNING <execute>: No server discovered.\n");
-					returnedValue = NO_SERVER;
-				}
-			}
-		}
-		if(returnedValue != NO_SERVER && (m_requestDataWriter->write(*(char*)data, m_requestInstanceHandle) == DDS_RETCODE_OK))
-		{
-			retCode = m_replyWaitset->wait(replyActiveConditions, tTimeout);
-
-			if(retCode == DDS_RETCODE_OK)
-			{
-				if(replyActiveConditions.length() == 0)
-				{
-					printf("WARNING <execute>:Wait timeout. Any conditions triggered\n");
-					returnedValue = SERVER_TIMEOUT;
-				}
-				else
-				{
-					if(replyActiveConditions[0] == m_replyCondition)
-					{
-						returnedValue = OPERATION_SUCCESSFUL;
+				if(retCode == DDS_RETCODE_OK){
+					if(noServerConditions.length() == 0){
+						printf("WARNING <execute>: No server discovered.\n");
+						returnedValue = NO_SERVER;
 					}
 				}
 			}
-			else if(retCode == DDS_RETCODE_TIMEOUT)
+			if(returnedValue != NO_SERVER && (write(request) == DDS_RETCODE_OK))
 			{
-				printf("WARNING <execute>: Wait timeout.\n");
-				returnedValue = SERVER_TIMEOUT;
+				// Without guard conditions this algorithm DO NOT guarantee a maximum Timeout
+				// The code would be cleaner if i would be sure about the returned active conditions
+				// on multiple waitsets attached to the same condition.
+				do{
+					if(DDS_InstanceHandle_is_nil(&info->instanceHandle)){
+						retCode = info->waitSet->wait(replyActiveConditions, tTimeout);
+
+						if(retCode == DDS_RETCODE_OK){
+							returnedValue = handleNewInstance(info, replyActiveConditions);
+						}
+					}
+					else{
+						retCode = info->waitSet->wait(replyActiveConditions, tTimeout);
+						if(retCode == DDS_RETCODE_OK){
+							returnedValue = handleNewSample(info, request, replyActiveConditions);
+						}
+					}
+					if(retCode == DDS_RETCODE_TIMEOUT){
+						printf("WARNING <execute>: Wait timeout.\n");
+						returnedValue = SERVER_TIMEOUT;
+					}
+				}while(returnedValue == RECEIVED_OTHER_REQUEST);
 			}
-			else
-			{
+			else{
+				returnedValue = CLIENT_ERROR;
 				printf("ERROR <execute>: Some error occurs\n");
 			}
 		}
+		else{
+			printf("ERROR<execute>: failed to take mutex\n");
+		}
 	}
-	else
-	{
+	else{
 		printf("ERROR<execute>: Bad parameter(data)\n");
 	}
 
 	return returnedValue;
 }
 
-void ClientRemoteService::take()
+bool ClientRemoteService::take()
 {
-	if(RTIOsapiSemaphore_take(mutex, NULL) != RTI_OSAPI_SEMAPHORE_STATUS_OK)
-	{
-		printf("ERROR <execute>: failed to take mutex\n");
-	}
+	return RTIOsapiSemaphore_take(mutex, NULL) == RTI_OSAPI_SEMAPHORE_STATUS_OK;
 }
 
 void ClientRemoteService::give()
 {
-	if(RTIOsapiSemaphore_give(mutex) != RTI_OSAPI_SEMAPHORE_STATUS_OK)
-	{
+	if(RTIOsapiSemaphore_give(mutex) != RTI_OSAPI_SEMAPHORE_STATUS_OK){
 		printf("ERROR <ClientRemoteService::give>: failed to give mutex\n");
 	}
 }
 
-int ClientRemoteService::createConditionAndWaitset()
+int ClientRemoteService::createConditions()
 {
 	int returnedValue = -1;
+	if(m_replyDataReader != NULL){
+		m_newReplyInstanceCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
+		m_replyCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_NOT_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 
-	m_replyWaitset = new DDSWaitSet();
-
-	if(m_replyWaitset != NULL)
-	{
-		if(m_replyDataReader != NULL)
-		{
-			m_replyCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
-
-			if(m_replyCondition != NULL)
-			{
-				if(m_replyWaitset->attach_condition(m_replyCondition) == DDS_RETCODE_OK)
-				{
-					returnedValue = 0;
-				}
-			}
-			else
-			{
-				printf("ERROR <createConditionAndWaitset>: Cannot allocate the condition\n");
-			}
-
-		}
-		else
-		{
-			printf("ERROR <createConditionAndWaitset>: There is not reader\n");
-		}
+		returnedValue = m_newReplyInstanceCondition != NULL && m_replyCondition != NULL;
 	}
-	else
-	{
-		printf("ERROR <createConditionAndWaitset>: Cannot allocate the waitset\n");
+	else{
+		printf("ERROR <createConditionAndWaitset>: There is not reader\n");
 	}
-	if(returnedValue == 0){
+
+	if(returnedValue == 0)
+	{
 		m_matchingPubWaitset = new DDSWaitSet();
 
 		if(m_matchingPubWaitset != NULL)
@@ -276,27 +296,21 @@ int ClientRemoteService::createConditionAndWaitset()
 			{
 				m_matchingCondition = m_requestDataWriter->get_statuscondition();
 
-				if(m_matchingCondition != NULL)
-				{
+				if(m_matchingCondition != NULL){
 					m_matchingCondition->set_enabled_statuses(DDS_PUBLICATION_MATCHED_STATUS);
-					if(m_matchingPubWaitset->attach_condition(m_matchingCondition) == DDS_RETCODE_OK)
-					{
+					if(m_matchingPubWaitset->attach_condition(m_matchingCondition) == DDS_RETCODE_OK){
 						returnedValue = 0;
 					}
 				}
-				else
-				{
+				else{
 					printf("ERROR <createConditionAndWaitset>: Cannot allocate the condition\n");
 				}
-
 			}
-			else
-			{
+			else{
 				printf("ERROR <createConditionAndWaitset>: There is not reader\n");
 			}
 		}
-		else
-		{
+		else{
 			printf("ERROR <createConditionAndWaitset>: Cannot allocate the waitset\n");
 		}
 	}
@@ -304,40 +318,3 @@ int ClientRemoteService::createConditionAndWaitset()
 	return returnedValue;
 }
 
-int ClientRemoteService::getServerReply(void *requestData, void *replyData)
-{
-	int returnedValue = -1;
-	bool exitLoop = false;
-	DDS_SampleInfo info;
-	DDS_StatusMask readerStatus;
-
-	readerStatus = m_replyDataReader->get_status_changes();
-	if(readerStatus & DDS_DATA_AVAILABLE_STATUS)
-	{
-		do
-		{
-			if(m_replyDataReader->take_next_sample(*(char*)replyData, info) == DDS_RETCODE_OK)
-			{
-				if(info.valid_data == DDS_BOOLEAN_TRUE)
-				{
-					if(((long*)requestData)[1] == ((long*)replyData)[1])
-					{
-						returnedValue = 0;
-						exitLoop = true;
-					}
-				}
-			}
-			else
-			{
-				exitLoop = true;
-			}
-		}
-		while(!exitLoop);
-	}
-	else
-	{
-		printf("ERROR <getServerReply>: Not new samples\n");
-	}
-
-	return returnedValue;
-}

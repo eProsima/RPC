@@ -383,102 +383,6 @@
       Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
       >
             <File
-              RelativePath=".\subscribe_PulseRequest.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseRequestPlugin.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseRequestSupport.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseRequestUtils.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReply.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReplyPlugin.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReplySupport.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReplyUtils.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequest.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequestPlugin.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequestSupport.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequestUtils.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReply.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReplyPlugin.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReplySupport.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReplyUtils.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequest.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequestPlugin.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequestSupport.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequestUtils.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReply.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReplyPlugin.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReplySupport.cxx"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReplyUtils.cxx"
-              >
-            </File>
-            <File
               RelativePath=".\RateGen.cxx"
               >
             </File>
@@ -488,6 +392,22 @@
             </File>
             <File
               RelativePath=".\RateGenSupport.cxx"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReply.cxx"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReplyPlugin.cxx"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReplySupport.cxx"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReplyUtils.cxx"
               >
             </File>
             <File
@@ -504,102 +424,6 @@
       Filter="h;hpp;hxx;hm;inl"
       >
             <File
-              RelativePath=".\subscribe_PulseRequest.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseRequestPlugin.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseRequestSupport.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseRequestUtils.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReply.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReplyPlugin.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReplySupport.h"
-              >
-            </File>
-            <File
-              RelativePath=".\subscribe_PulseReplyUtils.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequest.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequestPlugin.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequestSupport.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseRequestUtils.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReply.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReplyPlugin.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReplySupport.h"
-              >
-            </File>
-            <File
-              RelativePath=".\unsubscribe_PulseReplyUtils.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequest.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequestPlugin.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequestSupport.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionRequestUtils.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReply.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReplyPlugin.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReplySupport.h"
-              >
-            </File>
-            <File
-              RelativePath=".\noReturnFunctionReplyUtils.h"
-              >
-            </File>
-            <File
               RelativePath=".\RateGen.h"
               >
             </File>
@@ -609,6 +433,22 @@
             </File>
             <File
               RelativePath=".\RateGenSupport.h"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReply.h"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReplyPlugin.h"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReplySupport.h"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenRequestReplyUtils.h"
               >
             </File>
             <File

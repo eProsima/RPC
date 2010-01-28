@@ -312,6 +312,8 @@ public class IDL2DDSCS
 		// first load main language template
 		StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("Utils", DefaultTemplateLexer.class, null);
 		
+		StringTemplate headerFile = utilTemplates.getInstanceOf("headerFile");
+		StringTemplate definitionFile = utilTemplates.getInstanceOf("definitionFile");
 		StringTemplate headerRequest = utilTemplates.getInstanceOf("header");
 		StringTemplate headerReply = utilTemplates.getInstanceOf("header");
 		StringTemplate definitionRequest = utilTemplates.getInstanceOf("definition");
@@ -321,19 +323,20 @@ public class IDL2DDSCS
 			externalDir.append("/");	
 		}
 		
+		headerFile.setAttribute("name", ifc.getName());
+		definitionFile.setAttribute("name", ifc.getName());
+		
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
 			headerRequest.setAttribute("funName", op.getName());
 			definitionRequest.setAttribute("funName", op.getName());
-			definitionRequest.setAttribute("interfaceName", ifc.getName());
 			
 			headerReply.setAttribute("funName", op.getName());
 			headerReply.setAttribute("type", "Reply");
 			
 			definitionReply.setAttribute("funName", op.getName());
 			definitionReply.setAttribute("type", "Reply");
-			definitionReply.setAttribute("interfaceName", ifc.getName());
 						
 			setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name}");
 			setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name}");
@@ -341,29 +344,25 @@ public class IDL2DDSCS
 				headerReply.setAttribute("returnType", op.getReturnType());					
 				definitionReply.setAttribute("returnType", op.getReturnType());
 			}
-
-			//System.out.println(request.toString());
-			externalDir.append(op.getName()).append("RequestUtils.h");
-			writeFile(externalDir.toString(), headerRequest);
-			externalDir.deleteCharAt(externalDir.length() - 1);
-			externalDir.append("cxx");
-			writeFile(externalDir.toString(), definitionRequest);
-
-			//System.out.println(request.toString());
-			externalDir.delete(externalDirLength + op.getName().length(), externalDir.length());
-			externalDir.append("ReplyUtils.h");
-			writeFile(externalDir.toString(), headerReply);
-			externalDir.deleteCharAt(externalDir.length() - 1);
-			externalDir.append("cxx");
-			writeFile(externalDir.toString(), definitionReply);
+			headerFile.setAttribute("classes", headerRequest.toString());
+			headerFile.setAttribute("classes", headerReply.toString());
 			
-			externalDir.delete(externalDirLength, externalDir.length());
-
+			definitionFile.setAttribute("classes", definitionRequest.toString());
+			definitionFile.setAttribute("classes", definitionReply.toString());
+			
 			headerRequest.reset();
 			headerReply.reset();
 			definitionRequest.reset();
 			definitionReply.reset();
 		}
+		//System.out.println(request.toString());
+		externalDir.append(ifc.getName()).append("RequestReplyUtils.h");
+		writeFile(externalDir.toString(), headerFile);
+		externalDir.deleteCharAt(externalDir.length() - 1);
+		externalDir.append("cxx");
+		writeFile(externalDir.toString(), definitionFile);
+		
+		externalDir.delete(externalDirLength, externalDir.length());
 	}
 	public static void genIdl(Interface ifc) throws Exception
 	{
@@ -471,22 +470,17 @@ public class IDL2DDSCS
 		externalDir.append(ifc.getName()).append("-vs2005.sln");
 		writeFile(externalDir.toString(), solution);
 		externalDir.delete(externalDirLength, externalDir.length());
-		
-		// Server and client common files
-		Operation op = null;		
-		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
-			op = (Operation) iter.next();
-			stringBuf.delete(0, stringBuf.length());
-			stringBuf.append(op.getName()).append("Request");
-			setProjectFiles(stringBuf, projectClient, projectServer, false);
-			stringBuf.delete(op.getName().length(), stringBuf.length());
-			stringBuf.append("Reply");
-			setProjectFiles(stringBuf, projectClient, projectServer, false);
-		}
+			
 		stringBuf.delete(0, stringBuf.length());
 		stringBuf.append(ifc.getName());
+		// Server and client common files
+
 		setProjectFiles(stringBuf, projectClient, projectServer, true);
-		
+		stringBuf.append("RequestReply");
+		setProjectFiles(stringBuf, projectClient, projectServer, false);
+
+		stringBuf.delete(0, stringBuf.length());
+		stringBuf.append(ifc.getName());		
 		// Client exclusive files
 		setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
 				
@@ -497,7 +491,7 @@ public class IDL2DDSCS
 		setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
 
 		projectServer.setAttribute("sourceFiles", "Server.cxx");
-
+		
 		//System.out.println(request.toString());
 		externalDir.append(ifc.getName()).append("Client-vs2005.vcproj");
 		writeFile(externalDir.toString(), projectClient);

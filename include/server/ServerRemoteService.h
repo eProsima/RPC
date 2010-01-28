@@ -3,8 +3,6 @@
 
 #include "ndds/ndds_cpp.h"
 #include "utils/ddscs.h"
-#include "utils/RemoteServiceWriter.h"
-#include "utils/RemoteServiceReader.h"
 #include "utils/DDSCSTypedefs.h"
 #include "utils/DDSCSMessages.h"
 
@@ -48,9 +46,11 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 
 		int sendReply(void* requestData, void *replyData);
 
+        virtual int sendError(void *requestData, DDSCSMessages errorMessage) = 0;
+
         execFunction getExecFunction();
         
-        int sendError(void *requestData, DDSCSMessages errorMessage);
+        virtual void on_data_available(DDSDataReader* reader) = 0;
 
         virtual void on_requested_deadline_missed(
                 DDSDataReader* /*reader*/,
@@ -76,9 +76,9 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
                 DDSDataReader* /*reader*/,
                 const DDS_SubscriptionMatchedStatus& /*status*/) {}
 
-        virtual void on_data_available(DDSDataReader* reader);
-
-    private:
+	protected:
+	
+		virtual int sendReply(void *replyData) = 0;
 
 		struct ServiceNode listNode;
 
@@ -114,12 +114,12 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
         /**
          * \brief The data reader used to communicate with the client. Client -> Server
          */
-        RemoteServiceReader *requestDataReader;
+		DDSDataReader *requestDataReader;
         
         /**
          * \brief The data writer used to communicate with the client. Server -> Client
          */
-        RemoteServiceWriter *replyDataWriter;
+		DDSDataWriter *replyDataWriter;
 
 
         fCreateRequestData createRequestData;
@@ -131,8 +131,6 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
         fDeleteReplyData deleteReplyData;
 
         fExecFunction execFunction;
-
-        int sendReply(void *replyData);
 };
 
 #endif // _SERVERREMOTESERVICE_H_

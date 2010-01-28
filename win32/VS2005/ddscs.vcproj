@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="ddscs"
 	ProjectGUID="{F7D9B1F2-168C-422E-8680-D9C86C394CEE}"
 	RootNamespace="ddscs"
@@ -391,11 +391,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\utils\RemoteServiceReader.h"
+				RelativePath="..\..\include\utils\GenericClientRemoteService.gen"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\utils\RemoteServiceWriter.h"
+				RelativePath="..\..\include\utils\GenericClientRemoteService.h"
 				>
 			</File>
 			<File

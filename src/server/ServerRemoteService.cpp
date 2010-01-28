@@ -2,31 +2,31 @@
 #include "server/DDSCSServer.h"
 #include "utils/ThreadPoolManager.h"
 
-void ServerRemoteService::on_data_available(DDSDataReader* reader)
-{
-     void* data = NULL;
-    DDS_SampleInfo info;
-
-    data = createRequestData();
-
-    if(data != NULL)
-    {
-        if((requestDataReader->take_next_sample(*(char*)data, info) != DDS_RETCODE_OK) ||
-			(info.valid_data != DDS_BOOLEAN_TRUE))
-        {
-            deleteRequestData(data);
-            data = NULL;
-		}
-		else
-		{
-			server->getPool()->schedule(getExecFunction(), data, server, this);
-		}
-    }
-    else
-    {
-        printf("ERROR <getClientRequest>: Cannot allocate request data\n");
-    }
-}
+//void ServerRemoteService::on_data_available(DDSDataReader* reader)
+//{
+//     void* data = NULL;
+//    DDS_SampleInfo info;
+//
+//    data = createRequestData();
+//
+//    if(data != NULL)
+//    {
+//        if((requestDataReader->take_next_sample(*(char*)data, info) != DDS_RETCODE_OK) ||
+//			(info.valid_data != DDS_BOOLEAN_TRUE))
+//        {
+//            deleteRequestData(data);
+//            data = NULL;
+//		}
+//		else
+//		{
+//			server->getPool()->schedule(getExecFunction(), data, server, this);
+//		}
+//    }
+//    else
+//    {
+//        printf("ERROR <getClientRequest>: Cannot allocate request data\n");
+//    }
+//}
 
 ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
         fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData,
@@ -56,7 +56,7 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
                     strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
                     if((replyTopic = serverParticipant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                     {
-                        if((replyDataWriter = (RemoteServiceWriter*)serverParticipant->create_datawriter(replyTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+                        if((replyDataWriter = serverParticipant->create_datawriter(replyTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                         {
                             if((requestSubscriber = serverParticipant->create_subscriber(DDS_SUBSCRIBER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                             {
@@ -67,7 +67,7 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
                                     strncat(topicNames, requestTypeName, 49); topicNames[49] = '\0';
                                     if((requestTopic = serverParticipant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                                     {
-										if((requestDataReader = (RemoteServiceReader*)serverParticipant->create_datareader(requestTopic, DDS_DATAREADER_QOS_DEFAULT, this, DDS_DATA_AVAILABLE_STATUS)) != NULL)
+										if((requestDataReader = serverParticipant->create_datareader(requestTopic, DDS_DATAREADER_QOS_DEFAULT, this, DDS_DATA_AVAILABLE_STATUS)) != NULL)
                                         {
                                             strncpy(this->remoteServiceName, remoteServiceName, 50);
                                             return;
@@ -149,7 +149,8 @@ int ServerRemoteService::sendReply(void* requestData, void *replyData)
         {
             ((long*)replyData)[0] = ((long*)requestData)[0];
             ((long*)replyData)[1] = ((long*)requestData)[1];
-            ((long*)replyData)[2] = OPERATION_SUCCESSFUL;
+            ((long*)replyData)[2] = ((long*)requestData)[2];
+            ((long*)replyData)[3] = OPERATION_SUCCESSFUL;
 			returnedValue = sendReply(replyData);
 
         }
@@ -166,43 +167,43 @@ int ServerRemoteService::sendReply(void* requestData, void *replyData)
     return returnedValue;
 }
 
-int ServerRemoteService::sendReply(void *replyData)
-{
-    int returnedValue = -1;
-
-    if(replyDataWriter->write(*(char*)replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
-    {
-		returnedValue = 0;
-    }
-    return returnedValue;
-}
-
-int ServerRemoteService::sendError(void *requestData, DDSCSMessages errorMessage)
-{
-    int returnedValue = -1;
-    void *replyData = NULL;
-
-    replyData = createReplyData();
-
-    if(replyData != NULL)
-    {
-        ((long*)replyData)[0] = ((long*)requestData)[0];
-        ((long*)replyData)[1] = ((long*)requestData)[1];
-        ((long*)replyData)[2] = errorMessage;
-
-        if(replyDataWriter->write(*(char*)replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
-        {
-            returnedValue = 0;
-        }
-
-        deleteReplyData(replyData);
-        deleteRequestData(requestData);
-    }
-    else
-    {
-        printf("ERROR <sendReply>: Bad parameter (replyData)\n");
-    }
-
-
-    return returnedValue;
-}
+//int ServerRemoteService::sendReply(void *replyData)
+//{
+//    int returnedValue = -1;
+//
+//    if(replyDataWriter->write(*(char*)replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
+//    {
+//		returnedValue = 0;
+//    }
+//    return returnedValue;
+//}
+//
+//int ServerRemoteService::sendError(void *requestData, DDSCSMessages errorMessage)
+//{
+//    int returnedValue = -1;
+//    void *replyData = NULL;
+//
+//    replyData = createReplyData();
+//
+//    if(replyData != NULL)
+//    {
+//        ((long*)replyData)[0] = ((long*)requestData)[0];
+//        ((long*)replyData)[1] = ((long*)requestData)[1];
+//        ((long*)replyData)[2] = errorMessage;
+//
+//        if(replyDataWriter->write(*(char*)replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
+//        {
+//            returnedValue = 0;
+//        }
+//
+//        deleteReplyData(replyData);
+//        deleteRequestData(requestData);
+//    }
+//    else
+//    {
+//        printf("ERROR <sendReply>: Bad parameter (replyData)\n");
+//    }
+//
+//
+//    return returnedValue;
+//}
