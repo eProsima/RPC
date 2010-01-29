@@ -275,7 +275,7 @@ configuration(target, conf) ::= <<
         Name="VCCLCompilerTool"
         Optimization="0"
         AdditionalIncludeDirectories="&quot;\$(NDDSHOME)\\include&quot;;&quot;\$(NDDSHOME)\\include\\ndds&quot;;&quot;\$(NDDSHOME)\\ddscs\\include&quot;"
-        PreprocessorDefinitions="WIN32;RTI_WIN32;_CONSOLE;$preprocessorDefs(conf)$"
+        PreprocessorDefinitions="WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$preprocessorDefs(conf)$"
         BasicRuntimeChecks="3"
         $runtimeLibrary(conf)$ 
         UsePrecompiledHeader="0"

@@ -91,11 +91,7 @@ class $funName$$type$Utils
     public:
 
         static const char* registerType(DDSDomainParticipant *clientParticipant);
-        
-        static void* createEmptyData();
-        
-        static void deleteData(void *data);
- 
+         
         static $funName$$type$* createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
         
         static void extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
@@ -137,16 +133,6 @@ const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParti
     }
 
     return typeName;
-}
-
-void* $funName$$type$Utils::createEmptyData()
-{
-    return $funName$$type$TypeSupport::create_data();
-}
-
-void $funName$$type$Utils::deleteData(void *data)
-{
-    $funName$$type$TypeSupport::delete_data(($funName$$type$*)data);
 }
 
 $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)

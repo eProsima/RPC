@@ -239,6 +239,6 @@ void ThreadPoolManager::schedule(void (*execFunction)(DDSCSServer*, void*, Serve
 		//   2. Locking errors
 		// each of them are sign of serious problems. 
 		// More serious at least, than using DataReader thread for sending an error response.
-		service->sendError(data, result);
+		service->sendReply(data, NULL, result);
 	}
 }

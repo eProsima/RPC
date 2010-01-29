@@ -23,6 +23,9 @@ class DDSCS_WIN32_DLL_API DDSCSServer
 		ThreadPoolManager* getPool();
 
 		void executeServer(DDS_Long seconds = DDSCS_DEFAULT_PERIOD_SEC, DDS_UnsignedLong nanoseconds = DDSCS_DEFAULT_PERIOD_NSEC);
+
+		void schedule(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, ServerRemoteService *service);
+
     protected:
 
         /**
@@ -43,9 +46,7 @@ class DDSCS_WIN32_DLL_API DDSCSServer
          * \param replyTypeName The name of the type used to receiver the function's return values. Cannot be NULL.
          * \return If the function works succesfully, 0 is returned. In other case, -1 is returned.
          */
-        int createRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName,
-                fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData, 
-                fCreateReplyData createReplyData, fDeleteReplyData deleteReplyData, fExecFunction execFunction);
+        int setRemoteService(ServerRemoteService *newRemoteService);
 
         DDSDomainParticipant* getParticipant();
 

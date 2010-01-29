@@ -13,7 +13,6 @@
  * 1.0,27ene10,RodM Created                                                *
  * =====================================================================   *
  */
-//subscribe_PulseRequestDataReader
 
 #if defined(TName) && defined(TDataWriter) && defined(TDataReader) && \
     defined(TDataTypeSupport) && defined(TData) && defined(TDataSeq)
@@ -61,7 +60,7 @@ DDSCSMessages TName::handleNewInstance(ThreadLocalInfo *localInfo, DDSConditionS
 				DDS_ReturnCode_t retcode = replyDataReader->take_w_condition(dataSeq, infoSeq, DDS_LENGTH_UNLIMITED, m_newReplyInstanceCondition);
 				if (retcode == DDS_RETCODE_NO_DATA) {
 					printf("ERROR <handleNewInstance>: no data\n");
-					value = SERVER_TIMEOUT;
+					value = localInfo->freshData == DDS_BOOLEAN_TRUE ? OPERATION_SUCCESSFUL : SERVER_TIMEOUT;
 				} 
 				else if (retcode != DDS_RETCODE_OK) {
 					printf("ERROR <handleNewInstance>: take error %d\n", retcode);
@@ -71,9 +70,11 @@ DDSCSMessages TName::handleNewInstance(ThreadLocalInfo *localInfo, DDSConditionS
 					ThreadLocalInfo* threadInfo;
 					for (int i = 0; i < dataSeq.length(); ++i) {
 						if (infoSeq[i].valid_data) {
-							threadInfo = dataSeq[0].localId == localInfo->localId ? localInfo : getInfo(dataSeq[0].localId);
+							threadInfo = dataSeq[i].localId == localInfo->localId ? localInfo : getInfo(dataSeq[i].localId);
 							if(threadInfo != NULL && DDS_InstanceHandle_is_nil(&threadInfo->instanceHandle)){
 								threadInfo->instanceHandle = infoSeq[i].instance_handle;
+								threadInfo->waitSet->detach_condition(m_newReplyInstanceCondition);
+								threadInfo->waitSet->attach_condition(m_replyCondition);
 								retcode = TDataTypeSupport::copy_data((TDataReply*)threadInfo->data, &dataSeq[i]);
 								if (retcode != DDS_RETCODE_OK) {
 									printf("ERROR <handleNewInstance>: copy data error %d\n", retcode);
@@ -122,6 +123,7 @@ DDSCSMessages TName::handleNewInstance(ThreadLocalInfo *localInfo, DDSConditionS
 DDSCSMessages TName::handleNewSample(ThreadLocalInfo *localInfo, void *request, DDSConditionSeq& conditionSeq)
 {
 	DDSCSMessages value = RECEIVED_OTHER_REQUEST;
+	TDataRequest *requestData = (TDataRequest*)request;
 	// Just one thread taking samples from DataReader at the same time and modifying localInfo->instanceHandle
 	if(take())
 	{
@@ -131,10 +133,10 @@ DDSCSMessages TName::handleNewSample(ThreadLocalInfo *localInfo, void *request, 
 			{
 				DDS_SampleInfoSeq infoSeq;
 				TDataSeq dataSeq;
-				DDS_ReturnCode_t retcode = replyDataReader->take_w_condition(dataSeq, infoSeq, DDS_LENGTH_UNLIMITED, m_replyCondition);
+				DDS_ReturnCode_t retcode = replyDataReader->take_instance(dataSeq, infoSeq, DDS_LENGTH_UNLIMITED,
+					localInfo->instanceHandle, DDS_ANY_SAMPLE_STATE, DDS_NOT_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 				if (retcode == DDS_RETCODE_NO_DATA) {
-					printf("ERROR <handleNewSample>: no data\n");
-					value = SERVER_TIMEOUT;
+					value = RECEIVED_OTHER_REQUEST;
 				} else if (retcode != DDS_RETCODE_OK) {
 					printf("ERROR <handleNewSample>: take error %d\n", retcode);
 					value = CLIENT_ERROR;
@@ -143,10 +145,10 @@ DDSCSMessages TName::handleNewSample(ThreadLocalInfo *localInfo, void *request, 
 					ThreadLocalInfo* threadInfo;
 					for (int i = 0; i < dataSeq.length(); ++i) {
 						if (infoSeq[i].valid_data) {
-							threadInfo = dataSeq[0].localId == localInfo->localId ? localInfo : getInfo(dataSeq[0].localId);
+							threadInfo = dataSeq[i].localId == localInfo->localId ? localInfo : getInfo(dataSeq[i].localId);
 							if(threadInfo != NULL)
 							{
-								if(((long*)&dataSeq[0])[2] == ((long*)request)[2])
+								if(dataSeq[0].numSec == requestData->numSec)
 								{
 									retcode = TDataTypeSupport::copy_data((TDataReply*)threadInfo->data, &dataSeq[i]);
 									if (retcode != DDS_RETCODE_OK) {

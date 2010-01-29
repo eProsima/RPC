@@ -86,7 +86,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     DDSCSMessages retValue;
     $varDecl(type=type, name="returnedValue", create="yes")$    
     $name$Request *instance = NULL;
-    $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
+    $name$Reply *retInstance = $name$ReplyTypeSupport::create_data();
     instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
     retValue = $name$_Service->execute(instance, retInstance);
     switch (retValue)
@@ -113,8 +113,8 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             break;
     };
     
-    $name$ReplyUtils::deleteData(retInstance);
-    $name$RequestUtils::deleteData(instance);
+    $name$ReplyTypeSupport::delete_data(retInstance);
+    $name$RequestTypeSupport::delete_data(instance);
 
     $if(!voidInitMap.(type))$
     return returnedValue;

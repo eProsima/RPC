@@ -161,9 +161,8 @@ $exFunctionHeader(class=interfaceName,...)$
            
     replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$nextParam(previous=inoutParams, params=outputParams)$$lastParam(params=[inoutParams,outputParams],type=type)$);
                                                   
+    // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData);
-    $name$RequestUtils::deleteData(requestData);
-    $name$ReplyUtils::deleteData(replyData);
 }
 >>
 
@@ -184,6 +183,7 @@ $doNotEditC()$
 
 #include "$interfaceName$Server.h"
 #include "$interfaceName$Plugin.h"
+#include "$interfaceName$ServerRemoteServiceSupport.h"
 
 $interfaceName$Server::$interfaceName$Server() : DDSCSServer()
 {
@@ -362,11 +362,10 @@ $[nextParam(params=inputParams),nextParam(previous=inputParams, params=inoutPara
  * Uses:
  */ createRemoteService(interfaceName, funNames) ::= <<
 $funNames:{funName |
-    this->createRemoteService("$funName$", $funName$RequestUtils::registerType(getParticipant()),
+    this->setRemoteService(new $funName$ServerRemoteService("$funName$", this,
+            $funName$RequestUtils::registerType(getParticipant()),
             $funName$ReplyUtils::registerType(getParticipant()),
-            $funName$RequestUtils::createEmptyData, $funName$RequestUtils::deleteData,
-            $funName$ReplyUtils::createEmptyData, $funName$ReplyUtils::deleteData,
-            &$interfaceName$Server::$funName$);
+            &$interfaceName$Server::$funName$, getParticipant()));
 }$
 >>
 

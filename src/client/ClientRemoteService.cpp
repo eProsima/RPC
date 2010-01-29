@@ -5,11 +5,7 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 {
 	char topicNames[100];
 	char filterLine[100];
-	char threadName[100];
 	DDS_StringSeq parameters;
-
-	parameters.ensure_length(1 , 1);
-	parameters[0] = DDS_String_dup("0");
 
 	if(clientParticipant != NULL)
 	{
@@ -43,9 +39,8 @@ m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_repl
 											{
 												if((m_replyDataReader = clientParticipant->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
 												{
-													if(createConditions() == 0){
+													if(createConditions()){
 														strncpy(m_remoteServiceName, remoteServiceName, 50);
-														_snprintf(threadName, 100, "%s_%ld", "ClientRemoteServiceThread", clientId);
 														REDAInlineList_init(&threadLocalInfoList);
 														return;
 													}
@@ -266,7 +261,7 @@ void ClientRemoteService::give()
 
 int ClientRemoteService::createConditions()
 {
-	int returnedValue = -1;
+	int returnedValue = 0;
 	if(m_replyDataReader != NULL){
 		m_newReplyInstanceCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 		m_replyCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_NOT_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
@@ -277,8 +272,9 @@ int ClientRemoteService::createConditions()
 		printf("ERROR <createConditionAndWaitset>: There is not reader\n");
 	}
 
-	if(returnedValue == 0)
+	if(returnedValue)
 	{
+		returnedValue = 0;
 		m_matchingPubWaitset = new DDSWaitSet();
 
 		if(m_matchingPubWaitset != NULL)
@@ -289,9 +285,7 @@ int ClientRemoteService::createConditions()
 
 				if(m_matchingCondition != NULL){
 					m_matchingCondition->set_enabled_statuses(DDS_PUBLICATION_MATCHED_STATUS);
-					if(m_matchingPubWaitset->attach_condition(m_matchingCondition) == DDS_RETCODE_OK){
-						returnedValue = 0;
-					}
+					returnedValue = m_matchingPubWaitset->attach_condition(m_matchingCondition) == DDS_RETCODE_OK;
 				}
 				else{
 					printf("ERROR <createConditionAndWaitset>: Cannot allocate the condition\n");

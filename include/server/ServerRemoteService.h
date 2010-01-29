@@ -32,9 +32,7 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
          * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
          */
         ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
-                fCreateRequestData createRequestData, fDeleteRequestData deleteRequestData,
-                fCreateReplyData createReplyData, fDeleteReplyData deleteReplyData,
-                fExecFunction execFunction, DDSDomainParticipant *clientParticipant);
+                fExecFunction execFunction, DDSDomainParticipant *serverParticipant);
 
         char* getRemoteServiceName();
 
@@ -43,13 +41,10 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 			return (REDAInlineListNode*)&listNode;
 		}
 
-
-		int sendReply(void* requestData, void *replyData);
-
-        virtual int sendError(void *requestData, DDSCSMessages errorMessage) = 0;
-
         execFunction getExecFunction();
-        
+
+		virtual int sendReply(void* request, void *reply, DDSCSMessages errorMessage = OPERATION_SUCCESSFUL) = 0;
+
         virtual void on_data_available(DDSDataReader* reader) = 0;
 
         virtual void on_requested_deadline_missed(
@@ -77,8 +72,6 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
                 const DDS_SubscriptionMatchedStatus& /*status*/) {}
 
 	protected:
-	
-		virtual int sendReply(void *replyData) = 0;
 
 		struct ServiceNode listNode;
 
@@ -125,10 +118,6 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
         fCreateRequestData createRequestData;
 
         fDeleteRequestData deleteRequestData;
-
-        fCreateReplyData createReplyData;
-
-        fDeleteReplyData deleteReplyData;
 
         fExecFunction execFunction;
 };

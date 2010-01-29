@@ -182,6 +182,7 @@ public class IDL2DDSCS
 		genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
 				"functionImpl", "functionHeader", "Client", ifc);
 		genRemoteServiceSupport(ifc, "Client");
+		genRemoteServiceSupport(ifc, "Server");
 
         System.out.println("Generating Server Code...");
         genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
@@ -313,27 +314,27 @@ public class IDL2DDSCS
 		// first load main language template
 		StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RemoteServiceSupport", DefaultTemplateLexer.class, null);
 		
-		StringTemplate clientHeader = utilTemplates.getInstanceOf("clientHeader");
-		StringTemplate clientDefinition = utilTemplates.getInstanceOf("clientDefinition");
+		StringTemplate header = utilTemplates.getInstanceOf(side + "Header");
+		StringTemplate definition = utilTemplates.getInstanceOf(side + "Definition");
 				
 		if(externalDirLength > 0){
 			externalDir.append("/");	
 		}
 		
-		clientHeader.setAttribute("interfaceName", ifc.getName());
-		clientDefinition.setAttribute("interfaceName", ifc.getName());
+		header.setAttribute("interfaceName", ifc.getName());
+		definition.setAttribute("interfaceName", ifc.getName());
 		
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
-			clientHeader.setAttribute("funNames", op.getName());
-			clientDefinition.setAttribute("funNames", op.getName());
+			header.setAttribute("funNames", op.getName());
+			definition.setAttribute("funNames", op.getName());
 		}
 		externalDir.append(ifc.getName()).append(side).append("RemoteServiceSupport.h");
-		writeFile(externalDir.toString(), clientHeader);
+		writeFile(externalDir.toString(), header);
 		externalDir.deleteCharAt(externalDir.length() - 1);
 		externalDir.append("cxx");
-		writeFile(externalDir.toString(), clientDefinition);
+		writeFile(externalDir.toString(), definition);
 		
 		externalDir.delete(externalDirLength, externalDir.length());	
 	}
@@ -520,6 +521,7 @@ public class IDL2DDSCS
 		// Server exclusive files
 		setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
 		setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
+		setProjectFile(stringBuf, projectServer, "ServerRemoteServiceSupport", ifc.getName().length());
 
 		projectServer.setAttribute("sourceFiles", "Server.cxx");
 		

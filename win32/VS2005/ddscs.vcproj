@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;"
-				PreprocessorDefinitions="NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSCS_WIN32_DLL_EXPORTS;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSCS_WIN32_DLL_EXPORTS;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
@@ -130,7 +130,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;"
-				PreprocessorDefinitions="NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSCS_WIN32_DLL_EXPORTS;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSCS_WIN32_DLL_EXPORTS;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -214,7 +214,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;"
-				PreprocessorDefinitions="WIN32;RTI_WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;RTI_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -285,7 +285,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;"
-				PreprocessorDefinitions="WIN32;RTI_WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;RTI_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -396,6 +396,14 @@
 			</File>
 			<File
 				RelativePath="..\..\include\utils\GenericClientRemoteService.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\utils\GenericServerRemoteService.gen"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\utils\GenericServerRemoteService.h"
 				>
 			</File>
 			<File
