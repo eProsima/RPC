@@ -415,6 +415,10 @@
               >
             </File>
             <File
+              RelativePath=".\RateGenClientRemoteServiceSupport.cxx"
+              >
+            </File>
+            <File
               RelativePath=".\Client.cxx"
               >
             </File>
@@ -453,6 +457,10 @@
             </File>
             <File
               RelativePath=".\RateGenProxy.h"
+              >
+            </File>
+            <File
+              RelativePath=".\RateGenClientRemoteServiceSupport.h"
               >
             </File>
     </Filter> 

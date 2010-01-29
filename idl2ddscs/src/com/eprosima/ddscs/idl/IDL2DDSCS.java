@@ -181,6 +181,7 @@ public class IDL2DDSCS
         System.out.println("Generating Client Code...");
 		genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
 				"functionImpl", "functionHeader", "Client", ifc);
+		genRemoteServiceSupport(ifc, "Client");
 
         System.out.println("Generating Server Code...");
         genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
@@ -307,6 +308,35 @@ public class IDL2DDSCS
 		}
 	}
 	
+	public static void genRemoteServiceSupport(Interface ifc, String side)
+	{
+		// first load main language template
+		StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RemoteServiceSupport", DefaultTemplateLexer.class, null);
+		
+		StringTemplate clientHeader = utilTemplates.getInstanceOf("clientHeader");
+		StringTemplate clientDefinition = utilTemplates.getInstanceOf("clientDefinition");
+				
+		if(externalDirLength > 0){
+			externalDir.append("/");	
+		}
+		
+		clientHeader.setAttribute("interfaceName", ifc.getName());
+		clientDefinition.setAttribute("interfaceName", ifc.getName());
+		
+		Operation op = null;
+		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
+			op = (Operation) iter.next();
+			clientHeader.setAttribute("funNames", op.getName());
+			clientDefinition.setAttribute("funNames", op.getName());
+		}
+		externalDir.append(ifc.getName()).append(side).append("RemoteServiceSupport.h");
+		writeFile(externalDir.toString(), clientHeader);
+		externalDir.deleteCharAt(externalDir.length() - 1);
+		externalDir.append("cxx");
+		writeFile(externalDir.toString(), clientDefinition);
+		
+		externalDir.delete(externalDirLength, externalDir.length());	
+	}
 	public static void genUtils(Interface ifc)
 	{
 		// first load main language template
@@ -483,6 +513,7 @@ public class IDL2DDSCS
 		stringBuf.append(ifc.getName());		
 		// Client exclusive files
 		setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
+		setProjectFile(stringBuf, projectClient, "ClientRemoteServiceSupport", ifc.getName().length());
 				
 		projectClient.setAttribute("sourceFiles", "Client.cxx");
 

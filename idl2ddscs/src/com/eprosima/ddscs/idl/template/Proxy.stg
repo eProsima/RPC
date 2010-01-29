@@ -88,12 +88,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     $name$Request *instance = NULL;
     $name$Reply *retInstance = ($name$Reply*)$name$ReplyUtils::createEmptyData();
     instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
-    retValue = $name$_Service->execute(instance);
-    if(retValue == OPERATION_SUCCESSFUL)
-    {
-      int ret = $name$_Service->getServerReply(instance, retInstance);
-      retValue = (ret == 0 ? (DDSCSMessages)((long*)retInstance)[3]: RECEIVED_OTHER_REQUEST);
-    }
+    retValue = $name$_Service->execute(instance, retInstance);
     switch (retValue)
     {
         case CLIENT_ERROR:
@@ -114,8 +109,10 @@ $functionHeader(class={$interfaceName$Proxy},...)$
         case OPERATION_SUCCESSFUL:
             $name$ReplyUtils::extractTypeData(retInstance$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
             $name$ReplyTypeSupport::print_data(retInstance);
+            $name$_Service->replyRead();            
             break;
     };
+    
     $name$ReplyUtils::deleteData(retInstance);
     $name$RequestUtils::deleteData(instance);
 
@@ -232,7 +229,7 @@ $invocations; separator="\n"$
  */ 
 createRemoteService(funNames) ::= <<
 $funNames:{funName |
-    this->$funName$_Service = new ClientRemoteService("$funName$",
+    this->$funName$_Service = new $funName$ClientRemoteService("$funName$",
                               getClientId(),
                               $funName$RequestUtils::registerType(getParticipant()),
                               $funName$ReplyUtils::registerType(getParticipant()),

@@ -132,7 +132,10 @@
   	<mkdir dir="${env.NDDSHOME}/ddscs"/>
   	
   	<copy todir="${env.NDDSHOME}/ddscs/include" overwrite="yes" preservelastmodified="yes">
-  		<fileset dir="../include" includes="**/*.h" excludes="**/.svn"/>
+  		<fileset dir="../include" excludes="**/.svn">
+  			<include name="**/*.h"/>
+  			<include name="**/*.gen"/>
+		</fileset>
   	</copy>
   	<copy todir="${env.NDDSHOME}/ddscs/lib" overwrite="yes" preservelastmodified="yes">
   		<fileset dir="../lib" includes="**/*" excludes="**/.svn"/>
@@ -153,7 +156,10 @@
   	<delete file="../ddscs.zip"/>
   	
   	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
-  		<fileset dir=".." includes="include/**/*.h" excludes="**/.svn"/>
+  		<fileset dir=".." excludes="**/.svn">
+  			<include name="include/**/*.h"/>
+  			<include name="include/**/*.gen"/>
+		</fileset>
   	</copy>
   	<copy todir="${tmp.dir}/ddscs" overwrite="yes" preservelastmodified="yes">
   		<fileset dir=".." includes="lib/**/*" excludes="**/.svn"/>

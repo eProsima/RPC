@@ -1,14 +1,5 @@
 #include "client/ClientRemoteService.h"
 
-struct ThreadLocalInfo{
-	struct REDAInlineListNode parent;
-	RTI_UINT32 localId;
-	void * data;
-	DDS_Boolean freshData;
-	DDS_InstanceHandle_t instanceHandle;
-	DDSWaitSet *waitSet;
-};
-
 ClientRemoteService::ClientRemoteService(const char *remoteServiceName, long clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
 m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_replyWaitset(NULL), m_replyFilter(NULL), m_numSec(0), clientID(clientId)
 {
@@ -316,5 +307,18 @@ int ClientRemoteService::createConditions()
 	}
 
 	return returnedValue;
+}
+
+void ClientRemoteService::replyRead()
+{
+	RTI_UINT32 id = RTIOsapiThread_getCurrentThreadID();
+	if(take())
+	{
+		ThreadLocalInfo *info = getInfo(id);
+		if(info != NULL){
+			info->freshData = DDS_BOOLEAN_FALSE;
+		}
+		give();
+	}
 }
 

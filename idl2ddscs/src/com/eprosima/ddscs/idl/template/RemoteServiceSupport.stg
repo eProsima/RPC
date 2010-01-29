@@ -40,10 +40,12 @@ clientHeader(interfaceName,funNames) ::= <<
 
 $doNotEditC()$
 
-#include "client/GenericClientRemoteService.h"
+#include "utils/GenericClientRemoteService.h"
+#include "$interfaceName$RequestReplySupport.h"
 
-$funNames:{clientRemoteServiceHeader($it$)};separator="\n"$
+$funNames:{$clientRemoteServiceHeader(name=it)$};separator="\n"$
 
+#endif  // _$interfaceName;format="toUpper"$_CLIENT_REMOTE_SERVICE_SUPPORT_H_
 >>
 
 /**
@@ -60,9 +62,9 @@ $funNames:{clientRemoteServiceHeader($it$)};separator="\n"$
 clientDefinition(interfaceName,funNames) ::= <<
 $doNotEditC()$
 
-#include "client/GenericClientRemoteService.h"
+#include "$interfaceName$ClientRemoteServiceSupport.h"
 
-$funNames:{clientRemoteServiceImpl($it$)};separator="\n"$
+$funNames:{$clientRemoteServiceImpl(name = it)$};separator="\n"$
 
 >>
 
@@ -98,21 +100,21 @@ GENERIC_CLIENT_REMOTE_SERVICE($name$ClientRemoteService, $name$RequestDataWriter
  */ 
 clientRemoteServiceImpl(name) ::= <<
 
-#if defined(TName) && defined(TDataWriter) && defined(TDataReader) && defined(TDataTypeSupport) && defined(TDataSeq)
-
 /* Defines */
 #define TName            $name$ClientRemoteService
 #define TDataTypeSupport $name$ReplyTypeSupport
+#define TData            $name$
 #define TDataSeq         $name$ReplySeq
 #define TDataReader      $name$ReplyDataReader
 #define TDataWriter      $name$RequestDataWriter
 
 
-#include "client/GenericClientRemoteService.gen"
+#include "utils/GenericClientRemoteService.gen"
 
 
 #undef TName
 #undef TDataTypeSupport
+#undef TData
 #undef TDataSeq
 #undef TDataReader
 #undef TDataWriter

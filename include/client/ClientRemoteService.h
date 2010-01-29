@@ -6,7 +6,14 @@
 #include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
 
-typedef struct ThreadLocalInfo ThreadLocalInfo;
+typedef struct ThreadLocalInfo{
+	struct REDAInlineListNode parent;
+	RTI_UINT32 localId;
+	void * data;
+	DDS_Boolean freshData;
+	DDS_InstanceHandle_t instanceHandle;
+	DDSWaitSet *waitSet;
+} ThreadLocalInfo;
 
 class DDSCS_WIN32_DLL_API ClientRemoteService
 {
@@ -27,7 +34,7 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
         /**
          */
         DDSCSMessages execute(void *request, void* reply, int timeout = 3);
-        void* getServerReply();
+        void replyRead();
 
 		// Clean Thread local resources
 		void removeInfo();
@@ -83,12 +90,12 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
         /**
          * \brief The read condition used to detect new Reply Topic instances.
          */
-        DDSCondition *m_newReplyInstanceCondition;
+        DDSReadCondition *m_newReplyInstanceCondition;
 
 		/**
          * \brief The read condition used to receive server's replies.
          */
-        DDSCondition *m_replyCondition;
+        DDSReadCondition *m_replyCondition;
 
 		/**
          * \brief The status condition used to wait for a matching publication (server).
