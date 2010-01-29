@@ -76,6 +76,7 @@ typeInitMap ::= [
         "long double":"DDS_LongDouble",
         "boolean":"DDS_Boolean",
         "string":"char*",
+        "DDSCSMessages":"DDSCSMessages",
         default:
 ]
 

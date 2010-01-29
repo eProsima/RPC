@@ -83,13 +83,12 @@ class $interfaceName$Proxy : public DDSCSClient
 functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $functionHeader(class={$interfaceName$Proxy},...)$ 
 {
-    DDSCSMessages retValue;
-    $varDecl(type=type, name="returnedValue", create="yes")$    
+    $varDecl(type=type, name="returnedValue", create="yes")$
     $name$Request *instance = NULL;
     $name$Reply *retInstance = $name$ReplyTypeSupport::create_data();
     instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
-    retValue = $name$_Service->execute(instance, retInstance);
-    switch (retValue)
+    returnedValue = $name$_Service->execute(instance, retInstance);
+    switch (returnedValue)
     {
         case CLIENT_ERROR:
             printf("CLIENT ERROR\n");
@@ -107,7 +106,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             printf("SERVER WITHOUT RESOURCES\n");
             break;
         case OPERATION_SUCCESSFUL:
-            $name$ReplyUtils::extractTypeData(retInstance$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
+            $name$ReplyUtils::extractTypeData(retInstance$if(extractTypeDataParams(inoutParams=inoutParams, outputParams = outputParams))$, $extractTypeDataParams(inoutParams=inoutParams, outputParams = outputParams)$$endif$);
             $name$ReplyTypeSupport::print_data(retInstance);
             $name$_Service->replyRead();            
             break;
@@ -263,15 +262,48 @@ $endif$
  * extractTypeDataParams: Internal Template
  * Produces the params for calling RequestUtils extractTypeData method 
  * Params:
- *   type         : function return type.
- *   inputParams  : list of input params objects.
  *   inoutParams  : list of inout params objects.
  *   outputParams : list of output params objects.
  *
  * Uses:
- *  nextParam - inherited(cplusplus)
- *  lastParam - local
+ *  nextExtractParam - local
  */ 
-extractTypeDataParams(type, inputParams, inoutParams, outputParams) ::= <<
-$[nextParam(params=inoutParams),nextParam(previous=inoutParams, params=outputParams),lastParam(params=[inoutParams,outputParams],type=type)]$
+extractTypeDataParams(inoutParams, outputParams) ::= <<
+$[nextExtractParam(params=inoutParams),nextExtractParam(previous=inoutParams, params=outputParams)]$
+>>
+
+/**
+ * varExtractUse: Internal Template
+ * Uses the variable as a parameter to a funcion call 
+ * checking if ti is a pointer or not. 
+ * Params:
+ *   type     : Variable type.
+ *   name     : Variable name. 
+ *
+ * Uses:
+ */ 
+ varExtractUse(type, name) ::= <<
+$if(typeInitMap.(type))$$name$
+$else$
+$name$
+$endif$    
+>>
+
+
+/**
+ * nextExtractParam: Internal Template
+ * Adds arguments to a function call preceeding them by a comma
+ * if there are previous arguments. 
+ * Params:
+ *   previous   : List of previous arguments in the function call. Nullable.
+ *   params     : List of next arguments in the function call. Nullable.
+ *
+ * Uses:
+ */ 
+ nextExtractParam(previous, params) ::= <<
+$if(previous)$
+$if(params)$,
+$endif$
+$endif$
+$params:{$varExtractUse(type = it.type, name = it.name)$};separator=", "$
 >>

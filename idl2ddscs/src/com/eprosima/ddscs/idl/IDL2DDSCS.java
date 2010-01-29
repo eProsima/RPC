@@ -196,6 +196,7 @@ public class IDL2DDSCS
 	public static void genHeaderAndImpl(String suffix, String templateGroupId, String headerTemplateId,
 			String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId, String main, Interface ifc)
 	{
+		String returnType = "DDSCSMessages";
 		// first load main language template
 		StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
 		
@@ -225,17 +226,19 @@ public class IDL2DDSCS
 			definition.setAttribute("funNames", op.getName());			
 
 			// Function Declaration
-			funDecl.setAttribute("type", op.getReturnType());
+			
+			funDecl.setAttribute("type", returnType);
 			funDecl.setAttribute("name", op.getName());
 
 			// Function Definition
-			funDef.setAttribute("type", op.getReturnType());
+			funDef.setAttribute("type", returnType);
 			funDef.setAttribute("name", op.getName());
 			funDef.setAttribute("interfaceName", ifc.getName());
 
-			funCall.setAttribute("type", op.getReturnType());
+			// Function call
+			funCall.setAttribute("type", returnType);
 			funCall.setAttribute("name", op.getName());
-
+			
 			ListIterator paramIter = null;
 			InputParam ip = null;
 			for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
@@ -258,6 +261,14 @@ public class IDL2DDSCS
 				funDef.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
 				funCall.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
 			}
+			// Return Value
+			if(!"void".equals(op.getReturnType()))
+			{
+				funDecl.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+				funDef.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");				
+				funCall.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+			}
+			
 			header.setAttribute("funDecls", funDecl.toString());
 			definition.setAttribute("funImpls", funDef.toString());
 			mainTemplate.setAttribute("invocations", funCall.toString());
@@ -631,10 +642,17 @@ public class IDL2DDSCS
 	public static void writeFile(String file, StringTemplate template)
 	{
 		try {
-			FileWriter fw = new FileWriter(file);
-			String data = template.toString();
-			fw.write(data, 0,data.length());
-			fw.close();
+			File handle = new File(file);
+			if(!handle.exists() || replace || file.endsWith("idl"))
+			{
+				FileWriter fw = new FileWriter(file);
+				String data = template.toString();
+				fw.write(data, 0,data.length());
+				fw.close();
+			}
+			else{
+				System.out.println(file + " exists. Skipping.");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		

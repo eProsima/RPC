@@ -84,6 +84,7 @@ headerImpl(interfaceName, funNames, funDecls) ::= <<
 
 $doNotEditC()$
 
+#include "utils/DDSCSMessages.h"
 #include "$interfaceName$.h"
 
 class $interfaceName$Impl
@@ -120,7 +121,9 @@ class $interfaceName$Impl
 emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
 $functionHeader(class={$interfaceName$Impl},...)$ 
 {
-  $returnType(type)$
+  DDSCSMessages retCode = OPERATION_SUCCESSFUL;
+  
+  return retCode;
 } 
 >>
 
@@ -159,10 +162,10 @@ $exFunctionHeader(class=interfaceName,...)$
     $if(!voidInitMap.(type))$
     returnedValue = $endif$srv->_impl->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
            
-    replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$nextParam(previous=inoutParams, params=outputParams)$$lastParam(params=[inoutParams,outputParams],type=type)$);
+    replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$nextParam(previous=inoutParams, params=outputParams)$);
                                                   
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData);
+    service->sendReply(requestData, replyData, returnedValue);
 }
 >>
 
