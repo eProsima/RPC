@@ -49,15 +49,20 @@ class $interfaceName$Proxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Proxy();
+        $interfaceName$Proxy(unsigned int timeout = 3000);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy();
 
+        unsigned int getTimeout();
+        void setTimeout(unsigned int millis);
+        
         $funDecls; separator=";\n"$;
         
     private:
         $funNames:{ClientRemoteService *$it$_Service;};separator="\n"$ 
+        
+        unsigned int m_timeout;
 };
 
 #endif // _$interfaceName$_PROXY_H_
@@ -87,7 +92,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     $name$Request *instance = NULL;
     $name$Reply *retInstance = $name$ReplyTypeSupport::create_data();
     instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
-    returnedValue = $name$_Service->execute(instance, retInstance);
+    returnedValue = $name$_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
         case CLIENT_ERROR:
@@ -107,7 +112,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             break;
         case OPERATION_SUCCESSFUL:
             $name$ReplyUtils::extractTypeData(retInstance$if(extractTypeDataParams(inoutParams=inoutParams, outputParams = outputParams))$, $extractTypeDataParams(inoutParams=inoutParams, outputParams = outputParams)$$endif$);
-            $name$ReplyTypeSupport::print_data(retInstance);
+            //$name$ReplyTypeSupport::print_data(retInstance);
             $name$_Service->replyRead();            
             break;
     };
@@ -141,8 +146,9 @@ $doNotEditC()$
 #include "$interfaceName$Plugin.h"
 
 
-$interfaceName$Proxy::$interfaceName$Proxy() : DDSCSClient()
+$interfaceName$Proxy::$interfaceName$Proxy(unsigned int timeout) : DDSCSClient()
 {
+    m_timeout = timeout;
     $createRemoteService(funNames); separator="\n"$
 }
 
@@ -150,6 +156,16 @@ $interfaceName$Proxy::~$interfaceName$Proxy()
 {
     $funNames:{name|delete $name$_Service;}; separator="\n"$
 }
+
+unsigned int $interfaceName$Proxy::getTimeout()
+{
+  return m_timeout;
+}
+ 
+ void $interfaceName$Proxy::setTimeout(unsigned int millis)
+ {
+    m_timeout = millis;
+ }
 
 $funImpls; separator="\n"$
 >>
@@ -204,8 +220,10 @@ main(interfaceName, invocations) ::= <<
 
 int main()
 {
-    $interfaceName$Proxy *proxy = new $interfaceName$Proxy();
+    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(4000);
 $invocations; separator="\n"$
+
+ delete(proxy);
 }
 >>
 

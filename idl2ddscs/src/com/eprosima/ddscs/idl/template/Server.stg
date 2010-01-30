@@ -157,7 +157,7 @@ $exFunctionHeader(class=interfaceName,...)$
     $varDecl(type=type, name="returnedValue")$    
     $name$Reply *replyData = NULL;
 
-    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(extractTypeDataParams(type=type,...))$, $extractTypeDataParams(type=type,...)$$endif$);
+    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if([inputParams,inoutParams])$, $extractTypeDataParams(type=type,...)$$endif$);
                                          
     $if(!voidInitMap.(type))$
     returnedValue = $endif$srv->_impl->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);

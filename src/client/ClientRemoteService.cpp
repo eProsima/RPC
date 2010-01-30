@@ -111,7 +111,6 @@ ClientRemoteService::~ClientRemoteService()
 }
 
 
-
 ThreadLocalInfo* ClientRemoteService::newInfo(RTI_UINT32 id)
 {
 	ThreadLocalInfo *info = new ThreadLocalInfo();
@@ -168,13 +167,13 @@ void ClientRemoteService::removeInfo()
 	}
 }
 
-DDSCSMessages ClientRemoteService::execute(void *request, void *reply, int timeout)
+DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned int timeout)
 {
 	DDSCSMessages returnedValue = CLIENT_ERROR;
 	DDSConditionSeq replyActiveConditions;
 	DDSConditionSeq noServerConditions;
 	DDS_ReturnCode_t retCode;
-	DDS_Duration_t tTimeout = {timeout, 0};
+	DDS_Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
 	ThreadLocalInfo *info;
 
 	if(request != NULL)

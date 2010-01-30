@@ -33,11 +33,12 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 
         /**
          */
-        DDSCSMessages execute(void *request, void* reply, int timeout = 3);
+        DDSCSMessages execute(void *request, void* reply, unsigned int timeout);
         void replyRead();
 
 		// Clean Thread local resources
 		void removeInfo();
+
     protected:
 		// Prevents multiThreaded execution
 		bool take();
@@ -52,7 +53,7 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 		virtual DDSCSMessages handleNewInstance(ThreadLocalInfo *info, DDSConditionSeq& conditionSeq) = 0;
 		virtual DDSCSMessages handleNewSample(ThreadLocalInfo *info, void *request, DDSConditionSeq& conditionSeq) = 0;
 
-        /**
+		/**
          * \brief This field stores the name of the service.
          */
         char m_remoteServiceName[50];

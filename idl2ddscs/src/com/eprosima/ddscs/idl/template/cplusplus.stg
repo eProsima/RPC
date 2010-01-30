@@ -38,8 +38,8 @@ group cplusplus;
  *  argDeclRef - local
  */ 
 functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inoutParams)$,
-              $endif$$argDeclRef(inoutParams);separator=", "$$if(outputParams)$,
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$,
+              $endif$$endif$$argDeclRef(inoutParams);separator=", "$$if([inputParams,inoutParams])$$if(outputParams)$,$endif$
               $endif$$argDeclRef(outputParams);separator=", "$)
 >>
 

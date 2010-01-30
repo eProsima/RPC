@@ -94,7 +94,7 @@ class $funName$$type$Utils
          
         static $funName$$type$* createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
         
-        static void extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
+        static void extractTypeData($funName$$type$* data$if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$);
 };
 
 >>
@@ -147,7 +147,7 @@ $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator
     return instance;
 }
 
-void $funName$$type$Utils::extractTypeData($funName$$type$* data, $argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
+void $funName$$type$Utils::extractTypeData($funName$$type$* data $if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$)
 {
     $params:{$extractDataHelper(type=it.type, name=it.name)$};separator="\n"$
     
