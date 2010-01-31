@@ -33,7 +33,7 @@ class DDSCS_WIN32_DLL_API DDSCSServer
          *
          * \param domainId The domain id's value that the client will have.
          */
-        DDSCSServer(int domainId = 0);
+        DDSCSServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
 
         /// \brief The default destructor.
         virtual ~DDSCSServer();

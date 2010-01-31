@@ -4,7 +4,7 @@
 #include "ndds_utility_cpp.h"
 #endif
 
-DDSCSServer::DDSCSServer(int domainId) : domainId(domainId), participant(NULL), threadPoolManager(NULL)
+DDSCSServer::DDSCSServer(int domainId,unsigned int threadCount) : domainId(domainId), participant(NULL), threadPoolManager(NULL)
 {
 	DDS_DomainParticipantQos participantQOS;
 	int serverId = 0;
@@ -28,7 +28,7 @@ DDSCSServer::DDSCSServer(int domainId) : domainId(domainId), participant(NULL), 
 	}
 
 	// ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
-	threadPoolManager = new ThreadPoolManager();
+	threadPoolManager = new ThreadPoolManager(threadCount);
 
 	if(threadPoolManager == NULL)
 	{
