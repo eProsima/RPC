@@ -54,7 +54,7 @@ class $interfaceName$Server : public DDSCSServer
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Server();
+        $interfaceName$Server(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$Server();
@@ -188,7 +188,7 @@ $doNotEditC()$
 #include "$interfaceName$Plugin.h"
 #include "$interfaceName$ServerRemoteServiceSupport.h"
 
-$interfaceName$Server::$interfaceName$Server() : DDSCSServer()
+$interfaceName$Server::$interfaceName$Server(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
 {
     _impl = new $interfaceName$Impl();
     
@@ -264,7 +264,9 @@ main(interfaceName, invocations) ::= <<
 int main()
 {
     int returnedValue = 0;
-    $interfaceName$Server *server = new $interfaceName$Server();
+    int domainId = 0;
+    unsigned int threadPoolSize = 5;
+    $interfaceName$Server *server = new $interfaceName$Server(domainId, threadPoolSize);
     server->executeServer();
 
     delete server;

@@ -49,7 +49,7 @@ class $interfaceName$Proxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Proxy(unsigned int timeout = 3000);
+        $interfaceName$Proxy(int domainId = 0, unsigned int timeout = 3000);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy();
@@ -146,7 +146,7 @@ $doNotEditC()$
 #include "$interfaceName$Plugin.h"
 
 
-$interfaceName$Proxy::$interfaceName$Proxy(unsigned int timeout) : DDSCSClient()
+$interfaceName$Proxy::$interfaceName$Proxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
 {
     m_timeout = timeout;
     $createRemoteService(funNames); separator="\n"$
@@ -220,10 +220,15 @@ main(interfaceName, invocations) ::= <<
 
 int main()
 {
-    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(4000);
+    int domainId = 0;
+    unsigned int timeoutInMillis = 4000;
+    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMillis);
+    DDS_Duration_t period = {5,0};
+    
 $invocations; separator="\n"$
 
- delete(proxy);
+   delete(proxy);
+   NDDSUtility::sleep(period);
 }
 >>
 

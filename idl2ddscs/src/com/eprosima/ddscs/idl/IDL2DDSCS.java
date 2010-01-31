@@ -635,8 +635,8 @@ public class IDL2DDSCS
 				"   -language                : Programming language (C|C++|C#|java).\n" +
 				"   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +
 				"   -ppDisable               : Do not use C/C++ preprocessor.\n" +
-				"   -replace                 : replace rtiddsgen generated files.\n" +
-				"   -d <path>                : Output directory.\n");
+				"   -replace                 : replace rtiddsgen generated files.\n");
+//				"   -d <path>                : Output directory.\n");
 	}
 
 	public static void writeFile(String file, StringTemplate template)
