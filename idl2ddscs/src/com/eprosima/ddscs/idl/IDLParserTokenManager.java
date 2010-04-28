@@ -16,7 +16,6 @@
  */
 
 package com.eprosima.ddscs.idl;
-import com.eprosima.ddscs.idl.ast.*;
 
 /** Token Manager. */
 //@SuppressWarnings("all")
