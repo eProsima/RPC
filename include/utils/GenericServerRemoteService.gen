@@ -1,0 +1,103 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,27ene10,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+#if defined(TName) && defined(TDataWriter) && defined(TDataReader) &&     \
+    defined(TDataRequestTypeSupport) && defined(TDataReplyTypeSupport) && \
+    defined(TData)
+
+#define concatenate(A, B)  A ## B
+
+#define TData_Request(TData) concatenate(TData,Request)
+#define TDataRequest TData_Request(TData)
+#define TData_Reply(TData) concatenate(TData,Reply)
+#define TDataReply TData_Reply(TData)
+
+
+TName::TName(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
+        fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
+        ServerRemoteService(remoteServiceName, server, requestTypeName, replyTypeName, 
+                            execFunction, serverParticipant)
+{
+	replyFooDataWriter    = TDataWriter::narrow(replyDataWriter);
+	requestFooDataReader  = TDataReader::narrow(requestDataReader);
+}
+
+TName::~TName()
+{
+}
+
+int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
+{
+    int returnedValue = -1;
+    TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : TDataReplyTypeSupport::create_data();
+    TDataRequest *requestData = (TDataRequest*)request;
+
+    if(replyData != NULL)
+    {
+        if(requestData != NULL)
+        {
+			replyData->clientId = requestData->clientId;
+			replyData->localId = requestData->localId;
+			replyData->numSec = requestData->numSec;
+			replyData->ddscsRetCode = errorMessage;
+
+			if(replyFooDataWriter->write(*replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
+			{
+				returnedValue = 0;
+			}
+			TDataRequestTypeSupport::delete_data(requestData);
+        }
+        else
+        {
+            printf("ERROR <sendReply>>: Bad parameter (replyData)\n");
+        }
+		TDataReplyTypeSupport::delete_data(replyData);
+    }
+    else
+    {
+        printf("ERROR <sendReply>>: Bad parameter (requestData)\n");
+    }
+    return returnedValue;
+}
+
+
+void TName::on_data_available(DDSDataReader* reader)
+{
+    DDS_SampleInfo info;
+    TDataRequest *data = TDataRequestTypeSupport::create_data();
+    
+    while(data != NULL && requestFooDataReader->take_next_sample(*data, info) == DDS_RETCODE_OK)
+    {
+        if(info.valid_data == DDS_BOOLEAN_TRUE){
+			server->schedule(getExecFunction(), data, this);
+			data = TDataRequestTypeSupport::create_data();
+		}
+	}
+	if(data != NULL){
+		TDataRequestTypeSupport::delete_data(data);
+	}
+}
+
+
+
+#undef concatenate
+
+#undef TData_Request
+#undef TDataRequest
+#undef TData_Reply
+#undef TDataReply
+
+#endif
