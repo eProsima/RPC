@@ -24,8 +24,12 @@
 #define TData_Reply(TData) concatenate(TData,Reply)
 #define TDataReply TData_Reply(TData)
 
+#define XCLASS_NAME_DEFINITION(ClassName) CLASS_NAME_DEFINITION(ClassName)
+#define CLASS_NAME_DEFINITION(ClassName) const char* const ClassName::CLASS_NAME = #ClassName
 
-TName::TName(const char *remoteServiceName, long clientId, const char *requestTypeName,
+XCLASS_NAME_DEFINITION(TName);
+
+TName::TName(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName,
         const char *replyTypeName, DDSDomainParticipant *clientParticipant):
         ClientRemoteService(remoteServiceName, clientId, requestTypeName, replyTypeName, clientParticipant)
 {
@@ -49,72 +53,95 @@ DDS_ReturnCode_t TName::write(void *data)
 
 DDSCSMessages TName::handleNewInstance(ThreadLocalInfo *localInfo, DDSConditionSeq& conditionSeq)
 {
+    const char* const METHOD_NAME = "handleNewInstance";
 	DDSCSMessages value = RECEIVED_OTHER_REQUEST;
+
 	// Just one thread taking samples from DataReader at the same time and modifying localInfo->instanceHandle
 	if(take())
 	{
-		if(DDS_InstanceHandle_is_nil(&localInfo->instanceHandle)){
-			if(conditionSeq.length() == 1 && conditionSeq[0] == m_newReplyInstanceCondition){
+		if(DDS_InstanceHandle_is_nil(&localInfo->instanceHandle))
+        {
+			if(conditionSeq.length() == 1 && conditionSeq[0] == m_newReplyInstanceCondition)
+            {
 				DDS_SampleInfoSeq infoSeq;
 				TDataSeq dataSeq;
 				DDS_ReturnCode_t retcode = replyDataReader->take_w_condition(dataSeq, infoSeq, DDS_LENGTH_UNLIMITED, m_newReplyInstanceCondition);
-				if (retcode == DDS_RETCODE_NO_DATA) {
-					printf("ERROR <handleNewInstance>: no data\n");
+
+				if (retcode == DDS_RETCODE_NO_DATA)
+                {
+					printf("ERROR<%s::%s>: no data\n", CLASS_NAME, METHOD_NAME);
 					value = localInfo->freshData == DDS_BOOLEAN_TRUE ? OPERATION_SUCCESSFUL : SERVER_TIMEOUT;
 				} 
-				else if (retcode != DDS_RETCODE_OK) {
-					printf("ERROR <handleNewInstance>: take error %d\n", retcode);
+				else if (retcode != DDS_RETCODE_OK)
+                {
+					printf("ERROR<%s::%s>: take error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 					value = CLIENT_ERROR;
 				}
-				else{
+				else
+                {
 					ThreadLocalInfo* threadInfo;
-					for (int i = 0; i < dataSeq.length(); ++i) {
-						if (infoSeq[i].valid_data) {
+					for (int i = 0; i < dataSeq.length(); ++i)
+                    {
+						if (infoSeq[i].valid_data)
+                        {
 							threadInfo = dataSeq[i].localId == localInfo->localId ? localInfo : getInfo(dataSeq[i].localId);
-							if(threadInfo != NULL && DDS_InstanceHandle_is_nil(&threadInfo->instanceHandle)){
+							if(threadInfo != NULL && DDS_InstanceHandle_is_nil(&threadInfo->instanceHandle))
+                            {
 								threadInfo->instanceHandle = infoSeq[i].instance_handle;
 								threadInfo->waitSet->detach_condition(m_newReplyInstanceCondition);
 								threadInfo->waitSet->attach_condition(m_replyCondition);
 								retcode = TDataTypeSupport::copy_data((TDataReply*)threadInfo->data, &dataSeq[i]);
-								if (retcode != DDS_RETCODE_OK) {
-									printf("ERROR <handleNewInstance>: copy data error %d\n", retcode);
+
+								if (retcode != DDS_RETCODE_OK)
+                                {
+									printf("ERROR<%s::%s>: copy data error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 								}
-								else{
+								else
+                                {
 									threadInfo->freshData = DDS_BOOLEAN_TRUE;
 								}
 							}
-							else{
-								if(threadInfo == NULL){
-									printf("ERROR <handleNewInstance>: Unexpected instance received.\n");
+							else
+                            {
+								if(threadInfo == NULL)
+                                {
+									printf("ERROR<%s::%s>: Unexpected instance received.\n", CLASS_NAME, METHOD_NAME);
 								}
-								else{
-									printf("ERROR <handleNewInstance>: The instance handle WAS NOT NIL.\n");
+								else
+                                {
+									printf("ERROR<%s::%s>: The instance handle WAS NOT NIL.\n", CLASS_NAME, METHOD_NAME);
 								}
 							}
 						}
 					}
 					retcode = replyDataReader->return_loan(dataSeq, infoSeq);
-					if (retcode != DDS_RETCODE_OK) {
-						printf("ERROR <handleNewInstance>: return loan error %d\n", retcode);
+
+					if (retcode != DDS_RETCODE_OK)
+                    {
+						printf("ERROR<%s::%s>: return loan error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 					}
 				}
 			}
-			else if(conditionSeq.length() == 0){
+			else if(conditionSeq.length() == 0)
+            {
 				// TO_DO: Check if this is correct
-				printf("WARNING <handleNewInstance>: no active condition\n");
+				printf("WARNING<%s::%s>: no active condition\n", CLASS_NAME, METHOD_NAME);
 				value = SERVER_TIMEOUT;
 			}
-			else{
-				printf("Error <handleNewInstance>:WaitSet condition do not match.\n");
+			else
+            {
+				printf("Error<%s::%s>:WaitSet condition do not match.\n", CLASS_NAME, METHOD_NAME);
 				value = CLIENT_ERROR;
 			}
 		}
-		else{
+		else
+        {
 			// another thread has done the work for me :)
 			value = OPERATION_SUCCESSFUL;
 		}
+
+        give();
 	}
-	give();
 	
 	return value != RECEIVED_OTHER_REQUEST ? value : 
 		DDS_InstanceHandle_is_nil(&localInfo->instanceHandle) ? RECEIVED_OTHER_REQUEST : OPERATION_SUCCESSFUL;
@@ -122,8 +149,10 @@ DDSCSMessages TName::handleNewInstance(ThreadLocalInfo *localInfo, DDSConditionS
 
 DDSCSMessages TName::handleNewSample(ThreadLocalInfo *localInfo, void *request, DDSConditionSeq& conditionSeq)
 {
+    const char* const METHOD_NAME = "handleNewSample";
 	DDSCSMessages value = RECEIVED_OTHER_REQUEST;
 	TDataRequest *requestData = (TDataRequest*)request;
+
 	// Just one thread taking samples from DataReader at the same time and modifying localInfo->instanceHandle
 	if(take())
 	{
@@ -135,64 +164,83 @@ DDSCSMessages TName::handleNewSample(ThreadLocalInfo *localInfo, void *request, 
 				TDataSeq dataSeq;
 				DDS_ReturnCode_t retcode = replyDataReader->take_instance(dataSeq, infoSeq, DDS_LENGTH_UNLIMITED,
 					localInfo->instanceHandle, DDS_ANY_SAMPLE_STATE, DDS_NOT_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
-				if (retcode == DDS_RETCODE_NO_DATA) {
+
+				if (retcode == DDS_RETCODE_NO_DATA) 
+                {
 					value = RECEIVED_OTHER_REQUEST;
-				} else if (retcode != DDS_RETCODE_OK) {
-					printf("ERROR <handleNewSample>: take error %d\n", retcode);
+				} else if (retcode != DDS_RETCODE_OK) 
+                {
+					printf("ERROR<%s::%s>: take error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 					value = CLIENT_ERROR;
 				}
-				else{
+				else
+                {
 					ThreadLocalInfo* threadInfo;
-					for (int i = 0; i < dataSeq.length(); ++i) {
-						if (infoSeq[i].valid_data) {
+					for (int i = 0; i < dataSeq.length(); ++i)
+                    {
+						if (infoSeq[i].valid_data)
+                        {
 							threadInfo = dataSeq[i].localId == localInfo->localId ? localInfo : getInfo(dataSeq[i].localId);
+
 							if(threadInfo != NULL)
 							{
 								if(dataSeq[0].numSec == requestData->numSec)
 								{
 									retcode = TDataTypeSupport::copy_data((TDataReply*)threadInfo->data, &dataSeq[i]);
-									if (retcode != DDS_RETCODE_OK) {
-										printf("ERROR <handleNewSample>: copy data error %d\n", retcode);
+
+									if (retcode != DDS_RETCODE_OK)
+                                    {
+										printf("ERROR<%s::%s>: copy data error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 									}
-									else{
-										if(threadInfo->freshData == DDS_BOOLEAN_FALSE){
+									else
+                                    {
+										if(threadInfo->freshData == DDS_BOOLEAN_FALSE)
+                                        {
 											threadInfo->freshData = DDS_BOOLEAN_TRUE;
 										}
-										else{
-											printf("ERROR <handleNewSample>: There was UNREAD data.\n");
+										else
+                                        {
+											printf("ERROR<%s::%s>: There was UNREAD data.\n", CLASS_NAME, METHOD_NAME);
 										}
 									}
 								}
 								else{
-									printf("ERROR <handleNewSample>: Unexpected sequence number received.\n");
+									printf("ERROR<%s::%s>: Unexpected sequence number received.\n", CLASS_NAME, METHOD_NAME);
 								}
 							}
 							else{
-								printf("ERROR <handleNewSample>: Unexpected instance received.\n");
+								printf("ERROR<%s::%s>: Unexpected instance received.\n", CLASS_NAME, METHOD_NAME);
 							}
 						}
 					}
 					retcode = replyDataReader->return_loan(dataSeq, infoSeq);
-					if (retcode != DDS_RETCODE_OK) {
-						printf("ERROR <handleNewSample>: return loan error %d\n", retcode);
+
+					if (retcode != DDS_RETCODE_OK)
+                    {
+						printf("ERROR<%s::%s>: return loan error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 					}
 				}
 			}
-			else if(conditionSeq.length() == 0){
+			else if(conditionSeq.length() == 0)
+            {
 				// TO_DO: Check if this is correct
-				printf("WARNING <handleNewSample>: no active condition\n");
+				printf("WARNING<%s::%s>: no active condition\n", CLASS_NAME, METHOD_NAME);
 				value = SERVER_TIMEOUT;
 			}
 			else{
-				printf("Error <handleNewSample>:WaitSet condition do not match.\n");
+				printf("Error<%s::%s>:WaitSet condition do not match.\n", CLASS_NAME, METHOD_NAME);
 				value = CLIENT_ERROR;
 			}
-		}else {
+		}
+        else
+        {
 			// another thread has done the work for me :)
 			value = OPERATION_SUCCESSFUL;
 		}
+
+        give();
 	}
-	give();
+
 	return value != RECEIVED_OTHER_REQUEST ? value : 
 		localInfo->freshData == DDS_BOOLEAN_FALSE ? RECEIVED_OTHER_REQUEST : OPERATION_SUCCESSFUL;
 }

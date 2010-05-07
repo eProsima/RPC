@@ -63,7 +63,7 @@ definitionFile(name, classes) ::= <<
 $doNotEditC()$
 
 #include "$name$RequestReplyUtils.h"
-#include "$name$Plugin.h"
+#include "$name$RequestReplyPlugin.h"
 
 $classes:{$it$};separator="\n"$
  

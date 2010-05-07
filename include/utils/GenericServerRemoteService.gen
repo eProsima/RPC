@@ -49,7 +49,9 @@ int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
     {
         if(requestData != NULL)
         {
-			replyData->clientId = requestData->clientId;
+			replyData->clientId[0] = requestData->clientId[0];
+			replyData->clientId[1] = requestData->clientId[1];
+			replyData->clientId[2] = requestData->clientId[2];
 			replyData->localId = requestData->localId;
 			replyData->numSec = requestData->numSec;
 			replyData->ddscsRetCode = errorMessage;

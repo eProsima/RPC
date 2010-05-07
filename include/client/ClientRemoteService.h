@@ -27,7 +27,7 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
          * \param clientParticipant Pointer to the domain participant used by the client. Cannot be NULL.
          */
-        ClientRemoteService(const char *remoteServiceName, long clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant);
+        ClientRemoteService(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant);
 
         virtual ~ClientRemoteService();
 
@@ -113,6 +113,11 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          */
         DDSWaitSet *m_matchingPubWaitset;
 
+        int createEntities(DDSDomainParticipant *participant, const char *remoteServiceName,
+                const char *requestTypeName, const char *replyTypeName);
+
+        int enableEntities();
+
         /**
          * \brief This function initialize the condition and waitset used to received server communications.
          *
@@ -120,10 +125,12 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          */
         int createConditions();
 
+        int createServiceDetectSystem();
+
         DDSContentFilteredTopic *m_replyFilter;
 
         unsigned long m_numSec;
-		long clientID;
+		DDS_UnsignedLong clientID[3];
 
 		RTIOsapiSemaphore *mutex;
 

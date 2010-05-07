@@ -85,7 +85,7 @@ headerImpl(interfaceName, funNames, funDecls) ::= <<
 $doNotEditC()$
 
 #include "utils/DDSCSMessages.h"
-#include "$interfaceName$.h"
+#include "$interfaceName$RequestReplyUtils.h"
 
 class $interfaceName$Impl
 {
@@ -185,7 +185,7 @@ definitionServer(interfaceName, funNames, funImpls) ::= <<
 $doNotEditC()$
 
 #include "$interfaceName$Server.h"
-#include "$interfaceName$Plugin.h"
+#include "$interfaceName$RequestReplyPlugin.h"
 #include "$interfaceName$ServerRemoteServiceSupport.h"
 
 $interfaceName$Server::$interfaceName$Server(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)

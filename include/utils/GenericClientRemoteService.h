@@ -21,7 +21,7 @@
 class  TName : public ClientRemoteService                                         \
 {                                                                                 \
 public:                                                                           \
-  TName(const char *remoteServiceName, long clientId, const char *requestTypeName,\
+  TName(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName,\
         const char *replyTypeName, DDSDomainParticipant *clientParticipant);      \
   virtual ~TName();                                                               \
                                                                                   \
@@ -34,6 +34,7 @@ protected:                                                                      
                                                                                   \
 private:                                                                          \
                                                                                   \
+    static const char* const CLASS_NAME;                                          \
 	TDataWriter *requestDataWriter;                                               \
 	TDataReader *replyDataReader;                                                 \
 }

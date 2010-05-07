@@ -143,7 +143,7 @@ $doNotEditC()$
 
 #include "$interfaceName$Proxy.h"
 #include "client/ClientRemoteService.h"
-#include "$interfaceName$Plugin.h"
+#include "$interfaceName$RequestReplyPlugin.h"
 
 
 $interfaceName$Proxy::$interfaceName$Proxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
@@ -216,7 +216,7 @@ main(interfaceName, invocations) ::= <<
  */
 
 #include "$interfaceName$Proxy.h"
-#include "$interfaceName$Plugin.h"
+#include "$interfaceName$RequestReplyPlugin.h"
 
 int main()
 {

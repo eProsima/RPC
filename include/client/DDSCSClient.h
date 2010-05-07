@@ -35,7 +35,11 @@ class DDSCS_WIN32_DLL_API DDSCSClient
 
         DDSDomainParticipant* getParticipant();
 
-        long getClientId();
+		/*
+		 * \brief This function return a pointer the identifier of the client.
+		 * Type of client identifier is DDS_Long[3]. Don't modify client identifier.
+		 */
+        DDS_UnsignedLong* getClientId();
 
     private:
 
@@ -45,7 +49,7 @@ class DDSCS_WIN32_DLL_API DDSCSClient
          */
         DDSDomainParticipant *m_participant;
 
-        long m_clientId;
+        DDS_UnsignedLong m_clientId[3];
 
         /// \brief The domain identifier.
         int m_domainId;

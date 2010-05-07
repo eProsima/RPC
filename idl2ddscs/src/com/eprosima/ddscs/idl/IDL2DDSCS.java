@@ -49,14 +49,14 @@ public class IDL2DDSCS
 	private static String idlFile = null;
 	private static ArrayList command = null;	
 	private static StringBuffer env = null;	
-	
+
 	//TO_DO: ¿external properties?
 	private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL|Win32", true, true),
-											new VSConfiguration("Release DLL|Win32", false, true),
-											new VSConfiguration("Debug|Win32", true, false),
-											new VSConfiguration("Release|Win32", false, false)};	
+		new VSConfiguration("Release DLL|Win32", false, true),
+		new VSConfiguration("Debug|Win32", true, false),
+		new VSConfiguration("Release|Win32", false, false)};	
 	private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};	
-	
+
 	/**
 	 * @param args
 	 */
@@ -65,14 +65,14 @@ public class IDL2DDSCS
 		if(getOptions(args))
 		{
 			String ndds_home = System.getProperty("NDDSHOME");
-			
+
 			if(ndds_home != null)
 			{				
 				env = new StringBuffer();
 				// TO_DO: Check OS for space character handling in commands				
 				env.append("PATH=");	
 				env.append(ndds_home).append(File.separatorChar).append("scripts");				
-				
+
 				command = new ArrayList();
 				command.add("rtiddsgen.bat");
 				if(languageOption != null)
@@ -95,11 +95,12 @@ public class IDL2DDSCS
 				{
 					command.add("-replace");
 				}
-				if(externalDirLength > 0){
+				if(externalDirLength > 0)
+                {
 					command.add("-d");
-					command.add(externalDir);
+					command.add(externalDir.toString());
 				}
-				
+
 				try{
 					ddsGen(command, idlFile);
 					Module root = parse(idlFile);
@@ -131,35 +132,36 @@ public class IDL2DDSCS
 	public static void ddsGen(ArrayList c, String file) throws Exception{
 		String[] commandArray = new String[c.size() + 1];
 		String[] envp = {env.toString()};
-			c.add(file);			
-			commandArray = (String[])c.toArray(commandArray);
-			Process rtiddsgen = Runtime.getRuntime().exec(commandArray, envp);
-			ProcessOutput errorOutput = new ProcessOutput(rtiddsgen.getErrorStream(), "ERROR");
-			ProcessOutput normalOutput = new ProcessOutput(rtiddsgen.getInputStream(), "OUTPUT");
-			errorOutput.start();
-			normalOutput.start();
-			int exitVal = rtiddsgen.waitFor();
-			if(exitVal != 0)
-			{
-				throw new Exception();
-			}
-			//TO_DO: check rtiddsgen has been correctly called it may return exitVal of 0 without
-			// generating nothing, for example due to missing preprocessor.
-			//The best way to do this is checking for output files existence and modification times (if -replace)
-			//ddsGenRunCheck(file);
-			c.remove(c.size() - 1);		
+		c.add(file);			
+		System.out.print(file);
+		commandArray = (String[])c.toArray(commandArray);
+		Process rtiddsgen = Runtime.getRuntime().exec(commandArray, envp);
+		ProcessOutput errorOutput = new ProcessOutput(rtiddsgen.getErrorStream(), "ERROR");
+		ProcessOutput normalOutput = new ProcessOutput(rtiddsgen.getInputStream(), "OUTPUT");
+		errorOutput.start();
+		normalOutput.start();
+		int exitVal = rtiddsgen.waitFor();
+		if(exitVal != 0)
+		{
+			throw new Exception();
+		}
+		//TO_DO: check rtiddsgen has been correctly called it may return exitVal of 0 without
+		// generating nothing, for example due to missing preprocessor.
+		//The best way to do this is checking for output files existence and modification times (if -replace)
+		//ddsGenRunCheck(file);
+		c.remove(c.size() - 1);		
 	}
-	
+
 	public static void gen(Module root) throws Exception{
 		// get a group loader containing main templates dir and target subdir
-        System.out.println("Loading Templates...");		
+		System.out.println("Loading Templates...");		
 		StringTemplateGroupLoader loader = 
-		    new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
+			new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
 		StringTemplateGroup.registerGroupLoader(loader);
-		
+
 		StringTemplateGroup baseTemplate = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, null);
 		Map typeInitMap = baseTemplate.getMap("typeInitMap");
-		
+
 		// Adds Simple type redefinitions to typeInitMap, so the generation logic
 		// would treat them as simple types instead of constructed/template types.
 		SimpleTypedef typedef = null;
@@ -169,41 +171,41 @@ public class IDL2DDSCS
 			template = new StringTemplate(baseTemplate, typedef.getAlias());
 			typeInitMap.put(typedef.getAlias(), template);
 		}
-				
+
 		Interface ifc = root.getIfc();
-		
-        System.out.println("Generating VS2005 solution...");
+
+		System.out.println("Generating VS2005 solution...");
 		genVS2005(ifc);
-        System.out.println("Generating Request/Response Topics...");
+		System.out.println("Generating Request/Response Topics...");
 		genIdl(ifc);
-        System.out.println("Generating Utils...");
+		System.out.println("Generating Utils...");
 		genUtils(ifc);
-        System.out.println("Generating Client Code...");
+		System.out.println("Generating Client Code...");
 		genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
 				"functionImpl", "functionHeader", "Client", ifc);
 		genRemoteServiceSupport(ifc, "Client");
 		genRemoteServiceSupport(ifc, "Server");
 
-        System.out.println("Generating Server Code...");
-        genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
+		System.out.println("Generating Server Code...");
+		genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
 				"functionImpl", "exFunctionHeader", "Server", ifc);
 		genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
 				"emptyFunctionImpl", "functionHeader", null, ifc);
-        System.out.println("Finished.");
-		
+		System.out.println("Finished.");
+
 	}
-	
+
 	public static void genHeaderAndImpl(String suffix, String templateGroupId, String headerTemplateId,
 			String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId, String main, Interface ifc)
 	{
 		String returnType = "DDSCSMessages";
 		// first load main language template
 		StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
-		
+
 		// Templates for main program generation
 		StringTemplate mainTemplate = templatesGroup.getInstanceOf("main");
 		StringTemplate funCall = templatesGroup.getInstanceOf("functionCall");
-		
+
 		//Template for Header generation
 		StringTemplate header = templatesGroup.getInstanceOf(headerTemplateId);
 		header.setAttribute("interfaceName", ifc.getName());
@@ -215,10 +217,10 @@ public class IDL2DDSCS
 
 		//Template for function declaration:
 		StringTemplate funDecl = templatesGroup.getInstanceOf(functionHeaderTemplateId);
-		
+
 		//Template for function Definition:
 		StringTemplate funDef = templatesGroup.getInstanceOf(functionTemplateId);
-			
+
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
@@ -226,7 +228,7 @@ public class IDL2DDSCS
 			definition.setAttribute("funNames", op.getName());			
 
 			// Function Declaration
-			
+
 			funDecl.setAttribute("type", returnType);
 			funDecl.setAttribute("name", op.getName());
 
@@ -238,7 +240,7 @@ public class IDL2DDSCS
 			// Function call
 			funCall.setAttribute("type", returnType);
 			funCall.setAttribute("name", op.getName());
-			
+
 			ListIterator paramIter = null;
 			InputParam ip = null;
 			for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
@@ -268,7 +270,7 @@ public class IDL2DDSCS
 				funDef.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");				
 				funCall.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
 			}
-			
+
 			header.setAttribute("funDecls", funDecl.toString());
 			definition.setAttribute("funImpls", funDef.toString());
 			mainTemplate.setAttribute("invocations", funCall.toString());
@@ -276,7 +278,9 @@ public class IDL2DDSCS
 			funDef.reset();
 			funCall.reset();
 		}
-		if(externalDirLength > 0){
+
+		if(externalDirLength > 0)
+        {
 			externalDir.append("/");	
 		}
 		//System.out.println(header.toString());
@@ -287,9 +291,13 @@ public class IDL2DDSCS
 		externalDir.append("cxx");
 		writeFile(externalDir.toString(), definition);
 		externalDir.delete(externalDirLength, externalDir.length());
-		
+
 		// Main
 		if(main != null){
+			if(externalDirLength > 0)
+            {
+				externalDir.append("/");	
+			}
 			mainTemplate.setAttribute("interfaceName", ifc.getName());
 			externalDir.append(main).append(".cxx");
 			writeFile(externalDir.toString(), mainTemplate);
@@ -297,14 +305,14 @@ public class IDL2DDSCS
 		}
 	}
 
-	
-	
+
+
 	private static void  setRequestReplyParams(StringTemplate request, StringTemplate reply, Operation op, String attribute){
 		ListIterator paramIter = null;
 		InputParam ip = null;
 		for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
 			ip = (InputParam)paramIter.next();
-			
+
 			request.setAttribute(attribute, ip.getType(), ip.getName());
 		}
 		InoutParam iop = null;
@@ -319,22 +327,23 @@ public class IDL2DDSCS
 			reply.setAttribute(attribute, oup.getType(), oup.getName());
 		}
 	}
-	
+
 	public static void genRemoteServiceSupport(Interface ifc, String side)
 	{
 		// first load main language template
 		StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RemoteServiceSupport", DefaultTemplateLexer.class, null);
-		
+
 		StringTemplate header = utilTemplates.getInstanceOf(side + "Header");
 		StringTemplate definition = utilTemplates.getInstanceOf(side + "Definition");
-				
-		if(externalDirLength > 0){
+
+		if(externalDirLength > 0)
+        {
 			externalDir.append("/");	
 		}
-		
+
 		header.setAttribute("interfaceName", ifc.getName());
 		definition.setAttribute("interfaceName", ifc.getName());
-		
+
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
@@ -346,40 +355,41 @@ public class IDL2DDSCS
 		externalDir.deleteCharAt(externalDir.length() - 1);
 		externalDir.append("cxx");
 		writeFile(externalDir.toString(), definition);
-		
+
 		externalDir.delete(externalDirLength, externalDir.length());	
 	}
 	public static void genUtils(Interface ifc)
 	{
 		// first load main language template
 		StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("Utils", DefaultTemplateLexer.class, null);
-		
+
 		StringTemplate headerFile = utilTemplates.getInstanceOf("headerFile");
 		StringTemplate definitionFile = utilTemplates.getInstanceOf("definitionFile");
 		StringTemplate headerRequest = utilTemplates.getInstanceOf("header");
 		StringTemplate headerReply = utilTemplates.getInstanceOf("header");
 		StringTemplate definitionRequest = utilTemplates.getInstanceOf("definition");
 		StringTemplate definitionReply = utilTemplates.getInstanceOf("definition");
-				
-		if(externalDirLength > 0){
+
+		if(externalDirLength > 0)
+        {
 			externalDir.append("/");	
 		}
-		
+
 		headerFile.setAttribute("name", ifc.getName());
 		definitionFile.setAttribute("name", ifc.getName());
-		
+
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
 			headerRequest.setAttribute("funName", op.getName());
 			definitionRequest.setAttribute("funName", op.getName());
-			
+
 			headerReply.setAttribute("funName", op.getName());
 			headerReply.setAttribute("type", "Reply");
-			
+
 			definitionReply.setAttribute("funName", op.getName());
 			definitionReply.setAttribute("type", "Reply");
-						
+
 			setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name}");
 			setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name}");
 			if(!"void".equals(op.getReturnType())){
@@ -388,10 +398,10 @@ public class IDL2DDSCS
 			}
 			headerFile.setAttribute("classes", headerRequest.toString());
 			headerFile.setAttribute("classes", headerReply.toString());
-			
+
 			definitionFile.setAttribute("classes", definitionRequest.toString());
 			definitionFile.setAttribute("classes", definitionReply.toString());
-			
+
 			headerRequest.reset();
 			headerReply.reset();
 			definitionRequest.reset();
@@ -406,27 +416,38 @@ public class IDL2DDSCS
 		
 		externalDir.delete(externalDirLength, externalDir.length());
 	}
+
 	public static void genIdl(Interface ifc) throws Exception
 	{
+		int lastBarraOccurrency = 0;
+		String idlFilename = null;
+		
 		// first load main language template
 		StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, null);
-		
+
+		// Obtain only the filename of the idl file.
+		lastBarraOccurrency = idlFile.lastIndexOf('/');
+		if(lastBarraOccurrency == -1)
+			idlFilename = idlFile;
+		else
+			idlFilename = idlFile.substring(lastBarraOccurrency + 1);
 		StringTemplate theFile = idlTemplates.getInstanceOf("idlFile");
-		theFile.setAttribute("file", idlFile);
-		
+		theFile.setAttribute("file", idlFilename);
+
 		StringTemplate request = idlTemplates.getInstanceOf("request");
 		StringTemplate reply = idlTemplates.getInstanceOf("reply");
-				
-		if(externalDirLength > 0){
+
+		if(externalDirLength > 0)
+        {
 			externalDir.append("/");	
 		}
-		
+
 		Operation op = null;
 		for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
 			op = (Operation) iter.next();
 			request.setAttribute("name", op.getName());		
 			reply.setAttribute("name", op.getName());
-						
+
 			setRequestReplyParams(request, reply, op, "fields.{type, name}");
 			if(!"void".equals(op.getReturnType())){
 				reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
@@ -441,12 +462,12 @@ public class IDL2DDSCS
 		externalDir.append(ifc.getName()).append("RequestReply.idl");
 		writeFile(externalDir.toString(), theFile);
 
-		ddsGen(command, externalDir.substring(externalDirLength));
-		
+		ddsGen(command, externalDir.toString());
+
 		externalDir.delete(externalDirLength, externalDir.length());
 
 	}
-	
+
 	private static void setProjectFiles(StringBuffer buf, StringTemplate client, StringTemplate server, boolean withoutUtils){
 		int nameBufLen = buf.length();
 		int extBufLen = 0;
@@ -464,7 +485,7 @@ public class IDL2DDSCS
 			buf.delete(nameBufLen, buf.length());
 		}
 	}
-	
+
 	private static void setProjectFile(StringBuffer buf, StringTemplate project, String suffix, int start){		
 		buf.delete(start, buf.length());
 		buf.append(suffix);
@@ -474,20 +495,27 @@ public class IDL2DDSCS
 		buf.append(".cxx");
 		project.setAttribute("sourceFiles", buf.toString());
 	}
-	
+
 	public static void genVS2005(Interface ifc)
 	{
+		int lastBarraOccurrency = 0;
+		StringBuffer idlStringBuf = null;
+		StringBuffer stringBuf = null;
 		// first load main language template
 		StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2005", DefaultTemplateLexer.class, null);
-		
+
 		StringTemplate solution = idlTemplates.getInstanceOf("solution");
 		StringTemplate projectClient = idlTemplates.getInstanceOf("project");
 		StringTemplate projectServer = idlTemplates.getInstanceOf("project");
-				
-		if(externalDirLength > 0){
-			externalDir.append("/");	
-		}
-		StringBuffer stringBuf = new StringBuffer(ifc.getName());
+
+		// Obtain only the filename of the idl file.
+		lastBarraOccurrency = idlFile.lastIndexOf('/');
+		if(lastBarraOccurrency == -1)
+			idlStringBuf = new StringBuffer(idlFile.substring(0, idlFile.length() - 4 /* '.idl' */));
+		else
+			idlStringBuf = new StringBuffer(idlFile.substring(lastBarraOccurrency + 1, idlFile.length() - 4 /* '.idl' */));
+		
+		stringBuf = new StringBuffer(ifc.getName());
 		stringBuf.append("Server");
 		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
 		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(), serverGuid, null);
@@ -500,8 +528,8 @@ public class IDL2DDSCS
 		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(),clientGuid, serverGuid);
 		projectClient.setAttribute("guid", clientGuid);
 		projectClient.setAttribute("name",stringBuf.toString());
-		
-						
+
+
 		// project configurations	
 		for(int index = 0; index < configurations.length; index++){
 			solution.setAttribute("configurations", configurations[index].getName());
@@ -509,15 +537,19 @@ public class IDL2DDSCS
 			projectServer.setAttribute("configurations", configurations[index]);
 		}
 
+		if(externalDirLength > 0)
+        {
+			externalDir.append("/");	
+		}
 		externalDir.append(ifc.getName()).append("-vs2005.sln");
 		writeFile(externalDir.toString(), solution);
 		externalDir.delete(externalDirLength, externalDir.length());
-			
+
 		stringBuf.delete(0, stringBuf.length());
 		stringBuf.append(ifc.getName());
 		// Server and client common files
 
-		setProjectFiles(stringBuf, projectClient, projectServer, true);
+		setProjectFiles(idlStringBuf, projectClient, projectServer, true);
 		stringBuf.append("RequestReply");
 		setProjectFiles(stringBuf, projectClient, projectServer, false);
 
@@ -526,7 +558,7 @@ public class IDL2DDSCS
 		// Client exclusive files
 		setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
 		setProjectFile(stringBuf, projectClient, "ClientRemoteServiceSupport", ifc.getName().length());
-				
+
 		projectClient.setAttribute("sourceFiles", "Client.cxx");
 
 		// Server exclusive files
@@ -535,48 +567,55 @@ public class IDL2DDSCS
 		setProjectFile(stringBuf, projectServer, "ServerRemoteServiceSupport", ifc.getName().length());
 
 		projectServer.setAttribute("sourceFiles", "Server.cxx");
-		
+
 		//System.out.println(request.toString());
+		if(externalDirLength > 0)
+        {
+			externalDir.append("/");	
+		}
 		externalDir.append(ifc.getName()).append("Client-vs2005.vcproj");
 		writeFile(externalDir.toString(), projectClient);
+		externalDir.delete(externalDirLength, externalDir.length());
 
-		//System.out.println(reply.toString());
-		externalDir.delete(externalDirLength + ifc.getName().length(), externalDir.length());
-		externalDir.append("Server-vs2005.vcproj");
+		if(externalDirLength > 0)
+        {
+			externalDir.append("/");	
+		}
+		externalDir.append(ifc.getName()).append("Server-vs2005.vcproj");
 		writeFile(externalDir.toString(), projectServer);
 
 		externalDir.delete(externalDirLength, externalDir.length());
 	}
-	
+
 	public static Module parse(String file) {
 		IDLParser parser = null;
 		Module root = null;
-    	System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
-    	try {
-    		parser = new IDLParser(new java.io.FileInputStream(file));
-    	} catch (java.io.FileNotFoundException e) {
-    		System.out.println("IDL Parser Version 0.1:  File " + file + " not found.");
-    	}
+		System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
+		try {
+			parser = new IDLParser(new java.io.FileInputStream(file));
+		} catch (java.io.FileNotFoundException e) {
+			System.out.println("IDL Parser Version 0.1:  File " + file + " not found.");
+		}
 
-	    try 
-	    {
-	        ASTStart n = parser.Start();
-	        CplusplusVisitor visitor = new CplusplusVisitor();
-	        root = (Module)n.jjtAccept(visitor, null);
-	        System.out.println(file + " Parsing Complete.");
-	    } catch (Exception e) {
-	        System.out.println("Oops. Parser Error");
-	        System.out.println(e.getMessage());
-	    }
-	   
-	    return root;		
+		try 
+		{
+			ASTStart n = parser.Start();
+			CplusplusVisitor visitor = new CplusplusVisitor();
+			root = (Module)n.jjtAccept(visitor, null);
+			System.out.println(file + " Parsing Complete.");
+		} catch (Exception e) {
+			System.out.println("Oops. Parser Error");
+			System.out.println(e.getMessage());
+		}
+
+		return root;		
 	}
-	
+
 	public static boolean getOptions(String args[])
 	{
 		int count = 0;
 		String arg;
-		
+
 		while(count < args.length)
 		{
 			arg = args[count++];
@@ -587,7 +626,7 @@ public class IDL2DDSCS
 			else if(arg.equals("-language"))
 			{
 				languageOption = args[count++];
-				
+
 				if(!languageOption.equals("C++"))
 				{
 					System.out.println("ERROR: Unknown language " +  languageOption);
@@ -617,7 +656,7 @@ public class IDL2DDSCS
 				return false;
 			}
 		}
-		
+
 		if(idlFile == null)
 		{
 			System.out.println("ERROR: The program expects an IDL file");
@@ -627,16 +666,16 @@ public class IDL2DDSCS
 		externalDir = (externalDir == null) ? new StringBuffer(): externalDir;
 		return true;
 	}
-	
-	
+
+
 	public static void printHelp()
 	{
 		System.out.print("ddscs help:\n\nUsage: ddscs [options] <IDL file>\nOptions:\n" +
 				"   -language                : Programming language (C|C++|C#|java).\n" +
 				"   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +
 				"   -ppDisable               : Do not use C/C++ preprocessor.\n" +
-				"   -replace                 : replace rtiddsgen generated files.\n");
-//				"   -d <path>                : Output directory.\n");
+		"   -replace                 : replace rtiddsgen generated files.\n");
+		//				"   -d <path>                : Output directory.\n");
 	}
 
 	public static void writeFile(String file, StringTemplate template)
@@ -669,32 +708,32 @@ class MyErrorListener implements StringTemplateErrorListener {
 	public void warning(String arg0) {
 		System.out.println(arg0);	
 	}	
-	
+
 }
 
 class ProcessOutput extends Thread
 {
-    InputStream is;
-    String type;
-    
-    ProcessOutput(InputStream is, String type)
-    {
-        this.is = is;
-        this.type = type;
-    }
-    
-    public void run()
-    {
-        try
-        {
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-            String line=null;
-            while ( (line = br.readLine()) != null)
-                System.out.println(line);    
-            } catch (IOException ioe)
-              {
-                ioe.printStackTrace();  
-              }
-    }
+	InputStream is;
+	String type;
+
+	ProcessOutput(InputStream is, String type)
+	{
+		this.is = is;
+		this.type = type;
+	}
+
+	public void run()
+	{
+		try
+		{
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			String line=null;
+			while ( (line = br.readLine()) != null)
+				System.out.println(line);    
+		} catch (IOException ioe)
+		{
+			ioe.printStackTrace();  
+		}
+	}
 }

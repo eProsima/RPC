@@ -1,8 +1,11 @@
 #include "client/DDSCSClient.h"
 
-DDSCSClient::DDSCSClient(int domainId) : m_clientId(0), m_domainId(domainId), m_participant(NULL)
+DDSCSClient::DDSCSClient(int domainId) : m_domainId(domainId), m_participant(NULL)
 {
     DDS_DomainParticipantQos participantQOS;
+
+	// Initializing client identifier.
+	m_clientId[0] = 0; m_clientId[1] = 0; m_clientId[2] = 0;
 
     // Creating the domain participant which is associated with the client
     m_participant = DDSTheParticipantFactory->create_participant(
@@ -13,7 +16,11 @@ DDSCSClient::DDSCSClient(int domainId) : m_clientId(0), m_domainId(domainId), m_
     {
         if(m_participant->get_qos(participantQOS) == DDS_RETCODE_OK)
         {
-            m_clientId = participantQOS.wire_protocol.participant_id;
+			m_clientId[0] = participantQOS.wire_protocol.rtps_host_id;
+			m_clientId[1] = participantQOS.wire_protocol.rtps_app_id;
+			m_clientId[2] = participantQOS.wire_protocol.rtps_instance_id;
+            participantQOS.entity_factory.autoenable_created_entities = DDS_BOOLEAN_FALSE;
+            m_participant->set_qos(participantQOS);
         }
     }
     else
@@ -21,7 +28,8 @@ DDSCSClient::DDSCSClient(int domainId) : m_clientId(0), m_domainId(domainId), m_
         printf("ERROR <DDSCSClient>: create_participant error\n");
     }
 
-    printf("INFO <DDSCSClient>: Created client with ID %ld\n", m_clientId);
+	printf("INFO <DDSCSClient>: Created client with ID {%u, %u, %u}\n", m_clientId[0],
+		m_clientId[1], m_clientId[2]);
 }
 
 DDSCSClient::~DDSCSClient()
@@ -49,7 +57,7 @@ DDSDomainParticipant* DDSCSClient::getParticipant()
 }
 
 
-long DDSCSClient::getClientId()
+DDS_UnsignedLong* DDSCSClient::getClientId()
 {
     return m_clientId;
 }

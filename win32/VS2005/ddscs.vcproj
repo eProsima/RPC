@@ -99,6 +99,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(TargetDir)\$(TargetFileName)&quot; $(EPROSIMA_LIBRARY_PATH)\proyectos"
 			/>
 		</Configuration>
 		<Configuration
@@ -186,6 +187,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(TargetDir)\$(TargetFileName)&quot; $(EPROSIMA_LIBRARY_PATH)\proyectos"
 			/>
 		</Configuration>
 		<Configuration
@@ -255,6 +257,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(TargetDir)\$(TargetFileName)&quot; $(EPROSIMA_LIBRARY_PATH)\proyectos"
 			/>
 		</Configuration>
 		<Configuration
@@ -325,6 +328,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(TargetDir)\$(TargetFileName)&quot; $(EPROSIMA_LIBRARY_PATH)\proyectos"
 			/>
 		</Configuration>
 	</Configurations>

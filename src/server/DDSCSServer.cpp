@@ -1,8 +1,6 @@
 #include "server/DDSCSServer.h"
 
-#ifndef ndds_utility_cpp_h
 #include "ndds_utility_cpp.h"
-#endif
 
 DDSCSServer::DDSCSServer(int domainId,unsigned int threadCount) : domainId(domainId), participant(NULL), threadPoolManager(NULL)
 {
