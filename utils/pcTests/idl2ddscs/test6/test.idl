@@ -1,0 +1,82 @@
+struct basicTypes
+{
+	char c;
+	wchar wc;
+	octet o;
+	short s;
+	unsigned short us;
+	long l;
+	unsigned long ul;
+	long long ll;
+	unsigned long long ull;
+	float f;
+	double d;
+	boolean b;
+};
+
+enum primitiveEnum
+{
+	ENUM1,
+	ENUM2,
+	ENUM3
+};
+
+union primitiveUnion switch (long)
+{
+	case 1:
+		short short_member;
+	default:
+		long long_member;
+};
+
+struct basicArrays
+{
+	char c[100];
+	wchar wc[100];
+	octet o[100];
+	short s[100];
+	unsigned short us[100];
+	long l[100];
+	unsigned long ul[100];
+	long long ll[100];
+	unsigned long long ull[100];
+	float f[100];
+	double d[100];
+	boolean b[100];
+};
+
+struct basicSequences
+{
+	sequence<char, 4> c;
+	sequence<wchar, 4> wc;
+	sequence<octet, 4> o;
+	sequence<short, 4> s;
+	sequence<unsigned short, 4> us;
+	sequence<long, 4> l;
+	sequence<unsigned long, 4> ul;
+	sequence<long long, 4> ll;
+	sequence<unsigned long long, 4> ull;
+	sequence<float, 4> f;
+	sequence<double, 4> d;
+	sequence<boolean, 4> b;
+};
+
+struct allTypes
+{
+	basicTypes basics;
+	primitiveEnum enums;
+	primitiveUnion unions;
+	basicArrays arrays;
+	basicSequences sequences;
+};
+
+interface TestGen 
+{
+
+    allTypes fillAllTypes(in basicTypes basics, in primitiveUnion unions,
+		    in basicArrays arrays, in basicSequences sequences);
+
+    boolean extractAllTypes(in allTypes all, out basicTypes basics2,
+		     out primitiveUnion unions2, out basicArrays arrays2,
+		     out basicSequences sequences2);
+};

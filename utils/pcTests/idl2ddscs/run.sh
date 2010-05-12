@@ -124,7 +124,6 @@ function test4
     checkReturnedValue
 }
 
-# This tests check IDL2DDSCS when parameter are external directory in relative URL and idl file in relative URL.
 function test5
 {
     TEST_NAME="Test5"
@@ -139,18 +138,37 @@ function test5
         compile
     fi
 
-    #clean
+    clean
+    checkReturnedValue
+}
+
+function test6
+{
+    TEST_NAME="Test6"
+    TEST_OUTPUT_DIR="utils/pcTests/idl2ddscs/test6"
+    TEST_IDL_FILE="utils/pcTests/idl2ddscs/test6/test.idl"
+
+    echo Starting $TEST_NAME
+    ${JAVA} -classpath "c:\j2sdk1.4.2_19\src.zip;${ANTLR_DIR};${STRINGTEMPLATE_DIR};${DDSCS_LIBRARY_DIR}\idl2ddscs.jar" ${NDDSHOME_SET} com.eprosima.ddscs.idl.IDL2DDSCS ${IDL2DDSCS_OPTS} -d ${TEST_OUTPUT_DIR} ${TEST_IDL_FILE}
+    RETURNEDVALUE=$?
+
+    if [ $RETURNEDVALUE = 0 ]; then
+        compile
+    fi
+
+    clean
     checkReturnedValue
 }
 
 echo "Running tests for IDL2DDSCS"
 
 if [ -d ./lib ]; then
-    #test1
-    #test2
-    #test3
-    #test4
+    test1
+    test2
+    test3
+    test4
     test5
+    test6
 else
     echo "Run in ddscs root directory"
 fi
