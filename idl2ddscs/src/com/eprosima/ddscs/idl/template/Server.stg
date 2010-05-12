@@ -162,7 +162,7 @@ $exFunctionHeader(class=interfaceName,...)$
     $if(!voidInitMap.(type))$
     returnedValue = $endif$srv->_impl->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
            
-    replyData = $name$ReplyUtils::createTypeData($inoutParams:{$it.name$}; separator=", "$$nextParam(previous=inoutParams, params=outputParams)$);
+    replyData = $name$ReplyUtils::createTypeData($nextParam(params=inoutParams)$$nextParam(previous=inoutParams, params=outputParams)$);
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);

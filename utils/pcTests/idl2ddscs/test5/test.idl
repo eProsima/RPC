@@ -1,0 +1,35 @@
+typedef sequence<octet,64> Cookie;
+typedef string<64> Username;
+typedef string<128> Password;
+
+struct Country
+{
+	short number;
+	float latitude;
+	float longitude;
+};
+
+struct FlyInformation
+{
+	long identifier;
+	string<64> company;
+	Country country;
+};
+
+typedef sequence<FlyInformation> Flies;
+
+interface TestGen 
+{
+
+    Cookie login(in Username username, in Password password);
+
+    void logout(in Cookie cookie);
+
+    FlyInformation getFly(in long identifier);
+
+    void setFly(inout FlyInformation fly);
+
+    Flies getFlies(out long numberOfFlies);
+
+    boolean launchAlarm();
+ };

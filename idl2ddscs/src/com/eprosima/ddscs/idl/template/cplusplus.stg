@@ -210,7 +210,7 @@ $endif$
  *
  * Uses:
  */ 
- varUse(type, name) ::= <<
+varUse(type, name) ::= <<
 $if(typeInitMap.(type))$$name$
 $else$
 *$name$
@@ -228,7 +228,7 @@ $endif$
  *
  * Uses:
  */ 
- nextParam(previous, params) ::= <<
+nextParam(previous, params) ::= <<
 $if(previous)$
 $if(params)$,
 $endif$

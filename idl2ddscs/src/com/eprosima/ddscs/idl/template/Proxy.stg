@@ -91,7 +91,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     $varDecl(type=type, name="returnedValue", create="yes")$
     $name$Request *instance = NULL;
     $name$Reply *retInstance = $name$ReplyTypeSupport::create_data();
-    instance = $name$RequestUtils::createTypeData($inputParams:{$it.name$}; separator=","$$nextParam(previous=inputParams, params=inoutParams)$);
+    instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
     returnedValue = $name$_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
@@ -111,7 +111,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             printf("SERVER WITHOUT RESOURCES\n");
             break;
         case OPERATION_SUCCESSFUL:
-            $name$ReplyUtils::extractTypeData(retInstance$if(extractTypeDataParams(inoutParams=inoutParams, outputParams = outputParams))$, $extractTypeDataParams(inoutParams=inoutParams, outputParams = outputParams)$$endif$);
+            $name$ReplyUtils::extractTypeData(retInstance$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
             //$name$ReplyTypeSupport::print_data(retInstance);
             $name$_Service->replyRead();            
             break;

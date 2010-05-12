@@ -1,0 +1,23 @@
+typedef sequence<octet,64> Cookie;
+
+
+struct tickConsumer{
+
+  long id;
+
+  string name;
+
+};
+
+
+
+interface TestGen 
+{
+
+    Cookie subscribe_Pulse(in tickConsumer c, in long i, inout long kk, out octet ret1);
+
+    tickConsumer unsubscribe_Pulse(in Cookie ck);
+
+    void noReturnFunction(in long id, out octet ret2);
+
+ };
