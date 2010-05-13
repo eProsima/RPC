@@ -1,16 +1,17 @@
 #include "utils/Thread.h"
 #include "utils/ThreadPoolManager.h"
 #include "server/ServerRemoteService.h"
+#include "eProsima_c/eProsimaMacros.h"
 
 Thread::Thread(unsigned int identifier, struct RTIOsapiThreadFactory *threadFactory, ThreadPoolManager *manager) :
-id(identifier), manager(manager), status(THREAD_NOT_INITIALIZED), osThread(NULL), execFunctionData(NULL),
-    execFunction(NULL), server(NULL), service(NULL)
+id(identifier), status(THREAD_NOT_INITIALIZED), manager(manager), osThread(NULL), server(NULL),
+    service(NULL), execFunctionData(NULL), execFunction(NULL)
 {
 	REDAInlineListNode_init(&listNode.parent);
 	listNode.thread = this;
 	if(threadFactory != NULL)
 	{
-		_snprintf(threadName, 20, "thread %lu", id); 
+		SNPRINTF(threadName, 20, "thread %u", id); 
 		threadName[19] = '\0';
 		osThread = RTIOsapiThreadFactory_createThread(threadFactory, threadName, RTI_OSAPI_THREAD_PRIORITY_NORMAL,
 			   RTI_OSAPI_THREAD_OPTION_DEFAULT, 4096, (void*(*)(void*))execute, this);
@@ -119,7 +120,7 @@ void Thread::run()
 			try{
 				if(status == THREAD_GETREADY)
 				{
-					printf("Thread %lu\n", id);
+					printf("Thread %u\n", id);
 
 					execFunction(server, execFunctionData, service);
 				}

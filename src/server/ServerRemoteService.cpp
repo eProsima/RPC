@@ -6,8 +6,8 @@ static const char* const CLASS_NAME = "ServerRemoteService";
 
 ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
-    server(server), requestSubscriber(NULL), requestTopic(NULL), requestDataReader(NULL),
-    replyPublisher(NULL), createRequestData(createRequestData),
+    server(server), requestSubscriber(NULL), replyPublisher(NULL), requestTopic(NULL),
+    requestDataReader(NULL), createRequestData(createRequestData),
     deleteRequestData(deleteRequestData), execFunction(execFunction)
 {
     const char* const METHOD_NAME = "ServerRemoteService";
@@ -109,7 +109,7 @@ char* ServerRemoteService::getRemoteServiceName()
     return remoteServiceName;
 }
 
-execFunction ServerRemoteService::getExecFunction()
+fExecFunction ServerRemoteService::getExecFunction()
 {
     return execFunction;
 }

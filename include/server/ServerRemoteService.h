@@ -10,8 +10,6 @@ class DDSCSServer;
 class ThreadPoolManager;
 class ServerRemoteService;
 
-typedef void(*execFunction)(DDSCSServer*, void*, ServerRemoteService*);
-
 typedef struct ServiceNode
 {
 	REDAInlineListNode parent;
@@ -41,7 +39,7 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 			return (REDAInlineListNode*)&listNode;
 		}
 
-        execFunction getExecFunction();
+        fExecFunction getExecFunction();
 
 		virtual int sendReply(void* request, void *reply, DDSCSMessages errorMessage = OPERATION_SUCCESSFUL) = 0;
 

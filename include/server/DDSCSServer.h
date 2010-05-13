@@ -52,14 +52,14 @@ class DDSCS_WIN32_DLL_API DDSCSServer
 
     private:
 
+        /// \brief The domain identifier.
+        int domainId;
+
         /**
          * \brief Each client is associated with a DDSDomainParticipant. This participant have to be created in the client creation.
          * This pointer should never be NULL.
          */
         DDSDomainParticipant *participant;
-
-        /// \brief The domain identifier.
-        int domainId;
         
         /// \brief The list that contains all the remote services.
         REDAInlineList remoteServicesList;

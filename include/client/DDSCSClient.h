@@ -43,16 +43,16 @@ class DDSCS_WIN32_DLL_API DDSCSClient
 
     private:
 
+        DDS_UnsignedLong m_clientId[3];
+
+        /// \brief The domain identifier.
+        int m_domainId;
+
         /**
          * \brief Each client is associated with a DDSDomainParticipant. This participant have to be created in the client creation.
          * This pointer should never be NULL.
          */
         DDSDomainParticipant *m_participant;
-
-        DDS_UnsignedLong m_clientId[3];
-
-        /// \brief The domain identifier.
-        int m_domainId;
 };
 
 #endif // _DDSCSCLIENT_H_

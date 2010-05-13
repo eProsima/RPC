@@ -60,11 +60,11 @@ class Thread
 
 		struct RTIOsapiSemaphore *mutex;
 
-        void *execFunctionData;
+		DDSCSServer* server;
 
         ServerRemoteService *service;
 
-		DDSCSServer* server;
+        void *execFunctionData;
 
         void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*);
 

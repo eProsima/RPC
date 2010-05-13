@@ -1,9 +1,10 @@
 #include "client/ClientRemoteService.h"
+#include "eProsima_c/eProsimaMacros.h"
 
 static const char* const CLASS_NAME = "ClientRemoteService";
 
 ClientRemoteService::ClientRemoteService(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
-m_requestTopic(NULL), m_requestDataWriter(NULL), m_replySubscriber(NULL), m_replyWaitset(NULL), m_replyFilter(NULL), m_numSec(0)
+m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyWaitset(NULL), m_replyFilter(NULL), m_numSec(0)
 {
     const char* const METHOD_NAME = "ClientRemoteService";
 
@@ -266,7 +267,7 @@ int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const
 
                                             if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                                             {
-                                                _snprintf(filterLine, 100, "clientId[0] = %u and clientId[1] = %u and clientId[2] = %u", clientID[0], clientID[1], clientID[2]);
+                                                SNPRINTF(filterLine, 100, "clientId[0] = %u and clientId[1] = %u and clientId[2] = %u", clientID[0], clientID[1], clientID[2]);
                                                 if((m_replyFilter = participant->create_contentfilteredtopic(remoteServiceName, m_replyTopic, filterLine, parameters)) != NULL)
                                                 {
                                                     if((m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)

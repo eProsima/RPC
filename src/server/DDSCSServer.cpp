@@ -5,7 +5,7 @@
 DDSCSServer::DDSCSServer(int domainId,unsigned int threadCount) : domainId(domainId), participant(NULL), threadPoolManager(NULL)
 {
 	DDS_DomainParticipantQos participantQOS;
-	int serverId = 0;
+	DDS_Long serverId = 0;
 
 	// Creating the domain participant which is associated with the client
 	participant = DDSTheParticipantFactory->create_participant(
@@ -36,7 +36,7 @@ DDSCSServer::DDSCSServer(int domainId,unsigned int threadCount) : domainId(domai
 
 	REDAInlineList_init(&remoteServicesList);
 
-	printf("INFO <DDSCSServer>: Created server with ID %ld\n", serverId);
+	printf("INFO <DDSCSServer>: Created server with ID %d\n", serverId);
 fin:
 	return;
 }

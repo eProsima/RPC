@@ -6,7 +6,8 @@
 #include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
 
-typedef struct ThreadLocalInfo{
+typedef struct ThreadLocalInfo
+{
 	struct REDAInlineListNode parent;
 	RTI_UINT32 localId;
 	void * data;
