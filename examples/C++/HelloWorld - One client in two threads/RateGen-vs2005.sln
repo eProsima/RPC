@@ -1,0 +1,37 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RateGenServer", "RateGenServer-vs2005.vcproj", "{CE34456D-1AFC-21CC-C0DA-57C34A192C39}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RateGenClient", "RateGenClient-vs2005.vcproj", "{0F375C92-2574-89C6-6F4E-9A6FFAE95223}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39} = {CE34456D-1AFC-21CC-C0DA-57C34A192C39}
+	EndProjectSectionEndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug DLL|Win32 = Debug DLL|Win32
+		Release DLL|Win32 = Release DLL|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Debug|Win32.Build.0 = Debug|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release|Win32.ActiveCfg = Release|Win32
+		{CE34456D-1AFC-21CC-C0DA-57C34A192C39}.Release|Win32.Build.0 = Release|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Debug|Win32.Build.0 = Debug|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release|Win32.ActiveCfg = Release|Win32
+		{0F375C92-2574-89C6-6F4E-9A6FFAE95223}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

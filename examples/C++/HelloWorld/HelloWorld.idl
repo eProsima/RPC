@@ -1,0 +1,4 @@
+interface RateGen 
+{
+    long suma(in long id1, in long id2);
+ };

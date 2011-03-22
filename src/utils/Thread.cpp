@@ -14,7 +14,7 @@ id(identifier), status(THREAD_NOT_INITIALIZED), manager(manager), osThread(NULL)
 		SNPRINTF(threadName, 20, "thread %u", id); 
 		threadName[19] = '\0';
 		osThread = RTIOsapiThreadFactory_createThread(threadFactory, threadName, RTI_OSAPI_THREAD_PRIORITY_NORMAL,
-			   RTI_OSAPI_THREAD_OPTION_DEFAULT, 4096, (void*(*)(void*))execute, this);
+			   RTI_OSAPI_THREAD_OPTION_DEFAULT, 4096, NULL, (void*(*)(void*))execute, this);
 
 		if(osThread != NULL)
 		{
