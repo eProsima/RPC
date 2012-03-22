@@ -1,0 +1,1 @@
+Este proyecto está preparado para la versión RTI DDS 4.5d.
