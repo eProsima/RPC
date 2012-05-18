@@ -44,17 +44,24 @@ int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
     int returnedValue = -1;
     TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : TDataReplyTypeSupport::create_data();
     TDataRequest *requestData = (TDataRequest*)request;
+    DDS_UnsignedLong *serverServiceId = getServerServiceId();
 
     if(replyData != NULL)
     {
         if(requestData != NULL)
         {
-			replyData->clientId[0] = requestData->clientId[0];
-			replyData->clientId[1] = requestData->clientId[1];
-			replyData->clientId[2] = requestData->clientId[2];
-			replyData->localId = requestData->localId;
+            replyData->serverServiceId[0] = serverServiceId[0];
+            replyData->serverServiceId[1] = serverServiceId[1];
+            replyData->serverServiceId[2] = serverServiceId[2];
+            replyData->serverServiceId[3] = serverServiceId[3];
+			replyData->clientServiceId[0] = requestData->clientServiceId[0];
+			replyData->clientServiceId[1] = requestData->clientServiceId[1];
+			replyData->clientServiceId[2] = requestData->clientServiceId[2];
+			replyData->clientServiceId[3] = requestData->clientServiceId[3];
 			replyData->numSec = requestData->numSec;
 			replyData->ddscsRetCode = errorMessage;
+			
+			printf("SENDING\n");
 
 			if(replyFooDataWriter->write(*replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
 			{

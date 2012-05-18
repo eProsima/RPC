@@ -6,16 +6,6 @@
 #include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
 
-typedef struct ThreadLocalInfo
-{
-	struct REDAInlineListNode parent;
-	RTI_UINT32 localId;
-	void * data;
-	DDS_Boolean freshData;
-	DDS_InstanceHandle_t instanceHandle;
-	DDSWaitSet *waitSet;
-} ThreadLocalInfo;
-
 class DDSCS_WIN32_DLL_API ClientRemoteService
 {
     public:
@@ -28,31 +18,23 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
          * \param clientParticipant Pointer to the domain participant used by the client. Cannot be NULL.
          */
-        ClientRemoteService(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant);
+        ClientRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant);
 
         virtual ~ClientRemoteService();
 
         /**
          */
         DDSCSMessages execute(void *request, void* reply, unsigned int timeout);
-        void replyRead();
-
-		// Clean Thread local resources
-		void removeInfo();
 
     protected:
 		// Prevents multiThreaded execution
 		bool take();
 		void give();
-		// Should be called only after take()
-		ThreadLocalInfo * newInfo(RTI_UINT32 id);
-		ThreadLocalInfo * getInfo(RTI_UINT32 id);
-		ThreadLocalInfo * getInfo();
 
 		// Foo dependent methods
+        virtual int registerInstance(void *data) = 0;
 		virtual DDS_ReturnCode_t write(void *data) = 0;
-		virtual DDSCSMessages handleNewInstance(ThreadLocalInfo *info, DDSConditionSeq& conditionSeq) = 0;
-		virtual DDSCSMessages handleNewSample(ThreadLocalInfo *info, void *request, DDSConditionSeq& conditionSeq) = 0;
+        virtual DDSCSMessages takeReply(void *reply, DDSQueryCondition *query) = 0;
 
 		/**
          * \brief This field stores the name of the service.
@@ -89,29 +71,15 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          */
 		DDSDataReader *m_replyDataReader;
 
-        /**
-         * \brief The read condition used to detect new Reply Topic instances.
-         */
-        DDSReadCondition *m_newReplyInstanceCondition;
-
-		/**
-         * \brief The read condition used to receive server's replies.
-         */
-        DDSReadCondition *m_replyCondition;
-
 		/**
          * \brief The status condition used to wait for a matching publication (server).
          */
         DDSStatusCondition *m_matchingCondition;
 
-        /**
-         * \brief The waitset used to receive server replies.
-         */
-        DDSWaitSet *m_replyWaitset;
-
 		/**
          * \brief The waitset used to wait for a matching publication (server).
          */
+        // TODO Es compartido por hilos. Cambiar.
         DDSWaitSet *m_matchingPubWaitset;
 
         int createEntities(DDSDomainParticipant *participant, const char *remoteServiceName,
@@ -130,13 +98,10 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 
         DDSContentFilteredTopic *m_replyFilter;
 
-        unsigned long m_numSec;
-		DDS_UnsignedLong clientID[3];
+        DDS_Long m_numSec;
+		DDS_UnsignedLong m_clientServiceId[4];
+        DDS_InstanceHandle_t m_ih;
 
 		RTIOsapiSemaphore *mutex;
-
-		//Multithreaded client handling
-		REDAInlineList threadLocalInfoList;
-
 };
 #endif // _CLIENTREMOTESERVICE_H_

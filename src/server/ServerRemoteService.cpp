@@ -44,6 +44,28 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
 										if((requestDataReader = requestSubscriber->create_datareader(requestTopic, DDS_DATAREADER_QOS_DEFAULT, this, DDS_DATA_AVAILABLE_STATUS)) != NULL)
                                         {
                                             strncpy(this->remoteServiceName, remoteServiceName, 50);
+
+                                            // Obtain serverServiceId.
+                                            DDS_DataWriterQos *wQos = new DDS_DataWriterQos();
+                                            replyDataWriter->get_qos(*wQos);
+                                            m_serverServiceId[0] = ((wQos->protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
+                                                ((wQos->protocol.virtual_guid.value[1] << 16) & 0xFF0000) +
+                                                ((wQos->protocol.virtual_guid.value[2] << 8) & 0xFF00) +
+                                                (wQos->protocol.virtual_guid.value[3] & 0xFF);
+                                            m_serverServiceId[1] = ((wQos->protocol.virtual_guid.value[4] << 24) & 0xFF000000) +
+                                                ((wQos->protocol.virtual_guid.value[5] << 16) & 0xFF0000) +
+                                                ((wQos->protocol.virtual_guid.value[6] << 8) & 0xFF00) +
+                                                (wQos->protocol.virtual_guid.value[7] & 0xFF);
+                                            m_serverServiceId[2] = ((wQos->protocol.virtual_guid.value[8] << 24) & 0xFF000000) +
+                                                ((wQos->protocol.virtual_guid.value[9] << 16) & 0xFF0000) +
+                                                ((wQos->protocol.virtual_guid.value[10] << 8) & 0xFF00) +
+                                                (wQos->protocol.virtual_guid.value[11] & 0xFF);
+                                            m_serverServiceId[3] = ((wQos->protocol.virtual_guid.value[12] << 24) & 0xFF000000) +
+                                                ((wQos->protocol.virtual_guid.value[13] << 16) & 0xFF0000) +
+                                                ((wQos->protocol.virtual_guid.value[14] << 8) & 0xFF00) +
+                                                (wQos->protocol.virtual_guid.value[15] & 0xFF);
+                                            delete wQos;
+
                                             return;
                                         }
 
@@ -107,6 +129,11 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
 char* ServerRemoteService::getRemoteServiceName()
 {
     return remoteServiceName;
+}
+
+DDS_UnsignedLong* ServerRemoteService::getServerServiceId()
+{
+    return m_serverServiceId;
 }
 
 fExecFunction ServerRemoteService::getExecFunction()

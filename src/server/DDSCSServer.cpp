@@ -112,5 +112,6 @@ void DDSCSServer::executeServer(DDS_Long seconds, DDS_UnsignedLong nanoseconds)
 
 void DDSCSServer::schedule(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, ServerRemoteService *service)
 {
+    printf("SCHEDULING %s\n", service->getRemoteServiceName());
 	threadPoolManager->schedule(execFunction, data, this, service);
 }

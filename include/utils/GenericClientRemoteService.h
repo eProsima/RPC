@@ -21,16 +21,14 @@
 class  TName : public ClientRemoteService                                         \
 {                                                                                 \
 public:                                                                           \
-  TName(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName,\
+  TName(const char *remoteServiceName, const char *requestTypeName,               \
         const char *replyTypeName, DDSDomainParticipant *clientParticipant);      \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \
+  virtual int registerInstance(void *data);                                       \
   virtual DDS_ReturnCode_t write(void *data);                                     \
-  virtual DDSCSMessages handleNewInstance(ThreadLocalInfo *info,                  \
-    DDSConditionSeq& conditionSeq);                                               \
-  virtual DDSCSMessages handleNewSample(ThreadLocalInfo *info, void *request,     \
-    DDSConditionSeq& conditionSeq);                                               \
+  virtual DDSCSMessages takeReply(void *reply, DDSQueryCondition *query);         \
                                                                                   \
 private:                                                                          \
                                                                                   \

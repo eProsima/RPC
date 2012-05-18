@@ -112,8 +112,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             break;
         case OPERATION_SUCCESSFUL:
             $name$ReplyUtils::extractTypeData(retInstance$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
-            //$name$ReplyTypeSupport::print_data(retInstance);
-            $name$_Service->replyRead();            
+            //$name$ReplyTypeSupport::print_data(retInstance);          
             break;
     };
     
@@ -252,7 +251,6 @@ $invocations; separator="\n"$
 createRemoteService(funNames) ::= <<
 $funNames:{funName |
     this->$funName$_Service = new $funName$ClientRemoteService("$funName$",
-                              getClientId(),
                               $funName$RequestUtils::registerType(getParticipant()),
                               $funName$ReplyUtils::registerType(getParticipant()),
                               getParticipant());

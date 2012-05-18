@@ -34,6 +34,8 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 
         char* getRemoteServiceName();
 
+        DDS_UnsignedLong* getServerServiceId();
+
 		REDAInlineListNode* getNode()
 		{
 			return (REDAInlineListNode*)&listNode;
@@ -118,6 +120,8 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
         fDeleteRequestData deleteRequestData;
 
         fExecFunction execFunction;
+
+        DDS_UnsignedLong m_serverServiceId[4];
 };
 
 #endif // _SERVERREMOTESERVICE_H_

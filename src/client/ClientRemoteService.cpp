@@ -3,14 +3,10 @@
 
 static const char* const CLASS_NAME = "ClientRemoteService";
 
-ClientRemoteService::ClientRemoteService(const char *remoteServiceName, DDS_UnsignedLong *clientId, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
-m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyWaitset(NULL), m_replyFilter(NULL), m_numSec(0)
+ClientRemoteService::ClientRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
+m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS_HANDLE_NIL)
 {
     const char* const METHOD_NAME = "ClientRemoteService";
-
-    clientID[0] = clientId[0];
-    clientID[1] = clientId[1];
-    clientID[2] = clientId[2];
     
     mutex =  RTIOsapiSemaphore_new(RTI_OSAPI_SEMAPHORE_KIND_MUTEX, NULL);
 
@@ -22,14 +18,7 @@ m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_repl
             {
                 if(enableEntities())
                 {
-                    if(createConditions()){
-                        strncpy(m_remoteServiceName, remoteServiceName, 50);
-                        REDAInlineList_init(&threadLocalInfoList);
-                    }
-                    else
-                    {
-                        printf("ERROR<%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
-                    }
+                    strncpy(m_remoteServiceName, remoteServiceName, 50);
                 }
                 else
                 {
@@ -56,63 +45,6 @@ ClientRemoteService::~ClientRemoteService()
 	}
 }
 
-
-ThreadLocalInfo* ClientRemoteService::newInfo(RTI_UINT32 id)
-{
-	ThreadLocalInfo *info = new ThreadLocalInfo();
-	info->localId = id;
-	info->data = NULL;
-	info->freshData = DDS_BOOLEAN_FALSE;
-	info->waitSet = new DDSWaitSet();
-	info->waitSet->attach_condition(m_newReplyInstanceCondition);
-	info->instanceHandle = DDS_HANDLE_NIL;		
-	REDAInlineList_addNodeToBackEA(&threadLocalInfoList, &info->parent);
-
-	return info;
-}
-
-ThreadLocalInfo* ClientRemoteService::getInfo(RTI_UINT32 id)
-{
-	ThreadLocalInfo *info = NULL;
-	info = (ThreadLocalInfo *)REDAInlineList_getFirst(&threadLocalInfoList);
-	while(info != NULL && info->localId != id)
-	{
-		info = (ThreadLocalInfo *)info->parent.next;
-	}
-	return info;
-}
-
-ThreadLocalInfo* ClientRemoteService::getInfo()
-{
-	RTI_UINT32 id = RTIOsapiThread_getCurrentThreadID();
-
-	ThreadLocalInfo *info = getInfo(id);
-
-	return info != NULL ? info : newInfo(id);
-
-}
-
-void ClientRemoteService::removeInfo()
-{
-	ThreadLocalInfo *info = NULL;
-	RTI_UINT32 id = RTIOsapiThread_getCurrentThreadID();
-	info = (ThreadLocalInfo *)REDAInlineList_getFirst(&threadLocalInfoList);
-	while(info != NULL && info->localId != id)
-	{
-		info = (ThreadLocalInfo *)info->parent.next;
-	}
-	if(info != NULL)
-	{
-		info->waitSet->detach_condition(m_newReplyInstanceCondition);
-		info->waitSet->detach_condition(m_replyCondition);
-		delete(info->waitSet);
-		info->waitSet = NULL;
-		info->data = NULL;
-		info->instanceHandle = DDS_HANDLE_NIL;
-		delete(info);
-	}
-}
-
 DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned int timeout)
 {
     const char* const METHOD_NAME = "execute";
@@ -121,23 +53,25 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
 	DDSConditionSeq noServerConditions;
 	DDS_ReturnCode_t retCode;
 	DDS_Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
-	ThreadLocalInfo *info;
+    DDS_Long numSec = 0;
+    char value[50];
 
 	if(request != NULL)
 	{
-		*(DDS_UnsignedLong*)request = clientID[0];
-        ((DDS_UnsignedLong*)request)[1] = clientID[1];
-        ((DDS_UnsignedLong*)request)[2] = clientID[2];
-		((DDS_UnsignedLong*)request)[3] = RTIOsapiThread_getCurrentThreadID();
+		*(DDS_UnsignedLong*)request = m_clientServiceId[0];
+        ((DDS_UnsignedLong*)request)[1] = m_clientServiceId[1];
+        ((DDS_UnsignedLong*)request)[2] = m_clientServiceId[2];
+		((DDS_UnsignedLong*)request)[3] = m_clientServiceId[3];
 
 		if(take())
 		{
-			info = getInfo();
+			//info = getInfo();
 			/* Thread safe num_Sec handling */
 			((DDS_Long*)request)[4] = m_numSec;
+            numSec = m_numSec;
 			m_numSec++;
 			give();
-			info->data = reply;
+			//info->data = reply;
 			// Matching server (Request DataReader) detection.
 			// Drawbacks:
 			//		1.- If the publication matched status is triggered between get_publication_matched_status()
@@ -156,43 +90,79 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
                     returnedValue = NO_SERVER;
                 }
 			}
+
+            // Register instance.
+            if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
+                printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
+
 			if(returnedValue != NO_SERVER && (write(request) == DDS_RETCODE_OK))
 			{
-				// Without guard conditions this algorithm DO NOT guarantee a maximum Timeout
-				// The code would be cleaner if i would be sure about the returned active conditions
-				// on multiple waitsets attached to the same condition.
-				do
+                struct DDS_StringSeq stringSeq;
+
+                stringSeq.ensure_length(5, 5);
+                SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                stringSeq[0] = DDS_String_dup(value);
+                SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                stringSeq[1] = DDS_String_dup(value);
+                SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                stringSeq[2] = DDS_String_dup(value);
+                SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                stringSeq[3] = DDS_String_dup(value);
+                SNPRINTF(value, 50, "%u", numSec);
+                stringSeq[4] = DDS_String_dup(value);
+
+                DDSQueryCondition *query = m_replyDataReader->create_querycondition(DDS_NOT_READ_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE,
+                    "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                    stringSeq);
+                
+                if(query != NULL)
                 {
-					if(DDS_InstanceHandle_is_nil(&info->instanceHandle))
-                    {
-						retCode = info->waitSet->wait(replyActiveConditions, tTimeout);
+                    DDSWaitSet *waitSet = new DDSWaitSet();
 
-						if(retCode == DDS_RETCODE_OK)
+                    if(waitSet != NULL)
+                    {
+                        retCode = waitSet->attach_condition(query);
+
+                        if(retCode == DDS_RETCODE_OK)
                         {
-							returnedValue = handleNewInstance(info, replyActiveConditions);
-						}
-					}
-					else
-                    {
-						retCode = info->waitSet->wait(replyActiveConditions, tTimeout);
+                            retCode = waitSet->wait(replyActiveConditions, tTimeout);
 
-						if(retCode == DDS_RETCODE_OK)
+                            if(retCode == DDS_RETCODE_OK)
+                            {
+                                if(replyActiveConditions.length() == 1 && replyActiveConditions[0] == query)
+                                {
+                                    returnedValue = takeReply(reply, query);
+                                }
+                            }
+                            else if(retCode == DDS_RETCODE_TIMEOUT)
+                            {
+                                printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
+				                returnedValue = SERVER_TIMEOUT;
+                            }
+
+                            waitSet->detach_condition(query);
+                        }
+                        else
                         {
-							returnedValue = handleNewSample(info, request, replyActiveConditions);
-						}
-					}
+                            printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
+                        }
 
-					if(retCode == DDS_RETCODE_TIMEOUT)
+                        delete waitSet;
+                    }
+                    else
                     {
-						printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
-						returnedValue = SERVER_TIMEOUT;
-					}
-				}
-                while(returnedValue == RECEIVED_OTHER_REQUEST);
+                        printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+                    }
+
+                    m_replyDataReader->delete_readcondition(query);
+                }
+                else
+                {
+                    printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
+                }
 			}
 			else
             {
-				returnedValue = CLIENT_ERROR;
 				printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
 			}
 		}
@@ -226,7 +196,7 @@ int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const
 {
     const char* const METHOD_NAME = "createEntities";
     char topicNames[100];
-    char filterLine[100];
+    char filterLine[250];
     DDS_StringSeq parameters;
     DDS_PublisherQos publisherQos;
     DDS_SubscriberQos subscriberQos;
@@ -251,7 +221,28 @@ int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const
                         if((m_requestTopic = participant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                         {
                             if((m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
-                            {
+                            {                              
+                                // Obtain clientServiceId.
+                                DDS_DataWriterQos *wQos = new DDS_DataWriterQos();
+                                m_requestDataWriter->get_qos(*wQos);
+                                m_clientServiceId[0] = ((wQos->protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
+                                    ((wQos->protocol.virtual_guid.value[1] << 16) & 0xFF0000) +
+                                    ((wQos->protocol.virtual_guid.value[2] << 8) & 0xFF00) +
+                                    (wQos->protocol.virtual_guid.value[3] & 0xFF);
+                                m_clientServiceId[1] = ((wQos->protocol.virtual_guid.value[4] << 24) & 0xFF000000) +
+                                    ((wQos->protocol.virtual_guid.value[5] << 16) & 0xFF0000) +
+                                    ((wQos->protocol.virtual_guid.value[6] << 8) & 0xFF00) +
+                                    (wQos->protocol.virtual_guid.value[7] & 0xFF);
+                                m_clientServiceId[2] = ((wQos->protocol.virtual_guid.value[8] << 24) & 0xFF000000) +
+                                    ((wQos->protocol.virtual_guid.value[9] << 16) & 0xFF0000) +
+                                    ((wQos->protocol.virtual_guid.value[10] << 8) & 0xFF00) +
+                                    (wQos->protocol.virtual_guid.value[11] & 0xFF);
+                                m_clientServiceId[3] = ((wQos->protocol.virtual_guid.value[12] << 24) & 0xFF000000) +
+                                    ((wQos->protocol.virtual_guid.value[13] << 16) & 0xFF0000) +
+                                    ((wQos->protocol.virtual_guid.value[14] << 8) & 0xFF00) +
+                                    (wQos->protocol.virtual_guid.value[15] & 0xFF);
+                                delete wQos;
+
                                 if((m_replySubscriber = participant->create_subscriber(DDS_SUBSCRIBER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                                 {
                                     if(m_replySubscriber->get_qos(subscriberQos) == DDS_RETCODE_OK)
@@ -267,7 +258,8 @@ int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const
 
                                             if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                                             {
-                                                SNPRINTF(filterLine, 100, "clientId[0] = %u and clientId[1] = %u and clientId[2] = %u", clientID[0], clientID[1], clientID[2]);
+                                                SNPRINTF(filterLine, 250, "clientServiceId[0] = %u and clientServiceId[1] = %u and clientServiceId[2] = %u and clientServiceId[3] = %u",
+                                                    m_clientServiceId[0], m_clientServiceId[1], m_clientServiceId[2], m_clientServiceId[3]);
                                                 if((m_replyFilter = participant->create_contentfilteredtopic(remoteServiceName, m_replyTopic, filterLine, parameters)) != NULL)
                                                 {
                                                     if((m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
@@ -398,23 +390,6 @@ int ClientRemoteService::enableEntities()
     return returnedValue;
 }
 
-int ClientRemoteService::createConditions()
-{
-	int returnedValue = 0;
-
-	if(m_replyDataReader != NULL){
-		m_newReplyInstanceCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
-		m_replyCondition = m_replyDataReader->create_readcondition(DDS_NOT_READ_SAMPLE_STATE, DDS_NOT_NEW_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
-
-		returnedValue = m_newReplyInstanceCondition != NULL && m_replyCondition != NULL;
-	}
-	else{
-		printf("ERROR <createConditionAndWaitset>: There is not reader\n");
-	}
-
-	return returnedValue;
-}
-
 int ClientRemoteService::createServiceDetectSystem()
 {
     const char* const METHOD_NAME = "createServiceDetectSystem";
@@ -446,18 +421,5 @@ int ClientRemoteService::createServiceDetectSystem()
     }
 
     return returnedValue;
-}
-
-void ClientRemoteService::replyRead()
-{
-	RTI_UINT32 id = RTIOsapiThread_getCurrentThreadID();
-	if(take())
-	{
-		ThreadLocalInfo *info = getInfo(id);
-		if(info != NULL){
-			info->freshData = DDS_BOOLEAN_FALSE;
-		}
-		give();
-	}
 }
 
