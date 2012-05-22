@@ -98,7 +98,7 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 
         DDSContentFilteredTopic *m_replyFilter;
 
-        DDS_Long m_numSec;
+        DDS_UnsignedLong m_numSec;
 		DDS_UnsignedLong m_clientServiceId[4];
         DDS_InstanceHandle_t m_ih;
 

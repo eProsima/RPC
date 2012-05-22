@@ -53,7 +53,7 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
 	DDSConditionSeq noServerConditions;
 	DDS_ReturnCode_t retCode;
 	DDS_Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
-    DDS_Long numSec = 0;
+    DDS_UnsignedLong numSec = 0;
     char value[50];
 
 	if(request != NULL)
@@ -138,6 +138,10 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
                             {
                                 printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
 				                returnedValue = SERVER_TIMEOUT;
+
+                                struct DDS_DataReaderCacheStatus cs;
+                                m_replyDataReader->get_datareader_cache_status(cs);
+                                printf("Samples in datareader: %d\n", cs.sample_count);
                             }
 
                             waitSet->detach_condition(query);
