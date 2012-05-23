@@ -14,20 +14,13 @@ m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_repl
     {
         if(createEntities(clientParticipant, remoteServiceName, requestTypeName, replyTypeName))
         {
-            if(createServiceDetectSystem())
+            if(enableEntities())
             {
-                if(enableEntities())
-                {
-                    strncpy(m_remoteServiceName, remoteServiceName, 50);
-                }
-                else
-                {
-                    printf("ERROR<%s::%s>: Cannot enableEntities\n", CLASS_NAME, METHOD_NAME);
-                }
+                strncpy(m_remoteServiceName, remoteServiceName, 50);
             }
             else
             {
-                printf("ERROR<%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+                printf("ERROR<%s::%s>: Cannot enableEntities\n", CLASS_NAME, METHOD_NAME);
             }
         }
     }
@@ -49,8 +42,8 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
 {
     const char* const METHOD_NAME = "execute";
 	DDSCSMessages returnedValue = CLIENT_ERROR;
-	DDSConditionSeq replyActiveConditions;
-	DDSConditionSeq noServerConditions;
+    DDSWaitSet *waitSet = NULL;
+    DDSStatusCondition *statusCondition = NULL;
 	DDS_ReturnCode_t retCode;
 	DDS_Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
     DDS_UnsignedLong numSec = 0;
@@ -77,59 +70,111 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
 			//		1.- If the publication matched status is triggered between get_publication_matched_status()
 			//          and wait() calls it will be missed.
 			//      2.- If there is no matched entity the total wait time may be up to 2* tTimeout
-			DDS_PublicationMatchedStatus pms;
-			m_requestDataWriter->get_publication_matched_status(pms);
 
-			if(pms.current_count < 1)
+            waitSet = new DDSWaitSet();
+
+            if(waitSet != NULL)
             {
-				retCode = m_matchingPubWaitset->wait(noServerConditions, tTimeout);
+                // Detect request datareader from server.
+			    DDS_PublicationMatchedStatus pms;
+			    m_requestDataWriter->get_publication_matched_status(pms);
 
-				if((retCode == DDS_RETCODE_TIMEOUT) || (retCode == DDS_RETCODE_OK && noServerConditions.length() == 0))
+			    if(pms.current_count < 1)
                 {
-                    printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
-                    returnedValue = NO_SERVER;
+                    statusCondition = m_requestDataWriter->get_statuscondition();
+
+                    if(statusCondition != NULL)
+                    {
+                        statusCondition->set_enabled_statuses(DDS_PUBLICATION_MATCHED_STATUS);
+                        
+                        if(waitSet->attach_condition(statusCondition) == DDS_RETCODE_OK)
+                        {
+                            DDSConditionSeq conds;
+				            retCode = waitSet->wait(conds, tTimeout);
+
+				            if((retCode == DDS_RETCODE_TIMEOUT) || (retCode == DDS_RETCODE_OK && conds.length() == 0))
+                            {
+                                printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+                                returnedValue = NO_SERVER;
+                            }
+
+                            waitSet->detach_condition(statusCondition);
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s>: Cannot get status condition from request datawriter.\n", CLASS_NAME, METHOD_NAME);
+                    }
+			    }
+
+                // Detect reply datawriter from server.
+                DDS_SubscriptionMatchedStatus sms;
+                m_replyDataReader->get_subscription_matched_status(sms);
+
+                if(sms.current_count < 1)
+                {
+                    statusCondition = m_replyDataReader->get_statuscondition();
+
+                    if(statusCondition != NULL)
+                    {
+                        statusCondition->set_enabled_statuses(DDS_SUBSCRIPTION_MATCHED_STATUS);
+                        
+                        if(waitSet->attach_condition(statusCondition) == DDS_RETCODE_OK)
+                        {
+                            DDSConditionSeq conds;
+				            retCode = waitSet->wait(conds, tTimeout);
+
+				            if((retCode == DDS_RETCODE_TIMEOUT) || (retCode == DDS_RETCODE_OK && conds.length() == 0))
+                            {
+                                printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+                                returnedValue = NO_SERVER;
+                            }
+
+                            waitSet->detach_condition(statusCondition);
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s>: Cannot get status condition from reply datareader.\n", CLASS_NAME, METHOD_NAME);
+                    }
                 }
-			}
 
-            // Register instance.
-            if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
-                printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
+                // Register instance.
+                if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
+                    printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
 
-			if(returnedValue != NO_SERVER && (write(request) == DDS_RETCODE_OK))
-			{
-                struct DDS_StringSeq stringSeq;
+			    if(returnedValue != NO_SERVER && (write(request) == DDS_RETCODE_OK))
+			    {
+                    struct DDS_StringSeq stringSeq;
 
-                stringSeq.ensure_length(5, 5);
-                SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                stringSeq[0] = DDS_String_dup(value);
-                SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                stringSeq[1] = DDS_String_dup(value);
-                SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                stringSeq[2] = DDS_String_dup(value);
-                SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                stringSeq[3] = DDS_String_dup(value);
-                SNPRINTF(value, 50, "%u", numSec);
-                stringSeq[4] = DDS_String_dup(value);
+                    stringSeq.ensure_length(5, 5);
+                    SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                    stringSeq[0] = DDS_String_dup(value);
+                    SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                    stringSeq[1] = DDS_String_dup(value);
+                    SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                    stringSeq[2] = DDS_String_dup(value);
+                    SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                    stringSeq[3] = DDS_String_dup(value);
+                    SNPRINTF(value, 50, "%u", numSec);
+                    stringSeq[4] = DDS_String_dup(value);
 
-                DDSQueryCondition *query = m_replyDataReader->create_querycondition(DDS_NOT_READ_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE,
-                    "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
-                    stringSeq);
-                
-                if(query != NULL)
-                {
-                    DDSWaitSet *waitSet = new DDSWaitSet();
-
-                    if(waitSet != NULL)
+                    DDSQueryCondition *query = m_replyDataReader->create_querycondition(DDS_NOT_READ_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE,
+                        "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                        stringSeq);
+                    
+                    if(query != NULL)
                     {
                         retCode = waitSet->attach_condition(query);
 
                         if(retCode == DDS_RETCODE_OK)
                         {
-                            retCode = waitSet->wait(replyActiveConditions, tTimeout);
+                            DDSConditionSeq conds;
+                            retCode = waitSet->wait(conds, tTimeout);
 
                             if(retCode == DDS_RETCODE_OK)
                             {
-                                if(replyActiveConditions.length() == 1 && replyActiveConditions[0] == query)
+                                if(conds.length() == 1 && conds[0] == query)
                                 {
                                     returnedValue = takeReply(reply, query);
                                 }
@@ -137,11 +182,7 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
                             else if(retCode == DDS_RETCODE_TIMEOUT)
                             {
                                 printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
-				                returnedValue = SERVER_TIMEOUT;
-
-                                struct DDS_DataReaderCacheStatus cs;
-                                m_replyDataReader->get_datareader_cache_status(cs);
-                                printf("Samples in datareader: %d\n", cs.sample_count);
+			                    returnedValue = SERVER_TIMEOUT;
                             }
 
                             waitSet->detach_condition(query);
@@ -151,24 +192,24 @@ DDSCSMessages ClientRemoteService::execute(void *request, void *reply, unsigned 
                             printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
                         }
 
-                        delete waitSet;
+                        m_replyDataReader->delete_readcondition(query);
                     }
                     else
                     {
-                        printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+                        printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
                     }
-
-                    m_replyDataReader->delete_readcondition(query);
-                }
-                else
+			    }
+			    else
                 {
-                    printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
-                }
-			}
-			else
+				    printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+			    }
+
+                delete waitSet;
+            }
+            else
             {
-				printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
-			}
+                printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+            }
 		}
 		else{
 			printf("ERROR<%s::%s>: failed to take mutex\n", CLASS_NAME, METHOD_NAME);
@@ -389,39 +430,6 @@ int ClientRemoteService::enableEntities()
     else
     {
         printf("ERROR<%s::%s>: Cannot enable request publisher\n", CLASS_NAME, METHOD_NAME);
-    }
-
-    return returnedValue;
-}
-
-int ClientRemoteService::createServiceDetectSystem()
-{
-    const char* const METHOD_NAME = "createServiceDetectSystem";
-    int returnedValue = 0;
-
-    m_matchingPubWaitset = new DDSWaitSet();
-
-    if(m_matchingPubWaitset != NULL)
-    {
-        if(m_requestDataWriter != NULL)
-        {
-            m_matchingCondition = m_requestDataWriter->get_statuscondition();
-
-            if(m_matchingCondition != NULL)
-            {
-                m_matchingCondition->set_enabled_statuses(DDS_PUBLICATION_MATCHED_STATUS);
-                returnedValue = m_matchingPubWaitset->attach_condition(m_matchingCondition) == DDS_RETCODE_OK;
-            }
-            else{
-                printf("ERROR<%s::%s>: Cannot allocate the condition\n", CLASS_NAME, METHOD_NAME);
-            }
-        }
-        else{
-            printf("ERROR<%s::%s>: There is not reader\n", CLASS_NAME, METHOD_NAME);
-        }
-    }
-    else{
-        printf("ERROR<%s::%s>: Cannot allocate the waitset\n", CLASS_NAME, METHOD_NAME);
     }
 
     return returnedValue;

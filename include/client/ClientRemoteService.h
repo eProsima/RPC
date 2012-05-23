@@ -76,25 +76,10 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          */
         DDSStatusCondition *m_matchingCondition;
 
-		/**
-         * \brief The waitset used to wait for a matching publication (server).
-         */
-        // TODO Es compartido por hilos. Cambiar.
-        DDSWaitSet *m_matchingPubWaitset;
-
         int createEntities(DDSDomainParticipant *participant, const char *remoteServiceName,
                 const char *requestTypeName, const char *replyTypeName);
 
         int enableEntities();
-
-        /**
-         * \brief This function initialize the condition and waitset used to received server communications.
-         *
-         * \return If the function works successful then returns 0. In other case -1 is returned.
-         */
-        int createConditions();
-
-        int createServiceDetectSystem();
 
         DDSContentFilteredTopic *m_replyFilter;
 
