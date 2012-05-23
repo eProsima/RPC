@@ -1,0 +1,18 @@
+interface BasicTypeTest
+{
+
+	octet getOctet(in octet oc1, inout octet oc2, out octet oc3);
+	char getChar(in char ch1, inout char ch2, out char ch3);
+	wchar getWChar(in wchar wch1, inout wchar wch2, out wchar wch3);
+	short getShort(in short sh1, inout short sh2, out short sh3);
+	unsigned short getUShort(in unsigned short ush1, inout unsigned short ush2, out unsigned short ush3);
+	long getLong(in long lo1, inout long lo2, out long lo3);
+	unsigned long getULong(in unsigned long ulo1, inout unsigned long ulo2, out unsigned long ulo3);
+	long long getLLong(in long long llo1, inout long long llo2, out long long llo3);
+	unsigned long long getULLong(in unsigned long long ullo1, inout unsigned long long ullo2, out unsigned long long ullo3);
+	float getFloat(in float fl1, inout float fl2, out float fl3);
+	double getDouble(in double do1, inout double do2, out double do3);
+        // Not supported yet. Our IDL parse is for CORBA-IDL 2.0 and long double is in CORBA-IDL 2.1
+	//long double getLDouble(in long double ldo1, inout long double ldo2, out long double ldo3);
+	boolean getBoolean(in boolean bo1, inout boolean bo2, out boolean bo3);
+};

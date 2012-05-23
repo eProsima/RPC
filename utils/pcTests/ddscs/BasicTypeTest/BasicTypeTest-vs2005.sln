@@ -1,0 +1,37 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicTypeTestServer", "BasicTypeTestServer-vs2005.vcproj", "{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicTypeTestClient", "BasicTypeTestClient-vs2005.vcproj", "{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE} = {F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}
+	EndProjectSectionEndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug DLL|Win32 = Debug DLL|Win32
+		Release DLL|Win32 = Release DLL|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug|Win32.Build.0 = Debug|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release|Win32.ActiveCfg = Release|Win32
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release|Win32.Build.0 = Release|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug|Win32.ActiveCfg = Debug|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug|Win32.Build.0 = Debug|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release|Win32.ActiveCfg = Release|Win32
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
