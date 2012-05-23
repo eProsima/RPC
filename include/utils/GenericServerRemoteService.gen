@@ -60,8 +60,6 @@ int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
 			replyData->clientServiceId[3] = requestData->clientServiceId[3];
 			replyData->numSec = requestData->numSec;
 			replyData->ddscsRetCode = errorMessage;
-			
-			printf("SENDING\n");
 
 			if(replyFooDataWriter->write(*replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
 			{
