@@ -22,13 +22,7 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.StringTemplateGroupLoader;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 import com.eprosima.ddscs.idl.ast.*;
-import com.eprosima.ddscs.idl.tree.InoutParam;
-import com.eprosima.ddscs.idl.tree.InputParam;
-import com.eprosima.ddscs.idl.tree.Interface;
-import com.eprosima.ddscs.idl.tree.Operation;
-import com.eprosima.ddscs.idl.tree.OutputParam;
-import com.eprosima.ddscs.idl.tree.Module;
-import com.eprosima.ddscs.idl.tree.SimpleTypedef;
+import com.eprosima.ddscs.idl.tree.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -192,16 +186,33 @@ public class IDL2DDSCS
         StringTemplateGroup baseTemplate = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, null);
         Map typeInitMap = baseTemplate.getMap("typeInitMap");
 
-        // Adds Simple type redefinitions to typeInitMap, so the generation logic
+        // Adds certain type declarations to typeInitMap, so the generation logic
         // would treat them as simple types instead of constructed/template types.
-        SimpleTypedef typedef = null;
+        TypeDecl typedecl = null, aux = null;
         StringTemplate template = null;
 
-        for(ListIterator iter = root.getTypes().listIterator(); iter.hasNext();)
+        for(ListIterator iter = root.getTypesDecl().listIterator(); iter.hasNext();)
         {						
-            typedef = (SimpleTypedef) iter.next();
-            template = new StringTemplate(baseTemplate, typedef.getAlias());
-            typeInitMap.put(typedef.getAlias(), template);
+            typedecl = (TypeDecl) iter.next();
+        	aux = typedecl;
+        	
+            if(typedecl instanceof SimpleTypedef)
+            {
+            	SimpleTypedef def = null;
+            	
+            	do
+            	{
+            		def = (SimpleTypedef)aux;
+            		aux = def.getBase();
+            	}
+            	while(aux instanceof SimpleTypedef);
+            }
+            
+            if(aux instanceof BasicType || aux instanceof EnumType)
+            {
+            	template = new StringTemplate(baseTemplate, typedecl.getTemplateName());
+            	typeInitMap.put(typedecl.getName(), template);
+            }
         }
 
         Interface ifc = root.getIfc();
@@ -332,29 +343,37 @@ public class IDL2DDSCS
                 for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
                     ip = (InputParam)paramIter.next();
                     funDecl.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());				
-                    funDef.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
-                    funCall.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
+                    funDef.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
+                    		(ip.getType().equals("string") ? "yes" : null));
+                    funCall.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
+                    		(ip.getType().equals("string") ? "yes" : null));
                 }
                 InoutParam iop = null;
                 for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
                     iop = (InoutParam)paramIter.next();
                     funDecl.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
-                    funDef.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
-                    funCall.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
+                    funDef.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
+                    		(iop.getType().equals("string") ? "yes" : null));				
+                    funCall.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
+                    		(iop.getType().equals("string") ? "yes" : null));				
                 }
                 OutputParam oup = null;
                 for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
                     oup = (OutputParam)paramIter.next();
                     funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
-                    funDef.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
-                    funCall.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
+                    funDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
+                    		(oup.getType().equals("string") ? "yes" : null));				
+                    funCall.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
+                    		(oup.getType().equals("string") ? "yes" : null));				
                 }
                 // Return Value
                 if(!"void".equals(op.getReturnType()))
                 {
                     funDecl.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
-                    funDef.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");				
-                    funCall.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+                    funDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
+                    		(op.getReturnType().equals("string") ? "yes" : null));				
+                    funCall.setAttribute("outputParams.{type, name,string}", op.getReturnType(), op.getName()+"_ret",
+                    		(op.getReturnType().equals("string") ? "yes" : null));
                 }
 
                 header.setAttribute("funDecls", funDecl.toString());
@@ -412,18 +431,18 @@ public class IDL2DDSCS
         for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
             ip = (InputParam)paramIter.next();
 
-            request.setAttribute(attribute, ip.getType(), ip.getName());
+            request.setAttribute(attribute, ip.getType(), ip.getName(), (ip.getType().equals("string") ? "yes" : null));
         }
         InoutParam iop = null;
         for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
             iop = (InoutParam)paramIter.next();
-            request.setAttribute(attribute, iop.getType(), iop.getName());
-            reply.setAttribute(attribute, iop.getType(), iop.getName());
+            request.setAttribute(attribute, iop.getType(), iop.getName(), (iop.getType().equals("string") ? "yes" : null));
+            reply.setAttribute(attribute, iop.getType(), iop.getName(), (iop.getType().equals("string") ? "yes" : null));
         }
         OutputParam oup = null;
         for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
             oup = (OutputParam)paramIter.next();
-            reply.setAttribute(attribute, oup.getType(), oup.getName());
+            reply.setAttribute(attribute, oup.getType(), oup.getName(), (oup.getType().equals("string") ? "yes" : null));
         }
     }
 
@@ -511,11 +530,12 @@ public class IDL2DDSCS
                 definitionReply.setAttribute("funName", op.getName());
                 definitionReply.setAttribute("type", "Reply");
 
-                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name}");
-                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name}");
+                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name, string}");
+                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name, string}");
                 if(!"void".equals(op.getReturnType())){
                     headerReply.setAttribute("returnType", op.getReturnType());					
                     definitionReply.setAttribute("returnType", op.getReturnType());
+                    definitionReply.setAttribute("string", (op.getReturnType().equals("string") ? "yes" : null));
                 }
                 headerFile.setAttribute("classes", headerRequest.toString());
                 headerFile.setAttribute("classes", headerReply.toString());
@@ -578,7 +598,7 @@ public class IDL2DDSCS
                 request.setAttribute("name", op.getName());		
                 reply.setAttribute("name", op.getName());
 
-                setRequestReplyParams(request, reply, op, "fields.{type, name}");
+                setRequestReplyParams(request, reply, op, "fields.{type, name, string}");
                 if(!"void".equals(op.getReturnType())){
                     reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
                 }

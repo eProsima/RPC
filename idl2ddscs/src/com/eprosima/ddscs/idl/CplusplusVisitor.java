@@ -192,15 +192,21 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(ASTID node, Object data) {
-		Object value = node.jjtGetValue();
-		if (value != null) {
-			if (data instanceof Named) {
+		Object value = node.jjtGetValue(), returnedValue = data;
+		
+		if (value != null)
+		{
+			if (data instanceof Named)
+			{
 				((Named) data).setName(value.toString());
-			} else {
-				data = value.toString();
+			}
+			else
+			{
+				returnedValue = value.toString();
 			}
 		}
-		return data;
+		
+		return returnedValue;
 	}
 
 	/*
@@ -287,16 +293,20 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 * @see IDLParserVisitor#visit(ASTType, java.lang.Object)
 	 */
 
-	public Object visit(ASTTypedef node, Object data) {
-		Node child = node.jjtGetChild(0);
-		SimpleTypedef def = null;
-		if(child instanceof ASTSimpleType || child instanceof ASTstring)
+	public Object visit(ASTTypedef node, Object data)
+	{
+		String base = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		TypeDecl basedecl = ((Module)data).getTypeDecl(base);
+		
+		if(basedecl != null)
 		{
-			def = new SimpleTypedef();			
-			def.setBase(child.jjtAccept(this, data).toString());
-			def.setAlias(node.jjtGetChild(1).jjtAccept(this, def).toString());
-			((Module)data).add(def);
+			SimpleTypedef def = new SimpleTypedef(node.jjtGetChild(1).jjtAccept(this, data).toString(),
+					basedecl);			
+			((Module)data).addTypeDecl(def);
 		}
+		else
+			System.out.println("ERROR<CplusplusVisitor::visit>: Unknown base of typedef " + base);
+
 		return data;
 	}
 	/*
@@ -305,7 +315,30 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 * @see IDLParserVisitor#visit(ASTType, java.lang.Object)
 	 */
 
-	public Object visit(ASTConstructedType node, Object data) {
+	public Object visit(ASTConstructedType node, Object data)
+	{
+		String type = node.jjtGetValue().toString();
+		TypeDecl typedecl = null;
+		
+		if(type.equals("enum"))
+		{
+			typedecl = new EnumType();
+		}
+		else if(type.equals("struct"))
+		{
+			typedecl = new StructType();
+		}
+		else if(type.equals("union"))
+		{
+			typedecl = new UnionType();
+		}
+		
+		if(typedecl != null)
+		{
+			node.jjtGetChild(0).jjtAccept(this, typedecl);
+			typedecl.setTemplateName(typedecl.getName());
+			((Module)data).addTypeDecl(typedecl);
+		}
 		return data;
 	}
 }

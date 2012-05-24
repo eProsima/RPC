@@ -147,13 +147,13 @@ $functionHeader(class={$interfaceName$Impl},...)$
  *  lastParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
+functionImpl(interfaceName,type,name,string,inputParams,inoutParams,outputParams) ::= <<
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
     $interfaceName$Server *srv = ($interfaceName$Server*)server;
-    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes")$}; separator="\n"$   
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes")$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes")$}; separator="\n"$   
+    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $varDecl(type=type, name="returnedValue")$    
     $name$Reply *replyData = NULL;
 
@@ -166,6 +166,10 @@ $exFunctionHeader(class=interfaceName,...)$
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+    $inputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$       
 }
 >>
 

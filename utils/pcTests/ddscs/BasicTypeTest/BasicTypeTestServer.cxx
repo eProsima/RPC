@@ -80,11 +80,11 @@ BasicTypeTestServer::~BasicTypeTestServer()
 void BasicTypeTestServer::getOctet(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Octet  oc1;       
-    DDS_Octet  oc2;       
-    DDS_Octet  oc3;    
-    DDS_Octet  getOctet_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Octet  oc1 ;       
+    DDS_Octet  oc2 ;       
+    DDS_Octet  oc3 ;    
+    DDS_Octet  getOctet_ret ;       
+    DDSCSMessages  returnedValue ;        
     getOctetReply *replyData = NULL;
 
     getOctetRequestUtils::extractTypeData((getOctetRequest*)requestData, oc1    ,oc2    );
@@ -95,15 +95,20 @@ void BasicTypeTestServer::getOctet(DDSCSServer *server, void *requestData, Serve
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getChar(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Char  ch1;       
-    DDS_Char  ch2;       
-    DDS_Char  ch3;    
-    DDS_Char  getChar_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Char  ch1 ;       
+    DDS_Char  ch2 ;       
+    DDS_Char  ch3 ;    
+    DDS_Char  getChar_ret ;       
+    DDSCSMessages  returnedValue ;        
     getCharReply *replyData = NULL;
 
     getCharRequestUtils::extractTypeData((getCharRequest*)requestData, ch1    ,ch2    );
@@ -114,15 +119,20 @@ void BasicTypeTestServer::getChar(DDSCSServer *server, void *requestData, Server
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getWChar(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Wchar  wch1;       
-    DDS_Wchar  wch2;       
-    DDS_Wchar  wch3;    
-    DDS_Wchar  getWChar_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Wchar  wch1 ;       
+    DDS_Wchar  wch2 ;       
+    DDS_Wchar  wch3 ;    
+    DDS_Wchar  getWChar_ret ;       
+    DDSCSMessages  returnedValue ;        
     getWCharReply *replyData = NULL;
 
     getWCharRequestUtils::extractTypeData((getWCharRequest*)requestData, wch1    ,wch2    );
@@ -133,15 +143,20 @@ void BasicTypeTestServer::getWChar(DDSCSServer *server, void *requestData, Serve
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getShort(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Short  sh1;       
-    DDS_Short  sh2;       
-    DDS_Short  sh3;    
-    DDS_Short  getShort_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Short  sh1 ;       
+    DDS_Short  sh2 ;       
+    DDS_Short  sh3 ;    
+    DDS_Short  getShort_ret ;       
+    DDSCSMessages  returnedValue ;        
     getShortReply *replyData = NULL;
 
     getShortRequestUtils::extractTypeData((getShortRequest*)requestData, sh1    ,sh2    );
@@ -152,15 +167,20 @@ void BasicTypeTestServer::getShort(DDSCSServer *server, void *requestData, Serve
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getUShort(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_UnsignedShort  ush1;       
-    DDS_UnsignedShort  ush2;       
-    DDS_UnsignedShort  ush3;    
-    DDS_UnsignedShort  getUShort_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_UnsignedShort  ush1 ;       
+    DDS_UnsignedShort  ush2 ;       
+    DDS_UnsignedShort  ush3 ;    
+    DDS_UnsignedShort  getUShort_ret ;       
+    DDSCSMessages  returnedValue ;        
     getUShortReply *replyData = NULL;
 
     getUShortRequestUtils::extractTypeData((getUShortRequest*)requestData, ush1    ,ush2    );
@@ -171,15 +191,20 @@ void BasicTypeTestServer::getUShort(DDSCSServer *server, void *requestData, Serv
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getLong(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Long  lo1;       
-    DDS_Long  lo2;       
-    DDS_Long  lo3;    
-    DDS_Long  getLong_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Long  lo1 ;       
+    DDS_Long  lo2 ;       
+    DDS_Long  lo3 ;    
+    DDS_Long  getLong_ret ;       
+    DDSCSMessages  returnedValue ;        
     getLongReply *replyData = NULL;
 
     getLongRequestUtils::extractTypeData((getLongRequest*)requestData, lo1    ,lo2    );
@@ -190,15 +215,20 @@ void BasicTypeTestServer::getLong(DDSCSServer *server, void *requestData, Server
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getULong(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_UnsignedLong  ulo1;       
-    DDS_UnsignedLong  ulo2;       
-    DDS_UnsignedLong  ulo3;    
-    DDS_UnsignedLong  getULong_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_UnsignedLong  ulo1 ;       
+    DDS_UnsignedLong  ulo2 ;       
+    DDS_UnsignedLong  ulo3 ;    
+    DDS_UnsignedLong  getULong_ret ;       
+    DDSCSMessages  returnedValue ;        
     getULongReply *replyData = NULL;
 
     getULongRequestUtils::extractTypeData((getULongRequest*)requestData, ulo1    ,ulo2    );
@@ -209,15 +239,20 @@ void BasicTypeTestServer::getULong(DDSCSServer *server, void *requestData, Serve
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getLLong(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_LongLong  llo1;       
-    DDS_LongLong  llo2;       
-    DDS_LongLong  llo3;    
-    DDS_LongLong  getLLong_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_LongLong  llo1 ;       
+    DDS_LongLong  llo2 ;       
+    DDS_LongLong  llo3 ;    
+    DDS_LongLong  getLLong_ret ;       
+    DDSCSMessages  returnedValue ;        
     getLLongReply *replyData = NULL;
 
     getLLongRequestUtils::extractTypeData((getLLongRequest*)requestData, llo1    ,llo2    );
@@ -228,15 +263,20 @@ void BasicTypeTestServer::getLLong(DDSCSServer *server, void *requestData, Serve
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getULLong(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_UnsignedLongLong  ullo1;       
-    DDS_UnsignedLongLong  ullo2;       
-    DDS_UnsignedLongLong  ullo3;    
-    DDS_UnsignedLongLong  getULLong_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_UnsignedLongLong  ullo1 ;       
+    DDS_UnsignedLongLong  ullo2 ;       
+    DDS_UnsignedLongLong  ullo3 ;    
+    DDS_UnsignedLongLong  getULLong_ret ;       
+    DDSCSMessages  returnedValue ;        
     getULLongReply *replyData = NULL;
 
     getULLongRequestUtils::extractTypeData((getULLongRequest*)requestData, ullo1    ,ullo2    );
@@ -247,15 +287,20 @@ void BasicTypeTestServer::getULLong(DDSCSServer *server, void *requestData, Serv
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getFloat(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Float  fl1;       
-    DDS_Float  fl2;       
-    DDS_Float  fl3;    
-    DDS_Float  getFloat_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Float  fl1 ;       
+    DDS_Float  fl2 ;       
+    DDS_Float  fl3 ;    
+    DDS_Float  getFloat_ret ;       
+    DDSCSMessages  returnedValue ;        
     getFloatReply *replyData = NULL;
 
     getFloatRequestUtils::extractTypeData((getFloatRequest*)requestData, fl1    ,fl2    );
@@ -266,15 +311,20 @@ void BasicTypeTestServer::getFloat(DDSCSServer *server, void *requestData, Serve
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getDouble(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Double  do1;       
-    DDS_Double  do2;       
-    DDS_Double  do3;    
-    DDS_Double  getDouble_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Double  do1 ;       
+    DDS_Double  do2 ;       
+    DDS_Double  do3 ;    
+    DDS_Double  getDouble_ret ;       
+    DDSCSMessages  returnedValue ;        
     getDoubleReply *replyData = NULL;
 
     getDoubleRequestUtils::extractTypeData((getDoubleRequest*)requestData, do1    ,do2    );
@@ -285,15 +335,20 @@ void BasicTypeTestServer::getDouble(DDSCSServer *server, void *requestData, Serv
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }
 void BasicTypeTestServer::getBoolean(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
-    DDS_Boolean  bo1;       
-    DDS_Boolean  bo2;       
-    DDS_Boolean  bo3;    
-    DDS_Boolean  getBoolean_ret;       
-    DDSCSMessages  returnedValue;        
+    DDS_Boolean  bo1 ;       
+    DDS_Boolean  bo2 ;       
+    DDS_Boolean  bo3 ;    
+    DDS_Boolean  getBoolean_ret ;       
+    DDSCSMessages  returnedValue ;        
     getBooleanReply *replyData = NULL;
 
     getBooleanRequestUtils::extractTypeData((getBooleanRequest*)requestData, bo1    ,bo2    );
@@ -304,4 +359,9 @@ void BasicTypeTestServer::getBoolean(DDSCSServer *server, void *requestData, Ser
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+        
+        
+        
+               
 }

@@ -33,7 +33,7 @@ void StructTestServer::duplicate(DDSCSServer *server, void *requestData, ServerR
     Envio *ev = EnvioPluginSupport_create_data();       
    
     Recepcion *duplicate_ret = RecepcionPluginSupport_create_data();       
-    DDSCSMessages  returnedValue;        
+    DDSCSMessages  returnedValue ;        
     duplicateReply *replyData = NULL;
 
     duplicateRequestUtils::extractTypeData((duplicateRequest*)requestData, *ev    );
@@ -44,6 +44,9 @@ void StructTestServer::duplicate(DDSCSServer *server, void *requestData, ServerR
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+    EnvioPluginSupport_destroy_data(ev);    
+    RecepcionPluginSupport_destroy_data(duplicate_ret);           
 }
 void StructTestServer::suma(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -52,7 +55,7 @@ void StructTestServer::suma(DDSCSServer *server, void *requestData, ServerRemote
     Envio *ev2 = EnvioPluginSupport_create_data();       
    
     Recepcion *suma_ret = RecepcionPluginSupport_create_data();       
-    DDSCSMessages  returnedValue;        
+    DDSCSMessages  returnedValue ;        
     sumaReply *replyData = NULL;
 
     sumaRequestUtils::extractTypeData((sumaRequest*)requestData, *ev1    , *ev2    );
@@ -63,4 +66,8 @@ void StructTestServer::suma(DDSCSServer *server, void *requestData, ServerRemote
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
+    
+    EnvioPluginSupport_destroy_data(ev1);    
+    EnvioPluginSupport_destroy_data(ev2);    
+    RecepcionPluginSupport_destroy_data(suma_ret);           
 }

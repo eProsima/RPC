@@ -44,7 +44,7 @@ unsigned int StructTestProxy::getTimeout()
 DDSCSMessages
  StructTestProxy::duplicate(Envio & ev ,Recepcion  &duplicate_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     duplicateRequest *instance = NULL;
     duplicateReply *retInstance = duplicateReplyTypeSupport::create_data();
     instance = duplicateRequestUtils::createTypeData(ev    );
@@ -81,7 +81,7 @@ DDSCSMessages
 DDSCSMessages
  StructTestProxy::suma(Envio & ev1, Envio & ev2 ,Recepcion  &suma_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     sumaRequest *instance = NULL;
     sumaReply *retInstance = sumaReplyTypeSupport::create_data();
     instance = sumaRequestUtils::createTypeData(ev1    , ev2    );

@@ -15,10 +15,10 @@ int main()
     
     Envio *ev = EnvioPluginSupport_create_data();       
     ev->dato = 10;
-    ev->message = "HOLA";
+    ev->message = DDS_String_dup("HOLA");
    
     Recepcion *duplicate_ret = RecepcionPluginSupport_create_data();       
-    DDSCSMessages  duplicateRetValue;        
+    DDSCSMessages  duplicateRetValue ;        
 
     /**
      * Dynamic memory passed to the proxy will be freed before return *
@@ -26,16 +26,18 @@ int main()
      */
     duplicateRetValue = proxy->duplicate(*ev    ,*duplicate_ret    );
     printf("%s %d\n", duplicate_ret->message, duplicate_ret->devolucion);
-
+    
+    EnvioPluginSupport_destroy_data(ev);    
+    RecepcionPluginSupport_destroy_data(duplicate_ret);    
     Envio *ev1 = EnvioPluginSupport_create_data();    
     Envio *ev2 = EnvioPluginSupport_create_data();       
     ev1->dato = 10;
-    ev1->message = "HOLA";
+    ev1->message = DDS_String_dup("HOLA");
     ev2->dato = 20;
-    ev2->message = "ADIOS";
+    ev2->message = DDS_String_dup("ADIOS");
    
     Recepcion *suma_ret = RecepcionPluginSupport_create_data();       
-    DDSCSMessages  sumaRetValue;        
+    DDSCSMessages  sumaRetValue ;        
 
     /**
      * Dynamic memory passed to the proxy will be freed before return *
@@ -43,7 +45,10 @@ int main()
      */
     sumaRetValue = proxy->suma(*ev1    , *ev2    ,*suma_ret    );
     printf("%s %d\n", suma_ret->message, suma_ret->devolucion);
-
+    
+    EnvioPluginSupport_destroy_data(ev1);    
+    EnvioPluginSupport_destroy_data(ev2);    
+    RecepcionPluginSupport_destroy_data(suma_ret);    
 
    delete(proxy);
    NDDSUtility::sleep(period);

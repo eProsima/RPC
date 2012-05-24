@@ -104,7 +104,7 @@ unsigned int BasicTypeTestProxy::getTimeout()
 DDSCSMessages
  BasicTypeTestProxy::getOctet(DDS_Octet oc1 ,DDS_Octet &oc2,DDS_Octet &oc3, DDS_Octet &getOctet_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getOctetRequest *instance = NULL;
     getOctetReply *retInstance = getOctetReplyTypeSupport::create_data();
     instance = getOctetRequestUtils::createTypeData(oc1    ,oc2    );
@@ -141,7 +141,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getChar(DDS_Char ch1 ,DDS_Char &ch2,DDS_Char &ch3, DDS_Char &getChar_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getCharRequest *instance = NULL;
     getCharReply *retInstance = getCharReplyTypeSupport::create_data();
     instance = getCharRequestUtils::createTypeData(ch1    ,ch2    );
@@ -178,7 +178,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getWChar(DDS_Wchar wch1 ,DDS_Wchar &wch2,DDS_Wchar &wch3, DDS_Wchar &getWChar_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getWCharRequest *instance = NULL;
     getWCharReply *retInstance = getWCharReplyTypeSupport::create_data();
     instance = getWCharRequestUtils::createTypeData(wch1    ,wch2    );
@@ -215,7 +215,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getShort(DDS_Short sh1 ,DDS_Short &sh2,DDS_Short &sh3, DDS_Short &getShort_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getShortRequest *instance = NULL;
     getShortReply *retInstance = getShortReplyTypeSupport::create_data();
     instance = getShortRequestUtils::createTypeData(sh1    ,sh2    );
@@ -252,7 +252,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getUShort(DDS_UnsignedShort ush1 ,DDS_UnsignedShort &ush2,DDS_UnsignedShort &ush3, DDS_UnsignedShort &getUShort_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getUShortRequest *instance = NULL;
     getUShortReply *retInstance = getUShortReplyTypeSupport::create_data();
     instance = getUShortRequestUtils::createTypeData(ush1    ,ush2    );
@@ -289,7 +289,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getLong(DDS_Long lo1 ,DDS_Long &lo2,DDS_Long &lo3, DDS_Long &getLong_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getLongRequest *instance = NULL;
     getLongReply *retInstance = getLongReplyTypeSupport::create_data();
     instance = getLongRequestUtils::createTypeData(lo1    ,lo2    );
@@ -326,7 +326,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getULong(DDS_UnsignedLong ulo1 ,DDS_UnsignedLong &ulo2,DDS_UnsignedLong &ulo3, DDS_UnsignedLong &getULong_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getULongRequest *instance = NULL;
     getULongReply *retInstance = getULongReplyTypeSupport::create_data();
     instance = getULongRequestUtils::createTypeData(ulo1    ,ulo2    );
@@ -363,7 +363,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getLLong(DDS_LongLong llo1 ,DDS_LongLong &llo2,DDS_LongLong &llo3, DDS_LongLong &getLLong_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getLLongRequest *instance = NULL;
     getLLongReply *retInstance = getLLongReplyTypeSupport::create_data();
     instance = getLLongRequestUtils::createTypeData(llo1    ,llo2    );
@@ -400,7 +400,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getULLong(DDS_UnsignedLongLong ullo1 ,DDS_UnsignedLongLong &ullo2,DDS_UnsignedLongLong &ullo3, DDS_UnsignedLongLong &getULLong_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getULLongRequest *instance = NULL;
     getULLongReply *retInstance = getULLongReplyTypeSupport::create_data();
     instance = getULLongRequestUtils::createTypeData(ullo1    ,ullo2    );
@@ -437,7 +437,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getFloat(DDS_Float fl1 ,DDS_Float &fl2,DDS_Float &fl3, DDS_Float &getFloat_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getFloatRequest *instance = NULL;
     getFloatReply *retInstance = getFloatReplyTypeSupport::create_data();
     instance = getFloatRequestUtils::createTypeData(fl1    ,fl2    );
@@ -474,7 +474,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getDouble(DDS_Double do1 ,DDS_Double &do2,DDS_Double &do3, DDS_Double &getDouble_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getDoubleRequest *instance = NULL;
     getDoubleReply *retInstance = getDoubleReplyTypeSupport::create_data();
     instance = getDoubleRequestUtils::createTypeData(do1    ,do2    );
@@ -511,7 +511,7 @@ DDSCSMessages
 DDSCSMessages
  BasicTypeTestProxy::getBoolean(DDS_Boolean bo1 ,DDS_Boolean &bo2,DDS_Boolean &bo3, DDS_Boolean &getBoolean_ret) 
 {
-    DDSCSMessages  returnedValue;    
+    DDSCSMessages  returnedValue ;    
     getBooleanRequest *instance = NULL;
     getBooleanReply *retInstance = getBooleanReplyTypeSupport::create_data();
     instance = getBooleanRequestUtils::createTypeData(bo1    ,bo2    );

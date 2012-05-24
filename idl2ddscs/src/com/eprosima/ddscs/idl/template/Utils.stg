@@ -116,7 +116,7 @@ class $funName$$type$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
- definition(funName, type="Request", params, returnType) ::= <<
+ definition(funName, type="Request", params, returnType, string) ::= <<
 
 const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParticipant)
 {
@@ -139,20 +139,20 @@ $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator
 {
     $funName$$type$* instance = $funName$$type$TypeSupport::create_data();
 
-    $params:{$createDataHelper(type=it.type, name=it.name)$};separator="\n"$
+    $params:{$createDataHelper(type=it.type, name=it.name, string=it.string)$};separator="\n"$
     
     $if(returnType)$
-    $createDataHelper(type=returnType, name="returnedValue")$        
+    $createDataHelper(type=returnType, name="returnedValue", string=string)$        
     $endif$    
     return instance;
 }
 
 void $funName$$type$Utils::extractTypeData($funName$$type$* data $if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$)
 {
-    $params:{$extractDataHelper(type=it.type, name=it.name)$};separator="\n"$
+    $params:{$extractDataHelper(type=it.type, name=it.name, string=it.string)$};separator="\n"$
     
     $if(returnType)$
-    $extractDataHelper(type=returnType, name="returnedValue")$        
+    $extractDataHelper(type=returnType, name="returnedValue", string=string)$        
     $endif$    
 }
 
@@ -209,9 +209,13 @@ $if(params)$, $endif$$check(returnType)$ returnedValue
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-createDataHelper(type, name) ::= <<
+createDataHelper(type, name, string) ::= <<
 $if(typeInitMap.(type))$
+$if(string)$
+instance->$name$ = DDS_String_dup($name$);
+$else$
 instance->$name$ = $name$;
+$endif$
 $else$
 $type$PluginSupport_copy_data(&instance->$name$, &$name$);
 $endif$
@@ -229,9 +233,13 @@ $endif$
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-extractDataHelper(type, name) ::= <<
+extractDataHelper(type, name, string) ::= <<
 $if(typeInitMap.(type))$
+$if(string)$
+$name$ = DDS_String_dup(data->$name$);
+$else$
 $name$ = data->$name$;
+$endif$
 $else$
 $type$PluginSupport_copy_data(&$name$, &data->$name$);
 $endif$

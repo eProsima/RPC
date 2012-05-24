@@ -16,20 +16,18 @@
 
 package com.eprosima.ddscs.idl.tree;
 
-public class SimpleTypedef{
-	protected String base;
-	protected String alias;
+public class SimpleTypedef extends TypeDecl{
+	protected TypeDecl base;
+	
+	public SimpleTypedef(String name, TypeDecl base)
+	{
+		super(name, name);
+	}
 
-	public String getBase() {
+	public TypeDecl getBase() {
 		return base;
 	}
-	public void setBase(String base) {
+	public void setBase(TypeDecl base) {
 		this.base = base;
-	}
-	public String getAlias() {
-		return alias;
-	}
-	public void setAlias(String alias) {
-		this.alias = alias;
 	}
 }

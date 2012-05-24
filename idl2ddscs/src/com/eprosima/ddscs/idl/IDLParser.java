@@ -1233,35 +1233,40 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
 
 /* Production 50 */
   final public void struct_type() throws ParseException {
- /*@bgen(jjtree) ConstructedType */
-  ASTConstructedType jjtn000 = new ASTConstructedType(JJTCONSTRUCTEDTYPE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-    try {
-      jj_consume_token(43);
-      identifier();
-      jj_consume_token(10);
-      member_list();
-      jj_consume_token(11);
-    } catch (Throwable jjte000) {
-    if (jjtc000) {
-      jjtree.clearNodeScope(jjtn000);
-      jjtc000 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte000 instanceof RuntimeException) {
-      {if (true) throw (RuntimeException)jjte000;}
-    }
-    if (jjte000 instanceof ParseException) {
-      {if (true) throw (ParseException)jjte000;}
-    }
-    {if (true) throw (Error)jjte000;}
-    } finally {
-    if (jjtc000) {
-      jjtree.closeNodeScope(jjtn000, true);
-    }
-    }
+	  /*@bgen(jjtree) ConstructedType */
+	  ASTConstructedType jjtn000 = new ASTConstructedType(JJTCONSTRUCTEDTYPE);
+	  boolean jjtc000 = true;
+	  jjtree.openNodeScope(jjtn000); Token t;
+	  try {
+		  t = jj_consume_token(43);
+		  identifier();
+		  jj_consume_token(10);
+		  member_list();
+		  jj_consume_token(11);
+		  
+		  // RICHI
+		  jjtree.closeNodeScope(jjtn000, true);
+		  jjtc000 = false;
+		  jjtn000.jjtSetValue(t.image);
+	  } catch (Throwable jjte000) {
+		  if (jjtc000) {
+			  jjtree.clearNodeScope(jjtn000);
+			  jjtc000 = false;
+		  } else {
+			  jjtree.popNode();
+		  }
+		  if (jjte000 instanceof RuntimeException) {
+			  {if (true) throw (RuntimeException)jjte000;}
+		  }
+		  if (jjte000 instanceof ParseException) {
+			  {if (true) throw (ParseException)jjte000;}
+		  }
+		  {if (true) throw (Error)jjte000;}
+	  } finally {
+		  if (jjtc000) {
+			  jjtree.closeNodeScope(jjtn000, true);
+		  }
+	  }
   }
 
 /* Production 51 */
@@ -1304,39 +1309,44 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
 
 /* Production 53 */
   final public void union_type() throws ParseException {
- /*@bgen(jjtree) ConstructedType */
-  ASTConstructedType jjtn000 = new ASTConstructedType(JJTCONSTRUCTEDTYPE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-    try {
-      jj_consume_token(44);
-      identifier();
-      jj_consume_token(45);
-      jj_consume_token(29);
-      switch_type_spec();
-      jj_consume_token(30);
-      jj_consume_token(10);
-      switch_body();
-      jj_consume_token(11);
-    } catch (Throwable jjte000) {
-    if (jjtc000) {
-      jjtree.clearNodeScope(jjtn000);
-      jjtc000 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte000 instanceof RuntimeException) {
-      {if (true) throw (RuntimeException)jjte000;}
-    }
-    if (jjte000 instanceof ParseException) {
-      {if (true) throw (ParseException)jjte000;}
-    }
-    {if (true) throw (Error)jjte000;}
-    } finally {
-    if (jjtc000) {
-      jjtree.closeNodeScope(jjtn000, true);
-    }
-    }
+	  /*@bgen(jjtree) ConstructedType */
+	  ASTConstructedType jjtn000 = new ASTConstructedType(JJTCONSTRUCTEDTYPE);
+	  boolean jjtc000 = true;
+	  jjtree.openNodeScope(jjtn000); Token t;
+	  try {
+		  t = jj_consume_token(44);
+		  identifier();
+		  jj_consume_token(45);
+		  jj_consume_token(29);
+		  switch_type_spec();
+		  jj_consume_token(30);
+		  jj_consume_token(10);
+		  switch_body();
+		  jj_consume_token(11);
+		  
+		  // RICHI
+		  jjtree.closeNodeScope(jjtn000, true);
+		  jjtc000 = false;
+		  jjtn000.jjtSetValue(t.image);
+	  } catch (Throwable jjte000) {
+		  if (jjtc000) {
+			  jjtree.clearNodeScope(jjtn000);
+			  jjtc000 = false;
+		  } else {
+			  jjtree.popNode();
+		  }
+		  if (jjte000 instanceof RuntimeException) {
+			  {if (true) throw (RuntimeException)jjte000;}
+		  }
+		  if (jjte000 instanceof ParseException) {
+			  {if (true) throw (ParseException)jjte000;}
+		  }
+		  {if (true) throw (Error)jjte000;}
+	  } finally {
+		  if (jjtc000) {
+			  jjtree.closeNodeScope(jjtn000, true);
+		  }
+	  }
   }
 
 /* Production 54 */
@@ -1430,48 +1440,53 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
 
 /* Production 59 */
   final public void enum_type() throws ParseException {
- /*@bgen(jjtree) ConstructedType */
-  ASTConstructedType jjtn000 = new ASTConstructedType(JJTCONSTRUCTEDTYPE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-    try {
-      jj_consume_token(48);
-      identifier();
-      jj_consume_token(10);
-      enumerator();
-      label_16:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 14:
-          ;
-          break;
-        default:
-          jj_la1[42] = jj_gen;
-          break label_16;
-        }
-        jj_consume_token(14);
-        enumerator();
-      }
-      jj_consume_token(11);
-    } catch (Throwable jjte000) {
-    if (jjtc000) {
-      jjtree.clearNodeScope(jjtn000);
-      jjtc000 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte000 instanceof RuntimeException) {
-      {if (true) throw (RuntimeException)jjte000;}
-    }
-    if (jjte000 instanceof ParseException) {
-      {if (true) throw (ParseException)jjte000;}
-    }
-    {if (true) throw (Error)jjte000;}
-    } finally {
-    if (jjtc000) {
-      jjtree.closeNodeScope(jjtn000, true);
-    }
-    }
+	  /*@bgen(jjtree) ConstructedType */
+	  ASTConstructedType jjtn000 = new ASTConstructedType(JJTCONSTRUCTEDTYPE);
+	  boolean jjtc000 = true;
+	  jjtree.openNodeScope(jjtn000); Token t;
+	  try {
+		  t = jj_consume_token(48);
+		  identifier();
+		  jj_consume_token(10);
+		  enumerator();
+		  label_16:
+			  while (true) {
+				  switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+				  case 14:
+					  ;
+					  break;
+				  default:
+					  jj_la1[42] = jj_gen;
+					  break label_16;
+				  }
+				  jj_consume_token(14);
+				  enumerator();
+			  }
+		  jj_consume_token(11);
+		  
+		  // RICHI
+		  jjtree.closeNodeScope(jjtn000, true);
+		  jjtc000 = false;
+		  jjtn000.jjtSetValue(t.image);
+	  } catch (Throwable jjte000) {
+		  if (jjtc000) {
+			  jjtree.clearNodeScope(jjtn000);
+			  jjtc000 = false;
+		  } else {
+			  jjtree.popNode();
+		  }
+		  if (jjte000 instanceof RuntimeException) {
+			  {if (true) throw (RuntimeException)jjte000;}
+		  }
+		  if (jjte000 instanceof ParseException) {
+			  {if (true) throw (ParseException)jjte000;}
+		  }
+		  {if (true) throw (Error)jjte000;}
+	  } finally {
+		  if (jjtc000) {
+			  jjtree.closeNodeScope(jjtn000, true);
+		  }
+	  }
   }
 
 /* Production 60 */
@@ -1843,34 +1858,34 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
 
 /* Production 72 */
   final public void param_attribute() throws ParseException {
- /*@bgen(jjtree) param_attr */
- ASTparam_attr jjtn000 = new ASTparam_attr(JJTPARAM_ATTR);
- boolean jjtc000 = true;
- jjtree.openNodeScope(jjtn000);Token t;
-    try {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 60:
-        t = jj_consume_token(60);
-        break;
-      case 61:
-        t = jj_consume_token(61);
-        break;
-      case 62:
-        t = jj_consume_token(62);
-        break;
-      default:
-        jj_la1[55] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-  jjtn000.jjtSetValue(t.image);
-    } finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-    }
+	  /*@bgen(jjtree) param_attr */
+	  ASTparam_attr jjtn000 = new ASTparam_attr(JJTPARAM_ATTR);
+	  boolean jjtc000 = true;
+	  jjtree.openNodeScope(jjtn000);Token t;
+	  try {
+		  switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+		  case 60:
+			  t = jj_consume_token(60);
+			  break;
+		  case 61:
+			  t = jj_consume_token(61);
+			  break;
+		  case 62:
+			  t = jj_consume_token(62);
+			  break;
+		  default:
+			  jj_la1[55] = jj_gen;
+			  jj_consume_token(-1);
+			  throw new ParseException();
+		  }
+		  jjtree.closeNodeScope(jjtn000, true);
+		  jjtc000 = false;
+		  jjtn000.jjtSetValue(t.image);
+	  } finally {
+		  if (jjtc000) {
+			  jjtree.closeNodeScope(jjtn000, true);
+		  }
+	  }
   }
 
 /* Production 73 */
