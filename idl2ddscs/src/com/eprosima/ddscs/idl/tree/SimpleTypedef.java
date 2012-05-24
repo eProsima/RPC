@@ -19,9 +19,15 @@ package com.eprosima.ddscs.idl.tree;
 public class SimpleTypedef extends TypeDecl{
 	protected TypeDecl base;
 	
+	public SimpleTypedef(TypeDecl base)
+	{
+		this.base = base;
+	}
+	
 	public SimpleTypedef(String name, TypeDecl base)
 	{
 		super(name, name);
+		this.base = base;
 	}
 
 	public TypeDecl getBase() {

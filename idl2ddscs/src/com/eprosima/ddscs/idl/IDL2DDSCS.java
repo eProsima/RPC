@@ -171,6 +171,22 @@ public class IDL2DDSCS
         //ddsGenRunCheck(file);
         c.remove(c.size() - 1);		
     }
+    
+    private static boolean typeIsString(Module root, String name)
+    {
+    	boolean returnedValue = false;
+    	TypeDecl typedecl = root.getTypeDecl(name);
+    	
+    	while(typedecl instanceof SimpleTypedef)
+    	{
+    		typedecl = ((SimpleTypedef)typedecl).getBase();
+    	}
+    	
+    	if(typedecl.getName().equals("string"))
+    		returnedValue = true;
+    	
+    	return returnedValue;
+    }
 
     public static int gen(Module root) throws Exception
     {
@@ -344,9 +360,9 @@ public class IDL2DDSCS
                     ip = (InputParam)paramIter.next();
                     funDecl.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());				
                     funDef.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
-                    		(ip.getType().equals("string") ? "yes" : null));
+                    		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
                     funCall.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
-                    		(ip.getType().equals("string") ? "yes" : null));
+                    		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
                 }
                 InoutParam iop = null;
                 for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
@@ -355,25 +371,25 @@ public class IDL2DDSCS
                     funDef.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
                     		(iop.getType().equals("string") ? "yes" : null));				
                     funCall.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
-                    		(iop.getType().equals("string") ? "yes" : null));				
+                    		(typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));				
                 }
                 OutputParam oup = null;
                 for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
                     oup = (OutputParam)paramIter.next();
                     funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
                     funDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
-                    		(oup.getType().equals("string") ? "yes" : null));				
+                    		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));				
                     funCall.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
-                    		(oup.getType().equals("string") ? "yes" : null));				
+                    		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));				
                 }
                 // Return Value
                 if(!"void".equals(op.getReturnType()))
                 {
                     funDecl.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
                     funDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
-                    		(op.getReturnType().equals("string") ? "yes" : null));				
+                    		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
                     funCall.setAttribute("outputParams.{type, name,string}", op.getReturnType(), op.getName()+"_ret",
-                    		(op.getReturnType().equals("string") ? "yes" : null));
+                    		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
                 }
 
                 header.setAttribute("funDecls", funDecl.toString());
@@ -425,24 +441,26 @@ public class IDL2DDSCS
 
 
 
-    private static void  setRequestReplyParams(StringTemplate request, StringTemplate reply, Operation op, String attribute){
+    private static void  setRequestReplyParams(StringTemplate request, StringTemplate reply, Operation op, String attribute,
+    		Interface ifc)
+    {
         ListIterator paramIter = null;
         InputParam ip = null;
         for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
             ip = (InputParam)paramIter.next();
 
-            request.setAttribute(attribute, ip.getType(), ip.getName(), (ip.getType().equals("string") ? "yes" : null));
+            request.setAttribute(attribute, ip.getType(), ip.getName(), (typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
         }
         InoutParam iop = null;
         for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
             iop = (InoutParam)paramIter.next();
-            request.setAttribute(attribute, iop.getType(), iop.getName(), (iop.getType().equals("string") ? "yes" : null));
-            reply.setAttribute(attribute, iop.getType(), iop.getName(), (iop.getType().equals("string") ? "yes" : null));
+            request.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));
+            reply.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));
         }
         OutputParam oup = null;
         for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
             oup = (OutputParam)paramIter.next();
-            reply.setAttribute(attribute, oup.getType(), oup.getName(), (oup.getType().equals("string") ? "yes" : null));
+            reply.setAttribute(attribute, oup.getType(), oup.getName(), (typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));
         }
     }
 
@@ -530,12 +548,12 @@ public class IDL2DDSCS
                 definitionReply.setAttribute("funName", op.getName());
                 definitionReply.setAttribute("type", "Reply");
 
-                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name, string}");
-                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name, string}");
+                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name, string}", ifc);
+                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name, string}", ifc);
                 if(!"void".equals(op.getReturnType())){
                     headerReply.setAttribute("returnType", op.getReturnType());					
                     definitionReply.setAttribute("returnType", op.getReturnType());
-                    definitionReply.setAttribute("string", (op.getReturnType().equals("string") ? "yes" : null));
+                    definitionReply.setAttribute("string", (typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
                 }
                 headerFile.setAttribute("classes", headerRequest.toString());
                 headerFile.setAttribute("classes", headerReply.toString());
@@ -598,7 +616,7 @@ public class IDL2DDSCS
                 request.setAttribute("name", op.getName());		
                 reply.setAttribute("name", op.getName());
 
-                setRequestReplyParams(request, reply, op, "fields.{type, name, string}");
+                setRequestReplyParams(request, reply, op, "fields.{type, name, string}", ifc);
                 if(!"void".equals(op.getReturnType())){
                     reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
                 }

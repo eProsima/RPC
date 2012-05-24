@@ -300,8 +300,9 @@ public class CplusplusVisitor implements IDLParserVisitor {
 		
 		if(basedecl != null)
 		{
-			SimpleTypedef def = new SimpleTypedef(node.jjtGetChild(1).jjtAccept(this, data).toString(),
-					basedecl);			
+			SimpleTypedef def = new SimpleTypedef(basedecl);	
+			node.jjtGetChild(1).jjtAccept(this, def);
+			def.setTemplateName(def.getName());
 			((Module)data).addTypeDecl(def);
 		}
 		else

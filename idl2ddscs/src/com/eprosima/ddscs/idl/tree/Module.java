@@ -68,7 +68,7 @@ public class Module implements Named {
 		for(ListIterator iter = type_declarations.listIterator(); iter.hasNext();)
         {
 			typedecl = (TypeDecl) iter.next();
-			
+
 			if(typedecl.getName().equals(name))
 			{
 				returnedValue = typedecl;
@@ -84,5 +84,6 @@ public class Module implements Named {
 	}
 	public void setIfc(Interface ifc) {
 		this.ifc = ifc;
+		this.ifc.setModule(this);
 	}
 }

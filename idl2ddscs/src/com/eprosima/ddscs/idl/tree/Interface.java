@@ -22,9 +22,11 @@ import java.util.List;
 public class Interface implements Named{
 	private String name;
 	private List operations;
+	private Module parent;
 	
 	public Interface(){
 		operations = new ArrayList();
+		parent = null;
 	}
 	public String getName() {
 		return name;
@@ -39,5 +41,15 @@ public class Interface implements Named{
 
 	public void add(Operation op){
 		operations.add(op);
+	}
+	
+	public Module getModule()
+	{
+		return parent;
+	}
+	
+	public void setModule(Module parent)
+	{
+		this.parent = parent;
 	}
 }
