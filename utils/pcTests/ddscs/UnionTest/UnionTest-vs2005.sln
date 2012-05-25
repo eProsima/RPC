@@ -1,0 +1,37 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnionTestServer", "UnionTestServer-vs2005.vcproj", "{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnionTestClient", "UnionTestClient-vs2005.vcproj", "{63D39A2F-8FA4-85BD-4545-2E39DA75960E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B} = {9DA27D4C-E451-14AB-DDE9-D1E33067C02B}
+	EndProjectSectionEndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug DLL|Win32 = Debug DLL|Win32
+		Release DLL|Win32 = Release DLL|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Debug|Win32.Build.0 = Debug|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Release|Win32.ActiveCfg = Release|Win32
+		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B}.Release|Win32.Build.0 = Release|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Debug DLL|Win32.ActiveCfg = Debug DLL|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Debug DLL|Win32.Build.0 = Debug DLL|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Debug|Win32.Build.0 = Debug|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Release|Win32.ActiveCfg = Release|Win32
+		{63D39A2F-8FA4-85BD-4545-2E39DA75960E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

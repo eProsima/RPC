@@ -169,7 +169,7 @@ $exFunctionHeader(class=interfaceName,...)$
     
     $inputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
     $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$       
+    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
 }
 >>
 
