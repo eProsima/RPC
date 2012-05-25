@@ -594,6 +594,7 @@ void struct_type() #ConstructedType:
 {}
 {
   "struct" identifier() "{" member_list() "}"
+  { jjtThis.jjtSetValue("struct");}
 }
 
 /* Production 51 */
@@ -618,6 +619,7 @@ void union_type() #ConstructedType:
 {}
 {
   "union" identifier() "switch" "(" switch_type_spec() ")" "{" switch_body() "}"
+  { jjtThis.jjtSetValue("union");}
 }
 
 /* Production 54 */
@@ -676,6 +678,7 @@ void enum_type() #ConstructedType:
 {}
 {
   "enum" identifier() "{" enumerator() ( "," enumerator() )* "}"
+  { jjtThis.jjtSetValue("enum");}
 }
 
 /* Production 60 */

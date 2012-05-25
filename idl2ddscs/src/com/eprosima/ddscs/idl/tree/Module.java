@@ -13,6 +13,7 @@ public class Module implements Named {
 	public Module(){
 		BasicType bt = null;
 		EnumType et = null;
+		SequenceType st = null;
 		type_declarations = new ArrayList();
 		
 		// Create basic types:
@@ -46,6 +47,8 @@ public class Module implements Named {
         type_declarations.add(bt);
         et = new EnumType("DDSCSMessages");
         type_declarations.add(et);
+        st = new SequenceType("sequence");
+        type_declarations.add(st);
 	}
 	public String getName() {
 		return name;
