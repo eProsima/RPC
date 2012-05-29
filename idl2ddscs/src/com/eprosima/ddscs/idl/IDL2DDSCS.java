@@ -338,7 +338,8 @@ public class IDL2DDSCS
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
                 op = (Operation) iter.next();
                 header.setAttribute("funNames", op.getName());
-                definition.setAttribute("funNames", op.getName());			
+                definition.setAttribute("funNames.{name, requestQosLibrary, requestQosProfile, replyQosLibrary, replyQosProfile}",
+                		op.getName(), op.getRequestLibrary(), op.getRequestProfile(), op.getReplyLibrary(), op.getReplyProfile());			
 
                 // Function Declaration
 
@@ -423,6 +424,8 @@ public class IDL2DDSCS
                             externalDir.append("/");	
                         }
                         mainTemplate.setAttribute("interfaceName", ifc.getName());
+                        mainTemplate.setAttribute("qosLibrary", ifc.getQosLibrary());
+                        mainTemplate.setAttribute("qosProfile", ifc.getQosProfile());
                         externalDir.append(main).append(".cxx");
                         writeFile(externalDir.toString(), mainTemplate);
                         externalDir.delete(externalDirLength, externalDir.length());						

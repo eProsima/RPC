@@ -4,7 +4,9 @@
 
 static const char* const CLASS_NAME = "ServerRemoteService";
 
-ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
+ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName,
+                                         const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
+                                         const char *replyQosLibrary, const char *replyQosProfile,
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
     server(server), requestSubscriber(NULL), replyPublisher(NULL), requestTopic(NULL),
     requestDataReader(NULL), createRequestData(createRequestData),
@@ -30,7 +32,16 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
                     strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
                     if((replyTopic = serverParticipant->create_topic(topicNames, replyTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                     {
-                        if((replyDataWriter = replyPublisher->create_datawriter(replyTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+                        if(replyQosLibrary == NULL || replyQosProfile == NULL)
+                        {
+                            replyDataWriter = replyPublisher->create_datawriter(replyTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE);
+                        }
+                        else
+                        {
+                            replyDataWriter = replyPublisher->create_datawriter_with_profile(replyTopic, replyQosLibrary, replyQosProfile, NULL, DDS_STATUS_MASK_NONE);
+                        }
+
+                        if(replyDataWriter != NULL)
                         {
                             if((requestSubscriber = serverParticipant->create_subscriber(DDS_SUBSCRIBER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                             {
@@ -41,7 +52,17 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
                                     strncat(topicNames, requestTypeName, 49); topicNames[49] = '\0';
                                     if((requestTopic = serverParticipant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                                     {
-										if((requestDataReader = requestSubscriber->create_datareader(requestTopic, DDS_DATAREADER_QOS_DEFAULT, this, DDS_DATA_AVAILABLE_STATUS)) != NULL)
+                                        if(requestQosLibrary == NULL || requestQosProfile == NULL)
+                                        {
+                                            requestDataReader = requestSubscriber->create_datareader(requestTopic, DDS_DATAREADER_QOS_DEFAULT, this, DDS_DATA_AVAILABLE_STATUS);
+                                        }
+                                        else
+                                        {
+                                            requestDataReader = requestSubscriber->create_datareader_with_profile(requestTopic, requestQosLibrary, requestQosProfile,
+                                                this, DDS_DATA_AVAILABLE_STATUS);
+                                        }
+
+										if(requestDataReader != NULL)
                                         {
                                             strncpy(this->remoteServiceName, remoteServiceName, 50);
 

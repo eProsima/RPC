@@ -2,15 +2,26 @@
 
 #include "ndds_utility_cpp.h"
 
-DDSCSServer::DDSCSServer(int domainId,unsigned int threadCount) : domainId(domainId), participant(NULL), threadPoolManager(NULL)
+DDSCSServer::DDSCSServer(int domainId, const char *qosLibrary,
+                         const char *qosProfile, unsigned int threadCount) : domainId(domainId),
+                         participant(NULL), threadPoolManager(NULL)
 {
 	DDS_DomainParticipantQos participantQOS;
 	DDS_Long serverId = 0;
 
 	// Creating the domain participant which is associated with the client
-	participant = DDSTheParticipantFactory->create_participant(
-		domainId, DDS_PARTICIPANT_QOS_DEFAULT, 
-		NULL /* listener */, DDS_STATUS_MASK_NONE);
+    if(qosLibrary == NULL || qosProfile == NULL)
+    {
+	    participant = DDSTheParticipantFactory->create_participant(
+		    domainId, DDS_PARTICIPANT_QOS_DEFAULT, 
+		    NULL /* listener */, DDS_STATUS_MASK_NONE);
+    }
+    else
+    {
+        participant = DDSTheParticipantFactory->create_participant_with_profile(
+            domainId, qosLibrary, qosProfile,
+            NULL /* listener */, DDS_STATUS_MASK_NONE);
+    }
 
 	if (participant != NULL)
 	{

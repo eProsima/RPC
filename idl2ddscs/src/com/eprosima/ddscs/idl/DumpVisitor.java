@@ -73,6 +73,27 @@ public class DumpVisitor implements IDLParserVisitor {
 		visit(((SimpleNode)node), data);
 		return data;
 	}
+	
+	public Object visit(ASTqos_exprs node, Object data)
+	 {
+		// TODO Auto-generated method stub
+		visit(((SimpleNode)node), data);
+		return data;
+	 }
+	 
+	 public Object visit(ASTqos_expr node, Object data)
+	 {
+		// TODO Auto-generated method stub
+		visit(((SimpleNode)node), data);
+		return data;
+	 }
+	 
+	 public Object visit(ASTqos_attr node, Object data)
+	 {		
+		// TODO Auto-generated method stub
+		visit(((SimpleNode)node), data);
+		return data;
+	 }
 
 	/* (non-Javadoc)
 	 * @see IDLParserVisitor#visit(ASTparams, java.lang.Object)

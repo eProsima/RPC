@@ -22,7 +22,9 @@ class  TName : public ServerRemoteService                                       
 {                                                                                 \
 public:                                                                           \
   TName(const char *remoteServiceName, DDSCSServer* server,                       \
-        const char *requestTypeName, const char *replyTypeName,                   \
+        const char *requestTypeName, const char *requestQosLibrary,               \
+        const char *requestQosProfile, const char *replyTypeName,                 \
+        const char *replyQosLibrary, const char *replyQosProfile,                \
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant);     \
   virtual ~TName();                                                               \
                                                                                   \

@@ -12,6 +12,7 @@
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,28may12,RicM Added //@qos parsing.
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
@@ -19,7 +20,6 @@
 package com.eprosima.ddscs.idl;
 
 /** Token Manager Error. */
-//////@SuppressWarnings("all")
 public class TokenMgrError extends Error
 {
 
@@ -154,4 +154,4 @@ public class TokenMgrError extends Error
       this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason);
    }
 }
-/* JavaCC - OriginalChecksum=586e6ade9aef5f1d165d1d94abd68854 (do not edit this line) */
+/* JavaCC - OriginalChecksum=99f9c7eafc5dfafd2c5264c7c9314f91 (do not edit this line) */

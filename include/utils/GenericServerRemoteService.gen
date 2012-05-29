@@ -26,9 +26,12 @@
 #define TDataReply TData_Reply(TData)
 
 
-TName::TName(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
+TName::TName(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName,
+        const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
+        const char *replyQosLibrary, const char *replyQosProfile,
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
-        ServerRemoteService(remoteServiceName, server, requestTypeName, replyTypeName, 
+        ServerRemoteService(remoteServiceName, server, requestTypeName, requestQosLibrary,
+                            requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile,
                             execFunction, serverParticipant)
 {
 	replyFooDataWriter    = TDataWriter::narrow(replyDataWriter);

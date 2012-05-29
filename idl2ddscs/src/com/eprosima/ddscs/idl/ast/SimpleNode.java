@@ -12,15 +12,16 @@
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,29may12,RicM Added qos expresions.                                  *
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
 
 package com.eprosima.ddscs.idl.ast;
 
-import com.eprosima.ddscs.idl.*;
+import com.eprosima.ddscs.idl.IDLParser;
 
-//////@SuppressWarnings("all")
+////@SuppressWarnings("all")
 public class SimpleNode implements Node {
   protected Node parent;
   protected Node[] children;
@@ -108,4 +109,4 @@ public class SimpleNode implements Node {
   }
 }
 
-/* JavaCC - OriginalChecksum=90b595f9c8be95b4e5a7761b58fa8dd8 (do not edit this line) */
+/* JavaCC - OriginalChecksum=9934ee1728e0f851a6333473ec59c1a1 (do not edit this line) */

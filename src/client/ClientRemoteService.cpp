@@ -3,7 +3,9 @@
 
 static const char* const CLASS_NAME = "ClientRemoteService";
 
-ClientRemoteService::ClientRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
+ClientRemoteService::ClientRemoteService(const char *remoteServiceName, const char *requestTypeName,
+                                         const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
+                                         const char *replyQosLibrary, const char *replyQosProfile, DDSDomainParticipant *clientParticipant) : m_requestPublisher(NULL),
 m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS_HANDLE_NIL)
 {
     const char* const METHOD_NAME = "ClientRemoteService";
@@ -12,7 +14,8 @@ m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_repl
 
     if(mutex != NULL)
     {
-        if(createEntities(clientParticipant, remoteServiceName, requestTypeName, replyTypeName))
+        if(createEntities(clientParticipant, remoteServiceName, requestTypeName, requestQosLibrary,
+            requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile))
         {
             if(enableEntities())
             {
@@ -237,7 +240,8 @@ void ClientRemoteService::give()
 }
 
 int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const char *remoteServiceName,
-        const char *requestTypeName, const char *replyTypeName)
+        const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
+        const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile)
 {
     const char* const METHOD_NAME = "createEntities";
     char topicNames[100];
@@ -265,7 +269,16 @@ int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const
 
                         if((m_requestTopic = participant->create_topic(topicNames, requestTypeName, DDS_TOPIC_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
                         {
-                            if((m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+                            if(requestQosLibrary == NULL || requestQosProfile == NULL)
+                            {
+                                m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, DDS_DATAWRITER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE);
+                            }
+                            else
+                            {
+                                m_requestDataWriter = m_requestPublisher->create_datawriter_with_profile(m_requestTopic, requestQosLibrary, requestQosProfile,
+                                    NULL, DDS_STATUS_MASK_NONE);
+                            }
+                            if(m_requestDataWriter != NULL)
                             {                              
                                 // Obtain clientServiceId.
                                 DDS_DataWriterQos *wQos = new DDS_DataWriterQos();
@@ -307,7 +320,17 @@ int ClientRemoteService::createEntities(DDSDomainParticipant *participant, const
                                                     m_clientServiceId[0], m_clientServiceId[1], m_clientServiceId[2], m_clientServiceId[3]);
                                                 if((m_replyFilter = participant->create_contentfilteredtopic(remoteServiceName, m_replyTopic, filterLine, parameters)) != NULL)
                                                 {
-                                                    if((m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE)) != NULL)
+                                                    if(replyQosLibrary == NULL || replyQosProfile == NULL)
+                                                    {
+                                                        m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS_DATAREADER_QOS_DEFAULT, NULL, DDS_STATUS_MASK_NONE);
+                                                    }
+                                                    else
+                                                    {
+                                                        m_replyDataReader = m_replySubscriber->create_datareader_with_profile(m_replyFilter, replyQosLibrary, replyQosProfile,
+                                                            NULL, DDS_STATUS_MASK_NONE);
+                                                    }
+
+                                                    if(m_replyDataReader != NULL)
                                                     {
                                                         return 1;
                                                     }

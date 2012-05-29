@@ -25,6 +25,10 @@ public class Operation implements Named{
 	private List inputParams;
 	private List inoutParams;
 	private List outputParams;
+	private String m_requestLibrary = null;
+	private String m_replyLibrary = null;
+	private String m_requestProfile = null;
+	private String m_replyProfile = null;
 	
 	public Operation(){
 		inputParams = new ArrayList();
@@ -64,4 +68,43 @@ public class Operation implements Named{
 		outputParams.add(param);
 	}
 
+	public void setRequestLibrary(String library)
+	{
+		m_requestLibrary = library;
+	}
+	
+	public String getRequestLibrary()
+	{
+		return m_requestLibrary;
+	}
+	
+	public void setReplyLibrary(String library)
+	{
+		m_replyLibrary = library;
+	}
+	
+	public String getReplyLibrary()
+	{
+		return m_replyLibrary;
+	}
+	
+	public void setRequestProfile(String profile)
+	{
+		m_requestProfile = profile;
+	}
+	
+	public String getRequestProfile()
+	{
+		return m_requestProfile;
+	}
+	
+	public void setReplyProfile(String profile)
+	{
+		m_replyProfile = profile;
+	}
+	
+	public String getReplyProfile()
+	{
+		return m_replyProfile;
+	}
 }

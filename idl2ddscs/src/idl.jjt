@@ -43,11 +43,14 @@ PARSER_BEGIN(IDLParser)
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,28may12,RicM Added //@qos parsing.
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
 
 package com.eprosima.ddscs.idl;
+
+import com.eprosima.ddscs.idl.ast.*;
 
 public class IDLParser {
  
@@ -66,7 +69,7 @@ SKIP :
 | < "\t" >
 | < "\n" >
 | < "\r" >
-| < "//" (~["\n"])* "\n" >
+| < "//" ((["#"] ((["q"] ((["o"] (((~["s","\n"]) (~["\n"])* "\n") | "\n")) | ((~["o","\n"]) (~["\n"])* "\n") | "\n")) | ((~["q","\n"]) (~["\n"])* "\n") | "\n")) | ((~["#","\n"]) (~["\n"])* "\n") | "\n") >
 | <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
 | < "#" ([" ","\t"])* (["0"-"9"])+
     (([" ","\t"])* "\"" (~["\""])+ "\""
@@ -98,7 +101,7 @@ void definition() :
 |
   except_dcl() ";"
 |
-  interfacex() ";"
+  interfacex()
 |
   module() ";"
 }
@@ -127,7 +130,7 @@ void interfacex():
 void interface_dcl()  #interfaceNode :
 {}
 {
-  interface_header() "{" interface_body() "}"
+  interface_header() "{" interface_body() "}" ";" [ qos_expr() ]
 }
 
 /* Production 6 */
@@ -135,7 +138,7 @@ void interface_dcl()  #interfaceNode :
 void forward_dcl() :
 {}
 {
-  "interface" identifier()
+  "interface" identifier() ";"
 }
 
 /* Production 7 */
@@ -742,7 +745,38 @@ void except_dcl() :
 void op_dcl() #operation :
 {}
 {
-  [ op_attribute() ] op_type_spec() identifier() parameter_dcls() [ raises_expr() ] [ context_expr() ]
+  [ qos_exprs() ] [ op_attribute() ] op_type_spec() identifier() parameter_dcls() [ raises_expr() ] [ context_expr() ]
+}
+
+/* RICHI */
+
+void qos_exprs() #qos_exprs :
+{}
+{
+  ( qos_expr() )+
+}
+
+/* RICHI */
+
+void qos_expr() #qos_expr :
+{}
+{
+  qos_attribute() identifier() identifier()
+}
+
+/* RICHI */
+
+void qos_attribute() #qos_attr :
+{Token t;}
+{
+(
+  t = "//#qos"
+|
+  t = "//#qos-request"
+|
+  t = "//#qos-reply"
+)
+{ jjtThis.jjtSetValue(t.image);}         
 }
 
 /* Production 68 */

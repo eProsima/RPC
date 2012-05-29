@@ -18,7 +18,9 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
          * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
          * \param clientParticipant Pointer to the domain participant used by the client. Cannot be NULL.
          */
-        ClientRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *replyTypeName, DDSDomainParticipant *clientParticipant);
+        ClientRemoteService(const char *remoteServiceName, const char *requestTypeName, const char *requestQosLibrary,
+            const char *requestQosProfile, const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile,
+            DDSDomainParticipant *clientParticipant);
 
         virtual ~ClientRemoteService();
 
@@ -77,7 +79,8 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
         DDSStatusCondition *m_matchingCondition;
 
         int createEntities(DDSDomainParticipant *participant, const char *remoteServiceName,
-                const char *requestTypeName, const char *replyTypeName);
+                const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
+                const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
 
         int enableEntities();
 

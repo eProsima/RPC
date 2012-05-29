@@ -29,7 +29,9 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
          * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
          * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
          */
-        ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName, const char *replyTypeName,
+        ServerRemoteService(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName,
+            const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
+            const char *replyQosLibrary, const char *replyQosProfile,
                 fExecFunction execFunction, DDSDomainParticipant *serverParticipant);
 
         char* getRemoteServiceName();

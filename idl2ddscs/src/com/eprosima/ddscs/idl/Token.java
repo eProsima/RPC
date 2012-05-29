@@ -12,16 +12,17 @@
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,28may12,RicM Added //@qos parsing.
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
+
 package com.eprosima.ddscs.idl;
 
 /**
  * Describes the input token stream.
  */
 
-//////@SuppressWarnings("all")
 public class Token {
 
   /**
@@ -137,4 +138,4 @@ public class Token {
   }
 
 }
-/* JavaCC - OriginalChecksum=9b0f6f888ba08422e46078ee7d42c66a (do not edit this line) */
+/* JavaCC - OriginalChecksum=9eba214f5d912be247c10b2325ca6f10 (do not edit this line) */

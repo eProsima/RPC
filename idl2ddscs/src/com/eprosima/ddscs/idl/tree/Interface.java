@@ -23,6 +23,8 @@ public class Interface implements Named{
 	private String name;
 	private List operations;
 	private Module parent;
+	private String m_qosLibrary = null;
+	private String m_qosProfile = null;
 	
 	public Interface(){
 		operations = new ArrayList();
@@ -51,5 +53,25 @@ public class Interface implements Named{
 	public void setModule(Module parent)
 	{
 		this.parent = parent;
+	}
+	
+	public void setQosLibrary(String library)
+	{
+		m_qosLibrary = library;
+	}
+	
+	public String getQosLibrary()
+	{
+		return m_qosLibrary;
+	}
+	
+	public void setQosProfile(String profile)
+	{
+		m_qosProfile = profile;
+	}
+	
+	public String getQosProfile()
+	{
+		return m_qosProfile;
 	}
 }

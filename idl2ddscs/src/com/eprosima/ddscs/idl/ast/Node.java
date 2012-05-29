@@ -12,6 +12,7 @@
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,29may12,RicM Added qos expresions.                                  *
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
@@ -52,4 +53,4 @@ public interface Node {
   /** Accept the visitor. **/
   public Object jjtAccept(IDLParserVisitor visitor, Object data);
 }
-/* JavaCC - OriginalChecksum=6d577cc9094b9458428e5dd90e106e41 (do not edit this line) */
+/* JavaCC - OriginalChecksum=d1a2daefe4b4f6e07d07b1b9ff92525a (do not edit this line) */

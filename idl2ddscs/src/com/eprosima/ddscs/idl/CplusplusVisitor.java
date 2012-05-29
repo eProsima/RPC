@@ -33,7 +33,6 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(SimpleNode node, Object data) {
-		//System.out.println(node.toString());
 		node.childrenAccept(this, data);
 		return data;
 	}
@@ -99,10 +98,83 @@ public class CplusplusVisitor implements IDLParserVisitor {
 			if(op.getReturnType() == null){
 				op.setReturnType("void");
 			}
-			((Interface) data).add(op);			
+			((Interface) data).add(op);
 		}
 		return data;
 	}
+	
+	 public Object visit(ASTqos_exprs node, Object op)
+	 {
+		 visit(((SimpleNode) node), op);
+		 return op;
+	 }
+	 
+	 public Object visit(ASTqos_expr node, Object data)
+	 {
+		 Object returnedValue = null;
+		 
+		 if(data instanceof Interface)
+		 {
+			 Interface ifc = (Interface)data;
+			 String attr = node.jjtGetChild(0).jjtAccept(this, data).toString();
+			 
+			 if(attr.equals("//#qos"))
+			 {
+				 ifc.setQosLibrary(node.jjtGetChild(1).jjtAccept(this, null).toString());
+				 ifc.setQosProfile(node.jjtGetChild(2).jjtAccept(this, null).toString());
+			 }
+			 else
+			 {
+				 System.out.println("ERROR<CpluspluVisitor::visit>: Bad qos expresion for interface");
+			 }
+			 
+			 returnedValue = ifc;
+		 }
+		 else if(data instanceof Operation)
+		 {
+			 Operation operation = (Operation)data;
+			 String attr = node.jjtGetChild(0).jjtAccept(this, data).toString();
+
+			 if(attr.equals("//#qos-request"))
+			 {
+				 operation.setRequestLibrary(node.jjtGetChild(1).jjtAccept(this, null).toString());
+				 operation.setRequestProfile(node.jjtGetChild(2).jjtAccept(this, null).toString());
+			 }
+			 else if(attr.equals("//#qos-reply"))
+			 {
+				 operation.setReplyLibrary(node.jjtGetChild(1).jjtAccept(this, null).toString());
+				 operation.setReplyProfile(node.jjtGetChild(2).jjtAccept(this, null).toString());
+			 }
+			 else if(attr.equals("//#qos"))
+			 {
+				 String library = node.jjtGetChild(1).jjtAccept(this, null).toString();
+				 String profile = node.jjtGetChild(2).jjtAccept(this, null).toString();
+				 operation.setRequestLibrary(library);
+				 operation.setReplyLibrary(library);
+				 operation.setRequestProfile(profile);
+				 operation.setReplyProfile(profile);
+			 }
+			 else
+			 {
+				 System.out.println("ERROR<CpluspluVisitor::visit>: Bad qos expresion for operation");
+			 }
+			 
+			 returnedValue = operation;
+		 }
+		 else
+		 {
+			 System.out.println("ERROR<CpluspluVisitor::visit>: Qos expresion in bad location");
+		 }
+		 
+		 return returnedValue;
+	 }
+	 
+	 public Object visit(ASTqos_attr node, Object op)
+	 {
+		 String returnedValue = node.jjtGetValue().toString();
+
+		 return returnedValue;
+	 }
 
 	/*
 	 * (non-Javadoc)

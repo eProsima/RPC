@@ -32,8 +32,12 @@
 XCLASS_NAME_DEFINITION(TName);
 
 TName::TName(const char *remoteServiceName, const char *requestTypeName,
-        const char *replyTypeName, DDSDomainParticipant *clientParticipant):
-        ClientRemoteService(remoteServiceName, requestTypeName, replyTypeName, clientParticipant)
+        const char *requestQosLibrary, const char *requestQosProfile,
+        const char *replyTypeName, const char *replyQosLibrary,
+        const char *replyQosProfile, DDSDomainParticipant *clientParticipant):
+        ClientRemoteService(remoteServiceName, requestTypeName, requestQosLibrary,
+        requestQosProfile, replyTypeName, replyQosLibrary,
+        replyQosProfile, clientParticipant)
 {
 	requestDataWriter = TDataWriter::narrow(m_requestDataWriter);
 	replyDataReader   = TDataReader::narrow(m_replyDataReader);

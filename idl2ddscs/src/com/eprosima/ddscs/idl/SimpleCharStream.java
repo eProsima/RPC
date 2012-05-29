@@ -12,6 +12,7 @@
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,28may12,RicM Added //@qos parsing.
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
@@ -23,7 +24,6 @@ package com.eprosima.ddscs.idl;
  * contain only ASCII characters (without unicode processing).
  */
 
-//////@SuppressWarnings("all")
 public class SimpleCharStream
 {
 /** Whether parser is static. */
@@ -486,4 +486,4 @@ public class SimpleCharStream
   }
 
 }
-/* JavaCC - OriginalChecksum=88994b2905a17439f6156e5c636df478 (do not edit this line) */
+/* JavaCC - OriginalChecksum=25e35936d203d44c63bddb2948d7f56a (do not edit this line) */

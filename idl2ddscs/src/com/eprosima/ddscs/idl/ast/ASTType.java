@@ -12,15 +12,16 @@
  *                                                                         *
  * modification history                                                    *
  * --------------------                                                    *
+ * 1.1,29may12,RicM Added qos expresions.                                  *
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
 
 package com.eprosima.ddscs.idl.ast;
 
-import com.eprosima.ddscs.idl.*;
+import com.eprosima.ddscs.idl.IDLParser;
 
-//////@SuppressWarnings("all")
+////@SuppressWarnings("all")
 public class ASTType extends SimpleNode {
   public ASTType(int id) {
     super(id);
@@ -36,4 +37,4 @@ public class ASTType extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=e0b2dc657f94ad1de40273e88e32d400 (do not edit this line) */
+/* JavaCC - OriginalChecksum=ca3791abf81cbcb86e48af87a27a9151 (do not edit this line) */
