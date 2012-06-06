@@ -14,17 +14,29 @@ EnumYStringTestProxy::EnumYStringTestProxy(int domainId, unsigned int timeout) :
 
         this->getEnum_Service = new getEnumClientRemoteService("getEnum",
                                   getEnumRequestUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                                   getEnumReplyUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                                   getParticipant());
 
         this->getString_Service = new getStringClientRemoteService("getString",
                                   getStringRequestUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                                   getStringReplyUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                                   getParticipant());
 
         this->getStringBounded_Service = new getStringBoundedClientRemoteService("getStringBounded",
                                   getStringBoundedRequestUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                                   getStringBoundedReplyUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                                   getParticipant());
 
 }

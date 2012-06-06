@@ -339,7 +339,10 @@ public class IDL2DDSCS
                 op = (Operation) iter.next();
                 header.setAttribute("funNames", op.getName());
                 definition.setAttribute("funNames.{name, requestQosLibrary, requestQosProfile, replyQosLibrary, replyQosProfile}",
-                		op.getName(), op.getRequestLibrary(), op.getRequestProfile(), op.getReplyLibrary(), op.getReplyProfile());			
+                		op.getName(), (op.getRequestLibrary() != null ? op.getRequestLibrary() : ifc.getQosLibrary()),
+                		(op.getRequestProfile() != null ? op.getRequestProfile() : ifc.getQosProfile()),
+                		(op.getReplyLibrary() != null ? op.getReplyLibrary() : ifc.getQosLibrary()),
+                		(op.getReplyProfile() != null ? op.getReplyProfile() : ifc.getQosProfile()));			
 
                 // Function Declaration
 

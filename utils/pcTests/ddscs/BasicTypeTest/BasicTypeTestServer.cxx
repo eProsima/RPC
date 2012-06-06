@@ -6,69 +6,118 @@
 #include "BasicTypeTestRequestReplyPlugin.h"
 #include "BasicTypeTestServerRemoteServiceSupport.h"
 
-BasicTypeTestServer::BasicTypeTestServer(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
+BasicTypeTestServer::BasicTypeTestServer(int domainId, const char *qosLibrary,
+    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
 {
     _impl = new BasicTypeTestImpl();
     
 
         this->setRemoteService(new getOctetServerRemoteService("getOctet", this,
                 getOctetRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getOctetReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getOctet, getParticipant()));
 
         this->setRemoteService(new getCharServerRemoteService("getChar", this,
                 getCharRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getCharReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getChar, getParticipant()));
 
         this->setRemoteService(new getWCharServerRemoteService("getWChar", this,
                 getWCharRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getWCharReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getWChar, getParticipant()));
 
         this->setRemoteService(new getShortServerRemoteService("getShort", this,
                 getShortRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getShortReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getShort, getParticipant()));
 
         this->setRemoteService(new getUShortServerRemoteService("getUShort", this,
                 getUShortRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getUShortReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getUShort, getParticipant()));
 
         this->setRemoteService(new getLongServerRemoteService("getLong", this,
                 getLongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getLongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getLong, getParticipant()));
 
         this->setRemoteService(new getULongServerRemoteService("getULong", this,
                 getULongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getULongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getULong, getParticipant()));
 
         this->setRemoteService(new getLLongServerRemoteService("getLLong", this,
                 getLLongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getLLongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getLLong, getParticipant()));
 
         this->setRemoteService(new getULLongServerRemoteService("getULLong", this,
                 getULLongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getULLongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getULLong, getParticipant()));
 
         this->setRemoteService(new getFloatServerRemoteService("getFloat", this,
                 getFloatRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getFloatReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getFloat, getParticipant()));
 
         this->setRemoteService(new getDoubleServerRemoteService("getDouble", this,
                 getDoubleRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getDoubleReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getDouble, getParticipant()));
 
         this->setRemoteService(new getBooleanServerRemoteService("getBoolean", this,
                 getBooleanRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 getBooleanReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                 &BasicTypeTestServer::getBoolean, getParticipant()));
 
 }

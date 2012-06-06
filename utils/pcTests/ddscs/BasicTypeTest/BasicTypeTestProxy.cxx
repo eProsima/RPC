@@ -14,62 +14,110 @@ BasicTypeTestProxy::BasicTypeTestProxy(int domainId, unsigned int timeout) : DDS
 
         this->getOctet_Service = new getOctetClientRemoteService("getOctet",
                                   getOctetRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getOctetReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getChar_Service = new getCharClientRemoteService("getChar",
                                   getCharRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getCharReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getWChar_Service = new getWCharClientRemoteService("getWChar",
                                   getWCharRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getWCharReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getShort_Service = new getShortClientRemoteService("getShort",
                                   getShortRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getShortReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getUShort_Service = new getUShortClientRemoteService("getUShort",
                                   getUShortRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getUShortReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getLong_Service = new getLongClientRemoteService("getLong",
                                   getLongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getLongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getULong_Service = new getULongClientRemoteService("getULong",
                                   getULongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getULongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getLLong_Service = new getLLongClientRemoteService("getLLong",
                                   getLLongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getLLongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getULLong_Service = new getULLongClientRemoteService("getULLong",
                                   getULLongRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getULLongReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getFloat_Service = new getFloatClientRemoteService("getFloat",
                                   getFloatRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getFloatReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getDouble_Service = new getDoubleClientRemoteService("getDouble",
                                   getDoubleRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getDoubleReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
         this->getBoolean_Service = new getBooleanClientRemoteService("getBoolean",
                                   getBooleanRequestUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getBooleanReplyUtils::registerType(getParticipant()),
+    "BasicTypeTest_Library",
+    "BasicTypeTest_Profile",
                                   getParticipant());
 
 }

@@ -6,24 +6,37 @@
 #include "EnumYStringTestRequestReplyPlugin.h"
 #include "EnumYStringTestServerRemoteServiceSupport.h"
 
-EnumYStringTestServer::EnumYStringTestServer(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
+EnumYStringTestServer::EnumYStringTestServer(int domainId, const char *qosLibrary,
+    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
 {
     _impl = new EnumYStringTestImpl();
     
 
         this->setRemoteService(new getEnumServerRemoteService("getEnum", this,
                 getEnumRequestUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                 getEnumReplyUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                 &EnumYStringTestServer::getEnum, getParticipant()));
 
         this->setRemoteService(new getStringServerRemoteService("getString", this,
                 getStringRequestUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                 getStringReplyUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                 &EnumYStringTestServer::getString, getParticipant()));
 
         this->setRemoteService(new getStringBoundedServerRemoteService("getStringBounded", this,
                 getStringBoundedRequestUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                 getStringBoundedReplyUtils::registerType(getParticipant()),
+    "EnumYStringTest_Library",
+    "EnumYStringTest_Profile",
                 &EnumYStringTestServer::getStringBounded, getParticipant()));
 
 }
