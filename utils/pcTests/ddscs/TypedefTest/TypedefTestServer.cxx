@@ -6,39 +6,64 @@
 #include "TypedefTestRequestReplyPlugin.h"
 #include "TypedefTestServerRemoteServiceSupport.h"
 
-TypedefTestServer::TypedefTestServer(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
+TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
+    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
 {
     _impl = new TypedefTestImpl();
     
 
         this->setRemoteService(new getLargoServerRemoteService("getLargo", this,
                 getLargoRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 getLargoReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 &TypedefTestServer::getLargo, getParticipant()));
 
         this->setRemoteService(new getLarguisimoServerRemoteService("getLarguisimo", this,
                 getLarguisimoRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 getLarguisimoReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 &TypedefTestServer::getLarguisimo, getParticipant()));
 
         this->setRemoteService(new getDatosDefServerRemoteService("getDatosDef", this,
                 getDatosDefRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 getDatosDefReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 &TypedefTestServer::getDatosDef, getParticipant()));
 
         this->setRemoteService(new getDatosDefondoServerRemoteService("getDatosDefondo", this,
                 getDatosDefondoRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 getDatosDefondoReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 &TypedefTestServer::getDatosDefondo, getParticipant()));
 
         this->setRemoteService(new getCadenaServerRemoteService("getCadena", this,
                 getCadenaRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 getCadenaReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 &TypedefTestServer::getCadena, getParticipant()));
 
         this->setRemoteService(new getCorreaServerRemoteService("getCorrea", this,
                 getCorreaRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 getCorreaReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                 &TypedefTestServer::getCorrea, getParticipant()));
 
 }

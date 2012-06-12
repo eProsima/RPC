@@ -16,7 +16,8 @@ class SequenceTestServer : public DDSCSServer
     public:
 
         /// \brief The default constructor.
-        SequenceTestServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
+        SequenceTestServer(int domainId = 0, const char *qosLibrary = NULL,
+            const char *qosProfile = NULL, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
 
         /// \brief The default destructor.
         virtual ~SequenceTestServer();

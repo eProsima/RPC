@@ -212,6 +212,8 @@ $if(params)$, $endif$$check(returnType)$ returnedValue
 createDataHelper(type, name, string) ::= <<
 $if(typeInitMap.(type))$
 $if(string)$
+if(instance->$name$ != NULL)
+   DDS_String_free(instance->$name$);
 instance->$name$ = DDS_String_dup($name$);
 $else$
 instance->$name$ = $name$;

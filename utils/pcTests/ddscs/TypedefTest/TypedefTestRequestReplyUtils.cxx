@@ -307,6 +307,8 @@ getCadenaRequest* getCadenaRequestUtils::createTypeData(cadena c1)
 {
     getCadenaRequest* instance = getCadenaRequestTypeSupport::create_data();
 
+    if(instance->c1 != NULL)
+       DDS_String_free(instance->c1);
     instance->c1 = DDS_String_dup(c1);
     
     
@@ -342,8 +344,12 @@ getCadenaReply* getCadenaReplyUtils::createTypeData(cadena c2, cadena& returnedV
 {
     getCadenaReply* instance = getCadenaReplyTypeSupport::create_data();
 
+    if(instance->c2 != NULL)
+       DDS_String_free(instance->c2);
     instance->c2 = DDS_String_dup(c2);
     
+    if(instance->returnedValue != NULL)
+       DDS_String_free(instance->returnedValue);
     instance->returnedValue = DDS_String_dup(returnedValue);            
     return instance;
 }
@@ -377,6 +383,8 @@ getCorreaRequest* getCorreaRequestUtils::createTypeData(correa cc1)
 {
     getCorreaRequest* instance = getCorreaRequestTypeSupport::create_data();
 
+    if(instance->cc1 != NULL)
+       DDS_String_free(instance->cc1);
     instance->cc1 = DDS_String_dup(cc1);
     
     
@@ -412,8 +420,12 @@ getCorreaReply* getCorreaReplyUtils::createTypeData(correa cc2, correa& returned
 {
     getCorreaReply* instance = getCorreaReplyTypeSupport::create_data();
 
+    if(instance->cc2 != NULL)
+       DDS_String_free(instance->cc2);
     instance->cc2 = DDS_String_dup(cc2);
     
+    if(instance->returnedValue != NULL)
+       DDS_String_free(instance->returnedValue);
     instance->returnedValue = DDS_String_dup(returnedValue);            
     return instance;
 }

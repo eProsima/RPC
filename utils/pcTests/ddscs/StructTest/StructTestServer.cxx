@@ -6,19 +6,28 @@
 #include "StructTestRequestReplyPlugin.h"
 #include "StructTestServerRemoteServiceSupport.h"
 
-StructTestServer::StructTestServer(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
+StructTestServer::StructTestServer(int domainId, const char *qosLibrary,
+    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
 {
     _impl = new StructTestImpl();
     
 
         this->setRemoteService(new duplicateServerRemoteService("duplicate", this,
                 duplicateRequestUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                 duplicateReplyUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                 &StructTestServer::duplicate, getParticipant()));
 
         this->setRemoteService(new sumaServerRemoteService("suma", this,
                 sumaRequestUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                 sumaReplyUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                 &StructTestServer::suma, getParticipant()));
 
 }

@@ -14,32 +14,56 @@ TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSCl
 
         this->getLargo_Service = new getLargoClientRemoteService("getLargo",
                                   getLargoRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getLargoReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getParticipant());
 
         this->getLarguisimo_Service = new getLarguisimoClientRemoteService("getLarguisimo",
                                   getLarguisimoRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getLarguisimoReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getParticipant());
 
         this->getDatosDef_Service = new getDatosDefClientRemoteService("getDatosDef",
                                   getDatosDefRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getDatosDefReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getParticipant());
 
         this->getDatosDefondo_Service = new getDatosDefondoClientRemoteService("getDatosDefondo",
                                   getDatosDefondoRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getDatosDefondoReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getParticipant());
 
         this->getCadena_Service = new getCadenaClientRemoteService("getCadena",
                                   getCadenaRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getCadenaReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getParticipant());
 
         this->getCorrea_Service = new getCorreaClientRemoteService("getCorrea",
                                   getCorreaRequestUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getCorreaReplyUtils::registerType(getParticipant()),
+    "TypedefTest_Library",
+    "TypedefTest_Profile",
                                   getParticipant());
 
 }

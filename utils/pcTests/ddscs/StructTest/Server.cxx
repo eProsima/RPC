@@ -10,7 +10,10 @@ int main()
     int returnedValue = 0;
     int domainId = 0;
     unsigned int threadPoolSize = 5;
-    StructTestServer *server = new StructTestServer(domainId, threadPoolSize);
+    StructTestServer *server = new StructTestServer(domainId,
+"StructTest_Library",
+"StructTest_Profile",
+        threadPoolSize);
     server->executeServer();
 
     delete server;

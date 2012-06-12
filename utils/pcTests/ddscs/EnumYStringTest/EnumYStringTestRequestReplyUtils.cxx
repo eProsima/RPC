@@ -101,7 +101,11 @@ getStringRequest* getStringRequestUtils::createTypeData(char* s1, char* s2)
 {
     getStringRequest* instance = getStringRequestTypeSupport::create_data();
 
+    if(instance->s1 != NULL)
+       DDS_String_free(instance->s1);
     instance->s1 = DDS_String_dup(s1);
+    if(instance->s2 != NULL)
+       DDS_String_free(instance->s2);
     instance->s2 = DDS_String_dup(s2);
     
     
@@ -138,9 +142,15 @@ getStringReply* getStringReplyUtils::createTypeData(char* s2, char* s3, char*& r
 {
     getStringReply* instance = getStringReplyTypeSupport::create_data();
 
+    if(instance->s2 != NULL)
+       DDS_String_free(instance->s2);
     instance->s2 = DDS_String_dup(s2);
+    if(instance->s3 != NULL)
+       DDS_String_free(instance->s3);
     instance->s3 = DDS_String_dup(s3);
     
+    if(instance->returnedValue != NULL)
+       DDS_String_free(instance->returnedValue);
     instance->returnedValue = DDS_String_dup(returnedValue);            
     return instance;
 }
@@ -175,7 +185,11 @@ getStringBoundedRequest* getStringBoundedRequestUtils::createTypeData(char* sb1,
 {
     getStringBoundedRequest* instance = getStringBoundedRequestTypeSupport::create_data();
 
+    if(instance->sb1 != NULL)
+       DDS_String_free(instance->sb1);
     instance->sb1 = DDS_String_dup(sb1);
+    if(instance->sb2 != NULL)
+       DDS_String_free(instance->sb2);
     instance->sb2 = DDS_String_dup(sb2);
     
     
@@ -212,9 +226,15 @@ getStringBoundedReply* getStringBoundedReplyUtils::createTypeData(char* sb2, cha
 {
     getStringBoundedReply* instance = getStringBoundedReplyTypeSupport::create_data();
 
+    if(instance->sb2 != NULL)
+       DDS_String_free(instance->sb2);
     instance->sb2 = DDS_String_dup(sb2);
+    if(instance->sb3 != NULL)
+       DDS_String_free(instance->sb3);
     instance->sb3 = DDS_String_dup(sb3);
     
+    if(instance->returnedValue != NULL)
+       DDS_String_free(instance->returnedValue);
     instance->returnedValue = DDS_String_dup(returnedValue);            
     return instance;
 }

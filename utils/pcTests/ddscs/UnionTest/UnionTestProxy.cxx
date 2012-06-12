@@ -14,7 +14,11 @@ UnionTestProxy::UnionTestProxy(int domainId, unsigned int timeout) : DDSCSClient
 
         this->getEmpleado_Service = new getEmpleadoClientRemoteService("getEmpleado",
                                   getEmpleadoRequestUtils::registerType(getParticipant()),
+    "UnionTest_Library",
+    "UnionTest_Profile",
                                   getEmpleadoReplyUtils::registerType(getParticipant()),
+    "UnionTest_Library",
+    "UnionTest_Profile",
                                   getParticipant());
 
 }

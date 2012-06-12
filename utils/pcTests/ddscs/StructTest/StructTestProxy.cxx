@@ -14,12 +14,20 @@ StructTestProxy::StructTestProxy(int domainId, unsigned int timeout) : DDSCSClie
 
         this->duplicate_Service = new duplicateClientRemoteService("duplicate",
                                   duplicateRequestUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                                   duplicateReplyUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                                   getParticipant());
 
         this->suma_Service = new sumaClientRemoteService("suma",
                                   sumaRequestUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                                   sumaReplyUtils::registerType(getParticipant()),
+    "StructTest_Library",
+    "StructTest_Profile",
                                   getParticipant());
 
 }

@@ -10,7 +10,10 @@ int main()
     int returnedValue = 0;
     int domainId = 0;
     unsigned int threadPoolSize = 5;
-    TypedefTestServer *server = new TypedefTestServer(domainId, threadPoolSize);
+    TypedefTestServer *server = new TypedefTestServer(domainId,
+"TypedefTest_Library",
+"TypedefTest_Profile",
+        threadPoolSize);
     server->executeServer();
 
     delete server;

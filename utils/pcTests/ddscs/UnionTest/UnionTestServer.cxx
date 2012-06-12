@@ -6,14 +6,19 @@
 #include "UnionTestRequestReplyPlugin.h"
 #include "UnionTestServerRemoteServiceSupport.h"
 
-UnionTestServer::UnionTestServer(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
+UnionTestServer::UnionTestServer(int domainId, const char *qosLibrary,
+    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
 {
     _impl = new UnionTestImpl();
     
 
         this->setRemoteService(new getEmpleadoServerRemoteService("getEmpleado", this,
                 getEmpleadoRequestUtils::registerType(getParticipant()),
+    "UnionTest_Library",
+    "UnionTest_Profile",
                 getEmpleadoReplyUtils::registerType(getParticipant()),
+    "UnionTest_Library",
+    "UnionTest_Profile",
                 &UnionTestServer::getEmpleado, getParticipant()));
 
 }

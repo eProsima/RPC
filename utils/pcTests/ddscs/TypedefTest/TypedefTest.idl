@@ -19,4 +19,4 @@ interface TypedefTest
 	DatosDefondo getDatosDefondo(in DatosDefondo dd1, out DatosDefondo dd2);
 	cadena getCadena(in cadena c1, out cadena c2);
 	correa getCorrea(in correa cc1, out correa cc2);
-};
+}; //#qos TypedefTest_Library TypedefTest_Profile

@@ -6,24 +6,37 @@
 #include "SequenceTestRequestReplyPlugin.h"
 #include "SequenceTestServerRemoteServiceSupport.h"
 
-SequenceTestServer::SequenceTestServer(int domainId, unsigned int threadCount) : DDSCSServer(domainId, threadCount)
+SequenceTestServer::SequenceTestServer(int domainId, const char *qosLibrary,
+    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
 {
     _impl = new SequenceTestImpl();
     
 
         this->setRemoteService(new getSLongServerRemoteService("getSLong", this,
                 getSLongRequestUtils::registerType(getParticipant()),
+    "SequenceTest_Library",
+    "SequenceTest_Profile",
                 getSLongReplyUtils::registerType(getParticipant()),
+    "SequenceTest_Library",
+    "SequenceTest_Profile",
                 &SequenceTestServer::getSLong, getParticipant()));
 
         this->setRemoteService(new getStringServerRemoteService("getString", this,
                 getStringRequestUtils::registerType(getParticipant()),
+    "SequenceTest_Library",
+    "SequenceTest_Profile",
                 getStringReplyUtils::registerType(getParticipant()),
+    "SequenceTest_Library",
+    "SequenceTest_Profile",
                 &SequenceTestServer::getString, getParticipant()));
 
         this->setRemoteService(new getStringBoundedServerRemoteService("getStringBounded", this,
                 getStringBoundedRequestUtils::registerType(getParticipant()),
+    "SequenceTest_Library",
+    "SequenceTest_Profile",
                 getStringBoundedReplyUtils::registerType(getParticipant()),
+    "SequenceTest_Library",
+    "SequenceTest_Profile",
                 &SequenceTestServer::getStringBounded, getParticipant()));
 
 }
