@@ -6,13 +6,12 @@
 #include "StructTestRequestReplyPlugin.h"
 #include "StructTestServerRemoteServiceSupport.h"
 
-StructTestServer::StructTestServer(int domainId, const char *qosLibrary,
-    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
+StructTestServer::StructTestServer(int domainId, unsigned int threadCount,
+const char *qosLibrary, const char *qosProfile) : DDSCSServer(domainId, threadCount, qosLibrary, qosProfile)
 {
     _impl = new StructTestImpl();
     
-
-        this->setRemoteService(new duplicateServerRemoteService("duplicate", this,
+    this->setRemoteService(new duplicateServerRemoteService("duplicate", this,
                 duplicateRequestUtils::registerType(getParticipant()),
     "StructTest_Library",
     "StructTest_Profile",
@@ -20,8 +19,7 @@ StructTestServer::StructTestServer(int domainId, const char *qosLibrary,
     "StructTest_Library",
     "StructTest_Profile",
                 &StructTestServer::duplicate, getParticipant()));
-
-        this->setRemoteService(new sumaServerRemoteService("suma", this,
+    this->setRemoteService(new sumaServerRemoteService("suma", this,
                 sumaRequestUtils::registerType(getParticipant()),
     "StructTest_Library",
     "StructTest_Profile",
@@ -55,7 +53,7 @@ void StructTestServer::duplicate(DDSCSServer *server, void *requestData, ServerR
     service->sendReply(requestData, replyData, returnedValue);
     
     EnvioPluginSupport_destroy_data(ev);    
-    RecepcionPluginSupport_destroy_data(duplicate_ret);           
+    RecepcionPluginSupport_destroy_data(duplicate_ret);    
 }
 void StructTestServer::suma(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -78,5 +76,5 @@ void StructTestServer::suma(DDSCSServer *server, void *requestData, ServerRemote
     
     EnvioPluginSupport_destroy_data(ev1);    
     EnvioPluginSupport_destroy_data(ev2);    
-    RecepcionPluginSupport_destroy_data(suma_ret);           
+    RecepcionPluginSupport_destroy_data(suma_ret);    
 }

@@ -14,7 +14,8 @@ class EnumYStringTestProxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        EnumYStringTestProxy(int domainId = 0, unsigned int timeout = 3000);
+        EnumYStringTestProxy(int domainId = 0, unsigned int timeout = 3000,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~EnumYStringTestProxy();

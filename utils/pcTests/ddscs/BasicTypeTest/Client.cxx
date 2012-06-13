@@ -10,7 +10,8 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    BasicTypeTestProxy *proxy = new BasicTypeTestProxy(domainId, timeoutInMillis);
+    BasicTypeTestProxy *proxy = new BasicTypeTestProxy(domainId, timeoutInMillis,
+"BasicTypeTest_Library", "BasicTypeTest_Profile");
     DDS_Duration_t period = {5,0};
     
     DDS_Octet  oc1 = 1;       

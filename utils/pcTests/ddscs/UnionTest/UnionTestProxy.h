@@ -14,7 +14,8 @@ class UnionTestProxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        UnionTestProxy(int domainId = 0, unsigned int timeout = 3000);
+        UnionTestProxy(int domainId = 0, unsigned int timeout = 3000,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~UnionTestProxy();

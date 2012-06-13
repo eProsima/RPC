@@ -14,7 +14,8 @@ class StructTestProxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        StructTestProxy(int domainId = 0, unsigned int timeout = 3000);
+        StructTestProxy(int domainId = 0, unsigned int timeout = 3000,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~StructTestProxy();

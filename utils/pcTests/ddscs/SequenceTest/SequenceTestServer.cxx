@@ -6,13 +6,12 @@
 #include "SequenceTestRequestReplyPlugin.h"
 #include "SequenceTestServerRemoteServiceSupport.h"
 
-SequenceTestServer::SequenceTestServer(int domainId, const char *qosLibrary,
-    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
+SequenceTestServer::SequenceTestServer(int domainId, unsigned int threadCount,
+const char *qosLibrary, const char *qosProfile) : DDSCSServer(domainId, threadCount, qosLibrary, qosProfile)
 {
     _impl = new SequenceTestImpl();
     
-
-        this->setRemoteService(new getSLongServerRemoteService("getSLong", this,
+    this->setRemoteService(new getSLongServerRemoteService("getSLong", this,
                 getSLongRequestUtils::registerType(getParticipant()),
     "SequenceTest_Library",
     "SequenceTest_Profile",
@@ -20,8 +19,7 @@ SequenceTestServer::SequenceTestServer(int domainId, const char *qosLibrary,
     "SequenceTest_Library",
     "SequenceTest_Profile",
                 &SequenceTestServer::getSLong, getParticipant()));
-
-        this->setRemoteService(new getStringServerRemoteService("getString", this,
+    this->setRemoteService(new getStringServerRemoteService("getString", this,
                 getStringRequestUtils::registerType(getParticipant()),
     "SequenceTest_Library",
     "SequenceTest_Profile",
@@ -29,8 +27,7 @@ SequenceTestServer::SequenceTestServer(int domainId, const char *qosLibrary,
     "SequenceTest_Library",
     "SequenceTest_Profile",
                 &SequenceTestServer::getString, getParticipant()));
-
-        this->setRemoteService(new getStringBoundedServerRemoteService("getStringBounded", this,
+    this->setRemoteService(new getStringBoundedServerRemoteService("getStringBounded", this,
                 getStringBoundedRequestUtils::registerType(getParticipant()),
     "SequenceTest_Library",
     "SequenceTest_Profile",
@@ -67,7 +64,7 @@ void SequenceTestServer::getSLong(DDSCSServer *server, void *requestData, Server
     largoPluginSupport_destroy_data(l1);    
     largoPluginSupport_destroy_data(l2);    
     largoPluginSupport_destroy_data(l3);    
-    largoPluginSupport_destroy_data(getSLong_ret);           
+    largoPluginSupport_destroy_data(getSLong_ret);    
 }
 void SequenceTestServer::getString(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -91,7 +88,7 @@ void SequenceTestServer::getString(DDSCSServer *server, void *requestData, Serve
     cadenaPluginSupport_destroy_data(s1);    
     cadenaPluginSupport_destroy_data(s2);    
     cadenaPluginSupport_destroy_data(s3);    
-    cadenaPluginSupport_destroy_data(getString_ret);           
+    cadenaPluginSupport_destroy_data(getString_ret);    
 }
 void SequenceTestServer::getStringBounded(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -115,5 +112,5 @@ void SequenceTestServer::getStringBounded(DDSCSServer *server, void *requestData
     dattosPluginSupport_destroy_data(sb1);    
     dattosPluginSupport_destroy_data(sb2);    
     dattosPluginSupport_destroy_data(sb3);    
-    dattosPluginSupport_destroy_data(getStringBounded_ret);           
+    dattosPluginSupport_destroy_data(getStringBounded_ret);    
 }

@@ -14,7 +14,8 @@ class BasicTypeTestProxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        BasicTypeTestProxy(int domainId = 0, unsigned int timeout = 3000);
+        BasicTypeTestProxy(int domainId = 0, unsigned int timeout = 3000,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTestProxy();

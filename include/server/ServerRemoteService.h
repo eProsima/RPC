@@ -45,6 +45,12 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 
         fExecFunction getExecFunction();
 
+        int createEntities(DDSDomainParticipant *participant, const char *remoteServiceName,
+                const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
+                const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
+
+        int enableEntities();
+
 		virtual int sendReply(void* request, void *reply, DDSCSMessages errorMessage = OPERATION_SUCCESSFUL) = 0;
 
         virtual void on_data_available(DDSDataReader* reader) = 0;

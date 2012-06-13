@@ -8,11 +8,11 @@
 #include "TypedefTestRequestReplyPlugin.h"
 
 
-TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
+TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout
+, const char *qosLibrary, const char *qosProfile) : DDSCSClient(domainId, qosLibrary, qosProfile)
 {
     m_timeout = timeout;
-
-        this->getLargo_Service = new getLargoClientRemoteService("getLargo",
+    this->getLargo_Service = new getLargoClientRemoteService("getLargo",
                                   getLargoRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -20,8 +20,7 @@ TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSCl
     "TypedefTest_Library",
     "TypedefTest_Profile",
                                   getParticipant());
-
-        this->getLarguisimo_Service = new getLarguisimoClientRemoteService("getLarguisimo",
+    this->getLarguisimo_Service = new getLarguisimoClientRemoteService("getLarguisimo",
                                   getLarguisimoRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -29,8 +28,7 @@ TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSCl
     "TypedefTest_Library",
     "TypedefTest_Profile",
                                   getParticipant());
-
-        this->getDatosDef_Service = new getDatosDefClientRemoteService("getDatosDef",
+    this->getDatosDef_Service = new getDatosDefClientRemoteService("getDatosDef",
                                   getDatosDefRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -38,8 +36,7 @@ TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSCl
     "TypedefTest_Library",
     "TypedefTest_Profile",
                                   getParticipant());
-
-        this->getDatosDefondo_Service = new getDatosDefondoClientRemoteService("getDatosDefondo",
+    this->getDatosDefondo_Service = new getDatosDefondoClientRemoteService("getDatosDefondo",
                                   getDatosDefondoRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -47,8 +44,7 @@ TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSCl
     "TypedefTest_Library",
     "TypedefTest_Profile",
                                   getParticipant());
-
-        this->getCadena_Service = new getCadenaClientRemoteService("getCadena",
+    this->getCadena_Service = new getCadenaClientRemoteService("getCadena",
                                   getCadenaRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -56,8 +52,7 @@ TypedefTestProxy::TypedefTestProxy(int domainId, unsigned int timeout) : DDSCSCl
     "TypedefTest_Library",
     "TypedefTest_Profile",
                                   getParticipant());
-
-        this->getCorrea_Service = new getCorreaClientRemoteService("getCorrea",
+    this->getCorrea_Service = new getCorreaClientRemoteService("getCorrea",
                                   getCorreaRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",

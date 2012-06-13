@@ -10,10 +10,9 @@ int main()
     int returnedValue = 0;
     int domainId = 0;
     unsigned int threadPoolSize = 5;
-    BasicTypeTestServer *server = new BasicTypeTestServer(domainId,
+    BasicTypeTestServer *server = new BasicTypeTestServer(domainId, threadPoolSize,
 "BasicTypeTest_Library",
-"BasicTypeTest_Profile",
-        threadPoolSize);
+"BasicTypeTest_Profile");
     server->executeServer();
 
     delete server;

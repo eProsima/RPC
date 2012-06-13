@@ -16,8 +16,8 @@ class BasicTypeTestServer : public DDSCSServer
     public:
 
         /// \brief The default constructor.
-        BasicTypeTestServer(int domainId = 0, const char *qosLibrary = NULL,
-            const char *qosProfile = NULL, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
+        BasicTypeTestServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTestServer();

@@ -14,7 +14,8 @@ class TypedefTestProxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        TypedefTestProxy(int domainId = 0, unsigned int timeout = 3000);
+        TypedefTestProxy(int domainId = 0, unsigned int timeout = 3000,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~TypedefTestProxy();

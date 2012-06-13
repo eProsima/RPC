@@ -49,7 +49,8 @@ class $interfaceName$Proxy : public DDSCSClient
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Proxy(int domainId = 0, unsigned int timeout = 3000);
+        $interfaceName$Proxy(int domainId = 0, unsigned int timeout = 3000,
+        const char *qosLibrary = NULL, const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy();
@@ -145,7 +146,8 @@ $doNotEditC()$
 #include "$interfaceName$RequestReplyPlugin.h"
 
 
-$interfaceName$Proxy::$interfaceName$Proxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
+$interfaceName$Proxy::$interfaceName$Proxy(int domainId, unsigned int timeout
+, const char *qosLibrary, const char *qosProfile) : DDSCSClient(domainId, qosLibrary, qosProfile)
 {
     m_timeout = timeout;
     $createRemoteService(funNames); separator="\n"$
@@ -224,7 +226,8 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMillis);
+    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMillis,
+    $if(qosLibrary)$"$qosLibrary$"$else$NULL$endif$, $if(qosProfile)$"$qosProfile$"$else$NULL$endif$);
     DDS_Duration_t period = {5,0};
     
 $invocations; separator="\n"$

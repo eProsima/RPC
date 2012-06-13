@@ -19,7 +19,8 @@ class DDSCS_WIN32_DLL_API DDSCSClient
          * \param The client identifier.
          * \param domainId The domain id's value that the client will have.
          */
-        DDSCSClient(int domainId = 0);
+        DDSCSClient(int domainId = 0, const char *qosLibrary = NULL,
+                         const char *qosProfile = NULL);
 
         /// \brief The default destructor.
         virtual ~DDSCSClient();

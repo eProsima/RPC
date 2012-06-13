@@ -10,7 +10,8 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    UnionTestProxy *proxy = new UnionTestProxy(domainId, timeoutInMillis);
+    UnionTestProxy *proxy = new UnionTestProxy(domainId, timeoutInMillis,
+"UnionTest_Library", "UnionTest_Profile");
     DDS_Duration_t period = {5,0};
     char buffer[30];
     

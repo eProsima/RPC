@@ -8,11 +8,11 @@
 #include "EnumYStringTestRequestReplyPlugin.h"
 
 
-EnumYStringTestProxy::EnumYStringTestProxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
+EnumYStringTestProxy::EnumYStringTestProxy(int domainId, unsigned int timeout
+, const char *qosLibrary, const char *qosProfile) : DDSCSClient(domainId, qosLibrary, qosProfile)
 {
     m_timeout = timeout;
-
-        this->getEnum_Service = new getEnumClientRemoteService("getEnum",
+    this->getEnum_Service = new getEnumClientRemoteService("getEnum",
                                   getEnumRequestUtils::registerType(getParticipant()),
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
@@ -20,8 +20,7 @@ EnumYStringTestProxy::EnumYStringTestProxy(int domainId, unsigned int timeout) :
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
                                   getParticipant());
-
-        this->getString_Service = new getStringClientRemoteService("getString",
+    this->getString_Service = new getStringClientRemoteService("getString",
                                   getStringRequestUtils::registerType(getParticipant()),
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
@@ -29,8 +28,7 @@ EnumYStringTestProxy::EnumYStringTestProxy(int domainId, unsigned int timeout) :
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
                                   getParticipant());
-
-        this->getStringBounded_Service = new getStringBoundedClientRemoteService("getStringBounded",
+    this->getStringBounded_Service = new getStringBoundedClientRemoteService("getStringBounded",
                                   getStringBoundedRequestUtils::registerType(getParticipant()),
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",

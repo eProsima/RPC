@@ -8,11 +8,11 @@
 #include "UnionTestRequestReplyPlugin.h"
 
 
-UnionTestProxy::UnionTestProxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
+UnionTestProxy::UnionTestProxy(int domainId, unsigned int timeout
+, const char *qosLibrary, const char *qosProfile) : DDSCSClient(domainId, qosLibrary, qosProfile)
 {
     m_timeout = timeout;
-
-        this->getEmpleado_Service = new getEmpleadoClientRemoteService("getEmpleado",
+    this->getEmpleado_Service = new getEmpleadoClientRemoteService("getEmpleado",
                                   getEmpleadoRequestUtils::registerType(getParticipant()),
     "UnionTest_Library",
     "UnionTest_Profile",

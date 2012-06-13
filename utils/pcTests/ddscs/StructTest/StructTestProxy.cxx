@@ -8,11 +8,11 @@
 #include "StructTestRequestReplyPlugin.h"
 
 
-StructTestProxy::StructTestProxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
+StructTestProxy::StructTestProxy(int domainId, unsigned int timeout
+, const char *qosLibrary, const char *qosProfile) : DDSCSClient(domainId, qosLibrary, qosProfile)
 {
     m_timeout = timeout;
-
-        this->duplicate_Service = new duplicateClientRemoteService("duplicate",
+    this->duplicate_Service = new duplicateClientRemoteService("duplicate",
                                   duplicateRequestUtils::registerType(getParticipant()),
     "StructTest_Library",
     "StructTest_Profile",
@@ -20,8 +20,7 @@ StructTestProxy::StructTestProxy(int domainId, unsigned int timeout) : DDSCSClie
     "StructTest_Library",
     "StructTest_Profile",
                                   getParticipant());
-
-        this->suma_Service = new sumaClientRemoteService("suma",
+    this->suma_Service = new sumaClientRemoteService("suma",
                                   sumaRequestUtils::registerType(getParticipant()),
     "StructTest_Library",
     "StructTest_Profile",

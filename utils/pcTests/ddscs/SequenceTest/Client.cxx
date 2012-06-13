@@ -10,7 +10,8 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    SequenceTestProxy *proxy = new SequenceTestProxy(domainId, timeoutInMillis);
+    SequenceTestProxy *proxy = new SequenceTestProxy(domainId, timeoutInMillis,
+"SequenceTest_Library", "SequenceTest_Profile");
     DDS_Duration_t period = {5,0};
     
     largo *l1 = largoPluginSupport_create_data();       

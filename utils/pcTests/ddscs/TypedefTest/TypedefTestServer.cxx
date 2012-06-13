@@ -6,13 +6,12 @@
 #include "TypedefTestRequestReplyPlugin.h"
 #include "TypedefTestServerRemoteServiceSupport.h"
 
-TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
-    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
+TypedefTestServer::TypedefTestServer(int domainId, unsigned int threadCount,
+const char *qosLibrary, const char *qosProfile) : DDSCSServer(domainId, threadCount, qosLibrary, qosProfile)
 {
     _impl = new TypedefTestImpl();
     
-
-        this->setRemoteService(new getLargoServerRemoteService("getLargo", this,
+    this->setRemoteService(new getLargoServerRemoteService("getLargo", this,
                 getLargoRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -20,8 +19,7 @@ TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
     "TypedefTest_Library",
     "TypedefTest_Profile",
                 &TypedefTestServer::getLargo, getParticipant()));
-
-        this->setRemoteService(new getLarguisimoServerRemoteService("getLarguisimo", this,
+    this->setRemoteService(new getLarguisimoServerRemoteService("getLarguisimo", this,
                 getLarguisimoRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -29,8 +27,7 @@ TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
     "TypedefTest_Library",
     "TypedefTest_Profile",
                 &TypedefTestServer::getLarguisimo, getParticipant()));
-
-        this->setRemoteService(new getDatosDefServerRemoteService("getDatosDef", this,
+    this->setRemoteService(new getDatosDefServerRemoteService("getDatosDef", this,
                 getDatosDefRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -38,8 +35,7 @@ TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
     "TypedefTest_Library",
     "TypedefTest_Profile",
                 &TypedefTestServer::getDatosDef, getParticipant()));
-
-        this->setRemoteService(new getDatosDefondoServerRemoteService("getDatosDefondo", this,
+    this->setRemoteService(new getDatosDefondoServerRemoteService("getDatosDefondo", this,
                 getDatosDefondoRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -47,8 +43,7 @@ TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
     "TypedefTest_Library",
     "TypedefTest_Profile",
                 &TypedefTestServer::getDatosDefondo, getParticipant()));
-
-        this->setRemoteService(new getCadenaServerRemoteService("getCadena", this,
+    this->setRemoteService(new getCadenaServerRemoteService("getCadena", this,
                 getCadenaRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -56,8 +51,7 @@ TypedefTestServer::TypedefTestServer(int domainId, const char *qosLibrary,
     "TypedefTest_Library",
     "TypedefTest_Profile",
                 &TypedefTestServer::getCadena, getParticipant()));
-
-        this->setRemoteService(new getCorreaServerRemoteService("getCorrea", this,
+    this->setRemoteService(new getCorreaServerRemoteService("getCorrea", this,
                 getCorreaRequestUtils::registerType(getParticipant()),
     "TypedefTest_Library",
     "TypedefTest_Profile",
@@ -93,7 +87,7 @@ void TypedefTestServer::getLargo(DDSCSServer *server, void *requestData, ServerR
     
         
         
-               
+        
 }
 void TypedefTestServer::getLarguisimo(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -116,7 +110,7 @@ void TypedefTestServer::getLarguisimo(DDSCSServer *server, void *requestData, Se
     
         
         
-               
+        
 }
 void TypedefTestServer::getDatosDef(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -139,7 +133,7 @@ void TypedefTestServer::getDatosDef(DDSCSServer *server, void *requestData, Serv
     
     DatosDefPluginSupport_destroy_data(d1);    
     DatosDefPluginSupport_destroy_data(d2);    
-    DatosDefPluginSupport_destroy_data(getDatosDef_ret);           
+    DatosDefPluginSupport_destroy_data(getDatosDef_ret);    
 }
 void TypedefTestServer::getDatosDefondo(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -162,7 +156,7 @@ void TypedefTestServer::getDatosDefondo(DDSCSServer *server, void *requestData, 
     
     DatosDefondoPluginSupport_destroy_data(dd1);    
     DatosDefondoPluginSupport_destroy_data(dd2);    
-    DatosDefondoPluginSupport_destroy_data(getDatosDefondo_ret);           
+    DatosDefondoPluginSupport_destroy_data(getDatosDefondo_ret);    
 }
 void TypedefTestServer::getCadena(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -185,7 +179,7 @@ void TypedefTestServer::getCadena(DDSCSServer *server, void *requestData, Server
     
     if(c1 != NULL) DDS_String_free(c1);    
     if(c2 != NULL) DDS_String_free(c2);    
-    if(getCadena_ret != NULL) DDS_String_free(getCadena_ret);           
+    if(getCadena_ret != NULL) DDS_String_free(getCadena_ret);    
 }
 void TypedefTestServer::getCorrea(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -208,5 +202,5 @@ void TypedefTestServer::getCorrea(DDSCSServer *server, void *requestData, Server
     
     if(cc1 != NULL) DDS_String_free(cc1);    
     if(cc2 != NULL) DDS_String_free(cc2);    
-    if(getCorrea_ret != NULL) DDS_String_free(getCorrea_ret);           
+    if(getCorrea_ret != NULL) DDS_String_free(getCorrea_ret);    
 }

@@ -8,11 +8,11 @@
 #include "SequenceTestRequestReplyPlugin.h"
 
 
-SequenceTestProxy::SequenceTestProxy(int domainId, unsigned int timeout) : DDSCSClient(domainId)
+SequenceTestProxy::SequenceTestProxy(int domainId, unsigned int timeout
+, const char *qosLibrary, const char *qosProfile) : DDSCSClient(domainId, qosLibrary, qosProfile)
 {
     m_timeout = timeout;
-
-        this->getSLong_Service = new getSLongClientRemoteService("getSLong",
+    this->getSLong_Service = new getSLongClientRemoteService("getSLong",
                                   getSLongRequestUtils::registerType(getParticipant()),
     "SequenceTest_Library",
     "SequenceTest_Profile",
@@ -20,8 +20,7 @@ SequenceTestProxy::SequenceTestProxy(int domainId, unsigned int timeout) : DDSCS
     "SequenceTest_Library",
     "SequenceTest_Profile",
                                   getParticipant());
-
-        this->getString_Service = new getStringClientRemoteService("getString",
+    this->getString_Service = new getStringClientRemoteService("getString",
                                   getStringRequestUtils::registerType(getParticipant()),
     "SequenceTest_Library",
     "SequenceTest_Profile",
@@ -29,8 +28,7 @@ SequenceTestProxy::SequenceTestProxy(int domainId, unsigned int timeout) : DDSCS
     "SequenceTest_Library",
     "SequenceTest_Profile",
                                   getParticipant());
-
-        this->getStringBounded_Service = new getStringBoundedClientRemoteService("getStringBounded",
+    this->getStringBounded_Service = new getStringBoundedClientRemoteService("getStringBounded",
                                   getStringBoundedRequestUtils::registerType(getParticipant()),
     "SequenceTest_Library",
     "SequenceTest_Profile",

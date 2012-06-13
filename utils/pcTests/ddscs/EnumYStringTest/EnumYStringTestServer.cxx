@@ -6,13 +6,12 @@
 #include "EnumYStringTestRequestReplyPlugin.h"
 #include "EnumYStringTestServerRemoteServiceSupport.h"
 
-EnumYStringTestServer::EnumYStringTestServer(int domainId, const char *qosLibrary,
-    const char *qosProfile, unsigned int threadCount) : DDSCSServer(domainId, qosLibrary, qosProfile, threadCount)
+EnumYStringTestServer::EnumYStringTestServer(int domainId, unsigned int threadCount,
+const char *qosLibrary, const char *qosProfile) : DDSCSServer(domainId, threadCount, qosLibrary, qosProfile)
 {
     _impl = new EnumYStringTestImpl();
     
-
-        this->setRemoteService(new getEnumServerRemoteService("getEnum", this,
+    this->setRemoteService(new getEnumServerRemoteService("getEnum", this,
                 getEnumRequestUtils::registerType(getParticipant()),
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
@@ -20,8 +19,7 @@ EnumYStringTestServer::EnumYStringTestServer(int domainId, const char *qosLibrar
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
                 &EnumYStringTestServer::getEnum, getParticipant()));
-
-        this->setRemoteService(new getStringServerRemoteService("getString", this,
+    this->setRemoteService(new getStringServerRemoteService("getString", this,
                 getStringRequestUtils::registerType(getParticipant()),
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
@@ -29,8 +27,7 @@ EnumYStringTestServer::EnumYStringTestServer(int domainId, const char *qosLibrar
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
                 &EnumYStringTestServer::getString, getParticipant()));
-
-        this->setRemoteService(new getStringBoundedServerRemoteService("getStringBounded", this,
+    this->setRemoteService(new getStringBoundedServerRemoteService("getStringBounded", this,
                 getStringBoundedRequestUtils::registerType(getParticipant()),
     "EnumYStringTest_Library",
     "EnumYStringTest_Profile",
@@ -67,7 +64,7 @@ void EnumYStringTestServer::getEnum(DDSCSServer *server, void *requestData, Serv
         
         
         
-               
+        
 }
 void EnumYStringTestServer::getString(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -91,7 +88,7 @@ void EnumYStringTestServer::getString(DDSCSServer *server, void *requestData, Se
     if(s1 != NULL) DDS_String_free(s1);    
     if(s2 != NULL) DDS_String_free(s2);    
     if(s3 != NULL) DDS_String_free(s3);    
-    if(getString_ret != NULL) DDS_String_free(getString_ret);           
+    if(getString_ret != NULL) DDS_String_free(getString_ret);    
 }
 void EnumYStringTestServer::getStringBounded(DDSCSServer *server, void *requestData, ServerRemoteService *service) 
 { 
@@ -115,5 +112,5 @@ void EnumYStringTestServer::getStringBounded(DDSCSServer *server, void *requestD
     if(sb1 != NULL) DDS_String_free(sb1);    
     if(sb2 != NULL) DDS_String_free(sb2);    
     if(sb3 != NULL) DDS_String_free(sb3);    
-    if(getStringBounded_ret != NULL) DDS_String_free(getStringBounded_ret);           
+    if(getStringBounded_ret != NULL) DDS_String_free(getStringBounded_ret);    
 }

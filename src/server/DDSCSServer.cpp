@@ -2,8 +2,8 @@
 
 #include "ndds_utility_cpp.h"
 
-DDSCSServer::DDSCSServer(int domainId, const char *qosLibrary,
-                         const char *qosProfile, unsigned int threadCount) : domainId(domainId),
+DDSCSServer::DDSCSServer(int domainId, unsigned int threadCount,
+                         const char *qosLibrary, const char *qosProfile) : domainId(domainId),
                          participant(NULL), threadPoolManager(NULL)
 {
 	DDS_DomainParticipantQos participantQOS;
@@ -28,6 +28,9 @@ DDSCSServer::DDSCSServer(int domainId, const char *qosLibrary,
 		if(participant->get_qos(participantQOS) == DDS_RETCODE_OK)
 		{
 			serverId = participantQOS.wire_protocol.participant_id;
+
+            participantQOS.entity_factory.autoenable_created_entities = DDS_BOOLEAN_FALSE;
+            participant->set_qos(participantQOS);
 		}
 	}
 	else

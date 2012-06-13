@@ -10,10 +10,9 @@ int main()
     int returnedValue = 0;
     int domainId = 0;
     unsigned int threadPoolSize = 5;
-    SequenceTestServer *server = new SequenceTestServer(domainId,
+    SequenceTestServer *server = new SequenceTestServer(domainId, threadPoolSize,
 "SequenceTest_Library",
-"SequenceTest_Profile",
-        threadPoolSize);
+"SequenceTest_Profile");
     server->executeServer();
 
     delete server;

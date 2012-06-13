@@ -1,13 +1,23 @@
 #include "client/DDSCSClient.h"
 
-DDSCSClient::DDSCSClient(int domainId) : m_domainId(domainId), m_participant(NULL)
+DDSCSClient::DDSCSClient(int domainId, const char *qosLibrary,
+                         const char *qosProfile) : m_domainId(domainId), m_participant(NULL)
 {
     DDS_DomainParticipantQos participantQOS;
 
     // Creating the domain participant which is associated with the client
-    m_participant = DDSTheParticipantFactory->create_participant(
-            m_domainId, DDS_PARTICIPANT_QOS_DEFAULT, 
+    if(qosLibrary == NULL || qosProfile == NULL)
+    {
+        m_participant = DDSTheParticipantFactory->create_participant(
+                m_domainId, DDS_PARTICIPANT_QOS_DEFAULT, 
+                NULL /* listener */, DDS_STATUS_MASK_NONE);
+    }
+    else
+    {
+        m_participant = DDSTheParticipantFactory->create_participant_with_profile(
+            m_domainId, qosLibrary, qosProfile,
             NULL /* listener */, DDS_STATUS_MASK_NONE);
+    }
 
     if (m_participant != NULL)
     {
