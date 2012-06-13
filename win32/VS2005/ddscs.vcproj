@@ -428,6 +428,26 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\..\src\ddscs.rc"
+				>
+				<FileConfiguration
+					Name="Debug DDSDyn|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions="EPROSIMA_C_DLL_EXPORT;RTI_WIN32"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release DDSDyn|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions="EPROSIMA_C_DLL_EXPORT;RTI_WIN32"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
