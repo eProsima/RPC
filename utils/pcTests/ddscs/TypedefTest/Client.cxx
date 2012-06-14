@@ -10,8 +10,7 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    TypedefTestProxy *proxy = new TypedefTestProxy(domainId, timeoutInMillis,
-"TypedefTest_Library", "TypedefTest_Profile");
+    TypedefTestProxy *proxy = new TypedefTestProxy(domainId, timeoutInMillis);
     DDS_Duration_t period = {5,0};
     
     largo  l1 = 1;       

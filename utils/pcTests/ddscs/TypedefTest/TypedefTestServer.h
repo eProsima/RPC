@@ -17,7 +17,7 @@ class TypedefTestServer : public DDSCSServer
 
         /// \brief The default constructor.
         TypedefTestServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT,
-        const char *qosLibrary = NULL, const char *qosProfile = NULL);
+        const char *qosLibrary = "TypedefTest_Library", const char *qosProfile = "TypedefTest_Profile");
 
         /// \brief The default destructor.
         virtual ~TypedefTestServer();

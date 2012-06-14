@@ -10,8 +10,7 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    StructTestProxy *proxy = new StructTestProxy(domainId, timeoutInMillis,
-"StructTest_Library", "StructTest_Profile");
+    StructTestProxy *proxy = new StructTestProxy(domainId, timeoutInMillis);
     DDS_Duration_t period = {5,0};
     
     Envio *ev = EnvioPluginSupport_create_data();       

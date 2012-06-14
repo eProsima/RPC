@@ -10,8 +10,7 @@ int main()
 {
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
-    EnumYStringTestProxy *proxy = new EnumYStringTestProxy(domainId, timeoutInMillis,
-"EnumYStringTest_Library", "EnumYStringTest_Profile");
+    EnumYStringTestProxy *proxy = new EnumYStringTestProxy(domainId, timeoutInMillis);
     DDS_Duration_t period = {5,0};
     
     Valores  v1 = VALOR1;       

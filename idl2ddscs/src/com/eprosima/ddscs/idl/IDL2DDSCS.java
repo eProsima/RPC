@@ -322,6 +322,8 @@ public class IDL2DDSCS
             //Template for Header generation
             StringTemplate header = templatesGroup.getInstanceOf(headerTemplateId);
             header.setAttribute("interfaceName", ifc.getName());
+            header.setAttribute("qosLibrary", ifc.getQosLibrary());
+            header.setAttribute("qosProfile", ifc.getQosProfile());
 
             //Template for Definition generation
             StringTemplate definition = templatesGroup.getInstanceOf(definitionTemplateId);
@@ -427,8 +429,6 @@ public class IDL2DDSCS
                             externalDir.append("/");	
                         }
                         mainTemplate.setAttribute("interfaceName", ifc.getName());
-                        mainTemplate.setAttribute("qosLibrary", ifc.getQosLibrary());
-                        mainTemplate.setAttribute("qosProfile", ifc.getQosProfile());
                         externalDir.append(main).append(".cxx");
                         writeFile(externalDir.toString(), mainTemplate);
                         externalDir.delete(externalDirLength, externalDir.length());						

@@ -17,7 +17,7 @@ class StructTestServer : public DDSCSServer
 
         /// \brief The default constructor.
         StructTestServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT,
-        const char *qosLibrary = NULL, const char *qosProfile = NULL);
+        const char *qosLibrary = "StructTest_Library", const char *qosProfile = "StructTest_Profile");
 
         /// \brief The default destructor.
         virtual ~StructTestServer();

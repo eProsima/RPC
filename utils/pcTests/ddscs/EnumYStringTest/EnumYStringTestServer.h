@@ -17,7 +17,7 @@ class EnumYStringTestServer : public DDSCSServer
 
         /// \brief The default constructor.
         EnumYStringTestServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT,
-        const char *qosLibrary = NULL, const char *qosProfile = NULL);
+        const char *qosLibrary = "EnumYStringTest_Library", const char *qosProfile = "EnumYStringTest_Profile");
 
         /// \brief The default destructor.
         virtual ~EnumYStringTestServer();

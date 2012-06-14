@@ -10,9 +10,7 @@ int main()
     int returnedValue = 0;
     int domainId = 0;
     unsigned int threadPoolSize = 5;
-    EnumYStringTestServer *server = new EnumYStringTestServer(domainId, threadPoolSize,
-"EnumYStringTest_Library",
-"EnumYStringTest_Profile");
+    EnumYStringTestServer *server = new EnumYStringTestServer(domainId, threadPoolSize);
     server->executeServer();
 
     delete server;

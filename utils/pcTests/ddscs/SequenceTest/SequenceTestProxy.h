@@ -15,7 +15,7 @@ class SequenceTestProxy : public DDSCSClient
 
         /// \brief The default constructor.
         SequenceTestProxy(int domainId = 0, unsigned int timeout = 3000,
-        const char *qosLibrary = NULL, const char *qosProfile = NULL);
+        const char *qosLibrary =  "SequenceTest_Library", const char *qosProfile = "SequenceTest_Profile");
 
         /// \brief The default destructor.
         virtual ~SequenceTestProxy();

@@ -17,7 +17,7 @@ class UnionTestServer : public DDSCSServer
 
         /// \brief The default constructor.
         UnionTestServer(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT,
-        const char *qosLibrary = NULL, const char *qosProfile = NULL);
+        const char *qosLibrary = "UnionTest_Library", const char *qosProfile = "UnionTest_Profile");
 
         /// \brief The default destructor.
         virtual ~UnionTestServer();

@@ -10,9 +10,7 @@ int main()
     int returnedValue = 0;
     int domainId = 0;
     unsigned int threadPoolSize = 5;
-    UnionTestServer *server = new UnionTestServer(domainId, threadPoolSize,
-"UnionTest_Library",
-"UnionTest_Profile");
+    UnionTestServer *server = new UnionTestServer(domainId, threadPoolSize);
     server->executeServer();
 
     delete server;
