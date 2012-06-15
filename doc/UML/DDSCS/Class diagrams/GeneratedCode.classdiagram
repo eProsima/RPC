@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="2ec26f85-eee1-48da-b681-05cd99575618" name="GeneratedCode" linkedPackageId="a22106e1-876f-4caa-84c5-a84963df8557" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="b25fbe16-9d47-4c24-9316-5bf946cbd7d5">
+      <profileInstance Id="f92c331f-161d-401f-9a67-9cbf068d333a" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="657b6a55-5a59-43d1-a4ee-03847dfec054">
+      <profileInstance Id="f86430e9-5967-473b-8d82-40ffca8f5373" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="2789266d-40df-4281-aa98-713db884727e" name="function1ClientRemoteService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="e734b7a5-8f06-4078-9a03-40eab81207e0" />
+        <ownedOperationsInternal>
+          <operation Id="e167f5af-fe18-4ab8-b1d7-3a092ae7368e" name="registerInstance" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b2c0a69a-8361-439d-99b5-456945bb1fe1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d3c4d99e-1062-47f7-a86e-a5a1eb982722" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="4b5a1198-d939-4d6f-9844-d0a3dfbef7b9" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5009928b-46dc-4ef0-a443-c75d319a1c3e" LastKnownName="void*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b550fe7b-94ff-430f-beea-9ac2821ba2c7" direction="Return" isUnique="false">
+                  <elementDefinition Id="950fbc10-b0cf-4906-8f5c-b8bb4d638a4e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1d36fbf0-44de-4c47-a842-3efb68b3d1e0" LastKnownName="int" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="93cadbc2-2245-44e5-be5f-7a4f1d81badd" name="write" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8b570a4e-1e0c-470b-b1c3-d94ec917e5ee" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8ff965df-8b7d-4e0a-a558-6e1a4fae742a" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="ad697cfd-71ae-4a4a-b573-5ed0ff53b096" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5009928b-46dc-4ef0-a443-c75d319a1c3e" LastKnownName="void*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="df20c91c-b80c-4577-962f-d4c65425ab8b" direction="Return" isUnique="false">
+                  <elementDefinition Id="bc47a9ed-aea5-499b-9269-d6a9a870b82c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="9dcf7e14-7cf5-4903-aff3-20a68b661f5c" LastKnownName="DDS_ReturnCode_t" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="add2593f-76af-45e7-81ff-2269c948e1c7" name="takeReply" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="57910d77-93ae-48e5-bc5f-99948488449b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a03b4b04-4c45-47f3-b451-39a5647b459d" name="reply" direction="In" isUnique="false">
+                  <elementDefinition Id="64b31d9c-ce71-4671-8ab9-9fe74906aecd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5009928b-46dc-4ef0-a443-c75d319a1c3e" LastKnownName="void*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e6813e77-1f67-40df-9e5f-4dcd3d28a068" name="query" direction="In" isUnique="false">
+                  <elementDefinition Id="54ad8192-128a-44de-b2eb-7f378cbad889" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="700efa62-151e-4092-8c84-38bee27953ee" LastKnownName="DDSQueryCondition*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fc4e2f57-14dc-4199-a944-19140fd490c6" direction="Return" isUnique="false">
+                  <elementDefinition Id="d745ee89-f751-4b33-9fdc-4cb4bb9db279" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5467b182-16c6-487c-a5b0-4c848d7278fb" LastKnownName="DDSCSMessages" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="5009928b-46dc-4ef0-a443-c75d319a1c3e" name="void*" isAbstract="false" isLeaf="false" cachedFullName="void*">
+        <elementDefinition Id="6e9f0391-f8db-4f29-8683-013757a16368" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="1d36fbf0-44de-4c47-a842-3efb68b3d1e0" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
+        <elementDefinition Id="609bbadb-c736-4fa4-96f3-39dc9112d9df" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="9dcf7e14-7cf5-4903-aff3-20a68b661f5c" name="DDS_ReturnCode_t" isAbstract="false" isLeaf="false" cachedFullName="DDS_ReturnCode_t">
+        <elementDefinition Id="32f19bec-ae00-496f-ad53-23bfae7ec040" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="700efa62-151e-4092-8c84-38bee27953ee" name="DDSQueryCondition*" isAbstract="false" isLeaf="false" cachedFullName="DDSQueryCondition*">
+        <elementDefinition Id="f066c2b8-bc23-4eb6-84a1-2a289989f755" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="5467b182-16c6-487c-a5b0-4c848d7278fb" name="DDSCSMessages" isAbstract="false" isLeaf="false" cachedFullName="DDSCSMessages">
+        <elementDefinition Id="01116219-f642-4257-aca9-4522ef6a0b54" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="a22106e1-876f-4caa-84c5-a84963df8557" name="DDSCS">
+    <elementDefinition Id="d3220d26-5f30-4636-9eaa-008d70413dfd" />
+  </package>
+</logicalClassDesignerModel>
