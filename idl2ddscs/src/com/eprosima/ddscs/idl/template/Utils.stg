@@ -149,7 +149,7 @@ $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator
 
 void $funName$$type$Utils::extractTypeData($funName$$type$* data $if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$)
 {
-    $params:{$extractDataHelper(type=it.type, name=it.name, string=it.string)$};separator="\n"$
+    $params:{$extractDataHelper(type=it.type, name=it.name, string=it.string, isRequestIn=it.isRequestIn)$};separator="\n"$
     
     $if(returnType)$
     $extractDataHelper(type=returnType, name="returnedValue", string=string)$        
@@ -178,7 +178,7 @@ void $funName$$type$Utils::extractTypeData($funName$$type$* data $if(params)$, $
 check(returnType) ::= <<
 $if(typeInitMap.(returnType))$$typeInitMap.(returnType)$&
 $else$
-$returnType$&
+$returnType$*&
 $endif$
 >>
 
@@ -219,7 +219,7 @@ $else$
 instance->$name$ = $name$;
 $endif$
 $else$
-$type$PluginSupport_copy_data(&instance->$name$, &$name$);
+$type$PluginSupport_copy_data(&instance->$name$, $name$);
 $endif$
 >>    
 
@@ -235,7 +235,14 @@ $endif$
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-extractDataHelper(type, name, string) ::= <<
+extractDataHelper(type, name, string, isRequestIn) ::= <<
+$if(isRequestIn)$
+$if(typeInitMap.(type))$
+$name$ = data->$name$;
+$else$
+$name$ = &data->$name$;
+$endif$
+$else$
 $if(typeInitMap.(type))$
 $if(string)$
 $name$ = DDS_String_dup(data->$name$);
@@ -243,7 +250,8 @@ $else$
 $name$ = data->$name$;
 $endif$
 $else$
-$type$PluginSupport_copy_data(&$name$, &data->$name$);
+$type$PluginSupport_copy_data($name$, &data->$name$);
+$endif$
 $endif$
 >>    
 

@@ -1,0 +1,37 @@
+- DDSCS soportando OpenDDS
+ + Modificar la librería DDSCs para que utilice el API de OpenDDS.
+ + IDL2DDSCS debe generar código específico para OpenDDS.
+   * Llamar a los dos generadores de IDL que acompañan a OpenDDS para el IDL del usuario (puede que en este caso con uno valga).
+   * Generar el nuevo IDL de los tipos Request y Reply (en formato OpenDDS).
+   * LLamar a los dos generadores de IDL que acompañan a OpenDDS.
+   * Generar el código RequestReplyUtils con la nomenglatura de OpenDDS para los tipos que generó.
+   * Generar el próxy y los clientremoteservice con el APi de OpenDDS.
+   * Generar el server y los serverremoteservice con el API de OpenDDS.
+   * Generar el skeleton del servidor.
+   * Generar los proyectos para el visual studio.
+ + Crear los ejemplos para OpenDDS y organizar los de RTI DDS y OpenDDs en carpetas.
+ + Crear los tests para OpenDDS y organizar los de RTI DDS y OpenDDS en carpetas.
+ + Aumentar el Manual de Usuario para que soporte OpenDDS.
+- Instalador para DDSCS: debe soportar OpenDDS y RTI DDS.
+ + Investigar sobre posible software que te cree el instalador.
+ + Crear el instalador.
+ + Cambiar el Manual de Usuario para reflejar el nuevo instalador.
+- Página web del DDSCS
+ + Preparar máquina virtual para el desarrollo.
+   * Instalar máquina virtual para el desarrollo (Linux).
+   * Instalar Jomla en la máquina virtual.
+ + Diseño de la página web.
+   * Posible idea: imagén arriba representativa del producto con referencia a eProsima. Menu debajo de la imagen o en el lateral izquierdo 
+con los siguientes items: Inicio, Sobre DDSCS (hablará del RMI, etc. de DDS y de la unión de ambas a través del producto), Como usar DDSCS(
+esplicación de lo facil que es usarlo, breve ejemplo, videos, Documentación, Descargas, Licencia, FAQ, Soporte, etc..
+ + Crear la página web.
+   * Cambiar el diseño visual de menus, imagen principal del producto. Se puede aplicar un tema ya exitente y modificar el CS a gusto.
+   * Generación del menu con los desplegables.
+   * Incrustación del contenido para cada entrada del menu.
+   * Referenciar enlaces que haya en los contenidos (ir a otro menu, etc).
+ + Diseño de la zona de descargas. Por ejemplo que se rellene un formulario y que se envíe por correo el enlace.
+ + Crear la zona de descargas.
+- Pagina web de eProsima
+ + Ni puta idea.
+- Videos para la web DDSCS
+ + Prácticar voz femenina en inglés. Se lo dejo a Jaime.

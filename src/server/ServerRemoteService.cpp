@@ -9,8 +9,7 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
                                          const char *replyQosLibrary, const char *replyQosProfile,
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
     server(server), requestSubscriber(NULL), replyPublisher(NULL), requestTopic(NULL),
-    requestDataReader(NULL), createRequestData(createRequestData),
-    deleteRequestData(deleteRequestData), execFunction(execFunction)
+    requestDataReader(NULL), execFunction(execFunction)
 {
     const char* const METHOD_NAME = "ServerRemoteService";
 

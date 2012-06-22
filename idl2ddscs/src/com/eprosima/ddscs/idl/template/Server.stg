@@ -152,7 +152,7 @@ functionImpl(interfaceName,type,name,string,inputParams,inoutParams,outputParams
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
     $interfaceName$Server *srv = ($interfaceName$Server*)server;
-    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $inputParams:{$varDecl(type = it.type, name = it.name, string = it.string)$}; separator="\n"$   
     $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $varDecl(type=type, name="returnedValue")$    
@@ -168,7 +168,9 @@ $exFunctionHeader(class=interfaceName,...)$
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
     
-    $inputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $name$ReplyTypeSupport::delete_data(replyData);
+    $name$RequestTypeSupport::delete_data(($name$Request*)requestData);
+    
     $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
     $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
 }

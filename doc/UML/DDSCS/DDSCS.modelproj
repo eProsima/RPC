@@ -17,7 +17,56 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" />
   <ItemGroup>
+    <Content Include="Class diagrams\Extras.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class diagrams\Extras.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class diagrams\Extras.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\Client usage.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\Client usage.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\Client usage.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\Client.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\Client.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\Client.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\Server usage.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\Server usage.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\Server usage.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\Server.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\Server.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\Server.sequencediagram</DependentUpon>
+    </Content>
     <Folder Include="ModelDefinition\" />
+    <Content Include="Class diagrams\Client.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class diagrams\Client.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class diagrams\Client.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Class diagrams\DDSCS Library.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class diagrams\DDSCS Library.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class diagrams\DDSCS Library.classdiagram</DependentUpon>
+    </Content>
     <Content Include="Class diagrams\GeneratedCode.classdiagram">
       <SubType>Content</SubType>
     </Content>
@@ -25,9 +74,17 @@
       <SubType>Content</SubType>
       <DependentUpon>Class diagrams\GeneratedCode.classdiagram</DependentUpon>
     </Content>
+    <Content Include="Class diagrams\Server.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class diagrams\Server.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class diagrams\Server.classdiagram</DependentUpon>
+    </Content>
     <Content Include="ModelDefinition\DDSCS.uml">
       <SubType>Content</SubType>
     </Content>
     <Folder Include="Class diagrams" />
+    <Folder Include="Sequence diagrams" />
   </ItemGroup>
 </Project>

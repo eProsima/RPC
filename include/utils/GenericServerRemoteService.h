@@ -24,13 +24,14 @@ public:                                                                         
   TName(const char *remoteServiceName, DDSCSServer* server,                       \
         const char *requestTypeName, const char *requestQosLibrary,               \
         const char *requestQosProfile, const char *replyTypeName,                 \
-        const char *replyQosLibrary, const char *replyQosProfile,                \
+        const char *replyQosLibrary, const char *replyQosProfile,                 \
         fExecFunction execFunction, DDSDomainParticipant *serverParticipant);     \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \
   virtual int sendReply(void* request, void *reply,                               \
      DDSCSMessages errorMessage = OPERATION_SUCCESSFUL);                          \
+  virtual void deleteRequestData(void *request);                                  \
   virtual void on_data_available(DDSDataReader* reader);                          \
                                                                                   \
 private:                                                                          \

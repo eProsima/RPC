@@ -28,7 +28,6 @@ group cplusplus;
  * Produces a function header to be used in declaration & implementation 
  * Params:
  *   type         : function return type.
- *   class        : Class name. Must be null for declaration and not null for implementation
  *   inputParams  : list of input params objects.
  *   inoutParams  : list of inout params objects.
  *   outputParams : list of output params objects.
@@ -125,7 +124,7 @@ $if(!voidInitMap.(type))$
 $if(typeInitMap.(type))$
 $typeInitMap.(type)$  $name$ $if(string)$ = NULL$endif$;
 $else$
-$type$ *$name$$if(create)$ = $type$PluginSupport_create_data()$endif$;
+$type$ *$name$ = $if(create)$$type$PluginSupport_create_data()$else$NULL$endif$;
 $endif$    
 $endif$
 >>
@@ -159,7 +158,7 @@ argType(type, in) ::= <<
 $if(typeInitMap.(type))$
 $typeInitMap.(type)$
 $else$
-$type$ $if(in)$&$endif$
+$type$*
 $endif$
 >>
 
@@ -221,10 +220,7 @@ $endif$
  * Uses:
  */ 
 varUse(type, name) ::= <<
-$if(typeInitMap.(type))$$name$
-$else$
-*$name$
-$endif$    
+$name$  
 >>
 
 

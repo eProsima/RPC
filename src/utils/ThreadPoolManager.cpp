@@ -240,5 +240,6 @@ void ThreadPoolManager::schedule(void (*execFunction)(DDSCSServer*, void*, Serve
 		// each of them are sign of serious problems. 
 		// More serious at least, than using DataReader thread for sending an error response.
 		service->sendReply(data, NULL, result);
+        service->deleteRequestData(data);
 	}
 }

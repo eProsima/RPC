@@ -53,6 +53,8 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 
 		virtual int sendReply(void* request, void *reply, DDSCSMessages errorMessage = OPERATION_SUCCESSFUL) = 0;
 
+        virtual void deleteRequestData(void *request) = 0;
+
         virtual void on_data_available(DDSDataReader* reader) = 0;
 
         virtual void on_requested_deadline_missed(
@@ -121,11 +123,6 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
          * \brief The data writer used to communicate with the client. Server -> Client
          */
 		DDSDataWriter *replyDataWriter;
-
-
-        fCreateRequestData createRequestData;
-
-        fDeleteRequestData deleteRequestData;
 
         fExecFunction execFunction;
 

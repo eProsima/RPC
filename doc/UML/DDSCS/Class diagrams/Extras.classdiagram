@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="6ee3c21c-0267-46cc-bd83-96d18f201994" name="Extras" linkedPackageId="47c6c05d-9fb3-4ceb-8431-4f9b41d04cf6" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="2e75d194-0f0c-423c-8fae-a6bc58e894ef">
+      <profileInstance Id="d0fc648f-c81f-483a-95f2-35c9c38f2d82" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="3e9f6a82-6f7a-4a1d-9fa2-17536dee0c9d">
+      <profileInstance Id="99c4a203-5606-4a79-a48c-acc9319befb2" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e47adfc9-c954-4793-87ad-9a11d506e303" name="DDS Middleware" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="51887613-c629-4b8d-a0a7-d57143d9e479" />
+        <ownedOperationsInternal>
+          <operation Id="f7a431b0-39c9-480b-8321-cbff940410f7" name="create_participant" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="98f8e22f-89af-4914-9804-02c8afac45d2" />
+          </operation>
+          <operation Id="4e22d7f5-9083-4d62-b7a2-a9556eb44754" name="create_topic" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="abbbec4d-b9b5-4cef-a074-eee1b5f62a8a" />
+          </operation>
+          <operation Id="d9088ea3-365d-4540-b713-c52a7d272b68" name="create_publisher" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="cae969c7-f6a1-45a9-b4bc-f76146fe9468" />
+          </operation>
+          <operation Id="4ec7fe20-6a4d-4c6c-a227-3ba35c22fae5" name="create_datawriter" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6739d81d-1e52-4b31-aaa0-80bf9fa98c92" />
+          </operation>
+          <operation Id="bed226f6-f167-4f0e-9fbf-da528aa4f588" name="create_subscriber" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0f64a62c-2056-466b-b420-a9c4058e0c05" />
+          </operation>
+          <operation Id="41618d67-0b04-4d9a-ae48-564c8c397180" name="create_datareader" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5a2cbbca-80cf-4e43-8f5f-a00dccdd52f3" />
+          </operation>
+          <operation Id="aecd59ef-75d6-4bd4-a6b2-51a9fe827d80" name="write" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="48dae6a9-ca1f-42ed-9c79-8cc82c1b1b1c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2b958ba8-63e6-4460-bc3c-5c5fc045bf73" name="sample" direction="In" isUnique="false">
+                  <elementDefinition Id="10900b7b-7a19-4816-ac1c-5fc61fd8fdf8" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="22a9dee9-826b-46ea-91b5-65df603d2189" LastKnownName="void*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="9af95b2e-c6a4-46bd-9b01-4d139601e1bf" name="attach_condition" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a0e99fef-eaac-4bc3-8af4-e21ee00e9f99" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9ff102ed-f645-429f-9afa-525487d5f254" name="query" direction="In" isUnique="false">
+                  <elementDefinition Id="0dbfabba-dd72-4da0-9497-3e38ad51daf0" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c400eae2-28f5-42c4-a1f5-e9baac6009ad" LastKnownName="DDSQueryCondition*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="09107817-64f4-40a7-9ffe-6803b596ccde" name="wait" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="55ecc779-a461-4d6a-9b15-4b08db8b5dff" />
+          </operation>
+          <operation Id="88b22082-38f4-457a-b068-d49313162c75" name="take_w_condition" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e6dc5b37-bb10-42bb-b1af-3104866175d8" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0a042908-359f-4fe7-930e-35a33a2c1fda" name="query" direction="In" isUnique="false">
+                  <elementDefinition Id="91271380-21a6-47f6-81d3-2a53516cdcc4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c400eae2-28f5-42c4-a1f5-e9baac6009ad" LastKnownName="DDSQueryCondition*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="22a9dee9-826b-46ea-91b5-65df603d2189" name="void*" isAbstract="false" isLeaf="false" cachedFullName="void*">
+        <elementDefinition Id="6e9f0391-f8db-4f29-8683-013757a16368" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c400eae2-28f5-42c4-a1f5-e9baac6009ad" name="DDSQueryCondition*" isAbstract="false" isLeaf="false" cachedFullName="DDSQueryCondition*">
+        <elementDefinition Id="f066c2b8-bc23-4eb6-84a1-2a289989f755" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="47c6c05d-9fb3-4ceb-8431-4f9b41d04cf6" name="DDSCS">
+    <elementDefinition Id="d3220d26-5f30-4636-9eaa-008d70413dfd" />
+  </package>
+</logicalClassDesignerModel>

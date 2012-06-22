@@ -455,7 +455,7 @@ public class IDL2DDSCS
         for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
             ip = (InputParam)paramIter.next();
 
-            request.setAttribute(attribute, ip.getType(), ip.getName(), (typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
+            request.setAttribute(attribute, ip.getType(), ip.getName(), (typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null), "yes");
         }
         InoutParam iop = null;
         for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
@@ -554,8 +554,8 @@ public class IDL2DDSCS
                 definitionReply.setAttribute("funName", op.getName());
                 definitionReply.setAttribute("type", "Reply");
 
-                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name, string}", ifc);
-                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name, string}", ifc);
+                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name, string, isRequestIn}", ifc);
+                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name, string, isRequestIn}", ifc);
                 if(!"void".equals(op.getReturnType())){
                     headerReply.setAttribute("returnType", op.getReturnType());					
                     definitionReply.setAttribute("returnType", op.getReturnType());
@@ -622,7 +622,7 @@ public class IDL2DDSCS
                 request.setAttribute("name", op.getName());		
                 reply.setAttribute("name", op.getName());
 
-                setRequestReplyParams(request, reply, op, "fields.{type, name, string}", ifc);
+                setRequestReplyParams(request, reply, op, "fields.{type, name, string, isRequestIn}", ifc);
                 if(!"void".equals(op.getReturnType())){
                     reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
                 }

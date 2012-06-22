@@ -68,19 +68,31 @@ int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
 			{
 				returnedValue = 0;
 			}
-			TDataRequestTypeSupport::delete_data(requestData);
         }
         else
         {
-            printf("ERROR <sendReply>>: Bad parameter (replyData)\n");
+            printf("ERROR <sendReply>: Bad parameter (replyData)\n");
         }
-		TDataReplyTypeSupport::delete_data(replyData);
     }
     else
     {
-        printf("ERROR <sendReply>>: Bad parameter (requestData)\n");
+        printf("ERROR<sendReply>: Bad parameter (requestData)\n");
     }
     return returnedValue;
+}
+
+void TName::deleteRequestData(void *request)
+{
+	TDataRequest *requestData = (TDataRequest*)request;
+	
+	if(requestData != NULL)
+	{
+		TDataRequestTypeSupport::delete_data(requestData);
+	}
+	else
+	{
+		printf("ERROR<sendReply>: Bad parameter (request)\n");
+	}
 }
 
 
