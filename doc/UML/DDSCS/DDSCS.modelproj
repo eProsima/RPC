@@ -24,6 +24,13 @@
       <SubType>Content</SubType>
       <DependentUpon>Class diagrams\Extras.classdiagram</DependentUpon>
     </Content>
+    <Content Include="Sequence diagrams\Client async usage.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\Client async usage.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\Client async usage.sequencediagram</DependentUpon>
+    </Content>
     <Content Include="Sequence diagrams\Client usage.sequencediagram">
       <SubType>Content</SubType>
     </Content>

@@ -1,0 +1,24 @@
++ Pagina web.
+
++ Documentación.
+ - Manuales.
+ - Ejemplos.
+ - Instalación.
+
++ Implementación
+ - Modelo de objetos (paradigma que usan).
+ - API. Analizar estructura y nivel de complejidad.
+ - Tipos soportados.
+ - Lenguajes soportados.
+ - Plataformas.
+
++ Negocio
+ - Modelo de negocio.
+ - Licencia.
+ - Comunidad.
+ - Proyectos que lo usan.
+
++ Detalles técnicos
+ - Rendimiento.
+ - Multihilo.
+ - Manejo de memoria.

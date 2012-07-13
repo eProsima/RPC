@@ -1,0 +1,9 @@
+- Quitar comentario del ejemplo del cliente.
+- La creación del servidor sea con un constructor por defecto, en el ejemplo del servidor.
+- Quitar el returnedValue del ejemplo del servidor.
+- Que la habilitación de las entidades de DDS sea en el executeServer.
+- Cambiar el nombre a la función execServer, por startListening.
+- Lanzar excepciones al crear el Servidor o el Proxy.
+- Quitar copia de memoria en el extractTypeData. OK.
+- sendReply deja de borrar los datos. Crear función virtual generada para la clase *ServerRemoteService para que ThreadPoolManager lo llame.
+En la ejecución del procedimiento remote en el Server borre la memoria. OK.
