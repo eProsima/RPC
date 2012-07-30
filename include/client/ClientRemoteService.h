@@ -6,6 +6,11 @@
 #include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
 
+namespace boost
+{
+    class mutex;
+}
+
 class DDSCS_WIN32_DLL_API ClientRemoteService
 {
     public:
@@ -29,9 +34,6 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
         DDSCSMessages execute(void *request, void* reply, unsigned int timeout);
 
     protected:
-		// Prevents multiThreaded execution
-		bool take();
-		void give();
 
 		// Foo dependent methods
         virtual int registerInstance(void *data) = 0;
@@ -90,6 +92,6 @@ class DDSCS_WIN32_DLL_API ClientRemoteService
 		DDS_UnsignedLong m_clientServiceId[4];
         DDS_InstanceHandle_t m_ih;
 
-		RTIOsapiSemaphore *mutex;
+        boost::mutex *m_mutex;
 };
 #endif // _CLIENTREMOTESERVICE_H_

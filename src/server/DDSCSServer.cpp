@@ -1,6 +1,44 @@
 #include "server/DDSCSServer.h"
 
-#include "ndds_utility_cpp.h"
+#include "boost/threadpool.hpp"
+
+class Job
+{
+public:
+	Job(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, DDSCSServer *server, ServerRemoteService *service)
+		: m_execFunction(execFunction), m_data(data), m_server(server), m_service(service)
+	{
+	}
+
+	void run()
+	{
+		m_execFunction(m_server, m_data, m_service);
+	}
+
+private:
+	void (*m_execFunction)(DDSCSServer*, void*, ServerRemoteService*);
+	void *m_data;
+	DDSCSServer *m_server;
+	ServerRemoteService *m_service;
+};
+
+class ThreadPoolManager
+{
+public:
+	ThreadPoolManager(unsigned int threadCount)
+	{
+		m_pool = new boost::threadpool::pool(threadCount);
+	}
+
+	boost::threadpool::pool* getPool()
+	{
+		return m_pool;
+	}
+
+private:
+
+	boost::threadpool::pool *m_pool;
+};
 
 DDSCSServer::DDSCSServer(int domainId, unsigned int threadCount,
                          const char *qosLibrary, const char *qosProfile) : domainId(domainId),
@@ -48,8 +86,6 @@ DDSCSServer::DDSCSServer(int domainId, unsigned int threadCount,
 		goto fin;
 	}
 
-	REDAInlineList_init(&remoteServicesList);
-
 	printf("INFO <DDSCSServer>: Created server with ID %d\n", serverId);
 fin:
 	return;
@@ -57,14 +93,14 @@ fin:
 
 void DDSCSServer::deleteServices()
 {
-	ServiceNode *node;	
-	int i, count = REDAInlineList_getSize(&remoteServicesList);
-	// Try to clean up even if mutex take have failed...
-	for(i = 0; i < count; i++)
+	ServerRemoteService *service = NULL;
+	std::list<ServerRemoteService*>::iterator it = m_remoteServicesList.begin();
+
+	while(it != m_remoteServicesList.end())
 	{
-		node = (ServiceNode*)REDAInlineList_getFirst(&remoteServicesList);
-		REDAInlineList_removeNodeEA(&remoteServicesList, &node->parent);
-		delete node->service;
+		service = *it;
+		it = m_remoteServicesList.erase(it);
+		delete service;
 	}
 }
 
@@ -104,7 +140,7 @@ int DDSCSServer::setRemoteService(ServerRemoteService *newRemoteService)
 
 	if(newRemoteService != NULL)
 	{
-		REDAInlineList_addNodeToBackEA(&remoteServicesList, newRemoteService->getNode());
+		m_remoteServicesList.push_back(newRemoteService);
 		returnedValue = 0;
 	}
 	else
@@ -127,5 +163,6 @@ void DDSCSServer::executeServer(DDS_Long seconds, DDS_UnsignedLong nanoseconds)
 void DDSCSServer::schedule(void (*execFunction)(DDSCSServer*, void*, ServerRemoteService*), void *data, ServerRemoteService *service)
 {
     printf("SCHEDULING %s\n", service->getRemoteServiceName());
-	threadPoolManager->schedule(execFunction, data, this, service);
+	boost::shared_ptr<Job> job(new Job(execFunction, data, this, service));
+	boost::threadpool::schedule(*threadPoolManager->getPool(), boost::bind(&Job::run, job));
 }

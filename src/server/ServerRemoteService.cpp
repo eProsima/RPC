@@ -18,8 +18,6 @@ ServerRemoteService::ServerRemoteService(const char *remoteServiceName, DDSCSSer
     {
         if(enableEntities())
         {
-            	REDAInlineListNode_init(&listNode.parent);
-	            listNode.service = this;
         }
         else
         {

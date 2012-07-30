@@ -15,9 +15,9 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug DDSDyn|Win32"
-			OutputDirectory=".\objs\Debug DDSDyn"
-			IntermediateDirectory=".\objs\Debug DDSDyn"
+			Name="DebugDLL|Win32"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)\obj\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
 			ManagedExtensions="0"
@@ -40,13 +40,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;"
+				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;;&quot;$(EPROSIMA_LIBRARY_PATH)\boost_1_50_0&quot;"
 				PreprocessorDefinitions="NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSCS_WIN32_DLL_EXPORTS;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
-				AssemblerListingLocation=".\objs\Debug DDSDyn\"
-				ObjectFile=".\objs\Debug DDSDyn\"
+				AssemblerListingLocation=""
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
@@ -103,9 +104,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release DDSDyn|Win32"
-			OutputDirectory=".\objs\Release DDSDyn"
-			IntermediateDirectory=".\objs\Release DDSDyn"
+			Name="ReleaseDLL|Win32"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)\obj\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
 			ManagedExtensions="0"
@@ -130,14 +131,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;"
+				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;;&quot;$(EPROSIMA_LIBRARY_PATH)\boost_1_50_0&quot;"
 				PreprocessorDefinitions="NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSCS_WIN32_DLL_EXPORTS;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				AssemblerListingLocation=".\objs\Release DDSDyn\"
-				ObjectFile=".\objs\Release DDSDyn\"
-				ProgramDataBaseFileName=".\objs\Release DDSDyn\"
+				AssemblerListingLocation=""
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="0"
@@ -191,9 +192,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Debug DDSStatic|Win32"
-			OutputDirectory=".\objs\Debug DDSStatic"
-			IntermediateDirectory=".\objs\Debug DDSStatic"
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)\obj\$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
 			>
@@ -215,14 +216,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;"
+				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;;&quot;$(EPROSIMA_LIBRARY_PATH)\boost_1_50_0&quot;"
 				PreprocessorDefinitions="WIN32;RTI_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				AssemblerListingLocation=".\objs\Debug DDSStatic\"
-				ObjectFile=".\objs\Debug DDSStatic\"
-				ProgramDataBaseFileName=".\objs\Debug DDSStatic\"
+				AssemblerListingLocation=""
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
@@ -261,9 +262,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release DDSStatic|Win32"
-			OutputDirectory=".\objs\Release DDSStatic"
-			IntermediateDirectory=".\objs\Release DDSStatic"
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)\obj\$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
 			WholeProgramOptimization="0"
@@ -287,14 +288,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;"
+				AdditionalIncludeDirectories="&quot;$(NDDSHOME)\include&quot;;&quot;$(NDDSHOME)\include\ndds&quot;;&quot;$(SolutionDir)..\..\include&quot;;&quot;$(EPROSIMADIR)\code&quot;;&quot;$(EPROSIMA_LIBRARY_PATH)\boost_1_50_0&quot;"
 				PreprocessorDefinitions="WIN32;RTI_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				AssemblerListingLocation=".\objs\Release DDSStatic\"
-				ObjectFile=".\objs\Release DDSStatic\"
-				ProgramDataBaseFileName=".\objs\Release DDSStatic\"
+				AssemblerListingLocation=""
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="0"
@@ -432,7 +433,7 @@
 				RelativePath="..\..\src\ddscs.rc"
 				>
 				<FileConfiguration
-					Name="Debug DDSDyn|Win32"
+					Name="DebugDLL|Win32"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"
@@ -440,7 +441,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release DDSDyn|Win32"
+					Name="ReleaseDLL|Win32"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"

@@ -10,13 +10,6 @@ class DDSCSServer;
 class ThreadPoolManager;
 class ServerRemoteService;
 
-typedef struct ServiceNode
-{
-	REDAInlineListNode parent;
-	ServerRemoteService *service;
-} ServiceNode;
-
-
 class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
 {
     public:
@@ -37,11 +30,6 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
         char* getRemoteServiceName();
 
         DDS_UnsignedLong* getServerServiceId();
-
-		REDAInlineListNode* getNode()
-		{
-			return (REDAInlineListNode*)&listNode;
-		}
 
         fExecFunction getExecFunction();
 
@@ -82,8 +70,6 @@ class DDSCS_WIN32_DLL_API ServerRemoteService : public DDSDataReaderListener
                 const DDS_SubscriptionMatchedStatus& /*status*/) {}
 
 	protected:
-
-		struct ServiceNode listNode;
 
         /**
          * \brief This field stores the name of the service.

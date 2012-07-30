@@ -4,13 +4,17 @@
 #include "ndds/ndds_cpp.h"
 #include "utils/ddscs.h"
 #include "utils/DDSCSMessages.h"
-#include "utils/ThreadPoolManager.h"
 #include "utils/DDSCSTypedefs.h"
 #include "server/ServerRemoteService.h"
 
+#include <list>
+
 #define DDSCS_DEFAULT_PERIOD_SEC 5
 #define DDSCS_DEFAULT_PERIOD_NSEC 0
+#define DDSCS_MIN_THREADS_DEFAULT 5
 
+class ThreadPoolManager;
+	 
 /**
  * \file
  * \brief This file contains the definition of the class DDSCSServer
@@ -19,8 +23,6 @@ class DDSCS_WIN32_DLL_API DDSCSServer
 {
 
     public:
-
-		ThreadPoolManager* getPool();
 
 		void executeServer(DDS_Long seconds = DDSCS_DEFAULT_PERIOD_SEC, DDS_UnsignedLong nanoseconds = DDSCS_DEFAULT_PERIOD_NSEC);
 
@@ -63,7 +65,7 @@ class DDSCS_WIN32_DLL_API DDSCSServer
         DDSDomainParticipant *participant;
         
         /// \brief The list that contains all the remote services.
-        REDAInlineList remoteServicesList;
+        std::list<ServerRemoteService*> m_remoteServicesList;
 
         ThreadPoolManager *threadPoolManager;
 
