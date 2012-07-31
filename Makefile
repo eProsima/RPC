@@ -7,11 +7,11 @@ AR=ar
 CP=cp
 
 -include $(EPROSIMADIR)/building/makefiles/dds.mk
--include $(BASEDIR)/building/makefiles/ddscs.mk
+-include $(BASEDIR)/building/makefiles/ddsrpc.mk
 
 .PHONY: all
 
-all: ddscs
+all: ddsrpc
 
 clean:
 	@rm -f $(OBJS)
