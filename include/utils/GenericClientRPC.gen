@@ -31,11 +31,11 @@
 
 XCLASS_NAME_DEFINITION(TName);
 
-TName::TName(const char *remoteServiceName, const char *requestTypeName,
+TName::TName(const char *rpcName, const char *requestTypeName,
         const char *requestQosLibrary, const char *requestQosProfile,
         const char *replyTypeName, const char *replyQosLibrary,
-        const char *replyQosProfile, DDSDomainParticipant *clientParticipant):
-        ClientRemoteService(remoteServiceName, requestTypeName, requestQosLibrary,
+        const char *replyQosProfile, DDS::DomainParticipant *clientParticipant):
+        DDSRPC::ClientRPC(rpcName, requestTypeName, requestQosLibrary,
         requestQosProfile, replyTypeName, replyQosLibrary,
         replyQosProfile, clientParticipant)
 {
@@ -62,9 +62,9 @@ int TName::registerInstance(void *data)
     return returnedCode;
 }
 
-DDS_ReturnCode_t TName::write(void *data)
+DDS::ReturnCode_t TName::write(void *data)
 {
-	DDS_ReturnCode_t retCode = DDS_RETCODE_ERROR;
+	DDS::ReturnCode_t retCode = DDS::RETCODE_ERROR;
 	
 	if(requestDataWriter != NULL){
 		retCode = requestDataWriter->write(*((TDataRequest*)data), m_ih);
@@ -72,50 +72,50 @@ DDS_ReturnCode_t TName::write(void *data)
 	return retCode;
 }
 
-DDSCSMessages TName::takeReply(void *reply, DDSQueryCondition *query)
+DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 {
     const char* const METHOD_NAME = "takeReply";
-    DDS_SampleInfoSeq infoSeq;
+    DDS::SampleInfoSeq infoSeq;
 	TDataSeq dataSeq;
-	DDSCSMessages value = RECEIVED_OTHER_REQUEST;
+	DDSRPC::ReturnMessage value = DDSRPC::RECEIVED_OTHER_REQUEST;
 
 	if(reply != NULL && query != NULL)
 	{
-	    DDS_ReturnCode_t retcode = replyDataReader->take_w_condition(dataSeq, infoSeq, DDS_LENGTH_UNLIMITED, query);
+	    DDS::ReturnCode_t retcode = replyDataReader->take_w_condition(dataSeq, infoSeq, DDS::LENGTH_UNLIMITED, query);
 	    
-		if(retcode == DDS_RETCODE_OK)
+		if(retcode == DDS::RETCODE_OK)
 		{
 		    if(dataSeq.length() == 1)
 		    {
 				if (infoSeq[0].valid_data)
 				{
 					retcode = TDataTypeSupport::copy_data((TDataReply*)reply, &dataSeq[0]);
-					value = OPERATION_SUCCESSFUL;
+					value = DDSRPC::OPERATION_SUCCESSFUL;
 				}
 		    }
 		    else
 		    {
 				printf("ERROR<%s::%s>: Sequence of replies is not supported %d\n", CLASS_NAME, METHOD_NAME);
-				value = CLIENT_ERROR;
+				value = DDSRPC::CLIENT_ERROR;
 		    }
 		    
 		    retcode = replyDataReader->return_loan(dataSeq, infoSeq);
 		}
-		else if(retcode == DDS_RETCODE_NO_DATA)
+		else if(retcode == DDS::RETCODE_NO_DATA)
 		{
 			printf("ERROR<%s::%s>: no data\n", CLASS_NAME, METHOD_NAME);
-			value = SERVER_TIMEOUT;
+			value = DDSRPC::SERVER_TIMEOUT;
 		}
 		else
 		{
 			printf("ERROR<%s::%s>: take error %d\n", CLASS_NAME, METHOD_NAME, retcode);
-			value = CLIENT_ERROR;
+			value = DDSRPC::CLIENT_ERROR;
 		}
 	}
 	else
 	{
 		printf("ERROR<%s::%s>: bad parameteres\n", CLASS_NAME, METHOD_NAME);
-		value = CLIENT_ERROR;
+		value = DDSRPC::CLIENT_ERROR;
 	}
 	
 	return value;

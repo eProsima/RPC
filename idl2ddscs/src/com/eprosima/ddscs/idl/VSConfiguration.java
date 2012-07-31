@@ -19,33 +19,45 @@ package com.eprosima.ddscs.idl;
 public class VSConfiguration {
 	
 	private String name;
+	private String platform;
 	private boolean debug;
 	private boolean dll;
 	
 	public VSConfiguration(){
 		name = null;
+		platform = null;
 		debug = false;
 		dll = false;		
 	}
 
-	public VSConfiguration(String name, boolean debug, boolean dll){
+	public VSConfiguration(String name, String platform, boolean debug, boolean dll){
 		this.name = name;
+		this.platform = platform;
 		this.debug = debug;
 		this.dll = dll;		
 	}
+	
 	public String getName(){
 		return name;
 	}
-	public boolean isDebugDll(){
-		return debug & dll;		
+	
+	public String getPlatform()
+	{
+		return platform;
 	}
-	public boolean isDebug(){
-		return debug & !dll;		
+
+	public boolean isDll()
+	{
+		return dll;		
 	}
-	public boolean isReleaseDll(){
-		return !debug & dll;		
+	
+	public boolean isDebug()
+	{
+		return debug;		
 	}
-	public boolean isRelease(){
-		return !debug & !dll;		
+	
+	public boolean isRelease()
+	{
+		return !debug;		
 	}
 }

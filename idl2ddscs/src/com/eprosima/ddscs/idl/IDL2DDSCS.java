@@ -46,10 +46,10 @@ public class IDL2DDSCS
     private static StringBuffer env = null;	
 
     //TO_DO: external properties?
-    private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL|Win32", true, true),
-        new VSConfiguration("Release DLL|Win32", false, true),
-        new VSConfiguration("Debug|Win32", true, false),
-        new VSConfiguration("Release|Win32", false, false)};	
+    private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL", "Win32", true, true),
+        new VSConfiguration("Release DLL", "Win32", false, true),
+        new VSConfiguration("Debug", "Win32", true, false),
+        new VSConfiguration("Release", "Win32", false, false)};	
     private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};	
 
     /**
@@ -233,8 +233,8 @@ public class IDL2DDSCS
 
         Interface ifc = root.getIfc();
 
-        System.out.println("Generating VS2005 solution...");
-        if(genVS2005(ifc) == 0)
+        System.out.println("Generating solution...");
+        if(genSolution(ifc) == 0)
         {
             System.out.println("Generating Request/Response Topics...");
             if(genIdl(ifc) == 0)
@@ -246,9 +246,9 @@ public class IDL2DDSCS
                     if(genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
                                 "functionImpl", "functionHeader", "Client", ifc) == 0)
                     {
-                        if(genRemoteServiceSupport(ifc, "Client") == 0)
+                        if(genRPCSupport(ifc, "Client") == 0)
                         {
-                            if(genRemoteServiceSupport(ifc, "Server") == 0)
+                            if(genRPCSupport(ifc, "Server") == 0)
                             {
                                 System.out.println("Generating Server Code...");
                                 if(genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
@@ -308,7 +308,7 @@ public class IDL2DDSCS
     {
         final String METHOD_NAME = "genHeaderAndImpl";
         int returnedValue = -1;
-        String returnType = "DDSCSMessages";
+        String returnType = "DDSRPC::ReturnMessage";
 
         // first load main language template
         StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
@@ -452,30 +452,30 @@ public class IDL2DDSCS
     {
         ListIterator paramIter = null;
         InputParam ip = null;
-        for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
+        for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();)
+        {
             ip = (InputParam)paramIter.next();
-
             request.setAttribute(attribute, ip.getType(), ip.getName(), (typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null), "yes");
         }
         InoutParam iop = null;
         for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
             iop = (InoutParam)paramIter.next();
-            request.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));
-            reply.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));
+            request.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null), null);
+            reply.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null), null);
         }
         OutputParam oup = null;
         for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
             oup = (OutputParam)paramIter.next();
-            reply.setAttribute(attribute, oup.getType(), oup.getName(), (typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));
+            reply.setAttribute(attribute, oup.getType(), oup.getName(), (typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null), null);
         }
     }
 
-    public static int genRemoteServiceSupport(Interface ifc, String side)
+    public static int genRPCSupport(Interface ifc, String side)
     {
-        final String METHOD_NAME = "genRemoteServiceSupport";
+        final String METHOD_NAME = "genRPCSupport";
         int returnedValue = -1;
         // first load main language template
-        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RemoteServiceSupport", DefaultTemplateLexer.class, null);
+        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RPCSupport", DefaultTemplateLexer.class, null);
 
         if(utilTemplates != null)
         {
@@ -498,7 +498,7 @@ public class IDL2DDSCS
                 definition.setAttribute("funNames", op.getName());
             }
 
-            externalDir.append(ifc.getName()).append(side).append("RemoteServiceSupport.h");
+            externalDir.append(ifc.getName()).append(side).append("RPCSupport.h");
             if(writeFile(externalDir.toString(), header) == 0)
             {
                 externalDir.deleteCharAt(externalDir.length() - 1);
@@ -510,7 +510,7 @@ public class IDL2DDSCS
         }
         else
         {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group RemoteServiceSupport");
+            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group RPCSupport");
         }
 
         return returnedValue;
@@ -689,16 +689,16 @@ public class IDL2DDSCS
         project.setAttribute("sourceFiles", buf.toString());
     }
 
-    public static int genVS2005(Interface ifc)
+    public static int genSolution(Interface ifc)
     {
-        final String METHOD_NAME = "genVS2005";
+        final String METHOD_NAME = "genSolution";
         int returnedValue = -1;
         int lastBarraOccurrency = 0;
         StringBuffer idlStringBuf = null;
         StringBuffer stringBuf = null;
 
         // first load main language template
-        StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2005", DefaultTemplateLexer.class, null);
+        StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, null);
 
         if(idlTemplates != null)
         {
@@ -729,7 +729,7 @@ public class IDL2DDSCS
 
             // project configurations	
             for(int index = 0; index < configurations.length; index++){
-                solution.setAttribute("configurations", configurations[index].getName());
+                solution.setAttribute("configurations", configurations[index]);
                 projectClient.setAttribute("configurations", configurations[index]);
                 projectServer.setAttribute("configurations", configurations[index]);
             }
@@ -738,7 +738,7 @@ public class IDL2DDSCS
             {
                 externalDir.append("/");	
             }
-            externalDir.append(ifc.getName()).append("-vs2005.sln");
+            externalDir.append(ifc.getName()).append("-vs2010.sln");
             if(writeFile(externalDir.toString(), solution) == 0)
             {
                 externalDir.delete(externalDirLength, externalDir.length());
@@ -755,14 +755,14 @@ public class IDL2DDSCS
                 stringBuf.append(ifc.getName());		
                 // Client exclusive files
                 setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
-                setProjectFile(stringBuf, projectClient, "ClientRemoteServiceSupport", ifc.getName().length());
+                setProjectFile(stringBuf, projectClient, "ClientRPCSupport", ifc.getName().length());
 
                 projectClient.setAttribute("sourceFiles", "Client.cxx");
 
                 // Server exclusive files
                 setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
                 setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
-                setProjectFile(stringBuf, projectServer, "ServerRemoteServiceSupport", ifc.getName().length());
+                setProjectFile(stringBuf, projectServer, "ServerRPCSupport", ifc.getName().length());
 
                 projectServer.setAttribute("sourceFiles", "Server.cxx");
 
@@ -771,7 +771,7 @@ public class IDL2DDSCS
                 {
                     externalDir.append("/");	
                 }
-                externalDir.append(ifc.getName()).append("Client-vs2005.vcproj");
+                externalDir.append(ifc.getName()).append("Client-vs2010.vcxproj");
                 if(writeFile(externalDir.toString(), projectClient) == 0)
                 {
                     externalDir.delete(externalDirLength, externalDir.length());
@@ -780,7 +780,7 @@ public class IDL2DDSCS
                     {
                         externalDir.append("/");	
                     }
-                    externalDir.append(ifc.getName()).append("Server-vs2005.vcproj");
+                    externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj");
                     returnedValue = writeFile(externalDir.toString(), projectServer);
                     externalDir.delete(externalDirLength, externalDir.length());
                 }

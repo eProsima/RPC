@@ -45,7 +45,7 @@ public class Module implements Named {
         type_declarations.add(bt);
         bt = new BasicType("string", "char*");
         type_declarations.add(bt);
-        et = new EnumType("DDSCSMessages");
+        et = new EnumType("DDSRPC::ReturnMessage");
         type_declarations.add(et);
         st = new SequenceType("sequence");
         type_declarations.add(st);

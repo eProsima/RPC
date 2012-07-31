@@ -146,7 +146,7 @@ varDel(type, name, string) ::= <<
 $if(!voidInitMap.(type))$
 $if(typeInitMap.(type))$
 $if(string)$
-if($name$ != NULL) DDS_String_free($name$);
+if($name$ != NULL) DDS::String_free($name$);
 $endif$
 $else$
 $type$PluginSupport_destroy_data($name$);

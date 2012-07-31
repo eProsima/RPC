@@ -14,28 +14,29 @@
  * =====================================================================   *
  */
 
-#include "client/ClientRemoteService.h"
+#include "server/ServerRPC.h"
 
-#define GENERIC_CLIENT_REMOTE_SERVICE(TName, TDataWriter, TDataReader)            \
+#define GENERIC_SERVER_RPC(TName, TDataWriter, TDataReader)                       \
                                                                                   \
-class  TName : public ClientRemoteService                                         \
+class  TName : public DDSRPC::ServerRPC                                           \
 {                                                                                 \
 public:                                                                           \
-  TName(const char *remoteServiceName, const char *requestTypeName,               \
-        const char *requestQosLibrary, const char *requestQosProfile,             \
-        const char *replyTypeName, const char *replyQosLibrary,                   \
-        const char *replyQosProfile, DDSDomainParticipant *clientParticipant);    \
+  TName(const char *rpcName, DDSRPC::Server* server,                              \
+        const char *requestTypeName, const char *requestQosLibrary,               \
+        const char *requestQosProfile, const char *replyTypeName,                 \
+        const char *replyQosLibrary, const char *replyQosProfile,                 \
+        DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant); \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \
-  virtual int registerInstance(void *data);                                       \
-  virtual DDS_ReturnCode_t write(void *data);                                     \
-  virtual DDSCSMessages takeReply(void *reply, DDSQueryCondition *query);         \
+  virtual int sendReply(void* request, void *reply,                               \
+     DDSRPC::ReturnMessage errorMessage = DDSRPC::OPERATION_SUCCESSFUL);          \
+  virtual void deleteRequestData(void *request);                                  \
+  virtual void on_data_available(DDS::DataReader* reader);                        \
                                                                                   \
 private:                                                                          \
                                                                                   \
-    static const char* const CLASS_NAME;                                          \
-	TDataWriter *requestDataWriter;                                               \
-	TDataReader *replyDataReader;                                                 \
+	TDataWriter *replyFooDataWriter;                                              \
+	TDataReader *requestFooDataReader;                                            \
 }
 

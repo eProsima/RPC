@@ -26,28 +26,29 @@
 #define TDataReply TData_Reply(TData)
 
 
-TName::TName(const char *remoteServiceName, DDSCSServer* server, const char *requestTypeName,
+TName::TName(const char *rpcName, DDSRPC::Server* server, const char *requestTypeName,
         const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
         const char *replyQosLibrary, const char *replyQosProfile,
-        fExecFunction execFunction, DDSDomainParticipant *serverParticipant) :
-        ServerRemoteService(remoteServiceName, server, requestTypeName, requestQosLibrary,
+        DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant) :
+        DDSRPC::ServerRPC(rpcName, server, requestTypeName, requestQosLibrary,
                             requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile,
                             execFunction, serverParticipant)
 {
-	replyFooDataWriter    = TDataWriter::narrow(replyDataWriter);
-	requestFooDataReader  = TDataReader::narrow(requestDataReader);
+	replyFooDataWriter    = TDataWriter::narrow(m_replyDataWriter);
+	requestFooDataReader  = TDataReader::narrow(m_requestDataReader);
 }
 
 TName::~TName()
 {
 }
 
-int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
+int TName::sendReply(void *request, void* reply,  DDSRPC::ReturnMessage errorMessage)
 {
     int returnedValue = -1;
     TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : TDataReplyTypeSupport::create_data();
     TDataRequest *requestData = (TDataRequest*)request;
-    DDS_UnsignedLong *serverServiceId = getServerServiceId();
+	//CHECK
+    unsigned int *serverServiceId = getServerId();
 
     if(replyData != NULL)
     {
@@ -64,7 +65,7 @@ int TName::sendReply(void *request, void* reply,  DDSCSMessages errorMessage)
 			replyData->numSec = requestData->numSec;
 			replyData->ddscsRetCode = errorMessage;
 
-			if(replyFooDataWriter->write(*replyData, DDS_HANDLE_NIL) == DDS_RETCODE_OK)
+			if(replyFooDataWriter->write(*replyData, DDS::HANDLE_NIL) == DDS::RETCODE_OK)
 			{
 				returnedValue = 0;
 			}
@@ -96,15 +97,15 @@ void TName::deleteRequestData(void *request)
 }
 
 
-void TName::on_data_available(DDSDataReader* reader)
+void TName::on_data_available(DDS::DataReader* reader)
 {
-    DDS_SampleInfo info;
+    DDS::SampleInfo info;
     TDataRequest *data = TDataRequestTypeSupport::create_data();
     
-    while(data != NULL && requestFooDataReader->take_next_sample(*data, info) == DDS_RETCODE_OK)
+    while(data != NULL && requestFooDataReader->take_next_sample(*data, info) == DDS::RETCODE_OK)
     {
-        if(info.valid_data == DDS_BOOLEAN_TRUE){
-			server->schedule(getExecFunction(), data, this);
+        if(info.valid_data == DDS::BOOLEAN_TRUE){
+			m_server->schedule(getExecFunction(), data, this);
 			data = TDataRequestTypeSupport::create_data();
 		}
 	}

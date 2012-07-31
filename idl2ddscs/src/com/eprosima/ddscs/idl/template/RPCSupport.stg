@@ -14,7 +14,7 @@
  * =====================================================================   *
  */
 
-group RemoteServiceSupport : cplusplus;
+group RPCSupport : cplusplus;
 
 /************************************************************************
  *                                                                      *
@@ -25,92 +25,92 @@ group RemoteServiceSupport : cplusplus;
 
 /**
  * ClientHeader: External Template
- * Produces the ClientRemoteServiceSupport header file.
+ * Produces the ClientRPCSupport header file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
  *   funNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
- *  clientRemoteServiceHeader - local
+ *  clientRPCHeader - local
  */ 
 ClientHeader(interfaceName,funNames) ::= <<
-#ifndef _$interfaceName;format="toUpper"$_CLIENT_REMOTE_SERVICE_SUPPORT_H_
-#define _$interfaceName;format="toUpper"$_CLIENT_REMOTE_SERVICE_SUPPORT_H_
+#ifndef _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 
 $doNotEditC()$
 
-#include "utils/GenericClientRemoteService.h"
+#include "utils/GenericClientRPC.h"
 #include "$interfaceName$RequestReplySupport.h"
 
-$funNames:{$ClientRemoteServiceHeader(name=it)$};separator="\n"$
+$funNames:{$ClientRPCHeader(name=it)$};separator="\n"$
 
-#endif  // _$interfaceName;format="toUpper"$_CLIENT_REMOTE_SERVICE_SUPPORT_H_
+#endif  // _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 >>
 
 /**
  * ServerHeader: External Template
- * Produces the ClientRemoteServiceSupport header file.
+ * Produces the ClientRPCSupport header file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
  *   funNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
- *  clientRemoteServiceHeader - local
+ *  clientRPCHeader - local
  */ 
 ServerHeader(interfaceName,funNames) ::= <<
-#ifndef _$interfaceName;format="toUpper"$_SERVER_REMOTE_SERVICE_SUPPORT_H_
-#define _$interfaceName;format="toUpper"$_SERVER_REMOTE_SERVICE_SUPPORT_H_
+#ifndef _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 
 $doNotEditC()$
 
-#include "utils/GenericServerRemoteService.h"
+#include "utils/GenericServerRPC.h"
 #include "$interfaceName$RequestReplySupport.h"
 
-$funNames:{$ServerRemoteServiceHeader(name=it)$};separator="\n"$
+$funNames:{$ServerRPCHeader(name=it)$};separator="\n"$
 
-#endif  // _$interfaceName;format="toUpper"$_SERVER_REMOTE_SERVICE_SUPPORT_H_
+#endif  // _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 >>
 
 /**
  * ClientDefinition: External Template
- * Produces the ClientRemoteServiceSupport implementation file.
+ * Produces the ClientRPCSupport implementation file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
  *   funNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
- *  clientRemoteServiceHeader - local
+ *  clientRPCHeader - local
  */ 
 ClientDefinition(interfaceName,funNames) ::= <<
 $doNotEditC()$
 
-#include "$interfaceName$ClientRemoteServiceSupport.h"
+#include "$interfaceName$ClientRPCSupport.h"
 
-$funNames:{$ClientRemoteServiceImpl(name = it)$};separator="\n"$
+$funNames:{$ClientRPCImpl(name = it)$};separator="\n"$
 
 >>
 
 /**
  * ServerDefinition: External Template
- * Produces the ClientRemoteServiceSupport implementation file.
+ * Produces the ClientRPCSupport implementation file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
  *   funNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
- *  clientRemoteServiceHeader - local
+ *  clientRPCHeader - local
  */ 
 ServerDefinition(interfaceName,funNames) ::= <<
 $doNotEditC()$
 
-#include "server/DDSCSServer.h"
-#include "$interfaceName$ServerRemoteServiceSupport.h"
+#include "server/Server.h"
+#include "$interfaceName$ServerRPCSupport.h"
 
-$funNames:{$ServerRemoteServiceImpl(name = it)$};separator="\n"$
+$funNames:{$ServerRPCImpl(name = it)$};separator="\n"$
 
 >>
 
@@ -123,45 +123,45 @@ $funNames:{$ServerRemoteServiceImpl(name = it)$};separator="\n"$
  */
 
 /**
- * ClientRemoteServiceHeader: Internal Template
+ * ClientRPCHeader: Internal Template
 
  * Params:
  *   name     :function name 
  *
  * Uses:
  */ 
-ClientRemoteServiceHeader(name) ::= <<
+ClientRPCHeader(name) ::= <<
 
-GENERIC_CLIENT_REMOTE_SERVICE($name$ClientRemoteService, $name$RequestDataWriter, $name$ReplyDataReader);
+GENERIC_CLIENT_RPC($name$ClientRPC, $name$RequestDataWriter, $name$ReplyDataReader);
 
 >>
 
 /**
- * ServerRemoteServiceHeader: Internal Template
+ * ServerRPCHeader: Internal Template
 
  * Params:
  *   name     :function name 
  *
  * Uses:
  */ 
-ServerRemoteServiceHeader(name) ::= <<
+ServerRPCHeader(name) ::= <<
 
-GENERIC_SERVER_REMOTE_SERVICE($name$ServerRemoteService, $name$ReplyDataWriter, $name$RequestDataReader);
+GENERIC_SERVER_RPC($name$ServerRPC, $name$ReplyDataWriter, $name$RequestDataReader);
 
 >>
 
 /**
- * ClientRemoteServiceImpl: Internal Template
+ * ClientRPCImpl: Internal Template
  * 
  * Params:
  *   name     :function name 
  *
  * Uses:
  */ 
-ClientRemoteServiceImpl(name) ::= <<
+ClientRPCImpl(name) ::= <<
 
 /* Defines */
-#define TName            $name$ClientRemoteService
+#define TName            $name$ClientRPC
 #define TDataTypeSupport $name$ReplyTypeSupport
 #define TData            $name$
 #define TDataSeq         $name$ReplySeq
@@ -169,7 +169,7 @@ ClientRemoteServiceImpl(name) ::= <<
 #define TDataWriter      $name$RequestDataWriter
 
 
-#include "utils/GenericClientRemoteService.gen"
+#include "utils/GenericClientRPC.gen"
 
 
 #undef TName
@@ -182,17 +182,17 @@ ClientRemoteServiceImpl(name) ::= <<
 >>
 
 /**
- * ServerRemoteServiceImpl: Internal Template
+ * ServerRPCImpl: Internal Template
  * 
  * Params:
  *   name     :function name 
  *
  * Uses:
  */ 
-ServerRemoteServiceImpl(name) ::= <<
+ServerRPCImpl(name) ::= <<
 
 /* Defines */
-#define TName                   $name$ServerRemoteService
+#define TName                   $name$ServerRPC
 #define TDataReplyTypeSupport   $name$ReplyTypeSupport
 #define TDataRequestTypeSupport $name$RequestTypeSupport
 #define TData                   $name$
@@ -200,7 +200,7 @@ ServerRemoteServiceImpl(name) ::= <<
 #define TDataWriter             $name$ReplyDataWriter
 
 
-#include "utils/GenericServerRemoteService.gen"
+#include "utils/GenericServerRPC.gen"
 
 
 #undef TName

@@ -40,8 +40,9 @@ headerFile(name, classes) ::= <<
 
 $doNotEditC()$
 
-#include "dds_cpp/dds_cpp_domain.h"
 #include "$name$RequestReplySupport.h"
+
+#include "ndds_namespace_cpp.h"
 
 $classes:{$it$};separator="\n"$
  
@@ -90,7 +91,7 @@ class $funName$$type$Utils
 {
     public:
 
-        static const char* registerType(DDSDomainParticipant *clientParticipant);
+        static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
         static $funName$$type$* createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
         
@@ -118,7 +119,7 @@ class $funName$$type$Utils
  */ 
  definition(funName, type="Request", params, returnType, string) ::= <<
 
-const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParticipant)
+const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
@@ -126,7 +127,7 @@ const char* $funName$$type$Utils::registerType(DDSDomainParticipant *clientParti
     {
         typeName = $funName$$type$TypeSupport::get_type_name();
 
-        if($funName$$type$TypeSupport::register_type(clientParticipant, typeName) != DDS_RETCODE_OK)
+        if($funName$$type$TypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -213,8 +214,8 @@ createDataHelper(type, name, string) ::= <<
 $if(typeInitMap.(type))$
 $if(string)$
 if(instance->$name$ != NULL)
-   DDS_String_free(instance->$name$);
-instance->$name$ = DDS_String_dup($name$);
+   DDS::String_free(instance->$name$);
+instance->$name$ = DDS::String_dup($name$);
 $else$
 instance->$name$ = $name$;
 $endif$
@@ -245,7 +246,7 @@ $endif$
 $else$
 $if(typeInitMap.(type))$
 $if(string)$
-$name$ = DDS_String_dup(data->$name$);
+$name$ = DDS::String_dup(data->$name$);
 $else$
 $name$ = data->$name$;
 $endif$
