@@ -45,6 +45,11 @@ public class VSConfiguration {
 	{
 		return platform;
 	}
+	
+	public void setPlatform(String platform)
+	{
+		this.platform = platform;
+	}
 
 	public boolean isDll()
 	{

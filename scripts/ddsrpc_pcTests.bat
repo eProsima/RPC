@@ -54,7 +54,7 @@ goto getarg
 
 set JREHOME="%NDDSHOME%\jre\i86Win32"
 
-%JREHOME%\bin\java -DNDDSHOME=%NDDSHOME% -Djava.ext.dirs="..\..\..\..\idl2ddscs\lib" com.eprosima.ddscs.idl.IDL2DDSCS %args%
+%JREHOME%\bin\java -DNDDSHOME=%NDDSHOME% -Djava.ext.dirs="..\..\..\..\idl2ddsrpc\lib" com.eprosima.ddsrpc.idl.IDL2DDSRPC %args%
 
 
 

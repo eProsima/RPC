@@ -68,7 +68,7 @@ EndGlobal
  *   configuration - local
  *   filter        - local
  */ 
-project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
+project(guid, name, example, arch, configurations, sourceFiles, headerFiles) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -96,8 +96,8 @@ project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
   </ImportGroup>};separator="\n"$
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
-    <OutDir>.\objs\i86Win32VS2010\</OutDir>
-    <IntDir>.\objs\i86Win32VS2010\</IntDir>
+    <OutDir>.\objs\\$example$\</OutDir>
+    <IntDir>.\objs\\$example$\</IntDir>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules/>
     <CodeAnalysisRuleAssemblies/>
@@ -105,7 +105,7 @@ project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
   $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
     <ClCompile>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;..\..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\ddsrpc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>$runtimeLibrary(conf=it)$</RuntimeLibrary>
@@ -113,9 +113,9 @@ project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\objs\i86Win32VS2010\</AssemblerListingLocation>
-      <ObjectFileName>.\objs\i86Win32VS2010\</ObjectFileName>
-      <ProgramDataBaseFileName>.\objs\i86Win32VS2010\</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\objs\\$example$\</AssemblerListingLocation>
+      <ObjectFileName>.\objs\\$example$\</ObjectFileName>
+      <ProgramDataBaseFileName>.\objs\\$example$\</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -123,14 +123,14 @@ project(guid, name, configurations, sourceFiles, headerFiles) ::= <<
     </ClCompile>
     <Link>
       <AdditionalDependencies>$dependencies(conf=it)$;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>.\objs\i86Win32VS2010\\\$(ProjectName).exe</OutputFile>
+      <OutputFile>.\objs\\$example$\\\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>\$(NDDSHOME)\lib\i86Win32VS2010;..\..\..\..\lib\i86win32vs2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\$(NDDSHOME)\lib\\$example$;\$(NDDSHOME)\ddsrpc\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>$ignoreDefaultLibraryNames(conf=it)$;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>$generateDebugInformation(conf=it)$</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\objs\i86Win32VS2010\\$name$.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\objs\\$example$\\$name$.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
+      <TargetMachine>$if(arch)$MachineX64$else$MachineX86$endif$</TargetMachine>
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>

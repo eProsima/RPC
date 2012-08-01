@@ -99,7 +99,7 @@
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -110,7 +110,7 @@
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;libboost_thread-vc100-mt-gd-1_49.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(ProjectName)d.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2005\$(TargetName).pdb</ProgramDatabaseFile>
@@ -134,7 +134,7 @@
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
@@ -144,7 +144,7 @@
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;libboost_thread-vc100-mt-1_49.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -164,7 +164,7 @@
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -191,7 +191,7 @@
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
