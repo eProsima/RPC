@@ -35,6 +35,7 @@ import java.util.Map;
 public class IDL2DDSRPC
 {
     private static String osOption = "Win32";
+    private static String exampleOption = "";
     private static String languageOption = "C++";
     private static boolean ppDisable = false;
     private static boolean replace = false;
@@ -77,7 +78,7 @@ public class IDL2DDSRPC
                         command.add("rtiddsgen.bat");
                     else if(osOption.equals("Linux"))
                     {
-                        env.append(":/usr/bin");
+                        env.append(":/bin:/sbin:/usr/bin:/usr/sbin");
                         command.add("rtiddsgen");
                     }
                 }
@@ -196,7 +197,7 @@ public class IDL2DDSRPC
         // get a group loader containing main templates dir and target subdir
         System.out.println("Loading Templates...");		
         StringTemplateGroupLoader loader = 
-            new CommonGroupLoader("com/eprosima/ddscs/idl/template", new MyErrorListener());
+            new CommonGroupLoader("com/eprosima/ddsrpc/idl/template", new MyErrorListener());
         StringTemplateGroup.registerGroupLoader(loader);
 
         StringTemplateGroup baseTemplate = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, null);
@@ -233,71 +234,70 @@ public class IDL2DDSRPC
 
         Interface ifc = root.getIfc();
 
-        System.out.println("Generating solution...");
-        if(genSolution(ifc) == 0)
+        System.out.println("Generating Request/Response Topics...");
+        if(genIdl(ifc) == 0)
         {
-            System.out.println("Generating Request/Response Topics...");
-            if(genIdl(ifc) == 0)
-            {
-                System.out.println("Generating Utils...");
-                if(genUtils(ifc) == 0)
-                {
-                    System.out.println("Generating Client Code...");
-                    if(genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
-                                "functionImpl", "functionHeader", "Client", ifc) == 0)
-                    {
-                        if(genRPCSupport(ifc, "Client") == 0)
-                        {
-                            if(genRPCSupport(ifc, "Server") == 0)
-                            {
-                                System.out.println("Generating Server Code...");
-                                if(genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
-                                            "functionImpl", "exFunctionHeader", "Server", ifc) == 0)
-                                {
-                                    if(genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
-                                                "emptyFunctionImpl", "functionHeader", null, ifc) == 0)
-                                    {
-                                        System.out.println("Finished.");
-                                        returnedValue = 0;
-                                    }
-                                    else
-                                    {
-                                        System.out.println("ERROR<" + METHOD_NAME + ">: Generating Serve implementation code.");
-                                    }
-                                }
-                                else
-                                {
-                                    System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Code.");
-                                }
-                            }
-                            else
-                            {
-                                System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Remote Code.");
-                            }
-                        }
-                        else
-                        {
-                            System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Remote Code.");
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Code.");
-                    }
-                }
-                else
-                {
-                    System.out.println("ERROR<" + METHOD_NAME + ">: Generating Utils.");
-                }
-            }
-            else
-            {
-                System.out.println("ERROR<" + METHOD_NAME + ">: Generating Request/Response Topics.");
-            }
+        	System.out.println("Generating Utils...");
+        	if(genUtils(ifc) == 0)
+        	{
+        		System.out.println("Generating Client Code...");
+        		if(genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
+        				"functionImpl", "functionHeader", "Client", ifc) == 0)
+        		{
+        			if(genRPCSupport(ifc, "Client") == 0)
+        			{
+        				if(genRPCSupport(ifc, "Server") == 0)
+        				{
+        					System.out.println("Generating Server Code...");
+        					if(genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
+        							"functionImpl", "exFunctionHeader", "Server", ifc) == 0)
+        					{
+        						if(genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
+        								"emptyFunctionImpl", "functionHeader", null, ifc) == 0)
+        						{
+        							if(genSolution(ifc) == 0)
+        							{
+        								System.out.println("Finished.");
+        								returnedValue = 0;
+        							}
+        							else
+            						{
+            							System.out.println("ERROR<" + METHOD_NAME + ">: Generating Solution for " + exampleOption);
+            						}
+        						}
+        						else
+        						{
+        							System.out.println("ERROR<" + METHOD_NAME + ">: Generating Serve implementation code.");
+        						}
+        					}
+        					else
+        					{
+        						System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Code.");
+        					}
+        				}
+        				else
+        				{
+        					System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Remote Code.");
+        				}
+        			}
+        			else
+        			{
+        				System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Remote Code.");
+        			}
+        		}
+        		else
+        		{
+        			System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Code.");
+        		}
+        	}
+        	else
+        	{
+        		System.out.println("ERROR<" + METHOD_NAME + ">: Generating Utils.");
+        	}
         }
         else
         {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Generating VS2005 solution.");
+        	System.out.println("ERROR<" + METHOD_NAME + ">: Generating Request/Response Topics.");
         }
 
         return returnedValue;
@@ -689,109 +689,154 @@ public class IDL2DDSRPC
         project.setAttribute("sourceFiles", buf.toString());
     }
 
-    public static int genSolution(Interface ifc)
+    private static int genSolution(Interface ifc)
     {
         final String METHOD_NAME = "genSolution";
-        int returnedValue = -1;
+        int returnedValue = 0;
         int lastBarraOccurrency = 0;
         StringBuffer idlStringBuf = null;
         StringBuffer stringBuf = null;
 
-        // first load main language template
-        StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, null);
-
-        if(idlTemplates != null)
+        if(exampleOption.equals("i86Win32VS2010"))
         {
-            StringTemplate solution = idlTemplates.getInstanceOf("solution");
-            StringTemplate projectClient = idlTemplates.getInstanceOf("project");
-            StringTemplate projectServer = idlTemplates.getInstanceOf("project");
+        	System.out.println("Genering VS2010 solution");
+        	// first load main language template
+        	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, null);
 
-            // Obtain only the filename of the idl file.
-            lastBarraOccurrency = idlFile.lastIndexOf('/');
-            if(lastBarraOccurrency == -1)
-                idlStringBuf = new StringBuffer(idlFile.substring(0, idlFile.length() - 4 /* '.idl' */));
-            else
-                idlStringBuf = new StringBuffer(idlFile.substring(lastBarraOccurrency + 1, idlFile.length() - 4 /* '.idl' */));
+        	if(idlTemplates != null)
+        	{
+        		StringTemplate solution = idlTemplates.getInstanceOf("solution");
+        		StringTemplate projectClient = idlTemplates.getInstanceOf("project");
+        		StringTemplate projectServer = idlTemplates.getInstanceOf("project");
 
-            stringBuf = new StringBuffer(ifc.getName());
-            stringBuf.append("Server");
-            String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
-            solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(), serverGuid, null);
-            projectServer.setAttribute("guid", serverGuid);
-            projectServer.setAttribute("name",stringBuf.toString());
+        		// Obtain only the filename of the idl file.
+        		lastBarraOccurrency = idlFile.lastIndexOf('/');
+        		if(lastBarraOccurrency == -1)
+        			idlStringBuf = new StringBuffer(idlFile.substring(0, idlFile.length() - 4 /* '.idl' */));
+        		else
+        			idlStringBuf = new StringBuffer(idlFile.substring(lastBarraOccurrency + 1, idlFile.length() - 4 /* '.idl' */));
 
-            stringBuf.delete(ifc.getName().length(), stringBuf.length());
-            stringBuf.append("Client");
-            String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
-            solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(),clientGuid, serverGuid);
-            projectClient.setAttribute("guid", clientGuid);
-            projectClient.setAttribute("name",stringBuf.toString());
+        		stringBuf = new StringBuffer(ifc.getName());
+        		stringBuf.append("Server");
+        		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
+        		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(), serverGuid, null);
+        		projectServer.setAttribute("guid", serverGuid);
+        		projectServer.setAttribute("name",stringBuf.toString());
 
-            // project configurations	
-            for(int index = 0; index < configurations.length; index++){
-                solution.setAttribute("configurations", configurations[index]);
-                projectClient.setAttribute("configurations", configurations[index]);
-                projectServer.setAttribute("configurations", configurations[index]);
-            }
+        		stringBuf.delete(ifc.getName().length(), stringBuf.length());
+        		stringBuf.append("Client");
+        		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
+        		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(),clientGuid, serverGuid);
+        		projectClient.setAttribute("guid", clientGuid);
+        		projectClient.setAttribute("name",stringBuf.toString());
 
-            if(externalDirLength > 0)
-            {
-                externalDir.append("/");	
-            }
-            externalDir.append(ifc.getName()).append("-vs2010.sln");
-            if(writeFile(externalDir.toString(), solution) == 0)
-            {
-                externalDir.delete(externalDirLength, externalDir.length());
+        		// project configurations	
+        		for(int index = 0; index < configurations.length; index++){
+        			solution.setAttribute("configurations", configurations[index]);
+        			projectClient.setAttribute("configurations", configurations[index]);
+        			projectServer.setAttribute("configurations", configurations[index]);
+        		}
 
-                stringBuf.delete(0, stringBuf.length());
-                stringBuf.append(ifc.getName());
-                // Server and client common files
+        		if(externalDirLength > 0)
+        		{
+        			externalDir.append("/");	
+        		}
+        		externalDir.append(ifc.getName()).append("-vs2010.sln");
+        		if(writeFile(externalDir.toString(), solution) == 0)
+        		{
+        			externalDir.delete(externalDirLength, externalDir.length());
 
-                setProjectFiles(idlStringBuf, projectClient, projectServer, true);
-                stringBuf.append("RequestReply");
-                setProjectFiles(stringBuf, projectClient, projectServer, false);
+        			stringBuf.delete(0, stringBuf.length());
+        			stringBuf.append(ifc.getName());
+        			// Server and client common files
 
-                stringBuf.delete(0, stringBuf.length());
-                stringBuf.append(ifc.getName());		
-                // Client exclusive files
-                setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
-                setProjectFile(stringBuf, projectClient, "ClientRPCSupport", ifc.getName().length());
+        			setProjectFiles(idlStringBuf, projectClient, projectServer, true);
+        			stringBuf.append("RequestReply");
+        			setProjectFiles(stringBuf, projectClient, projectServer, false);
 
-                projectClient.setAttribute("sourceFiles", "Client.cxx");
+        			stringBuf.delete(0, stringBuf.length());
+        			stringBuf.append(ifc.getName());		
+        			// Client exclusive files
+        			setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
+        			setProjectFile(stringBuf, projectClient, "ClientRPCSupport", ifc.getName().length());
 
-                // Server exclusive files
-                setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
-                setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
-                setProjectFile(stringBuf, projectServer, "ServerRPCSupport", ifc.getName().length());
+        			projectClient.setAttribute("sourceFiles", "Client.cxx");
 
-                projectServer.setAttribute("sourceFiles", "Server.cxx");
+        			// Server exclusive files
+        			setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
+        			setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
+        			setProjectFile(stringBuf, projectServer, "ServerRPCSupport", ifc.getName().length());
 
-                //System.out.println(request.toString());
-                if(externalDirLength > 0)
-                {
-                    externalDir.append("/");	
-                }
-                externalDir.append(ifc.getName()).append("Client-vs2010.vcxproj");
-                if(writeFile(externalDir.toString(), projectClient) == 0)
-                {
-                    externalDir.delete(externalDirLength, externalDir.length());
+        			projectServer.setAttribute("sourceFiles", "Server.cxx");
 
-                    if(externalDirLength > 0)
-                    {
-                        externalDir.append("/");	
-                    }
-                    externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj");
-                    returnedValue = writeFile(externalDir.toString(), projectServer);
-                    externalDir.delete(externalDirLength, externalDir.length());
-                }
-            }
+        			//System.out.println(request.toString());
+        			if(externalDirLength > 0)
+        			{
+        				externalDir.append("/");	
+        			}
+        			externalDir.append(ifc.getName()).append("Client-vs2010.vcxproj");
+        			if(writeFile(externalDir.toString(), projectClient) == 0)
+        			{
+        				externalDir.delete(externalDirLength, externalDir.length());
+
+        				if(externalDirLength > 0)
+        				{
+        					externalDir.append("/");	
+        				}
+        				externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj");
+        				returnedValue = writeFile(externalDir.toString(), projectServer);
+        				externalDir.delete(externalDirLength, externalDir.length());
+        			}
+        		}
+        	}
+        	else
+        	{
+        		System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group VS2010");
+        	}
         }
-        else
-        {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group VS2005");
+        else if(exampleOption.contains("Linux"))
+        {        
+        	System.out.println("Genering makefile solution");
+        	if(exampleOption.startsWith("i86"))
+        	{
+        		returnedValue = genMakefile(ifc, "32");
+        	}
+        	else if(exampleOption.startsWith("x64"))
+        	{
+        		returnedValue = genMakefile(ifc, "64");
+        	}
+        	else
+        		returnedValue = -1;
         }
 
         return returnedValue;
+    }
+    
+    private static int genMakefile(Interface ifc, String arch)
+    {
+    	final String METHOD_NAME = "getMakefile";
+    	int returnedValue = -1;
+    	
+    	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("makefile", DefaultTemplateLexer.class, null);
+
+    	if(idlTemplates != null)
+    	{
+    		StringTemplate makecxx = idlTemplates.getInstanceOf("makecxx");
+    		
+    		makecxx.setAttribute("interface", ifc.getName());
+    		makecxx.setAttribute("example", exampleOption);
+    		makecxx.setAttribute("arch", arch);
+    		
+    		String extdir = externalDir.toString() + (externalDirLength > 0 ? "/" : "") + "makefile_" + exampleOption;
+    		System.out.println("Genering makefile " + extdir);
+			returnedValue = writeFile(extdir.toString(), makecxx);
+    	}
+    	else
+    	{
+    		System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group makecxx");
+    	}
+    	
+    	return returnedValue;
     }
 
     public static Module parse(String file) {
@@ -841,6 +886,18 @@ public class IDL2DDSRPC
                     System.out.println("ERROR: Unknown OS " + osOption);
                     return false;
                 }
+            }
+            else if(arg.equals("-example"))
+            {
+            	exampleOption = args[count++];
+            	
+            	if(!exampleOption.equals("i86Win32VS2010") &&
+            			!exampleOption.equals("i86Linux2.6gcc4.4.3") &&
+            			!exampleOption.equals("x64Linux2.6gcc4.5.1"))
+            	{
+            		System.out.println("ERROR: Unknown example arch " + exampleOption);
+            		return false;
+            	}
             }
             else if(arg.equals("-language"))
             {

@@ -105,9 +105,9 @@
       >
       <classpath refid="build.classpath"/>
       </javac>
-  	<copy todir="${build.classes}">
+  	<!--copy todir="${build.classes}">
   		<fileset dir="${src.dir}" includes="**/*.stg"/>
-  	</copy>
+  	</copy-->
   </target>
 
   <!-- =================================================================== -->
