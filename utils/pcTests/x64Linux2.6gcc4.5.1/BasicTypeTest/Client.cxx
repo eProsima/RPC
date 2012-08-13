@@ -17,160 +17,221 @@ int main()
     DDS_Octet  oc2 = 2;       
     DDS_Octet  oc3 ;    
     DDS_Octet  getOctet_ret ;       
-    DDSRPC::ReturnMessage  getOctetRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getOctetRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getOctetRetValue = proxy->getOctet(oc1  ,oc2  ,oc3  , getOctet_ret  );
-    printf("getOctet: oc2 = %hhu, oc3 = %hhu, ret = %hhu\n", oc2, oc3, getOctet_ret);
+    
+	if(getOctetRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		oc3 != 2 ||
+		getOctet_ret != 1 ||
+		oc2 != 3 ||
+		oc1 != 1)
+	{
+		printf("TEST FAILED<getOctet>\n");
+		_exit(-1);
+	}
 
     DDS_Char  ch1 = 1;       
     DDS_Char  ch2 = 2;       
     DDS_Char  ch3 ;    
     DDS_Char  getChar_ret ;       
-    DDSRPC::ReturnMessage  getCharRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getCharRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
-    getCharRetValue = proxy->getChar(ch1  ,ch2  ,ch3  , getChar_ret  );
-    printf("getChar: ch2 = %hhd, ch3 = %hhd, ret = %hhd\n", ch2, ch3, getChar_ret);
+    getCharRetValue = proxy->getChar(ch1  ,ch2  ,ch3  , getChar_ret  );   
+
+	if(getCharRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		ch3 != 2 ||
+		getChar_ret != 1 ||
+		ch2 != 3 ||
+		ch1 != 1)
+	{
+		printf("TEST FAILED<getChar>\n");
+		_exit(-1);
+	}
         
     DDS_Wchar  wch1 = 1;       
     DDS_Wchar  wch2 = 2;       
     DDS_Wchar  wch3 ;    
     DDS_Wchar  getWChar_ret ;       
-    DDSRPC::ReturnMessage  getWCharRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getWCharRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getWCharRetValue = proxy->getWChar(wch1  ,wch2  ,wch3  , getWChar_ret  );
-    printf("getWChar: wch2 = %u, wch3 = %u, ret = %u\n", wch2, wch3, getWChar_ret);
+    
+	if(getWCharRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		wch3 != 2 ||
+		getWChar_ret != 1 ||
+		wch2 != 3 ||
+		wch1 != 1)
+	{
+		printf("TEST FAILED<getWChar>\n");
+		_exit(-1);
+	}
 
     DDS_Short  sh1 = 1;       
     DDS_Short  sh2 = 2;       
     DDS_Short  sh3 ;    
     DDS_Short  getShort_ret ;       
-    DDSRPC::ReturnMessage  getShortRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getShortRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getShortRetValue = proxy->getShort(sh1  ,sh2  ,sh3  , getShort_ret  );
-    printf("getShort: sh2 = %hd, sh3 = %hd, ret = %hd\n", sh2, sh3, getShort_ret);
+    
+	if(getShortRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		sh3 != 2 ||
+		getShort_ret != 1 ||
+		sh2 != 3 ||
+		sh1 != 1)
+	{
+		printf("TEST FAILED<getShort>\n");
+		_exit(-1);
+	}
 
     DDS_UnsignedShort  ush1 = 1;       
     DDS_UnsignedShort  ush2 = 2;       
     DDS_UnsignedShort  ush3 ;    
     DDS_UnsignedShort  getUShort_ret ;       
-    DDSRPC::ReturnMessage  getUShortRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getUShortRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getUShortRetValue = proxy->getUShort(ush1  ,ush2  ,ush3  , getUShort_ret  );
-    printf("getUShort: ush2 = %hu, ush3 = %hu, ret = %hu\n", ush2, ush3, getUShort_ret);
+    
+	if(getUShortRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		ush3 != 2 ||
+		getUShort_ret != 1 ||
+		ush2 != 3 ||
+		ush1 != 1)
+	{
+		printf("TEST FAILED<getUShort>\n");
+		_exit(-1);
+	}
 
     DDS_Long  lo1 = 1;       
     DDS_Long  lo2 = 2;       
     DDS_Long  lo3 ;    
     DDS_Long  getLong_ret ;       
-    DDSRPC::ReturnMessage  getLongRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getLongRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getLongRetValue = proxy->getLong(lo1  ,lo2  ,lo3  , getLong_ret  );
-    printf("getLong: lo2 = %d, lo3 = %d, retu = %d\n", lo2, lo3, getLong_ret);
+    
+	if(getLongRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		lo3 != 2 ||
+		getLong_ret != 1 ||
+		lo2 != 3 ||
+		lo1 != 1)
+	{
+		printf("TEST FAILED<getLong>\n");
+		_exit(-1);
+	}
 
     DDS_UnsignedLong  ulo1 = 1;       
     DDS_UnsignedLong  ulo2 = 2;       
     DDS_UnsignedLong  ulo3 ;    
     DDS_UnsignedLong  getULong_ret ;       
-    DDSRPC::ReturnMessage  getULongRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getULongRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getULongRetValue = proxy->getULong(ulo1  ,ulo2  ,ulo3  , getULong_ret  );
-    printf("getULong: ulo2 = %u, ulo3 = %u, ret = %u\n", ulo2, ulo3, getULong_ret);
+    
+	if(getULongRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		ulo3 != 2 ||
+		getULong_ret != 1 ||
+		ulo2 != 3 ||
+		ulo1 != 1)
+	{
+		printf("TEST FAILED<getULong>\n");
+		_exit(-1);
+	}
 
     DDS_LongLong  llo1 = 1;       
     DDS_LongLong  llo2 = 2;       
     DDS_LongLong  llo3 ;    
     DDS_LongLong  getLLong_ret ;       
-    DDSRPC::ReturnMessage  getLLongRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getLLongRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getLLongRetValue = proxy->getLLong(llo1  ,llo2  ,llo3  , getLLong_ret  );
-    printf("getLLong: llo2 = %lld, llo3 = %lld, ret = %lld\n", llo2, llo3, getLLong_ret);
+    
+	if(getLLongRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		llo3 != 2 ||
+		getLLong_ret != 1 ||
+		llo2 != 3 ||
+		llo1 != 1)
+	{
+		printf("TEST FAILED<getLLong>\n");
+		_exit(-1);
+	}
 
     DDS_UnsignedLongLong  ullo1 = 1;       
     DDS_UnsignedLongLong  ullo2 = 2;       
     DDS_UnsignedLongLong  ullo3 ;    
     DDS_UnsignedLongLong  getULLong_ret ;       
-    DDSRPC::ReturnMessage  getULLongRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getULLongRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getULLongRetValue = proxy->getULLong(ullo1  ,ullo2  ,ullo3  , getULLong_ret  );
-    printf("getULLong: ullo2 = %llu, ullo3 = %llu, retu = %llu\n", ullo2, ullo3, getULLong_ret);
+    
+	if(getULLongRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		ullo3 != 2 ||
+		getULLong_ret != 1 ||
+		ullo2 != 3 ||
+		ullo1 != 1)
+	{
+		printf("TEST FAILED<getULLong>\n");
+		_exit(-1);
+	}
 
     DDS_Float  fl1 = 1.0;       
     DDS_Float  fl2 = 2.0;       
     DDS_Float  fl3 ;    
     DDS_Float  getFloat_ret ;       
-    DDSRPC::ReturnMessage  getFloatRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getFloatRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getFloatRetValue = proxy->getFloat(fl1  ,fl2  ,fl3  , getFloat_ret  );
-    printf("getFloat: fl2 = %f, fl3 = %f, ret = %f\n", fl2, fl3, getFloat_ret);
+    
+	if(getFloatRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		fl3 != 2.0 ||
+		getFloat_ret != 1.0 ||
+		fl2 != 3.0 ||
+		fl1 != 1.0)
+	{
+		printf("TEST FAILED<getFloat>\n");
+		_exit(-1);
+	}
 
     DDS_Double  do1 = 1.0;       
     DDS_Double  do2 = 2.0;       
     DDS_Double  do3 ;    
     DDS_Double  getDouble_ret ;       
-    DDSRPC::ReturnMessage  getDoubleRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getDoubleRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getDoubleRetValue = proxy->getDouble(do1  ,do2  ,do3  , getDouble_ret  );
-    printf("getDouble: do2 = %lf, do3 = %lf, ret = %lf\n", do2, do3, getDouble_ret);
+    
+	if(getDoubleRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		do3 != 2.0 ||
+		getDouble_ret != 1.0 ||
+		do2 != 3.0 ||
+		do1 != 1.0)
+	{
+		printf("TEST FAILED<getDouble>\n");
+		_exit(-1);
+	}
 
     DDS_Boolean  bo1 = RTI_TRUE;       
     DDS_Boolean  bo2 = RTI_FALSE;       
     DDS_Boolean  bo3 ;    
     DDS_Boolean  getBoolean_ret ;       
-    DDSRPC::ReturnMessage  getBooleanRetValue ;        
+    eProsima::DDSRPC::ReturnMessage  getBooleanRetValue ;        
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     getBooleanRetValue = proxy->getBoolean(bo1  ,bo2  ,bo3  , getBoolean_ret  );
-    printf("getBoolean: bo2 = %s, bo3 = %s, ret = %s\n", (bo2 == RTI_TRUE ? "true" : "false"), (bo3 == RTI_TRUE ? "true" : "false"),
-        (getBoolean_ret == RTI_TRUE ? "true" : "false"));
-        
+    
+	if(getBooleanRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
+		bo3 != RTI_FALSE ||
+		getBoolean_ret != RTI_TRUE ||
+		bo2 != RTI_TRUE ||
+		bo1 != RTI_TRUE)
+	{
+		printf("TEST FAILED<getBoolean>\n");
+		_exit(-1);
+	}
+      
+	printf("TEST SUCCESFULLY\n");
         
    delete(proxy);
-   NDDSUtility::sleep(period);
+   
+   _exit(0);
 }

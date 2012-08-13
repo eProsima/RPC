@@ -95,7 +95,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 		    }
 		    else
 		    {
-				printf("ERROR<%s::%s>: Sequence of replies is not supported %d\n", CLASS_NAME, METHOD_NAME);
+				printf("ERROR<%s::%s>: Sequence of replies is not supported.\n", CLASS_NAME, METHOD_NAME);
 				value = eProsima::DDSRPC::CLIENT_ERROR;
 		    }
 		    
@@ -103,7 +103,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 		}
 		else if(retcode == DDS::RETCODE_NO_DATA)
 		{
-			printf("ERROR<%s::%s>: no data\n", CLASS_NAME, METHOD_NAME);
+			printf("ERROR<%s::%s>: no data.\n", CLASS_NAME, METHOD_NAME);
 			value = eProsima::DDSRPC::SERVER_TIMEOUT;
 		}
 		else

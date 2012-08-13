@@ -114,14 +114,14 @@ BasicTypeTestServer::~BasicTypeTestServer()
     delete _impl;    
 }
 
-void BasicTypeTestServer::getOctet(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getOctet(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Octet  oc1 ;       
     DDS_Octet  oc2 ;       
     DDS_Octet  oc3 ;    
     DDS_Octet  getOctet_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getOctetReply *replyData = NULL;
 
     getOctetRequestUtils::extractTypeData((getOctetRequest*)requestData, oc1  ,oc2  );
@@ -140,14 +140,14 @@ void BasicTypeTestServer::getOctet(DDSRPC::Server *server, void *requestData, DD
         
         
 }
-void BasicTypeTestServer::getChar(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getChar(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Char  ch1 ;       
     DDS_Char  ch2 ;       
     DDS_Char  ch3 ;    
     DDS_Char  getChar_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getCharReply *replyData = NULL;
 
     getCharRequestUtils::extractTypeData((getCharRequest*)requestData, ch1  ,ch2  );
@@ -166,14 +166,14 @@ void BasicTypeTestServer::getChar(DDSRPC::Server *server, void *requestData, DDS
         
         
 }
-void BasicTypeTestServer::getWChar(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getWChar(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Wchar  wch1 ;       
     DDS_Wchar  wch2 ;       
     DDS_Wchar  wch3 ;    
     DDS_Wchar  getWChar_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getWCharReply *replyData = NULL;
 
     getWCharRequestUtils::extractTypeData((getWCharRequest*)requestData, wch1  ,wch2  );
@@ -192,14 +192,14 @@ void BasicTypeTestServer::getWChar(DDSRPC::Server *server, void *requestData, DD
         
         
 }
-void BasicTypeTestServer::getShort(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getShort(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Short  sh1 ;       
     DDS_Short  sh2 ;       
     DDS_Short  sh3 ;    
     DDS_Short  getShort_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getShortReply *replyData = NULL;
 
     getShortRequestUtils::extractTypeData((getShortRequest*)requestData, sh1  ,sh2  );
@@ -218,14 +218,14 @@ void BasicTypeTestServer::getShort(DDSRPC::Server *server, void *requestData, DD
         
         
 }
-void BasicTypeTestServer::getUShort(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getUShort(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_UnsignedShort  ush1 ;       
     DDS_UnsignedShort  ush2 ;       
     DDS_UnsignedShort  ush3 ;    
     DDS_UnsignedShort  getUShort_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getUShortReply *replyData = NULL;
 
     getUShortRequestUtils::extractTypeData((getUShortRequest*)requestData, ush1  ,ush2  );
@@ -244,14 +244,14 @@ void BasicTypeTestServer::getUShort(DDSRPC::Server *server, void *requestData, D
         
         
 }
-void BasicTypeTestServer::getLong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Long  lo1 ;       
     DDS_Long  lo2 ;       
     DDS_Long  lo3 ;    
     DDS_Long  getLong_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getLongReply *replyData = NULL;
 
     getLongRequestUtils::extractTypeData((getLongRequest*)requestData, lo1  ,lo2  );
@@ -270,14 +270,14 @@ void BasicTypeTestServer::getLong(DDSRPC::Server *server, void *requestData, DDS
         
         
 }
-void BasicTypeTestServer::getULong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getULong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_UnsignedLong  ulo1 ;       
     DDS_UnsignedLong  ulo2 ;       
     DDS_UnsignedLong  ulo3 ;    
     DDS_UnsignedLong  getULong_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getULongReply *replyData = NULL;
 
     getULongRequestUtils::extractTypeData((getULongRequest*)requestData, ulo1  ,ulo2  );
@@ -296,14 +296,14 @@ void BasicTypeTestServer::getULong(DDSRPC::Server *server, void *requestData, DD
         
         
 }
-void BasicTypeTestServer::getLLong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getLLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_LongLong  llo1 ;       
     DDS_LongLong  llo2 ;       
     DDS_LongLong  llo3 ;    
     DDS_LongLong  getLLong_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getLLongReply *replyData = NULL;
 
     getLLongRequestUtils::extractTypeData((getLLongRequest*)requestData, llo1  ,llo2  );
@@ -322,14 +322,14 @@ void BasicTypeTestServer::getLLong(DDSRPC::Server *server, void *requestData, DD
         
         
 }
-void BasicTypeTestServer::getULLong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getULLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_UnsignedLongLong  ullo1 ;       
     DDS_UnsignedLongLong  ullo2 ;       
     DDS_UnsignedLongLong  ullo3 ;    
     DDS_UnsignedLongLong  getULLong_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getULLongReply *replyData = NULL;
 
     getULLongRequestUtils::extractTypeData((getULLongRequest*)requestData, ullo1  ,ullo2  );
@@ -348,14 +348,14 @@ void BasicTypeTestServer::getULLong(DDSRPC::Server *server, void *requestData, D
         
         
 }
-void BasicTypeTestServer::getFloat(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getFloat(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Float  fl1 ;       
     DDS_Float  fl2 ;       
     DDS_Float  fl3 ;    
     DDS_Float  getFloat_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getFloatReply *replyData = NULL;
 
     getFloatRequestUtils::extractTypeData((getFloatRequest*)requestData, fl1  ,fl2  );
@@ -374,14 +374,14 @@ void BasicTypeTestServer::getFloat(DDSRPC::Server *server, void *requestData, DD
         
         
 }
-void BasicTypeTestServer::getDouble(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getDouble(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Double  do1 ;       
     DDS_Double  do2 ;       
     DDS_Double  do3 ;    
     DDS_Double  getDouble_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getDoubleReply *replyData = NULL;
 
     getDoubleRequestUtils::extractTypeData((getDoubleRequest*)requestData, do1  ,do2  );
@@ -400,14 +400,14 @@ void BasicTypeTestServer::getDouble(DDSRPC::Server *server, void *requestData, D
         
         
 }
-void BasicTypeTestServer::getBoolean(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service) 
+void BasicTypeTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServer *srv = (BasicTypeTestServer*)server;
     DDS_Boolean  bo1 ;       
     DDS_Boolean  bo2 ;       
     DDS_Boolean  bo3 ;    
     DDS_Boolean  getBoolean_ret ;       
-    DDSRPC::ReturnMessage  returnedValue ;        
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
     getBooleanReply *replyData = NULL;
 
     getBooleanRequestUtils::extractTypeData((getBooleanRequest*)requestData, bo1  ,bo2  );

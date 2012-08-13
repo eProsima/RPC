@@ -138,32 +138,32 @@ unsigned int BasicTypeTestProxy::getTimeout()
  }
 
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getOctet(DDS_Octet oc1 ,DDS_Octet &oc2,DDS_Octet &oc3, DDS_Octet &getOctet_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getOctetRequest *instance = NULL;
     getOctetReply *retInstance = getOctetReplyTypeSupport::create_data();
     instance = getOctetRequestUtils::createTypeData(oc1    ,oc2    );
     returnedValue = getOctet_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getOctetReplyUtils::extractTypeData(retInstance, oc2    ,oc3    , getOctet_ret    );
             //getOctetReplyTypeSupport::print_data(retInstance);          
             break;
@@ -175,32 +175,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getChar(DDS_Char ch1 ,DDS_Char &ch2,DDS_Char &ch3, DDS_Char &getChar_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getCharRequest *instance = NULL;
     getCharReply *retInstance = getCharReplyTypeSupport::create_data();
     instance = getCharRequestUtils::createTypeData(ch1    ,ch2    );
     returnedValue = getChar_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getCharReplyUtils::extractTypeData(retInstance, ch2    ,ch3    , getChar_ret    );
             //getCharReplyTypeSupport::print_data(retInstance);          
             break;
@@ -212,32 +212,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getWChar(DDS_Wchar wch1 ,DDS_Wchar &wch2,DDS_Wchar &wch3, DDS_Wchar &getWChar_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getWCharRequest *instance = NULL;
     getWCharReply *retInstance = getWCharReplyTypeSupport::create_data();
     instance = getWCharRequestUtils::createTypeData(wch1    ,wch2    );
     returnedValue = getWChar_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getWCharReplyUtils::extractTypeData(retInstance, wch2    ,wch3    , getWChar_ret    );
             //getWCharReplyTypeSupport::print_data(retInstance);          
             break;
@@ -249,32 +249,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getShort(DDS_Short sh1 ,DDS_Short &sh2,DDS_Short &sh3, DDS_Short &getShort_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getShortRequest *instance = NULL;
     getShortReply *retInstance = getShortReplyTypeSupport::create_data();
     instance = getShortRequestUtils::createTypeData(sh1    ,sh2    );
     returnedValue = getShort_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getShortReplyUtils::extractTypeData(retInstance, sh2    ,sh3    , getShort_ret    );
             //getShortReplyTypeSupport::print_data(retInstance);          
             break;
@@ -286,32 +286,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getUShort(DDS_UnsignedShort ush1 ,DDS_UnsignedShort &ush2,DDS_UnsignedShort &ush3, DDS_UnsignedShort &getUShort_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getUShortRequest *instance = NULL;
     getUShortReply *retInstance = getUShortReplyTypeSupport::create_data();
     instance = getUShortRequestUtils::createTypeData(ush1    ,ush2    );
     returnedValue = getUShort_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getUShortReplyUtils::extractTypeData(retInstance, ush2    ,ush3    , getUShort_ret    );
             //getUShortReplyTypeSupport::print_data(retInstance);          
             break;
@@ -323,32 +323,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getLong(DDS_Long lo1 ,DDS_Long &lo2,DDS_Long &lo3, DDS_Long &getLong_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getLongRequest *instance = NULL;
     getLongReply *retInstance = getLongReplyTypeSupport::create_data();
     instance = getLongRequestUtils::createTypeData(lo1    ,lo2    );
     returnedValue = getLong_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getLongReplyUtils::extractTypeData(retInstance, lo2    ,lo3    , getLong_ret    );
             //getLongReplyTypeSupport::print_data(retInstance);          
             break;
@@ -360,32 +360,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getULong(DDS_UnsignedLong ulo1 ,DDS_UnsignedLong &ulo2,DDS_UnsignedLong &ulo3, DDS_UnsignedLong &getULong_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getULongRequest *instance = NULL;
     getULongReply *retInstance = getULongReplyTypeSupport::create_data();
     instance = getULongRequestUtils::createTypeData(ulo1    ,ulo2    );
     returnedValue = getULong_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getULongReplyUtils::extractTypeData(retInstance, ulo2    ,ulo3    , getULong_ret    );
             //getULongReplyTypeSupport::print_data(retInstance);          
             break;
@@ -397,32 +397,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getLLong(DDS_LongLong llo1 ,DDS_LongLong &llo2,DDS_LongLong &llo3, DDS_LongLong &getLLong_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getLLongRequest *instance = NULL;
     getLLongReply *retInstance = getLLongReplyTypeSupport::create_data();
     instance = getLLongRequestUtils::createTypeData(llo1    ,llo2    );
     returnedValue = getLLong_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getLLongReplyUtils::extractTypeData(retInstance, llo2    ,llo3    , getLLong_ret    );
             //getLLongReplyTypeSupport::print_data(retInstance);          
             break;
@@ -434,32 +434,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getULLong(DDS_UnsignedLongLong ullo1 ,DDS_UnsignedLongLong &ullo2,DDS_UnsignedLongLong &ullo3, DDS_UnsignedLongLong &getULLong_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getULLongRequest *instance = NULL;
     getULLongReply *retInstance = getULLongReplyTypeSupport::create_data();
     instance = getULLongRequestUtils::createTypeData(ullo1    ,ullo2    );
     returnedValue = getULLong_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getULLongReplyUtils::extractTypeData(retInstance, ullo2    ,ullo3    , getULLong_ret    );
             //getULLongReplyTypeSupport::print_data(retInstance);          
             break;
@@ -471,32 +471,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getFloat(DDS_Float fl1 ,DDS_Float &fl2,DDS_Float &fl3, DDS_Float &getFloat_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getFloatRequest *instance = NULL;
     getFloatReply *retInstance = getFloatReplyTypeSupport::create_data();
     instance = getFloatRequestUtils::createTypeData(fl1    ,fl2    );
     returnedValue = getFloat_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getFloatReplyUtils::extractTypeData(retInstance, fl2    ,fl3    , getFloat_ret    );
             //getFloatReplyTypeSupport::print_data(retInstance);          
             break;
@@ -508,32 +508,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getDouble(DDS_Double do1 ,DDS_Double &do2,DDS_Double &do3, DDS_Double &getDouble_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getDoubleRequest *instance = NULL;
     getDoubleReply *retInstance = getDoubleReplyTypeSupport::create_data();
     instance = getDoubleRequestUtils::createTypeData(do1    ,do2    );
     returnedValue = getDouble_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getDoubleReplyUtils::extractTypeData(retInstance, do2    ,do3    , getDouble_ret    );
             //getDoubleReplyTypeSupport::print_data(retInstance);          
             break;
@@ -545,32 +545,32 @@ DDSRPC::ReturnMessage
     return returnedValue;
 }
  
-DDSRPC::ReturnMessage
+eProsima::DDSRPC::ReturnMessage
  BasicTypeTestProxy::getBoolean(DDS_Boolean bo1 ,DDS_Boolean &bo2,DDS_Boolean &bo3, DDS_Boolean &getBoolean_ret) 
 {
-    DDSRPC::ReturnMessage  returnedValue ;    
+    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
     getBooleanRequest *instance = NULL;
     getBooleanReply *retInstance = getBooleanReplyTypeSupport::create_data();
     instance = getBooleanRequestUtils::createTypeData(bo1    ,bo2    );
     returnedValue = getBoolean_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             getBooleanReplyUtils::extractTypeData(retInstance, bo2    ,bo3    , getBoolean_ret    );
             //getBooleanReplyTypeSupport::print_data(retInstance);          
             break;

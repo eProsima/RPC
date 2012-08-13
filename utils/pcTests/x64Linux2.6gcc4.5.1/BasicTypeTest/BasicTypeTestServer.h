@@ -9,7 +9,7 @@
 #include "BasicTypeTestServerImpl.h"
 #include "BasicTypeTestRequestReplyUtils.h"
 
-class BasicTypeTestServer : public DDSRPC::Server
+class BasicTypeTestServer : public eProsima::DDSRPC::Server
 {
     private: 
       BasicTypeTestImpl *_impl;
@@ -22,18 +22,18 @@ class BasicTypeTestServer : public DDSRPC::Server
         /// \brief The default destructor.
         virtual ~BasicTypeTestServer();
 
-        static void getOctet(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getChar(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getWChar(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getShort(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getUShort(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getLong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getULong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getLLong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getULLong(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getFloat(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getDouble(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
-        static void getBoolean(DDSRPC::Server *server, void *requestData, DDSRPC::ServerRPC *service);
+        static void getOctet(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getChar(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getWChar(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getShort(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getUShort(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getULong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getLLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getULLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getFloat(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getDouble(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
 };
 
 #endif // _BasicTypeTestSKELETON_H_
