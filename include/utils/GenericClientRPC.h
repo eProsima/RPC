@@ -18,7 +18,7 @@
 
 #define GENERIC_CLIENT_RPC(TName, TDataWriter, TDataReader)                       \
                                                                                   \
-class  TName : public DDSRPC::ClientRPC                                                   \
+class  TName : public eProsima::DDSRPC::ClientRPC                                                   \
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, const char *requestTypeName,                         \
@@ -30,7 +30,7 @@ public:                                                                         
 protected:                                                                        \
   virtual int registerInstance(void *data);                                       \
   virtual DDS::ReturnCode_t write(void *data);                                    \
-  virtual DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
+  virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 private:                                                                          \
                                                                                   \

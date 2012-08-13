@@ -7,119 +7,122 @@
 
 #include "ndds_namespace_cpp.h"
 
-namespace DDSRPC
+namespace eProsima
 {
-
-	class Server;
-	class ThreadPoolManager;
-
-	class DDSRPC_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
+	namespace DDSRPC
 	{
-		public:
 
-			/**
-			 * \brief The constructor.
-			 *
-			 * \param remoteServiceName The name of this service. Cannot be NULL.
-			 * \param requestTypeName The name of the type used to send the function's parameters. Max: 49 characteres. Cannot be NULL.
-			 * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
-			 * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
-			 */
-			ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
-				const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
-				const char *replyQosLibrary, const char *replyQosProfile,
-					fExecFunction execFunction, DDS::DomainParticipant *serverParticipant);
+		class Server;
+		class ThreadPoolManager;
 
-			char* getRPCName();
+		class DDSRPC_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
+		{
+			public:
 
-			//CHECK DDS_UnsignedLong
-			unsigned int* getServerId();
+				/**
+				 * \brief The constructor.
+				 *
+				 * \param remoteServiceName The name of this service. Cannot be NULL.
+				 * \param requestTypeName The name of the type used to send the function's parameters. Max: 49 characteres. Cannot be NULL.
+				 * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
+				 * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
+				 */
+				ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
+					const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
+					const char *replyQosLibrary, const char *replyQosProfile,
+						fExecFunction execFunction, DDS::DomainParticipant *serverParticipant);
 
-			fExecFunction getExecFunction();
+				char* getRPCName();
 
-			int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-					const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
-					const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
+				//CHECK DDS_UnsignedLong
+				unsigned int* getServerId();
 
-			int enableEntities();
+				fExecFunction getExecFunction();
 
-			virtual int sendReply(void* request, void *reply, ReturnMessage errorMessage = OPERATION_SUCCESSFUL) = 0;
+				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
+						const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
+						const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
 
-			virtual void deleteRequestData(void *request) = 0;
+				int enableEntities();
 
-			virtual void on_data_available(DDS::DataReader* reader) = 0;
+				virtual int sendReply(void* request, void *reply, ReturnMessage errorMessage = OPERATION_SUCCESSFUL) = 0;
 
-			virtual void on_requested_deadline_missed(
-					DDS::DataReader* reader,
-					const DDS::RequestedDeadlineMissedStatus& status) {}
+				virtual void deleteRequestData(void *request) = 0;
 
-			virtual void on_requested_incompatible_qos(
-					DDS::DataReader* reader,
-					const DDS::RequestedIncompatibleQosStatus& status) {}
+				virtual void on_data_available(DDS::DataReader* reader) = 0;
 
-			virtual void on_sample_rejected(
-					DDS::DataReader* reader,
-					const DDS::SampleRejectedStatus& status) {}
+				virtual void on_requested_deadline_missed(
+						DDS::DataReader* reader,
+						const DDS::RequestedDeadlineMissedStatus& status) {}
 
-			virtual void on_liveliness_changed(
-					DDS::DataReader* reader,
-					const DDS::LivelinessChangedStatus& status) {}
+				virtual void on_requested_incompatible_qos(
+						DDS::DataReader* reader,
+						const DDS::RequestedIncompatibleQosStatus& status) {}
 
-			virtual void on_sample_lost(
-					DDS::DataReader* reader,
-					const DDS::SampleLostStatus& status) {}
+				virtual void on_sample_rejected(
+						DDS::DataReader* reader,
+						const DDS::SampleRejectedStatus& status) {}
 
-			virtual void on_subscription_matched(
-					DDS::DataReader* reader,
-					const DDS::SubscriptionMatchedStatus& status) {}
+				virtual void on_liveliness_changed(
+						DDS::DataReader* reader,
+						const DDS::LivelinessChangedStatus& status) {}
 
-		protected:
+				virtual void on_sample_lost(
+						DDS::DataReader* reader,
+						const DDS::SampleLostStatus& status) {}
 
-			/**
-			 * \brief This field stores the name of the service.
-			 */
-			char m_rpcName[50];
+				virtual void on_subscription_matched(
+						DDS::DataReader* reader,
+						const DDS::SubscriptionMatchedStatus& status) {}
 
-			/**
-			 * \brief This field stores a pointer to the ThreadPoolManager.
-			 */
-			Server *m_server;
-			/**
-			 * \brief The subscriber used to communicate with the client. Client -> Server
-			 */
-			DDS::Subscriber *m_requestSubscriber;
+			protected:
 
-			/**
-			 * \brief The publisher used to communicate with the client. Server -> Client.
-			 */
-			DDS::Publisher *m_replyPublisher;
+				/**
+				 * \brief This field stores the name of the service.
+				 */
+				char m_rpcName[50];
 
-			/**
-			 * \brief The topic used to communicate with the server. Client -> Server
-			 */
-			DDS::Topic *m_requestTopic;
+				/**
+				 * \brief This field stores a pointer to the ThreadPoolManager.
+				 */
+				Server *m_server;
+				/**
+				 * \brief The subscriber used to communicate with the client. Client -> Server
+				 */
+				DDS::Subscriber *m_requestSubscriber;
 
-			/**
-			 * \brief The topic used to communicate with the server. Server -> Client
-			 */
-			DDS::Topic *m_replyTopic;
+				/**
+				 * \brief The publisher used to communicate with the client. Server -> Client.
+				 */
+				DDS::Publisher *m_replyPublisher;
 
-			/**
-			 * \brief The data reader used to communicate with the client. Client -> Server
-			 */
-			DDS::DataReader *m_requestDataReader;
+				/**
+				 * \brief The topic used to communicate with the server. Client -> Server
+				 */
+				DDS::Topic *m_requestTopic;
+
+				/**
+				 * \brief The topic used to communicate with the server. Server -> Client
+				 */
+				DDS::Topic *m_replyTopic;
+
+				/**
+				 * \brief The data reader used to communicate with the client. Client -> Server
+				 */
+				DDS::DataReader *m_requestDataReader;
         
-			/**
-			 * \brief The data writer used to communicate with the client. Server -> Client
-			 */
-			DDS::DataWriter *m_replyDataWriter;
+				/**
+				 * \brief The data writer used to communicate with the client. Server -> Client
+				 */
+				DDS::DataWriter *m_replyDataWriter;
 
-			fExecFunction m_execFunction;
+				fExecFunction m_execFunction;
 
-			//CHECK
-			unsigned int m_serverId[4];
-	};
+				//CHECK
+				unsigned int m_serverId[4];
+		};
 
-} // namespace DDSRPC
+	} // namespace DDSRPC
+} // namespace eProsima
 
 #endif // _SERVER_SERVERRPC_H_

@@ -1,0 +1,37 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicTypeTestServer", "BasicTypeTestServer-vs2010.vcxproj", "{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicTypeTestClient", "BasicTypeTestClient-vs2010.vcxproj", "{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE} = {F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}
+	EndProjectSectionEndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug DLL|x64 = Debug DLL|x64
+		Release DLL|x64 = Release DLL|x64
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release DLL|x64.Build.0 = Release DLL|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug|x64.ActiveCfg = Debug|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Debug|x64.Build.0 = Debug|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release|x64.ActiveCfg = Release|x64
+		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}.Release|x64.Build.0 = Release|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release DLL|x64.Build.0 = Release DLL|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug|x64.ActiveCfg = Debug|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Debug|x64.Build.0 = Debug|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release|x64.ActiveCfg = Release|x64
+		{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

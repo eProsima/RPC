@@ -308,7 +308,7 @@ public class IDL2DDSRPC
     {
         final String METHOD_NAME = "genHeaderAndImpl";
         int returnedValue = -1;
-        String returnType = "DDSRPC::ReturnMessage";
+        String returnType = "eProsima::DDSRPC::ReturnMessage";
 
         // first load main language template
         StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);

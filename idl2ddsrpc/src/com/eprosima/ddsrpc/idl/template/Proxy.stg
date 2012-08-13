@@ -44,7 +44,7 @@ $doNotEditC()$
 #include "$interfaceName$RequestReplyUtils.h"
 #include "$interfaceName$ClientRPCSupport.h"
 
-class $interfaceName$Proxy : public DDSRPC::Client
+class $interfaceName$Proxy : public eProsima::DDSRPC::Client
 {
     public:
 
@@ -61,7 +61,7 @@ class $interfaceName$Proxy : public DDSRPC::Client
         $funDecls; separator=";\n"$;
         
     private:
-        $funNames:{DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
+        $funNames:{eProsima::DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
         
         unsigned int m_timeout;
 };
@@ -96,22 +96,22 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     returnedValue = $name$_Service->execute(instance, retInstance, m_timeout);
     switch (returnedValue)
     {
-        case DDSRPC::CLIENT_ERROR:
+        case eProsima::DDSRPC::CLIENT_ERROR:
             printf("CLIENT ERROR\n");
             break;
-        case DDSRPC::RECEIVED_OTHER_REQUEST:
+        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
             printf("Y ESTE PAQUETE?\n");
             break;
-        case DDSRPC::SERVER_TIMEOUT:
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
             printf("TIMEOUT\n");
             break;
-        case DDSRPC::SERVER_ERROR:
+        case eProsima::DDSRPC::SERVER_ERROR:
             printf("SERVER ERROR\n");
             break;
-        case DDSRPC::WITHOUT_RESOURCES:
+        case eProsima::DDSRPC::WITHOUT_RESOURCES:
             printf("SERVER WITHOUT RESOURCES\n");
             break;
-        case DDSRPC::OPERATION_SUCCESSFUL:
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             $name$ReplyUtils::extractTypeData(retInstance$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
             //$name$ReplyTypeSupport::print_data(retInstance);          
             break;
@@ -192,10 +192,6 @@ functionCall(type,name,string,inputParams,inoutParams,outputParams) ::= <<
     $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $varDecl(type=type, name=[name,"RetValue"])$    
 
-    /**
-     * Dynamic memory passed to the proxy will be freed before return *
-     * Pass a copy if you want to keep it                             *
-     */
     $if(!voidInitMap.(type))$
     $name$RetValue = 
     $endif$proxy->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);

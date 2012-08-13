@@ -26,11 +26,11 @@
 #define TDataReply TData_Reply(TData)
 
 
-TName::TName(const char *rpcName, DDSRPC::Server* server, const char *requestTypeName,
+TName::TName(const char *rpcName, eProsima::DDSRPC::Server* server, const char *requestTypeName,
         const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
         const char *replyQosLibrary, const char *replyQosProfile,
-        DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant) :
-        DDSRPC::ServerRPC(rpcName, server, requestTypeName, requestQosLibrary,
+        eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant) :
+        eProsima::DDSRPC::ServerRPC(rpcName, server, requestTypeName, requestQosLibrary,
                             requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile,
                             execFunction, serverParticipant)
 {
@@ -42,7 +42,7 @@ TName::~TName()
 {
 }
 
-int TName::sendReply(void *request, void* reply,  DDSRPC::ReturnMessage errorMessage)
+int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessage errorMessage)
 {
     int returnedValue = -1;
     TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : TDataReplyTypeSupport::create_data();

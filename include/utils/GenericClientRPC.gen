@@ -35,7 +35,7 @@ TName::TName(const char *rpcName, const char *requestTypeName,
         const char *requestQosLibrary, const char *requestQosProfile,
         const char *replyTypeName, const char *replyQosLibrary,
         const char *replyQosProfile, DDS::DomainParticipant *clientParticipant):
-        DDSRPC::ClientRPC(rpcName, requestTypeName, requestQosLibrary,
+        eProsima::DDSRPC::ClientRPC(rpcName, requestTypeName, requestQosLibrary,
         requestQosProfile, replyTypeName, replyQosLibrary,
         replyQosProfile, clientParticipant)
 {
@@ -72,12 +72,12 @@ DDS::ReturnCode_t TName::write(void *data)
 	return retCode;
 }
 
-DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
+eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 {
     const char* const METHOD_NAME = "takeReply";
     DDS::SampleInfoSeq infoSeq;
 	TDataSeq dataSeq;
-	DDSRPC::ReturnMessage value = DDSRPC::RECEIVED_OTHER_REQUEST;
+	eProsima::DDSRPC::ReturnMessage value = eProsima::DDSRPC::RECEIVED_OTHER_REQUEST;
 
 	if(reply != NULL && query != NULL)
 	{
@@ -90,13 +90,13 @@ DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 				if (infoSeq[0].valid_data)
 				{
 					retcode = TDataTypeSupport::copy_data((TDataReply*)reply, &dataSeq[0]);
-					value = DDSRPC::OPERATION_SUCCESSFUL;
+					value = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 				}
 		    }
 		    else
 		    {
 				printf("ERROR<%s::%s>: Sequence of replies is not supported %d\n", CLASS_NAME, METHOD_NAME);
-				value = DDSRPC::CLIENT_ERROR;
+				value = eProsima::DDSRPC::CLIENT_ERROR;
 		    }
 		    
 		    retcode = replyDataReader->return_loan(dataSeq, infoSeq);
@@ -104,18 +104,18 @@ DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 		else if(retcode == DDS::RETCODE_NO_DATA)
 		{
 			printf("ERROR<%s::%s>: no data\n", CLASS_NAME, METHOD_NAME);
-			value = DDSRPC::SERVER_TIMEOUT;
+			value = eProsima::DDSRPC::SERVER_TIMEOUT;
 		}
 		else
 		{
 			printf("ERROR<%s::%s>: take error %d\n", CLASS_NAME, METHOD_NAME, retcode);
-			value = DDSRPC::CLIENT_ERROR;
+			value = eProsima::DDSRPC::CLIENT_ERROR;
 		}
 	}
 	else
 	{
 		printf("ERROR<%s::%s>: bad parameteres\n", CLASS_NAME, METHOD_NAME);
-		value = DDSRPC::CLIENT_ERROR;
+		value = eProsima::DDSRPC::CLIENT_ERROR;
 	}
 	
 	return value;
