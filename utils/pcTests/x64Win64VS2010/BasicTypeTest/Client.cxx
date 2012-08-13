@@ -11,7 +11,6 @@ int main()
     int domainId = 0;
     unsigned int timeoutInMillis = 4000;
     BasicTypeTestProxy *proxy = new BasicTypeTestProxy(domainId, timeoutInMillis);
-    DDS_Duration_t period = {5,0};
     
     DDS_Octet  oc1 = 1;       
     DDS_Octet  oc2 = 2;       
@@ -27,7 +26,7 @@ int main()
 		oc2 != 3 ||
 		oc1 != 1)
 	{
-		printf("TEST FAILED<getOctet>");
+		printf("TEST FAILED<getOctet>\n");
 		_exit(-1);
 	}
 
@@ -45,7 +44,7 @@ int main()
 		ch2 != 3 ||
 		ch1 != 1)
 	{
-		printf("TEST FAILED<getChar>");
+		printf("TEST FAILED<getChar>\n");
 		_exit(-1);
 	}
         
@@ -63,7 +62,7 @@ int main()
 		wch2 != 3 ||
 		wch1 != 1)
 	{
-		printf("TEST FAILED<getWChar>");
+		printf("TEST FAILED<getWChar>\n");
 		_exit(-1);
 	}
 
@@ -81,7 +80,7 @@ int main()
 		sh2 != 3 ||
 		sh1 != 1)
 	{
-		printf("TEST FAILED<getShort>");
+		printf("TEST FAILED<getShort>\n");
 		_exit(-1);
 	}
 
@@ -99,7 +98,7 @@ int main()
 		ush2 != 3 ||
 		ush1 != 1)
 	{
-		printf("TEST FAILED<getUShort>");
+		printf("TEST FAILED<getUShort>\n");
 		_exit(-1);
 	}
 
@@ -117,7 +116,7 @@ int main()
 		lo2 != 3 ||
 		lo1 != 1)
 	{
-		printf("TEST FAILED<getLong>");
+		printf("TEST FAILED<getLong>\n");
 		_exit(-1);
 	}
 
@@ -135,7 +134,7 @@ int main()
 		ulo2 != 3 ||
 		ulo1 != 1)
 	{
-		printf("TEST FAILED<getULong>");
+		printf("TEST FAILED<getULong>\n");
 		_exit(-1);
 	}
 
@@ -153,7 +152,7 @@ int main()
 		llo2 != 3 ||
 		llo1 != 1)
 	{
-		printf("TEST FAILED<getLLong>");
+		printf("TEST FAILED<getLLong>\n");
 		_exit(-1);
 	}
 
@@ -171,7 +170,7 @@ int main()
 		ullo2 != 3 ||
 		ullo1 != 1)
 	{
-		printf("TEST FAILED<getULLong>");
+		printf("TEST FAILED<getULLong>\n");
 		_exit(-1);
 	}
 
@@ -189,7 +188,7 @@ int main()
 		fl2 != 3.0 ||
 		fl1 != 1.0)
 	{
-		printf("TEST FAILED<getFloat>");
+		printf("TEST FAILED<getFloat>\n");
 		_exit(-1);
 	}
 
@@ -207,7 +206,7 @@ int main()
 		do2 != 3.0 ||
 		do1 != 1.0)
 	{
-		printf("TEST FAILED<getDouble>");
+		printf("TEST FAILED<getDouble>\n");
 		_exit(-1);
 	}
 
@@ -225,11 +224,11 @@ int main()
 		bo2 != RTI_TRUE ||
 		bo1 != RTI_TRUE)
 	{
-		printf("TEST FAILED<getBoolean>");
+		printf("TEST FAILED<getBoolean>\n");
 		_exit(-1);
 	}
       
-	printf("TEST SUCCESFULLY");
+	printf("TEST SUCCESFULLY\n");
         
    delete(proxy);
    
