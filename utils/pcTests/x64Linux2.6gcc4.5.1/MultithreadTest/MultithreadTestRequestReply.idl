@@ -7,14 +7,14 @@
 
 struct testRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     Dato dato1;
 }; //@top-level true
 
 struct testReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     Dato dato2;
     long returnedValue;

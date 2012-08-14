@@ -78,7 +78,7 @@ DDS_TypeCode* getSLongRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -323,7 +323,7 @@ DDS_TypeCode* getSLongReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -618,7 +618,7 @@ DDS_TypeCode* getStringRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -863,7 +863,7 @@ DDS_TypeCode* getStringReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1158,7 +1158,7 @@ DDS_TypeCode* getStringBoundedRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1403,7 +1403,7 @@ DDS_TypeCode* getStringBoundedReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef UnionTestRequestReply_1136051212_h
-#define UnionTestRequestReply_1136051212_h
+#ifndef UnionTestRequestReply_1136051226_h
+#define UnionTestRequestReply_1136051226_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -213,4 +213,4 @@ RTIBool getEmpleadoReply_copy(
 
 
 
-#endif /* UnionTestRequestReply_1136051212_h */
+#endif /* UnionTestRequestReply_1136051226_h */

@@ -7,14 +7,14 @@
 
 struct getLargoRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     largo l1;
 }; //@top-level true
 
 struct getLargoReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     largo l2;
     largo returnedValue;
@@ -22,14 +22,14 @@ struct getLargoReply{
 
 struct getLarguisimoRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     larguisimo ll1;
 }; //@top-level true
 
 struct getLarguisimoReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     larguisimo ll2;
     larguisimo returnedValue;
@@ -37,14 +37,14 @@ struct getLarguisimoReply{
 
 struct getDatosDefRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     DatosDef d1;
 }; //@top-level true
 
 struct getDatosDefReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     DatosDef d2;
     DatosDef returnedValue;
@@ -52,14 +52,14 @@ struct getDatosDefReply{
 
 struct getDatosDefondoRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     DatosDefondo dd1;
 }; //@top-level true
 
 struct getDatosDefondoReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     DatosDefondo dd2;
     DatosDefondo returnedValue;
@@ -67,14 +67,14 @@ struct getDatosDefondoReply{
 
 struct getCadenaRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     cadena c1;
 }; //@top-level true
 
 struct getCadenaReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     cadena c2;
     cadena returnedValue;
@@ -82,14 +82,14 @@ struct getCadenaReply{
 
 struct getCorreaRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     correa cc1;
 }; //@top-level true
 
 struct getCorreaReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     correa cc2;
     correa returnedValue;

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTestRequestReplyPlugin_2120090698_h
-#define BasicTypeTestRequestReplyPlugin_2120090698_h
+#ifndef BasicTypeTestRequestReplyPlugin_2120090866_h
+#define BasicTypeTestRequestReplyPlugin_2120090866_h
 
 #include "BasicTypeTestRequestReply.h"
 
@@ -6338,4 +6338,4 @@ getBooleanReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* BasicTypeTestRequestReplyPlugin_2120090698_h */
+#endif /* BasicTypeTestRequestReplyPlugin_2120090866_h */

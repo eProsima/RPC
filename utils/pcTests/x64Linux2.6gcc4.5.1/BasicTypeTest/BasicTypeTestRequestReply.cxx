@@ -78,7 +78,7 @@ DDS_TypeCode* getOctetRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -319,7 +319,7 @@ DDS_TypeCode* getOctetReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -608,7 +608,7 @@ DDS_TypeCode* getCharRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -849,7 +849,7 @@ DDS_TypeCode* getCharReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1138,7 +1138,7 @@ DDS_TypeCode* getWCharRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1379,7 +1379,7 @@ DDS_TypeCode* getWCharReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1668,7 +1668,7 @@ DDS_TypeCode* getShortRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1909,7 +1909,7 @@ DDS_TypeCode* getShortReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -2198,7 +2198,7 @@ DDS_TypeCode* getUShortRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -2439,7 +2439,7 @@ DDS_TypeCode* getUShortReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -2728,7 +2728,7 @@ DDS_TypeCode* getLongRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -2969,7 +2969,7 @@ DDS_TypeCode* getLongReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -3258,7 +3258,7 @@ DDS_TypeCode* getULongRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -3499,7 +3499,7 @@ DDS_TypeCode* getULongReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -3788,7 +3788,7 @@ DDS_TypeCode* getLLongRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -4029,7 +4029,7 @@ DDS_TypeCode* getLLongReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -4318,7 +4318,7 @@ DDS_TypeCode* getULLongRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -4559,7 +4559,7 @@ DDS_TypeCode* getULLongReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -4848,7 +4848,7 @@ DDS_TypeCode* getFloatRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -5089,7 +5089,7 @@ DDS_TypeCode* getFloatReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -5378,7 +5378,7 @@ DDS_TypeCode* getDoubleRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -5619,7 +5619,7 @@ DDS_TypeCode* getDoubleReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -5908,7 +5908,7 @@ DDS_TypeCode* getBooleanRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -6149,7 +6149,7 @@ DDS_TypeCode* getBooleanReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */

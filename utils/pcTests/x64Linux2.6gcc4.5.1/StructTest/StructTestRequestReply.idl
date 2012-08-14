@@ -7,21 +7,21 @@
 
 struct duplicateRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     Envio ev;
 }; //@top-level true
 
 struct duplicateReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     Recepcion returnedValue;
 }; //@top-level true
 
 struct sumaRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     Envio ev1;
     Envio ev2;
 }; //@top-level true
@@ -29,7 +29,7 @@ struct sumaRequest{
 struct sumaReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     Recepcion returnedValue;
 }; //@top-level true

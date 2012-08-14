@@ -78,7 +78,7 @@ DDS_TypeCode* duplicateRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -294,7 +294,7 @@ DDS_TypeCode* duplicateReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -531,7 +531,7 @@ DDS_TypeCode* sumaRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -776,7 +776,7 @@ DDS_TypeCode* sumaReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */

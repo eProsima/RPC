@@ -37,10 +37,6 @@ RTI Connext user manual.
                     </max_blocking_time>
                 </reliability>                
 
-                <history>
-                    <kind>KEEP_ALL_HISTORY_QOS</kind>
-                </history>
-
                 <protocol>
                     <rtps_reliable_writer>
                         <min_send_window_size>50</min_send_window_size>
@@ -56,10 +52,6 @@ RTI Connext user manual.
 		<reliability>
                     <kind>RELIABLE_RELIABILITY_QOS</kind>
                 </reliability>
-    
-		<history>
-                    <kind>KEEP_ALL_HISTORY_QOS</kind>
-                </history>
 			
             </datareader_qos>
 
