@@ -927,6 +927,7 @@ public class IDL2DDSRPC
             	
             	if(!exampleOption.equals("i86Win32VS2010") &&
             			!exampleOption.equals("x64Win64VS2010") &&
+            			!exampleOption.equals("i86Linux2.6gcc4.1.2") &&
             			!exampleOption.equals("i86Linux2.6gcc4.4.3") &&
             			!exampleOption.equals("x64Linux2.6gcc4.5.1"))
             	{
