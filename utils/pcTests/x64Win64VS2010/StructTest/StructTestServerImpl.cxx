@@ -19,7 +19,7 @@ eProsima::DDSRPC::ReturnMessage
   eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 
   duplicate_ret->devolucion = ev->dato;
-  duplicate_ret->message = DDS_String_dup(ev->message);
+  duplicate_ret->message = DDS::String_dup(ev->message);
   
   return retCode;
 } 
@@ -30,7 +30,7 @@ eProsima::DDSRPC::ReturnMessage
   eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 
   suma_ret->devolucion = ev1->dato + ev2->dato;
-  suma_ret->message = DDS_String_alloc(strlen(ev1->message) + strlen(ev2->message) + 1);
+  suma_ret->message = DDS::String_alloc(strlen(ev1->message) + strlen(ev2->message) + 1);
   _snprintf(suma_ret->message, strlen(ev1->message) + strlen(ev2->message) + 1, "%s%s", ev1->message, ev2->message);
   
   return retCode;

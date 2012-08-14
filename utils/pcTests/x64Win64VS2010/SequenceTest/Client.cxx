@@ -25,8 +25,6 @@ int main()
     l2->set_at(0, 3);
     l2->set_at(1, 4);
     getSLongRetValue = proxy->getSLong(l1  ,l2  ,l3  , getSLong_ret  );
-    printf("getSLong: l2[0] = %d, l2[1] = %d, l3[0] = %d, l3[1] = %d, getSLong_ret[0] = %d, getSLong_ret[1] = %d\n",
-        l2->get_at(0), l2->get_at(1), l3->get_at(0), l3->get_at(1), getSLong_ret->get_at(0), getSLong_ret->get_at(1));
 
 	if(getSLongRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
 		l3->get_at(0) != 3 || l3->get_at(1) != 4 ||

@@ -117,7 +117,6 @@ int createThreads()
 int main()
 {
     const char* const METHOD_NAME = "main";
-    DDS_Duration_t sleepPeriod = {1, 0};
 
     proxy = new MultithreadTestProxy(0, 4000);
 

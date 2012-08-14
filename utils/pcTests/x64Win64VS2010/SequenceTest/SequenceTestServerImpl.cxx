@@ -36,15 +36,15 @@ eProsima::DDSRPC::ReturnMessage
   eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 
   s3->ensure_length(2, 2);
-  (*s3)[0] = DDS_String_dup((*s2)[0]);
-  (*s3)[1] = DDS_String_dup((*s2)[1]);
+  (*s3)[0] = DDS::String_dup((*s2)[0]);
+  (*s3)[1] = DDS::String_dup((*s2)[1]);
   getString_ret->ensure_length(2, 2);
-  (*getString_ret)[0] = DDS_String_dup((*s1)[0]);
-  (*getString_ret)[1] = DDS_String_dup((*s1)[1]);
-  DDS_String_free((*s2)[0]);
-  DDS_String_free((*s2)[1]);
-  (*s2)[0] = DDS_String_dup((*s1)[0]);
-  (*s2)[1] = DDS_String_dup((*s1)[1]);
+  (*getString_ret)[0] = DDS::String_dup((*s1)[0]);
+  (*getString_ret)[1] = DDS::String_dup((*s1)[1]);
+  DDS::String_free((*s2)[0]);
+  DDS::String_free((*s2)[1]);
+  (*s2)[0] = DDS::String_dup((*s1)[0]);
+  (*s2)[1] = DDS::String_dup((*s1)[1]);
   
   return retCode;
 } 
@@ -56,20 +56,20 @@ eProsima::DDSRPC::ReturnMessage
 
   sb3->ensure_length(2, 2);
   (*sb3)[0].count = (*sb2)[0].count;
-  (*sb3)[0].message = DDS_String_dup((*sb2)[0].message);
+  (*sb3)[0].message = DDS::String_dup((*sb2)[0].message);
   (*sb3)[1].count = (*sb2)[1].count;
-  (*sb3)[1].message = DDS_String_dup((*sb2)[1].message);
+  (*sb3)[1].message = DDS::String_dup((*sb2)[1].message);
   getStringBounded_ret->ensure_length(2, 2);
   (*getStringBounded_ret)[0].count = (*sb1)[0].count;
-  (*getStringBounded_ret)[0].message = DDS_String_dup((*sb1)[0].message);
+  (*getStringBounded_ret)[0].message = DDS::String_dup((*sb1)[0].message);
   (*getStringBounded_ret)[1].count = (*sb1)[1].count;
-  (*getStringBounded_ret)[1].message = DDS_String_dup((*sb1)[1].message);
+  (*getStringBounded_ret)[1].message = DDS::String_dup((*sb1)[1].message);
   (*sb2)[0].count = (*sb1)[0].count;
-  DDS_String_free((*sb2)[0].message);
-  (*sb2)[0].message = DDS_String_dup((*sb1)[0].message);
+  DDS::String_free((*sb2)[0].message);
+  (*sb2)[0].message = DDS::String_dup((*sb1)[0].message);
   (*sb2)[1].count = (*sb1)[1].count;
-  DDS_String_free((*sb2)[1].message);
-  (*sb2)[1].message = DDS_String_dup((*sb1)[1].message);
+  DDS::String_free((*sb2)[1].message);
+  (*sb2)[1].message = DDS::String_dup((*sb1)[1].message);
   
   return retCode;
 } 
