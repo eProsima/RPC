@@ -5,7 +5,7 @@ CPP_$example$ = g++
 CXXFLAGS_$example$ = -m$arch$
 LD_$example$ = g++
 LDFLAGS_$example$ = -m$arch$
-SYSLIBS_$example$ = -ldl -lnsl -lm -lpthread -lrt -lboost_thread
+SYSLIBS_$example$ = -ldl -lnsl -lm -lpthread -lrt
 DEFINES_ARCH_SPECIFIC = -DRTI_UNIX -DRTI_LINUX
 
 DEFINES = \$(DEFINES_ARCH_SPECIFIC)  
