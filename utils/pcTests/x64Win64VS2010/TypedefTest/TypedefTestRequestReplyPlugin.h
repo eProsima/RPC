@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestRequestReplyPlugin_1722561779_h
-#define TypedefTestRequestReplyPlugin_1722561779_h
+#ifndef TypedefTestRequestReplyPlugin_1722561863_h
+#define TypedefTestRequestReplyPlugin_1722561863_h
 
 #include "TypedefTestRequestReply.h"
 
@@ -3194,4 +3194,4 @@ getCorreaReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* TypedefTestRequestReplyPlugin_1722561779_h */
+#endif /* TypedefTestRequestReplyPlugin_1722561863_h */

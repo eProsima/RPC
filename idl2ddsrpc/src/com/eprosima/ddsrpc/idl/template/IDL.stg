@@ -57,7 +57,7 @@ request(name, fields) ::= <<
 
 struct $name$Request{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     $fields:{$it.type$ $it.name$;};separator="\n"$
 }; //@top-level true
 >>
@@ -75,7 +75,7 @@ reply(name, fields) ::= <<
 struct $name$Reply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     $fields:{$it.type$ $it.name$;};separator="\n"$
 }; //@top-level true

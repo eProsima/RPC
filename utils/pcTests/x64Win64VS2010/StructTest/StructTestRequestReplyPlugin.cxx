@@ -698,6 +698,11 @@ duplicateRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrStream_serializeUnsignedLong(
+        stream, &sample->numSec)) {
+        return RTI_FALSE;
+    }
+            
     }
 
 
@@ -739,6 +744,11 @@ RTIBool duplicateRequestPlugin_deserialize_key_sample(
 
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -806,6 +816,9 @@ duplicateRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
         current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
             
+    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
+        current_alignment);
+            
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -845,7 +858,8 @@ duplicateRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -886,6 +900,11 @@ duplicateRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
+        return RTI_FALSE;
+    }
+            
     return RTI_TRUE;
 }
 
@@ -901,6 +920,11 @@ duplicateRequestPlugin_key_to_instance(
 
     if (!RTICdrType_copyArray(
         dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
         return RTI_FALSE;
     }
             
@@ -982,6 +1006,11 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
 
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1833,6 +1862,11 @@ duplicateReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrStream_serializeUnsignedLong(
+        stream, &sample->numSec)) {
+        return RTI_FALSE;
+    }
+            
     }
 
 
@@ -1879,6 +1913,11 @@ RTIBool duplicateReplyPlugin_deserialize_key_sample(
             
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1949,6 +1988,9 @@ duplicateReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
         current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
             
+    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
+        current_alignment);
+            
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1993,7 +2035,8 @@ duplicateReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2043,6 +2086,11 @@ duplicateReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
+        return RTI_FALSE;
+    }
+            
     return RTI_TRUE;
 }
 
@@ -2063,6 +2111,11 @@ duplicateReplyPlugin_key_to_instance(
             
     if (!RTICdrType_copyArray(
         dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2149,6 +2202,11 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
             
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2980,6 +3038,11 @@ sumaRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrStream_serializeUnsignedLong(
+        stream, &sample->numSec)) {
+        return RTI_FALSE;
+    }
+            
     }
 
 
@@ -3021,6 +3084,11 @@ RTIBool sumaRequestPlugin_deserialize_key_sample(
 
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3088,6 +3156,9 @@ sumaRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
         current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
             
+    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
+        current_alignment);
+            
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -3127,7 +3198,8 @@ sumaRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3176,6 +3248,11 @@ sumaRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
+        return RTI_FALSE;
+    }
+            
     return RTI_TRUE;
 }
 
@@ -3191,6 +3268,11 @@ sumaRequestPlugin_key_to_instance(
 
     if (!RTICdrType_copyArray(
         dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3272,6 +3354,11 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
 
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4123,6 +4210,11 @@ sumaReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrStream_serializeUnsignedLong(
+        stream, &sample->numSec)) {
+        return RTI_FALSE;
+    }
+            
     }
 
 
@@ -4169,6 +4261,11 @@ RTIBool sumaReplyPlugin_deserialize_key_sample(
             
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4239,6 +4336,9 @@ sumaReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
         current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
             
+    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
+        current_alignment);
+            
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4283,7 +4383,8 @@ sumaReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4333,6 +4434,11 @@ sumaReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
+        return RTI_FALSE;
+    }
+            
     return RTI_TRUE;
 }
 
@@ -4353,6 +4459,11 @@ sumaReplyPlugin_key_to_instance(
             
     if (!RTICdrType_copyArray(
         dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->numSec, &src->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4439,6 +4550,11 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
             
     if (!RTICdrStream_deserializePrimitiveArray(
         stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrStream_deserializeUnsignedLong(
+        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             

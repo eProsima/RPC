@@ -7,7 +7,7 @@
 
 struct getOctetRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     octet oc1;
     octet oc2;
 }; //@top-level true
@@ -15,7 +15,7 @@ struct getOctetRequest{
 struct getOctetReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     octet oc2;
     octet oc3;
@@ -24,7 +24,7 @@ struct getOctetReply{
 
 struct getCharRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     char ch1;
     char ch2;
 }; //@top-level true
@@ -32,7 +32,7 @@ struct getCharRequest{
 struct getCharReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     char ch2;
     char ch3;
@@ -41,7 +41,7 @@ struct getCharReply{
 
 struct getWCharRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     wchar wch1;
     wchar wch2;
 }; //@top-level true
@@ -49,7 +49,7 @@ struct getWCharRequest{
 struct getWCharReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     wchar wch2;
     wchar wch3;
@@ -58,7 +58,7 @@ struct getWCharReply{
 
 struct getShortRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     short sh1;
     short sh2;
 }; //@top-level true
@@ -66,7 +66,7 @@ struct getShortRequest{
 struct getShortReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     short sh2;
     short sh3;
@@ -75,7 +75,7 @@ struct getShortReply{
 
 struct getUShortRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     unsigned short ush1;
     unsigned short ush2;
 }; //@top-level true
@@ -83,7 +83,7 @@ struct getUShortRequest{
 struct getUShortReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     unsigned short ush2;
     unsigned short ush3;
@@ -92,7 +92,7 @@ struct getUShortReply{
 
 struct getLongRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long lo1;
     long lo2;
 }; //@top-level true
@@ -100,7 +100,7 @@ struct getLongRequest{
 struct getLongReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     long lo2;
     long lo3;
@@ -109,7 +109,7 @@ struct getLongReply{
 
 struct getULongRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     unsigned long ulo1;
     unsigned long ulo2;
 }; //@top-level true
@@ -117,7 +117,7 @@ struct getULongRequest{
 struct getULongReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     unsigned long ulo2;
     unsigned long ulo3;
@@ -126,7 +126,7 @@ struct getULongReply{
 
 struct getLLongRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long long llo1;
     long long llo2;
 }; //@top-level true
@@ -134,7 +134,7 @@ struct getLLongRequest{
 struct getLLongReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     long long llo2;
     long long llo3;
@@ -143,7 +143,7 @@ struct getLLongReply{
 
 struct getULLongRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     unsigned long long ullo1;
     unsigned long long ullo2;
 }; //@top-level true
@@ -151,7 +151,7 @@ struct getULLongRequest{
 struct getULLongReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     unsigned long long ullo2;
     unsigned long long ullo3;
@@ -160,7 +160,7 @@ struct getULLongReply{
 
 struct getFloatRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     float fl1;
     float fl2;
 }; //@top-level true
@@ -168,7 +168,7 @@ struct getFloatRequest{
 struct getFloatReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     float fl2;
     float fl3;
@@ -177,7 +177,7 @@ struct getFloatReply{
 
 struct getDoubleRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     double do1;
     double do2;
 }; //@top-level true
@@ -185,7 +185,7 @@ struct getDoubleRequest{
 struct getDoubleReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     double do2;
     double do3;
@@ -194,7 +194,7 @@ struct getDoubleReply{
 
 struct getBooleanRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     boolean bo1;
     boolean bo2;
 }; //@top-level true
@@ -202,7 +202,7 @@ struct getBooleanRequest{
 struct getBooleanReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     boolean bo2;
     boolean bo3;

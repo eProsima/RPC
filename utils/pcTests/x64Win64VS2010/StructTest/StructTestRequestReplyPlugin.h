@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestRequestReplyPlugin_1086133004_h
-#define StructTestRequestReplyPlugin_1086133004_h
+#ifndef StructTestRequestReplyPlugin_1086133032_h
+#define StructTestRequestReplyPlugin_1086133032_h
 
 #include "StructTestRequestReply.h"
 
@@ -1098,4 +1098,4 @@ sumaReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* StructTestRequestReplyPlugin_1086133004_h */
+#endif /* StructTestRequestReplyPlugin_1086133032_h */

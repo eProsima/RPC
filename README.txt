@@ -6,6 +6,12 @@ Para compilar boost en 32-bits:
 Para compilar boost en 64-bits:
    bjam --toolset=msvc-9.0 address-model=64 --build-type=complete stage
 
+Observaciones tenidas en cuenta al decidir si el número de secuencia entra dentro de la clave:
+- El número de secuencia está en la clave:
+  + Por defecto el historial está a uno, que es el valor adecuado.
+- El número de secuencia no está en la clave:
+  - Por defecto el historia está a uno, y es necesario que se cambie a que guarde todo.
+
 
 TODO
 Que el numero de secuencia también esté en la clave: el objetivo es poder tener multiples servidores, y al tener

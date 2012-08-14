@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestRequestReplyPlugin_1383307642_h
-#define EnumYStringTestRequestReplyPlugin_1383307642_h
+#ifndef EnumYStringTestRequestReplyPlugin_1383307684_h
+#define EnumYStringTestRequestReplyPlugin_1383307684_h
 
 #include "EnumYStringTestRequestReply.h"
 
@@ -1622,4 +1622,4 @@ getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* EnumYStringTestRequestReplyPlugin_1383307642_h */
+#endif /* EnumYStringTestRequestReplyPlugin_1383307684_h */

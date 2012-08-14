@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTestRequestReply_2120090908_h
-#define BasicTypeTestRequestReply_2120090908_h
+#ifndef BasicTypeTestRequestReply_2120091076_h
+#define BasicTypeTestRequestReply_2120091076_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -2226,4 +2226,4 @@ RTIBool getBooleanReply_copy(
 
 
 
-#endif /* BasicTypeTestRequestReply_2120090908_h */
+#endif /* BasicTypeTestRequestReply_2120091076_h */

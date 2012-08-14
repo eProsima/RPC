@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef UnionTestRequestReplyPlugin_1136051235_h
-#define UnionTestRequestReplyPlugin_1136051235_h
+#ifndef UnionTestRequestReplyPlugin_1136051249_h
+#define UnionTestRequestReplyPlugin_1136051249_h
 
 #include "UnionTestRequestReply.h"
 
@@ -574,4 +574,4 @@ getEmpleadoReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* UnionTestRequestReplyPlugin_1136051235_h */
+#endif /* UnionTestRequestReplyPlugin_1136051249_h */

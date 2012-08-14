@@ -7,7 +7,7 @@
 
 struct getEmpleadoRequest{
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     Empleado em1;
     Empleado em2;
 }; //@top-level true
@@ -15,7 +15,7 @@ struct getEmpleadoRequest{
 struct getEmpleadoReply{
     unsigned long serverServiceId[4]; //@key
     unsigned long clientServiceId[4]; //@key
-    unsigned long numSec;
+    unsigned long numSec; //@key
     long ddscsRetCode;
     Empleado em2;
     Empleado em3;
