@@ -1,6 +1,7 @@
 #include "server/Server.h"
 #include "server/ServerRPC.h"
 
+#include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::Server";

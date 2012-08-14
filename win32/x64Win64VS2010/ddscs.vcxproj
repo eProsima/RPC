@@ -108,7 +108,7 @@
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;libboost_thread-vc100-mt-gd-1_49.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)d.dll</OutputFile>
       <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -141,7 +141,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;libboost_thread-vc100-mt-1_49.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

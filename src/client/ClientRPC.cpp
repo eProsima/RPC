@@ -1,7 +1,8 @@
 #include "client/ClientRPC.h"
 #include "eProsima_c/eProsimaMacros.h"
 
-#include <boost/thread/mutex.hpp>
+#include "boost/config/user.hpp"
+#include "boost/thread/mutex.hpp"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::ClientRPC";
 
