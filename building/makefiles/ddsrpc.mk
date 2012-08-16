@@ -10,8 +10,8 @@ DDSRPC_TARGET_DEBUG_Z= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpczd.a
 DDSRPC_TARGET= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpc.so
 DDSRPC_TARGET_Z= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpcz.a
 
-DDSRPC_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread
-DDSRPC_LIBS= $(LIBS) -lboost_thread
+DDSRPC_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
+DDSRPC_LIBS= $(LIBS) -lboost_thread-mt
 
 DDSRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
