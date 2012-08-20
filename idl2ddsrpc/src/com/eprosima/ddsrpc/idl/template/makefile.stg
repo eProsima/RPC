@@ -18,7 +18,7 @@ LIBS = -L\$(NDDSHOME)/lib/$example$ -L\$(NDDSHOME)/ddsrpc/lib/$example$ \
 COMMONSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
                 $interface$Plugin.cxx $interface$RequestReplySupport.cxx  \
                 $interface$RequestReplyUtils.cxx $interface$Support.cxx
-CLIENTSOURCES = $interface$Proxy.cxx $interface$ClientRPCSupport.cxx  Client.cxx 
+CLIENTSOURCES = $interface$Proxy.cxx $interface$ClientRPCSupport.cxx $interface$AsyncSupport.cxx Client.cxx 
 SERVERSOURCES = $interface$Server.cxx $interface$ServerImpl.cxx $interface$ServerRPCSupport.cxx Server.cxx 
 DIRECTORIES   = objs.dir objs/$example$.dir
 COMMONOBJS    = \$(COMMONSOURCES:%.cxx=objs/$example$/%.o)

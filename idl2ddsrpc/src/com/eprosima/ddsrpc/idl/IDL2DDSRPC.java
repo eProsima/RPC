@@ -242,42 +242,49 @@ public class IDL2DDSRPC
         	{
         		System.out.println("Generating Client Code...");
         		if(genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
-        				"functionImpl", "functionHeader", "Client", ifc) == 0)
+        				"functionImpl", "functionHeader", "Client", ifc, true) == 0)
         		{
         			if(genRPCSupport(ifc, "Client") == 0)
         			{
-        				if(genRPCSupport(ifc, "Server") == 0)
+        				if(genAsyncSupport(ifc) == 0)
         				{
-        					System.out.println("Generating Server Code...");
-        					if(genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
-        							"functionImpl", "exFunctionHeader", "Server", ifc) == 0)
+        					if(genRPCSupport(ifc, "Server") == 0)
         					{
-        						if(genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
-        								"emptyFunctionImpl", "functionHeader", null, ifc) == 0)
+        						System.out.println("Generating Server Code...");
+        						if(genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
+        								"functionImpl", "exFunctionHeader", "Server", ifc, false) == 0)
         						{
-        							if(genSolution(ifc) == 0)
+        							if(genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
+        									"emptyFunctionImpl", "functionHeader", null, ifc, false) == 0)
         							{
-        								System.out.println("Finished.");
-        								returnedValue = 0;
+        								if(genSolution(ifc) == 0)
+        								{
+        									System.out.println("Finished.");
+        									returnedValue = 0;
+        								}
+        								else
+        								{
+        									System.out.println("ERROR<" + METHOD_NAME + ">: Generating Solution for " + exampleOption);
+        								}
         							}
         							else
-            						{
-            							System.out.println("ERROR<" + METHOD_NAME + ">: Generating Solution for " + exampleOption);
-            						}
+        							{
+        								System.out.println("ERROR<" + METHOD_NAME + ">: Generating Serve implementation code.");
+        							}
         						}
         						else
         						{
-        							System.out.println("ERROR<" + METHOD_NAME + ">: Generating Serve implementation code.");
+        							System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Code.");
         						}
         					}
         					else
         					{
-        						System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Code.");
+        						System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Remote Code.");
         					}
         				}
         				else
         				{
-        					System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Remote Code.");
+        					System.out.println("ERROR<" + METHOD_NAME + ">: Generating asynchronous support.");
         				}
         			}
         			else
@@ -304,7 +311,8 @@ public class IDL2DDSRPC
     }
 
     public static int genHeaderAndImpl(String suffix, String templateGroupId, String headerTemplateId,
-            String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId, String main, Interface ifc)
+            String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId,
+            String main, Interface ifc, boolean withAsync)
     {
         final String METHOD_NAME = "genHeaderAndImpl";
         int returnedValue = -1;
@@ -335,6 +343,17 @@ public class IDL2DDSRPC
 
             //Template for function Definition:
             StringTemplate funDef = templatesGroup.getInstanceOf(functionTemplateId);
+            
+            StringTemplate funDeclAsync = null;
+            StringTemplate callbackDeclAsync = null;
+            StringTemplate funDefAsync = null;
+            
+            if(withAsync)
+            {
+            	funDeclAsync = templatesGroup.getInstanceOf(functionHeaderTemplateId + "Async");
+            	callbackDeclAsync = templatesGroup.getInstanceOf("callbackHeaderAsync");
+            	funDefAsync = templatesGroup.getInstanceOf(functionTemplateId + "Async");
+            }
 
             Operation op = null;
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
@@ -354,7 +373,18 @@ public class IDL2DDSRPC
                 // Function Definition
                 funDef.setAttribute("type", returnType);
                 funDef.setAttribute("name", op.getName());
-                funDef.setAttribute("interfaceName", ifc.getName());
+                funDef.setAttribute("interfaceName", ifc.getName());               
+                
+                if(withAsync)
+                {
+                	funDeclAsync.setAttribute("type", returnType);
+                	funDeclAsync.setAttribute("name", op.getName());
+                	callbackDeclAsync.setAttribute("type", returnType);
+                	callbackDeclAsync.setAttribute("name", op.getName());
+                	funDefAsync.setAttribute("type", returnType);
+                	funDefAsync.setAttribute("name", op.getName());
+                	funDefAsync.setAttribute("interfaceName", ifc.getName());
+                }
 
                 // Function call
                 funCall.setAttribute("type", returnType);
@@ -364,25 +394,42 @@ public class IDL2DDSRPC
                 InputParam ip = null;
                 for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
                     ip = (InputParam)paramIter.next();
-                    funDecl.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());				
+                    funDecl.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
                     funDef.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
                     		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
+                    if(withAsync)
+                    {
+                    	funDeclAsync.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
+                    	funDefAsync.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
+                        		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
+                    }
                     funCall.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
                     		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
                 }
                 InoutParam iop = null;
                 for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
                     iop = (InoutParam)paramIter.next();
-                    funDecl.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());				
+                    funDecl.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
                     funDef.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
-                    		(iop.getType().equals("string") ? "yes" : null));				
+                    		(iop.getType().equals("string") ? "yes" : null));
+                    if(withAsync)
+                    {
+                    	funDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
+                    	callbackDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
+                    	funDefAsync.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
+                        		(iop.getType().equals("string") ? "yes" : null));
+                    }
                     funCall.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
                     		(typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));				
                 }
                 OutputParam oup = null;
                 for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
                     oup = (OutputParam)paramIter.next();
-                    funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());				
+                    funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
+                    if(withAsync)
+                    {
+                    	callbackDeclAsync.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
+                    }
                     funDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
                     		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));				
                     funCall.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
@@ -392,6 +439,10 @@ public class IDL2DDSRPC
                 if(!"void".equals(op.getReturnType()))
                 {
                     funDecl.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+                    if(withAsync)
+                    {
+                    	callbackDeclAsync.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+                    }
                     funDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
                     		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
                     funCall.setAttribute("outputParams.{type, name,string}", op.getReturnType(), op.getName()+"_ret",
@@ -400,9 +451,21 @@ public class IDL2DDSRPC
 
                 header.setAttribute("funDecls", funDecl.toString());
                 definition.setAttribute("funImpls", funDef.toString());
+                if(withAsync)
+                {
+                	header.setAttribute("funDeclsAsync", funDeclAsync.toString());
+                	header.setAttribute("callbackDeclsAsync", callbackDeclAsync.toString());
+                	definition.setAttribute("funImplsAsync", funDefAsync.toString());
+                }
                 mainTemplate.setAttribute("invocations", funCall.toString());
                 funDecl.reset();
                 funDef.reset();
+                if(withAsync)
+                {
+                	funDeclAsync.reset();
+                	callbackDeclAsync.reset();
+                	funDefAsync.reset();
+                }
                 funCall.reset();
             }
 
@@ -515,6 +578,83 @@ public class IDL2DDSRPC
 
         return returnedValue;
     }
+    
+    public static int genAsyncSupport(Interface ifc)
+    {
+    	final String METHOD_NAME = "genAsyncSupport";
+        int returnedValue = -1;
+        // first load main language template
+        StringTemplateGroup asyncTemplates = StringTemplateGroup.loadGroup("AsyncSupport", DefaultTemplateLexer.class, null);
+
+        if(asyncTemplates != null)
+        {
+            StringTemplate header = asyncTemplates.getInstanceOf("header");
+            StringTemplate definition = asyncTemplates.getInstanceOf("definition");
+            
+            StringTemplate taskDecl = asyncTemplates.getInstanceOf("taskHeader");
+            StringTemplate taskDef = asyncTemplates.getInstanceOf("taskDeclaration");
+
+            if(externalDirLength > 0)
+            {
+                externalDir.append("/");	
+            }
+
+            header.setAttribute("interfaceName", ifc.getName());
+            definition.setAttribute("interfaceName", ifc.getName());
+
+            Operation op = null;
+            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
+            {						
+                op = (Operation) iter.next();
+                taskDecl.setAttribute("name", op.getName());
+                taskDef.setAttribute("name", op.getName());
+                
+                ListIterator paramIter = null;
+                InoutParam iop = null;
+                for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
+                    iop = (InoutParam)paramIter.next();
+                    taskDef.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
+                    		(iop.getType().equals("string") ? "yes" : null));
+                }
+                OutputParam oup = null;
+                for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
+                    oup = (OutputParam)paramIter.next();
+                    taskDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
+                    		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));					
+                }
+                // Return Value
+                if(!"void".equals(op.getReturnType()))
+                {
+                	taskDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
+                    		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
+                }
+                
+                header.setAttribute("taskDefs", taskDecl.toString());
+                definition.setAttribute("taskDecls", taskDef.toString());
+                taskDecl.reset();
+                taskDef.reset();
+            }
+
+            externalDir.append(ifc.getName()).append("AsyncSupport.h");
+            if(writeFile(externalDir.toString(), header) == 0)
+            {
+                externalDir.deleteCharAt(externalDir.length() - 1);
+                externalDir.append("cxx");
+                returnedValue = writeFile(externalDir.toString(), definition);
+
+                externalDir.delete(externalDirLength, externalDir.length());
+            	returnedValue = 0;
+            }
+        }
+        else
+        {
+            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group AsyncSupport");
+        }
+
+        return returnedValue;
+    }
+    
+    
     public static int genUtils(Interface ifc)
     {
         final String METHOD_NAME = "genUtils";

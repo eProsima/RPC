@@ -34,7 +34,7 @@ group Proxy : cplusplus;
  * Uses:
  *  include - inherited(cplusplus)
  */ 
-header(interfaceName, qosLibrary, qosProfile, funNames, funDecls) ::= <<
+header(interfaceName, qosLibrary, qosProfile, funNames, funDecls, funDeclsAsync, callbackDeclsAsync) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_PROXY_H_
 #define _$interfaceName;format="toUpper"$_PROXY_H_
 
@@ -43,6 +43,8 @@ $doNotEditC()$
 #include "client/Client.h"
 #include "$interfaceName$RequestReplyUtils.h"
 #include "$interfaceName$ClientRPCSupport.h"
+
+$callbackDeclsAsync; separator=";\n"$;
 
 class $interfaceName$Proxy : public eProsima::DDSRPC::Client
 {
@@ -60,6 +62,8 @@ class $interfaceName$Proxy : public eProsima::DDSRPC::Client
         
         $funDecls; separator=";\n"$;
         
+        $funDeclsAsync; separator=";\n"$;
+        
     private:
         $funNames:{eProsima::DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
         
@@ -67,6 +71,16 @@ class $interfaceName$Proxy : public eProsima::DDSRPC::Client
 };
 
 #endif // _$interfaceName$_PROXY_H_
+>>
+
+callbackHeaderAsync(type,name,inoutParams,outputParams) ::= <<
+typedef void (*$name$Callback)($argDecl(inoutParams);separator=", "$ $if(inoutParams)$$if(outputParams)$,
+              $endif$$endif$$argDecl(outputParams);separator=", "$)
+>>
+
+functionHeaderAsync(type,class,name,inputParams,inoutParams) ::= << 
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($name$Callback $name$callback, $argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$,
+              $endif$$endif$$argDecl(inoutParams);separator=", "$)
 >>
 
 /**
@@ -126,6 +140,32 @@ $functionHeader(class={$interfaceName$Proxy},...)$
 }
 >>
 
+functionImplAsync(interfaceName,type,name,inputParams,inoutParams) ::= <<
+$functionHeaderAsync(class={$interfaceName$Proxy},...)$ 
+{
+    $varDecl(type=type, name="returnedValue", create="yes")$
+    $name$Request *instance = NULL;
+    $name$Task *task = NULL;
+    instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
+    task = new $name$Task($name$callback, this, $name$_Service);
+    returnedValue = $name$_Service->executeAsync(instance, task, m_timeout);
+    switch (returnedValue)
+    {
+        case eProsima::DDSRPC::CLIENT_ERROR:
+            printf("CLIENT ERROR\n");
+            break;
+        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
+            break;
+    };
+    
+    $name$RequestTypeSupport::delete_data(instance);
+
+    $if(!voidInitMap.(type))$
+    return returnedValue;
+    $endif$
+}
+>>
+
 /**
  * definition: External Template
  * Produces the Proxy implementation file.
@@ -137,13 +177,14 @@ $functionHeader(class={$interfaceName$Proxy},...)$
  * Uses:
  *  createRPC - local
  */ 
-definition(interfaceName, funNames, funImpls) ::= <<
+definition(interfaceName, funNames, funImpls, funImplsAsync) ::= <<
 $doNotEditC()$
 
 
 #include "$interfaceName$Proxy.h"
 #include "client/ClientRPC.h"
 #include "$interfaceName$RequestReplyPlugin.h"
+#include "$interfaceName$AsyncSupport.h"
 
 
 $interfaceName$Proxy::$interfaceName$Proxy(int domainId, unsigned int timeout
@@ -169,6 +210,8 @@ unsigned int $interfaceName$Proxy::getTimeout()
  }
 
 $funImpls; separator="\n"$
+
+$funImplsAsync; separator="\n"$
 >>
 
 /**
@@ -257,7 +300,7 @@ $funNames:{this->$it.name$_Service = new $it.name$ClientRPC("$it.name$",
                               $it.name$ReplyUtils::registerType(getParticipant()),
                               $if(it.replyQosLibrary)$"$it.replyQosLibrary$"$else$NULL$endif$,
                               $if(it.replyQosProfile)$"$it.replyQosProfile$"$else$NULL$endif$,
-                              getParticipant());
+                              this);
 }$
 >>
 

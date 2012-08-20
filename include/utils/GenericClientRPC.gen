@@ -34,10 +34,10 @@ XCLASS_NAME_DEFINITION(TName);
 TName::TName(const char *rpcName, const char *requestTypeName,
         const char *requestQosLibrary, const char *requestQosProfile,
         const char *replyTypeName, const char *replyQosLibrary,
-        const char *replyQosProfile, DDS::DomainParticipant *clientParticipant):
+        const char *replyQosProfile, eProsima::DDSRPC::Client *client) :
         eProsima::DDSRPC::ClientRPC(rpcName, requestTypeName, requestQosLibrary,
         requestQosProfile, replyTypeName, replyQosLibrary,
-        replyQosProfile, clientParticipant)
+        replyQosProfile, client)
 {
 	requestDataWriter = TDataWriter::narrow(m_requestDataWriter);
 	replyDataReader   = TDataReader::narrow(m_replyDataReader);

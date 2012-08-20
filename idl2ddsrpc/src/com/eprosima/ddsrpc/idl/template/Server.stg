@@ -50,7 +50,7 @@ $doNotEditC()$
 class $interfaceName$Server : public eProsima::DDSRPC::Server
 {
     private: 
-      $interfaceName$Impl *_impl;
+      $interfaceName$ServerImpl *_impl;
     public:
 
         /// \brief The default constructor.
@@ -80,28 +80,28 @@ class $interfaceName$Server : public eProsima::DDSRPC::Server
  *   doNotEditC - inherited(cplusplus)
  */ 
 headerImpl(interfaceName, qosLibrary, qosProfile, funNames, funDecls) ::= <<
-#ifndef _$interfaceName;format="toUpper"$IMPL_H_
-#define _$interfaceName;format="toUpper"$IMPL_H_
+#ifndef _$interfaceName;format="toUpper"$SERVER_IMPL_H_
+#define _$interfaceName;format="toUpper"$SERVER_IMPL_H_
 
 $doNotEditC()$
 
 #include "utils/Messages.h"
 #include "$interfaceName$RequestReplyUtils.h"
 
-class $interfaceName$Impl
+class $interfaceName$ServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Impl();
+        $interfaceName$ServerImpl();
 
         /// \brief The default destructor.
-        virtual ~$interfaceName$Impl();
+        virtual ~$interfaceName$ServerImpl();
 
         $funDecls; separator=";\n"$;
 };
 
-#endif // _$interfaceName$IMPL_H_
+#endif // _$interfaceName$SERVER_IMPL_H_
 >>
 
 /**
@@ -120,7 +120,7 @@ class $interfaceName$Impl
  *  returnType     - local
  */ 
 emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
-$functionHeader(class={$interfaceName$Impl},...)$ 
+$functionHeader(class={$interfaceName$ServerImpl},...)$ 
 {
   eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
   
@@ -198,7 +198,7 @@ $doNotEditC()$
 $interfaceName$Server::$interfaceName$Server(int domainId, unsigned int threadCount,
 const char *qosLibrary, const char *qosProfile) : Server(domainId, threadCount, qosLibrary, qosProfile)
 {
-    _impl = new $interfaceName$Impl();
+    _impl = new $interfaceName$ServerImpl();
     
     $createRPC(...); separator="\n"$
 }
@@ -228,10 +228,10 @@ definitionImpl(interfaceName, funNames, funImpls) ::= <<
  
 #include "$interfaceName$ServerImpl.h"
 
-$interfaceName$Impl::$interfaceName$Impl()
+$interfaceName$ServerImpl::$interfaceName$ServerImpl()
 {
 }
-$interfaceName$Impl::~$interfaceName$Impl()
+$interfaceName$ServerImpl::~$interfaceName$ServerImpl()
 {
 }
 

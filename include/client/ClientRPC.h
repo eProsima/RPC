@@ -15,6 +15,8 @@ namespace eProsima
 {
 	namespace DDSRPC
 	{
+        class Client;
+        class AsyncTask;
 
 		class DDSRPC_WIN32_DLL_API ClientRPC
 		{
@@ -30,7 +32,7 @@ namespace eProsima
 				 */
 				ClientRPC(const char *rpcName, const char *requestTypeName, const char *requestQosLibrary,
 					const char *requestQosProfile, const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile,
-					DDS::DomainParticipant *clientParticipant);
+					Client *client);
 
 				virtual ~ClientRPC();
 
@@ -38,17 +40,32 @@ namespace eProsima
 				 */
 				ReturnMessage execute(void *request, void* reply, unsigned int timeout);
 
+				ReturnMessage executeAsync(void *request, AsyncTask *task, unsigned int timeout);
+
+                void deleteQuery(DDS::QueryCondition *query);
+
+				virtual ReturnMessage takeReply(void *reply, DDS::QueryCondition *query) = 0;
+
 			protected:
 
 				// Foo dependent methods
 				virtual int registerInstance(void *data) = 0;
 				virtual DDS::ReturnCode_t write(void *data) = 0;
-				virtual ReturnMessage takeReply(void *reply, DDS::QueryCondition *query) = 0;
+
+				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
+						const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
+						const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
+
+				int enableEntities();
+
+                ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, unsigned int timeout);
 
 				/**
 				 * \brief This field stores the name of the service.
 				 */
 				char m_rpcName[50];
+
+                Client *m_client;
 
 				/**
 				 * \brief The publisher used to communicate with the server. Client -> Server
@@ -84,12 +101,6 @@ namespace eProsima
 				 * \brief The status condition used to wait for a matching publication (server).
 				 */
 				DDS::StatusCondition *m_matchingCondition;
-
-				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-						const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
-						const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
-
-				int enableEntities();
 
 				DDS::ContentFilteredTopic *m_replyFilter;
 

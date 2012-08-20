@@ -1,0 +1,120 @@
+group AsyncSupport : cplusplus;
+
+header(interfaceName, taskDefs) ::= <<
+#ifndef _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
+
+$doNotEditC()$
+
+#include "client/AsyncTask.h"
+
+$taskDefs; separator=";\n"$;
+
+#endif // _$interfaceName$_ASYNC_SUPPORT_H_
+>>
+
+taskHeader(name) ::= <<
+
+class $name$Task : public eProsima::DDSRPC::AsyncTask
+{
+    public:
+
+        /// \brief The default constructor.
+        $name$Task($name$Callback callback, eProsima::DDSRPC::Client *client, eProsima::DDSRPC::ClientRPC *clientRPC);
+
+        /// \brief The default destructor.
+        virtual ~$name$Task();
+        
+        virtual void execute(DDS::QueryCondition *query);
+        
+    private:
+        
+        $name$Callback m_callback;
+}
+>>
+
+definition(interfaceName, taskDecls) ::= <<
+#include "$interfaceName$Proxy.h"
+#include "$interfaceName$AsyncSupport.h"
+#include "$interfaceName$RequestReplyPlugin.h"
+
+$taskDecls; separator="\n"$
+>>
+
+taskDeclaration(name,inoutParams,outputParams) ::= <<
+
+$name$Task::$name$Task($name$Callback callback, eProsima::DDSRPC::Client *client, eProsima::DDSRPC::ClientRPC *clientRPC) :
+      AsyncTask(client, clientRPC), m_callback(callback)
+{
+}
+
+$name$Task::~$name$Task()
+{
+}
+
+void $name$Task::execute(DDS::QueryCondition *query)
+{
+    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
+	$name$Reply *reply = $name$ReplyTypeSupport::create_data();
+	eProsima::DDSRPC::ReturnMessage retCode = getRPC()->takeReply(reply, query);
+	
+	if(retCode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	{
+		$name$ReplyUtils::extractTypeData(reply$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
+		m_callback($extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$);
+	}
+	
+	$name$ReplyTypeSupport::delete_data(reply);
+}
+
+>>
+
+/**
+ * extractTypeDataParams: Internal Template
+ * Produces the params for calling RequestUtils extractTypeData method 
+ * Params:
+ *   inoutParams  : list of inout params objects.
+ *   outputParams : list of output params objects.
+ *
+ * Uses:
+ *  nextExtractParam - local
+ */ 
+extractTypeDataParams(inoutParams, outputParams) ::= <<
+$[nextExtractParam(params=inoutParams),nextExtractParam(previous=inoutParams, params=outputParams)]$
+>>
+
+/**
+ * nextExtractParam: Internal Template
+ * Adds arguments to a function call preceeding them by a comma
+ * if there are previous arguments. 
+ * Params:
+ *   previous   : List of previous arguments in the function call. Nullable.
+ *   params     : List of next arguments in the function call. Nullable.
+ *
+ * Uses:
+ */ 
+ nextExtractParam(previous, params) ::= <<
+$if(previous)$
+$if(params)$,
+$endif$
+$endif$
+$params:{$varExtractUse(type = it.type, name = it.name)$};separator=", "$
+>>
+
+/**
+ * varExtractUse: Internal Template
+ * Uses the variable as a parameter to a funcion call 
+ * checking if ti is a pointer or not. 
+ * Params:
+ *   type     : Variable type.
+ *   name     : Variable name. 
+ *
+ * Uses:
+ */ 
+ varExtractUse(type, name) ::= <<
+$if(typeInitMap.(type))$$name$
+$else$
+$name$
+$endif$    
+>>

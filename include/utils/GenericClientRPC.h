@@ -24,13 +24,13 @@ public:                                                                         
   TName(const char *rpcName, const char *requestTypeName,                         \
         const char *requestQosLibrary, const char *requestQosProfile,             \
         const char *replyTypeName, const char *replyQosLibrary,                   \
-        const char *replyQosProfile, DDS::DomainParticipant *clientParticipant);  \
+        const char *replyQosProfile, eProsima::DDSRPC::Client *client);           \
   virtual ~TName();                                                               \
+  virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 protected:                                                                        \
   virtual int registerInstance(void *data);                                       \
   virtual DDS::ReturnCode_t write(void *data);                                    \
-  virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 private:                                                                          \
                                                                                   \

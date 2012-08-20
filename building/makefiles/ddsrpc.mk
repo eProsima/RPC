@@ -18,6 +18,8 @@ DDSRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
                     -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool
 
 DDSRPC_SRC_CFILES= $(BASEDIR)/src/client/Client.cpp \
+			$(BASEDIR)/src/client/AsyncTask.cpp \
+			$(BASEDIR)/src/client/AsyncThread.cpp \
 			$(BASEDIR)/src/client/ClientRPC.cpp \
 			$(BASEDIR)/src/server/Server.cpp \
 			$(BASEDIR)/src/server/ServerRPC.cpp

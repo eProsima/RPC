@@ -1,4 +1,5 @@
 #include "client/ClientRPC.h"
+#include "client/Client.h"
 #include "eProsima_c/eProsimaMacros.h"
 
 #include "boost/config/user.hpp"
@@ -13,7 +14,7 @@ namespace eProsima
 
 		ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName,
 												 const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
-												 const char *replyQosLibrary, const char *replyQosProfile, DDS::DomainParticipant *clientParticipant) : m_requestPublisher(NULL),
+												 const char *replyQosLibrary, const char *replyQosProfile, Client *client) : m_client(client), m_requestPublisher(NULL),
 		m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS::HANDLE_NIL)
 		{
 			const char* const METHOD_NAME = "ClientRPC";
@@ -22,7 +23,7 @@ namespace eProsima
 
 			if(m_mutex != NULL)
 			{
-				if(createEntities(clientParticipant, rpcName, requestTypeName, requestQosLibrary,
+				if(createEntities(client->getParticipant(), rpcName, requestTypeName, requestQosLibrary,
 					requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile))
 				{
 					if(enableEntities())
@@ -55,7 +56,6 @@ namespace eProsima
 			const char* const METHOD_NAME = "execute";
 			ReturnMessage returnedValue = CLIENT_ERROR;
 			DDS::WaitSet *waitSet = NULL;
-			DDS::StatusCondition *statusCondition = NULL;
 			DDS::ReturnCode_t retCode;
 			DDS::Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
 			unsigned int numSec = 0;
@@ -86,134 +86,78 @@ namespace eProsima
 
 				if(waitSet != NULL)
 				{
-					// Detect request datareader from server.
-					DDS::PublicationMatchedStatus pms;
-					m_requestDataWriter->get_publication_matched_status(pms);
+                    if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
+                    {
+                        // Register instance.
+                        if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
+                            printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
 
-					if(pms.current_count < 1)
-					{
-						statusCondition = m_requestDataWriter->get_statuscondition();
+                        if(write(request) == DDS::RETCODE_OK)
+                        {
+                            DDS::StringSeq stringSeq;
 
-						if(statusCondition != NULL)
-						{
-							statusCondition->set_enabled_statuses(DDS::PUBLICATION_MATCHED_STATUS);
-                    
-							if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
-							{
-								DDS::ConditionSeq conds;
-								retCode = waitSet->wait(conds, tTimeout);
+                            stringSeq.ensure_length(5, 5);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                            stringSeq[0] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                            stringSeq[1] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                            stringSeq[2] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                            stringSeq[3] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", numSec);
+                            stringSeq[4] = DDS::String_dup(value);
 
-								if((retCode == DDS::RETCODE_TIMEOUT) || (retCode == DDS::RETCODE_OK && conds.length() == 0))
-								{
-									printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
-									returnedValue = NO_SERVER;
-								}
+                            DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
+                                    "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                                    stringSeq);
 
-								waitSet->detach_condition(statusCondition);
-							}
-						}
-						else
-						{
-							printf("ERROR<%s::%s>: Cannot get status condition from request datawriter.\n", CLASS_NAME, METHOD_NAME);
-						}
-					}
+                            if(query != NULL)
+                            {
+                                retCode = waitSet->attach_condition(query);
 
-					// Detect reply datawriter from server.
-					DDS::SubscriptionMatchedStatus sms;
-					m_replyDataReader->get_subscription_matched_status(sms);
+                                if(retCode == DDS::RETCODE_OK)
+                                {
+                                    DDS::ConditionSeq conds;
+                                    retCode = waitSet->wait(conds, tTimeout);
 
-					if(sms.current_count < 1)
-					{
-						statusCondition = m_replyDataReader->get_statuscondition();
+                                    if(retCode == DDS::RETCODE_OK)
+                                    {
+                                        if(conds.length() == 1 && conds[0] == query)
+                                        {
+                                            returnedValue = takeReply(reply, query);
+                                        }
+                                    }
+                                    else if(retCode == DDS::RETCODE_TIMEOUT)
+                                    {
+                                        printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
+                                        returnedValue = SERVER_TIMEOUT;
+                                    }
 
-						if(statusCondition != NULL)
-						{
-							statusCondition->set_enabled_statuses(DDS::SUBSCRIPTION_MATCHED_STATUS);
-                    
-							if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
-							{
-								DDS::ConditionSeq conds;
-								retCode = waitSet->wait(conds, tTimeout);
+                                    waitSet->detach_condition(query);
+                                }
+                                else
+                                {
+                                    printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
+                                }
 
-								if((retCode == DDS::RETCODE_TIMEOUT) || (retCode == DDS::RETCODE_OK && conds.length() == 0))
-								{
-									printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
-									returnedValue = NO_SERVER;
-								}
-
-								waitSet->detach_condition(statusCondition);
-							}
-						}
-						else
-						{
-							printf("ERROR<%s::%s>: Cannot get status condition from reply datareader.\n", CLASS_NAME, METHOD_NAME);
-						}
-					}
-
-					// Register instance.
-					if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
-						printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
-
-					if(returnedValue != NO_SERVER && (write(request) == DDS::RETCODE_OK))
-					{
-						DDS::StringSeq stringSeq;
-
-						stringSeq.ensure_length(5, 5);
-						SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-						stringSeq[0] = DDS::String_dup(value);
-						SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-						stringSeq[1] = DDS::String_dup(value);
-						SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-						stringSeq[2] = DDS::String_dup(value);
-						SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-						stringSeq[3] = DDS::String_dup(value);
-						SNPRINTF(value, 50, "%u", numSec);
-						stringSeq[4] = DDS::String_dup(value);
-
-						DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-							"clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
-							stringSeq);
-                
-						if(query != NULL)
-						{
-							retCode = waitSet->attach_condition(query);
-
-							if(retCode == DDS::RETCODE_OK)
-							{
-								DDS::ConditionSeq conds;
-								retCode = waitSet->wait(conds, tTimeout);
-
-								if(retCode == DDS::RETCODE_OK)
-								{
-									if(conds.length() == 1 && conds[0] == query)
-									{
-										returnedValue = takeReply(reply, query);
-									}
-								}
-								else if(retCode == DDS::RETCODE_TIMEOUT)
-								{
-									printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
-									returnedValue = SERVER_TIMEOUT;
-								}
-
-								waitSet->detach_condition(query);
-							}
-							else
-							{
-								printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
-							}
-
-							m_replyDataReader->delete_readcondition(query);
-						}
-						else
-						{
-							printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
-						}
-					}
-					else
-					{
-						printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
-					}
+                                m_replyDataReader->delete_readcondition(query);
+                            }
+                            else
+                            {
+                                printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
+                            }
+                        }
+                        else
+                        {
+                            printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+                        }
+                    }
+                    else
+                    {
+                        printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+                        returnedValue = NO_SERVER;
+                    }
 
 					delete waitSet;
 				}
@@ -222,12 +166,186 @@ namespace eProsima
 					printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
 				}
 			}
-			else{
+			else
+            {
 				printf("ERROR<%s::%s>: Bad parameter(data)\n", CLASS_NAME, METHOD_NAME);
 			}
 
 			return returnedValue;
 		}
+
+        ReturnMessage ClientRPC::executeAsync(void *request, AsyncTask *task, unsigned int timeout)
+        {
+			const char* const METHOD_NAME = "executeAsync";
+			ReturnMessage returnedValue = CLIENT_ERROR;
+			DDS::WaitSet *waitSet = NULL;
+			unsigned int numSec = 0;
+			char value[50];
+
+            if(request != NULL && task != NULL)
+            {
+				*(unsigned int*)request = m_clientServiceId[0];
+				((unsigned int*)request)[1] = m_clientServiceId[1];
+				((unsigned int*)request)[2] = m_clientServiceId[2];
+				((unsigned int*)request)[3] = m_clientServiceId[3];
+
+				m_mutex->lock();
+				/* Thread safe num_Sec handling */
+				((unsigned int*)request)[4] = m_numSec;
+				numSec = m_numSec;
+				m_numSec++;
+				m_mutex->unlock();
+
+				waitSet = new DDS::WaitSet();
+
+				if(waitSet != NULL)
+				{
+                    if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
+                    {
+                        // Register instance.
+                        if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
+                            printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
+
+                        if(write(request) == DDS::RETCODE_OK)
+                        {
+                            DDS::StringSeq stringSeq;
+
+                            stringSeq.ensure_length(5, 5);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                            stringSeq[0] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                            stringSeq[1] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                            stringSeq[2] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                            stringSeq[3] = DDS::String_dup(value);
+                            SNPRINTF(value, 50, "%u", numSec);
+                            stringSeq[4] = DDS::String_dup(value);
+
+                            DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
+                                    "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                                    stringSeq);
+
+                            if(query != NULL)
+                            {
+                                if(m_client->addAsyncTask(query, task) == 0)
+                                    returnedValue = OPERATION_SUCCESSFUL;
+                                else
+                                    printf("ERROR <%s::%s>: Cannot add asynchronous task\n", CLASS_NAME, METHOD_NAME);
+                            }
+                            else
+                            {
+                                printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
+                            }
+                        }
+                        else
+                        {
+                            printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+                        }
+                    }
+                    else
+                    {
+                        printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+                        returnedValue = NO_SERVER;
+                    }
+
+					delete waitSet;
+				}
+				else
+				{
+					printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+				}
+            }
+			else
+            {
+				printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+			}
+
+            return returnedValue;
+        }
+
+        ReturnMessage ClientRPC::checkServerConnection(DDS::WaitSet *waitSet, unsigned int timeout)
+        {
+            const char* const METHOD_NAME = "checkServerConnection";
+            ReturnMessage returnedValue = OPERATION_SUCCESSFUL;
+			DDS::StatusCondition *statusCondition = NULL;
+			DDS::ReturnCode_t retCode;
+			DDS::Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
+
+            if(waitSet != NULL)
+            {
+                // Detect request datareader from server.
+                DDS::PublicationMatchedStatus pms;
+                m_requestDataWriter->get_publication_matched_status(pms);
+
+                if(pms.current_count < 1)
+                {
+                    returnedValue = NO_SERVER;
+                    statusCondition = m_requestDataWriter->get_statuscondition();
+
+                    if(statusCondition != NULL)
+                    {
+                        statusCondition->set_enabled_statuses(DDS::PUBLICATION_MATCHED_STATUS);
+
+                        if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
+                        {
+                            DDS::ConditionSeq conds;
+                            retCode = waitSet->wait(conds, tTimeout);
+
+                            if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
+                                returnedValue = OPERATION_SUCCESSFUL;
+
+                            waitSet->detach_condition(statusCondition);
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s>: Cannot get status condition from request datawriter.\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
+
+                if(returnedValue == OPERATION_SUCCESSFUL)
+                {
+                    // Detect reply datawriter from server.
+                    DDS::SubscriptionMatchedStatus sms;
+                    m_replyDataReader->get_subscription_matched_status(sms);
+
+                    if(sms.current_count < 1)
+                    {
+                        returnedValue == NO_SERVER;
+                        statusCondition = m_replyDataReader->get_statuscondition();
+
+                        if(statusCondition != NULL)
+                        {
+                            statusCondition->set_enabled_statuses(DDS::SUBSCRIPTION_MATCHED_STATUS);
+
+                            if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
+                            {
+                                DDS::ConditionSeq conds;
+                                retCode = waitSet->wait(conds, tTimeout);
+
+                                if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
+                                {
+                                    returnedValue = OPERATION_SUCCESSFUL;
+                                }
+
+                                waitSet->detach_condition(statusCondition);
+                            }
+                        }
+                        else
+                        {
+                            printf("ERROR<%s::%s>: Cannot get status condition from reply datareader.\n", CLASS_NAME, METHOD_NAME);
+                        }
+                    }
+                }
+            }
+			else
+            {
+				printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+			}
+
+            return returnedValue;
+        }
 
 		int ClientRPC::createEntities(DDS::DomainParticipant *participant, const char *rpcName,
 				const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
@@ -447,6 +565,20 @@ namespace eProsima
 
 			return returnedValue;
 		}
+
+        void ClientRPC::deleteQuery(DDS::QueryCondition *query)
+        {
+            const char* const METHOD_NAME = "deleteQuery";
+
+            if(query != NULL)
+            {
+                m_replyDataReader->delete_readcondition(query);
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+            }
+        }
 
 	} // namespace DDSRPC
 } // namespace eProsima

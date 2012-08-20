@@ -10,6 +10,8 @@ namespace eProsima
 {
 	namespace DDSRPC
 	{
+        class AsyncThread;
+        class AsyncTask;
 
 		/**
 		 * \file
@@ -17,6 +19,12 @@ namespace eProsima
 		 */
 		class DDSRPC_WIN32_DLL_API Client
 		{
+            public:
+
+				DDS::DomainParticipant* getParticipant();
+
+                int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task);
+
 			protected:
 
 				/**
@@ -31,17 +39,6 @@ namespace eProsima
 				/// \brief The default destructor.
 				virtual ~Client();
 
-				/**
-				 * \brief This function creates and adds a new remote service.
-				 *
-				 * \param remoteServiceName The name of the new remote service. Max 49 charancters. Cannot be NULL.
-				 * \param requestTypeName The name of the type used to send the function's parameters. Cannot be NULL.
-				 * \param replyTypeName The name of the type used to receiver the function's return values. Cannot be NULL.
-				 * \return If the function works succesfully, 0 is returned. In other case, -1 is returned.
-				 */
-
-				DDS::DomainParticipant* getParticipant();
-
 			private:
 
 				/// \brief The domain identifier.
@@ -52,6 +49,8 @@ namespace eProsima
 				 * This pointer should never be NULL.
 				 */
 				DDS::DomainParticipant *m_participant;
+
+                AsyncThread *m_asyncThread;
 		};
 
 	} // namespace DDSRPC

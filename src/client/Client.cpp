@@ -1,4 +1,6 @@
 #include "client/Client.h"
+#include "client/AsyncThread.h"
+#include "exceptions/ResourceException.h"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::Client";
 
@@ -33,21 +35,43 @@ namespace eProsima
 				{
 					participantQOS.entity_factory.autoenable_created_entities = DDS::BOOLEAN_FALSE;
 					m_participant->set_qos(participantQOS);
+
+                    m_asyncThread = new AsyncThread();
+
+                    if(m_asyncThread != NULL)
+                    {
+                        if(m_asyncThread->init() == 0)
+                            return;
+                        else
+                        {
+                            printf("ERROR<%s:%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+                            delete m_asyncThread;
+                        }
+                    }
+                    else
+                        printf("ERROR<%s:%s>: create asynchronous thread\n", CLASS_NAME, METHOD_NAME);
 				}
+
+                TheParticipantFactory->delete_participant(m_participant);
 			}
 			else
 			{
 				printf("ERROR<%s:%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
 			}
 
-			//printf("INFO <DDSCSClient>: Created client with ID {%u, %u, %u}\n", m_clientId[0],
-			//	m_clientId[1], m_clientId[2]);
+            throw ResourceException();
 		}
 
 		Client::~Client()
 		{
 			const char* const METHOD_NAME = "~Client";
 			DDS::ReturnCode_t retcode;
+
+            if(m_asyncThread != NULL)
+            {
+                m_asyncThread->exit();
+                delete m_asyncThread;
+            }
 
 			if(m_participant != NULL)
 			{
@@ -63,6 +87,22 @@ namespace eProsima
 			}
 		}
 
+        int Client::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task)
+        {
+            const char* const METHOD_NAME = "addAsyncTask";
+            int returnedValue = -1;
+
+            if(query != NULL && task != NULL)
+            {
+                returnedValue = m_asyncThread->addTask(query, task);
+            }
+            else
+            {
+                printf("ERROR<%s::%S>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+            }
+
+            return returnedValue;
+        }
 
 		DDS::DomainParticipant* Client::getParticipant()
 		{ 

@@ -1,5 +1,6 @@
 #include "server/Server.h"
 #include "server/ServerRPC.h"
+#include "exceptions/ResourceException.h"
 
 #include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"
@@ -79,26 +80,22 @@ namespace eProsima
 
 					participantQOS.entity_factory.autoenable_created_entities = DDS::BOOLEAN_FALSE;
 					m_participant->set_qos(participantQOS);
+
+                    // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
+                    m_threadPoolManager = new ThreadPoolManager(threadCount);
+
+                    if(m_threadPoolManager != NULL)
+                        return;
+                    else
+                        printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
 				}
 			}
 			else
 			{
 				printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
-				goto fin;
 			}
 
-			// ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
-			m_threadPoolManager = new ThreadPoolManager(threadCount);
-
-			if(m_threadPoolManager == NULL)
-			{
-				printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
-				goto fin;
-			}
-
-			printf("INFO<%s::%s>: Created server with ID %d\n", CLASS_NAME, METHOD_NAME, serverId);
-		fin:
-			return;
+            throw ResourceException();
 		}
 
 		void Server::deleteRPCs()
