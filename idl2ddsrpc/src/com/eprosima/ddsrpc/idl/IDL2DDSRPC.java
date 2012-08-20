@@ -948,6 +948,7 @@ public class IDL2DDSRPC
     			// Client exclusive files
     			setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
     			setProjectFile(stringBuf, projectClient, "ClientRPCSupport", ifc.getName().length());
+    			setProjectFile(stringBuf, projectClient, "AsyncSupport", ifc.getName().length());
 
     			projectClient.setAttribute("sourceFiles", "Client.cxx");
 

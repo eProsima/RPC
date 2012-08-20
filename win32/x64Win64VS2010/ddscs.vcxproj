@@ -207,12 +207,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\client\AsyncTask.cpp" />
+    <ClCompile Include="..\..\src\client\AsyncThread.cpp" />
     <ClCompile Include="..\..\src\client\Client.cpp" />
     <ClCompile Include="..\..\src\client\ClientRPC.cpp" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
     <ClCompile Include="..\..\src\server\ServerRPC.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\client\AsyncTask.h" />
+    <ClInclude Include="..\..\include\client\AsyncThread.h" />
     <ClInclude Include="..\..\include\client\Client.h" />
     <ClInclude Include="..\..\include\client\ClientRPC.h" />
     <ClInclude Include="..\..\include\server\Server.h" />

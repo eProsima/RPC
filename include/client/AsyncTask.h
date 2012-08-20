@@ -1,6 +1,8 @@
 #ifndef _CLIENT_ASYNCTASK_H_
 #define _CLIENT_ASYNCTASK_H_
 
+#include "utils/ddsrpc.h"
+
 #include "ndds_namespace_cpp.h"
 
 namespace eProsima
@@ -10,7 +12,7 @@ namespace eProsima
         class Client;
         class ClientRPC;
 
-        class AsyncTask
+        class DDSRPC_WIN32_DLL_API AsyncTask
         {
             public:
 
