@@ -781,10 +781,14 @@ void qos_attribute() #qos_attr :
 
 /* Production 68 */
 
-void op_attribute() :
+void op_attribute() #op_attr :
+{Token t;}
 {}
 {
-  "oneway"
+(
+  t = "oneway"
+)
+{ jjtThis.jjtSetValue(t.image);}         
 }
 
 /* Production 69 */
