@@ -38,10 +38,11 @@ public interface IDLParserVisitor
   public Object visit(ASTqos_exprs node, Object data);
   public Object visit(ASTqos_expr node, Object data);
   public Object visit(ASTqos_attr node, Object data);
+  public Object visit(ASTop_attr node, Object data);
   public Object visit(ASTparams node, Object data);
   public Object visit(ASTparam node, Object data);
   public Object visit(ASTparam_attr node, Object data);
   public Object visit(ASTparam_type node, Object data);
   public Object visit(ASTID node, Object data);
 }
-/* JavaCC - OriginalChecksum=bd2601cc17120b9ab48c47b6741b38ee (do not edit this line) */
+/* JavaCC - OriginalChecksum=f05597502567f6d9878f53b20dd6ff5a (do not edit this line) */

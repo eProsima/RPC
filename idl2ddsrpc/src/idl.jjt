@@ -48,9 +48,9 @@ PARSER_BEGIN(IDLParser)
  * =====================================================================   *
  */
 
-package com.eprosima.ddscs.idl;
+package com.eprosima.ddsrpc.idl;
 
-import com.eprosima.ddscs.idl.ast.*;
+import com.eprosima.ddsrpc.idl.ast.*;
 
 public class IDLParser {
  
@@ -783,7 +783,6 @@ void qos_attribute() #qos_attr :
 
 void op_attribute() #op_attr :
 {Token t;}
-{}
 {
 (
   t = "oneway"

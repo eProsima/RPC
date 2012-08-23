@@ -38,11 +38,12 @@ public interface IDLParserTreeConstants
   public int JJTQOS_EXPRS = 14;
   public int JJTQOS_EXPR = 15;
   public int JJTQOS_ATTR = 16;
-  public int JJTPARAMS = 17;
-  public int JJTPARAM = 18;
-  public int JJTPARAM_ATTR = 19;
-  public int JJTPARAM_TYPE = 20;
-  public int JJTID = 21;
+  public int JJTOP_ATTR = 17;
+  public int JJTPARAMS = 18;
+  public int JJTPARAM = 19;
+  public int JJTPARAM_ATTR = 20;
+  public int JJTPARAM_TYPE = 21;
+  public int JJTID = 22;
 
 
   public String[] jjtNodeName = {
@@ -63,6 +64,7 @@ public interface IDLParserTreeConstants
     "qos_exprs",
     "qos_expr",
     "qos_attr",
+    "op_attr",
     "params",
     "param",
     "param_attr",
@@ -70,4 +72,4 @@ public interface IDLParserTreeConstants
     "ID",
   };
 }
-/* JavaCC - OriginalChecksum=cb3fa3ca35935ecc8a545d4332426990 (do not edit this line) */
+/* JavaCC - OriginalChecksum=4a81ccd692ee8dac1e15da211e4dc98c (do not edit this line) */

@@ -21,7 +21,7 @@ package com.eprosima.ddsrpc.idl;
 import com.eprosima.ddsrpc.idl.ast.*;
 
 public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLParserConstants {/*@bgen(jjtree)*/
-  protected JJTIDLParserState jjtree = new JJTIDLParserState();
+  protected static JJTIDLParserState jjtree = new JJTIDLParserState();
 
   final public ASTStart Start() throws ParseException {
                          /*@bgen(jjtree) Start */
@@ -1868,7 +1868,20 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
 
 /* Production 68 */
   final public void op_attribute() throws ParseException {
-    jj_consume_token(61);
+ /*@bgen(jjtree) op_attr */
+ ASTop_attr jjtn000 = new ASTop_attr(JJTOP_ATTR);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);Token t;
+    try {
+      t = jj_consume_token(61);
+  jjtree.closeNodeScope(jjtn000, true);
+  jjtc000 = false;
+  jjtn000.jjtSetValue(t.image);
+    } finally {
+  if (jjtc000) {
+    jjtree.closeNodeScope(jjtn000, true);
+  }
+    }
   }
 
 /* Production 69 */
@@ -2218,6 +2231,11 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
     return false;
   }
 
+  private boolean jj_3R_31() {
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
   private boolean jj_3R_28() {
     if (jj_scan_token(38)) return true;
     if (jj_scan_token(36)) return true;
@@ -2232,11 +2250,6 @@ public class IDLParser/*@bgen(jjtree)*/implements IDLParserTreeConstants, IDLPar
 
   private boolean jj_3R_32() {
     if (jj_3R_34()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_31() {
-    if (jj_scan_token(ID)) return true;
     return false;
   }
 
