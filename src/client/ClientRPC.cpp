@@ -1,9 +1,12 @@
 #include "client/ClientRPC.h"
 #include "client/Client.h"
+#include "client/AsyncTask.h"
+#include "utils/Typedefs.h"
 #include "eProsima_c/eProsimaMacros.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::ClientRPC";
 
@@ -51,13 +54,13 @@ namespace eProsima
 			}
 		}
 
-		ReturnMessage ClientRPC::execute(void *request, void *reply, unsigned int timeout)
+		ReturnMessage ClientRPC::execute(void *request, void *reply, long timeout)
 		{
 			const char* const METHOD_NAME = "execute";
 			ReturnMessage returnedValue = CLIENT_ERROR;
 			DDS::WaitSet *waitSet = NULL;
 			DDS::ReturnCode_t retCode;
-			DDS::Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
+            boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
 			unsigned int numSec = 0;
 			char value[50];
 
@@ -94,58 +97,68 @@ namespace eProsima
 
                         if(write(request) == DDS::RETCODE_OK)
                         {
-                            DDS::StringSeq stringSeq;
-
-                            stringSeq.ensure_length(5, 5);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                            stringSeq[0] = DDS::String_dup(value);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                            stringSeq[1] = DDS::String_dup(value);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                            stringSeq[2] = DDS::String_dup(value);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                            stringSeq[3] = DDS::String_dup(value);
-                            SNPRINTF(value, 50, "%u", numSec);
-                            stringSeq[4] = DDS::String_dup(value);
-
-                            DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                    "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
-                                    stringSeq);
-
-                            if(query != NULL)
+                            // Its not a oneway function.
+                            if(m_replySubscriber != NULL)
                             {
-                                retCode = waitSet->attach_condition(query);
+                                DDS::StringSeq stringSeq(5);
 
-                                if(retCode == DDS::RETCODE_OK)
+                                stringSeq.length(5);
+                                SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                                stringSeq[0] = strdup(value);
+                                SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                                stringSeq[1] = strdup(value);
+                                SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                                stringSeq[2] = strdup(value);
+                                SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                                stringSeq[3] = strdup(value);
+                                SNPRINTF(value, 50, "%u", numSec);
+                                stringSeq[4] = strdup(value);
+
+                                DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
+                                        "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                                        stringSeq);
+
+                                if(query != NULL)
                                 {
-                                    DDS::ConditionSeq conds;
-                                    retCode = waitSet->wait(conds, tTimeout);
+                                    retCode = waitSet->attach_condition(query);
 
                                     if(retCode == DDS::RETCODE_OK)
                                     {
-                                        if(conds.length() == 1 && conds[0] == query)
+                                        DDS::ConditionSeq conds;
+                                        DDS_TIMEOUT(ddsTimeout, tTimeout);
+
+                                        retCode = waitSet->wait(conds, ddsTimeout);
+
+                                        if(retCode == DDS::RETCODE_OK)
                                         {
-                                            returnedValue = takeReply(reply, query);
+                                            if(conds.length() == 1 && conds[0] == query)
+                                            {
+                                                returnedValue = takeReply(reply, query);
+                                            }
                                         }
+                                        else if(retCode == DDS::RETCODE_TIMEOUT)
+                                        {
+                                            printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
+                                            returnedValue = SERVER_TIMEOUT;
+                                        }
+
+                                        waitSet->detach_condition(query);
                                     }
-                                    else if(retCode == DDS::RETCODE_TIMEOUT)
+                                    else
                                     {
-                                        printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
-                                        returnedValue = SERVER_TIMEOUT;
+                                        printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
                                     }
 
-                                    waitSet->detach_condition(query);
+                                    m_replyDataReader->delete_readcondition(query);
                                 }
                                 else
                                 {
-                                    printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
+                                    printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
                                 }
-
-                                m_replyDataReader->delete_readcondition(query);
                             }
                             else
                             {
-                                printf("ERROR <%s::%s>: Cannot create query condition\n", CLASS_NAME, METHOD_NAME);
+                                returnedValue = OPERATION_SUCCESSFUL;
                             }
                         }
                         else
@@ -174,7 +187,7 @@ namespace eProsima
 			return returnedValue;
 		}
 
-        ReturnMessage ClientRPC::executeAsync(void *request, AsyncTask *task, unsigned int timeout)
+        ReturnMessage ClientRPC::executeAsync(void *request, AsyncTask *task, long timeout)
         {
 			const char* const METHOD_NAME = "executeAsync";
 			ReturnMessage returnedValue = CLIENT_ERROR;
@@ -208,19 +221,19 @@ namespace eProsima
 
                         if(write(request) == DDS::RETCODE_OK)
                         {
-                            DDS::StringSeq stringSeq;
+                            DDS::StringSeq stringSeq(5);
 
-                            stringSeq.ensure_length(5, 5);
+                            stringSeq.length(5);
                             SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                            stringSeq[0] = DDS::String_dup(value);
+                            stringSeq[0] = strdup(value);
                             SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                            stringSeq[1] = DDS::String_dup(value);
+                            stringSeq[1] = strdup(value);
                             SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                            stringSeq[2] = DDS::String_dup(value);
+                            stringSeq[2] = strdup(value);
                             SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                            stringSeq[3] = DDS::String_dup(value);
+                            stringSeq[3] = strdup(value);
                             SNPRINTF(value, 50, "%u", numSec);
-                            stringSeq[4] = DDS::String_dup(value);
+                            stringSeq[4] = strdup(value);
 
                             DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
                                     "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
@@ -228,7 +241,9 @@ namespace eProsima
 
                             if(query != NULL)
                             {
-                                if(m_client->addAsyncTask(query, task) == 0)
+                                // Set the timeout.
+                                task->setClientRPC(this);
+                                if(m_client->addAsyncTask(query, task, timeout) == 0)
                                     returnedValue = OPERATION_SUCCESSFUL;
                                 else
                                     printf("ERROR <%s::%s>: Cannot add asynchronous task\n", CLASS_NAME, METHOD_NAME);
@@ -264,13 +279,14 @@ namespace eProsima
             return returnedValue;
         }
 
-        ReturnMessage ClientRPC::checkServerConnection(DDS::WaitSet *waitSet, unsigned int timeout)
+        ReturnMessage ClientRPC::checkServerConnection(DDS::WaitSet *waitSet, long timeout)
         {
             const char* const METHOD_NAME = "checkServerConnection";
             ReturnMessage returnedValue = OPERATION_SUCCESSFUL;
 			DDS::StatusCondition *statusCondition = NULL;
 			DDS::ReturnCode_t retCode;
-			DDS::Duration_t tTimeout = {timeout/1000, (timeout%1000) * 1000000};
+            boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
+            DDS_TIMEOUT(ddsTimeout, tTimeout);
 
             if(waitSet != NULL)
             {
@@ -290,7 +306,8 @@ namespace eProsima
                         if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
                         {
                             DDS::ConditionSeq conds;
-                            retCode = waitSet->wait(conds, tTimeout);
+
+                            retCode = waitSet->wait(conds, ddsTimeout);
 
                             if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
                                 returnedValue = OPERATION_SUCCESSFUL;
@@ -304,7 +321,7 @@ namespace eProsima
                     }
                 }
 
-                if(returnedValue == OPERATION_SUCCESSFUL)
+                if(returnedValue == OPERATION_SUCCESSFUL && m_replySubscriber != NULL)
                 {
                     // Detect reply datawriter from server.
                     DDS::SubscriptionMatchedStatus sms;
@@ -312,7 +329,7 @@ namespace eProsima
 
                     if(sms.current_count < 1)
                     {
-                        returnedValue == NO_SERVER;
+                        returnedValue = NO_SERVER;
                         statusCondition = m_replyDataReader->get_statuscondition();
 
                         if(statusCondition != NULL)
@@ -322,7 +339,7 @@ namespace eProsima
                             if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
                             {
                                 DDS::ConditionSeq conds;
-                                retCode = waitSet->wait(conds, tTimeout);
+                                retCode = waitSet->wait(conds, ddsTimeout);
 
                                 if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
                                 {
@@ -362,11 +379,11 @@ namespace eProsima
 			{
 				if(rpcName != NULL)
 				{
-					if((m_requestPublisher = participant->create_publisher(DDS::PUBLISHER_QOS_DEFAULT, NULL, DDS::STATUS_MASK_NONE)) != NULL)
+					if((m_requestPublisher = participant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
 					{
 						if(m_requestPublisher->get_qos(publisherQos) == DDS::RETCODE_OK)
 						{
-							publisherQos.entity_factory.autoenable_created_entities = DDS::BOOLEAN_FALSE;
+							publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
 							m_requestPublisher->set_qos(publisherQos);
 
 							if(requestTypeName != NULL)
@@ -375,16 +392,16 @@ namespace eProsima
 								strncat(topicNames, "-", 1);
 								strncat(topicNames, requestTypeName, 49); topicNames[99] = '\0';
 
-								if((m_requestTopic = participant->create_topic(topicNames, requestTypeName, DDS::TOPIC_QOS_DEFAULT, NULL, DDS::STATUS_MASK_NONE)) != NULL)
+								if((m_requestTopic = participant->create_topic(topicNames, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
 								{
 									if(requestQosLibrary == NULL || requestQosProfile == NULL)
 									{
-										m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, DDS::DATAWRITER_QOS_DEFAULT, NULL, DDS::STATUS_MASK_NONE);
+										m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, DATAWRITER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
 									}
 									else
 									{
 										m_requestDataWriter = m_requestPublisher->create_datawriter_with_profile(m_requestTopic, requestQosLibrary, requestQosProfile,
-											NULL, DDS::STATUS_MASK_NONE);
+											NULL, STATUS_MASK_NONE);
 									}
 									if(m_requestDataWriter != NULL)
 									{                              
@@ -409,66 +426,67 @@ namespace eProsima
 											(wQos->protocol.virtual_guid.value[15] & 0xFF);
 										delete wQos;
 
-										if((m_replySubscriber = participant->create_subscriber(DDS::SUBSCRIBER_QOS_DEFAULT, NULL, DDS::STATUS_MASK_NONE)) != NULL)
-										{
-											if(m_replySubscriber->get_qos(subscriberQos) == DDS::RETCODE_OK)
-											{
-												subscriberQos.entity_factory.autoenable_created_entities = DDS::BOOLEAN_FALSE;
-												m_replySubscriber->set_qos(subscriberQos);
+                                        // Is not oneway operation
+                                        if(replyTypeName != NULL)
+                                        {
+                                            if((m_replySubscriber = participant->create_subscriber(DDS::SUBSCRIBER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                            {
+                                                if(m_replySubscriber->get_qos(subscriberQos) == DDS::RETCODE_OK)
+                                                {
+                                                    subscriberQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                                                    m_replySubscriber->set_qos(subscriberQos);
 
-												if(replyTypeName != NULL)
-												{
-													strncpy(topicNames, rpcName, 49); topicNames[49] = '\0';
-													strncat(topicNames, "-", 1);
-													strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
+                                                    strncpy(topicNames, rpcName, 49); topicNames[49] = '\0';
+                                                    strncat(topicNames, "-", 1);
+                                                    strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
 
-													if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, DDS::TOPIC_QOS_DEFAULT, NULL, DDS::STATUS_MASK_NONE)) != NULL)
-													{
-														SNPRINTF(filterLine, 250, "clientServiceId[0] = %u and clientServiceId[1] = %u and clientServiceId[2] = %u and clientServiceId[3] = %u",
-															m_clientServiceId[0], m_clientServiceId[1], m_clientServiceId[2], m_clientServiceId[3]);
-														if((m_replyFilter = participant->create_contentfilteredtopic(rpcName, m_replyTopic, filterLine, parameters)) != NULL)
-														{
-															if(replyQosLibrary == NULL || replyQosProfile == NULL)
-															{
-																m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS::DATAREADER_QOS_DEFAULT, NULL, DDS::STATUS_MASK_NONE);
-															}
-															else
-															{
-																m_replyDataReader = m_replySubscriber->create_datareader_with_profile(m_replyFilter, replyQosLibrary, replyQosProfile,
-																	NULL, DDS::STATUS_MASK_NONE);
-															}
+                                                    if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, DDS::TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                                    {
+                                                        SNPRINTF(filterLine, 250, "clientServiceId[0] = %u and clientServiceId[1] = %u and clientServiceId[2] = %u and clientServiceId[3] = %u",
+                                                                m_clientServiceId[0], m_clientServiceId[1], m_clientServiceId[2], m_clientServiceId[3]);
+                                                        if((m_replyFilter = participant->create_contentfilteredtopic(rpcName, m_replyTopic, filterLine, parameters)) != NULL)
+                                                        {
+                                                            if(replyQosLibrary == NULL || replyQosProfile == NULL)
+                                                            {
+                                                                m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS::DATAREADER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
+                                                            }
+                                                            else
+                                                            {
+                                                                m_replyDataReader = m_replySubscriber->create_datareader_with_profile(m_replyFilter, replyQosLibrary, replyQosProfile,
+                                                                        NULL, STATUS_MASK_NONE);
+                                                            }
 
-															if(m_replyDataReader != NULL)
-															{
-																return 1;
-															}
+                                                            if(m_replyDataReader != NULL)
+                                                            {
+                                                                return 1;
+                                                            }
 
-															participant->delete_contentfilteredtopic(m_replyFilter);
-														}
+                                                            participant->delete_contentfilteredtopic(m_replyFilter);
+                                                        }
 
-														participant->delete_topic(m_replyTopic);
-													}
-													else
-													{
-														printf("ERROR<%s::%s>: Cannot create the reply topic\n", CLASS_NAME, METHOD_NAME);
-													}
-												}
-												else
-												{
-													printf("ERROR<%s::%s>: Bad parameter (replyTypeName)\n", CLASS_NAME, METHOD_NAME);
-												}
-											}
-											else
-											{
-												printf("ERROR <%s::%s>: Cannot get the subscriber qos\n", CLASS_NAME, METHOD_NAME);
-											}
+                                                        participant->delete_topic(m_replyTopic);
+                                                    }
+                                                    else
+                                                    {
+                                                        printf("ERROR<%s::%s>: Cannot create the reply topic\n", CLASS_NAME, METHOD_NAME);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    printf("ERROR <%s::%s>: Cannot get the subscriber qos\n", CLASS_NAME, METHOD_NAME);
+                                                }
 
-											participant->delete_subscriber(m_replySubscriber);
-										}
-										else
-										{
-											printf("ERROR<%s::%s>: Cannot create the reply subscriber\n", CLASS_NAME, METHOD_NAME);
-										}
+                                                participant->delete_subscriber(m_replySubscriber);
+                                            }
+                                            else
+                                            {
+                                                printf("ERROR<%s::%s>: Cannot create the reply subscriber\n", CLASS_NAME, METHOD_NAME);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 1;
+                                        }
 
 										m_requestPublisher->delete_datawriter(m_requestDataWriter);
 									}
@@ -524,29 +542,37 @@ namespace eProsima
 				if(m_requestTopic->enable() == DDS::RETCODE_OK)
 				{
 					if(m_requestDataWriter->enable() == DDS::RETCODE_OK)
-					{
-						if(m_replySubscriber->enable() == DDS::RETCODE_OK)
-						{
-							if(m_replyTopic->enable() == DDS::RETCODE_OK)
-							{
-								if(m_replyDataReader->enable() == DDS::RETCODE_OK)
-								{
-									returnedValue = 1;
-								}
-								else
-								{
-									printf("ERROR<%s::%s>: Cannot enable reply datareader\n", CLASS_NAME, METHOD_NAME);
-								}
-							}
-							else
-							{
-								printf("ERROR<%s::%s>: Cannot enable reply topic\n", CLASS_NAME, METHOD_NAME);
-							}
-						}
-						else
-						{
-							printf("ERROR<%s::%s>: Cannot enable reply subscriber\n", CLASS_NAME, METHOD_NAME);
-						}
+                    {
+                        // if not operation oneway.
+                        if(m_replySubscriber != NULL)
+                        {
+                            if(m_replySubscriber->enable() == DDS::RETCODE_OK)
+                            {
+                                if(m_replyTopic->enable() == DDS::RETCODE_OK)
+                                {
+                                    if(m_replyDataReader->enable() == DDS::RETCODE_OK)
+                                    {
+                                        returnedValue = 1;
+                                    }
+                                    else
+                                    {
+                                        printf("ERROR<%s::%s>: Cannot enable reply datareader\n", CLASS_NAME, METHOD_NAME);
+                                    }
+                                }
+                                else
+                                {
+                                    printf("ERROR<%s::%s>: Cannot enable reply topic\n", CLASS_NAME, METHOD_NAME);
+                                }
+                            }
+                            else
+                            {
+                                printf("ERROR<%s::%s>: Cannot enable reply subscriber\n", CLASS_NAME, METHOD_NAME);
+                            }
+                        }
+                        else
+                        {
+                            returnedValue = 1;
+                        }
 					}
 					else
 					{

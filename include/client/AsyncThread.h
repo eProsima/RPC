@@ -1,10 +1,10 @@
 #ifndef _CLIENT_ASYNCTHREAD_H_
 #define _CLIENT_ASYNCTHREAD_H_
 
-#include <map>
+#include <vector>
 #include <boost/thread.hpp>
 
-#include "ndds_namespace_cpp.h"
+#include "utils/Version.h"
 
 namespace eProsima
 {
@@ -12,8 +12,9 @@ namespace eProsima
 	{
         class AsyncTask;
 
-        typedef std::map<DDS::QueryCondition*, AsyncTask*> AsyncTaskMap;
         typedef std::pair<DDS::QueryCondition*, AsyncTask*> AsyncTaskPair;
+        typedef std::pair<boost::posix_time::time_duration, AsyncTaskPair> AsyncListPair;
+        typedef std::vector<AsyncListPair> AsyncVector;
 
         class AsyncThread
         {
@@ -25,7 +26,7 @@ namespace eProsima
 
                 void exit();
 
-                int addTask(DDS::QueryCondition *query, AsyncTask *task);
+                int addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
 
             private:
 
@@ -33,13 +34,16 @@ namespace eProsima
 
                 boost::thread m_thread;
 
-                AsyncTaskMap m_map;
+                AsyncVector m_vector;
 
 				boost::mutex *m_mutex;
+                boost::condition_variable m_cond_wake_up;
 
                 DDS::GuardCondition *m_guardWaitSet;
 
                 DDS::WaitSet *m_waitSet;
+
+                DDS::Duration_t m_timeout;
 
                 bool m_exit;
         };

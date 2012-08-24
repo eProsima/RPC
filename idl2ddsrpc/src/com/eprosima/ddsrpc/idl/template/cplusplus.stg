@@ -122,7 +122,7 @@ doNotEditCplusplus(version="1.0") ::= <<
 varDecl(type, name, create, string) ::= <<
 $if(!voidInitMap.(type))$
 $if(typeInitMap.(type))$
-$typeInitMap.(type)$  $name$ $if(string)$ = NULL$endif$;
+$typeInitMap.(type)$  $name$ $if(create)$$if(string)$ = NULL$else$ = 0$endif$$endif$;
 $else$
 $type$ *$name$ = $if(create)$$type$PluginSupport_create_data()$else$NULL$endif$;
 $endif$    

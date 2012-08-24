@@ -39,3 +39,23 @@ private:                                                                        
 	TDataReader *replyDataReader;                                                 \
 }
 
+#define GENERIC_CLIENT_ONEWAY_RPC(TName, TDataWriter)                       \
+                                                                                  \
+class  TName : public eProsima::DDSRPC::ClientRPC                                                   \
+{                                                                                 \
+public:                                                                           \
+  TName(const char *rpcName, const char *requestTypeName,                         \
+        const char *requestQosLibrary, const char *requestQosProfile,             \
+        eProsima::DDSRPC::Client *client);           \
+  virtual ~TName();                                                               \
+  virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
+                                                                                  \
+protected:                                                                        \
+  virtual int registerInstance(void *data);                                       \
+  virtual DDS::ReturnCode_t write(void *data);                                    \
+                                                                                  \
+private:                                                                          \
+                                                                                  \
+    static const char* const CLASS_NAME;                                          \
+	TDataWriter *requestDataWriter;                                               \
+}

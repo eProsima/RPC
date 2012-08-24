@@ -8,28 +8,31 @@ $doNotEditC()$
 
 #include "client/AsyncTask.h"
 
-$taskDefs; separator=";\n"$;
+$taskDefs; separator=";\n"$$if(taskDefs)$;$endif$
 
 #endif // _$interfaceName$_ASYNC_SUPPORT_H_
 >>
 
-taskHeader(name) ::= <<
+taskHeader(interfaceName, name) ::= <<
 
-class $name$Task : public eProsima::DDSRPC::AsyncTask
+class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
         /// \brief The default constructor.
-        $name$Task($name$Callback callback, eProsima::DDSRPC::Client *client, eProsima::DDSRPC::ClientRPC *clientRPC);
+        $interfaceName$_$name$Task($interfaceName$_$name$ &obj,
+           eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
-        virtual ~$name$Task();
+        virtual ~$interfaceName$_$name$Task();
         
-        virtual void execute(DDS::QueryCondition *query);
+        virtual void execute(eProsima::DDSRPC::ReturnMessage);
         
-    private:
+        $interfaceName$_$name$& getObject();
         
-        $name$Callback m_callback;
+        private:
+        
+           $interfaceName$_$name$ &m_obj;
 }
 >>
 
@@ -41,31 +44,38 @@ definition(interfaceName, taskDecls) ::= <<
 $taskDecls; separator="\n"$
 >>
 
-taskDeclaration(name,inoutParams,outputParams) ::= <<
+taskDeclaration(interfaceName, name,inoutParams,outputParams) ::= <<
 
-$name$Task::$name$Task($name$Callback callback, eProsima::DDSRPC::Client *client, eProsima::DDSRPC::ClientRPC *clientRPC) :
-      AsyncTask(client, clientRPC), m_callback(callback)
+$interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$ &obj,
+   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    m_reply = (void*)$name$ReplyTypeSupport::create_data();
 }
 
-$name$Task::~$name$Task()
+$interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
+    $name$ReplyTypeSupport::delete_data(($name$Reply*)m_reply);
 }
 
-void $name$Task::execute(DDS::QueryCondition *query)
+$interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
+{
+    return m_obj;
+}
+
+void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message)
 {
     $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
-	$name$Reply *reply = $name$ReplyTypeSupport::create_data();
-	eProsima::DDSRPC::ReturnMessage retCode = getRPC()->takeReply(reply, query);
 	
-	if(retCode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		$name$ReplyUtils::extractTypeData(reply$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
-		m_callback($extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$);
+		$name$ReplyUtils::extractTypeData(($name$Reply*)m_reply$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
+		getObject().$name$($extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$);
 	}
-	
-	$name$ReplyTypeSupport::delete_data(reply);
+	else
+	{
+	    getObject().error(message);
+	}
 }
 
 >>

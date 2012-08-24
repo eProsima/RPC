@@ -34,7 +34,7 @@ group Proxy : cplusplus;
  * Uses:
  *  include - inherited(cplusplus)
  */ 
-header(interfaceName, qosLibrary, qosProfile, funNames, funDecls, funDeclsAsync, callbackDeclsAsync) ::= <<
+header(interfaceName, qosLibrary, qosProfile, funNames, funDecls, funDeclsAsync, classDeclsAsync) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_PROXY_H_
 #define _$interfaceName;format="toUpper"$_PROXY_H_
 
@@ -44,42 +44,47 @@ $doNotEditC()$
 #include "$interfaceName$RequestReplyUtils.h"
 #include "$interfaceName$ClientRPCSupport.h"
 
-$callbackDeclsAsync; separator=";\n"$;
+$classDeclsAsync; separator=";\n"$$if(classDeclsAsync)$;$endif$
 
 class $interfaceName$Proxy : public eProsima::DDSRPC::Client
 {
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Proxy(int domainId = 0, unsigned int timeout = 3000,
+        $interfaceName$Proxy(int domainId = 0, long timeout = 3000,
         const char *qosLibrary =  $if(qosLibrary)$"$qosLibrary$"$else$NULL$endif$, const char *qosProfile = $if(qosProfile)$"$qosProfile$"$else$NULL$endif$);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy();
-
-        unsigned int getTimeout();
-        void setTimeout(unsigned int millis);
         
         $funDecls; separator=";\n"$;
         
-        $funDeclsAsync; separator=";\n"$;
+        $funDeclsAsync; separator=";\n"$$if(funDeclsAsync)$;$endif$
         
     private:
         $funNames:{eProsima::DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
-        
-        unsigned int m_timeout;
 };
 
 #endif // _$interfaceName$_PROXY_H_
 >>
 
-callbackHeaderAsync(type,name,inoutParams,outputParams) ::= <<
-typedef void (*$name$Callback)($argDecl(inoutParams);separator=", "$ $if(inoutParams)$$if(outputParams)$,
+classHeaderAsync(interfaceName,type,name,inoutParams,outputParams) ::= <<
+class $interfaceName$_$name$
+{
+    public:
+        virtual void $name$($argDecl(inoutParams);separator=", "$ $if(inoutParams)$$if(outputParams)$,
               $endif$$endif$$argDecl(outputParams);separator=", "$)
+        {
+        }
+   
+        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        {
+        }
+}
 >>
 
-functionHeaderAsync(type,class,name,inputParams,inoutParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($name$Callback $name$callback, $argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$,
+functionHeaderAsync(interfaceName,type,class,name,inputParams,inoutParams) ::= << 
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj, $argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$,
               $endif$$endif$$argDecl(inoutParams);separator=", "$)
 >>
 
@@ -100,14 +105,14 @@ $functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($name$Callbac
  *  nextParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
+functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
 $functionHeader(class={$interfaceName$Proxy},...)$ 
 {
-    $varDecl(type=type, name="returnedValue", create="yes")$
+    $varDecl(type=type, name="returnedValue")$
     $name$Request *instance = NULL;
-    $name$Reply *retInstance = $name$ReplyTypeSupport::create_data();
+    $if(!isOneway)$$name$Reply *retInstance = $name$ReplyTypeSupport::create_data();$endif$
     instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
-    returnedValue = $name$_Service->execute(instance, retInstance, m_timeout);
+    returnedValue = $name$_Service->execute(instance, $if(!isOneway)$retInstance$else$NULL$endif$, getTimeout());
     switch (returnedValue)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
@@ -126,12 +131,14 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             printf("SERVER WITHOUT RESOURCES\n");
             break;
         case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
+            $if(!isOneway)$
             $name$ReplyUtils::extractTypeData(retInstance$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
             //$name$ReplyTypeSupport::print_data(retInstance);          
+            $endif$
             break;
     };
     
-    $name$ReplyTypeSupport::delete_data(retInstance);
+    $if(!isOneway)$$name$ReplyTypeSupport::delete_data(retInstance);$endif$
     $name$RequestTypeSupport::delete_data(instance);
 
     $if(!voidInitMap.(type))$
@@ -143,12 +150,12 @@ $functionHeader(class={$interfaceName$Proxy},...)$
 functionImplAsync(interfaceName,type,name,inputParams,inoutParams) ::= <<
 $functionHeaderAsync(class={$interfaceName$Proxy},...)$ 
 {
-    $varDecl(type=type, name="returnedValue", create="yes")$
+    $varDecl(type=type, name="returnedValue")$
     $name$Request *instance = NULL;
-    $name$Task *task = NULL;
+    $interfaceName$_$name$Task *task = NULL;
     instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
-    task = new $name$Task($name$callback, this, $name$_Service);
-    returnedValue = $name$_Service->executeAsync(instance, task, m_timeout);
+    task = new $interfaceName$_$name$Task(obj, this);
+    returnedValue = $name$_Service->executeAsync(instance, task, getTimeout());
     switch (returnedValue)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
@@ -187,10 +194,9 @@ $doNotEditC()$
 #include "$interfaceName$AsyncSupport.h"
 
 
-$interfaceName$Proxy::$interfaceName$Proxy(int domainId, unsigned int timeout
-, const char *qosLibrary, const char *qosProfile) : Client(domainId, qosLibrary, qosProfile)
+$interfaceName$Proxy::$interfaceName$Proxy(int domainId, long timeout
+, const char *qosLibrary, const char *qosProfile) : Client(domainId, timeout, qosLibrary, qosProfile)
 {
-    m_timeout = timeout;
     $createRPC(funNames); separator="\n"$
 }
 
@@ -198,16 +204,6 @@ $interfaceName$Proxy::~$interfaceName$Proxy()
 {
     $funNames:{delete $it.name$_Service;}; separator="\n"$
 }
-
-unsigned int $interfaceName$Proxy::getTimeout()
-{
-  return m_timeout;
-}
- 
- void $interfaceName$Proxy::setTimeout(unsigned int millis)
- {
-    m_timeout = millis;
- }
 
 $funImpls; separator="\n"$
 
@@ -264,14 +260,12 @@ main(interfaceName, invocations) ::= <<
 int main()
 {
     int domainId = 0;
-    unsigned int timeoutInMillis = 4000;
-    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMillis);
-    DDS_Duration_t period = {5,0};
+    unsigned int timeoutInMilliseconds = 4000;
+    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMilliseconds);
     
 $invocations; separator="\n"$
 
    delete(proxy);
-   NDDSUtility::sleep(period);
 }
 >>
 
@@ -295,11 +289,11 @@ $invocations; separator="\n"$
 createRPC(funNames) ::= <<
 $funNames:{this->$it.name$_Service = new $it.name$ClientRPC("$it.name$",
                               $it.name$RequestUtils::registerType(getParticipant()),
-                              $if(it.requestQosLibrary)$"$it.requestQosLibrary$"$else$NULL$endif$,
-                              $if(it.requestQosProfile)$"$it.requestQosProfile$"$else$NULL$endif$,
+                              $if(it.requestQos)$"$it.requestQos$"$else$NULL, NULL$endif$,
+                              $if(!it.isOneway)$
                               $it.name$ReplyUtils::registerType(getParticipant()),
-                              $if(it.replyQosLibrary)$"$it.replyQosLibrary$"$else$NULL$endif$,
-                              $if(it.replyQosProfile)$"$it.replyQosProfile$"$else$NULL$endif$,
+                              $if(it.replyQos)$"$it.replyQos$"$else$NULL, NULL$endif$,
+                              $endif$
                               this);
 }$
 >>

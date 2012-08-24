@@ -94,12 +94,26 @@ public class CplusplusVisitor implements IDLParserVisitor {
 		assert data instanceof Interface : "Data is not an Interface instance";
 		Operation op = new Operation();
 		visit(((SimpleNode) node), op);
+		
 		if (data != null && data instanceof Interface) {
 			if(op.getReturnType() == null){
 				op.setReturnType("void");
 			}
 			((Interface) data).add(op);
 		}
+		
+		// Check oneway restrictions.
+		if(op.isOneway())
+		{
+			if(op.getInoutParams().size() > 0 ||
+					op.getOutputParams().size() > 0 ||
+					!op.getReturnType().equals("void"))
+			{
+				System.out.println("ERROR: Operation " + op.getName() + " is defined as oneway but it uses output parameters");
+				((Interface)data).getModule().setError();
+			}
+		}
+		
 		return data;
 	}
 	
@@ -174,6 +188,18 @@ public class CplusplusVisitor implements IDLParserVisitor {
 		 String returnedValue = node.jjtGetValue().toString();
 
 		 return returnedValue;
+	 }
+	 
+	 public Object visit(ASTop_attr node, Object op)
+	 {
+		 Operation operation = (Operation)op;
+		 
+		 if(node.jjtGetValue().toString().equals("oneway"))
+		 {
+			 operation.setIsOneway(true);
+		 }
+		 
+		 return op;
 	 }
 
 	/*

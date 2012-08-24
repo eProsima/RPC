@@ -27,14 +27,22 @@
 
 
 TName::TName(const char *rpcName, eProsima::DDSRPC::Server* server, const char *requestTypeName,
-        const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
-        const char *replyQosLibrary, const char *replyQosProfile,
+        const char *requestQosLibrary, const char *requestQosProfile,
+#ifndef IS_ONEWAY
+        const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile,
+#endif
         eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant) :
-        eProsima::DDSRPC::ServerRPC(rpcName, server, requestTypeName, requestQosLibrary,
-                            requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile,
+        eProsima::DDSRPC::ServerRPC(rpcName, server, requestTypeName, requestQosLibrary, requestQosProfile,
+#ifndef IS_ONEWAY
+                            replyTypeName, replyQosLibrary, replyQosProfile,
+#else
+                            NULL, NULL, NULL,
+#endif
                             execFunction, serverParticipant)
 {
+#ifndef IS_ONEWAY
 	replyFooDataWriter    = TDataWriter::narrow(m_replyDataWriter);
+#endif
 	requestFooDataReader  = TDataReader::narrow(m_requestDataReader);
 }
 
@@ -45,6 +53,7 @@ TName::~TName()
 int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessage errorMessage)
 {
     int returnedValue = -1;
+#ifndef IS_ONEWAY
     TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : TDataReplyTypeSupport::create_data();
     TDataRequest *requestData = (TDataRequest*)request;
 	//CHECK
@@ -79,6 +88,7 @@ int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessag
     {
         printf("ERROR<sendReply>: Bad parameter (requestData)\n");
     }
+#endif
     return returnedValue;
 }
 

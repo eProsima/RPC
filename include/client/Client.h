@@ -3,8 +3,7 @@
 
 #include "utils/ddsrpc.h"
 #include "utils/Messages.h"
-
-#include "ndds_namespace_cpp.h"
+#include "utils/Version.h"
 
 namespace eProsima
 {
@@ -23,7 +22,11 @@ namespace eProsima
 
 				DDS::DomainParticipant* getParticipant();
 
-                int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task);
+                int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
+
+                long getTimeout();
+
+                void setTimeout(long milliseconds);
 
 			protected:
 
@@ -33,8 +36,7 @@ namespace eProsima
 				 * \param The client identifier.
 				 * \param domainId The domain id's value that the client will have.
 				 */
-				Client(int domainId = 0, const char *qosLibrary = NULL,
-								 const char *qosProfile = NULL);
+				Client(int domainId = 0, long milliseconds = 3000);
 
 				/// \brief The default destructor.
 				virtual ~Client();
@@ -51,6 +53,8 @@ namespace eProsima
 				DDS::DomainParticipant *m_participant;
 
                 AsyncThread *m_asyncThread;
+
+                long m_timeout;
 		};
 
 	} // namespace DDSRPC

@@ -3,8 +3,7 @@
 
 #include "utils/ddsrpc.h"
 #include "utils/Messages.h"
-
-#include "ndds_namespace_cpp.h"
+#include "utils/Version.h"
 
 namespace boost
 {
@@ -38,9 +37,9 @@ namespace eProsima
 
 				/**
 				 */
-				ReturnMessage execute(void *request, void* reply, unsigned int timeout);
+				ReturnMessage execute(void *request, void* reply, long timeout);
 
-				ReturnMessage executeAsync(void *request, AsyncTask *task, unsigned int timeout);
+				ReturnMessage executeAsync(void *request, AsyncTask *task, long timeout);
 
                 void deleteQuery(DDS::QueryCondition *query);
 
@@ -58,7 +57,7 @@ namespace eProsima
 
 				int enableEntities();
 
-                ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, unsigned int timeout);
+                ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
 
 				/**
 				 * \brief This field stores the name of the service.

@@ -8,6 +8,7 @@ public class Module implements Named {
 	private String name;
 	private List type_declarations;
 	private Interface ifc;
+	private boolean error = false;
 	
 
 	public Module(){
@@ -88,5 +89,15 @@ public class Module implements Named {
 	public void setIfc(Interface ifc) {
 		this.ifc = ifc;
 		this.ifc.setModule(this);
+	}
+	
+	public boolean getError()
+	{
+		return error;
+	}
+	
+	public void setError()
+	{
+		error = true;
 	}
 }

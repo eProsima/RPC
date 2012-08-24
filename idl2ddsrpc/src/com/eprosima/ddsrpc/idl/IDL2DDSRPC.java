@@ -118,7 +118,7 @@ public class IDL2DDSRPC
                     ddsGen(command, idlFile);
                     Module root = parse(idlFile);
 
-                    if(root != null)
+                    if(root != null && root.getError() == false)
                     {
                         returnedValue = gen(root);
                     }
@@ -141,8 +141,7 @@ public class IDL2DDSRPC
             printHelp();
         }	
 
-        if(returnedValue != 0)
-            throw new Exception();
+        System.exit(returnedValue);
     }
     // Need to use envp to pass a Path environment variable pointing to $NDDSHOME/scripts
     // if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
@@ -326,6 +325,7 @@ public class IDL2DDSRPC
             // Templates for main program generation
             StringTemplate mainTemplate = templatesGroup.getInstanceOf("main");
             StringTemplate funCall = templatesGroup.getInstanceOf("functionCall");
+            boolean one_invocation = false;  //Check that first operation was added.
 
             //Template for Header generation
             StringTemplate header = templatesGroup.getInstanceOf(headerTemplateId);
@@ -345,25 +345,45 @@ public class IDL2DDSRPC
             StringTemplate funDef = templatesGroup.getInstanceOf(functionTemplateId);
             
             StringTemplate funDeclAsync = null;
-            StringTemplate callbackDeclAsync = null;
+            StringTemplate classDeclAsync = null;
             StringTemplate funDefAsync = null;
             
             if(withAsync)
             {
             	funDeclAsync = templatesGroup.getInstanceOf(functionHeaderTemplateId + "Async");
-            	callbackDeclAsync = templatesGroup.getInstanceOf("callbackHeaderAsync");
+            	classDeclAsync = templatesGroup.getInstanceOf("classHeaderAsync");
             	funDefAsync = templatesGroup.getInstanceOf(functionTemplateId + "Async");
             }
 
             Operation op = null;
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
+            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); )
+            {						
                 op = (Operation) iter.next();
                 header.setAttribute("funNames", op.getName());
-                definition.setAttribute("funNames.{name, requestQosLibrary, requestQosProfile, replyQosLibrary, replyQosProfile}",
-                		op.getName(), (op.getRequestLibrary() != null ? op.getRequestLibrary() : ifc.getQosLibrary()),
-                		(op.getRequestProfile() != null ? op.getRequestProfile() : ifc.getQosProfile()),
-                		(op.getReplyLibrary() != null ? op.getReplyLibrary() : ifc.getQosLibrary()),
-                		(op.getReplyProfile() != null ? op.getReplyProfile() : ifc.getQosProfile()));			
+                
+                String requestQos = null;
+                if(op.getRequestLibrary() != null && op.getRequestProfile() != null)
+                {
+                	requestQos = op.getRequestLibrary() + "\" , \"" + op.getRequestProfile();
+                }
+                else if(ifc.getQosLibrary() != null && ifc.getQosProfile() != null)
+                {
+                	requestQos = ifc.getQosLibrary() + "\" , \"" + ifc.getQosProfile();
+                }
+                
+                String replyQos = null;
+                if(op.getReplyLibrary() != null && op.getReplyProfile() != null)
+                {
+                	replyQos = op.getReplyLibrary() + "\" , \"" + op.getReplyProfile();
+                }
+                else if(ifc.getQosLibrary() != null && ifc.getQosProfile() != null)
+                {
+                	requestQos = ifc.getQosLibrary() + "\" , \"" + ifc.getQosProfile();
+                }
+                
+                definition.setAttribute("funNames.{name, isOneway, requestQos, replyQos}",
+                		op.getName(), (op.isOneway() ? "true" : null),
+                		requestQos, replyQos);			
 
                 // Function Declaration
 
@@ -377,10 +397,12 @@ public class IDL2DDSRPC
                 
                 if(withAsync)
                 {
+                	funDeclAsync.setAttribute("interfaceName", ifc.getName());
                 	funDeclAsync.setAttribute("type", returnType);
                 	funDeclAsync.setAttribute("name", op.getName());
-                	callbackDeclAsync.setAttribute("type", returnType);
-                	callbackDeclAsync.setAttribute("name", op.getName());
+                	classDeclAsync.setAttribute("interfaceName", ifc.getName());
+                	classDeclAsync.setAttribute("type", returnType);
+                	classDeclAsync.setAttribute("name", op.getName());
                 	funDefAsync.setAttribute("type", returnType);
                 	funDefAsync.setAttribute("name", op.getName());
                 	funDefAsync.setAttribute("interfaceName", ifc.getName());
@@ -415,7 +437,7 @@ public class IDL2DDSRPC
                     if(withAsync)
                     {
                     	funDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
-                    	callbackDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
+                    	classDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
                     	funDefAsync.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
                         		(iop.getType().equals("string") ? "yes" : null));
                     }
@@ -428,7 +450,7 @@ public class IDL2DDSRPC
                     funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
                     if(withAsync)
                     {
-                    	callbackDeclAsync.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
+                    	classDeclAsync.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
                     }
                     funDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
                     		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));				
@@ -441,29 +463,36 @@ public class IDL2DDSRPC
                     funDecl.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
                     if(withAsync)
                     {
-                    	callbackDeclAsync.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+                    	classDeclAsync.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
                     }
                     funDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
                     		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
                     funCall.setAttribute("outputParams.{type, name,string}", op.getReturnType(), op.getName()+"_ret",
                     		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
                 }
+                // In case of oneway function, set the property
+                if(op.isOneway())
+                	funDef.setAttribute("isOneway", "true");
 
                 header.setAttribute("funDecls", funDecl.toString());
                 definition.setAttribute("funImpls", funDef.toString());
-                if(withAsync)
+                if(withAsync && !op.isOneway())
                 {
                 	header.setAttribute("funDeclsAsync", funDeclAsync.toString());
-                	header.setAttribute("callbackDeclsAsync", callbackDeclAsync.toString());
+                	header.setAttribute("classDeclsAsync", classDeclAsync.toString());
                 	definition.setAttribute("funImplsAsync", funDefAsync.toString());
                 }
-                mainTemplate.setAttribute("invocations", funCall.toString());
+                if(!one_invocation)
+                {
+                	mainTemplate.setAttribute("invocations", funCall.toString());
+                	one_invocation = true;
+                }
                 funDecl.reset();
                 funDef.reset();
                 if(withAsync)
                 {
                 	funDeclAsync.reset();
-                	callbackDeclAsync.reset();
+                	classDeclAsync.reset();
                 	funDefAsync.reset();
                 }
                 funCall.reset();
@@ -496,6 +525,7 @@ public class IDL2DDSRPC
                         writeFile(externalDir.toString(), mainTemplate);
                         externalDir.delete(externalDirLength, externalDir.length());						
                     }
+                    
                     returnedValue = 0;
                 }
             }
@@ -557,8 +587,8 @@ public class IDL2DDSRPC
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
             {						
                 op = (Operation) iter.next();
-                header.setAttribute("funNames", op.getName());
-                definition.setAttribute("funNames", op.getName());
+                header.setAttribute("funNames.{name, isOneway}", op.getName(), (op.isOneway() ? "true" : null));
+                definition.setAttribute("funNames.{name, isOneway}", op.getName(), (op.isOneway() ? "true" : null));
             }
 
             externalDir.append(ifc.getName()).append(side).append("RPCSupport.h");
@@ -605,6 +635,9 @@ public class IDL2DDSRPC
             Operation op = null;
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
             {						
+            	taskDecl.setAttribute("interfaceName", ifc.getName());
+            	taskDef.setAttribute("interfaceName", ifc.getName());
+            	
                 op = (Operation) iter.next();
                 taskDecl.setAttribute("name", op.getName());
                 taskDef.setAttribute("name", op.getName());
@@ -629,8 +662,12 @@ public class IDL2DDSRPC
                     		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
                 }
                 
-                header.setAttribute("taskDefs", taskDecl.toString());
-                definition.setAttribute("taskDecls", taskDef.toString());
+                // If function is not oneway
+                if(!op.isOneway())
+                {
+                	header.setAttribute("taskDefs", taskDecl.toString());
+                	definition.setAttribute("taskDecls", taskDef.toString());
+                }
                 taskDecl.reset();
                 taskDef.reset();
             }
@@ -702,10 +739,14 @@ public class IDL2DDSRPC
                     definitionReply.setAttribute("string", (typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
                 }
                 headerFile.setAttribute("classes", headerRequest.toString());
-                headerFile.setAttribute("classes", headerReply.toString());
-
                 definitionFile.setAttribute("classes", definitionRequest.toString());
-                definitionFile.setAttribute("classes", definitionReply.toString());
+
+                // Operation is not oneway.
+                if(!op.isOneway())
+                {
+                	headerFile.setAttribute("classes", headerReply.toString());
+                	definitionFile.setAttribute("classes", definitionReply.toString());
+                }
 
                 headerRequest.reset();
                 headerReply.reset();
@@ -767,7 +808,9 @@ public class IDL2DDSRPC
                     reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
                 }
                 theFile.setAttribute("types", request.toString());
-                theFile.setAttribute("types", reply.toString());
+                // if it is not a oneway function
+                if(!op.isOneway())
+                	theFile.setAttribute("types", reply.toString());
                 request.reset();
                 reply.reset();
             }
@@ -1017,10 +1060,13 @@ public class IDL2DDSRPC
     public static Module parse(String file) {
         IDLParser parser = null;
         Module root = null;
+        
         System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
-        try {
+        try
+        {
             parser = new IDLParser(new java.io.FileInputStream(file));
-        } catch (java.io.FileNotFoundException e) {
+        } catch (java.io.FileNotFoundException e)
+        {
             System.out.println("IDL Parser Version 0.1:  File " + file + " not found.");
         }
 
@@ -1053,42 +1099,60 @@ public class IDL2DDSRPC
             }
             else if(arg.equals("-os"))
             {
-                osOption = args[count++];
+            	if(count < args.length)
+            	{
+            		osOption = args[count++];
 
-                if(!osOption.equals("Win32") &&
-                        !osOption.equals("Linux"))
-                {
-                    System.out.println("ERROR: Unknown OS " + osOption);
-                    return false;
-                }
+            		if(!osOption.equals("Win32") &&
+            				!osOption.equals("Linux"))
+            		{
+            			System.out.println("ERROR: Unknown OS " + osOption);
+            			return false;
+            		}
+            	}
+            	else
+            		return false;
             }
             else if(arg.equals("-example"))
             {
-            	exampleOption = args[count++];
-            	
-            	if(!exampleOption.equals("i86Win32VS2010") &&
-            			!exampleOption.equals("x64Win64VS2010") &&
-            			!exampleOption.equals("i86Linux2.6gcc4.1.2") &&
-            			!exampleOption.equals("i86Linux2.6gcc4.4.3") &&
-            			!exampleOption.equals("x64Linux2.6gcc4.5.1"))
+            	if(count < args.length)
             	{
-            		System.out.println("ERROR: Unknown example arch " + exampleOption);
-            		return false;
+            		exampleOption = args[count++];
+
+            		if(!exampleOption.equals("i86Win32VS2010") &&
+            				!exampleOption.equals("x64Win64VS2010") &&
+            				!exampleOption.equals("i86Linux2.6gcc4.1.2") &&
+            				!exampleOption.equals("i86Linux2.6gcc4.4.3") &&
+            				!exampleOption.equals("x64Linux2.6gcc4.5.1"))
+            		{
+            			System.out.println("ERROR: Unknown example arch " + exampleOption);
+            			return false;
+            		}
             	}
+            	else
+            		return false;
             }
             else if(arg.equals("-language"))
             {
-                languageOption = args[count++];
+            	if(count < args.length)
+            	{
+            		languageOption = args[count++];
 
-                if(!languageOption.equals("C++"))
-                {
-                    System.out.println("ERROR: Unknown language " +  languageOption);
-                    return false;
-                }
+            		if(!languageOption.equals("C++"))
+            		{
+            			System.out.println("ERROR: Unknown language " +  languageOption);
+            			return false;
+            		}
+            	}
+            	else
+            		return false;
             }
             else if(arg.equals("-ppPath"))
             {
-                ppPath = args[count++];
+            	if(count < args.length)
+            		ppPath = args[count++];
+            	else
+            		return false;
             }
             else if(arg.equalsIgnoreCase("-ppDisable"))
             {
@@ -1100,8 +1164,13 @@ public class IDL2DDSRPC
             }
             else if(arg.equals("-d"))
             {
-                externalDir = new StringBuffer(args[count++]);
-                externalDirLength = externalDir.length();
+            	if(count < args.length)
+            	{
+            		externalDir = new StringBuffer(args[count++]);
+            		externalDirLength = externalDir.length();
+            	}
+            	else
+            		return false;
             }
             else
             {
@@ -1123,7 +1192,7 @@ public class IDL2DDSRPC
 
     public static void printHelp()
     {
-        System.out.print("ddscs help:\n\nUsage: ddscs [options] <IDL file>\nOptions:\n" +
+        System.out.print("ddsrpc help:\n\nUsage: ddsrpc [options] <IDL file>\nOptions:\n" +
                 "   -example : Generate solution for specific platform (example: x64Win64VS2010)\n" +
                 "   -language                : Programming language (C++).\n" +
                 "   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +

@@ -43,7 +43,7 @@ $doNotEditC()$
 #include "utils/GenericClientRPC.h"
 #include "$interfaceName$RequestReplySupport.h"
 
-$funNames:{$ClientRPCHeader(name=it)$};separator="\n"$
+$funNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 #endif  // _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 >>
@@ -68,7 +68,7 @@ $doNotEditC()$
 #include "utils/GenericServerRPC.h"
 #include "$interfaceName$RequestReplySupport.h"
 
-$funNames:{$ServerRPCHeader(name=it)$};separator="\n"$
+$funNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 #endif  // _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 >>
@@ -89,7 +89,7 @@ $doNotEditC()$
 
 #include "$interfaceName$ClientRPCSupport.h"
 
-$funNames:{$ClientRPCImpl(name = it)$};separator="\n"$
+$funNames:{$ClientRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 >>
 
@@ -110,7 +110,7 @@ $doNotEditC()$
 #include "server/Server.h"
 #include "$interfaceName$ServerRPCSupport.h"
 
-$funNames:{$ServerRPCImpl(name = it)$};separator="\n"$
+$funNames:{$ServerRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 >>
 
@@ -130,9 +130,9 @@ $funNames:{$ServerRPCImpl(name = it)$};separator="\n"$
  *
  * Uses:
  */ 
-ClientRPCHeader(name) ::= <<
+ClientRPCHeader(name,isOneway) ::= <<
 
-GENERIC_CLIENT_RPC($name$ClientRPC, $name$RequestDataWriter, $name$ReplyDataReader);
+$if(!isOneway)$GENERIC_CLIENT_RPC$else$GENERIC_CLIENT_ONEWAY_RPC$endif$($name$ClientRPC, $name$RequestDataWriter$if(!isOneway)$, $name$ReplyDataReader$endif$);
 
 >>
 
@@ -144,9 +144,9 @@ GENERIC_CLIENT_RPC($name$ClientRPC, $name$RequestDataWriter, $name$ReplyDataRead
  *
  * Uses:
  */ 
-ServerRPCHeader(name) ::= <<
+ServerRPCHeader(name,isOneway) ::= <<
 
-GENERIC_SERVER_RPC($name$ServerRPC, $name$ReplyDataWriter, $name$RequestDataReader);
+$if(!isOneway)$GENERIC_SERVER_RPC$else$GENERIC_SERVER_ONEWAY_RPC$endif$($name$ServerRPC$if(!isOneway)$, $name$ReplyDataWriter$endif$, $name$RequestDataReader);
 
 >>
 
@@ -158,7 +158,7 @@ GENERIC_SERVER_RPC($name$ServerRPC, $name$ReplyDataWriter, $name$RequestDataRead
  *
  * Uses:
  */ 
-ClientRPCImpl(name) ::= <<
+ClientRPCImpl(name,isOneway) ::= <<
 
 /* Defines */
 #define TName            $name$ClientRPC
@@ -167,6 +167,7 @@ ClientRPCImpl(name) ::= <<
 #define TDataSeq         $name$ReplySeq
 #define TDataReader      $name$ReplyDataReader
 #define TDataWriter      $name$RequestDataWriter
+$if(isOneway)$#define IS_ONEWAY$endif$
 
 
 #include "utils/GenericClientRPC.gen"
@@ -178,6 +179,7 @@ ClientRPCImpl(name) ::= <<
 #undef TDataSeq
 #undef TDataReader
 #undef TDataWriter
+$if(isOneway)$#undef IS_ONEWAY$endif$
 
 >>
 
@@ -189,7 +191,7 @@ ClientRPCImpl(name) ::= <<
  *
  * Uses:
  */ 
-ServerRPCImpl(name) ::= <<
+ServerRPCImpl(name,isOneway) ::= <<
 
 /* Defines */
 #define TName                   $name$ServerRPC
@@ -198,6 +200,7 @@ ServerRPCImpl(name) ::= <<
 #define TData                   $name$
 #define TDataReader             $name$RequestDataReader
 #define TDataWriter             $name$ReplyDataWriter
+$if(isOneway)$#define IS_ONEWAY$endif$
 
 
 #include "utils/GenericServerRPC.gen"
@@ -209,5 +212,6 @@ ServerRPCImpl(name) ::= <<
 #undef TData
 #undef TDataReader
 #undef TDataWriter
+$if(isOneway)$#undef IS_ONEWAY$endif$
 
 >>

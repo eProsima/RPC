@@ -2,8 +2,8 @@
 #define _CLIENT_ASYNCTASK_H_
 
 #include "utils/ddsrpc.h"
-
-#include "ndds_namespace_cpp.h"
+#include "utils/Messages.h"
+#include "utils/Version.h"
 
 namespace eProsima
 {
@@ -16,13 +16,24 @@ namespace eProsima
         {
             public:
 
-                AsyncTask(Client *client, ClientRPC *clientRPC);
+                AsyncTask(Client *client);
 
-				virtual void execute(DDS::QueryCondition *query) = 0;
+                ~AsyncTask();
+
+				virtual void execute(ReturnMessage message) = 0;
 
                 ClientRPC* getRPC();
 
+				void execute(ReturnMessage message, DDS::QueryCondition *query);
+
+                void setClientRPC(ClientRPC *clientRPC);
+
+            protected:
+
+                void *m_reply;
+
             private:
+
 
                 Client *m_client;
                 ClientRPC *m_clientRPC;

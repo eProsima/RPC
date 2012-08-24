@@ -9,32 +9,23 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
-		Client::Client(int domainId, const char *qosLibrary,
-								 const char *qosProfile) : m_domainId(domainId), m_participant(NULL)
+		Client::Client(int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
+        m_timeout(milliseconds)
 		{
 			const char* const METHOD_NAME = "Client";
-			DDS::DomainParticipantQos participantQOS;
+			DDS::DomainParticipantQos participantQos;
 
 			// Creating the domain participant which is associated with the client
-			if(qosLibrary == NULL || qosProfile == NULL)
-			{
-				m_participant = TheParticipantFactory->create_participant(
-						m_domainId, DDS::PARTICIPANT_QOS_DEFAULT, 
-						NULL /* listener */, DDS::STATUS_MASK_NONE);
-			}
-			else
-			{
-				m_participant = TheParticipantFactory->create_participant_with_profile(
-					m_domainId, qosLibrary, qosProfile,
-					NULL /* listener */, DDS::STATUS_MASK_NONE);
-			}
+            m_participant = TheParticipantFactory->create_participant(
+                    m_domainId, PARTICIPANT_QOS_DEFAULT, 
+                    NULL /* listener */, STATUS_MASK_NONE);
 
 			if (m_participant != NULL)
 			{
-				if(m_participant->get_qos(participantQOS) == DDS::RETCODE_OK)
+				if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
 				{
-					participantQOS.entity_factory.autoenable_created_entities = DDS::BOOLEAN_FALSE;
-					m_participant->set_qos(participantQOS);
+					participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+					m_participant->set_qos(participantQos);
 
                     m_asyncThread = new AsyncThread();
 
@@ -87,18 +78,18 @@ namespace eProsima
 			}
 		}
 
-        int Client::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task)
+        int Client::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout)
         {
             const char* const METHOD_NAME = "addAsyncTask";
             int returnedValue = -1;
 
             if(query != NULL && task != NULL)
             {
-                returnedValue = m_asyncThread->addTask(query, task);
+                returnedValue = m_asyncThread->addTask(query, task, timeout);
             }
             else
             {
-                printf("ERROR<%s::%S>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
             }
 
             return returnedValue;
@@ -108,6 +99,16 @@ namespace eProsima
 		{ 
 			return m_participant;
 		}
+
+        long Client::getTimeout()
+        {
+            return m_timeout;
+        }
+
+        void Client::setTimeout(long milliseconds)
+        {
+            m_timeout = milliseconds;
+        }
 
 	} // namespace DDSRPC
 } // namespace eProsima

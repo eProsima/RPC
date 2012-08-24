@@ -119,7 +119,7 @@ class $interfaceName$ServerImpl
  *  functionHeader - inherited(cplusplus)
  *  returnType     - local
  */ 
-emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams) ::= <<
+emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
 $functionHeader(class={$interfaceName$ServerImpl},...)$ 
 {
   eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
@@ -148,7 +148,7 @@ $functionHeader(class={$interfaceName$ServerImpl},...)$
  *  lastParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,string,inputParams,inoutParams,outputParams) ::= <<
+functionImpl(interfaceName,type,name,string,inputParams,inoutParams,outputParams,isOneway) ::= <<
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
     $interfaceName$Server *srv = ($interfaceName$Server*)server;
@@ -156,19 +156,21 @@ $exFunctionHeader(class=interfaceName,...)$
     $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $varDecl(type=type, name="returnedValue")$    
-    $name$Reply *replyData = NULL;
+    $if(!isOneway)$$name$Reply *replyData = NULL;$endif$
 
     $name$RequestUtils::extractTypeData(($name$Request*)requestData$if([inputParams,inoutParams])$, $extractTypeDataParams(type=type,...)$$endif$);
                                          
     $if(!voidInitMap.(type))$
     returnedValue = $endif$srv->_impl->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
            
+    $if(!isOneway)$
     replyData = $name$ReplyUtils::createTypeData($nextParam(params=inoutParams)$$nextParam(previous=inoutParams, params=outputParams)$);
                                                   
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
     
     $name$ReplyTypeSupport::delete_data(replyData);
+    $endif$
     $name$RequestTypeSupport::delete_data(($name$Request*)requestData);
     
     $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
@@ -377,11 +379,11 @@ $[nextParam(params=inputParams),nextParam(previous=inputParams, params=inoutPara
 createRPC(interfaceName, funNames) ::= <<
 $funNames:{this->setRPC(new $it.name$ServerRPC("$it.name$", this,
             $it.name$RequestUtils::registerType(getParticipant()),
-            $if(it.requestQosLibrary)$"$it.requestQosLibrary$"$else$NULL$endif$,
-            $if(it.requestQosProfile)$"$it.requestQosProfile$"$else$NULL$endif$,
+            $if(it.requestQos)$"$it.requestQos$"$else$NULL, NULL$endif$,
+            $if(!it.isOneway)$
             $it.name$ReplyUtils::registerType(getParticipant()),
-            $if(it.replyQosLibrary)$"$it.replyQosLibrary$"$else$NULL$endif$,
-            $if(it.replyQosProfile)$"$it.replyQosProfile$"$else$NULL$endif$,
+            $if(it.replyQos)$"$it.replyQos$"$else$NULL, NULL$endif$,
+            $endif$
             &$interfaceName$Server::$it.name$, getParticipant()));
 }$
 >>

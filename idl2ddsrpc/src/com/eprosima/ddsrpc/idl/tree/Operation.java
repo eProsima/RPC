@@ -29,6 +29,7 @@ public class Operation implements Named{
 	private String m_replyLibrary = null;
 	private String m_requestProfile = null;
 	private String m_replyProfile = null;
+	private boolean m_isOneway = false;
 	
 	public Operation(){
 		inputParams = new ArrayList();
@@ -106,5 +107,15 @@ public class Operation implements Named{
 	public String getReplyProfile()
 	{
 		return m_replyProfile;
+	}
+	
+	public boolean isOneway()
+	{
+		return m_isOneway;
+	}
+	
+	public void setIsOneway(boolean b)
+	{
+		m_isOneway = b;
 	}
 }
