@@ -29,8 +29,7 @@ namespace eProsima
 				 * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
 				 * \param clientParticipant Pointer to the domain participant used by the client. Cannot be NULL.
 				 */
-				ClientRPC(const char *rpcName, const char *requestTypeName, const char *requestQosLibrary,
-					const char *requestQosProfile, const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile,
+				ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName,
 					Client *client);
 
 				virtual ~ClientRPC();
@@ -52,8 +51,7 @@ namespace eProsima
 				virtual DDS::ReturnCode_t write(void *data) = 0;
 
 				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-						const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
-						const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
+						const char *requestTypeName, const char *replyTypeName);
 
 				int enableEntities();
 

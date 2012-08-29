@@ -36,25 +36,37 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
 }
 >>
 
-definition(interfaceName, taskDecls) ::= <<
+definition(opendds, interfaceName, taskDecls) ::= <<
 #include "$interfaceName$Proxy.h"
 #include "$interfaceName$AsyncSupport.h"
+$if(!opendds)$
 #include "$interfaceName$RequestReplyPlugin.h"
+$else$
+#include "$interfaceName$RequestReplyTypeSupportImpl.h"
+$endif$
 
 $taskDecls; separator="\n"$
 >>
 
-taskDeclaration(interfaceName, name,inoutParams,outputParams) ::= <<
+taskDeclaration(opendds, interfaceName, name,inoutParams,outputParams) ::= <<
 
 $interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$ &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+$if(!opendds)$
     m_reply = (void*)$name$ReplyTypeSupport::create_data();
+$else$
+    m_reply = (void*)new $name$Reply();
+$endif$
 }
 
 $interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
+$if(!opendds)$
     $name$ReplyTypeSupport::delete_data(($name$Reply*)m_reply);
+$else$
+    delete ($name$Reply*)m_reply;
+$endif$
 }
 
 $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()

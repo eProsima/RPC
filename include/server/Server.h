@@ -4,10 +4,9 @@
 #include "utils/ddsrpc.h"
 #include "utils/Messages.h"
 #include "utils/Typedefs.h"
+#include "utils/Version.h"
 
 #include <list>
-
-#include "ndds_namespace_cpp.h"
 
 #define DDSCS_DEFAULT_PERIOD_MILLISEC 5000
 #define DDSCS_MIN_THREADS_DEFAULT 5
@@ -40,8 +39,7 @@ namespace eProsima
 				 *
 				 * \param domainId The domain id's value that the client will have.
 				 */
-				Server(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT,
-					const char *qosLibrary = NULL, const char *qosProfile = NULL);
+				Server(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
 
 				/// \brief The default destructor.
 				virtual ~Server();

@@ -5,10 +5,10 @@ DDSRPC_OUTDIR_RELEASE = $(DDSRPC_OUTDIR)/release
 DDSRPC_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(DDSRPC_OUTDIR_DEBUG))
 DDSRPC_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(DDSRPC_OUTDIR_RELEASE))
 
-DDSRPC_TARGET_DEBUG= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpcd.so
-DDSRPC_TARGET_DEBUG_Z= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpczd.a
-DDSRPC_TARGET= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpc.so
-DDSRPC_TARGET_Z= $(BASEDIR)/lib/$(NDDSTARGET)/libddsrpcz.a
+DDSRPC_TARGET_DEBUG= $(BASEDIR)/lib/$(TARGET)/libddsrpcd.so
+DDSRPC_TARGET_DEBUG_Z= $(BASEDIR)/lib/$(TARGET)/libddsrpczd.a
+DDSRPC_TARGET= $(BASEDIR)/lib/$(TARGET)/libddsrpc.so
+DDSRPC_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/libddsrpcz.a
 
 DDSRPC_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
 DDSRPC_LIBS= $(LIBS) -lboost_thread-mt
@@ -22,7 +22,8 @@ DDSRPC_SRC_CFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/client/AsyncThread.cpp \
 			$(BASEDIR)/src/client/ClientRPC.cpp \
 			$(BASEDIR)/src/server/Server.cpp \
-			$(BASEDIR)/src/server/ServerRPC.cpp
+			$(BASEDIR)/src/server/ServerRPC.cpp \
+			$(BASEDIR)/src/utils/Utilities.cpp
 
 # Project sources are copied to the current directory
 DDSRPC_SRCS= $(DDSRPC_SRC_CFILES) $(DDSRPC_SRC_CPPFILE)
@@ -39,7 +40,7 @@ DDSRPC_DEPS_RELEASE = $(foreach dep,$(notdir $(addsuffix .d, $(basename $(DDSRPC
 OBJS+= $(DDSRPC_OBJS_DEBUG) $(DDSRPC_OBJS_RELEASE)
 DEPS+= $(DDSRPC_DEPS_DEBUG) $(DDSRPC_DEPS_RELEASE)
 
-.PHONY: ddscs checkDDSRPCDirectories
+.PHONY: ddsrpc checkDDSRPCDirectories
 
 ddsrpc: checkDDSRPCDirectories $(DDSRPC_TARGET_DEBUG) $(DDSRPC_TARGET_DEBUG_Z) $(DDSRPC_TARGET) $(DDSRPC_TARGET_Z)
 

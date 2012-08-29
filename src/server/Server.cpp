@@ -50,35 +50,22 @@ namespace eProsima
 			boost::threadpool::pool *m_pool;
 		};
 
-		Server::Server(int domainId, unsigned int threadCount,
-								 const char *qosLibrary, const char *qosProfile) : m_domainId(domainId),
+		Server::Server(int domainId, unsigned int threadCount) : m_domainId(domainId),
 								 m_participant(NULL), m_threadPoolManager(NULL)
 		{
 			const char* const METHOD_NAME = "Server";
 			DDS::DomainParticipantQos participantQOS;
-			DDS_Long serverId = 0;
 
 			// Creating the domain participant which is associated with the client
-			if(qosLibrary == NULL || qosProfile == NULL)
-			{
-				m_participant = TheParticipantFactory->create_participant(
-					domainId, DDS::PARTICIPANT_QOS_DEFAULT, 
-					NULL /* listener */, DDS::STATUS_MASK_NONE);
-			}
-			else
-			{
-				m_participant = TheParticipantFactory->create_participant_with_profile(
-					domainId, qosLibrary, qosProfile,
-					NULL /* listener */, DDS::STATUS_MASK_NONE);
-			}
+            m_participant = TheParticipantFactory->create_participant(
+                    domainId, PARTICIPANT_QOS_DEFAULT, 
+                    NULL /* listener */, STATUS_MASK_NONE);
 
 			if (m_participant != NULL)
 			{
 				if(m_participant->get_qos(participantQOS) == DDS::RETCODE_OK)
 				{
-					serverId = participantQOS.wire_protocol.participant_id;
-
-					participantQOS.entity_factory.autoenable_created_entities = DDS::BOOLEAN_FALSE;
+					participantQOS.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
 					m_participant->set_qos(participantQOS);
 
                     // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads

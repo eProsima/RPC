@@ -34,14 +34,18 @@ group RPCSupport : cplusplus;
  *  doNotEditC                - inherited(cplusplus)
  *  clientRPCHeader - local
  */ 
-ClientHeader(interfaceName,funNames) ::= <<
+ClientHeader(opendds, interfaceName, funNames) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 
 $doNotEditC()$
 
 #include "utils/GenericClientRPC.h"
+$if(!opendds)$
 #include "$interfaceName$RequestReplySupport.h"
+$else$
+#include "$interfaceName$RequestReplyTypeSupportImpl.h"
+$endif$
 
 $funNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
@@ -59,14 +63,19 @@ $funNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
  *  doNotEditC                - inherited(cplusplus)
  *  clientRPCHeader - local
  */ 
-ServerHeader(interfaceName,funNames) ::= <<
+ServerHeader(opendds, interfaceName,funNames) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 
 $doNotEditC()$
 
 #include "utils/GenericServerRPC.h"
+$if(!opendds)$
 #include "$interfaceName$RequestReplySupport.h"
+$else$
+#include "$interfaceName$RequestReplyTypeSupportImpl.h"
+$endif$
+
 
 $funNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 

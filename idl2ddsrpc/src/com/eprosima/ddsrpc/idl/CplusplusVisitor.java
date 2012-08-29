@@ -24,7 +24,14 @@ package com.eprosima.ddsrpc.idl;
 import com.eprosima.ddsrpc.idl.ast.*;
 import com.eprosima.ddsrpc.idl.tree.*;
 
-public class CplusplusVisitor implements IDLParserVisitor {
+public class CplusplusVisitor implements IDLParserVisitor
+{
+	private String m_middleware = null;
+	
+	public CplusplusVisitor(String middleware)
+	{
+		m_middleware = middleware;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -44,7 +51,8 @@ public class CplusplusVisitor implements IDLParserVisitor {
 	 */
 
 	public Object visit(ASTStart node, Object data) {
-		data = new Module();
+		data = new Module(m_middleware);
+		
 		if (node.jjtGetNumChildren() > 0) {
 			for (int i = 0; i < node.jjtGetNumChildren(); ++i) {
 				data = node.jjtGetChild(i).jjtAccept(this, data);

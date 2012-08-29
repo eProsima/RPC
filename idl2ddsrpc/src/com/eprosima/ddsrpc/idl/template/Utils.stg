@@ -33,16 +33,24 @@ group Utils : cplusplus;
  *   classes    : List of class headers.
  * Uses:
  */ 
-headerFile(name, classes) ::= <<
+headerFile(opendds, name, classes) ::= <<
 
 #ifndef _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 #define _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 
 $doNotEditC()$
 
+$if(!opendds)$
 #include "$name$RequestReplySupport.h"
+$else$
+#include "$name$RequestReplyC.h"
+$endif$
 
+$if(!opendds)$
 #include "ndds_namespace_cpp.h"
+$else$
+#include "dds/DdsDcpsDomainC.h"
+$endif$
 
 $classes:{$it$};separator="\n"$
  
@@ -60,11 +68,15 @@ $classes:{$it$};separator="\n"$
  *   classes    : List of class Implementations.
  * Uses:
  */ 
-definitionFile(name, classes) ::= <<
+definitionFile(opendds, name, classes) ::= <<
 $doNotEditC()$
 
 #include "$name$RequestReplyUtils.h"
+$if(!opendds)$
 #include "$name$RequestReplyPlugin.h"
+$else$
+#include "$name$RequestReplyTypeSupportImpl.h"
+$endif$
 
 $classes:{$it$};separator="\n"$
  
@@ -117,7 +129,7 @@ class $funName$$type$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
- definition(funName, type="Request", params, returnType, string) ::= <<
+ definition(opendds, funName, type="Request", params, returnType, string) ::= <<
 
 const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientParticipant)
 {
@@ -125,9 +137,18 @@ const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientPar
 
     if(clientParticipant != NULL)
     {
+        $if(!opendds)$
         typeName = $funName$$type$TypeSupport::get_type_name();
+        $else$
+        $funName$$type$TypeSupport_var ts = new $funName$$type$TypeSupportImpl;
+        typeName = ts->get_type_name();
+        $endif$
 
+        $if(!opendds)$
         if($funName$$type$TypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        $else$
+        if(ts->register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        $endif$
         {
             return NULL;
         }
@@ -138,7 +159,7 @@ const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientPar
 
 $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
 {
-    $funName$$type$* instance = $funName$$type$TypeSupport::create_data();
+    $funName$$type$* instance = new $funName$$type$();
 
     $params:{$createDataHelper(type=it.type, name=it.name, string=it.string)$};separator="\n"$
     

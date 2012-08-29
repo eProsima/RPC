@@ -22,9 +22,7 @@ class  TName : public eProsima::DDSRPC::ServerRPC                               
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, eProsima::DDSRPC::Server* server,                              \
-        const char *requestTypeName, const char *requestQosLibrary,               \
-        const char *requestQosProfile, const char *replyTypeName,                 \
-        const char *replyQosLibrary, const char *replyQosProfile,                 \
+        const char *requestTypeName, const char *replyTypeName,                 \
         eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant); \
   virtual ~TName();                                                               \
                                                                                   \
@@ -46,8 +44,7 @@ class  TName : public eProsima::DDSRPC::ServerRPC                               
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, eProsima::DDSRPC::Server* server,                              \
-        const char *requestTypeName, const char *requestQosLibrary,               \
-        const char *requestQosProfile,                                            \
+        const char *requestTypeName,                                            \
         eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant); \
   virtual ~TName();                                                               \
                                                                                   \

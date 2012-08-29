@@ -22,9 +22,7 @@ class  TName : public eProsima::DDSRPC::ClientRPC                               
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, const char *requestTypeName,                         \
-        const char *requestQosLibrary, const char *requestQosProfile,             \
-        const char *replyTypeName, const char *replyQosLibrary,                   \
-        const char *replyQosProfile, eProsima::DDSRPC::Client *client);           \
+        const char *replyTypeName, eProsima::DDSRPC::Client *client);           \
   virtual ~TName();                                                               \
   virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
@@ -45,7 +43,6 @@ class  TName : public eProsima::DDSRPC::ClientRPC                               
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, const char *requestTypeName,                         \
-        const char *requestQosLibrary, const char *requestQosProfile,             \
         eProsima::DDSRPC::Client *client);           \
   virtual ~TName();                                                               \
   virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \

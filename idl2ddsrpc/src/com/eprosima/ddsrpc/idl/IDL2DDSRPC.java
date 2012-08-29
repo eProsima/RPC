@@ -43,8 +43,11 @@ public class IDL2DDSRPC
     private static StringBuffer externalDir = null;
     private static int externalDirLength = 0;
     private static String idlFile = null;
-    private static ArrayList command = null;	
-    private static StringBuffer env = null;	
+    private static String command = null;
+    private static String extra_command = null;
+    private static ArrayList lineCommand = null;
+    private static String[] env_variables = null;	
+    private static String middleware = "rti";
 
     //TO_DO: external properties?
     private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL", "Win32", true, true),
@@ -62,60 +65,11 @@ public class IDL2DDSRPC
 
         if(getOptions(args))
         {
-            String ndds_home = System.getProperty("NDDSHOME");
-
-            if(ndds_home != null)
-            {				
-                env = new StringBuffer();
-                // TO_DO: Check OS for space character handling in commands				
-                env.append("PATH=");	
-                env.append(ndds_home).append(File.separatorChar).append("scripts");				
-                command = new ArrayList();
-
-                if(osOption != null)
-                {
-                    if(osOption.equals("Win32"))
-                        command.add("rtiddsgen.bat");
-                    else if(osOption.equals("Linux"))
-                    {
-                        env.append(":/bin:/sbin:/usr/bin:/usr/sbin");
-                        command.add("rtiddsgen");
-                    }
-                }
-
-                if(languageOption != null)
-                {
-                    command.add("-language");
-                    command.add(languageOption);
-                }
-
-                if(ppDisable == true)
-                {
-                    command.add("-ppDisable");
-                }
-                else
-                {
-                    if(ppPath != null)
-                    {
-                        command.add("-ppPath");
-                        command.add(ppPath);
-                    }
-                }
-
-                if(replace == true)
-                {
-                    command.add("-replace");
-                }
-
-                if(externalDirLength > 0)
-                {
-                    command.add("-d");
-                    command.add(externalDir.toString());
-                }
-
+            if(ddsGenInit() == 0)
+            {
                 try
                 {
-                    ddsGen(command, idlFile);
+                    ddsGen(idlFile);
                     Module root = parse(idlFile);
 
                     if(root != null && root.getError() == false)
@@ -129,10 +83,7 @@ public class IDL2DDSRPC
                     ioe.printStackTrace();
                 }
             }
-            else
-            {
-                System.out.println("ERROR: Cannot find the environment variable NDDSHOME");
-            }
+
             // TO_DO: May be more than one interface defined in the idl...
             // TO_DO: modules/namespaces
         }
@@ -143,33 +94,191 @@ public class IDL2DDSRPC
 
         System.exit(returnedValue);
     }
+    
+    public static int ddsGenInit()
+    {   
+        // Set environment variables.
+        String envPath = null, envLD = null, envRoot = null, dds_root = null, tao_root = null;
+        
+        envPath = System.getProperty("PATH");
+        
+        if(envPath != null)
+        {
+        	envPath = "PATH=" + envPath;
+        	
+        	if(osOption.equals("Linux") && (envLD = System.getProperty("LD_LIBRARY_PATH")) != null)
+        	{
+        		envLD = "LD_LIBRARY_PATH=" + envLD;
+        	}
+        	
+        	if(middleware.equals("opendds"))
+        	{
+        		dds_root = System.getProperty("DDS_ROOT");
+        		
+        		if(dds_root != null)
+        			envRoot = "DDS_ROOT=" + dds_root;
+        		else
+        		{
+        			System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
+        			return -1;
+        		}
+        		
+        		tao_root = System.getProperty("TAO_ROOT");
+        	}
+        	
+        	// Create final structure that stores the environment variables.
+        	env_variables = new String[1 + (envLD != null ? 1 : 0) +
+        	                           (envRoot != null ? 1 : 0)];
+        	int count = 0;
+        	env_variables[count++] = envPath;
+        	
+        	if(envLD != null)
+        		env_variables[count++] = envLD;
+        	
+        	if(envRoot != null)
+        		env_variables[count++] = envRoot;
+        }
+        else
+        {
+        	System.out.println("ERROR: Cannot find the environment variable PATH.");
+        	return -1;
+        }
+        
+        // Set line command.
+        lineCommand = new ArrayList();
+        
+        if(middleware.equals("rti"))
+        {
+        	if(osOption.equals("Win32"))
+        		command = "rtiddsgen.bat";
+        	else if(osOption.equals("Linux"))
+        		command = "rtiddsgen";
+        	
+        	if(languageOption != null)
+            {
+        		lineCommand.add("-language");
+        		lineCommand.add(languageOption);
+            }
+
+            if(ppDisable == true)
+            {
+            	lineCommand.add("-ppDisable");
+            }
+            else
+            {
+                if(ppPath != null)
+                {
+
+                	lineCommand.add("-ppPath");
+                	lineCommand.add(ppPath);
+                }
+            }
+
+            if(replace == true)
+            {
+            	lineCommand.add("-replace");
+            }
+
+            if(externalDirLength > 0)
+            {
+            	lineCommand.add("-d");
+            	lineCommand.add(externalDir.toString());
+
+            }
+        }
+        else if(middleware.equals("opendds"))
+        {
+        	command = "opendds_idl";
+            extra_command = "tao_idl";
+            
+            lineCommand.add("-I" + dds_root);
+            lineCommand.add("-I" + tao_root);
+        }
+    	
+    	return 0;
+    }
     // Need to use envp to pass a Path environment variable pointing to $NDDSHOME/scripts
     // if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
     // even using the well known solution of using double quotes
     // May be a problem with the Java Version deployed with RTI DDS.
-    public static void ddsGen(ArrayList c, String file) throws Exception
+    public static void ddsGen(String file) throws Exception
     {
-        String[] commandArray = new String[c.size() + 1];
-        String[] envp = {env.toString()};
-        c.add(file);			
-        System.out.print(file);
-        commandArray = (String[])c.toArray(commandArray);
-        Process rtiddsgen = Runtime.getRuntime().exec(commandArray, envp);
-        ProcessOutput errorOutput = new ProcessOutput(rtiddsgen.getErrorStream(), "ERROR");
-        ProcessOutput normalOutput = new ProcessOutput(rtiddsgen.getInputStream(), "OUTPUT");
+    	int count = 0;
+        ArrayList finalCommandLine = null;
+        String[] finalCommandArray = null;
+        			
+        System.out.println(file);
+        
+        // Execute tao_idl
+        if(extra_command != null)
+        {
+        	 finalCommandLine = new ArrayList();
+             finalCommandLine.add(extra_command);
+             finalCommandLine.add("-SS");
+             finalCommandLine.addAll(lineCommand);
+             finalCommandLine.add(file);
+             finalCommandArray = new String[finalCommandLine.size()];
+             finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
+             
+             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR");
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT");
+             auxerrorOutput.start();
+             auxnormalOutput.start();
+             int auxexitVal = auxddsgen.waitFor();
+
+             if(auxexitVal != 0)
+             {
+                 throw new Exception();
+             }
+        }
+        
+        finalCommandLine = new ArrayList();
+        finalCommandLine.add(command);
+        finalCommandLine.addAll(lineCommand);
+        finalCommandLine.add(file);
+        finalCommandArray = new String[finalCommandLine.size()];
+        finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
+        
+        Process ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR");
+        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT");
         errorOutput.start();
         normalOutput.start();
-        int exitVal = rtiddsgen.waitFor();
+        int exitVal = ddsgen.waitFor();
 
         if(exitVal != 0)
         {
             throw new Exception();
         }
+        
+        // Execute tao_idl
+        if(extra_command != null)
+        {
+        	 finalCommandLine = new ArrayList();
+             finalCommandLine.add(extra_command);
+             finalCommandLine.add("-SS");
+             finalCommandLine.addAll(lineCommand);
+             finalCommandLine.add(file.subSequence(0, file.length() - 4) + "TypeSupport.idl");
+             finalCommandArray = new String[finalCommandLine.size()];
+             finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
+             
+             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR");
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT");
+             auxerrorOutput.start();
+             auxnormalOutput.start();
+             int auxexitVal = auxddsgen.waitFor();
+
+             if(auxexitVal != 0)
+             {
+                 throw new Exception();
+             }
+        }
         //TO_DO: check rtiddsgen has been correctly called it may return exitVal of 0 without
         // generating nothing, for example due to missing preprocessor.
         //The best way to do this is checking for output files existence and modification times (if -replace)
-        //ddsGenRunCheck(file);
-        c.remove(c.size() - 1);		
+        //ddsGenRunCheck(file);	
     }
     
     private static boolean typeIsString(Module root, String name)
@@ -330,11 +439,11 @@ public class IDL2DDSRPC
             //Template for Header generation
             StringTemplate header = templatesGroup.getInstanceOf(headerTemplateId);
             header.setAttribute("interfaceName", ifc.getName());
-            header.setAttribute("qosLibrary", ifc.getQosLibrary());
-            header.setAttribute("qosProfile", ifc.getQosProfile());
 
             //Template for Definition generation
             StringTemplate definition = templatesGroup.getInstanceOf(definitionTemplateId);
+            if(middleware.equals("opendds"))
+            	definition.setAttribute("opendds", middleware);
             definition.setAttribute("interfaceName", ifc.getName());
 
 
@@ -361,32 +470,17 @@ public class IDL2DDSRPC
                 op = (Operation) iter.next();
                 header.setAttribute("funNames", op.getName());
                 
-                String requestQos = null;
-                if(op.getRequestLibrary() != null && op.getRequestProfile() != null)
-                {
-                	requestQos = op.getRequestLibrary() + "\" , \"" + op.getRequestProfile();
-                }
-                else if(ifc.getQosLibrary() != null && ifc.getQosProfile() != null)
-                {
-                	requestQos = ifc.getQosLibrary() + "\" , \"" + ifc.getQosProfile();
-                }
-                
-                String replyQos = null;
-                if(op.getReplyLibrary() != null && op.getReplyProfile() != null)
-                {
-                	replyQos = op.getReplyLibrary() + "\" , \"" + op.getReplyProfile();
-                }
-                else if(ifc.getQosLibrary() != null && ifc.getQosProfile() != null)
-                {
-                	requestQos = ifc.getQosLibrary() + "\" , \"" + ifc.getQosProfile();
-                }
-                
-                definition.setAttribute("funNames.{name, isOneway, requestQos, replyQos}",
-                		op.getName(), (op.isOneway() ? "true" : null),
-                		requestQos, replyQos);			
+                definition.setAttribute("funNames.{name, isOneway}",
+                		op.getName(), (op.isOneway() ? "true" : null));			
 
+                if(middleware.equals("opendds"))
+                {
+                	funDef.setAttribute("opendds", middleware);
+                	if(withAsync)
+                		funDefAsync.setAttribute("opendds", middleware);
+                }
+                
                 // Function Declaration
-
                 funDecl.setAttribute("type", returnType);
                 funDecl.setAttribute("name", op.getName());
 
@@ -520,6 +614,8 @@ public class IDL2DDSRPC
                         {
                             externalDir.append("/");	
                         }
+                        if(middleware.equals("opendds"))
+                        		mainTemplate.setAttribute("opendds", middleware);
                         mainTemplate.setAttribute("interfaceName", ifc.getName());
                         externalDir.append(main).append(".cxx");
                         writeFile(externalDir.toString(), mainTemplate);
@@ -579,6 +675,9 @@ public class IDL2DDSRPC
             {
                 externalDir.append("/");	
             }
+            
+            if(middleware.equals("opendds"))
+            	header.setAttribute("opendds", middleware);
 
             header.setAttribute("interfaceName", ifc.getName());
             definition.setAttribute("interfaceName", ifc.getName());
@@ -630,12 +729,18 @@ public class IDL2DDSRPC
             }
 
             header.setAttribute("interfaceName", ifc.getName());
+            
+            if(middleware.equals("opendds"))
+            	definition.setAttribute("opendds", middleware);
             definition.setAttribute("interfaceName", ifc.getName());
 
             Operation op = null;
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
             {						
             	taskDecl.setAttribute("interfaceName", ifc.getName());
+            	
+            	if(middleware.equals("opendds"))
+            		taskDef.setAttribute("opendds", middleware);
             	taskDef.setAttribute("interfaceName", ifc.getName());
             	
                 op = (Operation) iter.next();
@@ -715,6 +820,11 @@ public class IDL2DDSRPC
                 externalDir.append("/");	
             }
 
+            if(middleware.equals("opendds"))
+            {
+            	headerFile.setAttribute("opendds", middleware);
+            	definitionFile.setAttribute("opendds", middleware);
+            }
             headerFile.setAttribute("name", ifc.getName());
             definitionFile.setAttribute("name", ifc.getName());
 
@@ -722,6 +832,13 @@ public class IDL2DDSRPC
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
             {						
                 op = (Operation) iter.next();
+                
+                if(middleware.equals("opendds"))
+                {
+                	definitionRequest.setAttribute("opendds", middleware);
+                	definitionReply.setAttribute("opendds", middleware);
+                }
+                
                 headerRequest.setAttribute("funName", op.getName());
                 definitionRequest.setAttribute("funName", op.getName());
 
@@ -800,7 +917,12 @@ public class IDL2DDSRPC
 
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
                 op = (Operation) iter.next();
-                request.setAttribute("name", op.getName());		
+                if(middleware.equals("opendds"))
+                {
+                	request.setAttribute("opendds", middleware);
+                    reply.setAttribute("opendds", middleware);
+                }
+                request.setAttribute("name", op.getName());
                 reply.setAttribute("name", op.getName());
 
                 setRequestReplyParams(request, reply, op, "fields.{type, name, string, isRequestIn}", ifc);
@@ -821,7 +943,7 @@ public class IDL2DDSRPC
             {
                 try
                 {
-                    ddsGen(command, externalDir.toString());
+                    ddsGen(externalDir.toString());
                     returnedValue = 0;
                 }
                 catch(Exception ioe)
@@ -1041,6 +1163,8 @@ public class IDL2DDSRPC
     	{
     		StringTemplate makecxx = idlTemplates.getInstanceOf("makecxx");
     		
+    		if(middleware.equals("opendds"))
+    			makecxx.setAttribute("opendds", middleware);
     		makecxx.setAttribute("interface", ifc.getName());
     		makecxx.setAttribute("example", exampleOption);
     		makecxx.setAttribute("arch", arch);
@@ -1073,7 +1197,7 @@ public class IDL2DDSRPC
         try 
         {
             ASTStart n = parser.Start();
-            CplusplusVisitor visitor = new CplusplusVisitor();
+            CplusplusVisitor visitor = new CplusplusVisitor(middleware);
             root = (Module)n.jjtAccept(visitor, null);
             System.out.println(file + " Parsing Complete.");
         } catch (Exception e) {
@@ -1168,6 +1292,15 @@ public class IDL2DDSRPC
             	{
             		externalDir = new StringBuffer(args[count++]);
             		externalDirLength = externalDir.length();
+            	}
+            	else
+            		return false;
+            }
+            else if(arg.equals("-middleware"))
+            {
+            	if(count < args.length)
+            	{
+            		middleware = args[count++];
             	}
             	else
             		return false;

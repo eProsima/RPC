@@ -53,13 +53,24 @@ $types:{$it$};separator="\n"$
  *            inout, out and return type for Reply.
  *
  */ 
-request(name, fields) ::= <<
+request(opendds, name, fields) ::= <<
+
+typedef unsigned long Identification[4];
+
+$if(opendds)$
+#pragma DCPS_DATA_TYPE "$name$Request"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId[3]"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId[2]"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId[1]"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId[0]"
+#pragma DCPS_DATA_KEY "$name$Request numSec"
+$endif$
 
 struct $name$Request{
-    unsigned long clientServiceId[4]; //@key
-    unsigned long numSec; //@key
+    Identification clientServiceId; $if(!opendds)$//@key$endif$
+    unsigned long numSec; $if(!opendds)$//@key$endif$
     $fields:{$it.type$ $it.name$;};separator="\n"$
-}; //@top-level true
+}; $if(!opendds)$//@top-level true$endif$
 >>
 
 /**
@@ -70,13 +81,26 @@ struct $name$Request{
  *   fields : list of function parameters. In and inout parameters for Request,
  *            inout, out and return type for Reply.
  */ 
-reply(name, fields) ::= <<
+reply(opendds, name, fields) ::= <<
+
+$if(opendds)$
+#pragma DCPS_DATA_TYPE "$name$Reply"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[3]"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[2]"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[1]"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[0]"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[3]"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[2]"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[1]"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[0]"
+#pragma DCPS_DATA_KEY "$name$Reply numSec"
+$endif$
 
 struct $name$Reply{
-    unsigned long serverServiceId[4]; //@key
-    unsigned long clientServiceId[4]; //@key
-    unsigned long numSec; //@key
+    Identification serverServiceId; $if(!opendds)$//@key$endif$
+    Identification clientServiceId; $if(!opendds)$//@key$endif$
+    unsigned long numSec; $if(!opendds)$//@key$endif$
     long ddscsRetCode;
     $fields:{$it.type$ $it.name$;};separator="\n"$
-}; //@top-level true
+}; $if(!opendds)$//@top-level true$endif$
 >>

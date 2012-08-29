@@ -27,23 +27,29 @@
 
 
 TName::TName(const char *rpcName, eProsima::DDSRPC::Server* server, const char *requestTypeName,
-        const char *requestQosLibrary, const char *requestQosProfile,
 #ifndef IS_ONEWAY
-        const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile,
+        const char *replyTypeName,
 #endif
         eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant) :
-        eProsima::DDSRPC::ServerRPC(rpcName, server, requestTypeName, requestQosLibrary, requestQosProfile,
+        eProsima::DDSRPC::ServerRPC(rpcName, server, requestTypeName,
 #ifndef IS_ONEWAY
-                            replyTypeName, replyQosLibrary, replyQosProfile,
+                            replyTypeName,
 #else
-                            NULL, NULL, NULL,
+                            NULL,
 #endif
                             execFunction, serverParticipant)
 {
+#ifdef RTI_LINUX
 #ifndef IS_ONEWAY
 	replyFooDataWriter    = TDataWriter::narrow(m_replyDataWriter);
 #endif
 	requestFooDataReader  = TDataReader::narrow(m_requestDataReader);
+#elif defined(OPENDDS_LINUX)
+#ifndef IS_ONEWAY
+	replyFooDataWriter    = TDataWriter::_narrow(m_replyDataWriter);
+#endif
+	requestFooDataReader  = TDataReader::_narrow(m_requestDataReader);
+#endif
 }
 
 TName::~TName()
@@ -54,7 +60,11 @@ int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessag
 {
     int returnedValue = -1;
 #ifndef IS_ONEWAY
+#ifdef RTI_LINUX
     TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : TDataReplyTypeSupport::create_data();
+#elif defined(OPENDDS_LINUX)
+    TDataReply   *replyData   = reply != NULL ? (TDataReply*)reply : new TDataReply();
+#endif
     TDataRequest *requestData = (TDataRequest*)request;
 	//CHECK
     unsigned int *serverServiceId = getServerId();
@@ -98,7 +108,11 @@ void TName::deleteRequestData(void *request)
 	
 	if(requestData != NULL)
 	{
+#ifdef RTI_LINUX
 		TDataRequestTypeSupport::delete_data(requestData);
+#elif defined(OPENDDS_LINUX)
+		delete requestData;
+#endif
 	}
 	else
 	{
@@ -110,18 +124,31 @@ void TName::deleteRequestData(void *request)
 void TName::on_data_available(DDS::DataReader* reader)
 {
     DDS::SampleInfo info;
+#ifdef RTI_LINUX
     TDataRequest *data = TDataRequestTypeSupport::create_data();
+#elif OPENDDS_LINUX
+    TDataRequest *data = new TDataRequest();
+#endif
     
     while(data != NULL && requestFooDataReader->take_next_sample(*data, info) == DDS::RETCODE_OK)
     {
-        if(info.valid_data == DDS::BOOLEAN_TRUE){
-			m_server->schedule(getExecFunction(), data, this);
-			data = TDataRequestTypeSupport::create_data();
-		}
-	}
-	if(data != NULL){
-		TDataRequestTypeSupport::delete_data(data);
-	}
+	    if(info.valid_data == BOOLEAN_TRUE)
+	    {
+		    m_server->schedule(getExecFunction(), data, this);
+#ifdef RTI_LINUX
+		    data = TDataRequestTypeSupport::create_data();
+#elif OPENDDS_LINUX
+		    data = new TDataRequest();
+#endif
+	    }
+    }
+    if(data != NULL){
+#ifdef RTI_LINUX
+	    TDataRequestTypeSupport::delete_data(data);
+#elif OPENDDS_LINUX
+	    delete data;
+#endif
+    }
 }
 
 

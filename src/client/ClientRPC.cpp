@@ -2,6 +2,7 @@
 #include "client/Client.h"
 #include "client/AsyncTask.h"
 #include "utils/Typedefs.h"
+#include "utils/Utilities.h"
 #include "eProsima_c/eProsimaMacros.h"
 
 #include "boost/config/user.hpp"
@@ -15,9 +16,8 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
-		ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName,
-												 const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
-												 const char *replyQosLibrary, const char *replyQosProfile, Client *client) : m_client(client), m_requestPublisher(NULL),
+		ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName, Client *client) :
+            m_client(client), m_requestPublisher(NULL),
 		m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS::HANDLE_NIL)
 		{
 			const char* const METHOD_NAME = "ClientRPC";
@@ -26,8 +26,7 @@ namespace eProsima
 
 			if(m_mutex != NULL)
 			{
-				if(createEntities(client->getParticipant(), rpcName, requestTypeName, requestQosLibrary,
-					requestQosProfile, replyTypeName, replyQosLibrary, replyQosProfile))
+				if(createEntities(client->getParticipant(), rpcName, requestTypeName, replyTypeName))
 				{
 					if(enableEntities())
 					{
@@ -365,8 +364,7 @@ namespace eProsima
         }
 
 		int ClientRPC::createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-				const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
-				const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile)
+				const char *requestTypeName, const char *replyTypeName)
 		{
 			const char* const METHOD_NAME = "createEntities";
 			char topicNames[100];
@@ -394,42 +392,23 @@ namespace eProsima
 
 								if((m_requestTopic = participant->create_topic(topicNames, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
 								{
-									if(requestQosLibrary == NULL || requestQosProfile == NULL)
-									{
-										m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, DATAWRITER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
-									}
-									else
-									{
-										m_requestDataWriter = m_requestPublisher->create_datawriter_with_profile(m_requestTopic, requestQosLibrary, requestQosProfile,
-											NULL, STATUS_MASK_NONE);
-									}
+                                    DDS::DataWriterQos wQos = DDS::DataWriterQos();
+
+                                    m_requestPublisher->get_default_datawriter_qos(wQos);
+
+                                    wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+                                        
+                                    m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, wQos, NULL, STATUS_MASK_NONE);
+
 									if(m_requestDataWriter != NULL)
 									{                              
 										// Obtain clientServiceId.
-										DDS::DataWriterQos *wQos = new DDS::DataWriterQos();
-										m_requestDataWriter->get_qos(*wQos);
-										m_clientServiceId[0] = ((wQos->protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
-											((wQos->protocol.virtual_guid.value[1] << 16) & 0xFF0000) +
-											((wQos->protocol.virtual_guid.value[2] << 8) & 0xFF00) +
-											(wQos->protocol.virtual_guid.value[3] & 0xFF);
-										m_clientServiceId[1] = ((wQos->protocol.virtual_guid.value[4] << 24) & 0xFF000000) +
-											((wQos->protocol.virtual_guid.value[5] << 16) & 0xFF0000) +
-											((wQos->protocol.virtual_guid.value[6] << 8) & 0xFF00) +
-											(wQos->protocol.virtual_guid.value[7] & 0xFF);
-										m_clientServiceId[2] = ((wQos->protocol.virtual_guid.value[8] << 24) & 0xFF000000) +
-											((wQos->protocol.virtual_guid.value[9] << 16) & 0xFF0000) +
-											((wQos->protocol.virtual_guid.value[10] << 8) & 0xFF00) +
-											(wQos->protocol.virtual_guid.value[11] & 0xFF);
-										m_clientServiceId[3] = ((wQos->protocol.virtual_guid.value[12] << 24) & 0xFF000000) +
-											((wQos->protocol.virtual_guid.value[13] << 16) & 0xFF0000) +
-											((wQos->protocol.virtual_guid.value[14] << 8) & 0xFF00) +
-											(wQos->protocol.virtual_guid.value[15] & 0xFF);
-										delete wQos;
+                                        get_guid(m_clientServiceId, m_requestDataWriter, wQos);
 
                                         // Is not oneway operation
                                         if(replyTypeName != NULL)
                                         {
-                                            if((m_replySubscriber = participant->create_subscriber(DDS::SUBSCRIBER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                            if((m_replySubscriber = participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                                             {
                                                 if(m_replySubscriber->get_qos(subscriberQos) == DDS::RETCODE_OK)
                                                 {
@@ -440,21 +419,19 @@ namespace eProsima
                                                     strncat(topicNames, "-", 1);
                                                     strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
 
-                                                    if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, DDS::TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                                    if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                                                     {
                                                         SNPRINTF(filterLine, 250, "clientServiceId[0] = %u and clientServiceId[1] = %u and clientServiceId[2] = %u and clientServiceId[3] = %u",
                                                                 m_clientServiceId[0], m_clientServiceId[1], m_clientServiceId[2], m_clientServiceId[3]);
                                                         if((m_replyFilter = participant->create_contentfilteredtopic(rpcName, m_replyTopic, filterLine, parameters)) != NULL)
                                                         {
-                                                            if(replyQosLibrary == NULL || replyQosProfile == NULL)
-                                                            {
-                                                                m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, DDS::DATAREADER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
-                                                            }
-                                                            else
-                                                            {
-                                                                m_replyDataReader = m_replySubscriber->create_datareader_with_profile(m_replyFilter, replyQosLibrary, replyQosProfile,
-                                                                        NULL, STATUS_MASK_NONE);
-                                                            }
+                                                            DDS::DataReaderQos rQos = DDS::DataReaderQos();
+
+                                                            m_replySubscriber->get_default_datareader_qos(rQos);
+
+                                                            rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+
+                                                            m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, rQos, NULL, STATUS_MASK_NONE);
 
                                                             if(m_replyDataReader != NULL)
                                                             {

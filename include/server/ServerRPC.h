@@ -4,8 +4,7 @@
 #include "utils/ddsrpc.h"
 #include "utils/Typedefs.h"
 #include "utils/Messages.h"
-
-#include "ndds_namespace_cpp.h"
+#include "utils/Version.h"
 
 namespace eProsima
 {
@@ -28,9 +27,7 @@ namespace eProsima
 				 * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
 				 */
 				ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
-					const char *requestQosLibrary, const char *requestQosProfile, const char *replyTypeName,
-					const char *replyQosLibrary, const char *replyQosProfile,
-						fExecFunction execFunction, DDS::DomainParticipant *serverParticipant);
+					const char *replyTypeName, fExecFunction execFunction, DDS::DomainParticipant *serverParticipant);
 
 				char* getRPCName();
 
@@ -40,8 +37,7 @@ namespace eProsima
 				fExecFunction getExecFunction();
 
 				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-						const char *requestTypeName, const char *requestQosLibrary, const char *requestQosProfile,
-						const char *replyTypeName, const char *replyQosLibrary, const char *replyQosProfile);
+						const char *requestTypeName, const char *replyTypeName);
 
 				int enableEntities();
 
