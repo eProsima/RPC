@@ -114,7 +114,7 @@ namespace eProsima
                                 stringSeq[4] = strdup(value);
 
                                 DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                        "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                                        "clientServiceId.value_1 = %0 and clientServiceId.value_2 = %1 and clientServiceId.value_3 = %2 and clientServiceId.value_4 = %3 and numSec = %4",
                                         stringSeq);
 
                                 if(query != NULL)
@@ -235,7 +235,7 @@ namespace eProsima
                             stringSeq[4] = strdup(value);
 
                             DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                    "clientServiceId[0] = %0 and clientServiceId[1] = %1 and clientServiceId[2] = %2 and clientServiceId[3] = %3 and numSec = %4",
+                                    "clientServiceId.value_1 = %0 and clientServiceId.value_2 = %1 and clientServiceId.value_3 = %2 and clientServiceId.value_4 = %3 and numSec = %4",
                                     stringSeq);
 
                             if(query != NULL)
@@ -368,8 +368,6 @@ namespace eProsima
 		{
 			const char* const METHOD_NAME = "createEntities";
 			char topicNames[100];
-			char filterLine[250];
-			DDS::StringSeq parameters;
 			DDS::PublisherQos publisherQos;
 			DDS::SubscriberQos subscriberQos;
 
@@ -402,9 +400,6 @@ namespace eProsima
 
 									if(m_requestDataWriter != NULL)
 									{                              
-										// Obtain clientServiceId.
-                                        get_guid(m_clientServiceId, m_requestDataWriter, wQos);
-
                                         // Is not oneway operation
                                         if(replyTypeName != NULL)
                                         {
@@ -421,9 +416,22 @@ namespace eProsima
 
                                                     if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                                                     {
-                                                        SNPRINTF(filterLine, 250, "clientServiceId[0] = %u and clientServiceId[1] = %u and clientServiceId[2] = %u and clientServiceId[3] = %u",
-                                                                m_clientServiceId[0], m_clientServiceId[1], m_clientServiceId[2], m_clientServiceId[3]);
-                                                        if((m_replyFilter = participant->create_contentfilteredtopic(rpcName, m_replyTopic, filterLine, parameters)) != NULL)
+                                                        DDS::StringSeq stringSeq(4);
+                                                        char value[50];
+
+                                                        stringSeq.length(4);
+                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                                                        stringSeq[0] = strdup(value);
+                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                                                        stringSeq[1] = strdup(value);
+                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                                                        stringSeq[2] = strdup(value);
+                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                                                        stringSeq[3] = strdup(value);
+
+                                                        if((m_replyFilter = participant->create_contentfilteredtopic(rpcName, m_replyTopic,
+                                                                        "clientServiceId.value_1 = %0 and clientServiceId.value_2 = %1 and clientServiceId.value_3 = %2 and clientServiceId.value_4 = %3",
+                                                                        stringSeq)) != NULL)
                                                         {
                                                             DDS::DataReaderQos rQos = DDS::DataReaderQos();
 
@@ -520,6 +528,25 @@ namespace eProsima
 				{
 					if(m_requestDataWriter->enable() == DDS::RETCODE_OK)
                     {
+                        // Obtain clientServiceId.
+                        get_guid(m_clientServiceId, m_requestDataWriter);
+
+                        // Set identifier to filter topic.
+                        DDS::StringSeq stringSeq(4);
+                        char value[50];
+
+                        stringSeq.length(4);
+                        SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+                        stringSeq[0] = strdup(value);
+                        SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+                        stringSeq[1] = strdup(value);
+                        SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+                        stringSeq[2] = strdup(value);
+                        SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+                        stringSeq[3] = strdup(value);
+
+                        m_replyFilter->set_expression_parameters(stringSeq);
+
                         // if not operation oneway.
                         if(m_replySubscriber != NULL)
                         {

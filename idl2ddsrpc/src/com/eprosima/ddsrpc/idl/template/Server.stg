@@ -151,10 +151,10 @@ functionImpl(opendds, interfaceName,type,name,string,inputParams,inoutParams,out
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
     $interfaceName$Server *srv = ($interfaceName$Server*)server;
-    $inputParams:{$varDecl(type = it.type, name = it.name, string = it.string)$}; separator="\n"$   
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $varDecl(type=type, name="returnedValue")$    
+    $inputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$   
+    $inoutParams:{$varDecl(opendds=opendds,type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(opendds=opendds,type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $varDecl(opendds=opendds,type=type, name="returnedValue")$    
     $if(!isOneway)$$name$Reply *replyData = NULL;$endif$
 
     $name$RequestUtils::extractTypeData(($name$Request*)requestData$if([inputParams,inoutParams])$, $extractTypeDataParams(type=type,...)$$endif$);
@@ -181,8 +181,8 @@ $exFunctionHeader(class=interfaceName,...)$
     delete ($name$Request*)requestData;
     $endif$
     
-    $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $inoutParams:{$varDel(opendds=opendds,type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $outputParams:{$varDel(opendds=opendds,type = it.type, name = it.name, string = it.string)$}; separator="\n"$
 }
 >>
 
@@ -264,7 +264,7 @@ $funImpls; separator="\n"$
  *
  * Uses:
  */ 
-functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
+functionCall(opendds,type,name,inputParams,inoutParams,outputParams) ::= <<
 >>
 
 /**

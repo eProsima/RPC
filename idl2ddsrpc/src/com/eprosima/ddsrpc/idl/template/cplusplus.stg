@@ -119,12 +119,16 @@ doNotEditCplusplus(version="1.0") ::= <<
  *   voidInitMap - local
  *   typeInitMap - local
  */ 
-varDecl(type, name, create, string) ::= <<
+varDecl(opendds, type, name, create, string) ::= <<
 $if(!voidInitMap.(type))$
 $if(typeInitMap.(type))$
 $typeInitMap.(type)$  $name$ $if(create)$$if(string)$ = NULL$else$ = 0$endif$$endif$;
 $else$
+$if(!opendds)$
 $type$ *$name$ = $if(create)$$type$PluginSupport_create_data()$else$NULL$endif$;
+$else$
+$type$ *$name$ = $if(create)$new $type$()$else$NULL$endif$;
+$endif$
 $endif$    
 $endif$
 >>
@@ -142,14 +146,18 @@ $endif$
  *   voidInitMap - local
  *   typeInitMap - local
  */ 
-varDel(type, name, string) ::= <<
+varDel(opendds,type, name, string) ::= <<
 $if(!voidInitMap.(type))$
 $if(typeInitMap.(type))$
 $if(string)$
 if($name$ != NULL) DDS::String_free($name$);
 $endif$
 $else$
+$if(!opendds)$
 $type$PluginSupport_destroy_data($name$);
+$else$
+delete $name$;
+$endif$
 $endif$    
 $endif$
 >>

@@ -238,19 +238,19 @@ $funImplsAsync; separator="\n"$
  *  voidInitMap   - inherited(cplusplus)
  *  varDecl       - inherited(cplusplus)
  */ 
-functionCall(type,name,string,inputParams,inoutParams,outputParams) ::= <<
-    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $varDecl(type=type, name=[name,"RetValue"])$    
+functionCall(opendds, type,name,string,inputParams,inoutParams,outputParams) ::= <<
+    $inputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $inoutParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $varDecl(opendds=opendds, type=type, name=[name,"RetValue"])$    
 
     $if(!voidInitMap.(type))$
     $name$RetValue = 
     $endif$proxy->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
     
-    $inputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $inputParams:{$varDel(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $inoutParams:{$varDel(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $outputParams:{$varDel(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$
 >>
 
 /**

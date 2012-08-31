@@ -1,6 +1,7 @@
 #include "client/Client.h"
 #include "client/AsyncThread.h"
 #include "exceptions/ResourceException.h"
+#include "utils/Utilities.h"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::Client";
 
@@ -14,41 +15,49 @@ namespace eProsima
 		{
 			const char* const METHOD_NAME = "Client";
 			DDS::DomainParticipantQos participantQos;
+            DDS::DomainParticipantFactory *factory = getFactory(domainId);
 
-			// Creating the domain participant which is associated with the client
-            m_participant = TheParticipantFactory->create_participant(
-                    m_domainId, PARTICIPANT_QOS_DEFAULT, 
-                    NULL /* listener */, STATUS_MASK_NONE);
+            if(factory != NULL)
+            {
+                // Creating the domain participant which is associated with the client
+                m_participant = factory->create_participant(
+                        m_domainId, PARTICIPANT_QOS_DEFAULT, 
+                        NULL /* listener */, STATUS_MASK_NONE);
 
-			if (m_participant != NULL)
-			{
-				if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
-				{
-					participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-					m_participant->set_qos(participantQos);
-
-                    m_asyncThread = new AsyncThread();
-
-                    if(m_asyncThread != NULL)
+                if (m_participant != NULL)
+                {
+                    if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
                     {
-                        if(m_asyncThread->init() == 0)
-                            return;
-                        else
-                        {
-                            printf("ERROR<%s:%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
-                            delete m_asyncThread;
-                        }
-                    }
-                    else
-                        printf("ERROR<%s:%s>: create asynchronous thread\n", CLASS_NAME, METHOD_NAME);
-				}
+                        participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                        m_participant->set_qos(participantQos);
 
-                TheParticipantFactory->delete_participant(m_participant);
-			}
-			else
-			{
-				printf("ERROR<%s:%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
-			}
+                        m_asyncThread = new AsyncThread();
+
+                        if(m_asyncThread != NULL)
+                        {
+                            if(m_asyncThread->init() == 0)
+                                return;
+                            else
+                            {
+                                printf("ERROR<%s:%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+                                delete m_asyncThread;
+                            }
+                        }
+                        else
+                            printf("ERROR<%s:%s>: create asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+                    }
+
+                    TheParticipantFactory->delete_participant(m_participant);
+                }
+                else
+                {
+                    printf("ERROR<%s:%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+                }
+            }
+            else
+            {
+                printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
+            }
 
             throw ResourceException();
 		}

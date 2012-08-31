@@ -1,6 +1,7 @@
 #include "server/Server.h"
 #include "server/ServerRPC.h"
 #include "exceptions/ResourceException.h"
+#include "utils/Utilities.h"
 
 #include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"
@@ -55,32 +56,40 @@ namespace eProsima
 		{
 			const char* const METHOD_NAME = "Server";
 			DDS::DomainParticipantQos participantQOS;
+            DDS::DomainParticipantFactory *factory = getFactory(domainId);
 
-			// Creating the domain participant which is associated with the client
-            m_participant = TheParticipantFactory->create_participant(
-                    domainId, PARTICIPANT_QOS_DEFAULT, 
-                    NULL /* listener */, STATUS_MASK_NONE);
+            if(factory != NULL)
+            {
+                // Creating the domain participant which is associated with the client
+                m_participant = factory->create_participant(
+                        domainId, PARTICIPANT_QOS_DEFAULT, 
+                        NULL /* listener */, STATUS_MASK_NONE);
 
-			if (m_participant != NULL)
-			{
-				if(m_participant->get_qos(participantQOS) == DDS::RETCODE_OK)
-				{
-					participantQOS.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-					m_participant->set_qos(participantQOS);
+                if (m_participant != NULL)
+                {
+                    if(m_participant->get_qos(participantQOS) == DDS::RETCODE_OK)
+                    {
+                        participantQOS.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                        m_participant->set_qos(participantQOS);
 
-                    // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
-                    m_threadPoolManager = new ThreadPoolManager(threadCount);
+                        // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
+                        m_threadPoolManager = new ThreadPoolManager(threadCount);
 
-                    if(m_threadPoolManager != NULL)
-                        return;
-                    else
-                        printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
-				}
-			}
-			else
-			{
-				printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
-			}
+                        if(m_threadPoolManager != NULL)
+                            return;
+                        else
+                            printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
+                else
+                {
+                    printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+                }
+            }
+            else
+            {
+                printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
+            }
 
             throw ResourceException();
 		}

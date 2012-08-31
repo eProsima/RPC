@@ -111,7 +111,17 @@ public class IDL2DDSRPC
         		envLD = "LD_LIBRARY_PATH=" + envLD;
         	}
         	
-        	if(middleware.equals("opendds"))
+        	if(middleware.equals("rti"))
+        	{
+        		dds_root = System.getProperty("NDDSHOME");
+        		
+        		if(dds_root == null)
+        		{
+        			System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
+        			return -1;
+        		}
+        	}
+        	else if(middleware.equals("opendds"))
         	{
         		dds_root = System.getProperty("DDS_ROOT");
         		
@@ -185,6 +195,10 @@ public class IDL2DDSRPC
             	lineCommand.add(externalDir.toString());
 
             }
+            
+            // TODO
+            //lineCommand.add("-I " + dds_root + "/ddsrpc/idl");
+            lineCommand.add("-I../../../../idl");
         }
         else if(middleware.equals("opendds"))
         {
@@ -193,6 +207,9 @@ public class IDL2DDSRPC
             
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
+            // TODO
+            //lineCommand.add("-I" + dds_root + "/ddsrpc/idl");
+            lineCommand.add("-I../../../../idl");
         }
     	
     	return 0;
@@ -478,6 +495,7 @@ public class IDL2DDSRPC
                 	funDef.setAttribute("opendds", middleware);
                 	if(withAsync)
                 		funDefAsync.setAttribute("opendds", middleware);
+                	funCall.setAttribute("opendds", middleware);
                 }
                 
                 // Function Declaration

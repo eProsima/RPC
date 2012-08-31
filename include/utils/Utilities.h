@@ -3,8 +3,16 @@
 
 #include "utils/Version.h"
 
-void get_guid(unsigned int *id, DDS::DataWriter *datawriter, DDS::DataWriterQos &wQos);
+namespace eProsima
+{
+    namespace DDSRPC
+    {
+        void get_guid(unsigned int *id, DDS::DataWriter *datawriter);
 
-void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
+        void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
+
+        DDS::DomainParticipantFactory* getFactory(int domainId);
+    }; // namespace DDSR
+}; // namespace eProsima
 
 #endif // _UTILS_UTILITIES_H_

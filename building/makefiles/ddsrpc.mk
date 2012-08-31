@@ -13,9 +13,19 @@ DDSRPC_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/libddsrpcz.a
 DDSRPC_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
 DDSRPC_LIBS= $(LIBS) -lboost_thread-mt
 
+ifdef NDDSHOME
+else
+ifdef DDS_ROOT
+	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/opendds
+	SPECIFIC_SRC_CFILES= $(BASEDIR)/src/idl/opendds/MessageHeaderC.cpp \
+			     $(BASEDIR)/src/idl/opendds/MessageHeaderTypeSupportImpl.cpp
+endif
+endif
+
 DDSRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
-                    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool
+		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
+		    $(SPECIFIC_INCLUDE_DIR)
 
 DDSRPC_SRC_CFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/client/AsyncTask.cpp \
@@ -23,7 +33,8 @@ DDSRPC_SRC_CFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/client/ClientRPC.cpp \
 			$(BASEDIR)/src/server/Server.cpp \
 			$(BASEDIR)/src/server/ServerRPC.cpp \
-			$(BASEDIR)/src/utils/Utilities.cpp
+			$(BASEDIR)/src/utils/Utilities.cpp \
+			$(SPECIFIC_SRC_CFILES)
 
 # Project sources are copied to the current directory
 DDSRPC_SRCS= $(DDSRPC_SRC_CFILES) $(DDSRPC_SRC_CPPFILE)

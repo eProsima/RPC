@@ -90,8 +90,6 @@ namespace eProsima
 
                                                         if(m_replyDataWriter != NULL)
                                                         {
-                                                            // Obtain serverServiceId.
-                                                            get_guid(m_serverId, m_replyDataWriter, wQos);
                                                             return 1;
                                                         }
                                                         else
@@ -188,6 +186,9 @@ namespace eProsima
                                 {
                                     if(m_replyDataWriter->enable() == DDS::RETCODE_OK)
                                     {
+                                        // Obtain serverServiceId.
+                                        get_guid(m_serverId, m_replyDataWriter);
+
                                         returnedValue = 1;
                                     }
                                     else

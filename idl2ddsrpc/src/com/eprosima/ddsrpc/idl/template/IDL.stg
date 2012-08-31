@@ -36,6 +36,7 @@ group IDL : cplusplus;
 idlFile(file, types) ::= <<
 $doNotEditCplusplus()$
 
+#include "MessageHeader.idl"
 $file:{#include "$it$"}$
 
 $types:{$it$};separator="\n"$
@@ -55,14 +56,12 @@ $types:{$it$};separator="\n"$
  */ 
 request(opendds, name, fields) ::= <<
 
-typedef unsigned long Identification[4];
-
 $if(opendds)$
 #pragma DCPS_DATA_TYPE "$name$Request"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId[3]"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId[2]"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId[1]"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId[0]"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_1"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_2"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_3"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_4"
 #pragma DCPS_DATA_KEY "$name$Request numSec"
 $endif$
 
@@ -85,14 +84,14 @@ reply(opendds, name, fields) ::= <<
 
 $if(opendds)$
 #pragma DCPS_DATA_TYPE "$name$Reply"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[3]"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[2]"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[1]"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId[0]"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[3]"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[2]"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[1]"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId[0]"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_1"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_2"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_3"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_4"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_1"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_2"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_3"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_4"
 #pragma DCPS_DATA_KEY "$name$Reply numSec"
 $endif$
 

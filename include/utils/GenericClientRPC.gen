@@ -107,7 +107,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 #ifdef RTI_LINUX
 					TDataTypeSupport::copy_data((TDataReply*)reply, &dataSeq[0]);
 #elif defined(OPENDDS_LINUX)
-					*(CORBA::Any*)reply <<= &dataSeq[0];
+					(*(TDataReply*)reply) = dataSeq[0];
 #endif
 					value = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 				}

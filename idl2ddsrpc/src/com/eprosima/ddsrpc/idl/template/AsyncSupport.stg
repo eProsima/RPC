@@ -76,8 +76,8 @@ $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
 
 void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message)
 {
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
+    $inoutParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
