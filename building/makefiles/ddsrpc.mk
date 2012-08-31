@@ -14,10 +14,14 @@ DDSRPC_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
 DDSRPC_LIBS= $(LIBS) -lboost_thread-mt
 
 ifdef NDDSHOME
+	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/rti
+	SPECIFIC_SRC_CPPFILES= $(BASEDIR)/src/idl/rti/MessageHeader.cxx \
+			     $(BASEDIR)/src/idl/rti/MessageHeaderPlugin.cxx \
+			     $(BASEDIR)/src/idl/rti/MessageHeaderSupport.cxx
 else
 ifdef DDS_ROOT
 	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/opendds
-	SPECIFIC_SRC_CFILES= $(BASEDIR)/src/idl/opendds/MessageHeaderC.cpp \
+	SPECIFIC_SRC_CPPFILES= $(BASEDIR)/src/idl/opendds/MessageHeaderC.cpp \
 			     $(BASEDIR)/src/idl/opendds/MessageHeaderTypeSupportImpl.cpp
 endif
 endif
@@ -27,17 +31,17 @@ DDSRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 
-DDSRPC_SRC_CFILES= $(BASEDIR)/src/client/Client.cpp \
+DDSRPC_SRC_CPPFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/client/AsyncTask.cpp \
 			$(BASEDIR)/src/client/AsyncThread.cpp \
 			$(BASEDIR)/src/client/ClientRPC.cpp \
 			$(BASEDIR)/src/server/Server.cpp \
 			$(BASEDIR)/src/server/ServerRPC.cpp \
 			$(BASEDIR)/src/utils/Utilities.cpp \
-			$(SPECIFIC_SRC_CFILES)
+			$(SPECIFIC_SRC_CPPFILES)
 
 # Project sources are copied to the current directory
-DDSRPC_SRCS= $(DDSRPC_SRC_CFILES) $(DDSRPC_SRC_CPPFILE)
+DDSRPC_SRCS= $(DDSRPC_SRC_CFILES) $(DDSRPC_SRC_CPPFILES)
 
 # Source directories
 DDSRPC_SOURCES_DIRS_AUX= $(foreach srcdir, $(dir $(DDSRPC_SRCS)), $(srcdir))
@@ -78,6 +82,7 @@ $(DDSRPC_TARGET_Z): $(DDSRPC_OBJS_RELEASE)
 	$(CP) $(DDSRPC_TARGET_Z) $(EPROSIMA_LIBRARY_PATH)/proyectos
 
 vpath %.cpp $(DDSRPC_SOURCES_DIRS)
+vpath %.cxx $(DDSRPC_SOURCES_DIRS)
 
 $(DDSRPC_OUTDIR_DEBUG)/%.o:%.cpp
 	@echo Calculating dependencies \(DEBUG mode\) $<
@@ -91,4 +96,15 @@ $(DDSRPC_OUTDIR_RELEASE)/%.o:%.cpp
 	@echo Compiling \(RELEASE mode\) $<
 	@$(CPP) $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< -o $@
 
+$(DDSRPC_OUTDIR_DEBUG)/%.o:%.cxx
+	@echo Calculating dependencies \(DEBUG mode\) $<
+	@$(CPP) $(CFLAGS_DEBUG) -MM $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_DEBUG)\/&/g" > $(@:%.o=%.d)
+	@echo Compiling \(DEBUG mode\) $<  
+	@$(CPP) $(CFLAGS_DEBUG) $(DDSRPC_INCLUDE_DIRS) $< -o $@
+
+$(DDSRPC_OUTDIR_RELEASE)/%.o:%.cxx
+	@echo Calculating dependencies \(RELEASE mode\) $<
+	@$(CPP) $(CFLAGS) -MM $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_RELEASE)\/&/g" > $(@:%.o=%.d)
+	@echo Compiling \(RELEASE mode\) $<
+	@$(CPP) $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< -o $@
 

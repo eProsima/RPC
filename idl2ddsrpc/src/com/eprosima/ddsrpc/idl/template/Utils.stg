@@ -159,7 +159,11 @@ const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientPar
 
 $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
 {
+    $if(!opendds)$
+    $funName$$type$* instance = $funName$$type$TypeSupport::create_data();
+    $else$
     $funName$$type$* instance = new $funName$$type$();
+    $endif$
 
     $params:{$createDataHelper(opendds=opendds, type=it.type, name=it.name, string=it.string)$};separator="\n"$
     

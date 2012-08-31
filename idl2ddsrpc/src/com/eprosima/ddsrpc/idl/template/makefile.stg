@@ -15,7 +15,7 @@ $endif$
 DEFINES = \$(DEFINES_ARCH_SPECIFIC)  
 
 $if(!opendds)$
-INCLUDES = -I. -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/ddsrpc/include
+INCLUDES = -I. -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/ddsrpc/include  -I\$(DDS_ROOT)/ddsrpc/include/idl/rti
 $else$
 INCLUDES = -I. -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(DDS_ROOT)/ddsrpc/include -I\$(DDS_ROOT)/ddsrpc/include/idl/opendds
 $endif$
