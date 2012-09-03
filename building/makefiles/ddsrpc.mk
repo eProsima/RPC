@@ -38,6 +38,8 @@ DDSRPC_SRC_CPPFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/server/Server.cpp \
 			$(BASEDIR)/src/server/ServerRPC.cpp \
 			$(BASEDIR)/src/utils/Utilities.cpp \
+			$(BASEDIR)/src/transports/UDPTransport.cpp \
+			$(BASEDIR)/src/transports/TCPTransport.cpp \
 			$(SPECIFIC_SRC_CPPFILES)
 
 # Project sources are copied to the current directory

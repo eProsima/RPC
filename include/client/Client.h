@@ -9,6 +9,7 @@ namespace eProsima
 {
 	namespace DDSRPC
 	{
+        class Transport;
         class AsyncThread;
         class AsyncTask;
 
@@ -36,7 +37,7 @@ namespace eProsima
 				 * \param The client identifier.
 				 * \param domainId The domain id's value that the client will have.
 				 */
-				Client(int domainId = 0, long milliseconds = 3000);
+				Client(Transport *transport, int domainId = 0, long milliseconds = 3000);
 
 				/// \brief The default destructor.
 				virtual ~Client();

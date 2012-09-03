@@ -47,10 +47,23 @@ $doNotEditC()$
 #include "$interfaceName$ServerImpl.h"
 #include "$interfaceName$RequestReplyUtils.h"
 
-class $interfaceName$Server : public eProsima::DDSRPC::Server
+class $interfaceName$ServerH : public eProsima::DDSRPC::Server
 {
     private: 
       $interfaceName$ServerImpl *_impl;
+    public:
+
+        /// \brief The default constructor.
+        $interfaceName$ServerH(eProsima::DDSRPC::Transport *transport, int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$ServerH();
+
+        $funDecls; separator=";\n"$;
+};
+
+class $interfaceName$Server : public $interfaceName$ServerH
+{
     public:
 
         /// \brief The default constructor.
@@ -58,8 +71,18 @@ class $interfaceName$Server : public eProsima::DDSRPC::Server
 
         /// \brief The default destructor.
         virtual ~$interfaceName$Server();
+};
 
-        $funDecls; separator=";\n"$;
+class $interfaceName$WANServer : public $interfaceName$ServerH
+{
+    public:
+
+        /// \brief The default constructor.
+        $interfaceName$WANServer(const char *public_address, const char *server_bind_port,
+            int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$WANServer();
 };
 
 #endif // _$interfaceName$SKELETON_H_
@@ -150,7 +173,7 @@ $functionHeader(class={$interfaceName$ServerImpl},...)$
 functionImpl(opendds, interfaceName,type,name,string,inputParams,inoutParams,outputParams,isOneway) ::= <<
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
-    $interfaceName$Server *srv = ($interfaceName$Server*)server;
+    $interfaceName$ServerH *srv = dynamic_cast<$interfaceName$ServerH*>(server);
     $inputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$   
     $inoutParams:{$varDecl(opendds=opendds,type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
     $outputParams:{$varDecl(opendds=opendds,type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
@@ -202,6 +225,8 @@ definitionServer(opendds, interfaceName, funNames, funImpls) ::= <<
 $doNotEditC()$
 
 #include "$interfaceName$Server.h"
+#include "transports/UDPTransport.h"
+#include "transports/TCPTransport.h"
 $if(!opendds)$
 #include "$interfaceName$RequestReplyPlugin.h"
 $else$
@@ -210,18 +235,36 @@ $endif$
 
 #include "$interfaceName$ServerRPCSupport.h"
 
-$interfaceName$Server::$interfaceName$Server(int domainId, unsigned int threadCount) : Server(domainId, threadCount)
+$interfaceName$ServerH::$interfaceName$ServerH(eProsima::DDSRPC::Transport *transport, int domainId, unsigned int threadCount) :
+    Server(transport, domainId, threadCount)
 {
     _impl = new $interfaceName$ServerImpl();
     
     $createRPC(...); separator="\n"$
 }
-$interfaceName$Server::~$interfaceName$Server()
+$interfaceName$ServerH::~$interfaceName$ServerH()
 {
     delete _impl;    
 }
 
 $funImpls; separator="\n"$
+
+$interfaceName$Server::$interfaceName$Server(int domainId, unsigned int threadCount) :
+    $interfaceName$ServerH(new eProsima::DDSRPC::UDPTransport(), domainId, threadCount)
+{
+}
+$interfaceName$Server::~$interfaceName$Server()
+{   
+}
+
+$interfaceName$WANServer::$interfaceName$WANServer(const char *public_address, const char *server_bind_port,
+    int domainId, unsigned int threadCount) :
+    $interfaceName$ServerH(new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId, threadCount)
+{
+}
+$interfaceName$WANServer::~$interfaceName$WANServer()
+{   
+}
 >>
 
 /**
@@ -360,7 +403,7 @@ $endif$
  * Uses:
  */ 
 exFunctionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= <<
-$if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service)
+$if(!class)$static $endif$void $class$$if(class)$ServerH::$endif$$name$(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service)
 >>
 
 /**
@@ -394,7 +437,7 @@ $funNames:{this->setRPC(new $it.name$ServerRPC("$it.name$", this,
             $if(!it.isOneway)$
             $it.name$ReplyUtils::registerType(getParticipant()),
             $endif$
-            &$interfaceName$Server::$it.name$, getParticipant()));
+            &$interfaceName$ServerH::$it.name$, getParticipant()));
 }$
 >>
 

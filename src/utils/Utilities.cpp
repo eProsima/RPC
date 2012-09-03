@@ -1,8 +1,6 @@
 #include "utils/Utilities.h"
 #if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"
-#include "dds/DCPS/transport/framework/TransportInst_rch.h"
-#include "dds/DCPS/transport/rtps_udp/RtpsUdpInst.h"
 #endif
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::Utilities";
@@ -92,28 +90,7 @@ namespace eProsima
                 TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(discovery));
                 TheServiceParticipant->set_repo_domain(domainId, "rtps");
 
-                OpenDDS::DCPS::TransportConfig_rch cfg = TheTransportRegistry->create_config("ddsrpc_config");
-
-                if(cfg != NULL)
-                {
-                    OpenDDS::DCPS::TransportInst_rch inst = TheTransportRegistry->create_inst("ddsrpc_transport", "rtps_udp");
-
-                    if(inst != NULL)
-                    {
-                        OpenDDS::DCPS::dynamic_rchandle_cast<OpenDDS::DCPS::RtpsUdpInst>(inst)->use_multicast_ = true;
-                        cfg->instances_.push_back(inst);
-                        TheTransportRegistry->global_config(cfg);
-                        return TheParticipantFactory;
-                    }
-                    else
-                    {
-                        printf("ERROR<%s::%s>: Cannot create transport instance\n", CLASS_NAME, METHOD_NAME);
-                    }
-                }
-                else
-                {
-                    printf("ERROR<%s::%s>: Cannot create transport config object\n", CLASS_NAME, METHOD_NAME);
-                }
+                return TheParticipantFactory;
             }
             else
             {

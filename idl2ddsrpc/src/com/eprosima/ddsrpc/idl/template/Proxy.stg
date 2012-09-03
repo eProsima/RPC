@@ -46,15 +46,15 @@ $doNotEditC()$
 
 $classDeclsAsync; separator=";\n"$$if(classDeclsAsync)$;$endif$
 
-class $interfaceName$Proxy : public eProsima::DDSRPC::Client
+class $interfaceName$ProxyH : public eProsima::DDSRPC::Client
 {
     public:
 
         /// \brief The default constructor.
-        $interfaceName$Proxy(int domainId = 0, long timeout = 3000);
+        $interfaceName$ProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 3000);
 
         /// \brief The default destructor.
-        virtual ~$interfaceName$Proxy();
+        virtual ~$interfaceName$ProxyH();
         
         $funDecls; separator=";\n"$;
         
@@ -62,6 +62,24 @@ class $interfaceName$Proxy : public eProsima::DDSRPC::Client
         
     private:
         $funNames:{eProsima::DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
+};
+
+class $interfaceName$Proxy : public $interfaceName$ProxyH
+{
+    public:
+    
+        $interfaceName$Proxy(int domainId = 0, long timeout = 3000);
+        
+        virtual ~$interfaceName$Proxy();
+};
+
+class $interfaceName$WANProxy : public $interfaceName$ProxyH
+{
+    public:
+    
+        $interfaceName$WANProxy(const char *to_connect, int domainId = 0, long timeout = 3000);
+        
+        virtual ~$interfaceName$WANProxy();
 };
 
 #endif // _$interfaceName$_PROXY_H_
@@ -105,7 +123,7 @@ $functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceNam
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
 functionImpl(opendds, interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
-$functionHeader(class={$interfaceName$Proxy},...)$ 
+$functionHeader(class={$interfaceName$ProxyH},...)$ 
 {
     $varDecl(type=type, name="returnedValue")$
     $name$Request *instance = NULL;
@@ -156,7 +174,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
 >>
 
 functionImplAsync(opendds, interfaceName,type,name,inputParams,inoutParams) ::= <<
-$functionHeaderAsync(class={$interfaceName$Proxy},...)$ 
+$functionHeaderAsync(class={$interfaceName$ProxyH},...)$ 
 {
     $varDecl(type=type, name="returnedValue")$
     $name$Request *instance = NULL;
@@ -202,18 +220,21 @@ $doNotEditC()$
 
 #include "$interfaceName$Proxy.h"
 #include "client/ClientRPC.h"
+#include "transports/UDPTransport.h"
+#include "transports/TCPTransport.h"
 $if(!opendds)$
 #include "$interfaceName$RequestReplyPlugin.h"
 $endif$ 
 #include "$interfaceName$AsyncSupport.h"
 
 
-$interfaceName$Proxy::$interfaceName$Proxy(int domainId, long timeout) : Client(domainId, timeout)
+$interfaceName$ProxyH::$interfaceName$ProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+    Client(transport, domainId, timeout)
 {
     $createRPC(funNames); separator="\n"$
 }
 
-$interfaceName$Proxy::~$interfaceName$Proxy()
+$interfaceName$ProxyH::~$interfaceName$ProxyH()
 {
     $funNames:{delete $it.name$_Service;}; separator="\n"$
 }
@@ -221,6 +242,24 @@ $interfaceName$Proxy::~$interfaceName$Proxy()
 $funImpls; separator="\n"$
 
 $funImplsAsync; separator="\n"$
+
+$interfaceName$Proxy::$interfaceName$Proxy(int domainId, long timeout) :
+    $interfaceName$ProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
+{
+}
+
+$interfaceName$Proxy::~$interfaceName$Proxy()
+{
+}
+
+$interfaceName$WANProxy::$interfaceName$WANProxy(const char *to_connect, int domainId, long timeout) :
+    $interfaceName$ProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
+{
+}
+
+$interfaceName$WANProxy::~$interfaceName$WANProxy()
+{
+}
 >>
 
 /**

@@ -2,6 +2,7 @@
 #include "server/ServerRPC.h"
 #include "exceptions/ResourceException.h"
 #include "utils/Utilities.h"
+#include "transports/Transport.h"
 
 #include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"
@@ -51,44 +52,64 @@ namespace eProsima
 			boost::threadpool::pool *m_pool;
 		};
 
-		Server::Server(int domainId, unsigned int threadCount) : m_domainId(domainId),
+		Server::Server(Transport *transport, int domainId, unsigned int threadCount) : m_domainId(domainId),
 								 m_participant(NULL), m_threadPoolManager(NULL)
 		{
 			const char* const METHOD_NAME = "Server";
-			DDS::DomainParticipantQos participantQOS;
-            DDS::DomainParticipantFactory *factory = getFactory(domainId);
 
-            if(factory != NULL)
+            if(transport != NULL)
             {
-                // Creating the domain participant which is associated with the client
-                m_participant = factory->create_participant(
-                        domainId, PARTICIPANT_QOS_DEFAULT, 
-                        NULL /* listener */, STATUS_MASK_NONE);
+                DDS::DomainParticipantQos participantQos;
 
-                if (m_participant != NULL)
+#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+
+                // Because OpenDDS, the first step is set the transport.
+                transport->setTransport(participantQos);
+#endif
+
+                // Because OpenDDS, the first step is set the transport.
+                DDS::DomainParticipantFactory *factory = getFactory(domainId);
+
+                if(factory != NULL)
                 {
-                    if(m_participant->get_qos(participantQOS) == DDS::RETCODE_OK)
+                    factory->get_default_participant_qos(participantQos);
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+                    transport->setTransport(participantQos);
+#endif
+                    // Creating the domain participant which is associated with the client
+                    m_participant = factory->create_participant(
+                            domainId, PARTICIPANT_QOS_DEFAULT, 
+                            NULL /* listener */, STATUS_MASK_NONE);
+
+                    if (m_participant != NULL)
                     {
-                        participantQOS.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                        m_participant->set_qos(participantQOS);
+                        if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
+                        {
+                            participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                            m_participant->set_qos(participantQos);
 
-                        // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
-                        m_threadPoolManager = new ThreadPoolManager(threadCount);
+                            // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
+                            m_threadPoolManager = new ThreadPoolManager(threadCount);
 
-                        if(m_threadPoolManager != NULL)
-                            return;
-                        else
-                            printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
+                            if(m_threadPoolManager != NULL)
+                                return;
+                            else
+                                printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
                     }
                 }
                 else
                 {
-                    printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+                    printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
                 }
             }
             else
             {
-                printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
+                printf("ERROR<%s:%s>: bad parameters\n", CLASS_NAME, METHOD_NAME);
             }
 
             throw ResourceException();

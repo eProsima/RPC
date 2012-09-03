@@ -1,7 +1,7 @@
 #ifndef _UTILS_VERSION_H_
 #define _UTILS_VERSION_H_
 
-#ifdef RTI_LINUX
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
 
 #include "ndds_namespace_cpp.h"
 
@@ -15,7 +15,7 @@
 #define strdup DDS::String_dup
 
 
-#elif defined(OPENDDS_LINUX)
+#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 
 #include "dds/DdsDcpsC.h"
 #include "dds/DdsDcpsInfrastructureC.h"

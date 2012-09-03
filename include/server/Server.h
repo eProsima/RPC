@@ -16,6 +16,7 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
+        class Transport;
 		class ThreadPoolManager;
 		class ServerRPC;
 	 
@@ -39,7 +40,7 @@ namespace eProsima
 				 *
 				 * \param domainId The domain id's value that the client will have.
 				 */
-				Server(int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
+				Server(Transport *transport, int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
 
 				/// \brief The default destructor.
 				virtual ~Server();

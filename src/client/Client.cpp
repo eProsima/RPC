@@ -2,6 +2,7 @@
 #include "client/AsyncThread.h"
 #include "exceptions/ResourceException.h"
 #include "utils/Utilities.h"
+#include "transports/Transport.h"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::Client";
 
@@ -10,53 +11,72 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
-		Client::Client(int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
+		Client::Client(Transport *transport, int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
         m_timeout(milliseconds)
 		{
 			const char* const METHOD_NAME = "Client";
-			DDS::DomainParticipantQos participantQos;
-            DDS::DomainParticipantFactory *factory = getFactory(domainId);
 
-            if(factory != NULL)
+            if(transport != NULL)
             {
-                // Creating the domain participant which is associated with the client
-                m_participant = factory->create_participant(
-                        m_domainId, PARTICIPANT_QOS_DEFAULT, 
-                        NULL /* listener */, STATUS_MASK_NONE);
+                DDS::DomainParticipantQos participantQos;
 
-                if (m_participant != NULL)
+#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+
+                // Because OpenDDS, the first step is set the transport.
+                transport->setTransport(participantQos);
+#endif
+                
+                DDS::DomainParticipantFactory *factory = getFactory(domainId);
+
+                if(factory != NULL)
                 {
-                    if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
+                    factory->get_default_participant_qos(participantQos);
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+                    transport->setTransport(participantQos);
+#endif
+                    // Creating the domain participant which is associated with the client
+                    m_participant = factory->create_participant(
+                            m_domainId, participantQos, 
+                            NULL /* listener */, STATUS_MASK_NONE);
+
+                    if (m_participant != NULL)
                     {
-                        participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                        m_participant->set_qos(participantQos);
-
-                        m_asyncThread = new AsyncThread();
-
-                        if(m_asyncThread != NULL)
+                        if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
                         {
-                            if(m_asyncThread->init() == 0)
-                                return;
-                            else
-                            {
-                                printf("ERROR<%s:%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
-                                delete m_asyncThread;
-                            }
-                        }
-                        else
-                            printf("ERROR<%s:%s>: create asynchronous thread\n", CLASS_NAME, METHOD_NAME);
-                    }
+                            participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                            m_participant->set_qos(participantQos);
 
-                    TheParticipantFactory->delete_participant(m_participant);
+                            m_asyncThread = new AsyncThread();
+
+                            if(m_asyncThread != NULL)
+                            {
+                                if(m_asyncThread->init() == 0)
+                                    return;
+                                else
+                                {
+                                    printf("ERROR<%s:%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+                                    delete m_asyncThread;
+                                }
+                            }
+                            else
+                                printf("ERROR<%s:%s>: create asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+                        }
+
+                        TheParticipantFactory->delete_participant(m_participant);
+                    }
+                    else
+                    {
+                        printf("ERROR<%s:%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+                    }
                 }
                 else
                 {
-                    printf("ERROR<%s:%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+                    printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
                 }
             }
             else
             {
-                printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
+                printf("ERROR<%s:%s>: bad parameters\n", CLASS_NAME, METHOD_NAME);
             }
 
             throw ResourceException();
