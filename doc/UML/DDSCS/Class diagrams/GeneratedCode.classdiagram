@@ -2,7 +2,7 @@
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="2ec26f85-eee1-48da-b681-05cd99575618" name="GeneratedCode" linkedPackageId="a22106e1-876f-4caa-84c5-a84963df8557" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
-      <class Id="2789266d-40df-4281-aa98-713db884727e" name="function1ClientRemoteService" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="2789266d-40df-4281-aa98-713db884727e" name="function1ClientRPC" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="e734b7a5-8f06-4078-9a03-40eab81207e0" />
         <ownedOperationsInternal>
           <operation Id="e167f5af-fe18-4ab8-b1d7-3a092ae7368e" name="registerInstance" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
@@ -190,7 +190,7 @@
           <property Id="5700a6a1-a228-44b8-95a5-4ed27008a295" name="function1_Service" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="b56473d0-0bff-495b-8dda-ac8ecccaa6ff" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="3c5ac5e3-b7e2-4635-974a-17c97cabebbe" LastKnownName="ClientRemoteService" />
+              <referencedTypeMoniker Id="3c5ac5e3-b7e2-4635-974a-17c97cabebbe" LastKnownName="ClientRPC" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -289,27 +289,6 @@
             <elementDefinition Id="417738d8-d63c-4173-8615-5f92c0081f40" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="67069b9d-4f69-46f7-8484-83f3cee21bc7" name="callback" direction="In" isUnique="false">
-                  <elementDefinition Id="255169eb-186a-4e58-84ab-c34fca5d7aa6" />
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="36bd2850-0d9e-4290-8fed-fa1a77bd780d" name="param1" direction="In" isUnique="false">
-                  <elementDefinition Id="3bbda335-e953-4783-9b46-257c9a5a0767" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="39eb26bd-4b46-4608-9fb0-b3c913e12d25" LastKnownName="DDS_Short" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="40f297cf-a9e3-42f5-acf2-b80fcc144ce9" name="param2" direction="In" isUnique="false">
-                  <elementDefinition Id="35232b93-380a-4a94-9a49-808c54123675" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="94380d5c-b9be-4e0e-ad4c-591815eaf673" LastKnownName="DDS_Long" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="6f1a8b7a-b474-4e7c-b088-8a93f6eb6b1d" direction="Return" isUnique="false">
                   <elementDefinition Id="d6e2ea1a-a14b-4460-b115-5d129291360e" />
                   <type_NamedElement>
@@ -317,21 +296,27 @@
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="1d082ac4-6114-4914-a0f2-4bd1b7a665c4" name="function1_async_end" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="5e4ee1fb-16ad-4cd6-8a83-e274921a8b8f" />
-            <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="49c8952d-330d-41db-8e63-e42c91e91e7c" name="callback" direction="In" isUnique="false">
-                  <elementDefinition Id="3b49cd3c-3a90-4ce3-8df9-67bd8ddd68f4" />
+                <parameter Id="314e2ad6-550d-4709-981d-7b61856be621" name="obj" direction="In" isUnique="false">
+                  <elementDefinition Id="cbc8632f-a3d3-4a86-b9a2-7c40de0f4e5f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bbd68084-328c-4182-8bea-2e2c4c25f7e1" LastKnownName="Example_function1" />
+                  </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="8bf1e31a-d45c-4976-9d67-6b15ae82f860" name="reply" direction="In" isUnique="false">
-                  <elementDefinition Id="cc56328b-a320-4a63-b4cf-581e60f0007c" />
+                <parameter Id="cb246c4a-b558-4799-9d96-891f50a06cf5" name="param1" direction="In" isUnique="false">
+                  <elementDefinition Id="2646ddc9-f8a7-4bce-903c-2bf9fd35d247" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="5009928b-46dc-4ef0-a443-c75d319a1c3e" LastKnownName="void*" />
+                    <referencedTypeMoniker Id="39eb26bd-4b46-4608-9fb0-b3c913e12d25" LastKnownName="DDS_Short" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7dc2090f-5b16-4613-ba39-f7e751276661" name="param2" direction="In" isUnique="false">
+                  <elementDefinition Id="84c44ae8-c0e1-43e7-bb11-5c753eef2da7" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="94380d5c-b9be-4e0e-ad4c-591815eaf673" LastKnownName="DDS_Long" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -362,7 +347,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="3c5ac5e3-b7e2-4635-974a-17c97cabebbe" name="ClientRemoteService" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ClientRemoteService">
+      <referencedType Id="3c5ac5e3-b7e2-4635-974a-17c97cabebbe" name="ClientRPC" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ClientRPC">
         <elementDefinition Id="af84e5a7-7f29-44a5-978a-dd06fa411961" />
       </referencedType>
     </packageHasNamedElement>
@@ -382,7 +367,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="f92d6832-04f6-4f3b-9e1a-a2ab8582d8a4" name="function1ServerRemoteService" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="f92d6832-04f6-4f3b-9e1a-a2ab8582d8a4" name="function1ServerRPC" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="680def4c-6bfa-491c-87f2-f92bc15114ae" />
         <ownedOperationsInternal>
           <operation Id="ebe8ca32-05eb-4c8e-9b85-0b6b90c24690" name="sendReply" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
@@ -458,7 +443,7 @@
                 <parameter Id="6be0bbc8-49ce-4877-a7d0-8c23f2d9d407" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="2b449ec7-6c65-4252-83d6-9af97e1b6e12" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="0e90f0aa-862d-4c66-84ac-680d2c9e9f0b" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="0e90f0aa-862d-4c66-84ac-680d2c9e9f0b" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -580,7 +565,7 @@
                 <parameter Id="fb3782a2-cb6c-47ec-b5e3-a4c5db6d6572" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="7f4bc2cc-b124-4da5-9927-aff8b01c5a8c" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="0e90f0aa-862d-4c66-84ac-680d2c9e9f0b" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="0e90f0aa-862d-4c66-84ac-680d2c9e9f0b" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -596,7 +581,7 @@
                 <parameter Id="8dcad32b-5d1d-49a2-96e4-07322d52dc2d" name="service" direction="In" isUnique="false">
                   <elementDefinition Id="29ae8ae4-d3c0-4bf5-9b4c-40862fe1ee0f" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="8471bc75-71cd-44fd-8631-d9e9a18fd9ab" LastKnownName="ServerRemoteService" />
+                    <referencedTypeMoniker Id="8471bc75-71cd-44fd-8631-d9e9a18fd9ab" LastKnownName="ServerRPC" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -680,12 +665,12 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="8471bc75-71cd-44fd-8631-d9e9a18fd9ab" name="ServerRemoteService" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ServerRemoteService">
+      <referencedType Id="8471bc75-71cd-44fd-8631-d9e9a18fd9ab" name="ServerRPC" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ServerRPC">
         <elementDefinition Id="77b33842-dd16-4ca3-9dbb-93049e322070" />
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="0e90f0aa-862d-4c66-84ac-680d2c9e9f0b" name="DDSCSServer" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::DDSCSServer">
+      <referencedType Id="0e90f0aa-862d-4c66-84ac-680d2c9e9f0b" name="Server" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::Server">
         <elementDefinition Id="97ae059f-47a8-4996-a08c-e669cd307a7c" />
       </referencedType>
     </packageHasNamedElement>
@@ -980,6 +965,11 @@
     <packageHasNamedElement>
       <referencedType Id="fee6feb3-0cda-442e-8820-97dd14f2dcd3" name="DDSCS::ServerStrateges" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ServerStrateges">
         <elementDefinition Id="e605a6e7-accb-4378-a160-650d5a3680e7" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="bbd68084-328c-4182-8bea-2e2c4c25f7e1" name="Example_function1" isAbstract="false" isLeaf="false" cachedFullName="Example_function1">
+        <elementDefinition Id="b437557f-960d-4322-bd81-ad95e3d0abce" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

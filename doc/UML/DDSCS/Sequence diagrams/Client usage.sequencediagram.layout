@@ -57,14 +57,14 @@
       </nodes>
     </returnMessageConnector>
     <lifelineShape Id="36dc1902-3012-4544-a4e3-ea484cfff10d" absoluteBounds="4.25, 1, 0.15, 7" visible="true" visualStyleMode="Modified">
-      <lifelineMoniker Id="eae34fd7-0bf5-4556-9748-357dc77e0a0a" LastKnownName="function1ClientRemoteService : function1ClientRemoteService" />
+      <lifelineMoniker Id="eae34fd7-0bf5-4556-9748-357dc77e0a0a" LastKnownName="function1ClientRemoteService : function1ClientRPC" />
       <relativeChildShapes>
         <umlLifelineHeadShape Id="c8f4dff4-a84b-4708-9346-025db4455c8a" absoluteBounds="3.325, 0.6, 2, 0.4" customColor="White" visualStyleMode="Modified">
-          <lifelineMoniker Id="eae34fd7-0bf5-4556-9748-357dc77e0a0a" LastKnownName="function1ClientRemoteService : function1ClientRemoteService" />
+          <lifelineMoniker Id="eae34fd7-0bf5-4556-9748-357dc77e0a0a" LastKnownName="function1ClientRemoteService : function1ClientRPC" />
           <relativeChildShapes />
         </umlLifelineHeadShape>
         <lifelineHoverShape Id="50bf13fc-9d54-4bb3-ad38-498ea7027b16" absoluteBounds="4.25, 1, 0, 7">
-          <lifelineMoniker Id="eae34fd7-0bf5-4556-9748-357dc77e0a0a" LastKnownName="function1ClientRemoteService : function1ClientRemoteService" />
+          <lifelineMoniker Id="eae34fd7-0bf5-4556-9748-357dc77e0a0a" LastKnownName="function1ClientRemoteService : function1ClientRPC" />
         </lifelineHoverShape>
         <umlExecutionSpecificationShape Id="27237f8c-0a87-4844-858b-f7923c4a750d" absoluteBounds="4.25, 2.6604166666666664, 0.15, 4.549999999999998" customColor="184, 204, 215" visualStyleMode="Modified">
           <behaviorExecutionSpecificationMoniker Id="9946cc99-86fa-4e10-83b2-50b06ee0c833" LastKnownName="BehaviorExecutionSpecification4" />

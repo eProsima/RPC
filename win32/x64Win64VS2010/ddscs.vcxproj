@@ -91,8 +91,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSRPC_WIN32_DLL_EXPORTS;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSRPC_WIN32_DLL_EXPORTS;NDDS_USER_DLL_EXPORT;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -126,8 +126,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSRPC_WIN32_DLL_EXPORTS;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;DDSRPC_WIN32_DLL_EXPORTS;NDDS_USER_DLL_EXPORT;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -156,7 +156,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;RTI_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -183,7 +183,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;RTI_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -211,21 +211,36 @@
     <ClCompile Include="..\..\src\client\AsyncThread.cpp" />
     <ClCompile Include="..\..\src\client\Client.cpp" />
     <ClCompile Include="..\..\src\client\ClientRPC.cpp" />
+    <ClCompile Include="..\..\src\idl\rti\MessageHeader.cxx" />
+    <ClCompile Include="..\..\src\idl\rti\MessageHeaderPlugin.cxx" />
+    <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
     <ClCompile Include="..\..\src\server\ServerRPC.cpp" />
+    <ClCompile Include="..\..\src\transports\TCPTransport.cpp" />
+    <ClCompile Include="..\..\src\transports\UDPTransport.cpp" />
+    <ClCompile Include="..\..\src\utils\Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\client\AsyncTask.h" />
     <ClInclude Include="..\..\include\client\AsyncThread.h" />
     <ClInclude Include="..\..\include\client\Client.h" />
     <ClInclude Include="..\..\include\client\ClientRPC.h" />
+    <ClInclude Include="..\..\include\exceptions\ResourceException.h" />
+    <ClInclude Include="..\..\include\idl\rti\MessageHeader.h" />
+    <ClInclude Include="..\..\include\idl\rti\MessageHeaderPlugin.h" />
+    <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h" />
     <ClInclude Include="..\..\include\server\Server.h" />
     <ClInclude Include="..\..\include\server\ServerRPC.h" />
+    <ClInclude Include="..\..\include\transports\TCPTransport.h" />
+    <ClInclude Include="..\..\include\transports\Transport.h" />
+    <ClInclude Include="..\..\include\transports\UDPTransport.h" />
     <ClInclude Include="..\..\include\utils\ddsrpc.h" />
     <ClInclude Include="..\..\include\utils\GenericClientRPC.h" />
     <ClInclude Include="..\..\include\utils\GenericServerRPC.h" />
     <ClInclude Include="..\..\include\utils\Messages.h" />
     <ClInclude Include="..\..\include\utils\Typedefs.h" />
+    <ClInclude Include="..\..\include\utils\Utilities.h" />
+    <ClInclude Include="..\..\include\utils\Version.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\ddscs.rc">

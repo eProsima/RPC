@@ -105,7 +105,7 @@ project(guid, name, example, arch, configurations, sourceFiles, headerFiles) ::=
   $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
     <ClCompile>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\ddsrpc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\ddsrpc\include;\$(NDDSHOME)\ddsrpc\include\idl\rti;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>$runtimeLibrary(conf=it)$</RuntimeLibrary>

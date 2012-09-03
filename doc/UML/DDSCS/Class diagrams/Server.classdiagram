@@ -8,7 +8,7 @@
         <classMoniker Id="f8ae15c3-5c3e-4ed7-b366-389ae14911f2" LastKnownName="Example1ServerH" />
         <classMoniker Id="2f708217-3a39-46a0-8bc4-4db6f97eefa7" LastKnownName="function1ReplyUtils" />
         <classMoniker Id="b03a05b3-033a-4f6d-91aa-3d394673818c" LastKnownName="function1RequestUtils" />
-        <classMoniker Id="d05207fe-9fe1-4b4d-b717-75e3f3b5401b" LastKnownName="function1ServerRemoteService" />
+        <classMoniker Id="d05207fe-9fe1-4b4d-b717-75e3f3b5401b" LastKnownName="function1ServerRPC" />
         <classMoniker Id="efda3bd4-dccd-416e-8f9c-c115bcd115dc" LastKnownName="Example1ServerImpl" />
       </annotatedElements>
     </comment>
@@ -20,7 +20,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="4e8d0dce-bf47-44d2-bdd0-11e58834b17f" name="ServerRemoteService" isAbstract="true" isLeaf="false" isActiveClass="false">
+      <class Id="4e8d0dce-bf47-44d2-bdd0-11e58834b17f" name="ServerRPC" isAbstract="true" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="77b33842-dd16-4ca3-9dbb-93049e322070" />
         <generalsInternal>
           <generalization Id="c743b68f-5454-4ec8-a847-ef0a5e8e12f8" isSubstitutable="false">
@@ -44,7 +44,7 @@
           <property Id="1c1d1a91-5ee1-45cc-95d1-fe0d5a563f4d" name="server" visibility="Protected" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="b71909d4-6bd4-429b-826d-6ee2e80775f8" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="DDSCSServer" />
+              <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="Server" />
             </type_NamedElement>
           </property>
           <property Id="60f04515-baa5-4d91-830b-6c46f53b6e66" name="requestSubscriber" visibility="Protected" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -134,7 +134,7 @@
                 <parameter Id="d8a89952-95a2-4be6-a87b-9e7b815627f7" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="bbbb3ea7-77ea-4ac6-a580-9b1c40ae0ca9" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -413,7 +413,7 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" name="DDSCSServer" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::DDSCSServer">
+      <referencedType Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" name="Server" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::Server">
         <elementDefinition Id="97ae059f-47a8-4996-a08c-e669cd307a7c" />
       </referencedType>
     </packageHasNamedElement>
@@ -517,7 +517,7 @@
         </suppliersInternal>
         <generalsInternal>
           <generalization Id="c91d7f3b-8638-4944-b5bc-fc0ccffb824f" isSubstitutable="false">
-            <classMoniker Id="f8945ed7-15d6-48e1-89fb-495b5b5b23a9" LastKnownName="DDSCSServer" />
+            <classMoniker Id="f8945ed7-15d6-48e1-89fb-495b5b5b23a9" LastKnownName="Server" />
             <elementDefinition Id="74c42ee9-7985-4bb9-b932-3ef697503b9c" />
           </generalization>
         </generalsInternal>
@@ -547,7 +547,7 @@
                 <parameter Id="633ae9a0-87a1-4474-a3b3-c6f2532abd1b" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="7f4bc2cc-b124-4da5-9927-aff8b01c5a8c" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -563,7 +563,7 @@
                 <parameter Id="ec7c7806-8bb3-43c5-a351-41ad5a3babde" name="service" direction="In" isUnique="false">
                   <elementDefinition Id="29ae8ae4-d3c0-4bf5-9b4c-40862fe1ee0f" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRemoteService" />
+                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRPC" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -647,12 +647,12 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" name="ServerRemoteService" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ServerRemoteService">
+      <referencedType Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" name="ServerRPC" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ServerRPC">
         <elementDefinition Id="77b33842-dd16-4ca3-9dbb-93049e322070" />
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="f8945ed7-15d6-48e1-89fb-495b5b5b23a9" name="DDSCSServer" isAbstract="true" isLeaf="false" isActiveClass="false">
+      <class Id="f8945ed7-15d6-48e1-89fb-495b5b5b23a9" name="Server" isAbstract="true" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="97ae059f-47a8-4996-a08c-e669cd307a7c" />
         <suppliersInternal>
           <dependency Id="73f35e70-b7c5-4fd0-a905-429ad08d6607">
@@ -662,7 +662,7 @@
         </suppliersInternal>
         <targetEnds>
           <association Id="a7f28da5-87b5-47a9-a7ed-188bb524a9d2" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="4e8d0dce-bf47-44d2-bdd0-11e58834b17f" LastKnownName="ServerRemoteService" />
+            <classMoniker Id="4e8d0dce-bf47-44d2-bdd0-11e58834b17f" LastKnownName="ServerRPC" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="23f9b4d2-9533-41fc-9298-b3aa318f66c4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
@@ -738,7 +738,7 @@
                 <parameter Id="8f031da7-97f8-4f81-9487-650c16b858e3" name="newRemoteService" direction="In" isUnique="false">
                   <elementDefinition Id="a9d52b8e-e9e2-45fe-831b-874b2a1a8312" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRemoteService" />
+                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRPC" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -812,7 +812,7 @@
                 <parameter Id="8a7d5816-e0a1-4ef3-b94a-17c23cc437ba" name="service" direction="In" isUnique="false">
                   <elementDefinition Id="c7bdd8c3-6f1f-4ba2-bf21-ae17335d9d11" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRemoteService" />
+                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRPC" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -937,11 +937,11 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="d05207fe-9fe1-4b4d-b717-75e3f3b5401b" name="function1ServerRemoteService" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="d05207fe-9fe1-4b4d-b717-75e3f3b5401b" name="function1ServerRPC" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="680def4c-6bfa-491c-87f2-f92bc15114ae" />
         <generalsInternal>
           <generalization Id="017b56eb-0a87-4d6e-a1ed-5212058ecdf3" isSubstitutable="false">
-            <classMoniker Id="4e8d0dce-bf47-44d2-bdd0-11e58834b17f" LastKnownName="ServerRemoteService" />
+            <classMoniker Id="4e8d0dce-bf47-44d2-bdd0-11e58834b17f" LastKnownName="ServerRPC" />
             <elementDefinition Id="0e98be5d-e71d-47c0-a17e-16290f681c99" />
           </generalization>
         </generalsInternal>
@@ -1019,7 +1019,7 @@
                 <parameter Id="deba5318-dabb-4981-9e1f-5a940d53e1fc" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="2b449ec7-6c65-4252-83d6-9af97e1b6e12" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1401,7 +1401,7 @@
                 <parameter Id="bda52ab3-86c0-463e-b474-dd4e0774885f" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="53fb3c21-d373-4d25-8269-14d682eb8818" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1409,7 +1409,7 @@
                 <parameter Id="ee670ed3-4f5b-434a-94a6-1a590766905b" name="service" direction="In" isUnique="false">
                   <elementDefinition Id="666afa8a-e267-432a-b210-d68f53252bdb" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRemoteService" />
+                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRPC" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1453,7 +1453,7 @@
                 <parameter Id="8d980f6d-f3bd-4061-a11e-7ff9e69212e6" name="server" direction="In" isUnique="false">
                   <elementDefinition Id="e7f23d2f-687e-4861-bd57-045dc32b3d0d" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="DDSCSServer" />
+                    <referencedTypeMoniker Id="4cd1e58c-697b-4330-8cc6-71aff7d980c5" LastKnownName="Server" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1461,7 +1461,7 @@
                 <parameter Id="db057c13-f2db-4e51-9b8e-e1b1c04de6bc" name="service" direction="In" isUnique="false">
                   <elementDefinition Id="4121c3f4-cf34-44b6-b786-dad5ed2d79ae" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRemoteService" />
+                    <referencedTypeMoniker Id="236190c9-3bfe-45e4-bc31-80d11f9bad9a" LastKnownName="ServerRPC" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>

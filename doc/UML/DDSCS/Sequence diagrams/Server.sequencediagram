@@ -5,6 +5,339 @@
       <interaction Id="bb931dc8-6cfe-4508-ae78-f5fe395bfe06" name="Server" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
         <elementDefinition Id="cf09c815-2e95-4486-82be-5130c4c36bfc" />
         <fragments>
+          <messageOccurrenceSpecification Id="afc0200b-901d-45ad-b786-e35e6928da9c" name="MessageOccurrenceSpecification34">
+            <elementDefinition Id="84409cb1-2cae-4e5e-9199-7ba6e19cde53" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="fe167fed-6cd0-4a00-bf09-f22db918d83e" name="MessageOccurrenceSpecification59">
+            <elementDefinition Id="b52bf05d-f42e-4148-ad0d-df3645b0c604" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="16d1ddfa-02e0-49af-be4a-5340d470b8d7" name="LostFoundTarget1">
+            <elementDefinition Id="b5dc1e4f-50b6-4895-90f8-a20490acbcd2" />
+          </lostFoundTarget>
+          <messageOccurrenceSpecification Id="417dd6f7-edba-4ad3-b66f-61ce92a0133d" name="MessageOccurrenceSpecification1">
+            <elementDefinition Id="cc0e47fb-316f-4836-8e91-b88303cd70e4" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="74fe8d4b-49de-4c8c-b555-910e16f8dd40" name="MessageOccurrenceSpecification58">
+            <elementDefinition Id="cbf17ffc-f775-4e6f-b744-4c947d2754e2" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3d83b2dd-e6c2-4b5e-9206-74984ba74b76" name="MessageOccurrenceSpecification25">
+            <elementDefinition Id="246bd80b-8854-48fa-a79d-8440ef066f78" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="492e13c0-804b-4216-9e21-2929490d1b0d" name="MessageOccurrenceSpecification3">
+            <elementDefinition Id="f2dc889c-8de4-467e-b4aa-f89d739c778d" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b40166b4-bd81-4193-ac06-f88e66a359f0" name="MessageOccurrenceSpecification2">
+            <elementDefinition Id="8acd5a98-9055-4643-8d40-e963638ba529" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d86e46f0-5fdb-459d-a188-03b416dccccd" name="MessageOccurrenceSpecification4">
+            <elementDefinition Id="6b617a47-fc91-4edf-bf51-370638ec7797" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7bf834d9-600b-4ff5-872e-cad5d9c02b1d" name="MessageOccurrenceSpecification5">
+            <elementDefinition Id="786f8728-9d17-40d1-bc59-72a53436ce01" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="4cdcb2a5-36d1-4fde-b042-89546e4c4ca7" name="MessageOccurrenceSpecification24">
+            <elementDefinition Id="d872143b-63ae-4c14-84ef-c7dec96fbd61" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3c7802f1-5183-4e11-8e6d-1f9f6d82b572" name="MessageOccurrenceSpecification57">
+            <elementDefinition Id="eee650f7-80bf-4ff9-a5f6-9de9fa4456c7" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="af35beff-0f8d-4dfe-b811-0994b6efa39a" name="MessageOccurrenceSpecification56">
+            <elementDefinition Id="aed01a92-943f-48a2-bbd0-0f2271dd98a9" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="782d8225-3628-44d0-a72f-ba1a34b21cf1" name="MessageOccurrenceSpecification60">
+            <elementDefinition Id="cffd8fbd-0bff-4e15-acb4-0c883ab86773" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="36340487-5907-422f-aa7f-e88db7556226" name="MessageOccurrenceSpecification61">
+            <elementDefinition Id="bfc3fecd-f089-4c07-81bc-d2af14b75778" />
+            <covered>
+              <lifelineMoniker Id="18ad0cef-8a5b-465a-a9f4-ac3533001737" LastKnownName="threadPoolStrategy : ThreadPoolStrategy" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2fe11757-8156-466d-859a-4b8e6d97cac2" name="MessageOccurrenceSpecification63">
+            <elementDefinition Id="90b9bbbb-b0bb-46f9-ae15-aec1e73a8054" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="449d6d63-efb6-45a5-9cc8-fac3824763fb" name="MessageOccurrenceSpecification62">
+            <elementDefinition Id="93a41c77-c9f3-4e26-83b2-6313210cd337" />
+            <covered>
+              <lifelineMoniker Id="18ad0cef-8a5b-465a-a9f4-ac3533001737" LastKnownName="threadPoolStrategy : ThreadPoolStrategy" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="87d926a7-3562-4408-be44-fe8a61bf41c0" name="MessageOccurrenceSpecification54">
+            <elementDefinition Id="746d2964-5066-40cf-8ed9-e1c67718dd66" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2076ce0d-4094-44ac-a791-6bccee05fcde" name="MessageOccurrenceSpecification55">
+            <elementDefinition Id="1f32e2d2-5e3b-49dd-a415-efea54fa7867" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="9421af2f-8f94-4297-9233-20245e86b51f" name="MessageOccurrenceSpecification53">
+            <elementDefinition Id="a5d18084-0ed8-47c9-b5b8-8b9baedfadae" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="9228f73f-76d5-4a46-9647-9ef9718ba986" name="MessageOccurrenceSpecification10">
+            <elementDefinition Id="626e6b20-0479-4368-9ee4-f470e81f93f9" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d43b8254-fa27-4631-bec7-1008a356f9f9" name="MessageOccurrenceSpecification11">
+            <elementDefinition Id="7333d25a-af5d-472d-b33c-931ba78a6b91" />
+            <covered>
+              <lifelineMoniker Id="7686603d-3530-49ad-a506-3fcf275b3ec2" LastKnownName="example1ServerImpl : Example1ServerImpl" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6911de47-86c9-47ae-9101-143f4bc86f49" name="MessageOccurrenceSpecification13">
+            <elementDefinition Id="3bc519f3-c119-429d-bbc4-1f2575b0c1b6" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="bcb81418-9f01-4d69-a600-00a41586f635" name="MessageOccurrenceSpecification12">
+            <elementDefinition Id="a6b26f95-4847-4833-9095-bd4e6e2291f1" />
+            <covered>
+              <lifelineMoniker Id="7686603d-3530-49ad-a506-3fcf275b3ec2" LastKnownName="example1ServerImpl : Example1ServerImpl" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6782173b-5e72-476e-859d-84ba64b30446" name="MessageOccurrenceSpecification52">
+            <elementDefinition Id="cc9a4d6e-f1c7-49ae-b0fe-2a6589092170" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="9cdb5f6e-c525-448c-982b-846e78852db1" name="MessageOccurrenceSpecification51">
+            <elementDefinition Id="69cc2d1a-95bd-4cb6-be31-cf30611c8d4a" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d94377fa-a9fe-479a-9da7-466d6e5a0841" name="MessageOccurrenceSpecification50">
+            <elementDefinition Id="8105a376-3e4e-4de0-89a6-7a884e8c443d" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b0312eaa-8a6c-4c61-831e-5ba66f40993c" name="MessageOccurrenceSpecification14">
+            <elementDefinition Id="745fd0f8-b575-4063-9d4e-fb3fec5f7f3c" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="274f2ccf-96fb-4ce8-b8d8-90bb38c45bcb" name="MessageOccurrenceSpecification15">
+            <elementDefinition Id="64638718-e13d-4f0c-94cd-d696adab3c34" />
+            <covered>
+              <lifelineMoniker Id="601cd4d4-f04d-4a5d-ae29-380ecded7580" LastKnownName="function1RequestUtils : function1RequestUtils" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3aa7e2f5-d9d3-45d3-bd66-555823169a91" name="MessageOccurrenceSpecification17">
+            <elementDefinition Id="8281ab98-a726-4fed-831f-21005b549327" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="12e49caf-0250-488a-9c98-d796a6069a67" name="MessageOccurrenceSpecification16">
+            <elementDefinition Id="b85b3729-8599-4f9d-bda5-eade8d17ba5d" />
+            <covered>
+              <lifelineMoniker Id="601cd4d4-f04d-4a5d-ae29-380ecded7580" LastKnownName="function1RequestUtils : function1RequestUtils" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="8f1d8d27-f583-44b3-bc46-f775b1997c31" name="MessageOccurrenceSpecification48">
+            <elementDefinition Id="54f00245-15b2-48f1-bdbe-6c48e2cd7f22" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="48c9b2f9-b740-4a58-a926-41b4894f8ddb" name="MessageOccurrenceSpecification49">
+            <elementDefinition Id="7c28525c-017e-4992-bce4-16de1cbe8798" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0f28fd9e-ac37-40f8-9b92-c4bd458c4533" name="MessageOccurrenceSpecification47">
+            <elementDefinition Id="85680624-e3f5-4b4a-9f5e-6314861b14ee" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="9ff7b115-416f-4d89-8b31-3c410b9a20e3" name="MessageOccurrenceSpecification18">
+            <elementDefinition Id="7a81c506-2698-410b-ba14-88e42322e947" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="414a3ac1-ace6-4892-9509-2e6ca59be9f3" name="MessageOccurrenceSpecification19">
+            <elementDefinition Id="f80c0b5c-2582-4115-8360-df892291a423" />
+            <covered>
+              <lifelineMoniker Id="61ec20e4-6fd7-4d4b-9186-b4e073d204f8" LastKnownName="function1ReplyUtils : function1ReplyUtils" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b0808e08-a7f3-4d16-9f72-69e710059a68" name="MessageOccurrenceSpecification20">
+            <elementDefinition Id="dae7c226-f536-4549-8137-bf5a17b3708f" />
+            <covered>
+              <lifelineMoniker Id="61ec20e4-6fd7-4d4b-9186-b4e073d204f8" LastKnownName="function1ReplyUtils : function1ReplyUtils" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="242feb6b-04ac-4681-945e-46860e76a863" name="MessageOccurrenceSpecification21">
+            <elementDefinition Id="d8f52148-a99a-483d-a4ea-956df97c5b97" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="4d615c99-457a-48b0-80bc-7efa22f83dea" name="MessageOccurrenceSpecification46">
+            <elementDefinition Id="43a79cbc-31d5-4eb9-99a6-95eaae1f2348" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0eb967a8-ca69-442e-a9b6-320bdd20ee68" name="MessageOccurrenceSpecification44">
+            <elementDefinition Id="ae59b0fd-75b3-4eaf-8fcf-0a02d56c8557" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7c86a457-b00e-43bf-8549-89f1f68dec0a" name="MessageOccurrenceSpecification45">
+            <elementDefinition Id="f7960223-2e80-4907-80c2-136cb3c5d508" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="a3f85486-8e7e-4b64-9942-f49e8ba5ff58" name="MessageOccurrenceSpecification22">
+            <elementDefinition Id="87c3ad00-cbeb-4b13-a915-c3b437d1dae5" />
+            <covered>
+              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="419a7e69-bfee-409c-a0c1-e741af406768" name="MessageOccurrenceSpecification23">
+            <elementDefinition Id="ae85c47b-36fd-415d-9833-f089fd48ab8f" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="46fb9f81-6d62-4351-843f-982818749ae9" name="MessageOccurrenceSpecification26">
+            <elementDefinition Id="4c0a0046-0cc3-4dbf-8d59-950c5d8aab28" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="518f3c45-27be-4503-9879-155702018a79" name="MessageOccurrenceSpecification42">
+            <elementDefinition Id="ea12f15d-324b-442f-a519-92661d02e01d" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="9836f9bc-9f58-47ac-a8ce-8d2f4014b1c5" name="MessageOccurrenceSpecification43">
+            <elementDefinition Id="01189fbd-2860-4c64-8ad0-fa26cdb56829" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="5a6c1ef4-33fc-49e0-9a7c-cfcc764bca41" name="MessageOccurrenceSpecification27">
+            <elementDefinition Id="86146d1f-73fe-4f90-9d6c-95357c76ff18" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="57650cbe-66c0-4d26-bf79-e5e6721245bb" name="MessageOccurrenceSpecification41">
+            <elementDefinition Id="bc05a3fb-d17f-4b12-9466-ac195b9613bc" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="9aff4d4e-0000-47d9-a238-37f452c18123" name="MessageOccurrenceSpecification40">
+            <elementDefinition Id="06f470b7-66c5-479a-b5b9-23797fe8251e" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="fa015d92-eba5-4dee-bac3-7a027853e74f" name="MessageOccurrenceSpecification32">
+            <elementDefinition Id="2ef7fc25-c894-4235-a6b1-2e040f35e8aa" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="84181483-a308-47e8-b72a-9173d2218e7f" name="MessageOccurrenceSpecification33">
+            <elementDefinition Id="ad509192-aa45-44fc-982f-88c2a4f107ec" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0e851a39-7677-4d4c-be78-d597174300c5" name="MessageOccurrenceSpecification38">
+            <elementDefinition Id="3f438b2f-dfca-4d0d-8cb4-b5d8e8f431f1" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="27981fbd-0cc3-4e7a-85a6-766367dad642" name="MessageOccurrenceSpecification35">
+            <elementDefinition Id="3189eb7d-439c-486d-9a3a-b285b1d293c3" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="46712916-4cea-4b15-bb8e-500fbd1b96f3" name="MessageOccurrenceSpecification39">
+            <elementDefinition Id="04ee5fdd-a4bb-45f9-b523-bc71ed4c98eb" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ab18ac6b-3ef3-4c9e-b64a-0a1528f3cd3b" name="MessageOccurrenceSpecification36">
+            <elementDefinition Id="16f7af5b-792c-4967-8a1d-1004ecd2715a" />
+            <covered>
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7e9e0d98-afdc-4dcf-9569-1560e40862f7" name="MessageOccurrenceSpecification37">
+            <elementDefinition Id="6415496e-99a5-4d40-ab66-4b556d5d03fc" />
+            <covered>
+              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
+            </covered>
+          </messageOccurrenceSpecification>
           <behaviorExecutionSpecification Id="e2842540-5b79-4dfc-81e3-ee8792d11c8b" name="BehaviorExecutionSpecification1">
             <elementDefinition Id="5c9813c2-c7c6-4c8d-9d7a-2408b8468892" />
             <coveredLifelines>
@@ -46,15 +379,6 @@
               <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
             </covered>
           </executionOccurrenceSpecification>
-          <lostFoundTarget Id="16d1ddfa-02e0-49af-be4a-5340d470b8d7" name="LostFoundTarget1">
-            <elementDefinition Id="b5dc1e4f-50b6-4895-90f8-a20490acbcd2" />
-          </lostFoundTarget>
-          <messageOccurrenceSpecification Id="417dd6f7-edba-4ad3-b66f-61ce92a0133d" name="MessageOccurrenceSpecification1">
-            <elementDefinition Id="cc0e47fb-316f-4836-8e91-b88303cd70e4" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
           <behaviorExecutionSpecification Id="0a7f85bb-1140-4061-a546-a292b73bfb86" name="BehaviorExecutionSpecification2">
             <elementDefinition Id="858979ab-7702-4670-bdad-2c89db32f56c" />
             <coveredLifelines>
@@ -82,30 +406,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="492e13c0-804b-4216-9e21-2929490d1b0d" name="MessageOccurrenceSpecification3">
-            <elementDefinition Id="f2dc889c-8de4-467e-b4aa-f89d739c778d" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="b40166b4-bd81-4193-ac06-f88e66a359f0" name="MessageOccurrenceSpecification2">
-            <elementDefinition Id="8acd5a98-9055-4643-8d40-e963638ba529" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="d86e46f0-5fdb-459d-a188-03b416dccccd" name="MessageOccurrenceSpecification4">
-            <elementDefinition Id="6b617a47-fc91-4edf-bf51-370638ec7797" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="7bf834d9-600b-4ff5-872e-cad5d9c02b1d" name="MessageOccurrenceSpecification5">
-            <elementDefinition Id="786f8728-9d17-40d1-bc59-72a53436ce01" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="a8780d41-63a0-49cf-8283-4ea1854104f1" name="ExecutionOccurrenceSpecification4">
             <elementDefinition Id="dc4e5a1c-848c-4e34-bb49-79ecb2563a57" />
             <event>
@@ -144,30 +444,6 @@
               <lifelineMoniker Id="18ad0cef-8a5b-465a-a9f4-ac3533001737" LastKnownName="threadPoolStrategy : ThreadPoolStrategy" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="782d8225-3628-44d0-a72f-ba1a34b21cf1" name="MessageOccurrenceSpecification60">
-            <elementDefinition Id="cffd8fbd-0bff-4e15-acb4-0c883ab86773" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="36340487-5907-422f-aa7f-e88db7556226" name="MessageOccurrenceSpecification61">
-            <elementDefinition Id="bfc3fecd-f089-4c07-81bc-d2af14b75778" />
-            <covered>
-              <lifelineMoniker Id="18ad0cef-8a5b-465a-a9f4-ac3533001737" LastKnownName="threadPoolStrategy : ThreadPoolStrategy" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="2fe11757-8156-466d-859a-4b8e6d97cac2" name="MessageOccurrenceSpecification63">
-            <elementDefinition Id="90b9bbbb-b0bb-46f9-ae15-aec1e73a8054" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="449d6d63-efb6-45a5-9cc8-fac3824763fb" name="MessageOccurrenceSpecification62">
-            <elementDefinition Id="93a41c77-c9f3-4e26-83b2-6313210cd337" />
-            <covered>
-              <lifelineMoniker Id="18ad0cef-8a5b-465a-a9f4-ac3533001737" LastKnownName="threadPoolStrategy : ThreadPoolStrategy" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="d6fe4630-5549-4bad-863e-d36804214b5b" name="ExecutionOccurrenceSpecification36">
             <elementDefinition Id="14ae4705-a24d-44dc-8bf1-ce799f294b71" />
             <event>
@@ -206,30 +482,6 @@
               <lifelineMoniker Id="7686603d-3530-49ad-a506-3fcf275b3ec2" LastKnownName="example1ServerImpl : Example1ServerImpl" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="9228f73f-76d5-4a46-9647-9ef9718ba986" name="MessageOccurrenceSpecification10">
-            <elementDefinition Id="626e6b20-0479-4368-9ee4-f470e81f93f9" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="d43b8254-fa27-4631-bec7-1008a356f9f9" name="MessageOccurrenceSpecification11">
-            <elementDefinition Id="7333d25a-af5d-472d-b33c-931ba78a6b91" />
-            <covered>
-              <lifelineMoniker Id="7686603d-3530-49ad-a506-3fcf275b3ec2" LastKnownName="example1ServerImpl : Example1ServerImpl" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="6911de47-86c9-47ae-9101-143f4bc86f49" name="MessageOccurrenceSpecification13">
-            <elementDefinition Id="3bc519f3-c119-429d-bbc4-1f2575b0c1b6" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="bcb81418-9f01-4d69-a600-00a41586f635" name="MessageOccurrenceSpecification12">
-            <elementDefinition Id="a6b26f95-4847-4833-9095-bd4e6e2291f1" />
-            <covered>
-              <lifelineMoniker Id="7686603d-3530-49ad-a506-3fcf275b3ec2" LastKnownName="example1ServerImpl : Example1ServerImpl" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="2f3f9e55-e0b3-413e-b95a-ae17a427e71a" name="ExecutionOccurrenceSpecification8">
             <elementDefinition Id="00be9b77-a624-4ef7-b4d2-49f7ae255b3b" />
             <event>
@@ -268,30 +520,6 @@
               <lifelineMoniker Id="601cd4d4-f04d-4a5d-ae29-380ecded7580" LastKnownName="function1RequestUtils : function1RequestUtils" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="b0312eaa-8a6c-4c61-831e-5ba66f40993c" name="MessageOccurrenceSpecification14">
-            <elementDefinition Id="745fd0f8-b575-4063-9d4e-fb3fec5f7f3c" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="274f2ccf-96fb-4ce8-b8d8-90bb38c45bcb" name="MessageOccurrenceSpecification15">
-            <elementDefinition Id="64638718-e13d-4f0c-94cd-d696adab3c34" />
-            <covered>
-              <lifelineMoniker Id="601cd4d4-f04d-4a5d-ae29-380ecded7580" LastKnownName="function1RequestUtils : function1RequestUtils" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="3aa7e2f5-d9d3-45d3-bd66-555823169a91" name="MessageOccurrenceSpecification17">
-            <elementDefinition Id="8281ab98-a726-4fed-831f-21005b549327" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="12e49caf-0250-488a-9c98-d796a6069a67" name="MessageOccurrenceSpecification16">
-            <elementDefinition Id="b85b3729-8599-4f9d-bda5-eade8d17ba5d" />
-            <covered>
-              <lifelineMoniker Id="601cd4d4-f04d-4a5d-ae29-380ecded7580" LastKnownName="function1RequestUtils : function1RequestUtils" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="961f46ce-44d9-4519-a7e2-97d76619b08a" name="ExecutionOccurrenceSpecification10">
             <elementDefinition Id="2a84097a-f9c1-4520-b772-262bc3f0b48d" />
             <event>
@@ -330,30 +558,6 @@
               <lifelineMoniker Id="61ec20e4-6fd7-4d4b-9186-b4e073d204f8" LastKnownName="function1ReplyUtils : function1ReplyUtils" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="9ff7b115-416f-4d89-8b31-3c410b9a20e3" name="MessageOccurrenceSpecification18">
-            <elementDefinition Id="7a81c506-2698-410b-ba14-88e42322e947" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="414a3ac1-ace6-4892-9509-2e6ca59be9f3" name="MessageOccurrenceSpecification19">
-            <elementDefinition Id="f80c0b5c-2582-4115-8360-df892291a423" />
-            <covered>
-              <lifelineMoniker Id="61ec20e4-6fd7-4d4b-9186-b4e073d204f8" LastKnownName="function1ReplyUtils : function1ReplyUtils" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="b0808e08-a7f3-4d16-9f72-69e710059a68" name="MessageOccurrenceSpecification20">
-            <elementDefinition Id="dae7c226-f536-4549-8137-bf5a17b3708f" />
-            <covered>
-              <lifelineMoniker Id="61ec20e4-6fd7-4d4b-9186-b4e073d204f8" LastKnownName="function1ReplyUtils : function1ReplyUtils" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="242feb6b-04ac-4681-945e-46860e76a863" name="MessageOccurrenceSpecification21">
-            <elementDefinition Id="d8f52148-a99a-483d-a4ea-956df97c5b97" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="5921ccd3-66a9-446c-926e-231c055d5d78" name="ExecutionOccurrenceSpecification12">
             <elementDefinition Id="b24fbb9f-6981-45c6-a14d-e390247531a0" />
             <event>
@@ -368,7 +572,7 @@
           <behaviorExecutionSpecification Id="6ae6b708-c568-4541-b0a2-e270b0400723" name="BehaviorExecutionSpecification7">
             <elementDefinition Id="70b35d22-611c-41a1-9c3e-45ed4103422f" />
             <coveredLifelines>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </coveredLifelines>
             <finish>
               <executionOccurrenceSpecificationMoniker Id="76a998e6-fb1d-4ba5-bd7e-4d2bb670c3c5" LastKnownName="ExecutionOccurrenceSpecification14" />
@@ -395,31 +599,13 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="a3f85486-8e7e-4b64-9942-f49e8ba5ff58" name="MessageOccurrenceSpecification22">
-            <elementDefinition Id="87c3ad00-cbeb-4b13-a915-c3b437d1dae5" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="419a7e69-bfee-409c-a0c1-e741af406768" name="MessageOccurrenceSpecification23">
-            <elementDefinition Id="ae85c47b-36fd-415d-9833-f089fd48ab8f" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="46fb9f81-6d62-4351-843f-982818749ae9" name="MessageOccurrenceSpecification26">
-            <elementDefinition Id="4c0a0046-0cc3-4dbf-8d59-950c5d8aab28" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <behaviorExecutionSpecification Id="75ece04e-1653-4165-a2af-6339d53884af" name="BehaviorExecutionSpecification8">
             <elementDefinition Id="ddcadfde-db81-428c-bbf5-2434a9ff4829" />
             <coveredLifelines>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </coveredLifelines>
             <finish>
               <executionOccurrenceSpecificationMoniker Id="8dd1486f-d5d5-4d09-bd5d-de8bbfb54530" LastKnownName="ExecutionOccurrenceSpecification16" />
@@ -451,15 +637,9 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="5a6c1ef4-33fc-49e0-9a7c-cfcc764bca41" name="MessageOccurrenceSpecification27">
-            <elementDefinition Id="86146d1f-73fe-4f90-9d6c-95357c76ff18" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <behaviorExecutionSpecification Id="8480dc8d-b2fd-4c47-a202-75fcb2ccff58" name="BehaviorExecutionSpecification10">
             <elementDefinition Id="f64bf134-da1a-46f3-bbf4-59cec52969a3" />
             <coveredLifelines>
@@ -487,30 +667,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="fa015d92-eba5-4dee-bac3-7a027853e74f" name="MessageOccurrenceSpecification32">
-            <elementDefinition Id="2ef7fc25-c894-4235-a6b1-2e040f35e8aa" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="84181483-a308-47e8-b72a-9173d2218e7f" name="MessageOccurrenceSpecification33">
-            <elementDefinition Id="ad509192-aa45-44fc-982f-88c2a4f107ec" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="afc0200b-901d-45ad-b786-e35e6928da9c" name="MessageOccurrenceSpecification34">
-            <elementDefinition Id="84409cb1-2cae-4e5e-9199-7ba6e19cde53" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="27981fbd-0cc3-4e7a-85a6-766367dad642" name="MessageOccurrenceSpecification35">
-            <elementDefinition Id="3189eb7d-439c-486d-9a3a-b285b1d293c3" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="62d03cf1-9357-4f1b-81df-1b263068b8da" name="ExecutionOccurrenceSpecification20">
             <elementDefinition Id="911aad52-9afb-4883-aa07-14f72662f5d2" />
             <event>
@@ -549,30 +705,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="7e9e0d98-afdc-4dcf-9569-1560e40862f7" name="MessageOccurrenceSpecification37">
-            <elementDefinition Id="6415496e-99a5-4d40-ab66-4b556d5d03fc" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="ab18ac6b-3ef3-4c9e-b64a-0a1528f3cd3b" name="MessageOccurrenceSpecification36">
-            <elementDefinition Id="16f7af5b-792c-4967-8a1d-1004ecd2715a" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="46712916-4cea-4b15-bb8e-500fbd1b96f3" name="MessageOccurrenceSpecification39">
-            <elementDefinition Id="04ee5fdd-a4bb-45f9-b523-bc71ed4c98eb" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="0e851a39-7677-4d4c-be78-d597174300c5" name="MessageOccurrenceSpecification38">
-            <elementDefinition Id="3f438b2f-dfca-4d0d-8cb4-b5d8e8f431f1" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="56b9094b-eb1f-41f7-88e4-80a206f07a33" name="ExecutionOccurrenceSpecification22">
             <elementDefinition Id="0b8815cc-7cf8-4f66-ae19-91fff41e4346" />
             <event>
@@ -611,30 +743,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="9aff4d4e-0000-47d9-a238-37f452c18123" name="MessageOccurrenceSpecification40">
-            <elementDefinition Id="06f470b7-66c5-479a-b5b9-23797fe8251e" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="57650cbe-66c0-4d26-bf79-e5e6721245bb" name="MessageOccurrenceSpecification41">
-            <elementDefinition Id="bc05a3fb-d17f-4b12-9466-ac195b9613bc" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="9836f9bc-9f58-47ac-a8ce-8d2f4014b1c5" name="MessageOccurrenceSpecification43">
-            <elementDefinition Id="01189fbd-2860-4c64-8ad0-fa26cdb56829" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="518f3c45-27be-4503-9879-155702018a79" name="MessageOccurrenceSpecification42">
-            <elementDefinition Id="ea12f15d-324b-442f-a519-92661d02e01d" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="2b8de04c-ac83-421f-b0d2-641cd0428ffc" name="ExecutionOccurrenceSpecification24">
             <elementDefinition Id="c9d1b96e-e094-4531-8db0-838ed43b286d" />
             <event>
@@ -673,30 +781,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="7c86a457-b00e-43bf-8549-89f1f68dec0a" name="MessageOccurrenceSpecification45">
-            <elementDefinition Id="f7960223-2e80-4907-80c2-136cb3c5d508" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="0eb967a8-ca69-442e-a9b6-320bdd20ee68" name="MessageOccurrenceSpecification44">
-            <elementDefinition Id="ae59b0fd-75b3-4eaf-8fcf-0a02d56c8557" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="4d615c99-457a-48b0-80bc-7efa22f83dea" name="MessageOccurrenceSpecification46">
-            <elementDefinition Id="43a79cbc-31d5-4eb9-99a6-95eaae1f2348" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="0f28fd9e-ac37-40f8-9b92-c4bd458c4533" name="MessageOccurrenceSpecification47">
-            <elementDefinition Id="85680624-e3f5-4b4a-9f5e-6314861b14ee" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="f7c6d468-72c7-489a-946c-057c2fea9338" name="ExecutionOccurrenceSpecification26">
             <elementDefinition Id="d36babb6-3644-473c-a245-affd1e00d280" />
             <event>
@@ -735,30 +819,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="48c9b2f9-b740-4a58-a926-41b4894f8ddb" name="MessageOccurrenceSpecification49">
-            <elementDefinition Id="7c28525c-017e-4992-bce4-16de1cbe8798" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="8f1d8d27-f583-44b3-bc46-f775b1997c31" name="MessageOccurrenceSpecification48">
-            <elementDefinition Id="54f00245-15b2-48f1-bdbe-6c48e2cd7f22" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="d94377fa-a9fe-479a-9da7-466d6e5a0841" name="MessageOccurrenceSpecification50">
-            <elementDefinition Id="8105a376-3e4e-4de0-89a6-7a884e8c443d" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="9cdb5f6e-c525-448c-982b-846e78852db1" name="MessageOccurrenceSpecification51">
-            <elementDefinition Id="69cc2d1a-95bd-4cb6-be31-cf30611c8d4a" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="3a940ec5-7116-433d-b1f2-12c0fc8b51fb" name="ExecutionOccurrenceSpecification28">
             <elementDefinition Id="89d04d03-a908-45fa-b134-dd9ddbcad178" />
             <event>
@@ -797,30 +857,6 @@
               <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="6782173b-5e72-476e-859d-84ba64b30446" name="MessageOccurrenceSpecification52">
-            <elementDefinition Id="cc9a4d6e-f1c7-49ae-b0fe-2a6589092170" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="9421af2f-8f94-4297-9233-20245e86b51f" name="MessageOccurrenceSpecification53">
-            <elementDefinition Id="a5d18084-0ed8-47c9-b5b8-8b9baedfadae" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="2076ce0d-4094-44ac-a791-6bccee05fcde" name="MessageOccurrenceSpecification55">
-            <elementDefinition Id="1f32e2d2-5e3b-49dd-a415-efea54fa7867" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="87d926a7-3562-4408-be44-fe8a61bf41c0" name="MessageOccurrenceSpecification54">
-            <elementDefinition Id="746d2964-5066-40cf-8ed9-e1c67718dd66" />
-            <covered>
-              <lifelineMoniker Id="494f3bdf-1898-4dce-9feb-0d8425bcefc5" LastKnownName="dDS Middleware : DDS Middleware" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="cd545161-7e25-4bea-a9dd-29ac3a1de31c" name="ExecutionOccurrenceSpecification30">
             <elementDefinition Id="0336a00d-0b0d-44f5-aa8c-442a1c4286fd" />
             <event>
@@ -840,19 +876,13 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="af35beff-0f8d-4dfe-b811-0994b6efa39a" name="MessageOccurrenceSpecification56">
-            <elementDefinition Id="aed01a92-943f-48a2-bbd0-0f2271dd98a9" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <behaviorExecutionSpecification Id="9184e398-bf78-47f5-a6f0-7fdfbd0c8029" name="BehaviorExecutionSpecification16">
             <elementDefinition Id="d1a390bd-67f7-4b3f-9842-7e3af61fc993" />
             <coveredLifelines>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </coveredLifelines>
             <finish>
               <executionOccurrenceSpecificationMoniker Id="3992ab80-4227-4027-9daa-a0bf1d177e52" LastKnownName="ExecutionOccurrenceSpecification32" />
@@ -872,15 +902,9 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="3c7802f1-5183-4e11-8e6d-1f9f6d82b572" name="MessageOccurrenceSpecification57">
-            <elementDefinition Id="eee650f7-80bf-4ff9-a5f6-9de9fa4456c7" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="3992ab80-4227-4027-9daa-a0bf1d177e52" name="ExecutionOccurrenceSpecification32">
             <elementDefinition Id="b7de9a05-a170-40a2-ad35-950714ebf92b" />
             <event>
@@ -889,21 +913,9 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="4cdcb2a5-36d1-4fde-b042-89546e4c4ca7" name="MessageOccurrenceSpecification24">
-            <elementDefinition Id="d872143b-63ae-4c14-84ef-c7dec96fbd61" />
-            <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="3d83b2dd-e6c2-4b5e-9206-74984ba74b76" name="MessageOccurrenceSpecification25">
-            <elementDefinition Id="246bd80b-8854-48fa-a79d-8440ef066f78" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="76a998e6-fb1d-4ba5-bd7e-4d2bb670c3c5" name="ExecutionOccurrenceSpecification14">
             <elementDefinition Id="c83307b2-35ac-4f54-91bb-24e80fb5f322" />
             <event>
@@ -912,15 +924,9 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="1350c51b-aa57-4547-bb80-95fe698f0446" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="74fe8d4b-49de-4c8c-b555-910e16f8dd40" name="MessageOccurrenceSpecification58">
-            <elementDefinition Id="cbf17ffc-f775-4e6f-b744-4c947d2754e2" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
           <behaviorExecutionSpecification Id="2a1a66d8-32d8-4f6d-9c6b-71bb1bf1cf79" name="BehaviorExecutionSpecification17">
             <elementDefinition Id="1d723cda-b61f-4dc4-bfef-df684e18edd6" />
             <coveredLifelines>
@@ -947,12 +953,6 @@
               <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="fe167fed-6cd0-4a00-bf09-f22db918d83e" name="MessageOccurrenceSpecification59">
-            <elementDefinition Id="b52bf05d-f42e-4148-ad0d-df3645b0c604" />
-            <covered>
-              <lifelineMoniker Id="3f69172a-5e55-4357-8afd-85dd2dc8d73a" LastKnownName="example1Server : Example1ServerH" />
-            </covered>
-          </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="31ded1dd-653e-4be8-a4f8-08b5e69f2ef5" name="ExecutionOccurrenceSpecification34">
             <elementDefinition Id="39b1c60e-fdcf-4ebb-81a4-ad003ba8de3b" />
             <event>
@@ -987,7 +987,7 @@
               <executionOccurrenceSpecificationMoniker Id="d9e47121-8dd8-487d-83c4-715129bbebc8" LastKnownName="ExecutionOccurrenceSpecification2" />
             </topLevelOccurrences>
           </lifeline>
-          <lifeline Id="1350c51b-aa57-4547-bb80-95fe698f0446" name="function1ServerRemoteService : function1ServerRemoteService" isActor="false" lifelineDisplayName="function1ServerRemoteService : function1ServerRemoteService">
+          <lifeline Id="1350c51b-aa57-4547-bb80-95fe698f0446" name="function1ServerRemoteService : function1ServerRPC" isActor="false" lifelineDisplayName="function1ServerRemoteService : function1ServerRPC">
             <elementDefinition Id="79083d52-adea-4cb2-9cb0-24eb80ffad44" />
             <represents>
               <propertyMoniker Id="0d598532-f8ab-4c77-8511-f6d9526a9800" />
@@ -1142,7 +1142,7 @@
               <messageOccurrenceSpecificationMoniker Id="242feb6b-04ac-4681-945e-46860e76a863" LastKnownName="MessageOccurrenceSpecification21" />
             </receiveEvent>
           </message>
-          <message Id="9d162e07-ae86-4432-9812-0979e8305de5" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="+ function1ServerRemoteService(remoteServiceName : char*, server : DDSCSServer, requestTypeName : char*, requestQosLibrary : char*, requestQosProfile : char*, replyTypeName : char*, replyQosLibrary : char*, replyQosProfile : char*, execFunction : fExecFunction, serverParticipant : DDSDomainParticipant*)">
+          <message Id="9d162e07-ae86-4432-9812-0979e8305de5" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="+ function1ServerRemoteService(remoteServiceName : char*, server : DDSCS::Server, requestTypeName : char*, requestQosLibrary : char*, requestQosProfile : char*, replyTypeName : char*, replyQosLibrary : char*, replyQosProfile : char*, execFunction : fExecFunction, serverParticipant : DDSDomainParticipant*)">
             <elementDefinition Id="6c8521e2-2479-4539-b09d-6b30266e9568" />
             <sendEvent>
               <messageOccurrenceSpecificationMoniker Id="a3f85486-8e7e-4b64-9942-f49e8ba5ff58" LastKnownName="MessageOccurrenceSpecification22" />
@@ -1286,7 +1286,7 @@
               <messageOccurrenceSpecificationMoniker Id="3c7802f1-5183-4e11-8e6d-1f9f6d82b572" LastKnownName="MessageOccurrenceSpecification57" />
             </receiveEvent>
           </message>
-          <message Id="85e26643-3b8b-403c-869d-60175d779e7b" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true" signatureText="# setRemoteService(newRemoteService : ServerRemoteService) : int">
+          <message Id="85e26643-3b8b-403c-869d-60175d779e7b" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true" signatureText="# setRemoteService(newRemoteService : DDSCS::ServerRPC) : int">
             <elementDefinition Id="ad15a346-4ca9-452b-8cc4-f6a160908028" />
             <sendEvent>
               <messageOccurrenceSpecificationMoniker Id="74fe8d4b-49de-4c8c-b555-910e16f8dd40" LastKnownName="MessageOccurrenceSpecification58" />
@@ -1342,7 +1342,7 @@
           <property Id="0d598532-f8ab-4c77-8511-f6d9526a9800" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="96974965-7530-469c-872c-10581c940125" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="abd30466-7bec-4ae5-b2c8-ccae53d02d78" LastKnownName="function1ServerRemoteService" />
+              <referencedTypeMoniker Id="abd30466-7bec-4ae5-b2c8-ccae53d02d78" LastKnownName="function1ServerRPC" />
             </type_NamedElement>
           </property>
           <property Id="fca605e5-2d77-40c6-8a09-14fcecbbd5a5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -1423,7 +1423,7 @@
       </executionEvent>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="abd30466-7bec-4ae5-b2c8-ccae53d02d78" name="function1ServerRemoteService" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::function1ServerRemoteService">
+      <referencedType Id="abd30466-7bec-4ae5-b2c8-ccae53d02d78" name="function1ServerRPC" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::function1ServerRPC">
         <elementDefinition Id="680def4c-6bfa-491c-87f2-f92bc15114ae" />
       </referencedType>
     </packageHasNamedElement>

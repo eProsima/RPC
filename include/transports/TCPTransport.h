@@ -2,12 +2,13 @@
 #define _TRANSPORTS_TCPTRANSPORT_H_
 
 #include "transports/Transport.h"
+#include "utils/ddsrpc.h"
 
 namespace eProsima
 {
     namespace DDSRPC
     {
-        class TCPTransport : public Transport
+        class DDSRPC_WIN32_DLL_API TCPTransport : public Transport
         {
             public:
 

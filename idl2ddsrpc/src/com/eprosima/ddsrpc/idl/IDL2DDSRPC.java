@@ -195,10 +195,6 @@ public class IDL2DDSRPC
             	lineCommand.add(externalDir.toString());
 
             }
-            
-            // TODO
-            //lineCommand.add("-I " + dds_root + "/ddsrpc/idl");
-            lineCommand.add("-I../../../../idl");
         }
         else if(middleware.equals("opendds"))
         {
@@ -207,10 +203,14 @@ public class IDL2DDSRPC
             
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
-            // TODO
-            //lineCommand.add("-I" + dds_root + "/ddsrpc/idl");
-            lineCommand.add("-I../../../../idl");
         }
+        
+        // TODO
+        if(osOption.equals("Win32"))
+        	 lineCommand.add("-I" + dds_root + "\\ddsrpc\\idl");
+        else if(osOption.equals("Linux"))
+        	lineCommand.add("-I" + dds_root + "/ddsrpc/idl");
+        //lineCommand.add("-I../../../../idl");
     	
     	return 0;
     }

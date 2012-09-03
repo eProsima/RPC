@@ -14,7 +14,7 @@
           <messageOccurrenceSpecification Id="44eb2380-53d8-4dad-9b67-06ee576599d0" name="MessageOccurrenceSpecification25">
             <elementDefinition Id="b399d171-a5b3-4246-824b-534564dedffa" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="eadd9218-9ed1-44ae-b8d2-d0ebcdc30509" name="MessageOccurrenceSpecification12">
@@ -38,7 +38,7 @@
           <messageOccurrenceSpecification Id="4a68ae15-4e05-4568-9ca4-018c12999e0d" name="MessageOccurrenceSpecification28">
             <elementDefinition Id="fa383e30-c4fc-4d28-8cf0-7c419ce3f2f3" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="8fa44ada-1561-4c5a-b130-8ae35cb39c49" name="MessageOccurrenceSpecification9">
@@ -122,7 +122,7 @@
           <messageOccurrenceSpecification Id="6fbe0684-e294-4a6a-a9eb-32dbee5a1e7e" name="MessageOccurrenceSpecification2">
             <elementDefinition Id="602ce3e8-5145-4492-b545-d9b29b35fd3f" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="c66cf7ff-0e46-4980-a808-2aaacfbb2182" name="MessageOccurrenceSpecification10">
@@ -143,13 +143,13 @@
           <messageOccurrenceSpecification Id="f89a9fff-0558-4f63-b922-a26908f36b67" name="MessageOccurrenceSpecification1">
             <elementDefinition Id="fcaa4254-67fa-4682-91ca-fd2361ac60b9" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="931b73fa-c298-4ac0-87ff-f23cfa23633a" name="MessageOccurrenceSpecification5">
             <elementDefinition Id="f331d49b-8aac-467e-b352-deb46499fd5e" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="69f6b0eb-e680-45a5-8548-3f6076e1b532" name="MessageOccurrenceSpecification4">
@@ -167,7 +167,7 @@
           <messageOccurrenceSpecification Id="d78a5f29-c179-4d2f-91b9-d2177455d5ee" name="MessageOccurrenceSpecification31">
             <elementDefinition Id="8b5ada39-cf95-4b74-a0b2-25474c30d86f" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="b4a2d7b4-a97b-4c50-a8dc-0826476d1a0d" name="MessageOccurrenceSpecification30">
@@ -179,7 +179,7 @@
           <messageOccurrenceSpecification Id="1953f52d-5e75-4daa-aebb-5d96fe30c7dc" name="MessageOccurrenceSpecification26">
             <elementDefinition Id="ce76f74f-ba25-4205-b5a0-eba73760d377" />
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="15b0d4ad-c70b-4bcb-a648-06870e983c57" name="MessageOccurrenceSpecification6">
@@ -197,7 +197,7 @@
           <behaviorExecutionSpecification Id="18b89830-53cb-44a6-8a18-a6d54d8ac118" name="BehaviorExecutionSpecification1">
             <elementDefinition Id="88db6249-34e8-44f9-adc4-9dd5161403ed" />
             <coveredLifelines>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </coveredLifelines>
             <finish>
               <executionOccurrenceSpecificationMoniker Id="691df6cd-5e3a-4292-a23c-8f439e8a15e5" LastKnownName="ExecutionOccurrenceSpecification2" />
@@ -219,7 +219,7 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
           <behaviorExecutionSpecification Id="aea76001-cd91-47c7-9a21-1bd9e63c1897" name="BehaviorExecutionSpecification2">
@@ -321,7 +321,7 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
           <executionOccurrenceSpecification Id="806d28eb-c198-447c-b014-cdc71501d37f" name="ExecutionOccurrenceSpecification7">
@@ -452,7 +452,7 @@
           <behaviorExecutionSpecification Id="f97caffc-7f42-4ca0-9dcb-d534f047ef9c" name="BehaviorExecutionSpecification8">
             <elementDefinition Id="114b4987-c4be-450d-83f5-0ad71df6815b" />
             <coveredLifelines>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </coveredLifelines>
             <finish>
               <executionOccurrenceSpecificationMoniker Id="8b07d2fc-b594-48e3-a708-2c9f98ac4a46" LastKnownName="ExecutionOccurrenceSpecification16" />
@@ -475,7 +475,7 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
           <behaviorExecutionSpecification Id="8db3938d-51ae-4952-afc4-3f5b1c4ca6e6" name="BehaviorExecutionSpecification9">
@@ -524,7 +524,7 @@
               </executionOccurrenceSpecificationReferencesEvent>
             </event>
             <covered>
-              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRemoteService" />
+              <lifelineMoniker Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" LastKnownName="function1ServerRemoteService : function1ServerRPC" />
             </covered>
           </executionOccurrenceSpecification>
           <executionOccurrenceSpecification Id="eac42d6a-da1e-4e98-a183-1285628c87df" name="ExecutionOccurrenceSpecification8">
@@ -551,7 +551,7 @@
           </executionOccurrenceSpecification>
         </fragments>
         <lifelines>
-          <lifeline Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" name="function1ServerRemoteService : function1ServerRemoteService" isActor="false" lifelineDisplayName="function1ServerRemoteService : function1ServerRemoteService">
+          <lifeline Id="2b4b2bd0-c83e-49b9-ab2f-5cc5a24333db" name="function1ServerRemoteService : function1ServerRPC" isActor="false" lifelineDisplayName="function1ServerRemoteService : function1ServerRPC">
             <elementDefinition Id="a76ffc3f-82d8-4bee-9edc-32a1f634c5fd" />
             <represents>
               <propertyMoniker Id="d0c207d3-abc8-4767-b48b-8aff0a725a43" />
@@ -636,7 +636,7 @@
               <messageOccurrenceSpecificationMoniker Id="f89a9fff-0558-4f63-b922-a26908f36b67" LastKnownName="MessageOccurrenceSpecification1" />
             </receiveEvent>
           </message>
-          <message Id="63e3c2a7-5322-46f6-ab92-236979d2f521" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ schedule(execFunction : fExecFunction, data : void*, service : ServerRemoteService) : void">
+          <message Id="63e3c2a7-5322-46f6-ab92-236979d2f521" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ schedule(execFunction : fExecFunction, data : void*, service : DDSCS::ServerRPC) : void">
             <elementDefinition Id="4bdc7d62-f8d1-4270-b5e6-0e42b0c40437" />
             <sendEvent>
               <messageOccurrenceSpecificationMoniker Id="6fbe0684-e294-4a6a-a9eb-32dbee5a1e7e" LastKnownName="MessageOccurrenceSpecification2" />
@@ -654,7 +654,7 @@
               <messageOccurrenceSpecificationMoniker Id="931b73fa-c298-4ac0-87ff-f23cfa23633a" LastKnownName="MessageOccurrenceSpecification5" />
             </receiveEvent>
           </message>
-          <message Id="78ad4f0b-0613-4763-921b-66fa49744ee4" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false" signatureText="+ schedule(execFunction : fExecFunction, data : void*, server : DDSCSServer, service : ServerRemoteService) : void">
+          <message Id="78ad4f0b-0613-4763-921b-66fa49744ee4" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false" signatureText="+ schedule(execFunction : fExecFunction, data : void*, server : DDSCS::Server, service : DDSCS::ServerRPC) : void">
             <elementDefinition Id="2adfe6ba-8174-4da9-8bf9-d96f1a046c08" />
             <sendEvent>
               <messageOccurrenceSpecificationMoniker Id="15b0d4ad-c70b-4bcb-a648-06870e983c57" LastKnownName="MessageOccurrenceSpecification6" />
@@ -663,7 +663,7 @@
               <messageOccurrenceSpecificationMoniker Id="2219c554-1060-493d-baa4-547c5a2c2079" LastKnownName="MessageOccurrenceSpecification7" />
             </receiveEvent>
           </message>
-          <message Id="bbfdb221-d32e-4d9b-a7f8-a81b0da003ad" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ function1(server : DDSCSServer, requestData : void*, service : ServerRemoteService) : void">
+          <message Id="bbfdb221-d32e-4d9b-a7f8-a81b0da003ad" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ function1(server : DDSCS::Server, requestData : void*, service : DDSCS::ServerRPC) : void">
             <elementDefinition Id="9602e3ee-9978-414b-ac53-ff1170aa35cd" />
             <sendEvent>
               <messageOccurrenceSpecificationMoniker Id="a450907d-68e2-4632-9adc-f3ee32510d57" LastKnownName="MessageOccurrenceSpecification8" />
@@ -776,7 +776,7 @@
           <property Id="d0c207d3-abc8-4767-b48b-8aff0a725a43" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="42c54687-8662-46ec-abfb-e7eb98032dc6" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="9edfbae3-85c0-4b97-94da-d9856f6f00e3" LastKnownName="function1ServerRemoteService" />
+              <referencedTypeMoniker Id="9edfbae3-85c0-4b97-94da-d9856f6f00e3" LastKnownName="function1ServerRPC" />
             </type_NamedElement>
           </property>
           <property Id="8d8efc44-2783-44bd-b685-5c95d6007654" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -819,7 +819,7 @@
       </interaction>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="9edfbae3-85c0-4b97-94da-d9856f6f00e3" name="function1ServerRemoteService" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::function1ServerRemoteService">
+      <referencedType Id="9edfbae3-85c0-4b97-94da-d9856f6f00e3" name="function1ServerRPC" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::function1ServerRPC">
         <elementDefinition Id="680def4c-6bfa-491c-87f2-f92bc15114ae" />
       </referencedType>
     </packageHasNamedElement>
