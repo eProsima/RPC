@@ -206,11 +206,11 @@ public class IDL2DDSRPC
         }
         
         // TODO
-        if(osOption.equals("Win32"))
+        /*if(osOption.equals("Win32"))
         	 lineCommand.add("-I" + dds_root + "\\ddsrpc\\idl");
         else if(osOption.equals("Linux"))
-        	lineCommand.add("-I" + dds_root + "/ddsrpc/idl");
-        //lineCommand.add("-I../../../../idl");
+        	 lineCommand.add("-I" + dds_root + "/ddsrpc/idl");*/
+        lineCommand.add("-I../../../../idl");
     	
     	return 0;
     }
