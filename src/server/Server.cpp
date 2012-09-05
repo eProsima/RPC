@@ -41,7 +41,7 @@ namespace eProsima
 #endif
                     // Creating the domain participant which is associated with the client
                     m_participant = factory->create_participant(
-                            domainId, PARTICIPANT_QOS_DEFAULT, 
+                            domainId, participantQos, 
                             NULL /* listener */, STATUS_MASK_NONE);
 
                     if (m_participant != NULL)

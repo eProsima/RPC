@@ -35,11 +35,10 @@ namespace eProsima
         {
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
             int length = participantQos.property.value.length(),
-                dynProperties = 0 + (m_public_address !=  NULL ? 1 : 0)
-                    + (m_server_bind_port != NULL ? 1 : 0);
+                dynProperties = 0 + (m_public_address !=  NULL ? 1 : 0);
 
-            participantQos.property.value.ensure_length(length + 4 + dynProperties,
-                    length + 4 + dynProperties);
+            participantQos.property.value.ensure_length(length + 5 + dynProperties,
+                    length + 5 + dynProperties);
 
             participantQos.property.value[length].name  = strdup("dds.transport.load_plugins");
             participantQos.property.value[length++].value  = strdup("dds.transport.TCPv4.tcp1");
@@ -59,10 +58,14 @@ namespace eProsima
                 participantQos.property.value[length++].value  = strdup(m_public_address);
             }
 
+            participantQos.property.value[length].name  = strdup("dds.transport.TCPv4.tcp1.server_bind_port");
             if(m_server_bind_port != NULL)
             {
-                participantQos.property.value[length].name  = strdup("dds.transport.TCPv4.tcp1.server_bind_port");
                 participantQos.property.value[length++].value  = strdup(m_server_bind_port);
+            }
+            else
+            {
+                participantQos.property.value[length++].value  = strdup("0");
             }
 
             // Quitar los builtin transports.
@@ -74,7 +77,7 @@ namespace eProsima
                 char buf[50];
 
                 length = participantQos.discovery.initial_peers.length();
-                participantQos.discovery.initial_peers.ensure_length(length, length);
+                participantQos.discovery.initial_peers.ensure_length(length + 1, length + 1);
 
                 SNPRINTF(buf, 50, "tcpv4_wan://%s", m_to_connect);
 
