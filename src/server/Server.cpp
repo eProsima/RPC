@@ -3,9 +3,10 @@
 #include "exceptions/ResourceException.h"
 #include "utils/Utilities.h"
 #include "transports/Transport.h"
+#include "server/ServerStrategy.h"
 
 #include "boost/config/user.hpp"
-#include "boost/threadpool.hpp"
+#include "boost/thread.hpp"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::Server";
 
@@ -14,50 +15,12 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
-		class Job
-		{
-		public:
-			Job(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
-				: m_execFunction(execFunction), m_data(data), m_server(server), m_service(service)
-			{
-			}
-
-			void run()
-			{
-				m_execFunction(m_server, m_data, m_service);
-			}
-
-		private:
-			fExecFunction m_execFunction;
-			void *m_data;
-			Server *m_server;
-			ServerRPC *m_service;
-		};
-
-		class ThreadPoolManager
-		{
-		public:
-			ThreadPoolManager(unsigned int threadCount)
-			{
-				m_pool = new boost::threadpool::pool(threadCount);
-			}
-
-			boost::threadpool::pool* getPool()
-			{
-				return m_pool;
-			}
-
-		private:
-
-			boost::threadpool::pool *m_pool;
-		};
-
-		Server::Server(Transport *transport, int domainId, unsigned int threadCount) : m_domainId(domainId),
-								 m_participant(NULL), m_threadPoolManager(NULL)
+		Server::Server(ServerStrategy *strategy, Transport *transport, int domainId) : m_domainId(domainId),
+        m_strategy(strategy), m_participant(NULL)
 		{
 			const char* const METHOD_NAME = "Server";
 
-            if(transport != NULL)
+            if(strategy != NULL && transport != NULL)
             {
                 DDS::DomainParticipantQos participantQos;
 
@@ -88,13 +51,7 @@ namespace eProsima
                             participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
                             m_participant->set_qos(participantQos);
 
-                            // ThreadPool with DDSCS_MIN_THREADS_DEFAULT threads
-                            m_threadPoolManager = new ThreadPoolManager(threadCount);
-
-                            if(m_threadPoolManager != NULL)
-                                return;
-                            else
-                                printf("ERROR<%s::%s>: cannot create thread pool manager\n", CLASS_NAME, METHOD_NAME);
+                            return;
                         }
                     }
                     else
@@ -146,11 +103,6 @@ namespace eProsima
 				}
 			}
 
-			if(m_threadPoolManager != NULL)
-			{
-				delete m_threadPoolManager;
-			}
-
 			deleteRPCs();
 		}
 
@@ -188,8 +140,7 @@ namespace eProsima
 		void Server::schedule(fExecFunction execFunction, void *data, ServerRPC *service)
 		{
 			printf("SCHEDULING %s\n", service->getRPCName());
-			boost::shared_ptr<Job> job(new Job(execFunction, data, this, service));
-			boost::threadpool::schedule(*m_threadPoolManager->getPool(), boost::bind(&Job::run, job));
+            m_strategy->schedule(execFunction, data, this, service);
 		}
 
 	} // namespace DDSRPC

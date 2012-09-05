@@ -164,9 +164,9 @@ $endif$
 
 argType(type, in) ::= <<
 $if(typeInitMap.(type))$
-$typeInitMap.(type)$
+$if(in)$const $endif$$typeInitMap.(type)$
 $else$
-$type$*
+$if(in)$const $endif$$type$*
 $endif$
 >>
 

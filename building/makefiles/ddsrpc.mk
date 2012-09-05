@@ -40,6 +40,9 @@ DDSRPC_SRC_CPPFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/utils/Utilities.cpp \
 			$(BASEDIR)/src/transports/UDPTransport.cpp \
 			$(BASEDIR)/src/transports/TCPTransport.cpp \
+			$(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
+			$(BASEDIR)/src/strategies/SingleThreadStrategy.cpp \
+			$(BASEDIR)/src/strategies/ThreadPerRequestStrategy.cpp \
 			$(SPECIFIC_SRC_CPPFILES)
 
 # Project sources are copied to the current directory

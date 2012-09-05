@@ -8,16 +8,15 @@
 
 #include <list>
 
-#define DDSCS_DEFAULT_PERIOD_MILLISEC 5000
-#define DDSCS_MIN_THREADS_DEFAULT 5
+#define DDSRPC_DEFAULT_PERIOD_MILLISEC 5000
 
 namespace eProsima
 {
 	namespace DDSRPC
 	{
 
+        class ServerStrategy;
         class Transport;
-		class ThreadPoolManager;
 		class ServerRPC;
 	 
 		/**
@@ -29,7 +28,7 @@ namespace eProsima
 
 			public:
 
-				void executeServer(unsigned int milliseconds = DDSCS_DEFAULT_PERIOD_MILLISEC);
+				void executeServer(unsigned int milliseconds = DDSRPC_DEFAULT_PERIOD_MILLISEC);
 
 				void schedule(fExecFunction execFunction, void *data, ServerRPC *service);
 
@@ -40,7 +39,7 @@ namespace eProsima
 				 *
 				 * \param domainId The domain id's value that the client will have.
 				 */
-				Server(Transport *transport, int domainId = 0, unsigned int threadCount = DDSCS_MIN_THREADS_DEFAULT);
+				Server(ServerStrategy *strategy, Transport *transport, int domainId = 0);
 
 				/// \brief The default destructor.
 				virtual ~Server();
@@ -62,6 +61,8 @@ namespace eProsima
 				/// \brief The domain identifier.
 				int m_domainId;
 
+                ServerStrategy *m_strategy;
+
 				/**
 				 * \brief Each client is associated with a DDSDomainParticipant. This participant have to be created in the client creation.
 				 * This pointer should never be NULL.
@@ -70,8 +71,6 @@ namespace eProsima
         
 				/// \brief The list that contains all the remote services.
 				std::list<ServerRPC*> m_rpcList;
-
-				ThreadPoolManager *m_threadPoolManager;
 
 				void deleteRPCs();
 		};
