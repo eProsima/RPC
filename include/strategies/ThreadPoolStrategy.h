@@ -2,6 +2,7 @@
 #define _STRATEGIES_THREADPOOLSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
+#include "utils/ddsrpc.h"
 
 #define DDSRPC_MIN_THREADS_DEFAULT 5
 
@@ -11,7 +12,7 @@ namespace eProsima
     {
         class ThreadPoolStrategyImpl;
 
-        class ThreadPoolStrategy : public ServerStrategy
+        class DDSRPC_WIN32_DLL_API ThreadPoolStrategy : public ServerStrategy
         {
             public:
 

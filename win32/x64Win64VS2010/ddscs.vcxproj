@@ -216,6 +216,9 @@
     <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
     <ClCompile Include="..\..\src\server\ServerRPC.cpp" />
+    <ClCompile Include="..\..\src\strategies\SingleThreadStrategy.cpp" />
+    <ClCompile Include="..\..\src\strategies\ThreadPerRequestStrategy.cpp" />
+    <ClCompile Include="..\..\src\strategies\ThreadPoolStrategy.cpp" />
     <ClCompile Include="..\..\src\transports\TCPTransport.cpp" />
     <ClCompile Include="..\..\src\transports\UDPTransport.cpp" />
     <ClCompile Include="..\..\src\utils\Utilities.cpp" />
@@ -231,6 +234,9 @@
     <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h" />
     <ClInclude Include="..\..\include\server\Server.h" />
     <ClInclude Include="..\..\include\server\ServerRPC.h" />
+    <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h" />
+    <ClInclude Include="..\..\include\strategies\ThreadPerRequestStrategy.h" />
+    <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h" />
     <ClInclude Include="..\..\include\transports\TCPTransport.h" />
     <ClInclude Include="..\..\include\transports\Transport.h" />
     <ClInclude Include="..\..\include\transports\UDPTransport.h" />

@@ -2,6 +2,7 @@
 #define _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
+#include "utils/ddsrpc.h"
 
 namespace eProsima
 {
@@ -9,7 +10,7 @@ namespace eProsima
     {
         class ThreadPerRequestStrategyJob;
 
-        class ThreadPerRequestStrategy : public ServerStrategy
+        class DDSRPC_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
         {
             public:
 

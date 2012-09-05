@@ -46,6 +46,12 @@
     <Filter Include="Archivos de código fuente\utils">
       <UniqueIdentifier>{cd282fb3-cb10-4bf6-9d53-adc37f064363}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\strategies">
+      <UniqueIdentifier>{a9f7f6b4-2ad4-4a08-8b9e-f319eed3fb5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\strategies">
+      <UniqueIdentifier>{94cf33c4-0971-4eff-9d6c-439468819d8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\client\AsyncTask.cpp">
@@ -83,6 +89,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\utils\Utilities.cpp">
       <Filter>Archivos de código fuente\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\strategies\SingleThreadStrategy.cpp">
+      <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\strategies\ThreadPerRequestStrategy.cpp">
+      <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\strategies\ThreadPoolStrategy.cpp">
+      <Filter>Archivos de código fuente\strategies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\transports\UDPTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h">
+      <Filter>Archivos de encabezado\strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\strategies\ThreadPerRequestStrategy.h">
+      <Filter>Archivos de encabezado\strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h">
+      <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
