@@ -272,7 +272,7 @@ $if(it.dll)$$if(it.debug)$MultiThreadedDebugDLL$else$MultiThreadedDLL$endif$$els
  * Uses:
  */ 
 dependencies(conf) ::= <<
-nddscpp$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; nddsc$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; nddscore$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; ddscs$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib
+nddscpp$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; nddsc$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; nddscore$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; ddsrpc$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib
 >>
 
 /**

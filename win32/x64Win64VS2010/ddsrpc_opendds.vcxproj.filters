@@ -72,15 +72,6 @@
     <ClCompile Include="..\..\src\server\ServerRPC.cpp">
       <Filter>Archivos de código fuente\server</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeader.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderPlugin.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\transports\TCPTransport.cpp">
       <Filter>Archivos de código fuente\transports</Filter>
     </ClCompile>
@@ -98,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\strategies\ThreadPoolStrategy.cpp">
       <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\idl\opendds\MessageHeaderC.cpp">
+      <Filter>Archivos de código fuente\idl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\idl\opendds\MessageHeaderTypeSupportImpl.cpp">
+      <Filter>Archivos de código fuente\idl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,15 +115,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\server\ServerRPC.h">
       <Filter>Archivos de encabezado\server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeader.h">
-      <Filter>Archivos de encabezado\idl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h">
-      <Filter>Archivos de encabezado\idl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderPlugin.h">
-      <Filter>Archivos de encabezado\idl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\utils\ddsrpc.h">
       <Filter>Archivos de encabezado\utils</Filter>
@@ -170,9 +158,15 @@
     <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\idl\opendds\MessageHeaderC.h">
+      <Filter>Archivos de encabezado\idl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\idl\opendds\MessageHeaderTypeSupportImpl.h">
+      <Filter>Archivos de encabezado\idl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\src\ddscs.rc">
+    <ResourceCompile Include="..\..\src\ddsrpc.rc">
       <Filter>Archivos de recursos</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -182,6 +176,9 @@
     </None>
     <None Include="..\..\include\utils\GenericServerRPC.gen">
       <Filter>Archivos de encabezado\utils</Filter>
+    </None>
+    <None Include="..\..\include\idl\opendds\MessageHeaderC.inl">
+      <Filter>Archivos de encabezado\idl</Filter>
     </None>
   </ItemGroup>
 </Project>
