@@ -48,13 +48,18 @@ public class IDL2DDSRPC
     private static ArrayList lineCommand = null;
     private static String[] env_variables = null;	
     private static String middleware = "rti";
+    private static String spTemplate = "main";
+    
+    // Used to set the base template.
+    private static StringTemplateGroup spTemplateGroup = null;
+    private static StringTemplateGroup baseTemplateGroup = null;
 
     //TO_DO: external properties?
     private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL", "Win32", true, true),
         new VSConfiguration("Release DLL", "Win32", false, true),
         new VSConfiguration("Debug", "Win32", true, false),
         new VSConfiguration("Release", "Win32", false, false)};	
-    private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};	
+    private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};
 
     /**
      * @param args
@@ -200,6 +205,7 @@ public class IDL2DDSRPC
         {
         	command = "opendds_idl";
             extra_command = "tao_idl";
+            spTemplate = "opendds";
             
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
@@ -325,8 +331,9 @@ public class IDL2DDSRPC
             new CommonGroupLoader("com/eprosima/ddsrpc/idl/template", new MyErrorListener());
         StringTemplateGroup.registerGroupLoader(loader);
 
-        StringTemplateGroup baseTemplate = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, null);
-        Map typeInitMap = baseTemplate.getMap("typeInitMap");
+        spTemplateGroup = StringTemplateGroup.loadGroup(spTemplate, DefaultTemplateLexer.class, null);
+        baseTemplateGroup = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, spTemplateGroup);
+        Map typeInitMap = baseTemplateGroup.getMap("typeInitMap");
 
         // Adds certain type declarations to typeInitMap, so the generation logic
         // would treat them as simple types instead of constructed/template types.
@@ -352,7 +359,7 @@ public class IDL2DDSRPC
             
             if(aux instanceof BasicType || aux instanceof EnumType)
             {
-            	template = new StringTemplate(baseTemplate, typedecl.getTemplateName());
+            	template = new StringTemplate(baseTemplateGroup, typedecl.getTemplateName());
             	typeInitMap.put(typedecl.getName(), template);
             }
         }
@@ -444,7 +451,7 @@ public class IDL2DDSRPC
         String returnType = "eProsima::DDSRPC::ReturnMessage";
 
         // first load main language template
-        StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, null);
+        StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, baseTemplateGroup);
 
         if(templatesGroup != null)
         {
@@ -459,8 +466,6 @@ public class IDL2DDSRPC
 
             //Template for Definition generation
             StringTemplate definition = templatesGroup.getInstanceOf(definitionTemplateId);
-            if(middleware.equals("opendds"))
-            	definition.setAttribute("opendds", middleware);
             definition.setAttribute("interfaceName", ifc.getName());
 
 
@@ -489,14 +494,6 @@ public class IDL2DDSRPC
                 
                 definition.setAttribute("funNames.{name, isOneway}",
                 		op.getName(), (op.isOneway() ? "true" : null));			
-
-                if(middleware.equals("opendds"))
-                {
-                	funDef.setAttribute("opendds", middleware);
-                	if(withAsync)
-                		funDefAsync.setAttribute("opendds", middleware);
-                	funCall.setAttribute("opendds", middleware);
-                }
                 
                 // Function Declaration
                 funDecl.setAttribute("type", returnType);
@@ -632,8 +629,6 @@ public class IDL2DDSRPC
                         {
                             externalDir.append("/");	
                         }
-                        if(middleware.equals("opendds"))
-                        		mainTemplate.setAttribute("opendds", middleware);
                         mainTemplate.setAttribute("interfaceName", ifc.getName());
                         externalDir.append(main).append(".cxx");
                         writeFile(externalDir.toString(), mainTemplate);
@@ -682,7 +677,7 @@ public class IDL2DDSRPC
         final String METHOD_NAME = "genRPCSupport";
         int returnedValue = -1;
         // first load main language template
-        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RPCSupport", DefaultTemplateLexer.class, null);
+        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RPCSupport", DefaultTemplateLexer.class, baseTemplateGroup);
 
         if(utilTemplates != null)
         {
@@ -693,9 +688,6 @@ public class IDL2DDSRPC
             {
                 externalDir.append("/");	
             }
-            
-            if(middleware.equals("opendds"))
-            	header.setAttribute("opendds", middleware);
 
             header.setAttribute("interfaceName", ifc.getName());
             definition.setAttribute("interfaceName", ifc.getName());
@@ -731,7 +723,7 @@ public class IDL2DDSRPC
     	final String METHOD_NAME = "genAsyncSupport";
         int returnedValue = -1;
         // first load main language template
-        StringTemplateGroup asyncTemplates = StringTemplateGroup.loadGroup("AsyncSupport", DefaultTemplateLexer.class, null);
+        StringTemplateGroup asyncTemplates = StringTemplateGroup.loadGroup("AsyncSupport", DefaultTemplateLexer.class, baseTemplateGroup);
 
         if(asyncTemplates != null)
         {
@@ -748,8 +740,6 @@ public class IDL2DDSRPC
 
             header.setAttribute("interfaceName", ifc.getName());
             
-            if(middleware.equals("opendds"))
-            	definition.setAttribute("opendds", middleware);
             definition.setAttribute("interfaceName", ifc.getName());
 
             Operation op = null;
@@ -757,8 +747,6 @@ public class IDL2DDSRPC
             {						
             	taskDecl.setAttribute("interfaceName", ifc.getName());
             	
-            	if(middleware.equals("opendds"))
-            		taskDef.setAttribute("opendds", middleware);
             	taskDef.setAttribute("interfaceName", ifc.getName());
             	
                 op = (Operation) iter.next();
@@ -821,7 +809,7 @@ public class IDL2DDSRPC
         int returnedValue = -1;
 
         // first load main language template
-        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("Utils", DefaultTemplateLexer.class, null);
+        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("Utils", DefaultTemplateLexer.class, baseTemplateGroup);
 
         if(utilTemplates != null)
         {
@@ -838,11 +826,6 @@ public class IDL2DDSRPC
                 externalDir.append("/");	
             }
 
-            if(middleware.equals("opendds"))
-            {
-            	headerFile.setAttribute("opendds", middleware);
-            	definitionFile.setAttribute("opendds", middleware);
-            }
             headerFile.setAttribute("name", ifc.getName());
             definitionFile.setAttribute("name", ifc.getName());
 
@@ -850,12 +833,6 @@ public class IDL2DDSRPC
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
             {						
                 op = (Operation) iter.next();
-                
-                if(middleware.equals("opendds"))
-                {
-                	definitionRequest.setAttribute("opendds", middleware);
-                	definitionReply.setAttribute("opendds", middleware);
-                }
                 
                 headerRequest.setAttribute("funName", op.getName());
                 definitionRequest.setAttribute("funName", op.getName());
@@ -915,7 +892,7 @@ public class IDL2DDSRPC
         String idlFilename = null;
 
         // first load main language template
-        StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, null);
+        StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, baseTemplateGroup);
 
         if(idlTemplates != null)
         {
@@ -935,11 +912,7 @@ public class IDL2DDSRPC
 
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
                 op = (Operation) iter.next();
-                if(middleware.equals("opendds"))
-                {
-                	request.setAttribute("opendds", middleware);
-                    reply.setAttribute("opendds", middleware);
-                }
+
                 request.setAttribute("name", op.getName());
                 reply.setAttribute("name", op.getName());
 
@@ -1175,14 +1148,12 @@ public class IDL2DDSRPC
     	final String METHOD_NAME = "getMakefile";
     	int returnedValue = -1;
     	
-    	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("makefile", DefaultTemplateLexer.class, null);
+    	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("makefile", DefaultTemplateLexer.class, spTemplateGroup);
 
     	if(idlTemplates != null)
     	{
     		StringTemplate makecxx = idlTemplates.getInstanceOf("makecxx");
     		
-    		if(middleware.equals("opendds"))
-    			makecxx.setAttribute("opendds", middleware);
     		makecxx.setAttribute("interface", ifc.getName());
     		makecxx.setAttribute("example", exampleOption);
     		makecxx.setAttribute("arch", arch);

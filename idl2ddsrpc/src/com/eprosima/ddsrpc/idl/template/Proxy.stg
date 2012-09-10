@@ -14,7 +14,7 @@
  * =====================================================================   *
  */
 
-group Proxy : cplusplus;
+group Proxy;
 
 /************************************************************************
  *                                                                      *
@@ -122,16 +122,13 @@ $functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceNam
  *  nextParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(opendds, interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
+functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
 $functionHeader(class={$interfaceName$ProxyH},...)$ 
 {
     $varDecl(type=type, name="returnedValue")$
     $name$Request *instance = NULL;
-    $if(!opendds)$
-    $if(!isOneway)$$name$Reply *retInstance = $name$ReplyTypeSupport::create_data();$endif$
-    $else$
-    $if(!isOneway)$$name$Reply *retInstance = new $name$Reply();$endif$
-    $endif$
+    $if(!isOneway)$$reqrepCreation(type=name, reqrep="Reply", name="retInstance", create="create")$$endif$
+
     instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
     returnedValue = $name$_Service->execute(instance, $if(!isOneway)$retInstance$else$NULL$endif$, getTimeout());
     switch (returnedValue)
@@ -159,13 +156,8 @@ $functionHeader(class={$interfaceName$ProxyH},...)$
             break;
     };
     
-    $if(!opendds)$
-    $if(!isOneway)$$name$ReplyTypeSupport::delete_data(retInstance);$endif$
-    $name$RequestTypeSupport::delete_data(instance);
-    $else$
-    $if(!isOneway)$delete retInstance;$endif$
-    delete instance;
-    $endif$
+    $if(!isOneway)$$reqrepDestruction(type=name, reqrep="Reply", name="retInstance")$$endif$
+    $reqrepDestruction(type=name, reqrep="Request", name="instance")$
 
     $if(!voidInitMap.(type))$
     return returnedValue;
@@ -173,7 +165,7 @@ $functionHeader(class={$interfaceName$ProxyH},...)$
 }
 >>
 
-functionImplAsync(opendds, interfaceName,type,name,inputParams,inoutParams) ::= <<
+functionImplAsync(interfaceName,type,name,inputParams,inoutParams) ::= <<
 $functionHeaderAsync(class={$interfaceName$ProxyH},...)$ 
 {
     $varDecl(type=type, name="returnedValue")$
@@ -191,11 +183,7 @@ $functionHeaderAsync(class={$interfaceName$ProxyH},...)$
             break;
     };
     
-    $if(!opendds)$
-    $name$RequestTypeSupport::delete_data(instance);
-    $else$
-    delete instance;
-    $endif$
+    $reqrepDestruction(type=name, reqrep="Request", name="instance")$
 
     $if(!voidInitMap.(type))$
     return returnedValue;
@@ -214,7 +202,7 @@ $functionHeaderAsync(class={$interfaceName$ProxyH},...)$
  * Uses:
  *  createRPC - local
  */ 
-definition(opendds, interfaceName, funNames, funImpls, funImplsAsync) ::= <<
+definition(interfaceName, funNames, funImpls, funImplsAsync) ::= <<
 $doNotEditC()$
 
 
@@ -222,9 +210,7 @@ $doNotEditC()$
 #include "client/ClientRPC.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-$if(!opendds)$
-#include "$interfaceName$RequestReplyPlugin.h"
-$endif$ 
+$ReqRepIncludes(interfaceName=interfaceName)$
 #include "$interfaceName$AsyncSupport.h"
 
 
@@ -277,19 +263,19 @@ $interfaceName$WANProxy::~$interfaceName$WANProxy()
  *  voidInitMap   - inherited(cplusplus)
  *  varDecl       - inherited(cplusplus)
  */ 
-functionCall(opendds, type,name,string,inputParams,inoutParams,outputParams) ::= <<
-    $inputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $inoutParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $varDecl(opendds=opendds, type=type, name=[name,"RetValue"])$    
+functionCall(type,name,string,inputParams,inoutParams,outputParams) ::= <<
+    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $varDecl(type=type, name=[name,"RetValue"])$    
 
     $if(!voidInitMap.(type))$
     $name$RetValue = 
     $endif$proxy->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
     
-    $inputParams:{$varDel(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $inoutParams:{$varDel(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $outputParams:{$varDel(opendds=opendds, type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $inputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
 >>
 
 /**
@@ -300,18 +286,14 @@ functionCall(opendds, type,name,string,inputParams,inoutParams,outputParams) ::=
  *   invocations:   List of functionCall template outputs. 
  *
  */ 
-main(opendds, interfaceName, invocations) ::= <<
+main(interfaceName, invocations) ::= <<
 /** 
  * Generated by DDSRPC                                                   *
  * Example client. Method params should be initialized before execution  *
  */
 
 #include "$interfaceName$Proxy.h"
-$if(!opendds)$
-#include "$interfaceName$RequestReplyPlugin.h"
-$else$
-#include "$interfaceName$RequestReplyTypeSupportImpl.h"
-$endif$
+$ReqRepIncludes(interfaceName=interfaceName)$
 
 int main()
 {

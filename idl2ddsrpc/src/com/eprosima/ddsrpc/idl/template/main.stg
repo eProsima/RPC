@@ -1,0 +1,99 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group main;
+
+varComplexDecl(type, name, create) ::= <<
+$type$ *$name$ = $if(create)$$type$PluginSupport_create_data()$else$NULL$endif$;
+>>
+
+varComplexDel(type, name) ::= <<
+$type$PluginSupport_destroy_data($name$);
+>>
+
+ReqRepIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplyPlugin.h"
+>>
+
+ReqRepRIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplySupport.h"
+>>
+
+ReqRepSIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplySupport.h"
+>>
+
+ddsIncludes() ::= <<
+#include "ndds_namespace_cpp.h"
+>>
+
+reqrepCreation(type, reqrep, name, void, create) ::= <<
+$if(create)$$type$$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$$reqrep$TypeSupport::create_data();
+>>
+
+reqrepDestruction(type, reqrep, name, void) ::= <<
+$type$$reqrep$TypeSupport::delete_data($if(void)$($type$$reqrep$*)$endif$$name$);
+>>
+
+getTypename(funName, type, name) ::= <<
+$name$ = $funName$$type$TypeSupport::get_type_name();
+>>
+
+registerTypename(funName, type, name) ::= <<
+$funName$$type$TypeSupport::register_type(clientParticipant, $name$)
+>>
+
+preReqIDLDefines(name) ::= <<
+>>
+
+preRepIDLDefines(name) ::= <<
+>>
+
+keyIDLdefine() ::= <<
+ //@key
+>>
+
+levelIDLdefine() ::= <<
+ //@top-level true
+>>
+
+archMakeDefines() ::= <<
+ -DRTI_UNIX -DRTI_LINUX
+>>
+
+inclMake() ::= <<
+ -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds  -I\$(DDS_ROOT)/ddsrpc/include/idl/rti
+>>
+
+libsMake(example) ::= <<
+ -L\$(NDDSHOME)/lib/$example$ -L\$(NDDSHOME)/ddsrpc/lib/$example$ \
+       -lnddsc -lnddscore -lnddscpp
+>>
+
+sourceMake(interface) ::= <<
+COMMONCXXSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
+                $interface$Plugin.cxx $interface$RequestReplySupport.cxx $interface$Support.cxx \
+                $interface$RequestReplyUtils.cxx
+COMMONCPPSOURCES =
+>>
+
+createDH(type, name) ::= <<
+$type$PluginSupport_copy_data(&instance->$name$, $name$);
+>>
+
+extractDH(type, name) ::= <<
+$type$PluginSupport_copy_data($name$, &data->$name$);
+>>

@@ -1,48 +1,25 @@
 group makefile;
 
-makecxx(opendds, interface, example, arch) ::= <<
+makecxx(interface, example, arch) ::= <<
 CPP_$example$ = g++
 CXXFLAGS_$example$ = -m$arch$
 LD_$example$ = g++
 LDFLAGS_$example$ = -m$arch$
 SYSLIBS_$example$ = -ldl -lnsl -lm -lpthread -lrt
-$if(!opendds)$
-DEFINES_ARCH_SPECIFIC = -DRTI_UNIX -DRTI_LINUX
-$else$
-DEFINES_ARCH_SPECIFIC = -DOPENDDS_LINUX
-$endif$
+DEFINES_ARCH_SPECIFIC = $archMakeDefines()$
 
 DEFINES = \$(DEFINES_ARCH_SPECIFIC)  
 
-$if(!opendds)$
-INCLUDES = -I. -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/ddsrpc/include  -I\$(DDS_ROOT)/ddsrpc/include/idl/rti
-$else$
-INCLUDES = -I. -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(DDS_ROOT)/ddsrpc/include -I\$(DDS_ROOT)/ddsrpc/include/idl/opendds
-$endif$
+INCLUDES = -I. $inclMake()$ -I\$(NDDSHOME)/ddsrpc/include
 
-$if(!opendds)$
-LIBS = -L\$(NDDSHOME)/lib/$example$ -L\$(NDDSHOME)/ddsrpc/lib/$example$ \
-       -lnddsc -lnddscore -lnddscpp -lddsrpc \$(SYSLIBS_$example$)
-$else$
-LIBS = -L\$(DDS_ROOT)/lib -L\$(ACE_ROOT)/lib -L\$(DDS_ROOT)/ddsrpc/lib/$example$ \
-       -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE -lddsrpc \$(SYSLIBS_$example$)
-$endif$
+LIBS = $libsMake(example=example)$ -lddsrpc \$(SYSLIBS_$example$)
 
-$if(!opendds)$
-COMMONCXXSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
-                $interface$Plugin.cxx $interface$RequestReplySupport.cxx $interface$Support.cxx \
-                $interface$RequestReplyUtils.cxx
-$else$
-COMMONCXXSOURCES = $interface$RequestReplyUtils.cxx
-COMMONCPPSOURCES = $interface$C.cpp $interface$RequestReplyC.cpp \
-                $interface$RequestReplyTypeSupportC.cpp $interface$RequestReplyTypeSupportImpl.cpp \
-                $interface$TypeSupportC.cpp $interface$TypeSupportImpl.cpp
-$endif$
+$sourceMake(interface=interface)$
 
 CLIENTSOURCES = $interface$Proxy.cxx $interface$ClientRPCSupport.cxx $interface$AsyncSupport.cxx Client.cxx 
 SERVERSOURCES = $interface$Server.cxx $interface$ServerImpl.cxx $interface$ServerRPCSupport.cxx Server.cxx 
 DIRECTORIES   = objs.dir objs/$example$.dir
-COMMONOBJS    = \$(COMMONCXXSOURCES:%.cxx=objs/$example$/%.o) $if(opendds)$\$(COMMONCPPSOURCES:%.cpp=objs/$example$/%.o)$endif$
+COMMONOBJS    = \$(COMMONCXXSOURCES:%.cxx=objs/$example$/%.o) \$(COMMONCPPSOURCES:%.cpp=objs/$example$/%.o)
 CLIENTOBJS    = \$(CLIENTSOURCES:%.cxx=objs/$example$/%.o)
 SERVEROBJS    = \$(SERVERSOURCES:%.cxx=objs/$example$/%.o)
 CLIENTEXEC    = objs/$example$/$interface$Client

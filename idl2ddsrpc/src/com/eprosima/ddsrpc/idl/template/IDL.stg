@@ -14,7 +14,7 @@
  * =====================================================================   *
  */
 
-group IDL : cplusplus;
+group IDL;
 
 /************************************************************************
  *                                                                      *
@@ -54,22 +54,15 @@ $types:{$it$};separator="\n"$
  *            inout, out and return type for Reply.
  *
  */ 
-request(opendds, name, fields) ::= <<
+request(name, fields) ::= <<
 
-$if(opendds)$
-#pragma DCPS_DATA_TYPE "$name$Request"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_1"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_2"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_3"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_4"
-#pragma DCPS_DATA_KEY "$name$Request numSec"
-$endif$
+$preReqIDLDefines(name=name)$
 
 struct $name$Request{
-    Identification clientServiceId; $if(!opendds)$//@key$endif$
-    unsigned long numSec; $if(!opendds)$//@key$endif$
+    Identification clientServiceId; $keyIDLdefine()$
+    unsigned long numSec; $keyIDLdefine()$
     $fields:{$it.type$ $it.name$;};separator="\n"$
-}; $if(!opendds)$//@top-level true$endif$
+}; $levelIDLdefine()$
 >>
 
 /**
@@ -80,26 +73,15 @@ struct $name$Request{
  *   fields : list of function parameters. In and inout parameters for Request,
  *            inout, out and return type for Reply.
  */ 
-reply(opendds, name, fields) ::= <<
+reply(name, fields) ::= <<
 
-$if(opendds)$
-#pragma DCPS_DATA_TYPE "$name$Reply"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_1"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_2"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_3"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_4"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_1"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_2"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_3"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_4"
-#pragma DCPS_DATA_KEY "$name$Reply numSec"
-$endif$
+$preRepIDLDefines(name=name)$
 
 struct $name$Reply{
-    Identification serverServiceId; $if(!opendds)$//@key$endif$
-    Identification clientServiceId; $if(!opendds)$//@key$endif$
-    unsigned long numSec; $if(!opendds)$//@key$endif$
+    Identification serverServiceId; $keyIDLdefine()$
+    Identification clientServiceId; $keyIDLdefine()$
+    unsigned long numSec; $keyIDLdefine()$
     long ddscsRetCode;
     $fields:{$it.type$ $it.name$;};separator="\n"$
-}; $if(!opendds)$//@top-level true$endif$
+}; $levelIDLdefine()$
 >>

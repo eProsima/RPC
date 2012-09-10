@@ -1,4 +1,4 @@
-group AsyncSupport : cplusplus;
+group AsyncSupport;
 
 header(interfaceName, taskDefs) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
@@ -36,37 +36,25 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
 }
 >>
 
-definition(opendds, interfaceName, taskDecls) ::= <<
+definition(interfaceName, taskDecls) ::= <<
 #include "$interfaceName$Proxy.h"
 #include "$interfaceName$AsyncSupport.h"
-$if(!opendds)$
-#include "$interfaceName$RequestReplyPlugin.h"
-$else$
-#include "$interfaceName$RequestReplyTypeSupportImpl.h"
-$endif$
+$ReqRepIncludes(interfaceName=interfaceName)$
 
 $taskDecls; separator="\n"$
 >>
 
-taskDeclaration(opendds, interfaceName, name,inoutParams,outputParams) ::= <<
+taskDeclaration(interfaceName, name,inoutParams,outputParams) ::= <<
 
 $interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$ &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
-$if(!opendds)$
-    m_reply = (void*)$name$ReplyTypeSupport::create_data();
-$else$
-    m_reply = (void*)new $name$Reply();
-$endif$
+$reqrepCreation(type=name, reqrep="Reply", name="m_reply", void="void")$
 }
 
 $interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
-$if(!opendds)$
-    $name$ReplyTypeSupport::delete_data(($name$Reply*)m_reply);
-$else$
-    delete ($name$Reply*)m_reply;
-$endif$
+$reqrepDestruction(type=name, reqrep="Reply", name="m_reply", void="void")$
 }
 
 $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
@@ -76,8 +64,8 @@ $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
 
 void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message)
 {
-    $inoutParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(opendds=opendds, type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
+    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
+    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{

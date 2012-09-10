@@ -14,7 +14,7 @@
  * =====================================================================   *
  */
 
-group Utils : cplusplus;
+group Utils;
 
 /************************************************************************
  *                                                                      *
@@ -33,24 +33,16 @@ group Utils : cplusplus;
  *   classes    : List of class headers.
  * Uses:
  */ 
-headerFile(opendds, name, classes) ::= <<
+headerFile(name, classes) ::= <<
 
 #ifndef _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 #define _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 
 $doNotEditC()$
 
-$if(!opendds)$
-#include "$name$RequestReplySupport.h"
-$else$
-#include "$name$RequestReplyC.h"
-$endif$
+$ReqRepSIncludes(interfaceName=name)$
 
-$if(!opendds)$
-#include "ndds_namespace_cpp.h"
-$else$
-#include "dds/DdsDcpsDomainC.h"
-$endif$
+$ddsIncludes()$
 
 $classes:{$it$};separator="\n"$
  
@@ -68,15 +60,11 @@ $classes:{$it$};separator="\n"$
  *   classes    : List of class Implementations.
  * Uses:
  */ 
-definitionFile(opendds, name, classes) ::= <<
+definitionFile(name, classes) ::= <<
 $doNotEditC()$
 
 #include "$name$RequestReplyUtils.h"
-$if(!opendds)$
-#include "$name$RequestReplyPlugin.h"
-$else$
-#include "$name$RequestReplyTypeSupportImpl.h"
-$endif$
+$ReqRepIncludes(interfaceName=name)$
 
 $classes:{$it$};separator="\n"$
  
@@ -129,7 +117,7 @@ class $funName$$type$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
- definition(opendds, funName, type="Request", params, returnType, string) ::= <<
+ definition(funName, type="Request", params, returnType, string) ::= <<
 
 const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientParticipant)
 {
@@ -137,18 +125,9 @@ const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientPar
 
     if(clientParticipant != NULL)
     {
-        $if(!opendds)$
-        typeName = $funName$$type$TypeSupport::get_type_name();
-        $else$
-        $funName$$type$TypeSupport_var ts = new $funName$$type$TypeSupportImpl;
-        typeName = ts->get_type_name();
-        $endif$
+        $getTypename(funName=funName, type=type, name="typeName")$
 
-        $if(!opendds)$
-        if($funName$$type$TypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
-        $else$
-        if(ts->register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
-        $endif$
+        if($registerTypename(funName=funName, type=type, name="typeName")$ != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -159,26 +138,22 @@ const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientPar
 
 $funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
 {
-    $if(!opendds)$
-    $funName$$type$* instance = $funName$$type$TypeSupport::create_data();
-    $else$
-    $funName$$type$* instance = new $funName$$type$();
-    $endif$
+    $reqrepCreation(type=funName, reqrep=type, name="instance", create="create")$
 
-    $params:{$createDataHelper(opendds=opendds, type=it.type, name=it.name, string=it.string)$};separator="\n"$
+    $params:{$createDataHelper(type=it.type, name=it.name, string=it.string)$};separator="\n"$
     
     $if(returnType)$
-    $createDataHelper(opendds=opendds, type=returnType, name="returnedValue", string=string)$        
+    $createDataHelper(type=returnType, name="returnedValue", string=string)$        
     $endif$    
     return instance;
 }
 
 void $funName$$type$Utils::extractTypeData($funName$$type$* data $if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$)
 {
-    $params:{$extractDataHelper(opendds=opendds, type=it.type, name=it.name, string=it.string, isRequestIn=it.isRequestIn)$};separator="\n"$
+    $params:{$extractDataHelper(type=it.type, name=it.name, string=it.string, isRequestIn=it.isRequestIn)$};separator="\n"$
     
     $if(returnType)$
-    $extractDataHelper(opendds=opendds, type=returnType, name="returnedValue", string=string)$        
+    $extractDataHelper(type=returnType, name="returnedValue", string=string)$        
     $endif$    
 }
 
@@ -235,7 +210,7 @@ $if(params)$, $endif$$check(returnType)$ returnedValue
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-createDataHelper(opendds, type, name, string) ::= <<
+createDataHelper(type, name, string) ::= <<
 $if(typeInitMap.(type))$
 $if(string)$
 if(instance->$name$ != NULL)
@@ -245,11 +220,7 @@ $else$
 instance->$name$ = $name$;
 $endif$
 $else$
-$if(!opendds)$
-$type$PluginSupport_copy_data(&instance->$name$, $name$);
-$else$
-instance->$name$ = *$name$;
-$endif$
+$createDH(type=type, name=name)$
 $endif$
 >>    
 
@@ -265,7 +236,7 @@ $endif$
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-extractDataHelper(opendds, type, name, string, isRequestIn) ::= <<
+extractDataHelper(type, name, string, isRequestIn) ::= <<
 $if(isRequestIn)$
 $if(typeInitMap.(type))$
 $name$ = data->$name$;
@@ -280,11 +251,7 @@ $else$
 $name$ = data->$name$;
 $endif$
 $else$
-$if(!opendds)$
-$type$PluginSupport_copy_data($name$, &data->$name$);
-$else$
-*$name$ = data->$name$;
-$endif$
+$extractDH(type=type, name=name)$
 $endif$
 $endif$
 >>    
