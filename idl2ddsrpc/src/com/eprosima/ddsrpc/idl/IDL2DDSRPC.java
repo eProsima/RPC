@@ -42,6 +42,7 @@ public class IDL2DDSRPC
     private static String ppPath = null;
     private static StringBuffer externalDir = null;
     private static int externalDirLength = 0;
+    private static String tempDir = null;
     private static String idlFile = null;
     private static String command = null;
     private static String extra_command = null;
@@ -216,7 +217,12 @@ public class IDL2DDSRPC
             
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
-            lineCommand.add("-t"); lineCommand.add("c:\\temp");
+            
+            if(tempDir != null)
+            {
+            	lineCommand.add("-t");
+            	lineCommand.add("tempDir");
+            }
         }
         
         // TODO
@@ -1249,6 +1255,15 @@ public class IDL2DDSRPC
             	if(count < args.length)
             	{
             		middleware = args[count++];
+            	}
+            	else
+            		return false;
+            }
+            else if(arg.equals("-t"))
+            {
+            	if(count < args.length)
+            	{
+            		tempDir = args[count++];
             	}
             	else
             		return false;
