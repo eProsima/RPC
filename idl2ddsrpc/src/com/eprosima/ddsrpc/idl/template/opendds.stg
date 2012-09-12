@@ -90,12 +90,20 @@ archMakeDefines() ::= <<
 >>
 
 inclMake() ::= <<
- -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(DDS_ROOT)/ddsrpc/include/idl/opendds
+ -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(DDS_ROOT)/ddsrpc/include -I\$(DDS_ROOT)/ddsrpc/include/idl/opendds
+>>
+
+inclVS() ::= <<
+\$(DDS_ROOT);\$(TAO_ROOT);\$(ACE_ROOT);\$(DDS_ROOT)\ddsrpc\include;\$(DDS_ROOT)\ddsrpc\include\idl\opendds;
 >>
 
 libsMake(example) ::= <<
  -L\$(DDS_ROOT)/lib -L\$(ACE_ROOT)/lib -L\$(DDS_ROOT)/ddsrpc/lib/$example$ \
        -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE
+>>
+
+libsVS(example) ::= <<
+\$(DDS_ROOT)\lib\;\$(ACE_ROOT)\lib\;\$(DDS_ROOT)\ddsrpc\lib\\$example$;
 >>
 
 sourceMake(interface) ::= <<
@@ -105,6 +113,33 @@ COMMONCPPSOURCES = $interface$C.cpp $interface$RequestReplyC.cpp \
                 $interface$TypeSupportC.cpp $interface$TypeSupportImpl.cpp
 >>
 
+sourceVS(interface) ::= <<
+    <ClCompile Include="$interface$RequestReplyUtils.cxx" />
+    <ClCompile Include="$interface$C.cpp" />
+    <ClCompile Include="$interface$RequestReplyC.cpp" />
+    <ClCompile Include="$interface$RequestReplyTypeSupportC.cpp" />
+    <ClCompile Include="$interface$RequestReplyTypeSupportImpl.cpp" />
+    <ClCompile Include="$interface$TypeSupportC.cpp" />
+    <ClCompile Include="$interface$TypeSupportImpl.cpp" />
+>>
+
+sourceIVS(interface) ::= <<
+    <ClInclude Include="$interface$RequestReplyUtils.h" />
+    <ClInclude Include="$interface$C.h" />
+    <ClInclude Include="$interface$RequestReplyC.h" />
+    <ClInclude Include="$interface$RequestReplyTypeSupportC.h" />
+    <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h" />
+    <ClInclude Include="$interface$TypeSupportC.h" />
+    <ClInclude Include="$interface$TypeSupportImpl.h" />
+>>
+
+preprocessorDefs(conf) ::= <<
+WIN32;OPENDDS_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$DDSRPC_WIN32_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+>>
+
+dependencies(conf) ::= <<
+OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO_AnyTypeCode$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ACE$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ddsrpc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
+>>
 
 createDH(type, name) ::= <<
 instance->$name$ = *$name$;

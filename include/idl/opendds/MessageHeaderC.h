@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:135
+// be\be_codegen.cpp:135
 
 #ifndef _TAO_IDL_MESSAGEHEADERC_H_
 #define _TAO_IDL_MESSAGEHEADERC_H_
@@ -39,6 +39,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+#include /**/ "utils/ddsrpc.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
 #include "tao/Basic_Types.h"
@@ -48,10 +49,10 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO DDSRPC_WIN32_DLL_API_VARIABLE
 
 // TAO_IDL - Generated from
-// be/be_type.cpp:269
+// be\be_type.cpp:269
 
 struct Identification;
 
@@ -66,14 +67,14 @@ typedef
   Identification_out;
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/structure_ch.cpp:57
+// c:\richi\workspace\desarrollo\dds\opendds\instalaciones\opendds3.2\ace_wrappers\tao\tao_idl\be\be_visitor_structure/structure_ch.cpp:57
 
-struct  Identification
+struct DDSRPC_WIN32_DLL_API_VARIABLE Identification
 {
   typedef Identification_var _var_type;
   typedef Identification_out _out_type;
   
-  static void _tao_any_destructor (void *);
+  
   ::CORBA::ULong value_1;
   ::CORBA::ULong value_2;
   ::CORBA::ULong value_3;
@@ -81,12 +82,12 @@ struct  Identification
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_decl.cpp:49
+// c:\richi\workspace\desarrollo\dds\opendds\instalaciones\opendds3.2\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:49
 
-extern  ::CORBA::TypeCode_ptr const _tc_Identification;
+extern DDSRPC_WIN32_DLL_API_VARIABLE ::CORBA::TypeCode_ptr const _tc_Identification;
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:64
+// be\be_visitor_traits.cpp:64
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -99,34 +100,20 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:53
+// c:\richi\workspace\desarrollo\dds\opendds\instalaciones\opendds3.2\ace_wrappers\tao\tao_idl\be\be_visitor_structure/cdr_op_ch.cpp:54
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= (::CORBA::Any &, const Identification &); // copying version
- void operator<<= (::CORBA::Any &, Identification*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Identification *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Identification *&);
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:54
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
- ::CORBA::Boolean operator<< (TAO_OutputCDR &, const Identification &);
- ::CORBA::Boolean operator>> (TAO_InputCDR &, Identification &);
+DDSRPC_WIN32_DLL_API_VARIABLE ::CORBA::Boolean operator<< (TAO_OutputCDR &, const Identification &);
+DDSRPC_WIN32_DLL_API_VARIABLE ::CORBA::Boolean operator>> (TAO_InputCDR &, Identification &);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1228
+// be\be_codegen.cpp:1228
 #if defined (__ACE_INLINE__)
 #include "MessageHeaderC.inl"
 #endif /* defined INLINE */

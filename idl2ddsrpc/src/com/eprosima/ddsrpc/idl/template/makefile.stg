@@ -10,7 +10,7 @@ DEFINES_ARCH_SPECIFIC = $archMakeDefines()$
 
 DEFINES = \$(DEFINES_ARCH_SPECIFIC)  
 
-INCLUDES = -I. $inclMake()$ -I\$(NDDSHOME)/ddsrpc/include
+INCLUDES = -I. $inclMake()$
 
 LIBS = $libsMake(example=example)$ -lddsrpc \$(SYSLIBS_$example$)
 

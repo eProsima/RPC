@@ -75,7 +75,11 @@ archMakeDefines() ::= <<
 >>
 
 inclMake() ::= <<
- -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds  -I\$(DDS_ROOT)/ddsrpc/include/idl/rti
+ -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/ddsrpc/include -I\$(NDDSHOME)/ddsrpc/include/idl/rti
+>>
+
+inclVS() ::= <<
+\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\ddsrpc\include;\$(NDDSHOME)\ddsrpc\include\idl\rti;
 >>
 
 libsMake(example) ::= <<
@@ -83,11 +87,43 @@ libsMake(example) ::= <<
        -lnddsc -lnddscore -lnddscpp
 >>
 
+libsVS(example) ::= <<
+\$(NDDSHOME)\lib\\$example$;\$(NDDSHOME)\ddsrpc\lib\\$example$;
+>>
+
 sourceMake(interface) ::= <<
 COMMONCXXSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
                 $interface$Plugin.cxx $interface$RequestReplySupport.cxx $interface$Support.cxx \
                 $interface$RequestReplyUtils.cxx
 COMMONCPPSOURCES =
+>>
+
+sourceVS(interface) ::= <<
+    <ClCompile Include="$interface$RequestReply.cxx" />
+    <ClCompile Include="$interface$.cxx" />
+    <ClCompile Include="$interface$RequestReplyPlugin.cxx" />
+    <ClCompile Include="$interface$Plugin.cxx" />
+    <ClCompile Include="$interface$RequestReplySupport.cxx" />
+    <ClCompile Include="$interface$Support.cxx" />
+    <ClCompile Include="$interface$RequestReplyUtils.cxx" />
+>>
+
+sourceIVS(interface) ::= <<
+    <ClInclude Include="$interface$RequestReply.h" />
+    <ClInclude Include="$interface$.h" />
+    <ClInclude Include="$interface$RequestReplyPlugin.h" />
+    <ClInclude Include="$interface$Plugin.h" />
+    <ClInclude Include="$interface$RequestReplySupport.h" />
+    <ClInclude Include="$interface$Support.h" />
+    <ClInclude Include="$interface$RequestReplyUtils.h" />
+>>
+ 
+preprocessorDefs(conf) ::= <<
+WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+>>
+
+dependencies(conf) ::= <<
+nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; ddsrpc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
 createDH(type, name) ::= <<

@@ -68,7 +68,7 @@ EndGlobal
  *   configuration - local
  *   filter        - local
  */ 
-project(guid, name, example, arch, configurations, sourceFiles, headerFiles) ::= <<
+project(interfaceName, guid, name, example, arch, configurations, client) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -105,7 +105,7 @@ project(guid, name, example, arch, configurations, sourceFiles, headerFiles) ::=
   $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
     <ClCompile>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\ddsrpc\include;\$(NDDSHOME)\ddsrpc\include\idl\rti;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>$runtimeLibrary(conf=it)$</RuntimeLibrary>
@@ -125,7 +125,7 @@ project(guid, name, example, arch, configurations, sourceFiles, headerFiles) ::=
       <AdditionalDependencies>$dependencies(conf=it)$;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\objs\\$example$\\\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>\$(NDDSHOME)\lib\\$example$;\$(NDDSHOME)\ddsrpc\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$libsVS(example=example)$%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>$ignoreDefaultLibraryNames(conf=it)$;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>$generateDebugInformation(conf=it)$</GenerateDebugInformation>
       <ProgramDatabaseFile>.\objs\\$example$\\$name$.pdb</ProgramDatabaseFile>
@@ -134,10 +134,30 @@ project(guid, name, example, arch, configurations, sourceFiles, headerFiles) ::=
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
-    $filter(files=sourceFiles,tagName="ClCompile")$
+    $sourceVS(interface=interfaceName)$
+    $if(client)$
+    <ClCompile Include="$interfaceName$Proxy.cxx" />
+    <ClCompile Include="$interfaceName$ClientRPCSupport.cxx" />
+    <ClCompile Include="$interfaceName$AsyncSupport.cxx" />
+    <ClCompile Include="Client.cxx" />
+    $else$
+    <ClCompile Include="$interfaceName$Server.cxx" />
+    <ClCompile Include="$interfaceName$ServerImpl.cxx" />
+    <ClCompile Include="$interfaceName$ServerRPCSupport.cxx" />
+    <ClCompile Include="Server.cxx" />
+    $endif$
   </ItemGroup>
   <ItemGroup>
-    $filter(files=headerFiles,tagName="ClInclude")$ 
+    $sourceIVS(interface=interfaceName)$
+    $if(client)$
+    <ClInclude Include="$interfaceName$Proxy.h" />
+    <ClInclude Include="$interfaceName$ClientRPCSupport.h" />
+    <ClInclude Include="$interfaceName$AsyncSupport.h" />
+    $else$
+    <ClInclude Include="$interfaceName$Server.h" />
+    <ClInclude Include="$interfaceName$ServerImpl.h" />
+    <ClInclude Include="$interfaceName$ServerRPCSupport.h" />
+    $endif$
   </ItemGroup>
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -234,20 +254,6 @@ $if(conf.debug)$true$else$false$endif$
 >>
 
 /**
- * preprocessorDefs: Internal Template
- * Adds the suitable definitons to PreprocessorDefinitions attribute of VCCLCompilerTool 
- * in a configuration section of a VS2005 .vcproj file. 
- * 
- * Params:
- *   conf : VSCOnfiguration object. 
- *
- * Uses:
- */ 
-preprocessorDefs(conf) ::= <<
-WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(it.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(it.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
->>
-
-/**
  * runtimeLibrary: Internal Template
  * Produces the RuntimeLibrary attribute of VCCLCompilerTool 
  * in a configuration section of a VS2005 .vcproj file. 
@@ -259,34 +265,4 @@ WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(it.dll)$NDDS_DLL_VARIABLE;W
  */ 
 runtimeLibrary(conf) ::= <<
 $if(it.dll)$$if(it.debug)$MultiThreadedDebugDLL$else$MultiThreadedDLL$endif$$else$$if(it.debug)$MultiThreadedDebug$else$MultiThreaded$endif$$endif$
->>
-
-/**
- * dependencies: Internal Template
- * Adds the suitable libraries to AdditionalDependencies attribute of VCLinkerTool 
- * in a configuration section of a VS2005 .vcproj file. 
- * 
- * Params:
- *   conf : VSCOnfiguration object. 
- *
- * Uses:
- */ 
-dependencies(conf) ::= <<
-nddscpp$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; nddsc$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; nddscore$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib; ddsrpc$if(it.dll)$$else$z$endif$$if(it.debug)$d$endif$.lib
->>
-
-/**
- * file: Internal Template
- * Produces a Filter section of a VS2005 .vcproj file. 
- * 
- * Params:
- *   files        : List of fileNames belonging to this filter.
- *   filterName   : The filter name. 
- *   filterString : Set of file extensions. 
- *
- * Uses:
- *   file - local
- */ 
-filter(files, tagName) ::= <<
-    $files:{fileName | <$tagName$ Include="$fileName$" />};separator="\n"$
 >>

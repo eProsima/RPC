@@ -321,7 +321,7 @@ main(interfaceName, invocations) ::= <<
 #include "$interfaceName$Server.h"
 #include "strategies/ThreadPoolStrategy.h"
 
-int main()
+int main(int argc, char **argv)
 {
     int returnedValue = 0;
     int domainId = 0;
@@ -332,6 +332,8 @@ int main()
 
     delete server;
     delete pool;
+    
+    return 0;
 }
 
 >>

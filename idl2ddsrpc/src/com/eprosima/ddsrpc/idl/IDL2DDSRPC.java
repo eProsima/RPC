@@ -59,7 +59,6 @@ public class IDL2DDSRPC
         new VSConfiguration("Release DLL", "Win32", false, true),
         new VSConfiguration("Debug", "Win32", true, false),
         new VSConfiguration("Release", "Win32", false, false)};	
-    private static String operationFileSuffixes[]={"", "Plugin", "Support", "Utils"};
 
     /**
      * @param args
@@ -203,12 +202,21 @@ public class IDL2DDSRPC
         }
         else if(middleware.equals("opendds"))
         {
-        	command = "opendds_idl";
-            extra_command = "tao_idl";
+        	if(osOption.equals("Win32"))
+        	{
+        		command = "opendds_idl.exe";
+        		extra_command = "tao_idl.exe";
+        	}
+        	else if(osOption.equals("Linux"))
+        	{
+        		command = "opendds_idl";
+        		extra_command = "tao_idl";
+        	}
             spTemplate = "opendds";
             
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
+            lineCommand.add("-t"); lineCommand.add("c:\\temp");
         }
         
         // TODO
@@ -238,6 +246,7 @@ public class IDL2DDSRPC
         	 finalCommandLine = new ArrayList();
              finalCommandLine.add(extra_command);
              finalCommandLine.add("-SS");
+             finalCommandLine.add("-Sa");
              finalCommandLine.addAll(lineCommand);
              finalCommandLine.add(file);
              finalCommandArray = new String[finalCommandLine.size()];
@@ -252,6 +261,7 @@ public class IDL2DDSRPC
 
              if(auxexitVal != 0)
              {
+            	 System.out.println("process waitFor() function returns the error value " + auxexitVal);
                  throw new Exception();
              }
         }
@@ -281,6 +291,7 @@ public class IDL2DDSRPC
         	 finalCommandLine = new ArrayList();
              finalCommandLine.add(extra_command);
              finalCommandLine.add("-SS");
+             finalCommandLine.add("-Sa");
              finalCommandLine.addAll(lineCommand);
              finalCommandLine.add(file.subSequence(0, file.length() - 4) + "TypeSupport.idl");
              finalCommandArray = new String[finalCommandLine.size()];
@@ -954,37 +965,6 @@ public class IDL2DDSRPC
         return returnedValue;
     }
 
-    private static void setProjectFiles(StringBuffer buf, StringTemplate client, StringTemplate server, boolean withoutUtils)
-    {
-        int nameBufLen = buf.length();
-        int extBufLen = 0;
-        int limit = withoutUtils ? operationFileSuffixes.length -1 : operationFileSuffixes.length; 
-        for(int i = 0; i < limit; i++)
-        {			
-            buf.append(operationFileSuffixes[i]);
-            extBufLen = buf.length();
-            buf.append(".h");
-            client.setAttribute("headerFiles", buf.toString());
-            server.setAttribute("headerFiles", buf.toString());
-            buf.delete(extBufLen, buf.length());
-            buf.append(".cxx");
-            client.setAttribute("sourceFiles", buf.toString());
-            server.setAttribute("sourceFiles", buf.toString());
-            buf.delete(nameBufLen, buf.length());
-        }
-    }
-
-    private static void setProjectFile(StringBuffer buf, StringTemplate project, String suffix, int start)
-    {		
-        buf.delete(start, buf.length());
-        buf.append(suffix);
-        buf.append(".h");
-        project.setAttribute("headerFiles", buf.toString());
-        buf.delete(buf.length() -2, buf.length());
-        buf.append(".cxx");
-        project.setAttribute("sourceFiles", buf.toString());
-    }
-
     private static int genSolution(Interface ifc)
     {
         final String METHOD_NAME = "genSolution";
@@ -1042,7 +1022,7 @@ public class IDL2DDSRPC
         StringBuffer stringBuf = null;
         
     	// first load main language template
-    	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, null);
+    	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, spTemplateGroup);
 
     	if(idlTemplates != null)
     	{
@@ -1061,6 +1041,7 @@ public class IDL2DDSRPC
     		stringBuf.append("Server");
     		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
     		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(), serverGuid, null);
+    		projectServer.setAttribute("interfaceName", ifc.getName());
     		projectServer.setAttribute("guid", serverGuid);
     		projectServer.setAttribute("name",stringBuf.toString());
     		projectServer.setAttribute("example", exampleOption);
@@ -1070,10 +1051,12 @@ public class IDL2DDSRPC
     		stringBuf.append("Client");
     		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
     		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(),clientGuid, serverGuid);
+    		projectClient.setAttribute("interfaceName", ifc.getName());
     		projectClient.setAttribute("guid", clientGuid);
     		projectClient.setAttribute("name",stringBuf.toString());
     		projectClient.setAttribute("example", exampleOption);
     		projectClient.setAttribute("arch", arch);
+    		projectClient.setAttribute("client", "client");
 
     		// project configurations	
     		for(int index = 0; index < configurations.length; index++){
@@ -1090,30 +1073,6 @@ public class IDL2DDSRPC
     		if(writeFile(externalDir.toString(), solution) == 0)
     		{
     			externalDir.delete(externalDirLength, externalDir.length());
-
-    			stringBuf.delete(0, stringBuf.length());
-    			stringBuf.append(ifc.getName());
-    			// Server and client common files
-
-    			setProjectFiles(idlStringBuf, projectClient, projectServer, true);
-    			stringBuf.append("RequestReply");
-    			setProjectFiles(stringBuf, projectClient, projectServer, false);
-
-    			stringBuf.delete(0, stringBuf.length());
-    			stringBuf.append(ifc.getName());		
-    			// Client exclusive files
-    			setProjectFile(stringBuf, projectClient, "Proxy", ifc.getName().length());
-    			setProjectFile(stringBuf, projectClient, "ClientRPCSupport", ifc.getName().length());
-    			setProjectFile(stringBuf, projectClient, "AsyncSupport", ifc.getName().length());
-
-    			projectClient.setAttribute("sourceFiles", "Client.cxx");
-
-    			// Server exclusive files
-    			setProjectFile(stringBuf, projectServer, "Server", ifc.getName().length());
-    			setProjectFile(stringBuf, projectServer, "ServerImpl", ifc.getName().length());
-    			setProjectFile(stringBuf, projectServer, "ServerRPCSupport", ifc.getName().length());
-
-    			projectServer.setAttribute("sourceFiles", "Server.cxx");
 
     			//System.out.println(request.toString());
     			if(externalDirLength > 0)
@@ -1251,7 +1210,7 @@ public class IDL2DDSRPC
             	{
             		languageOption = args[count++];
 
-            		if(!languageOption.equals("C++"))
+            		if(!languageOption.equals("C++") && !languageOption.equals("c++"))
             		{
             			System.out.println("ERROR: Unknown language " +  languageOption);
             			return false;
@@ -1294,6 +1253,10 @@ public class IDL2DDSRPC
             	else
             		return false;
             }
+            else if(arg.equals("-help"))
+            {
+            	return false;
+            }
             else
             {
                 System.out.println("ERROR: Unknown argument " + arg);
@@ -1314,12 +1277,16 @@ public class IDL2DDSRPC
 
     public static void printHelp()
     {
+    	String rti_help =  "   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +
+                      "   -ppDisable               : Do not use C/C++ preprocessor.\n";
+    	String opendds_help = "   -t <temp dir>: Use the specific directory as temporary directory.\n";
+    	
         System.out.print("ddsrpc help:\n\nUsage: ddsrpc [options] <IDL file>\nOptions:\n" +
-                "   -example : Generate solution for specific platform (example: x64Win64VS2010)\n" +
-                "   -language                : Programming language (C++).\n" +
-                "   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +
-                "   -ppDisable               : Do not use C/C++ preprocessor.\n" +
-                "   -replace                 : replace rtiddsgen generated files.\n");
+        		"   -help: Show help\n" +
+                "   -example <platform>: Generate solution for specific platform (example: x64Win64VS2010)\n" +
+                "   -language <C++>: Programming language (default: C++).\n" +
+                "   -replace: replace generated files.\n" +
+                (middleware.equals("rti") ? rti_help : opendds_help));
         //				"   -d <path>                : Output directory.\n");
     }
 

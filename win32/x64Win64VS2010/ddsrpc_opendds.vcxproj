@@ -83,16 +83,16 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">$(ProjectName)d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)zd</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)z</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">ddsrpcd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">ddsrpc</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ddsrpczd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ddsrpcz</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;NDDS_USER_DLL_EXPORT;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -109,7 +109,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>ACEd.lib;TAOd.lib;TAO_AnyTypeCoded.lib;OpenDDS_Rtpsd.lib;OpenDDS_Dcpsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)d.dll</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpcd.dll</OutputFile>
       <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
@@ -127,7 +127,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;NDDS_USER_DLL_EXPORT;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -143,7 +143,7 @@
     <Link>
       <AdditionalDependencies>ACE.lib;TAO.lib;TAO_AnyTypeCode.lib;OpenDDS_Rtps.lib;OpenDDS_Dcps.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName).dll</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpc.dll</OutputFile>
       <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -169,7 +169,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)zd.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpczd.lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
@@ -198,7 +198,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)z.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpcz.lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>

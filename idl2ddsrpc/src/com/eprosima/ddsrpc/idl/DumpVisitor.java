@@ -21,6 +21,7 @@
 package com.eprosima.ddsrpc.idl;
 
 import com.eprosima.ddsrpc.idl.ast.*;
+import com.eprosima.ddsrpc.idl.tree.Operation;
 
 public class DumpVisitor implements IDLParserVisitor {
 
@@ -90,6 +91,13 @@ public class DumpVisitor implements IDLParserVisitor {
 	 
 	 public Object visit(ASTqos_attr node, Object data)
 	 {		
+		// TODO Auto-generated method stub
+		visit(((SimpleNode)node), data);
+		return data;
+	 }
+	 
+	 public Object visit(ASTop_attr node, Object data)
+	 {
 		// TODO Auto-generated method stub
 		visit(((SimpleNode)node), data);
 		return data;

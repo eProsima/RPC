@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:381
+// be\be_codegen.cpp:381
 
 
 #include "MessageHeaderC.h"
@@ -36,15 +36,13 @@
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
-#include "tao/CDR.h"
-#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "MessageHeaderC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:73
+// be\be_visitor_arg_traits.cpp:73
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,7 +57,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:84
+// c:\richi\workspace\desarrollo\dds\opendds\instalaciones\opendds3.2\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/struct_typecode.cpp:84
 
 static TAO::TypeCode::Struct_Field<
   char const *,
@@ -90,87 +88,12 @@ _tao_tc_Identification (
   &_tao_tc_Identification;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:65
-
-void 
-Identification::_tao_any_destructor (
-    void *_tao_void_pointer
-  )
-{
-  Identification *_tao_tmp_pointer =
-    static_cast<Identification *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Identification &_tao_elem
-  )
-{
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Identification *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Identification>::insert_copy (
-        _tao_any,
-        Identification::_tao_any_destructor,
-        _tc_Identification,
-        _tao_elem
-      );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Identification *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Identification>::insert (
-      _tao_any,
-      Identification::_tao_any_destructor,
-      _tc_Identification,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Identification *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Identification *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Identification *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<Identification>::extract (
-        _tao_any,
-        Identification::_tao_any_destructor,
-        _tc_Identification,
-        _tao_elem
-      );
-}
-TAO_END_VERSIONED_NAMESPACE_DECL
+// c:\richi\workspace\desarrollo\dds\opendds\instalaciones\opendds3.2\ace_wrappers\tao\tao_idl\be\be_visitor_structure/structure_cs.cpp:65
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_cs.cpp:61
+// c:\richi\workspace\desarrollo\dds\opendds\instalaciones\opendds3.2\ace_wrappers\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

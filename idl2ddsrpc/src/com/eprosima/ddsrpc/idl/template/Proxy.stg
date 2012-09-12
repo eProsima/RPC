@@ -295,7 +295,7 @@ main(interfaceName, invocations) ::= <<
 #include "$interfaceName$Proxy.h"
 $ReqRepIncludes(interfaceName=interfaceName)$
 
-int main()
+int main(int argc, char **argv)
 {
     int domainId = 0;
     unsigned int timeoutInMilliseconds = 4000;
@@ -304,6 +304,8 @@ int main()
 $invocations; separator="\n"$
 
    delete(proxy);
+   
+   return 0;
 }
 >>
 
