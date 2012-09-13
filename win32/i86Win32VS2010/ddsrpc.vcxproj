@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugDLL|x64">
+    <ProjectConfiguration Include="DebugDLL|Win32">
       <Configuration>DebugDLL</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
+    <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseDLL|x64">
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
       <Configuration>ReleaseDLL</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
+    <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -23,22 +23,22 @@
     <RootNamespace>ddsrpc</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
@@ -46,53 +46,53 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">$(SolutionDir)..\..\lib\x64Win64VS2010\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">false</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">$(SolutionDir)..\..\lib\x64Win64VS2010\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">false</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\lib\x64Win64VS2010\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\lib\x64Win64VS2010\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">ddsrpcd</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">ddsrpc</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ddsrpczd</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ddsrpcz</TargetName>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">$(SolutionDir)..\..\lib\i86Win32VS2010\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">false</IgnoreImportLibrary>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">$(SolutionDir)..\..\lib\i86Win32VS2010\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">false</IgnoreImportLibrary>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\lib\i86Win32VS2010\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\lib\i86Win32VS2010\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\obj\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">$(ProjectName)d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)zd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)z</TargetName>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -108,9 +108,9 @@
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>ACEd.lib;TAOd.lib;TAO_AnyTypeCoded.lib;OpenDDS_Rtpsd.lib;OpenDDS_Dcpsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpcd.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(ProjectName)d.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2005\$(TargetName).pdb</ProgramDatabaseFile>
@@ -122,12 +122,12 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;WIN32;RTI_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -141,10 +141,10 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ACE.lib;TAO.lib;TAO_AnyTypeCode.lib;OpenDDS_Rtps.lib;OpenDDS_Dcps.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpc.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -153,11 +153,12 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;EPROSIMA_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>
@@ -165,26 +166,25 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpczd.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\..\lib\i86Win32VS2010\$(ProjectName)zd.lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;EPROSIMA_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -198,9 +198,8 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\ddsrpcz.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\..\lib\i86Win32VS2010\$(ProjectName)z.lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
@@ -211,8 +210,9 @@
     <ClCompile Include="..\..\src\client\AsyncThread.cpp" />
     <ClCompile Include="..\..\src\client\Client.cpp" />
     <ClCompile Include="..\..\src\client\ClientRPC.cpp" />
-    <ClCompile Include="..\..\src\idl\opendds\MessageHeaderC.cpp" />
-    <ClCompile Include="..\..\src\idl\opendds\MessageHeaderTypeSupportImpl.cpp" />
+    <ClCompile Include="..\..\src\idl\rti\MessageHeader.cxx" />
+    <ClCompile Include="..\..\src\idl\rti\MessageHeaderPlugin.cxx" />
+    <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
     <ClCompile Include="..\..\src\server\ServerRPC.cpp" />
     <ClCompile Include="..\..\src\strategies\SingleThreadStrategy.cpp" />
@@ -228,8 +228,9 @@
     <ClInclude Include="..\..\include\client\Client.h" />
     <ClInclude Include="..\..\include\client\ClientRPC.h" />
     <ClInclude Include="..\..\include\exceptions\ResourceException.h" />
-    <ClInclude Include="..\..\include\idl\opendds\MessageHeaderC.h" />
-    <ClInclude Include="..\..\include\idl\opendds\MessageHeaderTypeSupportImpl.h" />
+    <ClInclude Include="..\..\include\idl\rti\MessageHeader.h" />
+    <ClInclude Include="..\..\include\idl\rti\MessageHeaderPlugin.h" />
+    <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h" />
     <ClInclude Include="..\..\include\server\Server.h" />
     <ClInclude Include="..\..\include\server\ServerRPC.h" />
     <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h" />
@@ -248,12 +249,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\ddsrpc.rc">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">EPROSIMA_C_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">EPROSIMA_C_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">EPROSIMA_C_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">EPROSIMA_C_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\include\idl\opendds\MessageHeaderC.inl" />
     <None Include="..\..\include\utils\GenericClientRPC.gen" />
     <None Include="..\..\include\utils\GenericServerRPC.gen" />
   </ItemGroup>
