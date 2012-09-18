@@ -129,7 +129,7 @@ namespace eProsima
 			return returnedValue;
 		}
 
-		void Server::executeServer(unsigned int milliseconds)
+		void Server::wait(unsigned int milliseconds)
 		{
 			while(1)
 			{

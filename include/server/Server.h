@@ -28,7 +28,7 @@ namespace eProsima
 
 			public:
 
-				void executeServer(unsigned int milliseconds = DDSRPC_DEFAULT_PERIOD_MILLISEC);
+				void wait(unsigned int milliseconds = DDSRPC_DEFAULT_PERIOD_MILLISEC);
 
 				void schedule(fExecFunction execFunction, void *data, ServerRPC *service);
 

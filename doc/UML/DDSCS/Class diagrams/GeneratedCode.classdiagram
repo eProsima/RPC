@@ -322,27 +322,6 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="24b9666e-9010-42f1-a168-9d86a9582ec5" name="setTransport" visibility="Private" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="5f441e9d-e1df-478f-b379-0daf097206ce" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="5b3d2429-7062-4263-a68f-641d32a15f71" name="qos" direction="In" isUnique="false">
-                  <elementDefinition Id="9937dbc2-26c5-4bb4-a611-f89ae389b49c" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="be173ca4-86b9-4eea-b581-9d9eed7768bd" LastKnownName="DDSDomainParticipantQos" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="346f038e-22e9-4976-a4b9-83767149355a" direction="Return" isUnique="false">
-                  <elementDefinition Id="5793720e-6083-419a-a8ed-f1564dd1d5c3" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>

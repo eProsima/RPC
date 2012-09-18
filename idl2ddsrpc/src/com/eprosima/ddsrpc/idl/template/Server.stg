@@ -328,7 +328,7 @@ int main(int argc, char **argv)
     unsigned int threadPoolSize = 5;
     eProsima::DDSRPC::ThreadPoolStrategy *pool = new eProsima::DDSRPC::ThreadPoolStrategy(threadPoolSize);
     $interfaceName$Server *server = new $interfaceName$Server(pool, domainId);
-    server->executeServer();
+    server->wait();
 
     delete server;
     delete pool;
