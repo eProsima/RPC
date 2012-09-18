@@ -101,8 +101,8 @@ class $interfaceName$_$name$
 >>
 
 functionHeaderAsync(interfaceName,type,class,name,inputParams,inoutParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj, $argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$,
-              $endif$$endif$$argDecl(inoutParams);separator=", "$)
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inputParams)$,$endif$ $argDecl(inputParams);separator=", "$ $if(inoutParams)$,
+              $endif$$argDecl(inoutParams);separator=", "$)
 >>
 
 /**
