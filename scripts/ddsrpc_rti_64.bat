@@ -52,11 +52,11 @@ goto getarg
 
 
 
-set JREHOME="%NDDSHOME%\jre\i86Win32"
+if "%JAVA_HOME%"=="" set JREHOME="%NDDSHOME%\jre\x64Win64"
+if not "%JAVA_HOME%"=="" set JREHOME="%JAVA_HOME%"
 
 
-"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -Djava.ext.dirs="%NDDSHOME%\ddsrpc\classes" com.eprosima.ddsrpc.idl.IDL2DDSRPC %args%
-
+"%JREHOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -Djava.ext.dirs="%NDDSHOME%\ddsrpc\classes" com.eprosima.ddsrpc.idl.IDL2DDSRPC %args%
 
 
 :rtiddsgen_end
