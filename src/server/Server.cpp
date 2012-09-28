@@ -51,6 +51,8 @@ namespace eProsima
                             participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
                             m_participant->set_qos(participantQos);
 
+							printf("INFO<%s::%s>: Server is running\n", CLASS_NAME, METHOD_NAME);
+
                             return;
                         }
                     }
@@ -139,7 +141,6 @@ namespace eProsima
 
 		void Server::schedule(fExecFunction execFunction, void *data, ServerRPC *service)
 		{
-			printf("SCHEDULING %s\n", service->getRPCName());
             m_strategy->schedule(execFunction, data, this, service);
 		}
 

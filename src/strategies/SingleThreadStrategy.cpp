@@ -7,11 +7,6 @@ namespace eProsima
 {
     namespace DDSRPC
     {
-
-        SingleThreadStrategy::SingleThreadStrategy()
-        {
-        }
-
         void SingleThreadStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
         {
             const char* const METHOD_NAME = "schedule";

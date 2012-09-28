@@ -29,10 +29,6 @@ namespace eProsima
                 ServerRPC *m_service;
         };
 
-        ThreadPerRequestStrategy::ThreadPerRequestStrategy()
-        {
-        }
-
         void ThreadPerRequestStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
         {
             const char* const METHOD_NAME = "schedule";

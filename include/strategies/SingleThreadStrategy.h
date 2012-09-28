@@ -8,12 +8,28 @@ namespace eProsima
 {
     namespace DDSRPC
     {
+		/**
+		 * \brief This class implements the sigle thread strategy.
+		 *        The server uses the reception thread of RTI DDS to execute the request.
+		 */
         class DDSRPC_WIN32_DLL_API SingleThreadStrategy : public ServerStrategy
         {
             public:
 
-                SingleThreadStrategy();
+				/// \brief Default constructor.
+				SingleThreadStrategy(){};
 
+				/// \brief Default destructor.
+				virtual ~SingleThreadStrategy(){};
+
+				/**
+				 * \brief This function execute directly the request.
+				 *
+				 * \param execFunction Function that has to be call when the request will be processed.
+				 * \param data The request. Cannot be NULL.
+				 * \param server A pointer to the server. Cannot be NULL.
+				 * \param service A pointer to the remote procedure service. Cannot be NULL.
+				 */
                 virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service);
         };
     } // namespace DDSRPC

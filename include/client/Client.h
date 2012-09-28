@@ -14,19 +14,41 @@ namespace eProsima
         class AsyncTask;
 
 		/**
-		 * \file
-		 * \brief This file contains the definition of the class DDSCSClient.
+		 * \brief This class implements the common functionalities that all server proxies have.
 		 */
 		class DDSRPC_WIN32_DLL_API Client
 		{
             public:
 
+				/**
+				 * \brief This function returns the DDS domain participant that use this server proxy.
+				 *
+				 * \return Pointer to the DDS domain participant.
+				 */
 				DDS::DomainParticipant* getParticipant();
 
+				/**
+				 * \brief This function adds a asynchronous task to the asynchronous thread.
+				 *
+				 * \param query The DDS query condition that is used to take the request. Cannot be NULL.
+				 * \param task The asynchronos task created and associated with a request. Cannot be NULL.
+				 * \param timeout The timeout used for this request.
+				 * \return 0 value is returned if function works successfully. In other case -1 is returned.
+				 */
                 int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
 
+				/**
+				 * \brief This function gets the timeout used when a request is sent.
+				 *
+				 * \return The time out used by the server proxy. It is in milliseconds.
+				 */
                 long getTimeout();
 
+				/**
+				 * \brief This function sets te timeout that the server proxy will use in each request.
+				 *
+				 * \para milliseconds The timeout in milliseconds.
+				 */
                 void setTimeout(long milliseconds);
 
 			protected:
@@ -34,10 +56,12 @@ namespace eProsima
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param The client identifier.
-				 * \param domainId The domain id's value that the client will have.
+				 * \param transport The transport that will be use the server proxy.
+				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
+				 * \param milliseconds Timout in milliseconds for all requests.
+				 * \exception eProsima::DDSRPC::ResourceException 
 				 */
-				Client(Transport *transport, int domainId = 0, long milliseconds = 3000);
+				Client(Transport *transport, int domainId = 0, long milliseconds = 10000);
 
 				/// \brief The default destructor.
 				virtual ~Client();

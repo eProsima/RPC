@@ -37,9 +37,9 @@ group cplusplus;
  *  argDeclRef - local
  */ 
 functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$($argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$,
-              $endif$$endif$$argDeclRef(inoutParams);separator=", "$$if([inputParams,inoutParams])$$if(outputParams)$,$endif$
-              $endif$$argDeclRef(outputParams);separator=", "$)
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$($if(inputParams)$/*in*/ $endif$$argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$, 
+              $endif$$endif$$if(inoutParams)$/*inout*/ $endif$$argDeclRef(inoutParams);separator=", "$$if([inputParams,inoutParams])$$if(outputParams)$, $endif$
+              $endif$$if(outputParams)$/*out*/ $endif$$argDeclRef(outputParams);separator=", "$)
 >>
 
 
@@ -171,7 +171,6 @@ $endif$
  *
  * Uses:
  */ 
-
 argDecl(arg) ::= <<
 $arg:{n | $argType(type=n.type, in="true")$ $n.name$};separator=", "$
 >>

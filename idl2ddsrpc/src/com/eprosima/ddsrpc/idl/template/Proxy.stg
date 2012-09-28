@@ -46,12 +46,23 @@ $doNotEditC()$
 
 $classDeclsAsync; separator=";\n"$$if(classDeclsAsync)$;$endif$
 
+/**
+ * \brief This class implements a specific client's proxy for the defined interface by user.
+ */
 class $interfaceName$ProxyH : public eProsima::DDSRPC::Client
 {
     public:
 
-        /// \brief The default constructor.
-        $interfaceName$ProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 3000);
+        /**
+         * \brief Default constructor. The client's proxy has to know what network transport
+         *        it should use.
+         *
+         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         */
+        $interfaceName$ProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$ProxyH();
@@ -64,20 +75,43 @@ class $interfaceName$ProxyH : public eProsima::DDSRPC::Client
         $funNames:{eProsima::DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
 };
 
+/**
+ * \brief This class implements a specific client's proxy for the defined interface by user.
+ *        This client's proxy uses the UDPv4 transport.
+ */
 class $interfaceName$Proxy : public $interfaceName$ProxyH
 {
     public:
     
-        $interfaceName$Proxy(int domainId = 0, long timeout = 3000);
+        /**
+         * \brief Default constructor.
+         *
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         */
+        $interfaceName$Proxy(int domainId = 0, long timeout = 10000);
         
         virtual ~$interfaceName$Proxy();
 };
 
+/**
+ * \brief This class implements a specific client's proxy for the defined interface by user.
+ *        This client's proxy uses the TCPv4 transport.
+ */
 class $interfaceName$WANProxy : public $interfaceName$ProxyH
 {
     public:
     
-        $interfaceName$WANProxy(const char *to_connect, int domainId = 0, long timeout = 3000);
+        /**
+         * \brief Default constructor.
+         *
+         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         */
+        $interfaceName$WANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
         
         virtual ~$interfaceName$WANProxy();
 };
@@ -89,8 +123,8 @@ classHeaderAsync(interfaceName,type,name,inoutParams,outputParams) ::= <<
 class $interfaceName$_$name$
 {
     public:
-        virtual void $name$($argDecl(inoutParams);separator=", "$ $if(inoutParams)$$if(outputParams)$,
-              $endif$$endif$$argDecl(outputParams);separator=", "$)
+        virtual void $name$($if(inoutParams)$/*inout*/ $endif$$argDecl(inoutParams);separator=", "$ $if(inoutParams)$$if(outputParams)$, 
+              $endif$$endif$$if(outputParams)$/*out*/ $endif$$argDecl(outputParams);separator=", "$)
         {
         }
    
@@ -101,7 +135,7 @@ class $interfaceName$_$name$
 >>
 
 functionHeaderAsync(interfaceName,type,class,name,inputParams,inoutParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inputParams)$,$endif$ $argDecl(inputParams);separator=", "$ $if(inoutParams)$,
+$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inputParams)$, /*in*/ $endif$ $argDecl(inputParams);separator=", "$ $if(inoutParams)$, /*inout*/ 
               $endif$$argDecl(inoutParams);separator=", "$)
 >>
 
@@ -298,7 +332,7 @@ $ReqRepIncludes(interfaceName=interfaceName)$
 int main(int argc, char **argv)
 {
     int domainId = 0;
-    unsigned int timeoutInMilliseconds = 4000;
+    unsigned int timeoutInMilliseconds = 10000;
     $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMilliseconds);
     
 $invocations; separator="\n"$

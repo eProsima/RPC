@@ -6,6 +6,17 @@ Para compilar boost en 32-bits:
 Para compilar boost en 64-bits:
    bjam --toolset=msvc-9.0 address-model=64 --build-type=complete stage
 
+
+Cuando se vaya a compilar DDSRPC para un plataforma, recordar tener en cuenta:
+
+- NDDSHOME apunta a la plataforma correcta.
+- La dirección de BOOST apunta a la plataforma correcta.
+
+
+
+
+NOTAS:
+
 Observaciones tenidas en cuenta al decidir si el número de secuencia entra dentro de la clave:
 - El número de secuencia está en la clave:
   + Por defecto el historial está a uno, que es el valor adecuado.
@@ -13,10 +24,8 @@ Observaciones tenidas en cuenta al decidir si el número de secuencia entra dentr
   - Por defecto el historia está a uno, y es necesario que se cambie a que guarde todo.
 
 
-TODO
-Que el numero de secuencia también esté en la clave: el objetivo es poder tener multiples servidores, y al tener
-el historial a uno, solo recibirá el último, si los recibe a la vez (pensar en esto).
+TODO:
+
 Registrar la instancia antes de enviar la respuesta (en el servidor)
 Support for "long double"
-Poner const cuando se pasa datos al usuario para que no los toque.
 Crear comentarios al crear el codigo (ejemplo, descripción de parámetros de una función como que parámetros son "in", "inout" o "out".

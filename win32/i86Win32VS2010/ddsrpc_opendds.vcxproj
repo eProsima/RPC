@@ -91,8 +91,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -110,7 +110,7 @@
     <Link>
       <AdditionalDependencies>ACEd.lib;TAOd.lib;TAO_AnyTypeCoded.lib;OpenDDS_Rtpsd.lib;OpenDDS_Dcpsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\ddsrpcd.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2005\$(TargetName).pdb</ProgramDatabaseFile>
@@ -126,8 +126,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;DDSRPC_WIN32_DLL_EXPORTS;DDSRPC_WIN32_DLL_VARIABLE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -144,7 +144,7 @@
       <AdditionalDependencies>ACE.lib;TAO.lib;TAO_AnyTypeCode.lib;OpenDDS_Rtps.lib;OpenDDS_Dcps.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\ddsrpc.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -156,8 +156,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -183,8 +183,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_49_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ACE_ROOT);$(TAO_ROOT);$(DDS_ROOT);$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\opendds;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;OPENDDS_WIN32;EPROSIMA_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

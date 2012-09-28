@@ -107,7 +107,7 @@ project(interfaceName, guid, name, example, arch, configurations, client) ::= <<
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$</PreprocessorDefinitions>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>$if(it.debug)$EnableFastChecks$else$Default$endif$</BasicRuntimeChecks>
       <RuntimeLibrary>$runtimeLibrary(conf=it)$</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>

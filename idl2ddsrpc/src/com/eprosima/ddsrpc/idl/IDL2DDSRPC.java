@@ -336,6 +336,22 @@ public class IDL2DDSRPC
     	
     	return returnedValue;
     }
+    
+    private static boolean typeIsEnum(Module root, String name)
+    {
+    	boolean returnedValue = false;
+    	TypeDecl typedecl = root.getTypeDecl(name);
+    	
+    	while(typedecl instanceof SimpleTypedef)
+    	{
+    		typedecl = ((SimpleTypedef)typedecl).getBase();
+    	}
+    	
+    	if(typedecl instanceof EnumType)
+    		returnedValue = true;
+    	
+    	return returnedValue;
+    }
 
     public static int gen(Module root) throws Exception
     {
@@ -595,6 +611,7 @@ public class IDL2DDSRPC
                     		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
                     funCall.setAttribute("outputParams.{type, name,string}", op.getReturnType(), op.getName()+"_ret",
                     		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
+                    if(typeIsEnum(ifc.getModule(), op.getReturnType()))
                 }
                 // In case of oneway function, set the property
                 if(op.isOneway())
