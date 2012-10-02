@@ -16,11 +16,11 @@
 
 group opendds;
 
-varComplexDecl(type, name, create) ::= <<
-$type$ *$name$ = $if(create)$new $type$()$else$NULL$endif$;
+varComplexDecl(typeName, name, create) ::= <<
+$typeName$ *$name$ = $if(create)$new $typeName$()$else$NULL$endif$;
 >>
 
-varComplexDel(type, name) ::= <<
+varComplexDel(typeName, name) ::= <<
 delete $name$;
 >>
 

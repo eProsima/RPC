@@ -16,12 +16,12 @@
 
 group main;
 
-varComplexDecl(type, name, create) ::= <<
-$type$ *$name$ = $if(create)$$type$PluginSupport_create_data()$else$NULL$endif$;
+varComplexDecl(typeName, name, create) ::= <<
+$typeName$ *$name$ = $if(create)$$typeName$PluginSupport_create_data()$else$NULL$endif$;
 >>
 
-varComplexDel(type, name) ::= <<
-$type$PluginSupport_destroy_data($name$);
+varComplexDel(typeName, name) ::= <<
+$typeName$PluginSupport_destroy_data($name$);
 >>
 
 ReqRepIncludes(interfaceName) ::= <<

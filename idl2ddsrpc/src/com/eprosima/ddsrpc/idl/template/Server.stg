@@ -176,12 +176,14 @@ class $interfaceName$ServerImpl
  *  functionHeader - inherited(cplusplus)
  *  returnType     - local
  */ 
-emptyFunctionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
+emptyFunctionImpl(interfaceName,type,name,params,inParams,outParams,isOneway) ::= <<
 $functionHeader(class={$interfaceName$ServerImpl},...)$ 
 {
-  eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+   $varDecl(typeName=type.templateName, baseType=type, name="retCode")$
   
-  return retCode;
+   $if(!voidInitMap.(type.templateName))$
+      return retCode;
+   $endif$
 } 
 >>
 
@@ -205,34 +207,30 @@ $functionHeader(class={$interfaceName$ServerImpl},...)$
  *  lastParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,string,inputParams,inoutParams,outputParams,isOneway) ::= <<
+functionImpl(interfaceName,type,name,string,params,inParams,outParams,isOneway) ::= <<
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
     $interfaceName$ServerH *srv = dynamic_cast<$interfaceName$ServerH*>(server);
-    $inputParams:{$varDecl(type = it.type, name = it.name, string = it.string)$}; separator="\n"$   
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $varDecl(type=type, name="returnedValue")$    
+    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create=it.isOutput)$}; separator="\n"$  
+    $varDecl(typeName=type.templateName, baseType=type, name="returnedValue")$    
     $if(!isOneway)$$name$Reply *replyData = NULL;$endif$
 
-    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if([inputParams,inoutParams])$, $extractTypeDataParams(type=type,...)$$endif$);
-                                         
-    $if(!voidInitMap.(type))$
-    returnedValue = $endif$srv->_impl->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
-           
+    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(inParams)$, $endif$$extractParams(inParams)$);
+
+    $if(!voidInitMap.(type.templateName))$returnedValue = $endif$srv->_impl->$name$($extractParams(params)$);
+
     $if(!isOneway)$
-    replyData = $name$ReplyUtils::createTypeData($nextParam(params=inoutParams)$$nextParam(previous=inoutParams, params=outputParams)$);
-                                                  
+    replyData = $name$ReplyUtils::createTypeData($extractParams(outParams)$);
+
     // sendReply takes care of deleting the data
     service->sendReply(requestData, replyData, returnedValue);
-    
+
     $reqrepDestruction(type=name, reqrep="Reply", name="replyData")$
     $endif$
     
     $reqrepDestruction(type=name, reqrep="Request", name="requestData", void="void")$
     
-    $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $outParams:{$varDel(typeName = it.typeName, baseType=it.baseType, name = it.name)$}; separator="\n"$
 }
 >>
 
@@ -333,7 +331,7 @@ $funImpls; separator="\n"$
  *
  * Uses:
  */ 
-functionCall(type,name,inputParams,inoutParams,outputParams) ::= <<
+functionCall(type,name,params) ::= <<
 >>
 
 /**
@@ -356,10 +354,9 @@ main(interfaceName, invocations) ::= <<
 int main(int argc, char **argv)
 {
     int returnedValue = 0;
-    int domainId = 0;
     unsigned int threadPoolSize = 5;
     eProsima::DDSRPC::ThreadPoolStrategy *pool = new eProsima::DDSRPC::ThreadPoolStrategy(threadPoolSize);
-    $interfaceName$Server *server = new $interfaceName$Server(pool, domainId);
+    $interfaceName$Server *server = new $interfaceName$Server(pool);
     server->wait();
 
     delete server;
@@ -433,24 +430,8 @@ $endif$
  *
  * Uses:
  */ 
-exFunctionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= <<
+exFunctionHeader(type,class,name,params) ::= <<
 $if(!class)$static $endif$void $class$$if(class)$ServerH::$endif$$name$(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service)
->>
-
-/**
- * extractTypeDataParams: Internal Template
- * Produces the params for calling Utils extractTypeData method 
- * Params:
- *   type         : function return type.
- *   inputParams  : list of input params objects.
- *   inoutParams  : list of inout params objects.
- *   outputParams : list of output params objects.
- *
- * Uses:
- *  nextParam - inherited(cplusplus)
- */ 
-extractTypeDataParams(type, inputParams, inoutParams, outputParams) ::= <<
-$[nextParam(params=inputParams),nextParam(previous=inputParams, params=inoutParams)]$
 >>
 
 /**

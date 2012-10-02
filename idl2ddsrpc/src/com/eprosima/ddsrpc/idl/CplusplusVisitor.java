@@ -83,11 +83,14 @@ public class CplusplusVisitor implements IDLParserVisitor
 
 	public Object visit(ASTinterfaceNode node, Object data) {
 		Interface ifc = new Interface();
-		visit(((SimpleNode) node), ifc);
+		
 		if(data instanceof Module)
 		{
 			((Module)data).setIfc(ifc);
 		}
+		
+		visit(((SimpleNode) node), ifc);
+
 		return data;
 	}
 
@@ -103,9 +106,16 @@ public class CplusplusVisitor implements IDLParserVisitor
 		Operation op = new Operation();
 		visit(((SimpleNode) node), op);
 		
-		if (data != null && data instanceof Interface) {
-			if(op.getReturnType() == null){
+		if (data != null && data instanceof Interface)
+		{
+			if(op.getReturnType() == null)
+			{
 				op.setReturnType("void");
+			}
+			else
+			{
+				// The return type doesn't has name at this leve. Set the name.
+				op.getReturnType().setName(op.getName() + "_ret");
 			}
 			((Interface) data).add(op);
 		}
@@ -113,9 +123,8 @@ public class CplusplusVisitor implements IDLParserVisitor
 		// Check oneway restrictions.
 		if(op.isOneway())
 		{
-			if(op.getInoutParams().size() > 0 ||
-					op.getOutputParams().size() > 0 ||
-					!op.getReturnType().equals("void"))
+			if(op.hasOutputParams() ||
+					!op.getReturnType().getTypeName().equals("void"))
 			{
 				System.out.println("ERROR: Operation " + op.getName() + " is defined as oneway but it uses output parameters");
 				((Interface)data).getModule().setError();
@@ -133,7 +142,8 @@ public class CplusplusVisitor implements IDLParserVisitor
 	 
 	 public Object visit(ASTqos_expr node, Object data)
 	 {
-		 Object returnedValue = null;
+		 return data;
+		 /*Object returnedValue = null;
 		 
 		 if(data instanceof Interface)
 		 {
@@ -188,7 +198,7 @@ public class CplusplusVisitor implements IDLParserVisitor
 			 System.out.println("ERROR<CpluspluVisitor::visit>: Qos expresion in bad location");
 		 }
 		 
-		 return returnedValue;
+		 return returnedValue;*/
 	 }
 	 
 	 public Object visit(ASTqos_attr node, Object op)
@@ -234,14 +244,15 @@ public class CplusplusVisitor implements IDLParserVisitor
 		Param param = null;
 		if ("in".equals(node.jjtGetValue())) {
 			param = new InputParam();
-			((Operation) data).addInputParam((InputParam) param);
 		} else if ("inout".equals(node.jjtGetValue())) {
 			param = new InoutParam();
-			((Operation) data).addInoutParam((InoutParam) param);
 		} else if ("out".equals(node.jjtGetValue())) {
 			param = new OutputParam();
-			((Operation) data).addOutputParam((OutputParam) param);
 		}
+		
+		if(param != null)
+			((Operation) data).addParam(param);
+		
 		return param;
 	}
 
@@ -256,7 +267,7 @@ public class CplusplusVisitor implements IDLParserVisitor
 		if (data instanceof Operation) {
 			((Operation) data).setReturnType(typeName);
 		} else if (data instanceof Param) {
-			((Param) data).setType(typeName);
+			((Param) data).setTypeName(typeName);
 		}
 		return data;
 	}
@@ -429,21 +440,34 @@ public class CplusplusVisitor implements IDLParserVisitor
 		
 		if(type.equals("enum"))
 		{
+			// Create enumerator type.
 			typedecl = new EnumType();
+			// Get the first enumerator value. Set data to null and this will cause that the first enumerator value will be returned.
+			String first_value = (String)node.jjtGetChild(1).jjtAccept(this, null);
+			
+			if(first_value != null)
+			{
+				typedecl.setInitialValue(first_value);
+			}
 		}
 		else if(type.equals("struct"))
 		{
+			// Create structure type.
 			typedecl = new StructType();
 		}
 		else if(type.equals("union"))
 		{
+			// Create union type.
 			typedecl = new UnionType();
 		}
 		
 		if(typedecl != null)
 		{
+			// Get the name of the type and set it.
 			node.jjtGetChild(0).jjtAccept(this, typedecl);
+			// Use the name as template in the code.
 			typedecl.setTemplateName(typedecl.getName());
+			// Add to types.
 			((Module)data).addTypeDecl(typedecl);
 		}
 		return data;

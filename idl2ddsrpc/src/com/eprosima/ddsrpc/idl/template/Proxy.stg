@@ -119,12 +119,11 @@ class $interfaceName$WANProxy : public $interfaceName$ProxyH
 #endif // _$interfaceName$_PROXY_H_
 >>
 
-classHeaderAsync(interfaceName,type,name,inoutParams,outputParams) ::= <<
+classHeaderAsync(interfaceName,type,name,outParams) ::= <<
 class $interfaceName$_$name$
 {
     public:
-        virtual void $name$($if(inoutParams)$/*inout*/ $endif$$argDecl(inoutParams);separator=", "$ $if(inoutParams)$$if(outputParams)$, 
-              $endif$$endif$$if(outputParams)$/*out*/ $endif$$argDecl(outputParams);separator=", "$)
+        virtual void $name$($argsDecl(outParams)$)
         {
         }
    
@@ -134,9 +133,8 @@ class $interfaceName$_$name$
 }
 >>
 
-functionHeaderAsync(interfaceName,type,class,name,inputParams,inoutParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inputParams)$, /*in*/ $endif$ $argDecl(inputParams);separator=", "$ $if(inoutParams)$, /*inout*/ 
-              $endif$$argDecl(inoutParams);separator=", "$)
+functionHeaderAsync(interfaceName,type,class,name,inParams) ::= << 
+$type.templateName$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inParams)$, $endif$$argsDecl(inParams)$)
 >>
 
 /**
@@ -156,14 +154,14 @@ $functionReturnType(type)$ $class$$if(class)$::$endif$$name$_async($interfaceNam
  *  nextParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,inputParams,inoutParams,outputParams,isOneway) ::= <<
+functionImpl(interfaceName,type,name,params,inParams,outParams,isOneway) ::= <<
 $functionHeader(class={$interfaceName$ProxyH},...)$ 
 {
-    $varDecl(type=type, name="returnedValue")$
+    $varDecl(typeName=type.templateName, baseType=type, name="returnedValue")$
     $name$Request *instance = NULL;
     $if(!isOneway)$$reqrepCreation(type=name, reqrep="Reply", name="retInstance", create="create")$$endif$
 
-    instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
+    instance = $name$RequestUtils::createTypeData($extractParams(inParams)$);
     returnedValue = $name$_Service->execute(instance, $if(!isOneway)$retInstance$else$NULL$endif$, getTimeout());
     switch (returnedValue)
     {
@@ -184,7 +182,7 @@ $functionHeader(class={$interfaceName$ProxyH},...)$
             break;
         case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
             $if(!isOneway)$
-            $name$ReplyUtils::extractTypeData(retInstance$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
+            $name$ReplyUtils::extractTypeData(retInstance$if(outParams)$, $endif$$extractParams(outParams)$);
             //$name$ReplyTypeSupport::print_data(retInstance);          
             $endif$
             break;
@@ -193,19 +191,19 @@ $functionHeader(class={$interfaceName$ProxyH},...)$
     $if(!isOneway)$$reqrepDestruction(type=name, reqrep="Reply", name="retInstance")$$endif$
     $reqrepDestruction(type=name, reqrep="Request", name="instance")$
 
-    $if(!voidInitMap.(type))$
+    $if(!voidInitMap.(type.templateName))$
     return returnedValue;
     $endif$
 }
 >>
 
-functionImplAsync(interfaceName,type,name,inputParams,inoutParams) ::= <<
+functionImplAsync(interfaceName,type,name,inParams) ::= <<
 $functionHeaderAsync(class={$interfaceName$ProxyH},...)$ 
 {
-    $varDecl(type=type, name="returnedValue")$
+    $varDecl(typeName=type.templateName, baseType=type, name="returnedValue")$
     $name$Request *instance = NULL;
     $interfaceName$_$name$Task *task = NULL;
-    instance = $name$RequestUtils::createTypeData($nextExtractParam(params=inputParams)$$nextExtractParam(previous=inputParams, params=inoutParams)$);
+    instance = $name$RequestUtils::createTypeData($extractParams(inParams)$);
     task = new $interfaceName$_$name$Task(obj, this);
     returnedValue = $name$_Service->executeAsync(instance, task, getTimeout());
     switch (returnedValue)
@@ -219,7 +217,7 @@ $functionHeaderAsync(class={$interfaceName$ProxyH},...)$
     
     $reqrepDestruction(type=name, reqrep="Request", name="instance")$
 
-    $if(!voidInitMap.(type))$
+    $if(!voidInitMap.(type.templateName))$
     return returnedValue;
     $endif$
 }
@@ -297,19 +295,15 @@ $interfaceName$WANProxy::~$interfaceName$WANProxy()
  *  voidInitMap   - inherited(cplusplus)
  *  varDecl       - inherited(cplusplus)
  */ 
-functionCall(type,name,string,inputParams,inoutParams,outputParams) ::= <<
-    $inputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $varDecl(type=type, name=[name,"RetValue"])$    
+functionCall(type,name,params) ::= <<
+    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create="yes")$}; separator="\n"$   
+    $varDecl(typeName=type.templateName, baseType=type, name=[name,"RetValue"])$    
 
-    $if(!voidInitMap.(type))$
+    $if(!voidInitMap.(type.templateName))$
     $name$RetValue = 
-    $endif$proxy->$name$($nextParam(params=inputParams)$$nextParam(previous=inputParams, params=inoutParams)$$nextParam(previous=[inputParams,inoutParams], params=outputParams)$);
+    $endif$proxy->$name$($extractParams(params)$);
     
-    $inputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $inoutParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
-    $outputParams:{$varDel(type = it.type, name = it.name, string = it.string)$}; separator="\n"$
+    $params:{$varDel(typeName = it.typeName, baseType=it.baseType, name = it.name)$}; separator="\n"$
 >>
 
 /**
@@ -331,9 +325,7 @@ $ReqRepIncludes(interfaceName=interfaceName)$
 
 int main(int argc, char **argv)
 {
-    int domainId = 0;
-    unsigned int timeoutInMilliseconds = 10000;
-    $interfaceName$Proxy *proxy = new $interfaceName$Proxy(domainId, timeoutInMilliseconds);
+    $interfaceName$Proxy *proxy = new $interfaceName$Proxy();
     
 $invocations; separator="\n"$
 
@@ -390,54 +382,4 @@ $endif$
 $if(!voidInitMap.(type))$
 $if(!typeInitMap.(type))$*$endif$returnedValue$endif$
 $endif$
->>
-
-/**
- * extractTypeDataParams: Internal Template
- * Produces the params for calling RequestUtils extractTypeData method 
- * Params:
- *   inoutParams  : list of inout params objects.
- *   outputParams : list of output params objects.
- *
- * Uses:
- *  nextExtractParam - local
- */ 
-extractTypeDataParams(inoutParams, outputParams) ::= <<
-$[nextExtractParam(params=inoutParams),nextExtractParam(previous=inoutParams, params=outputParams)]$
->>
-
-/**
- * varExtractUse: Internal Template
- * Uses the variable as a parameter to a funcion call 
- * checking if ti is a pointer or not. 
- * Params:
- *   type     : Variable type.
- *   name     : Variable name. 
- *
- * Uses:
- */ 
- varExtractUse(type, name) ::= <<
-$if(typeInitMap.(type))$$name$
-$else$
-$name$
-$endif$    
->>
-
-
-/**
- * nextExtractParam: Internal Template
- * Adds arguments to a function call preceeding them by a comma
- * if there are previous arguments. 
- * Params:
- *   previous   : List of previous arguments in the function call. Nullable.
- *   params     : List of next arguments in the function call. Nullable.
- *
- * Uses:
- */ 
- nextExtractParam(previous, params) ::= <<
-$if(previous)$
-$if(params)$,
-$endif$
-$endif$
-$params:{$varExtractUse(type = it.type, name = it.name)$};separator=", "$
 >>

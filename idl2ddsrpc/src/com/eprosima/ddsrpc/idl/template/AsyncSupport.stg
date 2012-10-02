@@ -44,7 +44,7 @@ $ReqRepIncludes(interfaceName=interfaceName)$
 $taskDecls; separator="\n"$
 >>
 
-taskDeclaration(interfaceName, name,inoutParams,outputParams) ::= <<
+taskDeclaration(interfaceName, name, outParams) ::= <<
 
 $interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$ &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
@@ -63,14 +63,13 @@ $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
 }
 
 void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message)
-{
-    $inoutParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$   
-    $outputParams:{$varDecl(type = it.type, name = it.name, create="yes", string = it.string)$}; separator="\n"$ 
+{  
+    $outParams:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create="yes")$}; separator="\n"$ 
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		$name$ReplyUtils::extractTypeData(($name$Reply*)m_reply$if([inoutParams, outputParams])$, $extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$$endif$);
-		getObject().$name$($extractTypeDataParams(inoutParams=inoutParams, outputParams=outputParams)$);
+		$name$ReplyUtils::extractTypeData(($name$Reply*)m_reply$if(outParams)$, $endif$$extractParams(params=outParams)$);
+		getObject().$name$($extractParams(params=outParams)$);
 	}
 	else
 	{
@@ -78,53 +77,4 @@ void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message
 	}
 }
 
->>
-
-/**
- * extractTypeDataParams: Internal Template
- * Produces the params for calling RequestUtils extractTypeData method 
- * Params:
- *   inoutParams  : list of inout params objects.
- *   outputParams : list of output params objects.
- *
- * Uses:
- *  nextExtractParam - local
- */ 
-extractTypeDataParams(inoutParams, outputParams) ::= <<
-$[nextExtractParam(params=inoutParams),nextExtractParam(previous=inoutParams, params=outputParams)]$
->>
-
-/**
- * nextExtractParam: Internal Template
- * Adds arguments to a function call preceeding them by a comma
- * if there are previous arguments. 
- * Params:
- *   previous   : List of previous arguments in the function call. Nullable.
- *   params     : List of next arguments in the function call. Nullable.
- *
- * Uses:
- */ 
- nextExtractParam(previous, params) ::= <<
-$if(previous)$
-$if(params)$,
-$endif$
-$endif$
-$params:{$varExtractUse(type = it.type, name = it.name)$};separator=", "$
->>
-
-/**
- * varExtractUse: Internal Template
- * Uses the variable as a parameter to a funcion call 
- * checking if ti is a pointer or not. 
- * Params:
- *   type     : Variable type.
- *   name     : Variable name. 
- *
- * Uses:
- */ 
- varExtractUse(type, name) ::= <<
-$if(typeInitMap.(type))$$name$
-$else$
-$name$
-$endif$    
 >>

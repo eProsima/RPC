@@ -54,14 +54,14 @@ $types:{$it$};separator="\n"$
  *            inout, out and return type for Reply.
  *
  */ 
-request(name, fields) ::= <<
+request(name, params) ::= <<
 
 $preReqIDLDefines(name=name)$
 
 struct $name$Request{
     Identification clientServiceId; $keyIDLdefine()$
     unsigned long numSec; $keyIDLdefine()$
-    $fields:{$it.type$ $it.name$;};separator="\n"$
+    $params : {$it.typeName$ $it.name$;};separator="\n"$
 }; $levelIDLdefine()$
 >>
 
@@ -73,7 +73,7 @@ struct $name$Request{
  *   fields : list of function parameters. In and inout parameters for Request,
  *            inout, out and return type for Reply.
  */ 
-reply(name, fields) ::= <<
+reply(name, params) ::= <<
 
 $preRepIDLDefines(name=name)$
 
@@ -81,7 +81,7 @@ struct $name$Reply{
     Identification serverServiceId; $keyIDLdefine()$
     Identification clientServiceId; $keyIDLdefine()$
     unsigned long numSec; $keyIDLdefine()$
-    long ddscsRetCode;
-    $fields:{$it.type$ $it.name$;};separator="\n"$
+    long ddsrpcRetCode;
+    $params : {$it.typeName$ $it.name$;};separator="\n"$
 }; $levelIDLdefine()$
 >>

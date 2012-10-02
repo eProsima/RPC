@@ -85,17 +85,17 @@ $classes:{$it$};separator="\n"$
  *   argDeclRef - inherited(cplusplus)
  *   lastParam  - local
  */ 
-header(funName, type="Request", params, returnType) ::= <<
+header(funName, templateName, params, returnType) ::= <<
 
-class $funName$$type$Utils
+class $funName$$templateName$Utils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static $funName$$type$* createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$);
+        static $funName$$templateName$* createTypeData($argsDecl([params, returnType]);separator=", "$);
         
-        static void extractTypeData($funName$$type$* data$if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$);
+        static void extractTypeData($funName$$templateName$* data$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$);
 };
 
 >>
@@ -117,17 +117,17 @@ class $funName$$type$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
- definition(funName, type="Request", params, returnType, string) ::= <<
+definition(funName, templateName, params, returnType) ::= <<
 
-const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* $funName$$templateName$Utils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        $getTypename(funName=funName, type=type, name="typeName")$
+        $getTypename(funName=funName, type=templateName, name="typeName")$
 
-        if($registerTypename(funName=funName, type=type, name="typeName")$ != DDS::RETCODE_OK)
+        if($registerTypename(funName=funName, type=templateName, name="typeName")$ != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -136,24 +136,24 @@ const char* $funName$$type$Utils::registerType(DDS::DomainParticipant *clientPar
     return typeName;
 }
 
-$funName$$type$* $funName$$type$Utils::createTypeData($argDecl(params);separator=", "$$if(returnType)$$lastParam(params=params, returnType=returnType)$$endif$)
+$funName$$templateName$* $funName$$templateName$Utils::createTypeData($argsDecl([params, returnType]);separator=", "$)
 {
-    $reqrepCreation(type=funName, reqrep=type, name="instance", create="create")$
+    $reqrepCreation(type=funName, reqrep=templateName, name="instance", create="create")$
 
-    $params:{$createDataHelper(type=it.type, name=it.name, string=it.string)$};separator="\n"$
+    $params : {$createDataHelper(param=it)$};separator="\n"$
     
     $if(returnType)$
-    $createDataHelper(type=returnType, name="returnedValue", string=string)$        
+    $createDataHelper(param=returnType)$        
     $endif$    
     return instance;
 }
 
-void $funName$$type$Utils::extractTypeData($funName$$type$* data $if(params)$, $endif$$argDeclRef(params);separator=", "$$if(returnType)$$lastParam(params="data", returnType=returnType)$$endif$)
+void $funName$$templateName$Utils::extractTypeData($funName$$templateName$* data $if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$)
 {
-    $params:{$extractDataHelper(type=it.type, name=it.name, string=it.string, isRequestIn=it.isRequestIn)$};separator="\n"$
+    $params : {$extractDataHelper(param=it)$};separator="\n"$
     
     $if(returnType)$
-    $extractDataHelper(type=returnType, name="returnedValue", string=string)$        
+    $extractDataHelper(param=returnType)$        
     $endif$    
 }
 
@@ -184,21 +184,6 @@ $endif$
 >>
 
 /**
- * lastParam: Internal Template
- * Includes the return value of the function in a call to
- * Utils extractTypeData or createTypeData methods.
- * Params:
- *   params     : List of previous arguments in the function call. Nullable.
- *   returnType : function return type.
- *
- * Uses:
- *   check - local
- */ 
-lastParam(params, returnType) ::= <<
-$if(params)$, $endif$$check(returnType)$ returnedValue
->>
-
-/**
  * createDataHelper: Internal Template
  * Produces code to fill a field of a newly created topic data.
  * Determines if it can be just assigned (basic type)
@@ -210,17 +195,17 @@ $if(params)$, $endif$$check(returnType)$ returnedValue
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-createDataHelper(type, name, string) ::= <<
-$if(typeInitMap.(type))$
-$if(string)$
-if(instance->$name$ != NULL)
-   DDS::String_free(instance->$name$);
-instance->$name$ = DDS::String_dup($name$);
+createDataHelper(param) ::= <<
+$if(typeInitMap.(param.typeName))$
+$if(param.baseType.isString)$
+if(instance->$param.name$ != NULL)
+   free(instance->$param.name$);
+instance->$param.name$ = strdup($param.name$);
 $else$
-instance->$name$ = $name$;
+instance->$param.name$ = $param.name$;
 $endif$
 $else$
-$createDH(type=type, name=name)$
+$createDH(type=param.typeName, name=param.name)$
 $endif$
 >>    
 
@@ -228,7 +213,8 @@ $endif$
  * extractDataHelper: Internal Template
  * Produces code to extract field values from a receivedtopic data.
  * Determines if it can be just assigned (basic type)
- * or has to be copied using PluginSupport_copy_data()
+ * or has to be copied using PluginSupport_copy_data().
+ * When the parameter it only input, then doesn't copy, but it is assgined. (IMPORTANT)
  * Params:
  *   type : param/field type.
  *   name : param/field name.
@@ -236,22 +222,22 @@ $endif$
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-extractDataHelper(type, name, string, isRequestIn) ::= <<
-$if(isRequestIn)$
-$if(typeInitMap.(type))$
-$name$ = data->$name$;
+extractDataHelper(param) ::= <<
+$if(param.isRestrictedInput)$
+$if(typeInitMap.(param.typeName))$
+$param.name$ = data->$param.name$;
 $else$
-$name$ = &data->$name$;
+$param.name$ = &data->$param.name$;
 $endif$
 $else$
-$if(typeInitMap.(type))$
-$if(string)$
-$name$ = DDS::String_dup(data->$name$);
+$if(typeInitMap.(param.typeName))$
+$if(param.baseType.isString)$
+$param.name$ = strdup(data->$param.name$);
 $else$
-$name$ = data->$name$;
+$param.name$ = data->$param.name$;
 $endif$
 $else$
-$extractDH(type=type, name=name)$
+$extractDH(type=param.typeName, name=param.name)$
 $endif$
 $endif$
 >>    

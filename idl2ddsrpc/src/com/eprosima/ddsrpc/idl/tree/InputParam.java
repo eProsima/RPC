@@ -16,6 +16,20 @@
 
 package com.eprosima.ddsrpc.idl.tree;
 
-public class InputParam extends Param {
-
+public class InputParam extends Param
+{
+	public InputParam()
+	{
+		comment = "in";
+	}
+	
+	public boolean isInput()
+	{
+		return true;
+	}
+	
+	public boolean isOutput()
+	{
+		return false;
+	}
 }

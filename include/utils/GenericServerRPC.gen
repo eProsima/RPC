@@ -82,7 +82,7 @@ int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessag
 			replyData->clientServiceId.value_3 = requestData->clientServiceId.value_3;
 			replyData->clientServiceId.value_4 = requestData->clientServiceId.value_4;
 			replyData->numSec = requestData->numSec;
-			replyData->ddscsRetCode = errorMessage;
+			replyData->ddsrpcRetCode = errorMessage;
 
 			if(replyFooDataWriter->write(*replyData, DDS::HANDLE_NIL) == DDS::RETCODE_OK)
 			{

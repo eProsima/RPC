@@ -11,4 +11,9 @@ public class EnumType extends TypeDecl
 	{
 		super(name, name);
 	}
+	
+	public EnumType(String name, String initial_value)
+	{
+		super(name, name, initial_value);
+	}
 }

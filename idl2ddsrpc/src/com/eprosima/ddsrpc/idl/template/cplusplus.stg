@@ -36,12 +36,9 @@ group cplusplus;
  *  argDecl    - local
  *  argDeclRef - local
  */ 
-functionHeader(type,class,name,inputParams,inoutParams,outputParams) ::= << 
-$functionReturnType(type)$ $class$$if(class)$::$endif$$name$($if(inputParams)$/*in*/ $endif$$argDecl(inputParams);separator=", "$ $if(inputParams)$$if(inoutParams)$, 
-              $endif$$endif$$if(inoutParams)$/*inout*/ $endif$$argDeclRef(inoutParams);separator=", "$$if([inputParams,inoutParams])$$if(outputParams)$, $endif$
-              $endif$$if(outputParams)$/*out*/ $endif$$argDeclRef(outputParams);separator=", "$)
+functionHeader(type,class,name,params) ::= << 
+$type.templateName$ $class$$if(class)$::$endif$$name$($argsDeclOutRef(params)$)
 >>
-
 
 /************************************************************************
  *                                                                      *
@@ -119,12 +116,12 @@ doNotEditCplusplus(version="1.0") ::= <<
  *   voidInitMap - local
  *   typeInitMap - local
  */ 
-varDecl(type, name, create, string) ::= <<
-$if(!voidInitMap.(type))$
-$if(typeInitMap.(type))$
-$typeInitMap.(type)$  $name$ $if(create)$$if(string)$ = NULL$else$ = 0$endif$$endif$;
+varDecl(typeName, baseType, name, create) ::= <<
+$if(!voidInitMap.(typeName))$
+$if(typeInitMap.(typeName))$
+$typeInitMap.(typeName)$  $name$ = $baseType.initialValue$;
 $else$
-$varComplexDecl(type=type, name=name, create=create)$
+$varComplexDecl(typeName=typeName, name=name, create=create)$
 $endif$    
 $endif$
 >>
@@ -142,23 +139,23 @@ $endif$
  *   voidInitMap - local
  *   typeInitMap - local
  */ 
-varDel(type, name, string) ::= <<
-$if(!voidInitMap.(type))$
-$if(typeInitMap.(type))$
-$if(string)$
-if($name$ != NULL) DDS::String_free($name$);
+varDel(typeName, baseType, name) ::= <<
+$if(!voidInitMap.(typeName))$
+$if(typeInitMap.(typeName))$
+$if(baseType.isString)$
+if($name$ != NULL) free($name$);
 $endif$
 $else$
-$varComplexDel(type=type, name=name)$
+$varComplexDel(typeName=typeName, name=name)$
 $endif$    
 $endif$
 >>
 
-argType(type, in) ::= <<
+argType(type, notIn) ::= <<
 $if(typeInitMap.(type))$
-$if(in)$const $endif$$typeInitMap.(type)$
+$if(!notIn)$const $endif$$typeInitMap.(type)$
 $else$
-$if(in)$const $endif$$type$*
+$if(!notIn)$const $endif$$type$*
 $endif$
 >>
 
@@ -171,74 +168,28 @@ $endif$
  *
  * Uses:
  */ 
-argDecl(arg) ::= <<
-$arg:{n | $argType(type=n.type, in="true")$ $n.name$};separator=", "$
+argDecl(arg, ref) ::= <<
+/*$arg.comment$*/ $argType(type=arg.typeName, notIn=ref)$ $ref$$arg.name$
 >>
 
-/**
- * argDecl: Internal Template
- * Produces a function signature whose parameters 
- * are passed by reference  (type1 &arg1, type2 &arg2...)
- * Params:
- *   arg   : List of arguments each one has "type" and "name" properties.
- *
- * Uses:
- */ 
-argDeclRef(arg) ::= <<
-$arg:{n | $argType(type=n.type)$ &$n.name$};separator=", "$
+argsDecl(args) ::= <<
+$args : {arg | $argDecl(arg=arg)$}; separator=", "$
 >>
 
-/**
- * functionReturnType: Internal Template
- * Produces a function signature whose parameters 
- * are passed by reference  (type1 &arg1, type2 &arg2...)
- * Params:
- *   arg   : List of arguments each one has "type" and "name" properties.
- *
- * Uses:
- */ 
-functionReturnType(type) ::= <<
-$if(typeInitMap.(type))$
-$typeInitMap.(type)$
-$elseif(voidInitMap.(type))$
-$voidInitMap.(type)$
+argsDeclRef(args) ::= <<
+$args : {arg | $argDecl(arg=arg, ref="&")$}; separator=", "$
+>>
+
+argDeclOutRef(arg) ::= <<
+$if(arg.isOutput)$
+$argDecl(arg=arg, ref="&")$
 $else$
-$type$*
+$argDecl(arg=arg)$
 $endif$
 >>
 
-
-/**
- * varUse: Internal Template
- * Uses the variable as a parameter to a funcion call 
- * checking if ti is a pointer or not. 
- * Params:
- *   type     : Variable type.
- *   name     : Variable name. 
- *
- * Uses:
- */ 
-varUse(type, name) ::= <<
-$name$  
->>
-
-
-/**
- * nextParam: Internal Template
- * Adds arguments to a function call preceeding them by a comma
- * if there are previous arguments. 
- * Params:
- *   previous   : List of previous arguments in the function call. Nullable.
- *   params     : List of next arguments in the function call. Nullable.
- *
- * Uses:
- */ 
-nextParam(previous, params) ::= <<
-$if(previous)$
-$if(params)$,
-$endif$
-$endif$
-$params:{$varUse(type = it.type, name = it.name)$};separator=", "$
+argsDeclOutRef(args) ::= <<
+$args : {arg | $argDeclOutRef(arg)$}; separator=", "$
 >>
 
 /**
@@ -255,4 +206,33 @@ $funNames:{
 #include "$it$RequestUtils.h"
 #include "$it$ReplyUtils.h"
 }$
+>>
+
+/**
+ * varUse: Internal Template
+ * Uses the variable as a parameter to a funcion call 
+ * checking if ti is a pointer or not. 
+ * Params:
+ *   type     : Variable type.
+ *   name     : Variable name. 
+ *
+ * Uses:
+ */ 
+varUse(name) ::= <<
+$name$  
+>>
+
+
+/**
+ * nextExtractParam: Internal Template
+ * Adds arguments to a function call preceeding them by a comma
+ * if there are previous arguments. 
+ * Params:
+ *   previous   : List of previous arguments in the function call. Nullable.
+ *   params     : List of next arguments in the function call. Nullable.
+ *
+ * Uses:
+ */ 
+extractParams(params) ::= <<
+$params:{$varUse(name = it.name)$};separator=", "$
 >>

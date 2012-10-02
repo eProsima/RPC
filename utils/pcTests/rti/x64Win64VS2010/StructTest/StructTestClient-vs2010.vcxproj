@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug DLL|x64">
+      <Configuration>Debug DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release DLL|x64">
+      <Configuration>Release DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>StructTestClient</ProjectName>
+    <ProjectGuid>{0EA6D37F-5254-37D1-C886-A1003F1E773E}</ProjectGuid>
+    <RootNamespace>StructTestClient</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    <OutDir>.\objs\x64Win64VS2010\</OutDir>
+    <IntDir>.\objs\x64Win64VS2010\</IntDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    <OutDir>.\objs\x64Win64VS2010\</OutDir>
+    <IntDir>.\objs\x64Win64VS2010\</IntDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>.\objs\x64Win64VS2010\</OutDir>
+    <IntDir>.\objs\x64Win64VS2010\</IntDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>.\objs\x64Win64VS2010\</OutDir>
+    <IntDir>.\objs\x64Win64VS2010\</IntDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;..\..\..\..\..\include;..\..\..\..\..\include\idl\rti;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\objs\x64Win64VS2010\</AssemblerListingLocation>
+      <ObjectFileName>.\objs\x64Win64VS2010\</ObjectFileName>
+      <ProgramDataBaseFileName>.\objs\x64Win64VS2010\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>nddscppd.lib; nddscd.lib; nddscored.lib; ddsrpcd.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;..\..\..\..\..\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\objs\x64Win64VS2010\StructTestClient.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;..\..\..\..\..\include;..\..\..\..\..\include\idl\rti;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\objs\x64Win64VS2010\</AssemblerListingLocation>
+      <ObjectFileName>.\objs\x64Win64VS2010\</ObjectFileName>
+      <ProgramDataBaseFileName>.\objs\x64Win64VS2010\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>nddscpp.lib; nddsc.lib; nddscore.lib; ddsrpc.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;..\..\..\..\..\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\objs\x64Win64VS2010\StructTestClient.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;..\..\..\..\..\include;..\..\..\..\..\include\idl\rti;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\objs\x64Win64VS2010\</AssemblerListingLocation>
+      <ObjectFileName>.\objs\x64Win64VS2010\</ObjectFileName>
+      <ProgramDataBaseFileName>.\objs\x64Win64VS2010\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>nddscppzd.lib; nddsczd.lib; nddscorezd.lib; ddsrpczd.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;..\..\..\..\..\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\objs\x64Win64VS2010\StructTestClient.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;..\..\..\..\..\include;..\..\..\..\..\include\idl\rti;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\objs\x64Win64VS2010\</AssemblerListingLocation>
+      <ObjectFileName>.\objs\x64Win64VS2010\</ObjectFileName>
+      <ProgramDataBaseFileName>.\objs\x64Win64VS2010\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>nddscppz.lib; nddscz.lib; nddscorez.lib; ddsrpcz.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;..\..\..\..\..\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\objs\x64Win64VS2010\StructTestClient.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="StructTestRequestReply.cxx" />
+    <ClCompile Include="StructTest.cxx" />
+    <ClCompile Include="StructTestRequestReplyPlugin.cxx" />
+    <ClCompile Include="StructTestPlugin.cxx" />
+    <ClCompile Include="StructTestRequestReplySupport.cxx" />
+    <ClCompile Include="StructTestSupport.cxx" />
+    <ClCompile Include="StructTestRequestReplyUtils.cxx" />
+    <ClCompile Include="StructTestProxy.cxx" />
+    <ClCompile Include="StructTestClientRPCSupport.cxx" />
+    <ClCompile Include="StructTestAsyncSupport.cxx" />
+    <ClCompile Include="Client.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StructTestRequestReply.h" />
+    <ClInclude Include="StructTest.h" />
+    <ClInclude Include="StructTestRequestReplyPlugin.h" />
+    <ClInclude Include="StructTestPlugin.h" />
+    <ClInclude Include="StructTestRequestReplySupport.h" />
+    <ClInclude Include="StructTestSupport.h" />
+    <ClInclude Include="StructTestRequestReplyUtils.h" />
+    <ClInclude Include="StructTestProxy.h" />
+    <ClInclude Include="StructTestClientRPCSupport.h" />
+    <ClInclude Include="StructTestAsyncSupport.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

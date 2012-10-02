@@ -17,19 +17,74 @@
 package com.eprosima.ddsrpc.idl.tree;
 
 public abstract class Param  implements Named{
-	protected String name;
-	protected String type;
+	/// Name of the parameter.
+	protected String name = null;
+	/// Name of the type of the parameter.
+	protected String typeName = null;
+	/// Type of the parameter.
+	protected TypeDecl baseType = null;
+	protected String comment = null;
 
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getType() {
-		return type;
+	
+	public String getTypeName() {
+		return typeName;
 	}
-	public void setType(String type) {
-		this.type = type;
+	
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
+	
+	public TypeDecl getBaseType() {
+		return baseType;
+	}
+	
+	public void setBaseType(TypeDecl baseType) {
+		this.baseType = baseType;
+	}
+	
+	public String getComment()
+	{
+		return comment;
+	}
+	
+	public String getIsInput()
+	{
+		String returnedValue = null;
+		
+		if(isInput())
+			returnedValue = "yes";
+			
+		return returnedValue;
+	}
+	
+	public String getIsOutput()
+	{
+		String returnedValue = null;
+		
+		if(isOutput())
+			returnedValue = "yes";
+			
+		return returnedValue;
+	}
+	
+	public String getIsRestrictedInput()
+	{
+		String returnedValue = null;
+		
+		if(isInput() && !isOutput())
+			returnedValue = "yes";
+		
+		return returnedValue;
+	}
+	
+	public abstract boolean isInput();
+	
+	public abstract boolean isOutput();
 }

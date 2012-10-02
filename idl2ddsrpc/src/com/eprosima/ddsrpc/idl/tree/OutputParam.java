@@ -16,6 +16,27 @@
 
 package com.eprosima.ddsrpc.idl.tree;
 
-public class OutputParam extends Param {
-
+public class OutputParam extends Param
+{
+	public OutputParam()
+	{
+		comment = "out";
+	}
+	
+	public OutputParam(String typeName, String name)
+	{
+		this.typeName = typeName;
+		this.name = name;
+		comment = "out";
+	}
+	
+	public boolean isInput()
+	{
+		return false;
+	}
+	
+	public boolean isOutput()
+	{
+		return true;
+	}
 }

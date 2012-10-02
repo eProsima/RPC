@@ -16,6 +16,20 @@
 
 package com.eprosima.ddsrpc.idl.tree;
 
-public class InoutParam extends Param {
-
+public class InoutParam extends Param
+{
+	public InoutParam()
+	{
+		comment = "inout";
+	}
+	
+	public boolean isInput()
+	{
+		return true;
+	}
+	
+	public boolean isOutput()
+	{
+		return true;
+	}
 }

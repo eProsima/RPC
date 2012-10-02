@@ -6,4 +6,9 @@ public class BasicType extends TypeDecl
 	{
 		super(name, template_name);
 	}
+	
+	public BasicType(String name, String template_name, String initial_value)
+	{
+		super(name, template_name, initial_value);
+	}
 }

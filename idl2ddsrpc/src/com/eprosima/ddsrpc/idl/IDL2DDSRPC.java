@@ -28,6 +28,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.HashMap;
 
 
 
@@ -324,33 +325,35 @@ public class IDL2DDSRPC
     private static boolean typeIsString(Module root, String name)
     {
     	boolean returnedValue = false;
+    	// Get the type declaration.
     	TypeDecl typedecl = root.getTypeDecl(name);
     	
+    	// If the type is typedef, get the base type.
     	while(typedecl instanceof SimpleTypedef)
     	{
     		typedecl = ((SimpleTypedef)typedecl).getBase();
     	}
     	
+    	// Check the final type is a string.
     	if(typedecl.getName().equals("string"))
     		returnedValue = true;
     	
     	return returnedValue;
     }
     
-    private static boolean typeIsEnum(Module root, String name)
+    private static String getTypeInitialValue(Module root, String name)
     {
-    	boolean returnedValue = false;
-    	TypeDecl typedecl = root.getTypeDecl(name);
+    	// Get the type declaration.
+    	TypeDecl typedecl= root.getTypeDecl(name);
     	
+    	// If the type is typede, get the base type.
     	while(typedecl instanceof SimpleTypedef)
     	{
     		typedecl = ((SimpleTypedef)typedecl).getBase();
     	}
     	
-    	if(typedecl instanceof EnumType)
-    		returnedValue = true;
-    	
-    	return returnedValue;
+    	// Return the initial value.
+    	return typedecl.getInitialValue();
     }
 
     public static int gen(Module root) throws Exception
@@ -512,12 +515,16 @@ public class IDL2DDSRPC
             StringTemplate classDeclAsync = null;
             StringTemplate funDefAsync = null;
             
+         // Asynchronous templates.
             if(withAsync)
             {
             	funDeclAsync = templatesGroup.getInstanceOf(functionHeaderTemplateId + "Async");
             	classDeclAsync = templatesGroup.getInstanceOf("classHeaderAsync");
             	funDefAsync = templatesGroup.getInstanceOf(functionTemplateId + "Async");
             }
+            
+            // Get the type declaration of "eProsima::DDSRPC::ReturnMessage".
+            TypeDecl returnTypeDecl = ifc.getModule().getTypeDecl(returnType);
 
             Operation op = null;
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); )
@@ -529,89 +536,80 @@ public class IDL2DDSRPC
                 		op.getName(), (op.isOneway() ? "true" : null));			
                 
                 // Function Declaration
-                funDecl.setAttribute("type", returnType);
+                funDecl.setAttribute("type", returnTypeDecl);
                 funDecl.setAttribute("name", op.getName());
 
                 // Function Definition
-                funDef.setAttribute("type", returnType);
+                funDef.setAttribute("type", returnTypeDecl);
                 funDef.setAttribute("name", op.getName());
-                funDef.setAttribute("interfaceName", ifc.getName());               
+                funDef.setAttribute("interfaceName", ifc.getName());   
                 
+                // Function call
+                funCall.setAttribute("type", returnTypeDecl);
+                funCall.setAttribute("name", op.getName());
+                
+                // Asynchronous templates.
                 if(withAsync)
                 {
+                	// Function Definition.
                 	funDeclAsync.setAttribute("interfaceName", ifc.getName());
-                	funDeclAsync.setAttribute("type", returnType);
+                	funDeclAsync.setAttribute("type", returnTypeDecl);
                 	funDeclAsync.setAttribute("name", op.getName());
                 	classDeclAsync.setAttribute("interfaceName", ifc.getName());
-                	classDeclAsync.setAttribute("type", returnType);
+                	classDeclAsync.setAttribute("type", returnTypeDecl);
                 	classDeclAsync.setAttribute("name", op.getName());
-                	funDefAsync.setAttribute("type", returnType);
+                	funDefAsync.setAttribute("type", returnTypeDecl);
                 	funDefAsync.setAttribute("name", op.getName());
                 	funDefAsync.setAttribute("interfaceName", ifc.getName());
                 }
 
-                // Function call
-                funCall.setAttribute("type", returnType);
-                funCall.setAttribute("name", op.getName());
+                Param parameter = null;
+                for(ListIterator paramIter = op.getParams().listIterator(); paramIter.hasNext();){
+                    parameter = (Param)paramIter.next();
 
-                ListIterator paramIter = null;
-                InputParam ip = null;
-                for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();){
-                    ip = (InputParam)paramIter.next();
-                    funDecl.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
-                    funDef.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
-                    		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
+                    // Set parameter in funDecl.
+                    funDecl.setAttribute("params", parameter);
+                    
+                    // Set parameter in funDef.
+                    funDef.setAttribute("params", parameter);
+                    if(parameter.isInput())
+                    	funDef.setAttribute("inParams", parameter);
+                    if(parameter.isOutput())
+                    	funDef.setAttribute("outParams", parameter);
+                    
+                    // Set parameter in funCall.
+                    funCall.setAttribute("params", parameter);
+                    
+                    // Asynchronous templates.
                     if(withAsync)
                     {
-                    	funDeclAsync.setAttribute("inputParams.{type, name}", ip.getType(), ip.getName());
-                    	funDefAsync.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
-                        		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
+                    	// Set parameter in funDeclAsync.
+                    	if(parameter.isInput())
+                    	{
+                    		funDeclAsync.setAttribute("inParams", parameter);
+                    		funDefAsync.setAttribute("inParams", parameter);
+                    	}
+                    	// Set parameter in classDeclAsync.
+                    	if(parameter.isOutput())
+                    		classDeclAsync.setAttribute("outParams", parameter);
                     }
-                    funCall.setAttribute("inputParams.{type, name, string}", ip.getType(), ip.getName(),
-                    		(typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null));
-                }
-                InoutParam iop = null;
-                for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
-                    iop = (InoutParam)paramIter.next();
-                    funDecl.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
-                    funDef.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
-                    		(iop.getType().equals("string") ? "yes" : null));
-                    if(withAsync)
-                    {
-                    	funDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
-                    	classDeclAsync.setAttribute("inoutParams.{type, name}", iop.getType(), iop.getName());
-                    	funDefAsync.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
-                        		(iop.getType().equals("string") ? "yes" : null));
-                    }
-                    funCall.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
-                    		(typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null));				
-                }
-                OutputParam oup = null;
-                for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
-                    oup = (OutputParam)paramIter.next();
-                    funDecl.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
-                    if(withAsync)
-                    {
-                    	classDeclAsync.setAttribute("outputParams.{type, name}", oup.getType(), oup.getName());
-                    }
-                    funDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
-                    		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));				
-                    funCall.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
-                    		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));				
                 }
                 // Return Value
-                if(!"void".equals(op.getReturnType()))
+                if(!"void".equals(op.getReturnType().getTypeName()))
                 {
-                    funDecl.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+                	// Set parameter in funDecl
+                    funDecl.setAttribute("params", op.getReturnType());
+                    // Set parameter in funDef.
+                    funDef.setAttribute("params", op.getReturnType());
+                    funDef.setAttribute("outParams", op.getReturnType());
+                    // Set parameter in funCall.
+                    funCall.setAttribute("params",  op.getReturnType());
+                    // Asynchronous templates.
                     if(withAsync)
                     {
-                    	classDeclAsync.setAttribute("outputParams.{type, name}", op.getReturnType(), op.getName()+"_ret");
+                    	// Set parameter in classDeclAsync.
+                    	classDeclAsync.setAttribute("outParams", op.getReturnType());
                     }
-                    funDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
-                    		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
-                    funCall.setAttribute("outputParams.{type, name,string}", op.getReturnType(), op.getName()+"_ret",
-                    		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
-                    if(typeIsEnum(ifc.getModule(), op.getReturnType()))
                 }
                 // In case of oneway function, set the property
                 if(op.isOneway())
@@ -619,6 +617,8 @@ public class IDL2DDSRPC
 
                 header.setAttribute("funDecls", funDecl.toString());
                 definition.setAttribute("funImpls", funDef.toString());
+                
+                // Set asynchrnous templates.
                 if(withAsync && !op.isOneway())
                 {
                 	header.setAttribute("funDeclsAsync", funDeclAsync.toString());
@@ -632,13 +632,13 @@ public class IDL2DDSRPC
                 }
                 funDecl.reset();
                 funDef.reset();
+                funCall.reset();
                 if(withAsync)
                 {
                 	funDeclAsync.reset();
                 	classDeclAsync.reset();
                 	funDefAsync.reset();
                 }
-                funCall.reset();
             }
 
             if(externalDirLength > 0)
@@ -687,22 +687,14 @@ public class IDL2DDSRPC
     		Interface ifc)
     {
         ListIterator paramIter = null;
-        InputParam ip = null;
-        for(paramIter = op.getInputParams().listIterator(); paramIter.hasNext();)
+        Param parameter = null;
+        for(paramIter = op.getParams().listIterator(); paramIter.hasNext();)
         {
-            ip = (InputParam)paramIter.next();
-            request.setAttribute(attribute, ip.getType(), ip.getName(), (typeIsString(ifc.getModule(), ip.getType()) ? "yes" : null), "yes");
-        }
-        InoutParam iop = null;
-        for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
-            iop = (InoutParam)paramIter.next();
-            request.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null), null);
-            reply.setAttribute(attribute, iop.getType(), iop.getName(), (typeIsString(ifc.getModule(), iop.getType()) ? "yes" : null), null);
-        }
-        OutputParam oup = null;
-        for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
-            oup = (OutputParam)paramIter.next();
-            reply.setAttribute(attribute, oup.getType(), oup.getName(), (typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null), null);
+            parameter = (Param)paramIter.next();
+            if(parameter.isInput())
+            	request.setAttribute(attribute, parameter);
+            if(parameter.isOutput())
+            	reply.setAttribute(attribute, parameter);
         }
     }
 
@@ -778,33 +770,28 @@ public class IDL2DDSRPC
 
             Operation op = null;
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
-            {						
+            {
+            	op = (Operation) iter.next();
+            	
             	taskDecl.setAttribute("interfaceName", ifc.getName());
-            	
             	taskDef.setAttribute("interfaceName", ifc.getName());
-            	
-                op = (Operation) iter.next();
+            	      
                 taskDecl.setAttribute("name", op.getName());
                 taskDef.setAttribute("name", op.getName());
                 
                 ListIterator paramIter = null;
-                InoutParam iop = null;
-                for(paramIter = op.getInoutParams().listIterator(); paramIter.hasNext();){
-                    iop = (InoutParam)paramIter.next();
-                    taskDef.setAttribute("inoutParams.{type, name, string}", iop.getType(), iop.getName(),
-                    		(iop.getType().equals("string") ? "yes" : null));
-                }
-                OutputParam oup = null;
-                for(paramIter = op.getOutputParams().listIterator(); paramIter.hasNext();){
-                    oup = (OutputParam)paramIter.next();
-                    taskDef.setAttribute("outputParams.{type, name, string}", oup.getType(), oup.getName(),
-                    		(typeIsString(ifc.getModule(), oup.getType()) ? "yes" : null));					
-                }
-                // Return Value
-                if(!"void".equals(op.getReturnType()))
+                Param parameter = null;
+                for(paramIter = op.getParams().listIterator(); paramIter.hasNext();)
                 {
-                	taskDef.setAttribute("outputParams.{type, name, string}", op.getReturnType(), op.getName()+"_ret",
-                    		(typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));				
+                	parameter = (Param)paramIter.next();
+                	if(parameter.isOutput())
+                		taskDef.setAttribute("outParams", parameter);
+                }
+                
+                // Return Value
+                if(!"void".equals(op.getReturnType().getTypeName()))
+                {
+                	taskDef.setAttribute("outParams", op.getReturnType());				
                 }
                 
                 // If function is not oneway
@@ -868,21 +855,25 @@ public class IDL2DDSRPC
             {						
                 op = (Operation) iter.next();
                 
+                // Request template
                 headerRequest.setAttribute("funName", op.getName());
+                headerRequest.setAttribute("templateName", "Request");
                 definitionRequest.setAttribute("funName", op.getName());
+                definitionRequest.setAttribute("templateName", "Request");
 
+                // Reply template
                 headerReply.setAttribute("funName", op.getName());
-                headerReply.setAttribute("type", "Reply");
-
+                headerReply.setAttribute("templateName", "Reply");
                 definitionReply.setAttribute("funName", op.getName());
-                definitionReply.setAttribute("type", "Reply");
+                definitionReply.setAttribute("templateName", "Reply");
 
-                setRequestReplyParams(headerRequest, headerReply, op, "params.{type, name, string, isRequestIn}", ifc);
-                setRequestReplyParams(definitionRequest, definitionReply, op, "params.{type, name, string, isRequestIn}", ifc);
-                if(!"void".equals(op.getReturnType())){
+                // Set parameters for request template and reply template
+                setRequestReplyParams(headerRequest, headerReply, op, "params", ifc);
+                setRequestReplyParams(definitionRequest, definitionReply, op, "params", ifc);
+                
+                if(!"void".equals(op.getReturnType().getTypeName())){
                     headerReply.setAttribute("returnType", op.getReturnType());					
                     definitionReply.setAttribute("returnType", op.getReturnType());
-                    definitionReply.setAttribute("string", (typeIsString(ifc.getModule(), op.getReturnType()) ? "yes" : null));
                 }
                 headerFile.setAttribute("classes", headerRequest.toString());
                 definitionFile.setAttribute("classes", definitionRequest.toString());
@@ -944,20 +935,25 @@ public class IDL2DDSRPC
 
             Operation op = null;
 
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); ){						
+            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); )
+            {						
                 op = (Operation) iter.next();
 
                 request.setAttribute("name", op.getName());
                 reply.setAttribute("name", op.getName());
 
-                setRequestReplyParams(request, reply, op, "fields.{type, name, string, isRequestIn}", ifc);
-                if(!"void".equals(op.getReturnType())){
-                    reply.setAttribute("fields.{type, name}", op.getReturnType(), "returnedValue");
+                setRequestReplyParams(request, reply, op, "params", ifc);
+                
+                if(!"void".equals(op.getReturnType().getTypeName()))
+                {
+                    reply.setAttribute("params", op.getReturnType());
                 }
+                
                 theFile.setAttribute("types", request.toString());
                 // if it is not a oneway function
                 if(!op.isOneway())
                 	theFile.setAttribute("types", reply.toString());
+                
                 request.reset();
                 reply.reset();
             }

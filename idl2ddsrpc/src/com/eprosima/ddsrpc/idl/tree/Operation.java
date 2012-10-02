@@ -18,58 +18,70 @@ package com.eprosima.ddsrpc.idl.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Operation implements Named{
-	private String returnType;
+	private Param returnType = null;
 	private String name;
-	private List inputParams;
-	private List inoutParams;
-	private List outputParams;
-	private String m_requestLibrary = null;
+	private List params;
+	/*private String m_requestLibrary = null;
 	private String m_replyLibrary = null;
 	private String m_requestProfile = null;
-	private String m_replyProfile = null;
+	private String m_replyProfile = null;*/
 	private boolean m_isOneway = false;
 	
 	public Operation(){
-		inputParams = new ArrayList();
-		inoutParams = new ArrayList();
-		outputParams = new ArrayList();
+		params = new ArrayList();
 	}
 	
-	public String getReturnType() {
+	public Param getReturnType() {
 		return returnType;
 	}
-	public void setReturnType(String returnType) {
-		this.returnType = returnType;
+	
+	public void setReturnType(String returnTypeName)
+	{
+		returnType = new OutputParam(returnTypeName, name + "_ret");
 	}
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List getInputParams() {
-		return inputParams;
-	}
-	public List getInoutParams() {
-		return inoutParams;
-	}
-	public List getOutputParams() {
-		return outputParams;
+	
+	public List getParams() {
+		return params;
 	}
 	
-	public void addInputParam(InputParam param){
-		inputParams.add(param);
+	public void addParam(Param param){
+		params.add(param);
 	}
-	public void addInoutParam(InoutParam param){
-		inoutParams.add(param);
-	}
-	public void addOutputParam(OutputParam param){
-		outputParams.add(param);
+	
+	/**
+	 * This function returns whether the operation has output parameters.
+	 * 
+	 * @return True if the operation has output parameters. In other case returns false.
+	 */
+	public boolean hasOutputParams()
+	{
+		boolean returnedValue = false;
+		
+		for(ListIterator paramIter = params.listIterator(); paramIter.hasNext();)
+		{
+			Param parameter = (Param)paramIter.next();
+			
+			if(parameter instanceof InoutParam || parameter instanceof OutputParam)
+			{
+			   returnedValue = true;
+			   break;
+			}
+		}
+		
+		return returnedValue;
 	}
 
-	public void setRequestLibrary(String library)
+	/*public void setRequestLibrary(String library)
 	{
 		m_requestLibrary = library;
 	}
@@ -107,7 +119,7 @@ public class Operation implements Named{
 	public String getReplyProfile()
 	{
 		return m_replyProfile;
-	}
+	}*/
 	
 	public boolean isOneway()
 	{
