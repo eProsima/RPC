@@ -37,7 +37,7 @@ group VS2010;
 solution(projects, configurations) ::= <<
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-$projects:{$projectRef(it)$};separator="\n"$
+$projects : {$projectRef(it)$};separator="\n"$
 Global
 $\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
 $configurations:{conf |$\t$$\t$$conf.name$|$conf.platform$ = $conf.name$|$conf.platform$};separator="\n"$
@@ -188,6 +188,7 @@ $\t$ProjectSection(ProjectDependencies) = postProject
 $\t$$\t${$project.dependsOn$} = {$project.dependsOn$}
 $\t$EndProjectSection
 $endif$
+
 EndProject
 >>
 

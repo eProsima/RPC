@@ -5,7 +5,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestClient", "MultithreadTestClient-vs2010.vcxproj", "{BA02399D-C1B3-8E50-7B58-4FE5323B2860}"
 	ProjectSection(ProjectDependencies) = postProject
 		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3} = {971CF5A9-C117-6BCD-FACE-E0AE389A13C3}
-	EndProjectSectionEndProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|x64 = Debug DLL|x64

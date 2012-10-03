@@ -370,10 +370,10 @@ returnedValue = srv->_impl->getDouble(do1  , do2  , do3  , getDouble_ret  );
 void BasicTypeTestServerH::getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
     BasicTypeTestServerH *srv = dynamic_cast<BasicTypeTestServerH*>(server);
-    DDS_Boolean  bo1 = 0;    
-    DDS_Boolean  bo2 = 0;    
-    DDS_Boolean  bo3 = 0;    
-    DDS_Boolean  getBoolean_ret = 0;      
+    DDS_Boolean  bo1 = RTI_FALSE;    
+    DDS_Boolean  bo2 = RTI_FALSE;    
+    DDS_Boolean  bo3 = RTI_FALSE;    
+    DDS_Boolean  getBoolean_ret = RTI_FALSE;      
     eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
     getBooleanReply *replyData = NULL;
 

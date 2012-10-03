@@ -5,7 +5,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicTypeTestClient", "BasicTypeTestClient-vs2010.vcxproj", "{60F843EA-9DA1-49AD-5A60-0AB74FA8F639}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE} = {F93C7CB0-94A1-E633-0C0E-0D2FCC9182CE}
-	EndProjectSectionEndProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|x64 = Debug DLL|x64

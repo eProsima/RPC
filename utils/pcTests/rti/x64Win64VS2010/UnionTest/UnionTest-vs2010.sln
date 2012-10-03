@@ -5,7 +5,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnionTestClient", "UnionTestClient-vs2010.vcxproj", "{63D39A2F-8FA4-85BD-4545-2E39DA75960E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9DA27D4C-E451-14AB-DDE9-D1E33067C02B} = {9DA27D4C-E451-14AB-DDE9-D1E33067C02B}
-	EndProjectSectionEndProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|x64 = Debug DLL|x64

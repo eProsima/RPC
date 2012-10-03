@@ -395,9 +395,9 @@ BasicTypeTest_getBoolean& BasicTypeTest_getBooleanTask::getObject()
 
 void BasicTypeTest_getBooleanTask::execute(eProsima::DDSRPC::ReturnMessage message)
 {  
-    DDS_Boolean  bo2 = 0;    
-    DDS_Boolean  bo3 = 0;    
-    DDS_Boolean  getBoolean_ret = 0;     
+    DDS_Boolean  bo2 = RTI_FALSE;    
+    DDS_Boolean  bo3 = RTI_FALSE;    
+    DDS_Boolean  getBoolean_ret = RTI_FALSE;     
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{

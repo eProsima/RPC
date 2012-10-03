@@ -5,7 +5,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StructTestClient", "StructTestClient-vs2010.vcxproj", "{0EA6D37F-5254-37D1-C886-A1003F1E773E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1445E747-5C79-0EA6-BEEB-2A52864E5170} = {1445E747-5C79-0EA6-BEEB-2A52864E5170}
-	EndProjectSectionEndProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|x64 = Debug DLL|x64
