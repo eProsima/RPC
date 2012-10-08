@@ -92,6 +92,7 @@ class $interfaceName$Proxy : public $interfaceName$ProxyH
          */
         $interfaceName$Proxy(int domainId = 0, long timeout = 10000);
         
+        /// \brief The default destructor.
         virtual ~$interfaceName$Proxy();
 };
 
@@ -113,6 +114,7 @@ class $interfaceName$WANProxy : public $interfaceName$ProxyH
          */
         $interfaceName$WANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
         
+        /// \brief The default destructor.
         virtual ~$interfaceName$WANProxy();
 };
 

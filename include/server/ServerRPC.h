@@ -14,6 +14,9 @@ namespace eProsima
 		class Server;
 		class ThreadPoolManager;
 
+		/**
+		 * \brief This class implements a remote procedure call in server side.
+		 */
 		class DDSRPC_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
 		{
 			public:
@@ -21,24 +24,44 @@ namespace eProsima
 				/**
 				 * \brief The constructor.
 				 *
-				 * \param remoteServiceName The name of this service. Cannot be NULL.
-				 * \param requestTypeName The name of the type used to send the function's parameters. Max: 49 characteres. Cannot be NULL.
-				 * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
+				 * \param rpcName The name of this remote procedure. Cannot be NULL.
+				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
+				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
+				 * \param execFunction Funtion that will be called when a new request is received. Cannot be NULL.
 				 * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
 				 */
 				ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
 					const char *replyTypeName, fExecFunction execFunction, DDS::DomainParticipant *serverParticipant);
 
+				/**
+				 * \brief This function returns the name of this object.
+				 *
+				 * \return The name of this object.
+				 */
 				char* getRPCName();
 
-				//CHECK DDS_UnsignedLong
+				/// \brief This function returns the identifier of the server.
 				unsigned int* getServerId();
 
+				/// \brief This function returns the function that is called when a new request is recevied.
 				fExecFunction getExecFunction();
 
+				/**
+				 * \brief This function creates the DDS entities of the server.
+				 *
+				 * \param participant  Pointer to the domain participant used by the server. Cannot be NULL.
+				 * \param rpcName The name of this object.
+				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
+				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
+				 * \return 0 value is returned when all entities was created succesfully. In other case, -1 value is returned.
+				 */
 				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
 						const char *requestTypeName, const char *replyTypeName);
-
+				/**
+				 * \brief This function enables all DDS entities of the server.
+				 *
+				 * \return 0 value is returned when all entities was enabled succesfully. In other case, -1 value is returned.
+				 */
 				int enableEntities();
 
 				virtual int sendReply(void* request, void *reply, ReturnMessage errorMessage = OPERATION_SUCCESSFUL) = 0;
@@ -74,12 +97,12 @@ namespace eProsima
 			protected:
 
 				/**
-				 * \brief This field stores the name of the service.
+				 * \brief This field stores the name of the remote procedure.
 				 */
 				char m_rpcName[50];
 
 				/**
-				 * \brief This field stores a pointer to the ThreadPoolManager.
+				 * \brief This field stores a pointer to the server.
 				 */
 				Server *m_server;
 				/**

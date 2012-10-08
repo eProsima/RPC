@@ -20,16 +20,23 @@ namespace eProsima
 		class ServerRPC;
 	 
 		/**
-		 * \file
-		 * \brief This file contains the definition of the class DDSCSServer
+		 * \brief This class implements the common functionalities that the server have.
 		 */
 		class DDSRPC_WIN32_DLL_API Server
 		{
 
 			public:
 
+				/// \brief This function introduces the thread in a loop.
 				void wait(unsigned int milliseconds = DDSRPC_DEFAULT_PERIOD_MILLISEC);
 
+				/**
+				 * \brief This function schedules a new request that was received.
+				 *
+				 * \param execFunction The function that has to be called by the server to execute the request. Cannot be NULL.
+				 * \param data The received request. Cannot be NULL.
+				 * \param service The remote procedure that has received the request. Cannot be NULL.
+				 */
 				void schedule(fExecFunction execFunction, void *data, ServerRPC *service);
 
 			protected:
@@ -37,7 +44,10 @@ namespace eProsima
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param domainId The domain id's value that the client will have.
+				 * \param strategy The strategy used by the server to execute new requests. Cannot be NULL.
+				 * \param transport The transport that will be use the server.
+				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
+				 * \exception eProsima::DDSRPC::ResourceException 
 				 */
 				Server(ServerStrategy *strategy, Transport *transport, int domainId = 0);
 
@@ -45,15 +55,18 @@ namespace eProsima
 				virtual ~Server();
 
 				/**
-				 * \brief This function creates and adds a new remote service.
+				 * \brief This function adds a new remote procedure call.
 				 *
-				 * \param remoteServiceName The name of the new remote service. Max 49 charancters. Cannot be NULL.
-				 * \param requestTypeName The name of the type used to send the function's parameters. Cannot be NULL.
-				 * \param replyTypeName The name of the type used to receiver the function's return values. Cannot be NULL.
-				 * \return If the function works succesfully, 0 is returned. In other case, -1 is returned.
+				 * \param newRPC The new remote procedure. Cannot be NULL.
+				 * \return 0 value is returned if remote procedure was added succesfully. In other case, -1 value is returned.
 				 */
 				int setRPC(ServerRPC *newRPC);
 
+				/**
+				 * \brief This function returns the DDS domain participant that use this server.
+				 *
+				 * \return Pointer to the DDS domain participant.
+				 */
 				DDS::DomainParticipant* getParticipant();
 
 			private:
@@ -61,15 +74,16 @@ namespace eProsima
 				/// \brief The domain identifier.
 				int m_domainId;
 
+				/// \brief The strategy used by the server with new requests.
                 ServerStrategy *m_strategy;
 
 				/**
-				 * \brief Each client is associated with a DDSDomainParticipant. This participant have to be created in the client creation.
+				 * \brief Each server is associated with a DDS DomainParticipant. This participant have to be created in the server creation.
 				 * This pointer should never be NULL.
 				 */
 				DDS::DomainParticipant *m_participant;
         
-				/// \brief The list that contains all the remote services.
+				/// \brief The list that contains all the remote procedures..
 				std::list<ServerRPC*> m_rpcList;
 
 				void deleteRPCs();

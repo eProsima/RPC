@@ -17,44 +17,114 @@ namespace eProsima
         class Client;
         class AsyncTask;
 
+		/**
+		 * \brief This class implements a remote procedure call in server's proxy side.
+		 */
 		class DDSRPC_WIN32_DLL_API ClientRPC
 		{
 			public:
 
 				/**
-				 * \brief The constructor.
+				 * \brief The default constructor.
 				 *
-				 * \param remoteServiceName The name of this service. Cannot be NULL.
-				 * \param requestTypeName The name of the type used to send the function's parameters. Max: 49 characteres. Cannot be NULL.
-				 * \param replyTypeName The name of the type used to received the function's return values. Max: 49 characteres. Cannot be NULL.
-				 * \param clientParticipant Pointer to the domain participant used by the client. Cannot be NULL.
+				 * \param rpcName The name associated with this RPC object. Cannot be NULL:
+				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
+				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
+				 * \param client Pointer to the eProsima::DDSRPC::Client class parent. Cannot be NULL.
 				 */
 				ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName,
 					Client *client);
 
+				/// \brief The default destructor.
 				virtual ~ClientRPC();
 
 				/**
+				 * \brief This function executes a synchronous RPC call.
+				 * Usually this function sends the  request to the server and waits the reply.
+				 * Wait mechanism is implemented with a DDS WaitSet.
+				 *
+				 * \param request Pointer to the allocated request. Cannot be NULL.
+				 * \param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
+				 *        The pointer can be NULL and this means that the RPC call is oneway.
+				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
+				 * \return The return message.
 				 */
 				ReturnMessage execute(void *request, void* reply, long timeout);
 
+				/**
+				 * \brief This function executes a asynchronous RPC call.
+				 * This function sends the  request to the server, schedule the asynchronous task and return the execution.
+				 *
+				 * \param request Pointer to the allocated request. Cannot be NULL.
+				 * \param task The asynchronous task that will be schedule to wait the reply. Cannot be NULL.
+				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
+				 * \return The return message.
+				 */
 				ReturnMessage executeAsync(void *request, AsyncTask *task, long timeout);
 
+				/**
+				 *  \brief This auxiliar function is used to delete a DDS QueryCondition.
+				 *
+				 *  \param query DDS QueryCondition to be released.
+				 */
                 void deleteQuery(DDS::QueryCondition *query);
 
+				/**
+				 * \brief This function takes the reply from the DDS DataReader using the DDS QueryCondition.
+				 *        This virtual function has to be implemented by the specific code.    
+				 *
+				 * \param reply Pointer to the allocated reply. This object is used to copy the received reply. Cannot be NULL.
+				 * \param query DDS QueryCondition used to take the reply from the DDS Datareader. Cannot be NULL.
+				 * \return The returned message.
+				 */
 				virtual ReturnMessage takeReply(void *reply, DDS::QueryCondition *query) = 0;
 
 			protected:
 
-				// Foo dependent methods
+				/**
+				 * \brief This function registers the request instance into the DDS DataWriter.
+				 *        This virtual function has to be implemented by the specific code.
+				 *
+				 * \param data Pointer to the request. Cannot be NULL.
+				 * \return 0 value is returned if the function work succesfully. -1 in other case.
+				 */
 				virtual int registerInstance(void *data) = 0;
+
+				/**
+				 * \brief This function writes the request using the DDS DataWriter.
+				 *        This virtual function has to be implemented by the specific code.
+				 *
+				 * \param data Pointer to the request. Cannot be NULL.
+				 * \return DDS return code that write function returns.
+				 */
 				virtual DDS::ReturnCode_t write(void *data) = 0;
 
+				/**
+				 * \brief This function creates the DDS entities used by the RPC object.
+				 *
+				 * \param participant DDS Domain Participant used to create the DDS entities. Cannot be NULL.
+				 * \param rpcName The name associated to this RPC. Cannot be NULL:
+				 * \param requestTypeName The type name of the request topic. Cannot be NULL.
+				 * \param replyTypeName The type name of the reply topic. Cannot be NULL.
+				 * \return 0 value is returned if all entities was created succesfully. -1 in other case.
+				 */
 				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
 						const char *requestTypeName, const char *replyTypeName);
 
+				/**
+				 * \brief This function enables the DDS entities.
+				 *
+				 * \return 0 value is returned if all entities was enabled succesfully. -1 in other case.
+				 */
 				int enableEntities();
 
+				/**
+				 * \brief This functio checks that the server was discovery.
+				 *
+				 * \param DDS WaitSet used to make the comprobation.
+				 * \param timeout Timeout used to the comprobation. Its value is in milliseconds.
+				 * \return DDSRPC return message.
+				 */
                 ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
 
 				/**
@@ -99,13 +169,20 @@ namespace eProsima
 				 */
 				DDS::StatusCondition *m_matchingCondition;
 
+				/**
+				 * \brief Content filter used to take the expected reply from the server.
+				 */
 				DDS::ContentFilteredTopic *m_replyFilter;
 
-				//CHECK
+				/// \brief The next sequence number for a request.
 				unsigned int m_numSec;
+
+				/// \brief The identifier used as client.
 				unsigned int m_clientServiceId[4];
+
 				DDS::InstanceHandle_t m_ih;
 
+				/// \brief Mutex used to ensure that sequence number is safe-thread.
 				boost::mutex *m_mutex;
 		};
 

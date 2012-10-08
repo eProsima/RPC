@@ -77,8 +77,10 @@ namespace eProsima
 				 */
 				DDS::DomainParticipant *m_participant;
 
+				/// \brief Thread object that manages asynchronous repliess from servers.
                 AsyncThread *m_asyncThread;
 
+				/// \brief Timeout used in each remote procedure call. It value is in milliseconds.
                 long m_timeout;
 		};
 
