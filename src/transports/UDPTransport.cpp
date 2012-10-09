@@ -1,4 +1,5 @@
 #include "transports/UDPTransport.h"
+#include "eProsima_c/eProsimaMacros.h"
 
 #if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 #include "dds/DCPS/transport/framework/TransportRegistry.h"
@@ -12,11 +13,43 @@ namespace eProsima
 {
     namespace DDSRPC
     {
+		UDPTransport::UDPTransport() : m_to_connect(NULL)
+		{
+		}
+
+		UDPTransport::UDPTransport(const char *to_connect) : m_to_connect(NULL)
+        {
+            m_to_connect = strdup(to_connect);
+        }
+
+		UDPTransport::~UDPTransport()
+        {
+            if(m_to_connect != NULL)
+                free(m_to_connect);
+        }
 
         int UDPTransport::setTransport(DDS::DomainParticipantQos &participantQos)
         {
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-            return 0;
+            int returnedValue = -1;
+
+			if(m_to_connect != NULL)
+			{
+				char buffer[100];
+				const char *pointer;
+
+				SNPRINTF(buffer, 100, "builtin.udpv4://%s", m_to_connect);
+				participantQos.discovery.accept_unknown_peers = DDS_BOOLEAN_FALSE;
+				participantQos.discovery.initial_peers.ensure_length(1, 1);
+				pointer = strdup(buffer);
+				participantQos.discovery.initial_peers.set_at(0, pointer);
+			}
+			else
+			{
+				returnedValue = 0;
+			}
+
+			return returnedValue;
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
             const char* const METHOD_NAME = "setTransport";
             int returnedValue = -1;

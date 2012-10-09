@@ -92,6 +92,16 @@ class $interfaceName$Proxy : public $interfaceName$ProxyH
          */
         $interfaceName$Proxy(int domainId = 0, long timeout = 10000);
         
+        /**
+         * \brief Constructor.
+         *
+         * \param to_connect IP address for the server. By example: "218.18.3.133"
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         */
+        $interfaceName$Proxy(const char *to_connect, int domainId = 0, long timeout = 10000);
+        
         /// \brief The default destructor.
         virtual ~$interfaceName$Proxy();
 };
@@ -265,6 +275,11 @@ $funImplsAsync; separator="\n"$
 
 $interfaceName$Proxy::$interfaceName$Proxy(int domainId, long timeout) :
     $interfaceName$ProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
+{
+}
+
+$interfaceName$Proxy::$interfaceName$Proxy(const char *to_connect, int domainId, long timeout) :
+    $interfaceName$ProxyH(new eProsima::DDSRPC::UDPTransport(to_connect), domainId, timeout)
 {
 }
 

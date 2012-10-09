@@ -249,44 +249,44 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="bf2a5b63-79e0-4b5c-9bc6-56075461bd08" name="Example1Proxy" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="bf2a5b63-79e0-4b5c-9bc6-56075461bd08" name="Example1ProxyH" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="033fa7d2-9d2f-420a-8db1-afba583429c8" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="63caed73-e460-4124-9866-be97fd73e260" name="configuration" direction="In" isUnique="false">
-                  <elementDefinition Id="be2af24b-b861-401a-8e8d-8614cd756aa5" />
+                <parameter Id="5186bbbf-32d8-4138-b1a2-74105cc714f4" name="configuration" direction="In" isUnique="false">
+                  <elementDefinition Id="389d1d71-a32e-4755-a95d-e338707a1d37" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="d6159610-25e8-446c-8d32-54389ae2c613" LastKnownName="char*" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="854ed3b2-9a18-442e-a235-e187eab2fece" name="timeout" direction="In" isUnique="false">
-                  <elementDefinition Id="8430956f-5faa-4fdc-a35f-c1ebca46837f" />
+                <parameter Id="19999f87-6262-4844-8103-b9f1fb39f430" name="timeout" direction="In" isUnique="false">
+                  <elementDefinition Id="f4819e81-810f-4c35-837e-193d7907aaad" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="ecc6a7ae-3f57-4e2d-a040-f52530b34012" LastKnownName="int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="aec39485-c3ad-465f-87d9-6920abeaf3e0" name="domainId" direction="In" isUnique="false">
-                  <elementDefinition Id="2edece3a-fbd0-49ab-83fc-644e075b291a" />
+                <parameter Id="0e0af781-6b1a-462b-8f0c-f0b0c8f6216a" name="domainId" direction="In" isUnique="false">
+                  <elementDefinition Id="d058c205-1a0c-44cb-bb2d-da003a42f687" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="ecc6a7ae-3f57-4e2d-a040-f52530b34012" LastKnownName="int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="899918c8-284a-4c5e-971c-c4a947e36893" name="qosLibrary" direction="In" isUnique="false">
-                  <elementDefinition Id="e2c7816c-4e7e-4f2f-b0bf-b5d537186ee6" />
+                <parameter Id="8727067b-69a5-4606-82e8-ba74674af5fb" name="qosLibrary" direction="In" isUnique="false">
+                  <elementDefinition Id="65b0a179-06de-4787-9ebe-cd01b053bed8" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="d6159610-25e8-446c-8d32-54389ae2c613" LastKnownName="char*" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="15c09693-4d82-447d-bd29-691d751d70f8" name="qosProfile" direction="In" isUnique="false">
-                  <elementDefinition Id="dcf24d45-9f87-431e-8af3-2b41aa18c818" />
+                <parameter Id="4edc8af1-3621-4300-8f31-d312e031a183" name="qosProfile" direction="In" isUnique="false">
+                  <elementDefinition Id="baebe63d-d92a-4ed0-8b53-80984c7d88a5" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="d6159610-25e8-446c-8d32-54389ae2c613" LastKnownName="char*" />
                   </type_NamedElement>
@@ -1620,6 +1620,35 @@
               <operationHasOwnedParameters>
                 <parameter Id="dc8d32ac-ce67-4649-9650-e0664d27324d" name="timeout" direction="In" isUnique="false">
                   <elementDefinition Id="04636f2b-0757-477d-9e16-6c1606c6952d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="20f915b7-4c7b-463a-9f01-5843cdb0a232" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="e8be3560-fd4f-4348-9ff4-0c6406550fa2" name="ExampleProxy" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f2f0df2f-98b1-452a-9026-3e970013d3e8" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="51d9b11f-8c66-4905-a322-80bca31fbe3d" name="to_connect" direction="In" isUnique="false">
+                  <elementDefinition Id="686a5202-fb6f-4fd3-a804-6c570fee18b3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d6159610-25e8-446c-8d32-54389ae2c613" LastKnownName="char*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="46f66a71-1193-4995-9bc9-37fdbf6043b2" name="domainId" direction="In" isUnique="false">
+                  <elementDefinition Id="6645a542-e8fb-461c-833a-714f5edaa2f2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="ecc6a7ae-3f57-4e2d-a040-f52530b34012" LastKnownName="int" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="94e9a706-ab5b-4ce0-b123-33c13591ae8f" name="timeout" direction="In" isUnique="false">
+                  <elementDefinition Id="02584b74-c6e2-466e-b09e-bf9f600e8b9b" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="20f915b7-4c7b-463a-9f01-5843cdb0a232" LastKnownName="long" />
                   </type_NamedElement>

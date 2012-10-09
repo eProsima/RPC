@@ -240,44 +240,44 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="05dcb0cf-6f03-4686-9ab4-b4468ee2e754" name="Example1Proxy" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="05dcb0cf-6f03-4686-9ab4-b4468ee2e754" name="Example1ProxyH" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="033fa7d2-9d2f-420a-8db1-afba583429c8" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="1784d082-15c3-4a03-9ff2-dafa296705ad" name="configuration" direction="In" isUnique="false">
-                  <elementDefinition Id="be2af24b-b861-401a-8e8d-8614cd756aa5" />
+                <parameter Id="6676830f-3e43-418d-9d5e-2aaf6b97d8e5" name="configuration" direction="In" isUnique="false">
+                  <elementDefinition Id="389d1d71-a32e-4755-a95d-e338707a1d37" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="97d7665c-7ad4-423c-a094-94844b81b83d" name="timeout" direction="In" isUnique="false">
-                  <elementDefinition Id="8430956f-5faa-4fdc-a35f-c1ebca46837f" />
+                <parameter Id="ea129502-ff0f-47b0-a3d2-f5cac1cd2062" name="timeout" direction="In" isUnique="false">
+                  <elementDefinition Id="f4819e81-810f-4c35-837e-193d7907aaad" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="1d36fbf0-44de-4c47-a842-3efb68b3d1e0" LastKnownName="int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="d7e8d84d-2ee6-49ad-80f7-fcdf5f5eedef" name="domainId" direction="In" isUnique="false">
-                  <elementDefinition Id="2edece3a-fbd0-49ab-83fc-644e075b291a" />
+                <parameter Id="56989582-5e97-428d-a862-50bd1f67551f" name="domainId" direction="In" isUnique="false">
+                  <elementDefinition Id="d058c205-1a0c-44cb-bb2d-da003a42f687" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="1d36fbf0-44de-4c47-a842-3efb68b3d1e0" LastKnownName="int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="865bec30-3ca5-4a36-a1f9-aaef73346fa0" name="qosLibrary" direction="In" isUnique="false">
-                  <elementDefinition Id="e2c7816c-4e7e-4f2f-b0bf-b5d537186ee6" />
+                <parameter Id="b5b55591-5e29-4f82-87b5-f55cb2ece9b4" name="qosLibrary" direction="In" isUnique="false">
+                  <elementDefinition Id="65b0a179-06de-4787-9ebe-cd01b053bed8" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="858f5710-d7e7-4dd8-a38c-2bc866a7e329" name="qosProfile" direction="In" isUnique="false">
-                  <elementDefinition Id="dcf24d45-9f87-431e-8af3-2b41aa18c818" />
+                <parameter Id="4307402b-119b-4f22-a454-3809c10f073b" name="qosProfile" direction="In" isUnique="false">
+                  <elementDefinition Id="baebe63d-d92a-4ed0-8b53-80984c7d88a5" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
                   </type_NamedElement>
@@ -574,67 +574,30 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="5f0db87b-654b-4ff9-a03f-be040845adcb" name="Example1Server" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="5f0db87b-654b-4ff9-a03f-be040845adcb" name="Example1ServerH" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="bfe6b471-7d5e-4af9-9002-74762530acda" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="127e8337-02c5-48f5-ab4e-0c2833e17559" name="configuration" direction="In" isUnique="false">
-                  <elementDefinition Id="4f608946-7a8b-4b1a-a713-cc9a8f6e4a4d" />
+                <parameter Id="d653f33c-38f5-4fba-8889-bee6b3aaabe8" name="strategy" direction="In" isUnique="false">
+                  <elementDefinition Id="3f0d8c35-1fbd-47e8-aeef-16b55e38f445" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
+                    <referencedTypeMoniker Id="1671df47-5e09-467f-a432-f5d172e211b5" LastKnownName="DDSRPC::ServerStrateges" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="1e10edb9-e36a-4570-a2f3-b577c988b6e0" name="strategy" direction="In" isUnique="false">
-                  <elementDefinition Id="65e7f157-5c74-4a0f-b5f6-a9c488264578" />
+                <parameter Id="b226a0fe-c6fe-4b7a-9cec-d7d5a2ce25b3" name="transport" direction="In" isUnique="false">
+                  <elementDefinition Id="00f79e16-e264-4622-85ed-5b6e1e858a0b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="fee6feb3-0cda-442e-8820-97dd14f2dcd3" LastKnownName="DDSCS::ServerStrateges" />
+                    <referencedTypeMoniker Id="162ef2b7-83af-4597-86b8-8fbebc063464" LastKnownName="DDSRPC::Transport" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="9845393a-f8e5-49e9-b2fe-ade3669b3c35" name="domainId" direction="In" isUnique="false">
-                  <elementDefinition Id="5c97ead4-a42c-4d51-b23c-5b04293994a5" />
+                <parameter Id="2ab61fa4-82ef-4236-b32e-c302313c22f0" name="domainId" direction="In" isUnique="false">
+                  <elementDefinition Id="4df680a7-c156-4df9-bc42-f88d12d5077d" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="1d36fbf0-44de-4c47-a842-3efb68b3d1e0" LastKnownName="int" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d863d4dd-8d5a-4ba9-bb34-f37c45169264" name="qosLibrary" direction="In" isUnique="false">
-                  <elementDefinition Id="cdb9704b-cc19-4a9d-97a2-0069e41b53db" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="3265cb3b-8c1c-4588-9f8c-19f71e5b0771" name="qosProfile" direction="In" isUnique="false">
-                  <elementDefinition Id="1ff316dd-7e13-44f6-9353-4e4885bb9b2d" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="9bb80555-3335-40fc-87b6-c92acb7dc8fe" name="setTransport" visibility="Private" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="3adec02b-5ca9-4612-8942-ee7ee9e68a14" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="7ba15bbf-2025-4061-b174-4f025cb5884f" name="qos" direction="In" isUnique="false">
-                  <elementDefinition Id="13de5adc-bcfb-4832-8fe8-9981eca278e1" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="be173ca4-86b9-4eea-b581-9d9eed7768bd" LastKnownName="DDSDomainParticipantQos" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="82eb7739-5bc8-4f77-95b8-98c03ecbdff3" direction="Return" isUnique="false">
-                  <elementDefinition Id="ad011b12-3931-49b8-90d3-dce210269c9f" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -937,18 +900,18 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="be173ca4-86b9-4eea-b581-9d9eed7768bd" name="DDSDomainParticipantQos" isAbstract="false" isLeaf="false" cachedFullName="DDSDomainParticipantQos">
-        <elementDefinition Id="131bce91-a206-49b6-b62a-3addfcd85181" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="fee6feb3-0cda-442e-8820-97dd14f2dcd3" name="DDSCS::ServerStrateges" isAbstract="false" isLeaf="false" cachedFullName="DDSCS::ServerStrateges">
-        <elementDefinition Id="e605a6e7-accb-4378-a160-650d5a3680e7" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="bbd68084-328c-4182-8bea-2e2c4c25f7e1" name="Example_function1" isAbstract="false" isLeaf="false" cachedFullName="Example_function1">
         <elementDefinition Id="b437557f-960d-4322-bd81-ad95e3d0abce" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="1671df47-5e09-467f-a432-f5d172e211b5" name="DDSRPC::ServerStrateges" isAbstract="false" isLeaf="false" cachedFullName="DDSRPC::ServerStrateges">
+        <elementDefinition Id="c8956731-ac38-478f-9602-a65d0c48d4b6" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="162ef2b7-83af-4597-86b8-8fbebc063464" name="DDSRPC::Transport" isAbstract="false" isLeaf="false" cachedFullName="DDSRPC::Transport">
+        <elementDefinition Id="8330945f-ea03-4f86-95d0-d148c4ecaaee" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
