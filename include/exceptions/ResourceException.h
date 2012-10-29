@@ -1,18 +1,21 @@
 #ifndef _EXCEPTIONS_RESOURCEEXCEPTION_H_
 #define _EXCEPTIONS_RESOURCEEXCEPTION_H_
 
-#include <exception>
+#include <exceptions/Exception.h>
 
 namespace eProsima
 {
     namespace DDSRPC
     {
-        class ResourceException : public std::exception
+        class ResourceException : public Exception
         {
-            virtual const char* what() const throw()
-            {
-                return "Resource error";
-            }
+		public:
+
+			ResourceException(const std::string &message) : Exception(message)
+			{
+			}
+
+			virtual ~ResourceException() {}
         };
     } // namespace DDSRPC
 } // namespace eProsima

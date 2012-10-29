@@ -8,7 +8,7 @@
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::Server";
+static const char* const CLASS_NAME ="eProsima::DDSRPC::Server";
 
 namespace eProsima
 {
@@ -19,6 +19,7 @@ namespace eProsima
         m_strategy(strategy), m_participant(NULL)
 		{
 			const char* const METHOD_NAME = "Server";
+			std::string errorMessage;
 
             if(strategy != NULL && transport != NULL)
             {
@@ -55,23 +56,30 @@ namespace eProsima
 
                             return;
                         }
+						else
+						{
+							errorMessage = "cannot get the participant QoS";
+						}
+
+						factory->delete_participant(m_participant);
                     }
                     else
                     {
-                        printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+						errorMessage = "create_participant error";
                     }
                 }
                 else
                 {
-                    printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
+					errorMessage = "create factory error";
                 }
             }
             else
             {
-                printf("ERROR<%s:%s>: bad parameters\n", CLASS_NAME, METHOD_NAME);
+				errorMessage = "bad parameters";
             }
 
-            throw ResourceException();
+			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+            throw ResourceException(errorMessage);
 		}
 
 		void Server::deleteRPCs()
@@ -115,7 +123,7 @@ namespace eProsima
 
 		int Server::setRPC(ServerRPC *newRPC)
 		{
-			const char* const METHOD_NAME = "getParticipant";
+			const char* const METHOD_NAME ="getParticipant";
 			int returnedValue = -1;
 
 			if(newRPC != NULL)

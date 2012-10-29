@@ -4,7 +4,7 @@
 #include "utils/Utilities.h"
 #include "transports/Transport.h"
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::Client";
+static const char* const CLASS_NAME ="eProsima::DDSRPC::Client";
 
 namespace eProsima
 {
@@ -14,7 +14,8 @@ namespace eProsima
 		Client::Client(Transport *transport, int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
         m_timeout(milliseconds)
 		{
-			const char* const METHOD_NAME = "Client";
+			const char* const METHOD_NAME ="Client";
+			std::string errorMessage;
 
             if(transport != NULL)
             {
@@ -54,32 +55,33 @@ namespace eProsima
                                     return;
                                 else
                                 {
-                                    printf("ERROR<%s:%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+									errorMessage = "Cannot initialize the asynchronous thread";
                                     delete m_asyncThread;
                                 }
                             }
                             else
-                                printf("ERROR<%s:%s>: create asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+								errorMessage = "create asynchronous thread";
                         }
 
-                        TheParticipantFactory->delete_participant(m_participant);
+                        factory->delete_participant(m_participant);
                     }
                     else
                     {
-                        printf("ERROR<%s:%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
+						errorMessage = "create_participant error";
                     }
                 }
                 else
                 {
-                    printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
+					errorMessage = "create factory error";
                 }
             }
             else
             {
-                printf("ERROR<%s:%s>: bad parameters\n", CLASS_NAME, METHOD_NAME);
+				errorMessage = "bad parameters";
             }
 
-            throw ResourceException();
+			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+            throw ResourceException(errorMessage);
 		}
 
 		Client::~Client()
@@ -109,7 +111,7 @@ namespace eProsima
 
         int Client::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout)
         {
-            const char* const METHOD_NAME = "addAsyncTask";
+            const std::string METHOD_NAME("addAsyncTask");
             int returnedValue = -1;
 
             if(query != NULL && task != NULL)

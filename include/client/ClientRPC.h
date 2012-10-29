@@ -47,7 +47,7 @@ namespace eProsima
 				 * \param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
 				 *        The pointer can be NULL and this means that the RPC call is oneway.
 				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
-				 * \return The return message.
+				 * \throw eProsima::DDSRPC::ServerTimeoutException
 				 */
 				ReturnMessage execute(void *request, void* reply, long timeout);
 

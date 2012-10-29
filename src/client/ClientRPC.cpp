@@ -4,6 +4,7 @@
 #include "utils/Typedefs.h"
 #include "utils/Utilities.h"
 #include "eProsima_c/eProsimaMacros.h"
+#include "exceptions/ResourceException.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
@@ -21,6 +22,7 @@ namespace eProsima
 		m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS::HANDLE_NIL)
 		{
 			const char* const METHOD_NAME = "ClientRPC";
+			std::string errorMessage;
     
 			m_mutex =  new boost::mutex();
 
@@ -31,17 +33,21 @@ namespace eProsima
 					if(enableEntities())
 					{
 						strncpy(m_rpcName, rpcName, 50);
+						return;
 					}
 					else
 					{
-						printf("ERROR<%s::%s>: Cannot enableEntities\n", CLASS_NAME, METHOD_NAME);
+						errorMessage = "Cannot enable the DDS entities";
 					}
 				}
 			}
 			else
 			{
-				printf("ERROR<%s::%s>: Cannot create mutex\n", CLASS_NAME, METHOD_NAME);
+				errorMessage = "Cannot create the mutex";
 			}
+
+			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+            throw ResourceException(errorMessage);
 		}
 
 		ClientRPC::~ClientRPC()
