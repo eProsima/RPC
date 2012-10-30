@@ -13,6 +13,9 @@ DDSRPC_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/libddsrpcz.a
 DDSRPC_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
 DDSRPC_LIBS= $(LIBS) -lboost_thread-mt
 
+DDSRPC_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++11
+DDSRPC_CFLAGS= $(CFLAGS) -std=c++11
+
 ifdef NDDSHOME
 	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/rti
 	SPECIFIC_SRC_CPPFILES= $(BASEDIR)/src/idl/rti/MessageHeader.cxx \
@@ -91,25 +94,25 @@ vpath %.cxx $(DDSRPC_SOURCES_DIRS)
 
 $(DDSRPC_OUTDIR_DEBUG)/%.o:%.cpp
 	@echo Calculating dependencies \(DEBUG mode\) $<
-	@$(CPP) $(CFLAGS_DEBUG) -MM $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_DEBUG)\/&/g" > $(@:%.o=%.d)
+	@$(CPP) $(DDSRPC_CFLAGS_DEBUG) -MM $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_DEBUG)\/&/g" > $(@:%.o=%.d)
 	@echo Compiling \(DEBUG mode\) $<  
-	@$(CPP) $(CFLAGS_DEBUG) $(DDSRPC_INCLUDE_DIRS) $< -o $@
+	@$(CPP) $(DDSRPC_CFLAGS_DEBUG) $(DDSRPC_INCLUDE_DIRS) $< -o $@
 
 $(DDSRPC_OUTDIR_RELEASE)/%.o:%.cpp
 	@echo Calculating dependencies \(RELEASE mode\) $<
-	@$(CPP) $(CFLAGS) -MM $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_RELEASE)\/&/g" > $(@:%.o=%.d)
+	@$(CPP) -MM $(DDSRPC_CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_RELEASE)\/&/g" > $(@:%.o=%.d)
 	@echo Compiling \(RELEASE mode\) $<
-	@$(CPP) $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< -o $@
+	@$(CPP) $(DDSRPC_CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< -o $@
 
 $(DDSRPC_OUTDIR_DEBUG)/%.o:%.cxx
 	@echo Calculating dependencies \(DEBUG mode\) $<
-	@$(CPP) $(CFLAGS_DEBUG) -MM $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_DEBUG)\/&/g" > $(@:%.o=%.d)
+	@$(CPP) $(DDSRPC_CFLAGS_DEBUG) -MM $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_DEBUG)\/&/g" > $(@:%.o=%.d)
 	@echo Compiling \(DEBUG mode\) $<  
-	@$(CPP) $(CFLAGS_DEBUG) $(DDSRPC_INCLUDE_DIRS) $< -o $@
+	@$(CPP) $(DDSRPC_CFLAGS_DEBUG) $(DDSRPC_INCLUDE_DIRS) $< -o $@
 
 $(DDSRPC_OUTDIR_RELEASE)/%.o:%.cxx
 	@echo Calculating dependencies \(RELEASE mode\) $<
-	@$(CPP) $(CFLAGS) -MM $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_RELEASE)\/&/g" > $(@:%.o=%.d)
+	@$(CPP) -MM $(DDSRPC_CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< | sed "s/^.*:/$(DDSRPC_SED_OUTPUT_DIR_RELEASE)\/&/g" > $(@:%.o=%.d)
 	@echo Compiling \(RELEASE mode\) $<
-	@$(CPP) $(CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< -o $@
+	@$(CPP) $(DDSRPC_CFLAGS) $(DDSRPC_INCLUDE_DIRS) $< -o $@
 

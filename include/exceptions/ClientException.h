@@ -15,6 +15,10 @@ namespace eProsima
 			{
 			}
 
+			ClientException(std::string &&message) : Exception(std::move(message))
+			{
+			}
+
 			virtual ~ClientException() {}
         };
     } // namespace DDSRPC

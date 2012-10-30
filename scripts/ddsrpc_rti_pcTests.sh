@@ -62,4 +62,4 @@ else
 	JREHOME="${JAVA_HOME}"
 fi
 
-exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -Djava.ext.dirs="../../../../idl2ddsrpc/lib" com.eprosima.ddsrpc.idl.IDL2DDSRPC -os Linux "$@"
+exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -Djava.ext.dirs="../../../../../idl2ddsrpc/lib" com.eprosima.ddsrpc.idl.IDL2DDSRPC -os Linux "$@"

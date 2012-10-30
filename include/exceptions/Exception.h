@@ -15,9 +15,8 @@ namespace eProsima
 			{
 			}
 
-			Exception(std::string &&message)
+			Exception(std::string&& message) : m_message(std::move(message))
 			{
-				m_message = std::move(message);
 			}
 
 			virtual ~Exception(){}

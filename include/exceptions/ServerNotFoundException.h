@@ -15,7 +15,7 @@ namespace eProsima
 			{
 			}
 
-			ServerNotFoundException(std::string &&message) : Exception(message)
+			ServerNotFoundException(std::string &&message) : Exception(std::move(message))
 			{
 			}
 

@@ -111,7 +111,7 @@ namespace eProsima
 
         int Client::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout)
         {
-            const std::string METHOD_NAME("addAsyncTask");
+            const char* const METHOD_NAME = "addAsyncTask";
             int returnedValue = -1;
 
             if(query != NULL && task != NULL)

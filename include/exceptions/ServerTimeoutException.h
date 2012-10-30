@@ -15,6 +15,10 @@ namespace eProsima
 			{
 			}
 
+			ServerTimeoutException(std::string &&message) : Exception(std::move(message))
+			{
+			}
+
 			virtual ~ServerTimeoutException() {}
         };
     } // namespace DDSRPC
