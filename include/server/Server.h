@@ -44,8 +44,10 @@ namespace eProsima
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param strategy The strategy used by the server to execute new requests. Cannot be NULL.
-				 * \param transport The transport that will be use the server.
+				 * \param strategy The strategy used by the server to execute new requests.
+				          This class doesn't delete this object in its destructor. Cannot be NULL.
+				 * \param transport The transport that will be use the server. This class doesn't delete this object in its destructor.
+				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
 				 * \exception eProsima::DDSRPC::ResourceException 
 				 */
@@ -86,7 +88,17 @@ namespace eProsima
 				/// \brief The list that contains all the remote procedures..
 				std::list<ServerRPC*> m_rpcList;
 
+				/// This function deletes all RPC endpoints.
 				void deleteRPCs();
+
+				/**
+				 * \brief If the transport was created by this class because it is the default UDPTransport,
+				 *          then this attribute has the true value. In other case the value will be false.
+				 */
+				bool m_defaultTransport;
+
+				/// \brief Pointer to the transport which this server's proxy uses.
+				Transport *m_transport;
 		};
 
 	} // namespace DDSRPC

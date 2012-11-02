@@ -19,7 +19,7 @@ class UnionTestServerImpl
         virtual ~UnionTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage getEmpleado(/*in*/ const Empleado* em1, /*inout*/ Empleado* &em2, /*out*/ Empleado* &em3, /*out*/ Empleado* &getEmpleado_ret);
+        Empleado getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Empleado& em2, /*out*/ Empleado& em3);
 };
 
 #endif // _UnionTestSERVER_IMPL_H_

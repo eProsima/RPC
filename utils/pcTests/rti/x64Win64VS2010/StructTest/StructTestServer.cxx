@@ -9,90 +9,87 @@
 
 #include "StructTestServerRPCSupport.h"
 
-StructTestServerH::StructTestServerH(eProsima::DDSRPC::ServerStrategy *strategy,
+StructTestServer::StructTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(strategy, NULL, domainId)
+{
+    _impl = new StructTestServerImpl();
+
+    createRPCs();
+}
+
+StructTestServer::StructTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
     Server(strategy, transport, domainId)
 {
     _impl = new StructTestServerImpl();
     
-    this->setRPC(new duplicateServerRPC("duplicate", this,
-                duplicateRequestUtils::registerType(getParticipant()),
-                duplicateReplyUtils::registerType(getParticipant()),
-                &StructTestServerH::duplicate, getParticipant()));
-    this->setRPC(new sumaServerRPC("suma", this,
-                sumaRequestUtils::registerType(getParticipant()),
-                sumaReplyUtils::registerType(getParticipant()),
-                &StructTestServerH::suma, getParticipant()));
-
+    createRPCs();
 }
-StructTestServerH::~StructTestServerH()
+
+StructTestServer::~StructTestServer()
 {
     delete _impl;    
 }
 
-void StructTestServerH::duplicate(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void StructTestServer::createRPCs()
+{
+    this->setRPC(new duplicateServerRPC("duplicate", this,
+                duplicateRequestUtils::registerType(getParticipant()),
+                duplicateReplyUtils::registerType(getParticipant()),
+                &StructTestServer::duplicate, getParticipant()));
+    this->setRPC(new sumaServerRPC("suma", this,
+                sumaRequestUtils::registerType(getParticipant()),
+                sumaReplyUtils::registerType(getParticipant()),
+                &StructTestServer::suma, getParticipant()));
+
+}
+
+void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    StructTestServerH *srv = dynamic_cast<StructTestServerH*>(server);
-    Envio *ev = NULL;    
-    Recepcion *duplicate_ret = RecepcionPluginSupport_create_data();      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    duplicateReply *replyData = NULL;
+    StructTestServer *srv = dynamic_cast<StructTestServer*>(server);
+    Envio ev;
+        
+    Recepcion duplicate_ret;
+           
+    duplicateReply replyData;
+    
 
-    duplicateRequestUtils::extractTypeData((duplicateRequest*)requestData, ev  );
+    duplicateRequestUtils::extractTypeData(*(duplicateRequest*)requestData, ev  );
 
-returnedValue = srv->_impl->duplicate(ev  , duplicate_ret  );
+    duplicate_ret = srv->_impl->duplicate(ev  );
 
-    replyData = duplicateReplyUtils::createTypeData(duplicate_ret  );
+    duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    duplicateReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     duplicateRequestTypeSupport::delete_data((duplicateRequest*)requestData);
     
-    RecepcionPluginSupport_destroy_data(duplicate_ret);    
+    Recepcion_finalize(&duplicate_ret);    
 }
-void StructTestServerH::suma(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void StructTestServer::suma(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    StructTestServerH *srv = dynamic_cast<StructTestServerH*>(server);
-    Envio *ev1 = NULL;    
-    Envio *ev2 = NULL;    
-    Recepcion *suma_ret = RecepcionPluginSupport_create_data();      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    sumaReply *replyData = NULL;
+    StructTestServer *srv = dynamic_cast<StructTestServer*>(server);
+    Envio ev1;
+        
+    Envio ev2;
+        
+    Recepcion suma_ret;
+           
+    sumaReply replyData;
+    
 
-    sumaRequestUtils::extractTypeData((sumaRequest*)requestData, ev1  , ev2  );
+    sumaRequestUtils::extractTypeData(*(sumaRequest*)requestData, ev1  , ev2  );
 
-returnedValue = srv->_impl->suma(ev1  , ev2  , suma_ret  );
+    suma_ret = srv->_impl->suma(ev1  , ev2  );
 
-    replyData = sumaReplyUtils::createTypeData(suma_ret  );
+    sumaReplyUtils::setTypeData(replyData, suma_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    sumaReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     sumaRequestTypeSupport::delete_data((sumaRequest*)requestData);
     
-    RecepcionPluginSupport_destroy_data(suma_ret);    
-}
-
-StructTestServer::StructTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    int domainId) :
-    StructTestServerH(strategy, new eProsima::DDSRPC::UDPTransport(), domainId)
-{
-}
-StructTestServer::~StructTestServer()
-{   
-}
-
-StructTestWANServer::StructTestWANServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    const char *public_address, const char *server_bind_port,
-    int domainId) :
-    StructTestServerH(strategy, new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId)
-{
-}
-StructTestWANServer::~StructTestWANServer()
-{   
+    Recepcion_finalize(&suma_ret);    
 }

@@ -9,10 +9,26 @@
 #include "transports/TCPTransport.h"
 #include "MultithreadTestRequestReplyPlugin.h"
 #include "MultithreadTestAsyncSupport.h"
+#include "exceptions/Exceptions.h"
 
+MultithreadTestProxy::MultithreadTestProxy(int domainId, long timeout) :
+    Client(NULL, domainId, timeout)
+{
+    createRPCs();
+}
 
-MultithreadTestProxyH::MultithreadTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+MultithreadTestProxy::MultithreadTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
     Client(transport, domainId, timeout)
+{
+    createRPCs();
+}
+
+MultithreadTestProxy::~MultithreadTestProxy()
+{
+    delete test_Service;
+}
+
+void MultithreadTestProxy::createRPCs()
 {
     this->test_Service = new testClientRPC("test",
                                   testRequestUtils::registerType(getParticipant()),
@@ -21,86 +37,60 @@ MultithreadTestProxyH::MultithreadTestProxyH(eProsima::DDSRPC::Transport *transp
 
 }
 
-MultithreadTestProxyH::~MultithreadTestProxyH()
-{
-    delete test_Service;
-}
-
  
-eProsima::DDSRPC::ReturnMessage MultithreadTestProxyH::test(/*in*/ const Dato* dato1, /*out*/ Dato* &dato2, /*out*/ DDS_Long &test_ret) 
+DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    testRequest *instance = NULL;
-    testReply* retInstance = testReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    DDS_Long  returnedValue = 0;    
+    testRequest instance;
+    testReply retInstance;
 
-    instance = testRequestUtils::createTypeData(dato1  );
-    returnedValue = test_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    testReply_initialize(&retInstance);    
+    testRequestUtils::setTypeData(instance, dato1  );
+    retcode = test_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        testReplyUtils::extractTypeData(retInstance, retcode, dato2  , returnedValue); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            testReplyUtils::extractTypeData(retInstance, dato2  , test_ret  );
-            //testReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    testReplyTypeSupport::delete_data(retInstance);
-    testRequestTypeSupport::delete_data(instance);
 
     return returnedValue;
 }
 
  
-eProsima::DDSRPC::ReturnMessage MultithreadTestProxyH::test_async(MultithreadTest_test &obj, /*in*/ const Dato* dato1) 
+void MultithreadTestProxy::test_async(MultithreadTest_test &obj, /*in*/ const Dato& dato1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    testRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    testRequest instance;
     MultithreadTest_testTask *task = NULL;
-    instance = testRequestUtils::createTypeData(dato1  );
+    testRequestUtils::setTypeData(instance, dato1  );
     task = new MultithreadTest_testTask(obj, this);
-    returnedValue = test_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = test_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    testRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
-}
-
-MultithreadTestProxy::MultithreadTestProxy(int domainId, long timeout) :
-    MultithreadTestProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
-{
-}
-
-MultithreadTestProxy::~MultithreadTestProxy()
-{
-}
-
-MultithreadTestWANProxy::MultithreadTestWANProxy(const char *to_connect, int domainId, long timeout) :
-    MultithreadTestProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
-{
-}
-
-MultithreadTestWANProxy::~MultithreadTestWANProxy()
-{
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }

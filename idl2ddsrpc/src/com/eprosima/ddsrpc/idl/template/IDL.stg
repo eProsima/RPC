@@ -73,7 +73,7 @@ struct $name$Request{
  *   fields : list of function parameters. In and inout parameters for Request,
  *            inout, out and return type for Reply.
  */ 
-reply(name, params) ::= <<
+reply(name, params, return) ::= <<
 
 $preRepIDLDefines(name=name)$
 
@@ -83,5 +83,6 @@ struct $name$Reply{
     unsigned long numSec; $keyIDLdefine()$
     long ddsrpcRetCode;
     $params : {$it.typeName$ $it.name$;};separator="\n"$
+    $if(return)$$return.typeName$ $return.name$;$endif$
 }; $levelIDLdefine()$
 >>

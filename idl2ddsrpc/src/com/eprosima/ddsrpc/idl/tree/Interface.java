@@ -72,6 +72,8 @@ public class Interface implements Named{
 		// The returned type also should have its type declaration. Check that its not "void".
 		if(!op.getReturnType().getTypeName().equals("void"))
 		{
+			// Update the return parameter name.
+			op.getReturnType().setName(op.getName() + "_ret");
 			TypeDecl type = parent.getTypeDecl(op.getReturnType().getTypeName());
 			
 			if(type != null)

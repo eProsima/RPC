@@ -12,7 +12,7 @@
 class StructTest_duplicate
 {
     public:
-        virtual void duplicate(/*out*/ const Recepcion* duplicate_ret)
+        virtual void duplicate(Recepcion &duplicate_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class StructTest_duplicate
 class StructTest_suma
 {
     public:
-        virtual void suma(/*out*/ const Recepcion* suma_ret)
+        virtual void suma(Recepcion &suma_ret)
         {
         }
    
@@ -33,80 +33,53 @@ class StructTest_suma
 };
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class StructTestProxyH : public eProsima::DDSRPC::Client
-{
-    public:
-
-        /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
-         *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        StructTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
-
-        /// \brief The default destructor.
-        virtual ~StructTestProxyH();
-        
-         
-        eProsima::DDSRPC::ReturnMessage duplicate(/*in*/ const Envio* ev, /*out*/ Recepcion* &duplicate_ret);
-         
-        eProsima::DDSRPC::ReturnMessage suma(/*in*/ const Envio* ev1, /*in*/ const Envio* ev2, /*out*/ Recepcion* &suma_ret);
-        
-         
-        eProsima::DDSRPC::ReturnMessage duplicate_async(StructTest_duplicate &obj, /*in*/ const Envio* ev);
-         
-        eProsima::DDSRPC::ReturnMessage suma_async(StructTest_suma &obj, /*in*/ const Envio* ev1, /*in*/ const Envio* ev2);
-        
-    private:
-        eProsima::DDSRPC::ClientRPC *duplicate_Service;
-        eProsima::DDSRPC::ClientRPC *suma_Service; 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class StructTestProxy : public StructTestProxyH
+class StructTestProxy : public eProsima::DDSRPC::Client
 {
     public:
     
         /**
-         * \brief Default constructor.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
         StructTestProxy(int domainId = 0, long timeout = 10000);
-        
-        virtual ~StructTestProxy();
-};
 
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class StructTestWANProxy : public StructTestProxyH
-{
-    public:
-    
         /**
-         * \brief Default constructor.
+         * \brief This constructor sets the transport that will be used by the server's proxy.
          *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        StructTestWANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
+        StructTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+
+        /// \brief The default destructor.
+        virtual ~StructTestProxy();
         
-        virtual ~StructTestWANProxy();
+         
+        Recepcion duplicate(/*in*/ const Envio& ev);
+         
+        Recepcion suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2);
+        
+         
+        void duplicate_async(StructTest_duplicate &obj, /*in*/ const Envio& ev);
+         
+        void suma_async(StructTest_suma &obj, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2);
+        
+    private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        eProsima::DDSRPC::ClientRPC *duplicate_Service;
+        eProsima::DDSRPC::ClientRPC *suma_Service; 
 };
 
 #endif // _StructTest_PROXY_H_

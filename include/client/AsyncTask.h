@@ -62,8 +62,8 @@ namespace eProsima
 
             protected:
 
-				/// \brief Allocated memory to be used when reply will be taken.
-                void *m_reply;
+				/// \brief Returns the allocated memory that will be used when reply will be taken.
+                virtual void* getReplyInstance() = 0;
 
             private:
 

@@ -19,17 +19,17 @@ class TypedefTestServerImpl
         virtual ~TypedefTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage getLargo(/*in*/ const largo l1, /*out*/ largo &l2, /*out*/ largo &getLargo_ret);
+        largo getLargo(/*in*/ largo l1, /*out*/ largo& l2);
          
-        eProsima::DDSRPC::ReturnMessage getLarguisimo(/*in*/ const larguisimo ll1, /*out*/ larguisimo &ll2, /*out*/ larguisimo &getLarguisimo_ret);
+        larguisimo getLarguisimo(/*in*/ larguisimo ll1, /*out*/ larguisimo& ll2);
          
-        eProsima::DDSRPC::ReturnMessage getDatosDef(/*in*/ const DatosDef* d1, /*out*/ DatosDef* &d2, /*out*/ DatosDef* &getDatosDef_ret);
+        DatosDef getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosDef& d2);
          
-        eProsima::DDSRPC::ReturnMessage getDatosDefondo(/*in*/ const DatosDefondo* dd1, /*out*/ DatosDefondo* &dd2, /*out*/ DatosDefondo* &getDatosDefondo_ret);
+        DatosDefondo getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2);
          
-        eProsima::DDSRPC::ReturnMessage getCadena(/*in*/ const cadena c1, /*out*/ cadena &c2, /*out*/ cadena &getCadena_ret);
+        cadena getCadena(/*in*/ cadena c1, /*out*/ cadena& c2);
          
-        eProsima::DDSRPC::ReturnMessage getCorrea(/*in*/ const correa cc1, /*out*/ correa &cc2, /*out*/ correa &getCorrea_ret);
+        correa getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2);
 };
 
 #endif // _TypedefTestSERVER_IMPL_H_

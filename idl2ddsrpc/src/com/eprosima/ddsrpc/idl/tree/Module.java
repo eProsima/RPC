@@ -49,8 +49,6 @@ public class Module implements Named {
 			type_declarations.add(bt);
 			bt = new BasicType("string", "char*", "NULL");
 			type_declarations.add(bt);
-			et = new EnumType("eProsima::DDSRPC::ReturnMessage", "eProsima::DDSRPC::OPERATION_SUCCESSFUL");
-			type_declarations.add(et);
 			st = new SequenceType("sequence");
 			type_declarations.add(st);
 		}
@@ -84,8 +82,6 @@ public class Module implements Named {
 			type_declarations.add(bt);
 			bt = new BasicType("string", "char*", "NULL");
 			type_declarations.add(bt);
-			et = new EnumType("eProsima::DDSRPC::ReturnMessage", "eProsima::DDSRPC::OPERATION_SUCCESSFUL");
-			type_declarations.add(et);
 			st = new SequenceType("sequence");
 			type_declarations.add(st);
 		}

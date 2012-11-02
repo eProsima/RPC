@@ -5,117 +5,153 @@
 
 #include "SequenceTestProxy.h"
 #include "SequenceTestRequestReplyPlugin.h"
+#include "exceptions/Exceptions.h"
 
 int main(int argc, char **argv)
 {
 	SequenceTestProxy *proxy = new SequenceTestProxy();
 
-	largo *l1 = largoPluginSupport_create_data();    
-	largo *l2 = largoPluginSupport_create_data();    
-	largo *l3 = largoPluginSupport_create_data();    
-	largo *getSLong_ret = largoPluginSupport_create_data();       
-	eProsima::DDSRPC::ReturnMessage  getSLongRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+	largo l1;
+	largo l2;
+	largo l3;
+	largo getSLong_ret;
 
-	l1->ensure_length(2, 2);
-	l1->set_at(0, 1);
-	l1->set_at(1, 2);
-	l2->ensure_length(2, 2);
-	l2->set_at(0, 3);
-	l2->set_at(1, 4);
+	largo_initialize(&l1);
+	largo_initialize(&l2);
+	largo_initialize(&l3);
+	largo_initialize(&getSLong_ret);
 
-	getSLongRetValue = proxy->getSLong(l1  , l2  , l3  , getSLong_ret  );
+	l1.ensure_length(2, 2);
+	l1.set_at(0, 1);
+	l1.set_at(1, 2);
+	l2.ensure_length(2, 2);
+	l2.set_at(0, 3);
+	l2.set_at(1, 4);
 
-	if(getSLongRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			l3->get_at(0) != 3 || l3->get_at(1) != 4 ||
-			getSLong_ret->get_at(0) != 1 || getSLong_ret->get_at(1) != 2 ||
-			l2->get_at(0) != 4 || l2->get_at(1) != 6 ||
-			l1->get_at(0) != 1 || l1->get_at(1) != 2)
+	try
 	{
-		printf("TEST FAILED<getSLong>\n");
-		_exit(-1);
-	}
+		getSLong_ret = proxy->getSLong(l1, l2, l3);
 
-	largoPluginSupport_destroy_data(l1);    
-	largoPluginSupport_destroy_data(l2);    
-	largoPluginSupport_destroy_data(l3);    
-	largoPluginSupport_destroy_data(getSLong_ret);    
+        if(l3.get_at(0) != 3 || l3.get_at(1) != 4 ||
+                getSLong_ret.get_at(0) != 1 || getSLong_ret.get_at(1) != 2 ||
+                l2.get_at(0) != 4 || l2.get_at(1) != 6 ||
+                l1.get_at(0) != 1 || l1.get_at(1) != 2)
+        {
+            printf("TEST FAILED<getSLong>: Wrong values\n");
+            _exit(-1);
+        }
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getSLong>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	cadena *s1 = cadenaPluginSupport_create_data();       
-	cadena *s2 = cadenaPluginSupport_create_data();       
-	cadena *s3 = cadenaPluginSupport_create_data();    
-	cadena *getString_ret = cadenaPluginSupport_create_data();       
-	eProsima::DDSRPC::ReturnMessage  getStringRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+	largo_finalize(&l1);    
+	largo_finalize(&l2);    
+	largo_finalize(&l3);    
+	largo_finalize(&getSLong_ret);    
+
+	cadena s1;
+	cadena s2;
+	cadena s3;
+	cadena getString_ret;
 	char *cadena;
 	char *& ref = cadena;
 
-	s1->ensure_length(2, 2);
+	cadena_initialize(&s1);    
+	cadena_initialize(&s2);    
+	cadena_initialize(&s3);    
+	cadena_initialize(&getString_ret);
+
+	s1.ensure_length(2, 2);
 	cadena = DDS_String_dup("PRUEBA");
-	s1->set_at(0, (const char*&)ref);
+	s1.set_at(0, (const char*&)ref);
 	cadena = DDS_String_dup("PRUEBA2");
-	s1->set_at(1, (const char*&)ref);
-	s2->ensure_length(2, 2);
+	s1.set_at(1, (const char*&)ref);
+	s2.ensure_length(2, 2);
 	cadena = DDS_String_dup("PRUEBA3");
-	s2->set_at(0, (const char*&)ref);
+	s2.set_at(0, (const char*&)ref);
 	cadena = DDS_String_dup("PRUEBA4");
-	s2->set_at(1, (const char*&)ref);
+	s2.set_at(1, (const char*&)ref);
 
-	getStringRetValue = proxy->getString(s1  ,s2  ,s3  , getString_ret  );
+    try
+    {
+        getString_ret = proxy->getString(s1, s2, s3);
 
-	if(getStringRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			strcmp(s3->get_at(0), "PRUEBA3")  != 0 || strcmp(s3->get_at(1), "PRUEBA4")  != 0 ||
-			strcmp(getString_ret->get_at(0), "PRUEBA")  != 0  || strcmp(getString_ret->get_at(1), "PRUEBA2")  != 0 ||
-			strcmp(s2->get_at(0), "PRUEBA")  != 0  || strcmp(s2->get_at(1), "PRUEBA2")  != 0 ||
-			strcmp(s1->get_at(0), "PRUEBA")  != 0  || strcmp(s1->get_at(1), "PRUEBA2")  != 0)
-	{
-		printf("TEST FAILED<getString>\n");
-		_exit(-1);
-	}
+        if(strcmp(s3.get_at(0), "PRUEBA3")  != 0 || strcmp(s3.get_at(1), "PRUEBA4")  != 0 ||
+                strcmp(getString_ret.get_at(0), "PRUEBA")  != 0  || strcmp(getString_ret.get_at(1), "PRUEBA2")  != 0 ||
+                strcmp(s2.get_at(0), "PRUEBA")  != 0  || strcmp(s2.get_at(1), "PRUEBA2")  != 0 ||
+                strcmp(s1.get_at(0), "PRUEBA")  != 0  || strcmp(s1.get_at(1), "PRUEBA2")  != 0)
+        {
+            printf("TEST FAILED<getString>: Wrong values\n");
+            _exit(-1);
+        }
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getString>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	cadenaPluginSupport_destroy_data(s1);    
-	cadenaPluginSupport_destroy_data(s2);    
-	cadenaPluginSupport_destroy_data(s3);    
-	cadenaPluginSupport_destroy_data(getString_ret);    
-	dattos *sb1 = dattosPluginSupport_create_data();       
-	dattos *sb2 = dattosPluginSupport_create_data();       
-	dattos *sb3 = dattosPluginSupport_create_data();    
-	dattos *getStringBounded_ret = dattosPluginSupport_create_data();       
-	eProsima::DDSRPC::ReturnMessage  getStringBoundedRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+	cadena_finalize(&s1);    
+	cadena_finalize(&s2);    
+	cadena_finalize(&s3);    
+	cadena_finalize(&getString_ret);    
+
+	dattos sb1;       
+	dattos sb2;       
+	dattos sb3;    
+	dattos getStringBounded_ret;
+
+	dattos_initialize(&sb1);
+	dattos_initialize(&sb2);
+	dattos_initialize(&sb3);
+	dattos_initialize(&getStringBounded_ret);
 
 	Datos data;
-	sb1->ensure_length(2, 2);
+	sb1.ensure_length(2, 2);
 	data.count = 1;
 	data.message = DDS_String_dup("PRUEBA");
-	sb1->set_at(0, data);
+	sb1.set_at(0, data);
 	data.count = 2;
 	DDS_String_free(data.message);
 	data.message = DDS_String_dup("PRUEBA2");
-	sb1->set_at(1, data);
-	sb2->ensure_length(2, 2);
+	sb1.set_at(1, data);
+	sb2.ensure_length(2, 2);
 	data.count = 3;
 	DDS_String_free(data.message);
 	data.message = DDS_String_dup("PRUEBA3");
-	sb2->set_at(0, data);
+	sb2.set_at(0, data);
 	data.count = 4;
 	DDS_String_free(data.message);
 	data.message = DDS_String_dup("PRUEBA4");
-	sb2->set_at(1, data);
+	sb2.set_at(1, data);
 
-	getStringBoundedRetValue = proxy->getStringBounded(sb1  ,sb2  ,sb3  , getStringBounded_ret  );
+    try
+    {
+        getStringBounded_ret = proxy->getStringBounded(sb1, sb2, sb3);
 
-	if(getStringBoundedRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			sb3->get_at(0).count != 3 || strcmp(sb3->get_at(0).message, "PRUEBA3")  != 0 || sb3->get_at(1).count != 4 || strcmp(sb3->get_at(1).message, "PRUEBA4")  != 0 ||
-			getStringBounded_ret->get_at(0).count != 1 || strcmp(getStringBounded_ret->get_at(0).message, "PRUEBA")  != 0  || getStringBounded_ret->get_at(1).count != 2 || strcmp(getStringBounded_ret->get_at(1).message, "PRUEBA2")  != 0 ||
-			sb2->get_at(0).count != 1 || strcmp(sb2->get_at(0).message, "PRUEBA")  != 0  || sb2->get_at(1).count != 2 || strcmp(sb2->get_at(1).message, "PRUEBA2")  != 0 ||
-			sb1->get_at(0).count != 1 || strcmp(sb1->get_at(0).message, "PRUEBA")  != 0  || sb1->get_at(1).count != 2 || strcmp(sb1->get_at(1).message, "PRUEBA2")  != 0)
-	{
-		printf("TEST FAILED<getStringBounded>\n");
-		_exit(-1);
-	}
+        if(sb3.get_at(0).count != 3 || strcmp(sb3.get_at(0).message, "PRUEBA3")  != 0 || sb3.get_at(1).count != 4 || strcmp(sb3.get_at(1).message, "PRUEBA4")  != 0 ||
+                getStringBounded_ret.get_at(0).count != 1 || strcmp(getStringBounded_ret.get_at(0).message, "PRUEBA")  != 0  || getStringBounded_ret.get_at(1).count != 2 || strcmp(getStringBounded_ret.get_at(1).message, "PRUEBA2")  != 0 ||
+                sb2.get_at(0).count != 1 || strcmp(sb2.get_at(0).message, "PRUEBA")  != 0  || sb2.get_at(1).count != 2 || strcmp(sb2.get_at(1).message, "PRUEBA2")  != 0 ||
+                sb1.get_at(0).count != 1 || strcmp(sb1.get_at(0).message, "PRUEBA")  != 0  || sb1.get_at(1).count != 2 || strcmp(sb1.get_at(1).message, "PRUEBA2")  != 0)
+        {
+            printf("TEST FAILED<getStringBounded>: Wrong values\n");
+            _exit(-1);
+        }
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getStringBounded>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	dattosPluginSupport_destroy_data(sb1);    
-	dattosPluginSupport_destroy_data(sb2);    
-	dattosPluginSupport_destroy_data(sb3);    
-	dattosPluginSupport_destroy_data(getStringBounded_ret);    
+
+	dattos_finalize(&sb1);    
+	dattos_finalize(&sb2);    
+	dattos_finalize(&sb3);    
+	dattos_finalize(&getStringBounded_ret);    
 
 	printf("TEST SUCCESFULLY\n");
 

@@ -12,7 +12,7 @@
 class UnionTest_getEmpleado
 {
     public:
-        virtual void getEmpleado(/*inout*/ const Empleado* em2, /*out*/ const Empleado* em3, /*out*/ const Empleado* getEmpleado_ret)
+        virtual void getEmpleado(/*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, Empleado &getEmpleado_ret)
         {
         }
    
@@ -22,75 +22,48 @@ class UnionTest_getEmpleado
 };
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class UnionTestProxyH : public eProsima::DDSRPC::Client
-{
-    public:
-
-        /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
-         *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        UnionTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
-
-        /// \brief The default destructor.
-        virtual ~UnionTestProxyH();
-        
-         
-        eProsima::DDSRPC::ReturnMessage getEmpleado(/*in*/ const Empleado* em1, /*inout*/ Empleado* &em2, /*out*/ Empleado* &em3, /*out*/ Empleado* &getEmpleado_ret);
-        
-         
-        eProsima::DDSRPC::ReturnMessage getEmpleado_async(UnionTest_getEmpleado &obj, /*in*/ const Empleado* em1, /*inout*/ const Empleado* em2);
-        
-    private:
-        eProsima::DDSRPC::ClientRPC *getEmpleado_Service; 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class UnionTestProxy : public UnionTestProxyH
+class UnionTestProxy : public eProsima::DDSRPC::Client
 {
     public:
     
         /**
-         * \brief Default constructor.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
         UnionTestProxy(int domainId = 0, long timeout = 10000);
-        
-        virtual ~UnionTestProxy();
-};
 
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class UnionTestWANProxy : public UnionTestProxyH
-{
-    public:
-    
         /**
-         * \brief Default constructor.
+         * \brief This constructor sets the transport that will be used by the server's proxy.
          *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        UnionTestWANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
+        UnionTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+
+        /// \brief The default destructor.
+        virtual ~UnionTestProxy();
         
-        virtual ~UnionTestWANProxy();
+         
+        Empleado getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Empleado& em2, /*out*/ Empleado& em3);
+        
+         
+        void getEmpleado_async(UnionTest_getEmpleado &obj, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2);
+        
+    private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        eProsima::DDSRPC::ClientRPC *getEmpleado_Service; 
 };
 
 #endif // _UnionTest_PROXY_H_

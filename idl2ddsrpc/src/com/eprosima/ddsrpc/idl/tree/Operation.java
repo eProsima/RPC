@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Operation implements Named{
-	private Param returnType = null;
+	private OutputParam m_returnType = null;
 	private String name;
 	private List params;
 	/*private String m_requestLibrary = null;
@@ -34,14 +34,16 @@ public class Operation implements Named{
 		params = new ArrayList();
 	}
 	
-	public Param getReturnType() {
-		return returnType;
+	public void createReturnType(String returnTypeName)
+	{
+		m_returnType = new OutputParam(returnTypeName, name + "_ret");
 	}
 	
-	public void setReturnType(String returnTypeName)
+	public Param getReturnType()
 	{
-		returnType = new OutputParam(returnTypeName, name + "_ret");
+		return m_returnType;
 	}
+	
 	public String getName() {
 		return name;
 	}

@@ -23,20 +23,15 @@ const char* testRequestUtils::registerType(DDS::DomainParticipant *clientPartici
     return typeName;
 }
 
-testRequest* testRequestUtils::createTypeData(/*in*/ const Dato* dato1)
+void testRequestUtils::setTypeData(testRequest& instance, /*in*/ const Dato& dato1)
 {
-    testRequest* instance = testRequestTypeSupport::create_data();
-
-    DatoPluginSupport_copy_data(&instance->dato1, dato1);
+    instance.dato1 = dato1;
     
-    
-    return instance;
 }
 
-void testRequestUtils::extractTypeData(testRequest* data , /*in*/ Dato* &dato1)
+void testRequestUtils::extractTypeData(testRequest& data, /*in*/ Dato& dato1)
 {
-    dato1 = &data->dato1;
-    
+    dato1 = data.dato1;  
     
 }
 
@@ -58,21 +53,17 @@ const char* testReplyUtils::registerType(DDS::DomainParticipant *clientParticipa
     return typeName;
 }
 
-testReply* testReplyUtils::createTypeData(/*out*/ const Dato* dato2, /*out*/ const DDS_Long test_ret)
+void testReplyUtils::setTypeData(testReply& instance, /*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret)
 {
-    testReply* instance = testReplyTypeSupport::create_data();
-
-    DatoPluginSupport_copy_data(&instance->dato2, dato2);
-    
-    instance->test_ret = test_ret;            
-    return instance;
+    instance.dato2 = dato2;
+    instance.test_ret = test_ret;            
 }
 
-void testReplyUtils::extractTypeData(testReply* data , /*out*/ Dato* &dato2, /*out*/ DDS_Long &test_ret)
+void testReplyUtils::extractTypeData(testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret)
 {
-    DatoPluginSupport_copy_data(dato2, &data->dato2);
-    
-    test_ret = data->test_ret;            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    Dato_finalize(&dato2);dato2 = data.dato2;  
+    test_ret = data.test_ret;            
 }
 
  

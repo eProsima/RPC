@@ -19,9 +19,9 @@ class StructTestServerImpl
         virtual ~StructTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage duplicate(/*in*/ const Envio* ev, /*out*/ Recepcion* &duplicate_ret);
+        Recepcion duplicate(/*in*/ const Envio& ev);
          
-        eProsima::DDSRPC::ReturnMessage suma(/*in*/ const Envio* ev1, /*in*/ const Envio* ev2, /*out*/ Recepcion* &suma_ret);
+        Recepcion suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2);
 };
 
 #endif // _StructTestSERVER_IMPL_H_

@@ -19,11 +19,11 @@ class SequenceTestServerImpl
         virtual ~SequenceTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage getSLong(/*in*/ const largo* l1, /*inout*/ largo* &l2, /*out*/ largo* &l3, /*out*/ largo* &getSLong_ret);
+        largo getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3);
          
-        eProsima::DDSRPC::ReturnMessage getString(/*in*/ const cadena* s1, /*inout*/ cadena* &s2, /*out*/ cadena* &s3, /*out*/ cadena* &getString_ret);
+        cadena getString(/*in*/ const cadena& s1, /*inout*/ cadena& s2, /*out*/ cadena& s3);
          
-        eProsima::DDSRPC::ReturnMessage getStringBounded(/*in*/ const dattos* sb1, /*inout*/ dattos* &sb2, /*out*/ dattos* &sb3, /*out*/ dattos* &getStringBounded_ret);
+        dattos getStringBounded(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3);
 };
 
 #endif // _SequenceTestSERVER_IMPL_H_

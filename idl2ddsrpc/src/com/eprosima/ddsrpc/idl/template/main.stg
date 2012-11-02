@@ -17,11 +17,22 @@
 group main;
 
 varComplexDecl(typeName, name, create) ::= <<
-$typeName$ *$name$ = $if(create)$$typeName$PluginSupport_create_data()$else$NULL$endif$;
+$typeName$ $name$;
+$if(create)$
+memset(&$name$, 0, sizeof($typeName$));
+$endif$
+>>
+
+varComplexInitialize(typeName, name) ::= <<
+$if(!voidInitMap.(typeName))$
+$if(!typeInitMap.(typeName))$
+$typeName$_initialize(&$name$);
+$endif$    
+$endif$
 >>
 
 varComplexDel(typeName, name) ::= <<
-$typeName$PluginSupport_destroy_data($name$);
+$typeName$_finalize(&$name$);
 >>
 
 ReqRepIncludes(interfaceName) ::= <<
@@ -46,6 +57,10 @@ $if(create)$$type$$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$$reqre
 
 reqrepDestruction(type, reqrep, name, void) ::= <<
 $type$$reqrep$TypeSupport::delete_data($if(void)$($type$$reqrep$*)$endif$$name$);
+>>
+
+reqrepRefFinalize(type, reqrep, name) ::= <<
+$type$$reqrep$_finalize(&$name$);
 >>
 
 getTypename(funName, type, name) ::= <<
@@ -126,10 +141,6 @@ dependencies(conf) ::= <<
 nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; ddsrpc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
-createDH(type, name) ::= <<
-$type$PluginSupport_copy_data(&instance->$name$, $name$);
->>
-
 extractDH(type, name) ::= <<
-$type$PluginSupport_copy_data($name$, &data->$name$);
+$type$PluginSupport_copy_data(&$name$, &data.$name$);
 >>

@@ -74,13 +74,13 @@ public abstract class Param  implements Named{
 		return returnedValue;
 	}
 	
-	public String getIsRestrictedInput()
+	public String getIsOnlyOutput()
 	{
 		String returnedValue = null;
 		
-		if(isInput() && !isOutput())
+		if(!isInput() && isOutput())
 			returnedValue = "yes";
-		
+			
 		return returnedValue;
 	}
 	

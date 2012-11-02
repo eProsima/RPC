@@ -23,9 +23,13 @@ class StructTest_duplicateTask : public eProsima::DDSRPC::AsyncTask
         
         StructTest_duplicate& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            StructTest_duplicate &m_obj;
+           
+           duplicateReply m_reply;
 };
 
 class StructTest_sumaTask : public eProsima::DDSRPC::AsyncTask
@@ -43,9 +47,13 @@ class StructTest_sumaTask : public eProsima::DDSRPC::AsyncTask
         
         StructTest_suma& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            StructTest_suma &m_obj;
+           
+           sumaReply m_reply;
 };
 
 #endif // _StructTest_ASYNC_SUPPORT_H_

@@ -19,29 +19,29 @@ class BasicTypeTestServerImpl
         virtual ~BasicTypeTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage getOctet(/*in*/ const DDS_Octet oc1, /*inout*/ DDS_Octet &oc2, /*out*/ DDS_Octet &oc3, /*out*/ DDS_Octet &getOctet_ret);
+        DDS_Octet getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3);
          
-        eProsima::DDSRPC::ReturnMessage getChar(/*in*/ const DDS_Char ch1, /*inout*/ DDS_Char &ch2, /*out*/ DDS_Char &ch3, /*out*/ DDS_Char &getChar_ret);
+        DDS_Char getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3);
          
-        eProsima::DDSRPC::ReturnMessage getWChar(/*in*/ const DDS_Wchar wch1, /*inout*/ DDS_Wchar &wch2, /*out*/ DDS_Wchar &wch3, /*out*/ DDS_Wchar &getWChar_ret);
+        DDS_Wchar getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3);
          
-        eProsima::DDSRPC::ReturnMessage getShort(/*in*/ const DDS_Short sh1, /*inout*/ DDS_Short &sh2, /*out*/ DDS_Short &sh3, /*out*/ DDS_Short &getShort_ret);
+        DDS_Short getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3);
          
-        eProsima::DDSRPC::ReturnMessage getUShort(/*in*/ const DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort &ush2, /*out*/ DDS_UnsignedShort &ush3, /*out*/ DDS_UnsignedShort &getUShort_ret);
+        DDS_UnsignedShort getUShort(/*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3);
          
-        eProsima::DDSRPC::ReturnMessage getLong(/*in*/ const DDS_Long lo1, /*inout*/ DDS_Long &lo2, /*out*/ DDS_Long &lo3, /*out*/ DDS_Long &getLong_ret);
+        DDS_Long getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3);
          
-        eProsima::DDSRPC::ReturnMessage getULong(/*in*/ const DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong &ulo2, /*out*/ DDS_UnsignedLong &ulo3, /*out*/ DDS_UnsignedLong &getULong_ret);
+        DDS_UnsignedLong getULong(/*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3);
          
-        eProsima::DDSRPC::ReturnMessage getLLong(/*in*/ const DDS_LongLong llo1, /*inout*/ DDS_LongLong &llo2, /*out*/ DDS_LongLong &llo3, /*out*/ DDS_LongLong &getLLong_ret);
+        DDS_LongLong getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3);
          
-        eProsima::DDSRPC::ReturnMessage getULLong(/*in*/ const DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong &ullo2, /*out*/ DDS_UnsignedLongLong &ullo3, /*out*/ DDS_UnsignedLongLong &getULLong_ret);
+        DDS_UnsignedLongLong getULLong(/*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3);
          
-        eProsima::DDSRPC::ReturnMessage getFloat(/*in*/ const DDS_Float fl1, /*inout*/ DDS_Float &fl2, /*out*/ DDS_Float &fl3, /*out*/ DDS_Float &getFloat_ret);
+        DDS_Float getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3);
          
-        eProsima::DDSRPC::ReturnMessage getDouble(/*in*/ const DDS_Double do1, /*inout*/ DDS_Double &do2, /*out*/ DDS_Double &do3, /*out*/ DDS_Double &getDouble_ret);
+        DDS_Double getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3);
          
-        eProsima::DDSRPC::ReturnMessage getBoolean(/*in*/ const DDS_Boolean bo1, /*inout*/ DDS_Boolean &bo2, /*out*/ DDS_Boolean &bo3, /*out*/ DDS_Boolean &getBoolean_ret);
+        DDS_Boolean getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3);
 };
 
 #endif // _BasicTypeTestSERVER_IMPL_H_

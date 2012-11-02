@@ -5,79 +5,98 @@
 
 #include "EnumYStringTestProxy.h"
 #include "EnumYStringTestRequestReplyPlugin.h"
+#include "exceptions/Exceptions.h"
 
 int main(int argc, char **argv)
 {
-	EnumYStringTestProxy *proxy = new EnumYStringTestProxy();
+    EnumYStringTestProxy *proxy = new EnumYStringTestProxy();
 
-	Valores  v1 = VALOR1;    
-	Valores  v2 = VALOR2;    
-	Valores  v3 = VALOR1;    
-	Valores  getEnum_ret = VALOR1;       
-	eProsima::DDSRPC::ReturnMessage  getEnumRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+    Valores  v1 = VALOR1;    
+    Valores  v2 = VALOR2;    
+    Valores  v3 = VALOR1;       
+    Valores  getEnumRetValue = VALOR1;    
 
-	getEnumRetValue = proxy->getEnum(v1  , v2  , v3  , getEnum_ret  );
+    try
+    {
+        getEnumRetValue = proxy->getEnum(v1, v2, v3);
 
-	if(getEnumRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			v3 != VALOR2 ||
-			getEnum_ret != VALOR1 ||
-			v2 != VALOR1 ||
-			v1 != VALOR1)
-	{
-		printf("TEST FAILED<getEnum>\n");
-		_exit(-1);
-	}       
+        if(v3 != VALOR2 ||
+                getEnumRetValue != VALOR1 ||
+                v2 != VALOR1 ||
+                v1 != VALOR1)
+        {
+            printf("TEST FAILED<getEnum>: Wrong values\n");
+            _exit(-1);
+        }       
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getEnum>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	char*  s1  = DDS::String_dup("PRUEBA");       
-	char*  s2  = DDS::String_dup("PRUEBA2");       
-	char*  s3  = NULL;    
-	char*  getString_ret  = NULL;       
-	eProsima::DDSRPC::ReturnMessage  getStringRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+    char*  s1  = DDS::String_dup("PRUEBA");       
+    char*  s2  = DDS::String_dup("PRUEBA2");       
+    char*  s3  = NULL;    
+    char*  getStringRetValue = NULL;       
 
-	getStringRetValue = proxy->getString(s1  ,s2  ,s3  , getString_ret  );
+    try
+    {
+        getStringRetValue = proxy->getString(s1, s2, s3);
 
-	if(getStringRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			strcmp(s3, "PRUEBA2") != 0 ||
-			strcmp(getString_ret, "PRUEBA") != 0 ||
-			strcmp(s2, "PRUEBAPRUEBA2") != 0 ||
-			strcmp(s1, "PRUEBA") != 0)
-	{
-		printf("TEST FAILED<getString>\n");
-		_exit(-1);
-	}       
+        if(strcmp(s3, "PRUEBA2") != 0 ||
+                strcmp(getStringRetValue, "PRUEBA") != 0 ||
+                strcmp(s2, "PRUEBAPRUEBA2") != 0 ||
+                strcmp(s1, "PRUEBA") != 0)
+        {
+            printf("TEST FAILED<getString>: Wrong values\n");
+            _exit(-1);
+        }       
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getString>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	if(s1 != NULL) DDS::String_free(s1);    
-	if(s2 != NULL) DDS::String_free(s2);    
-	if(s3 != NULL) DDS::String_free(s3);    
-	if(getString_ret != NULL) DDS::String_free(getString_ret);    
-	
-	char*  sb1  = DDS::String_dup("PRUEBA");       
-	char*  sb2  = DDS::String_dup("PRUEBA2");       
-	char*  sb3  = NULL;    
-	char*  getStringBounded_ret  = NULL;       
-	eProsima::DDSRPC::ReturnMessage  getStringBoundedRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+    if(s1 != NULL) DDS::String_free(s1);    
+    if(s2 != NULL) DDS::String_free(s2);    
+    if(s3 != NULL) DDS::String_free(s3);    
+    if(getStringRetValue != NULL) DDS::String_free(getStringRetValue);    
 
-	getStringBoundedRetValue = proxy->getStringBounded(sb1  ,sb2  ,sb3  , getStringBounded_ret  );
+    char*  sb1  = DDS::String_dup("PRUEBA");       
+    char*  sb2  = DDS::String_dup("PRUEBA2");       
+    char*  sb3  = NULL;    
+    char*  getStringBoundedRetValue = NULL;       
 
-	if(getStringBoundedRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			strcmp(sb3, "PRUEBA2") != 0 ||
-			strcmp(getStringBounded_ret, "PRUEBA") != 0 ||
-			strcmp(sb2, "PRUEBAPRUEBA2") != 0 ||
-			strcmp(sb1, "PRUEBA") != 0)
-	{
-		printf("TEST FAILED<getStringBounded>\n");
-		_exit(-1);
-	}    
+    try
+    {
+        getStringBoundedRetValue = proxy->getStringBounded(sb1, sb2, sb3);
 
-	if(sb1 != NULL) DDS::String_free(sb1);    
-	if(sb2 != NULL) DDS::String_free(sb2);    
-	if(sb3 != NULL) DDS::String_free(sb3);    
-	if(getStringBounded_ret != NULL) DDS::String_free(getStringBounded_ret);
+        if(strcmp(sb3, "PRUEBA2") != 0 ||
+                strcmp(getStringBoundedRetValue, "PRUEBA") != 0 ||
+                strcmp(sb2, "PRUEBAPRUEBA2") != 0 ||
+                strcmp(sb1, "PRUEBA") != 0)
+        {
+            printf("TEST FAILED<getStringBounded>: Wrong values\n");
+            _exit(-1);
+        }    
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getStringBounded>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	printf("TEST SUCCESFULLY\n");
+    if(sb1 != NULL) DDS::String_free(sb1);    
+    if(sb2 != NULL) DDS::String_free(sb2);    
+    if(sb3 != NULL) DDS::String_free(sb3);    
+    if(getStringBoundedRetValue != NULL) DDS::String_free(getStringBoundedRetValue);
 
-	delete(proxy);
+    printf("TEST SUCCESFULLY\n");
 
-	_exit(0);
-	return 0;
+    delete(proxy);
+
+    _exit(0);
+    return 0;
 }

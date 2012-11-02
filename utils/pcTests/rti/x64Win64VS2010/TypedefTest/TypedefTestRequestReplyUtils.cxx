@@ -23,20 +23,15 @@ const char* getLargoRequestUtils::registerType(DDS::DomainParticipant *clientPar
     return typeName;
 }
 
-getLargoRequest* getLargoRequestUtils::createTypeData(/*in*/ const largo l1)
+void getLargoRequestUtils::setTypeData(getLargoRequest& instance, /*in*/ largo l1)
 {
-    getLargoRequest* instance = getLargoRequestTypeSupport::create_data();
-
-    instance->l1 = l1;
+    instance.l1 = l1;
     
-    
-    return instance;
 }
 
-void getLargoRequestUtils::extractTypeData(getLargoRequest* data , /*in*/ largo &l1)
+void getLargoRequestUtils::extractTypeData(getLargoRequest& data, /*in*/ largo& l1)
 {
-    l1 = data->l1;
-    
+    l1 = data.l1;  
     
 }
 
@@ -58,21 +53,17 @@ const char* getLargoReplyUtils::registerType(DDS::DomainParticipant *clientParti
     return typeName;
 }
 
-getLargoReply* getLargoReplyUtils::createTypeData(/*out*/ const largo l2, /*out*/ const largo getLargo_ret)
+void getLargoReplyUtils::setTypeData(getLargoReply& instance, /*out*/ largo l2, /*out*/ largo getLargo_ret)
 {
-    getLargoReply* instance = getLargoReplyTypeSupport::create_data();
-
-    instance->l2 = l2;
-    
-    instance->getLargo_ret = getLargo_ret;            
-    return instance;
+    instance.l2 = l2;
+    instance.getLargo_ret = getLargo_ret;            
 }
 
-void getLargoReplyUtils::extractTypeData(getLargoReply* data , /*out*/ largo &l2, /*out*/ largo &getLargo_ret)
+void getLargoReplyUtils::extractTypeData(getLargoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret)
 {
-    l2 = data->l2;
-    
-    getLargo_ret = data->getLargo_ret;            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    l2 = data.l2;  
+    getLargo_ret = data.getLargo_ret;            
 }
 
 
@@ -93,20 +84,15 @@ const char* getLarguisimoRequestUtils::registerType(DDS::DomainParticipant *clie
     return typeName;
 }
 
-getLarguisimoRequest* getLarguisimoRequestUtils::createTypeData(/*in*/ const larguisimo ll1)
+void getLarguisimoRequestUtils::setTypeData(getLarguisimoRequest& instance, /*in*/ larguisimo ll1)
 {
-    getLarguisimoRequest* instance = getLarguisimoRequestTypeSupport::create_data();
-
-    instance->ll1 = ll1;
+    instance.ll1 = ll1;
     
-    
-    return instance;
 }
 
-void getLarguisimoRequestUtils::extractTypeData(getLarguisimoRequest* data , /*in*/ larguisimo &ll1)
+void getLarguisimoRequestUtils::extractTypeData(getLarguisimoRequest& data, /*in*/ larguisimo& ll1)
 {
-    ll1 = data->ll1;
-    
+    ll1 = data.ll1;  
     
 }
 
@@ -128,21 +114,17 @@ const char* getLarguisimoReplyUtils::registerType(DDS::DomainParticipant *client
     return typeName;
 }
 
-getLarguisimoReply* getLarguisimoReplyUtils::createTypeData(/*out*/ const larguisimo ll2, /*out*/ const larguisimo getLarguisimo_ret)
+void getLarguisimoReplyUtils::setTypeData(getLarguisimoReply& instance, /*out*/ larguisimo ll2, /*out*/ larguisimo getLarguisimo_ret)
 {
-    getLarguisimoReply* instance = getLarguisimoReplyTypeSupport::create_data();
-
-    instance->ll2 = ll2;
-    
-    instance->getLarguisimo_ret = getLarguisimo_ret;            
-    return instance;
+    instance.ll2 = ll2;
+    instance.getLarguisimo_ret = getLarguisimo_ret;            
 }
 
-void getLarguisimoReplyUtils::extractTypeData(getLarguisimoReply* data , /*out*/ larguisimo &ll2, /*out*/ larguisimo &getLarguisimo_ret)
+void getLarguisimoReplyUtils::extractTypeData(getLarguisimoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret)
 {
-    ll2 = data->ll2;
-    
-    getLarguisimo_ret = data->getLarguisimo_ret;            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    ll2 = data.ll2;  
+    getLarguisimo_ret = data.getLarguisimo_ret;            
 }
 
 
@@ -163,20 +145,15 @@ const char* getDatosDefRequestUtils::registerType(DDS::DomainParticipant *client
     return typeName;
 }
 
-getDatosDefRequest* getDatosDefRequestUtils::createTypeData(/*in*/ const DatosDef* d1)
+void getDatosDefRequestUtils::setTypeData(getDatosDefRequest& instance, /*in*/ const DatosDef& d1)
 {
-    getDatosDefRequest* instance = getDatosDefRequestTypeSupport::create_data();
-
-    DatosDefPluginSupport_copy_data(&instance->d1, d1);
+    instance.d1 = d1;
     
-    
-    return instance;
 }
 
-void getDatosDefRequestUtils::extractTypeData(getDatosDefRequest* data , /*in*/ DatosDef* &d1)
+void getDatosDefRequestUtils::extractTypeData(getDatosDefRequest& data, /*in*/ DatosDef& d1)
 {
-    d1 = &data->d1;
-    
+    d1 = data.d1;  
     
 }
 
@@ -198,21 +175,17 @@ const char* getDatosDefReplyUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-getDatosDefReply* getDatosDefReplyUtils::createTypeData(/*out*/ const DatosDef* d2, /*out*/ const DatosDef* getDatosDef_ret)
+void getDatosDefReplyUtils::setTypeData(getDatosDefReply& instance, /*out*/ const DatosDef& d2, /*out*/ const DatosDef& getDatosDef_ret)
 {
-    getDatosDefReply* instance = getDatosDefReplyTypeSupport::create_data();
-
-    DatosDefPluginSupport_copy_data(&instance->d2, d2);
-    
-    DatosDefPluginSupport_copy_data(&instance->getDatosDef_ret, getDatosDef_ret);            
-    return instance;
+    instance.d2 = d2;
+    instance.getDatosDef_ret = getDatosDef_ret;            
 }
 
-void getDatosDefReplyUtils::extractTypeData(getDatosDefReply* data , /*out*/ DatosDef* &d2, /*out*/ DatosDef* &getDatosDef_ret)
+void getDatosDefReplyUtils::extractTypeData(getDatosDefReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret)
 {
-    DatosDefPluginSupport_copy_data(d2, &data->d2);
-    
-    DatosDefPluginSupport_copy_data(getDatosDef_ret, &data->getDatosDef_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    d2 = data.d2;  
+    getDatosDef_ret = data.getDatosDef_ret;            
 }
 
 
@@ -233,20 +206,15 @@ const char* getDatosDefondoRequestUtils::registerType(DDS::DomainParticipant *cl
     return typeName;
 }
 
-getDatosDefondoRequest* getDatosDefondoRequestUtils::createTypeData(/*in*/ const DatosDefondo* dd1)
+void getDatosDefondoRequestUtils::setTypeData(getDatosDefondoRequest& instance, /*in*/ const DatosDefondo& dd1)
 {
-    getDatosDefondoRequest* instance = getDatosDefondoRequestTypeSupport::create_data();
-
-    DatosDefondoPluginSupport_copy_data(&instance->dd1, dd1);
+    instance.dd1 = dd1;
     
-    
-    return instance;
 }
 
-void getDatosDefondoRequestUtils::extractTypeData(getDatosDefondoRequest* data , /*in*/ DatosDefondo* &dd1)
+void getDatosDefondoRequestUtils::extractTypeData(getDatosDefondoRequest& data, /*in*/ DatosDefondo& dd1)
 {
-    dd1 = &data->dd1;
-    
+    dd1 = data.dd1;  
     
 }
 
@@ -268,21 +236,17 @@ const char* getDatosDefondoReplyUtils::registerType(DDS::DomainParticipant *clie
     return typeName;
 }
 
-getDatosDefondoReply* getDatosDefondoReplyUtils::createTypeData(/*out*/ const DatosDefondo* dd2, /*out*/ const DatosDefondo* getDatosDefondo_ret)
+void getDatosDefondoReplyUtils::setTypeData(getDatosDefondoReply& instance, /*out*/ const DatosDefondo& dd2, /*out*/ const DatosDefondo& getDatosDefondo_ret)
 {
-    getDatosDefondoReply* instance = getDatosDefondoReplyTypeSupport::create_data();
-
-    DatosDefondoPluginSupport_copy_data(&instance->dd2, dd2);
-    
-    DatosDefondoPluginSupport_copy_data(&instance->getDatosDefondo_ret, getDatosDefondo_ret);            
-    return instance;
+    instance.dd2 = dd2;
+    instance.getDatosDefondo_ret = getDatosDefondo_ret;            
 }
 
-void getDatosDefondoReplyUtils::extractTypeData(getDatosDefondoReply* data , /*out*/ DatosDefondo* &dd2, /*out*/ DatosDefondo* &getDatosDefondo_ret)
+void getDatosDefondoReplyUtils::extractTypeData(getDatosDefondoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret)
 {
-    DatosDefondoPluginSupport_copy_data(dd2, &data->dd2);
-    
-    DatosDefondoPluginSupport_copy_data(getDatosDefondo_ret, &data->getDatosDefondo_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    dd2 = data.dd2;  
+    getDatosDefondo_ret = data.getDatosDefondo_ret;            
 }
 
 
@@ -303,22 +267,15 @@ const char* getCadenaRequestUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-getCadenaRequest* getCadenaRequestUtils::createTypeData(/*in*/ const cadena c1)
+void getCadenaRequestUtils::setTypeData(getCadenaRequest& instance, /*in*/ cadena c1)
 {
-    getCadenaRequest* instance = getCadenaRequestTypeSupport::create_data();
-
-    if(instance->c1 != NULL)
-       free(instance->c1);
-    instance->c1 = strdup(c1);
+    instance.c1 = c1;
     
-    
-    return instance;
 }
 
-void getCadenaRequestUtils::extractTypeData(getCadenaRequest* data , /*in*/ cadena &c1)
+void getCadenaRequestUtils::extractTypeData(getCadenaRequest& data, /*in*/ cadena& c1)
 {
-    c1 = data->c1;
-    
+    c1 = data.c1;  
     
 }
 
@@ -340,25 +297,17 @@ const char* getCadenaReplyUtils::registerType(DDS::DomainParticipant *clientPart
     return typeName;
 }
 
-getCadenaReply* getCadenaReplyUtils::createTypeData(/*out*/ const cadena c2, /*out*/ const cadena getCadena_ret)
+void getCadenaReplyUtils::setTypeData(getCadenaReply& instance, /*out*/ cadena c2, /*out*/ cadena getCadena_ret)
 {
-    getCadenaReply* instance = getCadenaReplyTypeSupport::create_data();
-
-    if(instance->c2 != NULL)
-       free(instance->c2);
-    instance->c2 = strdup(c2);
-    
-    if(instance->getCadena_ret != NULL)
-       free(instance->getCadena_ret);
-    instance->getCadena_ret = strdup(getCadena_ret);            
-    return instance;
+    instance.c2 = c2;
+    instance.getCadena_ret = getCadena_ret;            
 }
 
-void getCadenaReplyUtils::extractTypeData(getCadenaReply* data , /*out*/ cadena &c2, /*out*/ cadena &getCadena_ret)
+void getCadenaReplyUtils::extractTypeData(getCadenaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret)
 {
-    c2 = strdup(data->c2);
-    
-    getCadena_ret = strdup(data->getCadena_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    c2 = data.c2;  
+    getCadena_ret = data.getCadena_ret;            
 }
 
 
@@ -379,22 +328,15 @@ const char* getCorreaRequestUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-getCorreaRequest* getCorreaRequestUtils::createTypeData(/*in*/ const correa cc1)
+void getCorreaRequestUtils::setTypeData(getCorreaRequest& instance, /*in*/ correa cc1)
 {
-    getCorreaRequest* instance = getCorreaRequestTypeSupport::create_data();
-
-    if(instance->cc1 != NULL)
-       free(instance->cc1);
-    instance->cc1 = strdup(cc1);
+    instance.cc1 = cc1;
     
-    
-    return instance;
 }
 
-void getCorreaRequestUtils::extractTypeData(getCorreaRequest* data , /*in*/ correa &cc1)
+void getCorreaRequestUtils::extractTypeData(getCorreaRequest& data, /*in*/ correa& cc1)
 {
-    cc1 = data->cc1;
-    
+    cc1 = data.cc1;  
     
 }
 
@@ -416,25 +358,17 @@ const char* getCorreaReplyUtils::registerType(DDS::DomainParticipant *clientPart
     return typeName;
 }
 
-getCorreaReply* getCorreaReplyUtils::createTypeData(/*out*/ const correa cc2, /*out*/ const correa getCorrea_ret)
+void getCorreaReplyUtils::setTypeData(getCorreaReply& instance, /*out*/ correa cc2, /*out*/ correa getCorrea_ret)
 {
-    getCorreaReply* instance = getCorreaReplyTypeSupport::create_data();
-
-    if(instance->cc2 != NULL)
-       free(instance->cc2);
-    instance->cc2 = strdup(cc2);
-    
-    if(instance->getCorrea_ret != NULL)
-       free(instance->getCorrea_ret);
-    instance->getCorrea_ret = strdup(getCorrea_ret);            
-    return instance;
+    instance.cc2 = cc2;
+    instance.getCorrea_ret = getCorrea_ret;            
 }
 
-void getCorreaReplyUtils::extractTypeData(getCorreaReply* data , /*out*/ correa &cc2, /*out*/ correa &getCorrea_ret)
+void getCorreaReplyUtils::extractTypeData(getCorreaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret)
 {
-    cc2 = strdup(data->cc2);
-    
-    getCorrea_ret = strdup(data->getCorrea_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    cc2 = data.cc2;  
+    getCorrea_ret = data.getCorrea_ret;            
 }
 
  

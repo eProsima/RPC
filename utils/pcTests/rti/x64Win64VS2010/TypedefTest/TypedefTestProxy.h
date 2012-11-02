@@ -12,7 +12,7 @@
 class TypedefTest_getLargo
 {
     public:
-        virtual void getLargo(/*out*/ const largo l2, /*out*/ const largo getLargo_ret)
+        virtual void getLargo(/*out*/ largo l2, largo &getLargo_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class TypedefTest_getLargo
 class TypedefTest_getLarguisimo
 {
     public:
-        virtual void getLarguisimo(/*out*/ const larguisimo ll2, /*out*/ const larguisimo getLarguisimo_ret)
+        virtual void getLarguisimo(/*out*/ larguisimo ll2, larguisimo &getLarguisimo_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class TypedefTest_getLarguisimo
 class TypedefTest_getDatosDef
 {
     public:
-        virtual void getDatosDef(/*out*/ const DatosDef* d2, /*out*/ const DatosDef* getDatosDef_ret)
+        virtual void getDatosDef(/*out*/ const DatosDef& d2, DatosDef &getDatosDef_ret)
         {
         }
    
@@ -45,7 +45,7 @@ class TypedefTest_getDatosDef
 class TypedefTest_getDatosDefondo
 {
     public:
-        virtual void getDatosDefondo(/*out*/ const DatosDefondo* dd2, /*out*/ const DatosDefondo* getDatosDefondo_ret)
+        virtual void getDatosDefondo(/*out*/ const DatosDefondo& dd2, DatosDefondo &getDatosDefondo_ret)
         {
         }
    
@@ -56,7 +56,7 @@ class TypedefTest_getDatosDefondo
 class TypedefTest_getCadena
 {
     public:
-        virtual void getCadena(/*out*/ const cadena c2, /*out*/ const cadena getCadena_ret)
+        virtual void getCadena(/*out*/ cadena c2, cadena &getCadena_ret)
         {
         }
    
@@ -67,7 +67,7 @@ class TypedefTest_getCadena
 class TypedefTest_getCorrea
 {
     public:
-        virtual void getCorrea(/*out*/ const correa cc2, /*out*/ const correa getCorrea_ret)
+        virtual void getCorrea(/*out*/ correa cc2, correa &getCorrea_ret)
         {
         }
    
@@ -77,100 +77,73 @@ class TypedefTest_getCorrea
 };
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class TypedefTestProxyH : public eProsima::DDSRPC::Client
+class TypedefTestProxy : public eProsima::DDSRPC::Client
 {
     public:
-
+    
         /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        TypedefTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        TypedefTestProxy(int domainId = 0, long timeout = 10000);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server's proxy.
+         *
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         */
+        TypedefTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
-        virtual ~TypedefTestProxyH();
+        virtual ~TypedefTestProxy();
         
          
-        eProsima::DDSRPC::ReturnMessage getLargo(/*in*/ const largo l1, /*out*/ largo &l2, /*out*/ largo &getLargo_ret);
+        largo getLargo(/*in*/ largo l1, /*out*/ largo& l2);
          
-        eProsima::DDSRPC::ReturnMessage getLarguisimo(/*in*/ const larguisimo ll1, /*out*/ larguisimo &ll2, /*out*/ larguisimo &getLarguisimo_ret);
+        larguisimo getLarguisimo(/*in*/ larguisimo ll1, /*out*/ larguisimo& ll2);
          
-        eProsima::DDSRPC::ReturnMessage getDatosDef(/*in*/ const DatosDef* d1, /*out*/ DatosDef* &d2, /*out*/ DatosDef* &getDatosDef_ret);
+        DatosDef getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosDef& d2);
          
-        eProsima::DDSRPC::ReturnMessage getDatosDefondo(/*in*/ const DatosDefondo* dd1, /*out*/ DatosDefondo* &dd2, /*out*/ DatosDefondo* &getDatosDefondo_ret);
+        DatosDefondo getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2);
          
-        eProsima::DDSRPC::ReturnMessage getCadena(/*in*/ const cadena c1, /*out*/ cadena &c2, /*out*/ cadena &getCadena_ret);
+        cadena getCadena(/*in*/ cadena c1, /*out*/ cadena& c2);
          
-        eProsima::DDSRPC::ReturnMessage getCorrea(/*in*/ const correa cc1, /*out*/ correa &cc2, /*out*/ correa &getCorrea_ret);
+        correa getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2);
         
          
-        eProsima::DDSRPC::ReturnMessage getLargo_async(TypedefTest_getLargo &obj, /*in*/ const largo l1);
+        void getLargo_async(TypedefTest_getLargo &obj, /*in*/ largo l1);
          
-        eProsima::DDSRPC::ReturnMessage getLarguisimo_async(TypedefTest_getLarguisimo &obj, /*in*/ const larguisimo ll1);
+        void getLarguisimo_async(TypedefTest_getLarguisimo &obj, /*in*/ larguisimo ll1);
          
-        eProsima::DDSRPC::ReturnMessage getDatosDef_async(TypedefTest_getDatosDef &obj, /*in*/ const DatosDef* d1);
+        void getDatosDef_async(TypedefTest_getDatosDef &obj, /*in*/ const DatosDef& d1);
          
-        eProsima::DDSRPC::ReturnMessage getDatosDefondo_async(TypedefTest_getDatosDefondo &obj, /*in*/ const DatosDefondo* dd1);
+        void getDatosDefondo_async(TypedefTest_getDatosDefondo &obj, /*in*/ const DatosDefondo& dd1);
          
-        eProsima::DDSRPC::ReturnMessage getCadena_async(TypedefTest_getCadena &obj, /*in*/ const cadena c1);
+        void getCadena_async(TypedefTest_getCadena &obj, /*in*/ cadena c1);
          
-        eProsima::DDSRPC::ReturnMessage getCorrea_async(TypedefTest_getCorrea &obj, /*in*/ const correa cc1);
+        void getCorrea_async(TypedefTest_getCorrea &obj, /*in*/ correa cc1);
         
     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
         eProsima::DDSRPC::ClientRPC *getLargo_Service;
         eProsima::DDSRPC::ClientRPC *getLarguisimo_Service;
         eProsima::DDSRPC::ClientRPC *getDatosDef_Service;
         eProsima::DDSRPC::ClientRPC *getDatosDefondo_Service;
         eProsima::DDSRPC::ClientRPC *getCadena_Service;
         eProsima::DDSRPC::ClientRPC *getCorrea_Service; 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class TypedefTestProxy : public TypedefTestProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        TypedefTestProxy(int domainId = 0, long timeout = 10000);
-        
-        virtual ~TypedefTestProxy();
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class TypedefTestWANProxy : public TypedefTestProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        TypedefTestWANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
-        
-        virtual ~TypedefTestWANProxy();
 };
 
 #endif // _TypedefTest_PROXY_H_

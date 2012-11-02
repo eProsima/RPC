@@ -23,9 +23,13 @@ class MultithreadTest_testTask : public eProsima::DDSRPC::AsyncTask
         
         MultithreadTest_test& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            MultithreadTest_test &m_obj;
+           
+           testReply m_reply;
 };
 
 #endif // _MultithreadTest_ASYNC_SUPPORT_H_

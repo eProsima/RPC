@@ -9,10 +9,26 @@
 #include "transports/TCPTransport.h"
 #include "UnionTestRequestReplyPlugin.h"
 #include "UnionTestAsyncSupport.h"
+#include "exceptions/Exceptions.h"
 
+UnionTestProxy::UnionTestProxy(int domainId, long timeout) :
+    Client(NULL, domainId, timeout)
+{
+    createRPCs();
+}
 
-UnionTestProxyH::UnionTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+UnionTestProxy::UnionTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
     Client(transport, domainId, timeout)
+{
+    createRPCs();
+}
+
+UnionTestProxy::~UnionTestProxy()
+{
+    delete getEmpleado_Service;
+}
+
+void UnionTestProxy::createRPCs()
 {
     this->getEmpleado_Service = new getEmpleadoClientRPC("getEmpleado",
                                   getEmpleadoRequestUtils::registerType(getParticipant()),
@@ -21,86 +37,61 @@ UnionTestProxyH::UnionTestProxyH(eProsima::DDSRPC::Transport *transport, int dom
 
 }
 
-UnionTestProxyH::~UnionTestProxyH()
-{
-    delete getEmpleado_Service;
-}
-
  
-eProsima::DDSRPC::ReturnMessage UnionTestProxyH::getEmpleado(/*in*/ const Empleado* em1, /*inout*/ Empleado* &em2, /*out*/ Empleado* &em3, /*out*/ Empleado* &getEmpleado_ret) 
+Empleado UnionTestProxy::getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Empleado& em2, /*out*/ Empleado& em3) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getEmpleadoRequest *instance = NULL;
-    getEmpleadoReply* retInstance = getEmpleadoReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    Empleado getEmpleado_ret;
+        
+    getEmpleadoRequest instance;
+    getEmpleadoReply retInstance;
 
-    instance = getEmpleadoRequestUtils::createTypeData(em1  , em2  );
-    returnedValue = getEmpleado_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getEmpleadoReply_initialize(&retInstance);    
+    getEmpleadoRequestUtils::setTypeData(instance, em1  , em2  );
+    retcode = getEmpleado_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getEmpleadoReplyUtils::extractTypeData(retInstance, retcode, em2  , em3  , getEmpleado_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getEmpleadoReplyUtils::extractTypeData(retInstance, em2  , em3  , getEmpleado_ret  );
-            //getEmpleadoReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getEmpleadoReplyTypeSupport::delete_data(retInstance);
-    getEmpleadoRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getEmpleado_ret;
 }
 
  
-eProsima::DDSRPC::ReturnMessage UnionTestProxyH::getEmpleado_async(UnionTest_getEmpleado &obj, /*in*/ const Empleado* em1, /*inout*/ const Empleado* em2) 
+void UnionTestProxy::getEmpleado_async(UnionTest_getEmpleado &obj, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getEmpleadoRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getEmpleadoRequest instance;
     UnionTest_getEmpleadoTask *task = NULL;
-    instance = getEmpleadoRequestUtils::createTypeData(em1  , em2  );
+    getEmpleadoRequestUtils::setTypeData(instance, em1  , em2  );
     task = new UnionTest_getEmpleadoTask(obj, this);
-    returnedValue = getEmpleado_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getEmpleado_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getEmpleadoRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
-}
-
-UnionTestProxy::UnionTestProxy(int domainId, long timeout) :
-    UnionTestProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
-{
-}
-
-UnionTestProxy::~UnionTestProxy()
-{
-}
-
-UnionTestWANProxy::UnionTestWANProxy(const char *to_connect, int domainId, long timeout) :
-    UnionTestProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
-{
-}
-
-UnionTestWANProxy::~UnionTestWANProxy()
-{
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }

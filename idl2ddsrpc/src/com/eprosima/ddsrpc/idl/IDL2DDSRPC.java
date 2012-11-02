@@ -484,7 +484,6 @@ public class IDL2DDSRPC
     {
         final String METHOD_NAME = "genHeaderAndImpl";
         int returnedValue = -1;
-        String returnType = "eProsima::DDSRPC::ReturnMessage";
 
         // first load main language template
         StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, baseTemplateGroup);
@@ -523,8 +522,6 @@ public class IDL2DDSRPC
             	funDefAsync = templatesGroup.getInstanceOf(functionTemplateId + "Async");
             }
             
-            // Get the type declaration of "eProsima::DDSRPC::ReturnMessage".
-            TypeDecl returnTypeDecl = ifc.getModule().getTypeDecl(returnType);
 
             Operation op = null;
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); )
@@ -536,16 +533,16 @@ public class IDL2DDSRPC
                 		op.getName(), (op.isOneway() ? "true" : null));			
                 
                 // Function Declaration
-                funDecl.setAttribute("type", returnTypeDecl);
+                funDecl.setAttribute("rettype", op.getReturnType());
                 funDecl.setAttribute("name", op.getName());
 
                 // Function Definition
-                funDef.setAttribute("type", returnTypeDecl);
+                funDef.setAttribute("rettype", op.getReturnType());
                 funDef.setAttribute("name", op.getName());
                 funDef.setAttribute("interfaceName", ifc.getName());   
                 
                 // Function call
-                funCall.setAttribute("type", returnTypeDecl);
+                funCall.setAttribute("rettype", op.getReturnType());
                 funCall.setAttribute("name", op.getName());
                 
                 // Asynchronous templates.
@@ -553,12 +550,10 @@ public class IDL2DDSRPC
                 {
                 	// Function Definition.
                 	funDeclAsync.setAttribute("interfaceName", ifc.getName());
-                	funDeclAsync.setAttribute("type", returnTypeDecl);
                 	funDeclAsync.setAttribute("name", op.getName());
                 	classDeclAsync.setAttribute("interfaceName", ifc.getName());
-                	classDeclAsync.setAttribute("type", returnTypeDecl);
+                	classDeclAsync.setAttribute("rettype", op.getReturnType());
                 	classDeclAsync.setAttribute("name", op.getName());
-                	funDefAsync.setAttribute("type", returnTypeDecl);
                 	funDefAsync.setAttribute("name", op.getName());
                 	funDefAsync.setAttribute("interfaceName", ifc.getName());
                 }
@@ -594,23 +589,7 @@ public class IDL2DDSRPC
                     		classDeclAsync.setAttribute("outParams", parameter);
                     }
                 }
-                // Return Value
-                if(!"void".equals(op.getReturnType().getTypeName()))
-                {
-                	// Set parameter in funDecl
-                    funDecl.setAttribute("params", op.getReturnType());
-                    // Set parameter in funDef.
-                    funDef.setAttribute("params", op.getReturnType());
-                    funDef.setAttribute("outParams", op.getReturnType());
-                    // Set parameter in funCall.
-                    funCall.setAttribute("params",  op.getReturnType());
-                    // Asynchronous templates.
-                    if(withAsync)
-                    {
-                    	// Set parameter in classDeclAsync.
-                    	classDeclAsync.setAttribute("outParams", op.getReturnType());
-                    }
-                }
+
                 // In case of oneway function, set the property
                 if(op.isOneway())
                 	funDef.setAttribute("isOneway", "true");
@@ -875,6 +854,10 @@ public class IDL2DDSRPC
                     headerReply.setAttribute("returnType", op.getReturnType());					
                     definitionReply.setAttribute("returnType", op.getReturnType());
                 }
+                
+                headerReply.setAttribute("isReply", "yes");
+                definitionReply.setAttribute("isReply", "yes");
+                
                 headerFile.setAttribute("classes", headerRequest.toString());
                 definitionFile.setAttribute("classes", definitionRequest.toString());
 
@@ -946,7 +929,7 @@ public class IDL2DDSRPC
                 
                 if(!"void".equals(op.getReturnType().getTypeName()))
                 {
-                    reply.setAttribute("params", op.getReturnType());
+                    reply.setAttribute("return", op.getReturnType());
                 }
                 
                 theFile.setAttribute("types", request.toString());

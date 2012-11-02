@@ -56,7 +56,8 @@ namespace eProsima
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param transport The transport that will be use the server proxy.
+				 * \param transport The transport that will be use the server's proxy. This class doesn't delete this object in its destructor.
+				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
 				 * \param milliseconds Timout in milliseconds for all requests.
 				 * \exception eProsima::DDSRPC::ResourceException 
@@ -82,6 +83,15 @@ namespace eProsima
 
 				/// \brief Timeout used in each remote procedure call. It value is in milliseconds.
                 long m_timeout;
+
+				/**
+				 * \brief If the transport was created by this class because it is the default UDPTransport,
+				 *          then this attribute has the true value. In other case the value will be false.
+				 */
+				bool m_defaultTransport;
+
+				/// \brief Pointer to the transport which this server's proxy uses.
+				Transport *m_transport;
 		};
 
 	} // namespace DDSRPC

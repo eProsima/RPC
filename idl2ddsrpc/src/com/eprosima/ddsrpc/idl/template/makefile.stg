@@ -2,7 +2,7 @@ group makefile;
 
 makecxx(interface, example, arch) ::= <<
 CPP_$example$ = g++
-CXXFLAGS_$example$ = -m$arch$
+CXXFLAGS_$example$ = -m$arch$ -std=c++11
 LD_$example$ = g++
 LDFLAGS_$example$ = -m$arch$
 SYSLIBS_$example$ = -ldl -lnsl -lm -lpthread -lrt

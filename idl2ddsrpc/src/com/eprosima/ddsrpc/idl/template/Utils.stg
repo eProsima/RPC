@@ -40,6 +40,7 @@ headerFile(name, classes) ::= <<
 
 $doNotEditC()$
 
+#include "utils/Messages.h"
 $ReqRepSIncludes(interfaceName=name)$
 
 $ddsIncludes()$
@@ -85,7 +86,7 @@ $classes:{$it$};separator="\n"$
  *   argDeclRef - inherited(cplusplus)
  *   lastParam  - local
  */ 
-header(funName, templateName, params, returnType) ::= <<
+header(funName, templateName, params, returnType, isReply) ::= <<
 
 class $funName$$templateName$Utils
 {
@@ -93,9 +94,9 @@ class $funName$$templateName$Utils
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static $funName$$templateName$* createTypeData($argsDecl([params, returnType]);separator=", "$);
+        static void setTypeData($funName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$);
         
-        static void extractTypeData($funName$$templateName$* data$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$);
+        static void extractTypeData($funName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$);
 };
 
 >>
@@ -117,7 +118,7 @@ class $funName$$templateName$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
-definition(funName, templateName, params, returnType) ::= <<
+definition(funName, templateName, params, returnType, isReply) ::= <<
 
 const char* $funName$$templateName$Utils::registerType(DDS::DomainParticipant *clientParticipant)
 {
@@ -136,24 +137,20 @@ const char* $funName$$templateName$Utils::registerType(DDS::DomainParticipant *c
     return typeName;
 }
 
-$funName$$templateName$* $funName$$templateName$Utils::createTypeData($argsDecl([params, returnType]);separator=", "$)
+void $funName$$templateName$Utils::setTypeData($funName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$)
 {
-    $reqrepCreation(type=funName, reqrep=templateName, name="instance", create="create")$
-
     $params : {$createDataHelper(param=it)$};separator="\n"$
-    
     $if(returnType)$
     $createDataHelper(param=returnType)$        
     $endif$    
-    return instance;
 }
 
-void $funName$$templateName$Utils::extractTypeData($funName$$templateName$* data $if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$)
+void $funName$$templateName$Utils::extractTypeData($funName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$)
 {
-    $params : {$extractDataHelper(param=it)$};separator="\n"$
-    
+    $if(isReply)$retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;$endif$
+    $params : {$extractDataHelper(param=it, isReply=isReply)$};separator="\n"$  
     $if(returnType)$
-    $extractDataHelper(param=returnType)$        
+    $extractDataHelper(param=returnType, isReply=isReply)$        
     $endif$    
 }
 
@@ -196,17 +193,7 @@ $endif$
  *   typeInitMap - inherited(cplusplus)
  */ 
 createDataHelper(param) ::= <<
-$if(typeInitMap.(param.typeName))$
-$if(param.baseType.isString)$
-if(instance->$param.name$ != NULL)
-   free(instance->$param.name$);
-instance->$param.name$ = strdup($param.name$);
-$else$
-instance->$param.name$ = $param.name$;
-$endif$
-$else$
-$createDH(type=param.typeName, name=param.name)$
-$endif$
+instance.$param.name$ = $param.name$;
 >>    
 
 /**
@@ -222,22 +209,32 @@ $endif$
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-extractDataHelper(param) ::= <<
-$if(param.isRestrictedInput)$
-$if(typeInitMap.(param.typeName))$
-$param.name$ = data->$param.name$;
-$else$
-$param.name$ = &data->$param.name$;
-$endif$
-$else$
+extractDataHelper(param, isReply) ::= <<
+$if(isReply)$
+$if(param.isInput)$
 $if(typeInitMap.(param.typeName))$
 $if(param.baseType.isString)$
-$param.name$ = strdup(data->$param.name$);
+if($param.name$ != NULL)
+	free($param.name$);
+$endif$
 $else$
-$param.name$ = data->$param.name$;
+$varComplexDel(typeName=param.typeName, name=param.name)$
+$endif$
+$endif$
+$param.name$ = data.$param.name$;
+$else$
+$if(param.isOutput)$
+$if(typeInitMap.(param.typeName))$
+$if(param.baseType.isString)$
+$param.name$ = strdup(data.$param.name$);
+$else$
+$param.name$ = data.$param.name$;
 $endif$
 $else$
 $extractDH(type=param.typeName, name=param.name)$
+$endif$
+$else$
+$param.name$ = data.$param.name$;
 $endif$
 $endif$
 >>    

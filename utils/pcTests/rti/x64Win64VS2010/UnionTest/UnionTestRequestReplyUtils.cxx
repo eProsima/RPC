@@ -23,22 +23,17 @@ const char* getEmpleadoRequestUtils::registerType(DDS::DomainParticipant *client
     return typeName;
 }
 
-getEmpleadoRequest* getEmpleadoRequestUtils::createTypeData(/*in*/ const Empleado* em1, /*inout*/ const Empleado* em2)
+void getEmpleadoRequestUtils::setTypeData(getEmpleadoRequest& instance, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2)
 {
-    getEmpleadoRequest* instance = getEmpleadoRequestTypeSupport::create_data();
-
-    EmpleadoPluginSupport_copy_data(&instance->em1, em1);
-    EmpleadoPluginSupport_copy_data(&instance->em2, em2);
+    instance.em1 = em1;
+    instance.em2 = em2;
     
-    
-    return instance;
 }
 
-void getEmpleadoRequestUtils::extractTypeData(getEmpleadoRequest* data , /*in*/ Empleado* &em1, /*inout*/ Empleado* &em2)
+void getEmpleadoRequestUtils::extractTypeData(getEmpleadoRequest& data, /*in*/ Empleado& em1, /*inout*/ Empleado& em2)
 {
-    em1 = &data->em1;
-    EmpleadoPluginSupport_copy_data(em2, &data->em2);
-    
+    em1 = data.em1;
+    EmpleadoPluginSupport_copy_data(&em2, &data.em2);  
     
 }
 
@@ -60,23 +55,19 @@ const char* getEmpleadoReplyUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-getEmpleadoReply* getEmpleadoReplyUtils::createTypeData(/*inout*/ const Empleado* em2, /*out*/ const Empleado* em3, /*out*/ const Empleado* getEmpleado_ret)
+void getEmpleadoReplyUtils::setTypeData(getEmpleadoReply& instance, /*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret)
 {
-    getEmpleadoReply* instance = getEmpleadoReplyTypeSupport::create_data();
-
-    EmpleadoPluginSupport_copy_data(&instance->em2, em2);
-    EmpleadoPluginSupport_copy_data(&instance->em3, em3);
-    
-    EmpleadoPluginSupport_copy_data(&instance->getEmpleado_ret, getEmpleado_ret);            
-    return instance;
+    instance.em2 = em2;
+    instance.em3 = em3;
+    instance.getEmpleado_ret = getEmpleado_ret;            
 }
 
-void getEmpleadoReplyUtils::extractTypeData(getEmpleadoReply* data , /*inout*/ Empleado* &em2, /*out*/ Empleado* &em3, /*out*/ Empleado* &getEmpleado_ret)
+void getEmpleadoReplyUtils::extractTypeData(getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret)
 {
-    EmpleadoPluginSupport_copy_data(em2, &data->em2);
-    EmpleadoPluginSupport_copy_data(em3, &data->em3);
-    
-    EmpleadoPluginSupport_copy_data(getEmpleado_ret, &data->getEmpleado_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    Empleado_finalize(&em2);em2 = data.em2;
+    em3 = data.em3;  
+    getEmpleado_ret = data.getEmpleado_ret;            
 }
 
  

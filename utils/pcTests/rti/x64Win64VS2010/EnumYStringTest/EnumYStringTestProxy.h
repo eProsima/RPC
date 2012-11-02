@@ -12,7 +12,7 @@
 class EnumYStringTest_getEnum
 {
     public:
-        virtual void getEnum(/*inout*/ const Valores v2, /*out*/ const Valores v3, /*out*/ const Valores getEnum_ret)
+        virtual void getEnum(/*inout*/ Valores v2, /*out*/ Valores v3, Valores &getEnum_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class EnumYStringTest_getEnum
 class EnumYStringTest_getString
 {
     public:
-        virtual void getString(/*inout*/ const char* s2, /*out*/ const char* s3, /*out*/ const char* getString_ret)
+        virtual void getString(/*inout*/ char* s2, /*out*/ char* s3, char* &getString_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class EnumYStringTest_getString
 class EnumYStringTest_getStringBounded
 {
     public:
-        virtual void getStringBounded(/*inout*/ const char* sb2, /*out*/ const char* sb3, /*out*/ const char* getStringBounded_ret)
+        virtual void getStringBounded(/*inout*/ char* sb2, /*out*/ char* sb3, char* &getStringBounded_ret)
         {
         }
    
@@ -44,85 +44,58 @@ class EnumYStringTest_getStringBounded
 };
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class EnumYStringTestProxyH : public eProsima::DDSRPC::Client
+class EnumYStringTestProxy : public eProsima::DDSRPC::Client
 {
     public:
-
+    
         /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        EnumYStringTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        EnumYStringTestProxy(int domainId = 0, long timeout = 10000);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server's proxy.
+         *
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         */
+        EnumYStringTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
-        virtual ~EnumYStringTestProxyH();
+        virtual ~EnumYStringTestProxy();
         
          
-        eProsima::DDSRPC::ReturnMessage getEnum(/*in*/ const Valores v1, /*inout*/ Valores &v2, /*out*/ Valores &v3, /*out*/ Valores &getEnum_ret);
+        Valores getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3);
          
-        eProsima::DDSRPC::ReturnMessage getString(/*in*/ const char* s1, /*inout*/ char* &s2, /*out*/ char* &s3, /*out*/ char* &getString_ret);
+        char* getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3);
          
-        eProsima::DDSRPC::ReturnMessage getStringBounded(/*in*/ const char* sb1, /*inout*/ char* &sb2, /*out*/ char* &sb3, /*out*/ char* &getStringBounded_ret);
+        char* getStringBounded(/*in*/ char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3);
         
          
-        eProsima::DDSRPC::ReturnMessage getEnum_async(EnumYStringTest_getEnum &obj, /*in*/ const Valores v1, /*inout*/ const Valores v2);
+        void getEnum_async(EnumYStringTest_getEnum &obj, /*in*/ Valores v1, /*inout*/ Valores v2);
          
-        eProsima::DDSRPC::ReturnMessage getString_async(EnumYStringTest_getString &obj, /*in*/ const char* s1, /*inout*/ const char* s2);
+        void getString_async(EnumYStringTest_getString &obj, /*in*/ char* s1, /*inout*/ char* s2);
          
-        eProsima::DDSRPC::ReturnMessage getStringBounded_async(EnumYStringTest_getStringBounded &obj, /*in*/ const char* sb1, /*inout*/ const char* sb2);
+        void getStringBounded_async(EnumYStringTest_getStringBounded &obj, /*in*/ char* sb1, /*inout*/ char* sb2);
         
     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
         eProsima::DDSRPC::ClientRPC *getEnum_Service;
         eProsima::DDSRPC::ClientRPC *getString_Service;
         eProsima::DDSRPC::ClientRPC *getStringBounded_Service; 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class EnumYStringTestProxy : public EnumYStringTestProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        EnumYStringTestProxy(int domainId = 0, long timeout = 10000);
-        
-        virtual ~EnumYStringTestProxy();
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class EnumYStringTestWANProxy : public EnumYStringTestProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        EnumYStringTestWANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
-        
-        virtual ~EnumYStringTestWANProxy();
 };
 
 #endif // _EnumYStringTest_PROXY_H_

@@ -36,8 +36,8 @@ group cplusplus;
  *  argDecl    - local
  *  argDeclRef - local
  */ 
-functionHeader(type,class,name,params) ::= << 
-$type.templateName$ $class$$if(class)$::$endif$$name$($argsDeclOutRef(params)$)
+functionHeader(rettype,class,name,params) ::= << 
+$argRetType(rettype.typeName)$ $class$$if(class)$::$endif$$name$($argsDeclOutRef(params)$)
 >>
 
 /************************************************************************
@@ -153,9 +153,17 @@ $endif$
 
 argType(type, notIn) ::= <<
 $if(typeInitMap.(type))$
-$if(!notIn)$const $endif$$typeInitMap.(type)$
+$typeInitMap.(type)$$notIn$
 $else$
-$if(!notIn)$const $endif$$type$*
+$if(!notIn)$const $endif$$type$&
+$endif$
+>>
+
+argRetType(type) ::= <<
+$if(typeInitMap.(type))$
+$typeInitMap.(type)$
+$else$
+$type$
 $endif$
 >>
 
@@ -169,7 +177,7 @@ $endif$
  * Uses:
  */ 
 argDecl(arg, ref) ::= <<
-/*$arg.comment$*/ $argType(type=arg.typeName, notIn=ref)$ $ref$$arg.name$
+/*$arg.comment$*/ $argType(type=arg.typeName, notIn=ref)$ $arg.name$
 >>
 
 argsDecl(args) ::= <<

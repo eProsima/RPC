@@ -5,6 +5,7 @@
 
 #include "MultithreadTestProxy.h"
 #include "MultithreadTestRequestReplyPlugin.h"
+#include "exceptions/Exceptions.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
@@ -16,139 +17,140 @@ static int run = 0;
 
 void* executeThread(int threadNum)
 {
-	const char* const METHOD_NAME = "executeThread";
-	char filename[50], fileLine[255];
-	FILE *file = NULL;
-	int count = 0;
+    const char* const METHOD_NAME = "executeThread";
+    char filename[50], fileLine[255];
+    FILE *file = NULL;
+    int count = 0;
 
-	_snprintf(filename, 50, "Thread%d.txt", threadNum);
-	file = fopen(filename, "w");
+    _snprintf(filename, 50, "Thread%d.txt", threadNum);
+    file = fopen(filename, "w");
 
-	if(file != NULL)
-	{
-		// Wait until start.
-		while(!run)
-		{
-			boost::this_thread::sleep(boost::posix_time::seconds(1));
-		}
+    if(file != NULL)
+    {
+        // Wait until start.
+        while(!run)
+        {
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+        }
 
-		for(; count < 200; ++count)
-		{
-			Dato *dato1 = DatoPluginSupport_create_data();
-			Dato *dato2 = DatoPluginSupport_create_data();    
-			DDS_Long  test_ret = 0;       
-			eProsima::DDSRPC::ReturnMessage  testRetValue;
+        for(; count < 200; ++count)
+        {
+            Dato dato1;
+            Dato dato2;
+            DDS_Long  test_ret = 0;       
 
-			dato1->count = count;
+            Dato_initialize(&dato1);
+            Dato_initialize(&dato2);
 
-			testRetValue = proxy->test(dato1    ,dato2    , test_ret    );
+            dato1.count = count;
 
-			if(testRetValue == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-			{
-				_snprintf(fileLine, 255, "Received (%d)\n", count);
-				fwrite(fileLine, strlen(fileLine), 1, file);
-			}
-			else
-			{
-				_snprintf(fileLine, 255, "Error in operation (%d)\n", count);
-				fwrite(fileLine, strlen(fileLine), 1, file);
-			}
+            try
+            {
+                test_ret =  proxy->test(dato1 ,dato2);
+                _snprintf(fileLine, 255, "Received (%d)\n", count);
+                fwrite(fileLine, strlen(fileLine), 1, file);
+            }
+            catch(eProsima::DDSRPC::Exception &ex)
+            {
+                _snprintf(fileLine, 255, "Error in operation (%d). %s\n", count, ex.getMessage().c_str());
+                fwrite(fileLine, strlen(fileLine), 1, file);
+            }
 
-			DatoPluginSupport_destroy_data(dato1);    
-			DatoPluginSupport_destroy_data(dato2);    
-		}
+            Dato_finalize(&dato1);
+            Dato_finalize(&dato2);
+        }
 
-		fclose(file);
-	}
-	else
-	{
-		printf("ERROR<%s>: Cannot open file to log\n", METHOD_NAME);
-	}
+        fclose(file);
+    }
+    else
+    {
+        printf("ERROR<%s>: Cannot open file to log\n", METHOD_NAME);
+    }
 
-	return NULL;
+    return NULL;
 }
 
 int checkFiles()
 {
-	char filename[50];
-	FILE *file = NULL;
-	int returnedValue = 0, number = 0;
+    char filename[50];
+    FILE *file = NULL;
+    int returnedValue = 0, number = 0;
 
-	for(int i = 1; i <= 4; ++i)
-	{
-		_snprintf(filename, 50, "Thread%d.txt", i);
-		file = fopen(filename, "r");
+    for(int i = 1; i <= 4; ++i)
+    {
+        _snprintf(filename, 50, "Thread%d.txt", i);
+        file = fopen(filename, "r");
 
-		if(file != NULL)
-		{
-			for(int count = 0; count < 200; ++count)
-			{
-				fscanf(file, "Received (%d)\n", &number);
+        if(file != NULL)
+        {
+            for(int count = 0; count < 200; ++count)
+            {
+                fscanf(file, "Received (%d)\n", &number);
 
-				if(number != count)
-					returnedValue = -1;
-			}
+                if(number != count)
+                    returnedValue = -1;
+            }
 
-			fclose(file);
-		}
-		else
-		{
-			returnedValue = -1;
-		}
-	}
+            fclose(file);
+        }
+        else
+        {
+            returnedValue = -1;
+        }
+    }
 
-	return returnedValue;
+    return returnedValue;
 }
 
 int createThreads()
 {
-	const char* const METHOD_NAME = "createThreads";
-	int returnedValue = -1;
+    const char* const METHOD_NAME = "createThreads";
+    int returnedValue = -1;
 
-	thread1 = boost::thread(executeThread, 1);
-	thread2 = boost::thread(executeThread, 2);
-	thread3 = boost::thread(executeThread, 3);
-	thread4 = boost::thread(executeThread, 4);
-	returnedValue = 0;
+    thread1 = boost::thread(executeThread, 1);
+    thread2 = boost::thread(executeThread, 2);
+    thread3 = boost::thread(executeThread, 3);
+    thread4 = boost::thread(executeThread, 4);
+    returnedValue = 0;
 
-	return returnedValue;
+    return returnedValue;
 }
 
 int main(int argc, char **argv)
 {
-	const char* const METHOD_NAME = "main";
+    const char* const METHOD_NAME = "main";
 
-	proxy = new MultithreadTestProxy();
+    proxy = new MultithreadTestProxy();
 
-	if(proxy != NULL)
-	{
-		// Create threads
-		if(createThreads() == 0)
-		{
-			run = 1;
-		}
+    if(proxy != NULL)
+    {
+        // Create threads
+        if(createThreads() == 0)
+        {
+            run = 1;
+        }
 
-		thread1.join();
-		thread2.join();
-		thread3.join();
-		thread4.join();
-		run = 0;
+        thread1.join();
+        thread2.join();
+        thread3.join();
+        thread4.join();
+        run = 0;
 
-		if(checkFiles() != 0)
-		{
-			printf("TEST FAILED\n");
-			_exit(-1);
-		}
-	}
-	else
-	{
-		printf("ERROR<%s>: Cannot create proxy\n", METHOD_NAME);
-	}
+        if(checkFiles() != 0)
+        {
+            printf("TEST FAILED\n");
+            _exit(-1);
+        }
+    }
+    else
+    {
+        printf("ERROR<%s>: Cannot create proxy\n", METHOD_NAME);
+    }
 
-	printf("TEST SUCCESFULLY\n");
+    printf("TEST SUCCESFULLY\n");
 
-	delete(proxy);
+    delete(proxy);
 
-	_exit(0);
-	return 0;
+    _exit(0);
+    return 0;
 }

@@ -13,39 +13,39 @@ EnumYStringTestServerImpl::~EnumYStringTestServerImpl()
 }
 
 
-eProsima::DDSRPC::ReturnMessage EnumYStringTestServerImpl::getEnum(/*in*/ const Valores v1, /*inout*/ Valores &v2, /*out*/ Valores &v3, /*out*/ Valores &getEnum_ret) 
+Valores EnumYStringTestServerImpl::getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3) 
 {
-	eProsima::DDSRPC::ReturnMessage  retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
+    Valores  returnedValue = VALOR1;    
 
-	v3 = v2;
-	getEnum_ret = v1;
-	v2 = v1;
+    v3 = v2;
+    returnedValue = v1;
+    v2 = v1;
 
-	return retCode;
+    return returnedValue;
 } 
 
-eProsima::DDSRPC::ReturnMessage EnumYStringTestServerImpl::getString(/*in*/ const char* s1, /*inout*/ char* &s2, /*out*/ char* &s3, /*out*/ char* &getString_ret) 
+char* EnumYStringTestServerImpl::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
 {
-	eProsima::DDSRPC::ReturnMessage  retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
+    char* returnedValue;
 
-	s3 = DDS::String_dup(s2);
-	getString_ret = DDS::String_dup(s1);
-	DDS::String_free(s2);
-	s2 = DDS::String_alloc(strlen(s1) + strlen(s3) + 1);
-	_snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
+    s3 = DDS::String_dup(s2);
+    returnedValue = DDS::String_dup(s1);
+    DDS::String_free(s2);
+    s2 = DDS::String_alloc(strlen(s1) + strlen(s3) + 1);
+    _snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
 
-	return retCode;
+    return returnedValue;
 } 
 
-eProsima::DDSRPC::ReturnMessage EnumYStringTestServerImpl::getStringBounded(/*in*/ const char* sb1, /*inout*/ char* &sb2, /*out*/ char* &sb3, /*out*/ char* &getStringBounded_ret) 
+char* EnumYStringTestServerImpl::getStringBounded(/*in*/ char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3) 
 {
-	eProsima::DDSRPC::ReturnMessage  retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
+    char* returnedValue;
 
-	sb3 = DDS::String_dup(sb2);
-	getStringBounded_ret = DDS::String_dup(sb1);
-	DDS::String_free(sb2);
-	sb2 = DDS::String_alloc(strlen(sb1) + strlen(sb3) + 1);
-	_snprintf(sb2, strlen(sb1) + strlen(sb3) + 1, "%s%s", sb1, sb3);
+    sb3 = DDS::String_dup(sb2);
+    returnedValue = DDS::String_dup(sb1);
+    DDS::String_free(sb2);
+    sb2 = DDS::String_alloc(strlen(sb1) + strlen(sb3) + 1);
+    _snprintf(sb2, strlen(sb1) + strlen(sb3) + 1, "%s%s", sb1, sb3);
 
-	return retCode;
+    return returnedValue;
 } 

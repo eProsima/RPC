@@ -23,9 +23,13 @@ class BasicTypeTest_getOctetTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getOctet& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getOctet &m_obj;
+           
+           getOctetReply m_reply;
 };
 
 class BasicTypeTest_getCharTask : public eProsima::DDSRPC::AsyncTask
@@ -43,9 +47,13 @@ class BasicTypeTest_getCharTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getChar& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getChar &m_obj;
+           
+           getCharReply m_reply;
 };
 
 class BasicTypeTest_getWCharTask : public eProsima::DDSRPC::AsyncTask
@@ -63,9 +71,13 @@ class BasicTypeTest_getWCharTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getWChar& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getWChar &m_obj;
+           
+           getWCharReply m_reply;
 };
 
 class BasicTypeTest_getShortTask : public eProsima::DDSRPC::AsyncTask
@@ -83,9 +95,13 @@ class BasicTypeTest_getShortTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getShort& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getShort &m_obj;
+           
+           getShortReply m_reply;
 };
 
 class BasicTypeTest_getUShortTask : public eProsima::DDSRPC::AsyncTask
@@ -103,9 +119,13 @@ class BasicTypeTest_getUShortTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getUShort& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getUShort &m_obj;
+           
+           getUShortReply m_reply;
 };
 
 class BasicTypeTest_getLongTask : public eProsima::DDSRPC::AsyncTask
@@ -123,9 +143,13 @@ class BasicTypeTest_getLongTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getLong& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getLong &m_obj;
+           
+           getLongReply m_reply;
 };
 
 class BasicTypeTest_getULongTask : public eProsima::DDSRPC::AsyncTask
@@ -143,9 +167,13 @@ class BasicTypeTest_getULongTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getULong& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getULong &m_obj;
+           
+           getULongReply m_reply;
 };
 
 class BasicTypeTest_getLLongTask : public eProsima::DDSRPC::AsyncTask
@@ -163,9 +191,13 @@ class BasicTypeTest_getLLongTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getLLong& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getLLong &m_obj;
+           
+           getLLongReply m_reply;
 };
 
 class BasicTypeTest_getULLongTask : public eProsima::DDSRPC::AsyncTask
@@ -183,9 +215,13 @@ class BasicTypeTest_getULLongTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getULLong& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getULLong &m_obj;
+           
+           getULLongReply m_reply;
 };
 
 class BasicTypeTest_getFloatTask : public eProsima::DDSRPC::AsyncTask
@@ -203,9 +239,13 @@ class BasicTypeTest_getFloatTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getFloat& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getFloat &m_obj;
+           
+           getFloatReply m_reply;
 };
 
 class BasicTypeTest_getDoubleTask : public eProsima::DDSRPC::AsyncTask
@@ -223,9 +263,13 @@ class BasicTypeTest_getDoubleTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getDouble& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getDouble &m_obj;
+           
+           getDoubleReply m_reply;
 };
 
 class BasicTypeTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
@@ -243,9 +287,13 @@ class BasicTypeTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
         
         BasicTypeTest_getBoolean& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            BasicTypeTest_getBoolean &m_obj;
+           
+           getBooleanReply m_reply;
 };
 
 #endif // _BasicTypeTest_ASYNC_SUPPORT_H_

@@ -23,9 +23,13 @@ class SequenceTest_getSLongTask : public eProsima::DDSRPC::AsyncTask
         
         SequenceTest_getSLong& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            SequenceTest_getSLong &m_obj;
+           
+           getSLongReply m_reply;
 };
 
 class SequenceTest_getStringTask : public eProsima::DDSRPC::AsyncTask
@@ -43,9 +47,13 @@ class SequenceTest_getStringTask : public eProsima::DDSRPC::AsyncTask
         
         SequenceTest_getString& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            SequenceTest_getString &m_obj;
+           
+           getStringReply m_reply;
 };
 
 class SequenceTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
@@ -63,9 +71,13 @@ class SequenceTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
         
         SequenceTest_getStringBounded& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            SequenceTest_getStringBounded &m_obj;
+           
+           getStringBoundedReply m_reply;
 };
 
 #endif // _SequenceTest_ASYNC_SUPPORT_H_

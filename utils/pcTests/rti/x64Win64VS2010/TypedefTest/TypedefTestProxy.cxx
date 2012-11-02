@@ -9,10 +9,31 @@
 #include "transports/TCPTransport.h"
 #include "TypedefTestRequestReplyPlugin.h"
 #include "TypedefTestAsyncSupport.h"
+#include "exceptions/Exceptions.h"
 
+TypedefTestProxy::TypedefTestProxy(int domainId, long timeout) :
+    Client(NULL, domainId, timeout)
+{
+    createRPCs();
+}
 
-TypedefTestProxyH::TypedefTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+TypedefTestProxy::TypedefTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
     Client(transport, domainId, timeout)
+{
+    createRPCs();
+}
+
+TypedefTestProxy::~TypedefTestProxy()
+{
+    delete getLargo_Service;
+    delete getLarguisimo_Service;
+    delete getDatosDef_Service;
+    delete getDatosDefondo_Service;
+    delete getCadena_Service;
+    delete getCorrea_Service;
+}
+
+void TypedefTestProxy::createRPCs()
 {
     this->getLargo_Service = new getLargoClientRPC("getLargo",
                                   getLargoRequestUtils::registerType(getParticipant()),
@@ -41,386 +62,342 @@ TypedefTestProxyH::TypedefTestProxyH(eProsima::DDSRPC::Transport *transport, int
 
 }
 
-TypedefTestProxyH::~TypedefTestProxyH()
-{
-    delete getLargo_Service;
-    delete getLarguisimo_Service;
-    delete getDatosDef_Service;
-    delete getDatosDefondo_Service;
-    delete getCadena_Service;
-    delete getCorrea_Service;
-}
-
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getLargo(/*in*/ const largo l1, /*out*/ largo &l2, /*out*/ largo &getLargo_ret) 
+largo TypedefTestProxy::getLargo(/*in*/ largo l1, /*out*/ largo& l2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getLargoRequest *instance = NULL;
-    getLargoReply* retInstance = getLargoReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    largo  getLargo_ret = 0;    
+    getLargoRequest instance;
+    getLargoReply retInstance;
 
-    instance = getLargoRequestUtils::createTypeData(l1  );
-    returnedValue = getLargo_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getLargoReply_initialize(&retInstance);    
+    getLargoRequestUtils::setTypeData(instance, l1  );
+    retcode = getLargo_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getLargoReplyUtils::extractTypeData(retInstance, retcode, l2  , getLargo_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getLargoReplyUtils::extractTypeData(retInstance, l2  , getLargo_ret  );
-            //getLargoReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getLargoReplyTypeSupport::delete_data(retInstance);
-    getLargoRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getLargo_ret;
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getLarguisimo(/*in*/ const larguisimo ll1, /*out*/ larguisimo &ll2, /*out*/ larguisimo &getLarguisimo_ret) 
+larguisimo TypedefTestProxy::getLarguisimo(/*in*/ larguisimo ll1, /*out*/ larguisimo& ll2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getLarguisimoRequest *instance = NULL;
-    getLarguisimoReply* retInstance = getLarguisimoReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    larguisimo  getLarguisimo_ret = 0;    
+    getLarguisimoRequest instance;
+    getLarguisimoReply retInstance;
 
-    instance = getLarguisimoRequestUtils::createTypeData(ll1  );
-    returnedValue = getLarguisimo_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getLarguisimoReply_initialize(&retInstance);    
+    getLarguisimoRequestUtils::setTypeData(instance, ll1  );
+    retcode = getLarguisimo_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getLarguisimoReplyUtils::extractTypeData(retInstance, retcode, ll2  , getLarguisimo_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getLarguisimoReplyUtils::extractTypeData(retInstance, ll2  , getLarguisimo_ret  );
-            //getLarguisimoReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getLarguisimoReplyTypeSupport::delete_data(retInstance);
-    getLarguisimoRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getLarguisimo_ret;
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getDatosDef(/*in*/ const DatosDef* d1, /*out*/ DatosDef* &d2, /*out*/ DatosDef* &getDatosDef_ret) 
+DatosDef TypedefTestProxy::getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosDef& d2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getDatosDefRequest *instance = NULL;
-    getDatosDefReply* retInstance = getDatosDefReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    DatosDef getDatosDef_ret;
+        
+    getDatosDefRequest instance;
+    getDatosDefReply retInstance;
 
-    instance = getDatosDefRequestUtils::createTypeData(d1  );
-    returnedValue = getDatosDef_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getDatosDefReply_initialize(&retInstance);    
+    getDatosDefRequestUtils::setTypeData(instance, d1  );
+    retcode = getDatosDef_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getDatosDefReplyUtils::extractTypeData(retInstance, retcode, d2  , getDatosDef_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getDatosDefReplyUtils::extractTypeData(retInstance, d2  , getDatosDef_ret  );
-            //getDatosDefReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getDatosDefReplyTypeSupport::delete_data(retInstance);
-    getDatosDefRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getDatosDef_ret;
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getDatosDefondo(/*in*/ const DatosDefondo* dd1, /*out*/ DatosDefondo* &dd2, /*out*/ DatosDefondo* &getDatosDefondo_ret) 
+DatosDefondo TypedefTestProxy::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getDatosDefondoRequest *instance = NULL;
-    getDatosDefondoReply* retInstance = getDatosDefondoReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    DatosDefondo getDatosDefondo_ret;
+        
+    getDatosDefondoRequest instance;
+    getDatosDefondoReply retInstance;
 
-    instance = getDatosDefondoRequestUtils::createTypeData(dd1  );
-    returnedValue = getDatosDefondo_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getDatosDefondoReply_initialize(&retInstance);    
+    getDatosDefondoRequestUtils::setTypeData(instance, dd1  );
+    retcode = getDatosDefondo_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getDatosDefondoReplyUtils::extractTypeData(retInstance, retcode, dd2  , getDatosDefondo_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getDatosDefondoReplyUtils::extractTypeData(retInstance, dd2  , getDatosDefondo_ret  );
-            //getDatosDefondoReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getDatosDefondoReplyTypeSupport::delete_data(retInstance);
-    getDatosDefondoRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getDatosDefondo_ret;
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getCadena(/*in*/ const cadena c1, /*out*/ cadena &c2, /*out*/ cadena &getCadena_ret) 
+cadena TypedefTestProxy::getCadena(/*in*/ cadena c1, /*out*/ cadena& c2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getCadenaRequest *instance = NULL;
-    getCadenaReply* retInstance = getCadenaReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    cadena  getCadena_ret = NULL;    
+    getCadenaRequest instance;
+    getCadenaReply retInstance;
 
-    instance = getCadenaRequestUtils::createTypeData(c1  );
-    returnedValue = getCadena_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getCadenaReply_initialize(&retInstance);    
+    getCadenaRequestUtils::setTypeData(instance, c1  );
+    retcode = getCadena_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getCadenaReplyUtils::extractTypeData(retInstance, retcode, c2  , getCadena_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getCadenaReplyUtils::extractTypeData(retInstance, c2  , getCadena_ret  );
-            //getCadenaReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getCadenaReplyTypeSupport::delete_data(retInstance);
-    getCadenaRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getCadena_ret;
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getCorrea(/*in*/ const correa cc1, /*out*/ correa &cc2, /*out*/ correa &getCorrea_ret) 
+correa TypedefTestProxy::getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getCorreaRequest *instance = NULL;
-    getCorreaReply* retInstance = getCorreaReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    correa  getCorrea_ret = NULL;    
+    getCorreaRequest instance;
+    getCorreaReply retInstance;
 
-    instance = getCorreaRequestUtils::createTypeData(cc1  );
-    returnedValue = getCorrea_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getCorreaReply_initialize(&retInstance);    
+    getCorreaRequestUtils::setTypeData(instance, cc1  );
+    retcode = getCorrea_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getCorreaReplyUtils::extractTypeData(retInstance, retcode, cc2  , getCorrea_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getCorreaReplyUtils::extractTypeData(retInstance, cc2  , getCorrea_ret  );
-            //getCorreaReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getCorreaReplyTypeSupport::delete_data(retInstance);
-    getCorreaRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return getCorrea_ret;
 }
 
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getLargo_async(TypedefTest_getLargo &obj, /*in*/ const largo l1) 
+void TypedefTestProxy::getLargo_async(TypedefTest_getLargo &obj, /*in*/ largo l1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getLargoRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getLargoRequest instance;
     TypedefTest_getLargoTask *task = NULL;
-    instance = getLargoRequestUtils::createTypeData(l1  );
+    getLargoRequestUtils::setTypeData(instance, l1  );
     task = new TypedefTest_getLargoTask(obj, this);
-    returnedValue = getLargo_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getLargo_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getLargoRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getLarguisimo_async(TypedefTest_getLarguisimo &obj, /*in*/ const larguisimo ll1) 
+void TypedefTestProxy::getLarguisimo_async(TypedefTest_getLarguisimo &obj, /*in*/ larguisimo ll1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getLarguisimoRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getLarguisimoRequest instance;
     TypedefTest_getLarguisimoTask *task = NULL;
-    instance = getLarguisimoRequestUtils::createTypeData(ll1  );
+    getLarguisimoRequestUtils::setTypeData(instance, ll1  );
     task = new TypedefTest_getLarguisimoTask(obj, this);
-    returnedValue = getLarguisimo_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getLarguisimo_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getLarguisimoRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getDatosDef_async(TypedefTest_getDatosDef &obj, /*in*/ const DatosDef* d1) 
+void TypedefTestProxy::getDatosDef_async(TypedefTest_getDatosDef &obj, /*in*/ const DatosDef& d1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getDatosDefRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getDatosDefRequest instance;
     TypedefTest_getDatosDefTask *task = NULL;
-    instance = getDatosDefRequestUtils::createTypeData(d1  );
+    getDatosDefRequestUtils::setTypeData(instance, d1  );
     task = new TypedefTest_getDatosDefTask(obj, this);
-    returnedValue = getDatosDef_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getDatosDef_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getDatosDefRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getDatosDefondo_async(TypedefTest_getDatosDefondo &obj, /*in*/ const DatosDefondo* dd1) 
+void TypedefTestProxy::getDatosDefondo_async(TypedefTest_getDatosDefondo &obj, /*in*/ const DatosDefondo& dd1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getDatosDefondoRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getDatosDefondoRequest instance;
     TypedefTest_getDatosDefondoTask *task = NULL;
-    instance = getDatosDefondoRequestUtils::createTypeData(dd1  );
+    getDatosDefondoRequestUtils::setTypeData(instance, dd1  );
     task = new TypedefTest_getDatosDefondoTask(obj, this);
-    returnedValue = getDatosDefondo_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getDatosDefondo_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getDatosDefondoRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getCadena_async(TypedefTest_getCadena &obj, /*in*/ const cadena c1) 
+void TypedefTestProxy::getCadena_async(TypedefTest_getCadena &obj, /*in*/ cadena c1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getCadenaRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getCadenaRequest instance;
     TypedefTest_getCadenaTask *task = NULL;
-    instance = getCadenaRequestUtils::createTypeData(c1  );
+    getCadenaRequestUtils::setTypeData(instance, c1  );
     task = new TypedefTest_getCadenaTask(obj, this);
-    returnedValue = getCadena_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getCadena_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getCadenaRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage TypedefTestProxyH::getCorrea_async(TypedefTest_getCorrea &obj, /*in*/ const correa cc1) 
+void TypedefTestProxy::getCorrea_async(TypedefTest_getCorrea &obj, /*in*/ correa cc1) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getCorreaRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getCorreaRequest instance;
     TypedefTest_getCorreaTask *task = NULL;
-    instance = getCorreaRequestUtils::createTypeData(cc1  );
+    getCorreaRequestUtils::setTypeData(instance, cc1  );
     task = new TypedefTest_getCorreaTask(obj, this);
-    returnedValue = getCorrea_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getCorrea_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getCorreaRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
-}
-
-TypedefTestProxy::TypedefTestProxy(int domainId, long timeout) :
-    TypedefTestProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
-{
-}
-
-TypedefTestProxy::~TypedefTestProxy()
-{
-}
-
-TypedefTestWANProxy::TypedefTestWANProxy(const char *to_connect, int domainId, long timeout) :
-    TypedefTestProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
-{
-}
-
-TypedefTestWANProxy::~TypedefTestWANProxy()
-{
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }

@@ -3,6 +3,7 @@
 #include "exceptions/ResourceException.h"
 #include "utils/Utilities.h"
 #include "transports/Transport.h"
+#include "transports/UDPTransport.h"
 #include "server/ServerStrategy.h"
 
 #include "boost/config/user.hpp"
@@ -16,19 +17,25 @@ namespace eProsima
 	{
 
 		Server::Server(ServerStrategy *strategy, Transport *transport, int domainId) : m_domainId(domainId),
-        m_strategy(strategy), m_participant(NULL)
+        m_strategy(strategy), m_participant(NULL), m_defaultTransport(false), m_transport(transport)
 		{
 			const char* const METHOD_NAME = "Server";
 			std::string errorMessage;
 
-            if(strategy != NULL && transport != NULL)
+            if(strategy != NULL)
             {
+				if(m_transport == NULL)
+				{
+					m_transport = new UDPTransport();
+					m_defaultTransport = true;
+				}
+
                 DDS::DomainParticipantQos participantQos;
 
 #if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 
                 // Because OpenDDS, the first step is set the transport.
-                transport->setTransport(participantQos);
+                m_transport->setTransport(participantQos);
 #endif
 
                 // Because OpenDDS, the first step is set the transport.
@@ -38,7 +45,7 @@ namespace eProsima
                 {
                     factory->get_default_participant_qos(participantQos);
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-                    transport->setTransport(participantQos);
+                    m_transport->setTransport(participantQos);
 #endif
                     // Creating the domain participant which is associated with the client
                     m_participant = factory->create_participant(
@@ -114,6 +121,9 @@ namespace eProsima
 			}
 
 			deleteRPCs();
+
+			if(m_defaultTransport && m_transport != NULL)
+				delete m_transport;
 		}
 
 		DDS::DomainParticipant* Server::getParticipant()

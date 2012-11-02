@@ -24,7 +24,7 @@ namespace eProsima
             {
                 if(message == OPERATION_SUCCESSFUL)
                 {
-                    eProsima::DDSRPC::ReturnMessage retCode = m_clientRPC->takeReply(m_reply, query);
+                    eProsima::DDSRPC::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
                     this->execute(retCode);
                 }
                 else

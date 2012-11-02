@@ -9,66 +9,65 @@
 
 #include "UnionTestServerRPCSupport.h"
 
-UnionTestServerH::UnionTestServerH(eProsima::DDSRPC::ServerStrategy *strategy,
+UnionTestServer::UnionTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(strategy, NULL, domainId)
+{
+    _impl = new UnionTestServerImpl();
+
+    createRPCs();
+}
+
+UnionTestServer::UnionTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
     Server(strategy, transport, domainId)
 {
     _impl = new UnionTestServerImpl();
     
-    this->setRPC(new getEmpleadoServerRPC("getEmpleado", this,
-                getEmpleadoRequestUtils::registerType(getParticipant()),
-                getEmpleadoReplyUtils::registerType(getParticipant()),
-                &UnionTestServerH::getEmpleado, getParticipant()));
-
+    createRPCs();
 }
-UnionTestServerH::~UnionTestServerH()
+
+UnionTestServer::~UnionTestServer()
 {
     delete _impl;    
 }
 
-void UnionTestServerH::getEmpleado(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void UnionTestServer::createRPCs()
+{
+    this->setRPC(new getEmpleadoServerRPC("getEmpleado", this,
+                getEmpleadoRequestUtils::registerType(getParticipant()),
+                getEmpleadoReplyUtils::registerType(getParticipant()),
+                &UnionTestServer::getEmpleado, getParticipant()));
+
+}
+
+void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    UnionTestServerH *srv = dynamic_cast<UnionTestServerH*>(server);
-    Empleado *em1 = NULL;    
-    Empleado *em2 = EmpleadoPluginSupport_create_data();    
-    Empleado *em3 = EmpleadoPluginSupport_create_data();    
-    Empleado *getEmpleado_ret = EmpleadoPluginSupport_create_data();      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getEmpleadoReply *replyData = NULL;
+    UnionTestServer *srv = dynamic_cast<UnionTestServer*>(server);
+    Empleado em1;
+        
+    Empleado em2;
+    memset(&em2, 0, sizeof(Empleado));    
+    Empleado em3;
+    memset(&em3, 0, sizeof(Empleado));    
+    Empleado getEmpleado_ret;
+           
+    getEmpleadoReply replyData;
+    
+    Empleado_initialize(&em2);    
 
-    getEmpleadoRequestUtils::extractTypeData((getEmpleadoRequest*)requestData, em1  , em2  );
+    getEmpleadoRequestUtils::extractTypeData(*(getEmpleadoRequest*)requestData, em1  , em2  );
 
-returnedValue = srv->_impl->getEmpleado(em1  , em2  , em3  , getEmpleado_ret  );
+    getEmpleado_ret = srv->_impl->getEmpleado(em1  , em2  , em3  );
 
-    replyData = getEmpleadoReplyUtils::createTypeData(em2  , em3  , getEmpleado_ret  );
+    getEmpleadoReplyUtils::setTypeData(replyData, em2  , em3  , getEmpleado_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getEmpleadoReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getEmpleadoRequestTypeSupport::delete_data((getEmpleadoRequest*)requestData);
     
-    EmpleadoPluginSupport_destroy_data(em2);    
-    EmpleadoPluginSupport_destroy_data(em3);    
-    EmpleadoPluginSupport_destroy_data(getEmpleado_ret);    
-}
-
-UnionTestServer::UnionTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    int domainId) :
-    UnionTestServerH(strategy, new eProsima::DDSRPC::UDPTransport(), domainId)
-{
-}
-UnionTestServer::~UnionTestServer()
-{   
-}
-
-UnionTestWANServer::UnionTestWANServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    const char *public_address, const char *server_bind_port,
-    int domainId) :
-    UnionTestServerH(strategy, new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId)
-{
-}
-UnionTestWANServer::~UnionTestWANServer()
-{   
+    Empleado_finalize(&getEmpleado_ret);    
+    Empleado_finalize(&em2);    
+    Empleado_finalize(&em3);    
 }

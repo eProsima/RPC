@@ -47,95 +47,56 @@ $doNotEditC()$
 $classDeclsAsync; separator=";\n"$$if(classDeclsAsync)$;$endif$
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class $interfaceName$ProxyH : public eProsima::DDSRPC::Client
+class $interfaceName$Proxy : public eProsima::DDSRPC::Client
 {
     public:
-
+    
         /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        $interfaceName$ProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        $interfaceName$Proxy(int domainId = 0, long timeout = 10000);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server's proxy.
+         *
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         */
+        $interfaceName$Proxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
-        virtual ~$interfaceName$ProxyH();
+        virtual ~$interfaceName$Proxy();
         
         $funDecls; separator=";\n"$;
         
         $funDeclsAsync; separator=";\n"$$if(funDeclsAsync)$;$endif$
         
     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
         $funNames:{eProsima::DDSRPC::ClientRPC *$it$_Service;};separator="\n"$ 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class $interfaceName$Proxy : public $interfaceName$ProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        $interfaceName$Proxy(int domainId = 0, long timeout = 10000);
-        
-        /**
-         * \brief Constructor.
-         *
-         * \param to_connect IP address for the server. By example: "218.18.3.133"
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        $interfaceName$Proxy(const char *to_connect, int domainId = 0, long timeout = 10000);
-        
-        /// \brief The default destructor.
-        virtual ~$interfaceName$Proxy();
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class $interfaceName$WANProxy : public $interfaceName$ProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        $interfaceName$WANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
-        
-        /// \brief The default destructor.
-        virtual ~$interfaceName$WANProxy();
 };
 
 #endif // _$interfaceName$_PROXY_H_
 >>
 
-classHeaderAsync(interfaceName,type,name,outParams) ::= <<
+classHeaderAsync(interfaceName,rettype,name,outParams) ::= <<
 class $interfaceName$_$name$
 {
     public:
-        virtual void $name$($argsDecl(outParams)$)
+        virtual void $name$($argsDecl(outParams)$$if(!voidInitMap.(rettype.typeName))$$if(outParams)$, $endif$$rettype.typeName$ &$rettype.name$$endif$)
         {
         }
    
@@ -145,8 +106,8 @@ class $interfaceName$_$name$
 }
 >>
 
-functionHeaderAsync(interfaceName,type,class,name,inParams) ::= << 
-$type.templateName$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inParams)$, $endif$$argsDecl(inParams)$)
+functionHeaderAsync(interfaceName,class,name,inParams) ::= << 
+void $class$$if(class)$::$endif$$name$_async($interfaceName$_$name$ &obj$if(inParams)$, $endif$$argsDecl(inParams)$)
 >>
 
 /**
@@ -166,75 +127,69 @@ $type.templateName$ $class$$if(class)$::$endif$$name$_async($interfaceName$_$nam
  *  nextParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,params,inParams,outParams,isOneway) ::= <<
-$functionHeader(class={$interfaceName$ProxyH},...)$ 
+functionImpl(interfaceName,rettype,name,params,inParams,outParams,isOneway) ::= <<
+$functionHeader(class={$interfaceName$Proxy},...)$ 
 {
-    $varDecl(typeName=type.templateName, baseType=type, name="returnedValue")$
-    $name$Request *instance = NULL;
-    $if(!isOneway)$$reqrepCreation(type=name, reqrep="Reply", name="retInstance", create="create")$$endif$
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
+    $name$Request instance;
+    $if(!isOneway)$
+    $name$Reply retInstance;
 
-    instance = $name$RequestUtils::createTypeData($extractParams(inParams)$);
-    returnedValue = $name$_Service->execute(instance, $if(!isOneway)$retInstance$else$NULL$endif$, getTimeout());
+    $varComplexInitialize(typeName=[name, "Reply"], name="retInstance")$
+    $endif$
+    $name$RequestUtils::setTypeData(instance$if(inParams)$, $endif$$extractParams(inParams)$);
+    retcode = $name$_Service->execute(&instance, $if(!isOneway)$&retInstance$else$NULL$endif$, getTimeout());
     
-    if(returnedValue == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
         $if(!isOneway)$
-        $name$ReplyUtils::extractTypeData(retInstance$if(outParams)$, $endif$$extractParams(outParams)$); 
+        $name$ReplyUtils::extractTypeData(retInstance, retcode$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $rettype.name$$endif$); 
         $endif$
     }
     
-    $if(!isOneway)$$reqrepDestruction(type=name, reqrep="Reply", name="retInstance")$$endif$
-    $reqrepDestruction(type=name, reqrep="Request", name="instance")$
-    
-    if(returnedValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    switch (retcode)
     {
-        switch (returnedValue)
-        {
-            case eProsima::DDSRPC::CLIENT_ERROR:
-                throw eProsima::DDSRPC::ClientException("Error in client side");
-                break;
-            case eProsima::DDSRPC::SERVER_TIMEOUT:
-                throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
-                break;
-            case eProsima::DDSRPC::SERVER_ERROR:
-                throw eProsima::DDSRPC::ServerException("Error in server side");
-                break;
-            case eProsima::DDSRPC::NO_SERVER:
-                throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
-                break;
-        };
-    }
+        case eProsima::DDSRPC::CLIENT_ERROR:
+            throw eProsima::DDSRPC::ClientException("Error in client side");
+            break;
+        case eProsima::DDSRPC::SERVER_TIMEOUT:
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+            break;
+        case eProsima::DDSRPC::SERVER_ERROR:
+            throw eProsima::DDSRPC::ServerException("Error in server side");
+            break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
+    };
     
 
-    $if(!voidInitMap.(type.templateName))$
-    return returnedValue;
+    $if(!voidInitMap.(rettype.typeName))$
+    return $rettype.name$;
     $endif$
 }
 >>
 
-functionImplAsync(interfaceName,type,name,inParams) ::= <<
-$functionHeaderAsync(class={$interfaceName$ProxyH},...)$ 
+functionImplAsync(interfaceName,name,inParams) ::= <<
+$functionHeaderAsync(class={$interfaceName$Proxy},...)$ 
 {
-    $varDecl(typeName=type.templateName, baseType=type, name="returnedValue")$
-    $name$Request *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    $name$Request instance;
     $interfaceName$_$name$Task *task = NULL;
-    instance = $name$RequestUtils::createTypeData($extractParams(inParams)$);
+    $name$RequestUtils::setTypeData(instance$if(inParams)$, $endif$$extractParams(inParams)$);
     task = new $interfaceName$_$name$Task(obj, this);
-    returnedValue = $name$_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = $name$_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    $reqrepDestruction(type=name, reqrep="Request", name="instance")$
-
-    $if(!voidInitMap.(type.templateName))$
-    return returnedValue;
-    $endif$
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
 >>
 
@@ -261,44 +216,31 @@ $ReqRepIncludes(interfaceName=interfaceName)$
 #include "$interfaceName$AsyncSupport.h"
 #include "exceptions/Exceptions.h"
 
-
-$interfaceName$ProxyH::$interfaceName$ProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
-    Client(transport, domainId, timeout)
+$interfaceName$Proxy::$interfaceName$Proxy(int domainId, long timeout) :
+    Client(NULL, domainId, timeout)
 {
-    $createRPC(funNames); separator="\n"$
+    createRPCs();
 }
 
-$interfaceName$ProxyH::~$interfaceName$ProxyH()
+$interfaceName$Proxy::$interfaceName$Proxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+    Client(transport, domainId, timeout)
+{
+    createRPCs();
+}
+
+$interfaceName$Proxy::~$interfaceName$Proxy()
 {
     $funNames:{delete $it.name$_Service;}; separator="\n"$
+}
+
+void $interfaceName$Proxy::createRPCs()
+{
+    $createRPC(funNames); separator="\n"$
 }
 
 $funImpls; separator="\n"$
 
 $funImplsAsync; separator="\n"$
-
-$interfaceName$Proxy::$interfaceName$Proxy(int domainId, long timeout) :
-    $interfaceName$ProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
-{
-}
-
-$interfaceName$Proxy::$interfaceName$Proxy(const char *to_connect, int domainId, long timeout) :
-    $interfaceName$ProxyH(new eProsima::DDSRPC::UDPTransport(to_connect), domainId, timeout)
-{
-}
-
-$interfaceName$Proxy::~$interfaceName$Proxy()
-{
-}
-
-$interfaceName$WANProxy::$interfaceName$WANProxy(const char *to_connect, int domainId, long timeout) :
-    $interfaceName$ProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
-{
-}
-
-$interfaceName$WANProxy::~$interfaceName$WANProxy()
-{
-}
 >>
 
 /**
@@ -316,15 +258,18 @@ $interfaceName$WANProxy::~$interfaceName$WANProxy()
  *  voidInitMap   - inherited(cplusplus)
  *  varDecl       - inherited(cplusplus)
  */ 
-functionCall(type,name,params) ::= <<
-    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create="yes")$}; separator="\n"$   
-    $varDecl(typeName=type.templateName, baseType=type, name=[name,"RetValue"])$    
-
-    $if(!voidInitMap.(type.templateName))$
-    $name$RetValue = 
-    $endif$proxy->$name$($extractParams(params)$);
+functionCall(rettype,name,params) ::= <<
+    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name)$}; separator="\n"$   
+    $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
     
-    $params:{$varDel(typeName = it.typeName, baseType=it.baseType, name = it.name)$}; separator="\n"$
+    $params:{$varComplexInitialize(typeName=it.typeName, name=it.name)$};separator="\n"$
+    $varComplexInitialize(typeName=rettype.typeName, name=rettype.name)$
+
+    $if(!voidInitMap.(rettype.typeName))$
+    $rettype.name$ = $endif$proxy->$name$($extractParams(params)$);
+    
+    $params:{$varDel(typeName=it.typeName, baseType=it.baseType, name=it.name)$}; separator="\n"$
+    $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
 >>
 
 /**

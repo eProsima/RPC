@@ -110,13 +110,9 @@ public class CplusplusVisitor implements IDLParserVisitor
 		{
 			if(op.getReturnType() == null)
 			{
-				op.setReturnType("void");
+				op.createReturnType("void");
 			}
-			else
-			{
-				// The return type doesn't has name at this leve. Set the name.
-				op.getReturnType().setName(op.getName() + "_ret");
-			}
+
 			((Interface) data).add(op);
 		}
 		
@@ -265,7 +261,7 @@ public class CplusplusVisitor implements IDLParserVisitor
 	public Object visit(ASTparam_type node, Object data) {
 		String typeName = node.jjtGetChild(0).jjtAccept(this, data).toString();
 		if (data instanceof Operation) {
-			((Operation) data).setReturnType(typeName);
+			((Operation) data).createReturnType(typeName);
 		} else if (data instanceof Param) {
 			((Param) data).setTypeName(typeName);
 		}

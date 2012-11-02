@@ -12,7 +12,7 @@
 class BasicTypeTest_getOctet
 {
     public:
-        virtual void getOctet(/*inout*/ const DDS_Octet oc2, /*out*/ const DDS_Octet oc3, /*out*/ const DDS_Octet getOctet_ret)
+        virtual void getOctet(/*inout*/ DDS_Octet oc2, /*out*/ DDS_Octet oc3, DDS_Octet &getOctet_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class BasicTypeTest_getOctet
 class BasicTypeTest_getChar
 {
     public:
-        virtual void getChar(/*inout*/ const DDS_Char ch2, /*out*/ const DDS_Char ch3, /*out*/ const DDS_Char getChar_ret)
+        virtual void getChar(/*inout*/ DDS_Char ch2, /*out*/ DDS_Char ch3, DDS_Char &getChar_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class BasicTypeTest_getChar
 class BasicTypeTest_getWChar
 {
     public:
-        virtual void getWChar(/*inout*/ const DDS_Wchar wch2, /*out*/ const DDS_Wchar wch3, /*out*/ const DDS_Wchar getWChar_ret)
+        virtual void getWChar(/*inout*/ DDS_Wchar wch2, /*out*/ DDS_Wchar wch3, DDS_Wchar &getWChar_ret)
         {
         }
    
@@ -45,7 +45,7 @@ class BasicTypeTest_getWChar
 class BasicTypeTest_getShort
 {
     public:
-        virtual void getShort(/*inout*/ const DDS_Short sh2, /*out*/ const DDS_Short sh3, /*out*/ const DDS_Short getShort_ret)
+        virtual void getShort(/*inout*/ DDS_Short sh2, /*out*/ DDS_Short sh3, DDS_Short &getShort_ret)
         {
         }
    
@@ -56,7 +56,7 @@ class BasicTypeTest_getShort
 class BasicTypeTest_getUShort
 {
     public:
-        virtual void getUShort(/*inout*/ const DDS_UnsignedShort ush2, /*out*/ const DDS_UnsignedShort ush3, /*out*/ const DDS_UnsignedShort getUShort_ret)
+        virtual void getUShort(/*inout*/ DDS_UnsignedShort ush2, /*out*/ DDS_UnsignedShort ush3, DDS_UnsignedShort &getUShort_ret)
         {
         }
    
@@ -67,7 +67,7 @@ class BasicTypeTest_getUShort
 class BasicTypeTest_getLong
 {
     public:
-        virtual void getLong(/*inout*/ const DDS_Long lo2, /*out*/ const DDS_Long lo3, /*out*/ const DDS_Long getLong_ret)
+        virtual void getLong(/*inout*/ DDS_Long lo2, /*out*/ DDS_Long lo3, DDS_Long &getLong_ret)
         {
         }
    
@@ -78,7 +78,7 @@ class BasicTypeTest_getLong
 class BasicTypeTest_getULong
 {
     public:
-        virtual void getULong(/*inout*/ const DDS_UnsignedLong ulo2, /*out*/ const DDS_UnsignedLong ulo3, /*out*/ const DDS_UnsignedLong getULong_ret)
+        virtual void getULong(/*inout*/ DDS_UnsignedLong ulo2, /*out*/ DDS_UnsignedLong ulo3, DDS_UnsignedLong &getULong_ret)
         {
         }
    
@@ -89,7 +89,7 @@ class BasicTypeTest_getULong
 class BasicTypeTest_getLLong
 {
     public:
-        virtual void getLLong(/*inout*/ const DDS_LongLong llo2, /*out*/ const DDS_LongLong llo3, /*out*/ const DDS_LongLong getLLong_ret)
+        virtual void getLLong(/*inout*/ DDS_LongLong llo2, /*out*/ DDS_LongLong llo3, DDS_LongLong &getLLong_ret)
         {
         }
    
@@ -100,7 +100,7 @@ class BasicTypeTest_getLLong
 class BasicTypeTest_getULLong
 {
     public:
-        virtual void getULLong(/*inout*/ const DDS_UnsignedLongLong ullo2, /*out*/ const DDS_UnsignedLongLong ullo3, /*out*/ const DDS_UnsignedLongLong getULLong_ret)
+        virtual void getULLong(/*inout*/ DDS_UnsignedLongLong ullo2, /*out*/ DDS_UnsignedLongLong ullo3, DDS_UnsignedLongLong &getULLong_ret)
         {
         }
    
@@ -111,7 +111,7 @@ class BasicTypeTest_getULLong
 class BasicTypeTest_getFloat
 {
     public:
-        virtual void getFloat(/*inout*/ const DDS_Float fl2, /*out*/ const DDS_Float fl3, /*out*/ const DDS_Float getFloat_ret)
+        virtual void getFloat(/*inout*/ DDS_Float fl2, /*out*/ DDS_Float fl3, DDS_Float &getFloat_ret)
         {
         }
    
@@ -122,7 +122,7 @@ class BasicTypeTest_getFloat
 class BasicTypeTest_getDouble
 {
     public:
-        virtual void getDouble(/*inout*/ const DDS_Double do2, /*out*/ const DDS_Double do3, /*out*/ const DDS_Double getDouble_ret)
+        virtual void getDouble(/*inout*/ DDS_Double do2, /*out*/ DDS_Double do3, DDS_Double &getDouble_ret)
         {
         }
    
@@ -133,7 +133,7 @@ class BasicTypeTest_getDouble
 class BasicTypeTest_getBoolean
 {
     public:
-        virtual void getBoolean(/*inout*/ const DDS_Boolean bo2, /*out*/ const DDS_Boolean bo3, /*out*/ const DDS_Boolean getBoolean_ret)
+        virtual void getBoolean(/*inout*/ DDS_Boolean bo2, /*out*/ DDS_Boolean bo3, DDS_Boolean &getBoolean_ret)
         {
         }
    
@@ -143,77 +143,91 @@ class BasicTypeTest_getBoolean
 };
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class BasicTypeTestProxyH : public eProsima::DDSRPC::Client
+class BasicTypeTestProxy : public eProsima::DDSRPC::Client
 {
     public:
-
+    
         /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        BasicTypeTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        BasicTypeTestProxy(int domainId = 0, long timeout = 10000);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server's proxy.
+         *
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         */
+        BasicTypeTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
-        virtual ~BasicTypeTestProxyH();
+        virtual ~BasicTypeTestProxy();
         
          
-        eProsima::DDSRPC::ReturnMessage getOctet(/*in*/ const DDS_Octet oc1, /*inout*/ DDS_Octet &oc2, /*out*/ DDS_Octet &oc3, /*out*/ DDS_Octet &getOctet_ret);
+        DDS_Octet getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3);
          
-        eProsima::DDSRPC::ReturnMessage getChar(/*in*/ const DDS_Char ch1, /*inout*/ DDS_Char &ch2, /*out*/ DDS_Char &ch3, /*out*/ DDS_Char &getChar_ret);
+        DDS_Char getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3);
          
-        eProsima::DDSRPC::ReturnMessage getWChar(/*in*/ const DDS_Wchar wch1, /*inout*/ DDS_Wchar &wch2, /*out*/ DDS_Wchar &wch3, /*out*/ DDS_Wchar &getWChar_ret);
+        DDS_Wchar getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3);
          
-        eProsima::DDSRPC::ReturnMessage getShort(/*in*/ const DDS_Short sh1, /*inout*/ DDS_Short &sh2, /*out*/ DDS_Short &sh3, /*out*/ DDS_Short &getShort_ret);
+        DDS_Short getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3);
          
-        eProsima::DDSRPC::ReturnMessage getUShort(/*in*/ const DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort &ush2, /*out*/ DDS_UnsignedShort &ush3, /*out*/ DDS_UnsignedShort &getUShort_ret);
+        DDS_UnsignedShort getUShort(/*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3);
          
-        eProsima::DDSRPC::ReturnMessage getLong(/*in*/ const DDS_Long lo1, /*inout*/ DDS_Long &lo2, /*out*/ DDS_Long &lo3, /*out*/ DDS_Long &getLong_ret);
+        DDS_Long getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3);
          
-        eProsima::DDSRPC::ReturnMessage getULong(/*in*/ const DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong &ulo2, /*out*/ DDS_UnsignedLong &ulo3, /*out*/ DDS_UnsignedLong &getULong_ret);
+        DDS_UnsignedLong getULong(/*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3);
          
-        eProsima::DDSRPC::ReturnMessage getLLong(/*in*/ const DDS_LongLong llo1, /*inout*/ DDS_LongLong &llo2, /*out*/ DDS_LongLong &llo3, /*out*/ DDS_LongLong &getLLong_ret);
+        DDS_LongLong getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3);
          
-        eProsima::DDSRPC::ReturnMessage getULLong(/*in*/ const DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong &ullo2, /*out*/ DDS_UnsignedLongLong &ullo3, /*out*/ DDS_UnsignedLongLong &getULLong_ret);
+        DDS_UnsignedLongLong getULLong(/*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3);
          
-        eProsima::DDSRPC::ReturnMessage getFloat(/*in*/ const DDS_Float fl1, /*inout*/ DDS_Float &fl2, /*out*/ DDS_Float &fl3, /*out*/ DDS_Float &getFloat_ret);
+        DDS_Float getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3);
          
-        eProsima::DDSRPC::ReturnMessage getDouble(/*in*/ const DDS_Double do1, /*inout*/ DDS_Double &do2, /*out*/ DDS_Double &do3, /*out*/ DDS_Double &getDouble_ret);
+        DDS_Double getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3);
          
-        eProsima::DDSRPC::ReturnMessage getBoolean(/*in*/ const DDS_Boolean bo1, /*inout*/ DDS_Boolean &bo2, /*out*/ DDS_Boolean &bo3, /*out*/ DDS_Boolean &getBoolean_ret);
+        DDS_Boolean getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3);
         
          
-        eProsima::DDSRPC::ReturnMessage getOctet_async(BasicTypeTest_getOctet &obj, /*in*/ const DDS_Octet oc1, /*inout*/ const DDS_Octet oc2);
+        void getOctet_async(BasicTypeTest_getOctet &obj, /*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet oc2);
          
-        eProsima::DDSRPC::ReturnMessage getChar_async(BasicTypeTest_getChar &obj, /*in*/ const DDS_Char ch1, /*inout*/ const DDS_Char ch2);
+        void getChar_async(BasicTypeTest_getChar &obj, /*in*/ DDS_Char ch1, /*inout*/ DDS_Char ch2);
          
-        eProsima::DDSRPC::ReturnMessage getWChar_async(BasicTypeTest_getWChar &obj, /*in*/ const DDS_Wchar wch1, /*inout*/ const DDS_Wchar wch2);
+        void getWChar_async(BasicTypeTest_getWChar &obj, /*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar wch2);
          
-        eProsima::DDSRPC::ReturnMessage getShort_async(BasicTypeTest_getShort &obj, /*in*/ const DDS_Short sh1, /*inout*/ const DDS_Short sh2);
+        void getShort_async(BasicTypeTest_getShort &obj, /*in*/ DDS_Short sh1, /*inout*/ DDS_Short sh2);
          
-        eProsima::DDSRPC::ReturnMessage getUShort_async(BasicTypeTest_getUShort &obj, /*in*/ const DDS_UnsignedShort ush1, /*inout*/ const DDS_UnsignedShort ush2);
+        void getUShort_async(BasicTypeTest_getUShort &obj, /*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort ush2);
          
-        eProsima::DDSRPC::ReturnMessage getLong_async(BasicTypeTest_getLong &obj, /*in*/ const DDS_Long lo1, /*inout*/ const DDS_Long lo2);
+        void getLong_async(BasicTypeTest_getLong &obj, /*in*/ DDS_Long lo1, /*inout*/ DDS_Long lo2);
          
-        eProsima::DDSRPC::ReturnMessage getULong_async(BasicTypeTest_getULong &obj, /*in*/ const DDS_UnsignedLong ulo1, /*inout*/ const DDS_UnsignedLong ulo2);
+        void getULong_async(BasicTypeTest_getULong &obj, /*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong ulo2);
          
-        eProsima::DDSRPC::ReturnMessage getLLong_async(BasicTypeTest_getLLong &obj, /*in*/ const DDS_LongLong llo1, /*inout*/ const DDS_LongLong llo2);
+        void getLLong_async(BasicTypeTest_getLLong &obj, /*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong llo2);
          
-        eProsima::DDSRPC::ReturnMessage getULLong_async(BasicTypeTest_getULLong &obj, /*in*/ const DDS_UnsignedLongLong ullo1, /*inout*/ const DDS_UnsignedLongLong ullo2);
+        void getULLong_async(BasicTypeTest_getULLong &obj, /*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong ullo2);
          
-        eProsima::DDSRPC::ReturnMessage getFloat_async(BasicTypeTest_getFloat &obj, /*in*/ const DDS_Float fl1, /*inout*/ const DDS_Float fl2);
+        void getFloat_async(BasicTypeTest_getFloat &obj, /*in*/ DDS_Float fl1, /*inout*/ DDS_Float fl2);
          
-        eProsima::DDSRPC::ReturnMessage getDouble_async(BasicTypeTest_getDouble &obj, /*in*/ const DDS_Double do1, /*inout*/ const DDS_Double do2);
+        void getDouble_async(BasicTypeTest_getDouble &obj, /*in*/ DDS_Double do1, /*inout*/ DDS_Double do2);
          
-        eProsima::DDSRPC::ReturnMessage getBoolean_async(BasicTypeTest_getBoolean &obj, /*in*/ const DDS_Boolean bo1, /*inout*/ const DDS_Boolean bo2);
+        void getBoolean_async(BasicTypeTest_getBoolean &obj, /*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean bo2);
         
     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
         eProsima::DDSRPC::ClientRPC *getOctet_Service;
         eProsima::DDSRPC::ClientRPC *getChar_Service;
         eProsima::DDSRPC::ClientRPC *getWChar_Service;
@@ -226,47 +240,6 @@ class BasicTypeTestProxyH : public eProsima::DDSRPC::Client
         eProsima::DDSRPC::ClientRPC *getFloat_Service;
         eProsima::DDSRPC::ClientRPC *getDouble_Service;
         eProsima::DDSRPC::ClientRPC *getBoolean_Service; 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class BasicTypeTestProxy : public BasicTypeTestProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        BasicTypeTestProxy(int domainId = 0, long timeout = 10000);
-        
-        virtual ~BasicTypeTestProxy();
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class BasicTypeTestWANProxy : public BasicTypeTestProxyH
-{
-    public:
-    
-        /**
-         * \brief Default constructor.
-         *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        BasicTypeTestWANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
-        
-        virtual ~BasicTypeTestWANProxy();
 };
 
 #endif // _BasicTypeTest_PROXY_H_

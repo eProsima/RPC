@@ -23,22 +23,17 @@ const char* getEnumRequestUtils::registerType(DDS::DomainParticipant *clientPart
     return typeName;
 }
 
-getEnumRequest* getEnumRequestUtils::createTypeData(/*in*/ const Valores v1, /*inout*/ const Valores v2)
+void getEnumRequestUtils::setTypeData(getEnumRequest& instance, /*in*/ Valores v1, /*inout*/ Valores v2)
 {
-    getEnumRequest* instance = getEnumRequestTypeSupport::create_data();
-
-    instance->v1 = v1;
-    instance->v2 = v2;
+    instance.v1 = v1;
+    instance.v2 = v2;
     
-    
-    return instance;
 }
 
-void getEnumRequestUtils::extractTypeData(getEnumRequest* data , /*in*/ Valores &v1, /*inout*/ Valores &v2)
+void getEnumRequestUtils::extractTypeData(getEnumRequest& data, /*in*/ Valores& v1, /*inout*/ Valores& v2)
 {
-    v1 = data->v1;
-    v2 = data->v2;
-    
+    v1 = data.v1;
+    v2 = data.v2;  
     
 }
 
@@ -60,23 +55,19 @@ const char* getEnumReplyUtils::registerType(DDS::DomainParticipant *clientPartic
     return typeName;
 }
 
-getEnumReply* getEnumReplyUtils::createTypeData(/*inout*/ const Valores v2, /*out*/ const Valores v3, /*out*/ const Valores getEnum_ret)
+void getEnumReplyUtils::setTypeData(getEnumReply& instance, /*inout*/ Valores v2, /*out*/ Valores v3, /*out*/ Valores getEnum_ret)
 {
-    getEnumReply* instance = getEnumReplyTypeSupport::create_data();
-
-    instance->v2 = v2;
-    instance->v3 = v3;
-    
-    instance->getEnum_ret = getEnum_ret;            
-    return instance;
+    instance.v2 = v2;
+    instance.v3 = v3;
+    instance.getEnum_ret = getEnum_ret;            
 }
 
-void getEnumReplyUtils::extractTypeData(getEnumReply* data , /*inout*/ Valores &v2, /*out*/ Valores &v3, /*out*/ Valores &getEnum_ret)
+void getEnumReplyUtils::extractTypeData(getEnumReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret)
 {
-    v2 = data->v2;
-    v3 = data->v3;
-    
-    getEnum_ret = data->getEnum_ret;            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    v2 = data.v2;
+    v3 = data.v3;  
+    getEnum_ret = data.getEnum_ret;            
 }
 
 
@@ -97,26 +88,17 @@ const char* getStringRequestUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-getStringRequest* getStringRequestUtils::createTypeData(/*in*/ const char* s1, /*inout*/ const char* s2)
+void getStringRequestUtils::setTypeData(getStringRequest& instance, /*in*/ char* s1, /*inout*/ char* s2)
 {
-    getStringRequest* instance = getStringRequestTypeSupport::create_data();
-
-    if(instance->s1 != NULL)
-       free(instance->s1);
-    instance->s1 = strdup(s1);
-    if(instance->s2 != NULL)
-       free(instance->s2);
-    instance->s2 = strdup(s2);
+    instance.s1 = s1;
+    instance.s2 = s2;
     
-    
-    return instance;
 }
 
-void getStringRequestUtils::extractTypeData(getStringRequest* data , /*in*/ char* &s1, /*inout*/ char* &s2)
+void getStringRequestUtils::extractTypeData(getStringRequest& data, /*in*/ char*& s1, /*inout*/ char*& s2)
 {
-    s1 = data->s1;
-    s2 = strdup(data->s2);
-    
+    s1 = data.s1;
+    s2 = strdup(data.s2);  
     
 }
 
@@ -138,29 +120,22 @@ const char* getStringReplyUtils::registerType(DDS::DomainParticipant *clientPart
     return typeName;
 }
 
-getStringReply* getStringReplyUtils::createTypeData(/*inout*/ const char* s2, /*out*/ const char* s3, /*out*/ const char* getString_ret)
+void getStringReplyUtils::setTypeData(getStringReply& instance, /*inout*/ char* s2, /*out*/ char* s3, /*out*/ char* getString_ret)
 {
-    getStringReply* instance = getStringReplyTypeSupport::create_data();
-
-    if(instance->s2 != NULL)
-       free(instance->s2);
-    instance->s2 = strdup(s2);
-    if(instance->s3 != NULL)
-       free(instance->s3);
-    instance->s3 = strdup(s3);
-    
-    if(instance->getString_ret != NULL)
-       free(instance->getString_ret);
-    instance->getString_ret = strdup(getString_ret);            
-    return instance;
+    instance.s2 = s2;
+    instance.s3 = s3;
+    instance.getString_ret = getString_ret;            
 }
 
-void getStringReplyUtils::extractTypeData(getStringReply* data , /*inout*/ char* &s2, /*out*/ char* &s3, /*out*/ char* &getString_ret)
+void getStringReplyUtils::extractTypeData(getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret)
 {
-    s2 = strdup(data->s2);
-    s3 = strdup(data->s3);
-    
-    getString_ret = strdup(data->getString_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    if(s2 != NULL)
+    	free(s2);s2 = data.s2;
+    if(s3 != NULL)
+    	free(s3);s3 = data.s3;  
+    if(getString_ret != NULL)
+    	free(getString_ret);getString_ret = data.getString_ret;            
 }
 
 
@@ -181,26 +156,17 @@ const char* getStringBoundedRequestUtils::registerType(DDS::DomainParticipant *c
     return typeName;
 }
 
-getStringBoundedRequest* getStringBoundedRequestUtils::createTypeData(/*in*/ const char* sb1, /*inout*/ const char* sb2)
+void getStringBoundedRequestUtils::setTypeData(getStringBoundedRequest& instance, /*in*/ char* sb1, /*inout*/ char* sb2)
 {
-    getStringBoundedRequest* instance = getStringBoundedRequestTypeSupport::create_data();
-
-    if(instance->sb1 != NULL)
-       free(instance->sb1);
-    instance->sb1 = strdup(sb1);
-    if(instance->sb2 != NULL)
-       free(instance->sb2);
-    instance->sb2 = strdup(sb2);
+    instance.sb1 = sb1;
+    instance.sb2 = sb2;
     
-    
-    return instance;
 }
 
-void getStringBoundedRequestUtils::extractTypeData(getStringBoundedRequest* data , /*in*/ char* &sb1, /*inout*/ char* &sb2)
+void getStringBoundedRequestUtils::extractTypeData(getStringBoundedRequest& data, /*in*/ char*& sb1, /*inout*/ char*& sb2)
 {
-    sb1 = data->sb1;
-    sb2 = strdup(data->sb2);
-    
+    sb1 = data.sb1;
+    sb2 = strdup(data.sb2);  
     
 }
 
@@ -222,29 +188,22 @@ const char* getStringBoundedReplyUtils::registerType(DDS::DomainParticipant *cli
     return typeName;
 }
 
-getStringBoundedReply* getStringBoundedReplyUtils::createTypeData(/*inout*/ const char* sb2, /*out*/ const char* sb3, /*out*/ const char* getStringBounded_ret)
+void getStringBoundedReplyUtils::setTypeData(getStringBoundedReply& instance, /*inout*/ char* sb2, /*out*/ char* sb3, /*out*/ char* getStringBounded_ret)
 {
-    getStringBoundedReply* instance = getStringBoundedReplyTypeSupport::create_data();
-
-    if(instance->sb2 != NULL)
-       free(instance->sb2);
-    instance->sb2 = strdup(sb2);
-    if(instance->sb3 != NULL)
-       free(instance->sb3);
-    instance->sb3 = strdup(sb3);
-    
-    if(instance->getStringBounded_ret != NULL)
-       free(instance->getStringBounded_ret);
-    instance->getStringBounded_ret = strdup(getStringBounded_ret);            
-    return instance;
+    instance.sb2 = sb2;
+    instance.sb3 = sb3;
+    instance.getStringBounded_ret = getStringBounded_ret;            
 }
 
-void getStringBoundedReplyUtils::extractTypeData(getStringBoundedReply* data , /*inout*/ char* &sb2, /*out*/ char* &sb3, /*out*/ char* &getStringBounded_ret)
+void getStringBoundedReplyUtils::extractTypeData(getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret)
 {
-    sb2 = strdup(data->sb2);
-    sb3 = strdup(data->sb3);
-    
-    getStringBounded_ret = strdup(data->getStringBounded_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+    if(sb2 != NULL)
+    	free(sb2);sb2 = data.sb2;
+    if(sb3 != NULL)
+    	free(sb3);sb3 = data.sb3;  
+    if(getStringBounded_ret != NULL)
+    	free(getStringBounded_ret);getStringBounded_ret = data.getStringBounded_ret;            
 }
 
  

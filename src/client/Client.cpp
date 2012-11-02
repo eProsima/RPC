@@ -3,6 +3,7 @@
 #include "exceptions/ResourceException.h"
 #include "utils/Utilities.h"
 #include "transports/Transport.h"
+#include "transports/UDPTransport.h"
 
 static const char* const CLASS_NAME ="eProsima::DDSRPC::Client";
 
@@ -12,72 +13,71 @@ namespace eProsima
 	{
 
 		Client::Client(Transport *transport, int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
-        m_timeout(milliseconds)
+        m_timeout(milliseconds), m_defaultTransport(false), m_transport(transport)
 		{
 			const char* const METHOD_NAME ="Client";
 			std::string errorMessage;
 
-            if(transport != NULL)
+            if(m_transport == NULL)
             {
-                DDS::DomainParticipantQos participantQos;
+				m_transport = new UDPTransport();
+				m_defaultTransport = true;
+			}
+
+            DDS::DomainParticipantQos participantQos;
 
 #if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 
-                // Because OpenDDS, the first step is set the transport.
-                transport->setTransport(participantQos);
+            // Because OpenDDS, the first step is set the transport.
+            m_transport->setTransport(participantQos);
 #endif
                 
-                DDS::DomainParticipantFactory *factory = getFactory(domainId);
+            DDS::DomainParticipantFactory *factory = getFactory(domainId);
 
-                if(factory != NULL)
-                {
-                    factory->get_default_participant_qos(participantQos);
+            if(factory != NULL)
+            {
+                factory->get_default_participant_qos(participantQos);
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-                    transport->setTransport(participantQos);
+                m_transport->setTransport(participantQos);
 #endif
-                    // Creating the domain participant which is associated with the client
-                    m_participant = factory->create_participant(
-                            m_domainId, participantQos, 
-                            NULL /* listener */, STATUS_MASK_NONE);
+                // Creating the domain participant which is associated with the client
+                m_participant = factory->create_participant(
+                        m_domainId, participantQos, 
+                        NULL /* listener */, STATUS_MASK_NONE);
 
-                    if (m_participant != NULL)
+                if (m_participant != NULL)
+                {
+                    if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
                     {
-                        if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
+                        participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                        m_participant->set_qos(participantQos);
+
+                        m_asyncThread = new AsyncThread();
+
+                        if(m_asyncThread != NULL)
                         {
-                            participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                            m_participant->set_qos(participantQos);
-
-                            m_asyncThread = new AsyncThread();
-
-                            if(m_asyncThread != NULL)
-                            {
-                                if(m_asyncThread->init() == 0)
-                                    return;
-                                else
-                                {
-									errorMessage = "Cannot initialize the asynchronous thread";
-                                    delete m_asyncThread;
-                                }
-                            }
+                            if(m_asyncThread->init() == 0)
+                                return;
                             else
-								errorMessage = "create asynchronous thread";
+                            {
+								errorMessage = "Cannot initialize the asynchronous thread";
+                                delete m_asyncThread;
+                            }
                         }
+                        else
+							errorMessage = "create asynchronous thread";
+                    }
 
-                        factory->delete_participant(m_participant);
-                    }
-                    else
-                    {
-						errorMessage = "create_participant error";
-                    }
+                    factory->delete_participant(m_participant);
                 }
                 else
                 {
-					errorMessage = "create factory error";
+					errorMessage = "create_participant error";
                 }
             }
             else
             {
-				errorMessage = "bad parameters";
+				errorMessage = "create factory error";
             }
 
 			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
@@ -107,6 +107,9 @@ namespace eProsima
 					printf("ERROR<~%s:%s> delete_participant error %d\n", CLASS_NAME, METHOD_NAME, retcode);
 				}
 			}
+
+			if(m_defaultTransport && m_transport != NULL)
+				delete m_transport;
 		}
 
         int Client::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout)

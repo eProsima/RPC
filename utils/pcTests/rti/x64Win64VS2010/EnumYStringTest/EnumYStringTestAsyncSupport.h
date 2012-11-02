@@ -23,9 +23,13 @@ class EnumYStringTest_getEnumTask : public eProsima::DDSRPC::AsyncTask
         
         EnumYStringTest_getEnum& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            EnumYStringTest_getEnum &m_obj;
+           
+           getEnumReply m_reply;
 };
 
 class EnumYStringTest_getStringTask : public eProsima::DDSRPC::AsyncTask
@@ -43,9 +47,13 @@ class EnumYStringTest_getStringTask : public eProsima::DDSRPC::AsyncTask
         
         EnumYStringTest_getString& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            EnumYStringTest_getString &m_obj;
+           
+           getStringReply m_reply;
 };
 
 class EnumYStringTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
@@ -63,9 +71,13 @@ class EnumYStringTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
         
         EnumYStringTest_getStringBounded& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            EnumYStringTest_getStringBounded &m_obj;
+           
+           getStringBoundedReply m_reply;
 };
 
 #endif // _EnumYStringTest_ASYNC_SUPPORT_H_

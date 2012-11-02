@@ -9,10 +9,28 @@
 #include "transports/TCPTransport.h"
 #include "EnumYStringTestRequestReplyPlugin.h"
 #include "EnumYStringTestAsyncSupport.h"
+#include "exceptions/Exceptions.h"
 
+EnumYStringTestProxy::EnumYStringTestProxy(int domainId, long timeout) :
+    Client(NULL, domainId, timeout)
+{
+    createRPCs();
+}
 
-EnumYStringTestProxyH::EnumYStringTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+EnumYStringTestProxy::EnumYStringTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
     Client(transport, domainId, timeout)
+{
+    createRPCs();
+}
+
+EnumYStringTestProxy::~EnumYStringTestProxy()
+{
+    delete getEnum_Service;
+    delete getString_Service;
+    delete getStringBounded_Service;
+}
+
+void EnumYStringTestProxy::createRPCs()
 {
     this->getEnum_Service = new getEnumClientRPC("getEnum",
                                   getEnumRequestUtils::registerType(getParticipant()),
@@ -29,206 +47,173 @@ EnumYStringTestProxyH::EnumYStringTestProxyH(eProsima::DDSRPC::Transport *transp
 
 }
 
-EnumYStringTestProxyH::~EnumYStringTestProxyH()
-{
-    delete getEnum_Service;
-    delete getString_Service;
-    delete getStringBounded_Service;
-}
-
  
-eProsima::DDSRPC::ReturnMessage EnumYStringTestProxyH::getEnum(/*in*/ const Valores v1, /*inout*/ Valores &v2, /*out*/ Valores &v3, /*out*/ Valores &getEnum_ret) 
+Valores EnumYStringTestProxy::getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getEnumRequest *instance = NULL;
-    getEnumReply* retInstance = getEnumReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    Valores  returnedValue = VALOR1;    
+    getEnumRequest instance;
+    getEnumReply retInstance;
 
-    instance = getEnumRequestUtils::createTypeData(v1  , v2  );
-    returnedValue = getEnum_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getEnumReply_initialize(&retInstance);    
+    memset(&retInstance, 0, sizeof(getEnumReply));
+    getEnumRequestUtils::setTypeData(instance, v1  , v2  );
+    retcode = getEnum_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getEnumReplyUtils::extractTypeData(retInstance, retcode, v2  , v3  , returnedValue); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getEnumReplyUtils::extractTypeData(retInstance, v2  , v3  , getEnum_ret  );
-            //getEnumReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getEnumReplyTypeSupport::delete_data(retInstance);
-    getEnumRequestTypeSupport::delete_data(instance);
 
     return returnedValue;
 }
  
-eProsima::DDSRPC::ReturnMessage EnumYStringTestProxyH::getString(/*in*/ const char* s1, /*inout*/ char* &s2, /*out*/ char* &s3, /*out*/ char* &getString_ret) 
+char* EnumYStringTestProxy::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getStringRequest *instance = NULL;
-    getStringReply* retInstance = getStringReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    char*  returnedValue = NULL;    
+    getStringRequest instance;
+    getStringReply retInstance;
 
-    instance = getStringRequestUtils::createTypeData(s1  , s2  );
-    returnedValue = getString_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getStringReply_initialize(&retInstance);    
+    getStringRequestUtils::setTypeData(instance, s1  , s2  );
+    retcode = getString_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getStringReplyUtils::extractTypeData(retInstance, retcode, s2  , s3  , returnedValue); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getStringReplyUtils::extractTypeData(retInstance, s2  , s3  , getString_ret  );
-            //getStringReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getStringReplyTypeSupport::delete_data(retInstance);
-    getStringRequestTypeSupport::delete_data(instance);
 
     return returnedValue;
 }
  
-eProsima::DDSRPC::ReturnMessage EnumYStringTestProxyH::getStringBounded(/*in*/ const char* sb1, /*inout*/ char* &sb2, /*out*/ char* &sb3, /*out*/ char* &getStringBounded_ret) 
+char* EnumYStringTestProxy::getStringBounded(/*in*/ char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getStringBoundedRequest *instance = NULL;
-    getStringBoundedReply* retInstance = getStringBoundedReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    char*  returnedValue = NULL;    
+    getStringBoundedRequest instance;
+    getStringBoundedReply retInstance;
 
-    instance = getStringBoundedRequestUtils::createTypeData(sb1  , sb2  );
-    returnedValue = getStringBounded_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    getStringBoundedReply_initialize(&retInstance);    
+    getStringBoundedRequestUtils::setTypeData(instance, sb1  , sb2  );
+    retcode = getStringBounded_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2  , sb3  , returnedValue); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            getStringBoundedReplyUtils::extractTypeData(retInstance, sb2  , sb3  , getStringBounded_ret  );
-            //getStringBoundedReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    getStringBoundedReplyTypeSupport::delete_data(retInstance);
-    getStringBoundedRequestTypeSupport::delete_data(instance);
 
     return returnedValue;
 }
 
  
-eProsima::DDSRPC::ReturnMessage EnumYStringTestProxyH::getEnum_async(EnumYStringTest_getEnum &obj, /*in*/ const Valores v1, /*inout*/ const Valores v2) 
+void EnumYStringTestProxy::getEnum_async(EnumYStringTest_getEnum &obj, /*in*/ Valores v1, /*inout*/ Valores v2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getEnumRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getEnumRequest instance;
     EnumYStringTest_getEnumTask *task = NULL;
-    instance = getEnumRequestUtils::createTypeData(v1  , v2  );
+    getEnumRequestUtils::setTypeData(instance, v1  , v2  );
     task = new EnumYStringTest_getEnumTask(obj, this);
-    returnedValue = getEnum_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getEnum_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getEnumRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage EnumYStringTestProxyH::getString_async(EnumYStringTest_getString &obj, /*in*/ const char* s1, /*inout*/ const char* s2) 
+void EnumYStringTestProxy::getString_async(EnumYStringTest_getString &obj, /*in*/ char* s1, /*inout*/ char* s2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getStringRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getStringRequest instance;
     EnumYStringTest_getStringTask *task = NULL;
-    instance = getStringRequestUtils::createTypeData(s1  , s2  );
+    getStringRequestUtils::setTypeData(instance, s1  , s2  );
     task = new EnumYStringTest_getStringTask(obj, this);
-    returnedValue = getString_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getString_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getStringRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage EnumYStringTestProxyH::getStringBounded_async(EnumYStringTest_getStringBounded &obj, /*in*/ const char* sb1, /*inout*/ const char* sb2) 
+void EnumYStringTestProxy::getStringBounded_async(EnumYStringTest_getStringBounded &obj, /*in*/ char* sb1, /*inout*/ char* sb2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    getStringBoundedRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    getStringBoundedRequest instance;
     EnumYStringTest_getStringBoundedTask *task = NULL;
-    instance = getStringBoundedRequestUtils::createTypeData(sb1  , sb2  );
+    getStringBoundedRequestUtils::setTypeData(instance, sb1  , sb2  );
     task = new EnumYStringTest_getStringBoundedTask(obj, this);
-    returnedValue = getStringBounded_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = getStringBounded_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    getStringBoundedRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
-}
-
-EnumYStringTestProxy::EnumYStringTestProxy(int domainId, long timeout) :
-    EnumYStringTestProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
-{
-}
-
-EnumYStringTestProxy::~EnumYStringTestProxy()
-{
-}
-
-EnumYStringTestWANProxy::EnumYStringTestWANProxy(const char *to_connect, int domainId, long timeout) :
-    EnumYStringTestProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
-{
-}
-
-EnumYStringTestWANProxy::~EnumYStringTestWANProxy()
-{
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }

@@ -9,64 +9,59 @@
 
 #include "MultithreadTestServerRPCSupport.h"
 
-MultithreadTestServerH::MultithreadTestServerH(eProsima::DDSRPC::ServerStrategy *strategy,
+MultithreadTestServer::MultithreadTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(strategy, NULL, domainId)
+{
+    _impl = new MultithreadTestServerImpl();
+
+    createRPCs();
+}
+
+MultithreadTestServer::MultithreadTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
     Server(strategy, transport, domainId)
 {
     _impl = new MultithreadTestServerImpl();
     
-    this->setRPC(new testServerRPC("test", this,
-                testRequestUtils::registerType(getParticipant()),
-                testReplyUtils::registerType(getParticipant()),
-                &MultithreadTestServerH::test, getParticipant()));
-
+    createRPCs();
 }
-MultithreadTestServerH::~MultithreadTestServerH()
+
+MultithreadTestServer::~MultithreadTestServer()
 {
     delete _impl;    
 }
 
-void MultithreadTestServerH::test(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void MultithreadTestServer::createRPCs()
+{
+    this->setRPC(new testServerRPC("test", this,
+                testRequestUtils::registerType(getParticipant()),
+                testReplyUtils::registerType(getParticipant()),
+                &MultithreadTestServer::test, getParticipant()));
+
+}
+
+void MultithreadTestServer::test(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    MultithreadTestServerH *srv = dynamic_cast<MultithreadTestServerH*>(server);
-    Dato *dato1 = NULL;    
-    Dato *dato2 = DatoPluginSupport_create_data();    
-    DDS_Long  test_ret = 0;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    testReply *replyData = NULL;
+    MultithreadTestServer *srv = dynamic_cast<MultithreadTestServer*>(server);
+    Dato dato1;
+        
+    Dato dato2;
+    memset(&dato2, 0, sizeof(Dato));    
+    DDS_Long  returnedValue = 0;       
+    testReply replyData;
 
-    testRequestUtils::extractTypeData((testRequest*)requestData, dato1  );
+    testRequestUtils::extractTypeData(*(testRequest*)requestData, dato1  );
 
-returnedValue = srv->_impl->test(dato1  , dato2  , test_ret  );
+returnedValue = srv->_impl->test(dato1  , dato2  );
 
-    replyData = testReplyUtils::createTypeData(dato2  , test_ret  );
+    testReplyUtils::setTypeData(replyData, dato2  , returnedValue);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    testReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     testRequestTypeSupport::delete_data((testRequest*)requestData);
     
-    DatoPluginSupport_destroy_data(dato2);    
         
-}
-
-MultithreadTestServer::MultithreadTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    int domainId) :
-    MultithreadTestServerH(strategy, new eProsima::DDSRPC::UDPTransport(), domainId)
-{
-}
-MultithreadTestServer::~MultithreadTestServer()
-{   
-}
-
-MultithreadTestWANServer::MultithreadTestWANServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    const char *public_address, const char *server_bind_port,
-    int domainId) :
-    MultithreadTestServerH(strategy, new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId)
-{
-}
-MultithreadTestWANServer::~MultithreadTestWANServer()
-{   
+    Dato_finalize(&dato2);    
 }

@@ -5,59 +5,78 @@
 
 #include "StructTestProxy.h"
 #include "StructTestRequestReplyPlugin.h"
+#include "exceptions/Exceptions.h"
 
 int main(int argc, char **argv)
 {
-	StructTestProxy *proxy = new StructTestProxy();
+    StructTestProxy *proxy = new StructTestProxy();
+    
+    Envio ev;
+    Recepcion duplicate_ret;
 
-	Envio *ev = EnvioPluginSupport_create_data();    
-	ev->dato = 10;
-	ev->message = DDS_String_dup("HOLA");
-	Recepcion *duplicate_ret = RecepcionPluginSupport_create_data();       
-	eProsima::DDSRPC::ReturnMessage  duplicateRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+	Envio_initialize(&ev);    
+    Recepcion_initialize(&duplicate_ret);    
+        
+    ev.dato = 10;
+    ev.message = DDS_String_dup("HOLA");
 
-	duplicateRetValue = proxy->duplicate(ev  , duplicate_ret  );
+    try
+    {
+        duplicate_ret = proxy->duplicate(ev);
 
-	if(duplicateRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			duplicate_ret->devolucion != 10 ||
-			strcmp(duplicate_ret->message, "HOLA") != 0 ||
-			ev->dato != 10 ||
-			strcmp(ev->message, "HOLA") != 0)
-	{
-		printf("TEST FAILED<duplicate>\n");
-		_exit(-1);
-	}
+        if(duplicate_ret.devolucion != 10 ||
+                strcmp(duplicate_ret.message, "HOLA") != 0 ||
+                ev.dato != 10 ||
+                strcmp(ev.message, "HOLA") != 0)
+        {
+            printf("TEST FAILED<duplicate>: Wrong values\n");
+            _exit(-1);
+        }
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<duplicate>: %s\n", ex.getMessage().c_str());
+    }
 
-	EnvioPluginSupport_destroy_data(ev);    
-	RecepcionPluginSupport_destroy_data(duplicate_ret);    
+    Envio_finalize(&ev);    
+    Recepcion_finalize(&duplicate_ret);    
 
-	Envio *ev1 = EnvioPluginSupport_create_data();    
-	Envio *ev2 = EnvioPluginSupport_create_data();       
-	ev1->dato = 10;
-	ev1->message = DDS_String_dup("HOLA");
-	ev2->dato = 20;
-	ev2->message = DDS_String_dup("ADIOS");
+	Envio ev1;    
+	Envio ev2;       
+	Recepcion suma_ret;
 
-	Recepcion *suma_ret = RecepcionPluginSupport_create_data();       
-	eProsima::DDSRPC::ReturnMessage  sumaRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+	Envio_initialize(&ev1);    
+	Envio_initialize(&ev2);    
+	Recepcion_initialize(&suma_ret);  
 
-	sumaRetValue = proxy->suma(ev1  , ev2  ,suma_ret  );
+	ev1.dato = 10;
+	ev1.message = DDS_String_dup("HOLA");
+	ev2.dato = 20;
+	ev2.message = DDS_String_dup("ADIOS");
 
-	if(sumaRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			suma_ret->devolucion != 30 ||
-			strcmp(suma_ret->message, "HOLAADIOS") != 0 ||
-			ev1->dato != 10 ||
-			strcmp(ev1->message, "HOLA") != 0 ||
-			ev2->dato != 20 ||
-			strcmp(ev2->message, "ADIOS") != 0)
-	{
-		printf("TEST FAILED<suma>\n");
-		_exit(-1);
-	}
+    try
+    {
+        suma_ret = proxy->suma(ev1, ev2);
 
-	EnvioPluginSupport_destroy_data(ev1);    
-	EnvioPluginSupport_destroy_data(ev2);    
-	RecepcionPluginSupport_destroy_data(suma_ret);    
+        if(suma_ret.devolucion != 30 ||
+                strcmp(suma_ret.message, "HOLAADIOS") != 0 ||
+                ev1.dato != 10 ||
+                strcmp(ev1.message, "HOLA") != 0 ||
+                ev2.dato != 20 ||
+                strcmp(ev2.message, "ADIOS") != 0)
+        {
+            printf("TEST FAILED<suma>: Wrong values\n");
+            _exit(-1);
+        }
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<suma>: %s\n", ex.getMessage().c_str());
+    }
+
+	Envio_finalize(&ev1);    
+	Envio_finalize(&ev2);    
+	Recepcion_finalize(&suma_ret);    
 
 	printf("TEST SUCCESFULLY\n");
 

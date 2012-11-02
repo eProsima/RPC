@@ -9,51 +9,63 @@
 
 #include "EnumYStringTestServerRPCSupport.h"
 
-EnumYStringTestServerH::EnumYStringTestServerH(eProsima::DDSRPC::ServerStrategy *strategy,
+EnumYStringTestServer::EnumYStringTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(strategy, NULL, domainId)
+{
+    _impl = new EnumYStringTestServerImpl();
+
+    createRPCs();
+}
+
+EnumYStringTestServer::EnumYStringTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
     Server(strategy, transport, domainId)
 {
     _impl = new EnumYStringTestServerImpl();
     
-    this->setRPC(new getEnumServerRPC("getEnum", this,
-                getEnumRequestUtils::registerType(getParticipant()),
-                getEnumReplyUtils::registerType(getParticipant()),
-                &EnumYStringTestServerH::getEnum, getParticipant()));
-    this->setRPC(new getStringServerRPC("getString", this,
-                getStringRequestUtils::registerType(getParticipant()),
-                getStringReplyUtils::registerType(getParticipant()),
-                &EnumYStringTestServerH::getString, getParticipant()));
-    this->setRPC(new getStringBoundedServerRPC("getStringBounded", this,
-                getStringBoundedRequestUtils::registerType(getParticipant()),
-                getStringBoundedReplyUtils::registerType(getParticipant()),
-                &EnumYStringTestServerH::getStringBounded, getParticipant()));
-
+    createRPCs();
 }
-EnumYStringTestServerH::~EnumYStringTestServerH()
+
+EnumYStringTestServer::~EnumYStringTestServer()
 {
     delete _impl;    
 }
 
-void EnumYStringTestServerH::getEnum(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void EnumYStringTestServer::createRPCs()
+{
+    this->setRPC(new getEnumServerRPC("getEnum", this,
+                getEnumRequestUtils::registerType(getParticipant()),
+                getEnumReplyUtils::registerType(getParticipant()),
+                &EnumYStringTestServer::getEnum, getParticipant()));
+    this->setRPC(new getStringServerRPC("getString", this,
+                getStringRequestUtils::registerType(getParticipant()),
+                getStringReplyUtils::registerType(getParticipant()),
+                &EnumYStringTestServer::getString, getParticipant()));
+    this->setRPC(new getStringBoundedServerRPC("getStringBounded", this,
+                getStringBoundedRequestUtils::registerType(getParticipant()),
+                getStringBoundedReplyUtils::registerType(getParticipant()),
+                &EnumYStringTestServer::getStringBounded, getParticipant()));
+
+}
+
+void EnumYStringTestServer::getEnum(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    EnumYStringTestServerH *srv = dynamic_cast<EnumYStringTestServerH*>(server);
+    EnumYStringTestServer *srv = dynamic_cast<EnumYStringTestServer*>(server);
     Valores  v1 = VALOR1;    
     Valores  v2 = VALOR1;    
     Valores  v3 = VALOR1;    
-    Valores  getEnum_ret = VALOR1;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getEnumReply *replyData = NULL;
+    Valores  returnedValue = VALOR1;       
+    getEnumReply replyData;
 
-    getEnumRequestUtils::extractTypeData((getEnumRequest*)requestData, v1  , v2  );
+    getEnumRequestUtils::extractTypeData(*(getEnumRequest*)requestData, v1  , v2  );
 
-returnedValue = srv->_impl->getEnum(v1  , v2  , v3  , getEnum_ret  );
+returnedValue = srv->_impl->getEnum(v1  , v2  , v3  );
 
-    replyData = getEnumReplyUtils::createTypeData(v2  , v3  , getEnum_ret  );
+    getEnumReplyUtils::setTypeData(replyData, v2  , v3  , returnedValue);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getEnumReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getEnumRequestTypeSupport::delete_data((getEnumRequest*)requestData);
     
@@ -61,76 +73,51 @@ returnedValue = srv->_impl->getEnum(v1  , v2  , v3  , getEnum_ret  );
         
         
 }
-void EnumYStringTestServerH::getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void EnumYStringTestServer::getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    EnumYStringTestServerH *srv = dynamic_cast<EnumYStringTestServerH*>(server);
+    EnumYStringTestServer *srv = dynamic_cast<EnumYStringTestServer*>(server);
     char*  s1 = NULL;    
     char*  s2 = NULL;    
     char*  s3 = NULL;    
-    char*  getString_ret = NULL;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getStringReply *replyData = NULL;
+    char*  returnedValue = NULL;       
+    getStringReply replyData;
 
-    getStringRequestUtils::extractTypeData((getStringRequest*)requestData, s1  , s2  );
+    getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1  , s2  );
 
-returnedValue = srv->_impl->getString(s1  , s2  , s3  , getString_ret  );
+returnedValue = srv->_impl->getString(s1  , s2  , s3  );
 
-    replyData = getStringReplyUtils::createTypeData(s2  , s3  , getString_ret  );
+    getStringReplyUtils::setTypeData(replyData, s2  , s3  , returnedValue);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getStringReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getStringRequestTypeSupport::delete_data((getStringRequest*)requestData);
     
+    if(returnedValue != NULL) free(returnedValue);    
     if(s2 != NULL) free(s2);    
     if(s3 != NULL) free(s3);    
-    if(getString_ret != NULL) free(getString_ret);    
 }
-void EnumYStringTestServerH::getStringBounded(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void EnumYStringTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    EnumYStringTestServerH *srv = dynamic_cast<EnumYStringTestServerH*>(server);
+    EnumYStringTestServer *srv = dynamic_cast<EnumYStringTestServer*>(server);
     char*  sb1 = NULL;    
     char*  sb2 = NULL;    
     char*  sb3 = NULL;    
-    char*  getStringBounded_ret = NULL;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getStringBoundedReply *replyData = NULL;
+    char*  returnedValue = NULL;       
+    getStringBoundedReply replyData;
 
-    getStringBoundedRequestUtils::extractTypeData((getStringBoundedRequest*)requestData, sb1  , sb2  );
+    getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1  , sb2  );
 
-returnedValue = srv->_impl->getStringBounded(sb1  , sb2  , sb3  , getStringBounded_ret  );
+returnedValue = srv->_impl->getStringBounded(sb1  , sb2  , sb3  );
 
-    replyData = getStringBoundedReplyUtils::createTypeData(sb2  , sb3  , getStringBounded_ret  );
+    getStringBoundedReplyUtils::setTypeData(replyData, sb2  , sb3  , returnedValue);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getStringBoundedReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getStringBoundedRequestTypeSupport::delete_data((getStringBoundedRequest*)requestData);
     
+    if(returnedValue != NULL) free(returnedValue);    
     if(sb2 != NULL) free(sb2);    
     if(sb3 != NULL) free(sb3);    
-    if(getStringBounded_ret != NULL) free(getStringBounded_ret);    
-}
-
-EnumYStringTestServer::EnumYStringTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    int domainId) :
-    EnumYStringTestServerH(strategy, new eProsima::DDSRPC::UDPTransport(), domainId)
-{
-}
-EnumYStringTestServer::~EnumYStringTestServer()
-{   
-}
-
-EnumYStringTestWANServer::EnumYStringTestWANServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    const char *public_address, const char *server_bind_port,
-    int domainId) :
-    EnumYStringTestServerH(strategy, new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId)
-{
-}
-EnumYStringTestWANServer::~EnumYStringTestWANServer()
-{   
 }

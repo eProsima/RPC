@@ -23,9 +23,13 @@ class UnionTest_getEmpleadoTask : public eProsima::DDSRPC::AsyncTask
         
         UnionTest_getEmpleado& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            UnionTest_getEmpleado &m_obj;
+           
+           getEmpleadoReply m_reply;
 };
 
 #endif // _UnionTest_ASYNC_SUPPORT_H_

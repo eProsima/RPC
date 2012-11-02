@@ -50,74 +50,45 @@ $doNotEditC()$
 /**
  * \brief This class implements a specific server for the defined interface by user.
  */
-class $interfaceName$ServerH : public eProsima::DDSRPC::Server
-{
-    private: 
-      $interfaceName$ServerImpl *_impl;
-    public:
-
-        /**
-         * \brief Default constructor. The server has to know what network transport
-         *        it should use.
-         *
-         * \param strategy Strategy used by server to work with new requests. Cannot be NULL.
-         * \param transport The network transport that server has to use. Cannot be NULL.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         */
-        $interfaceName$ServerH(eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
-            int domainId = 0);
-
-        /// \brief The default destructor.
-        virtual ~$interfaceName$ServerH();
-
-        $funDecls; separator=";\n"$;
-};
-
-/**
- * \brief This class implements a specific server for the defined interface by user.
- *        This server uses the UDPv4 transport.
- */
-class $interfaceName$Server : public $interfaceName$ServerH
+class $interfaceName$Server : public eProsima::DDSRPC::Server
 {
     public:
-
+    
         /**
-         * \brief Default constructor.
+         * \brief Default constructor. The server will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param strategy Strategy used by server to work with new requests. Cannot be NULL.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          */
         $interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
             int domainId = 0);
 
-        /// \brief The default destructor.
-        virtual ~$interfaceName$Server();
-};
-
-/**
- * \brief This class implements a specific server for the defined interface by user.
- *        This server uses the TCPv4 transport.
- */
-class $interfaceName$WANServer : public $interfaceName$ServerH
-{
-    public:
-
         /**
-         * \brief Default constructor.
+         * \brief This constructor sets the transport that will be used by the server.
          *
-         * \param strategy Strategy used by server to work with new requests. Cannot be NULL.
-         * \param public_address Public address and port of the server. The server should be accesible in this address.
-         *        The user has to configure its router for this purpose. By example: "218.18.3.133:7600"      *
-         * \param server_bind_port Port used by the server in its machine. This port will be use in the router for port forwarding
-         *        between the public port and this port.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param transport The network transport that server has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          */
-        $interfaceName$WANServer(eProsima::DDSRPC::ServerStrategy *strategy, 
-            const char *public_address, const char *server_bind_port,
+        $interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
             int domainId = 0);
 
         /// \brief The default destructor.
-        virtual ~$interfaceName$WANServer();
+        virtual ~$interfaceName$Server();
+
+        $funDecls; separator=";\n"$;
+        
+     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        /// \brief Pointer to the server's servant implemented by the user.
+        $interfaceName$ServerImpl *_impl;
 };
 
 #endif // _$interfaceName$SKELETON_H_
@@ -176,14 +147,14 @@ class $interfaceName$ServerImpl
  *  functionHeader - inherited(cplusplus)
  *  returnType     - local
  */ 
-emptyFunctionImpl(interfaceName,type,name,params,inParams,outParams,isOneway) ::= <<
+emptyFunctionImpl(interfaceName,rettype,name,params,inParams,outParams,isOneway) ::= <<
 $functionHeader(class={$interfaceName$ServerImpl},...)$ 
 {
-   $varDecl(typeName=type.templateName, baseType=type, name="retCode")$
-  
-   $if(!voidInitMap.(type.templateName))$
-      return retCode;
-   $endif$
+    $if(!voidInitMap.(rettype.typeName))$
+    $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
+   
+    return $rettype.name$;
+    $endif$
 } 
 >>
 
@@ -207,30 +178,31 @@ $functionHeader(class={$interfaceName$ServerImpl},...)$
  *  lastParam             - inherited(cplusplus)
  *  extractTypeDataParams - inherited(cplusplus)
  */ 
-functionImpl(interfaceName,type,name,string,params,inParams,outParams,isOneway) ::= <<
+functionImpl(interfaceName,rettype,name,string,params,inParams,outParams,isOneway) ::= <<
 $exFunctionHeader(class=interfaceName,...)$ 
 { 
-    $interfaceName$ServerH *srv = dynamic_cast<$interfaceName$ServerH*>(server);
-    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create=it.isOutput)$}; separator="\n"$  
-    $varDecl(typeName=type.templateName, baseType=type, name="returnedValue")$    
-    $if(!isOneway)$$name$Reply *replyData = NULL;$endif$
+    $interfaceName$Server *srv = dynamic_cast<$interfaceName$Server*>(server);
+    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create=it.isOnlyOutput)$}; separator="\n"$
+    $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$   
+    $if(!isOneway)$$name$Reply replyData;$endif$
+    
+    $inParams:{$if(it.isOutput)$$varComplexInitialize(typeName=it.typeName, name=it.name)$$endif$}; separator="\n"$
 
-    $name$RequestUtils::extractTypeData(($name$Request*)requestData$if(inParams)$, $endif$$extractParams(inParams)$);
+    $name$RequestUtils::extractTypeData(*($name$Request*)requestData$if(inParams)$, $endif$$extractParams(inParams)$);
 
-    $if(!voidInitMap.(type.templateName))$returnedValue = $endif$srv->_impl->$name$($extractParams(params)$);
+    $if(!voidInitMap.(rettype.typeName))$$rettype.name$ = $endif$srv->_impl->$name$($extractParams(params)$);
 
     $if(!isOneway)$
-    replyData = $name$ReplyUtils::createTypeData($extractParams(outParams)$);
+    $name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $rettype.name$$endif$);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    $reqrepDestruction(type=name, reqrep="Reply", name="replyData")$
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     $endif$
     
     $reqrepDestruction(type=name, reqrep="Request", name="requestData", void="void")$
     
-    $outParams:{$varDel(typeName = it.typeName, baseType=it.baseType, name = it.name)$}; separator="\n"$
+    $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
+    $outParams:{$varDel(typeName=it.typeName, baseType=it.baseType, name=it.name)$}; separator="\n"$
 }
 >>
 
@@ -256,39 +228,35 @@ $ReqRepIncludes(interfaceName=interfaceName)$
 
 #include "$interfaceName$ServerRPCSupport.h"
 
-$interfaceName$ServerH::$interfaceName$ServerH(eProsima::DDSRPC::ServerStrategy *strategy,
+$interfaceName$Server::$interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(strategy, NULL, domainId)
+{
+    _impl = new $interfaceName$ServerImpl();
+
+    createRPCs();
+}
+
+$interfaceName$Server::$interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
     Server(strategy, transport, domainId)
 {
     _impl = new $interfaceName$ServerImpl();
     
-    $createRPC(...); separator="\n"$
+    createRPCs();
 }
-$interfaceName$ServerH::~$interfaceName$ServerH()
+
+$interfaceName$Server::~$interfaceName$Server()
 {
     delete _impl;    
 }
 
+void $interfaceName$Server::createRPCs()
+{
+    $createRPC(...); separator="\n"$
+}
+
 $funImpls; separator="\n"$
-
-$interfaceName$Server::$interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
-    int domainId) :
-    $interfaceName$ServerH(strategy, new eProsima::DDSRPC::UDPTransport(), domainId)
-{
-}
-$interfaceName$Server::~$interfaceName$Server()
-{   
-}
-
-$interfaceName$WANServer::$interfaceName$WANServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    const char *public_address, const char *server_bind_port,
-    int domainId) :
-    $interfaceName$ServerH(strategy, new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId)
-{
-}
-$interfaceName$WANServer::~$interfaceName$WANServer()
-{   
-}
 >>
 
 /**
@@ -331,7 +299,7 @@ $funImpls; separator="\n"$
  *
  * Uses:
  */ 
-functionCall(type,name,params) ::= <<
+functionCall(rettype,name,params) ::= <<
 >>
 
 /**
@@ -375,28 +343,6 @@ int main(int argc, char **argv)
  */
 
 /**
- * returnType: Internal Template
- * Declares a variable of function Return Type if not void.
- * If it is an user defined type also initializes it;
- * Params:
- *   type     : Variable type.
- *
- * Uses:
- *   voidInitMap - local
- *   typeInitMap - local
- */ 
-returnType(type) ::= <<
-$if(voidInitMap.(type))$
-$elseif(typeInitMap.(type))$
-$typeInitMap.(type)$ _ret_value_;
-return _ret_value_;
-$else$
-$type$* _ret_value_ = new $type$();
-return _ret_value_;
-$endif$  
->>
-
-/**
  * lastParam: Internal Template
  * Determines if the return value of the function should be included
  * in a call to ReplyUtils createTypeData method.
@@ -430,8 +376,8 @@ $endif$
  *
  * Uses:
  */ 
-exFunctionHeader(type,class,name,params) ::= <<
-$if(!class)$static $endif$void $class$$if(class)$ServerH::$endif$$name$(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service)
+exFunctionHeader(rettype,class,name,params) ::= <<
+$if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service)
 >>
 
 /**
@@ -449,7 +395,7 @@ $funNames:{this->setRPC(new $it.name$ServerRPC("$it.name$", this,
             $if(!it.isOneway)$
             $it.name$ReplyUtils::registerType(getParticipant()),
             $endif$
-            &$interfaceName$ServerH::$it.name$, getParticipant()));
+            &$interfaceName$Server::$it.name$, getParticipant()));
 }$
 >>
 

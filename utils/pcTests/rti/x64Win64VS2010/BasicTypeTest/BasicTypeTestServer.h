@@ -12,25 +12,34 @@
 /**
  * \brief This class implements a specific server for the defined interface by user.
  */
-class BasicTypeTestServerH : public eProsima::DDSRPC::Server
+class BasicTypeTestServer : public eProsima::DDSRPC::Server
 {
-    private: 
-      BasicTypeTestServerImpl *_impl;
     public:
-
+    
         /**
-         * \brief Default constructor. The server has to know what network transport
-         *        it should use.
+         * \brief Default constructor. The server will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param strategy Strategy used by server to work with new requests. Cannot be NULL.
-         * \param transport The network transport that server has to use. Cannot be NULL.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          */
-        BasicTypeTestServerH(eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
+        BasicTypeTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+            int domainId = 0);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server.
+         *
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param transport The network transport that server has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         */
+        BasicTypeTestServer(eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
             int domainId = 0);
 
         /// \brief The default destructor.
-        virtual ~BasicTypeTestServerH();
+        virtual ~BasicTypeTestServer();
 
         static void getOctet(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
         static void getChar(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
@@ -44,53 +53,15 @@ class BasicTypeTestServerH : public eProsima::DDSRPC::Server
         static void getFloat(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
         static void getDouble(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
         static void getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-};
-
-/**
- * \brief This class implements a specific server for the defined interface by user.
- *        This server uses the UDPv4 transport.
- */
-class BasicTypeTestServer : public BasicTypeTestServerH
-{
-    public:
-
+        
+     private:
         /**
-         * \brief Default constructor.
-         *
-         * \param strategy Strategy used by server to work with new requests. Cannot be NULL.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \brief This function creates all RPC endpoints for each remote procedure.
          */
-        BasicTypeTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
-            int domainId = 0);
-
-        /// \brief The default destructor.
-        virtual ~BasicTypeTestServer();
-};
-
-/**
- * \brief This class implements a specific server for the defined interface by user.
- *        This server uses the TCPv4 transport.
- */
-class BasicTypeTestWANServer : public BasicTypeTestServerH
-{
-    public:
-
-        /**
-         * \brief Default constructor.
-         *
-         * \param strategy Strategy used by server to work with new requests. Cannot be NULL.
-         * \param public_address Public address and port of the server. The server should be accesible in this address.
-         *        The user has to configure its router for this purpose. By example: "218.18.3.133:7600"      *
-         * \param server_bind_port Port used by the server in its machine. This port will be use in the router for port forwarding
-         *        between the public port and this port.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         */
-        BasicTypeTestWANServer(eProsima::DDSRPC::ServerStrategy *strategy, 
-            const char *public_address, const char *server_bind_port,
-            int domainId = 0);
-
-        /// \brief The default destructor.
-        virtual ~BasicTypeTestWANServer();
+        void createRPCs();
+        
+        /// \brief Pointer to the server's servant implemented by the user.
+        BasicTypeTestServerImpl *_impl;
 };
 
 #endif // _BasicTypeTestSKELETON_H_

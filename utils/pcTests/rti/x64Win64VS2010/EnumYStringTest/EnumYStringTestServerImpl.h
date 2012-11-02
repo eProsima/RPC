@@ -19,11 +19,11 @@ class EnumYStringTestServerImpl
         virtual ~EnumYStringTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage getEnum(/*in*/ const Valores v1, /*inout*/ Valores &v2, /*out*/ Valores &v3, /*out*/ Valores &getEnum_ret);
+        Valores getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3);
          
-        eProsima::DDSRPC::ReturnMessage getString(/*in*/ const char* s1, /*inout*/ char* &s2, /*out*/ char* &s3, /*out*/ char* &getString_ret);
+        char* getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3);
          
-        eProsima::DDSRPC::ReturnMessage getStringBounded(/*in*/ const char* sb1, /*inout*/ char* &sb2, /*out*/ char* &sb3, /*out*/ char* &getStringBounded_ret);
+        char* getStringBounded(/*in*/ char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3);
 };
 
 #endif // _EnumYStringTestSERVER_IMPL_H_

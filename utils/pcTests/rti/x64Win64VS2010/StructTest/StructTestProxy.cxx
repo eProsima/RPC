@@ -9,10 +9,27 @@
 #include "transports/TCPTransport.h"
 #include "StructTestRequestReplyPlugin.h"
 #include "StructTestAsyncSupport.h"
+#include "exceptions/Exceptions.h"
 
+StructTestProxy::StructTestProxy(int domainId, long timeout) :
+    Client(NULL, domainId, timeout)
+{
+    createRPCs();
+}
 
-StructTestProxyH::StructTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+StructTestProxy::StructTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
     Client(transport, domainId, timeout)
+{
+    createRPCs();
+}
+
+StructTestProxy::~StructTestProxy()
+{
+    delete duplicate_Service;
+    delete suma_Service;
+}
+
+void StructTestProxy::createRPCs()
 {
     this->duplicate_Service = new duplicateClientRPC("duplicate",
                                   duplicateRequestUtils::registerType(getParticipant()),
@@ -25,146 +42,118 @@ StructTestProxyH::StructTestProxyH(eProsima::DDSRPC::Transport *transport, int d
 
 }
 
-StructTestProxyH::~StructTestProxyH()
-{
-    delete duplicate_Service;
-    delete suma_Service;
-}
-
  
-eProsima::DDSRPC::ReturnMessage StructTestProxyH::duplicate(/*in*/ const Envio* ev, /*out*/ Recepcion* &duplicate_ret) 
+Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    duplicateRequest *instance = NULL;
-    duplicateReply* retInstance = duplicateReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    Recepcion duplicate_ret;
+        
+    duplicateRequest instance;
+    duplicateReply retInstance;
 
-    instance = duplicateRequestUtils::createTypeData(ev  );
-    returnedValue = duplicate_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    duplicateReply_initialize(&retInstance);    
+    duplicateRequestUtils::setTypeData(instance, ev  );
+    retcode = duplicate_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        duplicateReplyUtils::extractTypeData(retInstance, retcode, duplicate_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            duplicateReplyUtils::extractTypeData(retInstance, duplicate_ret  );
-            //duplicateReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    duplicateReplyTypeSupport::delete_data(retInstance);
-    duplicateRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return duplicate_ret;
 }
  
-eProsima::DDSRPC::ReturnMessage StructTestProxyH::suma(/*in*/ const Envio* ev1, /*in*/ const Envio* ev2, /*out*/ Recepcion* &suma_ret) 
+Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    sumaRequest *instance = NULL;
-    sumaReply* retInstance = sumaReplyTypeSupport::create_data();
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    Recepcion suma_ret;
+        
+    sumaRequest instance;
+    sumaReply retInstance;
 
-    instance = sumaRequestUtils::createTypeData(ev1  , ev2  );
-    returnedValue = suma_Service->execute(instance, retInstance, getTimeout());
-    switch (returnedValue)
+    sumaReply_initialize(&retInstance);    
+    sumaRequestUtils::setTypeData(instance, ev1  , ev2  );
+    retcode = suma_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    {
+        sumaReplyUtils::extractTypeData(retInstance, retcode, suma_ret); 
+    }
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
+            throw eProsima::DDSRPC::ServerException("Error in server side");
             break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            sumaReplyUtils::extractTypeData(retInstance, suma_ret  );
-            //sumaReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
-    sumaReplyTypeSupport::delete_data(retInstance);
-    sumaRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return suma_ret;
 }
 
  
-eProsima::DDSRPC::ReturnMessage StructTestProxyH::duplicate_async(StructTest_duplicate &obj, /*in*/ const Envio* ev) 
+void StructTestProxy::duplicate_async(StructTest_duplicate &obj, /*in*/ const Envio& ev) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    duplicateRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    duplicateRequest instance;
     StructTest_duplicateTask *task = NULL;
-    instance = duplicateRequestUtils::createTypeData(ev  );
+    duplicateRequestUtils::setTypeData(instance, ev  );
     task = new StructTest_duplicateTask(obj, this);
-    returnedValue = duplicate_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = duplicate_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    duplicateRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }
  
-eProsima::DDSRPC::ReturnMessage StructTestProxyH::suma_async(StructTest_suma &obj, /*in*/ const Envio* ev1, /*in*/ const Envio* ev2) 
+void StructTestProxy::suma_async(StructTest_suma &obj, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;    
-    sumaRequest *instance = NULL;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    sumaRequest instance;
     StructTest_sumaTask *task = NULL;
-    instance = sumaRequestUtils::createTypeData(ev1  , ev2  );
+    sumaRequestUtils::setTypeData(instance, ev1  , ev2  );
     task = new StructTest_sumaTask(obj, this);
-    returnedValue = suma_Service->executeAsync(instance, task, getTimeout());
-    switch (returnedValue)
+    retcode = suma_Service->executeAsync(&instance, task, getTimeout());
+    
+    switch (retcode)
     {
         case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+            throw eProsima::DDSRPC::ClientException("Error in client side");
             break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
-    
-    sumaRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
-}
-
-StructTestProxy::StructTestProxy(int domainId, long timeout) :
-    StructTestProxyH(new eProsima::DDSRPC::UDPTransport(), domainId, timeout)
-{
-}
-
-StructTestProxy::~StructTestProxy()
-{
-}
-
-StructTestWANProxy::StructTestWANProxy(const char *to_connect, int domainId, long timeout) :
-    StructTestProxyH(new eProsima::DDSRPC::TCPTransport(to_connect), domainId, timeout)
-{
-}
-
-StructTestWANProxy::~StructTestWANProxy()
-{
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }

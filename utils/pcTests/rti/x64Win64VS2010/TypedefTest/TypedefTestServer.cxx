@@ -9,209 +9,199 @@
 
 #include "TypedefTestServerRPCSupport.h"
 
-TypedefTestServerH::TypedefTestServerH(eProsima::DDSRPC::ServerStrategy *strategy,
+TypedefTestServer::TypedefTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(strategy, NULL, domainId)
+{
+    _impl = new TypedefTestServerImpl();
+
+    createRPCs();
+}
+
+TypedefTestServer::TypedefTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
     Server(strategy, transport, domainId)
 {
     _impl = new TypedefTestServerImpl();
     
-    this->setRPC(new getLargoServerRPC("getLargo", this,
-                getLargoRequestUtils::registerType(getParticipant()),
-                getLargoReplyUtils::registerType(getParticipant()),
-                &TypedefTestServerH::getLargo, getParticipant()));
-    this->setRPC(new getLarguisimoServerRPC("getLarguisimo", this,
-                getLarguisimoRequestUtils::registerType(getParticipant()),
-                getLarguisimoReplyUtils::registerType(getParticipant()),
-                &TypedefTestServerH::getLarguisimo, getParticipant()));
-    this->setRPC(new getDatosDefServerRPC("getDatosDef", this,
-                getDatosDefRequestUtils::registerType(getParticipant()),
-                getDatosDefReplyUtils::registerType(getParticipant()),
-                &TypedefTestServerH::getDatosDef, getParticipant()));
-    this->setRPC(new getDatosDefondoServerRPC("getDatosDefondo", this,
-                getDatosDefondoRequestUtils::registerType(getParticipant()),
-                getDatosDefondoReplyUtils::registerType(getParticipant()),
-                &TypedefTestServerH::getDatosDefondo, getParticipant()));
-    this->setRPC(new getCadenaServerRPC("getCadena", this,
-                getCadenaRequestUtils::registerType(getParticipant()),
-                getCadenaReplyUtils::registerType(getParticipant()),
-                &TypedefTestServerH::getCadena, getParticipant()));
-    this->setRPC(new getCorreaServerRPC("getCorrea", this,
-                getCorreaRequestUtils::registerType(getParticipant()),
-                getCorreaReplyUtils::registerType(getParticipant()),
-                &TypedefTestServerH::getCorrea, getParticipant()));
-
+    createRPCs();
 }
-TypedefTestServerH::~TypedefTestServerH()
+
+TypedefTestServer::~TypedefTestServer()
 {
     delete _impl;    
 }
 
-void TypedefTestServerH::getLargo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void TypedefTestServer::createRPCs()
+{
+    this->setRPC(new getLargoServerRPC("getLargo", this,
+                getLargoRequestUtils::registerType(getParticipant()),
+                getLargoReplyUtils::registerType(getParticipant()),
+                &TypedefTestServer::getLargo, getParticipant()));
+    this->setRPC(new getLarguisimoServerRPC("getLarguisimo", this,
+                getLarguisimoRequestUtils::registerType(getParticipant()),
+                getLarguisimoReplyUtils::registerType(getParticipant()),
+                &TypedefTestServer::getLarguisimo, getParticipant()));
+    this->setRPC(new getDatosDefServerRPC("getDatosDef", this,
+                getDatosDefRequestUtils::registerType(getParticipant()),
+                getDatosDefReplyUtils::registerType(getParticipant()),
+                &TypedefTestServer::getDatosDef, getParticipant()));
+    this->setRPC(new getDatosDefondoServerRPC("getDatosDefondo", this,
+                getDatosDefondoRequestUtils::registerType(getParticipant()),
+                getDatosDefondoReplyUtils::registerType(getParticipant()),
+                &TypedefTestServer::getDatosDefondo, getParticipant()));
+    this->setRPC(new getCadenaServerRPC("getCadena", this,
+                getCadenaRequestUtils::registerType(getParticipant()),
+                getCadenaReplyUtils::registerType(getParticipant()),
+                &TypedefTestServer::getCadena, getParticipant()));
+    this->setRPC(new getCorreaServerRPC("getCorrea", this,
+                getCorreaRequestUtils::registerType(getParticipant()),
+                getCorreaReplyUtils::registerType(getParticipant()),
+                &TypedefTestServer::getCorrea, getParticipant()));
+
+}
+
+void TypedefTestServer::getLargo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    TypedefTestServerH *srv = dynamic_cast<TypedefTestServerH*>(server);
+    TypedefTestServer *srv = dynamic_cast<TypedefTestServer*>(server);
     largo  l1 = 0;    
     largo  l2 = 0;    
-    largo  getLargo_ret = 0;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getLargoReply *replyData = NULL;
+    largo  getLargo_ret = 0;       
+    getLargoReply replyData;
+    
 
-    getLargoRequestUtils::extractTypeData((getLargoRequest*)requestData, l1  );
+    getLargoRequestUtils::extractTypeData(*(getLargoRequest*)requestData, l1  );
 
-returnedValue = srv->_impl->getLargo(l1  , l2  , getLargo_ret  );
+    getLargo_ret = srv->_impl->getLargo(l1  , l2  );
 
-    replyData = getLargoReplyUtils::createTypeData(l2  , getLargo_ret  );
+    getLargoReplyUtils::setTypeData(replyData, l2  , getLargo_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getLargoReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getLargoRequestTypeSupport::delete_data((getLargoRequest*)requestData);
     
         
         
 }
-void TypedefTestServerH::getLarguisimo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void TypedefTestServer::getLarguisimo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    TypedefTestServerH *srv = dynamic_cast<TypedefTestServerH*>(server);
+    TypedefTestServer *srv = dynamic_cast<TypedefTestServer*>(server);
     larguisimo  ll1 = 0;    
     larguisimo  ll2 = 0;    
-    larguisimo  getLarguisimo_ret = 0;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getLarguisimoReply *replyData = NULL;
+    larguisimo  getLarguisimo_ret = 0;       
+    getLarguisimoReply replyData;
+    
 
-    getLarguisimoRequestUtils::extractTypeData((getLarguisimoRequest*)requestData, ll1  );
+    getLarguisimoRequestUtils::extractTypeData(*(getLarguisimoRequest*)requestData, ll1  );
 
-returnedValue = srv->_impl->getLarguisimo(ll1  , ll2  , getLarguisimo_ret  );
+    getLarguisimo_ret = srv->_impl->getLarguisimo(ll1  , ll2  );
 
-    replyData = getLarguisimoReplyUtils::createTypeData(ll2  , getLarguisimo_ret  );
+    getLarguisimoReplyUtils::setTypeData(replyData, ll2  , getLarguisimo_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getLarguisimoReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getLarguisimoRequestTypeSupport::delete_data((getLarguisimoRequest*)requestData);
     
         
         
 }
-void TypedefTestServerH::getDatosDef(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void TypedefTestServer::getDatosDef(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    TypedefTestServerH *srv = dynamic_cast<TypedefTestServerH*>(server);
-    DatosDef *d1 = NULL;    
-    DatosDef *d2 = DatosDefPluginSupport_create_data();    
-    DatosDef *getDatosDef_ret = DatosDefPluginSupport_create_data();      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getDatosDefReply *replyData = NULL;
+    TypedefTestServer *srv = dynamic_cast<TypedefTestServer*>(server);
+    DatosDef d1;
+        
+    DatosDef d2;
+    memset(&d2, 0, sizeof(DatosDef));    
+    DatosDef getDatosDef_ret;
+           
+    getDatosDefReply replyData;
+    
 
-    getDatosDefRequestUtils::extractTypeData((getDatosDefRequest*)requestData, d1  );
+    getDatosDefRequestUtils::extractTypeData(*(getDatosDefRequest*)requestData, d1  );
 
-returnedValue = srv->_impl->getDatosDef(d1  , d2  , getDatosDef_ret  );
+    getDatosDef_ret = srv->_impl->getDatosDef(d1  , d2  );
 
-    replyData = getDatosDefReplyUtils::createTypeData(d2  , getDatosDef_ret  );
+    getDatosDefReplyUtils::setTypeData(replyData, d2  , getDatosDef_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getDatosDefReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getDatosDefRequestTypeSupport::delete_data((getDatosDefRequest*)requestData);
     
-    DatosDefPluginSupport_destroy_data(d2);    
-    DatosDefPluginSupport_destroy_data(getDatosDef_ret);    
+    DatosDef_finalize(&getDatosDef_ret);    
+    DatosDef_finalize(&d2);    
 }
-void TypedefTestServerH::getDatosDefondo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void TypedefTestServer::getDatosDefondo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    TypedefTestServerH *srv = dynamic_cast<TypedefTestServerH*>(server);
-    DatosDefondo *dd1 = NULL;    
-    DatosDefondo *dd2 = DatosDefondoPluginSupport_create_data();    
-    DatosDefondo *getDatosDefondo_ret = DatosDefondoPluginSupport_create_data();      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getDatosDefondoReply *replyData = NULL;
+    TypedefTestServer *srv = dynamic_cast<TypedefTestServer*>(server);
+    DatosDefondo dd1;
+        
+    DatosDefondo dd2;
+    memset(&dd2, 0, sizeof(DatosDefondo));    
+    DatosDefondo getDatosDefondo_ret;
+           
+    getDatosDefondoReply replyData;
+    
 
-    getDatosDefondoRequestUtils::extractTypeData((getDatosDefondoRequest*)requestData, dd1  );
+    getDatosDefondoRequestUtils::extractTypeData(*(getDatosDefondoRequest*)requestData, dd1  );
 
-returnedValue = srv->_impl->getDatosDefondo(dd1  , dd2  , getDatosDefondo_ret  );
+    getDatosDefondo_ret = srv->_impl->getDatosDefondo(dd1  , dd2  );
 
-    replyData = getDatosDefondoReplyUtils::createTypeData(dd2  , getDatosDefondo_ret  );
+    getDatosDefondoReplyUtils::setTypeData(replyData, dd2  , getDatosDefondo_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getDatosDefondoReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getDatosDefondoRequestTypeSupport::delete_data((getDatosDefondoRequest*)requestData);
     
-    DatosDefondoPluginSupport_destroy_data(dd2);    
-    DatosDefondoPluginSupport_destroy_data(getDatosDefondo_ret);    
+    DatosDefondo_finalize(&getDatosDefondo_ret);    
+    DatosDefondo_finalize(&dd2);    
 }
-void TypedefTestServerH::getCadena(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void TypedefTestServer::getCadena(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    TypedefTestServerH *srv = dynamic_cast<TypedefTestServerH*>(server);
+    TypedefTestServer *srv = dynamic_cast<TypedefTestServer*>(server);
     cadena  c1 = NULL;    
     cadena  c2 = NULL;    
-    cadena  getCadena_ret = NULL;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getCadenaReply *replyData = NULL;
+    cadena  getCadena_ret = NULL;       
+    getCadenaReply replyData;
+    
 
-    getCadenaRequestUtils::extractTypeData((getCadenaRequest*)requestData, c1  );
+    getCadenaRequestUtils::extractTypeData(*(getCadenaRequest*)requestData, c1  );
 
-returnedValue = srv->_impl->getCadena(c1  , c2  , getCadena_ret  );
+    getCadena_ret = srv->_impl->getCadena(c1  , c2  );
 
-    replyData = getCadenaReplyUtils::createTypeData(c2  , getCadena_ret  );
+    getCadenaReplyUtils::setTypeData(replyData, c2  , getCadena_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getCadenaReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getCadenaRequestTypeSupport::delete_data((getCadenaRequest*)requestData);
     
-    if(c2 != NULL) free(c2);    
     if(getCadena_ret != NULL) free(getCadena_ret);    
+    if(c2 != NULL) free(c2);    
 }
-void TypedefTestServerH::getCorrea(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void TypedefTestServer::getCorrea(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
 { 
-    TypedefTestServerH *srv = dynamic_cast<TypedefTestServerH*>(server);
+    TypedefTestServer *srv = dynamic_cast<TypedefTestServer*>(server);
     correa  cc1 = NULL;    
     correa  cc2 = NULL;    
-    correa  getCorrea_ret = NULL;      
-    eProsima::DDSRPC::ReturnMessage  returnedValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
-    getCorreaReply *replyData = NULL;
+    correa  getCorrea_ret = NULL;       
+    getCorreaReply replyData;
+    
 
-    getCorreaRequestUtils::extractTypeData((getCorreaRequest*)requestData, cc1  );
+    getCorreaRequestUtils::extractTypeData(*(getCorreaRequest*)requestData, cc1  );
 
-returnedValue = srv->_impl->getCorrea(cc1  , cc2  , getCorrea_ret  );
+    getCorrea_ret = srv->_impl->getCorrea(cc1  , cc2  );
 
-    replyData = getCorreaReplyUtils::createTypeData(cc2  , getCorrea_ret  );
+    getCorreaReplyUtils::setTypeData(replyData, cc2  , getCorrea_ret);
 
     // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
-
-    getCorreaReplyTypeSupport::delete_data(replyData);
+    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getCorreaRequestTypeSupport::delete_data((getCorreaRequest*)requestData);
     
-    if(cc2 != NULL) free(cc2);    
     if(getCorrea_ret != NULL) free(getCorrea_ret);    
-}
-
-TypedefTestServer::TypedefTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    int domainId) :
-    TypedefTestServerH(strategy, new eProsima::DDSRPC::UDPTransport(), domainId)
-{
-}
-TypedefTestServer::~TypedefTestServer()
-{   
-}
-
-TypedefTestWANServer::TypedefTestWANServer(eProsima::DDSRPC::ServerStrategy *strategy,
-    const char *public_address, const char *server_bind_port,
-    int domainId) :
-    TypedefTestServerH(strategy, new eProsima::DDSRPC::TCPTransport(public_address, server_bind_port), domainId)
-{
-}
-TypedefTestWANServer::~TypedefTestWANServer()
-{   
+    if(cc2 != NULL) free(cc2);    
 }

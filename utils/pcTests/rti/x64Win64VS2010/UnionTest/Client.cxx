@@ -5,43 +5,55 @@
 
 #include "UnionTestProxy.h"
 #include "UnionTestRequestReplyPlugin.h"
+#include "exceptions/Exceptions.h"
 
 int main(int argc, char **argv)
 {
-	UnionTestProxy *proxy = new UnionTestProxy();
+    UnionTestProxy *proxy = new UnionTestProxy();
 
-	Empleado *em1 = EmpleadoPluginSupport_create_data();    
-	Empleado *em2 = EmpleadoPluginSupport_create_data();    
-	Empleado *em3 = EmpleadoPluginSupport_create_data();    
-	Empleado *getEmpleado_ret = EmpleadoPluginSupport_create_data();       
-	eProsima::DDSRPC::ReturnMessage  getEmpleadoRetValue = eProsima::DDSRPC::OPERATION_SUCCESSFUL;        
+    Empleado em1;
+    Empleado em2;
+    Empleado em3;
+    Empleado getEmpleado_ret;
 
-	em1->_d = 1;
-	em1->_u.id = 1;
-	em2->_d = 2;
-	em2->_u.name = DDS::String_dup("PRUEBA");
+    Empleado_initialize(&em1);    
+    Empleado_initialize(&em2);    
+    Empleado_initialize(&em3);    
+    Empleado_initialize(&getEmpleado_ret);    
 
-	getEmpleadoRetValue = proxy->getEmpleado(em1  , em2  , em3  , getEmpleado_ret  );
+    em1._d = 1;
+    em1._u.id = 1;
+    em2._d = 2;
+    em2._u.name = DDS::String_dup("PRUEBA");
 
-	if(getEmpleadoRetValue != eProsima::DDSRPC::OPERATION_SUCCESSFUL ||
-			em3->_d != 2 || strcmp(em3->_u.name, "PRUEBA") != 0 ||
-			getEmpleado_ret->_d != 1 || getEmpleado_ret->_u.id != 1 ||
-			em2->_d != 1 || em2->_u.id != 1 ||
-			em1->_d != 1 || em1->_u.id != 1)
-	{
-		printf("TEST FAILED<getEmpleado>\n");
-		_exit(-1);
-	}
+    try
+    {
+        getEmpleado_ret = proxy->getEmpleado(em1, em2, em3);
 
-	EmpleadoPluginSupport_destroy_data(em1);    
-	EmpleadoPluginSupport_destroy_data(em2);    
-	EmpleadoPluginSupport_destroy_data(em3);    
-	EmpleadoPluginSupport_destroy_data(getEmpleado_ret);   
+        if(em3._d != 2 || strcmp(em3._u.name, "PRUEBA") != 0 ||
+                getEmpleado_ret._d != 1 || getEmpleado_ret._u.id != 1 ||
+                em2._d != 1 || em2._u.id != 1 ||
+                em1._d != 1 || em1._u.id != 1)
+        {
+            printf("TEST FAILED<getEmpleado>: Wrong values\n");
+            _exit(-1);
+        }
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<getEmpleado>: %s\n", ex.getMessage().c_str());
+        _exit(-1);
+    }
 
-	printf("TEST SUCCESFULLY\n");
+    Empleado_finalize(&em1);    
+    Empleado_finalize(&em2);    
+    Empleado_finalize(&em3);    
+    Empleado_finalize(&getEmpleado_ret);    
 
-	delete(proxy);
+    printf("TEST SUCCESFULLY\n");
 
-	_exit(0);
-	return 0;
+    delete(proxy);
+
+    _exit(0);
+    return 0;
 }

@@ -30,9 +30,13 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
         
         $interfaceName$_$name$& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            $interfaceName$_$name$ &m_obj;
+           
+           $name$Reply m_reply;
 }
 >>
 
@@ -49,12 +53,10 @@ taskDeclaration(interfaceName, name, outParams) ::= <<
 $interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$ &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
-$reqrepCreation(type=name, reqrep="Reply", name="m_reply", void="void")$
 }
 
 $interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
-$reqrepDestruction(type=name, reqrep="Reply", name="m_reply", void="void")$
 }
 
 $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
@@ -62,14 +64,24 @@ $interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
     return m_obj;
 }
 
+void* $interfaceName$_$name$Task::getReplyInstance()
+{
+    return &m_reply;
+}
+
 void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message)
 {  
-    $outParams:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create="yes")$}; separator="\n"$ 
+    $outParams:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name)$}; separator="\n"$
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		$name$ReplyUtils::extractTypeData(($name$Reply*)m_reply$if(outParams)$, $endif$$extractParams(params=outParams)$);
-		getObject().$name$($extractParams(params=outParams)$);
+		$name$ReplyUtils::extractTypeData(m_reply, retcode$if(outParams)$, $endif$$extractParams(params=outParams)$);
+		
+		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+		    getObject().$name$($extractParams(params=outParams)$);
+		else
+		    getObject().error(retcode);
 	}
 	else
 	{

@@ -12,7 +12,7 @@
 class MultithreadTest_test
 {
     public:
-        virtual void test(/*out*/ const Dato* dato2, /*out*/ const DDS_Long test_ret)
+        virtual void test(/*out*/ const Dato& dato2, DDS_Long &test_ret)
         {
         }
    
@@ -22,75 +22,48 @@ class MultithreadTest_test
 };
 
 /**
- * \brief This class implements a specific client's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface by user.
  */
-class MultithreadTestProxyH : public eProsima::DDSRPC::Client
-{
-    public:
-
-        /**
-         * \brief Default constructor. The client's proxy has to know what network transport
-         *        it should use.
-         *
-         * \param transport The network transport that client's proxy has to use. Cannot be NULL.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0
-         * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
-         */
-        MultithreadTestProxyH(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
-
-        /// \brief The default destructor.
-        virtual ~MultithreadTestProxyH();
-        
-         
-        eProsima::DDSRPC::ReturnMessage test(/*in*/ const Dato* dato1, /*out*/ Dato* &dato2, /*out*/ DDS_Long &test_ret);
-        
-         
-        eProsima::DDSRPC::ReturnMessage test_async(MultithreadTest_test &obj, /*in*/ const Dato* dato1);
-        
-    private:
-        eProsima::DDSRPC::ClientRPC *test_Service; 
-};
-
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the UDPv4 transport.
- */
-class MultithreadTestProxy : public MultithreadTestProxyH
+class MultithreadTestProxy : public eProsima::DDSRPC::Client
 {
     public:
     
         /**
-         * \brief Default constructor.
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
         MultithreadTestProxy(int domainId = 0, long timeout = 10000);
-        
-        virtual ~MultithreadTestProxy();
-};
 
-/**
- * \brief This class implements a specific client's proxy for the defined interface by user.
- *        This client's proxy uses the TCPv4 transport.
- */
-class MultithreadTestWANProxy : public MultithreadTestProxyH
-{
-    public:
-    
         /**
-         * \brief Default constructor.
+         * \brief This constructor sets the transport that will be used by the server's proxy.
          *
-         * \param to_connect Public address and port for the server. By example: "218.18.3.133:7600"
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, the call return a eProsima::DDSRPC::SERVER_TIMEOUT.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        MultithreadTestWANProxy(const char *to_connect, int domainId = 0, long timeout = 10000);
+        MultithreadTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+
+        /// \brief The default destructor.
+        virtual ~MultithreadTestProxy();
         
-        virtual ~MultithreadTestWANProxy();
+         
+        DDS_Long test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2);
+        
+         
+        void test_async(MultithreadTest_test &obj, /*in*/ const Dato& dato1);
+        
+    private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        eProsima::DDSRPC::ClientRPC *test_Service; 
 };
 
 #endif // _MultithreadTest_PROXY_H_

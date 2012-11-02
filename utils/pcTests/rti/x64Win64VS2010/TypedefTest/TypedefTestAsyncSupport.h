@@ -23,9 +23,13 @@ class TypedefTest_getLargoTask : public eProsima::DDSRPC::AsyncTask
         
         TypedefTest_getLargo& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            TypedefTest_getLargo &m_obj;
+           
+           getLargoReply m_reply;
 };
 
 class TypedefTest_getLarguisimoTask : public eProsima::DDSRPC::AsyncTask
@@ -43,9 +47,13 @@ class TypedefTest_getLarguisimoTask : public eProsima::DDSRPC::AsyncTask
         
         TypedefTest_getLarguisimo& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            TypedefTest_getLarguisimo &m_obj;
+           
+           getLarguisimoReply m_reply;
 };
 
 class TypedefTest_getDatosDefTask : public eProsima::DDSRPC::AsyncTask
@@ -63,9 +71,13 @@ class TypedefTest_getDatosDefTask : public eProsima::DDSRPC::AsyncTask
         
         TypedefTest_getDatosDef& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            TypedefTest_getDatosDef &m_obj;
+           
+           getDatosDefReply m_reply;
 };
 
 class TypedefTest_getDatosDefondoTask : public eProsima::DDSRPC::AsyncTask
@@ -83,9 +95,13 @@ class TypedefTest_getDatosDefondoTask : public eProsima::DDSRPC::AsyncTask
         
         TypedefTest_getDatosDefondo& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            TypedefTest_getDatosDefondo &m_obj;
+           
+           getDatosDefondoReply m_reply;
 };
 
 class TypedefTest_getCadenaTask : public eProsima::DDSRPC::AsyncTask
@@ -103,9 +119,13 @@ class TypedefTest_getCadenaTask : public eProsima::DDSRPC::AsyncTask
         
         TypedefTest_getCadena& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            TypedefTest_getCadena &m_obj;
+           
+           getCadenaReply m_reply;
 };
 
 class TypedefTest_getCorreaTask : public eProsima::DDSRPC::AsyncTask
@@ -123,9 +143,13 @@ class TypedefTest_getCorreaTask : public eProsima::DDSRPC::AsyncTask
         
         TypedefTest_getCorrea& getObject();
         
+        void* getReplyInstance();
+        
         private:
         
            TypedefTest_getCorrea &m_obj;
+           
+           getCorreaReply m_reply;
 };
 
 #endif // _TypedefTest_ASYNC_SUPPORT_H_

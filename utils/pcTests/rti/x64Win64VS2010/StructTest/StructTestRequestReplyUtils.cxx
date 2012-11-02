@@ -23,20 +23,15 @@ const char* duplicateRequestUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-duplicateRequest* duplicateRequestUtils::createTypeData(/*in*/ const Envio* ev)
+void duplicateRequestUtils::setTypeData(duplicateRequest& instance, /*in*/ const Envio& ev)
 {
-    duplicateRequest* instance = duplicateRequestTypeSupport::create_data();
-
-    EnvioPluginSupport_copy_data(&instance->ev, ev);
+    instance.ev = ev;
     
-    
-    return instance;
 }
 
-void duplicateRequestUtils::extractTypeData(duplicateRequest* data , /*in*/ Envio* &ev)
+void duplicateRequestUtils::extractTypeData(duplicateRequest& data, /*in*/ Envio& ev)
 {
-    ev = &data->ev;
-    
+    ev = data.ev;  
     
 }
 
@@ -58,19 +53,16 @@ const char* duplicateReplyUtils::registerType(DDS::DomainParticipant *clientPart
     return typeName;
 }
 
-duplicateReply* duplicateReplyUtils::createTypeData(/*out*/ const Recepcion* duplicate_ret)
+void duplicateReplyUtils::setTypeData(duplicateReply& instance, /*out*/ const Recepcion& duplicate_ret)
 {
-    duplicateReply* instance = duplicateReplyTypeSupport::create_data();
-
-    
-    RecepcionPluginSupport_copy_data(&instance->duplicate_ret, duplicate_ret);            
-    return instance;
+    instance.duplicate_ret = duplicate_ret;            
 }
 
-void duplicateReplyUtils::extractTypeData(duplicateReply* data , /*out*/ Recepcion* &duplicate_ret)
+void duplicateReplyUtils::extractTypeData(duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret)
 {
-    
-    RecepcionPluginSupport_copy_data(duplicate_ret, &data->duplicate_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+  
+    duplicate_ret = data.duplicate_ret;            
 }
 
 
@@ -91,22 +83,17 @@ const char* sumaRequestUtils::registerType(DDS::DomainParticipant *clientPartici
     return typeName;
 }
 
-sumaRequest* sumaRequestUtils::createTypeData(/*in*/ const Envio* ev1, /*in*/ const Envio* ev2)
+void sumaRequestUtils::setTypeData(sumaRequest& instance, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2)
 {
-    sumaRequest* instance = sumaRequestTypeSupport::create_data();
-
-    EnvioPluginSupport_copy_data(&instance->ev1, ev1);
-    EnvioPluginSupport_copy_data(&instance->ev2, ev2);
+    instance.ev1 = ev1;
+    instance.ev2 = ev2;
     
-    
-    return instance;
 }
 
-void sumaRequestUtils::extractTypeData(sumaRequest* data , /*in*/ Envio* &ev1, /*in*/ Envio* &ev2)
+void sumaRequestUtils::extractTypeData(sumaRequest& data, /*in*/ Envio& ev1, /*in*/ Envio& ev2)
 {
-    ev1 = &data->ev1;
-    ev2 = &data->ev2;
-    
+    ev1 = data.ev1;
+    ev2 = data.ev2;  
     
 }
 
@@ -128,19 +115,16 @@ const char* sumaReplyUtils::registerType(DDS::DomainParticipant *clientParticipa
     return typeName;
 }
 
-sumaReply* sumaReplyUtils::createTypeData(/*out*/ const Recepcion* suma_ret)
+void sumaReplyUtils::setTypeData(sumaReply& instance, /*out*/ const Recepcion& suma_ret)
 {
-    sumaReply* instance = sumaReplyTypeSupport::create_data();
-
-    
-    RecepcionPluginSupport_copy_data(&instance->suma_ret, suma_ret);            
-    return instance;
+    instance.suma_ret = suma_ret;            
 }
 
-void sumaReplyUtils::extractTypeData(sumaReply* data , /*out*/ Recepcion* &suma_ret)
+void sumaReplyUtils::extractTypeData(sumaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret)
 {
-    
-    RecepcionPluginSupport_copy_data(suma_ret, &data->suma_ret);            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+  
+    suma_ret = data.suma_ret;            
 }
 
  

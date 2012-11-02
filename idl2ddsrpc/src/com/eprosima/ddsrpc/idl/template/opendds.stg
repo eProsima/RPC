@@ -17,7 +17,10 @@
 group opendds;
 
 varComplexDecl(typeName, name, create) ::= <<
-$typeName$ *$name$ = $if(create)$new $typeName$()$else$NULL$endif$;
+$typeName$ $name$();
+>>
+
+varComplexInitialize(typeName, name) ::= <<
 >>
 
 varComplexDel(typeName, name) ::= <<
@@ -141,10 +144,6 @@ dependencies(conf) ::= <<
 OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO_AnyTypeCode$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ACE$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ddsrpc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
-createDH(type, name) ::= <<
-instance->$name$ = *$name$;
->>
-
 extractDH(type, name) ::= <<
-*$name$ = data->$name$;
+$name$ = data->$name$;
 >>

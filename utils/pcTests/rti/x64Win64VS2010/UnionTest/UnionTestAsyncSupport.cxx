@@ -6,12 +6,10 @@
 UnionTest_getEmpleadoTask::UnionTest_getEmpleadoTask(UnionTest_getEmpleado &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
-m_reply = (void*)getEmpleadoReplyTypeSupport::create_data();
 }
 
 UnionTest_getEmpleadoTask::~UnionTest_getEmpleadoTask()
 {
-getEmpleadoReplyTypeSupport::delete_data((getEmpleadoReply*)m_reply);
 }
 
 UnionTest_getEmpleado& UnionTest_getEmpleadoTask::getObject()
@@ -19,16 +17,29 @@ UnionTest_getEmpleado& UnionTest_getEmpleadoTask::getObject()
     return m_obj;
 }
 
+void* UnionTest_getEmpleadoTask::getReplyInstance()
+{
+    return &m_reply;
+}
+
 void UnionTest_getEmpleadoTask::execute(eProsima::DDSRPC::ReturnMessage message)
 {  
-    Empleado *em2 = EmpleadoPluginSupport_create_data();    
-    Empleado *em3 = EmpleadoPluginSupport_create_data();    
-    Empleado *getEmpleado_ret = EmpleadoPluginSupport_create_data();     
+    Empleado em2;
+        
+    Empleado em3;
+        
+    Empleado getEmpleado_ret;
+        
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getEmpleadoReplyUtils::extractTypeData((getEmpleadoReply*)m_reply, em2  , em3  , getEmpleado_ret  );
-		getObject().getEmpleado(em2  , em3  , getEmpleado_ret  );
+		getEmpleadoReplyUtils::extractTypeData(m_reply, retcode, em2  , em3  , getEmpleado_ret  );
+		
+		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+		    getObject().getEmpleado(em2  , em3  , getEmpleado_ret  );
+		else
+		    getObject().error(retcode);
 	}
 	else
 	{

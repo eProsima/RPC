@@ -19,7 +19,7 @@ class MultithreadTestServerImpl
         virtual ~MultithreadTestServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage test(/*in*/ const Dato* dato1, /*out*/ Dato* &dato2, /*out*/ DDS_Long &test_ret);
+        DDS_Long test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2);
 };
 
 #endif // _MultithreadTestSERVER_IMPL_H_
