@@ -55,9 +55,9 @@ void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *request
     duplicateReply replyData;
     
 
-    duplicateRequestUtils::extractTypeData(*(duplicateRequest*)requestData, ev  );
+    duplicateRequestUtils::extractTypeData(*(duplicateRequest*)requestData, ev);
 
-    duplicate_ret = srv->_impl->duplicate(ev  );
+    duplicate_ret = srv->_impl->duplicate(ev);
 
     duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
 
@@ -80,9 +80,9 @@ void StructTestServer::suma(eProsima::DDSRPC::Server *server, void *requestData,
     sumaReply replyData;
     
 
-    sumaRequestUtils::extractTypeData(*(sumaRequest*)requestData, ev1  , ev2  );
+    sumaRequestUtils::extractTypeData(*(sumaRequest*)requestData, ev1, ev2);
 
-    suma_ret = srv->_impl->suma(ev1  , ev2  );
+    suma_ret = srv->_impl->suma(ev1, ev2);
 
     sumaReplyUtils::setTypeData(replyData, suma_ret);
 

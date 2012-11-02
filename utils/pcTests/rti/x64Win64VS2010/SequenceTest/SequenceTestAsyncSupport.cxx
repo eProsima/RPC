@@ -34,10 +34,10 @@ void SequenceTest_getSLongTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getSLongReplyUtils::extractTypeData(m_reply, retcode, l2  , l3  , getSLong_ret  );
+		getSLongReplyUtils::extractTypeData(m_reply, retcode, l2, l3, getSLong_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getSLong(l2  , l3  , getSLong_ret  );
+		    getObject().getSLong(l2, l3, getSLong_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -79,10 +79,10 @@ void SequenceTest_getStringTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getStringReplyUtils::extractTypeData(m_reply, retcode, s2  , s3  , getString_ret  );
+		getStringReplyUtils::extractTypeData(m_reply, retcode, s2, s3, getString_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getString(s2  , s3  , getString_ret  );
+		    getObject().getString(s2, s3, getString_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -124,10 +124,10 @@ void SequenceTest_getStringBoundedTask::execute(eProsima::DDSRPC::ReturnMessage 
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2  , sb3  , getStringBounded_ret  );
+		getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2, sb3, getStringBounded_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getStringBounded(sb2  , sb3  , getStringBounded_ret  );
+		    getObject().getStringBounded(sb2, sb3, getStringBounded_ret);
 		else
 		    getObject().error(retcode);
 	}

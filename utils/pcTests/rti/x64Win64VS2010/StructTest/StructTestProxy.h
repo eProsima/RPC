@@ -12,7 +12,7 @@
 class StructTest_duplicate
 {
     public:
-        virtual void duplicate(Recepcion &duplicate_ret)
+        virtual void duplicate(/*out*/ const Recepcion& duplicate_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class StructTest_duplicate
 class StructTest_suma
 {
     public:
-        virtual void suma(Recepcion &suma_ret)
+        virtual void suma(/*out*/ const Recepcion& suma_ret)
         {
         }
    

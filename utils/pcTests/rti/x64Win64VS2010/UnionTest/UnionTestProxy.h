@@ -12,7 +12,7 @@
 class UnionTest_getEmpleado
 {
     public:
-        virtual void getEmpleado(/*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, Empleado &getEmpleado_ret)
+        virtual void getEmpleado(/*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret)
         {
         }
    

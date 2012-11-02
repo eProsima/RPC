@@ -193,7 +193,7 @@ $exFunctionHeader(class=interfaceName,...)$
     $if(!voidInitMap.(rettype.typeName))$$rettype.name$ = $endif$srv->_impl->$name$($extractParams(params)$);
 
     $if(!isOneway)$
-    $name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $rettype.name$$endif$);
+    $name$ReplyUtils::setTypeData(replyData$if([outParams, rettype])$, $endif$$extractParams([outParams, rettype])$);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);

@@ -47,12 +47,12 @@ Empleado UnionTestProxy::getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Emple
     getEmpleadoReply retInstance;
 
     getEmpleadoReply_initialize(&retInstance);    
-    getEmpleadoRequestUtils::setTypeData(instance, em1  , em2  );
+    getEmpleadoRequestUtils::setTypeData(instance, em1, em2);
     retcode = getEmpleado_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getEmpleadoReplyUtils::extractTypeData(retInstance, retcode, em2  , em3  , getEmpleado_ret); 
+        getEmpleadoReplyUtils::extractTypeData(retInstance, retcode, em2, em3, getEmpleado_ret); 
     }
     
     switch (retcode)
@@ -81,7 +81,7 @@ void UnionTestProxy::getEmpleado_async(UnionTest_getEmpleado &obj, /*in*/ const 
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getEmpleadoRequest instance;
     UnionTest_getEmpleadoTask *task = NULL;
-    getEmpleadoRequestUtils::setTypeData(instance, em1  , em2  );
+    getEmpleadoRequestUtils::setTypeData(instance, em1, em2);
     task = new UnionTest_getEmpleadoTask(obj, this);
     retcode = getEmpleado_Service->executeAsync(&instance, task, getTimeout());
     

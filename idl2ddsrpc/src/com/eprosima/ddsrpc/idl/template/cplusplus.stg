@@ -177,7 +177,9 @@ $endif$
  * Uses:
  */ 
 argDecl(arg, ref) ::= <<
+$if(!voidInitMap.(arg.typeName))$
 /*$arg.comment$*/ $argType(type=arg.typeName, notIn=ref)$ $arg.name$
+$endif$
 >>
 
 argsDecl(args) ::= <<
@@ -226,8 +228,10 @@ $funNames:{
  *
  * Uses:
  */ 
-varUse(name) ::= <<
-$name$  
+varUse(param) ::= <<
+$if(!voidInitMap.(param.typeName))$
+$param.name$
+$endif$
 >>
 
 
@@ -242,5 +246,5 @@ $name$
  * Uses:
  */ 
 extractParams(params) ::= <<
-$params:{$varUse(name = it.name)$};separator=", "$
+$params:{$varUse(it)$};separator=", "$
 >>

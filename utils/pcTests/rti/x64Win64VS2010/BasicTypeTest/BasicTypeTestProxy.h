@@ -12,7 +12,7 @@
 class BasicTypeTest_getOctet
 {
     public:
-        virtual void getOctet(/*inout*/ DDS_Octet oc2, /*out*/ DDS_Octet oc3, DDS_Octet &getOctet_ret)
+        virtual void getOctet(/*inout*/ DDS_Octet oc2, /*out*/ DDS_Octet oc3, /*out*/ DDS_Octet getOctet_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class BasicTypeTest_getOctet
 class BasicTypeTest_getChar
 {
     public:
-        virtual void getChar(/*inout*/ DDS_Char ch2, /*out*/ DDS_Char ch3, DDS_Char &getChar_ret)
+        virtual void getChar(/*inout*/ DDS_Char ch2, /*out*/ DDS_Char ch3, /*out*/ DDS_Char getChar_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class BasicTypeTest_getChar
 class BasicTypeTest_getWChar
 {
     public:
-        virtual void getWChar(/*inout*/ DDS_Wchar wch2, /*out*/ DDS_Wchar wch3, DDS_Wchar &getWChar_ret)
+        virtual void getWChar(/*inout*/ DDS_Wchar wch2, /*out*/ DDS_Wchar wch3, /*out*/ DDS_Wchar getWChar_ret)
         {
         }
    
@@ -45,7 +45,7 @@ class BasicTypeTest_getWChar
 class BasicTypeTest_getShort
 {
     public:
-        virtual void getShort(/*inout*/ DDS_Short sh2, /*out*/ DDS_Short sh3, DDS_Short &getShort_ret)
+        virtual void getShort(/*inout*/ DDS_Short sh2, /*out*/ DDS_Short sh3, /*out*/ DDS_Short getShort_ret)
         {
         }
    
@@ -56,7 +56,7 @@ class BasicTypeTest_getShort
 class BasicTypeTest_getUShort
 {
     public:
-        virtual void getUShort(/*inout*/ DDS_UnsignedShort ush2, /*out*/ DDS_UnsignedShort ush3, DDS_UnsignedShort &getUShort_ret)
+        virtual void getUShort(/*inout*/ DDS_UnsignedShort ush2, /*out*/ DDS_UnsignedShort ush3, /*out*/ DDS_UnsignedShort getUShort_ret)
         {
         }
    
@@ -67,7 +67,7 @@ class BasicTypeTest_getUShort
 class BasicTypeTest_getLong
 {
     public:
-        virtual void getLong(/*inout*/ DDS_Long lo2, /*out*/ DDS_Long lo3, DDS_Long &getLong_ret)
+        virtual void getLong(/*inout*/ DDS_Long lo2, /*out*/ DDS_Long lo3, /*out*/ DDS_Long getLong_ret)
         {
         }
    
@@ -78,7 +78,7 @@ class BasicTypeTest_getLong
 class BasicTypeTest_getULong
 {
     public:
-        virtual void getULong(/*inout*/ DDS_UnsignedLong ulo2, /*out*/ DDS_UnsignedLong ulo3, DDS_UnsignedLong &getULong_ret)
+        virtual void getULong(/*inout*/ DDS_UnsignedLong ulo2, /*out*/ DDS_UnsignedLong ulo3, /*out*/ DDS_UnsignedLong getULong_ret)
         {
         }
    
@@ -89,7 +89,7 @@ class BasicTypeTest_getULong
 class BasicTypeTest_getLLong
 {
     public:
-        virtual void getLLong(/*inout*/ DDS_LongLong llo2, /*out*/ DDS_LongLong llo3, DDS_LongLong &getLLong_ret)
+        virtual void getLLong(/*inout*/ DDS_LongLong llo2, /*out*/ DDS_LongLong llo3, /*out*/ DDS_LongLong getLLong_ret)
         {
         }
    
@@ -100,7 +100,7 @@ class BasicTypeTest_getLLong
 class BasicTypeTest_getULLong
 {
     public:
-        virtual void getULLong(/*inout*/ DDS_UnsignedLongLong ullo2, /*out*/ DDS_UnsignedLongLong ullo3, DDS_UnsignedLongLong &getULLong_ret)
+        virtual void getULLong(/*inout*/ DDS_UnsignedLongLong ullo2, /*out*/ DDS_UnsignedLongLong ullo3, /*out*/ DDS_UnsignedLongLong getULLong_ret)
         {
         }
    
@@ -111,7 +111,7 @@ class BasicTypeTest_getULLong
 class BasicTypeTest_getFloat
 {
     public:
-        virtual void getFloat(/*inout*/ DDS_Float fl2, /*out*/ DDS_Float fl3, DDS_Float &getFloat_ret)
+        virtual void getFloat(/*inout*/ DDS_Float fl2, /*out*/ DDS_Float fl3, /*out*/ DDS_Float getFloat_ret)
         {
         }
    
@@ -122,7 +122,7 @@ class BasicTypeTest_getFloat
 class BasicTypeTest_getDouble
 {
     public:
-        virtual void getDouble(/*inout*/ DDS_Double do2, /*out*/ DDS_Double do3, DDS_Double &getDouble_ret)
+        virtual void getDouble(/*inout*/ DDS_Double do2, /*out*/ DDS_Double do3, /*out*/ DDS_Double getDouble_ret)
         {
         }
    
@@ -133,7 +133,7 @@ class BasicTypeTest_getDouble
 class BasicTypeTest_getBoolean
 {
     public:
-        virtual void getBoolean(/*inout*/ DDS_Boolean bo2, /*out*/ DDS_Boolean bo3, DDS_Boolean &getBoolean_ret)
+        virtual void getBoolean(/*inout*/ DDS_Boolean bo2, /*out*/ DDS_Boolean bo3, /*out*/ DDS_Boolean getBoolean_ret)
         {
         }
    

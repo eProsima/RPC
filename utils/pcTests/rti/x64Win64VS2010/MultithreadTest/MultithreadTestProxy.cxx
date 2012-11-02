@@ -41,17 +41,17 @@ void MultithreadTestProxy::createRPCs()
 DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Long  returnedValue = 0;    
+    DDS_Long  test_ret = 0;    
     testRequest instance;
     testReply retInstance;
 
     testReply_initialize(&retInstance);    
-    testRequestUtils::setTypeData(instance, dato1  );
+    testRequestUtils::setTypeData(instance, dato1);
     retcode = test_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        testReplyUtils::extractTypeData(retInstance, retcode, dato2  , returnedValue); 
+        testReplyUtils::extractTypeData(retInstance, retcode, dato2, test_ret); 
     }
     
     switch (retcode)
@@ -71,7 +71,7 @@ DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato
     };
     
 
-    return returnedValue;
+    return test_ret;
 }
 
  
@@ -80,7 +80,7 @@ void MultithreadTestProxy::test_async(MultithreadTest_test &obj, /*in*/ const Da
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     testRequest instance;
     MultithreadTest_testTask *task = NULL;
-    testRequestUtils::setTypeData(instance, dato1  );
+    testRequestUtils::setTypeData(instance, dato1);
     task = new MultithreadTest_testTask(obj, this);
     retcode = test_Service->executeAsync(&instance, task, getTimeout());
     

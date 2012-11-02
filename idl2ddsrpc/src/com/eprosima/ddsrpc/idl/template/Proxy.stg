@@ -96,7 +96,7 @@ classHeaderAsync(interfaceName,rettype,name,outParams) ::= <<
 class $interfaceName$_$name$
 {
     public:
-        virtual void $name$($argsDecl(outParams)$$if(!voidInitMap.(rettype.typeName))$$if(outParams)$, $endif$$rettype.typeName$ &$rettype.name$$endif$)
+        virtual void $name$($argsDecl([outParams, rettype])$)
         {
         }
    
@@ -144,7 +144,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
         $if(!isOneway)$
-        $name$ReplyUtils::extractTypeData(retInstance, retcode$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $rettype.name$$endif$); 
+        $name$ReplyUtils::extractTypeData(retInstance, retcode$if([outParams, rettype])$, $endif$$extractParams([outParams, rettype])$); 
         $endif$
     }
     

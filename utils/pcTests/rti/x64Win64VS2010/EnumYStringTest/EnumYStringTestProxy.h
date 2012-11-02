@@ -12,7 +12,7 @@
 class EnumYStringTest_getEnum
 {
     public:
-        virtual void getEnum(/*inout*/ Valores v2, /*out*/ Valores v3, Valores &getEnum_ret)
+        virtual void getEnum(/*inout*/ Valores v2, /*out*/ Valores v3, /*out*/ Valores getEnum_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class EnumYStringTest_getEnum
 class EnumYStringTest_getString
 {
     public:
-        virtual void getString(/*inout*/ char* s2, /*out*/ char* s3, char* &getString_ret)
+        virtual void getString(/*inout*/ char* s2, /*out*/ char* s3, /*out*/ char* getString_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class EnumYStringTest_getString
 class EnumYStringTest_getStringBounded
 {
     public:
-        virtual void getStringBounded(/*inout*/ char* sb2, /*out*/ char* sb3, char* &getStringBounded_ret)
+        virtual void getStringBounded(/*inout*/ char* sb2, /*out*/ char* sb3, /*out*/ char* getStringBounded_ret)
         {
         }
    

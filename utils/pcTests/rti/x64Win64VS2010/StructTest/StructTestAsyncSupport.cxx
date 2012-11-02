@@ -30,10 +30,10 @@ void StructTest_duplicateTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		duplicateReplyUtils::extractTypeData(m_reply, retcode, duplicate_ret  );
+		duplicateReplyUtils::extractTypeData(m_reply, retcode, duplicate_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().duplicate(duplicate_ret  );
+		    getObject().duplicate(duplicate_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -71,10 +71,10 @@ void StructTest_sumaTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		sumaReplyUtils::extractTypeData(m_reply, retcode, suma_ret  );
+		sumaReplyUtils::extractTypeData(m_reply, retcode, suma_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().suma(suma_ret  );
+		    getObject().suma(suma_ret);
 		else
 		    getObject().error(retcode);
 	}

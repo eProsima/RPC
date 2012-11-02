@@ -55,7 +55,7 @@ void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *reques
     largo l1;
         
     largo l2;
-    memset(&l2, 0, sizeof(largo));    
+        
     largo l3;
     memset(&l3, 0, sizeof(largo));    
     largo getSLong_ret;
@@ -64,11 +64,11 @@ void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *reques
     
     largo_initialize(&l2);    
 
-    getSLongRequestUtils::extractTypeData(*(getSLongRequest*)requestData, l1  , l2  );
+    getSLongRequestUtils::extractTypeData(*(getSLongRequest*)requestData, l1, l2);
 
-    getSLong_ret = srv->_impl->getSLong(l1  , l2  , l3  );
+    getSLong_ret = srv->_impl->getSLong(l1, l2, l3);
 
-    getSLongReplyUtils::setTypeData(replyData, l2  , l3  , getSLong_ret);
+    getSLongReplyUtils::setTypeData(replyData, l2, l3, getSLong_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
@@ -85,7 +85,7 @@ void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *reque
     cadena s1;
         
     cadena s2;
-    memset(&s2, 0, sizeof(cadena));    
+        
     cadena s3;
     memset(&s3, 0, sizeof(cadena));    
     cadena getString_ret;
@@ -94,11 +94,11 @@ void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *reque
     
     cadena_initialize(&s2);    
 
-    getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1  , s2  );
+    getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1, s2);
 
-    getString_ret = srv->_impl->getString(s1  , s2  , s3  );
+    getString_ret = srv->_impl->getString(s1, s2, s3);
 
-    getStringReplyUtils::setTypeData(replyData, s2  , s3  , getString_ret);
+    getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
@@ -115,7 +115,7 @@ void SequenceTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void
     dattos sb1;
         
     dattos sb2;
-    memset(&sb2, 0, sizeof(dattos));    
+        
     dattos sb3;
     memset(&sb3, 0, sizeof(dattos));    
     dattos getStringBounded_ret;
@@ -124,11 +124,11 @@ void SequenceTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void
     
     dattos_initialize(&sb2);    
 
-    getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1  , sb2  );
+    getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1, sb2);
 
-    getStringBounded_ret = srv->_impl->getStringBounded(sb1  , sb2  , sb3  );
+    getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
-    getStringBoundedReplyUtils::setTypeData(replyData, sb2  , sb3  , getStringBounded_ret);
+    getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);

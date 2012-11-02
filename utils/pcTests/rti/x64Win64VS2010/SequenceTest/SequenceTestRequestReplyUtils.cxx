@@ -66,8 +66,8 @@ void getSLongReplyUtils::extractTypeData(getSLongReply& data, eProsima::DDSRPC::
 {
 retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
     largo_finalize(&l2);l2 = data.l2;
-    largo_finalize(&l3);l3 = data.l3;  
-    largo_finalize(&getSLong_ret);getSLong_ret = data.getSLong_ret;            
+    l3 = data.l3;  
+    getSLong_ret = data.getSLong_ret;            
 }
 
 
@@ -131,8 +131,8 @@ void getStringReplyUtils::extractTypeData(getStringReply& data, eProsima::DDSRPC
 {
 retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
     cadena_finalize(&s2);s2 = data.s2;
-    cadena_finalize(&s3);s3 = data.s3;  
-    cadena_finalize(&getString_ret);getString_ret = data.getString_ret;            
+    s3 = data.s3;  
+    getString_ret = data.getString_ret;            
 }
 
 
@@ -196,8 +196,8 @@ void getStringBoundedReplyUtils::extractTypeData(getStringBoundedReply& data, eP
 {
 retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
     dattos_finalize(&sb2);sb2 = data.sb2;
-    dattos_finalize(&sb3);sb3 = data.sb3;  
-    dattos_finalize(&getStringBounded_ret);getStringBounded_ret = data.getStringBounded_ret;            
+    sb3 = data.sb3;  
+    getStringBounded_ret = data.getStringBounded_ret;            
 }
 
  

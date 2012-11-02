@@ -51,18 +51,17 @@ void EnumYStringTestProxy::createRPCs()
 Valores EnumYStringTestProxy::getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    Valores  returnedValue = VALOR1;    
+    Valores  getEnum_ret = VALOR1;    
     getEnumRequest instance;
     getEnumReply retInstance;
 
     getEnumReply_initialize(&retInstance);    
-    memset(&retInstance, 0, sizeof(getEnumReply));
-    getEnumRequestUtils::setTypeData(instance, v1  , v2  );
+    getEnumRequestUtils::setTypeData(instance, v1, v2);
     retcode = getEnum_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getEnumReplyUtils::extractTypeData(retInstance, retcode, v2  , v3  , returnedValue); 
+        getEnumReplyUtils::extractTypeData(retInstance, retcode, v2, v3, getEnum_ret); 
     }
     
     switch (retcode)
@@ -82,23 +81,23 @@ Valores EnumYStringTestProxy::getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, 
     };
     
 
-    return returnedValue;
+    return getEnum_ret;
 }
  
 char* EnumYStringTestProxy::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    char*  returnedValue = NULL;    
+    char*  getString_ret = NULL;    
     getStringRequest instance;
     getStringReply retInstance;
 
     getStringReply_initialize(&retInstance);    
-    getStringRequestUtils::setTypeData(instance, s1  , s2  );
+    getStringRequestUtils::setTypeData(instance, s1, s2);
     retcode = getString_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringReplyUtils::extractTypeData(retInstance, retcode, s2  , s3  , returnedValue); 
+        getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret); 
     }
     
     switch (retcode)
@@ -118,23 +117,23 @@ char* EnumYStringTestProxy::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*ou
     };
     
 
-    return returnedValue;
+    return getString_ret;
 }
  
 char* EnumYStringTestProxy::getStringBounded(/*in*/ char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    char*  returnedValue = NULL;    
+    char*  getStringBounded_ret = NULL;    
     getStringBoundedRequest instance;
     getStringBoundedReply retInstance;
 
     getStringBoundedReply_initialize(&retInstance);    
-    getStringBoundedRequestUtils::setTypeData(instance, sb1  , sb2  );
+    getStringBoundedRequestUtils::setTypeData(instance, sb1, sb2);
     retcode = getStringBounded_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2  , sb3  , returnedValue); 
+        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret); 
     }
     
     switch (retcode)
@@ -154,7 +153,7 @@ char* EnumYStringTestProxy::getStringBounded(/*in*/ char* sb1, /*inout*/ char*& 
     };
     
 
-    return returnedValue;
+    return getStringBounded_ret;
 }
 
  
@@ -163,7 +162,7 @@ void EnumYStringTestProxy::getEnum_async(EnumYStringTest_getEnum &obj, /*in*/ Va
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getEnumRequest instance;
     EnumYStringTest_getEnumTask *task = NULL;
-    getEnumRequestUtils::setTypeData(instance, v1  , v2  );
+    getEnumRequestUtils::setTypeData(instance, v1, v2);
     task = new EnumYStringTest_getEnumTask(obj, this);
     retcode = getEnum_Service->executeAsync(&instance, task, getTimeout());
     
@@ -183,7 +182,7 @@ void EnumYStringTestProxy::getString_async(EnumYStringTest_getString &obj, /*in*
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getStringRequest instance;
     EnumYStringTest_getStringTask *task = NULL;
-    getStringRequestUtils::setTypeData(instance, s1  , s2  );
+    getStringRequestUtils::setTypeData(instance, s1, s2);
     task = new EnumYStringTest_getStringTask(obj, this);
     retcode = getString_Service->executeAsync(&instance, task, getTimeout());
     
@@ -203,7 +202,7 @@ void EnumYStringTestProxy::getStringBounded_async(EnumYStringTest_getStringBound
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getStringBoundedRequest instance;
     EnumYStringTest_getStringBoundedTask *task = NULL;
-    getStringBoundedRequestUtils::setTypeData(instance, sb1  , sb2  );
+    getStringBoundedRequestUtils::setTypeData(instance, sb1, sb2);
     task = new EnumYStringTest_getStringBoundedTask(obj, this);
     retcode = getStringBounded_Service->executeAsync(&instance, task, getTimeout());
     

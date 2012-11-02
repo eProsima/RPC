@@ -30,10 +30,10 @@ void TypedefTest_getLargoTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getLargoReplyUtils::extractTypeData(m_reply, retcode, l2  , getLargo_ret  );
+		getLargoReplyUtils::extractTypeData(m_reply, retcode, l2, getLargo_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getLargo(l2  , getLargo_ret  );
+		    getObject().getLargo(l2, getLargo_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -71,10 +71,10 @@ void TypedefTest_getLarguisimoTask::execute(eProsima::DDSRPC::ReturnMessage mess
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getLarguisimoReplyUtils::extractTypeData(m_reply, retcode, ll2  , getLarguisimo_ret  );
+		getLarguisimoReplyUtils::extractTypeData(m_reply, retcode, ll2, getLarguisimo_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getLarguisimo(ll2  , getLarguisimo_ret  );
+		    getObject().getLarguisimo(ll2, getLarguisimo_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -114,10 +114,10 @@ void TypedefTest_getDatosDefTask::execute(eProsima::DDSRPC::ReturnMessage messag
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getDatosDefReplyUtils::extractTypeData(m_reply, retcode, d2  , getDatosDef_ret  );
+		getDatosDefReplyUtils::extractTypeData(m_reply, retcode, d2, getDatosDef_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getDatosDef(d2  , getDatosDef_ret  );
+		    getObject().getDatosDef(d2, getDatosDef_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -157,10 +157,10 @@ void TypedefTest_getDatosDefondoTask::execute(eProsima::DDSRPC::ReturnMessage me
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getDatosDefondoReplyUtils::extractTypeData(m_reply, retcode, dd2  , getDatosDefondo_ret  );
+		getDatosDefondoReplyUtils::extractTypeData(m_reply, retcode, dd2, getDatosDefondo_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getDatosDefondo(dd2  , getDatosDefondo_ret  );
+		    getObject().getDatosDefondo(dd2, getDatosDefondo_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -198,10 +198,10 @@ void TypedefTest_getCadenaTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getCadenaReplyUtils::extractTypeData(m_reply, retcode, c2  , getCadena_ret  );
+		getCadenaReplyUtils::extractTypeData(m_reply, retcode, c2, getCadena_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getCadena(c2  , getCadena_ret  );
+		    getObject().getCadena(c2, getCadena_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -239,10 +239,10 @@ void TypedefTest_getCorreaTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getCorreaReplyUtils::extractTypeData(m_reply, retcode, cc2  , getCorrea_ret  );
+		getCorreaReplyUtils::extractTypeData(m_reply, retcode, cc2, getCorrea_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getCorrea(cc2  , getCorrea_ret  );
+		    getObject().getCorrea(cc2, getCorrea_ret);
 		else
 		    getObject().error(retcode);
 	}

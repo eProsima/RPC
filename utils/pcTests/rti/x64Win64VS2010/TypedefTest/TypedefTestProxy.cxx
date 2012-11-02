@@ -71,12 +71,12 @@ largo TypedefTestProxy::getLargo(/*in*/ largo l1, /*out*/ largo& l2)
     getLargoReply retInstance;
 
     getLargoReply_initialize(&retInstance);    
-    getLargoRequestUtils::setTypeData(instance, l1  );
+    getLargoRequestUtils::setTypeData(instance, l1);
     retcode = getLargo_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLargoReplyUtils::extractTypeData(retInstance, retcode, l2  , getLargo_ret); 
+        getLargoReplyUtils::extractTypeData(retInstance, retcode, l2, getLargo_ret); 
     }
     
     switch (retcode)
@@ -107,12 +107,12 @@ larguisimo TypedefTestProxy::getLarguisimo(/*in*/ larguisimo ll1, /*out*/ largui
     getLarguisimoReply retInstance;
 
     getLarguisimoReply_initialize(&retInstance);    
-    getLarguisimoRequestUtils::setTypeData(instance, ll1  );
+    getLarguisimoRequestUtils::setTypeData(instance, ll1);
     retcode = getLarguisimo_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLarguisimoReplyUtils::extractTypeData(retInstance, retcode, ll2  , getLarguisimo_ret); 
+        getLarguisimoReplyUtils::extractTypeData(retInstance, retcode, ll2, getLarguisimo_ret); 
     }
     
     switch (retcode)
@@ -144,12 +144,12 @@ DatosDef TypedefTestProxy::getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosD
     getDatosDefReply retInstance;
 
     getDatosDefReply_initialize(&retInstance);    
-    getDatosDefRequestUtils::setTypeData(instance, d1  );
+    getDatosDefRequestUtils::setTypeData(instance, d1);
     retcode = getDatosDef_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDatosDefReplyUtils::extractTypeData(retInstance, retcode, d2  , getDatosDef_ret); 
+        getDatosDefReplyUtils::extractTypeData(retInstance, retcode, d2, getDatosDef_ret); 
     }
     
     switch (retcode)
@@ -181,12 +181,12 @@ DatosDefondo TypedefTestProxy::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /
     getDatosDefondoReply retInstance;
 
     getDatosDefondoReply_initialize(&retInstance);    
-    getDatosDefondoRequestUtils::setTypeData(instance, dd1  );
+    getDatosDefondoRequestUtils::setTypeData(instance, dd1);
     retcode = getDatosDefondo_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDatosDefondoReplyUtils::extractTypeData(retInstance, retcode, dd2  , getDatosDefondo_ret); 
+        getDatosDefondoReplyUtils::extractTypeData(retInstance, retcode, dd2, getDatosDefondo_ret); 
     }
     
     switch (retcode)
@@ -217,12 +217,12 @@ cadena TypedefTestProxy::getCadena(/*in*/ cadena c1, /*out*/ cadena& c2)
     getCadenaReply retInstance;
 
     getCadenaReply_initialize(&retInstance);    
-    getCadenaRequestUtils::setTypeData(instance, c1  );
+    getCadenaRequestUtils::setTypeData(instance, c1);
     retcode = getCadena_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCadenaReplyUtils::extractTypeData(retInstance, retcode, c2  , getCadena_ret); 
+        getCadenaReplyUtils::extractTypeData(retInstance, retcode, c2, getCadena_ret); 
     }
     
     switch (retcode)
@@ -253,12 +253,12 @@ correa TypedefTestProxy::getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2)
     getCorreaReply retInstance;
 
     getCorreaReply_initialize(&retInstance);    
-    getCorreaRequestUtils::setTypeData(instance, cc1  );
+    getCorreaRequestUtils::setTypeData(instance, cc1);
     retcode = getCorrea_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCorreaReplyUtils::extractTypeData(retInstance, retcode, cc2  , getCorrea_ret); 
+        getCorreaReplyUtils::extractTypeData(retInstance, retcode, cc2, getCorrea_ret); 
     }
     
     switch (retcode)
@@ -287,7 +287,7 @@ void TypedefTestProxy::getLargo_async(TypedefTest_getLargo &obj, /*in*/ largo l1
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getLargoRequest instance;
     TypedefTest_getLargoTask *task = NULL;
-    getLargoRequestUtils::setTypeData(instance, l1  );
+    getLargoRequestUtils::setTypeData(instance, l1);
     task = new TypedefTest_getLargoTask(obj, this);
     retcode = getLargo_Service->executeAsync(&instance, task, getTimeout());
     
@@ -307,7 +307,7 @@ void TypedefTestProxy::getLarguisimo_async(TypedefTest_getLarguisimo &obj, /*in*
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getLarguisimoRequest instance;
     TypedefTest_getLarguisimoTask *task = NULL;
-    getLarguisimoRequestUtils::setTypeData(instance, ll1  );
+    getLarguisimoRequestUtils::setTypeData(instance, ll1);
     task = new TypedefTest_getLarguisimoTask(obj, this);
     retcode = getLarguisimo_Service->executeAsync(&instance, task, getTimeout());
     
@@ -327,7 +327,7 @@ void TypedefTestProxy::getDatosDef_async(TypedefTest_getDatosDef &obj, /*in*/ co
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getDatosDefRequest instance;
     TypedefTest_getDatosDefTask *task = NULL;
-    getDatosDefRequestUtils::setTypeData(instance, d1  );
+    getDatosDefRequestUtils::setTypeData(instance, d1);
     task = new TypedefTest_getDatosDefTask(obj, this);
     retcode = getDatosDef_Service->executeAsync(&instance, task, getTimeout());
     
@@ -347,7 +347,7 @@ void TypedefTestProxy::getDatosDefondo_async(TypedefTest_getDatosDefondo &obj, /
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getDatosDefondoRequest instance;
     TypedefTest_getDatosDefondoTask *task = NULL;
-    getDatosDefondoRequestUtils::setTypeData(instance, dd1  );
+    getDatosDefondoRequestUtils::setTypeData(instance, dd1);
     task = new TypedefTest_getDatosDefondoTask(obj, this);
     retcode = getDatosDefondo_Service->executeAsync(&instance, task, getTimeout());
     
@@ -367,7 +367,7 @@ void TypedefTestProxy::getCadena_async(TypedefTest_getCadena &obj, /*in*/ cadena
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getCadenaRequest instance;
     TypedefTest_getCadenaTask *task = NULL;
-    getCadenaRequestUtils::setTypeData(instance, c1  );
+    getCadenaRequestUtils::setTypeData(instance, c1);
     task = new TypedefTest_getCadenaTask(obj, this);
     retcode = getCadena_Service->executeAsync(&instance, task, getTimeout());
     
@@ -387,7 +387,7 @@ void TypedefTestProxy::getCorrea_async(TypedefTest_getCorrea &obj, /*in*/ correa
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getCorreaRequest instance;
     TypedefTest_getCorreaTask *task = NULL;
-    getCorreaRequestUtils::setTypeData(instance, cc1  );
+    getCorreaRequestUtils::setTypeData(instance, cc1);
     task = new TypedefTest_getCorreaTask(obj, this);
     retcode = getCorrea_Service->executeAsync(&instance, task, getTimeout());
     

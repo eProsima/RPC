@@ -48,14 +48,15 @@ void MultithreadTestServer::test(eProsima::DDSRPC::Server *server, void *request
         
     Dato dato2;
     memset(&dato2, 0, sizeof(Dato));    
-    DDS_Long  returnedValue = 0;       
+    DDS_Long  test_ret = 0;       
     testReply replyData;
+    
 
-    testRequestUtils::extractTypeData(*(testRequest*)requestData, dato1  );
+    testRequestUtils::extractTypeData(*(testRequest*)requestData, dato1);
 
-returnedValue = srv->_impl->test(dato1  , dato2  );
+    test_ret = srv->_impl->test(dato1, dato2);
 
-    testReplyUtils::setTypeData(replyData, dato2  , returnedValue);
+    testReplyUtils::setTypeData(replyData, dato2, test_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);

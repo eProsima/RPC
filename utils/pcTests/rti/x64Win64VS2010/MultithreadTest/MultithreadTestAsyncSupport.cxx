@@ -31,10 +31,10 @@ void MultithreadTest_testTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		testReplyUtils::extractTypeData(m_reply, retcode, dato2  , test_ret  );
+		testReplyUtils::extractTypeData(m_reply, retcode, dato2, test_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().test(dato2  , test_ret  );
+		    getObject().test(dato2, test_ret);
 		else
 		    getObject().error(retcode);
 	}

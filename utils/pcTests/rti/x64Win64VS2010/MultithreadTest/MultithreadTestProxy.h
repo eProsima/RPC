@@ -12,7 +12,7 @@
 class MultithreadTest_test
 {
     public:
-        virtual void test(/*out*/ const Dato& dato2, DDS_Long &test_ret)
+        virtual void test(/*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret)
         {
         }
    

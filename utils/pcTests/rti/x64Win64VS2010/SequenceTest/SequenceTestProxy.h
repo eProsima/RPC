@@ -12,7 +12,7 @@
 class SequenceTest_getSLong
 {
     public:
-        virtual void getSLong(/*inout*/ const largo& l2, /*out*/ const largo& l3, largo &getSLong_ret)
+        virtual void getSLong(/*inout*/ const largo& l2, /*out*/ const largo& l3, /*out*/ const largo& getSLong_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class SequenceTest_getSLong
 class SequenceTest_getString
 {
     public:
-        virtual void getString(/*inout*/ const cadena& s2, /*out*/ const cadena& s3, cadena &getString_ret)
+        virtual void getString(/*inout*/ const cadena& s2, /*out*/ const cadena& s3, /*out*/ const cadena& getString_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class SequenceTest_getString
 class SequenceTest_getStringBounded
 {
     public:
-        virtual void getStringBounded(/*inout*/ const dattos& sb2, /*out*/ const dattos& sb3, dattos &getStringBounded_ret)
+        virtual void getStringBounded(/*inout*/ const dattos& sb2, /*out*/ const dattos& sb3, /*out*/ const dattos& getStringBounded_ret)
         {
         }
    

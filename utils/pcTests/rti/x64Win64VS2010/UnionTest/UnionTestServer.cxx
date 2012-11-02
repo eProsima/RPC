@@ -47,7 +47,7 @@ void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *reques
     Empleado em1;
         
     Empleado em2;
-    memset(&em2, 0, sizeof(Empleado));    
+        
     Empleado em3;
     memset(&em3, 0, sizeof(Empleado));    
     Empleado getEmpleado_ret;
@@ -56,11 +56,11 @@ void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *reques
     
     Empleado_initialize(&em2);    
 
-    getEmpleadoRequestUtils::extractTypeData(*(getEmpleadoRequest*)requestData, em1  , em2  );
+    getEmpleadoRequestUtils::extractTypeData(*(getEmpleadoRequest*)requestData, em1, em2);
 
-    getEmpleado_ret = srv->_impl->getEmpleado(em1  , em2  , em3  );
+    getEmpleado_ret = srv->_impl->getEmpleado(em1, em2, em3);
 
-    getEmpleadoReplyUtils::setTypeData(replyData, em2  , em3  , getEmpleado_ret);
+    getEmpleadoReplyUtils::setTypeData(replyData, em2, em3, getEmpleado_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);

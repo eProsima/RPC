@@ -62,7 +62,7 @@ void testReplyUtils::setTypeData(testReply& instance, /*out*/ const Dato& dato2,
 void testReplyUtils::extractTypeData(testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret)
 {
 retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
-    Dato_finalize(&dato2);dato2 = data.dato2;  
+    dato2 = data.dato2;  
     test_ret = data.test_ret;            
 }
 

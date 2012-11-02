@@ -55,14 +55,16 @@ void EnumYStringTestServer::getEnum(eProsima::DDSRPC::Server *server, void *requ
     Valores  v1 = VALOR1;    
     Valores  v2 = VALOR1;    
     Valores  v3 = VALOR1;    
-    Valores  returnedValue = VALOR1;       
+    Valores  getEnum_ret = VALOR1;       
     getEnumReply replyData;
+    
+        
 
-    getEnumRequestUtils::extractTypeData(*(getEnumRequest*)requestData, v1  , v2  );
+    getEnumRequestUtils::extractTypeData(*(getEnumRequest*)requestData, v1, v2);
 
-returnedValue = srv->_impl->getEnum(v1  , v2  , v3  );
+    getEnum_ret = srv->_impl->getEnum(v1, v2, v3);
 
-    getEnumReplyUtils::setTypeData(replyData, v2  , v3  , returnedValue);
+    getEnumReplyUtils::setTypeData(replyData, v2, v3, getEnum_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
@@ -79,21 +81,23 @@ void EnumYStringTestServer::getString(eProsima::DDSRPC::Server *server, void *re
     char*  s1 = NULL;    
     char*  s2 = NULL;    
     char*  s3 = NULL;    
-    char*  returnedValue = NULL;       
+    char*  getString_ret = NULL;       
     getStringReply replyData;
+    
+        
 
-    getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1  , s2  );
+    getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1, s2);
 
-returnedValue = srv->_impl->getString(s1  , s2  , s3  );
+    getString_ret = srv->_impl->getString(s1, s2, s3);
 
-    getStringReplyUtils::setTypeData(replyData, s2  , s3  , returnedValue);
+    getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getStringRequestTypeSupport::delete_data((getStringRequest*)requestData);
     
-    if(returnedValue != NULL) free(returnedValue);    
+    if(getString_ret != NULL) free(getString_ret);    
     if(s2 != NULL) free(s2);    
     if(s3 != NULL) free(s3);    
 }
@@ -103,21 +107,23 @@ void EnumYStringTestServer::getStringBounded(eProsima::DDSRPC::Server *server, v
     char*  sb1 = NULL;    
     char*  sb2 = NULL;    
     char*  sb3 = NULL;    
-    char*  returnedValue = NULL;       
+    char*  getStringBounded_ret = NULL;       
     getStringBoundedReply replyData;
+    
+        
 
-    getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1  , sb2  );
+    getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1, sb2);
 
-returnedValue = srv->_impl->getStringBounded(sb1  , sb2  , sb3  );
+    getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
-    getStringBoundedReplyUtils::setTypeData(replyData, sb2  , sb3  , returnedValue);
+    getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
 
     // sendReply takes care of deleting the data
     service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
     
     getStringBoundedRequestTypeSupport::delete_data((getStringBoundedRequest*)requestData);
     
-    if(returnedValue != NULL) free(returnedValue);    
+    if(getStringBounded_ret != NULL) free(getStringBounded_ret);    
     if(sb2 != NULL) free(sb2);    
     if(sb3 != NULL) free(sb3);    
 }

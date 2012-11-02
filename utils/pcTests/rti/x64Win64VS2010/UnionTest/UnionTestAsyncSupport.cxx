@@ -34,10 +34,10 @@ void UnionTest_getEmpleadoTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getEmpleadoReplyUtils::extractTypeData(m_reply, retcode, em2  , em3  , getEmpleado_ret  );
+		getEmpleadoReplyUtils::extractTypeData(m_reply, retcode, em2, em3, getEmpleado_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getEmpleado(em2  , em3  , getEmpleado_ret  );
+		    getObject().getEmpleado(em2, em3, getEmpleado_ret);
 		else
 		    getObject().error(retcode);
 	}

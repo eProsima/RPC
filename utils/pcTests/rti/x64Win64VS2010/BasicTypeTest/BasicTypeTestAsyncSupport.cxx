@@ -31,10 +31,10 @@ void BasicTypeTest_getOctetTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getOctetReplyUtils::extractTypeData(m_reply, retcode, oc2  , oc3  , getOctet_ret  );
+		getOctetReplyUtils::extractTypeData(m_reply, retcode, oc2, oc3, getOctet_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getOctet(oc2  , oc3  , getOctet_ret  );
+		    getObject().getOctet(oc2, oc3, getOctet_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -73,10 +73,10 @@ void BasicTypeTest_getCharTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getCharReplyUtils::extractTypeData(m_reply, retcode, ch2  , ch3  , getChar_ret  );
+		getCharReplyUtils::extractTypeData(m_reply, retcode, ch2, ch3, getChar_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getChar(ch2  , ch3  , getChar_ret  );
+		    getObject().getChar(ch2, ch3, getChar_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -115,10 +115,10 @@ void BasicTypeTest_getWCharTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getWCharReplyUtils::extractTypeData(m_reply, retcode, wch2  , wch3  , getWChar_ret  );
+		getWCharReplyUtils::extractTypeData(m_reply, retcode, wch2, wch3, getWChar_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getWChar(wch2  , wch3  , getWChar_ret  );
+		    getObject().getWChar(wch2, wch3, getWChar_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -157,10 +157,10 @@ void BasicTypeTest_getShortTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getShortReplyUtils::extractTypeData(m_reply, retcode, sh2  , sh3  , getShort_ret  );
+		getShortReplyUtils::extractTypeData(m_reply, retcode, sh2, sh3, getShort_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getShort(sh2  , sh3  , getShort_ret  );
+		    getObject().getShort(sh2, sh3, getShort_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -199,10 +199,10 @@ void BasicTypeTest_getUShortTask::execute(eProsima::DDSRPC::ReturnMessage messag
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getUShortReplyUtils::extractTypeData(m_reply, retcode, ush2  , ush3  , getUShort_ret  );
+		getUShortReplyUtils::extractTypeData(m_reply, retcode, ush2, ush3, getUShort_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getUShort(ush2  , ush3  , getUShort_ret  );
+		    getObject().getUShort(ush2, ush3, getUShort_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -241,10 +241,10 @@ void BasicTypeTest_getLongTask::execute(eProsima::DDSRPC::ReturnMessage message)
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getLongReplyUtils::extractTypeData(m_reply, retcode, lo2  , lo3  , getLong_ret  );
+		getLongReplyUtils::extractTypeData(m_reply, retcode, lo2, lo3, getLong_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getLong(lo2  , lo3  , getLong_ret  );
+		    getObject().getLong(lo2, lo3, getLong_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -283,10 +283,10 @@ void BasicTypeTest_getULongTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getULongReplyUtils::extractTypeData(m_reply, retcode, ulo2  , ulo3  , getULong_ret  );
+		getULongReplyUtils::extractTypeData(m_reply, retcode, ulo2, ulo3, getULong_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getULong(ulo2  , ulo3  , getULong_ret  );
+		    getObject().getULong(ulo2, ulo3, getULong_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -325,10 +325,10 @@ void BasicTypeTest_getLLongTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getLLongReplyUtils::extractTypeData(m_reply, retcode, llo2  , llo3  , getLLong_ret  );
+		getLLongReplyUtils::extractTypeData(m_reply, retcode, llo2, llo3, getLLong_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getLLong(llo2  , llo3  , getLLong_ret  );
+		    getObject().getLLong(llo2, llo3, getLLong_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -367,10 +367,10 @@ void BasicTypeTest_getULLongTask::execute(eProsima::DDSRPC::ReturnMessage messag
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getULLongReplyUtils::extractTypeData(m_reply, retcode, ullo2  , ullo3  , getULLong_ret  );
+		getULLongReplyUtils::extractTypeData(m_reply, retcode, ullo2, ullo3, getULLong_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getULLong(ullo2  , ullo3  , getULLong_ret  );
+		    getObject().getULLong(ullo2, ullo3, getULLong_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -409,10 +409,10 @@ void BasicTypeTest_getFloatTask::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getFloatReplyUtils::extractTypeData(m_reply, retcode, fl2  , fl3  , getFloat_ret  );
+		getFloatReplyUtils::extractTypeData(m_reply, retcode, fl2, fl3, getFloat_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getFloat(fl2  , fl3  , getFloat_ret  );
+		    getObject().getFloat(fl2, fl3, getFloat_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -451,10 +451,10 @@ void BasicTypeTest_getDoubleTask::execute(eProsima::DDSRPC::ReturnMessage messag
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getDoubleReplyUtils::extractTypeData(m_reply, retcode, do2  , do3  , getDouble_ret  );
+		getDoubleReplyUtils::extractTypeData(m_reply, retcode, do2, do3, getDouble_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getDouble(do2  , do3  , getDouble_ret  );
+		    getObject().getDouble(do2, do3, getDouble_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -493,10 +493,10 @@ void BasicTypeTest_getBooleanTask::execute(eProsima::DDSRPC::ReturnMessage messa
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getBooleanReplyUtils::extractTypeData(m_reply, retcode, bo2  , bo3  , getBoolean_ret  );
+		getBooleanReplyUtils::extractTypeData(m_reply, retcode, bo2, bo3, getBoolean_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getBoolean(bo2  , bo3  , getBoolean_ret  );
+		    getObject().getBoolean(bo2, bo3, getBoolean_ret);
 		else
 		    getObject().error(retcode);
 	}

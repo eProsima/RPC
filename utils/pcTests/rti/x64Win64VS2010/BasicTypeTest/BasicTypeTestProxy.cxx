@@ -96,18 +96,17 @@ void BasicTypeTestProxy::createRPCs()
 DDS_Octet BasicTypeTestProxy::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Octet returnedValue;
-        
+    DDS_Octet  getOctet_ret = 0;    
     getOctetRequest instance;
     getOctetReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getOctetReply));
-    getOctetRequestUtils::setTypeData(instance, oc1  , oc2  );
+    getOctetReply_initialize(&retInstance);    
+    getOctetRequestUtils::setTypeData(instance, oc1, oc2);
     retcode = getOctet_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getOctetReplyUtils::extractTypeData(retInstance, retcode, oc2  , oc3  , returnedValue); 
+        getOctetReplyUtils::extractTypeData(retInstance, retcode, oc2, oc3, getOctet_ret); 
     }
     
     switch (retcode)
@@ -127,24 +126,23 @@ DDS_Octet BasicTypeTestProxy::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet
     };
     
 
-    return returnedValue;
+    return getOctet_ret;
 }
  
 DDS_Char BasicTypeTestProxy::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Char returnedValue;
-        
+    DDS_Char  getChar_ret = 0;    
     getCharRequest instance;
     getCharReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getCharReply));
-    getCharRequestUtils::setTypeData(instance, ch1  , ch2  );
+    getCharReply_initialize(&retInstance);    
+    getCharRequestUtils::setTypeData(instance, ch1, ch2);
     retcode = getChar_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCharReplyUtils::extractTypeData(retInstance, retcode, ch2  , ch3  , returnedValue); 
+        getCharReplyUtils::extractTypeData(retInstance, retcode, ch2, ch3, getChar_ret); 
     }
     
     switch (retcode)
@@ -164,24 +162,23 @@ DDS_Char BasicTypeTestProxy::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch
     };
     
 
-    return returnedValue;
+    return getChar_ret;
 }
  
 DDS_Wchar BasicTypeTestProxy::getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Wchar returnedValue;
-        
+    DDS_Wchar  getWChar_ret = 0;    
     getWCharRequest instance;
     getWCharReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getWCharReply));
-    getWCharRequestUtils::setTypeData(instance, wch1  , wch2  );
+    getWCharReply_initialize(&retInstance);    
+    getWCharRequestUtils::setTypeData(instance, wch1, wch2);
     retcode = getWChar_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getWCharReplyUtils::extractTypeData(retInstance, retcode, wch2  , wch3  , returnedValue); 
+        getWCharReplyUtils::extractTypeData(retInstance, retcode, wch2, wch3, getWChar_ret); 
     }
     
     switch (retcode)
@@ -201,24 +198,23 @@ DDS_Wchar BasicTypeTestProxy::getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wcha
     };
     
 
-    return returnedValue;
+    return getWChar_ret;
 }
  
 DDS_Short BasicTypeTestProxy::getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Short returnedValue;
-        
+    DDS_Short  getShort_ret = 0;    
     getShortRequest instance;
     getShortReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getShortReply));
-    getShortRequestUtils::setTypeData(instance, sh1  , sh2  );
+    getShortReply_initialize(&retInstance);    
+    getShortRequestUtils::setTypeData(instance, sh1, sh2);
     retcode = getShort_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getShortReplyUtils::extractTypeData(retInstance, retcode, sh2  , sh3  , returnedValue); 
+        getShortReplyUtils::extractTypeData(retInstance, retcode, sh2, sh3, getShort_ret); 
     }
     
     switch (retcode)
@@ -238,24 +234,23 @@ DDS_Short BasicTypeTestProxy::getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short
     };
     
 
-    return returnedValue;
+    return getShort_ret;
 }
  
 DDS_UnsignedShort BasicTypeTestProxy::getUShort(/*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_UnsignedShort returnedValue;
-        
+    DDS_UnsignedShort  getUShort_ret = 0;    
     getUShortRequest instance;
     getUShortReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getUShortReply));
-    getUShortRequestUtils::setTypeData(instance, ush1  , ush2  );
+    getUShortReply_initialize(&retInstance);    
+    getUShortRequestUtils::setTypeData(instance, ush1, ush2);
     retcode = getUShort_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getUShortReplyUtils::extractTypeData(retInstance, retcode, ush2  , ush3  , returnedValue); 
+        getUShortReplyUtils::extractTypeData(retInstance, retcode, ush2, ush3, getUShort_ret); 
     }
     
     switch (retcode)
@@ -275,24 +270,23 @@ DDS_UnsignedShort BasicTypeTestProxy::getUShort(/*in*/ DDS_UnsignedShort ush1, /
     };
     
 
-    return returnedValue;
+    return getUShort_ret;
 }
  
 DDS_Long BasicTypeTestProxy::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Long returnedValue;
-        
+    DDS_Long  getLong_ret = 0;    
     getLongRequest instance;
     getLongReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getLongReply));
-    getLongRequestUtils::setTypeData(instance, lo1  , lo2  );
+    getLongReply_initialize(&retInstance);    
+    getLongRequestUtils::setTypeData(instance, lo1, lo2);
     retcode = getLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLongReplyUtils::extractTypeData(retInstance, retcode, lo2  , lo3  , returnedValue); 
+        getLongReplyUtils::extractTypeData(retInstance, retcode, lo2, lo3, getLong_ret); 
     }
     
     switch (retcode)
@@ -312,24 +306,23 @@ DDS_Long BasicTypeTestProxy::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo
     };
     
 
-    return returnedValue;
+    return getLong_ret;
 }
  
 DDS_UnsignedLong BasicTypeTestProxy::getULong(/*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_UnsignedLong returnedValue;
-        
+    DDS_UnsignedLong  getULong_ret = 0;    
     getULongRequest instance;
     getULongReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getULongReply));
-    getULongRequestUtils::setTypeData(instance, ulo1  , ulo2  );
+    getULongReply_initialize(&retInstance);    
+    getULongRequestUtils::setTypeData(instance, ulo1, ulo2);
     retcode = getULong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getULongReplyUtils::extractTypeData(retInstance, retcode, ulo2  , ulo3  , returnedValue); 
+        getULongReplyUtils::extractTypeData(retInstance, retcode, ulo2, ulo3, getULong_ret); 
     }
     
     switch (retcode)
@@ -349,24 +342,23 @@ DDS_UnsignedLong BasicTypeTestProxy::getULong(/*in*/ DDS_UnsignedLong ulo1, /*in
     };
     
 
-    return returnedValue;
+    return getULong_ret;
 }
  
 DDS_LongLong BasicTypeTestProxy::getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_LongLong returnedValue;
-        
+    DDS_LongLong  getLLong_ret = 0;    
     getLLongRequest instance;
     getLLongReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getLLongReply));
-    getLLongRequestUtils::setTypeData(instance, llo1  , llo2  );
+    getLLongReply_initialize(&retInstance);    
+    getLLongRequestUtils::setTypeData(instance, llo1, llo2);
     retcode = getLLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLLongReplyUtils::extractTypeData(retInstance, retcode, llo2  , llo3  , returnedValue); 
+        getLLongReplyUtils::extractTypeData(retInstance, retcode, llo2, llo3, getLLong_ret); 
     }
     
     switch (retcode)
@@ -386,24 +378,23 @@ DDS_LongLong BasicTypeTestProxy::getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DD
     };
     
 
-    return returnedValue;
+    return getLLong_ret;
 }
  
 DDS_UnsignedLongLong BasicTypeTestProxy::getULLong(/*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_UnsignedLongLong returnedValue;
-        
+    DDS_UnsignedLongLong  getULLong_ret = 0;    
     getULLongRequest instance;
     getULLongReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getULLongReply));
-    getULLongRequestUtils::setTypeData(instance, ullo1  , ullo2  );
+    getULLongReply_initialize(&retInstance);    
+    getULLongRequestUtils::setTypeData(instance, ullo1, ullo2);
     retcode = getULLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getULLongReplyUtils::extractTypeData(retInstance, retcode, ullo2  , ullo3  , returnedValue); 
+        getULLongReplyUtils::extractTypeData(retInstance, retcode, ullo2, ullo3, getULLong_ret); 
     }
     
     switch (retcode)
@@ -423,24 +414,23 @@ DDS_UnsignedLongLong BasicTypeTestProxy::getULLong(/*in*/ DDS_UnsignedLongLong u
     };
     
 
-    return returnedValue;
+    return getULLong_ret;
 }
  
 DDS_Float BasicTypeTestProxy::getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Float returnedValue;
-        
+    DDS_Float  getFloat_ret = 0;    
     getFloatRequest instance;
     getFloatReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getFloatReply));
-    getFloatRequestUtils::setTypeData(instance, fl1  , fl2  );
+    getFloatReply_initialize(&retInstance);    
+    getFloatRequestUtils::setTypeData(instance, fl1, fl2);
     retcode = getFloat_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getFloatReplyUtils::extractTypeData(retInstance, retcode, fl2  , fl3  , returnedValue); 
+        getFloatReplyUtils::extractTypeData(retInstance, retcode, fl2, fl3, getFloat_ret); 
     }
     
     switch (retcode)
@@ -460,24 +450,23 @@ DDS_Float BasicTypeTestProxy::getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float
     };
     
 
-    return returnedValue;
+    return getFloat_ret;
 }
  
 DDS_Double BasicTypeTestProxy::getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Double returnedValue;
-        
+    DDS_Double  getDouble_ret = 0;    
     getDoubleRequest instance;
     getDoubleReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getDoubleReply));
-    getDoubleRequestUtils::setTypeData(instance, do1  , do2  );
+    getDoubleReply_initialize(&retInstance);    
+    getDoubleRequestUtils::setTypeData(instance, do1, do2);
     retcode = getDouble_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDoubleReplyUtils::extractTypeData(retInstance, retcode, do2  , do3  , returnedValue); 
+        getDoubleReplyUtils::extractTypeData(retInstance, retcode, do2, do3, getDouble_ret); 
     }
     
     switch (retcode)
@@ -497,24 +486,23 @@ DDS_Double BasicTypeTestProxy::getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Do
     };
     
 
-    return returnedValue;
+    return getDouble_ret;
 }
  
 DDS_Boolean BasicTypeTestProxy::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3) 
 {
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    DDS_Boolean returnedValue;
-        
+    DDS_Boolean  getBoolean_ret = RTI_FALSE;    
     getBooleanRequest instance;
     getBooleanReply retInstance;
 
-    memset(&retInstance, 0, sizeof(getBooleanReply));
-    getBooleanRequestUtils::setTypeData(instance, bo1  , bo2  );
+    getBooleanReply_initialize(&retInstance);    
+    getBooleanRequestUtils::setTypeData(instance, bo1, bo2);
     retcode = getBoolean_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getBooleanReplyUtils::extractTypeData(retInstance, retcode, bo2  , bo3  , returnedValue); 
+        getBooleanReplyUtils::extractTypeData(retInstance, retcode, bo2, bo3, getBoolean_ret); 
     }
     
     switch (retcode)
@@ -534,7 +522,7 @@ DDS_Boolean BasicTypeTestProxy::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS
     };
     
 
-    return returnedValue;
+    return getBoolean_ret;
 }
 
  
@@ -543,7 +531,7 @@ void BasicTypeTestProxy::getOctet_async(BasicTypeTest_getOctet &obj, /*in*/ DDS_
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getOctetRequest instance;
     BasicTypeTest_getOctetTask *task = NULL;
-    getOctetRequestUtils::setTypeData(instance, oc1  , oc2  );
+    getOctetRequestUtils::setTypeData(instance, oc1, oc2);
     task = new BasicTypeTest_getOctetTask(obj, this);
     retcode = getOctet_Service->executeAsync(&instance, task, getTimeout());
     
@@ -563,7 +551,7 @@ void BasicTypeTestProxy::getChar_async(BasicTypeTest_getChar &obj, /*in*/ DDS_Ch
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getCharRequest instance;
     BasicTypeTest_getCharTask *task = NULL;
-    getCharRequestUtils::setTypeData(instance, ch1  , ch2  );
+    getCharRequestUtils::setTypeData(instance, ch1, ch2);
     task = new BasicTypeTest_getCharTask(obj, this);
     retcode = getChar_Service->executeAsync(&instance, task, getTimeout());
     
@@ -583,7 +571,7 @@ void BasicTypeTestProxy::getWChar_async(BasicTypeTest_getWChar &obj, /*in*/ DDS_
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getWCharRequest instance;
     BasicTypeTest_getWCharTask *task = NULL;
-    getWCharRequestUtils::setTypeData(instance, wch1  , wch2  );
+    getWCharRequestUtils::setTypeData(instance, wch1, wch2);
     task = new BasicTypeTest_getWCharTask(obj, this);
     retcode = getWChar_Service->executeAsync(&instance, task, getTimeout());
     
@@ -603,7 +591,7 @@ void BasicTypeTestProxy::getShort_async(BasicTypeTest_getShort &obj, /*in*/ DDS_
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getShortRequest instance;
     BasicTypeTest_getShortTask *task = NULL;
-    getShortRequestUtils::setTypeData(instance, sh1  , sh2  );
+    getShortRequestUtils::setTypeData(instance, sh1, sh2);
     task = new BasicTypeTest_getShortTask(obj, this);
     retcode = getShort_Service->executeAsync(&instance, task, getTimeout());
     
@@ -623,7 +611,7 @@ void BasicTypeTestProxy::getUShort_async(BasicTypeTest_getUShort &obj, /*in*/ DD
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getUShortRequest instance;
     BasicTypeTest_getUShortTask *task = NULL;
-    getUShortRequestUtils::setTypeData(instance, ush1  , ush2  );
+    getUShortRequestUtils::setTypeData(instance, ush1, ush2);
     task = new BasicTypeTest_getUShortTask(obj, this);
     retcode = getUShort_Service->executeAsync(&instance, task, getTimeout());
     
@@ -643,7 +631,7 @@ void BasicTypeTestProxy::getLong_async(BasicTypeTest_getLong &obj, /*in*/ DDS_Lo
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getLongRequest instance;
     BasicTypeTest_getLongTask *task = NULL;
-    getLongRequestUtils::setTypeData(instance, lo1  , lo2  );
+    getLongRequestUtils::setTypeData(instance, lo1, lo2);
     task = new BasicTypeTest_getLongTask(obj, this);
     retcode = getLong_Service->executeAsync(&instance, task, getTimeout());
     
@@ -663,7 +651,7 @@ void BasicTypeTestProxy::getULong_async(BasicTypeTest_getULong &obj, /*in*/ DDS_
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getULongRequest instance;
     BasicTypeTest_getULongTask *task = NULL;
-    getULongRequestUtils::setTypeData(instance, ulo1  , ulo2  );
+    getULongRequestUtils::setTypeData(instance, ulo1, ulo2);
     task = new BasicTypeTest_getULongTask(obj, this);
     retcode = getULong_Service->executeAsync(&instance, task, getTimeout());
     
@@ -683,7 +671,7 @@ void BasicTypeTestProxy::getLLong_async(BasicTypeTest_getLLong &obj, /*in*/ DDS_
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getLLongRequest instance;
     BasicTypeTest_getLLongTask *task = NULL;
-    getLLongRequestUtils::setTypeData(instance, llo1  , llo2  );
+    getLLongRequestUtils::setTypeData(instance, llo1, llo2);
     task = new BasicTypeTest_getLLongTask(obj, this);
     retcode = getLLong_Service->executeAsync(&instance, task, getTimeout());
     
@@ -703,7 +691,7 @@ void BasicTypeTestProxy::getULLong_async(BasicTypeTest_getULLong &obj, /*in*/ DD
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getULLongRequest instance;
     BasicTypeTest_getULLongTask *task = NULL;
-    getULLongRequestUtils::setTypeData(instance, ullo1  , ullo2  );
+    getULLongRequestUtils::setTypeData(instance, ullo1, ullo2);
     task = new BasicTypeTest_getULLongTask(obj, this);
     retcode = getULLong_Service->executeAsync(&instance, task, getTimeout());
     
@@ -723,7 +711,7 @@ void BasicTypeTestProxy::getFloat_async(BasicTypeTest_getFloat &obj, /*in*/ DDS_
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getFloatRequest instance;
     BasicTypeTest_getFloatTask *task = NULL;
-    getFloatRequestUtils::setTypeData(instance, fl1  , fl2  );
+    getFloatRequestUtils::setTypeData(instance, fl1, fl2);
     task = new BasicTypeTest_getFloatTask(obj, this);
     retcode = getFloat_Service->executeAsync(&instance, task, getTimeout());
     
@@ -743,7 +731,7 @@ void BasicTypeTestProxy::getDouble_async(BasicTypeTest_getDouble &obj, /*in*/ DD
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getDoubleRequest instance;
     BasicTypeTest_getDoubleTask *task = NULL;
-    getDoubleRequestUtils::setTypeData(instance, do1  , do2  );
+    getDoubleRequestUtils::setTypeData(instance, do1, do2);
     task = new BasicTypeTest_getDoubleTask(obj, this);
     retcode = getDouble_Service->executeAsync(&instance, task, getTimeout());
     
@@ -763,7 +751,7 @@ void BasicTypeTestProxy::getBoolean_async(BasicTypeTest_getBoolean &obj, /*in*/ 
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getBooleanRequest instance;
     BasicTypeTest_getBooleanTask *task = NULL;
-    getBooleanRequestUtils::setTypeData(instance, bo1  , bo2  );
+    getBooleanRequestUtils::setTypeData(instance, bo1, bo2);
     task = new BasicTypeTest_getBooleanTask(obj, this);
     retcode = getBoolean_Service->executeAsync(&instance, task, getTimeout());
     

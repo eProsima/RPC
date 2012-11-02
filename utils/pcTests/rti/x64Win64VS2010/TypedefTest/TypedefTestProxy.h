@@ -12,7 +12,7 @@
 class TypedefTest_getLargo
 {
     public:
-        virtual void getLargo(/*out*/ largo l2, largo &getLargo_ret)
+        virtual void getLargo(/*out*/ largo l2, /*out*/ largo getLargo_ret)
         {
         }
    
@@ -23,7 +23,7 @@ class TypedefTest_getLargo
 class TypedefTest_getLarguisimo
 {
     public:
-        virtual void getLarguisimo(/*out*/ larguisimo ll2, larguisimo &getLarguisimo_ret)
+        virtual void getLarguisimo(/*out*/ larguisimo ll2, /*out*/ larguisimo getLarguisimo_ret)
         {
         }
    
@@ -34,7 +34,7 @@ class TypedefTest_getLarguisimo
 class TypedefTest_getDatosDef
 {
     public:
-        virtual void getDatosDef(/*out*/ const DatosDef& d2, DatosDef &getDatosDef_ret)
+        virtual void getDatosDef(/*out*/ const DatosDef& d2, /*out*/ const DatosDef& getDatosDef_ret)
         {
         }
    
@@ -45,7 +45,7 @@ class TypedefTest_getDatosDef
 class TypedefTest_getDatosDefondo
 {
     public:
-        virtual void getDatosDefondo(/*out*/ const DatosDefondo& dd2, DatosDefondo &getDatosDefondo_ret)
+        virtual void getDatosDefondo(/*out*/ const DatosDefondo& dd2, /*out*/ const DatosDefondo& getDatosDefondo_ret)
         {
         }
    
@@ -56,7 +56,7 @@ class TypedefTest_getDatosDefondo
 class TypedefTest_getCadena
 {
     public:
-        virtual void getCadena(/*out*/ cadena c2, cadena &getCadena_ret)
+        virtual void getCadena(/*out*/ cadena c2, /*out*/ cadena getCadena_ret)
         {
         }
    
@@ -67,7 +67,7 @@ class TypedefTest_getCadena
 class TypedefTest_getCorrea
 {
     public:
-        virtual void getCorrea(/*out*/ correa cc2, correa &getCorrea_ret)
+        virtual void getCorrea(/*out*/ correa cc2, /*out*/ correa getCorrea_ret)
         {
         }
    

@@ -132,10 +132,8 @@ void getStringReplyUtils::extractTypeData(getStringReply& data, eProsima::DDSRPC
 retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
     if(s2 != NULL)
     	free(s2);s2 = data.s2;
-    if(s3 != NULL)
-    	free(s3);s3 = data.s3;  
-    if(getString_ret != NULL)
-    	free(getString_ret);getString_ret = data.getString_ret;            
+    s3 = data.s3;  
+    getString_ret = data.getString_ret;            
 }
 
 
@@ -200,10 +198,8 @@ void getStringBoundedReplyUtils::extractTypeData(getStringBoundedReply& data, eP
 retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
     if(sb2 != NULL)
     	free(sb2);sb2 = data.sb2;
-    if(sb3 != NULL)
-    	free(sb3);sb3 = data.sb3;  
-    if(getStringBounded_ret != NULL)
-    	free(getStringBounded_ret);getStringBounded_ret = data.getStringBounded_ret;            
+    sb3 = data.sb3;  
+    getStringBounded_ret = data.getStringBounded_ret;            
 }
 
  

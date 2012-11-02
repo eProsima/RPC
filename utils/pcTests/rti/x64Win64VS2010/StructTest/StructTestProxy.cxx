@@ -52,7 +52,7 @@ Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev)
     duplicateReply retInstance;
 
     duplicateReply_initialize(&retInstance);    
-    duplicateRequestUtils::setTypeData(instance, ev  );
+    duplicateRequestUtils::setTypeData(instance, ev);
     retcode = duplicate_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
@@ -89,7 +89,7 @@ Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2
     sumaReply retInstance;
 
     sumaReply_initialize(&retInstance);    
-    sumaRequestUtils::setTypeData(instance, ev1  , ev2  );
+    sumaRequestUtils::setTypeData(instance, ev1, ev2);
     retcode = suma_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
@@ -123,7 +123,7 @@ void StructTestProxy::duplicate_async(StructTest_duplicate &obj, /*in*/ const En
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     duplicateRequest instance;
     StructTest_duplicateTask *task = NULL;
-    duplicateRequestUtils::setTypeData(instance, ev  );
+    duplicateRequestUtils::setTypeData(instance, ev);
     task = new StructTest_duplicateTask(obj, this);
     retcode = duplicate_Service->executeAsync(&instance, task, getTimeout());
     
@@ -143,7 +143,7 @@ void StructTestProxy::suma_async(StructTest_suma &obj, /*in*/ const Envio& ev1, 
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     sumaRequest instance;
     StructTest_sumaTask *task = NULL;
-    sumaRequestUtils::setTypeData(instance, ev1  , ev2  );
+    sumaRequestUtils::setTypeData(instance, ev1, ev2);
     task = new StructTest_sumaTask(obj, this);
     retcode = suma_Service->executeAsync(&instance, task, getTimeout());
     

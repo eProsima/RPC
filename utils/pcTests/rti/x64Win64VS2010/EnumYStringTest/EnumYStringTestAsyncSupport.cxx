@@ -31,10 +31,10 @@ void EnumYStringTest_getEnumTask::execute(eProsima::DDSRPC::ReturnMessage messag
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getEnumReplyUtils::extractTypeData(m_reply, retcode, v2  , v3  , getEnum_ret  );
+		getEnumReplyUtils::extractTypeData(m_reply, retcode, v2, v3, getEnum_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getEnum(v2  , v3  , getEnum_ret  );
+		    getObject().getEnum(v2, v3, getEnum_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -73,10 +73,10 @@ void EnumYStringTest_getStringTask::execute(eProsima::DDSRPC::ReturnMessage mess
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getStringReplyUtils::extractTypeData(m_reply, retcode, s2  , s3  , getString_ret  );
+		getStringReplyUtils::extractTypeData(m_reply, retcode, s2, s3, getString_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getString(s2  , s3  , getString_ret  );
+		    getObject().getString(s2, s3, getString_ret);
 		else
 		    getObject().error(retcode);
 	}
@@ -115,10 +115,10 @@ void EnumYStringTest_getStringBoundedTask::execute(eProsima::DDSRPC::ReturnMessa
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2  , sb3  , getStringBounded_ret  );
+		getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2, sb3, getStringBounded_ret);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getStringBounded(sb2  , sb3  , getStringBounded_ret  );
+		    getObject().getStringBounded(sb2, sb3, getStringBounded_ret);
 		else
 		    getObject().error(retcode);
 	}

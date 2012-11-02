@@ -57,12 +57,12 @@ largo SequenceTestProxy::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /
     getSLongReply retInstance;
 
     getSLongReply_initialize(&retInstance);    
-    getSLongRequestUtils::setTypeData(instance, l1  , l2  );
+    getSLongRequestUtils::setTypeData(instance, l1, l2);
     retcode = getSLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getSLongReplyUtils::extractTypeData(retInstance, retcode, l2  , l3  , getSLong_ret); 
+        getSLongReplyUtils::extractTypeData(retInstance, retcode, l2, l3, getSLong_ret); 
     }
     
     switch (retcode)
@@ -94,12 +94,12 @@ cadena SequenceTestProxy::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s
     getStringReply retInstance;
 
     getStringReply_initialize(&retInstance);    
-    getStringRequestUtils::setTypeData(instance, s1  , s2  );
+    getStringRequestUtils::setTypeData(instance, s1, s2);
     retcode = getString_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringReplyUtils::extractTypeData(retInstance, retcode, s2  , s3  , getString_ret); 
+        getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret); 
     }
     
     switch (retcode)
@@ -131,12 +131,12 @@ dattos SequenceTestProxy::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ d
     getStringBoundedReply retInstance;
 
     getStringBoundedReply_initialize(&retInstance);    
-    getStringBoundedRequestUtils::setTypeData(instance, sb1  , sb2  );
+    getStringBoundedRequestUtils::setTypeData(instance, sb1, sb2);
     retcode = getStringBounded_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2  , sb3  , getStringBounded_ret); 
+        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret); 
     }
     
     switch (retcode)
@@ -165,7 +165,7 @@ void SequenceTestProxy::getSLong_async(SequenceTest_getSLong &obj, /*in*/ const 
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getSLongRequest instance;
     SequenceTest_getSLongTask *task = NULL;
-    getSLongRequestUtils::setTypeData(instance, l1  , l2  );
+    getSLongRequestUtils::setTypeData(instance, l1, l2);
     task = new SequenceTest_getSLongTask(obj, this);
     retcode = getSLong_Service->executeAsync(&instance, task, getTimeout());
     
@@ -185,7 +185,7 @@ void SequenceTestProxy::getString_async(SequenceTest_getString &obj, /*in*/ cons
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getStringRequest instance;
     SequenceTest_getStringTask *task = NULL;
-    getStringRequestUtils::setTypeData(instance, s1  , s2  );
+    getStringRequestUtils::setTypeData(instance, s1, s2);
     task = new SequenceTest_getStringTask(obj, this);
     retcode = getString_Service->executeAsync(&instance, task, getTimeout());
     
@@ -205,7 +205,7 @@ void SequenceTestProxy::getStringBounded_async(SequenceTest_getStringBounded &ob
 	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
     getStringBoundedRequest instance;
     SequenceTest_getStringBoundedTask *task = NULL;
-    getStringBoundedRequestUtils::setTypeData(instance, sb1  , sb2  );
+    getStringBoundedRequestUtils::setTypeData(instance, sb1, sb2);
     task = new SequenceTest_getStringBoundedTask(obj, this);
     retcode = getStringBounded_Service->executeAsync(&instance, task, getTimeout());
     
