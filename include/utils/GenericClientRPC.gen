@@ -100,7 +100,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 	    
 		if(retcode == DDS::RETCODE_OK)
 		{
-		    if(dataSeq.length() == 1)
+		    if(dataSeq.length() > 0)
 		    {
 				if (infoSeq[0].valid_data)
 				{
@@ -114,7 +114,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 		    }
 		    else
 		    {
-				printf("ERROR<%s::%s>: Sequence of replies is not supported.\n", CLASS_NAME, METHOD_NAME);
+				printf("ERROR<%s::%s>: Empty returned data.\n", CLASS_NAME, METHOD_NAME);
 		    }
 		    
 		    retcode = replyDataReader->return_loan(dataSeq, infoSeq);
