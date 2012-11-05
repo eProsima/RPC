@@ -98,6 +98,9 @@ int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessag
 	{
 		printf("ERROR<sendReply>: Bad parameter (requestData)\n");
 	}
+
+	if(reply == NULL)
+	    TDataReplyTypeSupport::delete_data(replyData);
 #endif
 	return returnedValue;
 }

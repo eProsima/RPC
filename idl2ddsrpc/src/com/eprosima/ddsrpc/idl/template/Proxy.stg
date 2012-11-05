@@ -144,7 +144,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
         $if(!isOneway)$
-        $name$ReplyUtils::extractTypeData(retInstance, retcode$if([outParams, rettype])$, $endif$$extractParams([outParams, rettype])$); 
+        $name$ReplyUtils::extractTypeData(retInstance, retcode$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $extractParams(rettype)$$endif$);  
         $endif$
     }
     
@@ -265,8 +265,14 @@ functionCall(rettype,name,params) ::= <<
     $params:{$varComplexInitialize(typeName=it.typeName, name=it.name)$};separator="\n"$
     $varComplexInitialize(typeName=rettype.typeName, name=rettype.name)$
 
-    $if(!voidInitMap.(rettype.typeName))$
-    $rettype.name$ = $endif$proxy->$name$($extractParams(params)$);
+    try
+    {
+        $if(!voidInitMap.(rettype.typeName))$
+        $rettype.name$ = $endif$proxy->$name$($extractParams(params)$);
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+    }
     
     $params:{$varDel(typeName=it.typeName, baseType=it.baseType, name=it.name)$}; separator="\n"$
     $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
@@ -288,6 +294,7 @@ main(interfaceName, invocations) ::= <<
 
 #include "$interfaceName$Proxy.h"
 $ReqRepIncludes(interfaceName=interfaceName)$
+#include "exceptions/Exceptions.h"
 
 int main(int argc, char **argv)
 {
