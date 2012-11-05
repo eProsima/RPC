@@ -1,0 +1,12 @@
+struct Estructura
+{
+	long count;
+	string message;
+};
+
+interface ServerException
+{
+   void sendException();
+   string sendExceptionTwo(in string message, inout string message2, out string message3);
+   Estructura sendExceptionThree(in Estructura es, inout Estructura es2, out Estructura es3);
+};
