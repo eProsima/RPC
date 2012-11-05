@@ -1,0 +1,50 @@
+CPP_x64Linux2.6gcc4.5.1 = g++
+CXXFLAGS_x64Linux2.6gcc4.5.1 = -m64 -std=c++11
+LD_x64Linux2.6gcc4.5.1 = g++
+LDFLAGS_x64Linux2.6gcc4.5.1 = -m64
+SYSLIBS_x64Linux2.6gcc4.5.1 = -ldl -lnsl -lm -lpthread -lrt
+DEFINES_ARCH_SPECIFIC =  -DRTI_UNIX -DRTI_LINUX
+
+DEFINES = $(DEFINES_ARCH_SPECIFIC)  
+
+INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../../include -I../../../../../include/idl/rti
+
+LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gcc4.5.1 \
+       -lnddsc -lnddscore -lnddscpp -lddsrpc $(SYSLIBS_x64Linux2.6gcc4.5.1)
+
+COMMONCXXSOURCES = StructTestRequestReply.cxx StructTest.cxx StructTestRequestReplyPlugin.cxx \
+                StructTestPlugin.cxx StructTestRequestReplySupport.cxx StructTestSupport.cxx \
+                StructTestRequestReplyUtils.cxx
+COMMONCPPSOURCES =
+
+CLIENTSOURCES = StructTestProxy.cxx StructTestClientRPCSupport.cxx StructTestAsyncSupport.cxx Client.cxx 
+SERVERSOURCES = StructTestServer.cxx StructTestServerImpl.cxx StructTestServerRPCSupport.cxx Server.cxx 
+DIRECTORIES   = objs.dir objs/x64Linux2.6gcc4.5.1.dir
+COMMONOBJS    = $(COMMONCXXSOURCES:%.cxx=objs/x64Linux2.6gcc4.5.1/%.o) $(COMMONCPPSOURCES:%.cpp=objs/x64Linux2.6gcc4.5.1/%.o)
+CLIENTOBJS    = $(CLIENTSOURCES:%.cxx=objs/x64Linux2.6gcc4.5.1/%.o)
+SERVEROBJS    = $(SERVERSOURCES:%.cxx=objs/x64Linux2.6gcc4.5.1/%.o)
+CLIENTEXEC    = objs/x64Linux2.6gcc4.5.1/StructTestClient
+SERVEREXEC    = objs/x64Linux2.6gcc4.5.1/StructTestServer
+
+client: $(DIRECTORIES) $(COMMONOBJS) $(CLIENTOBJS) $(CLIENTEXEC)
+server: $(DIRECTORIES) $(COMMONOBJS) $(SERVEROBJS) $(SERVEREXEC)
+
+$(CLIENTEXEC) : 
+	$(LD_x64Linux2.6gcc4.5.1) $(LDFLAGS_x64Linux2.6gcc4.5.1)  -o $(@:%.out=%) $(COMMONOBJS) $(CLIENTOBJS) $(LIBS)
+
+$(SERVEREXEC) : 
+	$(LD_x64Linux2.6gcc4.5.1) $(LDFLAGS_x64Linux2.6gcc4.5.1)  -o $(@:%.out=%) $(COMMONOBJS) $(SERVEROBJS) $(LIBS)
+
+objs/x64Linux2.6gcc4.5.1/%.o : %.cxx
+	$(CPP_x64Linux2.6gcc4.5.1) $(CXXFLAGS_x64Linux2.6gcc4.5.1)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+	
+objs/x64Linux2.6gcc4.5.1/%.o : %.cpp
+	$(CPP_x64Linux2.6gcc4.5.1) $(CXXFLAGS_x64Linux2.6gcc4.5.1)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+
+# Here is how we create those subdirectories automatically.
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;
