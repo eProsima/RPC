@@ -61,7 +61,7 @@ Valores EnumYStringTestProxy::getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, 
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getEnumReplyUtils::extractTypeData(retInstance, retcode, v2, v3, getEnum_ret); 
+        getEnumReplyUtils::extractTypeData(retInstance, retcode, v2, v3, getEnum_ret);  
     }
     
     switch (retcode)
@@ -97,7 +97,7 @@ char* EnumYStringTestProxy::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*ou
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret); 
+        getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret);  
     }
     
     switch (retcode)
@@ -133,7 +133,7 @@ char* EnumYStringTestProxy::getStringBounded(/*in*/ char* sb1, /*inout*/ char*& 
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret); 
+        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret);  
     }
     
     switch (retcode)

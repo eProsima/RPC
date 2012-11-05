@@ -57,7 +57,7 @@ Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev)
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        duplicateReplyUtils::extractTypeData(retInstance, retcode, duplicate_ret); 
+        duplicateReplyUtils::extractTypeData(retInstance, retcode, duplicate_ret);  
     }
     
     switch (retcode)
@@ -94,7 +94,7 @@ Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        sumaReplyUtils::extractTypeData(retInstance, retcode, suma_ret); 
+        sumaReplyUtils::extractTypeData(retInstance, retcode, suma_ret);  
     }
     
     switch (retcode)

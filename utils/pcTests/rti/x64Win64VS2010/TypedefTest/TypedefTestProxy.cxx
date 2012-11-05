@@ -76,7 +76,7 @@ largo TypedefTestProxy::getLargo(/*in*/ largo l1, /*out*/ largo& l2)
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLargoReplyUtils::extractTypeData(retInstance, retcode, l2, getLargo_ret); 
+        getLargoReplyUtils::extractTypeData(retInstance, retcode, l2, getLargo_ret);  
     }
     
     switch (retcode)
@@ -112,7 +112,7 @@ larguisimo TypedefTestProxy::getLarguisimo(/*in*/ larguisimo ll1, /*out*/ largui
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLarguisimoReplyUtils::extractTypeData(retInstance, retcode, ll2, getLarguisimo_ret); 
+        getLarguisimoReplyUtils::extractTypeData(retInstance, retcode, ll2, getLarguisimo_ret);  
     }
     
     switch (retcode)
@@ -149,7 +149,7 @@ DatosDef TypedefTestProxy::getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosD
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDatosDefReplyUtils::extractTypeData(retInstance, retcode, d2, getDatosDef_ret); 
+        getDatosDefReplyUtils::extractTypeData(retInstance, retcode, d2, getDatosDef_ret);  
     }
     
     switch (retcode)
@@ -186,7 +186,7 @@ DatosDefondo TypedefTestProxy::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDatosDefondoReplyUtils::extractTypeData(retInstance, retcode, dd2, getDatosDefondo_ret); 
+        getDatosDefondoReplyUtils::extractTypeData(retInstance, retcode, dd2, getDatosDefondo_ret);  
     }
     
     switch (retcode)
@@ -222,7 +222,7 @@ cadena TypedefTestProxy::getCadena(/*in*/ cadena c1, /*out*/ cadena& c2)
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCadenaReplyUtils::extractTypeData(retInstance, retcode, c2, getCadena_ret); 
+        getCadenaReplyUtils::extractTypeData(retInstance, retcode, c2, getCadena_ret);  
     }
     
     switch (retcode)
@@ -258,7 +258,7 @@ correa TypedefTestProxy::getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2)
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCorreaReplyUtils::extractTypeData(retInstance, retcode, cc2, getCorrea_ret); 
+        getCorreaReplyUtils::extractTypeData(retInstance, retcode, cc2, getCorrea_ret);  
     }
     
     switch (retcode)

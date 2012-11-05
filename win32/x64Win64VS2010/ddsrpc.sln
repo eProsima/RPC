@@ -3,47 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ddsrpc", "ddsrpc.vcxproj", "{F7D9B1F2-168C-422E-8680-D9C86C394CEE}"
 EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "ddsrpcSetup", "ddsrpcSetup.isproj", "{2CE5030B-C030-4F18-9DC2-4C8481442EF4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		CD_ROM|x64 = CD_ROM|x64
 		Debug|x64 = Debug|x64
 		DebugDLL|x64 = DebugDLL|x64
-		DVD-5|x64 = DVD-5|x64
 		Release|x64 = Release|x64
 		ReleaseDLL|x64 = ReleaseDLL|x64
-		SingleImage|x64 = SingleImage|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.CD_ROM|x64.ActiveCfg = Release|x64
-		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.CD_ROM|x64.Build.0 = Release|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.Debug|x64.ActiveCfg = Debug|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.Debug|x64.Build.0 = Debug|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.DebugDLL|x64.ActiveCfg = DebugDLL|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.DebugDLL|x64.Build.0 = DebugDLL|x64
-		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.DVD-5|x64.ActiveCfg = Debug|x64
-		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.DVD-5|x64.Build.0 = Debug|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.Release|x64.ActiveCfg = Release|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.Release|x64.Build.0 = Release|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.ReleaseDLL|x64.ActiveCfg = ReleaseDLL|x64
 		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.ReleaseDLL|x64.Build.0 = ReleaseDLL|x64
-		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.SingleImage|x64.ActiveCfg = Release|x64
-		{F7D9B1F2-168C-422E-8680-D9C86C394CEE}.SingleImage|x64.Build.0 = Release|x64
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.CD_ROM|x64.ActiveCfg = CD_ROM
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.CD_ROM|x64.Build.0 = CD_ROM
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.Debug|x64.ActiveCfg = DVD-5
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.Debug|x64.Build.0 = DVD-5
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.DebugDLL|x64.ActiveCfg = DVD-5
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.DebugDLL|x64.Build.0 = DVD-5
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.DVD-5|x64.ActiveCfg = DVD-5
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.DVD-5|x64.Build.0 = DVD-5
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.Release|x64.ActiveCfg = SingleImage
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.Release|x64.Build.0 = SingleImage
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.ReleaseDLL|x64.ActiveCfg = SingleImage
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.ReleaseDLL|x64.Build.0 = SingleImage
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.SingleImage|x64.ActiveCfg = SingleImage
-		{2CE5030B-C030-4F18-9DC2-4C8481442EF4}.SingleImage|x64.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
