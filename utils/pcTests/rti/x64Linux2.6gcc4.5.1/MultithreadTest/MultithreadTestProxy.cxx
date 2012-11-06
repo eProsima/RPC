@@ -51,7 +51,7 @@ DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        testReplyUtils::extractTypeData(retInstance, retcode, dato2, test_ret); 
+        testReplyUtils::extractTypeData(retInstance, retcode, dato2, test_ret);  
     }
     
     switch (retcode)

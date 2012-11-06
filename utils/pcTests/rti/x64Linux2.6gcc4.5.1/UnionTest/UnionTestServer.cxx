@@ -5,6 +5,7 @@
 #include "UnionTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
+#include "exceptions/ServerException.h"
 #include "UnionTestRequestReplyPlugin.h"
 
 #include "UnionTestServerRPCSupport.h"
@@ -51,19 +52,25 @@ void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *reques
     Empleado em3;
     memset(&em3, 0, sizeof(Empleado));    
     Empleado getEmpleado_ret;
-           
+    memset(&getEmpleado_ret, 0, sizeof(Empleado));       
     getEmpleadoReply replyData;
     
     Empleado_initialize(&em2);    
 
     getEmpleadoRequestUtils::extractTypeData(*(getEmpleadoRequest*)requestData, em1, em2);
 
-    getEmpleado_ret = srv->_impl->getEmpleado(em1, em2, em3);
+    try
+    {
+        getEmpleado_ret = srv->_impl->getEmpleado(em1, em2, em3);
 
-    getEmpleadoReplyUtils::setTypeData(replyData, em2, em3, getEmpleado_ret);
+        getEmpleadoReplyUtils::setTypeData(replyData, em2, em3, getEmpleado_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getEmpleadoRequestTypeSupport::delete_data((getEmpleadoRequest*)requestData);
     

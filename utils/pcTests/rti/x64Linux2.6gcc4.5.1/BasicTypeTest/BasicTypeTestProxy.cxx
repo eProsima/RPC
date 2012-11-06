@@ -106,7 +106,7 @@ DDS_Octet BasicTypeTestProxy::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getOctetReplyUtils::extractTypeData(retInstance, retcode, oc2, oc3, getOctet_ret); 
+        getOctetReplyUtils::extractTypeData(retInstance, retcode, oc2, oc3, getOctet_ret);  
     }
     
     switch (retcode)
@@ -142,7 +142,7 @@ DDS_Char BasicTypeTestProxy::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCharReplyUtils::extractTypeData(retInstance, retcode, ch2, ch3, getChar_ret); 
+        getCharReplyUtils::extractTypeData(retInstance, retcode, ch2, ch3, getChar_ret);  
     }
     
     switch (retcode)
@@ -178,7 +178,7 @@ DDS_Wchar BasicTypeTestProxy::getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wcha
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getWCharReplyUtils::extractTypeData(retInstance, retcode, wch2, wch3, getWChar_ret); 
+        getWCharReplyUtils::extractTypeData(retInstance, retcode, wch2, wch3, getWChar_ret);  
     }
     
     switch (retcode)
@@ -214,7 +214,7 @@ DDS_Short BasicTypeTestProxy::getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getShortReplyUtils::extractTypeData(retInstance, retcode, sh2, sh3, getShort_ret); 
+        getShortReplyUtils::extractTypeData(retInstance, retcode, sh2, sh3, getShort_ret);  
     }
     
     switch (retcode)
@@ -250,7 +250,7 @@ DDS_UnsignedShort BasicTypeTestProxy::getUShort(/*in*/ DDS_UnsignedShort ush1, /
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getUShortReplyUtils::extractTypeData(retInstance, retcode, ush2, ush3, getUShort_ret); 
+        getUShortReplyUtils::extractTypeData(retInstance, retcode, ush2, ush3, getUShort_ret);  
     }
     
     switch (retcode)
@@ -286,7 +286,7 @@ DDS_Long BasicTypeTestProxy::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLongReplyUtils::extractTypeData(retInstance, retcode, lo2, lo3, getLong_ret); 
+        getLongReplyUtils::extractTypeData(retInstance, retcode, lo2, lo3, getLong_ret);  
     }
     
     switch (retcode)
@@ -322,7 +322,7 @@ DDS_UnsignedLong BasicTypeTestProxy::getULong(/*in*/ DDS_UnsignedLong ulo1, /*in
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getULongReplyUtils::extractTypeData(retInstance, retcode, ulo2, ulo3, getULong_ret); 
+        getULongReplyUtils::extractTypeData(retInstance, retcode, ulo2, ulo3, getULong_ret);  
     }
     
     switch (retcode)
@@ -358,7 +358,7 @@ DDS_LongLong BasicTypeTestProxy::getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DD
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLLongReplyUtils::extractTypeData(retInstance, retcode, llo2, llo3, getLLong_ret); 
+        getLLongReplyUtils::extractTypeData(retInstance, retcode, llo2, llo3, getLLong_ret);  
     }
     
     switch (retcode)
@@ -394,7 +394,7 @@ DDS_UnsignedLongLong BasicTypeTestProxy::getULLong(/*in*/ DDS_UnsignedLongLong u
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getULLongReplyUtils::extractTypeData(retInstance, retcode, ullo2, ullo3, getULLong_ret); 
+        getULLongReplyUtils::extractTypeData(retInstance, retcode, ullo2, ullo3, getULLong_ret);  
     }
     
     switch (retcode)
@@ -430,7 +430,7 @@ DDS_Float BasicTypeTestProxy::getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getFloatReplyUtils::extractTypeData(retInstance, retcode, fl2, fl3, getFloat_ret); 
+        getFloatReplyUtils::extractTypeData(retInstance, retcode, fl2, fl3, getFloat_ret);  
     }
     
     switch (retcode)
@@ -466,7 +466,7 @@ DDS_Double BasicTypeTestProxy::getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Do
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDoubleReplyUtils::extractTypeData(retInstance, retcode, do2, do3, getDouble_ret); 
+        getDoubleReplyUtils::extractTypeData(retInstance, retcode, do2, do3, getDouble_ret);  
     }
     
     switch (retcode)
@@ -502,7 +502,7 @@ DDS_Boolean BasicTypeTestProxy::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getBooleanReplyUtils::extractTypeData(retInstance, retcode, bo2, bo3, getBoolean_ret); 
+        getBooleanReplyUtils::extractTypeData(retInstance, retcode, bo2, bo3, getBoolean_ret);  
     }
     
     switch (retcode)

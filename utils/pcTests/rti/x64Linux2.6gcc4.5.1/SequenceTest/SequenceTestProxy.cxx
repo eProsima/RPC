@@ -62,7 +62,7 @@ largo SequenceTestProxy::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getSLongReplyUtils::extractTypeData(retInstance, retcode, l2, l3, getSLong_ret); 
+        getSLongReplyUtils::extractTypeData(retInstance, retcode, l2, l3, getSLong_ret);  
     }
     
     switch (retcode)
@@ -99,7 +99,7 @@ cadena SequenceTestProxy::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret); 
+        getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret);  
     }
     
     switch (retcode)
@@ -136,7 +136,7 @@ dattos SequenceTestProxy::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ d
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret); 
+        getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret);  
     }
     
     switch (retcode)

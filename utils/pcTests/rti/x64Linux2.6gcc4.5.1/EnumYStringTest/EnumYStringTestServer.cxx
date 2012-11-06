@@ -5,6 +5,7 @@
 #include "EnumYStringTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
+#include "exceptions/ServerException.h"
 #include "EnumYStringTestRequestReplyPlugin.h"
 
 #include "EnumYStringTestServerRPCSupport.h"
@@ -62,12 +63,18 @@ void EnumYStringTestServer::getEnum(eProsima::DDSRPC::Server *server, void *requ
 
     getEnumRequestUtils::extractTypeData(*(getEnumRequest*)requestData, v1, v2);
 
-    getEnum_ret = srv->_impl->getEnum(v1, v2, v3);
+    try
+    {
+        getEnum_ret = srv->_impl->getEnum(v1, v2, v3);
 
-    getEnumReplyUtils::setTypeData(replyData, v2, v3, getEnum_ret);
+        getEnumReplyUtils::setTypeData(replyData, v2, v3, getEnum_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getEnumRequestTypeSupport::delete_data((getEnumRequest*)requestData);
     
@@ -88,12 +95,18 @@ void EnumYStringTestServer::getString(eProsima::DDSRPC::Server *server, void *re
 
     getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1, s2);
 
-    getString_ret = srv->_impl->getString(s1, s2, s3);
+    try
+    {
+        getString_ret = srv->_impl->getString(s1, s2, s3);
 
-    getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
+        getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getStringRequestTypeSupport::delete_data((getStringRequest*)requestData);
     
@@ -114,12 +127,18 @@ void EnumYStringTestServer::getStringBounded(eProsima::DDSRPC::Server *server, v
 
     getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1, sb2);
 
-    getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
+    try
+    {
+        getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
-    getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
+        getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getStringBoundedRequestTypeSupport::delete_data((getStringBoundedRequest*)requestData);
     

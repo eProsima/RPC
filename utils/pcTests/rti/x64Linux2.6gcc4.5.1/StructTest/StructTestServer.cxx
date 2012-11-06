@@ -5,6 +5,7 @@
 #include "StructTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
+#include "exceptions/ServerException.h"
 #include "StructTestRequestReplyPlugin.h"
 
 #include "StructTestServerRPCSupport.h"
@@ -51,18 +52,24 @@ void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *request
     Envio ev;
         
     Recepcion duplicate_ret;
-           
+    memset(&duplicate_ret, 0, sizeof(Recepcion));       
     duplicateReply replyData;
     
 
     duplicateRequestUtils::extractTypeData(*(duplicateRequest*)requestData, ev);
 
-    duplicate_ret = srv->_impl->duplicate(ev);
+    try
+    {
+        duplicate_ret = srv->_impl->duplicate(ev);
 
-    duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
+        duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     duplicateRequestTypeSupport::delete_data((duplicateRequest*)requestData);
     
@@ -76,18 +83,24 @@ void StructTestServer::suma(eProsima::DDSRPC::Server *server, void *requestData,
     Envio ev2;
         
     Recepcion suma_ret;
-           
+    memset(&suma_ret, 0, sizeof(Recepcion));       
     sumaReply replyData;
     
 
     sumaRequestUtils::extractTypeData(*(sumaRequest*)requestData, ev1, ev2);
 
-    suma_ret = srv->_impl->suma(ev1, ev2);
+    try
+    {
+        suma_ret = srv->_impl->suma(ev1, ev2);
 
-    sumaReplyUtils::setTypeData(replyData, suma_ret);
+        sumaReplyUtils::setTypeData(replyData, suma_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     sumaRequestTypeSupport::delete_data((sumaRequest*)requestData);
     

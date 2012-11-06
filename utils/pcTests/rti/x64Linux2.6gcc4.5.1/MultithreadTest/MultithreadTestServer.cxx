@@ -5,6 +5,7 @@
 #include "MultithreadTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
+#include "exceptions/ServerException.h"
 #include "MultithreadTestRequestReplyPlugin.h"
 
 #include "MultithreadTestServerRPCSupport.h"
@@ -54,12 +55,18 @@ void MultithreadTestServer::test(eProsima::DDSRPC::Server *server, void *request
 
     testRequestUtils::extractTypeData(*(testRequest*)requestData, dato1);
 
-    test_ret = srv->_impl->test(dato1, dato2);
+    try
+    {
+        test_ret = srv->_impl->test(dato1, dato2);
 
-    testReplyUtils::setTypeData(replyData, dato2, test_ret);
+        testReplyUtils::setTypeData(replyData, dato2, test_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     testRequestTypeSupport::delete_data((testRequest*)requestData);
     

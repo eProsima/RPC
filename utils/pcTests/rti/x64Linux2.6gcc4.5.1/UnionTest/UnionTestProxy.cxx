@@ -52,7 +52,7 @@ Empleado UnionTestProxy::getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Emple
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getEmpleadoReplyUtils::extractTypeData(retInstance, retcode, em2, em3, getEmpleado_ret); 
+        getEmpleadoReplyUtils::extractTypeData(retInstance, retcode, em2, em3, getEmpleado_ret);  
     }
     
     switch (retcode)

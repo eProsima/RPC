@@ -5,6 +5,7 @@
 #include "TypedefTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
+#include "exceptions/ServerException.h"
 #include "TypedefTestRequestReplyPlugin.h"
 
 #include "TypedefTestServerRPCSupport.h"
@@ -72,12 +73,18 @@ void TypedefTestServer::getLargo(eProsima::DDSRPC::Server *server, void *request
 
     getLargoRequestUtils::extractTypeData(*(getLargoRequest*)requestData, l1);
 
-    getLargo_ret = srv->_impl->getLargo(l1, l2);
+    try
+    {
+        getLargo_ret = srv->_impl->getLargo(l1, l2);
 
-    getLargoReplyUtils::setTypeData(replyData, l2, getLargo_ret);
+        getLargoReplyUtils::setTypeData(replyData, l2, getLargo_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getLargoRequestTypeSupport::delete_data((getLargoRequest*)requestData);
     
@@ -95,12 +102,18 @@ void TypedefTestServer::getLarguisimo(eProsima::DDSRPC::Server *server, void *re
 
     getLarguisimoRequestUtils::extractTypeData(*(getLarguisimoRequest*)requestData, ll1);
 
-    getLarguisimo_ret = srv->_impl->getLarguisimo(ll1, ll2);
+    try
+    {
+        getLarguisimo_ret = srv->_impl->getLarguisimo(ll1, ll2);
 
-    getLarguisimoReplyUtils::setTypeData(replyData, ll2, getLarguisimo_ret);
+        getLarguisimoReplyUtils::setTypeData(replyData, ll2, getLarguisimo_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getLarguisimoRequestTypeSupport::delete_data((getLarguisimoRequest*)requestData);
     
@@ -115,18 +128,24 @@ void TypedefTestServer::getDatosDef(eProsima::DDSRPC::Server *server, void *requ
     DatosDef d2;
     memset(&d2, 0, sizeof(DatosDef));    
     DatosDef getDatosDef_ret;
-           
+    memset(&getDatosDef_ret, 0, sizeof(DatosDef));       
     getDatosDefReply replyData;
     
 
     getDatosDefRequestUtils::extractTypeData(*(getDatosDefRequest*)requestData, d1);
 
-    getDatosDef_ret = srv->_impl->getDatosDef(d1, d2);
+    try
+    {
+        getDatosDef_ret = srv->_impl->getDatosDef(d1, d2);
 
-    getDatosDefReplyUtils::setTypeData(replyData, d2, getDatosDef_ret);
+        getDatosDefReplyUtils::setTypeData(replyData, d2, getDatosDef_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getDatosDefRequestTypeSupport::delete_data((getDatosDefRequest*)requestData);
     
@@ -141,18 +160,24 @@ void TypedefTestServer::getDatosDefondo(eProsima::DDSRPC::Server *server, void *
     DatosDefondo dd2;
     memset(&dd2, 0, sizeof(DatosDefondo));    
     DatosDefondo getDatosDefondo_ret;
-           
+    memset(&getDatosDefondo_ret, 0, sizeof(DatosDefondo));       
     getDatosDefondoReply replyData;
     
 
     getDatosDefondoRequestUtils::extractTypeData(*(getDatosDefondoRequest*)requestData, dd1);
 
-    getDatosDefondo_ret = srv->_impl->getDatosDefondo(dd1, dd2);
+    try
+    {
+        getDatosDefondo_ret = srv->_impl->getDatosDefondo(dd1, dd2);
 
-    getDatosDefondoReplyUtils::setTypeData(replyData, dd2, getDatosDefondo_ret);
+        getDatosDefondoReplyUtils::setTypeData(replyData, dd2, getDatosDefondo_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getDatosDefondoRequestTypeSupport::delete_data((getDatosDefondoRequest*)requestData);
     
@@ -170,12 +195,18 @@ void TypedefTestServer::getCadena(eProsima::DDSRPC::Server *server, void *reques
 
     getCadenaRequestUtils::extractTypeData(*(getCadenaRequest*)requestData, c1);
 
-    getCadena_ret = srv->_impl->getCadena(c1, c2);
+    try
+    {
+        getCadena_ret = srv->_impl->getCadena(c1, c2);
 
-    getCadenaReplyUtils::setTypeData(replyData, c2, getCadena_ret);
+        getCadenaReplyUtils::setTypeData(replyData, c2, getCadena_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getCadenaRequestTypeSupport::delete_data((getCadenaRequest*)requestData);
     
@@ -193,12 +224,18 @@ void TypedefTestServer::getCorrea(eProsima::DDSRPC::Server *server, void *reques
 
     getCorreaRequestUtils::extractTypeData(*(getCorreaRequest*)requestData, cc1);
 
-    getCorrea_ret = srv->_impl->getCorrea(cc1, cc2);
+    try
+    {
+        getCorrea_ret = srv->_impl->getCorrea(cc1, cc2);
 
-    getCorreaReplyUtils::setTypeData(replyData, cc2, getCorrea_ret);
+        getCorreaReplyUtils::setTypeData(replyData, cc2, getCorrea_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getCorreaRequestTypeSupport::delete_data((getCorreaRequest*)requestData);
     

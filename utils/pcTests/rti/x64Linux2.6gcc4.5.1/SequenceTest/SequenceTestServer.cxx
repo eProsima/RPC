@@ -5,6 +5,7 @@
 #include "SequenceTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
+#include "exceptions/ServerException.h"
 #include "SequenceTestRequestReplyPlugin.h"
 
 #include "SequenceTestServerRPCSupport.h"
@@ -59,19 +60,25 @@ void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *reques
     largo l3;
     memset(&l3, 0, sizeof(largo));    
     largo getSLong_ret;
-           
+    memset(&getSLong_ret, 0, sizeof(largo));       
     getSLongReply replyData;
     
     largo_initialize(&l2);    
 
     getSLongRequestUtils::extractTypeData(*(getSLongRequest*)requestData, l1, l2);
 
-    getSLong_ret = srv->_impl->getSLong(l1, l2, l3);
+    try
+    {
+        getSLong_ret = srv->_impl->getSLong(l1, l2, l3);
 
-    getSLongReplyUtils::setTypeData(replyData, l2, l3, getSLong_ret);
+        getSLongReplyUtils::setTypeData(replyData, l2, l3, getSLong_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getSLongRequestTypeSupport::delete_data((getSLongRequest*)requestData);
     
@@ -89,19 +96,25 @@ void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *reque
     cadena s3;
     memset(&s3, 0, sizeof(cadena));    
     cadena getString_ret;
-           
+    memset(&getString_ret, 0, sizeof(cadena));       
     getStringReply replyData;
     
     cadena_initialize(&s2);    
 
     getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1, s2);
 
-    getString_ret = srv->_impl->getString(s1, s2, s3);
+    try
+    {
+        getString_ret = srv->_impl->getString(s1, s2, s3);
 
-    getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
+        getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getStringRequestTypeSupport::delete_data((getStringRequest*)requestData);
     
@@ -119,19 +132,25 @@ void SequenceTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void
     dattos sb3;
     memset(&sb3, 0, sizeof(dattos));    
     dattos getStringBounded_ret;
-           
+    memset(&getStringBounded_ret, 0, sizeof(dattos));       
     getStringBoundedReply replyData;
     
     dattos_initialize(&sb2);    
 
     getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1, sb2);
 
-    getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
+    try
+    {
+        getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
-    getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
+        getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
 
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+    }
+    catch(eProsima::DDSRPC::ServerException)
+    {
+        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+    }
     
     getStringBoundedRequestTypeSupport::delete_data((getStringBoundedRequest*)requestData);
     
