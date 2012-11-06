@@ -157,9 +157,9 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;RTI_WIN32;EPROSIMA_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;EPROSIMA_WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -184,9 +184,9 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(SolutionDir)..\..\include\idl\rti;$(EPROSIMADIR)\code;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;RTI_WIN32;EPROSIMA_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;RTI_WIN32;EPROSIMA_WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__LITTLE_ENDIAN__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AssemblerListingLocation>
       </AssemblerListingLocation>

@@ -126,7 +126,7 @@ project(interfaceName, guid, name, example, arch, configurations, client) ::= <<
       <OutputFile>.\objs\\$example$\\\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$libsVS(example=example)$%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>$ignoreDefaultLibraryNames(conf=it)$;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>$ignoreDefaultLibraryNames(conf=it)$%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>$generateDebugInformation(conf=it)$</GenerateDebugInformation>
       <ProgramDatabaseFile>.\objs\\$example$\\$name$.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
@@ -237,7 +237,6 @@ $\t$$\t${$guid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platfor
  * Uses:
  */ 
 ignoreDefaultLibraryNames(conf) ::= <<
-LIBCMT$if(it.debug)$D$endif$
 >>
 
 /**

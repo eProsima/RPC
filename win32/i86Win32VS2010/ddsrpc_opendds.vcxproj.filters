@@ -164,6 +164,24 @@
     <ClInclude Include="..\..\include\idl\opendds\MessageHeaderTypeSupportImpl.h">
       <Filter>Archivos de encabezado\idl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\Exception.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ClientException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerTimeoutException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\Exceptions.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\ddsrpc.rc">

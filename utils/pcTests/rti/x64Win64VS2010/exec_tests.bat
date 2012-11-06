@@ -32,6 +32,10 @@ if not %errorstatus%==0 goto :EOF
 :: Copy backup to original files.
 move Client.cxx.backup Client.cxx
 move %*ServerImpl.cxx.backup %*ServerImpl.cxx
+
+:: Start executing tests in each configuration.
+
+:: Release DLL Configuration
 :: Clean the visual solution
 msbuild "%*-vs2010.sln" /t:Clean
 :: Build the visual solution
@@ -47,6 +51,62 @@ call :wait 5
 set errorstatus=%ERRORLEVEL%
 :: Kill server
 TaskKill /IM "%*Server.exe"
+if not %errorstatus%==0 goto :EOF
+
+:: Debug DLL Configuration
+:: Clean the visual solution
+msbuild "%*-vs2010.sln" /t:Clean
+:: Build the visual solution
+msbuild "%*-vs2010.sln" /t:Build /p:Configuration="Debug DLL"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Execute the server in other cmd.exe
+start objs\x64Win64VS2010\%*Server.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"objs\x64Win64VS2010\%*Client.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%*Server.exe"
+if not %errorstatus%==0 goto :EOF
+
+:: Release Configuration
+:: Clean the visual solution
+msbuild "%*-vs2010.sln" /t:Clean
+:: Build the visual solution
+msbuild "%*-vs2010.sln" /t:Build /p:Configuration="Release"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Execute the server in other cmd.exe
+start objs\x64Win64VS2010\%*Server.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"objs\x64Win64VS2010\%*Client.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%*Server.exe"
+if not %errorstatus%==0 goto :EOF
+
+:: Debug Configuration
+:: Clean the visual solution
+msbuild "%*-vs2010.sln" /t:Clean
+:: Build the visual solution
+msbuild "%*-vs2010.sln" /t:Build /p:Configuration="Debug"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Execute the server in other cmd.exe
+start objs\x64Win64VS2010\%*Server.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"objs\x64Win64VS2010\%*Client.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%*Server.exe"
+if not %errorstatus%==0 goto :EOF
+
 goto :EOF
 
 :: Fuction wait ::

@@ -100,8 +100,12 @@ int TName::sendReply(void *request, void* reply,  eProsima::DDSRPC::ReturnMessag
 	}
 
 	if(reply == NULL)
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
 	    TDataReplyTypeSupport::delete_data(replyData);
+#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+	    delete replyData;
 #endif
+#endif // IS_ONEWAY
 	return returnedValue;
 }
 
