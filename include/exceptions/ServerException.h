@@ -11,6 +11,10 @@ namespace eProsima
         {
 		public:
 
+			ServerException() : Exception("")
+			{
+			}
+
 			ServerException(const std::string &message) : Exception(message)
 			{
 			}
