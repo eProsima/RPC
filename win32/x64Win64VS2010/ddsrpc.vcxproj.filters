@@ -52,6 +52,9 @@
     <Filter Include="Archivos de código fuente\strategies">
       <UniqueIdentifier>{94cf33c4-0971-4eff-9d6c-439468819d8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\exceptions">
+      <UniqueIdentifier>{69af10f1-f914-4f9a-b834-fdae970c254a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\client\AsyncTask.cpp">
@@ -98,6 +101,27 @@
     </ClCompile>
     <ClCompile Include="..\..\src\strategies\ThreadPoolStrategy.cpp">
       <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ClientInternalException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\Exception.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\InitializeException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ServerInternalException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ServerNotFoundException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ServerTimeoutException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\SystemException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +173,6 @@
     <ClInclude Include="..\..\include\utils\Version.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ResourceException.h">
-      <Filter>Archivos de encabezado\exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\transports\Transport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
@@ -173,12 +194,6 @@
     <ClInclude Include="..\..\include\exceptions\Exception.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ClientException.h">
-      <Filter>Archivos de encabezado\exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ServerException.h">
-      <Filter>Archivos de encabezado\exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
@@ -186,6 +201,18 @@
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\exceptions\Exceptions.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ClientInternalException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\InitializeException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerInternalException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\SystemException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
   </ItemGroup>

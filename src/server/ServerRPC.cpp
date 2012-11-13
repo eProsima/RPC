@@ -1,6 +1,8 @@
 #include "server/ServerRPC.h"
 #include "server/Server.h"
 #include "utils/Utilities.h"
+#include "eProsima_c/eProsimaMacros.h"
+#include "exceptions/InitializeException.h"
 
 static const char* const CLASS_NAME = "eProsima::DDSRPC::ServerRPC";
 
@@ -10,29 +12,55 @@ namespace eProsima
 	{
 
 		ServerRPC::ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
-												 const char *replyTypeName, fExecFunction execFunction, DDS::DomainParticipant *serverParticipant) :
-			m_server(server), m_requestSubscriber(NULL), m_replyPublisher(NULL), m_requestTopic(NULL),
+												 const char *replyTypeName, fExecFunction execFunction) :
+			m_server(server), m_requestSubscriber(NULL), m_replyPublisher(NULL), m_requestTopic(NULL), m_requestFilter(NULL),
 			m_requestDataReader(NULL), m_execFunction(execFunction)
 		{
 			const char* const METHOD_NAME = "ServerRemoteService";
+			std::string errorMessage;
 
-			if(createEntities(serverParticipant, rpcName, requestTypeName, replyTypeName))
+			if(createEntities(server->getParticipant(), rpcName, requestTypeName, replyTypeName))
 			{
 				if(enableEntities())
 				{
+					return;
 				}
 				else
 				{
-					printf("ERROR<%s::%s>: Cannot enableEntities\n", CLASS_NAME, METHOD_NAME);
+					errorMessage = "Cannot enable the DDS entities";
 				}
 			}
+			else
+			{
+				errorMessage = "Cannot create the DDS entities";
+			}
+
+			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+            throw InitializeException(errorMessage);
+		}
+
+		ServerRPC::~ServerRPC()
+		{
+			if(m_replyDataWriter != NULL)
+				m_replyPublisher->delete_datawriter(m_replyDataWriter);
+			if(m_replyTopic != NULL)
+				m_server->getParticipant()->delete_topic(m_replyTopic);
+			if(m_replyPublisher != NULL)
+				m_server->getParticipant()->delete_publisher(m_replyPublisher);
+			if(m_requestDataReader != NULL)
+				m_requestSubscriber->delete_datareader(m_requestDataReader);
+			if(m_requestFilter != NULL)
+				m_server->getParticipant()->delete_contentfilteredtopic(m_requestFilter);
+			if(m_requestTopic != NULL)
+				m_server->getParticipant()->delete_topic(m_requestTopic);
+			if(m_requestSubscriber != NULL)
+				m_server->getParticipant()->delete_subscriber(m_requestSubscriber);
 		}
 
 		int ServerRPC::createEntities(DDS::DomainParticipant *serverParticipant, const char *rpcName,
 				const char *requestTypeName, const char *replyTypeName)
 		{
 			const char* const METHOD_NAME = "createEntities";
-			char topicNames[100];
 			DDS::PublisherQos publisherQos;
 			DDS::SubscriberQos subscriberQos;
 
@@ -49,84 +77,95 @@ namespace eProsima
 
                             if(requestTypeName != NULL)
                             {
-                                strncpy(topicNames, rpcName, 49); topicNames[49] = '\0';
-                                strncat(topicNames, "-", 1);
-                                strncat(topicNames, requestTypeName, 49); topicNames[49] = '\0';
-                                if((m_requestTopic = serverParticipant->create_topic(topicNames, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                if((m_requestTopic = serverParticipant->create_topic(requestTypeName, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                                 {
-                                    DDS::DataReaderQos rQos = DDS::DataReaderQos();
+									DDS::StringSeq stringSeq(1);
+									char value[257];
 
-                                    m_requestSubscriber->get_default_datareader_qos(rQos);
-                                    rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+									stringSeq.length(1);
+									SNPRINTF(value, 257, "'%s'", m_server->getServiceName().c_str());
+									stringSeq[0] = strdup(value);
 
-                                    m_requestDataReader = m_requestSubscriber->create_datareader(m_requestTopic, rQos, this, DDS::DATA_AVAILABLE_STATUS);
+									if((m_requestFilter = serverParticipant->create_contentfilteredtopic(rpcName, m_requestTopic,
+													"header.remoteServiceName = %0", stringSeq)) != NULL)
+									{
+										DDS::DataReaderQos rQos = DDS::DataReaderQos();
 
-                                    if(m_requestDataReader != NULL)
-                                    {
-                                        set_redundant_feature(m_requestDataReader, rQos);
+										m_requestSubscriber->get_default_datareader_qos(rQos);
+										rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
 
-                                        strncpy(m_rpcName, rpcName, 50);
+										m_requestDataReader = m_requestSubscriber->create_datareader(m_requestFilter, rQos, this, DDS::DATA_AVAILABLE_STATUS);
 
-                                        if(replyTypeName != NULL)
-                                        {
-                                            if((m_replyPublisher = serverParticipant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
-                                            {
-                                                if(m_replyPublisher->get_qos(publisherQos) == DDS::RETCODE_OK)
-                                                {
-                                                    publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                                                    m_replyPublisher->set_qos(publisherQos);
+										if(m_requestDataReader != NULL)
+										{
+											set_redundant_feature(m_requestDataReader, rQos);
 
-                                                    strncpy(topicNames, rpcName, 49); topicNames[49] = '\0';
-                                                    strncat(topicNames, "-", 1);
-                                                    strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
-                                                    if((m_replyTopic = serverParticipant->create_topic(topicNames, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
-                                                    {
-                                                        DDS::DataWriterQos wQos = DDS:: DataWriterQos();
+											strncpy(m_rpcName, rpcName, 50);
 
-                                                        m_replyPublisher->get_default_datawriter_qos(wQos);
-                                                        wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+											if(replyTypeName != NULL)
+											{
+												if((m_replyPublisher = serverParticipant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+												{
+													if(m_replyPublisher->get_qos(publisherQos) == DDS::RETCODE_OK)
+													{
+														publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+														m_replyPublisher->set_qos(publisherQos);
 
-                                                        m_replyDataWriter = m_replyPublisher->create_datawriter(m_replyTopic, wQos, NULL, STATUS_MASK_NONE);
+														if((m_replyTopic = serverParticipant->create_topic(replyTypeName, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+														{
+															DDS::DataWriterQos wQos = DDS:: DataWriterQos();
 
-                                                        if(m_replyDataWriter != NULL)
-                                                        {
-                                                            return 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
-                                                        }
+															m_replyPublisher->get_default_datawriter_qos(wQos);
+															wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
 
-                                                        serverParticipant->delete_topic(m_replyTopic);
-                                                    }
-                                                    else
-                                                    {
-                                                        printf("ERROR<%s::%s: Cannot create the request topic\n", CLASS_NAME, METHOD_NAME);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    printf("ERROR <%s::%s>: Cannot get the publisher qos\n", CLASS_NAME, METHOD_NAME);
-                                                }
+															m_replyDataWriter = m_replyPublisher->create_datawriter(m_replyTopic, wQos, NULL, STATUS_MASK_NONE);
 
-                                                serverParticipant->delete_publisher(m_replyPublisher);
-                                            }
-                                            else
-                                            {
-                                                printf("ERROR<%s::%s: Cannot create the request publisher\n", CLASS_NAME, METHOD_NAME);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            return 1;
-                                        }
+															if(m_replyDataWriter != NULL)
+															{
+																return 1;
+															}
+															else
+															{
+																printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
+															}
 
-                                        m_requestSubscriber->delete_datareader(m_requestDataReader);
-                                    }
-                                    else
-                                    {
-                                        printf("ERROR<%s::%s: Cannot create the request data reader\n", CLASS_NAME, METHOD_NAME);
-                                    }
+															serverParticipant->delete_topic(m_replyTopic);
+														}
+														else
+														{
+															printf("ERROR<%s::%s: Cannot create the request topic\n", CLASS_NAME, METHOD_NAME);
+														}
+													}
+													else
+													{
+														printf("ERROR <%s::%s>: Cannot get the publisher qos\n", CLASS_NAME, METHOD_NAME);
+													}
+
+													serverParticipant->delete_publisher(m_replyPublisher);
+												}
+												else
+												{
+													printf("ERROR<%s::%s: Cannot create the request publisher\n", CLASS_NAME, METHOD_NAME);
+												}
+											}
+											else
+											{
+												return 1;
+											}
+
+											m_requestSubscriber->delete_datareader(m_requestDataReader);
+										}
+										else
+										{
+											printf("ERROR<%s::%s: Cannot create the request data reader\n", CLASS_NAME, METHOD_NAME);
+										}
+
+										serverParticipant->delete_contentfilteredtopic(m_requestFilter);
+									}
+									else
+									{
+										printf("ERROR<%s::%s>: Cannot create the request filter\n", CLASS_NAME, METHOD_NAME);
+									}
 
                                     serverParticipant->delete_topic(m_requestTopic);
                                 }
@@ -186,9 +225,6 @@ namespace eProsima
                                 {
                                     if(m_replyDataWriter->enable() == DDS::RETCODE_OK)
                                     {
-                                        // Obtain serverServiceId.
-                                        get_guid(m_serverId, m_replyDataWriter);
-
                                         returnedValue = 1;
                                     }
                                     else
@@ -232,11 +268,6 @@ namespace eProsima
 		char* ServerRPC::getRPCName()
 		{
 			return m_rpcName;
-		}
-
-		unsigned int* ServerRPC::getServerId()
-		{
-			return m_serverId;
 		}
 
 		fExecFunction ServerRPC::getExecFunction()

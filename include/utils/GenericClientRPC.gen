@@ -88,7 +88,7 @@ DDS::ReturnCode_t TName::write(void *data)
 
 eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 {
-    eProsima::DDSRPC::ReturnMessage value = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage value = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
 #ifndef IS_ONEWAY
     const char* const METHOD_NAME = "takeReply";
     DDS::SampleInfoSeq infoSeq;

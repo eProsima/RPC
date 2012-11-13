@@ -59,8 +59,7 @@ request(name, params) ::= <<
 $preReqIDLDefines(name=name)$
 
 struct $name$Request{
-    Identification clientServiceId; $keyIDLdefine()$
-    unsigned long numSec; $keyIDLdefine()$
+    RequestHeader header; $keyIDLdefine()$
     $params : {$it.typeName$ $it.name$;};separator="\n"$
 }; $levelIDLdefine()$
 >>
@@ -78,10 +77,7 @@ reply(name, params, return) ::= <<
 $preRepIDLDefines(name=name)$
 
 struct $name$Reply{
-    Identification serverServiceId; $keyIDLdefine()$
-    Identification clientServiceId; $keyIDLdefine()$
-    unsigned long numSec; $keyIDLdefine()$
-    long ddsrpcRetCode;
+    ReplyHeader header; $keyIDLdefine()$
     $params : {$it.typeName$ $it.name$;};separator="\n"$
     $if(return)$$return.typeName$ $return.name$;$endif$
 }; $levelIDLdefine()$

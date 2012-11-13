@@ -12,13 +12,11 @@ namespace eProsima
 		typedef enum ReturnMessage
 		{
 			/// \brief An error occurs in the server's proxy side.
-			CLIENT_ERROR = -2,
+			CLIENT_INTERNAL_ERROR = -2,
 			/// \brief Timeout while the client is waiting the server's reply.
 			SERVER_TIMEOUT,
 			/// \brief An error occurs in the server side.
-			SERVER_ERROR,
-			/// \brief There are not resources to manage the server's proxy request.
-			WITHOUT_RESOURCES,
+			SERVER_INTERNAL_ERROR,
 			/// \brief Operation was succesful.
 			OPERATION_SUCCESSFUL,
 			/// \brief Server was not found.

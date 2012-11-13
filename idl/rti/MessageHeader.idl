@@ -1,0 +1,22 @@
+struct Identification
+{
+    unsigned long value_1;
+    unsigned long value_2;
+    unsigned long value_3;
+    unsigned long value_4;
+}; //@top-level false 
+
+struct RequestHeader
+{
+    Identification clientId; //@key
+    string<255> remoteServiceName;
+    unsigned long requestSequenceNumber; //@key
+}; //@top-level false 
+
+struct ReplyHeader
+{
+    Identification clientId; //@key
+    unsigned long requestSequenceNumber; //@key
+    long ddsrpcRetCode;
+    string ddsrpcRetMsg;
+}; //@top-level false 

@@ -5,6 +5,8 @@
 #include "utils/Messages.h"
 #include "utils/Version.h"
 
+#include <string>
+
 namespace eProsima
 {
 	namespace DDSRPC
@@ -42,7 +44,7 @@ namespace eProsima
 				 *
 				 * \return The time out used by the server proxy. It is in milliseconds.
 				 */
-                long getTimeout();
+                long getTimeout() const;
 
 				/**
 				 * \brief This function sets te timeout that the server proxy will use in each request.
@@ -51,18 +53,26 @@ namespace eProsima
 				 */
                 void setTimeout(long milliseconds);
 
+				/**
+				 * \brief This function returns the name of the remote service that this proxy is offering.
+				 *
+				 * \return The name of the remote service.
+				 */
+				const std::string& getRemoteServiceName() const;
+
 			protected:
 
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
+				 * \param remoteServiceName The name of the remote service that the proxy will offer. 
 				 * \param transport The transport that will be use the server's proxy. This class doesn't delete this object in its destructor.
 				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
 				 * \param milliseconds Timout in milliseconds for all requests.
 				 * \exception eProsima::DDSRPC::ResourceException 
 				 */
-				Client(Transport *transport, int domainId = 0, long milliseconds = 10000);
+				Client(std::string remoteServiceName, Transport *transport, int domainId = 0, long milliseconds = 10000);
 
 				/// \brief The default destructor.
 				virtual ~Client();
@@ -92,6 +102,9 @@ namespace eProsima
 
 				/// \brief Pointer to the transport which this server's proxy uses.
 				Transport *m_transport;
+
+				/// \brief The name of the remote service that the proxy will offer.
+				std::string m_remoteServiceName;
 		};
 
 	} // namespace DDSRPC

@@ -36,7 +36,7 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
         
            $interfaceName$_$name$ &m_obj;
            
-           $name$Reply m_reply;
+           $interfaceName$_$name$Reply m_reply;
 }
 >>
 
@@ -76,7 +76,7 @@ void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message
 	
 	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		$name$ReplyUtils::extractTypeData(m_reply, retcode$if(outParams)$, $endif$$extractParams(params=outParams)$);
+		$interfaceName$_$name$ReplyUtils::extractTypeData(m_reply, retcode$if(outParams)$, $endif$$extractParams(params=outParams)$);
 		
 		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 		    getObject().$name$($extractParams(params=outParams)$);

@@ -44,6 +44,8 @@ public class IDL2DDSRPC
     private static StringBuffer externalDir = null;
     private static int externalDirLength = 0;
     private static String tempDir = null;
+    // Array list of strings. Include paths
+    private static ArrayList includePaths = new ArrayList();
     private static String idlFile = null;
     private static String command = null;
     private static String extra_command = null;
@@ -231,7 +233,13 @@ public class IDL2DDSRPC
         	 lineCommand.add("-I" + dds_root + "\\ddsrpc\\idl");
         else if(osOption.equals("Linux"))
         	 lineCommand.add("-I" + dds_root + "/ddsrpc/idl");*/
-        lineCommand.add("-I../../../../idl");
+        lineCommand.add("-I"+dds_root+"/ddsrpc/idl");
+        
+        // Add the include paths given as parameters.
+        for(int i = 0; i < includePaths.size(); ++i)
+        {
+        	lineCommand.add(includePaths.get(i));
+        }
     	
     	return 0;
     }
@@ -701,8 +709,8 @@ public class IDL2DDSRPC
             for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
             {						
                 op = (Operation) iter.next();
-                header.setAttribute("funNames.{name, isOneway}", op.getName(), (op.isOneway() ? "true" : null));
-                definition.setAttribute("funNames.{name, isOneway}", op.getName(), (op.isOneway() ? "true" : null));
+                header.setAttribute("topicNames.{name, isOneway}", ifc.getName() + "_" + op.getName(), (op.isOneway() ? "true" : null));
+                definition.setAttribute("topicNames.{name, isOneway}", ifc.getName() + "_" + op.getName(), (op.isOneway() ? "true" : null));
             }
 
             externalDir.append(ifc.getName()).append(side).append("RPCSupport.h");
@@ -835,15 +843,15 @@ public class IDL2DDSRPC
                 op = (Operation) iter.next();
                 
                 // Request template
-                headerRequest.setAttribute("funName", op.getName());
+                headerRequest.setAttribute("topicName", ifc.getName() + "_" + op.getName());
                 headerRequest.setAttribute("templateName", "Request");
-                definitionRequest.setAttribute("funName", op.getName());
+                definitionRequest.setAttribute("topicName", ifc.getName() + "_" + op.getName());
                 definitionRequest.setAttribute("templateName", "Request");
 
                 // Reply template
-                headerReply.setAttribute("funName", op.getName());
+                headerReply.setAttribute("topicName", ifc.getName() + "_" + op.getName());
                 headerReply.setAttribute("templateName", "Reply");
-                definitionReply.setAttribute("funName", op.getName());
+                definitionReply.setAttribute("topicName", ifc.getName() + "_" + op.getName());
                 definitionReply.setAttribute("templateName", "Reply");
 
                 // Set parameters for request template and reply template
@@ -922,8 +930,8 @@ public class IDL2DDSRPC
             {						
                 op = (Operation) iter.next();
 
-                request.setAttribute("name", op.getName());
-                reply.setAttribute("name", op.getName());
+                request.setAttribute("name", ifc.getName() + "_" + op.getName());
+                reply.setAttribute("name", ifc.getName() + "_" + op.getName());
 
                 setRequestReplyParams(request, reply, op, "params", ifc);
                 
@@ -1267,6 +1275,20 @@ public class IDL2DDSRPC
             else if(arg.equals("-help"))
             {
             	return false;
+            }
+            // Get include directories
+            else if(arg.equals("-I"))
+            {
+            	if(count < args.length)
+            	{
+            		includePaths.add(new String(arg + args[count++]));
+            	}
+            	else
+            		return false;
+            }
+            else if(arg.startsWith("-I"))
+            {
+            	includePaths.add(arg);
             }
             else
             {

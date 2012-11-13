@@ -1,6 +1,6 @@
 #include "client/Client.h"
 #include "client/AsyncThread.h"
-#include "exceptions/ResourceException.h"
+#include "exceptions/InitializeException.h"
 #include "utils/Utilities.h"
 #include "transports/Transport.h"
 #include "transports/UDPTransport.h"
@@ -12,8 +12,8 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
-		Client::Client(Transport *transport, int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
-        m_timeout(milliseconds), m_defaultTransport(false), m_transport(transport)
+		Client::Client(std::string remoteServiceName, Transport *transport, int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
+        m_timeout(milliseconds), m_defaultTransport(false), m_transport(transport), m_remoteServiceName(remoteServiceName)
 		{
 			const char* const METHOD_NAME ="Client";
 			std::string errorMessage;
@@ -81,7 +81,7 @@ namespace eProsima
             }
 
 			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
-            throw ResourceException(errorMessage);
+            throw InitializeException(errorMessage);
 		}
 
 		Client::~Client()
@@ -134,7 +134,7 @@ namespace eProsima
 			return m_participant;
 		}
 
-        long Client::getTimeout()
+        long Client::getTimeout() const
         {
             return m_timeout;
         }
@@ -143,6 +143,11 @@ namespace eProsima
         {
             m_timeout = milliseconds;
         }
+
+		const std::string& Client::getRemoteServiceName() const
+		{
+			return m_remoteServiceName;
+		}
 
 	} // namespace DDSRPC
 } // namespace eProsima

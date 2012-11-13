@@ -51,7 +51,7 @@ goto getarg
 :continue
 
 
-"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -Djava.ext.dirs="..\..\..\..\..\idl2ddsrpc\lib" com.eprosima.ddsrpc.idl.IDL2DDSRPC %args%
+"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -Djava.ext.dirs="..\..\..\..\..\idl2ddsrpc\lib" com.eprosima.ddsrpc.idl.IDL2DDSRPC %args% -I../../../../../idl/rti
 
 
 

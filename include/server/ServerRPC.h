@@ -28,10 +28,12 @@ namespace eProsima
 				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
 				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
 				 * \param execFunction Funtion that will be called when a new request is received. Cannot be NULL.
-				 * \param serverParticipant Pointer to the domain participant used by the server. Cannot be NULL.
 				 */
 				ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
-					const char *replyTypeName, fExecFunction execFunction, DDS::DomainParticipant *serverParticipant);
+					const char *replyTypeName, fExecFunction execFunction);
+
+				/// \brief Default destructor.
+				virtual ~ServerRPC();
 
 				/**
 				 * \brief This function returns the name of this object.
@@ -39,9 +41,6 @@ namespace eProsima
 				 * \return The name of this object.
 				 */
 				char* getRPCName();
-
-				/// \brief This function returns the identifier of the server.
-				unsigned int* getServerId();
 
 				/// \brief This function returns the function that is called when a new request is recevied.
 				fExecFunction getExecFunction();
@@ -64,7 +63,7 @@ namespace eProsima
 				 */
 				int enableEntities();
 
-				virtual int sendReply(void* request, void *reply, ReturnMessage errorMessage = OPERATION_SUCCESSFUL) = 0;
+				virtual int sendReply(void* request, void *reply) = 0;
 
 				virtual void deleteRequestData(void *request) = 0;
 
@@ -121,6 +120,11 @@ namespace eProsima
 				DDS::Topic *m_requestTopic;
 
 				/**
+				 * \brief Content filter used to take the expected request from clients.
+				 */
+				DDS::ContentFilteredTopic *m_requestFilter;
+
+				/**
 				 * \brief The topic used to communicate with the server. Server -> Client
 				 */
 				DDS::Topic *m_replyTopic;
@@ -136,9 +140,6 @@ namespace eProsima
 				DDS::DataWriter *m_replyDataWriter;
 
 				fExecFunction m_execFunction;
-
-				//CHECK
-				unsigned int m_serverId[4];
 		};
 
 	} // namespace DDSRPC

@@ -1,25 +1,31 @@
 #ifndef _EXCEPTIONS_SERVERTIMEOUTEXCEPTION_H_
 #define _EXCEPTIONS_SERVERTIMEOUTEXCEPTION_H_
 
-#include <exceptions/Exception.h>
+#include <exceptions/SystemException.h>
 
 namespace eProsima
 {
     namespace DDSRPC
     {
-        class ServerTimeoutException : public Exception
+        class DDSRPC_WIN32_DLL_API ServerTimeoutException : public SystemException
         {
 		public:
 
-			ServerTimeoutException(const std::string &message) : Exception(message)
-			{
-			}
+			ServerTimeoutException(const std::string &message);
 
-			ServerTimeoutException(std::string &&message) : Exception(std::move(message))
-			{
-			}
+			ServerTimeoutException(std::string&& message);
 
-			virtual ~ServerTimeoutException() {}
+			ServerTimeoutException(const ServerTimeoutException &ex);
+
+			ServerTimeoutException(ServerTimeoutException&& ex);
+
+			ServerTimeoutException& operator=(const ServerTimeoutException &ex);
+
+			ServerTimeoutException& operator=(ServerTimeoutException&& ex);
+
+			virtual ~ServerTimeoutException();
+
+			virtual void raise() const;
         };
     } // namespace DDSRPC
 } // namespace eProsima

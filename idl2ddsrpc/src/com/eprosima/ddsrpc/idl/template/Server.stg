@@ -57,23 +57,25 @@ class $interfaceName$Server : public eProsima::DDSRPC::Server
         /**
          * \brief Default constructor. The server will use the default eProsima::DDSRPC::UDPTransport.
          *
+         * \param serviceName The name of the service that the server offers. Proxies will use this name to connect with the server.
          * \param strategy Strategy used by server to work with new requests.
          *        This class doesn't delete this object in its destructor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          */
-        $interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
+        $interfaceName$Server(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
             int domainId = 0);
 
         /**
          * \brief This constructor sets the transport that will be used by the server.
          *
+         * \param serviceName The name of the service that the server offers. Proxies will use this name to connect with the server.
          * \param strategy Strategy used by server to work with new requests.
          *        This class doesn't delete this object in its destructor. Cannot be NULL.
          * \param transport The network transport that server has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          */
-        $interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
+        $interfaceName$Server(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
             int domainId = 0);
 
         /// \brief The default destructor.
@@ -184,30 +186,35 @@ $exFunctionHeader(class=interfaceName,...)$
     $interfaceName$Server *srv = dynamic_cast<$interfaceName$Server*>(server);
     $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create=it.isOnlyOutput)$}; separator="\n"$
     $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name, create="yes")$   
-    $if(!isOneway)$$name$Reply replyData;$endif$
+    $if(!isOneway)$$interfaceName$_$name$Reply replyData;$endif$
     
     $inParams:{$if(it.isOutput)$$varComplexInitialize(typeName=it.typeName, name=it.name)$$endif$}; separator="\n"$
 
-    $name$RequestUtils::extractTypeData(*($name$Request*)requestData$if(inParams)$, $endif$$extractParams(inParams)$);
+    $interfaceName$_$name$RequestUtils::extractTypeData(*($interfaceName$_$name$Request*)requestData$if(inParams)$, $endif$$extractParams(inParams)$);
 
     try
     {
         $if(!voidInitMap.(rettype.typeName))$$rettype.name$ = $endif$srv->_impl->$name$($extractParams(params)$);
 
         $if(!isOneway)$
-        $name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $extractParams(rettype)$$endif$);
+        $interfaceName$_$name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $extractParams(rettype)$$endif$);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
         $endif$
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
         $if(!isOneway)$
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
         $endif$
     }
     
-    $reqrepDestruction(type=name, reqrep="Request", name="requestData", void="void")$
+    $reqrepDestruction(type=[interfaceName, "_", name], reqrep="Request", name="requestData", void="void")$
     
     $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
     $outParams:{$varDel(typeName=it.typeName, baseType=it.baseType, name=it.name)$}; separator="\n"$
@@ -232,23 +239,23 @@ $doNotEditC()$
 #include "$interfaceName$Server.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 $ReqRepIncludes(interfaceName=interfaceName)$
 
 #include "$interfaceName$ServerRPCSupport.h"
 
-$interfaceName$Server::$interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
+$interfaceName$Server::$interfaceName$Server(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new $interfaceName$ServerImpl();
 
     createRPCs();
 }
 
-$interfaceName$Server::$interfaceName$Server(eProsima::DDSRPC::ServerStrategy *strategy,
+$interfaceName$Server::$interfaceName$Server(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new $interfaceName$ServerImpl();
     
@@ -333,7 +340,7 @@ int main(int argc, char **argv)
     int returnedValue = 0;
     unsigned int threadPoolSize = 5;
     eProsima::DDSRPC::ThreadPoolStrategy *pool = new eProsima::DDSRPC::ThreadPoolStrategy(threadPoolSize);
-    $interfaceName$Server *server = new $interfaceName$Server(pool);
+    $interfaceName$Server *server = new $interfaceName$Server("$interfaceName$Service", pool);
     server->wait();
 
     delete server;
@@ -399,12 +406,12 @@ $if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(eProsima:
  * Uses:
  */
 createRPC(interfaceName, funNames) ::= <<
-$funNames:{this->setRPC(new $it.name$ServerRPC("$it.name$", this,
-            $it.name$RequestUtils::registerType(getParticipant()),
+$funNames:{this->setRPC(new $interfaceName$_$it.name$ServerRPC("$it.name$", this,
+            $interfaceName$_$it.name$RequestUtils::registerType(getParticipant()),
             $if(!it.isOneway)$
-            $it.name$ReplyUtils::registerType(getParticipant()),
+            $interfaceName$_$it.name$ReplyUtils::registerType(getParticipant()),
             $endif$
-            &$interfaceName$Server::$it.name$, getParticipant()));
+            &$interfaceName$Server::$it.name$));
 }$
 >>
 

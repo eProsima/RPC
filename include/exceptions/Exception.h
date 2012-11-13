@@ -1,30 +1,37 @@
 #ifndef _EXCEPTIONS_EXCEPTION_H_
 #define _EXCEPTIONS_EXCEPTION_H_
 
+#include "utils/ddsrpc.h"
 #include <string>
+#include <exception>
 
 namespace eProsima
 {
     namespace DDSRPC
     {
-        class Exception
+        class DDSRPC_WIN32_DLL_API Exception : public std::exception
         {
 		public:
 
-			Exception(const std::string &message) : m_message(message)
-			{
-			}
+			virtual ~Exception();
 
-			Exception(std::string&& message) : m_message(std::move(message))
-			{
-			}
+			virtual void raise() const = 0;
 
-			virtual ~Exception(){}
+			virtual const char* what() const throw() override;
 
-			virtual std::string getMessage() const throw()
-            {
-                return m_message;
-            }
+		protected:
+
+			Exception(const std::string &message);
+
+			Exception(std::string&& message);
+
+			Exception(const Exception &ex);
+
+			Exception(Exception&& ex);
+
+			Exception& operator=(const Exception &ex);
+
+			Exception& operator=(Exception&&);
 
 		private:
 

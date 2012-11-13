@@ -23,12 +23,11 @@ class  TName : public eProsima::DDSRPC::ServerRPC                               
 public:                                                                           \
   TName(const char *rpcName, eProsima::DDSRPC::Server* server,                              \
         const char *requestTypeName, const char *replyTypeName,                 \
-        eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant); \
+        eProsima::DDSRPC::fExecFunction execFunction);                            \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \
-  virtual int sendReply(void* request, void *reply,                               \
-     eProsima::DDSRPC::ReturnMessage errorMessage = eProsima::DDSRPC::OPERATION_SUCCESSFUL);          \
+  virtual int sendReply(void* request, void *reply);                              \
   virtual void deleteRequestData(void *request);                                  \
   virtual void on_data_available(DDS::DataReader* reader);                        \
                                                                                   \
@@ -44,13 +43,12 @@ class  TName : public eProsima::DDSRPC::ServerRPC                               
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, eProsima::DDSRPC::Server* server,                              \
-        const char *requestTypeName,                                            \
-        eProsima::DDSRPC::fExecFunction execFunction, DDS::DomainParticipant *serverParticipant); \
+        const char *requestTypeName,                                              \
+        eProsima::DDSRPC::fExecFunction execFunction);                            \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \
-  virtual int sendReply(void* request, void *reply,                               \
-     eProsima::DDSRPC::ReturnMessage errorMessage = eProsima::DDSRPC::OPERATION_SUCCESSFUL);          \
+  virtual int sendReply(void* request, void *reply);                              \
   virtual void deleteRequestData(void *request);                                  \
   virtual void on_data_available(DDS::DataReader* reader);                        \
                                                                                   \

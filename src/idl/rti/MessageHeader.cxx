@@ -258,3 +258,428 @@ RTIBool Identification_copy(
 #undef TSeq
 #undef T
 
+/* ========================================================================= */
+const char *RequestHeaderTYPENAME = "RequestHeader";
+
+DDS_TypeCode* RequestHeader_get_typecode()
+{
+    static RTIBool is_initialized = RTI_FALSE;
+
+    static DDS_TypeCode RequestHeader_g_tc_remoteServiceName_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+
+    static DDS_TypeCode_Member RequestHeader_g_tc_members[3]=
+    {
+        {
+            (char *)"clientId",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"remoteServiceName",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"requestSequenceNumber",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        }
+    };
+
+    static DDS_TypeCode RequestHeader_g_tc =
+    {{
+        DDS_TK_STRUCT,/* Kind */
+        DDS_BOOLEAN_FALSE, /* Ignored */
+        -1,/* Ignored */
+        (char *)"RequestHeader", /* Name */
+        NULL, /* Ignored */
+        0, /* Ignored */
+        0, /* Ignored */
+        NULL, /* Ignored */
+        3, /* Number of members */
+        RequestHeader_g_tc_members, /* Members */
+        DDS_VM_NONE /* Ignored */
+    }}; /* Type code for RequestHeader*/
+
+    if (is_initialized) {
+        return &RequestHeader_g_tc;
+    }
+
+
+    RequestHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
+    RequestHeader_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&RequestHeader_g_tc_remoteServiceName_string;
+    RequestHeader_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
+
+    is_initialized = RTI_TRUE;
+
+    return &RequestHeader_g_tc;
+}
+
+
+RTIBool RequestHeader_initialize(
+    RequestHeader* sample) {
+  return RequestHeader_initialize_ex(sample,RTI_TRUE);
+}
+        
+RTIBool RequestHeader_initialize_ex(
+    RequestHeader* sample,RTIBool allocatePointers)
+{
+        
+    
+    if (allocatePointers) {} /* To avoid warnings */
+
+
+    if (!Identification_initialize_ex(&sample->clientId,allocatePointers)) {
+        return RTI_FALSE;
+    }
+            
+    sample->remoteServiceName = DDS_String_alloc((255));
+    if (sample->remoteServiceName == NULL) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_initUnsignedLong(&sample->requestSequenceNumber)) {
+        return RTI_FALSE;
+    }                
+            
+
+    return RTI_TRUE;
+}
+
+void RequestHeader_finalize(
+    RequestHeader* sample)
+{
+    RequestHeader_finalize_ex(sample,RTI_TRUE);
+}
+        
+void RequestHeader_finalize_ex(
+    RequestHeader* sample,RTIBool deletePointers)
+{        
+    if (sample) { } /* To avoid warnings */
+    if (deletePointers) {} /* To avoid warnings */
+
+
+    Identification_finalize_ex(&sample->clientId,deletePointers);
+            
+    DDS_String_free(sample->remoteServiceName);                
+            
+}
+
+RTIBool RequestHeader_copy(
+    RequestHeader* dst,
+    const RequestHeader* src)
+{        
+
+    if (!Identification_copy(
+        &dst->clientId, &src->clientId)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyString(
+        dst->remoteServiceName, src->remoteServiceName, (255) + 1)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->requestSequenceNumber, &src->requestSequenceNumber)) {
+        return RTI_FALSE;
+    }
+            
+
+    return RTI_TRUE;
+}
+
+
+/**
+ * <<IMPLEMENTATION>>
+ *
+ * Defines:  TSeq, T
+ *
+ * Configure and implement 'RequestHeader' sequence class.
+ */
+#define T RequestHeader
+#define TSeq RequestHeaderSeq
+#define T_initialize_ex RequestHeader_initialize_ex
+#define T_finalize_ex   RequestHeader_finalize_ex
+#define T_copy       RequestHeader_copy
+
+#ifndef NDDS_STANDALONE_TYPE
+#include "dds_c/generic/dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp/generic/dds_cpp_sequence_TSeq.gen"
+#endif
+#else
+#include "dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp_sequence_TSeq.gen"
+#endif
+#endif
+
+#undef T_copy
+#undef T_finalize_ex
+#undef T_initialize_ex
+#undef TSeq
+#undef T
+
+/* ========================================================================= */
+const char *ReplyHeaderTYPENAME = "ReplyHeader";
+
+DDS_TypeCode* ReplyHeader_get_typecode()
+{
+    static RTIBool is_initialized = RTI_FALSE;
+
+    static DDS_TypeCode ReplyHeader_g_tc_ddsrpcRetMsg_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+
+    static DDS_TypeCode_Member ReplyHeader_g_tc_members[4]=
+    {
+        {
+            (char *)"clientId",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"requestSequenceNumber",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_TRUE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"ddsrpcRetCode",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"ddsrpcRetMsg",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        }
+    };
+
+    static DDS_TypeCode ReplyHeader_g_tc =
+    {{
+        DDS_TK_STRUCT,/* Kind */
+        DDS_BOOLEAN_FALSE, /* Ignored */
+        -1,/* Ignored */
+        (char *)"ReplyHeader", /* Name */
+        NULL, /* Ignored */
+        0, /* Ignored */
+        0, /* Ignored */
+        NULL, /* Ignored */
+        4, /* Number of members */
+        ReplyHeader_g_tc_members, /* Members */
+        DDS_VM_NONE /* Ignored */
+    }}; /* Type code for ReplyHeader*/
+
+    if (is_initialized) {
+        return &ReplyHeader_g_tc;
+    }
+
+
+    ReplyHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
+    ReplyHeader_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
+    ReplyHeader_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    ReplyHeader_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ReplyHeader_g_tc_ddsrpcRetMsg_string;
+
+    is_initialized = RTI_TRUE;
+
+    return &ReplyHeader_g_tc;
+}
+
+
+RTIBool ReplyHeader_initialize(
+    ReplyHeader* sample) {
+  return ReplyHeader_initialize_ex(sample,RTI_TRUE);
+}
+        
+RTIBool ReplyHeader_initialize_ex(
+    ReplyHeader* sample,RTIBool allocatePointers)
+{
+        
+    
+    if (allocatePointers) {} /* To avoid warnings */
+
+
+    if (!Identification_initialize_ex(&sample->clientId,allocatePointers)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_initUnsignedLong(&sample->requestSequenceNumber)) {
+        return RTI_FALSE;
+    }                
+            
+    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
+        return RTI_FALSE;
+    }                
+            
+    sample->ddsrpcRetMsg = DDS_String_alloc((255));
+    if (sample->ddsrpcRetMsg == NULL) {
+        return RTI_FALSE;
+    }
+            
+
+    return RTI_TRUE;
+}
+
+void ReplyHeader_finalize(
+    ReplyHeader* sample)
+{
+    ReplyHeader_finalize_ex(sample,RTI_TRUE);
+}
+        
+void ReplyHeader_finalize_ex(
+    ReplyHeader* sample,RTIBool deletePointers)
+{        
+    if (sample) { } /* To avoid warnings */
+    if (deletePointers) {} /* To avoid warnings */
+
+
+    Identification_finalize_ex(&sample->clientId,deletePointers);
+            
+    DDS_String_free(sample->ddsrpcRetMsg);                
+            
+}
+
+RTIBool ReplyHeader_copy(
+    ReplyHeader* dst,
+    const ReplyHeader* src)
+{        
+
+    if (!Identification_copy(
+        &dst->clientId, &src->clientId)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyUnsignedLong(
+        &dst->requestSequenceNumber, &src->requestSequenceNumber)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyLong(
+        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+        return RTI_FALSE;
+    }
+            
+    if (!RTICdrType_copyString(
+        dst->ddsrpcRetMsg, src->ddsrpcRetMsg, (255) + 1)) {
+        return RTI_FALSE;
+    }
+            
+
+    return RTI_TRUE;
+}
+
+
+/**
+ * <<IMPLEMENTATION>>
+ *
+ * Defines:  TSeq, T
+ *
+ * Configure and implement 'ReplyHeader' sequence class.
+ */
+#define T ReplyHeader
+#define TSeq ReplyHeaderSeq
+#define T_initialize_ex ReplyHeader_initialize_ex
+#define T_finalize_ex   ReplyHeader_finalize_ex
+#define T_copy       ReplyHeader_copy
+
+#ifndef NDDS_STANDALONE_TYPE
+#include "dds_c/generic/dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp/generic/dds_cpp_sequence_TSeq.gen"
+#endif
+#else
+#include "dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp_sequence_TSeq.gen"
+#endif
+#endif
+
+#undef T_copy
+#undef T_finalize_ex
+#undef T_initialize_ex
+#undef TSeq
+#undef T
+

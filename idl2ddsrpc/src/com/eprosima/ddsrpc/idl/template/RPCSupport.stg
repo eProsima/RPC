@@ -28,13 +28,13 @@ group RPCSupport;
  * Produces the ClientRPCSupport header file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
- *   funNames     : list of the interface function names. 
+ *   topicNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
  *  clientRPCHeader - local
  */ 
-ClientHeader(interfaceName, funNames) ::= <<
+ClientHeader(interfaceName, topicNames) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 
@@ -43,7 +43,7 @@ $doNotEditC()$
 #include "utils/GenericClientRPC.h"
 $ReqRepRIncludes(interfaceName=interfaceName)$
 
-$funNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+$topicNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 #endif  // _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 >>
@@ -53,13 +53,13 @@ $funNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
  * Produces the ClientRPCSupport header file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
- *   funNames     : list of the interface function names. 
+ *   topicNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
  *  clientRPCHeader - local
  */ 
-ServerHeader(interfaceName,funNames) ::= <<
+ServerHeader(interfaceName,topicNames) ::= <<
 #ifndef _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 
@@ -69,7 +69,7 @@ $doNotEditC()$
 $ReqRepRIncludes(interfaceName=interfaceName)$
 
 
-$funNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+$topicNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 #endif  // _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 >>
@@ -79,18 +79,18 @@ $funNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
  * Produces the ClientRPCSupport implementation file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
- *   funNames     : list of the interface function names. 
+ *   topicNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
  *  clientRPCHeader - local
  */ 
-ClientDefinition(interfaceName,funNames) ::= <<
+ClientDefinition(interfaceName,topicNames) ::= <<
 $doNotEditC()$
 
 #include "$interfaceName$ClientRPCSupport.h"
 
-$funNames:{$ClientRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+$topicNames:{$ClientRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 >>
 
@@ -99,19 +99,19 @@ $funNames:{$ClientRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
  * Produces the ClientRPCSupport implementation file.
  * Params:
  *   interfaceName: Name of the interface whose methods this proxy invokes.
- *   funNames     : list of the interface function names. 
+ *   topicNames     : list of the interface function names. 
  *
  * Uses:
  *  doNotEditC                - inherited(cplusplus)
  *  clientRPCHeader - local
  */ 
-ServerDefinition(interfaceName,funNames) ::= <<
+ServerDefinition(interfaceName,topicNames) ::= <<
 $doNotEditC()$
 
 #include "server/Server.h"
 #include "$interfaceName$ServerRPCSupport.h"
 
-$funNames:{$ServerRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+$topicNames:{$ServerRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
 
 >>
 

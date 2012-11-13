@@ -4,7 +4,8 @@
 #include "utils/Typedefs.h"
 #include "utils/Utilities.h"
 #include "eProsima_c/eProsimaMacros.h"
-#include "exceptions/ResourceException.h"
+#include "exceptions/InitializeException.h"
+#include "MessageHeader.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
@@ -40,6 +41,10 @@ namespace eProsima
 						errorMessage = "Cannot enable the DDS entities";
 					}
 				}
+				else
+				{
+					errorMessage = "Cannot create the DDS entities";
+				}
 			}
 			else
 			{
@@ -47,7 +52,7 @@ namespace eProsima
 			}
 
 			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
-            throw ResourceException(errorMessage);
+            throw InitializeException(errorMessage);
 		}
 
 		ClientRPC::~ClientRPC()
@@ -57,12 +62,27 @@ namespace eProsima
 				delete m_mutex;
 				m_mutex = NULL;
 			}
+
+			if(m_replyDataReader != NULL)
+			    m_replySubscriber->delete_datareader(m_replyDataReader);
+			if(m_replyFilter != NULL)
+				m_client->getParticipant()->delete_contentfilteredtopic(m_replyFilter);
+			if(m_replyTopic != NULL)
+				m_client->getParticipant()->delete_topic(m_replyTopic);
+			if(m_replySubscriber != NULL)
+				 m_client->getParticipant()->delete_subscriber(m_replySubscriber);
+			if(m_requestDataWriter != NULL)
+				m_requestPublisher->delete_datawriter(m_requestDataWriter);
+			if(m_requestTopic)
+				m_client->getParticipant()->delete_topic(m_requestTopic);
+			if(m_requestPublisher != NULL)
+				m_client->getParticipant()->delete_publisher(m_requestPublisher);
 		}
 
 		ReturnMessage ClientRPC::execute(void *request, void *reply, long timeout)
 		{
 			const char* const METHOD_NAME = "execute";
-			ReturnMessage returnedValue = CLIENT_ERROR;
+			ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
 			DDS::WaitSet *waitSet = NULL;
 			DDS::ReturnCode_t retCode;
             boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
@@ -71,14 +91,16 @@ namespace eProsima
 
 			if(request != NULL)
 			{
-				*(unsigned int*)request = m_clientServiceId[0];
-				((unsigned int*)request)[1] = m_clientServiceId[1];
-				((unsigned int*)request)[2] = m_clientServiceId[2];
-				((unsigned int*)request)[3] = m_clientServiceId[3];
+				RequestHeader *reqhead = (RequestHeader*)request;
+				reqhead->clientId.value_1 = m_clientServiceId[0];
+				reqhead->clientId.value_2 = m_clientServiceId[1];
+				reqhead->clientId.value_3 = m_clientServiceId[2];
+				reqhead->clientId.value_4 = m_clientServiceId[3];
+				reqhead->remoteServiceName = (char*)m_client->getRemoteServiceName().c_str();
 
 				m_mutex->lock();
 				/* Thread safe num_Sec handling */
-				((unsigned int*)request)[4] = m_numSec;
+				reqhead->requestSequenceNumber = m_numSec;
 				numSec = m_numSec;
 				m_numSec++;
 				m_mutex->unlock();
@@ -120,7 +142,7 @@ namespace eProsima
                                 stringSeq[4] = strdup(value);
 
                                 DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                        "clientServiceId.value_1 = %0 and clientServiceId.value_2 = %1 and clientServiceId.value_3 = %2 and clientServiceId.value_4 = %3 and numSec = %4",
+                                        "header.clientId.value_1 = %0 and header.clientId.value_2 = %1 and header.clientId.value_3 = %2 and header.clientId.value_4 = %3 and header.requestSequenceNumber = %4",
                                         stringSeq);
 
                                 if(query != NULL)
@@ -183,6 +205,9 @@ namespace eProsima
 				{
 					printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
 				}
+				
+				// Set the remoteServiceName to NULL.
+				reqhead->remoteServiceName = NULL;
 			}
 			else
             {
@@ -195,7 +220,7 @@ namespace eProsima
         ReturnMessage ClientRPC::executeAsync(void *request, AsyncTask *task, long timeout)
         {
 			const char* const METHOD_NAME = "executeAsync";
-			ReturnMessage returnedValue = CLIENT_ERROR;
+			ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
 			DDS::WaitSet *waitSet = NULL;
 			unsigned int numSec = 0;
 			char value[50];
@@ -241,7 +266,7 @@ namespace eProsima
                             stringSeq[4] = strdup(value);
 
                             DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                    "clientServiceId.value_1 = %0 and clientServiceId.value_2 = %1 and clientServiceId.value_3 = %2 and clientServiceId.value_4 = %3 and numSec = %4",
+                                    "header.clientId.value_1 = %0 and header.clientId.value_2 = %1 and header.clientId.value_3 = %2 and header.clientId.value_4 = %3 and header.requestSequenceNumber = %4",
                                     stringSeq);
 
                             if(query != NULL)
@@ -373,7 +398,6 @@ namespace eProsima
 				const char *requestTypeName, const char *replyTypeName)
 		{
 			const char* const METHOD_NAME = "createEntities";
-			char topicNames[100];
 			DDS::PublisherQos publisherQos;
 			DDS::SubscriberQos subscriberQos;
 
@@ -390,11 +414,7 @@ namespace eProsima
 
 							if(requestTypeName != NULL)
 							{
-								strncpy(topicNames, rpcName, 49); topicNames[49] = '\0';
-								strncat(topicNames, "-", 1);
-								strncat(topicNames, requestTypeName, 49); topicNames[99] = '\0';
-
-								if((m_requestTopic = participant->create_topic(topicNames, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+								if((m_requestTopic = participant->create_topic(requestTypeName, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
 								{
                                     DDS::DataWriterQos wQos = DDS::DataWriterQos();
 
@@ -416,27 +436,17 @@ namespace eProsima
                                                     subscriberQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
                                                     m_replySubscriber->set_qos(subscriberQos);
 
-                                                    strncpy(topicNames, rpcName, 49); topicNames[49] = '\0';
-                                                    strncat(topicNames, "-", 1);
-                                                    strncat(topicNames, replyTypeName, 49); topicNames[99] = '\0';
-
-                                                    if((m_replyTopic = participant->create_topic(topicNames, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                                    if((m_replyTopic = participant->create_topic(replyTypeName, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                                                     {
                                                         DDS::StringSeq stringSeq(4);
-                                                        char value[50];
-
-                                                        stringSeq.length(4);
-                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                                                        stringSeq[0] = strdup(value);
-                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                                                        stringSeq[1] = strdup(value);
-                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                                                        stringSeq[2] = strdup(value);
-                                                        SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                                                        stringSeq[3] = strdup(value);
+														stringSeq.length(4);
+                                                        stringSeq[0] = strdup("0");
+                                                        stringSeq[1] = strdup("0");
+                                                        stringSeq[2] = strdup("0");
+                                                        stringSeq[3] = strdup("0");
 
                                                         if((m_replyFilter = participant->create_contentfilteredtopic(rpcName, m_replyTopic,
-                                                                        "clientServiceId.value_1 = %0 and clientServiceId.value_2 = %1 and clientServiceId.value_3 = %2 and clientServiceId.value_4 = %3",
+                                                                        "header.clientId.value_1 = %0 and header.clientId.value_2 = %1 and header.clientId.value_3 = %2 and header.clientId.value_4 = %3",
                                                                         stringSeq)) != NULL)
                                                         {
                                                             DDS::DataReaderQos rQos = DDS::DataReaderQos();
@@ -454,6 +464,10 @@ namespace eProsima
 
                                                             participant->delete_contentfilteredtopic(m_replyFilter);
                                                         }
+														else
+														{
+															printf("ERROR<%s::%s>: Cannot create the reply filter\n", CLASS_NAME, METHOD_NAME);
+														}
 
                                                         participant->delete_topic(m_replyTopic);
                                                     }

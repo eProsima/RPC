@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderSupport_953111474_h
-#define MessageHeaderSupport_953111474_h
+#ifndef MessageHeaderSupport_953111818_h
+#define MessageHeaderSupport_953111818_h
 
 /* Uses */
 #include "MessageHeader.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* MessageHeaderSupport_953111474_h */
+#endif  /* MessageHeaderSupport_953111818_h */

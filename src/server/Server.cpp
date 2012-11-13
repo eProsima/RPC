@@ -1,6 +1,6 @@
 #include "server/Server.h"
 #include "server/ServerRPC.h"
-#include "exceptions/ResourceException.h"
+#include "exceptions/InitializeException.h"
 #include "utils/Utilities.h"
 #include "transports/Transport.h"
 #include "transports/UDPTransport.h"
@@ -16,7 +16,7 @@ namespace eProsima
 	namespace DDSRPC
 	{
 
-		Server::Server(ServerStrategy *strategy, Transport *transport, int domainId) : m_domainId(domainId),
+		Server::Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId) : m_serviceName(serviceName), m_domainId(domainId),
         m_strategy(strategy), m_participant(NULL), m_defaultTransport(false), m_transport(transport)
 		{
 			const char* const METHOD_NAME = "Server";
@@ -86,7 +86,7 @@ namespace eProsima
             }
 
 			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
-            throw ResourceException(errorMessage);
+            throw InitializeException(errorMessage);
 		}
 
 		void Server::deleteRPCs()
@@ -126,7 +126,7 @@ namespace eProsima
 				delete m_transport;
 		}
 
-		DDS::DomainParticipant* Server::getParticipant()
+		DDS::DomainParticipant* Server::getParticipant() const
 		{ 
 			return m_participant;
 		}
@@ -160,6 +160,11 @@ namespace eProsima
 		void Server::schedule(fExecFunction execFunction, void *data, ServerRPC *service)
 		{
             m_strategy->schedule(execFunction, data, this, service);
+		}
+
+		const std::string& Server::getServiceName() const
+		{
+			return m_serviceName;
 		}
 
 	} // namespace DDSRPC

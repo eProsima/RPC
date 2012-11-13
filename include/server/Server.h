@@ -6,6 +6,7 @@
 #include "utils/Typedefs.h"
 #include "utils/Version.h"
 
+#include <string>
 #include <list>
 
 #define DDSRPC_DEFAULT_PERIOD_MILLISEC 5000
@@ -39,19 +40,34 @@ namespace eProsima
 				 */
 				void schedule(fExecFunction execFunction, void *data, ServerRPC *service);
 
+				/**
+				 * \brief This function returns the name of the server that the server offers.
+				 *
+				 * \return The name of the service.
+				 */
+				const std::string& getServiceName() const;
+
+				/**
+				 * \brief This function returns the DDS domain participant that use this server.
+				 *
+				 * \return Pointer to the DDS domain participant.
+				 */
+				DDS::DomainParticipant* getParticipant() const;
+
 			protected:
 
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
+				 * \param serviceName The name of the service that the server offers. Proxies will use this name to connect with the server.
 				 * \param strategy The strategy used by the server to execute new requests.
-				          This class doesn't delete this object in its destructor. Cannot be NULL.
+				 *         This class doesn't delete this object in its destructor. Cannot be NULL.
 				 * \param transport The transport that will be use the server. This class doesn't delete this object in its destructor.
 				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
 				 * \exception eProsima::DDSRPC::ResourceException 
 				 */
-				Server(ServerStrategy *strategy, Transport *transport, int domainId = 0);
+				Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId = 0);
 
 				/// \brief The default destructor.
 				virtual ~Server();
@@ -64,14 +80,10 @@ namespace eProsima
 				 */
 				int setRPC(ServerRPC *newRPC);
 
-				/**
-				 * \brief This function returns the DDS domain participant that use this server.
-				 *
-				 * \return Pointer to the DDS domain participant.
-				 */
-				DDS::DomainParticipant* getParticipant();
-
 			private:
+
+				/// \brief The name of the service that the server offers. Proxies will use this name to connect with the server.
+				std::string m_serviceName;
 
 				/// \brief The domain identifier.
 				int m_domainId;

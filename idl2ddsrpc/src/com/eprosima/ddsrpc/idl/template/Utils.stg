@@ -76,7 +76,7 @@ $classes:{$it$};separator="\n"$
  * Produces header file for Request&Reply Topic data type Utils
  * 
  * Params:
- *   funName    : name of the function the generated Request/Reply topic data utils belongs to.
+ *   topicName    : name of the function the generated Request/Reply topic data utils belongs to.
  *   type       : Request/Reply
  *   params     : List of previous arguments in the function call. Nullable.
  *   returnType : function return type.
@@ -86,17 +86,17 @@ $classes:{$it$};separator="\n"$
  *   argDeclRef - inherited(cplusplus)
  *   lastParam  - local
  */ 
-header(funName, templateName, params, returnType, isReply) ::= <<
+header(topicName, templateName, params, returnType, isReply) ::= <<
 
-class $funName$$templateName$Utils
+class $topicName$$templateName$Utils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData($funName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$);
+        static void setTypeData($topicName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$);
         
-        static void extractTypeData($funName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$);
+        static void extractTypeData($topicName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$);
 };
 
 >>
@@ -106,7 +106,7 @@ class $funName$$templateName$Utils
  * Produces Implementation file for Request&Reply Topic data type Utils
  * 
  * Params:
- *   funName       : name of the function the generated Request/Reply topic data utils belongs to.
+ *   topicName       : name of the function the generated Request/Reply topic data utils belongs to.
  *   type          : Request/Reply
  *   params        : List of previous arguments in the function call. Nullable.
  *   returnType    : function return type.
@@ -118,17 +118,17 @@ class $funName$$templateName$Utils
  *   createDataHelper  - local
  *   extractDataHelper - local
  */ 
-definition(funName, templateName, params, returnType, isReply) ::= <<
+definition(topicName, templateName, params, returnType, isReply) ::= <<
 
-const char* $funName$$templateName$Utils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* $topicName$$templateName$Utils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        $getTypename(funName=funName, type=templateName, name="typeName")$
+        $getTypename(funName=topicName, type=templateName, name="typeName")$
 
-        if($registerTypename(funName=funName, type=templateName, name="typeName")$ != DDS::RETCODE_OK)
+        if($registerTypename(funName=topicName, type=templateName, name="typeName")$ != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -137,7 +137,7 @@ const char* $funName$$templateName$Utils::registerType(DDS::DomainParticipant *c
     return typeName;
 }
 
-void $funName$$templateName$Utils::setTypeData($funName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$)
+void $topicName$$templateName$Utils::setTypeData($topicName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$)
 {
     $params : {$createDataHelper(param=it)$};separator="\n"$
     $if(returnType)$
@@ -145,9 +145,9 @@ void $funName$$templateName$Utils::setTypeData($funName$$templateName$& instance
     $endif$    
 }
 
-void $funName$$templateName$Utils::extractTypeData($funName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$)
+void $topicName$$templateName$Utils::extractTypeData($topicName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$)
 {
-    $if(isReply)$retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;$endif$
+    $if(isReply)$retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;$endif$
     $params : {$extractDataHelper(param=it, isReply=isReply)$};separator="\n"$  
     $if(returnType)$
     $extractDataHelper(param=returnType, isReply=isReply)$        
