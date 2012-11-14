@@ -36,7 +36,8 @@ namespace eProsima
             if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
             {
                 boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, data, server, service));
-                boost::thread *thread = new boost::thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+                boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+                thread.detach();
             }
             else
             {

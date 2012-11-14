@@ -5,18 +5,11 @@ namespace eProsima
 {
 	namespace DDSRPC
 	{
-#define DDS_TIMEOUT(name, duration) DDS::Duration_t name = {duration.total_seconds(), duration.fractional_seconds()}; \
-        if(duration.num_fractional_digits() == 3) \
-           name.nanosec *= 1000000; \
-        if(duration.num_fractional_digits() == 6) \
-           name.nanosec *= 1000;
+#define DDS_TIMEOUT(name, duration) DDS::Duration_t name = {duration.total_seconds(), \
+    static_cast<RTI_UINT32>(duration.fractional_seconds() * (1000000000 / boost::posix_time::time_duration::traits_type::res_adjust()))};
 
 #define DDS_TIMEOUT_SET(name, duration) name.sec = duration.total_seconds(); \
-        name.nanosec = duration.fractional_seconds(); \
-        if(duration.num_fractional_digits() == 3) \
-           name.nanosec *= 1000000; \
-        if(duration.num_fractional_digits() == 6) \
-           name.nanosec *= 1000;
+        name.nanosec = static_cast<RTI_UINT32>(duration.fractional_seconds() * (1000000000 / boost::posix_time::time_duration::traits_type::res_adjust()));
 
 
 		class ServerRPC;

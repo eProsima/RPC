@@ -23,7 +23,7 @@ namespace eProsima
 
 			ServerInternalException& operator=(ServerInternalException&& ex);
 
-			virtual ~ServerInternalException();
+			virtual ~ServerInternalException() DDSRPC_USE_NOEXCEPT;
 
 			virtual void raise() const;
         };

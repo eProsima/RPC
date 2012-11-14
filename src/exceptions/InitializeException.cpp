@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		InitializeException::~InitializeException()
+		InitializeException::~InitializeException() DDSRPC_USE_NOEXCEPT
 		{
 		}
 

@@ -665,19 +665,14 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ../../src/client \
-                         ../../src/idl/rti \
-                         ../../src/server \
-                         ../../src/strategies \
-                         ../../src/transports \
-                         ../../src/utils \
-                         ../../include/client \
+INPUT                  = ../../include/client \
                          ../../include/exceptions \
                          ../../include/idl/rti \
                          ../../include/server \
                          ../../include/strategies \
                          ../../include/transports \
-                         ../../include/utils
+                         ../../include/utils \
+                         ./foo
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 

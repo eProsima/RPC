@@ -27,7 +27,7 @@ namespace eProsima
                 AsyncTask(Client *client);
 
 				/// \brief Default destructor.
-                ~AsyncTask();
+                virtual ~AsyncTask();
 
 				/**
 				 * \brief This function executes the callback functions when a reply is received or an error occurs.

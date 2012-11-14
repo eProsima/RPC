@@ -1,0 +1,4 @@
+interface FooInterface
+{
+	void foo_procedure();
+};

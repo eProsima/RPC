@@ -32,11 +32,11 @@ namespace eProsima
 			return *this;
 		}
 
-		Exception::~Exception()
+		Exception::~Exception() DDSRPC_USE_NOEXCEPT
 		{
 		}
 
-		const char* Exception::what() const
+		const char* Exception::what() const throw()
 		{
 			return m_message.c_str();
 		}

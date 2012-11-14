@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ServerNotFoundException::~ServerNotFoundException()
+		ServerNotFoundException::~ServerNotFoundException() DDSRPC_USE_NOEXCEPT
 		{
 		}
 

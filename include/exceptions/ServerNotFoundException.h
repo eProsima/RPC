@@ -23,7 +23,7 @@ namespace eProsima
 
 			ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
-			virtual ~ServerNotFoundException();
+			virtual ~ServerNotFoundException() DDSRPC_USE_NOEXCEPT;
 
 			virtual void raise() const;
         };

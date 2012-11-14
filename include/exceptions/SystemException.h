@@ -13,7 +13,7 @@ namespace eProsima
         {
 		public:
 
-			virtual ~SystemException();
+			virtual ~SystemException() DDSRPC_USE_NOEXCEPT;
 
 			const int32_t& minor() const;
 

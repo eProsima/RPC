@@ -43,7 +43,7 @@ namespace eProsima
 			return *this;
 		}
 
-		SystemException::~SystemException()
+		SystemException::~SystemException() DDSRPC_USE_NOEXCEPT
 		{
 		}
 

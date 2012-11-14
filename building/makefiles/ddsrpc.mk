@@ -46,6 +46,13 @@ DDSRPC_SRC_CPPFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
 			$(BASEDIR)/src/strategies/SingleThreadStrategy.cpp \
 			$(BASEDIR)/src/strategies/ThreadPerRequestStrategy.cpp \
+            $(BASEDIR)/src/exceptions/Exception.cpp \
+            $(BASEDIR)/src/exceptions/ClientInternalException.cpp \
+            $(BASEDIR)/src/exceptions/InitializeException.cpp \
+            $(BASEDIR)/src/exceptions/ServerInternalException.cpp \
+            $(BASEDIR)/src/exceptions/ServerNotFoundException.cpp \
+            $(BASEDIR)/src/exceptions/ServerTimeoutException.cpp \
+            $(BASEDIR)/src/exceptions/SystemException.cpp \
 			$(SPECIFIC_SRC_CPPFILES)
 
 # Project sources are copied to the current directory

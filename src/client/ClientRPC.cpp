@@ -15,107 +15,107 @@ static const char* const CLASS_NAME = "eProsima::DDSRPC::ClientRPC";
 
 namespace eProsima
 {
-	namespace DDSRPC
-	{
+    namespace DDSRPC
+    {
 
-		ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName, Client *client) :
+        ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName, Client *client) :
             m_client(client), m_requestPublisher(NULL),
-		m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS::HANDLE_NIL)
-		{
-			const char* const METHOD_NAME = "ClientRPC";
-			std::string errorMessage;
-    
-			m_mutex =  new boost::mutex();
+            m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS::HANDLE_NIL)
+        {
+            const char* const METHOD_NAME = "ClientRPC";
+            std::string errorMessage;
 
-			if(m_mutex != NULL)
-			{
-				if(createEntities(client->getParticipant(), rpcName, requestTypeName, replyTypeName))
-				{
-					if(enableEntities())
-					{
-						strncpy(m_rpcName, rpcName, 50);
-						return;
-					}
-					else
-					{
-						errorMessage = "Cannot enable the DDS entities";
-					}
-				}
-				else
-				{
-					errorMessage = "Cannot create the DDS entities";
-				}
-			}
-			else
-			{
-				errorMessage = "Cannot create the mutex";
-			}
+            m_mutex =  new boost::mutex();
 
-			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+            if(m_mutex != NULL)
+            {
+                if(createEntities(client->getParticipant(), rpcName, requestTypeName, replyTypeName))
+                {
+                    if(enableEntities())
+                    {
+                        strncpy(m_rpcName, rpcName, 50);
+                        return;
+                    }
+                    else
+                    {
+                        errorMessage = "Cannot enable the DDS entities";
+                    }
+                }
+                else
+                {
+                    errorMessage = "Cannot create the DDS entities";
+                }
+            }
+            else
+            {
+                errorMessage = "Cannot create the mutex";
+            }
+
+            printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
             throw InitializeException(errorMessage);
-		}
+        }
 
-		ClientRPC::~ClientRPC()
-		{
-			if(m_mutex != NULL)
-			{
-				delete m_mutex;
-				m_mutex = NULL;
-			}
+        ClientRPC::~ClientRPC()
+        {
+            if(m_mutex != NULL)
+            {
+                delete m_mutex;
+                m_mutex = NULL;
+            }
 
-			if(m_replyDataReader != NULL)
-			    m_replySubscriber->delete_datareader(m_replyDataReader);
-			if(m_replyFilter != NULL)
-				m_client->getParticipant()->delete_contentfilteredtopic(m_replyFilter);
-			if(m_replyTopic != NULL)
-				m_client->getParticipant()->delete_topic(m_replyTopic);
-			if(m_replySubscriber != NULL)
-				 m_client->getParticipant()->delete_subscriber(m_replySubscriber);
-			if(m_requestDataWriter != NULL)
-				m_requestPublisher->delete_datawriter(m_requestDataWriter);
-			if(m_requestTopic)
-				m_client->getParticipant()->delete_topic(m_requestTopic);
-			if(m_requestPublisher != NULL)
-				m_client->getParticipant()->delete_publisher(m_requestPublisher);
-		}
+            if(m_replyDataReader != NULL)
+                m_replySubscriber->delete_datareader(m_replyDataReader);
+            if(m_replyFilter != NULL)
+                m_client->getParticipant()->delete_contentfilteredtopic(m_replyFilter);
+            if(m_replyTopic != NULL)
+                m_client->getParticipant()->delete_topic(m_replyTopic);
+            if(m_replySubscriber != NULL)
+                m_client->getParticipant()->delete_subscriber(m_replySubscriber);
+            if(m_requestDataWriter != NULL)
+                m_requestPublisher->delete_datawriter(m_requestDataWriter);
+            if(m_requestTopic)
+                m_client->getParticipant()->delete_topic(m_requestTopic);
+            if(m_requestPublisher != NULL)
+                m_client->getParticipant()->delete_publisher(m_requestPublisher);
+        }
 
-		ReturnMessage ClientRPC::execute(void *request, void *reply, long timeout)
-		{
-			const char* const METHOD_NAME = "execute";
-			ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-			DDS::WaitSet *waitSet = NULL;
-			DDS::ReturnCode_t retCode;
+        ReturnMessage ClientRPC::execute(void *request, void *reply, long timeout)
+        {
+            const char* const METHOD_NAME = "execute";
+            ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
+            DDS::WaitSet *waitSet = NULL;
+            DDS::ReturnCode_t retCode;
             boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
-			unsigned int numSec = 0;
-			char value[50];
+            unsigned int numSec = 0;
+            char value[50];
 
-			if(request != NULL)
-			{
-				RequestHeader *reqhead = (RequestHeader*)request;
-				reqhead->clientId.value_1 = m_clientServiceId[0];
-				reqhead->clientId.value_2 = m_clientServiceId[1];
-				reqhead->clientId.value_3 = m_clientServiceId[2];
-				reqhead->clientId.value_4 = m_clientServiceId[3];
-				reqhead->remoteServiceName = (char*)m_client->getRemoteServiceName().c_str();
+            if(request != NULL)
+            {
+                RequestHeader *reqhead = (RequestHeader*)request;
+                reqhead->clientId.value_1 = m_clientServiceId[0];
+                reqhead->clientId.value_2 = m_clientServiceId[1];
+                reqhead->clientId.value_3 = m_clientServiceId[2];
+                reqhead->clientId.value_4 = m_clientServiceId[3];
+                reqhead->remoteServiceName = (char*)m_client->getRemoteServiceName().c_str();
 
-				m_mutex->lock();
-				/* Thread safe num_Sec handling */
-				reqhead->requestSequenceNumber = m_numSec;
-				numSec = m_numSec;
-				m_numSec++;
-				m_mutex->unlock();
+                m_mutex->lock();
+                /* Thread safe num_Sec handling */
+                reqhead->requestSequenceNumber = m_numSec;
+                numSec = m_numSec;
+                m_numSec++;
+                m_mutex->unlock();
 
-				//info->data = reply;
-				// Matching server (Request DataReader) detection.
-				// Drawbacks:
-				//		1.- If the publication matched status is triggered between get_publication_matched_status()
-				//          and wait() calls it will be missed.
-				//      2.- If there is no matched entity the total wait time may be up to 2* tTimeout
+                //info->data = reply;
+                // Matching server (Request DataReader) detection.
+                // Drawbacks:
+                //		1.- If the publication matched status is triggered between get_publication_matched_status()
+                //          and wait() calls it will be missed.
+                //      2.- If there is no matched entity the total wait time may be up to 2* tTimeout
 
-				waitSet = new DDS::WaitSet();
+                waitSet = new DDS::WaitSet();
 
-				if(waitSet != NULL)
-				{
+                if(waitSet != NULL)
+                {
                     if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
                     {
                         // Register instance.
@@ -153,6 +153,7 @@ namespace eProsima
                                     {
                                         DDS::ConditionSeq conds;
                                         DDS_TIMEOUT(ddsTimeout, tTimeout);
+printf("Seconds: %d, Nanosecs: %u\n", ddsTimeout.sec, ddsTimeout.nanosec);
 
                                         retCode = waitSet->wait(conds, ddsTimeout);
 
@@ -199,50 +200,50 @@ namespace eProsima
                         returnedValue = NO_SERVER;
                     }
 
-					delete waitSet;
-				}
-				else
-				{
-					printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
-				}
-				
-				// Set the remoteServiceName to NULL.
-				reqhead->remoteServiceName = NULL;
-			}
-			else
-            {
-				printf("ERROR<%s::%s>: Bad parameter(data)\n", CLASS_NAME, METHOD_NAME);
-			}
+                    delete waitSet;
+                }
+                else
+                {
+                    printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+                }
 
-			return returnedValue;
-		}
+                // Set the remoteServiceName to NULL.
+                reqhead->remoteServiceName = NULL;
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Bad parameter(data)\n", CLASS_NAME, METHOD_NAME);
+            }
+
+            return returnedValue;
+        }
 
         ReturnMessage ClientRPC::executeAsync(void *request, AsyncTask *task, long timeout)
         {
-			const char* const METHOD_NAME = "executeAsync";
-			ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-			DDS::WaitSet *waitSet = NULL;
-			unsigned int numSec = 0;
-			char value[50];
+            const char* const METHOD_NAME = "executeAsync";
+            ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
+            DDS::WaitSet *waitSet = NULL;
+            unsigned int numSec = 0;
+            char value[50];
 
             if(request != NULL && task != NULL)
             {
-				*(unsigned int*)request = m_clientServiceId[0];
-				((unsigned int*)request)[1] = m_clientServiceId[1];
-				((unsigned int*)request)[2] = m_clientServiceId[2];
-				((unsigned int*)request)[3] = m_clientServiceId[3];
+                *(unsigned int*)request = m_clientServiceId[0];
+                ((unsigned int*)request)[1] = m_clientServiceId[1];
+                ((unsigned int*)request)[2] = m_clientServiceId[2];
+                ((unsigned int*)request)[3] = m_clientServiceId[3];
 
-				m_mutex->lock();
-				/* Thread safe num_Sec handling */
-				((unsigned int*)request)[4] = m_numSec;
-				numSec = m_numSec;
-				m_numSec++;
-				m_mutex->unlock();
+                m_mutex->lock();
+                /* Thread safe num_Sec handling */
+                ((unsigned int*)request)[4] = m_numSec;
+                numSec = m_numSec;
+                m_numSec++;
+                m_mutex->unlock();
 
-				waitSet = new DDS::WaitSet();
+                waitSet = new DDS::WaitSet();
 
-				if(waitSet != NULL)
-				{
+                if(waitSet != NULL)
+                {
                     if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
                     {
                         // Register instance.
@@ -294,17 +295,17 @@ namespace eProsima
                         returnedValue = NO_SERVER;
                     }
 
-					delete waitSet;
-				}
-				else
-				{
-					printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
-				}
+                    delete waitSet;
+                }
+                else
+                {
+                    printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+                }
             }
-			else
+            else
             {
-				printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-			}
+                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+            }
 
             return returnedValue;
         }
@@ -313,8 +314,8 @@ namespace eProsima
         {
             const char* const METHOD_NAME = "checkServerConnection";
             ReturnMessage returnedValue = OPERATION_SUCCESSFUL;
-			DDS::StatusCondition *statusCondition = NULL;
-			DDS::ReturnCode_t retCode;
+            DDS::StatusCondition *statusCondition = NULL;
+            DDS::ReturnCode_t retCode;
             boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
             DDS_TIMEOUT(ddsTimeout, tTimeout);
 
@@ -386,46 +387,46 @@ namespace eProsima
                     }
                 }
             }
-			else
+            else
             {
-				printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-			}
+                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+            }
 
             return returnedValue;
         }
 
-		int ClientRPC::createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-				const char *requestTypeName, const char *replyTypeName)
-		{
-			const char* const METHOD_NAME = "createEntities";
-			DDS::PublisherQos publisherQos;
-			DDS::SubscriberQos subscriberQos;
+        int ClientRPC::createEntities(DDS::DomainParticipant *participant, const char *rpcName,
+                const char *requestTypeName, const char *replyTypeName)
+        {
+            const char* const METHOD_NAME = "createEntities";
+            DDS::PublisherQos publisherQos;
+            DDS::SubscriberQos subscriberQos;
 
-			if(participant != NULL)
-			{
-				if(rpcName != NULL)
-				{
-					if((m_requestPublisher = participant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
-					{
-						if(m_requestPublisher->get_qos(publisherQos) == DDS::RETCODE_OK)
-						{
-							publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-							m_requestPublisher->set_qos(publisherQos);
+            if(participant != NULL)
+            {
+                if(rpcName != NULL)
+                {
+                    if((m_requestPublisher = participant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                    {
+                        if(m_requestPublisher->get_qos(publisherQos) == DDS::RETCODE_OK)
+                        {
+                            publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                            m_requestPublisher->set_qos(publisherQos);
 
-							if(requestTypeName != NULL)
-							{
-								if((m_requestTopic = participant->create_topic(requestTypeName, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
-								{
+                            if(requestTypeName != NULL)
+                            {
+                                if((m_requestTopic = participant->create_topic(requestTypeName, requestTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                                {
                                     DDS::DataWriterQos wQos = DDS::DataWriterQos();
 
                                     m_requestPublisher->get_default_datawriter_qos(wQos);
 
                                     wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
-                                        
+
                                     m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, wQos, NULL, STATUS_MASK_NONE);
 
-									if(m_requestDataWriter != NULL)
-									{                              
+                                    if(m_requestDataWriter != NULL)
+                                    {                              
                                         // Is not oneway operation
                                         if(replyTypeName != NULL)
                                         {
@@ -439,7 +440,7 @@ namespace eProsima
                                                     if((m_replyTopic = participant->create_topic(replyTypeName, replyTypeName, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                                                     {
                                                         DDS::StringSeq stringSeq(4);
-														stringSeq.length(4);
+                                                        stringSeq.length(4);
                                                         stringSeq[0] = strdup("0");
                                                         stringSeq[1] = strdup("0");
                                                         stringSeq[2] = strdup("0");
@@ -464,10 +465,10 @@ namespace eProsima
 
                                                             participant->delete_contentfilteredtopic(m_replyFilter);
                                                         }
-														else
-														{
-															printf("ERROR<%s::%s>: Cannot create the reply filter\n", CLASS_NAME, METHOD_NAME);
-														}
+                                                        else
+                                                        {
+                                                            printf("ERROR<%s::%s>: Cannot create the reply filter\n", CLASS_NAME, METHOD_NAME);
+                                                        }
 
                                                         participant->delete_topic(m_replyTopic);
                                                     }
@@ -493,60 +494,60 @@ namespace eProsima
                                             return 1;
                                         }
 
-										m_requestPublisher->delete_datawriter(m_requestDataWriter);
-									}
-									else
-									{
-										printf("ERROR<%s::%s>: Cannot create the request data writer\n", CLASS_NAME, METHOD_NAME);
-									}
+                                        m_requestPublisher->delete_datawriter(m_requestDataWriter);
+                                    }
+                                    else
+                                    {
+                                        printf("ERROR<%s::%s>: Cannot create the request data writer\n", CLASS_NAME, METHOD_NAME);
+                                    }
 
-									participant->delete_topic(m_requestTopic);
-								}
-								else
-								{
-									printf("ERROR<%s::%s>: Cannot create the request topic\n", CLASS_NAME, METHOD_NAME);
-								}
-							}
-							else
-							{
-								printf("ERROR<%s::%s>: Bad parameter (requestTypeName)\n", CLASS_NAME, METHOD_NAME);
-							}
-						}
-						else
-						{
-							printf("ERROR <%s::%s>: Cannot get the publisher qos\n", CLASS_NAME, METHOD_NAME);
-						}
+                                    participant->delete_topic(m_requestTopic);
+                                }
+                                else
+                                {
+                                    printf("ERROR<%s::%s>: Cannot create the request topic\n", CLASS_NAME, METHOD_NAME);
+                                }
+                            }
+                            else
+                            {
+                                printf("ERROR<%s::%s>: Bad parameter (requestTypeName)\n", CLASS_NAME, METHOD_NAME);
+                            }
+                        }
+                        else
+                        {
+                            printf("ERROR <%s::%s>: Cannot get the publisher qos\n", CLASS_NAME, METHOD_NAME);
+                        }
 
-						participant->delete_publisher(m_requestPublisher);
-					}
-					else
-					{
-						printf("ERROR<%s::%s>: Cannot create the request publisher\n", CLASS_NAME, METHOD_NAME);
-					}
-				}
-				else
-				{
-					printf("ERROR<%s::%s>: Bad parameter (remoteServiceName)\n", CLASS_NAME, METHOD_NAME);
-				}
-			}
-			else
-			{
-				printf("ERROR<%s::%s>: Bad parameter (participant)\n", CLASS_NAME, METHOD_NAME);
-			}
+                        participant->delete_publisher(m_requestPublisher);
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s>: Cannot create the request publisher\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
+                else
+                {
+                    printf("ERROR<%s::%s>: Bad parameter (remoteServiceName)\n", CLASS_NAME, METHOD_NAME);
+                }
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Bad parameter (participant)\n", CLASS_NAME, METHOD_NAME);
+            }
 
-			return 0;
-		}
+            return 0;
+        }
 
-		int ClientRPC::enableEntities()
-		{
-			const char* const METHOD_NAME = "enableEntities";
-			int returnedValue = 0;
+        int ClientRPC::enableEntities()
+        {
+            const char* const METHOD_NAME = "enableEntities";
+            int returnedValue = 0;
 
-			if(m_requestPublisher->enable() == DDS::RETCODE_OK)
-			{
-				if(m_requestTopic->enable() == DDS::RETCODE_OK)
-				{
-					if(m_requestDataWriter->enable() == DDS::RETCODE_OK)
+            if(m_requestPublisher->enable() == DDS::RETCODE_OK)
+            {
+                if(m_requestTopic->enable() == DDS::RETCODE_OK)
+                {
+                    if(m_requestDataWriter->enable() == DDS::RETCODE_OK)
                     {
                         // Obtain clientServiceId.
                         get_guid(m_clientServiceId, m_requestDataWriter);
@@ -597,24 +598,24 @@ namespace eProsima
                         {
                             returnedValue = 1;
                         }
-					}
-					else
-					{
-						printf("ERROR<%s::%s>: Cannot enable request datawriter\n", CLASS_NAME, METHOD_NAME);
-					}
-				}
-				else
-				{
-					printf("ERROR<%s::%s>: Cannot enable request topic\n", CLASS_NAME, METHOD_NAME);
-				}
-			}
-			else
-			{
-				printf("ERROR<%s::%s>: Cannot enable request publisher\n", CLASS_NAME, METHOD_NAME);
-			}
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s>: Cannot enable request datawriter\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
+                else
+                {
+                    printf("ERROR<%s::%s>: Cannot enable request topic\n", CLASS_NAME, METHOD_NAME);
+                }
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Cannot enable request publisher\n", CLASS_NAME, METHOD_NAME);
+            }
 
-			return returnedValue;
-		}
+            return returnedValue;
+        }
 
         void ClientRPC::deleteQuery(DDS::QueryCondition *query)
         {
@@ -630,5 +631,5 @@ namespace eProsima
             }
         }
 
-	} // namespace DDSRPC
+    } // namespace DDSRPC
 } // namespace eProsima

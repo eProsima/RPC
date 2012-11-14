@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ServerTimeoutException::~ServerTimeoutException()
+		ServerTimeoutException::~ServerTimeoutException() DDSRPC_USE_NOEXCEPT
 		{
 		}
 

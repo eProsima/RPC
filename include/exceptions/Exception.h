@@ -13,7 +13,7 @@ namespace eProsima
         {
 		public:
 
-			virtual ~Exception();
+			virtual ~Exception() DDSRPC_USE_NOEXCEPT;
 
 			virtual void raise() const = 0;
 

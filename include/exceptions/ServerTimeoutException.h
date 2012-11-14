@@ -23,7 +23,7 @@ namespace eProsima
 
 			ServerTimeoutException& operator=(ServerTimeoutException&& ex);
 
-			virtual ~ServerTimeoutException();
+			virtual ~ServerTimeoutException() DDSRPC_USE_NOEXCEPT;
 
 			virtual void raise() const;
         };

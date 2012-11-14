@@ -23,7 +23,7 @@ namespace eProsima
 
 			InitializeException& operator=(InitializeException&& ex);
 
-			virtual ~InitializeException();
+			virtual ~InitializeException() DDSRPC_USE_NOEXCEPT;
 
 			virtual void raise() const;
         };

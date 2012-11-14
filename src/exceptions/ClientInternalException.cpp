@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ClientInternalException::~ClientInternalException()
+		ClientInternalException::~ClientInternalException() DDSRPC_USE_NOEXCEPT
 		{
 		}
 
