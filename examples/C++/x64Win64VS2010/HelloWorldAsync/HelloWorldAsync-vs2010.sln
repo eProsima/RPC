@@ -5,7 +5,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorldAsyncClient", "HelloWorldAsyncClient-vs2010.vcxproj", "{D95D87B2-F79E-168A-2AC8-ABD4536F57E2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D0A98CD7-6355-52B5-6A91-64C3EEA666CF} = {D0A98CD7-6355-52B5-6A91-64C3EEA666CF}
-	EndProjectSectionEndProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug DLL|x64 = Debug DLL|x64

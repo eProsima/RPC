@@ -5,98 +5,92 @@
 
 #include "HelloWorldAsyncProxy.h"
 #include "client/ClientRPC.h"
+#include "transports/UDPTransport.h"
+#include "transports/TCPTransport.h"
 #include "HelloWorldAsyncRequestReplyPlugin.h"
 #include "HelloWorldAsyncAsyncSupport.h"
+#include "exceptions/Exceptions.h"
 
-
-HelloWorldAsyncProxy::HelloWorldAsyncProxy(int domainId, unsigned int timeout
-, const char *qosLibrary, const char *qosProfile) : Client(domainId, qosLibrary, qosProfile)
+HelloWorldAsyncProxy::HelloWorldAsyncProxy(std::string remoteServiceName, int domainId, long timeout) :
+    Client(remoteServiceName, NULL, domainId, timeout)
 {
-    m_timeout = timeout;
-    this->suma_Service = new sumaClientRPC("suma",
-                                  sumaRequestUtils::registerType(getParticipant()),
-    NULL,
-    NULL,
-                                  sumaReplyUtils::registerType(getParticipant()),
-    NULL,
-    NULL,
-                                  this);
+    createRPCs();
+}
 
+HelloWorldAsyncProxy::HelloWorldAsyncProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+    Client(remoteServiceName, transport, domainId, timeout)
+{
+    createRPCs();
 }
 
 HelloWorldAsyncProxy::~HelloWorldAsyncProxy()
 {
-    delete suma_Service;
+    delete sayHello_Service;
 }
 
-unsigned int HelloWorldAsyncProxy::getTimeout()
+void HelloWorldAsyncProxy::createRPCs()
 {
-  return m_timeout;
+    this->sayHello_Service = new HelloWorldAsync_sayHelloClientRPC("sayHello",
+                                  HelloWorldAsync_sayHelloRequestUtils::registerType(getParticipant()),
+                                  HelloWorldAsync_sayHelloReplyUtils::registerType(getParticipant()),
+                                  this);
+
 }
- 
- void HelloWorldAsyncProxy::setTimeout(unsigned int millis)
- {
-    m_timeout = millis;
- }
 
  
-eProsima::DDSRPC::ReturnMessage
- HelloWorldAsyncProxy::suma(DDS_Long id1, DDS_Long id2 ,DDS_Long &suma_ret) 
+char* HelloWorldAsyncProxy::sayHello(/*in*/ char* name) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
-    sumaRequest *instance = NULL;
-    sumaReply *retInstance = sumaReplyTypeSupport::create_data();
-    instance = sumaRequestUtils::createTypeData(id1    , id2    );
-    returnedValue = suma_Service->execute(instance, retInstance, m_timeout);
-    switch (returnedValue)
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    char*  sayHello_ret = NULL;    
+    HelloWorldAsync_sayHelloRequest instance;
+    HelloWorldAsync_sayHelloReply retInstance;
+
+    HelloWorldAsync_sayHelloReply_initialize(&retInstance);    
+    HelloWorldAsync_sayHelloRequestUtils::setTypeData(instance, name);
+    retcode = sayHello_Service->execute(&instance, &retInstance, getTimeout());
+    
+    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
+        HelloWorldAsync_sayHelloReplyUtils::extractTypeData(retInstance, retcode, sayHello_ret);  
+    }
+    
+    switch (retcode)
+    {
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::RECEIVED_OTHER_REQUEST:
-            printf("Y ESTE PAQUETE?\n");
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
-            printf("TIMEOUT\n");
+            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            printf("SERVER ERROR\n");
-            break;
-        case eProsima::DDSRPC::WITHOUT_RESOURCES:
-            printf("SERVER WITHOUT RESOURCES\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:
-            sumaReplyUtils::extractTypeData(retInstance, suma_ret    );
-            //sumaReplyTypeSupport::print_data(retInstance);          
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
     };
     
-    sumaReplyTypeSupport::delete_data(retInstance);
-    sumaRequestTypeSupport::delete_data(instance);
 
-    return returnedValue;
+    return sayHello_ret;
 }
 
  
-eProsima::DDSRPC::ReturnMessage
- HelloWorldAsyncProxy::suma_async(sumaCallback sumacallback, DDS_Long id1, DDS_Long id2 ) 
+void HelloWorldAsyncProxy::sayHello_async(HelloWorldAsync_sayHelloCallbackHandler &obj, /*in*/ char* name) 
 {
-    eProsima::DDSRPC::ReturnMessage  returnedValue ;    
-    sumaRequest *instance = NULL;
-    sumaTask *task = NULL;
-    instance = sumaRequestUtils::createTypeData(id1    , id2    );
-    task = new sumaTask(sumacallback, this, suma_Service);
-    returnedValue = suma_Service->executeAsync(instance, task, m_timeout);
-    switch (returnedValue)
-    {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            printf("CLIENT ERROR\n");
-            break;
-        case eProsima::DDSRPC::OPERATION_SUCCESSFUL:       
-            break;
-    };
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    HelloWorldAsync_sayHelloRequest instance;
+    HelloWorldAsync_sayHelloTask *task = NULL;
+    HelloWorldAsync_sayHelloRequestUtils::setTypeData(instance, name);
+    task = new HelloWorldAsync_sayHelloTask(obj, this);
+    retcode = sayHello_Service->executeAsync(&instance, task, getTimeout());
     
-    sumaRequestTypeSupport::delete_data(instance);
-
-    return returnedValue;
+    switch (retcode)
+    {
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+            break;
+        case eProsima::DDSRPC::NO_SERVER:
+             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+             break;
+    }
 }

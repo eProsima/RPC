@@ -5,29 +5,53 @@
 
 #include "HelloWorldAsyncProxy.h"
 #include "HelloWorldAsyncRequestReplyPlugin.h"
+#include "exceptions/Exceptions.h"
 
-void suma( DDS_Long suma_ret)
+class SayHelloHandler : public HelloWorldAsync_sayHelloCallbackHandler
 {
-	printf("SUMA: %d\n", suma_ret);
-}
+    public:
+		SayHelloHandler() : received(false){}
 
-int main()
+        void sayHello(/*out*/ char* sayHello_ret)
+		{
+			printf("%s\n", sayHello_ret);
+			received = true;
+		}
+   
+        void on_exception(const eProsima::DDSRPC::Exception &ex)
+		{
+			printf("Exception: %s\n", ex.what());
+			received = true;
+		}
+
+		bool isReceived() const
+		{
+			return received;
+		}
+
+private:
+	    bool received;
+};
+
+int main(int argc, char **argv)
 {
-    int domainId = 0;
-    unsigned int timeoutInMillis = 4000;
-    HelloWorldAsyncProxy *proxy = new HelloWorldAsyncProxy(domainId, timeoutInMillis);
-    DDS_Duration_t period = {10,0};
-    
-    DDS_Long  id1 = 1;    
-    DDS_Long  id2 = 2;       
-       
-    eProsima::DDSRPC::ReturnMessage  sumaRetValue ;        
+    HelloWorldAsyncProxy *proxy = new HelloWorldAsyncProxy("HelloWorldAsyncService");
+    SayHelloHandler handler;
+    char*  name = "Ricardo";        
 
-    sumaRetValue = proxy->suma_async(suma, id1  , id2);
-    
-        
-   NDDSUtility::sleep(period);  
-        
+    try
+    {
+        proxy->sayHello_async(handler, name);
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+		printf("Exception\n", ex.what());
+    }
 
-   delete(proxy);
+	while(!handler.isReceived())
+		Sleep(1000);
+
+    delete(proxy);
+   
+    return 0;
 }

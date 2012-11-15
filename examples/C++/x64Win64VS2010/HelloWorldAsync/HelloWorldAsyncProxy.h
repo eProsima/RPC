@@ -8,35 +8,61 @@
 #include "client/Client.h"
 #include "HelloWorldAsyncRequestReplyUtils.h"
 #include "HelloWorldAsyncClientRPCSupport.h"
+#include "exceptions/Exception.h"
 
-typedef void (*sumaCallback)( DDS_Long suma_ret);
+class HelloWorldAsync_sayHelloCallbackHandler
+{
+    public:
+        virtual void sayHello(/*out*/ char* sayHello_ret) = 0;
+   
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+};
 
+/**
+ * \brief This class implements a specific server's proxy for the defined interface by user.
+ */
 class HelloWorldAsyncProxy : public eProsima::DDSRPC::Client
 {
     public:
+    
+        /**
+         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
+         *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         */
+        HelloWorldAsyncProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
-        /// \brief The default constructor.
-        HelloWorldAsyncProxy(int domainId = 0, unsigned int timeout = 3000,
-        const char *qosLibrary =  NULL, const char *qosProfile = NULL);
+        /**
+         * \brief This constructor sets the transport that will be used by the server's proxy.
+         *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         */
+        HelloWorldAsyncProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~HelloWorldAsyncProxy();
-
-        unsigned int getTimeout();
-        void setTimeout(unsigned int millis);
         
          
-        eProsima::DDSRPC::ReturnMessage
-         suma(DDS_Long id1, DDS_Long id2 ,DDS_Long &suma_ret);
+        char* sayHello(/*in*/ char* name);
         
          
-        eProsima::DDSRPC::ReturnMessage
-         suma_async(sumaCallback sumacallback, DDS_Long id1, DDS_Long id2 );
+        void sayHello_async(HelloWorldAsync_sayHelloCallbackHandler &obj, /*in*/ char* name);
         
     private:
-        eProsima::DDSRPC::ClientRPC *suma_Service; 
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
         
-        unsigned int m_timeout;
+        eProsima::DDSRPC::ClientRPC *sayHello_Service; 
 };
 
 #endif // _HelloWorldAsync_PROXY_H_

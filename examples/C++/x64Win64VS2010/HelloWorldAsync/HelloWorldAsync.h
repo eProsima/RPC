@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldAsync_1977524846_h
-#define HelloWorldAsync_1977524846_h
+#ifndef HelloWorldAsync_1977524845_h
+#define HelloWorldAsync_1977524845_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -27,4 +27,4 @@
 
 
 
-#endif /* HelloWorldAsync_1977524846_h */
+#endif /* HelloWorldAsync_1977524845_h */

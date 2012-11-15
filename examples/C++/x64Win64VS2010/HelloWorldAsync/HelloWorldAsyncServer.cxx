@@ -3,50 +3,75 @@
  */
 
 #include "HelloWorldAsyncServer.h"
+#include "transports/UDPTransport.h"
+#include "transports/TCPTransport.h"
+#include "exceptions/ServerInternalException.h"
 #include "HelloWorldAsyncRequestReplyPlugin.h"
+
 #include "HelloWorldAsyncServerRPCSupport.h"
 
-HelloWorldAsyncServer::HelloWorldAsyncServer(int domainId, unsigned int threadCount,
-const char *qosLibrary, const char *qosProfile) : Server(domainId, threadCount, qosLibrary, qosProfile)
+HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+    int domainId) :
+    Server(serviceName, strategy, NULL, domainId)
+{
+    _impl = new HelloWorldAsyncServerImpl();
+
+    createRPCs();
+}
+
+HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+    eProsima::DDSRPC::Transport *transport, int domainId) :
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new HelloWorldAsyncServerImpl();
     
-    this->setRPC(new sumaServerRPC("suma", this,
-                sumaRequestUtils::registerType(getParticipant()),
-    NULL,
-    NULL,
-                sumaReplyUtils::registerType(getParticipant()),
-    NULL,
-    NULL,
-                &HelloWorldAsyncServer::suma, getParticipant()));
-
+    createRPCs();
 }
+
 HelloWorldAsyncServer::~HelloWorldAsyncServer()
 {
     delete _impl;    
 }
 
-void HelloWorldAsyncServer::suma(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
-{ 
-    HelloWorldAsyncServer *srv = (HelloWorldAsyncServer*)server;
-    DDS_Long  id1 ;    
-    DDS_Long  id2 ;       
-   
-    DDS_Long  suma_ret ;       
-    eProsima::DDSRPC::ReturnMessage  returnedValue ;        
-    sumaReply *replyData = NULL;
+void HelloWorldAsyncServer::createRPCs()
+{
+    this->setRPC(new HelloWorldAsync_sayHelloServerRPC("sayHello", this,
+                HelloWorldAsync_sayHelloRequestUtils::registerType(getParticipant()),
+                HelloWorldAsync_sayHelloReplyUtils::registerType(getParticipant()),
+                &HelloWorldAsyncServer::sayHello));
 
-    sumaRequestUtils::extractTypeData((sumaRequest*)requestData, id1  , id2  );
-                                         
-    returnedValue = srv->_impl->suma(id1  , id2  ,suma_ret  );
-           
-    replyData = sumaReplyUtils::createTypeData(suma_ret  );
-                                                  
-    // sendReply takes care of deleting the data
-    service->sendReply(requestData, replyData, returnedValue);
+}
+
+void HelloWorldAsyncServer::sayHello(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+{ 
+    HelloWorldAsyncServer *srv = dynamic_cast<HelloWorldAsyncServer*>(server);
+    char*  name = NULL;    
+    char*  sayHello_ret = NULL;       
+    HelloWorldAsync_sayHelloReply replyData;
     
-    sumaReplyTypeSupport::delete_data(replyData);
-    sumaRequestTypeSupport::delete_data((sumaRequest*)requestData);
-    
+
+    HelloWorldAsync_sayHelloRequestUtils::extractTypeData(*(HelloWorldAsync_sayHelloRequest*)requestData, name);
+
+    try
+    {
+        sayHello_ret = srv->_impl->sayHello(name);
+
+        HelloWorldAsync_sayHelloReplyUtils::setTypeData(replyData, sayHello_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
+
+        service->sendReply(requestData, &replyData);
+    }
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    {
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
         
+        service->sendReply(requestData, &replyData);
+    }
+    
+    HelloWorldAsync_sayHelloRequestTypeSupport::delete_data((HelloWorldAsync_sayHelloRequest*)requestData);
+    
+    if(sayHello_ret != NULL) free(sayHello_ret);    
 }

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldAsyncRequestReply_1955699068_h
-#define HelloWorldAsyncRequestReply_1955699068_h
+#ifndef HelloWorldAsyncRequestReply_1955698971_h
+#define HelloWorldAsyncRequestReply_1955698971_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -26,6 +26,9 @@
 #endif
 
 
+#include "MessageHeader.h"
+
+
 #include "HelloWorldAsync.h"
 
 
@@ -34,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *sumaRequestTYPENAME;
+extern const char *HelloWorldAsync_sayHelloRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -43,12 +46,12 @@ extern const char *sumaRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sumaRequestSeq;
+    struct HelloWorldAsync_sayHelloRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sumaRequestTypeSupport;
-    class sumaRequestDataWriter;
-    class sumaRequestDataReader;
+    class HelloWorldAsync_sayHelloRequestTypeSupport;
+    class HelloWorldAsync_sayHelloRequestDataWriter;
+    class HelloWorldAsync_sayHelloRequestDataReader;
 #endif
 
 #endif
@@ -56,25 +59,23 @@ extern const char *sumaRequestTYPENAME;
             
     
 
-typedef struct sumaRequest
+typedef struct HelloWorldAsync_sayHelloRequest
 {
 #ifdef __cplusplus
-    typedef struct sumaRequestSeq Seq;
+    typedef struct HelloWorldAsync_sayHelloRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sumaRequestTypeSupport TypeSupport;
-    typedef sumaRequestDataWriter DataWriter;
-    typedef sumaRequestDataReader DataReader;
+    typedef HelloWorldAsync_sayHelloRequestTypeSupport TypeSupport;
+    typedef HelloWorldAsync_sayHelloRequestDataWriter DataWriter;
+    typedef HelloWorldAsync_sayHelloRequestDataReader DataReader;
 #endif
 
 #endif
 
-    DDS_UnsignedLong  clientServiceId[4];
-    DDS_UnsignedLong  numSec;
-    DDS_Long  id1;
-    DDS_Long  id2;
+    RequestHeader  header;
+    char*  name; /* maximum length = (255) */
 
-} sumaRequest;
+} HelloWorldAsync_sayHelloRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -85,31 +86,31 @@ typedef struct sumaRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sumaRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* HelloWorldAsync_sayHelloRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sumaRequestSeq, sumaRequest);
+DDS_SEQUENCE(HelloWorldAsync_sayHelloRequestSeq, HelloWorldAsync_sayHelloRequest);
         
 NDDSUSERDllExport
-RTIBool sumaRequest_initialize(
-        sumaRequest* self);
+RTIBool HelloWorldAsync_sayHelloRequest_initialize(
+        HelloWorldAsync_sayHelloRequest* self);
         
 NDDSUSERDllExport
-RTIBool sumaRequest_initialize_ex(
-        sumaRequest* self,RTIBool allocatePointers);
+RTIBool HelloWorldAsync_sayHelloRequest_initialize_ex(
+        HelloWorldAsync_sayHelloRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sumaRequest_finalize(
-        sumaRequest* self);
+void HelloWorldAsync_sayHelloRequest_finalize(
+        HelloWorldAsync_sayHelloRequest* self);
                         
 NDDSUSERDllExport
-void sumaRequest_finalize_ex(
-        sumaRequest* self,RTIBool deletePointers);
+void HelloWorldAsync_sayHelloRequest_finalize_ex(
+        HelloWorldAsync_sayHelloRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sumaRequest_copy(
-        sumaRequest* dst,
-        const sumaRequest* src);
+RTIBool HelloWorldAsync_sayHelloRequest_copy(
+        HelloWorldAsync_sayHelloRequest* dst,
+        const HelloWorldAsync_sayHelloRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -124,7 +125,7 @@ extern "C" {
 #endif
 
         
-extern const char *sumaReplyTYPENAME;
+extern const char *HelloWorldAsync_sayHelloReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -133,12 +134,12 @@ extern const char *sumaReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sumaReplySeq;
+    struct HelloWorldAsync_sayHelloReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sumaReplyTypeSupport;
-    class sumaReplyDataWriter;
-    class sumaReplyDataReader;
+    class HelloWorldAsync_sayHelloReplyTypeSupport;
+    class HelloWorldAsync_sayHelloReplyDataWriter;
+    class HelloWorldAsync_sayHelloReplyDataReader;
 #endif
 
 #endif
@@ -146,26 +147,23 @@ extern const char *sumaReplyTYPENAME;
             
     
 
-typedef struct sumaReply
+typedef struct HelloWorldAsync_sayHelloReply
 {
 #ifdef __cplusplus
-    typedef struct sumaReplySeq Seq;
+    typedef struct HelloWorldAsync_sayHelloReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sumaReplyTypeSupport TypeSupport;
-    typedef sumaReplyDataWriter DataWriter;
-    typedef sumaReplyDataReader DataReader;
+    typedef HelloWorldAsync_sayHelloReplyTypeSupport TypeSupport;
+    typedef HelloWorldAsync_sayHelloReplyDataWriter DataWriter;
+    typedef HelloWorldAsync_sayHelloReplyDataReader DataReader;
 #endif
 
 #endif
 
-    DDS_UnsignedLong  serverServiceId[4];
-    DDS_UnsignedLong  clientServiceId[4];
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddscsRetCode;
-    DDS_Long  returnedValue;
+    ReplyHeader  header;
+    char*  sayHello_ret; /* maximum length = (255) */
 
-} sumaReply;
+} HelloWorldAsync_sayHelloReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -176,31 +174,31 @@ typedef struct sumaReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sumaReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* HelloWorldAsync_sayHelloReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sumaReplySeq, sumaReply);
+DDS_SEQUENCE(HelloWorldAsync_sayHelloReplySeq, HelloWorldAsync_sayHelloReply);
         
 NDDSUSERDllExport
-RTIBool sumaReply_initialize(
-        sumaReply* self);
+RTIBool HelloWorldAsync_sayHelloReply_initialize(
+        HelloWorldAsync_sayHelloReply* self);
         
 NDDSUSERDllExport
-RTIBool sumaReply_initialize_ex(
-        sumaReply* self,RTIBool allocatePointers);
+RTIBool HelloWorldAsync_sayHelloReply_initialize_ex(
+        HelloWorldAsync_sayHelloReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sumaReply_finalize(
-        sumaReply* self);
+void HelloWorldAsync_sayHelloReply_finalize(
+        HelloWorldAsync_sayHelloReply* self);
                         
 NDDSUSERDllExport
-void sumaReply_finalize_ex(
-        sumaReply* self,RTIBool deletePointers);
+void HelloWorldAsync_sayHelloReply_finalize_ex(
+        HelloWorldAsync_sayHelloReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sumaReply_copy(
-        sumaReply* dst,
-        const sumaReply* src);
+RTIBool HelloWorldAsync_sayHelloReply_copy(
+        HelloWorldAsync_sayHelloReply* dst,
+        const HelloWorldAsync_sayHelloReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -211,4 +209,4 @@ RTIBool sumaReply_copy(
 
 
 
-#endif /* HelloWorldAsyncRequestReply_1955699068_h */
+#endif /* HelloWorldAsyncRequestReply_1955698971_h */

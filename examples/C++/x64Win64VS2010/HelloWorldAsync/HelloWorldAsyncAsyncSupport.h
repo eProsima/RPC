@@ -8,21 +8,30 @@
 #include "client/AsyncTask.h"
 
 
-class sumaTask : public eProsima::DDSRPC::AsyncTask
+class HelloWorldAsync_sayHelloTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
         /// \brief The default constructor.
-        sumaTask(sumaCallback callback, eProsima::DDSRPC::Client *client, eProsima::DDSRPC::ClientRPC *clientRPC);
+        HelloWorldAsync_sayHelloTask(HelloWorldAsync_sayHelloCallbackHandler &obj,
+           eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
-        virtual ~sumaTask();
+        virtual ~HelloWorldAsync_sayHelloTask();
         
-        virtual void execute(DDS::QueryCondition *query);
+        virtual void execute();
         
-    private:
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
-        sumaCallback m_callback;
+        HelloWorldAsync_sayHelloCallbackHandler& getObject();
+        
+        void* getReplyInstance();
+        
+        private:
+        
+           HelloWorldAsync_sayHelloCallbackHandler &m_obj;
+           
+           HelloWorldAsync_sayHelloReply m_reply;
 };
 
 #endif // _HelloWorldAsync_ASYNC_SUPPORT_H_

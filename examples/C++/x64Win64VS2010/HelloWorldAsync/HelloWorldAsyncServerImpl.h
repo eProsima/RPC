@@ -19,8 +19,7 @@ class HelloWorldAsyncServerImpl
         virtual ~HelloWorldAsyncServerImpl();
 
          
-        eProsima::DDSRPC::ReturnMessage
-         suma(DDS_Long id1, DDS_Long id2 ,DDS_Long &suma_ret);
+        char* sayHello(/*in*/ char* name);
 };
 
 #endif // _HelloWorldAsyncSERVER_IMPL_H_

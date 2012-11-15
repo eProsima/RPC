@@ -1,29 +1,49 @@
 #include "HelloWorldAsyncProxy.h"
 #include "HelloWorldAsyncAsyncSupport.h"
+#include "exceptions/ServerInternalException.h"
 #include "HelloWorldAsyncRequestReplyPlugin.h"
 
 
-sumaTask::sumaTask(sumaCallback callback, eProsima::DDSRPC::Client *client, eProsima::DDSRPC::ClientRPC *clientRPC) :
-      AsyncTask(client, clientRPC), m_callback(callback)
+HelloWorldAsync_sayHelloTask::HelloWorldAsync_sayHelloTask(HelloWorldAsync_sayHelloCallbackHandler &obj,
+   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    HelloWorldAsync_sayHelloReply_initialize(&m_reply);
 }
 
-sumaTask::~sumaTask()
+HelloWorldAsync_sayHelloTask::~HelloWorldAsync_sayHelloTask()
 {
+    HelloWorldAsync_sayHelloReply_finalize(&m_reply);
 }
 
-void sumaTask::execute(DDS::QueryCondition *query)
+HelloWorldAsync_sayHelloCallbackHandler& HelloWorldAsync_sayHelloTask::getObject()
 {
-   
-    DDS_Long  suma_ret ;     
-	sumaReply *reply = sumaReplyTypeSupport::create_data();
-	eProsima::DDSRPC::ReturnMessage retCode = getRPC()->takeReply(reply, query);
+    return m_obj;
+}
+
+void* HelloWorldAsync_sayHelloTask::getReplyInstance()
+{
+    return &m_reply;
+}
+
+void HelloWorldAsync_sayHelloTask::execute()
+{  
+    char*  sayHello_ret = NULL;    
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
-	if(retCode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	HelloWorldAsync_sayHelloReplyUtils::extractTypeData(m_reply, retcode, sayHello_ret);
+		
+	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
 	{
-		sumaReplyUtils::extractTypeData(reply, suma_ret    );
-		m_callback(suma_ret    );
+		getObject().sayHello(sayHello_ret);
 	}
-	
-	sumaReplyTypeSupport::delete_data(reply);
+	else
+	{
+		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+	}
+}
+
+void HelloWorldAsync_sayHelloTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+{
+    getObject().on_exception(ex);
 }

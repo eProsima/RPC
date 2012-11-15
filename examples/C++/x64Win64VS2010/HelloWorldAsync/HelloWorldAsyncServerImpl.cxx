@@ -13,12 +13,13 @@ HelloWorldAsyncServerImpl::~HelloWorldAsyncServerImpl()
 }
 
  
-eProsima::DDSRPC::ReturnMessage
- HelloWorldAsyncServerImpl::suma(DDS_Long id1, DDS_Long id2 ,DDS_Long &suma_ret) 
+char* HelloWorldAsyncServerImpl::sayHello(/*in*/ char* name) 
 {
-  eProsima::DDSRPC::ReturnMessage retCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-
-  suma_ret = id1 + id2;
-  
-  return retCode;
+	const char* const helloString = "Hello ";
+	size_t stringLength = strlen(helloString) + strlen(name) + 1;
+    char* sayHello_ret = (char*)calloc(stringLength, 1);
+	
+	_snprintf(sayHello_ret, stringLength, "%s%s", helloString, name);
+   
+    return sayHello_ret;
 } 

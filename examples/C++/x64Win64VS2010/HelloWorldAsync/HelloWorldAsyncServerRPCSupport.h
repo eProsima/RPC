@@ -9,7 +9,8 @@
 #include "HelloWorldAsyncRequestReplySupport.h"
 
 
-GENERIC_SERVER_RPC(sumaServerRPC, sumaReplyDataWriter, sumaRequestDataReader);
+
+GENERIC_SERVER_RPC(HelloWorldAsync_sayHelloServerRPC, HelloWorldAsync_sayHelloReplyDataWriter, HelloWorldAsync_sayHelloRequestDataReader);
 
 
 #endif  // _HelloWorldAsync_SERVER_RPC_SUPPORT_H_

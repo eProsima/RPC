@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldAsyncPlugin_1977524846_h
-#define HelloWorldAsyncPlugin_1977524846_h
+#ifndef HelloWorldAsyncPlugin_1977524845_h
+#define HelloWorldAsyncPlugin_1977524845_h
 
 #include "HelloWorldAsync.h"
 
@@ -47,4 +47,4 @@ extern "C" {
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* HelloWorldAsyncPlugin_1977524846_h */
+#endif /* HelloWorldAsyncPlugin_1977524845_h */

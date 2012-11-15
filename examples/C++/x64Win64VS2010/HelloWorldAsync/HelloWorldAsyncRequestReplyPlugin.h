@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldAsyncRequestReplyPlugin_1955699068_h
-#define HelloWorldAsyncRequestReplyPlugin_1955699068_h
+#ifndef HelloWorldAsyncRequestReplyPlugin_1955698971_h
+#define HelloWorldAsyncRequestReplyPlugin_1955698971_h
 
 #include "HelloWorldAsyncRequestReply.h"
 
@@ -35,81 +35,84 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
+#include "MessageHeaderPlugin.h"
+
+
 #include "HelloWorldAsyncPlugin.h"
 
 
 /* The type used to store keys for instances of type struct
- * sumaRequest.
+ * HelloWorldAsync_sayHelloRequest.
  *
- * By default, this type is struct sumaRequest
+ * By default, this type is struct HelloWorldAsync_sayHelloRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct sumaRequest)
+ * system (e.g. if sizeof(struct HelloWorldAsync_sayHelloRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct sumaRequest, the
+ * other than struct HelloWorldAsync_sayHelloRequest, the
  * following restriction applies: the key of struct
- * sumaRequest must consist of a
+ * HelloWorldAsync_sayHelloRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct sumaRequest.
+ * first field in struct HelloWorldAsync_sayHelloRequest.
 */
-typedef  struct sumaRequest sumaRequestKeyHolder;
+typedef  struct HelloWorldAsync_sayHelloRequest HelloWorldAsync_sayHelloRequestKeyHolder;
 
 
-#define sumaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define sumaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define sumaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define sumaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define HelloWorldAsync_sayHelloRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define HelloWorldAsync_sayHelloRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define HelloWorldAsync_sayHelloRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define HelloWorldAsync_sayHelloRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define sumaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define sumaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define HelloWorldAsync_sayHelloRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define HelloWorldAsync_sayHelloRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define sumaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define sumaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define HelloWorldAsync_sayHelloRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define HelloWorldAsync_sayHelloRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloRequest*
+HelloWorldAsync_sayHelloRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloRequest*
+HelloWorldAsync_sayHelloRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPluginSupport_copy_data(
-    sumaRequest *out,
-    const sumaRequest *in);
+HelloWorldAsync_sayHelloRequestPluginSupport_copy_data(
+    HelloWorldAsync_sayHelloRequest *out,
+    const HelloWorldAsync_sayHelloRequest *in);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_data_ex(
-    sumaRequest *sample,RTIBool deallocate_pointers);
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_data_ex(
+    HelloWorldAsync_sayHelloRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_data(
-    sumaRequest *sample);
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_data(
+    HelloWorldAsync_sayHelloRequest *sample);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_print_data(
-    const sumaRequest *sample,
+HelloWorldAsync_sayHelloRequestPluginSupport_print_data(
+    const HelloWorldAsync_sayHelloRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloRequest*
+HelloWorldAsync_sayHelloRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_key_ex(
-    sumaRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloRequest*
+HelloWorldAsync_sayHelloRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_key(
-    sumaRequestKeyHolder *key);
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key_ex(
+    HelloWorldAsync_sayHelloRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key(
+    HelloWorldAsync_sayHelloRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -117,7 +120,7 @@ sumaRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-sumaRequestPlugin_on_participant_attached(
+HelloWorldAsync_sayHelloRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -125,34 +128,34 @@ sumaRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-sumaRequestPlugin_on_participant_detached(
+HelloWorldAsync_sayHelloRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-sumaRequestPlugin_on_endpoint_attached(
+HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-sumaRequestPlugin_on_endpoint_detached(
+HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_copy_sample(
+HelloWorldAsync_sayHelloRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *out,
-    const sumaRequest *in);
+    HelloWorldAsync_sayHelloRequest *out,
+    const HelloWorldAsync_sayHelloRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_serialize(
+HelloWorldAsync_sayHelloRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample,
+    const HelloWorldAsync_sayHelloRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -160,9 +163,9 @@ sumaRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize_sample(
+HelloWorldAsync_sayHelloRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample, 
+    HelloWorldAsync_sayHelloRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -170,9 +173,9 @@ sumaRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize(
+HelloWorldAsync_sayHelloRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest **sample, 
+    HelloWorldAsync_sayHelloRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -182,7 +185,7 @@ sumaRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaRequestPlugin_skip(
+HelloWorldAsync_sayHelloRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -190,26 +193,26 @@ sumaRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-sumaRequestPlugin_get_serialized_sample_max_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-sumaRequestPlugin_get_serialized_sample_min_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-sumaRequestPlugin_get_serialized_sample_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaRequest * sample);
+    const HelloWorldAsync_sayHelloRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -217,19 +220,19 @@ sumaRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-sumaRequestPlugin_get_key_kind(void);
+HelloWorldAsync_sayHelloRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-sumaRequestPlugin_get_serialized_key_max_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_serialize_key(
+HelloWorldAsync_sayHelloRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample,
+    const HelloWorldAsync_sayHelloRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -237,9 +240,9 @@ sumaRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize_key_sample(
+HelloWorldAsync_sayHelloRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest * sample,
+    HelloWorldAsync_sayHelloRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -247,9 +250,9 @@ sumaRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize_key(
+HelloWorldAsync_sayHelloRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest ** sample,
+    HelloWorldAsync_sayHelloRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -258,9 +261,9 @@ sumaRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaRequestPlugin_serialized_sample_to_key(
+HelloWorldAsync_sayHelloRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample,
+    HelloWorldAsync_sayHelloRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -268,25 +271,25 @@ sumaRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_instance_to_key(
+HelloWorldAsync_sayHelloRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequestKeyHolder *key, 
-    const sumaRequest *instance);
+    HelloWorldAsync_sayHelloRequestKeyHolder *key, 
+    const HelloWorldAsync_sayHelloRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_key_to_instance(
+HelloWorldAsync_sayHelloRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *instance, 
-    const sumaRequestKeyHolder *key);
+    HelloWorldAsync_sayHelloRequest *instance, 
+    const HelloWorldAsync_sayHelloRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_instance_to_keyhash(
+HelloWorldAsync_sayHelloRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaRequest *instance);
+    const HelloWorldAsync_sayHelloRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_serialized_sample_to_keyhash(
+HelloWorldAsync_sayHelloRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -295,83 +298,83 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-sumaRequestPlugin_new(void);
+HelloWorldAsync_sayHelloRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-sumaRequestPlugin_delete(struct PRESTypePlugin *);
+HelloWorldAsync_sayHelloRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * sumaReply.
+ * HelloWorldAsync_sayHelloReply.
  *
- * By default, this type is struct sumaReply
+ * By default, this type is struct HelloWorldAsync_sayHelloReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct sumaReply)
+ * system (e.g. if sizeof(struct HelloWorldAsync_sayHelloReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct sumaReply, the
+ * other than struct HelloWorldAsync_sayHelloReply, the
  * following restriction applies: the key of struct
- * sumaReply must consist of a
+ * HelloWorldAsync_sayHelloReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct sumaReply.
+ * first field in struct HelloWorldAsync_sayHelloReply.
 */
-typedef  struct sumaReply sumaReplyKeyHolder;
+typedef  struct HelloWorldAsync_sayHelloReply HelloWorldAsync_sayHelloReplyKeyHolder;
 
 
-#define sumaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define sumaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define sumaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define sumaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define HelloWorldAsync_sayHelloReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define HelloWorldAsync_sayHelloReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define HelloWorldAsync_sayHelloReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define HelloWorldAsync_sayHelloReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define sumaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define sumaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define HelloWorldAsync_sayHelloReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define HelloWorldAsync_sayHelloReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define sumaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define sumaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define HelloWorldAsync_sayHelloReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define HelloWorldAsync_sayHelloReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloReply*
+HelloWorldAsync_sayHelloReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloReply*
+HelloWorldAsync_sayHelloReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPluginSupport_copy_data(
-    sumaReply *out,
-    const sumaReply *in);
+HelloWorldAsync_sayHelloReplyPluginSupport_copy_data(
+    HelloWorldAsync_sayHelloReply *out,
+    const HelloWorldAsync_sayHelloReply *in);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_data_ex(
-    sumaReply *sample,RTIBool deallocate_pointers);
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_data_ex(
+    HelloWorldAsync_sayHelloReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_data(
-    sumaReply *sample);
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_data(
+    HelloWorldAsync_sayHelloReply *sample);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_print_data(
-    const sumaReply *sample,
+HelloWorldAsync_sayHelloReplyPluginSupport_print_data(
+    const HelloWorldAsync_sayHelloReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloReply*
+HelloWorldAsync_sayHelloReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_key_ex(
-    sumaReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern HelloWorldAsync_sayHelloReply*
+HelloWorldAsync_sayHelloReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_key(
-    sumaReplyKeyHolder *key);
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key_ex(
+    HelloWorldAsync_sayHelloReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key(
+    HelloWorldAsync_sayHelloReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -379,7 +382,7 @@ sumaReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-sumaReplyPlugin_on_participant_attached(
+HelloWorldAsync_sayHelloReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -387,34 +390,34 @@ sumaReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-sumaReplyPlugin_on_participant_detached(
+HelloWorldAsync_sayHelloReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-sumaReplyPlugin_on_endpoint_attached(
+HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-sumaReplyPlugin_on_endpoint_detached(
+HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_copy_sample(
+HelloWorldAsync_sayHelloReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *out,
-    const sumaReply *in);
+    HelloWorldAsync_sayHelloReply *out,
+    const HelloWorldAsync_sayHelloReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_serialize(
+HelloWorldAsync_sayHelloReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample,
+    const HelloWorldAsync_sayHelloReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -422,9 +425,9 @@ sumaReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize_sample(
+HelloWorldAsync_sayHelloReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample, 
+    HelloWorldAsync_sayHelloReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -432,9 +435,9 @@ sumaReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize(
+HelloWorldAsync_sayHelloReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply **sample, 
+    HelloWorldAsync_sayHelloReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -444,7 +447,7 @@ sumaReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaReplyPlugin_skip(
+HelloWorldAsync_sayHelloReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -452,26 +455,26 @@ sumaReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-sumaReplyPlugin_get_serialized_sample_max_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-sumaReplyPlugin_get_serialized_sample_min_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-sumaReplyPlugin_get_serialized_sample_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaReply * sample);
+    const HelloWorldAsync_sayHelloReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -479,19 +482,19 @@ sumaReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-sumaReplyPlugin_get_key_kind(void);
+HelloWorldAsync_sayHelloReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-sumaReplyPlugin_get_serialized_key_max_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_serialize_key(
+HelloWorldAsync_sayHelloReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample,
+    const HelloWorldAsync_sayHelloReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -499,9 +502,9 @@ sumaReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize_key_sample(
+HelloWorldAsync_sayHelloReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply * sample,
+    HelloWorldAsync_sayHelloReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -509,9 +512,9 @@ sumaReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize_key(
+HelloWorldAsync_sayHelloReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply ** sample,
+    HelloWorldAsync_sayHelloReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -520,9 +523,9 @@ sumaReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaReplyPlugin_serialized_sample_to_key(
+HelloWorldAsync_sayHelloReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample,
+    HelloWorldAsync_sayHelloReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -530,25 +533,25 @@ sumaReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_instance_to_key(
+HelloWorldAsync_sayHelloReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReplyKeyHolder *key, 
-    const sumaReply *instance);
+    HelloWorldAsync_sayHelloReplyKeyHolder *key, 
+    const HelloWorldAsync_sayHelloReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_key_to_instance(
+HelloWorldAsync_sayHelloReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *instance, 
-    const sumaReplyKeyHolder *key);
+    HelloWorldAsync_sayHelloReply *instance, 
+    const HelloWorldAsync_sayHelloReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_instance_to_keyhash(
+HelloWorldAsync_sayHelloReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaReply *instance);
+    const HelloWorldAsync_sayHelloReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_serialized_sample_to_keyhash(
+HelloWorldAsync_sayHelloReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -557,10 +560,10 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-sumaReplyPlugin_new(void);
+HelloWorldAsync_sayHelloReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-sumaReplyPlugin_delete(struct PRESTypePlugin *);
+HelloWorldAsync_sayHelloReplyPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }
@@ -574,4 +577,4 @@ sumaReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* HelloWorldAsyncRequestReplyPlugin_1955699068_h */
+#endif /* HelloWorldAsyncRequestReplyPlugin_1955698971_h */

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldAsyncRequestReplySupport_1955699068_h
-#define HelloWorldAsyncRequestReplySupport_1955699068_h
+#ifndef HelloWorldAsyncRequestReplySupport_1955698971_h
+#define HelloWorldAsyncRequestReplySupport_1955698971_h
 
 /* Uses */
 #include "HelloWorldAsyncRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sumaRequestTypeSupport, sumaRequest);
+DDS_TYPESUPPORT_CPP(HelloWorldAsync_sayHelloRequestTypeSupport, HelloWorldAsync_sayHelloRequest);
 
-DDS_DATAWRITER_CPP(sumaRequestDataWriter, sumaRequest);
-DDS_DATAREADER_CPP(sumaRequestDataReader, sumaRequestSeq, sumaRequest);
+DDS_DATAWRITER_CPP(HelloWorldAsync_sayHelloRequestDataWriter, HelloWorldAsync_sayHelloRequest);
+DDS_DATAREADER_CPP(HelloWorldAsync_sayHelloRequestDataReader, HelloWorldAsync_sayHelloRequestSeq, HelloWorldAsync_sayHelloRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sumaRequestTypeSupport, sumaRequest);
-DDS_DATAWRITER_C(sumaRequestDataWriter, sumaRequest);
-DDS_DATAREADER_C(sumaRequestDataReader, sumaRequestSeq, sumaRequest);
+DDS_TYPESUPPORT_C(HelloWorldAsync_sayHelloRequestTypeSupport, HelloWorldAsync_sayHelloRequest);
+DDS_DATAWRITER_C(HelloWorldAsync_sayHelloRequestDataWriter, HelloWorldAsync_sayHelloRequest);
+DDS_DATAREADER_C(HelloWorldAsync_sayHelloRequestDataReader, HelloWorldAsync_sayHelloRequestSeq, HelloWorldAsync_sayHelloRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(sumaRequestDataReader, sumaRequestSeq, sumaRequest);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sumaReplyTypeSupport, sumaReply);
+DDS_TYPESUPPORT_CPP(HelloWorldAsync_sayHelloReplyTypeSupport, HelloWorldAsync_sayHelloReply);
 
-DDS_DATAWRITER_CPP(sumaReplyDataWriter, sumaReply);
-DDS_DATAREADER_CPP(sumaReplyDataReader, sumaReplySeq, sumaReply);
+DDS_DATAWRITER_CPP(HelloWorldAsync_sayHelloReplyDataWriter, HelloWorldAsync_sayHelloReply);
+DDS_DATAREADER_CPP(HelloWorldAsync_sayHelloReplyDataReader, HelloWorldAsync_sayHelloReplySeq, HelloWorldAsync_sayHelloReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sumaReplyTypeSupport, sumaReply);
-DDS_DATAWRITER_C(sumaReplyDataWriter, sumaReply);
-DDS_DATAREADER_C(sumaReplyDataReader, sumaReplySeq, sumaReply);
+DDS_TYPESUPPORT_C(HelloWorldAsync_sayHelloReplyTypeSupport, HelloWorldAsync_sayHelloReply);
+DDS_DATAWRITER_C(HelloWorldAsync_sayHelloReplyDataWriter, HelloWorldAsync_sayHelloReply);
+DDS_DATAREADER_C(HelloWorldAsync_sayHelloReplyDataReader, HelloWorldAsync_sayHelloReplySeq, HelloWorldAsync_sayHelloReply);
 
 #endif
 
@@ -132,4 +132,4 @@ DDS_DATAREADER_C(sumaReplyDataReader, sumaReplySeq, sumaReply);
 
 
 
-#endif  /* HelloWorldAsyncRequestReplySupport_1955699068_h */
+#endif  /* HelloWorldAsyncRequestReplySupport_1955698971_h */

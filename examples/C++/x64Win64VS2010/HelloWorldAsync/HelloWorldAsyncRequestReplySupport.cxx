@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sumaRequest' support classes.
+   Configure and implement 'HelloWorldAsync_sayHelloRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaRequestTYPENAME
+#define TTYPENAME   HelloWorldAsync_sayHelloRequestTYPENAME
 
 /* Defines */
-#define TDataWriter sumaRequestDataWriter
-#define TData       sumaRequest
+#define TDataWriter HelloWorldAsync_sayHelloRequestDataWriter
+#define TData       HelloWorldAsync_sayHelloRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaRequestTYPENAME
+#define TTYPENAME   HelloWorldAsync_sayHelloRequestTYPENAME
 
 /* Defines */
-#define TDataReader sumaRequestDataReader
-#define TDataSeq    sumaRequestSeq
-#define TData       sumaRequest
+#define TDataReader HelloWorldAsync_sayHelloRequestDataReader
+#define TDataSeq    HelloWorldAsync_sayHelloRequestSeq
+#define TData       HelloWorldAsync_sayHelloRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sumaRequestTYPENAME
-#define TPlugin_new  sumaRequestPlugin_new
-#define TPlugin_delete  sumaRequestPlugin_delete
+#define TTYPENAME    HelloWorldAsync_sayHelloRequestTYPENAME
+#define TPlugin_new  HelloWorldAsync_sayHelloRequestPlugin_new
+#define TPlugin_delete  HelloWorldAsync_sayHelloRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport sumaRequestTypeSupport
-#define TData        sumaRequest
-#define TDataReader  sumaRequestDataReader
-#define TDataWriter  sumaRequestDataWriter
+#define TTypeSupport HelloWorldAsync_sayHelloRequestTypeSupport
+#define TData        HelloWorldAsync_sayHelloRequest
+#define TDataReader  HelloWorldAsync_sayHelloRequestDataReader
+#define TDataWriter  HelloWorldAsync_sayHelloRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sumaReply' support classes.
+   Configure and implement 'HelloWorldAsync_sayHelloReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaReplyTYPENAME
+#define TTYPENAME   HelloWorldAsync_sayHelloReplyTYPENAME
 
 /* Defines */
-#define TDataWriter sumaReplyDataWriter
-#define TData       sumaReply
+#define TDataWriter HelloWorldAsync_sayHelloReplyDataWriter
+#define TData       HelloWorldAsync_sayHelloReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaReplyTYPENAME
+#define TTYPENAME   HelloWorldAsync_sayHelloReplyTYPENAME
 
 /* Defines */
-#define TDataReader sumaReplyDataReader
-#define TDataSeq    sumaReplySeq
-#define TData       sumaReply
+#define TDataReader HelloWorldAsync_sayHelloReplyDataReader
+#define TDataSeq    HelloWorldAsync_sayHelloReplySeq
+#define TData       HelloWorldAsync_sayHelloReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sumaReplyTYPENAME
-#define TPlugin_new  sumaReplyPlugin_new
-#define TPlugin_delete  sumaReplyPlugin_delete
+#define TTYPENAME    HelloWorldAsync_sayHelloReplyTYPENAME
+#define TPlugin_new  HelloWorldAsync_sayHelloReplyPlugin_new
+#define TPlugin_delete  HelloWorldAsync_sayHelloReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport sumaReplyTypeSupport
-#define TData        sumaReply
-#define TDataReader  sumaReplyDataReader
-#define TDataWriter  sumaReplyDataWriter
+#define TTypeSupport HelloWorldAsync_sayHelloReplyTypeSupport
+#define TData        HelloWorldAsync_sayHelloReply
+#define TDataReader  HelloWorldAsync_sayHelloReplyDataReader
+#define TDataWriter  HelloWorldAsync_sayHelloReplyDataWriter
 #ifdef __cplusplus
 
 

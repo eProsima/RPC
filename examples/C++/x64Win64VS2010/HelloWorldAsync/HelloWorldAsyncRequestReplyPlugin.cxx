@@ -54,22 +54,22 @@
 
 
 /* --------------------------------------------------------------------------------------
- *  Type sumaRequest
+ *  Type HelloWorldAsync_sayHelloRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sumaRequest *
-sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sumaRequest *sample = NULL;
+HelloWorldAsync_sayHelloRequest *
+HelloWorldAsync_sayHelloRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    HelloWorldAsync_sayHelloRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sumaRequest);
+        &sample, HelloWorldAsync_sayHelloRequest);
 
     if(sample != NULL) {
-        if (!sumaRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!HelloWorldAsync_sayHelloRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -78,44 +78,44 @@ sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sumaRequest *
-sumaRequestPluginSupport_create_data(void)
+HelloWorldAsync_sayHelloRequest *
+HelloWorldAsync_sayHelloRequestPluginSupport_create_data(void)
 {
-    return sumaRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return HelloWorldAsync_sayHelloRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_data_ex(
-    sumaRequest *sample,RTIBool deallocate_pointers) {
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_data_ex(
+    HelloWorldAsync_sayHelloRequest *sample,RTIBool deallocate_pointers) {
 
-    sumaRequest_finalize_ex(sample,deallocate_pointers);
+    HelloWorldAsync_sayHelloRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_data(
-    sumaRequest *sample) {
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_data(
+    HelloWorldAsync_sayHelloRequest *sample) {
 
-    sumaRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    HelloWorldAsync_sayHelloRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sumaRequestPluginSupport_copy_data(
-    sumaRequest *dst,
-    const sumaRequest *src)
+HelloWorldAsync_sayHelloRequestPluginSupport_copy_data(
+    HelloWorldAsync_sayHelloRequest *dst,
+    const HelloWorldAsync_sayHelloRequest *src)
 {
-    return sumaRequest_copy(dst,src);
+    return HelloWorldAsync_sayHelloRequest_copy(dst,src);
 }
 
 
 void 
-sumaRequestPluginSupport_print_data(
-    const sumaRequest *sample,
+HelloWorldAsync_sayHelloRequestPluginSupport_print_data(
+    const HelloWorldAsync_sayHelloRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -135,57 +135,54 @@ sumaRequestPluginSupport_print_data(
     }
 
 
-    RTICdrType_printArray(
-        sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE,
-        (RTICdrTypePrintFunction)RTICdrType_printUnsignedLong,
-        "clientServiceId", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->id1, "id1", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->id2, "id2", indent_level + 1);
+    if (&sample->name==NULL) {
+        RTICdrType_printString(
+            NULL, "name", indent_level + 1);                
+    } else {
+        RTICdrType_printString(
+            sample->name, "name", indent_level + 1);                
+    }
             
 
 }
 
-sumaRequest *
-sumaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sumaRequest *key = NULL;
+HelloWorldAsync_sayHelloRequest *
+HelloWorldAsync_sayHelloRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    HelloWorldAsync_sayHelloRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sumaRequestKeyHolder);
+        &key, HelloWorldAsync_sayHelloRequestKeyHolder);
 
-    sumaRequest_initialize_ex(key,allocate_pointers);
+    HelloWorldAsync_sayHelloRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sumaRequest *
-sumaRequestPluginSupport_create_key(void)
+HelloWorldAsync_sayHelloRequest *
+HelloWorldAsync_sayHelloRequestPluginSupport_create_key(void)
 {
-    return  sumaRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  HelloWorldAsync_sayHelloRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_key_ex(
-    sumaRequestKeyHolder *key,RTIBool deallocate_pointers)
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key_ex(
+    HelloWorldAsync_sayHelloRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sumaRequest_finalize_ex(key,deallocate_pointers);
+    HelloWorldAsync_sayHelloRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_key(
-    sumaRequestKeyHolder *key) {
+HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key(
+    HelloWorldAsync_sayHelloRequestKeyHolder *key) {
 
-  sumaRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -198,7 +195,7 @@ sumaRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sumaRequestPlugin_on_participant_attached(
+HelloWorldAsync_sayHelloRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -217,7 +214,7 @@ sumaRequestPlugin_on_participant_attached(
 
 
 void 
-sumaRequestPlugin_on_participant_detached(
+HelloWorldAsync_sayHelloRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -226,7 +223,7 @@ sumaRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sumaRequestPlugin_on_endpoint_attached(
+HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -244,19 +241,19 @@ sumaRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sumaRequestPluginSupport_create_data,
+            HelloWorldAsync_sayHelloRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sumaRequestPluginSupport_destroy_data,
+            HelloWorldAsync_sayHelloRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sumaRequestPluginSupport_create_key,
+            HelloWorldAsync_sayHelloRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sumaRequestPluginSupport_destroy_key);
+            HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sumaRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = HelloWorldAsync_sayHelloRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -272,9 +269,9 @@ sumaRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sumaRequestPlugin_get_serialized_sample_max_size, epd,
+                HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sumaRequestPlugin_get_serialized_sample_size,
+            HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -288,7 +285,7 @@ sumaRequestPlugin_on_endpoint_attached(
 
 
 void 
-sumaRequestPlugin_on_endpoint_detached(
+HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -297,13 +294,13 @@ sumaRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sumaRequestPlugin_copy_sample(
+HelloWorldAsync_sayHelloRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *dst,
-    const sumaRequest *src)
+    HelloWorldAsync_sayHelloRequest *dst,
+    const HelloWorldAsync_sayHelloRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sumaRequestPluginSupport_copy_data(dst,src);
+    return HelloWorldAsync_sayHelloRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -312,9 +309,9 @@ sumaRequestPlugin_copy_sample(
 
 
 RTIBool 
-sumaRequestPlugin_serialize(
+HelloWorldAsync_sayHelloRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample, 
+    const HelloWorldAsync_sayHelloRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -341,23 +338,18 @@ sumaRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!RTICdrStream_serializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!RequestHeaderPlugin_serialize(
+            endpoint_data,
+            &sample->header, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->id1)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->id2)) {
+    if (!RTICdrStream_serializeString(
+        stream, sample->name, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -373,9 +365,9 @@ sumaRequestPlugin_serialize(
 
 
 RTIBool 
-sumaRequestPlugin_deserialize_sample(
+HelloWorldAsync_sayHelloRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample,
+    HelloWorldAsync_sayHelloRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -400,23 +392,17 @@ sumaRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!RequestHeaderPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->id1)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->id2)) {
+    if (!RTICdrStream_deserializeString(
+        stream, sample->name, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -434,9 +420,9 @@ sumaRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-sumaRequestPlugin_deserialize(
+HelloWorldAsync_sayHelloRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest **sample,
+    HelloWorldAsync_sayHelloRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -446,7 +432,7 @@ sumaRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sumaRequestPlugin_deserialize_sample( 
+    return HelloWorldAsync_sayHelloRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -455,7 +441,7 @@ sumaRequestPlugin_deserialize(
 
 
 
-RTIBool sumaRequestPlugin_skip(
+RTIBool HelloWorldAsync_sayHelloRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -480,20 +466,15 @@ RTIBool sumaRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!RTICdrStream_skipPrimitiveArray(
-        stream, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!RequestHeaderPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -510,7 +491,7 @@ RTIBool sumaRequestPlugin_skip(
 
 
 unsigned int 
-sumaRequestPlugin_get_serialized_sample_max_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -538,17 +519,11 @@ sumaRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
+        current_alignment, (255) + 1);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -559,7 +534,7 @@ sumaRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sumaRequestPlugin_get_serialized_sample_min_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -587,17 +562,11 @@ sumaRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
+        current_alignment, 1);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -614,12 +583,12 @@ sumaRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sumaRequestPlugin_get_serialized_sample_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaRequest * sample) 
+    const HelloWorldAsync_sayHelloRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -644,17 +613,12 @@ sumaRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->header);
             
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment += RTICdrType_getStringSerializedSize(
+        current_alignment, sample->name);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -669,7 +633,7 @@ sumaRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sumaRequestPlugin_get_key_kind(void)
+HelloWorldAsync_sayHelloRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -678,9 +642,9 @@ sumaRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-sumaRequestPlugin_serialize_key(
+HelloWorldAsync_sayHelloRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample, 
+    const HelloWorldAsync_sayHelloRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -705,13 +669,13 @@ sumaRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!RTICdrStream_serializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
+    if (!RequestHeaderPlugin_serialize_key(
+            endpoint_data,
+            &sample->header, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
@@ -727,9 +691,9 @@ sumaRequestPlugin_serialize_key(
 }
 
 
-RTIBool sumaRequestPlugin_deserialize_key_sample(
+RTIBool HelloWorldAsync_sayHelloRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample, 
+    HelloWorldAsync_sayHelloRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -754,13 +718,12 @@ RTIBool sumaRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
+    if (!RequestHeaderPlugin_deserialize_key_sample(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
@@ -777,9 +740,9 @@ RTIBool sumaRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool sumaRequestPlugin_deserialize_key(
+RTIBool HelloWorldAsync_sayHelloRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest **sample, 
+    HelloWorldAsync_sayHelloRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -787,7 +750,7 @@ RTIBool sumaRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sumaRequestPlugin_deserialize_key_sample(
+    return HelloWorldAsync_sayHelloRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -795,7 +758,7 @@ RTIBool sumaRequestPlugin_deserialize_key(
 
 
 unsigned int
-sumaRequestPlugin_get_serialized_key_max_size(
+HelloWorldAsync_sayHelloRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -825,11 +788,8 @@ sumaRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -840,9 +800,9 @@ sumaRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sumaRequestPlugin_serialized_sample_to_key(
+HelloWorldAsync_sayHelloRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample,
+    HelloWorldAsync_sayHelloRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -865,21 +825,16 @@ sumaRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -899,21 +854,16 @@ sumaRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sumaRequestPlugin_instance_to_key(
+HelloWorldAsync_sayHelloRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequestKeyHolder *dst, 
-    const sumaRequest *src)
+    HelloWorldAsync_sayHelloRequestKeyHolder *dst, 
+    const HelloWorldAsync_sayHelloRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!RTICdrType_copyArray(
-        dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -922,21 +872,16 @@ sumaRequestPlugin_instance_to_key(
 
 
 RTIBool 
-sumaRequestPlugin_key_to_instance(
+HelloWorldAsync_sayHelloRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *dst, const
-    sumaRequestKeyHolder *src)
+    HelloWorldAsync_sayHelloRequest *dst, const
+    HelloWorldAsync_sayHelloRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!RTICdrType_copyArray(
-        dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -945,10 +890,10 @@ sumaRequestPlugin_key_to_instance(
 
 
 RTIBool 
-sumaRequestPlugin_instance_to_keyhash(
+HelloWorldAsync_sayHelloRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaRequest *instance)
+    const HelloWorldAsync_sayHelloRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -964,7 +909,7 @@ sumaRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sumaRequestPlugin_serialize_key(
+    if (!HelloWorldAsync_sayHelloRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -985,7 +930,7 @@ sumaRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sumaRequestPlugin_serialized_sample_to_keyhash(
+HelloWorldAsync_sayHelloRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -993,7 +938,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sumaRequest * sample;
+    HelloWorldAsync_sayHelloRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1008,7 +953,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sumaRequest *)
+    sample = (HelloWorldAsync_sayHelloRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -1016,13 +961,12 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
@@ -1031,7 +975,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sumaRequestPlugin_instance_to_keyhash(
+    if (!HelloWorldAsync_sayHelloRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -1044,7 +988,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sumaRequestPlugin_new(void) 
+struct PRESTypePlugin *HelloWorldAsync_sayHelloRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -1061,131 +1005,131 @@ struct PRESTypePlugin *sumaRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sumaRequestPlugin_on_participant_attached;
+        HelloWorldAsync_sayHelloRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sumaRequestPlugin_on_participant_detached;
+        HelloWorldAsync_sayHelloRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sumaRequestPlugin_on_endpoint_attached;
+        HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sumaRequestPlugin_on_endpoint_detached;
+        HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sumaRequestPlugin_copy_sample;
+        HelloWorldAsync_sayHelloRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sumaRequestPlugin_create_sample;
+        HelloWorldAsync_sayHelloRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sumaRequestPlugin_destroy_sample;
+        HelloWorldAsync_sayHelloRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sumaRequestPlugin_serialize;
+        HelloWorldAsync_sayHelloRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sumaRequestPlugin_deserialize;
+        HelloWorldAsync_sayHelloRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sumaRequestPlugin_get_serialized_sample_max_size;
+        HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sumaRequestPlugin_get_serialized_sample_min_size;
+        HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sumaRequestPlugin_get_sample;
+        HelloWorldAsync_sayHelloRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sumaRequestPlugin_return_sample;
+        HelloWorldAsync_sayHelloRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sumaRequestPlugin_get_key_kind;
+        HelloWorldAsync_sayHelloRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sumaRequestPlugin_get_serialized_key_max_size;
+        HelloWorldAsync_sayHelloRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sumaRequestPlugin_serialize_key;
+        HelloWorldAsync_sayHelloRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sumaRequestPlugin_deserialize_key;
+        HelloWorldAsync_sayHelloRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sumaRequestPlugin_deserialize_key_sample;
+        HelloWorldAsync_sayHelloRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sumaRequestPlugin_instance_to_keyhash;
+        HelloWorldAsync_sayHelloRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sumaRequestPlugin_serialized_sample_to_keyhash;
+        HelloWorldAsync_sayHelloRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sumaRequestPlugin_get_key;
+        HelloWorldAsync_sayHelloRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sumaRequestPlugin_return_key;
+        HelloWorldAsync_sayHelloRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sumaRequestPlugin_instance_to_key;
+        HelloWorldAsync_sayHelloRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sumaRequestPlugin_key_to_instance;
+        HelloWorldAsync_sayHelloRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sumaRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)HelloWorldAsync_sayHelloRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sumaRequestPlugin_get_buffer;
+        HelloWorldAsync_sayHelloRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sumaRequestPlugin_return_buffer;
+        HelloWorldAsync_sayHelloRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sumaRequestPlugin_get_serialized_sample_size;
+        HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sumaRequestTYPENAME;
+    plugin->endpointTypeName = HelloWorldAsync_sayHelloRequestTYPENAME;
 
     return plugin;
 }
 
 void
-sumaRequestPlugin_delete(struct PRESTypePlugin *plugin)
+HelloWorldAsync_sayHelloRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sumaReply
+ *  Type HelloWorldAsync_sayHelloReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sumaReply *
-sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sumaReply *sample = NULL;
+HelloWorldAsync_sayHelloReply *
+HelloWorldAsync_sayHelloReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    HelloWorldAsync_sayHelloReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sumaReply);
+        &sample, HelloWorldAsync_sayHelloReply);
 
     if(sample != NULL) {
-        if (!sumaReply_initialize_ex(sample,allocate_pointers)) {
+        if (!HelloWorldAsync_sayHelloReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -1194,44 +1138,44 @@ sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sumaReply *
-sumaReplyPluginSupport_create_data(void)
+HelloWorldAsync_sayHelloReply *
+HelloWorldAsync_sayHelloReplyPluginSupport_create_data(void)
 {
-    return sumaReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return HelloWorldAsync_sayHelloReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_data_ex(
-    sumaReply *sample,RTIBool deallocate_pointers) {
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_data_ex(
+    HelloWorldAsync_sayHelloReply *sample,RTIBool deallocate_pointers) {
 
-    sumaReply_finalize_ex(sample,deallocate_pointers);
+    HelloWorldAsync_sayHelloReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_data(
-    sumaReply *sample) {
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_data(
+    HelloWorldAsync_sayHelloReply *sample) {
 
-    sumaReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    HelloWorldAsync_sayHelloReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sumaReplyPluginSupport_copy_data(
-    sumaReply *dst,
-    const sumaReply *src)
+HelloWorldAsync_sayHelloReplyPluginSupport_copy_data(
+    HelloWorldAsync_sayHelloReply *dst,
+    const HelloWorldAsync_sayHelloReply *src)
 {
-    return sumaReply_copy(dst,src);
+    return HelloWorldAsync_sayHelloReply_copy(dst,src);
 }
 
 
 void 
-sumaReplyPluginSupport_print_data(
-    const sumaReply *sample,
+HelloWorldAsync_sayHelloReplyPluginSupport_print_data(
+    const HelloWorldAsync_sayHelloReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -1251,62 +1195,54 @@ sumaReplyPluginSupport_print_data(
     }
 
 
-    RTICdrType_printArray(
-        sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE,
-        (RTICdrTypePrintFunction)RTICdrType_printUnsignedLong,
-        "serverServiceId", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
-    RTICdrType_printArray(
-        sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE,
-        (RTICdrTypePrintFunction)RTICdrType_printUnsignedLong,
-        "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddscsRetCode, "ddscsRetCode", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->returnedValue, "returnedValue", indent_level + 1);
+    if (&sample->sayHello_ret==NULL) {
+        RTICdrType_printString(
+            NULL, "sayHello_ret", indent_level + 1);                
+    } else {
+        RTICdrType_printString(
+            sample->sayHello_ret, "sayHello_ret", indent_level + 1);                
+    }
             
 
 }
 
-sumaReply *
-sumaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sumaReply *key = NULL;
+HelloWorldAsync_sayHelloReply *
+HelloWorldAsync_sayHelloReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    HelloWorldAsync_sayHelloReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sumaReplyKeyHolder);
+        &key, HelloWorldAsync_sayHelloReplyKeyHolder);
 
-    sumaReply_initialize_ex(key,allocate_pointers);
+    HelloWorldAsync_sayHelloReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sumaReply *
-sumaReplyPluginSupport_create_key(void)
+HelloWorldAsync_sayHelloReply *
+HelloWorldAsync_sayHelloReplyPluginSupport_create_key(void)
 {
-    return  sumaReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  HelloWorldAsync_sayHelloReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_key_ex(
-    sumaReplyKeyHolder *key,RTIBool deallocate_pointers)
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key_ex(
+    HelloWorldAsync_sayHelloReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sumaReply_finalize_ex(key,deallocate_pointers);
+    HelloWorldAsync_sayHelloReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_key(
-    sumaReplyKeyHolder *key) {
+HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key(
+    HelloWorldAsync_sayHelloReplyKeyHolder *key) {
 
-  sumaReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -1319,7 +1255,7 @@ sumaReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sumaReplyPlugin_on_participant_attached(
+HelloWorldAsync_sayHelloReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -1338,7 +1274,7 @@ sumaReplyPlugin_on_participant_attached(
 
 
 void 
-sumaReplyPlugin_on_participant_detached(
+HelloWorldAsync_sayHelloReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -1347,7 +1283,7 @@ sumaReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sumaReplyPlugin_on_endpoint_attached(
+HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -1365,19 +1301,19 @@ sumaReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sumaReplyPluginSupport_create_data,
+            HelloWorldAsync_sayHelloReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sumaReplyPluginSupport_destroy_data,
+            HelloWorldAsync_sayHelloReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sumaReplyPluginSupport_create_key,
+            HelloWorldAsync_sayHelloReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sumaReplyPluginSupport_destroy_key);
+            HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sumaReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = HelloWorldAsync_sayHelloReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -1393,9 +1329,9 @@ sumaReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sumaReplyPlugin_get_serialized_sample_max_size, epd,
+                HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sumaReplyPlugin_get_serialized_sample_size,
+            HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -1409,7 +1345,7 @@ sumaReplyPlugin_on_endpoint_attached(
 
 
 void 
-sumaReplyPlugin_on_endpoint_detached(
+HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -1418,13 +1354,13 @@ sumaReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sumaReplyPlugin_copy_sample(
+HelloWorldAsync_sayHelloReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *dst,
-    const sumaReply *src)
+    HelloWorldAsync_sayHelloReply *dst,
+    const HelloWorldAsync_sayHelloReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sumaReplyPluginSupport_copy_data(dst,src);
+    return HelloWorldAsync_sayHelloReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1433,9 +1369,9 @@ sumaReplyPlugin_copy_sample(
 
 
 RTIBool 
-sumaReplyPlugin_serialize(
+HelloWorldAsync_sayHelloReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample, 
+    const HelloWorldAsync_sayHelloReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1462,28 +1398,18 @@ sumaReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!RTICdrStream_serializePrimitiveArray(
-        stream, (void*)sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!ReplyHeaderPlugin_serialize(
+            endpoint_data,
+            &sample->header, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_serializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddscsRetCode)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->returnedValue)) {
+    if (!RTICdrStream_serializeString(
+        stream, sample->sayHello_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -1499,9 +1425,9 @@ sumaReplyPlugin_serialize(
 
 
 RTIBool 
-sumaReplyPlugin_deserialize_sample(
+HelloWorldAsync_sayHelloReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample,
+    HelloWorldAsync_sayHelloReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1526,28 +1452,17 @@ sumaReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!ReplyHeaderPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddscsRetCode)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->returnedValue)) {
+    if (!RTICdrStream_deserializeString(
+        stream, sample->sayHello_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -1565,9 +1480,9 @@ sumaReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-sumaReplyPlugin_deserialize(
+HelloWorldAsync_sayHelloReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply **sample,
+    HelloWorldAsync_sayHelloReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -1577,7 +1492,7 @@ sumaReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sumaReplyPlugin_deserialize_sample( 
+    return HelloWorldAsync_sayHelloReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1586,7 +1501,7 @@ sumaReplyPlugin_deserialize(
 
 
 
-RTIBool sumaReplyPlugin_skip(
+RTIBool HelloWorldAsync_sayHelloReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -1611,25 +1526,15 @@ RTIBool sumaReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!RTICdrStream_skipPrimitiveArray(
-        stream, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!ReplyHeaderPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_skipPrimitiveArray(
-        stream, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -1646,7 +1551,7 @@ RTIBool sumaReplyPlugin_skip(
 
 
 unsigned int 
-sumaReplyPlugin_get_serialized_sample_max_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1674,20 +1579,11 @@ sumaReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
+        current_alignment, (255) + 1);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1698,7 +1594,7 @@ sumaReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sumaReplyPlugin_get_serialized_sample_min_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1726,20 +1622,11 @@ sumaReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
+        current_alignment, 1);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1756,12 +1643,12 @@ sumaReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sumaReplyPlugin_get_serialized_sample_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaReply * sample) 
+    const HelloWorldAsync_sayHelloReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -1786,20 +1673,12 @@ sumaReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->header);
             
-    current_alignment += RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment += RTICdrType_getStringSerializedSize(
+        current_alignment, sample->sayHello_ret);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1814,7 +1693,7 @@ sumaReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sumaReplyPlugin_get_key_kind(void)
+HelloWorldAsync_sayHelloReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -1823,9 +1702,9 @@ sumaReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-sumaReplyPlugin_serialize_key(
+HelloWorldAsync_sayHelloReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample, 
+    const HelloWorldAsync_sayHelloReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1850,18 +1729,13 @@ sumaReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!RTICdrStream_serializePrimitiveArray(
-        stream, (void*)sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
+    if (!ReplyHeaderPlugin_serialize_key(
+            endpoint_data,
+            &sample->header, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
@@ -1877,9 +1751,9 @@ sumaReplyPlugin_serialize_key(
 }
 
 
-RTIBool sumaReplyPlugin_deserialize_key_sample(
+RTIBool HelloWorldAsync_sayHelloReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample, 
+    HelloWorldAsync_sayHelloReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1904,18 +1778,12 @@ RTIBool sumaReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
@@ -1932,9 +1800,9 @@ RTIBool sumaReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool sumaReplyPlugin_deserialize_key(
+RTIBool HelloWorldAsync_sayHelloReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply **sample, 
+    HelloWorldAsync_sayHelloReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1942,7 +1810,7 @@ RTIBool sumaReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sumaReplyPlugin_deserialize_key_sample(
+    return HelloWorldAsync_sayHelloReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -1950,7 +1818,7 @@ RTIBool sumaReplyPlugin_deserialize_key(
 
 
 unsigned int
-sumaReplyPlugin_get_serialized_key_max_size(
+HelloWorldAsync_sayHelloReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1980,14 +1848,8 @@ sumaReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
-            
-    current_alignment +=  RTICdrType_getPrimitiveArrayMaxSizeSerialized(
-        current_alignment, (4), RTI_CDR_UNSIGNED_LONG_TYPE);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1998,9 +1860,9 @@ sumaReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sumaReplyPlugin_serialized_sample_to_key(
+HelloWorldAsync_sayHelloReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample,
+    HelloWorldAsync_sayHelloReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2023,26 +1885,16 @@ sumaReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -2062,26 +1914,16 @@ sumaReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sumaReplyPlugin_instance_to_key(
+HelloWorldAsync_sayHelloReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReplyKeyHolder *dst, 
-    const sumaReply *src)
+    HelloWorldAsync_sayHelloReplyKeyHolder *dst, 
+    const HelloWorldAsync_sayHelloReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!RTICdrType_copyArray(
-        dst->serverServiceId, src->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyArray(
-        dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2090,26 +1932,16 @@ sumaReplyPlugin_instance_to_key(
 
 
 RTIBool 
-sumaReplyPlugin_key_to_instance(
+HelloWorldAsync_sayHelloReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *dst, const
-    sumaReplyKeyHolder *src)
+    HelloWorldAsync_sayHelloReply *dst, const
+    HelloWorldAsync_sayHelloReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!RTICdrType_copyArray(
-        dst->serverServiceId, src->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyArray(
-        dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2118,10 +1950,10 @@ sumaReplyPlugin_key_to_instance(
 
 
 RTIBool 
-sumaReplyPlugin_instance_to_keyhash(
+HelloWorldAsync_sayHelloReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaReply *instance)
+    const HelloWorldAsync_sayHelloReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -2137,7 +1969,7 @@ sumaReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sumaReplyPlugin_serialize_key(
+    if (!HelloWorldAsync_sayHelloReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -2158,7 +1990,7 @@ sumaReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sumaReplyPlugin_serialized_sample_to_keyhash(
+HelloWorldAsync_sayHelloReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2166,7 +1998,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sumaReply * sample;
+    HelloWorldAsync_sayHelloReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2181,7 +2013,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sumaReply *)
+    sample = (HelloWorldAsync_sayHelloReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -2189,18 +2021,12 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializePrimitiveArray(
-        stream, (void*)sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_TYPE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
+            endpoint_data,
+            &sample->header,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
         return RTI_FALSE;
     }
             
@@ -2209,7 +2035,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sumaReplyPlugin_instance_to_keyhash(
+    if (!HelloWorldAsync_sayHelloReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -2222,7 +2048,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sumaReplyPlugin_new(void) 
+struct PRESTypePlugin *HelloWorldAsync_sayHelloReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -2239,110 +2065,110 @@ struct PRESTypePlugin *sumaReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sumaReplyPlugin_on_participant_attached;
+        HelloWorldAsync_sayHelloReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sumaReplyPlugin_on_participant_detached;
+        HelloWorldAsync_sayHelloReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sumaReplyPlugin_on_endpoint_attached;
+        HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sumaReplyPlugin_on_endpoint_detached;
+        HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sumaReplyPlugin_copy_sample;
+        HelloWorldAsync_sayHelloReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sumaReplyPlugin_create_sample;
+        HelloWorldAsync_sayHelloReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sumaReplyPlugin_destroy_sample;
+        HelloWorldAsync_sayHelloReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sumaReplyPlugin_serialize;
+        HelloWorldAsync_sayHelloReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sumaReplyPlugin_deserialize;
+        HelloWorldAsync_sayHelloReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sumaReplyPlugin_get_serialized_sample_max_size;
+        HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sumaReplyPlugin_get_serialized_sample_min_size;
+        HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sumaReplyPlugin_get_sample;
+        HelloWorldAsync_sayHelloReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sumaReplyPlugin_return_sample;
+        HelloWorldAsync_sayHelloReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sumaReplyPlugin_get_key_kind;
+        HelloWorldAsync_sayHelloReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sumaReplyPlugin_get_serialized_key_max_size;
+        HelloWorldAsync_sayHelloReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sumaReplyPlugin_serialize_key;
+        HelloWorldAsync_sayHelloReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sumaReplyPlugin_deserialize_key;
+        HelloWorldAsync_sayHelloReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sumaReplyPlugin_deserialize_key_sample;
+        HelloWorldAsync_sayHelloReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sumaReplyPlugin_instance_to_keyhash;
+        HelloWorldAsync_sayHelloReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sumaReplyPlugin_serialized_sample_to_keyhash;
+        HelloWorldAsync_sayHelloReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sumaReplyPlugin_get_key;
+        HelloWorldAsync_sayHelloReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sumaReplyPlugin_return_key;
+        HelloWorldAsync_sayHelloReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sumaReplyPlugin_instance_to_key;
+        HelloWorldAsync_sayHelloReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sumaReplyPlugin_key_to_instance;
+        HelloWorldAsync_sayHelloReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sumaReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)HelloWorldAsync_sayHelloReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sumaReplyPlugin_get_buffer;
+        HelloWorldAsync_sayHelloReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sumaReplyPlugin_return_buffer;
+        HelloWorldAsync_sayHelloReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sumaReplyPlugin_get_serialized_sample_size;
+        HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sumaReplyTYPENAME;
+    plugin->endpointTypeName = HelloWorldAsync_sayHelloReplyTYPENAME;
 
     return plugin;
 }
 
 void
-sumaReplyPlugin_delete(struct PRESTypePlugin *plugin)
+HelloWorldAsync_sayHelloReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

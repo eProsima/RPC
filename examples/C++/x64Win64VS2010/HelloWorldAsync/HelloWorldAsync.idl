@@ -2,6 +2,6 @@ interface HelloWorldAsync
 
 {
     
-	long suma(in long id1, in long id2);
+    string sayHello(in string name);
 
 };

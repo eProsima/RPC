@@ -6,15 +6,15 @@
 #include "HelloWorldAsyncRequestReplyPlugin.h"
 
 
-const char* sumaRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* HelloWorldAsync_sayHelloRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sumaRequestTypeSupport::get_type_name();
+        typeName = HelloWorldAsync_sayHelloRequestTypeSupport::get_type_name();
 
-        if(sumaRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(HelloWorldAsync_sayHelloRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -23,35 +23,28 @@ const char* sumaRequestUtils::registerType(DDS::DomainParticipant *clientPartici
     return typeName;
 }
 
-sumaRequest* sumaRequestUtils::createTypeData(DDS_Long id1, DDS_Long id2)
+void HelloWorldAsync_sayHelloRequestUtils::setTypeData(HelloWorldAsync_sayHelloRequest& instance, /*in*/ char* name)
 {
-    sumaRequest* instance = sumaRequestTypeSupport::create_data();
-
-    instance->id1 = id1;
-    instance->id2 = id2;
+    instance.name = name;
     
-    
-    return instance;
 }
 
-void sumaRequestUtils::extractTypeData(sumaRequest* data , DDS_Long &id1, DDS_Long &id2)
+void HelloWorldAsync_sayHelloRequestUtils::extractTypeData(HelloWorldAsync_sayHelloRequest& data, /*in*/ char*& name)
 {
-    id1 = data->id1;
-    id2 = data->id2;
-    
+    name = data.name;  
     
 }
 
 
-const char* sumaReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* HelloWorldAsync_sayHelloReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sumaReplyTypeSupport::get_type_name();
+        typeName = HelloWorldAsync_sayHelloReplyTypeSupport::get_type_name();
 
-        if(sumaReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(HelloWorldAsync_sayHelloReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -60,19 +53,16 @@ const char* sumaReplyUtils::registerType(DDS::DomainParticipant *clientParticipa
     return typeName;
 }
 
-sumaReply* sumaReplyUtils::createTypeData(DDS_Long& returnedValue)
+void HelloWorldAsync_sayHelloReplyUtils::setTypeData(HelloWorldAsync_sayHelloReply& instance, /*out*/ char* sayHello_ret)
 {
-    sumaReply* instance = sumaReplyTypeSupport::create_data();
-
-    
-    instance->returnedValue = returnedValue;            
-    return instance;
+    instance.sayHello_ret = sayHello_ret;            
 }
 
-void sumaReplyUtils::extractTypeData(sumaReply* data , DDS_Long& returnedValue)
+void HelloWorldAsync_sayHelloReplyUtils::extractTypeData(HelloWorldAsync_sayHelloReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ char*& sayHello_ret)
 {
-    
-    returnedValue = data->returnedValue;            
+retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+  
+    sayHello_ret = data.sayHello_ret;            
 }
 
  

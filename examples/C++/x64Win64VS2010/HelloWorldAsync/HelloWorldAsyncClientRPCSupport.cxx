@@ -6,12 +6,12 @@
 
 
 /* Defines */
-#define TName            sumaClientRPC
-#define TDataTypeSupport sumaReplyTypeSupport
-#define TData            suma
-#define TDataSeq         sumaReplySeq
-#define TDataReader      sumaReplyDataReader
-#define TDataWriter      sumaRequestDataWriter
+#define TName            HelloWorldAsync_sayHelloClientRPC
+#define TDataTypeSupport HelloWorldAsync_sayHelloReplyTypeSupport
+#define TData            HelloWorldAsync_sayHello
+#define TDataSeq         HelloWorldAsync_sayHelloReplySeq
+#define TDataReader      HelloWorldAsync_sayHelloReplyDataReader
+#define TDataWriter      HelloWorldAsync_sayHelloRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"

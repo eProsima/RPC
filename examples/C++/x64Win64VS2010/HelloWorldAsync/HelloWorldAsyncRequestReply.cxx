@@ -39,18 +39,18 @@
 #include "HelloWorldAsyncRequestReply.h"
 
 /* ========================================================================= */
-const char *sumaRequestTYPENAME = "sumaRequest";
+const char *HelloWorldAsync_sayHelloRequestTYPENAME = "HelloWorldAsync_sayHelloRequest";
 
-DDS_TypeCode* sumaRequest_get_typecode()
+DDS_TypeCode* HelloWorldAsync_sayHelloRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode sumaRequest_g_tc_clientServiceId_array = DDS_INITIALIZE_ARRAY_TYPECODE(1,4,NULL,NULL);
+    static DDS_TypeCode HelloWorldAsync_sayHelloRequest_g_tc_name_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member sumaRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member HelloWorldAsync_sayHelloRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -67,41 +67,7 @@ DDS_TypeCode* sumaRequest_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"id1",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"id2",/* Member name */
+            (char *)"name",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -119,109 +85,92 @@ DDS_TypeCode* sumaRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode sumaRequest_g_tc =
+    static DDS_TypeCode HelloWorldAsync_sayHelloRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sumaRequest", /* Name */
+        (char *)"HelloWorldAsync_sayHelloRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        sumaRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        HelloWorldAsync_sayHelloRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sumaRequest*/
+    }}; /* Type code for HelloWorldAsync_sayHelloRequest*/
 
     if (is_initialized) {
-        return &sumaRequest_g_tc;
+        return &HelloWorldAsync_sayHelloRequest_g_tc;
     }
 
-    sumaRequest_g_tc_clientServiceId_array._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
 
-    sumaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&sumaRequest_g_tc_clientServiceId_array;
-    sumaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sumaRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    sumaRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    HelloWorldAsync_sayHelloRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    HelloWorldAsync_sayHelloRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&HelloWorldAsync_sayHelloRequest_g_tc_name_string;
 
     is_initialized = RTI_TRUE;
 
-    return &sumaRequest_g_tc;
+    return &HelloWorldAsync_sayHelloRequest_g_tc;
 }
 
 
-RTIBool sumaRequest_initialize(
-    sumaRequest* sample) {
-  return sumaRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool HelloWorldAsync_sayHelloRequest_initialize(
+    HelloWorldAsync_sayHelloRequest* sample) {
+  return HelloWorldAsync_sayHelloRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sumaRequest_initialize_ex(
-    sumaRequest* sample,RTIBool allocatePointers)
+RTIBool HelloWorldAsync_sayHelloRequest_initialize_ex(
+    HelloWorldAsync_sayHelloRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
-    
-    if (!RTICdrType_initArray(
-        sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
+    sample->name = DDS_String_alloc((255));
+    if (sample->name == NULL) {
         return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->id1)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->id2)) {
-        return RTI_FALSE;
-    }                
+    }
             
 
     return RTI_TRUE;
 }
 
-void sumaRequest_finalize(
-    sumaRequest* sample)
+void HelloWorldAsync_sayHelloRequest_finalize(
+    HelloWorldAsync_sayHelloRequest* sample)
 {
-    sumaRequest_finalize_ex(sample,RTI_TRUE);
+    HelloWorldAsync_sayHelloRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void sumaRequest_finalize_ex(
-    sumaRequest* sample,RTIBool deletePointers)
+void HelloWorldAsync_sayHelloRequest_finalize_ex(
+    HelloWorldAsync_sayHelloRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
+            
+    DDS_String_free(sample->name);                
+            
 }
 
-RTIBool sumaRequest_copy(
-    sumaRequest* dst,
-    const sumaRequest* src)
+RTIBool HelloWorldAsync_sayHelloRequest_copy(
+    HelloWorldAsync_sayHelloRequest* dst,
+    const HelloWorldAsync_sayHelloRequest* src)
 {        
 
-    if (!RTICdrType_copyArray(
-        dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->id1, &src->id1)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->id2, &src->id2)) {
+    if (!RTICdrType_copyString(
+        dst->name, src->name, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -235,13 +184,13 @@ RTIBool sumaRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sumaRequest' sequence class.
+ * Configure and implement 'HelloWorldAsync_sayHelloRequest' sequence class.
  */
-#define T sumaRequest
-#define TSeq sumaRequestSeq
-#define T_initialize_ex sumaRequest_initialize_ex
-#define T_finalize_ex   sumaRequest_finalize_ex
-#define T_copy       sumaRequest_copy
+#define T HelloWorldAsync_sayHelloRequest
+#define TSeq HelloWorldAsync_sayHelloRequestSeq
+#define T_initialize_ex HelloWorldAsync_sayHelloRequest_initialize_ex
+#define T_finalize_ex   HelloWorldAsync_sayHelloRequest_finalize_ex
+#define T_copy       HelloWorldAsync_sayHelloRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -262,19 +211,18 @@ RTIBool sumaRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sumaReplyTYPENAME = "sumaReply";
+const char *HelloWorldAsync_sayHelloReplyTYPENAME = "HelloWorldAsync_sayHelloReply";
 
-DDS_TypeCode* sumaReply_get_typecode()
+DDS_TypeCode* HelloWorldAsync_sayHelloReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode sumaReply_g_tc_serverServiceId_array = DDS_INITIALIZE_ARRAY_TYPECODE(1,4,NULL,NULL);
-    static DDS_TypeCode sumaReply_g_tc_clientServiceId_array = DDS_INITIALIZE_ARRAY_TYPECODE(1,4,NULL,NULL);
+    static DDS_TypeCode HelloWorldAsync_sayHelloReply_g_tc_sayHello_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member sumaReply_g_tc_members[5]=
+    static DDS_TypeCode_Member HelloWorldAsync_sayHelloReply_g_tc_members[2]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -291,58 +239,7 @@ DDS_TypeCode* sumaReply_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddscsRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"returnedValue",/* Member name */
+            (char *)"sayHello_ret",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -360,121 +257,92 @@ DDS_TypeCode* sumaReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode sumaReply_g_tc =
+    static DDS_TypeCode HelloWorldAsync_sayHelloReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sumaReply", /* Name */
+        (char *)"HelloWorldAsync_sayHelloReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        5, /* Number of members */
-        sumaReply_g_tc_members, /* Members */
+        2, /* Number of members */
+        HelloWorldAsync_sayHelloReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sumaReply*/
+    }}; /* Type code for HelloWorldAsync_sayHelloReply*/
 
     if (is_initialized) {
-        return &sumaReply_g_tc;
+        return &HelloWorldAsync_sayHelloReply_g_tc;
     }
 
-    sumaReply_g_tc_serverServiceId_array._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sumaReply_g_tc_clientServiceId_array._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
 
-    sumaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&sumaReply_g_tc_serverServiceId_array;
-    sumaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&sumaReply_g_tc_clientServiceId_array;
-    sumaReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sumaReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    sumaReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    HelloWorldAsync_sayHelloReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    HelloWorldAsync_sayHelloReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&HelloWorldAsync_sayHelloReply_g_tc_sayHello_ret_string;
 
     is_initialized = RTI_TRUE;
 
-    return &sumaReply_g_tc;
+    return &HelloWorldAsync_sayHelloReply_g_tc;
 }
 
 
-RTIBool sumaReply_initialize(
-    sumaReply* sample) {
-  return sumaReply_initialize_ex(sample,RTI_TRUE);
+RTIBool HelloWorldAsync_sayHelloReply_initialize(
+    HelloWorldAsync_sayHelloReply* sample) {
+  return HelloWorldAsync_sayHelloReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sumaReply_initialize_ex(
-    sumaReply* sample,RTIBool allocatePointers)
+RTIBool HelloWorldAsync_sayHelloReply_initialize_ex(
+    HelloWorldAsync_sayHelloReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
-    
-    if (!RTICdrType_initArray(
-        sample->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-                
-    if (!RTICdrType_initArray(
-        sample->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
+    sample->sayHello_ret = DDS_String_alloc((255));
+    if (sample->sayHello_ret == NULL) {
         return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddscsRetCode)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->returnedValue)) {
-        return RTI_FALSE;
-    }                
+    }
             
 
     return RTI_TRUE;
 }
 
-void sumaReply_finalize(
-    sumaReply* sample)
+void HelloWorldAsync_sayHelloReply_finalize(
+    HelloWorldAsync_sayHelloReply* sample)
 {
-    sumaReply_finalize_ex(sample,RTI_TRUE);
+    HelloWorldAsync_sayHelloReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void sumaReply_finalize_ex(
-    sumaReply* sample,RTIBool deletePointers)
+void HelloWorldAsync_sayHelloReply_finalize_ex(
+    HelloWorldAsync_sayHelloReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
+            
+    DDS_String_free(sample->sayHello_ret);                
+            
 }
 
-RTIBool sumaReply_copy(
-    sumaReply* dst,
-    const sumaReply* src)
+RTIBool HelloWorldAsync_sayHelloReply_copy(
+    HelloWorldAsync_sayHelloReply* dst,
+    const HelloWorldAsync_sayHelloReply* src)
 {        
 
-    if (!RTICdrType_copyArray(
-        dst->serverServiceId, src->serverServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
-    if (!RTICdrType_copyArray(
-        dst->clientServiceId, src->clientServiceId, (4), RTI_CDR_UNSIGNED_LONG_SIZE)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddscsRetCode, &src->ddscsRetCode)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->returnedValue, &src->returnedValue)) {
+    if (!RTICdrType_copyString(
+        dst->sayHello_ret, src->sayHello_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -488,13 +356,13 @@ RTIBool sumaReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sumaReply' sequence class.
+ * Configure and implement 'HelloWorldAsync_sayHelloReply' sequence class.
  */
-#define T sumaReply
-#define TSeq sumaReplySeq
-#define T_initialize_ex sumaReply_initialize_ex
-#define T_finalize_ex   sumaReply_finalize_ex
-#define T_copy       sumaReply_copy
+#define T HelloWorldAsync_sayHelloReply
+#define TSeq HelloWorldAsync_sayHelloReplySeq
+#define T_initialize_ex HelloWorldAsync_sayHelloReply_initialize_ex
+#define T_finalize_ex   HelloWorldAsync_sayHelloReply_finalize_ex
+#define T_copy       HelloWorldAsync_sayHelloReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
