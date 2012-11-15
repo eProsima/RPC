@@ -12,27 +12,27 @@
 #include "ndds_namespace_cpp.h"
 
 
-class testRequestUtils
+class MultithreadTest_testRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(testRequest& instance, /*in*/ const Dato& dato1);
+        static void setTypeData(MultithreadTest_testRequest& instance, /*in*/ const Dato& dato1);
         
-        static void extractTypeData(testRequest& data, /*in*/ Dato& dato1);
+        static void extractTypeData(MultithreadTest_testRequest& data, /*in*/ Dato& dato1);
 };
 
 
-class testReplyUtils
+class MultithreadTest_testReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(testReply& instance, /*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret);
+        static void setTypeData(MultithreadTest_testReply& instance, /*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret);
         
-        static void extractTypeData(testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret);
+        static void extractTypeData(MultithreadTest_testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret);
 };
 
  

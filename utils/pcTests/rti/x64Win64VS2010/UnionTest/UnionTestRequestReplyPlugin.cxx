@@ -54,22 +54,22 @@
 
 
 /* --------------------------------------------------------------------------------------
- *  Type getEmpleadoRequest
+ *  Type UnionTest_getEmpleadoRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-getEmpleadoRequest *
-getEmpleadoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    getEmpleadoRequest *sample = NULL;
+UnionTest_getEmpleadoRequest *
+UnionTest_getEmpleadoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    UnionTest_getEmpleadoRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, getEmpleadoRequest);
+        &sample, UnionTest_getEmpleadoRequest);
 
     if(sample != NULL) {
-        if (!getEmpleadoRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!UnionTest_getEmpleadoRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -78,44 +78,44 @@ getEmpleadoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-getEmpleadoRequest *
-getEmpleadoRequestPluginSupport_create_data(void)
+UnionTest_getEmpleadoRequest *
+UnionTest_getEmpleadoRequestPluginSupport_create_data(void)
 {
-    return getEmpleadoRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return UnionTest_getEmpleadoRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-getEmpleadoRequestPluginSupport_destroy_data_ex(
-    getEmpleadoRequest *sample,RTIBool deallocate_pointers) {
+UnionTest_getEmpleadoRequestPluginSupport_destroy_data_ex(
+    UnionTest_getEmpleadoRequest *sample,RTIBool deallocate_pointers) {
 
-    getEmpleadoRequest_finalize_ex(sample,deallocate_pointers);
+    UnionTest_getEmpleadoRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-getEmpleadoRequestPluginSupport_destroy_data(
-    getEmpleadoRequest *sample) {
+UnionTest_getEmpleadoRequestPluginSupport_destroy_data(
+    UnionTest_getEmpleadoRequest *sample) {
 
-    getEmpleadoRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    UnionTest_getEmpleadoRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-getEmpleadoRequestPluginSupport_copy_data(
-    getEmpleadoRequest *dst,
-    const getEmpleadoRequest *src)
+UnionTest_getEmpleadoRequestPluginSupport_copy_data(
+    UnionTest_getEmpleadoRequest *dst,
+    const UnionTest_getEmpleadoRequest *src)
 {
-    return getEmpleadoRequest_copy(dst,src);
+    return UnionTest_getEmpleadoRequest_copy(dst,src);
 }
 
 
 void 
-getEmpleadoRequestPluginSupport_print_data(
-    const getEmpleadoRequest *sample,
+UnionTest_getEmpleadoRequestPluginSupport_print_data(
+    const UnionTest_getEmpleadoRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -135,11 +135,8 @@ getEmpleadoRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     EmpleadoPluginSupport_print_data(
         &sample->em1, "em1", indent_level + 1);
@@ -150,40 +147,40 @@ getEmpleadoRequestPluginSupport_print_data(
 
 }
 
-getEmpleadoRequest *
-getEmpleadoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    getEmpleadoRequest *key = NULL;
+UnionTest_getEmpleadoRequest *
+UnionTest_getEmpleadoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    UnionTest_getEmpleadoRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, getEmpleadoRequestKeyHolder);
+        &key, UnionTest_getEmpleadoRequestKeyHolder);
 
-    getEmpleadoRequest_initialize_ex(key,allocate_pointers);
+    UnionTest_getEmpleadoRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-getEmpleadoRequest *
-getEmpleadoRequestPluginSupport_create_key(void)
+UnionTest_getEmpleadoRequest *
+UnionTest_getEmpleadoRequestPluginSupport_create_key(void)
 {
-    return  getEmpleadoRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  UnionTest_getEmpleadoRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-getEmpleadoRequestPluginSupport_destroy_key_ex(
-    getEmpleadoRequestKeyHolder *key,RTIBool deallocate_pointers)
+UnionTest_getEmpleadoRequestPluginSupport_destroy_key_ex(
+    UnionTest_getEmpleadoRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    getEmpleadoRequest_finalize_ex(key,deallocate_pointers);
+    UnionTest_getEmpleadoRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-getEmpleadoRequestPluginSupport_destroy_key(
-    getEmpleadoRequestKeyHolder *key) {
+UnionTest_getEmpleadoRequestPluginSupport_destroy_key(
+    UnionTest_getEmpleadoRequestKeyHolder *key) {
 
-  getEmpleadoRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  UnionTest_getEmpleadoRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -196,7 +193,7 @@ getEmpleadoRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-getEmpleadoRequestPlugin_on_participant_attached(
+UnionTest_getEmpleadoRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -215,7 +212,7 @@ getEmpleadoRequestPlugin_on_participant_attached(
 
 
 void 
-getEmpleadoRequestPlugin_on_participant_detached(
+UnionTest_getEmpleadoRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -224,7 +221,7 @@ getEmpleadoRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-getEmpleadoRequestPlugin_on_endpoint_attached(
+UnionTest_getEmpleadoRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -242,19 +239,19 @@ getEmpleadoRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            getEmpleadoRequestPluginSupport_create_data,
+            UnionTest_getEmpleadoRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            getEmpleadoRequestPluginSupport_destroy_data,
+            UnionTest_getEmpleadoRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            getEmpleadoRequestPluginSupport_create_key,
+            UnionTest_getEmpleadoRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            getEmpleadoRequestPluginSupport_destroy_key);
+            UnionTest_getEmpleadoRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = getEmpleadoRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = UnionTest_getEmpleadoRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -270,9 +267,9 @@ getEmpleadoRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                getEmpleadoRequestPlugin_get_serialized_sample_max_size, epd,
+                UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            getEmpleadoRequestPlugin_get_serialized_sample_size,
+            UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -286,7 +283,7 @@ getEmpleadoRequestPlugin_on_endpoint_attached(
 
 
 void 
-getEmpleadoRequestPlugin_on_endpoint_detached(
+UnionTest_getEmpleadoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -295,13 +292,13 @@ getEmpleadoRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_copy_sample(
+UnionTest_getEmpleadoRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest *dst,
-    const getEmpleadoRequest *src)
+    UnionTest_getEmpleadoRequest *dst,
+    const UnionTest_getEmpleadoRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return getEmpleadoRequestPluginSupport_copy_data(dst,src);
+    return UnionTest_getEmpleadoRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -310,9 +307,9 @@ getEmpleadoRequestPlugin_copy_sample(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_serialize(
+UnionTest_getEmpleadoRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getEmpleadoRequest *sample, 
+    const UnionTest_getEmpleadoRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -339,18 +336,13 @@ getEmpleadoRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -386,9 +378,9 @@ getEmpleadoRequestPlugin_serialize(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_deserialize_sample(
+UnionTest_getEmpleadoRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest *sample,
+    UnionTest_getEmpleadoRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -413,17 +405,12 @@ getEmpleadoRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -459,9 +446,9 @@ getEmpleadoRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-getEmpleadoRequestPlugin_deserialize(
+UnionTest_getEmpleadoRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest **sample,
+    UnionTest_getEmpleadoRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -471,7 +458,7 @@ getEmpleadoRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return getEmpleadoRequestPlugin_deserialize_sample( 
+    return UnionTest_getEmpleadoRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -480,7 +467,7 @@ getEmpleadoRequestPlugin_deserialize(
 
 
 
-RTIBool getEmpleadoRequestPlugin_skip(
+RTIBool UnionTest_getEmpleadoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -505,15 +492,11 @@ RTIBool getEmpleadoRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -546,7 +529,7 @@ RTIBool getEmpleadoRequestPlugin_skip(
 
 
 unsigned int 
-getEmpleadoRequestPlugin_get_serialized_sample_max_size(
+UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -574,11 +557,8 @@ getEmpleadoRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -595,7 +575,7 @@ getEmpleadoRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-getEmpleadoRequestPlugin_get_serialized_sample_min_size(
+UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -623,11 +603,8 @@ getEmpleadoRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -650,12 +627,12 @@ getEmpleadoRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-getEmpleadoRequestPlugin_get_serialized_sample_size(
+UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getEmpleadoRequest * sample) 
+    const UnionTest_getEmpleadoRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -680,12 +657,9 @@ getEmpleadoRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -708,7 +682,7 @@ getEmpleadoRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-getEmpleadoRequestPlugin_get_key_kind(void)
+UnionTest_getEmpleadoRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -717,9 +691,9 @@ getEmpleadoRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-getEmpleadoRequestPlugin_serialize_key(
+UnionTest_getEmpleadoRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getEmpleadoRequest *sample, 
+    const UnionTest_getEmpleadoRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -744,18 +718,13 @@ getEmpleadoRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -771,9 +740,9 @@ getEmpleadoRequestPlugin_serialize_key(
 }
 
 
-RTIBool getEmpleadoRequestPlugin_deserialize_key_sample(
+RTIBool UnionTest_getEmpleadoRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest *sample, 
+    UnionTest_getEmpleadoRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -798,17 +767,12 @@ RTIBool getEmpleadoRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -825,9 +789,9 @@ RTIBool getEmpleadoRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool getEmpleadoRequestPlugin_deserialize_key(
+RTIBool UnionTest_getEmpleadoRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest **sample, 
+    UnionTest_getEmpleadoRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -835,7 +799,7 @@ RTIBool getEmpleadoRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return getEmpleadoRequestPlugin_deserialize_key_sample(
+    return UnionTest_getEmpleadoRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -843,7 +807,7 @@ RTIBool getEmpleadoRequestPlugin_deserialize_key(
 
 
 unsigned int
-getEmpleadoRequestPlugin_get_serialized_key_max_size(
+UnionTest_getEmpleadoRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -873,11 +837,8 @@ getEmpleadoRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -888,9 +849,9 @@ getEmpleadoRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_serialized_sample_to_key(
+UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest *sample,
+    UnionTest_getEmpleadoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -913,17 +874,12 @@ getEmpleadoRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -959,21 +915,16 @@ getEmpleadoRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_instance_to_key(
+UnionTest_getEmpleadoRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequestKeyHolder *dst, 
-    const getEmpleadoRequest *src)
+    UnionTest_getEmpleadoRequestKeyHolder *dst, 
+    const UnionTest_getEmpleadoRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -982,21 +933,16 @@ getEmpleadoRequestPlugin_instance_to_key(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_key_to_instance(
+UnionTest_getEmpleadoRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoRequest *dst, const
-    getEmpleadoRequestKeyHolder *src)
+    UnionTest_getEmpleadoRequest *dst, const
+    UnionTest_getEmpleadoRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1005,10 +951,10 @@ getEmpleadoRequestPlugin_key_to_instance(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_instance_to_keyhash(
+UnionTest_getEmpleadoRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getEmpleadoRequest *instance)
+    const UnionTest_getEmpleadoRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -1024,7 +970,7 @@ getEmpleadoRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!getEmpleadoRequestPlugin_serialize_key(
+    if (!UnionTest_getEmpleadoRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -1045,7 +991,7 @@ getEmpleadoRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
+UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1053,7 +999,7 @@ getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    getEmpleadoRequest * sample;
+    UnionTest_getEmpleadoRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1068,7 +1014,7 @@ getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (getEmpleadoRequest *)
+    sample = (UnionTest_getEmpleadoRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -1076,17 +1022,12 @@ getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1095,7 +1036,7 @@ getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!getEmpleadoRequestPlugin_instance_to_keyhash(
+    if (!UnionTest_getEmpleadoRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -1108,7 +1049,7 @@ getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *getEmpleadoRequestPlugin_new(void) 
+struct PRESTypePlugin *UnionTest_getEmpleadoRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -1125,131 +1066,131 @@ struct PRESTypePlugin *getEmpleadoRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        getEmpleadoRequestPlugin_on_participant_attached;
+        UnionTest_getEmpleadoRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        getEmpleadoRequestPlugin_on_participant_detached;
+        UnionTest_getEmpleadoRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        getEmpleadoRequestPlugin_on_endpoint_attached;
+        UnionTest_getEmpleadoRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        getEmpleadoRequestPlugin_on_endpoint_detached;
+        UnionTest_getEmpleadoRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        getEmpleadoRequestPlugin_copy_sample;
+        UnionTest_getEmpleadoRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        getEmpleadoRequestPlugin_create_sample;
+        UnionTest_getEmpleadoRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        getEmpleadoRequestPlugin_destroy_sample;
+        UnionTest_getEmpleadoRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        getEmpleadoRequestPlugin_serialize;
+        UnionTest_getEmpleadoRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        getEmpleadoRequestPlugin_deserialize;
+        UnionTest_getEmpleadoRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        getEmpleadoRequestPlugin_get_serialized_sample_max_size;
+        UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        getEmpleadoRequestPlugin_get_serialized_sample_min_size;
+        UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        getEmpleadoRequestPlugin_get_sample;
+        UnionTest_getEmpleadoRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        getEmpleadoRequestPlugin_return_sample;
+        UnionTest_getEmpleadoRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        getEmpleadoRequestPlugin_get_key_kind;
+        UnionTest_getEmpleadoRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        getEmpleadoRequestPlugin_get_serialized_key_max_size;
+        UnionTest_getEmpleadoRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        getEmpleadoRequestPlugin_serialize_key;
+        UnionTest_getEmpleadoRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        getEmpleadoRequestPlugin_deserialize_key;
+        UnionTest_getEmpleadoRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        getEmpleadoRequestPlugin_deserialize_key_sample;
+        UnionTest_getEmpleadoRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        getEmpleadoRequestPlugin_instance_to_keyhash;
+        UnionTest_getEmpleadoRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        getEmpleadoRequestPlugin_serialized_sample_to_keyhash;
+        UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        getEmpleadoRequestPlugin_get_key;
+        UnionTest_getEmpleadoRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        getEmpleadoRequestPlugin_return_key;
+        UnionTest_getEmpleadoRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        getEmpleadoRequestPlugin_instance_to_key;
+        UnionTest_getEmpleadoRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        getEmpleadoRequestPlugin_key_to_instance;
+        UnionTest_getEmpleadoRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)getEmpleadoRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)UnionTest_getEmpleadoRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        getEmpleadoRequestPlugin_get_buffer;
+        UnionTest_getEmpleadoRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        getEmpleadoRequestPlugin_return_buffer;
+        UnionTest_getEmpleadoRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        getEmpleadoRequestPlugin_get_serialized_sample_size;
+        UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = getEmpleadoRequestTYPENAME;
+    plugin->endpointTypeName = UnionTest_getEmpleadoRequestTYPENAME;
 
     return plugin;
 }
 
 void
-getEmpleadoRequestPlugin_delete(struct PRESTypePlugin *plugin)
+UnionTest_getEmpleadoRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type getEmpleadoReply
+ *  Type UnionTest_getEmpleadoReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-getEmpleadoReply *
-getEmpleadoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    getEmpleadoReply *sample = NULL;
+UnionTest_getEmpleadoReply *
+UnionTest_getEmpleadoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    UnionTest_getEmpleadoReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, getEmpleadoReply);
+        &sample, UnionTest_getEmpleadoReply);
 
     if(sample != NULL) {
-        if (!getEmpleadoReply_initialize_ex(sample,allocate_pointers)) {
+        if (!UnionTest_getEmpleadoReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -1258,44 +1199,44 @@ getEmpleadoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-getEmpleadoReply *
-getEmpleadoReplyPluginSupport_create_data(void)
+UnionTest_getEmpleadoReply *
+UnionTest_getEmpleadoReplyPluginSupport_create_data(void)
 {
-    return getEmpleadoReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return UnionTest_getEmpleadoReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-getEmpleadoReplyPluginSupport_destroy_data_ex(
-    getEmpleadoReply *sample,RTIBool deallocate_pointers) {
+UnionTest_getEmpleadoReplyPluginSupport_destroy_data_ex(
+    UnionTest_getEmpleadoReply *sample,RTIBool deallocate_pointers) {
 
-    getEmpleadoReply_finalize_ex(sample,deallocate_pointers);
+    UnionTest_getEmpleadoReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-getEmpleadoReplyPluginSupport_destroy_data(
-    getEmpleadoReply *sample) {
+UnionTest_getEmpleadoReplyPluginSupport_destroy_data(
+    UnionTest_getEmpleadoReply *sample) {
 
-    getEmpleadoReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    UnionTest_getEmpleadoReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-getEmpleadoReplyPluginSupport_copy_data(
-    getEmpleadoReply *dst,
-    const getEmpleadoReply *src)
+UnionTest_getEmpleadoReplyPluginSupport_copy_data(
+    UnionTest_getEmpleadoReply *dst,
+    const UnionTest_getEmpleadoReply *src)
 {
-    return getEmpleadoReply_copy(dst,src);
+    return UnionTest_getEmpleadoReply_copy(dst,src);
 }
 
 
 void 
-getEmpleadoReplyPluginSupport_print_data(
-    const getEmpleadoReply *sample,
+UnionTest_getEmpleadoReplyPluginSupport_print_data(
+    const UnionTest_getEmpleadoReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -1315,17 +1256,8 @@ getEmpleadoReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     EmpleadoPluginSupport_print_data(
         &sample->em2, "em2", indent_level + 1);
@@ -1339,40 +1271,40 @@ getEmpleadoReplyPluginSupport_print_data(
 
 }
 
-getEmpleadoReply *
-getEmpleadoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    getEmpleadoReply *key = NULL;
+UnionTest_getEmpleadoReply *
+UnionTest_getEmpleadoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    UnionTest_getEmpleadoReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, getEmpleadoReplyKeyHolder);
+        &key, UnionTest_getEmpleadoReplyKeyHolder);
 
-    getEmpleadoReply_initialize_ex(key,allocate_pointers);
+    UnionTest_getEmpleadoReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-getEmpleadoReply *
-getEmpleadoReplyPluginSupport_create_key(void)
+UnionTest_getEmpleadoReply *
+UnionTest_getEmpleadoReplyPluginSupport_create_key(void)
 {
-    return  getEmpleadoReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  UnionTest_getEmpleadoReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-getEmpleadoReplyPluginSupport_destroy_key_ex(
-    getEmpleadoReplyKeyHolder *key,RTIBool deallocate_pointers)
+UnionTest_getEmpleadoReplyPluginSupport_destroy_key_ex(
+    UnionTest_getEmpleadoReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    getEmpleadoReply_finalize_ex(key,deallocate_pointers);
+    UnionTest_getEmpleadoReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-getEmpleadoReplyPluginSupport_destroy_key(
-    getEmpleadoReplyKeyHolder *key) {
+UnionTest_getEmpleadoReplyPluginSupport_destroy_key(
+    UnionTest_getEmpleadoReplyKeyHolder *key) {
 
-  getEmpleadoReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  UnionTest_getEmpleadoReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -1385,7 +1317,7 @@ getEmpleadoReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-getEmpleadoReplyPlugin_on_participant_attached(
+UnionTest_getEmpleadoReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -1404,7 +1336,7 @@ getEmpleadoReplyPlugin_on_participant_attached(
 
 
 void 
-getEmpleadoReplyPlugin_on_participant_detached(
+UnionTest_getEmpleadoReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -1413,7 +1345,7 @@ getEmpleadoReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-getEmpleadoReplyPlugin_on_endpoint_attached(
+UnionTest_getEmpleadoReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -1431,19 +1363,19 @@ getEmpleadoReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            getEmpleadoReplyPluginSupport_create_data,
+            UnionTest_getEmpleadoReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            getEmpleadoReplyPluginSupport_destroy_data,
+            UnionTest_getEmpleadoReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            getEmpleadoReplyPluginSupport_create_key,
+            UnionTest_getEmpleadoReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            getEmpleadoReplyPluginSupport_destroy_key);
+            UnionTest_getEmpleadoReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = getEmpleadoReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = UnionTest_getEmpleadoReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -1459,9 +1391,9 @@ getEmpleadoReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                getEmpleadoReplyPlugin_get_serialized_sample_max_size, epd,
+                UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            getEmpleadoReplyPlugin_get_serialized_sample_size,
+            UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -1475,7 +1407,7 @@ getEmpleadoReplyPlugin_on_endpoint_attached(
 
 
 void 
-getEmpleadoReplyPlugin_on_endpoint_detached(
+UnionTest_getEmpleadoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -1484,13 +1416,13 @@ getEmpleadoReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_copy_sample(
+UnionTest_getEmpleadoReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply *dst,
-    const getEmpleadoReply *src)
+    UnionTest_getEmpleadoReply *dst,
+    const UnionTest_getEmpleadoReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return getEmpleadoReplyPluginSupport_copy_data(dst,src);
+    return UnionTest_getEmpleadoReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1499,9 +1431,9 @@ getEmpleadoReplyPlugin_copy_sample(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_serialize(
+UnionTest_getEmpleadoReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getEmpleadoReply *sample, 
+    const UnionTest_getEmpleadoReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1528,33 +1460,13 @@ getEmpleadoReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1600,9 +1512,9 @@ getEmpleadoReplyPlugin_serialize(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_deserialize_sample(
+UnionTest_getEmpleadoReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply *sample,
+    UnionTest_getEmpleadoReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1627,31 +1539,12 @@ getEmpleadoReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1696,9 +1589,9 @@ getEmpleadoReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-getEmpleadoReplyPlugin_deserialize(
+UnionTest_getEmpleadoReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply **sample,
+    UnionTest_getEmpleadoReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -1708,7 +1601,7 @@ getEmpleadoReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return getEmpleadoReplyPlugin_deserialize_sample( 
+    return UnionTest_getEmpleadoReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1717,7 +1610,7 @@ getEmpleadoReplyPlugin_deserialize(
 
 
 
-RTIBool getEmpleadoReplyPlugin_skip(
+RTIBool UnionTest_getEmpleadoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -1742,27 +1635,11 @@ RTIBool getEmpleadoReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -1803,7 +1680,7 @@ RTIBool getEmpleadoReplyPlugin_skip(
 
 
 unsigned int 
-getEmpleadoReplyPlugin_get_serialized_sample_max_size(
+UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1831,17 +1708,8 @@ getEmpleadoReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -1861,7 +1729,7 @@ getEmpleadoReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-getEmpleadoReplyPlugin_get_serialized_sample_min_size(
+UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1889,17 +1757,8 @@ getEmpleadoReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -1925,12 +1784,12 @@ getEmpleadoReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-getEmpleadoReplyPlugin_get_serialized_sample_size(
+UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getEmpleadoReply * sample) 
+    const UnionTest_getEmpleadoReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -1955,19 +1814,9 @@ getEmpleadoReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -1994,7 +1843,7 @@ getEmpleadoReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-getEmpleadoReplyPlugin_get_key_kind(void)
+UnionTest_getEmpleadoReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -2003,9 +1852,9 @@ getEmpleadoReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-getEmpleadoReplyPlugin_serialize_key(
+UnionTest_getEmpleadoReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getEmpleadoReply *sample, 
+    const UnionTest_getEmpleadoReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2030,28 +1879,13 @@ getEmpleadoReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2067,9 +1901,9 @@ getEmpleadoReplyPlugin_serialize_key(
 }
 
 
-RTIBool getEmpleadoReplyPlugin_deserialize_key_sample(
+RTIBool UnionTest_getEmpleadoReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply *sample, 
+    UnionTest_getEmpleadoReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -2094,26 +1928,12 @@ RTIBool getEmpleadoReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2130,9 +1950,9 @@ RTIBool getEmpleadoReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool getEmpleadoReplyPlugin_deserialize_key(
+RTIBool UnionTest_getEmpleadoReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply **sample, 
+    UnionTest_getEmpleadoReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2140,7 +1960,7 @@ RTIBool getEmpleadoReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return getEmpleadoReplyPlugin_deserialize_key_sample(
+    return UnionTest_getEmpleadoReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -2148,7 +1968,7 @@ RTIBool getEmpleadoReplyPlugin_deserialize_key(
 
 
 unsigned int
-getEmpleadoReplyPlugin_get_serialized_key_max_size(
+UnionTest_getEmpleadoReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2178,14 +1998,8 @@ getEmpleadoReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -2196,9 +2010,9 @@ getEmpleadoReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_serialized_sample_to_key(
+UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply *sample,
+    UnionTest_getEmpleadoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2221,30 +2035,12 @@ getEmpleadoReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -2288,26 +2084,16 @@ getEmpleadoReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_instance_to_key(
+UnionTest_getEmpleadoReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReplyKeyHolder *dst, 
-    const getEmpleadoReply *src)
+    UnionTest_getEmpleadoReplyKeyHolder *dst, 
+    const UnionTest_getEmpleadoReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2316,26 +2102,16 @@ getEmpleadoReplyPlugin_instance_to_key(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_key_to_instance(
+UnionTest_getEmpleadoReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getEmpleadoReply *dst, const
-    getEmpleadoReplyKeyHolder *src)
+    UnionTest_getEmpleadoReply *dst, const
+    UnionTest_getEmpleadoReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2344,10 +2120,10 @@ getEmpleadoReplyPlugin_key_to_instance(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_instance_to_keyhash(
+UnionTest_getEmpleadoReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getEmpleadoReply *instance)
+    const UnionTest_getEmpleadoReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -2363,7 +2139,7 @@ getEmpleadoReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!getEmpleadoReplyPlugin_serialize_key(
+    if (!UnionTest_getEmpleadoReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -2384,7 +2160,7 @@ getEmpleadoReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
+UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2392,7 +2168,7 @@ getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    getEmpleadoReply * sample;
+    UnionTest_getEmpleadoReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2407,7 +2183,7 @@ getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (getEmpleadoReply *)
+    sample = (UnionTest_getEmpleadoReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -2415,26 +2191,12 @@ getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2443,7 +2205,7 @@ getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!getEmpleadoReplyPlugin_instance_to_keyhash(
+    if (!UnionTest_getEmpleadoReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -2456,7 +2218,7 @@ getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *getEmpleadoReplyPlugin_new(void) 
+struct PRESTypePlugin *UnionTest_getEmpleadoReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -2473,110 +2235,110 @@ struct PRESTypePlugin *getEmpleadoReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        getEmpleadoReplyPlugin_on_participant_attached;
+        UnionTest_getEmpleadoReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        getEmpleadoReplyPlugin_on_participant_detached;
+        UnionTest_getEmpleadoReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        getEmpleadoReplyPlugin_on_endpoint_attached;
+        UnionTest_getEmpleadoReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        getEmpleadoReplyPlugin_on_endpoint_detached;
+        UnionTest_getEmpleadoReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        getEmpleadoReplyPlugin_copy_sample;
+        UnionTest_getEmpleadoReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        getEmpleadoReplyPlugin_create_sample;
+        UnionTest_getEmpleadoReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        getEmpleadoReplyPlugin_destroy_sample;
+        UnionTest_getEmpleadoReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        getEmpleadoReplyPlugin_serialize;
+        UnionTest_getEmpleadoReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        getEmpleadoReplyPlugin_deserialize;
+        UnionTest_getEmpleadoReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        getEmpleadoReplyPlugin_get_serialized_sample_max_size;
+        UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        getEmpleadoReplyPlugin_get_serialized_sample_min_size;
+        UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        getEmpleadoReplyPlugin_get_sample;
+        UnionTest_getEmpleadoReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        getEmpleadoReplyPlugin_return_sample;
+        UnionTest_getEmpleadoReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        getEmpleadoReplyPlugin_get_key_kind;
+        UnionTest_getEmpleadoReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        getEmpleadoReplyPlugin_get_serialized_key_max_size;
+        UnionTest_getEmpleadoReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        getEmpleadoReplyPlugin_serialize_key;
+        UnionTest_getEmpleadoReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        getEmpleadoReplyPlugin_deserialize_key;
+        UnionTest_getEmpleadoReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        getEmpleadoReplyPlugin_deserialize_key_sample;
+        UnionTest_getEmpleadoReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        getEmpleadoReplyPlugin_instance_to_keyhash;
+        UnionTest_getEmpleadoReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        getEmpleadoReplyPlugin_serialized_sample_to_keyhash;
+        UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        getEmpleadoReplyPlugin_get_key;
+        UnionTest_getEmpleadoReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        getEmpleadoReplyPlugin_return_key;
+        UnionTest_getEmpleadoReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        getEmpleadoReplyPlugin_instance_to_key;
+        UnionTest_getEmpleadoReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        getEmpleadoReplyPlugin_key_to_instance;
+        UnionTest_getEmpleadoReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)getEmpleadoReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)UnionTest_getEmpleadoReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        getEmpleadoReplyPlugin_get_buffer;
+        UnionTest_getEmpleadoReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        getEmpleadoReplyPlugin_return_buffer;
+        UnionTest_getEmpleadoReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        getEmpleadoReplyPlugin_get_serialized_sample_size;
+        UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = getEmpleadoReplyTYPENAME;
+    plugin->endpointTypeName = UnionTest_getEmpleadoReplyTYPENAME;
 
     return plugin;
 }
 
 void
-getEmpleadoReplyPlugin_delete(struct PRESTypePlugin *plugin)
+UnionTest_getEmpleadoReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

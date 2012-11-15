@@ -30,11 +30,6 @@ protected:                                                                      
   virtual int sendReply(void* request, void *reply);                              \
   virtual void deleteRequestData(void *request);                                  \
   virtual void on_data_available(DDS::DataReader* reader);                        \
-                                                                                  \
-private:                                                                          \
-                                                                                  \
-	TDataWriter *replyFooDataWriter;                                              \
-	TDataReader *requestFooDataReader;                                            \
 }
 
 #define GENERIC_SERVER_ONEWAY_RPC(TName, TDataReader)                       \

@@ -13,23 +13,25 @@ class UnionTest_getEmpleadoTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        UnionTest_getEmpleadoTask(UnionTest_getEmpleado &obj,
+        UnionTest_getEmpleadoTask(UnionTest_getEmpleadoCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~UnionTest_getEmpleadoTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        UnionTest_getEmpleado& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        UnionTest_getEmpleadoCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           UnionTest_getEmpleado &m_obj;
+           UnionTest_getEmpleadoCallbackHandler &m_obj;
            
-           getEmpleadoReply m_reply;
+           UnionTest_getEmpleadoReply m_reply;
 };
 
 #endif // _UnionTest_ASYNC_SUPPORT_H_

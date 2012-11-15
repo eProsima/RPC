@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MultithreadTestRequestReply_135729254_h
-#define MultithreadTestRequestReply_135729254_h
+#ifndef MultithreadTestRequestReply_135729124_h
+#define MultithreadTestRequestReply_135729124_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *testRequestTYPENAME;
+extern const char *MultithreadTest_testRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *testRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct testRequestSeq;
+    struct MultithreadTest_testRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class testRequestTypeSupport;
-    class testRequestDataWriter;
-    class testRequestDataReader;
+    class MultithreadTest_testRequestTypeSupport;
+    class MultithreadTest_testRequestDataWriter;
+    class MultithreadTest_testRequestDataReader;
 #endif
 
 #endif
@@ -59,24 +59,23 @@ extern const char *testRequestTYPENAME;
             
     
 
-typedef struct testRequest
+typedef struct MultithreadTest_testRequest
 {
 #ifdef __cplusplus
-    typedef struct testRequestSeq Seq;
+    typedef struct MultithreadTest_testRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef testRequestTypeSupport TypeSupport;
-    typedef testRequestDataWriter DataWriter;
-    typedef testRequestDataReader DataReader;
+    typedef MultithreadTest_testRequestTypeSupport TypeSupport;
+    typedef MultithreadTest_testRequestDataWriter DataWriter;
+    typedef MultithreadTest_testRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     Dato  dato1;
 
-} testRequest;
+} MultithreadTest_testRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -87,31 +86,31 @@ typedef struct testRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* testRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* MultithreadTest_testRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(testRequestSeq, testRequest);
+DDS_SEQUENCE(MultithreadTest_testRequestSeq, MultithreadTest_testRequest);
         
 NDDSUSERDllExport
-RTIBool testRequest_initialize(
-        testRequest* self);
+RTIBool MultithreadTest_testRequest_initialize(
+        MultithreadTest_testRequest* self);
         
 NDDSUSERDllExport
-RTIBool testRequest_initialize_ex(
-        testRequest* self,RTIBool allocatePointers);
+RTIBool MultithreadTest_testRequest_initialize_ex(
+        MultithreadTest_testRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void testRequest_finalize(
-        testRequest* self);
+void MultithreadTest_testRequest_finalize(
+        MultithreadTest_testRequest* self);
                         
 NDDSUSERDllExport
-void testRequest_finalize_ex(
-        testRequest* self,RTIBool deletePointers);
+void MultithreadTest_testRequest_finalize_ex(
+        MultithreadTest_testRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool testRequest_copy(
-        testRequest* dst,
-        const testRequest* src);
+RTIBool MultithreadTest_testRequest_copy(
+        MultithreadTest_testRequest* dst,
+        const MultithreadTest_testRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -126,7 +125,7 @@ extern "C" {
 #endif
 
         
-extern const char *testReplyTYPENAME;
+extern const char *MultithreadTest_testReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -135,12 +134,12 @@ extern const char *testReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct testReplySeq;
+    struct MultithreadTest_testReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class testReplyTypeSupport;
-    class testReplyDataWriter;
-    class testReplyDataReader;
+    class MultithreadTest_testReplyTypeSupport;
+    class MultithreadTest_testReplyDataWriter;
+    class MultithreadTest_testReplyDataReader;
 #endif
 
 #endif
@@ -148,27 +147,24 @@ extern const char *testReplyTYPENAME;
             
     
 
-typedef struct testReply
+typedef struct MultithreadTest_testReply
 {
 #ifdef __cplusplus
-    typedef struct testReplySeq Seq;
+    typedef struct MultithreadTest_testReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef testReplyTypeSupport TypeSupport;
-    typedef testReplyDataWriter DataWriter;
-    typedef testReplyDataReader DataReader;
+    typedef MultithreadTest_testReplyTypeSupport TypeSupport;
+    typedef MultithreadTest_testReplyDataWriter DataWriter;
+    typedef MultithreadTest_testReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     Dato  dato2;
     DDS_Long  test_ret;
 
-} testReply;
+} MultithreadTest_testReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -179,31 +175,31 @@ typedef struct testReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* testReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* MultithreadTest_testReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(testReplySeq, testReply);
+DDS_SEQUENCE(MultithreadTest_testReplySeq, MultithreadTest_testReply);
         
 NDDSUSERDllExport
-RTIBool testReply_initialize(
-        testReply* self);
+RTIBool MultithreadTest_testReply_initialize(
+        MultithreadTest_testReply* self);
         
 NDDSUSERDllExport
-RTIBool testReply_initialize_ex(
-        testReply* self,RTIBool allocatePointers);
+RTIBool MultithreadTest_testReply_initialize_ex(
+        MultithreadTest_testReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void testReply_finalize(
-        testReply* self);
+void MultithreadTest_testReply_finalize(
+        MultithreadTest_testReply* self);
                         
 NDDSUSERDllExport
-void testReply_finalize_ex(
-        testReply* self,RTIBool deletePointers);
+void MultithreadTest_testReply_finalize_ex(
+        MultithreadTest_testReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool testReply_copy(
-        testReply* dst,
-        const testReply* src);
+RTIBool MultithreadTest_testReply_copy(
+        MultithreadTest_testReply* dst,
+        const MultithreadTest_testReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -214,4 +210,4 @@ RTIBool testReply_copy(
 
 
 
-#endif /* MultithreadTestRequestReply_135729254_h */
+#endif /* MultithreadTestRequestReply_135729124_h */

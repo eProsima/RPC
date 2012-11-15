@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getEmpleadoRequest' support classes.
+   Configure and implement 'UnionTest_getEmpleadoRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEmpleadoRequestTYPENAME
+#define TTYPENAME   UnionTest_getEmpleadoRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getEmpleadoRequestDataWriter
-#define TData       getEmpleadoRequest
+#define TDataWriter UnionTest_getEmpleadoRequestDataWriter
+#define TData       UnionTest_getEmpleadoRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEmpleadoRequestTYPENAME
+#define TTYPENAME   UnionTest_getEmpleadoRequestTYPENAME
 
 /* Defines */
-#define TDataReader getEmpleadoRequestDataReader
-#define TDataSeq    getEmpleadoRequestSeq
-#define TData       getEmpleadoRequest
+#define TDataReader UnionTest_getEmpleadoRequestDataReader
+#define TDataSeq    UnionTest_getEmpleadoRequestSeq
+#define TData       UnionTest_getEmpleadoRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getEmpleadoRequestTYPENAME
-#define TPlugin_new  getEmpleadoRequestPlugin_new
-#define TPlugin_delete  getEmpleadoRequestPlugin_delete
+#define TTYPENAME    UnionTest_getEmpleadoRequestTYPENAME
+#define TPlugin_new  UnionTest_getEmpleadoRequestPlugin_new
+#define TPlugin_delete  UnionTest_getEmpleadoRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getEmpleadoRequestTypeSupport
-#define TData        getEmpleadoRequest
-#define TDataReader  getEmpleadoRequestDataReader
-#define TDataWriter  getEmpleadoRequestDataWriter
+#define TTypeSupport UnionTest_getEmpleadoRequestTypeSupport
+#define TData        UnionTest_getEmpleadoRequest
+#define TDataReader  UnionTest_getEmpleadoRequestDataReader
+#define TDataWriter  UnionTest_getEmpleadoRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getEmpleadoReply' support classes.
+   Configure and implement 'UnionTest_getEmpleadoReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEmpleadoReplyTYPENAME
+#define TTYPENAME   UnionTest_getEmpleadoReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getEmpleadoReplyDataWriter
-#define TData       getEmpleadoReply
+#define TDataWriter UnionTest_getEmpleadoReplyDataWriter
+#define TData       UnionTest_getEmpleadoReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEmpleadoReplyTYPENAME
+#define TTYPENAME   UnionTest_getEmpleadoReplyTYPENAME
 
 /* Defines */
-#define TDataReader getEmpleadoReplyDataReader
-#define TDataSeq    getEmpleadoReplySeq
-#define TData       getEmpleadoReply
+#define TDataReader UnionTest_getEmpleadoReplyDataReader
+#define TDataSeq    UnionTest_getEmpleadoReplySeq
+#define TData       UnionTest_getEmpleadoReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getEmpleadoReplyTYPENAME
-#define TPlugin_new  getEmpleadoReplyPlugin_new
-#define TPlugin_delete  getEmpleadoReplyPlugin_delete
+#define TTYPENAME    UnionTest_getEmpleadoReplyTYPENAME
+#define TPlugin_new  UnionTest_getEmpleadoReplyPlugin_new
+#define TPlugin_delete  UnionTest_getEmpleadoReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getEmpleadoReplyTypeSupport
-#define TData        getEmpleadoReply
-#define TDataReader  getEmpleadoReplyDataReader
-#define TDataWriter  getEmpleadoReplyDataWriter
+#define TTypeSupport UnionTest_getEmpleadoReplyTypeSupport
+#define TData        UnionTest_getEmpleadoReply
+#define TDataReader  UnionTest_getEmpleadoReplyDataReader
+#define TDataWriter  UnionTest_getEmpleadoReplyDataWriter
 #ifdef __cplusplus
 
 

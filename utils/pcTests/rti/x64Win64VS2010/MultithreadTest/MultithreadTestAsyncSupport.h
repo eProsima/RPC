@@ -13,23 +13,25 @@ class MultithreadTest_testTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        MultithreadTest_testTask(MultithreadTest_test &obj,
+        MultithreadTest_testTask(MultithreadTest_testCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~MultithreadTest_testTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        MultithreadTest_test& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        MultithreadTest_testCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           MultithreadTest_test &m_obj;
+           MultithreadTest_testCallbackHandler &m_obj;
            
-           testReply m_reply;
+           MultithreadTest_testReply m_reply;
 };
 
 #endif // _MultithreadTest_ASYNC_SUPPORT_H_

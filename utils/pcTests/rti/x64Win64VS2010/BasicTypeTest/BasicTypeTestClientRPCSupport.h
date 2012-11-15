@@ -9,40 +9,40 @@
 #include "BasicTypeTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(getOctetClientRPC, getOctetRequestDataWriter, getOctetReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getOctetClientRPC, BasicTypeTest_getOctetRequestDataWriter, BasicTypeTest_getOctetReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getCharClientRPC, getCharRequestDataWriter, getCharReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getCharClientRPC, BasicTypeTest_getCharRequestDataWriter, BasicTypeTest_getCharReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getWCharClientRPC, getWCharRequestDataWriter, getWCharReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getWCharClientRPC, BasicTypeTest_getWCharRequestDataWriter, BasicTypeTest_getWCharReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getShortClientRPC, getShortRequestDataWriter, getShortReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getShortClientRPC, BasicTypeTest_getShortRequestDataWriter, BasicTypeTest_getShortReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getUShortClientRPC, getUShortRequestDataWriter, getUShortReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getUShortClientRPC, BasicTypeTest_getUShortRequestDataWriter, BasicTypeTest_getUShortReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getLongClientRPC, getLongRequestDataWriter, getLongReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getLongClientRPC, BasicTypeTest_getLongRequestDataWriter, BasicTypeTest_getLongReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getULongClientRPC, getULongRequestDataWriter, getULongReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getULongClientRPC, BasicTypeTest_getULongRequestDataWriter, BasicTypeTest_getULongReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getLLongClientRPC, getLLongRequestDataWriter, getLLongReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getLLongClientRPC, BasicTypeTest_getLLongRequestDataWriter, BasicTypeTest_getLLongReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getULLongClientRPC, getULLongRequestDataWriter, getULLongReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getULLongClientRPC, BasicTypeTest_getULLongRequestDataWriter, BasicTypeTest_getULLongReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getFloatClientRPC, getFloatRequestDataWriter, getFloatReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getFloatClientRPC, BasicTypeTest_getFloatRequestDataWriter, BasicTypeTest_getFloatReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getDoubleClientRPC, getDoubleRequestDataWriter, getDoubleReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getDoubleClientRPC, BasicTypeTest_getDoubleRequestDataWriter, BasicTypeTest_getDoubleReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getBooleanClientRPC, getBooleanRequestDataWriter, getBooleanReplyDataReader);
+GENERIC_CLIENT_RPC(BasicTypeTest_getBooleanClientRPC, BasicTypeTest_getBooleanRequestDataWriter, BasicTypeTest_getBooleanReplyDataReader);
 
 
 #endif  // _BasicTypeTest_CLIENT_RPC_SUPPORT_H_

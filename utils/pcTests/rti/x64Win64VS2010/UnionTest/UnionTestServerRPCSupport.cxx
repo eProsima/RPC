@@ -7,12 +7,12 @@
 
 
 /* Defines */
-#define TName                   getEmpleadoServerRPC
-#define TDataReplyTypeSupport   getEmpleadoReplyTypeSupport
-#define TDataRequestTypeSupport getEmpleadoRequestTypeSupport
-#define TData                   getEmpleado
-#define TDataReader             getEmpleadoRequestDataReader
-#define TDataWriter             getEmpleadoReplyDataWriter
+#define TName                   UnionTest_getEmpleadoServerRPC
+#define TDataReplyTypeSupport   UnionTest_getEmpleadoReplyTypeSupport
+#define TDataRequestTypeSupport UnionTest_getEmpleadoRequestTypeSupport
+#define TData                   UnionTest_getEmpleado
+#define TDataReader             UnionTest_getEmpleadoRequestDataReader
+#define TDataWriter             UnionTest_getEmpleadoReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"

@@ -7,19 +7,15 @@
 
 
 
-struct getEmpleadoRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct UnionTest_getEmpleadoRequest{
+    RequestHeader header;  //@key
     Empleado em1;
     Empleado em2;
 };  //@top-level true
 
 
-struct getEmpleadoReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct UnionTest_getEmpleadoReply{
+    ReplyHeader header;  //@key
     Empleado em2;
     Empleado em3;
     Empleado getEmpleado_ret;

@@ -6,15 +6,15 @@
 #include "UnionTestRequestReplyPlugin.h"
 
 
-const char* getEmpleadoRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* UnionTest_getEmpleadoRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = getEmpleadoRequestTypeSupport::get_type_name();
+        typeName = UnionTest_getEmpleadoRequestTypeSupport::get_type_name();
 
-        if(getEmpleadoRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(UnionTest_getEmpleadoRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -23,14 +23,14 @@ const char* getEmpleadoRequestUtils::registerType(DDS::DomainParticipant *client
     return typeName;
 }
 
-void getEmpleadoRequestUtils::setTypeData(getEmpleadoRequest& instance, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2)
+void UnionTest_getEmpleadoRequestUtils::setTypeData(UnionTest_getEmpleadoRequest& instance, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2)
 {
     instance.em1 = em1;
     instance.em2 = em2;
     
 }
 
-void getEmpleadoRequestUtils::extractTypeData(getEmpleadoRequest& data, /*in*/ Empleado& em1, /*inout*/ Empleado& em2)
+void UnionTest_getEmpleadoRequestUtils::extractTypeData(UnionTest_getEmpleadoRequest& data, /*in*/ Empleado& em1, /*inout*/ Empleado& em2)
 {
     em1 = data.em1;
     EmpleadoPluginSupport_copy_data(&em2, &data.em2);  
@@ -38,15 +38,15 @@ void getEmpleadoRequestUtils::extractTypeData(getEmpleadoRequest& data, /*in*/ E
 }
 
 
-const char* getEmpleadoReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* UnionTest_getEmpleadoReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = getEmpleadoReplyTypeSupport::get_type_name();
+        typeName = UnionTest_getEmpleadoReplyTypeSupport::get_type_name();
 
-        if(getEmpleadoReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(UnionTest_getEmpleadoReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -55,16 +55,16 @@ const char* getEmpleadoReplyUtils::registerType(DDS::DomainParticipant *clientPa
     return typeName;
 }
 
-void getEmpleadoReplyUtils::setTypeData(getEmpleadoReply& instance, /*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret)
+void UnionTest_getEmpleadoReplyUtils::setTypeData(UnionTest_getEmpleadoReply& instance, /*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret)
 {
     instance.em2 = em2;
     instance.em3 = em3;
     instance.getEmpleado_ret = getEmpleado_ret;            
 }
 
-void getEmpleadoReplyUtils::extractTypeData(getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret)
+void UnionTest_getEmpleadoReplyUtils::extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
     Empleado_finalize(&em2);em2 = data.em2;
     em3 = data.em3;  
     getEmpleado_ret = data.getEmpleado_ret;            

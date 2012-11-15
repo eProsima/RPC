@@ -7,12 +7,12 @@
 
 
 /* Defines */
-#define TName                   getEnumServerRPC
-#define TDataReplyTypeSupport   getEnumReplyTypeSupport
-#define TDataRequestTypeSupport getEnumRequestTypeSupport
-#define TData                   getEnum
-#define TDataReader             getEnumRequestDataReader
-#define TDataWriter             getEnumReplyDataWriter
+#define TName                   EnumYStringTest_getEnumServerRPC
+#define TDataReplyTypeSupport   EnumYStringTest_getEnumReplyTypeSupport
+#define TDataRequestTypeSupport EnumYStringTest_getEnumRequestTypeSupport
+#define TData                   EnumYStringTest_getEnum
+#define TDataReader             EnumYStringTest_getEnumRequestDataReader
+#define TDataWriter             EnumYStringTest_getEnumReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -27,12 +27,12 @@
 
 
 /* Defines */
-#define TName                   getStringServerRPC
-#define TDataReplyTypeSupport   getStringReplyTypeSupport
-#define TDataRequestTypeSupport getStringRequestTypeSupport
-#define TData                   getString
-#define TDataReader             getStringRequestDataReader
-#define TDataWriter             getStringReplyDataWriter
+#define TName                   EnumYStringTest_getStringServerRPC
+#define TDataReplyTypeSupport   EnumYStringTest_getStringReplyTypeSupport
+#define TDataRequestTypeSupport EnumYStringTest_getStringRequestTypeSupport
+#define TData                   EnumYStringTest_getString
+#define TDataReader             EnumYStringTest_getStringRequestDataReader
+#define TDataWriter             EnumYStringTest_getStringReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -47,12 +47,12 @@
 
 
 /* Defines */
-#define TName                   getStringBoundedServerRPC
-#define TDataReplyTypeSupport   getStringBoundedReplyTypeSupport
-#define TDataRequestTypeSupport getStringBoundedRequestTypeSupport
-#define TData                   getStringBounded
-#define TDataReader             getStringBoundedRequestDataReader
-#define TDataWriter             getStringBoundedReplyDataWriter
+#define TName                   EnumYStringTest_getStringBoundedServerRPC
+#define TDataReplyTypeSupport   EnumYStringTest_getStringBoundedReplyTypeSupport
+#define TDataRequestTypeSupport EnumYStringTest_getStringBoundedRequestTypeSupport
+#define TData                   EnumYStringTest_getStringBounded
+#define TDataReader             EnumYStringTest_getStringBoundedRequestDataReader
+#define TDataWriter             EnumYStringTest_getStringBoundedReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"

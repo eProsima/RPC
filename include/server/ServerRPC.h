@@ -5,6 +5,7 @@
 #include "utils/Typedefs.h"
 #include "utils/Messages.h"
 #include "utils/Version.h"
+#include <string>
 
 namespace eProsima
 {
@@ -32,6 +33,20 @@ namespace eProsima
 				ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
 					const char *replyTypeName, fExecFunction execFunction);
 
+				/**
+				 * \brief This function starts the RPC object to listen requests.
+				 *        This function will create and enable the DDS entities.
+				 *
+				 * \return If the operation works successful then 0 value is returned. In other case -1 is returned.
+				 */
+				int start();
+
+				/**
+				 * \brief This function close the RPC object communications.
+				 *        This function will destroy the DDS entities.
+				 */
+				void stop();
+
 				/// \brief Default destructor.
 				virtual ~ServerRPC();
 
@@ -40,28 +55,10 @@ namespace eProsima
 				 *
 				 * \return The name of this object.
 				 */
-				char* getRPCName();
+				const char* getRPCName() const;
 
 				/// \brief This function returns the function that is called when a new request is recevied.
-				fExecFunction getExecFunction();
-
-				/**
-				 * \brief This function creates the DDS entities of the server.
-				 *
-				 * \param participant  Pointer to the domain participant used by the server. Cannot be NULL.
-				 * \param rpcName The name of this object.
-				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
-				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
-				 * \return 0 value is returned when all entities was created succesfully. In other case, -1 value is returned.
-				 */
-				int createEntities(DDS::DomainParticipant *participant, const char *rpcName,
-						const char *requestTypeName, const char *replyTypeName);
-				/**
-				 * \brief This function enables all DDS entities of the server.
-				 *
-				 * \return 0 value is returned when all entities was enabled succesfully. In other case, -1 value is returned.
-				 */
-				int enableEntities();
+				fExecFunction getExecFunction() const;
 
 				virtual int sendReply(void* request, void *reply) = 0;
 
@@ -98,7 +95,13 @@ namespace eProsima
 				/**
 				 * \brief This field stores the name of the remote procedure.
 				 */
-				char m_rpcName[50];
+				std::string m_rpcName;
+
+				/// \brief The type name of the request topic that the RPC object manages.
+				std::string m_requestTypeName;
+
+				/// \brief  The type name of the reply topic that te RPC object manages.
+				std::string m_replyTypeName;
 
 				/**
 				 * \brief This field stores a pointer to the server.
@@ -140,6 +143,22 @@ namespace eProsima
 				DDS::DataWriter *m_replyDataWriter;
 
 				fExecFunction m_execFunction;
+
+				private:
+					
+				/**
+				 * \brief This function creates the DDS entities of the server.
+				 *
+				 * \return 0 value is returned when all entities was created succesfully. In other case, -1 value is returned.
+				 */
+				int createEntities();
+
+				/**
+				 * \brief This function enables all DDS entities of the server.
+				 *
+				 * \return 0 value is returned when all entities was enabled succesfully. In other case, -1 value is returned.
+				 */
+				int enableEntities();
 		};
 
 	} // namespace DDSRPC

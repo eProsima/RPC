@@ -5,23 +5,23 @@
 #include "ServerExceptionServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 #include "ServerExceptionRequestReplyPlugin.h"
 
 #include "ServerExceptionServerRPCSupport.h"
 
-ServerExceptionServer::ServerExceptionServer(eProsima::DDSRPC::ServerStrategy *strategy,
+ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new ServerExceptionServerImpl();
 
     createRPCs();
 }
 
-ServerExceptionServer::ServerExceptionServer(eProsima::DDSRPC::ServerStrategy *strategy,
+ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new ServerExceptionServerImpl();
     
@@ -35,18 +35,18 @@ ServerExceptionServer::~ServerExceptionServer()
 
 void ServerExceptionServer::createRPCs()
 {
-    this->setRPC(new sendExceptionServerRPC("sendException", this,
-                sendExceptionRequestUtils::registerType(getParticipant()),
-                sendExceptionReplyUtils::registerType(getParticipant()),
-                &ServerExceptionServer::sendException, getParticipant()));
-    this->setRPC(new sendExceptionTwoServerRPC("sendExceptionTwo", this,
-                sendExceptionTwoRequestUtils::registerType(getParticipant()),
-                sendExceptionTwoReplyUtils::registerType(getParticipant()),
-                &ServerExceptionServer::sendExceptionTwo, getParticipant()));
-    this->setRPC(new sendExceptionThreeServerRPC("sendExceptionThree", this,
-                sendExceptionThreeRequestUtils::registerType(getParticipant()),
-                sendExceptionThreeReplyUtils::registerType(getParticipant()),
-                &ServerExceptionServer::sendExceptionThree, getParticipant()));
+    this->setRPC(new ServerException_sendExceptionServerRPC("sendException", this,
+                ServerException_sendExceptionRequestUtils::registerType(getParticipant()),
+                ServerException_sendExceptionReplyUtils::registerType(getParticipant()),
+                &ServerExceptionServer::sendException));
+    this->setRPC(new ServerException_sendExceptionTwoServerRPC("sendExceptionTwo", this,
+                ServerException_sendExceptionTwoRequestUtils::registerType(getParticipant()),
+                ServerException_sendExceptionTwoReplyUtils::registerType(getParticipant()),
+                &ServerExceptionServer::sendExceptionTwo));
+    this->setRPC(new ServerException_sendExceptionThreeServerRPC("sendExceptionThree", this,
+                ServerException_sendExceptionThreeRequestUtils::registerType(getParticipant()),
+                ServerException_sendExceptionThreeReplyUtils::registerType(getParticipant()),
+                &ServerExceptionServer::sendExceptionThree));
 
 }
 
@@ -54,25 +54,31 @@ void ServerExceptionServer::sendException(eProsima::DDSRPC::Server *server, void
 { 
     ServerExceptionServer *srv = dynamic_cast<ServerExceptionServer*>(server);
    
-    sendExceptionReply replyData;
+    ServerException_sendExceptionReply replyData;
     
 
-    sendExceptionRequestUtils::extractTypeData(*(sendExceptionRequest*)requestData);
+    ServerException_sendExceptionRequestUtils::extractTypeData(*(ServerException_sendExceptionRequest*)requestData);
 
     try
     {
 srv->_impl->sendException();
 
-        sendExceptionReplyUtils::setTypeData(replyData);
+        ServerException_sendExceptionReplyUtils::setTypeData(replyData);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    sendExceptionRequestTypeSupport::delete_data((sendExceptionRequest*)requestData);
+    ServerException_sendExceptionRequestTypeSupport::delete_data((ServerException_sendExceptionRequest*)requestData);
     
 }
 void ServerExceptionServer::sendExceptionTwo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
@@ -82,26 +88,32 @@ void ServerExceptionServer::sendExceptionTwo(eProsima::DDSRPC::Server *server, v
     char*  message2 = NULL;    
     char*  message3 = NULL;    
     char*  sendExceptionTwo_ret = NULL;       
-    sendExceptionTwoReply replyData;
+    ServerException_sendExceptionTwoReply replyData;
     
         
 
-    sendExceptionTwoRequestUtils::extractTypeData(*(sendExceptionTwoRequest*)requestData, message, message2);
+    ServerException_sendExceptionTwoRequestUtils::extractTypeData(*(ServerException_sendExceptionTwoRequest*)requestData, message, message2);
 
     try
     {
         sendExceptionTwo_ret = srv->_impl->sendExceptionTwo(message, message2, message3);
 
-        sendExceptionTwoReplyUtils::setTypeData(replyData, message2, message3, sendExceptionTwo_ret);
+        ServerException_sendExceptionTwoReplyUtils::setTypeData(replyData, message2, message3, sendExceptionTwo_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    sendExceptionTwoRequestTypeSupport::delete_data((sendExceptionTwoRequest*)requestData);
+    ServerException_sendExceptionTwoRequestTypeSupport::delete_data((ServerException_sendExceptionTwoRequest*)requestData);
     
     if(sendExceptionTwo_ret != NULL) free(sendExceptionTwo_ret);    
     if(message2 != NULL) free(message2);    
@@ -118,26 +130,32 @@ void ServerExceptionServer::sendExceptionThree(eProsima::DDSRPC::Server *server,
     memset(&es3, 0, sizeof(Estructura));    
     Estructura sendExceptionThree_ret;
     memset(&sendExceptionThree_ret, 0, sizeof(Estructura));       
-    sendExceptionThreeReply replyData;
+    ServerException_sendExceptionThreeReply replyData;
     
     Estructura_initialize(&es2);    
 
-    sendExceptionThreeRequestUtils::extractTypeData(*(sendExceptionThreeRequest*)requestData, es, es2);
+    ServerException_sendExceptionThreeRequestUtils::extractTypeData(*(ServerException_sendExceptionThreeRequest*)requestData, es, es2);
 
     try
     {
         sendExceptionThree_ret = srv->_impl->sendExceptionThree(es, es2, es3);
 
-        sendExceptionThreeReplyUtils::setTypeData(replyData, es2, es3, sendExceptionThree_ret);
+        ServerException_sendExceptionThreeReplyUtils::setTypeData(replyData, es2, es3, sendExceptionThree_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    sendExceptionThreeRequestTypeSupport::delete_data((sendExceptionThreeRequest*)requestData);
+    ServerException_sendExceptionThreeRequestTypeSupport::delete_data((ServerException_sendExceptionThreeRequest*)requestData);
     
     Estructura_finalize(&sendExceptionThree_ret);    
     Estructura_finalize(&es2);    

@@ -13,23 +13,25 @@ class TypedefTest_getLargoTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        TypedefTest_getLargoTask(TypedefTest_getLargo &obj,
+        TypedefTest_getLargoTask(TypedefTest_getLargoCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~TypedefTest_getLargoTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        TypedefTest_getLargo& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        TypedefTest_getLargoCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           TypedefTest_getLargo &m_obj;
+           TypedefTest_getLargoCallbackHandler &m_obj;
            
-           getLargoReply m_reply;
+           TypedefTest_getLargoReply m_reply;
 };
 
 class TypedefTest_getLarguisimoTask : public eProsima::DDSRPC::AsyncTask
@@ -37,23 +39,25 @@ class TypedefTest_getLarguisimoTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        TypedefTest_getLarguisimoTask(TypedefTest_getLarguisimo &obj,
+        TypedefTest_getLarguisimoTask(TypedefTest_getLarguisimoCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~TypedefTest_getLarguisimoTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        TypedefTest_getLarguisimo& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        TypedefTest_getLarguisimoCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           TypedefTest_getLarguisimo &m_obj;
+           TypedefTest_getLarguisimoCallbackHandler &m_obj;
            
-           getLarguisimoReply m_reply;
+           TypedefTest_getLarguisimoReply m_reply;
 };
 
 class TypedefTest_getDatosDefTask : public eProsima::DDSRPC::AsyncTask
@@ -61,23 +65,25 @@ class TypedefTest_getDatosDefTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        TypedefTest_getDatosDefTask(TypedefTest_getDatosDef &obj,
+        TypedefTest_getDatosDefTask(TypedefTest_getDatosDefCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~TypedefTest_getDatosDefTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        TypedefTest_getDatosDef& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        TypedefTest_getDatosDefCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           TypedefTest_getDatosDef &m_obj;
+           TypedefTest_getDatosDefCallbackHandler &m_obj;
            
-           getDatosDefReply m_reply;
+           TypedefTest_getDatosDefReply m_reply;
 };
 
 class TypedefTest_getDatosDefondoTask : public eProsima::DDSRPC::AsyncTask
@@ -85,23 +91,25 @@ class TypedefTest_getDatosDefondoTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        TypedefTest_getDatosDefondoTask(TypedefTest_getDatosDefondo &obj,
+        TypedefTest_getDatosDefondoTask(TypedefTest_getDatosDefondoCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~TypedefTest_getDatosDefondoTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        TypedefTest_getDatosDefondo& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        TypedefTest_getDatosDefondoCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           TypedefTest_getDatosDefondo &m_obj;
+           TypedefTest_getDatosDefondoCallbackHandler &m_obj;
            
-           getDatosDefondoReply m_reply;
+           TypedefTest_getDatosDefondoReply m_reply;
 };
 
 class TypedefTest_getCadenaTask : public eProsima::DDSRPC::AsyncTask
@@ -109,23 +117,25 @@ class TypedefTest_getCadenaTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        TypedefTest_getCadenaTask(TypedefTest_getCadena &obj,
+        TypedefTest_getCadenaTask(TypedefTest_getCadenaCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~TypedefTest_getCadenaTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        TypedefTest_getCadena& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        TypedefTest_getCadenaCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           TypedefTest_getCadena &m_obj;
+           TypedefTest_getCadenaCallbackHandler &m_obj;
            
-           getCadenaReply m_reply;
+           TypedefTest_getCadenaReply m_reply;
 };
 
 class TypedefTest_getCorreaTask : public eProsima::DDSRPC::AsyncTask
@@ -133,23 +143,25 @@ class TypedefTest_getCorreaTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        TypedefTest_getCorreaTask(TypedefTest_getCorrea &obj,
+        TypedefTest_getCorreaTask(TypedefTest_getCorreaCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~TypedefTest_getCorreaTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        TypedefTest_getCorrea& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        TypedefTest_getCorreaCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           TypedefTest_getCorrea &m_obj;
+           TypedefTest_getCorreaCallbackHandler &m_obj;
            
-           getCorreaReply m_reply;
+           TypedefTest_getCorreaReply m_reply;
 };
 
 #endif // _TypedefTest_ASYNC_SUPPORT_H_

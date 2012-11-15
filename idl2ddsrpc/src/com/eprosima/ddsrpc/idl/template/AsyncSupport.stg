@@ -20,21 +20,23 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        $interfaceName$_$name$Task($interfaceName$_$name$ &obj,
+        $interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~$interfaceName$_$name$Task();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        $interfaceName$_$name$& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        $interfaceName$_$name$CallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           $interfaceName$_$name$ &m_obj;
+           $interfaceName$_$name$CallbackHandler &m_obj;
            
            $interfaceName$_$name$Reply m_reply;
 }
@@ -43,6 +45,7 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
 definition(interfaceName, taskDecls) ::= <<
 #include "$interfaceName$Proxy.h"
 #include "$interfaceName$AsyncSupport.h"
+#include "exceptions/ServerInternalException.h"
 $ReqRepIncludes(interfaceName=interfaceName)$
 
 $taskDecls; separator="\n"$
@@ -50,7 +53,7 @@ $taskDecls; separator="\n"$
 
 taskDeclaration(interfaceName, name, outParams) ::= <<
 
-$interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$ &obj,
+$interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
 }
@@ -59,7 +62,7 @@ $interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
 }
 
-$interfaceName$_$name$& $interfaceName$_$name$Task::getObject()
+$interfaceName$_$name$CallbackHandler& $interfaceName$_$name$Task::getObject()
 {
     return m_obj;
 }
@@ -69,24 +72,27 @@ void* $interfaceName$_$name$Task::getReplyInstance()
     return &m_reply;
 }
 
-void $interfaceName$_$name$Task::execute(eProsima::DDSRPC::ReturnMessage message)
+void $interfaceName$_$name$Task::execute()
 {  
     $outParams:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name)$}; separator="\n"$
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
-	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-	{
-		$interfaceName$_$name$ReplyUtils::extractTypeData(m_reply, retcode$if(outParams)$, $endif$$extractParams(params=outParams)$);
+	$interfaceName$_$name$ReplyUtils::extractTypeData(m_reply, retcode$if(outParams)$, $endif$$extractParams(params=outParams)$);
 		
-		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().$name$($extractParams(params=outParams)$);
-		else
-		    getObject().error(retcode);
+	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	{
+		getObject().$name$($extractParams(params=outParams)$);
 	}
 	else
 	{
-	    getObject().error(message);
+		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
 	}
+}
+
+void $interfaceName$_$name$Task::on_exception(const eProsima::DDSRPC::SystemException &ex)
+{
+    getObject().on_exception(ex);
 }
 
 >>

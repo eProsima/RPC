@@ -2,6 +2,7 @@
 #define _TRANSPORTS_TRANSPORT_H_
 
 #include "utils/Version.h"
+#include "utils/ddsrpc.h"
 
 namespace eProsima
 {
@@ -11,7 +12,7 @@ namespace eProsima
 		 * \brief This class is the base of all classes that implement a transport
 		 *        that could be used by the client or the server.
 		 */
-        class Transport
+        class DDSRPC_WIN32_DLL_API Transport
         {
             public:
 

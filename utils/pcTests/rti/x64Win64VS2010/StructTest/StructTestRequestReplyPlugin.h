@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestRequestReplyPlugin_1086133069_h
-#define StructTestRequestReplyPlugin_1086133069_h
+#ifndef StructTestRequestReplyPlugin_1086132789_h
+#define StructTestRequestReplyPlugin_1086132789_h
 
 #include "StructTestRequestReply.h"
 
@@ -42,77 +42,77 @@ extern "C" {
 
 
 /* The type used to store keys for instances of type struct
- * duplicateRequest.
+ * StructTest_duplicateRequest.
  *
- * By default, this type is struct duplicateRequest
+ * By default, this type is struct StructTest_duplicateRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct duplicateRequest)
+ * system (e.g. if sizeof(struct StructTest_duplicateRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct duplicateRequest, the
+ * other than struct StructTest_duplicateRequest, the
  * following restriction applies: the key of struct
- * duplicateRequest must consist of a
+ * StructTest_duplicateRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct duplicateRequest.
+ * first field in struct StructTest_duplicateRequest.
 */
-typedef  struct duplicateRequest duplicateRequestKeyHolder;
+typedef  struct StructTest_duplicateRequest StructTest_duplicateRequestKeyHolder;
 
 
-#define duplicateRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define duplicateRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define duplicateRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define duplicateRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define StructTest_duplicateRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define StructTest_duplicateRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define StructTest_duplicateRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define StructTest_duplicateRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define duplicateRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define duplicateRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define StructTest_duplicateRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define StructTest_duplicateRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define duplicateRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define duplicateRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define StructTest_duplicateRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define StructTest_duplicateRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern duplicateRequest*
-duplicateRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_duplicateRequest*
+StructTest_duplicateRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern duplicateRequest*
-duplicateRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern StructTest_duplicateRequest*
+StructTest_duplicateRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPluginSupport_copy_data(
-    duplicateRequest *out,
-    const duplicateRequest *in);
+StructTest_duplicateRequestPluginSupport_copy_data(
+    StructTest_duplicateRequest *out,
+    const StructTest_duplicateRequest *in);
 
 NDDSUSERDllExport extern void 
-duplicateRequestPluginSupport_destroy_data_ex(
-    duplicateRequest *sample,RTIBool deallocate_pointers);
+StructTest_duplicateRequestPluginSupport_destroy_data_ex(
+    StructTest_duplicateRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-duplicateRequestPluginSupport_destroy_data(
-    duplicateRequest *sample);
+StructTest_duplicateRequestPluginSupport_destroy_data(
+    StructTest_duplicateRequest *sample);
 
 NDDSUSERDllExport extern void 
-duplicateRequestPluginSupport_print_data(
-    const duplicateRequest *sample,
+StructTest_duplicateRequestPluginSupport_print_data(
+    const StructTest_duplicateRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern duplicateRequest*
-duplicateRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_duplicateRequest*
+StructTest_duplicateRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern duplicateRequest*
-duplicateRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-duplicateRequestPluginSupport_destroy_key_ex(
-    duplicateRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern StructTest_duplicateRequest*
+StructTest_duplicateRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-duplicateRequestPluginSupport_destroy_key(
-    duplicateRequestKeyHolder *key);
+StructTest_duplicateRequestPluginSupport_destroy_key_ex(
+    StructTest_duplicateRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+StructTest_duplicateRequestPluginSupport_destroy_key(
+    StructTest_duplicateRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ duplicateRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-duplicateRequestPlugin_on_participant_attached(
+StructTest_duplicateRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -128,34 +128,34 @@ duplicateRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-duplicateRequestPlugin_on_participant_detached(
+StructTest_duplicateRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-duplicateRequestPlugin_on_endpoint_attached(
+StructTest_duplicateRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-duplicateRequestPlugin_on_endpoint_detached(
+StructTest_duplicateRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_copy_sample(
+StructTest_duplicateRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *out,
-    const duplicateRequest *in);
+    StructTest_duplicateRequest *out,
+    const StructTest_duplicateRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_serialize(
+StructTest_duplicateRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateRequest *sample,
+    const StructTest_duplicateRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -163,9 +163,9 @@ duplicateRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_deserialize_sample(
+StructTest_duplicateRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *sample, 
+    StructTest_duplicateRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -173,9 +173,9 @@ duplicateRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_deserialize(
+StructTest_duplicateRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest **sample, 
+    StructTest_duplicateRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -185,7 +185,7 @@ duplicateRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-duplicateRequestPlugin_skip(
+StructTest_duplicateRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -193,26 +193,26 @@ duplicateRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-duplicateRequestPlugin_get_serialized_sample_max_size(
+StructTest_duplicateRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-duplicateRequestPlugin_get_serialized_sample_min_size(
+StructTest_duplicateRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-duplicateRequestPlugin_get_serialized_sample_size(
+StructTest_duplicateRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const duplicateRequest * sample);
+    const StructTest_duplicateRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -220,19 +220,19 @@ duplicateRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-duplicateRequestPlugin_get_key_kind(void);
+StructTest_duplicateRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-duplicateRequestPlugin_get_serialized_key_max_size(
+StructTest_duplicateRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_serialize_key(
+StructTest_duplicateRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateRequest *sample,
+    const StructTest_duplicateRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -240,9 +240,9 @@ duplicateRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_deserialize_key_sample(
+StructTest_duplicateRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest * sample,
+    StructTest_duplicateRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -250,9 +250,9 @@ duplicateRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_deserialize_key(
+StructTest_duplicateRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest ** sample,
+    StructTest_duplicateRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -261,9 +261,9 @@ duplicateRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-duplicateRequestPlugin_serialized_sample_to_key(
+StructTest_duplicateRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *sample,
+    StructTest_duplicateRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -271,25 +271,25 @@ duplicateRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_instance_to_key(
+StructTest_duplicateRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequestKeyHolder *key, 
-    const duplicateRequest *instance);
+    StructTest_duplicateRequestKeyHolder *key, 
+    const StructTest_duplicateRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_key_to_instance(
+StructTest_duplicateRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *instance, 
-    const duplicateRequestKeyHolder *key);
+    StructTest_duplicateRequest *instance, 
+    const StructTest_duplicateRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_instance_to_keyhash(
+StructTest_duplicateRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const duplicateRequest *instance);
+    const StructTest_duplicateRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateRequestPlugin_serialized_sample_to_keyhash(
+StructTest_duplicateRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -298,83 +298,83 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-duplicateRequestPlugin_new(void);
+StructTest_duplicateRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-duplicateRequestPlugin_delete(struct PRESTypePlugin *);
+StructTest_duplicateRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * duplicateReply.
+ * StructTest_duplicateReply.
  *
- * By default, this type is struct duplicateReply
+ * By default, this type is struct StructTest_duplicateReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct duplicateReply)
+ * system (e.g. if sizeof(struct StructTest_duplicateReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct duplicateReply, the
+ * other than struct StructTest_duplicateReply, the
  * following restriction applies: the key of struct
- * duplicateReply must consist of a
+ * StructTest_duplicateReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct duplicateReply.
+ * first field in struct StructTest_duplicateReply.
 */
-typedef  struct duplicateReply duplicateReplyKeyHolder;
+typedef  struct StructTest_duplicateReply StructTest_duplicateReplyKeyHolder;
 
 
-#define duplicateReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define duplicateReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define duplicateReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define duplicateReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define StructTest_duplicateReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define StructTest_duplicateReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define StructTest_duplicateReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define StructTest_duplicateReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define duplicateReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define duplicateReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define StructTest_duplicateReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define StructTest_duplicateReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define duplicateReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define duplicateReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define StructTest_duplicateReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define StructTest_duplicateReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern duplicateReply*
-duplicateReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_duplicateReply*
+StructTest_duplicateReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern duplicateReply*
-duplicateReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern StructTest_duplicateReply*
+StructTest_duplicateReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPluginSupport_copy_data(
-    duplicateReply *out,
-    const duplicateReply *in);
+StructTest_duplicateReplyPluginSupport_copy_data(
+    StructTest_duplicateReply *out,
+    const StructTest_duplicateReply *in);
 
 NDDSUSERDllExport extern void 
-duplicateReplyPluginSupport_destroy_data_ex(
-    duplicateReply *sample,RTIBool deallocate_pointers);
+StructTest_duplicateReplyPluginSupport_destroy_data_ex(
+    StructTest_duplicateReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-duplicateReplyPluginSupport_destroy_data(
-    duplicateReply *sample);
+StructTest_duplicateReplyPluginSupport_destroy_data(
+    StructTest_duplicateReply *sample);
 
 NDDSUSERDllExport extern void 
-duplicateReplyPluginSupport_print_data(
-    const duplicateReply *sample,
+StructTest_duplicateReplyPluginSupport_print_data(
+    const StructTest_duplicateReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern duplicateReply*
-duplicateReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_duplicateReply*
+StructTest_duplicateReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern duplicateReply*
-duplicateReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-duplicateReplyPluginSupport_destroy_key_ex(
-    duplicateReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern StructTest_duplicateReply*
+StructTest_duplicateReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-duplicateReplyPluginSupport_destroy_key(
-    duplicateReplyKeyHolder *key);
+StructTest_duplicateReplyPluginSupport_destroy_key_ex(
+    StructTest_duplicateReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+StructTest_duplicateReplyPluginSupport_destroy_key(
+    StructTest_duplicateReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -382,7 +382,7 @@ duplicateReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-duplicateReplyPlugin_on_participant_attached(
+StructTest_duplicateReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -390,34 +390,34 @@ duplicateReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-duplicateReplyPlugin_on_participant_detached(
+StructTest_duplicateReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-duplicateReplyPlugin_on_endpoint_attached(
+StructTest_duplicateReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-duplicateReplyPlugin_on_endpoint_detached(
+StructTest_duplicateReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_copy_sample(
+StructTest_duplicateReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *out,
-    const duplicateReply *in);
+    StructTest_duplicateReply *out,
+    const StructTest_duplicateReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_serialize(
+StructTest_duplicateReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateReply *sample,
+    const StructTest_duplicateReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -425,9 +425,9 @@ duplicateReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_deserialize_sample(
+StructTest_duplicateReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *sample, 
+    StructTest_duplicateReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -435,9 +435,9 @@ duplicateReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_deserialize(
+StructTest_duplicateReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply **sample, 
+    StructTest_duplicateReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -447,7 +447,7 @@ duplicateReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-duplicateReplyPlugin_skip(
+StructTest_duplicateReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -455,26 +455,26 @@ duplicateReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-duplicateReplyPlugin_get_serialized_sample_max_size(
+StructTest_duplicateReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-duplicateReplyPlugin_get_serialized_sample_min_size(
+StructTest_duplicateReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-duplicateReplyPlugin_get_serialized_sample_size(
+StructTest_duplicateReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const duplicateReply * sample);
+    const StructTest_duplicateReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -482,19 +482,19 @@ duplicateReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-duplicateReplyPlugin_get_key_kind(void);
+StructTest_duplicateReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-duplicateReplyPlugin_get_serialized_key_max_size(
+StructTest_duplicateReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_serialize_key(
+StructTest_duplicateReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateReply *sample,
+    const StructTest_duplicateReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -502,9 +502,9 @@ duplicateReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_deserialize_key_sample(
+StructTest_duplicateReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply * sample,
+    StructTest_duplicateReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -512,9 +512,9 @@ duplicateReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_deserialize_key(
+StructTest_duplicateReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply ** sample,
+    StructTest_duplicateReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -523,9 +523,9 @@ duplicateReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-duplicateReplyPlugin_serialized_sample_to_key(
+StructTest_duplicateReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *sample,
+    StructTest_duplicateReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -533,25 +533,25 @@ duplicateReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_instance_to_key(
+StructTest_duplicateReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReplyKeyHolder *key, 
-    const duplicateReply *instance);
+    StructTest_duplicateReplyKeyHolder *key, 
+    const StructTest_duplicateReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_key_to_instance(
+StructTest_duplicateReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *instance, 
-    const duplicateReplyKeyHolder *key);
+    StructTest_duplicateReply *instance, 
+    const StructTest_duplicateReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_instance_to_keyhash(
+StructTest_duplicateReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const duplicateReply *instance);
+    const StructTest_duplicateReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-duplicateReplyPlugin_serialized_sample_to_keyhash(
+StructTest_duplicateReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -560,83 +560,83 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-duplicateReplyPlugin_new(void);
+StructTest_duplicateReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-duplicateReplyPlugin_delete(struct PRESTypePlugin *);
+StructTest_duplicateReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * sumaRequest.
+ * StructTest_sumaRequest.
  *
- * By default, this type is struct sumaRequest
+ * By default, this type is struct StructTest_sumaRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct sumaRequest)
+ * system (e.g. if sizeof(struct StructTest_sumaRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct sumaRequest, the
+ * other than struct StructTest_sumaRequest, the
  * following restriction applies: the key of struct
- * sumaRequest must consist of a
+ * StructTest_sumaRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct sumaRequest.
+ * first field in struct StructTest_sumaRequest.
 */
-typedef  struct sumaRequest sumaRequestKeyHolder;
+typedef  struct StructTest_sumaRequest StructTest_sumaRequestKeyHolder;
 
 
-#define sumaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define sumaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define sumaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define sumaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define StructTest_sumaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define StructTest_sumaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define StructTest_sumaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define StructTest_sumaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define sumaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define sumaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define StructTest_sumaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define StructTest_sumaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define sumaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define sumaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define StructTest_sumaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define StructTest_sumaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_sumaRequest*
+StructTest_sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern StructTest_sumaRequest*
+StructTest_sumaRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPluginSupport_copy_data(
-    sumaRequest *out,
-    const sumaRequest *in);
+StructTest_sumaRequestPluginSupport_copy_data(
+    StructTest_sumaRequest *out,
+    const StructTest_sumaRequest *in);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_data_ex(
-    sumaRequest *sample,RTIBool deallocate_pointers);
+StructTest_sumaRequestPluginSupport_destroy_data_ex(
+    StructTest_sumaRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_data(
-    sumaRequest *sample);
+StructTest_sumaRequestPluginSupport_destroy_data(
+    StructTest_sumaRequest *sample);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_print_data(
-    const sumaRequest *sample,
+StructTest_sumaRequestPluginSupport_print_data(
+    const StructTest_sumaRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_sumaRequest*
+StructTest_sumaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaRequest*
-sumaRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_key_ex(
-    sumaRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern StructTest_sumaRequest*
+StructTest_sumaRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-sumaRequestPluginSupport_destroy_key(
-    sumaRequestKeyHolder *key);
+StructTest_sumaRequestPluginSupport_destroy_key_ex(
+    StructTest_sumaRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+StructTest_sumaRequestPluginSupport_destroy_key(
+    StructTest_sumaRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ sumaRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-sumaRequestPlugin_on_participant_attached(
+StructTest_sumaRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -652,34 +652,34 @@ sumaRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-sumaRequestPlugin_on_participant_detached(
+StructTest_sumaRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-sumaRequestPlugin_on_endpoint_attached(
+StructTest_sumaRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-sumaRequestPlugin_on_endpoint_detached(
+StructTest_sumaRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_copy_sample(
+StructTest_sumaRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *out,
-    const sumaRequest *in);
+    StructTest_sumaRequest *out,
+    const StructTest_sumaRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_serialize(
+StructTest_sumaRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample,
+    const StructTest_sumaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -687,9 +687,9 @@ sumaRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize_sample(
+StructTest_sumaRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample, 
+    StructTest_sumaRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -697,9 +697,9 @@ sumaRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize(
+StructTest_sumaRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest **sample, 
+    StructTest_sumaRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -709,7 +709,7 @@ sumaRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaRequestPlugin_skip(
+StructTest_sumaRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -717,26 +717,26 @@ sumaRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-sumaRequestPlugin_get_serialized_sample_max_size(
+StructTest_sumaRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-sumaRequestPlugin_get_serialized_sample_min_size(
+StructTest_sumaRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-sumaRequestPlugin_get_serialized_sample_size(
+StructTest_sumaRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaRequest * sample);
+    const StructTest_sumaRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -744,19 +744,19 @@ sumaRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-sumaRequestPlugin_get_key_kind(void);
+StructTest_sumaRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-sumaRequestPlugin_get_serialized_key_max_size(
+StructTest_sumaRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_serialize_key(
+StructTest_sumaRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample,
+    const StructTest_sumaRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -764,9 +764,9 @@ sumaRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize_key_sample(
+StructTest_sumaRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest * sample,
+    StructTest_sumaRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -774,9 +774,9 @@ sumaRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_deserialize_key(
+StructTest_sumaRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest ** sample,
+    StructTest_sumaRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -785,9 +785,9 @@ sumaRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaRequestPlugin_serialized_sample_to_key(
+StructTest_sumaRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample,
+    StructTest_sumaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -795,25 +795,25 @@ sumaRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_instance_to_key(
+StructTest_sumaRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequestKeyHolder *key, 
-    const sumaRequest *instance);
+    StructTest_sumaRequestKeyHolder *key, 
+    const StructTest_sumaRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_key_to_instance(
+StructTest_sumaRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *instance, 
-    const sumaRequestKeyHolder *key);
+    StructTest_sumaRequest *instance, 
+    const StructTest_sumaRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_instance_to_keyhash(
+StructTest_sumaRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaRequest *instance);
+    const StructTest_sumaRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaRequestPlugin_serialized_sample_to_keyhash(
+StructTest_sumaRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -822,83 +822,83 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-sumaRequestPlugin_new(void);
+StructTest_sumaRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-sumaRequestPlugin_delete(struct PRESTypePlugin *);
+StructTest_sumaRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * sumaReply.
+ * StructTest_sumaReply.
  *
- * By default, this type is struct sumaReply
+ * By default, this type is struct StructTest_sumaReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct sumaReply)
+ * system (e.g. if sizeof(struct StructTest_sumaReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct sumaReply, the
+ * other than struct StructTest_sumaReply, the
  * following restriction applies: the key of struct
- * sumaReply must consist of a
+ * StructTest_sumaReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct sumaReply.
+ * first field in struct StructTest_sumaReply.
 */
-typedef  struct sumaReply sumaReplyKeyHolder;
+typedef  struct StructTest_sumaReply StructTest_sumaReplyKeyHolder;
 
 
-#define sumaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define sumaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define sumaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define sumaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define StructTest_sumaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define StructTest_sumaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define StructTest_sumaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define StructTest_sumaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define sumaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define sumaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define StructTest_sumaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define StructTest_sumaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define sumaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define sumaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define StructTest_sumaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define StructTest_sumaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_sumaReply*
+StructTest_sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern StructTest_sumaReply*
+StructTest_sumaReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPluginSupport_copy_data(
-    sumaReply *out,
-    const sumaReply *in);
+StructTest_sumaReplyPluginSupport_copy_data(
+    StructTest_sumaReply *out,
+    const StructTest_sumaReply *in);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_data_ex(
-    sumaReply *sample,RTIBool deallocate_pointers);
+StructTest_sumaReplyPluginSupport_destroy_data_ex(
+    StructTest_sumaReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_data(
-    sumaReply *sample);
+StructTest_sumaReplyPluginSupport_destroy_data(
+    StructTest_sumaReply *sample);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_print_data(
-    const sumaReply *sample,
+StructTest_sumaReplyPluginSupport_print_data(
+    const StructTest_sumaReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern StructTest_sumaReply*
+StructTest_sumaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern sumaReply*
-sumaReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_key_ex(
-    sumaReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern StructTest_sumaReply*
+StructTest_sumaReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-sumaReplyPluginSupport_destroy_key(
-    sumaReplyKeyHolder *key);
+StructTest_sumaReplyPluginSupport_destroy_key_ex(
+    StructTest_sumaReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+StructTest_sumaReplyPluginSupport_destroy_key(
+    StructTest_sumaReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -906,7 +906,7 @@ sumaReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-sumaReplyPlugin_on_participant_attached(
+StructTest_sumaReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -914,34 +914,34 @@ sumaReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-sumaReplyPlugin_on_participant_detached(
+StructTest_sumaReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-sumaReplyPlugin_on_endpoint_attached(
+StructTest_sumaReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-sumaReplyPlugin_on_endpoint_detached(
+StructTest_sumaReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_copy_sample(
+StructTest_sumaReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *out,
-    const sumaReply *in);
+    StructTest_sumaReply *out,
+    const StructTest_sumaReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_serialize(
+StructTest_sumaReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample,
+    const StructTest_sumaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -949,9 +949,9 @@ sumaReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize_sample(
+StructTest_sumaReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample, 
+    StructTest_sumaReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -959,9 +959,9 @@ sumaReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize(
+StructTest_sumaReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply **sample, 
+    StructTest_sumaReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -971,7 +971,7 @@ sumaReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaReplyPlugin_skip(
+StructTest_sumaReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -979,26 +979,26 @@ sumaReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-sumaReplyPlugin_get_serialized_sample_max_size(
+StructTest_sumaReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-sumaReplyPlugin_get_serialized_sample_min_size(
+StructTest_sumaReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-sumaReplyPlugin_get_serialized_sample_size(
+StructTest_sumaReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaReply * sample);
+    const StructTest_sumaReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1006,19 +1006,19 @@ sumaReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-sumaReplyPlugin_get_key_kind(void);
+StructTest_sumaReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-sumaReplyPlugin_get_serialized_key_max_size(
+StructTest_sumaReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_serialize_key(
+StructTest_sumaReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample,
+    const StructTest_sumaReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1026,9 +1026,9 @@ sumaReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize_key_sample(
+StructTest_sumaReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply * sample,
+    StructTest_sumaReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1036,9 +1036,9 @@ sumaReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_deserialize_key(
+StructTest_sumaReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply ** sample,
+    StructTest_sumaReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1047,9 +1047,9 @@ sumaReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-sumaReplyPlugin_serialized_sample_to_key(
+StructTest_sumaReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample,
+    StructTest_sumaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1057,25 +1057,25 @@ sumaReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_instance_to_key(
+StructTest_sumaReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReplyKeyHolder *key, 
-    const sumaReply *instance);
+    StructTest_sumaReplyKeyHolder *key, 
+    const StructTest_sumaReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_key_to_instance(
+StructTest_sumaReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *instance, 
-    const sumaReplyKeyHolder *key);
+    StructTest_sumaReply *instance, 
+    const StructTest_sumaReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_instance_to_keyhash(
+StructTest_sumaReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaReply *instance);
+    const StructTest_sumaReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-sumaReplyPlugin_serialized_sample_to_keyhash(
+StructTest_sumaReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1084,10 +1084,10 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-sumaReplyPlugin_new(void);
+StructTest_sumaReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-sumaReplyPlugin_delete(struct PRESTypePlugin *);
+StructTest_sumaReplyPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }
@@ -1101,4 +1101,4 @@ sumaReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* StructTestRequestReplyPlugin_1086133069_h */
+#endif /* StructTestRequestReplyPlugin_1086132789_h */

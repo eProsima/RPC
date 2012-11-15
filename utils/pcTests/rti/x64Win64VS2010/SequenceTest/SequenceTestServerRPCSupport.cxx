@@ -7,12 +7,12 @@
 
 
 /* Defines */
-#define TName                   getSLongServerRPC
-#define TDataReplyTypeSupport   getSLongReplyTypeSupport
-#define TDataRequestTypeSupport getSLongRequestTypeSupport
-#define TData                   getSLong
-#define TDataReader             getSLongRequestDataReader
-#define TDataWriter             getSLongReplyDataWriter
+#define TName                   SequenceTest_getSLongServerRPC
+#define TDataReplyTypeSupport   SequenceTest_getSLongReplyTypeSupport
+#define TDataRequestTypeSupport SequenceTest_getSLongRequestTypeSupport
+#define TData                   SequenceTest_getSLong
+#define TDataReader             SequenceTest_getSLongRequestDataReader
+#define TDataWriter             SequenceTest_getSLongReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -27,12 +27,12 @@
 
 
 /* Defines */
-#define TName                   getStringServerRPC
-#define TDataReplyTypeSupport   getStringReplyTypeSupport
-#define TDataRequestTypeSupport getStringRequestTypeSupport
-#define TData                   getString
-#define TDataReader             getStringRequestDataReader
-#define TDataWriter             getStringReplyDataWriter
+#define TName                   SequenceTest_getStringServerRPC
+#define TDataReplyTypeSupport   SequenceTest_getStringReplyTypeSupport
+#define TDataRequestTypeSupport SequenceTest_getStringRequestTypeSupport
+#define TData                   SequenceTest_getString
+#define TDataReader             SequenceTest_getStringRequestDataReader
+#define TDataWriter             SequenceTest_getStringReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -47,12 +47,12 @@
 
 
 /* Defines */
-#define TName                   getStringBoundedServerRPC
-#define TDataReplyTypeSupport   getStringBoundedReplyTypeSupport
-#define TDataRequestTypeSupport getStringBoundedRequestTypeSupport
-#define TData                   getStringBounded
-#define TDataReader             getStringBoundedRequestDataReader
-#define TDataWriter             getStringBoundedReplyDataWriter
+#define TName                   SequenceTest_getStringBoundedServerRPC
+#define TDataReplyTypeSupport   SequenceTest_getStringBoundedReplyTypeSupport
+#define TDataRequestTypeSupport SequenceTest_getStringBoundedRequestTypeSupport
+#define TData                   SequenceTest_getStringBounded
+#define TDataReader             SequenceTest_getStringBoundedRequestDataReader
+#define TDataWriter             SequenceTest_getStringBoundedReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"

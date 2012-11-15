@@ -6,12 +6,12 @@
 
 
 /* Defines */
-#define TName            getOctetClientRPC
-#define TDataTypeSupport getOctetReplyTypeSupport
-#define TData            getOctet
-#define TDataSeq         getOctetReplySeq
-#define TDataReader      getOctetReplyDataReader
-#define TDataWriter      getOctetRequestDataWriter
+#define TName            BasicTypeTest_getOctetClientRPC
+#define TDataTypeSupport BasicTypeTest_getOctetReplyTypeSupport
+#define TData            BasicTypeTest_getOctet
+#define TDataSeq         BasicTypeTest_getOctetReplySeq
+#define TDataReader      BasicTypeTest_getOctetReplyDataReader
+#define TDataWriter      BasicTypeTest_getOctetRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -26,12 +26,12 @@
 
 
 /* Defines */
-#define TName            getCharClientRPC
-#define TDataTypeSupport getCharReplyTypeSupport
-#define TData            getChar
-#define TDataSeq         getCharReplySeq
-#define TDataReader      getCharReplyDataReader
-#define TDataWriter      getCharRequestDataWriter
+#define TName            BasicTypeTest_getCharClientRPC
+#define TDataTypeSupport BasicTypeTest_getCharReplyTypeSupport
+#define TData            BasicTypeTest_getChar
+#define TDataSeq         BasicTypeTest_getCharReplySeq
+#define TDataReader      BasicTypeTest_getCharReplyDataReader
+#define TDataWriter      BasicTypeTest_getCharRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -46,12 +46,12 @@
 
 
 /* Defines */
-#define TName            getWCharClientRPC
-#define TDataTypeSupport getWCharReplyTypeSupport
-#define TData            getWChar
-#define TDataSeq         getWCharReplySeq
-#define TDataReader      getWCharReplyDataReader
-#define TDataWriter      getWCharRequestDataWriter
+#define TName            BasicTypeTest_getWCharClientRPC
+#define TDataTypeSupport BasicTypeTest_getWCharReplyTypeSupport
+#define TData            BasicTypeTest_getWChar
+#define TDataSeq         BasicTypeTest_getWCharReplySeq
+#define TDataReader      BasicTypeTest_getWCharReplyDataReader
+#define TDataWriter      BasicTypeTest_getWCharRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -66,12 +66,12 @@
 
 
 /* Defines */
-#define TName            getShortClientRPC
-#define TDataTypeSupport getShortReplyTypeSupport
-#define TData            getShort
-#define TDataSeq         getShortReplySeq
-#define TDataReader      getShortReplyDataReader
-#define TDataWriter      getShortRequestDataWriter
+#define TName            BasicTypeTest_getShortClientRPC
+#define TDataTypeSupport BasicTypeTest_getShortReplyTypeSupport
+#define TData            BasicTypeTest_getShort
+#define TDataSeq         BasicTypeTest_getShortReplySeq
+#define TDataReader      BasicTypeTest_getShortReplyDataReader
+#define TDataWriter      BasicTypeTest_getShortRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -86,12 +86,12 @@
 
 
 /* Defines */
-#define TName            getUShortClientRPC
-#define TDataTypeSupport getUShortReplyTypeSupport
-#define TData            getUShort
-#define TDataSeq         getUShortReplySeq
-#define TDataReader      getUShortReplyDataReader
-#define TDataWriter      getUShortRequestDataWriter
+#define TName            BasicTypeTest_getUShortClientRPC
+#define TDataTypeSupport BasicTypeTest_getUShortReplyTypeSupport
+#define TData            BasicTypeTest_getUShort
+#define TDataSeq         BasicTypeTest_getUShortReplySeq
+#define TDataReader      BasicTypeTest_getUShortReplyDataReader
+#define TDataWriter      BasicTypeTest_getUShortRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -106,12 +106,12 @@
 
 
 /* Defines */
-#define TName            getLongClientRPC
-#define TDataTypeSupport getLongReplyTypeSupport
-#define TData            getLong
-#define TDataSeq         getLongReplySeq
-#define TDataReader      getLongReplyDataReader
-#define TDataWriter      getLongRequestDataWriter
+#define TName            BasicTypeTest_getLongClientRPC
+#define TDataTypeSupport BasicTypeTest_getLongReplyTypeSupport
+#define TData            BasicTypeTest_getLong
+#define TDataSeq         BasicTypeTest_getLongReplySeq
+#define TDataReader      BasicTypeTest_getLongReplyDataReader
+#define TDataWriter      BasicTypeTest_getLongRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -126,12 +126,12 @@
 
 
 /* Defines */
-#define TName            getULongClientRPC
-#define TDataTypeSupport getULongReplyTypeSupport
-#define TData            getULong
-#define TDataSeq         getULongReplySeq
-#define TDataReader      getULongReplyDataReader
-#define TDataWriter      getULongRequestDataWriter
+#define TName            BasicTypeTest_getULongClientRPC
+#define TDataTypeSupport BasicTypeTest_getULongReplyTypeSupport
+#define TData            BasicTypeTest_getULong
+#define TDataSeq         BasicTypeTest_getULongReplySeq
+#define TDataReader      BasicTypeTest_getULongReplyDataReader
+#define TDataWriter      BasicTypeTest_getULongRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -146,12 +146,12 @@
 
 
 /* Defines */
-#define TName            getLLongClientRPC
-#define TDataTypeSupport getLLongReplyTypeSupport
-#define TData            getLLong
-#define TDataSeq         getLLongReplySeq
-#define TDataReader      getLLongReplyDataReader
-#define TDataWriter      getLLongRequestDataWriter
+#define TName            BasicTypeTest_getLLongClientRPC
+#define TDataTypeSupport BasicTypeTest_getLLongReplyTypeSupport
+#define TData            BasicTypeTest_getLLong
+#define TDataSeq         BasicTypeTest_getLLongReplySeq
+#define TDataReader      BasicTypeTest_getLLongReplyDataReader
+#define TDataWriter      BasicTypeTest_getLLongRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -166,12 +166,12 @@
 
 
 /* Defines */
-#define TName            getULLongClientRPC
-#define TDataTypeSupport getULLongReplyTypeSupport
-#define TData            getULLong
-#define TDataSeq         getULLongReplySeq
-#define TDataReader      getULLongReplyDataReader
-#define TDataWriter      getULLongRequestDataWriter
+#define TName            BasicTypeTest_getULLongClientRPC
+#define TDataTypeSupport BasicTypeTest_getULLongReplyTypeSupport
+#define TData            BasicTypeTest_getULLong
+#define TDataSeq         BasicTypeTest_getULLongReplySeq
+#define TDataReader      BasicTypeTest_getULLongReplyDataReader
+#define TDataWriter      BasicTypeTest_getULLongRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -186,12 +186,12 @@
 
 
 /* Defines */
-#define TName            getFloatClientRPC
-#define TDataTypeSupport getFloatReplyTypeSupport
-#define TData            getFloat
-#define TDataSeq         getFloatReplySeq
-#define TDataReader      getFloatReplyDataReader
-#define TDataWriter      getFloatRequestDataWriter
+#define TName            BasicTypeTest_getFloatClientRPC
+#define TDataTypeSupport BasicTypeTest_getFloatReplyTypeSupport
+#define TData            BasicTypeTest_getFloat
+#define TDataSeq         BasicTypeTest_getFloatReplySeq
+#define TDataReader      BasicTypeTest_getFloatReplyDataReader
+#define TDataWriter      BasicTypeTest_getFloatRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -206,12 +206,12 @@
 
 
 /* Defines */
-#define TName            getDoubleClientRPC
-#define TDataTypeSupport getDoubleReplyTypeSupport
-#define TData            getDouble
-#define TDataSeq         getDoubleReplySeq
-#define TDataReader      getDoubleReplyDataReader
-#define TDataWriter      getDoubleRequestDataWriter
+#define TName            BasicTypeTest_getDoubleClientRPC
+#define TDataTypeSupport BasicTypeTest_getDoubleReplyTypeSupport
+#define TData            BasicTypeTest_getDouble
+#define TDataSeq         BasicTypeTest_getDoubleReplySeq
+#define TDataReader      BasicTypeTest_getDoubleReplyDataReader
+#define TDataWriter      BasicTypeTest_getDoubleRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -226,12 +226,12 @@
 
 
 /* Defines */
-#define TName            getBooleanClientRPC
-#define TDataTypeSupport getBooleanReplyTypeSupport
-#define TData            getBoolean
-#define TDataSeq         getBooleanReplySeq
-#define TDataReader      getBooleanReplyDataReader
-#define TDataWriter      getBooleanRequestDataWriter
+#define TName            BasicTypeTest_getBooleanClientRPC
+#define TDataTypeSupport BasicTypeTest_getBooleanReplyTypeSupport
+#define TData            BasicTypeTest_getBoolean
+#define TDataSeq         BasicTypeTest_getBooleanReplySeq
+#define TDataReader      BasicTypeTest_getBooleanReplyDataReader
+#define TDataWriter      BasicTypeTest_getBooleanRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"

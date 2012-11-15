@@ -28,8 +28,17 @@ namespace eProsima
 
 			public:
 
-				/// \brief This function introduces the thread in a loop.
-				void wait(unsigned int milliseconds = DDSRPC_DEFAULT_PERIOD_MILLISEC);
+				/**
+				 * \brief This function starts the server to listen requests.
+				 *         The server will create the DDS entities to start listening.
+				 */
+				void serve();
+
+				/**
+				 * \brief This function close the server's communications.
+				 *        The server will destroy the DDS entities to close the communications.
+				 */
+				void stop();
 
 				/**
 				 * \brief This function schedules a new request that was received.

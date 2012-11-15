@@ -12,147 +12,147 @@
 #include "ndds_namespace_cpp.h"
 
 
-class getLargoRequestUtils
+class TypedefTest_getLargoRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getLargoRequest& instance, /*in*/ largo l1);
+        static void setTypeData(TypedefTest_getLargoRequest& instance, /*in*/ largo l1);
         
-        static void extractTypeData(getLargoRequest& data, /*in*/ largo& l1);
+        static void extractTypeData(TypedefTest_getLargoRequest& data, /*in*/ largo& l1);
 };
 
 
-class getLargoReplyUtils
+class TypedefTest_getLargoReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getLargoReply& instance, /*out*/ largo l2, /*out*/ largo getLargo_ret);
+        static void setTypeData(TypedefTest_getLargoReply& instance, /*out*/ largo l2, /*out*/ largo getLargo_ret);
         
-        static void extractTypeData(getLargoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret);
+        static void extractTypeData(TypedefTest_getLargoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret);
 };
 
 
-class getLarguisimoRequestUtils
+class TypedefTest_getLarguisimoRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getLarguisimoRequest& instance, /*in*/ larguisimo ll1);
+        static void setTypeData(TypedefTest_getLarguisimoRequest& instance, /*in*/ larguisimo ll1);
         
-        static void extractTypeData(getLarguisimoRequest& data, /*in*/ larguisimo& ll1);
+        static void extractTypeData(TypedefTest_getLarguisimoRequest& data, /*in*/ larguisimo& ll1);
 };
 
 
-class getLarguisimoReplyUtils
+class TypedefTest_getLarguisimoReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getLarguisimoReply& instance, /*out*/ larguisimo ll2, /*out*/ larguisimo getLarguisimo_ret);
+        static void setTypeData(TypedefTest_getLarguisimoReply& instance, /*out*/ larguisimo ll2, /*out*/ larguisimo getLarguisimo_ret);
         
-        static void extractTypeData(getLarguisimoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret);
+        static void extractTypeData(TypedefTest_getLarguisimoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret);
 };
 
 
-class getDatosDefRequestUtils
+class TypedefTest_getDatosDefRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getDatosDefRequest& instance, /*in*/ const DatosDef& d1);
+        static void setTypeData(TypedefTest_getDatosDefRequest& instance, /*in*/ const DatosDef& d1);
         
-        static void extractTypeData(getDatosDefRequest& data, /*in*/ DatosDef& d1);
+        static void extractTypeData(TypedefTest_getDatosDefRequest& data, /*in*/ DatosDef& d1);
 };
 
 
-class getDatosDefReplyUtils
+class TypedefTest_getDatosDefReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getDatosDefReply& instance, /*out*/ const DatosDef& d2, /*out*/ const DatosDef& getDatosDef_ret);
+        static void setTypeData(TypedefTest_getDatosDefReply& instance, /*out*/ const DatosDef& d2, /*out*/ const DatosDef& getDatosDef_ret);
         
-        static void extractTypeData(getDatosDefReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret);
+        static void extractTypeData(TypedefTest_getDatosDefReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret);
 };
 
 
-class getDatosDefondoRequestUtils
+class TypedefTest_getDatosDefondoRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getDatosDefondoRequest& instance, /*in*/ const DatosDefondo& dd1);
+        static void setTypeData(TypedefTest_getDatosDefondoRequest& instance, /*in*/ const DatosDefondo& dd1);
         
-        static void extractTypeData(getDatosDefondoRequest& data, /*in*/ DatosDefondo& dd1);
+        static void extractTypeData(TypedefTest_getDatosDefondoRequest& data, /*in*/ DatosDefondo& dd1);
 };
 
 
-class getDatosDefondoReplyUtils
+class TypedefTest_getDatosDefondoReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getDatosDefondoReply& instance, /*out*/ const DatosDefondo& dd2, /*out*/ const DatosDefondo& getDatosDefondo_ret);
+        static void setTypeData(TypedefTest_getDatosDefondoReply& instance, /*out*/ const DatosDefondo& dd2, /*out*/ const DatosDefondo& getDatosDefondo_ret);
         
-        static void extractTypeData(getDatosDefondoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret);
+        static void extractTypeData(TypedefTest_getDatosDefondoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret);
 };
 
 
-class getCadenaRequestUtils
+class TypedefTest_getCadenaRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getCadenaRequest& instance, /*in*/ cadena c1);
+        static void setTypeData(TypedefTest_getCadenaRequest& instance, /*in*/ cadena c1);
         
-        static void extractTypeData(getCadenaRequest& data, /*in*/ cadena& c1);
+        static void extractTypeData(TypedefTest_getCadenaRequest& data, /*in*/ cadena& c1);
 };
 
 
-class getCadenaReplyUtils
+class TypedefTest_getCadenaReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getCadenaReply& instance, /*out*/ cadena c2, /*out*/ cadena getCadena_ret);
+        static void setTypeData(TypedefTest_getCadenaReply& instance, /*out*/ cadena c2, /*out*/ cadena getCadena_ret);
         
-        static void extractTypeData(getCadenaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret);
+        static void extractTypeData(TypedefTest_getCadenaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret);
 };
 
 
-class getCorreaRequestUtils
+class TypedefTest_getCorreaRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getCorreaRequest& instance, /*in*/ correa cc1);
+        static void setTypeData(TypedefTest_getCorreaRequest& instance, /*in*/ correa cc1);
         
-        static void extractTypeData(getCorreaRequest& data, /*in*/ correa& cc1);
+        static void extractTypeData(TypedefTest_getCorreaRequest& data, /*in*/ correa& cc1);
 };
 
 
-class getCorreaReplyUtils
+class TypedefTest_getCorreaReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getCorreaReply& instance, /*out*/ correa cc2, /*out*/ correa getCorrea_ret);
+        static void setTypeData(TypedefTest_getCorreaReply& instance, /*out*/ correa cc2, /*out*/ correa getCorrea_ret);
         
-        static void extractTypeData(getCorreaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret);
+        static void extractTypeData(TypedefTest_getCorreaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret);
 };
 
  

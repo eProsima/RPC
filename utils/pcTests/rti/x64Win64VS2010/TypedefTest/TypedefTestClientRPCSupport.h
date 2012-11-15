@@ -9,22 +9,22 @@
 #include "TypedefTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(getLargoClientRPC, getLargoRequestDataWriter, getLargoReplyDataReader);
+GENERIC_CLIENT_RPC(TypedefTest_getLargoClientRPC, TypedefTest_getLargoRequestDataWriter, TypedefTest_getLargoReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getLarguisimoClientRPC, getLarguisimoRequestDataWriter, getLarguisimoReplyDataReader);
+GENERIC_CLIENT_RPC(TypedefTest_getLarguisimoClientRPC, TypedefTest_getLarguisimoRequestDataWriter, TypedefTest_getLarguisimoReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getDatosDefClientRPC, getDatosDefRequestDataWriter, getDatosDefReplyDataReader);
+GENERIC_CLIENT_RPC(TypedefTest_getDatosDefClientRPC, TypedefTest_getDatosDefRequestDataWriter, TypedefTest_getDatosDefReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getDatosDefondoClientRPC, getDatosDefondoRequestDataWriter, getDatosDefondoReplyDataReader);
+GENERIC_CLIENT_RPC(TypedefTest_getDatosDefondoClientRPC, TypedefTest_getDatosDefondoRequestDataWriter, TypedefTest_getDatosDefondoReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getCadenaClientRPC, getCadenaRequestDataWriter, getCadenaReplyDataReader);
+GENERIC_CLIENT_RPC(TypedefTest_getCadenaClientRPC, TypedefTest_getCadenaRequestDataWriter, TypedefTest_getCadenaReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getCorreaClientRPC, getCorreaRequestDataWriter, getCorreaReplyDataReader);
+GENERIC_CLIENT_RPC(TypedefTest_getCorreaClientRPC, TypedefTest_getCorreaRequestDataWriter, TypedefTest_getCorreaReplyDataReader);
 
 
 #endif  // _TypedefTest_CLIENT_RPC_SUPPORT_H_

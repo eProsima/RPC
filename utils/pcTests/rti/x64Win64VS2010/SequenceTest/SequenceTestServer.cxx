@@ -5,23 +5,23 @@
 #include "SequenceTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 #include "SequenceTestRequestReplyPlugin.h"
 
 #include "SequenceTestServerRPCSupport.h"
 
-SequenceTestServer::SequenceTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new SequenceTestServerImpl();
 
     createRPCs();
 }
 
-SequenceTestServer::SequenceTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new SequenceTestServerImpl();
     
@@ -35,18 +35,18 @@ SequenceTestServer::~SequenceTestServer()
 
 void SequenceTestServer::createRPCs()
 {
-    this->setRPC(new getSLongServerRPC("getSLong", this,
-                getSLongRequestUtils::registerType(getParticipant()),
-                getSLongReplyUtils::registerType(getParticipant()),
-                &SequenceTestServer::getSLong, getParticipant()));
-    this->setRPC(new getStringServerRPC("getString", this,
-                getStringRequestUtils::registerType(getParticipant()),
-                getStringReplyUtils::registerType(getParticipant()),
-                &SequenceTestServer::getString, getParticipant()));
-    this->setRPC(new getStringBoundedServerRPC("getStringBounded", this,
-                getStringBoundedRequestUtils::registerType(getParticipant()),
-                getStringBoundedReplyUtils::registerType(getParticipant()),
-                &SequenceTestServer::getStringBounded, getParticipant()));
+    this->setRPC(new SequenceTest_getSLongServerRPC("getSLong", this,
+                SequenceTest_getSLongRequestUtils::registerType(getParticipant()),
+                SequenceTest_getSLongReplyUtils::registerType(getParticipant()),
+                &SequenceTestServer::getSLong));
+    this->setRPC(new SequenceTest_getStringServerRPC("getString", this,
+                SequenceTest_getStringRequestUtils::registerType(getParticipant()),
+                SequenceTest_getStringReplyUtils::registerType(getParticipant()),
+                &SequenceTestServer::getString));
+    this->setRPC(new SequenceTest_getStringBoundedServerRPC("getStringBounded", this,
+                SequenceTest_getStringBoundedRequestUtils::registerType(getParticipant()),
+                SequenceTest_getStringBoundedReplyUtils::registerType(getParticipant()),
+                &SequenceTestServer::getStringBounded));
 
 }
 
@@ -61,26 +61,32 @@ void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *reques
     memset(&l3, 0, sizeof(largo));    
     largo getSLong_ret;
     memset(&getSLong_ret, 0, sizeof(largo));       
-    getSLongReply replyData;
+    SequenceTest_getSLongReply replyData;
     
     largo_initialize(&l2);    
 
-    getSLongRequestUtils::extractTypeData(*(getSLongRequest*)requestData, l1, l2);
+    SequenceTest_getSLongRequestUtils::extractTypeData(*(SequenceTest_getSLongRequest*)requestData, l1, l2);
 
     try
     {
         getSLong_ret = srv->_impl->getSLong(l1, l2, l3);
 
-        getSLongReplyUtils::setTypeData(replyData, l2, l3, getSLong_ret);
+        SequenceTest_getSLongReplyUtils::setTypeData(replyData, l2, l3, getSLong_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getSLongRequestTypeSupport::delete_data((getSLongRequest*)requestData);
+    SequenceTest_getSLongRequestTypeSupport::delete_data((SequenceTest_getSLongRequest*)requestData);
     
     largo_finalize(&getSLong_ret);    
     largo_finalize(&l2);    
@@ -97,26 +103,32 @@ void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *reque
     memset(&s3, 0, sizeof(cadena));    
     cadena getString_ret;
     memset(&getString_ret, 0, sizeof(cadena));       
-    getStringReply replyData;
+    SequenceTest_getStringReply replyData;
     
     cadena_initialize(&s2);    
 
-    getStringRequestUtils::extractTypeData(*(getStringRequest*)requestData, s1, s2);
+    SequenceTest_getStringRequestUtils::extractTypeData(*(SequenceTest_getStringRequest*)requestData, s1, s2);
 
     try
     {
         getString_ret = srv->_impl->getString(s1, s2, s3);
 
-        getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
+        SequenceTest_getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getStringRequestTypeSupport::delete_data((getStringRequest*)requestData);
+    SequenceTest_getStringRequestTypeSupport::delete_data((SequenceTest_getStringRequest*)requestData);
     
     cadena_finalize(&getString_ret);    
     cadena_finalize(&s2);    
@@ -133,26 +145,32 @@ void SequenceTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void
     memset(&sb3, 0, sizeof(dattos));    
     dattos getStringBounded_ret;
     memset(&getStringBounded_ret, 0, sizeof(dattos));       
-    getStringBoundedReply replyData;
+    SequenceTest_getStringBoundedReply replyData;
     
     dattos_initialize(&sb2);    
 
-    getStringBoundedRequestUtils::extractTypeData(*(getStringBoundedRequest*)requestData, sb1, sb2);
+    SequenceTest_getStringBoundedRequestUtils::extractTypeData(*(SequenceTest_getStringBoundedRequest*)requestData, sb1, sb2);
 
     try
     {
         getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
-        getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
+        SequenceTest_getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getStringBoundedRequestTypeSupport::delete_data((getStringBoundedRequest*)requestData);
+    SequenceTest_getStringBoundedRequestTypeSupport::delete_data((SequenceTest_getStringBoundedRequest*)requestData);
     
     dattos_finalize(&getStringBounded_ret);    
     dattos_finalize(&sb2);    

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestRequestReply_1086133069_h
-#define StructTestRequestReply_1086133069_h
+#ifndef StructTestRequestReply_1086132789_h
+#define StructTestRequestReply_1086132789_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *duplicateRequestTYPENAME;
+extern const char *StructTest_duplicateRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *duplicateRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct duplicateRequestSeq;
+    struct StructTest_duplicateRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class duplicateRequestTypeSupport;
-    class duplicateRequestDataWriter;
-    class duplicateRequestDataReader;
+    class StructTest_duplicateRequestTypeSupport;
+    class StructTest_duplicateRequestDataWriter;
+    class StructTest_duplicateRequestDataReader;
 #endif
 
 #endif
@@ -59,24 +59,23 @@ extern const char *duplicateRequestTYPENAME;
             
     
 
-typedef struct duplicateRequest
+typedef struct StructTest_duplicateRequest
 {
 #ifdef __cplusplus
-    typedef struct duplicateRequestSeq Seq;
+    typedef struct StructTest_duplicateRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef duplicateRequestTypeSupport TypeSupport;
-    typedef duplicateRequestDataWriter DataWriter;
-    typedef duplicateRequestDataReader DataReader;
+    typedef StructTest_duplicateRequestTypeSupport TypeSupport;
+    typedef StructTest_duplicateRequestDataWriter DataWriter;
+    typedef StructTest_duplicateRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     Envio  ev;
 
-} duplicateRequest;
+} StructTest_duplicateRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -87,31 +86,31 @@ typedef struct duplicateRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* duplicateRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* StructTest_duplicateRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(duplicateRequestSeq, duplicateRequest);
+DDS_SEQUENCE(StructTest_duplicateRequestSeq, StructTest_duplicateRequest);
         
 NDDSUSERDllExport
-RTIBool duplicateRequest_initialize(
-        duplicateRequest* self);
+RTIBool StructTest_duplicateRequest_initialize(
+        StructTest_duplicateRequest* self);
         
 NDDSUSERDllExport
-RTIBool duplicateRequest_initialize_ex(
-        duplicateRequest* self,RTIBool allocatePointers);
+RTIBool StructTest_duplicateRequest_initialize_ex(
+        StructTest_duplicateRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void duplicateRequest_finalize(
-        duplicateRequest* self);
+void StructTest_duplicateRequest_finalize(
+        StructTest_duplicateRequest* self);
                         
 NDDSUSERDllExport
-void duplicateRequest_finalize_ex(
-        duplicateRequest* self,RTIBool deletePointers);
+void StructTest_duplicateRequest_finalize_ex(
+        StructTest_duplicateRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool duplicateRequest_copy(
-        duplicateRequest* dst,
-        const duplicateRequest* src);
+RTIBool StructTest_duplicateRequest_copy(
+        StructTest_duplicateRequest* dst,
+        const StructTest_duplicateRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -126,7 +125,7 @@ extern "C" {
 #endif
 
         
-extern const char *duplicateReplyTYPENAME;
+extern const char *StructTest_duplicateReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -135,12 +134,12 @@ extern const char *duplicateReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct duplicateReplySeq;
+    struct StructTest_duplicateReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class duplicateReplyTypeSupport;
-    class duplicateReplyDataWriter;
-    class duplicateReplyDataReader;
+    class StructTest_duplicateReplyTypeSupport;
+    class StructTest_duplicateReplyDataWriter;
+    class StructTest_duplicateReplyDataReader;
 #endif
 
 #endif
@@ -148,26 +147,23 @@ extern const char *duplicateReplyTYPENAME;
             
     
 
-typedef struct duplicateReply
+typedef struct StructTest_duplicateReply
 {
 #ifdef __cplusplus
-    typedef struct duplicateReplySeq Seq;
+    typedef struct StructTest_duplicateReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef duplicateReplyTypeSupport TypeSupport;
-    typedef duplicateReplyDataWriter DataWriter;
-    typedef duplicateReplyDataReader DataReader;
+    typedef StructTest_duplicateReplyTypeSupport TypeSupport;
+    typedef StructTest_duplicateReplyDataWriter DataWriter;
+    typedef StructTest_duplicateReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     Recepcion  duplicate_ret;
 
-} duplicateReply;
+} StructTest_duplicateReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -178,31 +174,31 @@ typedef struct duplicateReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* duplicateReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* StructTest_duplicateReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(duplicateReplySeq, duplicateReply);
+DDS_SEQUENCE(StructTest_duplicateReplySeq, StructTest_duplicateReply);
         
 NDDSUSERDllExport
-RTIBool duplicateReply_initialize(
-        duplicateReply* self);
+RTIBool StructTest_duplicateReply_initialize(
+        StructTest_duplicateReply* self);
         
 NDDSUSERDllExport
-RTIBool duplicateReply_initialize_ex(
-        duplicateReply* self,RTIBool allocatePointers);
+RTIBool StructTest_duplicateReply_initialize_ex(
+        StructTest_duplicateReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void duplicateReply_finalize(
-        duplicateReply* self);
+void StructTest_duplicateReply_finalize(
+        StructTest_duplicateReply* self);
                         
 NDDSUSERDllExport
-void duplicateReply_finalize_ex(
-        duplicateReply* self,RTIBool deletePointers);
+void StructTest_duplicateReply_finalize_ex(
+        StructTest_duplicateReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool duplicateReply_copy(
-        duplicateReply* dst,
-        const duplicateReply* src);
+RTIBool StructTest_duplicateReply_copy(
+        StructTest_duplicateReply* dst,
+        const StructTest_duplicateReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -217,7 +213,7 @@ extern "C" {
 #endif
 
         
-extern const char *sumaRequestTYPENAME;
+extern const char *StructTest_sumaRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -226,12 +222,12 @@ extern const char *sumaRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sumaRequestSeq;
+    struct StructTest_sumaRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sumaRequestTypeSupport;
-    class sumaRequestDataWriter;
-    class sumaRequestDataReader;
+    class StructTest_sumaRequestTypeSupport;
+    class StructTest_sumaRequestDataWriter;
+    class StructTest_sumaRequestDataReader;
 #endif
 
 #endif
@@ -239,25 +235,24 @@ extern const char *sumaRequestTYPENAME;
             
     
 
-typedef struct sumaRequest
+typedef struct StructTest_sumaRequest
 {
 #ifdef __cplusplus
-    typedef struct sumaRequestSeq Seq;
+    typedef struct StructTest_sumaRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sumaRequestTypeSupport TypeSupport;
-    typedef sumaRequestDataWriter DataWriter;
-    typedef sumaRequestDataReader DataReader;
+    typedef StructTest_sumaRequestTypeSupport TypeSupport;
+    typedef StructTest_sumaRequestDataWriter DataWriter;
+    typedef StructTest_sumaRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     Envio  ev1;
     Envio  ev2;
 
-} sumaRequest;
+} StructTest_sumaRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -268,31 +263,31 @@ typedef struct sumaRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sumaRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* StructTest_sumaRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sumaRequestSeq, sumaRequest);
+DDS_SEQUENCE(StructTest_sumaRequestSeq, StructTest_sumaRequest);
         
 NDDSUSERDllExport
-RTIBool sumaRequest_initialize(
-        sumaRequest* self);
+RTIBool StructTest_sumaRequest_initialize(
+        StructTest_sumaRequest* self);
         
 NDDSUSERDllExport
-RTIBool sumaRequest_initialize_ex(
-        sumaRequest* self,RTIBool allocatePointers);
+RTIBool StructTest_sumaRequest_initialize_ex(
+        StructTest_sumaRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sumaRequest_finalize(
-        sumaRequest* self);
+void StructTest_sumaRequest_finalize(
+        StructTest_sumaRequest* self);
                         
 NDDSUSERDllExport
-void sumaRequest_finalize_ex(
-        sumaRequest* self,RTIBool deletePointers);
+void StructTest_sumaRequest_finalize_ex(
+        StructTest_sumaRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sumaRequest_copy(
-        sumaRequest* dst,
-        const sumaRequest* src);
+RTIBool StructTest_sumaRequest_copy(
+        StructTest_sumaRequest* dst,
+        const StructTest_sumaRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -307,7 +302,7 @@ extern "C" {
 #endif
 
         
-extern const char *sumaReplyTYPENAME;
+extern const char *StructTest_sumaReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -316,12 +311,12 @@ extern const char *sumaReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sumaReplySeq;
+    struct StructTest_sumaReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sumaReplyTypeSupport;
-    class sumaReplyDataWriter;
-    class sumaReplyDataReader;
+    class StructTest_sumaReplyTypeSupport;
+    class StructTest_sumaReplyDataWriter;
+    class StructTest_sumaReplyDataReader;
 #endif
 
 #endif
@@ -329,26 +324,23 @@ extern const char *sumaReplyTYPENAME;
             
     
 
-typedef struct sumaReply
+typedef struct StructTest_sumaReply
 {
 #ifdef __cplusplus
-    typedef struct sumaReplySeq Seq;
+    typedef struct StructTest_sumaReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sumaReplyTypeSupport TypeSupport;
-    typedef sumaReplyDataWriter DataWriter;
-    typedef sumaReplyDataReader DataReader;
+    typedef StructTest_sumaReplyTypeSupport TypeSupport;
+    typedef StructTest_sumaReplyDataWriter DataWriter;
+    typedef StructTest_sumaReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     Recepcion  suma_ret;
 
-} sumaReply;
+} StructTest_sumaReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -359,31 +351,31 @@ typedef struct sumaReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sumaReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* StructTest_sumaReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sumaReplySeq, sumaReply);
+DDS_SEQUENCE(StructTest_sumaReplySeq, StructTest_sumaReply);
         
 NDDSUSERDllExport
-RTIBool sumaReply_initialize(
-        sumaReply* self);
+RTIBool StructTest_sumaReply_initialize(
+        StructTest_sumaReply* self);
         
 NDDSUSERDllExport
-RTIBool sumaReply_initialize_ex(
-        sumaReply* self,RTIBool allocatePointers);
+RTIBool StructTest_sumaReply_initialize_ex(
+        StructTest_sumaReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sumaReply_finalize(
-        sumaReply* self);
+void StructTest_sumaReply_finalize(
+        StructTest_sumaReply* self);
                         
 NDDSUSERDllExport
-void sumaReply_finalize_ex(
-        sumaReply* self,RTIBool deletePointers);
+void StructTest_sumaReply_finalize_ex(
+        StructTest_sumaReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sumaReply_copy(
-        sumaReply* dst,
-        const sumaReply* src);
+RTIBool StructTest_sumaReply_copy(
+        StructTest_sumaReply* dst,
+        const StructTest_sumaReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -394,4 +386,4 @@ RTIBool sumaReply_copy(
 
 
 
-#endif /* StructTestRequestReply_1086133069_h */
+#endif /* StructTestRequestReply_1086132789_h */

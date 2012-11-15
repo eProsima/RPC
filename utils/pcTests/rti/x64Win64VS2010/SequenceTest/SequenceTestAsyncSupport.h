@@ -13,23 +13,25 @@ class SequenceTest_getSLongTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        SequenceTest_getSLongTask(SequenceTest_getSLong &obj,
+        SequenceTest_getSLongTask(SequenceTest_getSLongCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~SequenceTest_getSLongTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        SequenceTest_getSLong& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        SequenceTest_getSLongCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           SequenceTest_getSLong &m_obj;
+           SequenceTest_getSLongCallbackHandler &m_obj;
            
-           getSLongReply m_reply;
+           SequenceTest_getSLongReply m_reply;
 };
 
 class SequenceTest_getStringTask : public eProsima::DDSRPC::AsyncTask
@@ -37,23 +39,25 @@ class SequenceTest_getStringTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        SequenceTest_getStringTask(SequenceTest_getString &obj,
+        SequenceTest_getStringTask(SequenceTest_getStringCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~SequenceTest_getStringTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        SequenceTest_getString& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        SequenceTest_getStringCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           SequenceTest_getString &m_obj;
+           SequenceTest_getStringCallbackHandler &m_obj;
            
-           getStringReply m_reply;
+           SequenceTest_getStringReply m_reply;
 };
 
 class SequenceTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
@@ -61,23 +65,25 @@ class SequenceTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        SequenceTest_getStringBoundedTask(SequenceTest_getStringBounded &obj,
+        SequenceTest_getStringBoundedTask(SequenceTest_getStringBoundedCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~SequenceTest_getStringBoundedTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        SequenceTest_getStringBounded& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        SequenceTest_getStringBoundedCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           SequenceTest_getStringBounded &m_obj;
+           SequenceTest_getStringBoundedCallbackHandler &m_obj;
            
-           getStringBoundedReply m_reply;
+           SequenceTest_getStringBoundedReply m_reply;
 };
 
 #endif // _SequenceTest_ASYNC_SUPPORT_H_

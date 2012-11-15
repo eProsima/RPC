@@ -5,23 +5,23 @@
 #include "BasicTypeTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 #include "BasicTypeTestRequestReplyPlugin.h"
 
 #include "BasicTypeTestServerRPCSupport.h"
 
-BasicTypeTestServer::BasicTypeTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+BasicTypeTestServer::BasicTypeTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new BasicTypeTestServerImpl();
 
     createRPCs();
 }
 
-BasicTypeTestServer::BasicTypeTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+BasicTypeTestServer::BasicTypeTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new BasicTypeTestServerImpl();
     
@@ -35,54 +35,54 @@ BasicTypeTestServer::~BasicTypeTestServer()
 
 void BasicTypeTestServer::createRPCs()
 {
-    this->setRPC(new getOctetServerRPC("getOctet", this,
-                getOctetRequestUtils::registerType(getParticipant()),
-                getOctetReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getOctet, getParticipant()));
-    this->setRPC(new getCharServerRPC("getChar", this,
-                getCharRequestUtils::registerType(getParticipant()),
-                getCharReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getChar, getParticipant()));
-    this->setRPC(new getWCharServerRPC("getWChar", this,
-                getWCharRequestUtils::registerType(getParticipant()),
-                getWCharReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getWChar, getParticipant()));
-    this->setRPC(new getShortServerRPC("getShort", this,
-                getShortRequestUtils::registerType(getParticipant()),
-                getShortReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getShort, getParticipant()));
-    this->setRPC(new getUShortServerRPC("getUShort", this,
-                getUShortRequestUtils::registerType(getParticipant()),
-                getUShortReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getUShort, getParticipant()));
-    this->setRPC(new getLongServerRPC("getLong", this,
-                getLongRequestUtils::registerType(getParticipant()),
-                getLongReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getLong, getParticipant()));
-    this->setRPC(new getULongServerRPC("getULong", this,
-                getULongRequestUtils::registerType(getParticipant()),
-                getULongReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getULong, getParticipant()));
-    this->setRPC(new getLLongServerRPC("getLLong", this,
-                getLLongRequestUtils::registerType(getParticipant()),
-                getLLongReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getLLong, getParticipant()));
-    this->setRPC(new getULLongServerRPC("getULLong", this,
-                getULLongRequestUtils::registerType(getParticipant()),
-                getULLongReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getULLong, getParticipant()));
-    this->setRPC(new getFloatServerRPC("getFloat", this,
-                getFloatRequestUtils::registerType(getParticipant()),
-                getFloatReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getFloat, getParticipant()));
-    this->setRPC(new getDoubleServerRPC("getDouble", this,
-                getDoubleRequestUtils::registerType(getParticipant()),
-                getDoubleReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getDouble, getParticipant()));
-    this->setRPC(new getBooleanServerRPC("getBoolean", this,
-                getBooleanRequestUtils::registerType(getParticipant()),
-                getBooleanReplyUtils::registerType(getParticipant()),
-                &BasicTypeTestServer::getBoolean, getParticipant()));
+    this->setRPC(new BasicTypeTest_getOctetServerRPC("getOctet", this,
+                BasicTypeTest_getOctetRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getOctetReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getOctet));
+    this->setRPC(new BasicTypeTest_getCharServerRPC("getChar", this,
+                BasicTypeTest_getCharRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getCharReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getChar));
+    this->setRPC(new BasicTypeTest_getWCharServerRPC("getWChar", this,
+                BasicTypeTest_getWCharRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getWCharReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getWChar));
+    this->setRPC(new BasicTypeTest_getShortServerRPC("getShort", this,
+                BasicTypeTest_getShortRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getShortReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getShort));
+    this->setRPC(new BasicTypeTest_getUShortServerRPC("getUShort", this,
+                BasicTypeTest_getUShortRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getUShortReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getUShort));
+    this->setRPC(new BasicTypeTest_getLongServerRPC("getLong", this,
+                BasicTypeTest_getLongRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getLongReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getLong));
+    this->setRPC(new BasicTypeTest_getULongServerRPC("getULong", this,
+                BasicTypeTest_getULongRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getULongReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getULong));
+    this->setRPC(new BasicTypeTest_getLLongServerRPC("getLLong", this,
+                BasicTypeTest_getLLongRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getLLongReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getLLong));
+    this->setRPC(new BasicTypeTest_getULLongServerRPC("getULLong", this,
+                BasicTypeTest_getULLongRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getULLongReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getULLong));
+    this->setRPC(new BasicTypeTest_getFloatServerRPC("getFloat", this,
+                BasicTypeTest_getFloatRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getFloatReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getFloat));
+    this->setRPC(new BasicTypeTest_getDoubleServerRPC("getDouble", this,
+                BasicTypeTest_getDoubleRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getDoubleReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getDouble));
+    this->setRPC(new BasicTypeTest_getBooleanServerRPC("getBoolean", this,
+                BasicTypeTest_getBooleanRequestUtils::registerType(getParticipant()),
+                BasicTypeTest_getBooleanReplyUtils::registerType(getParticipant()),
+                &BasicTypeTestServer::getBoolean));
 
 }
 
@@ -93,26 +93,32 @@ void BasicTypeTestServer::getOctet(eProsima::DDSRPC::Server *server, void *reque
     DDS_Octet  oc2 = 0;    
     DDS_Octet  oc3 = 0;    
     DDS_Octet  getOctet_ret = 0;       
-    getOctetReply replyData;
+    BasicTypeTest_getOctetReply replyData;
     
         
 
-    getOctetRequestUtils::extractTypeData(*(getOctetRequest*)requestData, oc1, oc2);
+    BasicTypeTest_getOctetRequestUtils::extractTypeData(*(BasicTypeTest_getOctetRequest*)requestData, oc1, oc2);
 
     try
     {
         getOctet_ret = srv->_impl->getOctet(oc1, oc2, oc3);
 
-        getOctetReplyUtils::setTypeData(replyData, oc2, oc3, getOctet_ret);
+        BasicTypeTest_getOctetReplyUtils::setTypeData(replyData, oc2, oc3, getOctet_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getOctetRequestTypeSupport::delete_data((getOctetRequest*)requestData);
+    BasicTypeTest_getOctetRequestTypeSupport::delete_data((BasicTypeTest_getOctetRequest*)requestData);
     
         
         
@@ -125,26 +131,32 @@ void BasicTypeTestServer::getChar(eProsima::DDSRPC::Server *server, void *reques
     DDS_Char  ch2 = 0;    
     DDS_Char  ch3 = 0;    
     DDS_Char  getChar_ret = 0;       
-    getCharReply replyData;
+    BasicTypeTest_getCharReply replyData;
     
         
 
-    getCharRequestUtils::extractTypeData(*(getCharRequest*)requestData, ch1, ch2);
+    BasicTypeTest_getCharRequestUtils::extractTypeData(*(BasicTypeTest_getCharRequest*)requestData, ch1, ch2);
 
     try
     {
         getChar_ret = srv->_impl->getChar(ch1, ch2, ch3);
 
-        getCharReplyUtils::setTypeData(replyData, ch2, ch3, getChar_ret);
+        BasicTypeTest_getCharReplyUtils::setTypeData(replyData, ch2, ch3, getChar_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getCharRequestTypeSupport::delete_data((getCharRequest*)requestData);
+    BasicTypeTest_getCharRequestTypeSupport::delete_data((BasicTypeTest_getCharRequest*)requestData);
     
         
         
@@ -157,26 +169,32 @@ void BasicTypeTestServer::getWChar(eProsima::DDSRPC::Server *server, void *reque
     DDS_Wchar  wch2 = 0;    
     DDS_Wchar  wch3 = 0;    
     DDS_Wchar  getWChar_ret = 0;       
-    getWCharReply replyData;
+    BasicTypeTest_getWCharReply replyData;
     
         
 
-    getWCharRequestUtils::extractTypeData(*(getWCharRequest*)requestData, wch1, wch2);
+    BasicTypeTest_getWCharRequestUtils::extractTypeData(*(BasicTypeTest_getWCharRequest*)requestData, wch1, wch2);
 
     try
     {
         getWChar_ret = srv->_impl->getWChar(wch1, wch2, wch3);
 
-        getWCharReplyUtils::setTypeData(replyData, wch2, wch3, getWChar_ret);
+        BasicTypeTest_getWCharReplyUtils::setTypeData(replyData, wch2, wch3, getWChar_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getWCharRequestTypeSupport::delete_data((getWCharRequest*)requestData);
+    BasicTypeTest_getWCharRequestTypeSupport::delete_data((BasicTypeTest_getWCharRequest*)requestData);
     
         
         
@@ -189,26 +207,32 @@ void BasicTypeTestServer::getShort(eProsima::DDSRPC::Server *server, void *reque
     DDS_Short  sh2 = 0;    
     DDS_Short  sh3 = 0;    
     DDS_Short  getShort_ret = 0;       
-    getShortReply replyData;
+    BasicTypeTest_getShortReply replyData;
     
         
 
-    getShortRequestUtils::extractTypeData(*(getShortRequest*)requestData, sh1, sh2);
+    BasicTypeTest_getShortRequestUtils::extractTypeData(*(BasicTypeTest_getShortRequest*)requestData, sh1, sh2);
 
     try
     {
         getShort_ret = srv->_impl->getShort(sh1, sh2, sh3);
 
-        getShortReplyUtils::setTypeData(replyData, sh2, sh3, getShort_ret);
+        BasicTypeTest_getShortReplyUtils::setTypeData(replyData, sh2, sh3, getShort_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getShortRequestTypeSupport::delete_data((getShortRequest*)requestData);
+    BasicTypeTest_getShortRequestTypeSupport::delete_data((BasicTypeTest_getShortRequest*)requestData);
     
         
         
@@ -221,26 +245,32 @@ void BasicTypeTestServer::getUShort(eProsima::DDSRPC::Server *server, void *requ
     DDS_UnsignedShort  ush2 = 0;    
     DDS_UnsignedShort  ush3 = 0;    
     DDS_UnsignedShort  getUShort_ret = 0;       
-    getUShortReply replyData;
+    BasicTypeTest_getUShortReply replyData;
     
         
 
-    getUShortRequestUtils::extractTypeData(*(getUShortRequest*)requestData, ush1, ush2);
+    BasicTypeTest_getUShortRequestUtils::extractTypeData(*(BasicTypeTest_getUShortRequest*)requestData, ush1, ush2);
 
     try
     {
         getUShort_ret = srv->_impl->getUShort(ush1, ush2, ush3);
 
-        getUShortReplyUtils::setTypeData(replyData, ush2, ush3, getUShort_ret);
+        BasicTypeTest_getUShortReplyUtils::setTypeData(replyData, ush2, ush3, getUShort_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getUShortRequestTypeSupport::delete_data((getUShortRequest*)requestData);
+    BasicTypeTest_getUShortRequestTypeSupport::delete_data((BasicTypeTest_getUShortRequest*)requestData);
     
         
         
@@ -253,26 +283,32 @@ void BasicTypeTestServer::getLong(eProsima::DDSRPC::Server *server, void *reques
     DDS_Long  lo2 = 0;    
     DDS_Long  lo3 = 0;    
     DDS_Long  getLong_ret = 0;       
-    getLongReply replyData;
+    BasicTypeTest_getLongReply replyData;
     
         
 
-    getLongRequestUtils::extractTypeData(*(getLongRequest*)requestData, lo1, lo2);
+    BasicTypeTest_getLongRequestUtils::extractTypeData(*(BasicTypeTest_getLongRequest*)requestData, lo1, lo2);
 
     try
     {
         getLong_ret = srv->_impl->getLong(lo1, lo2, lo3);
 
-        getLongReplyUtils::setTypeData(replyData, lo2, lo3, getLong_ret);
+        BasicTypeTest_getLongReplyUtils::setTypeData(replyData, lo2, lo3, getLong_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getLongRequestTypeSupport::delete_data((getLongRequest*)requestData);
+    BasicTypeTest_getLongRequestTypeSupport::delete_data((BasicTypeTest_getLongRequest*)requestData);
     
         
         
@@ -285,26 +321,32 @@ void BasicTypeTestServer::getULong(eProsima::DDSRPC::Server *server, void *reque
     DDS_UnsignedLong  ulo2 = 0;    
     DDS_UnsignedLong  ulo3 = 0;    
     DDS_UnsignedLong  getULong_ret = 0;       
-    getULongReply replyData;
+    BasicTypeTest_getULongReply replyData;
     
         
 
-    getULongRequestUtils::extractTypeData(*(getULongRequest*)requestData, ulo1, ulo2);
+    BasicTypeTest_getULongRequestUtils::extractTypeData(*(BasicTypeTest_getULongRequest*)requestData, ulo1, ulo2);
 
     try
     {
         getULong_ret = srv->_impl->getULong(ulo1, ulo2, ulo3);
 
-        getULongReplyUtils::setTypeData(replyData, ulo2, ulo3, getULong_ret);
+        BasicTypeTest_getULongReplyUtils::setTypeData(replyData, ulo2, ulo3, getULong_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getULongRequestTypeSupport::delete_data((getULongRequest*)requestData);
+    BasicTypeTest_getULongRequestTypeSupport::delete_data((BasicTypeTest_getULongRequest*)requestData);
     
         
         
@@ -317,26 +359,32 @@ void BasicTypeTestServer::getLLong(eProsima::DDSRPC::Server *server, void *reque
     DDS_LongLong  llo2 = 0;    
     DDS_LongLong  llo3 = 0;    
     DDS_LongLong  getLLong_ret = 0;       
-    getLLongReply replyData;
+    BasicTypeTest_getLLongReply replyData;
     
         
 
-    getLLongRequestUtils::extractTypeData(*(getLLongRequest*)requestData, llo1, llo2);
+    BasicTypeTest_getLLongRequestUtils::extractTypeData(*(BasicTypeTest_getLLongRequest*)requestData, llo1, llo2);
 
     try
     {
         getLLong_ret = srv->_impl->getLLong(llo1, llo2, llo3);
 
-        getLLongReplyUtils::setTypeData(replyData, llo2, llo3, getLLong_ret);
+        BasicTypeTest_getLLongReplyUtils::setTypeData(replyData, llo2, llo3, getLLong_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getLLongRequestTypeSupport::delete_data((getLLongRequest*)requestData);
+    BasicTypeTest_getLLongRequestTypeSupport::delete_data((BasicTypeTest_getLLongRequest*)requestData);
     
         
         
@@ -349,26 +397,32 @@ void BasicTypeTestServer::getULLong(eProsima::DDSRPC::Server *server, void *requ
     DDS_UnsignedLongLong  ullo2 = 0;    
     DDS_UnsignedLongLong  ullo3 = 0;    
     DDS_UnsignedLongLong  getULLong_ret = 0;       
-    getULLongReply replyData;
+    BasicTypeTest_getULLongReply replyData;
     
         
 
-    getULLongRequestUtils::extractTypeData(*(getULLongRequest*)requestData, ullo1, ullo2);
+    BasicTypeTest_getULLongRequestUtils::extractTypeData(*(BasicTypeTest_getULLongRequest*)requestData, ullo1, ullo2);
 
     try
     {
         getULLong_ret = srv->_impl->getULLong(ullo1, ullo2, ullo3);
 
-        getULLongReplyUtils::setTypeData(replyData, ullo2, ullo3, getULLong_ret);
+        BasicTypeTest_getULLongReplyUtils::setTypeData(replyData, ullo2, ullo3, getULLong_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getULLongRequestTypeSupport::delete_data((getULLongRequest*)requestData);
+    BasicTypeTest_getULLongRequestTypeSupport::delete_data((BasicTypeTest_getULLongRequest*)requestData);
     
         
         
@@ -381,26 +435,32 @@ void BasicTypeTestServer::getFloat(eProsima::DDSRPC::Server *server, void *reque
     DDS_Float  fl2 = 0;    
     DDS_Float  fl3 = 0;    
     DDS_Float  getFloat_ret = 0;       
-    getFloatReply replyData;
+    BasicTypeTest_getFloatReply replyData;
     
         
 
-    getFloatRequestUtils::extractTypeData(*(getFloatRequest*)requestData, fl1, fl2);
+    BasicTypeTest_getFloatRequestUtils::extractTypeData(*(BasicTypeTest_getFloatRequest*)requestData, fl1, fl2);
 
     try
     {
         getFloat_ret = srv->_impl->getFloat(fl1, fl2, fl3);
 
-        getFloatReplyUtils::setTypeData(replyData, fl2, fl3, getFloat_ret);
+        BasicTypeTest_getFloatReplyUtils::setTypeData(replyData, fl2, fl3, getFloat_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getFloatRequestTypeSupport::delete_data((getFloatRequest*)requestData);
+    BasicTypeTest_getFloatRequestTypeSupport::delete_data((BasicTypeTest_getFloatRequest*)requestData);
     
         
         
@@ -413,26 +473,32 @@ void BasicTypeTestServer::getDouble(eProsima::DDSRPC::Server *server, void *requ
     DDS_Double  do2 = 0;    
     DDS_Double  do3 = 0;    
     DDS_Double  getDouble_ret = 0;       
-    getDoubleReply replyData;
+    BasicTypeTest_getDoubleReply replyData;
     
         
 
-    getDoubleRequestUtils::extractTypeData(*(getDoubleRequest*)requestData, do1, do2);
+    BasicTypeTest_getDoubleRequestUtils::extractTypeData(*(BasicTypeTest_getDoubleRequest*)requestData, do1, do2);
 
     try
     {
         getDouble_ret = srv->_impl->getDouble(do1, do2, do3);
 
-        getDoubleReplyUtils::setTypeData(replyData, do2, do3, getDouble_ret);
+        BasicTypeTest_getDoubleReplyUtils::setTypeData(replyData, do2, do3, getDouble_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getDoubleRequestTypeSupport::delete_data((getDoubleRequest*)requestData);
+    BasicTypeTest_getDoubleRequestTypeSupport::delete_data((BasicTypeTest_getDoubleRequest*)requestData);
     
         
         
@@ -445,26 +511,32 @@ void BasicTypeTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *req
     DDS_Boolean  bo2 = RTI_FALSE;    
     DDS_Boolean  bo3 = RTI_FALSE;    
     DDS_Boolean  getBoolean_ret = RTI_FALSE;       
-    getBooleanReply replyData;
+    BasicTypeTest_getBooleanReply replyData;
     
         
 
-    getBooleanRequestUtils::extractTypeData(*(getBooleanRequest*)requestData, bo1, bo2);
+    BasicTypeTest_getBooleanRequestUtils::extractTypeData(*(BasicTypeTest_getBooleanRequest*)requestData, bo1, bo2);
 
     try
     {
         getBoolean_ret = srv->_impl->getBoolean(bo1, bo2, bo3);
 
-        getBooleanReplyUtils::setTypeData(replyData, bo2, bo3, getBoolean_ret);
+        BasicTypeTest_getBooleanReplyUtils::setTypeData(replyData, bo2, bo3, getBoolean_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getBooleanRequestTypeSupport::delete_data((getBooleanRequest*)requestData);
+    BasicTypeTest_getBooleanRequestTypeSupport::delete_data((BasicTypeTest_getBooleanRequest*)requestData);
     
         
         

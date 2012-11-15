@@ -9,13 +9,13 @@
 #include "SequenceTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(getSLongClientRPC, getSLongRequestDataWriter, getSLongReplyDataReader);
+GENERIC_CLIENT_RPC(SequenceTest_getSLongClientRPC, SequenceTest_getSLongRequestDataWriter, SequenceTest_getSLongReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getStringClientRPC, getStringRequestDataWriter, getStringReplyDataReader);
+GENERIC_CLIENT_RPC(SequenceTest_getStringClientRPC, SequenceTest_getStringRequestDataWriter, SequenceTest_getStringReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getStringBoundedClientRPC, getStringBoundedRequestDataWriter, getStringBoundedReplyDataReader);
+GENERIC_CLIENT_RPC(SequenceTest_getStringBoundedClientRPC, SequenceTest_getStringBoundedRequestDataWriter, SequenceTest_getStringBoundedReplyDataReader);
 
 
 #endif  // _SequenceTest_CLIENT_RPC_SUPPORT_H_

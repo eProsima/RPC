@@ -215,6 +215,9 @@
     <ClInclude Include="..\..\include\exceptions\SystemException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\server\ServerStrategy.h">
+      <Filter>Archivos de encabezado\server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\ddsrpc.rc">

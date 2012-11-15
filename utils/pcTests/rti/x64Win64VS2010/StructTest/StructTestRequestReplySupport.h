@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestRequestReplySupport_1086133069_h
-#define StructTestRequestReplySupport_1086133069_h
+#ifndef StructTestRequestReplySupport_1086132789_h
+#define StructTestRequestReplySupport_1086132789_h
 
 /* Uses */
 #include "StructTestRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(duplicateRequestTypeSupport, duplicateRequest);
+DDS_TYPESUPPORT_CPP(StructTest_duplicateRequestTypeSupport, StructTest_duplicateRequest);
 
-DDS_DATAWRITER_CPP(duplicateRequestDataWriter, duplicateRequest);
-DDS_DATAREADER_CPP(duplicateRequestDataReader, duplicateRequestSeq, duplicateRequest);
+DDS_DATAWRITER_CPP(StructTest_duplicateRequestDataWriter, StructTest_duplicateRequest);
+DDS_DATAREADER_CPP(StructTest_duplicateRequestDataReader, StructTest_duplicateRequestSeq, StructTest_duplicateRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(duplicateRequestTypeSupport, duplicateRequest);
-DDS_DATAWRITER_C(duplicateRequestDataWriter, duplicateRequest);
-DDS_DATAREADER_C(duplicateRequestDataReader, duplicateRequestSeq, duplicateRequest);
+DDS_TYPESUPPORT_C(StructTest_duplicateRequestTypeSupport, StructTest_duplicateRequest);
+DDS_DATAWRITER_C(StructTest_duplicateRequestDataWriter, StructTest_duplicateRequest);
+DDS_DATAREADER_C(StructTest_duplicateRequestDataReader, StructTest_duplicateRequestSeq, StructTest_duplicateRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(duplicateRequestDataReader, duplicateRequestSeq, duplicateReque
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(duplicateReplyTypeSupport, duplicateReply);
+DDS_TYPESUPPORT_CPP(StructTest_duplicateReplyTypeSupport, StructTest_duplicateReply);
 
-DDS_DATAWRITER_CPP(duplicateReplyDataWriter, duplicateReply);
-DDS_DATAREADER_CPP(duplicateReplyDataReader, duplicateReplySeq, duplicateReply);
+DDS_DATAWRITER_CPP(StructTest_duplicateReplyDataWriter, StructTest_duplicateReply);
+DDS_DATAREADER_CPP(StructTest_duplicateReplyDataReader, StructTest_duplicateReplySeq, StructTest_duplicateReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(duplicateReplyTypeSupport, duplicateReply);
-DDS_DATAWRITER_C(duplicateReplyDataWriter, duplicateReply);
-DDS_DATAREADER_C(duplicateReplyDataReader, duplicateReplySeq, duplicateReply);
+DDS_TYPESUPPORT_C(StructTest_duplicateReplyTypeSupport, StructTest_duplicateReply);
+DDS_DATAWRITER_C(StructTest_duplicateReplyDataWriter, StructTest_duplicateReply);
+DDS_DATAREADER_C(StructTest_duplicateReplyDataReader, StructTest_duplicateReplySeq, StructTest_duplicateReply);
 
 #endif
 
@@ -161,17 +161,17 @@ DDS_DATAREADER_C(duplicateReplyDataReader, duplicateReplySeq, duplicateReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sumaRequestTypeSupport, sumaRequest);
+DDS_TYPESUPPORT_CPP(StructTest_sumaRequestTypeSupport, StructTest_sumaRequest);
 
-DDS_DATAWRITER_CPP(sumaRequestDataWriter, sumaRequest);
-DDS_DATAREADER_CPP(sumaRequestDataReader, sumaRequestSeq, sumaRequest);
+DDS_DATAWRITER_CPP(StructTest_sumaRequestDataWriter, StructTest_sumaRequest);
+DDS_DATAREADER_CPP(StructTest_sumaRequestDataReader, StructTest_sumaRequestSeq, StructTest_sumaRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sumaRequestTypeSupport, sumaRequest);
-DDS_DATAWRITER_C(sumaRequestDataWriter, sumaRequest);
-DDS_DATAREADER_C(sumaRequestDataReader, sumaRequestSeq, sumaRequest);
+DDS_TYPESUPPORT_C(StructTest_sumaRequestTypeSupport, StructTest_sumaRequest);
+DDS_DATAWRITER_C(StructTest_sumaRequestDataWriter, StructTest_sumaRequest);
+DDS_DATAREADER_C(StructTest_sumaRequestDataReader, StructTest_sumaRequestSeq, StructTest_sumaRequest);
 
 #endif
 
@@ -213,17 +213,17 @@ DDS_DATAREADER_C(sumaRequestDataReader, sumaRequestSeq, sumaRequest);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sumaReplyTypeSupport, sumaReply);
+DDS_TYPESUPPORT_CPP(StructTest_sumaReplyTypeSupport, StructTest_sumaReply);
 
-DDS_DATAWRITER_CPP(sumaReplyDataWriter, sumaReply);
-DDS_DATAREADER_CPP(sumaReplyDataReader, sumaReplySeq, sumaReply);
+DDS_DATAWRITER_CPP(StructTest_sumaReplyDataWriter, StructTest_sumaReply);
+DDS_DATAREADER_CPP(StructTest_sumaReplyDataReader, StructTest_sumaReplySeq, StructTest_sumaReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sumaReplyTypeSupport, sumaReply);
-DDS_DATAWRITER_C(sumaReplyDataWriter, sumaReply);
-DDS_DATAREADER_C(sumaReplyDataReader, sumaReplySeq, sumaReply);
+DDS_TYPESUPPORT_C(StructTest_sumaReplyTypeSupport, StructTest_sumaReply);
+DDS_DATAWRITER_C(StructTest_sumaReplyDataWriter, StructTest_sumaReply);
+DDS_DATAREADER_C(StructTest_sumaReplyDataReader, StructTest_sumaReplySeq, StructTest_sumaReply);
 
 #endif
 
@@ -236,4 +236,4 @@ DDS_DATAREADER_C(sumaReplyDataReader, sumaReplySeq, sumaReply);
 
 
 
-#endif  /* StructTestRequestReplySupport_1086133069_h */
+#endif  /* StructTestRequestReplySupport_1086132789_h */

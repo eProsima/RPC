@@ -39,34 +39,17 @@
 #include "StructTestRequestReply.h"
 
 /* ========================================================================= */
-const char *duplicateRequestTYPENAME = "duplicateRequest";
+const char *StructTest_duplicateRequestTYPENAME = "StructTest_duplicateRequest";
 
-DDS_TypeCode* duplicateRequest_get_typecode()
+DDS_TypeCode* StructTest_duplicateRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member duplicateRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member StructTest_duplicateRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -101,56 +84,51 @@ DDS_TypeCode* duplicateRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode duplicateRequest_g_tc =
+    static DDS_TypeCode StructTest_duplicateRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"duplicateRequest", /* Name */
+        (char *)"StructTest_duplicateRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        duplicateRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        StructTest_duplicateRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for duplicateRequest*/
+    }}; /* Type code for StructTest_duplicateRequest*/
 
     if (is_initialized) {
-        return &duplicateRequest_g_tc;
+        return &StructTest_duplicateRequest_g_tc;
     }
 
 
-    duplicateRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    duplicateRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    duplicateRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Envio_get_typecode();
+    StructTest_duplicateRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    StructTest_duplicateRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Envio_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &duplicateRequest_g_tc;
+    return &StructTest_duplicateRequest_g_tc;
 }
 
 
-RTIBool duplicateRequest_initialize(
-    duplicateRequest* sample) {
-  return duplicateRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool StructTest_duplicateRequest_initialize(
+    StructTest_duplicateRequest* sample) {
+  return StructTest_duplicateRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool duplicateRequest_initialize_ex(
-    duplicateRequest* sample,RTIBool allocatePointers)
+RTIBool StructTest_duplicateRequest_initialize_ex(
+    StructTest_duplicateRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!Envio_initialize_ex(&sample->ev,allocatePointers)) {
         return RTI_FALSE;
@@ -160,37 +138,32 @@ RTIBool duplicateRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void duplicateRequest_finalize(
-    duplicateRequest* sample)
+void StructTest_duplicateRequest_finalize(
+    StructTest_duplicateRequest* sample)
 {
-    duplicateRequest_finalize_ex(sample,RTI_TRUE);
+    StructTest_duplicateRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void duplicateRequest_finalize_ex(
-    duplicateRequest* sample,RTIBool deletePointers)
+void StructTest_duplicateRequest_finalize_ex(
+    StructTest_duplicateRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     Envio_finalize_ex(&sample->ev,deletePointers);
             
 }
 
-RTIBool duplicateRequest_copy(
-    duplicateRequest* dst,
-    const duplicateRequest* src)
+RTIBool StructTest_duplicateRequest_copy(
+    StructTest_duplicateRequest* dst,
+    const StructTest_duplicateRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -209,13 +182,13 @@ RTIBool duplicateRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'duplicateRequest' sequence class.
+ * Configure and implement 'StructTest_duplicateRequest' sequence class.
  */
-#define T duplicateRequest
-#define TSeq duplicateRequestSeq
-#define T_initialize_ex duplicateRequest_initialize_ex
-#define T_finalize_ex   duplicateRequest_finalize_ex
-#define T_copy       duplicateRequest_copy
+#define T StructTest_duplicateRequest
+#define TSeq StructTest_duplicateRequestSeq
+#define T_initialize_ex StructTest_duplicateRequest_initialize_ex
+#define T_finalize_ex   StructTest_duplicateRequest_finalize_ex
+#define T_copy       StructTest_duplicateRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -236,17 +209,17 @@ RTIBool duplicateRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *duplicateReplyTYPENAME = "duplicateReply";
+const char *StructTest_duplicateReplyTYPENAME = "StructTest_duplicateReply";
 
-DDS_TypeCode* duplicateReply_get_typecode()
+DDS_TypeCode* StructTest_duplicateReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member duplicateReply_g_tc_members[5]=
+    static DDS_TypeCode_Member StructTest_duplicateReply_g_tc_members[2]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -258,57 +231,6 @@ DDS_TypeCode* duplicateReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -332,66 +254,51 @@ DDS_TypeCode* duplicateReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode duplicateReply_g_tc =
+    static DDS_TypeCode StructTest_duplicateReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"duplicateReply", /* Name */
+        (char *)"StructTest_duplicateReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        5, /* Number of members */
-        duplicateReply_g_tc_members, /* Members */
+        2, /* Number of members */
+        StructTest_duplicateReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for duplicateReply*/
+    }}; /* Type code for StructTest_duplicateReply*/
 
     if (is_initialized) {
-        return &duplicateReply_g_tc;
+        return &StructTest_duplicateReply_g_tc;
     }
 
 
-    duplicateReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    duplicateReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    duplicateReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    duplicateReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    duplicateReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)Recepcion_get_typecode();
+    StructTest_duplicateReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    StructTest_duplicateReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Recepcion_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &duplicateReply_g_tc;
+    return &StructTest_duplicateReply_g_tc;
 }
 
 
-RTIBool duplicateReply_initialize(
-    duplicateReply* sample) {
-  return duplicateReply_initialize_ex(sample,RTI_TRUE);
+RTIBool StructTest_duplicateReply_initialize(
+    StructTest_duplicateReply* sample) {
+  return StructTest_duplicateReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool duplicateReply_initialize_ex(
-    duplicateReply* sample,RTIBool allocatePointers)
+RTIBool StructTest_duplicateReply_initialize_ex(
+    StructTest_duplicateReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!Recepcion_initialize_ex(&sample->duplicate_ret,allocatePointers)) {
         return RTI_FALSE;
@@ -401,49 +308,32 @@ RTIBool duplicateReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void duplicateReply_finalize(
-    duplicateReply* sample)
+void StructTest_duplicateReply_finalize(
+    StructTest_duplicateReply* sample)
 {
-    duplicateReply_finalize_ex(sample,RTI_TRUE);
+    StructTest_duplicateReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void duplicateReply_finalize_ex(
-    duplicateReply* sample,RTIBool deletePointers)
+void StructTest_duplicateReply_finalize_ex(
+    StructTest_duplicateReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     Recepcion_finalize_ex(&sample->duplicate_ret,deletePointers);
             
 }
 
-RTIBool duplicateReply_copy(
-    duplicateReply* dst,
-    const duplicateReply* src)
+RTIBool StructTest_duplicateReply_copy(
+    StructTest_duplicateReply* dst,
+    const StructTest_duplicateReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -462,13 +352,13 @@ RTIBool duplicateReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'duplicateReply' sequence class.
+ * Configure and implement 'StructTest_duplicateReply' sequence class.
  */
-#define T duplicateReply
-#define TSeq duplicateReplySeq
-#define T_initialize_ex duplicateReply_initialize_ex
-#define T_finalize_ex   duplicateReply_finalize_ex
-#define T_copy       duplicateReply_copy
+#define T StructTest_duplicateReply
+#define TSeq StructTest_duplicateReplySeq
+#define T_initialize_ex StructTest_duplicateReply_initialize_ex
+#define T_finalize_ex   StructTest_duplicateReply_finalize_ex
+#define T_copy       StructTest_duplicateReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -489,34 +379,17 @@ RTIBool duplicateReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sumaRequestTYPENAME = "sumaRequest";
+const char *StructTest_sumaRequestTYPENAME = "StructTest_sumaRequest";
 
-DDS_TypeCode* sumaRequest_get_typecode()
+DDS_TypeCode* StructTest_sumaRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member sumaRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member StructTest_sumaRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -568,57 +441,52 @@ DDS_TypeCode* sumaRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode sumaRequest_g_tc =
+    static DDS_TypeCode StructTest_sumaRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sumaRequest", /* Name */
+        (char *)"StructTest_sumaRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        sumaRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        StructTest_sumaRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sumaRequest*/
+    }}; /* Type code for StructTest_sumaRequest*/
 
     if (is_initialized) {
-        return &sumaRequest_g_tc;
+        return &StructTest_sumaRequest_g_tc;
     }
 
 
-    sumaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sumaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sumaRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Envio_get_typecode();
-    sumaRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Envio_get_typecode();
+    StructTest_sumaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    StructTest_sumaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Envio_get_typecode();
+    StructTest_sumaRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Envio_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &sumaRequest_g_tc;
+    return &StructTest_sumaRequest_g_tc;
 }
 
 
-RTIBool sumaRequest_initialize(
-    sumaRequest* sample) {
-  return sumaRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool StructTest_sumaRequest_initialize(
+    StructTest_sumaRequest* sample) {
+  return StructTest_sumaRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sumaRequest_initialize_ex(
-    sumaRequest* sample,RTIBool allocatePointers)
+RTIBool StructTest_sumaRequest_initialize_ex(
+    StructTest_sumaRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!Envio_initialize_ex(&sample->ev1,allocatePointers)) {
         return RTI_FALSE;
@@ -632,20 +500,20 @@ RTIBool sumaRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void sumaRequest_finalize(
-    sumaRequest* sample)
+void StructTest_sumaRequest_finalize(
+    StructTest_sumaRequest* sample)
 {
-    sumaRequest_finalize_ex(sample,RTI_TRUE);
+    StructTest_sumaRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void sumaRequest_finalize_ex(
-    sumaRequest* sample,RTIBool deletePointers)
+void StructTest_sumaRequest_finalize_ex(
+    StructTest_sumaRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     Envio_finalize_ex(&sample->ev1,deletePointers);
             
@@ -653,18 +521,13 @@ void sumaRequest_finalize_ex(
             
 }
 
-RTIBool sumaRequest_copy(
-    sumaRequest* dst,
-    const sumaRequest* src)
+RTIBool StructTest_sumaRequest_copy(
+    StructTest_sumaRequest* dst,
+    const StructTest_sumaRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -688,13 +551,13 @@ RTIBool sumaRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sumaRequest' sequence class.
+ * Configure and implement 'StructTest_sumaRequest' sequence class.
  */
-#define T sumaRequest
-#define TSeq sumaRequestSeq
-#define T_initialize_ex sumaRequest_initialize_ex
-#define T_finalize_ex   sumaRequest_finalize_ex
-#define T_copy       sumaRequest_copy
+#define T StructTest_sumaRequest
+#define TSeq StructTest_sumaRequestSeq
+#define T_initialize_ex StructTest_sumaRequest_initialize_ex
+#define T_finalize_ex   StructTest_sumaRequest_finalize_ex
+#define T_copy       StructTest_sumaRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -715,17 +578,17 @@ RTIBool sumaRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sumaReplyTYPENAME = "sumaReply";
+const char *StructTest_sumaReplyTYPENAME = "StructTest_sumaReply";
 
-DDS_TypeCode* sumaReply_get_typecode()
+DDS_TypeCode* StructTest_sumaReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member sumaReply_g_tc_members[5]=
+    static DDS_TypeCode_Member StructTest_sumaReply_g_tc_members[2]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -737,57 +600,6 @@ DDS_TypeCode* sumaReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -811,66 +623,51 @@ DDS_TypeCode* sumaReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode sumaReply_g_tc =
+    static DDS_TypeCode StructTest_sumaReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sumaReply", /* Name */
+        (char *)"StructTest_sumaReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        5, /* Number of members */
-        sumaReply_g_tc_members, /* Members */
+        2, /* Number of members */
+        StructTest_sumaReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sumaReply*/
+    }}; /* Type code for StructTest_sumaReply*/
 
     if (is_initialized) {
-        return &sumaReply_g_tc;
+        return &StructTest_sumaReply_g_tc;
     }
 
 
-    sumaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sumaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sumaReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sumaReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    sumaReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)Recepcion_get_typecode();
+    StructTest_sumaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    StructTest_sumaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Recepcion_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &sumaReply_g_tc;
+    return &StructTest_sumaReply_g_tc;
 }
 
 
-RTIBool sumaReply_initialize(
-    sumaReply* sample) {
-  return sumaReply_initialize_ex(sample,RTI_TRUE);
+RTIBool StructTest_sumaReply_initialize(
+    StructTest_sumaReply* sample) {
+  return StructTest_sumaReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sumaReply_initialize_ex(
-    sumaReply* sample,RTIBool allocatePointers)
+RTIBool StructTest_sumaReply_initialize_ex(
+    StructTest_sumaReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!Recepcion_initialize_ex(&sample->suma_ret,allocatePointers)) {
         return RTI_FALSE;
@@ -880,49 +677,32 @@ RTIBool sumaReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void sumaReply_finalize(
-    sumaReply* sample)
+void StructTest_sumaReply_finalize(
+    StructTest_sumaReply* sample)
 {
-    sumaReply_finalize_ex(sample,RTI_TRUE);
+    StructTest_sumaReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void sumaReply_finalize_ex(
-    sumaReply* sample,RTIBool deletePointers)
+void StructTest_sumaReply_finalize_ex(
+    StructTest_sumaReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     Recepcion_finalize_ex(&sample->suma_ret,deletePointers);
             
 }
 
-RTIBool sumaReply_copy(
-    sumaReply* dst,
-    const sumaReply* src)
+RTIBool StructTest_sumaReply_copy(
+    StructTest_sumaReply* dst,
+    const StructTest_sumaReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -941,13 +721,13 @@ RTIBool sumaReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sumaReply' sequence class.
+ * Configure and implement 'StructTest_sumaReply' sequence class.
  */
-#define T sumaReply
-#define TSeq sumaReplySeq
-#define T_initialize_ex sumaReply_initialize_ex
-#define T_finalize_ex   sumaReply_finalize_ex
-#define T_copy       sumaReply_copy
+#define T StructTest_sumaReply
+#define TSeq StructTest_sumaReplySeq
+#define T_initialize_ex StructTest_sumaReply_initialize_ex
+#define T_finalize_ex   StructTest_sumaReply_finalize_ex
+#define T_copy       StructTest_sumaReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

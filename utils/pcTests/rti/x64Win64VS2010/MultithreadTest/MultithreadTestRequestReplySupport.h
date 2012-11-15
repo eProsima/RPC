@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MultithreadTestRequestReplySupport_135729254_h
-#define MultithreadTestRequestReplySupport_135729254_h
+#ifndef MultithreadTestRequestReplySupport_135729124_h
+#define MultithreadTestRequestReplySupport_135729124_h
 
 /* Uses */
 #include "MultithreadTestRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(testRequestTypeSupport, testRequest);
+DDS_TYPESUPPORT_CPP(MultithreadTest_testRequestTypeSupport, MultithreadTest_testRequest);
 
-DDS_DATAWRITER_CPP(testRequestDataWriter, testRequest);
-DDS_DATAREADER_CPP(testRequestDataReader, testRequestSeq, testRequest);
+DDS_DATAWRITER_CPP(MultithreadTest_testRequestDataWriter, MultithreadTest_testRequest);
+DDS_DATAREADER_CPP(MultithreadTest_testRequestDataReader, MultithreadTest_testRequestSeq, MultithreadTest_testRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(testRequestTypeSupport, testRequest);
-DDS_DATAWRITER_C(testRequestDataWriter, testRequest);
-DDS_DATAREADER_C(testRequestDataReader, testRequestSeq, testRequest);
+DDS_TYPESUPPORT_C(MultithreadTest_testRequestTypeSupport, MultithreadTest_testRequest);
+DDS_DATAWRITER_C(MultithreadTest_testRequestDataWriter, MultithreadTest_testRequest);
+DDS_DATAREADER_C(MultithreadTest_testRequestDataReader, MultithreadTest_testRequestSeq, MultithreadTest_testRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(testRequestDataReader, testRequestSeq, testRequest);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(testReplyTypeSupport, testReply);
+DDS_TYPESUPPORT_CPP(MultithreadTest_testReplyTypeSupport, MultithreadTest_testReply);
 
-DDS_DATAWRITER_CPP(testReplyDataWriter, testReply);
-DDS_DATAREADER_CPP(testReplyDataReader, testReplySeq, testReply);
+DDS_DATAWRITER_CPP(MultithreadTest_testReplyDataWriter, MultithreadTest_testReply);
+DDS_DATAREADER_CPP(MultithreadTest_testReplyDataReader, MultithreadTest_testReplySeq, MultithreadTest_testReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(testReplyTypeSupport, testReply);
-DDS_DATAWRITER_C(testReplyDataWriter, testReply);
-DDS_DATAREADER_C(testReplyDataReader, testReplySeq, testReply);
+DDS_TYPESUPPORT_C(MultithreadTest_testReplyTypeSupport, MultithreadTest_testReply);
+DDS_DATAWRITER_C(MultithreadTest_testReplyDataWriter, MultithreadTest_testReply);
+DDS_DATAREADER_C(MultithreadTest_testReplyDataReader, MultithreadTest_testReplySeq, MultithreadTest_testReply);
 
 #endif
 
@@ -132,4 +132,4 @@ DDS_DATAREADER_C(testReplyDataReader, testReplySeq, testReply);
 
 
 
-#endif  /* MultithreadTestRequestReplySupport_135729254_h */
+#endif  /* MultithreadTestRequestReplySupport_135729124_h */

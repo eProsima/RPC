@@ -8,136 +8,137 @@
 #include "client/Client.h"
 #include "BasicTypeTestRequestReplyUtils.h"
 #include "BasicTypeTestClientRPCSupport.h"
+#include "exceptions/Exception.h"
 
-class BasicTypeTest_getOctet
+class BasicTypeTest_getOctetCallbackHandler
 {
     public:
         virtual void getOctet(/*inout*/ DDS_Octet oc2, /*out*/ DDS_Octet oc3, /*out*/ DDS_Octet getOctet_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getChar
+class BasicTypeTest_getCharCallbackHandler
 {
     public:
         virtual void getChar(/*inout*/ DDS_Char ch2, /*out*/ DDS_Char ch3, /*out*/ DDS_Char getChar_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getWChar
+class BasicTypeTest_getWCharCallbackHandler
 {
     public:
         virtual void getWChar(/*inout*/ DDS_Wchar wch2, /*out*/ DDS_Wchar wch3, /*out*/ DDS_Wchar getWChar_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getShort
+class BasicTypeTest_getShortCallbackHandler
 {
     public:
         virtual void getShort(/*inout*/ DDS_Short sh2, /*out*/ DDS_Short sh3, /*out*/ DDS_Short getShort_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getUShort
+class BasicTypeTest_getUShortCallbackHandler
 {
     public:
         virtual void getUShort(/*inout*/ DDS_UnsignedShort ush2, /*out*/ DDS_UnsignedShort ush3, /*out*/ DDS_UnsignedShort getUShort_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getLong
+class BasicTypeTest_getLongCallbackHandler
 {
     public:
         virtual void getLong(/*inout*/ DDS_Long lo2, /*out*/ DDS_Long lo3, /*out*/ DDS_Long getLong_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getULong
+class BasicTypeTest_getULongCallbackHandler
 {
     public:
         virtual void getULong(/*inout*/ DDS_UnsignedLong ulo2, /*out*/ DDS_UnsignedLong ulo3, /*out*/ DDS_UnsignedLong getULong_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getLLong
+class BasicTypeTest_getLLongCallbackHandler
 {
     public:
         virtual void getLLong(/*inout*/ DDS_LongLong llo2, /*out*/ DDS_LongLong llo3, /*out*/ DDS_LongLong getLLong_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getULLong
+class BasicTypeTest_getULLongCallbackHandler
 {
     public:
         virtual void getULLong(/*inout*/ DDS_UnsignedLongLong ullo2, /*out*/ DDS_UnsignedLongLong ullo3, /*out*/ DDS_UnsignedLongLong getULLong_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getFloat
+class BasicTypeTest_getFloatCallbackHandler
 {
     public:
         virtual void getFloat(/*inout*/ DDS_Float fl2, /*out*/ DDS_Float fl3, /*out*/ DDS_Float getFloat_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getDouble
+class BasicTypeTest_getDoubleCallbackHandler
 {
     public:
         virtual void getDouble(/*inout*/ DDS_Double do2, /*out*/ DDS_Double do3, /*out*/ DDS_Double getDouble_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class BasicTypeTest_getBoolean
+class BasicTypeTest_getBooleanCallbackHandler
 {
     public:
         virtual void getBoolean(/*inout*/ DDS_Boolean bo2, /*out*/ DDS_Boolean bo3, /*out*/ DDS_Boolean getBoolean_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
@@ -152,22 +153,24 @@ class BasicTypeTestProxy : public eProsima::DDSRPC::Client
         /**
          * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        BasicTypeTestProxy(int domainId = 0, long timeout = 10000);
+        BasicTypeTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
         /**
          * \brief This constructor sets the transport that will be used by the server's proxy.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        BasicTypeTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        BasicTypeTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTestProxy();
@@ -198,29 +201,29 @@ class BasicTypeTestProxy : public eProsima::DDSRPC::Client
         DDS_Boolean getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3);
         
          
-        void getOctet_async(BasicTypeTest_getOctet &obj, /*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet oc2);
+        void getOctet_async(BasicTypeTest_getOctetCallbackHandler &obj, /*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet oc2);
          
-        void getChar_async(BasicTypeTest_getChar &obj, /*in*/ DDS_Char ch1, /*inout*/ DDS_Char ch2);
+        void getChar_async(BasicTypeTest_getCharCallbackHandler &obj, /*in*/ DDS_Char ch1, /*inout*/ DDS_Char ch2);
          
-        void getWChar_async(BasicTypeTest_getWChar &obj, /*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar wch2);
+        void getWChar_async(BasicTypeTest_getWCharCallbackHandler &obj, /*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar wch2);
          
-        void getShort_async(BasicTypeTest_getShort &obj, /*in*/ DDS_Short sh1, /*inout*/ DDS_Short sh2);
+        void getShort_async(BasicTypeTest_getShortCallbackHandler &obj, /*in*/ DDS_Short sh1, /*inout*/ DDS_Short sh2);
          
-        void getUShort_async(BasicTypeTest_getUShort &obj, /*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort ush2);
+        void getUShort_async(BasicTypeTest_getUShortCallbackHandler &obj, /*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort ush2);
          
-        void getLong_async(BasicTypeTest_getLong &obj, /*in*/ DDS_Long lo1, /*inout*/ DDS_Long lo2);
+        void getLong_async(BasicTypeTest_getLongCallbackHandler &obj, /*in*/ DDS_Long lo1, /*inout*/ DDS_Long lo2);
          
-        void getULong_async(BasicTypeTest_getULong &obj, /*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong ulo2);
+        void getULong_async(BasicTypeTest_getULongCallbackHandler &obj, /*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong ulo2);
          
-        void getLLong_async(BasicTypeTest_getLLong &obj, /*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong llo2);
+        void getLLong_async(BasicTypeTest_getLLongCallbackHandler &obj, /*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong llo2);
          
-        void getULLong_async(BasicTypeTest_getULLong &obj, /*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong ullo2);
+        void getULLong_async(BasicTypeTest_getULLongCallbackHandler &obj, /*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong ullo2);
          
-        void getFloat_async(BasicTypeTest_getFloat &obj, /*in*/ DDS_Float fl1, /*inout*/ DDS_Float fl2);
+        void getFloat_async(BasicTypeTest_getFloatCallbackHandler &obj, /*in*/ DDS_Float fl1, /*inout*/ DDS_Float fl2);
          
-        void getDouble_async(BasicTypeTest_getDouble &obj, /*in*/ DDS_Double do1, /*inout*/ DDS_Double do2);
+        void getDouble_async(BasicTypeTest_getDoubleCallbackHandler &obj, /*in*/ DDS_Double do1, /*inout*/ DDS_Double do2);
          
-        void getBoolean_async(BasicTypeTest_getBoolean &obj, /*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean bo2);
+        void getBoolean_async(BasicTypeTest_getBooleanCallbackHandler &obj, /*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean bo2);
         
     private:
         /**

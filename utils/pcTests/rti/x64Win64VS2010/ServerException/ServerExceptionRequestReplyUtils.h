@@ -12,75 +12,75 @@
 #include "ndds_namespace_cpp.h"
 
 
-class sendExceptionRequestUtils
+class ServerException_sendExceptionRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sendExceptionRequest& instance);
+        static void setTypeData(ServerException_sendExceptionRequest& instance);
         
-        static void extractTypeData(sendExceptionRequest& data);
+        static void extractTypeData(ServerException_sendExceptionRequest& data);
 };
 
 
-class sendExceptionReplyUtils
+class ServerException_sendExceptionReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sendExceptionReply& instance);
+        static void setTypeData(ServerException_sendExceptionReply& instance);
         
-        static void extractTypeData(sendExceptionReply& data, eProsima::DDSRPC::ReturnMessage& retcode);
+        static void extractTypeData(ServerException_sendExceptionReply& data, eProsima::DDSRPC::ReturnMessage& retcode);
 };
 
 
-class sendExceptionTwoRequestUtils
+class ServerException_sendExceptionTwoRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sendExceptionTwoRequest& instance, /*in*/ char* message, /*inout*/ char* message2);
+        static void setTypeData(ServerException_sendExceptionTwoRequest& instance, /*in*/ char* message, /*inout*/ char* message2);
         
-        static void extractTypeData(sendExceptionTwoRequest& data, /*in*/ char*& message, /*inout*/ char*& message2);
+        static void extractTypeData(ServerException_sendExceptionTwoRequest& data, /*in*/ char*& message, /*inout*/ char*& message2);
 };
 
 
-class sendExceptionTwoReplyUtils
+class ServerException_sendExceptionTwoReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sendExceptionTwoReply& instance, /*inout*/ char* message2, /*out*/ char* message3, /*out*/ char* sendExceptionTwo_ret);
+        static void setTypeData(ServerException_sendExceptionTwoReply& instance, /*inout*/ char* message2, /*out*/ char* message3, /*out*/ char* sendExceptionTwo_ret);
         
-        static void extractTypeData(sendExceptionTwoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret);
+        static void extractTypeData(ServerException_sendExceptionTwoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret);
 };
 
 
-class sendExceptionThreeRequestUtils
+class ServerException_sendExceptionThreeRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sendExceptionThreeRequest& instance, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2);
+        static void setTypeData(ServerException_sendExceptionThreeRequest& instance, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2);
         
-        static void extractTypeData(sendExceptionThreeRequest& data, /*in*/ Estructura& es, /*inout*/ Estructura& es2);
+        static void extractTypeData(ServerException_sendExceptionThreeRequest& data, /*in*/ Estructura& es, /*inout*/ Estructura& es2);
 };
 
 
-class sendExceptionThreeReplyUtils
+class ServerException_sendExceptionThreeReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sendExceptionThreeReply& instance, /*inout*/ const Estructura& es2, /*out*/ const Estructura& es3, /*out*/ const Estructura& sendExceptionThree_ret);
+        static void setTypeData(ServerException_sendExceptionThreeReply& instance, /*inout*/ const Estructura& es2, /*out*/ const Estructura& es3, /*out*/ const Estructura& sendExceptionThree_ret);
         
-        static void extractTypeData(sendExceptionThreeReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret);
+        static void extractTypeData(ServerException_sendExceptionThreeReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret);
 };
 
  

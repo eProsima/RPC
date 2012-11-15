@@ -11,14 +11,14 @@
 #include "StructTestAsyncSupport.h"
 #include "exceptions/Exceptions.h"
 
-StructTestProxy::StructTestProxy(int domainId, long timeout) :
-    Client(NULL, domainId, timeout)
+StructTestProxy::StructTestProxy(std::string remoteServiceName, int domainId, long timeout) :
+    Client(remoteServiceName, NULL, domainId, timeout)
 {
     createRPCs();
 }
 
-StructTestProxy::StructTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
-    Client(transport, domainId, timeout)
+StructTestProxy::StructTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+    Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
 }
@@ -31,13 +31,13 @@ StructTestProxy::~StructTestProxy()
 
 void StructTestProxy::createRPCs()
 {
-    this->duplicate_Service = new duplicateClientRPC("duplicate",
-                                  duplicateRequestUtils::registerType(getParticipant()),
-                                  duplicateReplyUtils::registerType(getParticipant()),
+    this->duplicate_Service = new StructTest_duplicateClientRPC("duplicate",
+                                  StructTest_duplicateRequestUtils::registerType(getParticipant()),
+                                  StructTest_duplicateReplyUtils::registerType(getParticipant()),
                                   this);
-    this->suma_Service = new sumaClientRPC("suma",
-                                  sumaRequestUtils::registerType(getParticipant()),
-                                  sumaReplyUtils::registerType(getParticipant()),
+    this->suma_Service = new StructTest_sumaClientRPC("suma",
+                                  StructTest_sumaRequestUtils::registerType(getParticipant()),
+                                  StructTest_sumaReplyUtils::registerType(getParticipant()),
                                   this);
 
 }
@@ -45,31 +45,31 @@ void StructTestProxy::createRPCs()
  
 Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     Recepcion duplicate_ret;
         
-    duplicateRequest instance;
-    duplicateReply retInstance;
+    StructTest_duplicateRequest instance;
+    StructTest_duplicateReply retInstance;
 
-    duplicateReply_initialize(&retInstance);    
-    duplicateRequestUtils::setTypeData(instance, ev);
+    StructTest_duplicateReply_initialize(&retInstance);    
+    StructTest_duplicateRequestUtils::setTypeData(instance, ev);
     retcode = duplicate_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        duplicateReplyUtils::extractTypeData(retInstance, retcode, duplicate_ret);  
+        StructTest_duplicateReplyUtils::extractTypeData(retInstance, retcode, duplicate_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -82,31 +82,31 @@ Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev)
  
 Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     Recepcion suma_ret;
         
-    sumaRequest instance;
-    sumaReply retInstance;
+    StructTest_sumaRequest instance;
+    StructTest_sumaReply retInstance;
 
-    sumaReply_initialize(&retInstance);    
-    sumaRequestUtils::setTypeData(instance, ev1, ev2);
+    StructTest_sumaReply_initialize(&retInstance);    
+    StructTest_sumaRequestUtils::setTypeData(instance, ev1, ev2);
     retcode = suma_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        sumaReplyUtils::extractTypeData(retInstance, retcode, suma_ret);  
+        StructTest_sumaReplyUtils::extractTypeData(retInstance, retcode, suma_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -118,19 +118,19 @@ Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2
 }
 
  
-void StructTestProxy::duplicate_async(StructTest_duplicate &obj, /*in*/ const Envio& ev) 
+void StructTestProxy::duplicate_async(StructTest_duplicateCallbackHandler &obj, /*in*/ const Envio& ev) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    duplicateRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    StructTest_duplicateRequest instance;
     StructTest_duplicateTask *task = NULL;
-    duplicateRequestUtils::setTypeData(instance, ev);
+    StructTest_duplicateRequestUtils::setTypeData(instance, ev);
     task = new StructTest_duplicateTask(obj, this);
     retcode = duplicate_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -138,19 +138,19 @@ void StructTestProxy::duplicate_async(StructTest_duplicate &obj, /*in*/ const En
     }
 }
  
-void StructTestProxy::suma_async(StructTest_suma &obj, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
+void StructTestProxy::suma_async(StructTest_sumaCallbackHandler &obj, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    sumaRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    StructTest_sumaRequest instance;
     StructTest_sumaTask *task = NULL;
-    sumaRequestUtils::setTypeData(instance, ev1, ev2);
+    StructTest_sumaRequestUtils::setTypeData(instance, ev1, ev2);
     task = new StructTest_sumaTask(obj, this);
     retcode = suma_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");

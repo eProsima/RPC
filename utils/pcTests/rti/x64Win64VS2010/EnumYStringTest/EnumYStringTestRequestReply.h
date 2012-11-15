@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestRequestReply_1383307737_h
-#define EnumYStringTestRequestReply_1383307737_h
+#ifndef EnumYStringTestRequestReply_1383307347_h
+#define EnumYStringTestRequestReply_1383307347_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *getEnumRequestTYPENAME;
+extern const char *EnumYStringTest_getEnumRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *getEnumRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getEnumRequestSeq;
+    struct EnumYStringTest_getEnumRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getEnumRequestTypeSupport;
-    class getEnumRequestDataWriter;
-    class getEnumRequestDataReader;
+    class EnumYStringTest_getEnumRequestTypeSupport;
+    class EnumYStringTest_getEnumRequestDataWriter;
+    class EnumYStringTest_getEnumRequestDataReader;
 #endif
 
 #endif
@@ -59,25 +59,24 @@ extern const char *getEnumRequestTYPENAME;
             
     
 
-typedef struct getEnumRequest
+typedef struct EnumYStringTest_getEnumRequest
 {
 #ifdef __cplusplus
-    typedef struct getEnumRequestSeq Seq;
+    typedef struct EnumYStringTest_getEnumRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getEnumRequestTypeSupport TypeSupport;
-    typedef getEnumRequestDataWriter DataWriter;
-    typedef getEnumRequestDataReader DataReader;
+    typedef EnumYStringTest_getEnumRequestTypeSupport TypeSupport;
+    typedef EnumYStringTest_getEnumRequestDataWriter DataWriter;
+    typedef EnumYStringTest_getEnumRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     Valores  v1;
     Valores  v2;
 
-} getEnumRequest;
+} EnumYStringTest_getEnumRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -88,31 +87,31 @@ typedef struct getEnumRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getEnumRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EnumYStringTest_getEnumRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getEnumRequestSeq, getEnumRequest);
+DDS_SEQUENCE(EnumYStringTest_getEnumRequestSeq, EnumYStringTest_getEnumRequest);
         
 NDDSUSERDllExport
-RTIBool getEnumRequest_initialize(
-        getEnumRequest* self);
+RTIBool EnumYStringTest_getEnumRequest_initialize(
+        EnumYStringTest_getEnumRequest* self);
         
 NDDSUSERDllExport
-RTIBool getEnumRequest_initialize_ex(
-        getEnumRequest* self,RTIBool allocatePointers);
+RTIBool EnumYStringTest_getEnumRequest_initialize_ex(
+        EnumYStringTest_getEnumRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getEnumRequest_finalize(
-        getEnumRequest* self);
+void EnumYStringTest_getEnumRequest_finalize(
+        EnumYStringTest_getEnumRequest* self);
                         
 NDDSUSERDllExport
-void getEnumRequest_finalize_ex(
-        getEnumRequest* self,RTIBool deletePointers);
+void EnumYStringTest_getEnumRequest_finalize_ex(
+        EnumYStringTest_getEnumRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getEnumRequest_copy(
-        getEnumRequest* dst,
-        const getEnumRequest* src);
+RTIBool EnumYStringTest_getEnumRequest_copy(
+        EnumYStringTest_getEnumRequest* dst,
+        const EnumYStringTest_getEnumRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -127,7 +126,7 @@ extern "C" {
 #endif
 
         
-extern const char *getEnumReplyTYPENAME;
+extern const char *EnumYStringTest_getEnumReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -136,12 +135,12 @@ extern const char *getEnumReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getEnumReplySeq;
+    struct EnumYStringTest_getEnumReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getEnumReplyTypeSupport;
-    class getEnumReplyDataWriter;
-    class getEnumReplyDataReader;
+    class EnumYStringTest_getEnumReplyTypeSupport;
+    class EnumYStringTest_getEnumReplyDataWriter;
+    class EnumYStringTest_getEnumReplyDataReader;
 #endif
 
 #endif
@@ -149,28 +148,25 @@ extern const char *getEnumReplyTYPENAME;
             
     
 
-typedef struct getEnumReply
+typedef struct EnumYStringTest_getEnumReply
 {
 #ifdef __cplusplus
-    typedef struct getEnumReplySeq Seq;
+    typedef struct EnumYStringTest_getEnumReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getEnumReplyTypeSupport TypeSupport;
-    typedef getEnumReplyDataWriter DataWriter;
-    typedef getEnumReplyDataReader DataReader;
+    typedef EnumYStringTest_getEnumReplyTypeSupport TypeSupport;
+    typedef EnumYStringTest_getEnumReplyDataWriter DataWriter;
+    typedef EnumYStringTest_getEnumReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     Valores  v2;
     Valores  v3;
     Valores  getEnum_ret;
 
-} getEnumReply;
+} EnumYStringTest_getEnumReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -181,31 +177,31 @@ typedef struct getEnumReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getEnumReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EnumYStringTest_getEnumReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getEnumReplySeq, getEnumReply);
+DDS_SEQUENCE(EnumYStringTest_getEnumReplySeq, EnumYStringTest_getEnumReply);
         
 NDDSUSERDllExport
-RTIBool getEnumReply_initialize(
-        getEnumReply* self);
+RTIBool EnumYStringTest_getEnumReply_initialize(
+        EnumYStringTest_getEnumReply* self);
         
 NDDSUSERDllExport
-RTIBool getEnumReply_initialize_ex(
-        getEnumReply* self,RTIBool allocatePointers);
+RTIBool EnumYStringTest_getEnumReply_initialize_ex(
+        EnumYStringTest_getEnumReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getEnumReply_finalize(
-        getEnumReply* self);
+void EnumYStringTest_getEnumReply_finalize(
+        EnumYStringTest_getEnumReply* self);
                         
 NDDSUSERDllExport
-void getEnumReply_finalize_ex(
-        getEnumReply* self,RTIBool deletePointers);
+void EnumYStringTest_getEnumReply_finalize_ex(
+        EnumYStringTest_getEnumReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getEnumReply_copy(
-        getEnumReply* dst,
-        const getEnumReply* src);
+RTIBool EnumYStringTest_getEnumReply_copy(
+        EnumYStringTest_getEnumReply* dst,
+        const EnumYStringTest_getEnumReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -220,7 +216,7 @@ extern "C" {
 #endif
 
         
-extern const char *getStringRequestTYPENAME;
+extern const char *EnumYStringTest_getStringRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -229,12 +225,12 @@ extern const char *getStringRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getStringRequestSeq;
+    struct EnumYStringTest_getStringRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getStringRequestTypeSupport;
-    class getStringRequestDataWriter;
-    class getStringRequestDataReader;
+    class EnumYStringTest_getStringRequestTypeSupport;
+    class EnumYStringTest_getStringRequestDataWriter;
+    class EnumYStringTest_getStringRequestDataReader;
 #endif
 
 #endif
@@ -242,25 +238,24 @@ extern const char *getStringRequestTYPENAME;
             
     
 
-typedef struct getStringRequest
+typedef struct EnumYStringTest_getStringRequest
 {
 #ifdef __cplusplus
-    typedef struct getStringRequestSeq Seq;
+    typedef struct EnumYStringTest_getStringRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getStringRequestTypeSupport TypeSupport;
-    typedef getStringRequestDataWriter DataWriter;
-    typedef getStringRequestDataReader DataReader;
+    typedef EnumYStringTest_getStringRequestTypeSupport TypeSupport;
+    typedef EnumYStringTest_getStringRequestDataWriter DataWriter;
+    typedef EnumYStringTest_getStringRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     char*  s1; /* maximum length = (255) */
     char*  s2; /* maximum length = (255) */
 
-} getStringRequest;
+} EnumYStringTest_getStringRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -271,31 +266,31 @@ typedef struct getStringRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getStringRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EnumYStringTest_getStringRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getStringRequestSeq, getStringRequest);
+DDS_SEQUENCE(EnumYStringTest_getStringRequestSeq, EnumYStringTest_getStringRequest);
         
 NDDSUSERDllExport
-RTIBool getStringRequest_initialize(
-        getStringRequest* self);
+RTIBool EnumYStringTest_getStringRequest_initialize(
+        EnumYStringTest_getStringRequest* self);
         
 NDDSUSERDllExport
-RTIBool getStringRequest_initialize_ex(
-        getStringRequest* self,RTIBool allocatePointers);
+RTIBool EnumYStringTest_getStringRequest_initialize_ex(
+        EnumYStringTest_getStringRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getStringRequest_finalize(
-        getStringRequest* self);
+void EnumYStringTest_getStringRequest_finalize(
+        EnumYStringTest_getStringRequest* self);
                         
 NDDSUSERDllExport
-void getStringRequest_finalize_ex(
-        getStringRequest* self,RTIBool deletePointers);
+void EnumYStringTest_getStringRequest_finalize_ex(
+        EnumYStringTest_getStringRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getStringRequest_copy(
-        getStringRequest* dst,
-        const getStringRequest* src);
+RTIBool EnumYStringTest_getStringRequest_copy(
+        EnumYStringTest_getStringRequest* dst,
+        const EnumYStringTest_getStringRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -310,7 +305,7 @@ extern "C" {
 #endif
 
         
-extern const char *getStringReplyTYPENAME;
+extern const char *EnumYStringTest_getStringReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -319,12 +314,12 @@ extern const char *getStringReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getStringReplySeq;
+    struct EnumYStringTest_getStringReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getStringReplyTypeSupport;
-    class getStringReplyDataWriter;
-    class getStringReplyDataReader;
+    class EnumYStringTest_getStringReplyTypeSupport;
+    class EnumYStringTest_getStringReplyDataWriter;
+    class EnumYStringTest_getStringReplyDataReader;
 #endif
 
 #endif
@@ -332,28 +327,25 @@ extern const char *getStringReplyTYPENAME;
             
     
 
-typedef struct getStringReply
+typedef struct EnumYStringTest_getStringReply
 {
 #ifdef __cplusplus
-    typedef struct getStringReplySeq Seq;
+    typedef struct EnumYStringTest_getStringReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getStringReplyTypeSupport TypeSupport;
-    typedef getStringReplyDataWriter DataWriter;
-    typedef getStringReplyDataReader DataReader;
+    typedef EnumYStringTest_getStringReplyTypeSupport TypeSupport;
+    typedef EnumYStringTest_getStringReplyDataWriter DataWriter;
+    typedef EnumYStringTest_getStringReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     char*  s2; /* maximum length = (255) */
     char*  s3; /* maximum length = (255) */
     char*  getString_ret; /* maximum length = (255) */
 
-} getStringReply;
+} EnumYStringTest_getStringReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -364,31 +356,31 @@ typedef struct getStringReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getStringReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EnumYStringTest_getStringReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getStringReplySeq, getStringReply);
+DDS_SEQUENCE(EnumYStringTest_getStringReplySeq, EnumYStringTest_getStringReply);
         
 NDDSUSERDllExport
-RTIBool getStringReply_initialize(
-        getStringReply* self);
+RTIBool EnumYStringTest_getStringReply_initialize(
+        EnumYStringTest_getStringReply* self);
         
 NDDSUSERDllExport
-RTIBool getStringReply_initialize_ex(
-        getStringReply* self,RTIBool allocatePointers);
+RTIBool EnumYStringTest_getStringReply_initialize_ex(
+        EnumYStringTest_getStringReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getStringReply_finalize(
-        getStringReply* self);
+void EnumYStringTest_getStringReply_finalize(
+        EnumYStringTest_getStringReply* self);
                         
 NDDSUSERDllExport
-void getStringReply_finalize_ex(
-        getStringReply* self,RTIBool deletePointers);
+void EnumYStringTest_getStringReply_finalize_ex(
+        EnumYStringTest_getStringReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getStringReply_copy(
-        getStringReply* dst,
-        const getStringReply* src);
+RTIBool EnumYStringTest_getStringReply_copy(
+        EnumYStringTest_getStringReply* dst,
+        const EnumYStringTest_getStringReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -403,7 +395,7 @@ extern "C" {
 #endif
 
         
-extern const char *getStringBoundedRequestTYPENAME;
+extern const char *EnumYStringTest_getStringBoundedRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -412,12 +404,12 @@ extern const char *getStringBoundedRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getStringBoundedRequestSeq;
+    struct EnumYStringTest_getStringBoundedRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getStringBoundedRequestTypeSupport;
-    class getStringBoundedRequestDataWriter;
-    class getStringBoundedRequestDataReader;
+    class EnumYStringTest_getStringBoundedRequestTypeSupport;
+    class EnumYStringTest_getStringBoundedRequestDataWriter;
+    class EnumYStringTest_getStringBoundedRequestDataReader;
 #endif
 
 #endif
@@ -425,25 +417,24 @@ extern const char *getStringBoundedRequestTYPENAME;
             
     
 
-typedef struct getStringBoundedRequest
+typedef struct EnumYStringTest_getStringBoundedRequest
 {
 #ifdef __cplusplus
-    typedef struct getStringBoundedRequestSeq Seq;
+    typedef struct EnumYStringTest_getStringBoundedRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getStringBoundedRequestTypeSupport TypeSupport;
-    typedef getStringBoundedRequestDataWriter DataWriter;
-    typedef getStringBoundedRequestDataReader DataReader;
+    typedef EnumYStringTest_getStringBoundedRequestTypeSupport TypeSupport;
+    typedef EnumYStringTest_getStringBoundedRequestDataWriter DataWriter;
+    typedef EnumYStringTest_getStringBoundedRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     char*  sb1; /* maximum length = (255) */
     char*  sb2; /* maximum length = (255) */
 
-} getStringBoundedRequest;
+} EnumYStringTest_getStringBoundedRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -454,31 +445,31 @@ typedef struct getStringBoundedRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getStringBoundedRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EnumYStringTest_getStringBoundedRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getStringBoundedRequestSeq, getStringBoundedRequest);
+DDS_SEQUENCE(EnumYStringTest_getStringBoundedRequestSeq, EnumYStringTest_getStringBoundedRequest);
         
 NDDSUSERDllExport
-RTIBool getStringBoundedRequest_initialize(
-        getStringBoundedRequest* self);
+RTIBool EnumYStringTest_getStringBoundedRequest_initialize(
+        EnumYStringTest_getStringBoundedRequest* self);
         
 NDDSUSERDllExport
-RTIBool getStringBoundedRequest_initialize_ex(
-        getStringBoundedRequest* self,RTIBool allocatePointers);
+RTIBool EnumYStringTest_getStringBoundedRequest_initialize_ex(
+        EnumYStringTest_getStringBoundedRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getStringBoundedRequest_finalize(
-        getStringBoundedRequest* self);
+void EnumYStringTest_getStringBoundedRequest_finalize(
+        EnumYStringTest_getStringBoundedRequest* self);
                         
 NDDSUSERDllExport
-void getStringBoundedRequest_finalize_ex(
-        getStringBoundedRequest* self,RTIBool deletePointers);
+void EnumYStringTest_getStringBoundedRequest_finalize_ex(
+        EnumYStringTest_getStringBoundedRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getStringBoundedRequest_copy(
-        getStringBoundedRequest* dst,
-        const getStringBoundedRequest* src);
+RTIBool EnumYStringTest_getStringBoundedRequest_copy(
+        EnumYStringTest_getStringBoundedRequest* dst,
+        const EnumYStringTest_getStringBoundedRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -493,7 +484,7 @@ extern "C" {
 #endif
 
         
-extern const char *getStringBoundedReplyTYPENAME;
+extern const char *EnumYStringTest_getStringBoundedReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -502,12 +493,12 @@ extern const char *getStringBoundedReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getStringBoundedReplySeq;
+    struct EnumYStringTest_getStringBoundedReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getStringBoundedReplyTypeSupport;
-    class getStringBoundedReplyDataWriter;
-    class getStringBoundedReplyDataReader;
+    class EnumYStringTest_getStringBoundedReplyTypeSupport;
+    class EnumYStringTest_getStringBoundedReplyDataWriter;
+    class EnumYStringTest_getStringBoundedReplyDataReader;
 #endif
 
 #endif
@@ -515,28 +506,25 @@ extern const char *getStringBoundedReplyTYPENAME;
             
     
 
-typedef struct getStringBoundedReply
+typedef struct EnumYStringTest_getStringBoundedReply
 {
 #ifdef __cplusplus
-    typedef struct getStringBoundedReplySeq Seq;
+    typedef struct EnumYStringTest_getStringBoundedReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getStringBoundedReplyTypeSupport TypeSupport;
-    typedef getStringBoundedReplyDataWriter DataWriter;
-    typedef getStringBoundedReplyDataReader DataReader;
+    typedef EnumYStringTest_getStringBoundedReplyTypeSupport TypeSupport;
+    typedef EnumYStringTest_getStringBoundedReplyDataWriter DataWriter;
+    typedef EnumYStringTest_getStringBoundedReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     char*  sb2; /* maximum length = (255) */
     char*  sb3; /* maximum length = (255) */
     char*  getStringBounded_ret; /* maximum length = (255) */
 
-} getStringBoundedReply;
+} EnumYStringTest_getStringBoundedReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -547,31 +535,31 @@ typedef struct getStringBoundedReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getStringBoundedReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EnumYStringTest_getStringBoundedReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getStringBoundedReplySeq, getStringBoundedReply);
+DDS_SEQUENCE(EnumYStringTest_getStringBoundedReplySeq, EnumYStringTest_getStringBoundedReply);
         
 NDDSUSERDllExport
-RTIBool getStringBoundedReply_initialize(
-        getStringBoundedReply* self);
+RTIBool EnumYStringTest_getStringBoundedReply_initialize(
+        EnumYStringTest_getStringBoundedReply* self);
         
 NDDSUSERDllExport
-RTIBool getStringBoundedReply_initialize_ex(
-        getStringBoundedReply* self,RTIBool allocatePointers);
+RTIBool EnumYStringTest_getStringBoundedReply_initialize_ex(
+        EnumYStringTest_getStringBoundedReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getStringBoundedReply_finalize(
-        getStringBoundedReply* self);
+void EnumYStringTest_getStringBoundedReply_finalize(
+        EnumYStringTest_getStringBoundedReply* self);
                         
 NDDSUSERDllExport
-void getStringBoundedReply_finalize_ex(
-        getStringBoundedReply* self,RTIBool deletePointers);
+void EnumYStringTest_getStringBoundedReply_finalize_ex(
+        EnumYStringTest_getStringBoundedReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getStringBoundedReply_copy(
-        getStringBoundedReply* dst,
-        const getStringBoundedReply* src);
+RTIBool EnumYStringTest_getStringBoundedReply_copy(
+        EnumYStringTest_getStringBoundedReply* dst,
+        const EnumYStringTest_getStringBoundedReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -582,4 +570,4 @@ RTIBool getStringBoundedReply_copy(
 
 
 
-#endif /* EnumYStringTestRequestReply_1383307737_h */
+#endif /* EnumYStringTestRequestReply_1383307347_h */

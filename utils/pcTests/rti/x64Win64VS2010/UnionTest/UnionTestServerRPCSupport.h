@@ -10,7 +10,7 @@
 
 
 
-GENERIC_SERVER_RPC(getEmpleadoServerRPC, getEmpleadoReplyDataWriter, getEmpleadoRequestDataReader);
+GENERIC_SERVER_RPC(UnionTest_getEmpleadoServerRPC, UnionTest_getEmpleadoReplyDataWriter, UnionTest_getEmpleadoRequestDataReader);
 
 
 #endif  // _UnionTest_SERVER_RPC_SUPPORT_H_

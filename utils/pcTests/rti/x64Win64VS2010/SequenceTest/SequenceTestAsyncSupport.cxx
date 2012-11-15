@@ -1,9 +1,10 @@
 #include "SequenceTestProxy.h"
 #include "SequenceTestAsyncSupport.h"
+#include "exceptions/ServerInternalException.h"
 #include "SequenceTestRequestReplyPlugin.h"
 
 
-SequenceTest_getSLongTask::SequenceTest_getSLongTask(SequenceTest_getSLong &obj,
+SequenceTest_getSLongTask::SequenceTest_getSLongTask(SequenceTest_getSLongCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
 }
@@ -12,7 +13,7 @@ SequenceTest_getSLongTask::~SequenceTest_getSLongTask()
 {
 }
 
-SequenceTest_getSLong& SequenceTest_getSLongTask::getObject()
+SequenceTest_getSLongCallbackHandler& SequenceTest_getSLongTask::getObject()
 {
     return m_obj;
 }
@@ -22,7 +23,7 @@ void* SequenceTest_getSLongTask::getReplyInstance()
     return &m_reply;
 }
 
-void SequenceTest_getSLongTask::execute(eProsima::DDSRPC::ReturnMessage message)
+void SequenceTest_getSLongTask::execute()
 {  
     largo l2;
         
@@ -32,23 +33,26 @@ void SequenceTest_getSLongTask::execute(eProsima::DDSRPC::ReturnMessage message)
         
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
-	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-	{
-		getSLongReplyUtils::extractTypeData(m_reply, retcode, l2, l3, getSLong_ret);
+	SequenceTest_getSLongReplyUtils::extractTypeData(m_reply, retcode, l2, l3, getSLong_ret);
 		
-		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getSLong(l2, l3, getSLong_ret);
-		else
-		    getObject().error(retcode);
+	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	{
+		getObject().getSLong(l2, l3, getSLong_ret);
 	}
 	else
 	{
-	    getObject().error(message);
+		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
 	}
 }
 
+void SequenceTest_getSLongTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+{
+    getObject().on_exception(ex);
+}
 
-SequenceTest_getStringTask::SequenceTest_getStringTask(SequenceTest_getString &obj,
+
+SequenceTest_getStringTask::SequenceTest_getStringTask(SequenceTest_getStringCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
 }
@@ -57,7 +61,7 @@ SequenceTest_getStringTask::~SequenceTest_getStringTask()
 {
 }
 
-SequenceTest_getString& SequenceTest_getStringTask::getObject()
+SequenceTest_getStringCallbackHandler& SequenceTest_getStringTask::getObject()
 {
     return m_obj;
 }
@@ -67,7 +71,7 @@ void* SequenceTest_getStringTask::getReplyInstance()
     return &m_reply;
 }
 
-void SequenceTest_getStringTask::execute(eProsima::DDSRPC::ReturnMessage message)
+void SequenceTest_getStringTask::execute()
 {  
     cadena s2;
         
@@ -77,23 +81,26 @@ void SequenceTest_getStringTask::execute(eProsima::DDSRPC::ReturnMessage message
         
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
-	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-	{
-		getStringReplyUtils::extractTypeData(m_reply, retcode, s2, s3, getString_ret);
+	SequenceTest_getStringReplyUtils::extractTypeData(m_reply, retcode, s2, s3, getString_ret);
 		
-		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getString(s2, s3, getString_ret);
-		else
-		    getObject().error(retcode);
+	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	{
+		getObject().getString(s2, s3, getString_ret);
 	}
 	else
 	{
-	    getObject().error(message);
+		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
 	}
 }
 
+void SequenceTest_getStringTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+{
+    getObject().on_exception(ex);
+}
 
-SequenceTest_getStringBoundedTask::SequenceTest_getStringBoundedTask(SequenceTest_getStringBounded &obj,
+
+SequenceTest_getStringBoundedTask::SequenceTest_getStringBoundedTask(SequenceTest_getStringBoundedCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
 }
@@ -102,7 +109,7 @@ SequenceTest_getStringBoundedTask::~SequenceTest_getStringBoundedTask()
 {
 }
 
-SequenceTest_getStringBounded& SequenceTest_getStringBoundedTask::getObject()
+SequenceTest_getStringBoundedCallbackHandler& SequenceTest_getStringBoundedTask::getObject()
 {
     return m_obj;
 }
@@ -112,7 +119,7 @@ void* SequenceTest_getStringBoundedTask::getReplyInstance()
     return &m_reply;
 }
 
-void SequenceTest_getStringBoundedTask::execute(eProsima::DDSRPC::ReturnMessage message)
+void SequenceTest_getStringBoundedTask::execute()
 {  
     dattos sb2;
         
@@ -122,17 +129,20 @@ void SequenceTest_getStringBoundedTask::execute(eProsima::DDSRPC::ReturnMessage 
         
     eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
 	
-	if(message == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-	{
-		getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2, sb3, getStringBounded_ret);
+	SequenceTest_getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2, sb3, getStringBounded_ret);
 		
-		if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
-		    getObject().getStringBounded(sb2, sb3, getStringBounded_ret);
-		else
-		    getObject().error(retcode);
+	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	{
+		getObject().getStringBounded(sb2, sb3, getStringBounded_ret);
 	}
 	else
 	{
-	    getObject().error(message);
+		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
 	}
+}
+
+void SequenceTest_getStringBoundedTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+{
+    getObject().on_exception(ex);
 }

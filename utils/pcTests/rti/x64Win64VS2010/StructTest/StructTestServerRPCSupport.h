@@ -10,10 +10,10 @@
 
 
 
-GENERIC_SERVER_RPC(duplicateServerRPC, duplicateReplyDataWriter, duplicateRequestDataReader);
+GENERIC_SERVER_RPC(StructTest_duplicateServerRPC, StructTest_duplicateReplyDataWriter, StructTest_duplicateRequestDataReader);
 
 
-GENERIC_SERVER_RPC(sumaServerRPC, sumaReplyDataWriter, sumaRequestDataReader);
+GENERIC_SERVER_RPC(StructTest_sumaServerRPC, StructTest_sumaReplyDataWriter, StructTest_sumaRequestDataReader);
 
 
 #endif  // _StructTest_SERVER_RPC_SUPPORT_H_

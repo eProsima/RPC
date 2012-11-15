@@ -615,6 +615,10 @@ public class IDL2DDSRPC
                 if(!one_invocation)
                 {
                 	mainTemplate.setAttribute("invocations", funCall.toString());
+                	if(osOption.equals("Win32"))
+                		mainTemplate.setAttribute("sleep", "Sleep");
+                	else if(osOption.equals("Linux"))
+                		mainTemplate.setAttribute("sleep", "sleep");
                 	one_invocation = true;
                 }
                 funDecl.reset();

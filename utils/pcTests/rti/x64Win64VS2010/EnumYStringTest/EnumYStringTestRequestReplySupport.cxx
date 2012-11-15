@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getEnumRequest' support classes.
+   Configure and implement 'EnumYStringTest_getEnumRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEnumRequestTYPENAME
+#define TTYPENAME   EnumYStringTest_getEnumRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getEnumRequestDataWriter
-#define TData       getEnumRequest
+#define TDataWriter EnumYStringTest_getEnumRequestDataWriter
+#define TData       EnumYStringTest_getEnumRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEnumRequestTYPENAME
+#define TTYPENAME   EnumYStringTest_getEnumRequestTYPENAME
 
 /* Defines */
-#define TDataReader getEnumRequestDataReader
-#define TDataSeq    getEnumRequestSeq
-#define TData       getEnumRequest
+#define TDataReader EnumYStringTest_getEnumRequestDataReader
+#define TDataSeq    EnumYStringTest_getEnumRequestSeq
+#define TData       EnumYStringTest_getEnumRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getEnumRequestTYPENAME
-#define TPlugin_new  getEnumRequestPlugin_new
-#define TPlugin_delete  getEnumRequestPlugin_delete
+#define TTYPENAME    EnumYStringTest_getEnumRequestTYPENAME
+#define TPlugin_new  EnumYStringTest_getEnumRequestPlugin_new
+#define TPlugin_delete  EnumYStringTest_getEnumRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getEnumRequestTypeSupport
-#define TData        getEnumRequest
-#define TDataReader  getEnumRequestDataReader
-#define TDataWriter  getEnumRequestDataWriter
+#define TTypeSupport EnumYStringTest_getEnumRequestTypeSupport
+#define TData        EnumYStringTest_getEnumRequest
+#define TDataReader  EnumYStringTest_getEnumRequestDataReader
+#define TDataWriter  EnumYStringTest_getEnumRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getEnumReply' support classes.
+   Configure and implement 'EnumYStringTest_getEnumReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEnumReplyTYPENAME
+#define TTYPENAME   EnumYStringTest_getEnumReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getEnumReplyDataWriter
-#define TData       getEnumReply
+#define TDataWriter EnumYStringTest_getEnumReplyDataWriter
+#define TData       EnumYStringTest_getEnumReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getEnumReplyTYPENAME
+#define TTYPENAME   EnumYStringTest_getEnumReplyTYPENAME
 
 /* Defines */
-#define TDataReader getEnumReplyDataReader
-#define TDataSeq    getEnumReplySeq
-#define TData       getEnumReply
+#define TDataReader EnumYStringTest_getEnumReplyDataReader
+#define TDataSeq    EnumYStringTest_getEnumReplySeq
+#define TData       EnumYStringTest_getEnumReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getEnumReplyTYPENAME
-#define TPlugin_new  getEnumReplyPlugin_new
-#define TPlugin_delete  getEnumReplyPlugin_delete
+#define TTYPENAME    EnumYStringTest_getEnumReplyTYPENAME
+#define TPlugin_new  EnumYStringTest_getEnumReplyPlugin_new
+#define TPlugin_delete  EnumYStringTest_getEnumReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getEnumReplyTypeSupport
-#define TData        getEnumReply
-#define TDataReader  getEnumReplyDataReader
-#define TDataWriter  getEnumReplyDataWriter
+#define TTypeSupport EnumYStringTest_getEnumReplyTypeSupport
+#define TData        EnumYStringTest_getEnumReply
+#define TDataReader  EnumYStringTest_getEnumReplyDataReader
+#define TDataWriter  EnumYStringTest_getEnumReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -273,7 +273,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringRequest' support classes.
+   Configure and implement 'EnumYStringTest_getStringRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -289,11 +289,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringRequestTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getStringRequestDataWriter
-#define TData       getStringRequest
+#define TDataWriter EnumYStringTest_getStringRequestDataWriter
+#define TData       EnumYStringTest_getStringRequest
 
 
 #ifdef __cplusplus
@@ -319,12 +319,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringRequestTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringRequestTYPENAME
 
 /* Defines */
-#define TDataReader getStringRequestDataReader
-#define TDataSeq    getStringRequestSeq
-#define TData       getStringRequest
+#define TDataReader EnumYStringTest_getStringRequestDataReader
+#define TDataSeq    EnumYStringTest_getStringRequestSeq
+#define TData       EnumYStringTest_getStringRequest
 
 
 #ifdef __cplusplus
@@ -352,15 +352,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringRequestTYPENAME
-#define TPlugin_new  getStringRequestPlugin_new
-#define TPlugin_delete  getStringRequestPlugin_delete
+#define TTYPENAME    EnumYStringTest_getStringRequestTYPENAME
+#define TPlugin_new  EnumYStringTest_getStringRequestPlugin_new
+#define TPlugin_delete  EnumYStringTest_getStringRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringRequestTypeSupport
-#define TData        getStringRequest
-#define TDataReader  getStringRequestDataReader
-#define TDataWriter  getStringRequestDataWriter
+#define TTypeSupport EnumYStringTest_getStringRequestTypeSupport
+#define TData        EnumYStringTest_getStringRequest
+#define TDataReader  EnumYStringTest_getStringRequestDataReader
+#define TDataWriter  EnumYStringTest_getStringRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -394,7 +394,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringReply' support classes.
+   Configure and implement 'EnumYStringTest_getStringReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -410,11 +410,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringReplyTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getStringReplyDataWriter
-#define TData       getStringReply
+#define TDataWriter EnumYStringTest_getStringReplyDataWriter
+#define TData       EnumYStringTest_getStringReply
 
 
 #ifdef __cplusplus
@@ -440,12 +440,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringReplyTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringReplyTYPENAME
 
 /* Defines */
-#define TDataReader getStringReplyDataReader
-#define TDataSeq    getStringReplySeq
-#define TData       getStringReply
+#define TDataReader EnumYStringTest_getStringReplyDataReader
+#define TDataSeq    EnumYStringTest_getStringReplySeq
+#define TData       EnumYStringTest_getStringReply
 
 
 #ifdef __cplusplus
@@ -473,15 +473,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringReplyTYPENAME
-#define TPlugin_new  getStringReplyPlugin_new
-#define TPlugin_delete  getStringReplyPlugin_delete
+#define TTYPENAME    EnumYStringTest_getStringReplyTYPENAME
+#define TPlugin_new  EnumYStringTest_getStringReplyPlugin_new
+#define TPlugin_delete  EnumYStringTest_getStringReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringReplyTypeSupport
-#define TData        getStringReply
-#define TDataReader  getStringReplyDataReader
-#define TDataWriter  getStringReplyDataWriter
+#define TTypeSupport EnumYStringTest_getStringReplyTypeSupport
+#define TData        EnumYStringTest_getStringReply
+#define TDataReader  EnumYStringTest_getStringReplyDataReader
+#define TDataWriter  EnumYStringTest_getStringReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -515,7 +515,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringBoundedRequest' support classes.
+   Configure and implement 'EnumYStringTest_getStringBoundedRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -531,11 +531,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedRequestTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringBoundedRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getStringBoundedRequestDataWriter
-#define TData       getStringBoundedRequest
+#define TDataWriter EnumYStringTest_getStringBoundedRequestDataWriter
+#define TData       EnumYStringTest_getStringBoundedRequest
 
 
 #ifdef __cplusplus
@@ -561,12 +561,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedRequestTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringBoundedRequestTYPENAME
 
 /* Defines */
-#define TDataReader getStringBoundedRequestDataReader
-#define TDataSeq    getStringBoundedRequestSeq
-#define TData       getStringBoundedRequest
+#define TDataReader EnumYStringTest_getStringBoundedRequestDataReader
+#define TDataSeq    EnumYStringTest_getStringBoundedRequestSeq
+#define TData       EnumYStringTest_getStringBoundedRequest
 
 
 #ifdef __cplusplus
@@ -594,15 +594,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringBoundedRequestTYPENAME
-#define TPlugin_new  getStringBoundedRequestPlugin_new
-#define TPlugin_delete  getStringBoundedRequestPlugin_delete
+#define TTYPENAME    EnumYStringTest_getStringBoundedRequestTYPENAME
+#define TPlugin_new  EnumYStringTest_getStringBoundedRequestPlugin_new
+#define TPlugin_delete  EnumYStringTest_getStringBoundedRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringBoundedRequestTypeSupport
-#define TData        getStringBoundedRequest
-#define TDataReader  getStringBoundedRequestDataReader
-#define TDataWriter  getStringBoundedRequestDataWriter
+#define TTypeSupport EnumYStringTest_getStringBoundedRequestTypeSupport
+#define TData        EnumYStringTest_getStringBoundedRequest
+#define TDataReader  EnumYStringTest_getStringBoundedRequestDataReader
+#define TDataWriter  EnumYStringTest_getStringBoundedRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -636,7 +636,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringBoundedReply' support classes.
+   Configure and implement 'EnumYStringTest_getStringBoundedReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -652,11 +652,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedReplyTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringBoundedReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getStringBoundedReplyDataWriter
-#define TData       getStringBoundedReply
+#define TDataWriter EnumYStringTest_getStringBoundedReplyDataWriter
+#define TData       EnumYStringTest_getStringBoundedReply
 
 
 #ifdef __cplusplus
@@ -682,12 +682,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedReplyTYPENAME
+#define TTYPENAME   EnumYStringTest_getStringBoundedReplyTYPENAME
 
 /* Defines */
-#define TDataReader getStringBoundedReplyDataReader
-#define TDataSeq    getStringBoundedReplySeq
-#define TData       getStringBoundedReply
+#define TDataReader EnumYStringTest_getStringBoundedReplyDataReader
+#define TDataSeq    EnumYStringTest_getStringBoundedReplySeq
+#define TData       EnumYStringTest_getStringBoundedReply
 
 
 #ifdef __cplusplus
@@ -715,15 +715,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringBoundedReplyTYPENAME
-#define TPlugin_new  getStringBoundedReplyPlugin_new
-#define TPlugin_delete  getStringBoundedReplyPlugin_delete
+#define TTYPENAME    EnumYStringTest_getStringBoundedReplyTYPENAME
+#define TPlugin_new  EnumYStringTest_getStringBoundedReplyPlugin_new
+#define TPlugin_delete  EnumYStringTest_getStringBoundedReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringBoundedReplyTypeSupport
-#define TData        getStringBoundedReply
-#define TDataReader  getStringBoundedReplyDataReader
-#define TDataWriter  getStringBoundedReplyDataWriter
+#define TTypeSupport EnumYStringTest_getStringBoundedReplyTypeSupport
+#define TData        EnumYStringTest_getStringBoundedReply
+#define TDataReader  EnumYStringTest_getStringBoundedReplyDataReader
+#define TDataWriter  EnumYStringTest_getStringBoundedReplyDataWriter
 #ifdef __cplusplus
 
 

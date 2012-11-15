@@ -2,6 +2,7 @@
 #include "client/AsyncTask.h"
 #include "client/ClientRPC.h"
 #include "utils/Typedefs.h"
+#include "exceptions/ServerTimeoutException.h"
 
 #include <stdio.h>
 
@@ -137,7 +138,7 @@ namespace eProsima
 
                                 if(it != m_vector.end())
                                 {
-                                    it->second.second->execute(OPERATION_SUCCESSFUL, it->second.first);
+                                    it->second.second->execute(it->second.first);
                                     m_waitSet->detach_condition(it->second.first);
                                     it->second.second->getRPC()->deleteQuery(it->second.first);
                                     delete it->second.second;
@@ -157,7 +158,7 @@ namespace eProsima
                             if(it->first == boost::posix_time::milliseconds(0))
                             {
                                 //TODO Send exception
-                                it->second.second->execute(SERVER_TIMEOUT, it->second.first);
+                                it->second.second->on_exception(ServerTimeoutException("Asynchronous task exceed the time to wait the server's reply"));
                                 m_waitSet->detach_condition(it->second.first);
                                 it->second.second->getRPC()->deleteQuery(it->second.first);
                                 //TODO No borrar.

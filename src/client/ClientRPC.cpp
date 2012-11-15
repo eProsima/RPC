@@ -52,7 +52,7 @@ namespace eProsima
             }
 
             printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
-            throw InitializeException(errorMessage);
+            throw InitializeException(std::move(errorMessage));
         }
 
         ClientRPC::~ClientRPC()
@@ -153,7 +153,6 @@ namespace eProsima
                                     {
                                         DDS::ConditionSeq conds;
                                         DDS_TIMEOUT(ddsTimeout, tTimeout);
-printf("Seconds: %d, Nanosecs: %u\n", ddsTimeout.sec, ddsTimeout.nanosec);
 
                                         retCode = waitSet->wait(conds, ddsTimeout);
 

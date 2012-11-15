@@ -10,13 +10,13 @@
 
 
 
-GENERIC_SERVER_RPC(getEnumServerRPC, getEnumReplyDataWriter, getEnumRequestDataReader);
+GENERIC_SERVER_RPC(EnumYStringTest_getEnumServerRPC, EnumYStringTest_getEnumReplyDataWriter, EnumYStringTest_getEnumRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getStringServerRPC, getStringReplyDataWriter, getStringRequestDataReader);
+GENERIC_SERVER_RPC(EnumYStringTest_getStringServerRPC, EnumYStringTest_getStringReplyDataWriter, EnumYStringTest_getStringRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getStringBoundedServerRPC, getStringBoundedReplyDataWriter, getStringBoundedRequestDataReader);
+GENERIC_SERVER_RPC(EnumYStringTest_getStringBoundedServerRPC, EnumYStringTest_getStringBoundedReplyDataWriter, EnumYStringTest_getStringBoundedRequestDataReader);
 
 
 #endif  // _EnumYStringTest_SERVER_RPC_SUPPORT_H_

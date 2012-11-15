@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'testRequest' support classes.
+   Configure and implement 'MultithreadTest_testRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   testRequestTYPENAME
+#define TTYPENAME   MultithreadTest_testRequestTYPENAME
 
 /* Defines */
-#define TDataWriter testRequestDataWriter
-#define TData       testRequest
+#define TDataWriter MultithreadTest_testRequestDataWriter
+#define TData       MultithreadTest_testRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   testRequestTYPENAME
+#define TTYPENAME   MultithreadTest_testRequestTYPENAME
 
 /* Defines */
-#define TDataReader testRequestDataReader
-#define TDataSeq    testRequestSeq
-#define TData       testRequest
+#define TDataReader MultithreadTest_testRequestDataReader
+#define TDataSeq    MultithreadTest_testRequestSeq
+#define TData       MultithreadTest_testRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    testRequestTYPENAME
-#define TPlugin_new  testRequestPlugin_new
-#define TPlugin_delete  testRequestPlugin_delete
+#define TTYPENAME    MultithreadTest_testRequestTYPENAME
+#define TPlugin_new  MultithreadTest_testRequestPlugin_new
+#define TPlugin_delete  MultithreadTest_testRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport testRequestTypeSupport
-#define TData        testRequest
-#define TDataReader  testRequestDataReader
-#define TDataWriter  testRequestDataWriter
+#define TTypeSupport MultithreadTest_testRequestTypeSupport
+#define TData        MultithreadTest_testRequest
+#define TDataReader  MultithreadTest_testRequestDataReader
+#define TDataWriter  MultithreadTest_testRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'testReply' support classes.
+   Configure and implement 'MultithreadTest_testReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   testReplyTYPENAME
+#define TTYPENAME   MultithreadTest_testReplyTYPENAME
 
 /* Defines */
-#define TDataWriter testReplyDataWriter
-#define TData       testReply
+#define TDataWriter MultithreadTest_testReplyDataWriter
+#define TData       MultithreadTest_testReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   testReplyTYPENAME
+#define TTYPENAME   MultithreadTest_testReplyTYPENAME
 
 /* Defines */
-#define TDataReader testReplyDataReader
-#define TDataSeq    testReplySeq
-#define TData       testReply
+#define TDataReader MultithreadTest_testReplyDataReader
+#define TDataSeq    MultithreadTest_testReplySeq
+#define TData       MultithreadTest_testReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    testReplyTYPENAME
-#define TPlugin_new  testReplyPlugin_new
-#define TPlugin_delete  testReplyPlugin_delete
+#define TTYPENAME    MultithreadTest_testReplyTYPENAME
+#define TPlugin_new  MultithreadTest_testReplyPlugin_new
+#define TPlugin_delete  MultithreadTest_testReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport testReplyTypeSupport
-#define TData        testReply
-#define TDataReader  testReplyDataReader
-#define TDataWriter  testReplyDataWriter
+#define TTypeSupport MultithreadTest_testReplyTypeSupport
+#define TData        MultithreadTest_testReply
+#define TDataReader  MultithreadTest_testReplyDataReader
+#define TDataWriter  MultithreadTest_testReplyDataWriter
 #ifdef __cplusplus
 
 

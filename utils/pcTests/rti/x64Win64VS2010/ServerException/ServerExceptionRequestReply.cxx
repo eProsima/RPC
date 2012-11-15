@@ -39,34 +39,17 @@
 #include "ServerExceptionRequestReply.h"
 
 /* ========================================================================= */
-const char *sendExceptionRequestTYPENAME = "sendExceptionRequest";
+const char *ServerException_sendExceptionRequestTYPENAME = "ServerException_sendExceptionRequest";
 
-DDS_TypeCode* sendExceptionRequest_get_typecode()
+DDS_TypeCode* ServerException_sendExceptionRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member sendExceptionRequest_g_tc_members[2]=
+    static DDS_TypeCode_Member ServerException_sendExceptionRequest_g_tc_members[1]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -84,89 +67,79 @@ DDS_TypeCode* sendExceptionRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode sendExceptionRequest_g_tc =
+    static DDS_TypeCode ServerException_sendExceptionRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sendExceptionRequest", /* Name */
+        (char *)"ServerException_sendExceptionRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        2, /* Number of members */
-        sendExceptionRequest_g_tc_members, /* Members */
+        1, /* Number of members */
+        ServerException_sendExceptionRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sendExceptionRequest*/
+    }}; /* Type code for ServerException_sendExceptionRequest*/
 
     if (is_initialized) {
-        return &sendExceptionRequest_g_tc;
+        return &ServerException_sendExceptionRequest_g_tc;
     }
 
 
-    sendExceptionRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
+    ServerException_sendExceptionRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &sendExceptionRequest_g_tc;
+    return &ServerException_sendExceptionRequest_g_tc;
 }
 
 
-RTIBool sendExceptionRequest_initialize(
-    sendExceptionRequest* sample) {
-  return sendExceptionRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool ServerException_sendExceptionRequest_initialize(
+    ServerException_sendExceptionRequest* sample) {
+  return ServerException_sendExceptionRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sendExceptionRequest_initialize_ex(
-    sendExceptionRequest* sample,RTIBool allocatePointers)
+RTIBool ServerException_sendExceptionRequest_initialize_ex(
+    ServerException_sendExceptionRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
 
     return RTI_TRUE;
 }
 
-void sendExceptionRequest_finalize(
-    sendExceptionRequest* sample)
+void ServerException_sendExceptionRequest_finalize(
+    ServerException_sendExceptionRequest* sample)
 {
-    sendExceptionRequest_finalize_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void sendExceptionRequest_finalize_ex(
-    sendExceptionRequest* sample,RTIBool deletePointers)
+void ServerException_sendExceptionRequest_finalize_ex(
+    ServerException_sendExceptionRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
 }
 
-RTIBool sendExceptionRequest_copy(
-    sendExceptionRequest* dst,
-    const sendExceptionRequest* src)
+RTIBool ServerException_sendExceptionRequest_copy(
+    ServerException_sendExceptionRequest* dst,
+    const ServerException_sendExceptionRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -180,13 +153,13 @@ RTIBool sendExceptionRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sendExceptionRequest' sequence class.
+ * Configure and implement 'ServerException_sendExceptionRequest' sequence class.
  */
-#define T sendExceptionRequest
-#define TSeq sendExceptionRequestSeq
-#define T_initialize_ex sendExceptionRequest_initialize_ex
-#define T_finalize_ex   sendExceptionRequest_finalize_ex
-#define T_copy       sendExceptionRequest_copy
+#define T ServerException_sendExceptionRequest
+#define TSeq ServerException_sendExceptionRequestSeq
+#define T_initialize_ex ServerException_sendExceptionRequest_initialize_ex
+#define T_finalize_ex   ServerException_sendExceptionRequest_finalize_ex
+#define T_copy       ServerException_sendExceptionRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -207,17 +180,17 @@ RTIBool sendExceptionRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sendExceptionReplyTYPENAME = "sendExceptionReply";
+const char *ServerException_sendExceptionReplyTYPENAME = "ServerException_sendExceptionReply";
 
-DDS_TypeCode* sendExceptionReply_get_typecode()
+DDS_TypeCode* ServerException_sendExceptionReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member sendExceptionReply_g_tc_members[4]=
+    static DDS_TypeCode_Member ServerException_sendExceptionReply_g_tc_members[1]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -229,168 +202,85 @@ DDS_TypeCode* sendExceptionReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
         }
     };
 
-    static DDS_TypeCode sendExceptionReply_g_tc =
+    static DDS_TypeCode ServerException_sendExceptionReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sendExceptionReply", /* Name */
+        (char *)"ServerException_sendExceptionReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        sendExceptionReply_g_tc_members, /* Members */
+        1, /* Number of members */
+        ServerException_sendExceptionReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sendExceptionReply*/
+    }}; /* Type code for ServerException_sendExceptionReply*/
 
     if (is_initialized) {
-        return &sendExceptionReply_g_tc;
+        return &ServerException_sendExceptionReply_g_tc;
     }
 
 
-    sendExceptionReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sendExceptionReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    ServerException_sendExceptionReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &sendExceptionReply_g_tc;
+    return &ServerException_sendExceptionReply_g_tc;
 }
 
 
-RTIBool sendExceptionReply_initialize(
-    sendExceptionReply* sample) {
-  return sendExceptionReply_initialize_ex(sample,RTI_TRUE);
+RTIBool ServerException_sendExceptionReply_initialize(
+    ServerException_sendExceptionReply* sample) {
+  return ServerException_sendExceptionReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sendExceptionReply_initialize_ex(
-    sendExceptionReply* sample,RTIBool allocatePointers)
+RTIBool ServerException_sendExceptionReply_initialize_ex(
+    ServerException_sendExceptionReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
 
     return RTI_TRUE;
 }
 
-void sendExceptionReply_finalize(
-    sendExceptionReply* sample)
+void ServerException_sendExceptionReply_finalize(
+    ServerException_sendExceptionReply* sample)
 {
-    sendExceptionReply_finalize_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void sendExceptionReply_finalize_ex(
-    sendExceptionReply* sample,RTIBool deletePointers)
+void ServerException_sendExceptionReply_finalize_ex(
+    ServerException_sendExceptionReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
 }
 
-RTIBool sendExceptionReply_copy(
-    sendExceptionReply* dst,
-    const sendExceptionReply* src)
+RTIBool ServerException_sendExceptionReply_copy(
+    ServerException_sendExceptionReply* dst,
+    const ServerException_sendExceptionReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -404,13 +294,13 @@ RTIBool sendExceptionReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sendExceptionReply' sequence class.
+ * Configure and implement 'ServerException_sendExceptionReply' sequence class.
  */
-#define T sendExceptionReply
-#define TSeq sendExceptionReplySeq
-#define T_initialize_ex sendExceptionReply_initialize_ex
-#define T_finalize_ex   sendExceptionReply_finalize_ex
-#define T_copy       sendExceptionReply_copy
+#define T ServerException_sendExceptionReply
+#define TSeq ServerException_sendExceptionReplySeq
+#define T_initialize_ex ServerException_sendExceptionReply_initialize_ex
+#define T_finalize_ex   ServerException_sendExceptionReply_finalize_ex
+#define T_copy       ServerException_sendExceptionReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -431,36 +321,19 @@ RTIBool sendExceptionReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sendExceptionTwoRequestTYPENAME = "sendExceptionTwoRequest";
+const char *ServerException_sendExceptionTwoRequestTYPENAME = "ServerException_sendExceptionTwoRequest";
 
-DDS_TypeCode* sendExceptionTwoRequest_get_typecode()
+DDS_TypeCode* ServerException_sendExceptionTwoRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode sendExceptionTwoRequest_g_tc_message_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode sendExceptionTwoRequest_g_tc_message2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode ServerException_sendExceptionTwoRequest_g_tc_message_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode ServerException_sendExceptionTwoRequest_g_tc_message2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member sendExceptionTwoRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member ServerException_sendExceptionTwoRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -512,57 +385,52 @@ DDS_TypeCode* sendExceptionTwoRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode sendExceptionTwoRequest_g_tc =
+    static DDS_TypeCode ServerException_sendExceptionTwoRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sendExceptionTwoRequest", /* Name */
+        (char *)"ServerException_sendExceptionTwoRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        sendExceptionTwoRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        ServerException_sendExceptionTwoRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sendExceptionTwoRequest*/
+    }}; /* Type code for ServerException_sendExceptionTwoRequest*/
 
     if (is_initialized) {
-        return &sendExceptionTwoRequest_g_tc;
+        return &ServerException_sendExceptionTwoRequest_g_tc;
     }
 
 
-    sendExceptionTwoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionTwoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sendExceptionTwoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&sendExceptionTwoRequest_g_tc_message_string;
-    sendExceptionTwoRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&sendExceptionTwoRequest_g_tc_message2_string;
+    ServerException_sendExceptionTwoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    ServerException_sendExceptionTwoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&ServerException_sendExceptionTwoRequest_g_tc_message_string;
+    ServerException_sendExceptionTwoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&ServerException_sendExceptionTwoRequest_g_tc_message2_string;
 
     is_initialized = RTI_TRUE;
 
-    return &sendExceptionTwoRequest_g_tc;
+    return &ServerException_sendExceptionTwoRequest_g_tc;
 }
 
 
-RTIBool sendExceptionTwoRequest_initialize(
-    sendExceptionTwoRequest* sample) {
-  return sendExceptionTwoRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool ServerException_sendExceptionTwoRequest_initialize(
+    ServerException_sendExceptionTwoRequest* sample) {
+  return ServerException_sendExceptionTwoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sendExceptionTwoRequest_initialize_ex(
-    sendExceptionTwoRequest* sample,RTIBool allocatePointers)
+RTIBool ServerException_sendExceptionTwoRequest_initialize_ex(
+    ServerException_sendExceptionTwoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     sample->message = DDS_String_alloc((255));
     if (sample->message == NULL) {
@@ -578,20 +446,20 @@ RTIBool sendExceptionTwoRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void sendExceptionTwoRequest_finalize(
-    sendExceptionTwoRequest* sample)
+void ServerException_sendExceptionTwoRequest_finalize(
+    ServerException_sendExceptionTwoRequest* sample)
 {
-    sendExceptionTwoRequest_finalize_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionTwoRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void sendExceptionTwoRequest_finalize_ex(
-    sendExceptionTwoRequest* sample,RTIBool deletePointers)
+void ServerException_sendExceptionTwoRequest_finalize_ex(
+    ServerException_sendExceptionTwoRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     DDS_String_free(sample->message);                
             
@@ -599,18 +467,13 @@ void sendExceptionTwoRequest_finalize_ex(
             
 }
 
-RTIBool sendExceptionTwoRequest_copy(
-    sendExceptionTwoRequest* dst,
-    const sendExceptionTwoRequest* src)
+RTIBool ServerException_sendExceptionTwoRequest_copy(
+    ServerException_sendExceptionTwoRequest* dst,
+    const ServerException_sendExceptionTwoRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -634,13 +497,13 @@ RTIBool sendExceptionTwoRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sendExceptionTwoRequest' sequence class.
+ * Configure and implement 'ServerException_sendExceptionTwoRequest' sequence class.
  */
-#define T sendExceptionTwoRequest
-#define TSeq sendExceptionTwoRequestSeq
-#define T_initialize_ex sendExceptionTwoRequest_initialize_ex
-#define T_finalize_ex   sendExceptionTwoRequest_finalize_ex
-#define T_copy       sendExceptionTwoRequest_copy
+#define T ServerException_sendExceptionTwoRequest
+#define TSeq ServerException_sendExceptionTwoRequestSeq
+#define T_initialize_ex ServerException_sendExceptionTwoRequest_initialize_ex
+#define T_finalize_ex   ServerException_sendExceptionTwoRequest_finalize_ex
+#define T_copy       ServerException_sendExceptionTwoRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -661,20 +524,20 @@ RTIBool sendExceptionTwoRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sendExceptionTwoReplyTYPENAME = "sendExceptionTwoReply";
+const char *ServerException_sendExceptionTwoReplyTYPENAME = "ServerException_sendExceptionTwoReply";
 
-DDS_TypeCode* sendExceptionTwoReply_get_typecode()
+DDS_TypeCode* ServerException_sendExceptionTwoReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode sendExceptionTwoReply_g_tc_message2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode sendExceptionTwoReply_g_tc_message3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode sendExceptionTwoReply_g_tc_sendExceptionTwo_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode ServerException_sendExceptionTwoReply_g_tc_message2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode ServerException_sendExceptionTwoReply_g_tc_message3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode ServerException_sendExceptionTwoReply_g_tc_sendExceptionTwo_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member sendExceptionTwoReply_g_tc_members[7]=
+    static DDS_TypeCode_Member ServerException_sendExceptionTwoReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -686,57 +549,6 @@ DDS_TypeCode* sendExceptionTwoReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -794,68 +606,53 @@ DDS_TypeCode* sendExceptionTwoReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode sendExceptionTwoReply_g_tc =
+    static DDS_TypeCode ServerException_sendExceptionTwoReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sendExceptionTwoReply", /* Name */
+        (char *)"ServerException_sendExceptionTwoReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        sendExceptionTwoReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        ServerException_sendExceptionTwoReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sendExceptionTwoReply*/
+    }}; /* Type code for ServerException_sendExceptionTwoReply*/
 
     if (is_initialized) {
-        return &sendExceptionTwoReply_g_tc;
+        return &ServerException_sendExceptionTwoReply_g_tc;
     }
 
 
-    sendExceptionTwoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionTwoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionTwoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sendExceptionTwoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    sendExceptionTwoReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&sendExceptionTwoReply_g_tc_message2_string;
-    sendExceptionTwoReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&sendExceptionTwoReply_g_tc_message3_string;
-    sendExceptionTwoReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)&sendExceptionTwoReply_g_tc_sendExceptionTwo_ret_string;
+    ServerException_sendExceptionTwoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    ServerException_sendExceptionTwoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&ServerException_sendExceptionTwoReply_g_tc_message2_string;
+    ServerException_sendExceptionTwoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&ServerException_sendExceptionTwoReply_g_tc_message3_string;
+    ServerException_sendExceptionTwoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ServerException_sendExceptionTwoReply_g_tc_sendExceptionTwo_ret_string;
 
     is_initialized = RTI_TRUE;
 
-    return &sendExceptionTwoReply_g_tc;
+    return &ServerException_sendExceptionTwoReply_g_tc;
 }
 
 
-RTIBool sendExceptionTwoReply_initialize(
-    sendExceptionTwoReply* sample) {
-  return sendExceptionTwoReply_initialize_ex(sample,RTI_TRUE);
+RTIBool ServerException_sendExceptionTwoReply_initialize(
+    ServerException_sendExceptionTwoReply* sample) {
+  return ServerException_sendExceptionTwoReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sendExceptionTwoReply_initialize_ex(
-    sendExceptionTwoReply* sample,RTIBool allocatePointers)
+RTIBool ServerException_sendExceptionTwoReply_initialize_ex(
+    ServerException_sendExceptionTwoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     sample->message2 = DDS_String_alloc((255));
     if (sample->message2 == NULL) {
@@ -876,22 +673,20 @@ RTIBool sendExceptionTwoReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void sendExceptionTwoReply_finalize(
-    sendExceptionTwoReply* sample)
+void ServerException_sendExceptionTwoReply_finalize(
+    ServerException_sendExceptionTwoReply* sample)
 {
-    sendExceptionTwoReply_finalize_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionTwoReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void sendExceptionTwoReply_finalize_ex(
-    sendExceptionTwoReply* sample,RTIBool deletePointers)
+void ServerException_sendExceptionTwoReply_finalize_ex(
+    ServerException_sendExceptionTwoReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     DDS_String_free(sample->message2);                
             
@@ -901,28 +696,13 @@ void sendExceptionTwoReply_finalize_ex(
             
 }
 
-RTIBool sendExceptionTwoReply_copy(
-    sendExceptionTwoReply* dst,
-    const sendExceptionTwoReply* src)
+RTIBool ServerException_sendExceptionTwoReply_copy(
+    ServerException_sendExceptionTwoReply* dst,
+    const ServerException_sendExceptionTwoReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -951,13 +731,13 @@ RTIBool sendExceptionTwoReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sendExceptionTwoReply' sequence class.
+ * Configure and implement 'ServerException_sendExceptionTwoReply' sequence class.
  */
-#define T sendExceptionTwoReply
-#define TSeq sendExceptionTwoReplySeq
-#define T_initialize_ex sendExceptionTwoReply_initialize_ex
-#define T_finalize_ex   sendExceptionTwoReply_finalize_ex
-#define T_copy       sendExceptionTwoReply_copy
+#define T ServerException_sendExceptionTwoReply
+#define TSeq ServerException_sendExceptionTwoReplySeq
+#define T_initialize_ex ServerException_sendExceptionTwoReply_initialize_ex
+#define T_finalize_ex   ServerException_sendExceptionTwoReply_finalize_ex
+#define T_copy       ServerException_sendExceptionTwoReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -978,34 +758,17 @@ RTIBool sendExceptionTwoReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sendExceptionThreeRequestTYPENAME = "sendExceptionThreeRequest";
+const char *ServerException_sendExceptionThreeRequestTYPENAME = "ServerException_sendExceptionThreeRequest";
 
-DDS_TypeCode* sendExceptionThreeRequest_get_typecode()
+DDS_TypeCode* ServerException_sendExceptionThreeRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member sendExceptionThreeRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member ServerException_sendExceptionThreeRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1057,57 +820,52 @@ DDS_TypeCode* sendExceptionThreeRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode sendExceptionThreeRequest_g_tc =
+    static DDS_TypeCode ServerException_sendExceptionThreeRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sendExceptionThreeRequest", /* Name */
+        (char *)"ServerException_sendExceptionThreeRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        sendExceptionThreeRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        ServerException_sendExceptionThreeRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sendExceptionThreeRequest*/
+    }}; /* Type code for ServerException_sendExceptionThreeRequest*/
 
     if (is_initialized) {
-        return &sendExceptionThreeRequest_g_tc;
+        return &ServerException_sendExceptionThreeRequest_g_tc;
     }
 
 
-    sendExceptionThreeRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionThreeRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sendExceptionThreeRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
-    sendExceptionThreeRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
+    ServerException_sendExceptionThreeRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    ServerException_sendExceptionThreeRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
+    ServerException_sendExceptionThreeRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &sendExceptionThreeRequest_g_tc;
+    return &ServerException_sendExceptionThreeRequest_g_tc;
 }
 
 
-RTIBool sendExceptionThreeRequest_initialize(
-    sendExceptionThreeRequest* sample) {
-  return sendExceptionThreeRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool ServerException_sendExceptionThreeRequest_initialize(
+    ServerException_sendExceptionThreeRequest* sample) {
+  return ServerException_sendExceptionThreeRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sendExceptionThreeRequest_initialize_ex(
-    sendExceptionThreeRequest* sample,RTIBool allocatePointers)
+RTIBool ServerException_sendExceptionThreeRequest_initialize_ex(
+    ServerException_sendExceptionThreeRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!Estructura_initialize_ex(&sample->es,allocatePointers)) {
         return RTI_FALSE;
@@ -1121,20 +879,20 @@ RTIBool sendExceptionThreeRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void sendExceptionThreeRequest_finalize(
-    sendExceptionThreeRequest* sample)
+void ServerException_sendExceptionThreeRequest_finalize(
+    ServerException_sendExceptionThreeRequest* sample)
 {
-    sendExceptionThreeRequest_finalize_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionThreeRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void sendExceptionThreeRequest_finalize_ex(
-    sendExceptionThreeRequest* sample,RTIBool deletePointers)
+void ServerException_sendExceptionThreeRequest_finalize_ex(
+    ServerException_sendExceptionThreeRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     Estructura_finalize_ex(&sample->es,deletePointers);
             
@@ -1142,18 +900,13 @@ void sendExceptionThreeRequest_finalize_ex(
             
 }
 
-RTIBool sendExceptionThreeRequest_copy(
-    sendExceptionThreeRequest* dst,
-    const sendExceptionThreeRequest* src)
+RTIBool ServerException_sendExceptionThreeRequest_copy(
+    ServerException_sendExceptionThreeRequest* dst,
+    const ServerException_sendExceptionThreeRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1177,13 +930,13 @@ RTIBool sendExceptionThreeRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sendExceptionThreeRequest' sequence class.
+ * Configure and implement 'ServerException_sendExceptionThreeRequest' sequence class.
  */
-#define T sendExceptionThreeRequest
-#define TSeq sendExceptionThreeRequestSeq
-#define T_initialize_ex sendExceptionThreeRequest_initialize_ex
-#define T_finalize_ex   sendExceptionThreeRequest_finalize_ex
-#define T_copy       sendExceptionThreeRequest_copy
+#define T ServerException_sendExceptionThreeRequest
+#define TSeq ServerException_sendExceptionThreeRequestSeq
+#define T_initialize_ex ServerException_sendExceptionThreeRequest_initialize_ex
+#define T_finalize_ex   ServerException_sendExceptionThreeRequest_finalize_ex
+#define T_copy       ServerException_sendExceptionThreeRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1204,17 +957,17 @@ RTIBool sendExceptionThreeRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *sendExceptionThreeReplyTYPENAME = "sendExceptionThreeReply";
+const char *ServerException_sendExceptionThreeReplyTYPENAME = "ServerException_sendExceptionThreeReply";
 
-DDS_TypeCode* sendExceptionThreeReply_get_typecode()
+DDS_TypeCode* ServerException_sendExceptionThreeReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member sendExceptionThreeReply_g_tc_members[7]=
+    static DDS_TypeCode_Member ServerException_sendExceptionThreeReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1226,57 +979,6 @@ DDS_TypeCode* sendExceptionThreeReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1334,68 +1036,53 @@ DDS_TypeCode* sendExceptionThreeReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode sendExceptionThreeReply_g_tc =
+    static DDS_TypeCode ServerException_sendExceptionThreeReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"sendExceptionThreeReply", /* Name */
+        (char *)"ServerException_sendExceptionThreeReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        sendExceptionThreeReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        ServerException_sendExceptionThreeReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for sendExceptionThreeReply*/
+    }}; /* Type code for ServerException_sendExceptionThreeReply*/
 
     if (is_initialized) {
-        return &sendExceptionThreeReply_g_tc;
+        return &ServerException_sendExceptionThreeReply_g_tc;
     }
 
 
-    sendExceptionThreeReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionThreeReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    sendExceptionThreeReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    sendExceptionThreeReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    sendExceptionThreeReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
-    sendExceptionThreeReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
-    sendExceptionThreeReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
+    ServerException_sendExceptionThreeReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    ServerException_sendExceptionThreeReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
+    ServerException_sendExceptionThreeReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
+    ServerException_sendExceptionThreeReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Estructura_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &sendExceptionThreeReply_g_tc;
+    return &ServerException_sendExceptionThreeReply_g_tc;
 }
 
 
-RTIBool sendExceptionThreeReply_initialize(
-    sendExceptionThreeReply* sample) {
-  return sendExceptionThreeReply_initialize_ex(sample,RTI_TRUE);
+RTIBool ServerException_sendExceptionThreeReply_initialize(
+    ServerException_sendExceptionThreeReply* sample) {
+  return ServerException_sendExceptionThreeReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool sendExceptionThreeReply_initialize_ex(
-    sendExceptionThreeReply* sample,RTIBool allocatePointers)
+RTIBool ServerException_sendExceptionThreeReply_initialize_ex(
+    ServerException_sendExceptionThreeReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!Estructura_initialize_ex(&sample->es2,allocatePointers)) {
         return RTI_FALSE;
@@ -1413,22 +1100,20 @@ RTIBool sendExceptionThreeReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void sendExceptionThreeReply_finalize(
-    sendExceptionThreeReply* sample)
+void ServerException_sendExceptionThreeReply_finalize(
+    ServerException_sendExceptionThreeReply* sample)
 {
-    sendExceptionThreeReply_finalize_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionThreeReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void sendExceptionThreeReply_finalize_ex(
-    sendExceptionThreeReply* sample,RTIBool deletePointers)
+void ServerException_sendExceptionThreeReply_finalize_ex(
+    ServerException_sendExceptionThreeReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     Estructura_finalize_ex(&sample->es2,deletePointers);
             
@@ -1438,28 +1123,13 @@ void sendExceptionThreeReply_finalize_ex(
             
 }
 
-RTIBool sendExceptionThreeReply_copy(
-    sendExceptionThreeReply* dst,
-    const sendExceptionThreeReply* src)
+RTIBool ServerException_sendExceptionThreeReply_copy(
+    ServerException_sendExceptionThreeReply* dst,
+    const ServerException_sendExceptionThreeReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1488,13 +1158,13 @@ RTIBool sendExceptionThreeReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'sendExceptionThreeReply' sequence class.
+ * Configure and implement 'ServerException_sendExceptionThreeReply' sequence class.
  */
-#define T sendExceptionThreeReply
-#define TSeq sendExceptionThreeReplySeq
-#define T_initialize_ex sendExceptionThreeReply_initialize_ex
-#define T_finalize_ex   sendExceptionThreeReply_finalize_ex
-#define T_copy       sendExceptionThreeReply_copy
+#define T ServerException_sendExceptionThreeReply
+#define TSeq ServerException_sendExceptionThreeReplySeq
+#define T_initialize_ex ServerException_sendExceptionThreeReply_initialize_ex
+#define T_finalize_ex   ServerException_sendExceptionThreeReply_finalize_ex
+#define T_copy       ServerException_sendExceptionThreeReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

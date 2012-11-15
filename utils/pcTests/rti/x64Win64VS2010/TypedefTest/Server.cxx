@@ -11,8 +11,13 @@ int main(int argc, char **argv)
     int returnedValue = 0;
     unsigned int threadPoolSize = 5;
     eProsima::DDSRPC::ThreadPoolStrategy *pool = new eProsima::DDSRPC::ThreadPoolStrategy(threadPoolSize);
-    TypedefTestServer *server = new TypedefTestServer(pool);
-    server->wait();
+    TypedefTestServer *server = new TypedefTestServer("TypedefTestService", pool);
+    server->serve();
+    
+    while(1)
+    {
+        Sleep(10000);
+    }
 
     delete server;
     delete pool;

@@ -81,7 +81,7 @@ namespace eProsima
             }
 
 			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
-            throw InitializeException(errorMessage);
+            throw InitializeException(std::move(errorMessage));
 		}
 
 		Client::~Client()

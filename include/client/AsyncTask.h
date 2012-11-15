@@ -4,6 +4,7 @@
 #include "utils/ddsrpc.h"
 #include "utils/Messages.h"
 #include "utils/Version.h"
+#include "exceptions/SystemException.h"
 
 namespace eProsima
 {
@@ -30,12 +31,18 @@ namespace eProsima
                 virtual ~AsyncTask();
 
 				/**
-				 * \brief This function executes the callback functions when a reply is received or an error occurs.
+				 * \brief This function executes the callback functions when a reply is received or an error was transmitted.
+				 *        This function should be implemented by generated asynchronous tasks.
+				 */
+				virtual void execute() = 0;
+
+				/**
+				 * \brief This function sends an exception that occurs in the client side.
 				 *        This function should be implemented by generated asynchronous tasks.
 				 *
-				 * \param message Return code that occurs when asynchronous task try to take the reply.
+				 * \param ex The exception that is sent to the user.
 				 */
-				virtual void execute(ReturnMessage message) = 0;
+				virtual void on_exception(const SystemException &ex) = 0;
 
 				/**
 				 * \brief This function returns the remote procedure that this task is linked with.
@@ -51,7 +58,7 @@ namespace eProsima
 				 * \param message Return code occurs till now.
 			     * \param query Query condition associated with this asynchronous task.
 				 */
-				void execute(ReturnMessage message, DDS::QueryCondition *query);
+				void execute(DDS::QueryCondition *query);
 
 				/**
 				 * \brief This function set the remote procedure associated with this asynchronous task.

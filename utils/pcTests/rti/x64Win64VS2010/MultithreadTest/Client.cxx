@@ -52,7 +52,7 @@ void* executeThread(int threadNum)
             }
             catch(eProsima::DDSRPC::Exception &ex)
             {
-                _snprintf(fileLine, 255, "Error in operation (%d). %s\n", count, ex.getMessage().c_str());
+                _snprintf(fileLine, 255, "Error in operation (%d). %s\n", count, ex.what());
                 fwrite(fileLine, strlen(fileLine), 1, file);
             }
 
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 {
     const char* const METHOD_NAME = "main";
 
-    proxy = new MultithreadTestProxy();
+    proxy = new MultithreadTestProxy("MultithreadTestService");
 
     if(proxy != NULL)
     {

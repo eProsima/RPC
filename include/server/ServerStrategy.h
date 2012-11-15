@@ -2,19 +2,20 @@
 #define _SERVER_SERVERSTRATEGY_H_
 
 #include "utils/Typedefs.h"
+#include "utils/ddsrpc.h"
 
 namespace eProsima
 {
     namespace DDSRPC
     {
         class Server;
-        class ServerRPC;
+        class  ServerRPC;
 
 		/**
 		 * \brief This class is the base of all classes that implement a server strategy
 		 *        that could be used by the server.
 		 */
-        class ServerStrategy
+        class DDSRPC_WIN32_DLL_API ServerStrategy
         {
             public:
 

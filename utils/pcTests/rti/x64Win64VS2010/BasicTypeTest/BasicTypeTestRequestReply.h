@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTestRequestReply_2120091169_h
-#define BasicTypeTestRequestReply_2120091169_h
+#ifndef BasicTypeTestRequestReply_2120089561_h
+#define BasicTypeTestRequestReply_2120089561_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *getOctetRequestTYPENAME;
+extern const char *BasicTypeTest_getOctetRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *getOctetRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getOctetRequestSeq;
+    struct BasicTypeTest_getOctetRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getOctetRequestTypeSupport;
-    class getOctetRequestDataWriter;
-    class getOctetRequestDataReader;
+    class BasicTypeTest_getOctetRequestTypeSupport;
+    class BasicTypeTest_getOctetRequestDataWriter;
+    class BasicTypeTest_getOctetRequestDataReader;
 #endif
 
 #endif
@@ -59,25 +59,24 @@ extern const char *getOctetRequestTYPENAME;
             
     
 
-typedef struct getOctetRequest
+typedef struct BasicTypeTest_getOctetRequest
 {
 #ifdef __cplusplus
-    typedef struct getOctetRequestSeq Seq;
+    typedef struct BasicTypeTest_getOctetRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getOctetRequestTypeSupport TypeSupport;
-    typedef getOctetRequestDataWriter DataWriter;
-    typedef getOctetRequestDataReader DataReader;
+    typedef BasicTypeTest_getOctetRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getOctetRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getOctetRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Octet  oc1;
     DDS_Octet  oc2;
 
-} getOctetRequest;
+} BasicTypeTest_getOctetRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -88,31 +87,31 @@ typedef struct getOctetRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getOctetRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getOctetRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getOctetRequestSeq, getOctetRequest);
+DDS_SEQUENCE(BasicTypeTest_getOctetRequestSeq, BasicTypeTest_getOctetRequest);
         
 NDDSUSERDllExport
-RTIBool getOctetRequest_initialize(
-        getOctetRequest* self);
+RTIBool BasicTypeTest_getOctetRequest_initialize(
+        BasicTypeTest_getOctetRequest* self);
         
 NDDSUSERDllExport
-RTIBool getOctetRequest_initialize_ex(
-        getOctetRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getOctetRequest_initialize_ex(
+        BasicTypeTest_getOctetRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getOctetRequest_finalize(
-        getOctetRequest* self);
+void BasicTypeTest_getOctetRequest_finalize(
+        BasicTypeTest_getOctetRequest* self);
                         
 NDDSUSERDllExport
-void getOctetRequest_finalize_ex(
-        getOctetRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getOctetRequest_finalize_ex(
+        BasicTypeTest_getOctetRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getOctetRequest_copy(
-        getOctetRequest* dst,
-        const getOctetRequest* src);
+RTIBool BasicTypeTest_getOctetRequest_copy(
+        BasicTypeTest_getOctetRequest* dst,
+        const BasicTypeTest_getOctetRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -127,7 +126,7 @@ extern "C" {
 #endif
 
         
-extern const char *getOctetReplyTYPENAME;
+extern const char *BasicTypeTest_getOctetReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -136,12 +135,12 @@ extern const char *getOctetReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getOctetReplySeq;
+    struct BasicTypeTest_getOctetReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getOctetReplyTypeSupport;
-    class getOctetReplyDataWriter;
-    class getOctetReplyDataReader;
+    class BasicTypeTest_getOctetReplyTypeSupport;
+    class BasicTypeTest_getOctetReplyDataWriter;
+    class BasicTypeTest_getOctetReplyDataReader;
 #endif
 
 #endif
@@ -149,28 +148,25 @@ extern const char *getOctetReplyTYPENAME;
             
     
 
-typedef struct getOctetReply
+typedef struct BasicTypeTest_getOctetReply
 {
 #ifdef __cplusplus
-    typedef struct getOctetReplySeq Seq;
+    typedef struct BasicTypeTest_getOctetReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getOctetReplyTypeSupport TypeSupport;
-    typedef getOctetReplyDataWriter DataWriter;
-    typedef getOctetReplyDataReader DataReader;
+    typedef BasicTypeTest_getOctetReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getOctetReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getOctetReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Octet  oc2;
     DDS_Octet  oc3;
     DDS_Octet  getOctet_ret;
 
-} getOctetReply;
+} BasicTypeTest_getOctetReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -181,31 +177,31 @@ typedef struct getOctetReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getOctetReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getOctetReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getOctetReplySeq, getOctetReply);
+DDS_SEQUENCE(BasicTypeTest_getOctetReplySeq, BasicTypeTest_getOctetReply);
         
 NDDSUSERDllExport
-RTIBool getOctetReply_initialize(
-        getOctetReply* self);
+RTIBool BasicTypeTest_getOctetReply_initialize(
+        BasicTypeTest_getOctetReply* self);
         
 NDDSUSERDllExport
-RTIBool getOctetReply_initialize_ex(
-        getOctetReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getOctetReply_initialize_ex(
+        BasicTypeTest_getOctetReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getOctetReply_finalize(
-        getOctetReply* self);
+void BasicTypeTest_getOctetReply_finalize(
+        BasicTypeTest_getOctetReply* self);
                         
 NDDSUSERDllExport
-void getOctetReply_finalize_ex(
-        getOctetReply* self,RTIBool deletePointers);
+void BasicTypeTest_getOctetReply_finalize_ex(
+        BasicTypeTest_getOctetReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getOctetReply_copy(
-        getOctetReply* dst,
-        const getOctetReply* src);
+RTIBool BasicTypeTest_getOctetReply_copy(
+        BasicTypeTest_getOctetReply* dst,
+        const BasicTypeTest_getOctetReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -220,7 +216,7 @@ extern "C" {
 #endif
 
         
-extern const char *getCharRequestTYPENAME;
+extern const char *BasicTypeTest_getCharRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -229,12 +225,12 @@ extern const char *getCharRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getCharRequestSeq;
+    struct BasicTypeTest_getCharRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getCharRequestTypeSupport;
-    class getCharRequestDataWriter;
-    class getCharRequestDataReader;
+    class BasicTypeTest_getCharRequestTypeSupport;
+    class BasicTypeTest_getCharRequestDataWriter;
+    class BasicTypeTest_getCharRequestDataReader;
 #endif
 
 #endif
@@ -242,25 +238,24 @@ extern const char *getCharRequestTYPENAME;
             
     
 
-typedef struct getCharRequest
+typedef struct BasicTypeTest_getCharRequest
 {
 #ifdef __cplusplus
-    typedef struct getCharRequestSeq Seq;
+    typedef struct BasicTypeTest_getCharRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getCharRequestTypeSupport TypeSupport;
-    typedef getCharRequestDataWriter DataWriter;
-    typedef getCharRequestDataReader DataReader;
+    typedef BasicTypeTest_getCharRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getCharRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getCharRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Char  ch1;
     DDS_Char  ch2;
 
-} getCharRequest;
+} BasicTypeTest_getCharRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -271,31 +266,31 @@ typedef struct getCharRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getCharRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getCharRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getCharRequestSeq, getCharRequest);
+DDS_SEQUENCE(BasicTypeTest_getCharRequestSeq, BasicTypeTest_getCharRequest);
         
 NDDSUSERDllExport
-RTIBool getCharRequest_initialize(
-        getCharRequest* self);
+RTIBool BasicTypeTest_getCharRequest_initialize(
+        BasicTypeTest_getCharRequest* self);
         
 NDDSUSERDllExport
-RTIBool getCharRequest_initialize_ex(
-        getCharRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getCharRequest_initialize_ex(
+        BasicTypeTest_getCharRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getCharRequest_finalize(
-        getCharRequest* self);
+void BasicTypeTest_getCharRequest_finalize(
+        BasicTypeTest_getCharRequest* self);
                         
 NDDSUSERDllExport
-void getCharRequest_finalize_ex(
-        getCharRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getCharRequest_finalize_ex(
+        BasicTypeTest_getCharRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getCharRequest_copy(
-        getCharRequest* dst,
-        const getCharRequest* src);
+RTIBool BasicTypeTest_getCharRequest_copy(
+        BasicTypeTest_getCharRequest* dst,
+        const BasicTypeTest_getCharRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -310,7 +305,7 @@ extern "C" {
 #endif
 
         
-extern const char *getCharReplyTYPENAME;
+extern const char *BasicTypeTest_getCharReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -319,12 +314,12 @@ extern const char *getCharReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getCharReplySeq;
+    struct BasicTypeTest_getCharReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getCharReplyTypeSupport;
-    class getCharReplyDataWriter;
-    class getCharReplyDataReader;
+    class BasicTypeTest_getCharReplyTypeSupport;
+    class BasicTypeTest_getCharReplyDataWriter;
+    class BasicTypeTest_getCharReplyDataReader;
 #endif
 
 #endif
@@ -332,28 +327,25 @@ extern const char *getCharReplyTYPENAME;
             
     
 
-typedef struct getCharReply
+typedef struct BasicTypeTest_getCharReply
 {
 #ifdef __cplusplus
-    typedef struct getCharReplySeq Seq;
+    typedef struct BasicTypeTest_getCharReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getCharReplyTypeSupport TypeSupport;
-    typedef getCharReplyDataWriter DataWriter;
-    typedef getCharReplyDataReader DataReader;
+    typedef BasicTypeTest_getCharReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getCharReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getCharReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Char  ch2;
     DDS_Char  ch3;
     DDS_Char  getChar_ret;
 
-} getCharReply;
+} BasicTypeTest_getCharReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -364,31 +356,31 @@ typedef struct getCharReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getCharReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getCharReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getCharReplySeq, getCharReply);
+DDS_SEQUENCE(BasicTypeTest_getCharReplySeq, BasicTypeTest_getCharReply);
         
 NDDSUSERDllExport
-RTIBool getCharReply_initialize(
-        getCharReply* self);
+RTIBool BasicTypeTest_getCharReply_initialize(
+        BasicTypeTest_getCharReply* self);
         
 NDDSUSERDllExport
-RTIBool getCharReply_initialize_ex(
-        getCharReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getCharReply_initialize_ex(
+        BasicTypeTest_getCharReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getCharReply_finalize(
-        getCharReply* self);
+void BasicTypeTest_getCharReply_finalize(
+        BasicTypeTest_getCharReply* self);
                         
 NDDSUSERDllExport
-void getCharReply_finalize_ex(
-        getCharReply* self,RTIBool deletePointers);
+void BasicTypeTest_getCharReply_finalize_ex(
+        BasicTypeTest_getCharReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getCharReply_copy(
-        getCharReply* dst,
-        const getCharReply* src);
+RTIBool BasicTypeTest_getCharReply_copy(
+        BasicTypeTest_getCharReply* dst,
+        const BasicTypeTest_getCharReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -403,7 +395,7 @@ extern "C" {
 #endif
 
         
-extern const char *getWCharRequestTYPENAME;
+extern const char *BasicTypeTest_getWCharRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -412,12 +404,12 @@ extern const char *getWCharRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getWCharRequestSeq;
+    struct BasicTypeTest_getWCharRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getWCharRequestTypeSupport;
-    class getWCharRequestDataWriter;
-    class getWCharRequestDataReader;
+    class BasicTypeTest_getWCharRequestTypeSupport;
+    class BasicTypeTest_getWCharRequestDataWriter;
+    class BasicTypeTest_getWCharRequestDataReader;
 #endif
 
 #endif
@@ -425,25 +417,24 @@ extern const char *getWCharRequestTYPENAME;
             
     
 
-typedef struct getWCharRequest
+typedef struct BasicTypeTest_getWCharRequest
 {
 #ifdef __cplusplus
-    typedef struct getWCharRequestSeq Seq;
+    typedef struct BasicTypeTest_getWCharRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getWCharRequestTypeSupport TypeSupport;
-    typedef getWCharRequestDataWriter DataWriter;
-    typedef getWCharRequestDataReader DataReader;
+    typedef BasicTypeTest_getWCharRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getWCharRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getWCharRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Wchar  wch1;
     DDS_Wchar  wch2;
 
-} getWCharRequest;
+} BasicTypeTest_getWCharRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -454,31 +445,31 @@ typedef struct getWCharRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getWCharRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getWCharRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getWCharRequestSeq, getWCharRequest);
+DDS_SEQUENCE(BasicTypeTest_getWCharRequestSeq, BasicTypeTest_getWCharRequest);
         
 NDDSUSERDllExport
-RTIBool getWCharRequest_initialize(
-        getWCharRequest* self);
+RTIBool BasicTypeTest_getWCharRequest_initialize(
+        BasicTypeTest_getWCharRequest* self);
         
 NDDSUSERDllExport
-RTIBool getWCharRequest_initialize_ex(
-        getWCharRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getWCharRequest_initialize_ex(
+        BasicTypeTest_getWCharRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getWCharRequest_finalize(
-        getWCharRequest* self);
+void BasicTypeTest_getWCharRequest_finalize(
+        BasicTypeTest_getWCharRequest* self);
                         
 NDDSUSERDllExport
-void getWCharRequest_finalize_ex(
-        getWCharRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getWCharRequest_finalize_ex(
+        BasicTypeTest_getWCharRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getWCharRequest_copy(
-        getWCharRequest* dst,
-        const getWCharRequest* src);
+RTIBool BasicTypeTest_getWCharRequest_copy(
+        BasicTypeTest_getWCharRequest* dst,
+        const BasicTypeTest_getWCharRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -493,7 +484,7 @@ extern "C" {
 #endif
 
         
-extern const char *getWCharReplyTYPENAME;
+extern const char *BasicTypeTest_getWCharReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -502,12 +493,12 @@ extern const char *getWCharReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getWCharReplySeq;
+    struct BasicTypeTest_getWCharReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getWCharReplyTypeSupport;
-    class getWCharReplyDataWriter;
-    class getWCharReplyDataReader;
+    class BasicTypeTest_getWCharReplyTypeSupport;
+    class BasicTypeTest_getWCharReplyDataWriter;
+    class BasicTypeTest_getWCharReplyDataReader;
 #endif
 
 #endif
@@ -515,28 +506,25 @@ extern const char *getWCharReplyTYPENAME;
             
     
 
-typedef struct getWCharReply
+typedef struct BasicTypeTest_getWCharReply
 {
 #ifdef __cplusplus
-    typedef struct getWCharReplySeq Seq;
+    typedef struct BasicTypeTest_getWCharReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getWCharReplyTypeSupport TypeSupport;
-    typedef getWCharReplyDataWriter DataWriter;
-    typedef getWCharReplyDataReader DataReader;
+    typedef BasicTypeTest_getWCharReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getWCharReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getWCharReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Wchar  wch2;
     DDS_Wchar  wch3;
     DDS_Wchar  getWChar_ret;
 
-} getWCharReply;
+} BasicTypeTest_getWCharReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -547,31 +535,31 @@ typedef struct getWCharReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getWCharReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getWCharReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getWCharReplySeq, getWCharReply);
+DDS_SEQUENCE(BasicTypeTest_getWCharReplySeq, BasicTypeTest_getWCharReply);
         
 NDDSUSERDllExport
-RTIBool getWCharReply_initialize(
-        getWCharReply* self);
+RTIBool BasicTypeTest_getWCharReply_initialize(
+        BasicTypeTest_getWCharReply* self);
         
 NDDSUSERDllExport
-RTIBool getWCharReply_initialize_ex(
-        getWCharReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getWCharReply_initialize_ex(
+        BasicTypeTest_getWCharReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getWCharReply_finalize(
-        getWCharReply* self);
+void BasicTypeTest_getWCharReply_finalize(
+        BasicTypeTest_getWCharReply* self);
                         
 NDDSUSERDllExport
-void getWCharReply_finalize_ex(
-        getWCharReply* self,RTIBool deletePointers);
+void BasicTypeTest_getWCharReply_finalize_ex(
+        BasicTypeTest_getWCharReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getWCharReply_copy(
-        getWCharReply* dst,
-        const getWCharReply* src);
+RTIBool BasicTypeTest_getWCharReply_copy(
+        BasicTypeTest_getWCharReply* dst,
+        const BasicTypeTest_getWCharReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -586,7 +574,7 @@ extern "C" {
 #endif
 
         
-extern const char *getShortRequestTYPENAME;
+extern const char *BasicTypeTest_getShortRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -595,12 +583,12 @@ extern const char *getShortRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getShortRequestSeq;
+    struct BasicTypeTest_getShortRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getShortRequestTypeSupport;
-    class getShortRequestDataWriter;
-    class getShortRequestDataReader;
+    class BasicTypeTest_getShortRequestTypeSupport;
+    class BasicTypeTest_getShortRequestDataWriter;
+    class BasicTypeTest_getShortRequestDataReader;
 #endif
 
 #endif
@@ -608,25 +596,24 @@ extern const char *getShortRequestTYPENAME;
             
     
 
-typedef struct getShortRequest
+typedef struct BasicTypeTest_getShortRequest
 {
 #ifdef __cplusplus
-    typedef struct getShortRequestSeq Seq;
+    typedef struct BasicTypeTest_getShortRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getShortRequestTypeSupport TypeSupport;
-    typedef getShortRequestDataWriter DataWriter;
-    typedef getShortRequestDataReader DataReader;
+    typedef BasicTypeTest_getShortRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getShortRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getShortRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Short  sh1;
     DDS_Short  sh2;
 
-} getShortRequest;
+} BasicTypeTest_getShortRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -637,31 +624,31 @@ typedef struct getShortRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getShortRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getShortRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getShortRequestSeq, getShortRequest);
+DDS_SEQUENCE(BasicTypeTest_getShortRequestSeq, BasicTypeTest_getShortRequest);
         
 NDDSUSERDllExport
-RTIBool getShortRequest_initialize(
-        getShortRequest* self);
+RTIBool BasicTypeTest_getShortRequest_initialize(
+        BasicTypeTest_getShortRequest* self);
         
 NDDSUSERDllExport
-RTIBool getShortRequest_initialize_ex(
-        getShortRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getShortRequest_initialize_ex(
+        BasicTypeTest_getShortRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getShortRequest_finalize(
-        getShortRequest* self);
+void BasicTypeTest_getShortRequest_finalize(
+        BasicTypeTest_getShortRequest* self);
                         
 NDDSUSERDllExport
-void getShortRequest_finalize_ex(
-        getShortRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getShortRequest_finalize_ex(
+        BasicTypeTest_getShortRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getShortRequest_copy(
-        getShortRequest* dst,
-        const getShortRequest* src);
+RTIBool BasicTypeTest_getShortRequest_copy(
+        BasicTypeTest_getShortRequest* dst,
+        const BasicTypeTest_getShortRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -676,7 +663,7 @@ extern "C" {
 #endif
 
         
-extern const char *getShortReplyTYPENAME;
+extern const char *BasicTypeTest_getShortReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -685,12 +672,12 @@ extern const char *getShortReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getShortReplySeq;
+    struct BasicTypeTest_getShortReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getShortReplyTypeSupport;
-    class getShortReplyDataWriter;
-    class getShortReplyDataReader;
+    class BasicTypeTest_getShortReplyTypeSupport;
+    class BasicTypeTest_getShortReplyDataWriter;
+    class BasicTypeTest_getShortReplyDataReader;
 #endif
 
 #endif
@@ -698,28 +685,25 @@ extern const char *getShortReplyTYPENAME;
             
     
 
-typedef struct getShortReply
+typedef struct BasicTypeTest_getShortReply
 {
 #ifdef __cplusplus
-    typedef struct getShortReplySeq Seq;
+    typedef struct BasicTypeTest_getShortReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getShortReplyTypeSupport TypeSupport;
-    typedef getShortReplyDataWriter DataWriter;
-    typedef getShortReplyDataReader DataReader;
+    typedef BasicTypeTest_getShortReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getShortReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getShortReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Short  sh2;
     DDS_Short  sh3;
     DDS_Short  getShort_ret;
 
-} getShortReply;
+} BasicTypeTest_getShortReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -730,31 +714,31 @@ typedef struct getShortReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getShortReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getShortReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getShortReplySeq, getShortReply);
+DDS_SEQUENCE(BasicTypeTest_getShortReplySeq, BasicTypeTest_getShortReply);
         
 NDDSUSERDllExport
-RTIBool getShortReply_initialize(
-        getShortReply* self);
+RTIBool BasicTypeTest_getShortReply_initialize(
+        BasicTypeTest_getShortReply* self);
         
 NDDSUSERDllExport
-RTIBool getShortReply_initialize_ex(
-        getShortReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getShortReply_initialize_ex(
+        BasicTypeTest_getShortReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getShortReply_finalize(
-        getShortReply* self);
+void BasicTypeTest_getShortReply_finalize(
+        BasicTypeTest_getShortReply* self);
                         
 NDDSUSERDllExport
-void getShortReply_finalize_ex(
-        getShortReply* self,RTIBool deletePointers);
+void BasicTypeTest_getShortReply_finalize_ex(
+        BasicTypeTest_getShortReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getShortReply_copy(
-        getShortReply* dst,
-        const getShortReply* src);
+RTIBool BasicTypeTest_getShortReply_copy(
+        BasicTypeTest_getShortReply* dst,
+        const BasicTypeTest_getShortReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -769,7 +753,7 @@ extern "C" {
 #endif
 
         
-extern const char *getUShortRequestTYPENAME;
+extern const char *BasicTypeTest_getUShortRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -778,12 +762,12 @@ extern const char *getUShortRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getUShortRequestSeq;
+    struct BasicTypeTest_getUShortRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getUShortRequestTypeSupport;
-    class getUShortRequestDataWriter;
-    class getUShortRequestDataReader;
+    class BasicTypeTest_getUShortRequestTypeSupport;
+    class BasicTypeTest_getUShortRequestDataWriter;
+    class BasicTypeTest_getUShortRequestDataReader;
 #endif
 
 #endif
@@ -791,25 +775,24 @@ extern const char *getUShortRequestTYPENAME;
             
     
 
-typedef struct getUShortRequest
+typedef struct BasicTypeTest_getUShortRequest
 {
 #ifdef __cplusplus
-    typedef struct getUShortRequestSeq Seq;
+    typedef struct BasicTypeTest_getUShortRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getUShortRequestTypeSupport TypeSupport;
-    typedef getUShortRequestDataWriter DataWriter;
-    typedef getUShortRequestDataReader DataReader;
+    typedef BasicTypeTest_getUShortRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getUShortRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getUShortRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_UnsignedShort  ush1;
     DDS_UnsignedShort  ush2;
 
-} getUShortRequest;
+} BasicTypeTest_getUShortRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -820,31 +803,31 @@ typedef struct getUShortRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getUShortRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getUShortRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getUShortRequestSeq, getUShortRequest);
+DDS_SEQUENCE(BasicTypeTest_getUShortRequestSeq, BasicTypeTest_getUShortRequest);
         
 NDDSUSERDllExport
-RTIBool getUShortRequest_initialize(
-        getUShortRequest* self);
+RTIBool BasicTypeTest_getUShortRequest_initialize(
+        BasicTypeTest_getUShortRequest* self);
         
 NDDSUSERDllExport
-RTIBool getUShortRequest_initialize_ex(
-        getUShortRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getUShortRequest_initialize_ex(
+        BasicTypeTest_getUShortRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getUShortRequest_finalize(
-        getUShortRequest* self);
+void BasicTypeTest_getUShortRequest_finalize(
+        BasicTypeTest_getUShortRequest* self);
                         
 NDDSUSERDllExport
-void getUShortRequest_finalize_ex(
-        getUShortRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getUShortRequest_finalize_ex(
+        BasicTypeTest_getUShortRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getUShortRequest_copy(
-        getUShortRequest* dst,
-        const getUShortRequest* src);
+RTIBool BasicTypeTest_getUShortRequest_copy(
+        BasicTypeTest_getUShortRequest* dst,
+        const BasicTypeTest_getUShortRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -859,7 +842,7 @@ extern "C" {
 #endif
 
         
-extern const char *getUShortReplyTYPENAME;
+extern const char *BasicTypeTest_getUShortReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -868,12 +851,12 @@ extern const char *getUShortReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getUShortReplySeq;
+    struct BasicTypeTest_getUShortReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getUShortReplyTypeSupport;
-    class getUShortReplyDataWriter;
-    class getUShortReplyDataReader;
+    class BasicTypeTest_getUShortReplyTypeSupport;
+    class BasicTypeTest_getUShortReplyDataWriter;
+    class BasicTypeTest_getUShortReplyDataReader;
 #endif
 
 #endif
@@ -881,28 +864,25 @@ extern const char *getUShortReplyTYPENAME;
             
     
 
-typedef struct getUShortReply
+typedef struct BasicTypeTest_getUShortReply
 {
 #ifdef __cplusplus
-    typedef struct getUShortReplySeq Seq;
+    typedef struct BasicTypeTest_getUShortReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getUShortReplyTypeSupport TypeSupport;
-    typedef getUShortReplyDataWriter DataWriter;
-    typedef getUShortReplyDataReader DataReader;
+    typedef BasicTypeTest_getUShortReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getUShortReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getUShortReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_UnsignedShort  ush2;
     DDS_UnsignedShort  ush3;
     DDS_UnsignedShort  getUShort_ret;
 
-} getUShortReply;
+} BasicTypeTest_getUShortReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -913,31 +893,31 @@ typedef struct getUShortReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getUShortReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getUShortReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getUShortReplySeq, getUShortReply);
+DDS_SEQUENCE(BasicTypeTest_getUShortReplySeq, BasicTypeTest_getUShortReply);
         
 NDDSUSERDllExport
-RTIBool getUShortReply_initialize(
-        getUShortReply* self);
+RTIBool BasicTypeTest_getUShortReply_initialize(
+        BasicTypeTest_getUShortReply* self);
         
 NDDSUSERDllExport
-RTIBool getUShortReply_initialize_ex(
-        getUShortReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getUShortReply_initialize_ex(
+        BasicTypeTest_getUShortReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getUShortReply_finalize(
-        getUShortReply* self);
+void BasicTypeTest_getUShortReply_finalize(
+        BasicTypeTest_getUShortReply* self);
                         
 NDDSUSERDllExport
-void getUShortReply_finalize_ex(
-        getUShortReply* self,RTIBool deletePointers);
+void BasicTypeTest_getUShortReply_finalize_ex(
+        BasicTypeTest_getUShortReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getUShortReply_copy(
-        getUShortReply* dst,
-        const getUShortReply* src);
+RTIBool BasicTypeTest_getUShortReply_copy(
+        BasicTypeTest_getUShortReply* dst,
+        const BasicTypeTest_getUShortReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -952,7 +932,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLongRequestTYPENAME;
+extern const char *BasicTypeTest_getLongRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -961,12 +941,12 @@ extern const char *getLongRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLongRequestSeq;
+    struct BasicTypeTest_getLongRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLongRequestTypeSupport;
-    class getLongRequestDataWriter;
-    class getLongRequestDataReader;
+    class BasicTypeTest_getLongRequestTypeSupport;
+    class BasicTypeTest_getLongRequestDataWriter;
+    class BasicTypeTest_getLongRequestDataReader;
 #endif
 
 #endif
@@ -974,25 +954,24 @@ extern const char *getLongRequestTYPENAME;
             
     
 
-typedef struct getLongRequest
+typedef struct BasicTypeTest_getLongRequest
 {
 #ifdef __cplusplus
-    typedef struct getLongRequestSeq Seq;
+    typedef struct BasicTypeTest_getLongRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLongRequestTypeSupport TypeSupport;
-    typedef getLongRequestDataWriter DataWriter;
-    typedef getLongRequestDataReader DataReader;
+    typedef BasicTypeTest_getLongRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getLongRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getLongRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Long  lo1;
     DDS_Long  lo2;
 
-} getLongRequest;
+} BasicTypeTest_getLongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1003,31 +982,31 @@ typedef struct getLongRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLongRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getLongRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLongRequestSeq, getLongRequest);
+DDS_SEQUENCE(BasicTypeTest_getLongRequestSeq, BasicTypeTest_getLongRequest);
         
 NDDSUSERDllExport
-RTIBool getLongRequest_initialize(
-        getLongRequest* self);
+RTIBool BasicTypeTest_getLongRequest_initialize(
+        BasicTypeTest_getLongRequest* self);
         
 NDDSUSERDllExport
-RTIBool getLongRequest_initialize_ex(
-        getLongRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getLongRequest_initialize_ex(
+        BasicTypeTest_getLongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLongRequest_finalize(
-        getLongRequest* self);
+void BasicTypeTest_getLongRequest_finalize(
+        BasicTypeTest_getLongRequest* self);
                         
 NDDSUSERDllExport
-void getLongRequest_finalize_ex(
-        getLongRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getLongRequest_finalize_ex(
+        BasicTypeTest_getLongRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLongRequest_copy(
-        getLongRequest* dst,
-        const getLongRequest* src);
+RTIBool BasicTypeTest_getLongRequest_copy(
+        BasicTypeTest_getLongRequest* dst,
+        const BasicTypeTest_getLongRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1042,7 +1021,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLongReplyTYPENAME;
+extern const char *BasicTypeTest_getLongReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1051,12 +1030,12 @@ extern const char *getLongReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLongReplySeq;
+    struct BasicTypeTest_getLongReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLongReplyTypeSupport;
-    class getLongReplyDataWriter;
-    class getLongReplyDataReader;
+    class BasicTypeTest_getLongReplyTypeSupport;
+    class BasicTypeTest_getLongReplyDataWriter;
+    class BasicTypeTest_getLongReplyDataReader;
 #endif
 
 #endif
@@ -1064,28 +1043,25 @@ extern const char *getLongReplyTYPENAME;
             
     
 
-typedef struct getLongReply
+typedef struct BasicTypeTest_getLongReply
 {
 #ifdef __cplusplus
-    typedef struct getLongReplySeq Seq;
+    typedef struct BasicTypeTest_getLongReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLongReplyTypeSupport TypeSupport;
-    typedef getLongReplyDataWriter DataWriter;
-    typedef getLongReplyDataReader DataReader;
+    typedef BasicTypeTest_getLongReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getLongReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getLongReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Long  lo2;
     DDS_Long  lo3;
     DDS_Long  getLong_ret;
 
-} getLongReply;
+} BasicTypeTest_getLongReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1096,31 +1072,31 @@ typedef struct getLongReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLongReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getLongReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLongReplySeq, getLongReply);
+DDS_SEQUENCE(BasicTypeTest_getLongReplySeq, BasicTypeTest_getLongReply);
         
 NDDSUSERDllExport
-RTIBool getLongReply_initialize(
-        getLongReply* self);
+RTIBool BasicTypeTest_getLongReply_initialize(
+        BasicTypeTest_getLongReply* self);
         
 NDDSUSERDllExport
-RTIBool getLongReply_initialize_ex(
-        getLongReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getLongReply_initialize_ex(
+        BasicTypeTest_getLongReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLongReply_finalize(
-        getLongReply* self);
+void BasicTypeTest_getLongReply_finalize(
+        BasicTypeTest_getLongReply* self);
                         
 NDDSUSERDllExport
-void getLongReply_finalize_ex(
-        getLongReply* self,RTIBool deletePointers);
+void BasicTypeTest_getLongReply_finalize_ex(
+        BasicTypeTest_getLongReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLongReply_copy(
-        getLongReply* dst,
-        const getLongReply* src);
+RTIBool BasicTypeTest_getLongReply_copy(
+        BasicTypeTest_getLongReply* dst,
+        const BasicTypeTest_getLongReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1135,7 +1111,7 @@ extern "C" {
 #endif
 
         
-extern const char *getULongRequestTYPENAME;
+extern const char *BasicTypeTest_getULongRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1144,12 +1120,12 @@ extern const char *getULongRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getULongRequestSeq;
+    struct BasicTypeTest_getULongRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getULongRequestTypeSupport;
-    class getULongRequestDataWriter;
-    class getULongRequestDataReader;
+    class BasicTypeTest_getULongRequestTypeSupport;
+    class BasicTypeTest_getULongRequestDataWriter;
+    class BasicTypeTest_getULongRequestDataReader;
 #endif
 
 #endif
@@ -1157,25 +1133,24 @@ extern const char *getULongRequestTYPENAME;
             
     
 
-typedef struct getULongRequest
+typedef struct BasicTypeTest_getULongRequest
 {
 #ifdef __cplusplus
-    typedef struct getULongRequestSeq Seq;
+    typedef struct BasicTypeTest_getULongRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getULongRequestTypeSupport TypeSupport;
-    typedef getULongRequestDataWriter DataWriter;
-    typedef getULongRequestDataReader DataReader;
+    typedef BasicTypeTest_getULongRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getULongRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getULongRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_UnsignedLong  ulo1;
     DDS_UnsignedLong  ulo2;
 
-} getULongRequest;
+} BasicTypeTest_getULongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1186,31 +1161,31 @@ typedef struct getULongRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getULongRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getULongRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getULongRequestSeq, getULongRequest);
+DDS_SEQUENCE(BasicTypeTest_getULongRequestSeq, BasicTypeTest_getULongRequest);
         
 NDDSUSERDllExport
-RTIBool getULongRequest_initialize(
-        getULongRequest* self);
+RTIBool BasicTypeTest_getULongRequest_initialize(
+        BasicTypeTest_getULongRequest* self);
         
 NDDSUSERDllExport
-RTIBool getULongRequest_initialize_ex(
-        getULongRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getULongRequest_initialize_ex(
+        BasicTypeTest_getULongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getULongRequest_finalize(
-        getULongRequest* self);
+void BasicTypeTest_getULongRequest_finalize(
+        BasicTypeTest_getULongRequest* self);
                         
 NDDSUSERDllExport
-void getULongRequest_finalize_ex(
-        getULongRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getULongRequest_finalize_ex(
+        BasicTypeTest_getULongRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getULongRequest_copy(
-        getULongRequest* dst,
-        const getULongRequest* src);
+RTIBool BasicTypeTest_getULongRequest_copy(
+        BasicTypeTest_getULongRequest* dst,
+        const BasicTypeTest_getULongRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1225,7 +1200,7 @@ extern "C" {
 #endif
 
         
-extern const char *getULongReplyTYPENAME;
+extern const char *BasicTypeTest_getULongReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1234,12 +1209,12 @@ extern const char *getULongReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getULongReplySeq;
+    struct BasicTypeTest_getULongReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getULongReplyTypeSupport;
-    class getULongReplyDataWriter;
-    class getULongReplyDataReader;
+    class BasicTypeTest_getULongReplyTypeSupport;
+    class BasicTypeTest_getULongReplyDataWriter;
+    class BasicTypeTest_getULongReplyDataReader;
 #endif
 
 #endif
@@ -1247,28 +1222,25 @@ extern const char *getULongReplyTYPENAME;
             
     
 
-typedef struct getULongReply
+typedef struct BasicTypeTest_getULongReply
 {
 #ifdef __cplusplus
-    typedef struct getULongReplySeq Seq;
+    typedef struct BasicTypeTest_getULongReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getULongReplyTypeSupport TypeSupport;
-    typedef getULongReplyDataWriter DataWriter;
-    typedef getULongReplyDataReader DataReader;
+    typedef BasicTypeTest_getULongReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getULongReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getULongReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_UnsignedLong  ulo2;
     DDS_UnsignedLong  ulo3;
     DDS_UnsignedLong  getULong_ret;
 
-} getULongReply;
+} BasicTypeTest_getULongReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1279,31 +1251,31 @@ typedef struct getULongReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getULongReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getULongReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getULongReplySeq, getULongReply);
+DDS_SEQUENCE(BasicTypeTest_getULongReplySeq, BasicTypeTest_getULongReply);
         
 NDDSUSERDllExport
-RTIBool getULongReply_initialize(
-        getULongReply* self);
+RTIBool BasicTypeTest_getULongReply_initialize(
+        BasicTypeTest_getULongReply* self);
         
 NDDSUSERDllExport
-RTIBool getULongReply_initialize_ex(
-        getULongReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getULongReply_initialize_ex(
+        BasicTypeTest_getULongReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getULongReply_finalize(
-        getULongReply* self);
+void BasicTypeTest_getULongReply_finalize(
+        BasicTypeTest_getULongReply* self);
                         
 NDDSUSERDllExport
-void getULongReply_finalize_ex(
-        getULongReply* self,RTIBool deletePointers);
+void BasicTypeTest_getULongReply_finalize_ex(
+        BasicTypeTest_getULongReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getULongReply_copy(
-        getULongReply* dst,
-        const getULongReply* src);
+RTIBool BasicTypeTest_getULongReply_copy(
+        BasicTypeTest_getULongReply* dst,
+        const BasicTypeTest_getULongReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1318,7 +1290,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLLongRequestTYPENAME;
+extern const char *BasicTypeTest_getLLongRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1327,12 +1299,12 @@ extern const char *getLLongRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLLongRequestSeq;
+    struct BasicTypeTest_getLLongRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLLongRequestTypeSupport;
-    class getLLongRequestDataWriter;
-    class getLLongRequestDataReader;
+    class BasicTypeTest_getLLongRequestTypeSupport;
+    class BasicTypeTest_getLLongRequestDataWriter;
+    class BasicTypeTest_getLLongRequestDataReader;
 #endif
 
 #endif
@@ -1340,25 +1312,24 @@ extern const char *getLLongRequestTYPENAME;
             
     
 
-typedef struct getLLongRequest
+typedef struct BasicTypeTest_getLLongRequest
 {
 #ifdef __cplusplus
-    typedef struct getLLongRequestSeq Seq;
+    typedef struct BasicTypeTest_getLLongRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLLongRequestTypeSupport TypeSupport;
-    typedef getLLongRequestDataWriter DataWriter;
-    typedef getLLongRequestDataReader DataReader;
+    typedef BasicTypeTest_getLLongRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getLLongRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getLLongRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_LongLong  llo1;
     DDS_LongLong  llo2;
 
-} getLLongRequest;
+} BasicTypeTest_getLLongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1369,31 +1340,31 @@ typedef struct getLLongRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLLongRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getLLongRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLLongRequestSeq, getLLongRequest);
+DDS_SEQUENCE(BasicTypeTest_getLLongRequestSeq, BasicTypeTest_getLLongRequest);
         
 NDDSUSERDllExport
-RTIBool getLLongRequest_initialize(
-        getLLongRequest* self);
+RTIBool BasicTypeTest_getLLongRequest_initialize(
+        BasicTypeTest_getLLongRequest* self);
         
 NDDSUSERDllExport
-RTIBool getLLongRequest_initialize_ex(
-        getLLongRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getLLongRequest_initialize_ex(
+        BasicTypeTest_getLLongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLLongRequest_finalize(
-        getLLongRequest* self);
+void BasicTypeTest_getLLongRequest_finalize(
+        BasicTypeTest_getLLongRequest* self);
                         
 NDDSUSERDllExport
-void getLLongRequest_finalize_ex(
-        getLLongRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getLLongRequest_finalize_ex(
+        BasicTypeTest_getLLongRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLLongRequest_copy(
-        getLLongRequest* dst,
-        const getLLongRequest* src);
+RTIBool BasicTypeTest_getLLongRequest_copy(
+        BasicTypeTest_getLLongRequest* dst,
+        const BasicTypeTest_getLLongRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1408,7 +1379,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLLongReplyTYPENAME;
+extern const char *BasicTypeTest_getLLongReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1417,12 +1388,12 @@ extern const char *getLLongReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLLongReplySeq;
+    struct BasicTypeTest_getLLongReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLLongReplyTypeSupport;
-    class getLLongReplyDataWriter;
-    class getLLongReplyDataReader;
+    class BasicTypeTest_getLLongReplyTypeSupport;
+    class BasicTypeTest_getLLongReplyDataWriter;
+    class BasicTypeTest_getLLongReplyDataReader;
 #endif
 
 #endif
@@ -1430,28 +1401,25 @@ extern const char *getLLongReplyTYPENAME;
             
     
 
-typedef struct getLLongReply
+typedef struct BasicTypeTest_getLLongReply
 {
 #ifdef __cplusplus
-    typedef struct getLLongReplySeq Seq;
+    typedef struct BasicTypeTest_getLLongReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLLongReplyTypeSupport TypeSupport;
-    typedef getLLongReplyDataWriter DataWriter;
-    typedef getLLongReplyDataReader DataReader;
+    typedef BasicTypeTest_getLLongReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getLLongReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getLLongReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_LongLong  llo2;
     DDS_LongLong  llo3;
     DDS_LongLong  getLLong_ret;
 
-} getLLongReply;
+} BasicTypeTest_getLLongReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1462,31 +1430,31 @@ typedef struct getLLongReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLLongReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getLLongReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLLongReplySeq, getLLongReply);
+DDS_SEQUENCE(BasicTypeTest_getLLongReplySeq, BasicTypeTest_getLLongReply);
         
 NDDSUSERDllExport
-RTIBool getLLongReply_initialize(
-        getLLongReply* self);
+RTIBool BasicTypeTest_getLLongReply_initialize(
+        BasicTypeTest_getLLongReply* self);
         
 NDDSUSERDllExport
-RTIBool getLLongReply_initialize_ex(
-        getLLongReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getLLongReply_initialize_ex(
+        BasicTypeTest_getLLongReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLLongReply_finalize(
-        getLLongReply* self);
+void BasicTypeTest_getLLongReply_finalize(
+        BasicTypeTest_getLLongReply* self);
                         
 NDDSUSERDllExport
-void getLLongReply_finalize_ex(
-        getLLongReply* self,RTIBool deletePointers);
+void BasicTypeTest_getLLongReply_finalize_ex(
+        BasicTypeTest_getLLongReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLLongReply_copy(
-        getLLongReply* dst,
-        const getLLongReply* src);
+RTIBool BasicTypeTest_getLLongReply_copy(
+        BasicTypeTest_getLLongReply* dst,
+        const BasicTypeTest_getLLongReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1501,7 +1469,7 @@ extern "C" {
 #endif
 
         
-extern const char *getULLongRequestTYPENAME;
+extern const char *BasicTypeTest_getULLongRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1510,12 +1478,12 @@ extern const char *getULLongRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getULLongRequestSeq;
+    struct BasicTypeTest_getULLongRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getULLongRequestTypeSupport;
-    class getULLongRequestDataWriter;
-    class getULLongRequestDataReader;
+    class BasicTypeTest_getULLongRequestTypeSupport;
+    class BasicTypeTest_getULLongRequestDataWriter;
+    class BasicTypeTest_getULLongRequestDataReader;
 #endif
 
 #endif
@@ -1523,25 +1491,24 @@ extern const char *getULLongRequestTYPENAME;
             
     
 
-typedef struct getULLongRequest
+typedef struct BasicTypeTest_getULLongRequest
 {
 #ifdef __cplusplus
-    typedef struct getULLongRequestSeq Seq;
+    typedef struct BasicTypeTest_getULLongRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getULLongRequestTypeSupport TypeSupport;
-    typedef getULLongRequestDataWriter DataWriter;
-    typedef getULLongRequestDataReader DataReader;
+    typedef BasicTypeTest_getULLongRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getULLongRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getULLongRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_UnsignedLongLong  ullo1;
     DDS_UnsignedLongLong  ullo2;
 
-} getULLongRequest;
+} BasicTypeTest_getULLongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1552,31 +1519,31 @@ typedef struct getULLongRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getULLongRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getULLongRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getULLongRequestSeq, getULLongRequest);
+DDS_SEQUENCE(BasicTypeTest_getULLongRequestSeq, BasicTypeTest_getULLongRequest);
         
 NDDSUSERDllExport
-RTIBool getULLongRequest_initialize(
-        getULLongRequest* self);
+RTIBool BasicTypeTest_getULLongRequest_initialize(
+        BasicTypeTest_getULLongRequest* self);
         
 NDDSUSERDllExport
-RTIBool getULLongRequest_initialize_ex(
-        getULLongRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getULLongRequest_initialize_ex(
+        BasicTypeTest_getULLongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getULLongRequest_finalize(
-        getULLongRequest* self);
+void BasicTypeTest_getULLongRequest_finalize(
+        BasicTypeTest_getULLongRequest* self);
                         
 NDDSUSERDllExport
-void getULLongRequest_finalize_ex(
-        getULLongRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getULLongRequest_finalize_ex(
+        BasicTypeTest_getULLongRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getULLongRequest_copy(
-        getULLongRequest* dst,
-        const getULLongRequest* src);
+RTIBool BasicTypeTest_getULLongRequest_copy(
+        BasicTypeTest_getULLongRequest* dst,
+        const BasicTypeTest_getULLongRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1591,7 +1558,7 @@ extern "C" {
 #endif
 
         
-extern const char *getULLongReplyTYPENAME;
+extern const char *BasicTypeTest_getULLongReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1600,12 +1567,12 @@ extern const char *getULLongReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getULLongReplySeq;
+    struct BasicTypeTest_getULLongReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getULLongReplyTypeSupport;
-    class getULLongReplyDataWriter;
-    class getULLongReplyDataReader;
+    class BasicTypeTest_getULLongReplyTypeSupport;
+    class BasicTypeTest_getULLongReplyDataWriter;
+    class BasicTypeTest_getULLongReplyDataReader;
 #endif
 
 #endif
@@ -1613,28 +1580,25 @@ extern const char *getULLongReplyTYPENAME;
             
     
 
-typedef struct getULLongReply
+typedef struct BasicTypeTest_getULLongReply
 {
 #ifdef __cplusplus
-    typedef struct getULLongReplySeq Seq;
+    typedef struct BasicTypeTest_getULLongReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getULLongReplyTypeSupport TypeSupport;
-    typedef getULLongReplyDataWriter DataWriter;
-    typedef getULLongReplyDataReader DataReader;
+    typedef BasicTypeTest_getULLongReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getULLongReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getULLongReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_UnsignedLongLong  ullo2;
     DDS_UnsignedLongLong  ullo3;
     DDS_UnsignedLongLong  getULLong_ret;
 
-} getULLongReply;
+} BasicTypeTest_getULLongReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1645,31 +1609,31 @@ typedef struct getULLongReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getULLongReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getULLongReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getULLongReplySeq, getULLongReply);
+DDS_SEQUENCE(BasicTypeTest_getULLongReplySeq, BasicTypeTest_getULLongReply);
         
 NDDSUSERDllExport
-RTIBool getULLongReply_initialize(
-        getULLongReply* self);
+RTIBool BasicTypeTest_getULLongReply_initialize(
+        BasicTypeTest_getULLongReply* self);
         
 NDDSUSERDllExport
-RTIBool getULLongReply_initialize_ex(
-        getULLongReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getULLongReply_initialize_ex(
+        BasicTypeTest_getULLongReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getULLongReply_finalize(
-        getULLongReply* self);
+void BasicTypeTest_getULLongReply_finalize(
+        BasicTypeTest_getULLongReply* self);
                         
 NDDSUSERDllExport
-void getULLongReply_finalize_ex(
-        getULLongReply* self,RTIBool deletePointers);
+void BasicTypeTest_getULLongReply_finalize_ex(
+        BasicTypeTest_getULLongReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getULLongReply_copy(
-        getULLongReply* dst,
-        const getULLongReply* src);
+RTIBool BasicTypeTest_getULLongReply_copy(
+        BasicTypeTest_getULLongReply* dst,
+        const BasicTypeTest_getULLongReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1684,7 +1648,7 @@ extern "C" {
 #endif
 
         
-extern const char *getFloatRequestTYPENAME;
+extern const char *BasicTypeTest_getFloatRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1693,12 +1657,12 @@ extern const char *getFloatRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getFloatRequestSeq;
+    struct BasicTypeTest_getFloatRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getFloatRequestTypeSupport;
-    class getFloatRequestDataWriter;
-    class getFloatRequestDataReader;
+    class BasicTypeTest_getFloatRequestTypeSupport;
+    class BasicTypeTest_getFloatRequestDataWriter;
+    class BasicTypeTest_getFloatRequestDataReader;
 #endif
 
 #endif
@@ -1706,25 +1670,24 @@ extern const char *getFloatRequestTYPENAME;
             
     
 
-typedef struct getFloatRequest
+typedef struct BasicTypeTest_getFloatRequest
 {
 #ifdef __cplusplus
-    typedef struct getFloatRequestSeq Seq;
+    typedef struct BasicTypeTest_getFloatRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getFloatRequestTypeSupport TypeSupport;
-    typedef getFloatRequestDataWriter DataWriter;
-    typedef getFloatRequestDataReader DataReader;
+    typedef BasicTypeTest_getFloatRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getFloatRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getFloatRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Float  fl1;
     DDS_Float  fl2;
 
-} getFloatRequest;
+} BasicTypeTest_getFloatRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1735,31 +1698,31 @@ typedef struct getFloatRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getFloatRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getFloatRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getFloatRequestSeq, getFloatRequest);
+DDS_SEQUENCE(BasicTypeTest_getFloatRequestSeq, BasicTypeTest_getFloatRequest);
         
 NDDSUSERDllExport
-RTIBool getFloatRequest_initialize(
-        getFloatRequest* self);
+RTIBool BasicTypeTest_getFloatRequest_initialize(
+        BasicTypeTest_getFloatRequest* self);
         
 NDDSUSERDllExport
-RTIBool getFloatRequest_initialize_ex(
-        getFloatRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getFloatRequest_initialize_ex(
+        BasicTypeTest_getFloatRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getFloatRequest_finalize(
-        getFloatRequest* self);
+void BasicTypeTest_getFloatRequest_finalize(
+        BasicTypeTest_getFloatRequest* self);
                         
 NDDSUSERDllExport
-void getFloatRequest_finalize_ex(
-        getFloatRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getFloatRequest_finalize_ex(
+        BasicTypeTest_getFloatRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getFloatRequest_copy(
-        getFloatRequest* dst,
-        const getFloatRequest* src);
+RTIBool BasicTypeTest_getFloatRequest_copy(
+        BasicTypeTest_getFloatRequest* dst,
+        const BasicTypeTest_getFloatRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1774,7 +1737,7 @@ extern "C" {
 #endif
 
         
-extern const char *getFloatReplyTYPENAME;
+extern const char *BasicTypeTest_getFloatReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1783,12 +1746,12 @@ extern const char *getFloatReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getFloatReplySeq;
+    struct BasicTypeTest_getFloatReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getFloatReplyTypeSupport;
-    class getFloatReplyDataWriter;
-    class getFloatReplyDataReader;
+    class BasicTypeTest_getFloatReplyTypeSupport;
+    class BasicTypeTest_getFloatReplyDataWriter;
+    class BasicTypeTest_getFloatReplyDataReader;
 #endif
 
 #endif
@@ -1796,28 +1759,25 @@ extern const char *getFloatReplyTYPENAME;
             
     
 
-typedef struct getFloatReply
+typedef struct BasicTypeTest_getFloatReply
 {
 #ifdef __cplusplus
-    typedef struct getFloatReplySeq Seq;
+    typedef struct BasicTypeTest_getFloatReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getFloatReplyTypeSupport TypeSupport;
-    typedef getFloatReplyDataWriter DataWriter;
-    typedef getFloatReplyDataReader DataReader;
+    typedef BasicTypeTest_getFloatReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getFloatReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getFloatReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Float  fl2;
     DDS_Float  fl3;
     DDS_Float  getFloat_ret;
 
-} getFloatReply;
+} BasicTypeTest_getFloatReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1828,31 +1788,31 @@ typedef struct getFloatReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getFloatReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getFloatReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getFloatReplySeq, getFloatReply);
+DDS_SEQUENCE(BasicTypeTest_getFloatReplySeq, BasicTypeTest_getFloatReply);
         
 NDDSUSERDllExport
-RTIBool getFloatReply_initialize(
-        getFloatReply* self);
+RTIBool BasicTypeTest_getFloatReply_initialize(
+        BasicTypeTest_getFloatReply* self);
         
 NDDSUSERDllExport
-RTIBool getFloatReply_initialize_ex(
-        getFloatReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getFloatReply_initialize_ex(
+        BasicTypeTest_getFloatReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getFloatReply_finalize(
-        getFloatReply* self);
+void BasicTypeTest_getFloatReply_finalize(
+        BasicTypeTest_getFloatReply* self);
                         
 NDDSUSERDllExport
-void getFloatReply_finalize_ex(
-        getFloatReply* self,RTIBool deletePointers);
+void BasicTypeTest_getFloatReply_finalize_ex(
+        BasicTypeTest_getFloatReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getFloatReply_copy(
-        getFloatReply* dst,
-        const getFloatReply* src);
+RTIBool BasicTypeTest_getFloatReply_copy(
+        BasicTypeTest_getFloatReply* dst,
+        const BasicTypeTest_getFloatReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1867,7 +1827,7 @@ extern "C" {
 #endif
 
         
-extern const char *getDoubleRequestTYPENAME;
+extern const char *BasicTypeTest_getDoubleRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1876,12 +1836,12 @@ extern const char *getDoubleRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getDoubleRequestSeq;
+    struct BasicTypeTest_getDoubleRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getDoubleRequestTypeSupport;
-    class getDoubleRequestDataWriter;
-    class getDoubleRequestDataReader;
+    class BasicTypeTest_getDoubleRequestTypeSupport;
+    class BasicTypeTest_getDoubleRequestDataWriter;
+    class BasicTypeTest_getDoubleRequestDataReader;
 #endif
 
 #endif
@@ -1889,25 +1849,24 @@ extern const char *getDoubleRequestTYPENAME;
             
     
 
-typedef struct getDoubleRequest
+typedef struct BasicTypeTest_getDoubleRequest
 {
 #ifdef __cplusplus
-    typedef struct getDoubleRequestSeq Seq;
+    typedef struct BasicTypeTest_getDoubleRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getDoubleRequestTypeSupport TypeSupport;
-    typedef getDoubleRequestDataWriter DataWriter;
-    typedef getDoubleRequestDataReader DataReader;
+    typedef BasicTypeTest_getDoubleRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getDoubleRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getDoubleRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Double  do1;
     DDS_Double  do2;
 
-} getDoubleRequest;
+} BasicTypeTest_getDoubleRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1918,31 +1877,31 @@ typedef struct getDoubleRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getDoubleRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getDoubleRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getDoubleRequestSeq, getDoubleRequest);
+DDS_SEQUENCE(BasicTypeTest_getDoubleRequestSeq, BasicTypeTest_getDoubleRequest);
         
 NDDSUSERDllExport
-RTIBool getDoubleRequest_initialize(
-        getDoubleRequest* self);
+RTIBool BasicTypeTest_getDoubleRequest_initialize(
+        BasicTypeTest_getDoubleRequest* self);
         
 NDDSUSERDllExport
-RTIBool getDoubleRequest_initialize_ex(
-        getDoubleRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getDoubleRequest_initialize_ex(
+        BasicTypeTest_getDoubleRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getDoubleRequest_finalize(
-        getDoubleRequest* self);
+void BasicTypeTest_getDoubleRequest_finalize(
+        BasicTypeTest_getDoubleRequest* self);
                         
 NDDSUSERDllExport
-void getDoubleRequest_finalize_ex(
-        getDoubleRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getDoubleRequest_finalize_ex(
+        BasicTypeTest_getDoubleRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getDoubleRequest_copy(
-        getDoubleRequest* dst,
-        const getDoubleRequest* src);
+RTIBool BasicTypeTest_getDoubleRequest_copy(
+        BasicTypeTest_getDoubleRequest* dst,
+        const BasicTypeTest_getDoubleRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1957,7 +1916,7 @@ extern "C" {
 #endif
 
         
-extern const char *getDoubleReplyTYPENAME;
+extern const char *BasicTypeTest_getDoubleReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1966,12 +1925,12 @@ extern const char *getDoubleReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getDoubleReplySeq;
+    struct BasicTypeTest_getDoubleReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getDoubleReplyTypeSupport;
-    class getDoubleReplyDataWriter;
-    class getDoubleReplyDataReader;
+    class BasicTypeTest_getDoubleReplyTypeSupport;
+    class BasicTypeTest_getDoubleReplyDataWriter;
+    class BasicTypeTest_getDoubleReplyDataReader;
 #endif
 
 #endif
@@ -1979,28 +1938,25 @@ extern const char *getDoubleReplyTYPENAME;
             
     
 
-typedef struct getDoubleReply
+typedef struct BasicTypeTest_getDoubleReply
 {
 #ifdef __cplusplus
-    typedef struct getDoubleReplySeq Seq;
+    typedef struct BasicTypeTest_getDoubleReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getDoubleReplyTypeSupport TypeSupport;
-    typedef getDoubleReplyDataWriter DataWriter;
-    typedef getDoubleReplyDataReader DataReader;
+    typedef BasicTypeTest_getDoubleReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getDoubleReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getDoubleReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Double  do2;
     DDS_Double  do3;
     DDS_Double  getDouble_ret;
 
-} getDoubleReply;
+} BasicTypeTest_getDoubleReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -2011,31 +1967,31 @@ typedef struct getDoubleReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getDoubleReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getDoubleReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getDoubleReplySeq, getDoubleReply);
+DDS_SEQUENCE(BasicTypeTest_getDoubleReplySeq, BasicTypeTest_getDoubleReply);
         
 NDDSUSERDllExport
-RTIBool getDoubleReply_initialize(
-        getDoubleReply* self);
+RTIBool BasicTypeTest_getDoubleReply_initialize(
+        BasicTypeTest_getDoubleReply* self);
         
 NDDSUSERDllExport
-RTIBool getDoubleReply_initialize_ex(
-        getDoubleReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getDoubleReply_initialize_ex(
+        BasicTypeTest_getDoubleReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getDoubleReply_finalize(
-        getDoubleReply* self);
+void BasicTypeTest_getDoubleReply_finalize(
+        BasicTypeTest_getDoubleReply* self);
                         
 NDDSUSERDllExport
-void getDoubleReply_finalize_ex(
-        getDoubleReply* self,RTIBool deletePointers);
+void BasicTypeTest_getDoubleReply_finalize_ex(
+        BasicTypeTest_getDoubleReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getDoubleReply_copy(
-        getDoubleReply* dst,
-        const getDoubleReply* src);
+RTIBool BasicTypeTest_getDoubleReply_copy(
+        BasicTypeTest_getDoubleReply* dst,
+        const BasicTypeTest_getDoubleReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -2050,7 +2006,7 @@ extern "C" {
 #endif
 
         
-extern const char *getBooleanRequestTYPENAME;
+extern const char *BasicTypeTest_getBooleanRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -2059,12 +2015,12 @@ extern const char *getBooleanRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getBooleanRequestSeq;
+    struct BasicTypeTest_getBooleanRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getBooleanRequestTypeSupport;
-    class getBooleanRequestDataWriter;
-    class getBooleanRequestDataReader;
+    class BasicTypeTest_getBooleanRequestTypeSupport;
+    class BasicTypeTest_getBooleanRequestDataWriter;
+    class BasicTypeTest_getBooleanRequestDataReader;
 #endif
 
 #endif
@@ -2072,25 +2028,24 @@ extern const char *getBooleanRequestTYPENAME;
             
     
 
-typedef struct getBooleanRequest
+typedef struct BasicTypeTest_getBooleanRequest
 {
 #ifdef __cplusplus
-    typedef struct getBooleanRequestSeq Seq;
+    typedef struct BasicTypeTest_getBooleanRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getBooleanRequestTypeSupport TypeSupport;
-    typedef getBooleanRequestDataWriter DataWriter;
-    typedef getBooleanRequestDataReader DataReader;
+    typedef BasicTypeTest_getBooleanRequestTypeSupport TypeSupport;
+    typedef BasicTypeTest_getBooleanRequestDataWriter DataWriter;
+    typedef BasicTypeTest_getBooleanRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DDS_Boolean  bo1;
     DDS_Boolean  bo2;
 
-} getBooleanRequest;
+} BasicTypeTest_getBooleanRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -2101,31 +2056,31 @@ typedef struct getBooleanRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getBooleanRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getBooleanRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getBooleanRequestSeq, getBooleanRequest);
+DDS_SEQUENCE(BasicTypeTest_getBooleanRequestSeq, BasicTypeTest_getBooleanRequest);
         
 NDDSUSERDllExport
-RTIBool getBooleanRequest_initialize(
-        getBooleanRequest* self);
+RTIBool BasicTypeTest_getBooleanRequest_initialize(
+        BasicTypeTest_getBooleanRequest* self);
         
 NDDSUSERDllExport
-RTIBool getBooleanRequest_initialize_ex(
-        getBooleanRequest* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getBooleanRequest_initialize_ex(
+        BasicTypeTest_getBooleanRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getBooleanRequest_finalize(
-        getBooleanRequest* self);
+void BasicTypeTest_getBooleanRequest_finalize(
+        BasicTypeTest_getBooleanRequest* self);
                         
 NDDSUSERDllExport
-void getBooleanRequest_finalize_ex(
-        getBooleanRequest* self,RTIBool deletePointers);
+void BasicTypeTest_getBooleanRequest_finalize_ex(
+        BasicTypeTest_getBooleanRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getBooleanRequest_copy(
-        getBooleanRequest* dst,
-        const getBooleanRequest* src);
+RTIBool BasicTypeTest_getBooleanRequest_copy(
+        BasicTypeTest_getBooleanRequest* dst,
+        const BasicTypeTest_getBooleanRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -2140,7 +2095,7 @@ extern "C" {
 #endif
 
         
-extern const char *getBooleanReplyTYPENAME;
+extern const char *BasicTypeTest_getBooleanReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -2149,12 +2104,12 @@ extern const char *getBooleanReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getBooleanReplySeq;
+    struct BasicTypeTest_getBooleanReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getBooleanReplyTypeSupport;
-    class getBooleanReplyDataWriter;
-    class getBooleanReplyDataReader;
+    class BasicTypeTest_getBooleanReplyTypeSupport;
+    class BasicTypeTest_getBooleanReplyDataWriter;
+    class BasicTypeTest_getBooleanReplyDataReader;
 #endif
 
 #endif
@@ -2162,28 +2117,25 @@ extern const char *getBooleanReplyTYPENAME;
             
     
 
-typedef struct getBooleanReply
+typedef struct BasicTypeTest_getBooleanReply
 {
 #ifdef __cplusplus
-    typedef struct getBooleanReplySeq Seq;
+    typedef struct BasicTypeTest_getBooleanReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getBooleanReplyTypeSupport TypeSupport;
-    typedef getBooleanReplyDataWriter DataWriter;
-    typedef getBooleanReplyDataReader DataReader;
+    typedef BasicTypeTest_getBooleanReplyTypeSupport TypeSupport;
+    typedef BasicTypeTest_getBooleanReplyDataWriter DataWriter;
+    typedef BasicTypeTest_getBooleanReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DDS_Boolean  bo2;
     DDS_Boolean  bo3;
     DDS_Boolean  getBoolean_ret;
 
-} getBooleanReply;
+} BasicTypeTest_getBooleanReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -2194,31 +2146,31 @@ typedef struct getBooleanReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getBooleanReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* BasicTypeTest_getBooleanReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getBooleanReplySeq, getBooleanReply);
+DDS_SEQUENCE(BasicTypeTest_getBooleanReplySeq, BasicTypeTest_getBooleanReply);
         
 NDDSUSERDllExport
-RTIBool getBooleanReply_initialize(
-        getBooleanReply* self);
+RTIBool BasicTypeTest_getBooleanReply_initialize(
+        BasicTypeTest_getBooleanReply* self);
         
 NDDSUSERDllExport
-RTIBool getBooleanReply_initialize_ex(
-        getBooleanReply* self,RTIBool allocatePointers);
+RTIBool BasicTypeTest_getBooleanReply_initialize_ex(
+        BasicTypeTest_getBooleanReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getBooleanReply_finalize(
-        getBooleanReply* self);
+void BasicTypeTest_getBooleanReply_finalize(
+        BasicTypeTest_getBooleanReply* self);
                         
 NDDSUSERDllExport
-void getBooleanReply_finalize_ex(
-        getBooleanReply* self,RTIBool deletePointers);
+void BasicTypeTest_getBooleanReply_finalize_ex(
+        BasicTypeTest_getBooleanReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getBooleanReply_copy(
-        getBooleanReply* dst,
-        const getBooleanReply* src);
+RTIBool BasicTypeTest_getBooleanReply_copy(
+        BasicTypeTest_getBooleanReply* dst,
+        const BasicTypeTest_getBooleanReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -2229,4 +2181,4 @@ RTIBool getBooleanReply_copy(
 
 
 
-#endif /* BasicTypeTestRequestReply_2120091169_h */
+#endif /* BasicTypeTestRequestReply_2120089561_h */

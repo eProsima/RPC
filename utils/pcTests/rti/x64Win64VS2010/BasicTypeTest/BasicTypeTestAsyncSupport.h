@@ -13,23 +13,25 @@ class BasicTypeTest_getOctetTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getOctetTask(BasicTypeTest_getOctet &obj,
+        BasicTypeTest_getOctetTask(BasicTypeTest_getOctetCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getOctetTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getOctet& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getOctetCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getOctet &m_obj;
+           BasicTypeTest_getOctetCallbackHandler &m_obj;
            
-           getOctetReply m_reply;
+           BasicTypeTest_getOctetReply m_reply;
 };
 
 class BasicTypeTest_getCharTask : public eProsima::DDSRPC::AsyncTask
@@ -37,23 +39,25 @@ class BasicTypeTest_getCharTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getCharTask(BasicTypeTest_getChar &obj,
+        BasicTypeTest_getCharTask(BasicTypeTest_getCharCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getCharTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getChar& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getCharCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getChar &m_obj;
+           BasicTypeTest_getCharCallbackHandler &m_obj;
            
-           getCharReply m_reply;
+           BasicTypeTest_getCharReply m_reply;
 };
 
 class BasicTypeTest_getWCharTask : public eProsima::DDSRPC::AsyncTask
@@ -61,23 +65,25 @@ class BasicTypeTest_getWCharTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getWCharTask(BasicTypeTest_getWChar &obj,
+        BasicTypeTest_getWCharTask(BasicTypeTest_getWCharCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getWCharTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getWChar& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getWCharCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getWChar &m_obj;
+           BasicTypeTest_getWCharCallbackHandler &m_obj;
            
-           getWCharReply m_reply;
+           BasicTypeTest_getWCharReply m_reply;
 };
 
 class BasicTypeTest_getShortTask : public eProsima::DDSRPC::AsyncTask
@@ -85,23 +91,25 @@ class BasicTypeTest_getShortTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getShortTask(BasicTypeTest_getShort &obj,
+        BasicTypeTest_getShortTask(BasicTypeTest_getShortCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getShortTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getShort& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getShortCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getShort &m_obj;
+           BasicTypeTest_getShortCallbackHandler &m_obj;
            
-           getShortReply m_reply;
+           BasicTypeTest_getShortReply m_reply;
 };
 
 class BasicTypeTest_getUShortTask : public eProsima::DDSRPC::AsyncTask
@@ -109,23 +117,25 @@ class BasicTypeTest_getUShortTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getUShortTask(BasicTypeTest_getUShort &obj,
+        BasicTypeTest_getUShortTask(BasicTypeTest_getUShortCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getUShortTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getUShort& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getUShortCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getUShort &m_obj;
+           BasicTypeTest_getUShortCallbackHandler &m_obj;
            
-           getUShortReply m_reply;
+           BasicTypeTest_getUShortReply m_reply;
 };
 
 class BasicTypeTest_getLongTask : public eProsima::DDSRPC::AsyncTask
@@ -133,23 +143,25 @@ class BasicTypeTest_getLongTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getLongTask(BasicTypeTest_getLong &obj,
+        BasicTypeTest_getLongTask(BasicTypeTest_getLongCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getLongTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getLong& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getLongCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getLong &m_obj;
+           BasicTypeTest_getLongCallbackHandler &m_obj;
            
-           getLongReply m_reply;
+           BasicTypeTest_getLongReply m_reply;
 };
 
 class BasicTypeTest_getULongTask : public eProsima::DDSRPC::AsyncTask
@@ -157,23 +169,25 @@ class BasicTypeTest_getULongTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getULongTask(BasicTypeTest_getULong &obj,
+        BasicTypeTest_getULongTask(BasicTypeTest_getULongCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getULongTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getULong& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getULongCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getULong &m_obj;
+           BasicTypeTest_getULongCallbackHandler &m_obj;
            
-           getULongReply m_reply;
+           BasicTypeTest_getULongReply m_reply;
 };
 
 class BasicTypeTest_getLLongTask : public eProsima::DDSRPC::AsyncTask
@@ -181,23 +195,25 @@ class BasicTypeTest_getLLongTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getLLongTask(BasicTypeTest_getLLong &obj,
+        BasicTypeTest_getLLongTask(BasicTypeTest_getLLongCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getLLongTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getLLong& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getLLongCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getLLong &m_obj;
+           BasicTypeTest_getLLongCallbackHandler &m_obj;
            
-           getLLongReply m_reply;
+           BasicTypeTest_getLLongReply m_reply;
 };
 
 class BasicTypeTest_getULLongTask : public eProsima::DDSRPC::AsyncTask
@@ -205,23 +221,25 @@ class BasicTypeTest_getULLongTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getULLongTask(BasicTypeTest_getULLong &obj,
+        BasicTypeTest_getULLongTask(BasicTypeTest_getULLongCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getULLongTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getULLong& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getULLongCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getULLong &m_obj;
+           BasicTypeTest_getULLongCallbackHandler &m_obj;
            
-           getULLongReply m_reply;
+           BasicTypeTest_getULLongReply m_reply;
 };
 
 class BasicTypeTest_getFloatTask : public eProsima::DDSRPC::AsyncTask
@@ -229,23 +247,25 @@ class BasicTypeTest_getFloatTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getFloatTask(BasicTypeTest_getFloat &obj,
+        BasicTypeTest_getFloatTask(BasicTypeTest_getFloatCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getFloatTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getFloat& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getFloatCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getFloat &m_obj;
+           BasicTypeTest_getFloatCallbackHandler &m_obj;
            
-           getFloatReply m_reply;
+           BasicTypeTest_getFloatReply m_reply;
 };
 
 class BasicTypeTest_getDoubleTask : public eProsima::DDSRPC::AsyncTask
@@ -253,23 +273,25 @@ class BasicTypeTest_getDoubleTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getDoubleTask(BasicTypeTest_getDouble &obj,
+        BasicTypeTest_getDoubleTask(BasicTypeTest_getDoubleCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getDoubleTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getDouble& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getDoubleCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getDouble &m_obj;
+           BasicTypeTest_getDoubleCallbackHandler &m_obj;
            
-           getDoubleReply m_reply;
+           BasicTypeTest_getDoubleReply m_reply;
 };
 
 class BasicTypeTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
@@ -277,23 +299,25 @@ class BasicTypeTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        BasicTypeTest_getBooleanTask(BasicTypeTest_getBoolean &obj,
+        BasicTypeTest_getBooleanTask(BasicTypeTest_getBooleanCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getBooleanTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        BasicTypeTest_getBoolean& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        BasicTypeTest_getBooleanCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           BasicTypeTest_getBoolean &m_obj;
+           BasicTypeTest_getBooleanCallbackHandler &m_obj;
            
-           getBooleanReply m_reply;
+           BasicTypeTest_getBooleanReply m_reply;
 };
 
 #endif // _BasicTypeTest_ASYNC_SUPPORT_H_

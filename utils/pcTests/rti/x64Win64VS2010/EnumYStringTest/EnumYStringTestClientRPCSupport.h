@@ -9,13 +9,13 @@
 #include "EnumYStringTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(getEnumClientRPC, getEnumRequestDataWriter, getEnumReplyDataReader);
+GENERIC_CLIENT_RPC(EnumYStringTest_getEnumClientRPC, EnumYStringTest_getEnumRequestDataWriter, EnumYStringTest_getEnumReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getStringClientRPC, getStringRequestDataWriter, getStringReplyDataReader);
+GENERIC_CLIENT_RPC(EnumYStringTest_getStringClientRPC, EnumYStringTest_getStringRequestDataWriter, EnumYStringTest_getStringReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(getStringBoundedClientRPC, getStringBoundedRequestDataWriter, getStringBoundedReplyDataReader);
+GENERIC_CLIENT_RPC(EnumYStringTest_getStringBoundedClientRPC, EnumYStringTest_getStringBoundedRequestDataWriter, EnumYStringTest_getStringBoundedReplyDataReader);
 
 
 #endif  // _EnumYStringTest_CLIENT_RPC_SUPPORT_H_

@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getSLongRequest' support classes.
+   Configure and implement 'SequenceTest_getSLongRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getSLongRequestTYPENAME
+#define TTYPENAME   SequenceTest_getSLongRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getSLongRequestDataWriter
-#define TData       getSLongRequest
+#define TDataWriter SequenceTest_getSLongRequestDataWriter
+#define TData       SequenceTest_getSLongRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getSLongRequestTYPENAME
+#define TTYPENAME   SequenceTest_getSLongRequestTYPENAME
 
 /* Defines */
-#define TDataReader getSLongRequestDataReader
-#define TDataSeq    getSLongRequestSeq
-#define TData       getSLongRequest
+#define TDataReader SequenceTest_getSLongRequestDataReader
+#define TDataSeq    SequenceTest_getSLongRequestSeq
+#define TData       SequenceTest_getSLongRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getSLongRequestTYPENAME
-#define TPlugin_new  getSLongRequestPlugin_new
-#define TPlugin_delete  getSLongRequestPlugin_delete
+#define TTYPENAME    SequenceTest_getSLongRequestTYPENAME
+#define TPlugin_new  SequenceTest_getSLongRequestPlugin_new
+#define TPlugin_delete  SequenceTest_getSLongRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getSLongRequestTypeSupport
-#define TData        getSLongRequest
-#define TDataReader  getSLongRequestDataReader
-#define TDataWriter  getSLongRequestDataWriter
+#define TTypeSupport SequenceTest_getSLongRequestTypeSupport
+#define TData        SequenceTest_getSLongRequest
+#define TDataReader  SequenceTest_getSLongRequestDataReader
+#define TDataWriter  SequenceTest_getSLongRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getSLongReply' support classes.
+   Configure and implement 'SequenceTest_getSLongReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getSLongReplyTYPENAME
+#define TTYPENAME   SequenceTest_getSLongReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getSLongReplyDataWriter
-#define TData       getSLongReply
+#define TDataWriter SequenceTest_getSLongReplyDataWriter
+#define TData       SequenceTest_getSLongReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getSLongReplyTYPENAME
+#define TTYPENAME   SequenceTest_getSLongReplyTYPENAME
 
 /* Defines */
-#define TDataReader getSLongReplyDataReader
-#define TDataSeq    getSLongReplySeq
-#define TData       getSLongReply
+#define TDataReader SequenceTest_getSLongReplyDataReader
+#define TDataSeq    SequenceTest_getSLongReplySeq
+#define TData       SequenceTest_getSLongReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getSLongReplyTYPENAME
-#define TPlugin_new  getSLongReplyPlugin_new
-#define TPlugin_delete  getSLongReplyPlugin_delete
+#define TTYPENAME    SequenceTest_getSLongReplyTYPENAME
+#define TPlugin_new  SequenceTest_getSLongReplyPlugin_new
+#define TPlugin_delete  SequenceTest_getSLongReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getSLongReplyTypeSupport
-#define TData        getSLongReply
-#define TDataReader  getSLongReplyDataReader
-#define TDataWriter  getSLongReplyDataWriter
+#define TTypeSupport SequenceTest_getSLongReplyTypeSupport
+#define TData        SequenceTest_getSLongReply
+#define TDataReader  SequenceTest_getSLongReplyDataReader
+#define TDataWriter  SequenceTest_getSLongReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -273,7 +273,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringRequest' support classes.
+   Configure and implement 'SequenceTest_getStringRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -289,11 +289,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringRequestTYPENAME
+#define TTYPENAME   SequenceTest_getStringRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getStringRequestDataWriter
-#define TData       getStringRequest
+#define TDataWriter SequenceTest_getStringRequestDataWriter
+#define TData       SequenceTest_getStringRequest
 
 
 #ifdef __cplusplus
@@ -319,12 +319,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringRequestTYPENAME
+#define TTYPENAME   SequenceTest_getStringRequestTYPENAME
 
 /* Defines */
-#define TDataReader getStringRequestDataReader
-#define TDataSeq    getStringRequestSeq
-#define TData       getStringRequest
+#define TDataReader SequenceTest_getStringRequestDataReader
+#define TDataSeq    SequenceTest_getStringRequestSeq
+#define TData       SequenceTest_getStringRequest
 
 
 #ifdef __cplusplus
@@ -352,15 +352,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringRequestTYPENAME
-#define TPlugin_new  getStringRequestPlugin_new
-#define TPlugin_delete  getStringRequestPlugin_delete
+#define TTYPENAME    SequenceTest_getStringRequestTYPENAME
+#define TPlugin_new  SequenceTest_getStringRequestPlugin_new
+#define TPlugin_delete  SequenceTest_getStringRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringRequestTypeSupport
-#define TData        getStringRequest
-#define TDataReader  getStringRequestDataReader
-#define TDataWriter  getStringRequestDataWriter
+#define TTypeSupport SequenceTest_getStringRequestTypeSupport
+#define TData        SequenceTest_getStringRequest
+#define TDataReader  SequenceTest_getStringRequestDataReader
+#define TDataWriter  SequenceTest_getStringRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -394,7 +394,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringReply' support classes.
+   Configure and implement 'SequenceTest_getStringReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -410,11 +410,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringReplyTYPENAME
+#define TTYPENAME   SequenceTest_getStringReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getStringReplyDataWriter
-#define TData       getStringReply
+#define TDataWriter SequenceTest_getStringReplyDataWriter
+#define TData       SequenceTest_getStringReply
 
 
 #ifdef __cplusplus
@@ -440,12 +440,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringReplyTYPENAME
+#define TTYPENAME   SequenceTest_getStringReplyTYPENAME
 
 /* Defines */
-#define TDataReader getStringReplyDataReader
-#define TDataSeq    getStringReplySeq
-#define TData       getStringReply
+#define TDataReader SequenceTest_getStringReplyDataReader
+#define TDataSeq    SequenceTest_getStringReplySeq
+#define TData       SequenceTest_getStringReply
 
 
 #ifdef __cplusplus
@@ -473,15 +473,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringReplyTYPENAME
-#define TPlugin_new  getStringReplyPlugin_new
-#define TPlugin_delete  getStringReplyPlugin_delete
+#define TTYPENAME    SequenceTest_getStringReplyTYPENAME
+#define TPlugin_new  SequenceTest_getStringReplyPlugin_new
+#define TPlugin_delete  SequenceTest_getStringReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringReplyTypeSupport
-#define TData        getStringReply
-#define TDataReader  getStringReplyDataReader
-#define TDataWriter  getStringReplyDataWriter
+#define TTypeSupport SequenceTest_getStringReplyTypeSupport
+#define TData        SequenceTest_getStringReply
+#define TDataReader  SequenceTest_getStringReplyDataReader
+#define TDataWriter  SequenceTest_getStringReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -515,7 +515,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringBoundedRequest' support classes.
+   Configure and implement 'SequenceTest_getStringBoundedRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -531,11 +531,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedRequestTYPENAME
+#define TTYPENAME   SequenceTest_getStringBoundedRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getStringBoundedRequestDataWriter
-#define TData       getStringBoundedRequest
+#define TDataWriter SequenceTest_getStringBoundedRequestDataWriter
+#define TData       SequenceTest_getStringBoundedRequest
 
 
 #ifdef __cplusplus
@@ -561,12 +561,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedRequestTYPENAME
+#define TTYPENAME   SequenceTest_getStringBoundedRequestTYPENAME
 
 /* Defines */
-#define TDataReader getStringBoundedRequestDataReader
-#define TDataSeq    getStringBoundedRequestSeq
-#define TData       getStringBoundedRequest
+#define TDataReader SequenceTest_getStringBoundedRequestDataReader
+#define TDataSeq    SequenceTest_getStringBoundedRequestSeq
+#define TData       SequenceTest_getStringBoundedRequest
 
 
 #ifdef __cplusplus
@@ -594,15 +594,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringBoundedRequestTYPENAME
-#define TPlugin_new  getStringBoundedRequestPlugin_new
-#define TPlugin_delete  getStringBoundedRequestPlugin_delete
+#define TTYPENAME    SequenceTest_getStringBoundedRequestTYPENAME
+#define TPlugin_new  SequenceTest_getStringBoundedRequestPlugin_new
+#define TPlugin_delete  SequenceTest_getStringBoundedRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringBoundedRequestTypeSupport
-#define TData        getStringBoundedRequest
-#define TDataReader  getStringBoundedRequestDataReader
-#define TDataWriter  getStringBoundedRequestDataWriter
+#define TTypeSupport SequenceTest_getStringBoundedRequestTypeSupport
+#define TData        SequenceTest_getStringBoundedRequest
+#define TDataReader  SequenceTest_getStringBoundedRequestDataReader
+#define TDataWriter  SequenceTest_getStringBoundedRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -636,7 +636,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getStringBoundedReply' support classes.
+   Configure and implement 'SequenceTest_getStringBoundedReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -652,11 +652,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedReplyTYPENAME
+#define TTYPENAME   SequenceTest_getStringBoundedReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getStringBoundedReplyDataWriter
-#define TData       getStringBoundedReply
+#define TDataWriter SequenceTest_getStringBoundedReplyDataWriter
+#define TData       SequenceTest_getStringBoundedReply
 
 
 #ifdef __cplusplus
@@ -682,12 +682,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getStringBoundedReplyTYPENAME
+#define TTYPENAME   SequenceTest_getStringBoundedReplyTYPENAME
 
 /* Defines */
-#define TDataReader getStringBoundedReplyDataReader
-#define TDataSeq    getStringBoundedReplySeq
-#define TData       getStringBoundedReply
+#define TDataReader SequenceTest_getStringBoundedReplyDataReader
+#define TDataSeq    SequenceTest_getStringBoundedReplySeq
+#define TData       SequenceTest_getStringBoundedReply
 
 
 #ifdef __cplusplus
@@ -715,15 +715,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getStringBoundedReplyTYPENAME
-#define TPlugin_new  getStringBoundedReplyPlugin_new
-#define TPlugin_delete  getStringBoundedReplyPlugin_delete
+#define TTYPENAME    SequenceTest_getStringBoundedReplyTYPENAME
+#define TPlugin_new  SequenceTest_getStringBoundedReplyPlugin_new
+#define TPlugin_delete  SequenceTest_getStringBoundedReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getStringBoundedReplyTypeSupport
-#define TData        getStringBoundedReply
-#define TDataReader  getStringBoundedReplyDataReader
-#define TDataWriter  getStringBoundedReplyDataWriter
+#define TTypeSupport SequenceTest_getStringBoundedReplyTypeSupport
+#define TData        SequenceTest_getStringBoundedReply
+#define TDataReader  SequenceTest_getStringBoundedReplyDataReader
+#define TDataWriter  SequenceTest_getStringBoundedReplyDataWriter
 #ifdef __cplusplus
 
 

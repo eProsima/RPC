@@ -35,21 +35,10 @@ TName::TName(const char *rpcName, eProsima::DDSRPC::Server* server, const char *
 #ifndef IS_ONEWAY
 			replyTypeName,
 #else
-			NULL,
+			"",
 #endif
 			execFunction)
 {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
-#ifndef IS_ONEWAY
-	replyFooDataWriter    = TDataWriter::narrow(m_replyDataWriter);
-#endif
-	requestFooDataReader  = TDataReader::narrow(m_requestDataReader);
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-#ifndef IS_ONEWAY
-	replyFooDataWriter    = TDataWriter::_narrow(m_replyDataWriter);
-#endif
-	requestFooDataReader  = TDataReader::_narrow(m_requestDataReader);
-#endif
 }
 
 TName::~TName()
@@ -60,6 +49,11 @@ int TName::sendReply(void *request, void* reply)
 {
 	int returnedValue = -1;
 #ifndef IS_ONEWAY
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+    TDataWriter *replyDataWriter = TDataWriter::narrow(m_replyDataWriter);
+#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+    replyDataWriter = TDataWriter::_narrow(m_replyDataWriter);
+#endif
 	TDataReply   *replyData   = (TDataReply*)reply;
 	TDataRequest *requestData = (TDataRequest*)request;
 
@@ -73,7 +67,7 @@ int TName::sendReply(void *request, void* reply)
 			replyData->header.clientId.value_4 = requestData->header.clientId.value_4;
 			replyData->header.requestSequenceNumber = requestData->header.requestSequenceNumber;
 
-			if(replyFooDataWriter->write(*replyData, DDS::HANDLE_NIL) == DDS::RETCODE_OK)
+			if(replyDataWriter->write(*replyData, DDS::HANDLE_NIL) == DDS::RETCODE_OK)
 			{
 				returnedValue = 0;
 			}
@@ -115,12 +109,14 @@ void TName::on_data_available(DDS::DataReader* reader)
 {
 	DDS::SampleInfo info;
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
+    TDataReader *requestDataReader = TDataReader::narrow(m_requestDataReader);
 	TDataRequest *data = TDataRequestTypeSupport::create_data();
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+    TDataReader *requestDataReader = TDataReader::_narrow(m_requestDataReader);
 	TDataRequest *data = new TDataRequest();
 #endif
 
-	while(data != NULL && requestFooDataReader->take_next_sample(*data, info) == DDS::RETCODE_OK)
+	while(data != NULL && requestDataReader->take_next_sample(*data, info) == DDS::RETCODE_OK)
 	{
 		if(info.valid_data == BOOLEAN_TRUE)
 		{

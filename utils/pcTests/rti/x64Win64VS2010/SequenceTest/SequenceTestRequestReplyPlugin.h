@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestRequestReplyPlugin_1689902967_h
-#define SequenceTestRequestReplyPlugin_1689902967_h
+#ifndef SequenceTestRequestReplyPlugin_1689902559_h
+#define SequenceTestRequestReplyPlugin_1689902559_h
 
 #include "SequenceTestRequestReply.h"
 
@@ -42,77 +42,77 @@ extern "C" {
 
 
 /* The type used to store keys for instances of type struct
- * getSLongRequest.
+ * SequenceTest_getSLongRequest.
  *
- * By default, this type is struct getSLongRequest
+ * By default, this type is struct SequenceTest_getSLongRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getSLongRequest)
+ * system (e.g. if sizeof(struct SequenceTest_getSLongRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getSLongRequest, the
+ * other than struct SequenceTest_getSLongRequest, the
  * following restriction applies: the key of struct
- * getSLongRequest must consist of a
+ * SequenceTest_getSLongRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getSLongRequest.
+ * first field in struct SequenceTest_getSLongRequest.
 */
-typedef  struct getSLongRequest getSLongRequestKeyHolder;
+typedef  struct SequenceTest_getSLongRequest SequenceTest_getSLongRequestKeyHolder;
 
 
-#define getSLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getSLongRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getSLongRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getSLongRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define SequenceTest_getSLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define SequenceTest_getSLongRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define SequenceTest_getSLongRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SequenceTest_getSLongRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getSLongRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getSLongRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define SequenceTest_getSLongRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define SequenceTest_getSLongRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getSLongRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getSLongRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define SequenceTest_getSLongRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SequenceTest_getSLongRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getSLongRequest*
-getSLongRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getSLongRequest*
+SequenceTest_getSLongRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getSLongRequest*
-getSLongRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern SequenceTest_getSLongRequest*
+SequenceTest_getSLongRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPluginSupport_copy_data(
-    getSLongRequest *out,
-    const getSLongRequest *in);
+SequenceTest_getSLongRequestPluginSupport_copy_data(
+    SequenceTest_getSLongRequest *out,
+    const SequenceTest_getSLongRequest *in);
 
 NDDSUSERDllExport extern void 
-getSLongRequestPluginSupport_destroy_data_ex(
-    getSLongRequest *sample,RTIBool deallocate_pointers);
+SequenceTest_getSLongRequestPluginSupport_destroy_data_ex(
+    SequenceTest_getSLongRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getSLongRequestPluginSupport_destroy_data(
-    getSLongRequest *sample);
+SequenceTest_getSLongRequestPluginSupport_destroy_data(
+    SequenceTest_getSLongRequest *sample);
 
 NDDSUSERDllExport extern void 
-getSLongRequestPluginSupport_print_data(
-    const getSLongRequest *sample,
+SequenceTest_getSLongRequestPluginSupport_print_data(
+    const SequenceTest_getSLongRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getSLongRequest*
-getSLongRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getSLongRequest*
+SequenceTest_getSLongRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getSLongRequest*
-getSLongRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getSLongRequestPluginSupport_destroy_key_ex(
-    getSLongRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getSLongRequest*
+SequenceTest_getSLongRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getSLongRequestPluginSupport_destroy_key(
-    getSLongRequestKeyHolder *key);
+SequenceTest_getSLongRequestPluginSupport_destroy_key_ex(
+    SequenceTest_getSLongRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SequenceTest_getSLongRequestPluginSupport_destroy_key(
+    SequenceTest_getSLongRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ getSLongRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getSLongRequestPlugin_on_participant_attached(
+SequenceTest_getSLongRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -128,34 +128,34 @@ getSLongRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getSLongRequestPlugin_on_participant_detached(
+SequenceTest_getSLongRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getSLongRequestPlugin_on_endpoint_attached(
+SequenceTest_getSLongRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getSLongRequestPlugin_on_endpoint_detached(
+SequenceTest_getSLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_copy_sample(
+SequenceTest_getSLongRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest *out,
-    const getSLongRequest *in);
+    SequenceTest_getSLongRequest *out,
+    const SequenceTest_getSLongRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_serialize(
+SequenceTest_getSLongRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getSLongRequest *sample,
+    const SequenceTest_getSLongRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -163,9 +163,9 @@ getSLongRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_deserialize_sample(
+SequenceTest_getSLongRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest *sample, 
+    SequenceTest_getSLongRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -173,9 +173,9 @@ getSLongRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_deserialize(
+SequenceTest_getSLongRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest **sample, 
+    SequenceTest_getSLongRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -185,7 +185,7 @@ getSLongRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getSLongRequestPlugin_skip(
+SequenceTest_getSLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -193,26 +193,26 @@ getSLongRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getSLongRequestPlugin_get_serialized_sample_max_size(
+SequenceTest_getSLongRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getSLongRequestPlugin_get_serialized_sample_min_size(
+SequenceTest_getSLongRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getSLongRequestPlugin_get_serialized_sample_size(
+SequenceTest_getSLongRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getSLongRequest * sample);
+    const SequenceTest_getSLongRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -220,19 +220,19 @@ getSLongRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getSLongRequestPlugin_get_key_kind(void);
+SequenceTest_getSLongRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getSLongRequestPlugin_get_serialized_key_max_size(
+SequenceTest_getSLongRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_serialize_key(
+SequenceTest_getSLongRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getSLongRequest *sample,
+    const SequenceTest_getSLongRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -240,9 +240,9 @@ getSLongRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_deserialize_key_sample(
+SequenceTest_getSLongRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest * sample,
+    SequenceTest_getSLongRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -250,9 +250,9 @@ getSLongRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_deserialize_key(
+SequenceTest_getSLongRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest ** sample,
+    SequenceTest_getSLongRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -261,9 +261,9 @@ getSLongRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getSLongRequestPlugin_serialized_sample_to_key(
+SequenceTest_getSLongRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest *sample,
+    SequenceTest_getSLongRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -271,25 +271,25 @@ getSLongRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_instance_to_key(
+SequenceTest_getSLongRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequestKeyHolder *key, 
-    const getSLongRequest *instance);
+    SequenceTest_getSLongRequestKeyHolder *key, 
+    const SequenceTest_getSLongRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_key_to_instance(
+SequenceTest_getSLongRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongRequest *instance, 
-    const getSLongRequestKeyHolder *key);
+    SequenceTest_getSLongRequest *instance, 
+    const SequenceTest_getSLongRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_instance_to_keyhash(
+SequenceTest_getSLongRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getSLongRequest *instance);
+    const SequenceTest_getSLongRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongRequestPlugin_serialized_sample_to_keyhash(
+SequenceTest_getSLongRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -298,83 +298,83 @@ getSLongRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getSLongRequestPlugin_new(void);
+SequenceTest_getSLongRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getSLongRequestPlugin_delete(struct PRESTypePlugin *);
+SequenceTest_getSLongRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getSLongReply.
+ * SequenceTest_getSLongReply.
  *
- * By default, this type is struct getSLongReply
+ * By default, this type is struct SequenceTest_getSLongReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getSLongReply)
+ * system (e.g. if sizeof(struct SequenceTest_getSLongReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getSLongReply, the
+ * other than struct SequenceTest_getSLongReply, the
  * following restriction applies: the key of struct
- * getSLongReply must consist of a
+ * SequenceTest_getSLongReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getSLongReply.
+ * first field in struct SequenceTest_getSLongReply.
 */
-typedef  struct getSLongReply getSLongReplyKeyHolder;
+typedef  struct SequenceTest_getSLongReply SequenceTest_getSLongReplyKeyHolder;
 
 
-#define getSLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getSLongReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getSLongReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getSLongReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define SequenceTest_getSLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define SequenceTest_getSLongReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define SequenceTest_getSLongReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SequenceTest_getSLongReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getSLongReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getSLongReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define SequenceTest_getSLongReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define SequenceTest_getSLongReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getSLongReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getSLongReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define SequenceTest_getSLongReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SequenceTest_getSLongReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getSLongReply*
-getSLongReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getSLongReply*
+SequenceTest_getSLongReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getSLongReply*
-getSLongReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern SequenceTest_getSLongReply*
+SequenceTest_getSLongReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPluginSupport_copy_data(
-    getSLongReply *out,
-    const getSLongReply *in);
+SequenceTest_getSLongReplyPluginSupport_copy_data(
+    SequenceTest_getSLongReply *out,
+    const SequenceTest_getSLongReply *in);
 
 NDDSUSERDllExport extern void 
-getSLongReplyPluginSupport_destroy_data_ex(
-    getSLongReply *sample,RTIBool deallocate_pointers);
+SequenceTest_getSLongReplyPluginSupport_destroy_data_ex(
+    SequenceTest_getSLongReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getSLongReplyPluginSupport_destroy_data(
-    getSLongReply *sample);
+SequenceTest_getSLongReplyPluginSupport_destroy_data(
+    SequenceTest_getSLongReply *sample);
 
 NDDSUSERDllExport extern void 
-getSLongReplyPluginSupport_print_data(
-    const getSLongReply *sample,
+SequenceTest_getSLongReplyPluginSupport_print_data(
+    const SequenceTest_getSLongReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getSLongReply*
-getSLongReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getSLongReply*
+SequenceTest_getSLongReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getSLongReply*
-getSLongReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getSLongReplyPluginSupport_destroy_key_ex(
-    getSLongReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getSLongReply*
+SequenceTest_getSLongReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getSLongReplyPluginSupport_destroy_key(
-    getSLongReplyKeyHolder *key);
+SequenceTest_getSLongReplyPluginSupport_destroy_key_ex(
+    SequenceTest_getSLongReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SequenceTest_getSLongReplyPluginSupport_destroy_key(
+    SequenceTest_getSLongReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -382,7 +382,7 @@ getSLongReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getSLongReplyPlugin_on_participant_attached(
+SequenceTest_getSLongReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -390,34 +390,34 @@ getSLongReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getSLongReplyPlugin_on_participant_detached(
+SequenceTest_getSLongReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getSLongReplyPlugin_on_endpoint_attached(
+SequenceTest_getSLongReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getSLongReplyPlugin_on_endpoint_detached(
+SequenceTest_getSLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_copy_sample(
+SequenceTest_getSLongReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply *out,
-    const getSLongReply *in);
+    SequenceTest_getSLongReply *out,
+    const SequenceTest_getSLongReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_serialize(
+SequenceTest_getSLongReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getSLongReply *sample,
+    const SequenceTest_getSLongReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -425,9 +425,9 @@ getSLongReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_deserialize_sample(
+SequenceTest_getSLongReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply *sample, 
+    SequenceTest_getSLongReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -435,9 +435,9 @@ getSLongReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_deserialize(
+SequenceTest_getSLongReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply **sample, 
+    SequenceTest_getSLongReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -447,7 +447,7 @@ getSLongReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getSLongReplyPlugin_skip(
+SequenceTest_getSLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -455,26 +455,26 @@ getSLongReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getSLongReplyPlugin_get_serialized_sample_max_size(
+SequenceTest_getSLongReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getSLongReplyPlugin_get_serialized_sample_min_size(
+SequenceTest_getSLongReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getSLongReplyPlugin_get_serialized_sample_size(
+SequenceTest_getSLongReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getSLongReply * sample);
+    const SequenceTest_getSLongReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -482,19 +482,19 @@ getSLongReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getSLongReplyPlugin_get_key_kind(void);
+SequenceTest_getSLongReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getSLongReplyPlugin_get_serialized_key_max_size(
+SequenceTest_getSLongReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_serialize_key(
+SequenceTest_getSLongReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getSLongReply *sample,
+    const SequenceTest_getSLongReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -502,9 +502,9 @@ getSLongReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_deserialize_key_sample(
+SequenceTest_getSLongReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply * sample,
+    SequenceTest_getSLongReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -512,9 +512,9 @@ getSLongReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_deserialize_key(
+SequenceTest_getSLongReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply ** sample,
+    SequenceTest_getSLongReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -523,9 +523,9 @@ getSLongReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getSLongReplyPlugin_serialized_sample_to_key(
+SequenceTest_getSLongReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply *sample,
+    SequenceTest_getSLongReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -533,25 +533,25 @@ getSLongReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_instance_to_key(
+SequenceTest_getSLongReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReplyKeyHolder *key, 
-    const getSLongReply *instance);
+    SequenceTest_getSLongReplyKeyHolder *key, 
+    const SequenceTest_getSLongReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_key_to_instance(
+SequenceTest_getSLongReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getSLongReply *instance, 
-    const getSLongReplyKeyHolder *key);
+    SequenceTest_getSLongReply *instance, 
+    const SequenceTest_getSLongReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_instance_to_keyhash(
+SequenceTest_getSLongReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getSLongReply *instance);
+    const SequenceTest_getSLongReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getSLongReplyPlugin_serialized_sample_to_keyhash(
+SequenceTest_getSLongReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -560,83 +560,83 @@ getSLongReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getSLongReplyPlugin_new(void);
+SequenceTest_getSLongReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getSLongReplyPlugin_delete(struct PRESTypePlugin *);
+SequenceTest_getSLongReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringRequest.
+ * SequenceTest_getStringRequest.
  *
- * By default, this type is struct getStringRequest
+ * By default, this type is struct SequenceTest_getStringRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringRequest)
+ * system (e.g. if sizeof(struct SequenceTest_getStringRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringRequest, the
+ * other than struct SequenceTest_getStringRequest, the
  * following restriction applies: the key of struct
- * getStringRequest must consist of a
+ * SequenceTest_getStringRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringRequest.
+ * first field in struct SequenceTest_getStringRequest.
 */
-typedef  struct getStringRequest getStringRequestKeyHolder;
+typedef  struct SequenceTest_getStringRequest SequenceTest_getStringRequestKeyHolder;
 
 
-#define getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define SequenceTest_getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define SequenceTest_getStringRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define SequenceTest_getStringRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SequenceTest_getStringRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define SequenceTest_getStringRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define SequenceTest_getStringRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define SequenceTest_getStringRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SequenceTest_getStringRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringRequest*
+SequenceTest_getStringRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern SequenceTest_getStringRequest*
+SequenceTest_getStringRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPluginSupport_copy_data(
-    getStringRequest *out,
-    const getStringRequest *in);
+SequenceTest_getStringRequestPluginSupport_copy_data(
+    SequenceTest_getStringRequest *out,
+    const SequenceTest_getStringRequest *in);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_data_ex(
-    getStringRequest *sample,RTIBool deallocate_pointers);
+SequenceTest_getStringRequestPluginSupport_destroy_data_ex(
+    SequenceTest_getStringRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_data(
-    getStringRequest *sample);
+SequenceTest_getStringRequestPluginSupport_destroy_data(
+    SequenceTest_getStringRequest *sample);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_print_data(
-    const getStringRequest *sample,
+SequenceTest_getStringRequestPluginSupport_print_data(
+    const SequenceTest_getStringRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringRequest*
+SequenceTest_getStringRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_key_ex(
-    getStringRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringRequest*
+SequenceTest_getStringRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_key(
-    getStringRequestKeyHolder *key);
+SequenceTest_getStringRequestPluginSupport_destroy_key_ex(
+    SequenceTest_getStringRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SequenceTest_getStringRequestPluginSupport_destroy_key(
+    SequenceTest_getStringRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ getStringRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringRequestPlugin_on_participant_attached(
+SequenceTest_getStringRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -652,34 +652,34 @@ getStringRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringRequestPlugin_on_participant_detached(
+SequenceTest_getStringRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringRequestPlugin_on_endpoint_attached(
+SequenceTest_getStringRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringRequestPlugin_on_endpoint_detached(
+SequenceTest_getStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_copy_sample(
+SequenceTest_getStringRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *out,
-    const getStringRequest *in);
+    SequenceTest_getStringRequest *out,
+    const SequenceTest_getStringRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_serialize(
+SequenceTest_getStringRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringRequest *sample,
+    const SequenceTest_getStringRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -687,9 +687,9 @@ getStringRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize_sample(
+SequenceTest_getStringRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *sample, 
+    SequenceTest_getStringRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -697,9 +697,9 @@ getStringRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize(
+SequenceTest_getStringRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest **sample, 
+    SequenceTest_getStringRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -709,7 +709,7 @@ getStringRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringRequestPlugin_skip(
+SequenceTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -717,26 +717,26 @@ getStringRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringRequestPlugin_get_serialized_sample_max_size(
+SequenceTest_getStringRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringRequestPlugin_get_serialized_sample_min_size(
+SequenceTest_getStringRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringRequestPlugin_get_serialized_sample_size(
+SequenceTest_getStringRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringRequest * sample);
+    const SequenceTest_getStringRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -744,19 +744,19 @@ getStringRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringRequestPlugin_get_key_kind(void);
+SequenceTest_getStringRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringRequestPlugin_get_serialized_key_max_size(
+SequenceTest_getStringRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_serialize_key(
+SequenceTest_getStringRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringRequest *sample,
+    const SequenceTest_getStringRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -764,9 +764,9 @@ getStringRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize_key_sample(
+SequenceTest_getStringRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest * sample,
+    SequenceTest_getStringRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -774,9 +774,9 @@ getStringRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize_key(
+SequenceTest_getStringRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest ** sample,
+    SequenceTest_getStringRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -785,9 +785,9 @@ getStringRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringRequestPlugin_serialized_sample_to_key(
+SequenceTest_getStringRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *sample,
+    SequenceTest_getStringRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -795,25 +795,25 @@ getStringRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_instance_to_key(
+SequenceTest_getStringRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequestKeyHolder *key, 
-    const getStringRequest *instance);
+    SequenceTest_getStringRequestKeyHolder *key, 
+    const SequenceTest_getStringRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_key_to_instance(
+SequenceTest_getStringRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *instance, 
-    const getStringRequestKeyHolder *key);
+    SequenceTest_getStringRequest *instance, 
+    const SequenceTest_getStringRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_instance_to_keyhash(
+SequenceTest_getStringRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringRequest *instance);
+    const SequenceTest_getStringRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_serialized_sample_to_keyhash(
+SequenceTest_getStringRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -822,83 +822,83 @@ getStringRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringRequestPlugin_new(void);
+SequenceTest_getStringRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringRequestPlugin_delete(struct PRESTypePlugin *);
+SequenceTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringReply.
+ * SequenceTest_getStringReply.
  *
- * By default, this type is struct getStringReply
+ * By default, this type is struct SequenceTest_getStringReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringReply)
+ * system (e.g. if sizeof(struct SequenceTest_getStringReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringReply, the
+ * other than struct SequenceTest_getStringReply, the
  * following restriction applies: the key of struct
- * getStringReply must consist of a
+ * SequenceTest_getStringReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringReply.
+ * first field in struct SequenceTest_getStringReply.
 */
-typedef  struct getStringReply getStringReplyKeyHolder;
+typedef  struct SequenceTest_getStringReply SequenceTest_getStringReplyKeyHolder;
 
 
-#define getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define SequenceTest_getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define SequenceTest_getStringReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define SequenceTest_getStringReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SequenceTest_getStringReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define SequenceTest_getStringReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define SequenceTest_getStringReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define SequenceTest_getStringReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SequenceTest_getStringReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringReply*
+SequenceTest_getStringReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern SequenceTest_getStringReply*
+SequenceTest_getStringReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPluginSupport_copy_data(
-    getStringReply *out,
-    const getStringReply *in);
+SequenceTest_getStringReplyPluginSupport_copy_data(
+    SequenceTest_getStringReply *out,
+    const SequenceTest_getStringReply *in);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_data_ex(
-    getStringReply *sample,RTIBool deallocate_pointers);
+SequenceTest_getStringReplyPluginSupport_destroy_data_ex(
+    SequenceTest_getStringReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_data(
-    getStringReply *sample);
+SequenceTest_getStringReplyPluginSupport_destroy_data(
+    SequenceTest_getStringReply *sample);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_print_data(
-    const getStringReply *sample,
+SequenceTest_getStringReplyPluginSupport_print_data(
+    const SequenceTest_getStringReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringReply*
+SequenceTest_getStringReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_key_ex(
-    getStringReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringReply*
+SequenceTest_getStringReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_key(
-    getStringReplyKeyHolder *key);
+SequenceTest_getStringReplyPluginSupport_destroy_key_ex(
+    SequenceTest_getStringReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SequenceTest_getStringReplyPluginSupport_destroy_key(
+    SequenceTest_getStringReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -906,7 +906,7 @@ getStringReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringReplyPlugin_on_participant_attached(
+SequenceTest_getStringReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -914,34 +914,34 @@ getStringReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringReplyPlugin_on_participant_detached(
+SequenceTest_getStringReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringReplyPlugin_on_endpoint_attached(
+SequenceTest_getStringReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringReplyPlugin_on_endpoint_detached(
+SequenceTest_getStringReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_copy_sample(
+SequenceTest_getStringReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *out,
-    const getStringReply *in);
+    SequenceTest_getStringReply *out,
+    const SequenceTest_getStringReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_serialize(
+SequenceTest_getStringReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringReply *sample,
+    const SequenceTest_getStringReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -949,9 +949,9 @@ getStringReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize_sample(
+SequenceTest_getStringReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *sample, 
+    SequenceTest_getStringReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -959,9 +959,9 @@ getStringReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize(
+SequenceTest_getStringReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply **sample, 
+    SequenceTest_getStringReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -971,7 +971,7 @@ getStringReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringReplyPlugin_skip(
+SequenceTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -979,26 +979,26 @@ getStringReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringReplyPlugin_get_serialized_sample_max_size(
+SequenceTest_getStringReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringReplyPlugin_get_serialized_sample_min_size(
+SequenceTest_getStringReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringReplyPlugin_get_serialized_sample_size(
+SequenceTest_getStringReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringReply * sample);
+    const SequenceTest_getStringReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1006,19 +1006,19 @@ getStringReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringReplyPlugin_get_key_kind(void);
+SequenceTest_getStringReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringReplyPlugin_get_serialized_key_max_size(
+SequenceTest_getStringReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_serialize_key(
+SequenceTest_getStringReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringReply *sample,
+    const SequenceTest_getStringReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1026,9 +1026,9 @@ getStringReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize_key_sample(
+SequenceTest_getStringReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply * sample,
+    SequenceTest_getStringReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1036,9 +1036,9 @@ getStringReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize_key(
+SequenceTest_getStringReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply ** sample,
+    SequenceTest_getStringReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1047,9 +1047,9 @@ getStringReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringReplyPlugin_serialized_sample_to_key(
+SequenceTest_getStringReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *sample,
+    SequenceTest_getStringReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1057,25 +1057,25 @@ getStringReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_instance_to_key(
+SequenceTest_getStringReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReplyKeyHolder *key, 
-    const getStringReply *instance);
+    SequenceTest_getStringReplyKeyHolder *key, 
+    const SequenceTest_getStringReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_key_to_instance(
+SequenceTest_getStringReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *instance, 
-    const getStringReplyKeyHolder *key);
+    SequenceTest_getStringReply *instance, 
+    const SequenceTest_getStringReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_instance_to_keyhash(
+SequenceTest_getStringReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringReply *instance);
+    const SequenceTest_getStringReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_serialized_sample_to_keyhash(
+SequenceTest_getStringReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1084,83 +1084,83 @@ getStringReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringReplyPlugin_new(void);
+SequenceTest_getStringReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringReplyPlugin_delete(struct PRESTypePlugin *);
+SequenceTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringBoundedRequest.
+ * SequenceTest_getStringBoundedRequest.
  *
- * By default, this type is struct getStringBoundedRequest
+ * By default, this type is struct SequenceTest_getStringBoundedRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringBoundedRequest)
+ * system (e.g. if sizeof(struct SequenceTest_getStringBoundedRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringBoundedRequest, the
+ * other than struct SequenceTest_getStringBoundedRequest, the
  * following restriction applies: the key of struct
- * getStringBoundedRequest must consist of a
+ * SequenceTest_getStringBoundedRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringBoundedRequest.
+ * first field in struct SequenceTest_getStringBoundedRequest.
 */
-typedef  struct getStringBoundedRequest getStringBoundedRequestKeyHolder;
+typedef  struct SequenceTest_getStringBoundedRequest SequenceTest_getStringBoundedRequestKeyHolder;
 
 
-#define getStringBoundedRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringBoundedRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringBoundedRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringBoundedRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define SequenceTest_getStringBoundedRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define SequenceTest_getStringBoundedRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define SequenceTest_getStringBoundedRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SequenceTest_getStringBoundedRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringBoundedRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringBoundedRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define SequenceTest_getStringBoundedRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define SequenceTest_getStringBoundedRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringBoundedRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringBoundedRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define SequenceTest_getStringBoundedRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SequenceTest_getStringBoundedRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedRequest*
+SequenceTest_getStringBoundedRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedRequest*
+SequenceTest_getStringBoundedRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPluginSupport_copy_data(
-    getStringBoundedRequest *out,
-    const getStringBoundedRequest *in);
+SequenceTest_getStringBoundedRequestPluginSupport_copy_data(
+    SequenceTest_getStringBoundedRequest *out,
+    const SequenceTest_getStringBoundedRequest *in);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_data_ex(
-    getStringBoundedRequest *sample,RTIBool deallocate_pointers);
+SequenceTest_getStringBoundedRequestPluginSupport_destroy_data_ex(
+    SequenceTest_getStringBoundedRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_data(
-    getStringBoundedRequest *sample);
+SequenceTest_getStringBoundedRequestPluginSupport_destroy_data(
+    SequenceTest_getStringBoundedRequest *sample);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_print_data(
-    const getStringBoundedRequest *sample,
+SequenceTest_getStringBoundedRequestPluginSupport_print_data(
+    const SequenceTest_getStringBoundedRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedRequest*
+SequenceTest_getStringBoundedRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_key_ex(
-    getStringBoundedRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedRequest*
+SequenceTest_getStringBoundedRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_key(
-    getStringBoundedRequestKeyHolder *key);
+SequenceTest_getStringBoundedRequestPluginSupport_destroy_key_ex(
+    SequenceTest_getStringBoundedRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SequenceTest_getStringBoundedRequestPluginSupport_destroy_key(
+    SequenceTest_getStringBoundedRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1168,7 +1168,7 @@ getStringBoundedRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringBoundedRequestPlugin_on_participant_attached(
+SequenceTest_getStringBoundedRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1176,34 +1176,34 @@ getStringBoundedRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPlugin_on_participant_detached(
+SequenceTest_getStringBoundedRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringBoundedRequestPlugin_on_endpoint_attached(
+SequenceTest_getStringBoundedRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPlugin_on_endpoint_detached(
+SequenceTest_getStringBoundedRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_copy_sample(
+SequenceTest_getStringBoundedRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *out,
-    const getStringBoundedRequest *in);
+    SequenceTest_getStringBoundedRequest *out,
+    const SequenceTest_getStringBoundedRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_serialize(
+SequenceTest_getStringBoundedRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedRequest *sample,
+    const SequenceTest_getStringBoundedRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1211,9 +1211,9 @@ getStringBoundedRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize_sample(
+SequenceTest_getStringBoundedRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *sample, 
+    SequenceTest_getStringBoundedRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1221,9 +1221,9 @@ getStringBoundedRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize(
+SequenceTest_getStringBoundedRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest **sample, 
+    SequenceTest_getStringBoundedRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1233,7 +1233,7 @@ getStringBoundedRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedRequestPlugin_skip(
+SequenceTest_getStringBoundedRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1241,26 +1241,26 @@ getStringBoundedRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedRequestPlugin_get_serialized_sample_max_size(
+SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedRequestPlugin_get_serialized_sample_min_size(
+SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringBoundedRequestPlugin_get_serialized_sample_size(
+SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringBoundedRequest * sample);
+    const SequenceTest_getStringBoundedRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1268,19 +1268,19 @@ getStringBoundedRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringBoundedRequestPlugin_get_key_kind(void);
+SequenceTest_getStringBoundedRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedRequestPlugin_get_serialized_key_max_size(
+SequenceTest_getStringBoundedRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_serialize_key(
+SequenceTest_getStringBoundedRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedRequest *sample,
+    const SequenceTest_getStringBoundedRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1288,9 +1288,9 @@ getStringBoundedRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize_key_sample(
+SequenceTest_getStringBoundedRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest * sample,
+    SequenceTest_getStringBoundedRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1298,9 +1298,9 @@ getStringBoundedRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize_key(
+SequenceTest_getStringBoundedRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest ** sample,
+    SequenceTest_getStringBoundedRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1309,9 +1309,9 @@ getStringBoundedRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedRequestPlugin_serialized_sample_to_key(
+SequenceTest_getStringBoundedRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *sample,
+    SequenceTest_getStringBoundedRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1319,25 +1319,25 @@ getStringBoundedRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_instance_to_key(
+SequenceTest_getStringBoundedRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequestKeyHolder *key, 
-    const getStringBoundedRequest *instance);
+    SequenceTest_getStringBoundedRequestKeyHolder *key, 
+    const SequenceTest_getStringBoundedRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_key_to_instance(
+SequenceTest_getStringBoundedRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *instance, 
-    const getStringBoundedRequestKeyHolder *key);
+    SequenceTest_getStringBoundedRequest *instance, 
+    const SequenceTest_getStringBoundedRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_instance_to_keyhash(
+SequenceTest_getStringBoundedRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringBoundedRequest *instance);
+    const SequenceTest_getStringBoundedRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
+SequenceTest_getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1346,83 +1346,83 @@ getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringBoundedRequestPlugin_new(void);
+SequenceTest_getStringBoundedRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
+SequenceTest_getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringBoundedReply.
+ * SequenceTest_getStringBoundedReply.
  *
- * By default, this type is struct getStringBoundedReply
+ * By default, this type is struct SequenceTest_getStringBoundedReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringBoundedReply)
+ * system (e.g. if sizeof(struct SequenceTest_getStringBoundedReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringBoundedReply, the
+ * other than struct SequenceTest_getStringBoundedReply, the
  * following restriction applies: the key of struct
- * getStringBoundedReply must consist of a
+ * SequenceTest_getStringBoundedReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringBoundedReply.
+ * first field in struct SequenceTest_getStringBoundedReply.
 */
-typedef  struct getStringBoundedReply getStringBoundedReplyKeyHolder;
+typedef  struct SequenceTest_getStringBoundedReply SequenceTest_getStringBoundedReplyKeyHolder;
 
 
-#define getStringBoundedReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringBoundedReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringBoundedReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringBoundedReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define SequenceTest_getStringBoundedReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define SequenceTest_getStringBoundedReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define SequenceTest_getStringBoundedReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SequenceTest_getStringBoundedReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringBoundedReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringBoundedReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define SequenceTest_getStringBoundedReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define SequenceTest_getStringBoundedReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringBoundedReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringBoundedReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define SequenceTest_getStringBoundedReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SequenceTest_getStringBoundedReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedReply*
+SequenceTest_getStringBoundedReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedReply*
+SequenceTest_getStringBoundedReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPluginSupport_copy_data(
-    getStringBoundedReply *out,
-    const getStringBoundedReply *in);
+SequenceTest_getStringBoundedReplyPluginSupport_copy_data(
+    SequenceTest_getStringBoundedReply *out,
+    const SequenceTest_getStringBoundedReply *in);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_data_ex(
-    getStringBoundedReply *sample,RTIBool deallocate_pointers);
+SequenceTest_getStringBoundedReplyPluginSupport_destroy_data_ex(
+    SequenceTest_getStringBoundedReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_data(
-    getStringBoundedReply *sample);
+SequenceTest_getStringBoundedReplyPluginSupport_destroy_data(
+    SequenceTest_getStringBoundedReply *sample);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_print_data(
-    const getStringBoundedReply *sample,
+SequenceTest_getStringBoundedReplyPluginSupport_print_data(
+    const SequenceTest_getStringBoundedReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedReply*
+SequenceTest_getStringBoundedReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_key_ex(
-    getStringBoundedReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern SequenceTest_getStringBoundedReply*
+SequenceTest_getStringBoundedReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_key(
-    getStringBoundedReplyKeyHolder *key);
+SequenceTest_getStringBoundedReplyPluginSupport_destroy_key_ex(
+    SequenceTest_getStringBoundedReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SequenceTest_getStringBoundedReplyPluginSupport_destroy_key(
+    SequenceTest_getStringBoundedReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1430,7 +1430,7 @@ getStringBoundedReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringBoundedReplyPlugin_on_participant_attached(
+SequenceTest_getStringBoundedReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1438,34 +1438,34 @@ getStringBoundedReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPlugin_on_participant_detached(
+SequenceTest_getStringBoundedReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringBoundedReplyPlugin_on_endpoint_attached(
+SequenceTest_getStringBoundedReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPlugin_on_endpoint_detached(
+SequenceTest_getStringBoundedReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_copy_sample(
+SequenceTest_getStringBoundedReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *out,
-    const getStringBoundedReply *in);
+    SequenceTest_getStringBoundedReply *out,
+    const SequenceTest_getStringBoundedReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_serialize(
+SequenceTest_getStringBoundedReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedReply *sample,
+    const SequenceTest_getStringBoundedReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1473,9 +1473,9 @@ getStringBoundedReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize_sample(
+SequenceTest_getStringBoundedReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *sample, 
+    SequenceTest_getStringBoundedReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1483,9 +1483,9 @@ getStringBoundedReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize(
+SequenceTest_getStringBoundedReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply **sample, 
+    SequenceTest_getStringBoundedReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1495,7 +1495,7 @@ getStringBoundedReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedReplyPlugin_skip(
+SequenceTest_getStringBoundedReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1503,26 +1503,26 @@ getStringBoundedReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedReplyPlugin_get_serialized_sample_max_size(
+SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedReplyPlugin_get_serialized_sample_min_size(
+SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringBoundedReplyPlugin_get_serialized_sample_size(
+SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringBoundedReply * sample);
+    const SequenceTest_getStringBoundedReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1530,19 +1530,19 @@ getStringBoundedReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringBoundedReplyPlugin_get_key_kind(void);
+SequenceTest_getStringBoundedReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedReplyPlugin_get_serialized_key_max_size(
+SequenceTest_getStringBoundedReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_serialize_key(
+SequenceTest_getStringBoundedReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedReply *sample,
+    const SequenceTest_getStringBoundedReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1550,9 +1550,9 @@ getStringBoundedReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize_key_sample(
+SequenceTest_getStringBoundedReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply * sample,
+    SequenceTest_getStringBoundedReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1560,9 +1560,9 @@ getStringBoundedReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize_key(
+SequenceTest_getStringBoundedReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply ** sample,
+    SequenceTest_getStringBoundedReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1571,9 +1571,9 @@ getStringBoundedReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedReplyPlugin_serialized_sample_to_key(
+SequenceTest_getStringBoundedReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *sample,
+    SequenceTest_getStringBoundedReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1581,25 +1581,25 @@ getStringBoundedReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_instance_to_key(
+SequenceTest_getStringBoundedReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReplyKeyHolder *key, 
-    const getStringBoundedReply *instance);
+    SequenceTest_getStringBoundedReplyKeyHolder *key, 
+    const SequenceTest_getStringBoundedReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_key_to_instance(
+SequenceTest_getStringBoundedReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *instance, 
-    const getStringBoundedReplyKeyHolder *key);
+    SequenceTest_getStringBoundedReply *instance, 
+    const SequenceTest_getStringBoundedReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_instance_to_keyhash(
+SequenceTest_getStringBoundedReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringBoundedReply *instance);
+    const SequenceTest_getStringBoundedReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
+SequenceTest_getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1608,10 +1608,10 @@ getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringBoundedReplyPlugin_new(void);
+SequenceTest_getStringBoundedReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
+SequenceTest_getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }
@@ -1625,4 +1625,4 @@ getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* SequenceTestRequestReplyPlugin_1689902967_h */
+#endif /* SequenceTestRequestReplyPlugin_1689902559_h */

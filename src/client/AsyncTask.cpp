@@ -16,21 +16,14 @@ namespace eProsima
         {
         }
 
-        void AsyncTask::execute(ReturnMessage message, DDS::QueryCondition *query)
+        void AsyncTask::execute(DDS::QueryCondition *query)
         {
             const char* const METHOD_NAME = "execute";
 
             if(query != NULL)
             {
-                if(message == OPERATION_SUCCESSFUL)
-                {
-                    eProsima::DDSRPC::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
-                    this->execute(retCode);
-                }
-                else
-                {
-                    this->execute(message);
-                }
+                eProsima::DDSRPC::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
+                this->execute();
             }
             else
             {

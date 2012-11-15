@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    TypedefTestProxy *proxy = new TypedefTestProxy();
+    TypedefTestProxy *proxy = new TypedefTestProxy("TypedefTestService");
 
     largo  l1 = 1;    
     largo  l2 = 0;       
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getLargo>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getLargo>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getLarguisimo>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getLarguisimo>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getDatosDef>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getDatosDef>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getDatosDef>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getDatosDef>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -139,7 +139,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getCadena>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getCadena>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -165,7 +165,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getCadena>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getCadena>: %s\n", ex.what());
         _exit(-1);
     }
 

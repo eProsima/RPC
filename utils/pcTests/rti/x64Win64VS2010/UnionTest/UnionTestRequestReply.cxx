@@ -39,34 +39,17 @@
 #include "UnionTestRequestReply.h"
 
 /* ========================================================================= */
-const char *getEmpleadoRequestTYPENAME = "getEmpleadoRequest";
+const char *UnionTest_getEmpleadoRequestTYPENAME = "UnionTest_getEmpleadoRequest";
 
-DDS_TypeCode* getEmpleadoRequest_get_typecode()
+DDS_TypeCode* UnionTest_getEmpleadoRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getEmpleadoRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member UnionTest_getEmpleadoRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -118,57 +101,52 @@ DDS_TypeCode* getEmpleadoRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getEmpleadoRequest_g_tc =
+    static DDS_TypeCode UnionTest_getEmpleadoRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getEmpleadoRequest", /* Name */
+        (char *)"UnionTest_getEmpleadoRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getEmpleadoRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        UnionTest_getEmpleadoRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getEmpleadoRequest*/
+    }}; /* Type code for UnionTest_getEmpleadoRequest*/
 
     if (is_initialized) {
-        return &getEmpleadoRequest_g_tc;
+        return &UnionTest_getEmpleadoRequest_g_tc;
     }
 
 
-    getEmpleadoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getEmpleadoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getEmpleadoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
-    getEmpleadoRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
+    UnionTest_getEmpleadoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    UnionTest_getEmpleadoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
+    UnionTest_getEmpleadoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getEmpleadoRequest_g_tc;
+    return &UnionTest_getEmpleadoRequest_g_tc;
 }
 
 
-RTIBool getEmpleadoRequest_initialize(
-    getEmpleadoRequest* sample) {
-  return getEmpleadoRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool UnionTest_getEmpleadoRequest_initialize(
+    UnionTest_getEmpleadoRequest* sample) {
+  return UnionTest_getEmpleadoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getEmpleadoRequest_initialize_ex(
-    getEmpleadoRequest* sample,RTIBool allocatePointers)
+RTIBool UnionTest_getEmpleadoRequest_initialize_ex(
+    UnionTest_getEmpleadoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!Empleado_initialize_ex(&sample->em1,allocatePointers)) {
         return RTI_FALSE;
@@ -182,20 +160,20 @@ RTIBool getEmpleadoRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getEmpleadoRequest_finalize(
-    getEmpleadoRequest* sample)
+void UnionTest_getEmpleadoRequest_finalize(
+    UnionTest_getEmpleadoRequest* sample)
 {
-    getEmpleadoRequest_finalize_ex(sample,RTI_TRUE);
+    UnionTest_getEmpleadoRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getEmpleadoRequest_finalize_ex(
-    getEmpleadoRequest* sample,RTIBool deletePointers)
+void UnionTest_getEmpleadoRequest_finalize_ex(
+    UnionTest_getEmpleadoRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     Empleado_finalize_ex(&sample->em1,deletePointers);
             
@@ -203,18 +181,13 @@ void getEmpleadoRequest_finalize_ex(
             
 }
 
-RTIBool getEmpleadoRequest_copy(
-    getEmpleadoRequest* dst,
-    const getEmpleadoRequest* src)
+RTIBool UnionTest_getEmpleadoRequest_copy(
+    UnionTest_getEmpleadoRequest* dst,
+    const UnionTest_getEmpleadoRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -238,13 +211,13 @@ RTIBool getEmpleadoRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getEmpleadoRequest' sequence class.
+ * Configure and implement 'UnionTest_getEmpleadoRequest' sequence class.
  */
-#define T getEmpleadoRequest
-#define TSeq getEmpleadoRequestSeq
-#define T_initialize_ex getEmpleadoRequest_initialize_ex
-#define T_finalize_ex   getEmpleadoRequest_finalize_ex
-#define T_copy       getEmpleadoRequest_copy
+#define T UnionTest_getEmpleadoRequest
+#define TSeq UnionTest_getEmpleadoRequestSeq
+#define T_initialize_ex UnionTest_getEmpleadoRequest_initialize_ex
+#define T_finalize_ex   UnionTest_getEmpleadoRequest_finalize_ex
+#define T_copy       UnionTest_getEmpleadoRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -265,17 +238,17 @@ RTIBool getEmpleadoRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getEmpleadoReplyTYPENAME = "getEmpleadoReply";
+const char *UnionTest_getEmpleadoReplyTYPENAME = "UnionTest_getEmpleadoReply";
 
-DDS_TypeCode* getEmpleadoReply_get_typecode()
+DDS_TypeCode* UnionTest_getEmpleadoReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getEmpleadoReply_g_tc_members[7]=
+    static DDS_TypeCode_Member UnionTest_getEmpleadoReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -287,57 +260,6 @@ DDS_TypeCode* getEmpleadoReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -395,68 +317,53 @@ DDS_TypeCode* getEmpleadoReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getEmpleadoReply_g_tc =
+    static DDS_TypeCode UnionTest_getEmpleadoReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getEmpleadoReply", /* Name */
+        (char *)"UnionTest_getEmpleadoReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getEmpleadoReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        UnionTest_getEmpleadoReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getEmpleadoReply*/
+    }}; /* Type code for UnionTest_getEmpleadoReply*/
 
     if (is_initialized) {
-        return &getEmpleadoReply_g_tc;
+        return &UnionTest_getEmpleadoReply_g_tc;
     }
 
 
-    getEmpleadoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getEmpleadoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getEmpleadoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getEmpleadoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getEmpleadoReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
-    getEmpleadoReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
-    getEmpleadoReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
+    UnionTest_getEmpleadoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    UnionTest_getEmpleadoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
+    UnionTest_getEmpleadoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
+    UnionTest_getEmpleadoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Empleado_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getEmpleadoReply_g_tc;
+    return &UnionTest_getEmpleadoReply_g_tc;
 }
 
 
-RTIBool getEmpleadoReply_initialize(
-    getEmpleadoReply* sample) {
-  return getEmpleadoReply_initialize_ex(sample,RTI_TRUE);
+RTIBool UnionTest_getEmpleadoReply_initialize(
+    UnionTest_getEmpleadoReply* sample) {
+  return UnionTest_getEmpleadoReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getEmpleadoReply_initialize_ex(
-    getEmpleadoReply* sample,RTIBool allocatePointers)
+RTIBool UnionTest_getEmpleadoReply_initialize_ex(
+    UnionTest_getEmpleadoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!Empleado_initialize_ex(&sample->em2,allocatePointers)) {
         return RTI_FALSE;
@@ -474,22 +381,20 @@ RTIBool getEmpleadoReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getEmpleadoReply_finalize(
-    getEmpleadoReply* sample)
+void UnionTest_getEmpleadoReply_finalize(
+    UnionTest_getEmpleadoReply* sample)
 {
-    getEmpleadoReply_finalize_ex(sample,RTI_TRUE);
+    UnionTest_getEmpleadoReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getEmpleadoReply_finalize_ex(
-    getEmpleadoReply* sample,RTIBool deletePointers)
+void UnionTest_getEmpleadoReply_finalize_ex(
+    UnionTest_getEmpleadoReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     Empleado_finalize_ex(&sample->em2,deletePointers);
             
@@ -499,28 +404,13 @@ void getEmpleadoReply_finalize_ex(
             
 }
 
-RTIBool getEmpleadoReply_copy(
-    getEmpleadoReply* dst,
-    const getEmpleadoReply* src)
+RTIBool UnionTest_getEmpleadoReply_copy(
+    UnionTest_getEmpleadoReply* dst,
+    const UnionTest_getEmpleadoReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -549,13 +439,13 @@ RTIBool getEmpleadoReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getEmpleadoReply' sequence class.
+ * Configure and implement 'UnionTest_getEmpleadoReply' sequence class.
  */
-#define T getEmpleadoReply
-#define TSeq getEmpleadoReplySeq
-#define T_initialize_ex getEmpleadoReply_initialize_ex
-#define T_finalize_ex   getEmpleadoReply_finalize_ex
-#define T_copy       getEmpleadoReply_copy
+#define T UnionTest_getEmpleadoReply
+#define TSeq UnionTest_getEmpleadoReplySeq
+#define T_initialize_ex UnionTest_getEmpleadoReply_initialize_ex
+#define T_finalize_ex   UnionTest_getEmpleadoReply_finalize_ex
+#define T_copy       UnionTest_getEmpleadoReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

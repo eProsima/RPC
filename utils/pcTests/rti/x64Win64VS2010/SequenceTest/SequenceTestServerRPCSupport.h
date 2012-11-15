@@ -10,13 +10,13 @@
 
 
 
-GENERIC_SERVER_RPC(getSLongServerRPC, getSLongReplyDataWriter, getSLongRequestDataReader);
+GENERIC_SERVER_RPC(SequenceTest_getSLongServerRPC, SequenceTest_getSLongReplyDataWriter, SequenceTest_getSLongRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getStringServerRPC, getStringReplyDataWriter, getStringRequestDataReader);
+GENERIC_SERVER_RPC(SequenceTest_getStringServerRPC, SequenceTest_getStringReplyDataWriter, SequenceTest_getStringRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getStringBoundedServerRPC, getStringBoundedReplyDataWriter, getStringBoundedRequestDataReader);
+GENERIC_SERVER_RPC(SequenceTest_getStringBoundedServerRPC, SequenceTest_getStringBoundedReplyDataWriter, SequenceTest_getStringBoundedRequestDataReader);
 
 
 #endif  // _SequenceTest_SERVER_RPC_SUPPORT_H_

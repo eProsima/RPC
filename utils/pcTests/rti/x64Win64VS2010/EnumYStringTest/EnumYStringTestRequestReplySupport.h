@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestRequestReplySupport_1383307737_h
-#define EnumYStringTestRequestReplySupport_1383307737_h
+#ifndef EnumYStringTestRequestReplySupport_1383307347_h
+#define EnumYStringTestRequestReplySupport_1383307347_h
 
 /* Uses */
 #include "EnumYStringTestRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getEnumRequestTypeSupport, getEnumRequest);
+DDS_TYPESUPPORT_CPP(EnumYStringTest_getEnumRequestTypeSupport, EnumYStringTest_getEnumRequest);
 
-DDS_DATAWRITER_CPP(getEnumRequestDataWriter, getEnumRequest);
-DDS_DATAREADER_CPP(getEnumRequestDataReader, getEnumRequestSeq, getEnumRequest);
+DDS_DATAWRITER_CPP(EnumYStringTest_getEnumRequestDataWriter, EnumYStringTest_getEnumRequest);
+DDS_DATAREADER_CPP(EnumYStringTest_getEnumRequestDataReader, EnumYStringTest_getEnumRequestSeq, EnumYStringTest_getEnumRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getEnumRequestTypeSupport, getEnumRequest);
-DDS_DATAWRITER_C(getEnumRequestDataWriter, getEnumRequest);
-DDS_DATAREADER_C(getEnumRequestDataReader, getEnumRequestSeq, getEnumRequest);
+DDS_TYPESUPPORT_C(EnumYStringTest_getEnumRequestTypeSupport, EnumYStringTest_getEnumRequest);
+DDS_DATAWRITER_C(EnumYStringTest_getEnumRequestDataWriter, EnumYStringTest_getEnumRequest);
+DDS_DATAREADER_C(EnumYStringTest_getEnumRequestDataReader, EnumYStringTest_getEnumRequestSeq, EnumYStringTest_getEnumRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(getEnumRequestDataReader, getEnumRequestSeq, getEnumRequest);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getEnumReplyTypeSupport, getEnumReply);
+DDS_TYPESUPPORT_CPP(EnumYStringTest_getEnumReplyTypeSupport, EnumYStringTest_getEnumReply);
 
-DDS_DATAWRITER_CPP(getEnumReplyDataWriter, getEnumReply);
-DDS_DATAREADER_CPP(getEnumReplyDataReader, getEnumReplySeq, getEnumReply);
+DDS_DATAWRITER_CPP(EnumYStringTest_getEnumReplyDataWriter, EnumYStringTest_getEnumReply);
+DDS_DATAREADER_CPP(EnumYStringTest_getEnumReplyDataReader, EnumYStringTest_getEnumReplySeq, EnumYStringTest_getEnumReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getEnumReplyTypeSupport, getEnumReply);
-DDS_DATAWRITER_C(getEnumReplyDataWriter, getEnumReply);
-DDS_DATAREADER_C(getEnumReplyDataReader, getEnumReplySeq, getEnumReply);
+DDS_TYPESUPPORT_C(EnumYStringTest_getEnumReplyTypeSupport, EnumYStringTest_getEnumReply);
+DDS_DATAWRITER_C(EnumYStringTest_getEnumReplyDataWriter, EnumYStringTest_getEnumReply);
+DDS_DATAREADER_C(EnumYStringTest_getEnumReplyDataReader, EnumYStringTest_getEnumReplySeq, EnumYStringTest_getEnumReply);
 
 #endif
 
@@ -161,17 +161,17 @@ DDS_DATAREADER_C(getEnumReplyDataReader, getEnumReplySeq, getEnumReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringRequestTypeSupport, getStringRequest);
+DDS_TYPESUPPORT_CPP(EnumYStringTest_getStringRequestTypeSupport, EnumYStringTest_getStringRequest);
 
-DDS_DATAWRITER_CPP(getStringRequestDataWriter, getStringRequest);
-DDS_DATAREADER_CPP(getStringRequestDataReader, getStringRequestSeq, getStringRequest);
+DDS_DATAWRITER_CPP(EnumYStringTest_getStringRequestDataWriter, EnumYStringTest_getStringRequest);
+DDS_DATAREADER_CPP(EnumYStringTest_getStringRequestDataReader, EnumYStringTest_getStringRequestSeq, EnumYStringTest_getStringRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringRequestTypeSupport, getStringRequest);
-DDS_DATAWRITER_C(getStringRequestDataWriter, getStringRequest);
-DDS_DATAREADER_C(getStringRequestDataReader, getStringRequestSeq, getStringRequest);
+DDS_TYPESUPPORT_C(EnumYStringTest_getStringRequestTypeSupport, EnumYStringTest_getStringRequest);
+DDS_DATAWRITER_C(EnumYStringTest_getStringRequestDataWriter, EnumYStringTest_getStringRequest);
+DDS_DATAREADER_C(EnumYStringTest_getStringRequestDataReader, EnumYStringTest_getStringRequestSeq, EnumYStringTest_getStringRequest);
 
 #endif
 
@@ -213,17 +213,17 @@ DDS_DATAREADER_C(getStringRequestDataReader, getStringRequestSeq, getStringReque
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringReplyTypeSupport, getStringReply);
+DDS_TYPESUPPORT_CPP(EnumYStringTest_getStringReplyTypeSupport, EnumYStringTest_getStringReply);
 
-DDS_DATAWRITER_CPP(getStringReplyDataWriter, getStringReply);
-DDS_DATAREADER_CPP(getStringReplyDataReader, getStringReplySeq, getStringReply);
+DDS_DATAWRITER_CPP(EnumYStringTest_getStringReplyDataWriter, EnumYStringTest_getStringReply);
+DDS_DATAREADER_CPP(EnumYStringTest_getStringReplyDataReader, EnumYStringTest_getStringReplySeq, EnumYStringTest_getStringReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringReplyTypeSupport, getStringReply);
-DDS_DATAWRITER_C(getStringReplyDataWriter, getStringReply);
-DDS_DATAREADER_C(getStringReplyDataReader, getStringReplySeq, getStringReply);
+DDS_TYPESUPPORT_C(EnumYStringTest_getStringReplyTypeSupport, EnumYStringTest_getStringReply);
+DDS_DATAWRITER_C(EnumYStringTest_getStringReplyDataWriter, EnumYStringTest_getStringReply);
+DDS_DATAREADER_C(EnumYStringTest_getStringReplyDataReader, EnumYStringTest_getStringReplySeq, EnumYStringTest_getStringReply);
 
 #endif
 
@@ -265,17 +265,17 @@ DDS_DATAREADER_C(getStringReplyDataReader, getStringReplySeq, getStringReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringBoundedRequestTypeSupport, getStringBoundedRequest);
+DDS_TYPESUPPORT_CPP(EnumYStringTest_getStringBoundedRequestTypeSupport, EnumYStringTest_getStringBoundedRequest);
 
-DDS_DATAWRITER_CPP(getStringBoundedRequestDataWriter, getStringBoundedRequest);
-DDS_DATAREADER_CPP(getStringBoundedRequestDataReader, getStringBoundedRequestSeq, getStringBoundedRequest);
+DDS_DATAWRITER_CPP(EnumYStringTest_getStringBoundedRequestDataWriter, EnumYStringTest_getStringBoundedRequest);
+DDS_DATAREADER_CPP(EnumYStringTest_getStringBoundedRequestDataReader, EnumYStringTest_getStringBoundedRequestSeq, EnumYStringTest_getStringBoundedRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringBoundedRequestTypeSupport, getStringBoundedRequest);
-DDS_DATAWRITER_C(getStringBoundedRequestDataWriter, getStringBoundedRequest);
-DDS_DATAREADER_C(getStringBoundedRequestDataReader, getStringBoundedRequestSeq, getStringBoundedRequest);
+DDS_TYPESUPPORT_C(EnumYStringTest_getStringBoundedRequestTypeSupport, EnumYStringTest_getStringBoundedRequest);
+DDS_DATAWRITER_C(EnumYStringTest_getStringBoundedRequestDataWriter, EnumYStringTest_getStringBoundedRequest);
+DDS_DATAREADER_C(EnumYStringTest_getStringBoundedRequestDataReader, EnumYStringTest_getStringBoundedRequestSeq, EnumYStringTest_getStringBoundedRequest);
 
 #endif
 
@@ -317,17 +317,17 @@ DDS_DATAREADER_C(getStringBoundedRequestDataReader, getStringBoundedRequestSeq, 
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringBoundedReplyTypeSupport, getStringBoundedReply);
+DDS_TYPESUPPORT_CPP(EnumYStringTest_getStringBoundedReplyTypeSupport, EnumYStringTest_getStringBoundedReply);
 
-DDS_DATAWRITER_CPP(getStringBoundedReplyDataWriter, getStringBoundedReply);
-DDS_DATAREADER_CPP(getStringBoundedReplyDataReader, getStringBoundedReplySeq, getStringBoundedReply);
+DDS_DATAWRITER_CPP(EnumYStringTest_getStringBoundedReplyDataWriter, EnumYStringTest_getStringBoundedReply);
+DDS_DATAREADER_CPP(EnumYStringTest_getStringBoundedReplyDataReader, EnumYStringTest_getStringBoundedReplySeq, EnumYStringTest_getStringBoundedReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringBoundedReplyTypeSupport, getStringBoundedReply);
-DDS_DATAWRITER_C(getStringBoundedReplyDataWriter, getStringBoundedReply);
-DDS_DATAREADER_C(getStringBoundedReplyDataReader, getStringBoundedReplySeq, getStringBoundedReply);
+DDS_TYPESUPPORT_C(EnumYStringTest_getStringBoundedReplyTypeSupport, EnumYStringTest_getStringBoundedReply);
+DDS_DATAWRITER_C(EnumYStringTest_getStringBoundedReplyDataWriter, EnumYStringTest_getStringBoundedReply);
+DDS_DATAREADER_C(EnumYStringTest_getStringBoundedReplyDataReader, EnumYStringTest_getStringBoundedReplySeq, EnumYStringTest_getStringBoundedReply);
 
 #endif
 
@@ -340,4 +340,4 @@ DDS_DATAREADER_C(getStringBoundedReplyDataReader, getStringBoundedReplySeq, getS
 
 
 
-#endif  /* EnumYStringTestRequestReplySupport_1383307737_h */
+#endif  /* EnumYStringTestRequestReplySupport_1383307347_h */

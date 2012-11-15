@@ -10,22 +10,22 @@
 
 
 
-GENERIC_SERVER_RPC(getLargoServerRPC, getLargoReplyDataWriter, getLargoRequestDataReader);
+GENERIC_SERVER_RPC(TypedefTest_getLargoServerRPC, TypedefTest_getLargoReplyDataWriter, TypedefTest_getLargoRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getLarguisimoServerRPC, getLarguisimoReplyDataWriter, getLarguisimoRequestDataReader);
+GENERIC_SERVER_RPC(TypedefTest_getLarguisimoServerRPC, TypedefTest_getLarguisimoReplyDataWriter, TypedefTest_getLarguisimoRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getDatosDefServerRPC, getDatosDefReplyDataWriter, getDatosDefRequestDataReader);
+GENERIC_SERVER_RPC(TypedefTest_getDatosDefServerRPC, TypedefTest_getDatosDefReplyDataWriter, TypedefTest_getDatosDefRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getDatosDefondoServerRPC, getDatosDefondoReplyDataWriter, getDatosDefondoRequestDataReader);
+GENERIC_SERVER_RPC(TypedefTest_getDatosDefondoServerRPC, TypedefTest_getDatosDefondoReplyDataWriter, TypedefTest_getDatosDefondoRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getCadenaServerRPC, getCadenaReplyDataWriter, getCadenaRequestDataReader);
+GENERIC_SERVER_RPC(TypedefTest_getCadenaServerRPC, TypedefTest_getCadenaReplyDataWriter, TypedefTest_getCadenaRequestDataReader);
 
 
-GENERIC_SERVER_RPC(getCorreaServerRPC, getCorreaReplyDataWriter, getCorreaRequestDataReader);
+GENERIC_SERVER_RPC(TypedefTest_getCorreaServerRPC, TypedefTest_getCorreaReplyDataWriter, TypedefTest_getCorreaRequestDataReader);
 
 
 #endif  // _TypedefTest_SERVER_RPC_SUPPORT_H_

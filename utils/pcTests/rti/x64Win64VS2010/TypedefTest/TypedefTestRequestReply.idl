@@ -7,103 +7,79 @@
 
 
 
-struct getLargoRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct TypedefTest_getLargoRequest{
+    RequestHeader header;  //@key
     largo l1;
 };  //@top-level true
 
 
-struct getLargoReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct TypedefTest_getLargoReply{
+    ReplyHeader header;  //@key
     largo l2;
     largo getLargo_ret;
 };  //@top-level true
 
 
-struct getLarguisimoRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct TypedefTest_getLarguisimoRequest{
+    RequestHeader header;  //@key
     larguisimo ll1;
 };  //@top-level true
 
 
-struct getLarguisimoReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct TypedefTest_getLarguisimoReply{
+    ReplyHeader header;  //@key
     larguisimo ll2;
     larguisimo getLarguisimo_ret;
 };  //@top-level true
 
 
-struct getDatosDefRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct TypedefTest_getDatosDefRequest{
+    RequestHeader header;  //@key
     DatosDef d1;
 };  //@top-level true
 
 
-struct getDatosDefReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct TypedefTest_getDatosDefReply{
+    ReplyHeader header;  //@key
     DatosDef d2;
     DatosDef getDatosDef_ret;
 };  //@top-level true
 
 
-struct getDatosDefondoRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct TypedefTest_getDatosDefondoRequest{
+    RequestHeader header;  //@key
     DatosDefondo dd1;
 };  //@top-level true
 
 
-struct getDatosDefondoReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct TypedefTest_getDatosDefondoReply{
+    ReplyHeader header;  //@key
     DatosDefondo dd2;
     DatosDefondo getDatosDefondo_ret;
 };  //@top-level true
 
 
-struct getCadenaRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct TypedefTest_getCadenaRequest{
+    RequestHeader header;  //@key
     cadena c1;
 };  //@top-level true
 
 
-struct getCadenaReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct TypedefTest_getCadenaReply{
+    ReplyHeader header;  //@key
     cadena c2;
     cadena getCadena_ret;
 };  //@top-level true
 
 
-struct getCorreaRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct TypedefTest_getCorreaRequest{
+    RequestHeader header;  //@key
     correa cc1;
 };  //@top-level true
 
 
-struct getCorreaReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct TypedefTest_getCorreaReply{
+    ReplyHeader header;  //@key
     correa cc2;
     correa getCorrea_ret;
 };  //@top-level true

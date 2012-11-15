@@ -7,12 +7,12 @@
 
 
 /* Defines */
-#define TName                   sendExceptionServerRPC
-#define TDataReplyTypeSupport   sendExceptionReplyTypeSupport
-#define TDataRequestTypeSupport sendExceptionRequestTypeSupport
-#define TData                   sendException
-#define TDataReader             sendExceptionRequestDataReader
-#define TDataWriter             sendExceptionReplyDataWriter
+#define TName                   ServerException_sendExceptionServerRPC
+#define TDataReplyTypeSupport   ServerException_sendExceptionReplyTypeSupport
+#define TDataRequestTypeSupport ServerException_sendExceptionRequestTypeSupport
+#define TData                   ServerException_sendException
+#define TDataReader             ServerException_sendExceptionRequestDataReader
+#define TDataWriter             ServerException_sendExceptionReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -27,12 +27,12 @@
 
 
 /* Defines */
-#define TName                   sendExceptionTwoServerRPC
-#define TDataReplyTypeSupport   sendExceptionTwoReplyTypeSupport
-#define TDataRequestTypeSupport sendExceptionTwoRequestTypeSupport
-#define TData                   sendExceptionTwo
-#define TDataReader             sendExceptionTwoRequestDataReader
-#define TDataWriter             sendExceptionTwoReplyDataWriter
+#define TName                   ServerException_sendExceptionTwoServerRPC
+#define TDataReplyTypeSupport   ServerException_sendExceptionTwoReplyTypeSupport
+#define TDataRequestTypeSupport ServerException_sendExceptionTwoRequestTypeSupport
+#define TData                   ServerException_sendExceptionTwo
+#define TDataReader             ServerException_sendExceptionTwoRequestDataReader
+#define TDataWriter             ServerException_sendExceptionTwoReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -47,12 +47,12 @@
 
 
 /* Defines */
-#define TName                   sendExceptionThreeServerRPC
-#define TDataReplyTypeSupport   sendExceptionThreeReplyTypeSupport
-#define TDataRequestTypeSupport sendExceptionThreeRequestTypeSupport
-#define TData                   sendExceptionThree
-#define TDataReader             sendExceptionThreeRequestDataReader
-#define TDataWriter             sendExceptionThreeReplyDataWriter
+#define TName                   ServerException_sendExceptionThreeServerRPC
+#define TDataReplyTypeSupport   ServerException_sendExceptionThreeReplyTypeSupport
+#define TDataRequestTypeSupport ServerException_sendExceptionThreeRequestTypeSupport
+#define TData                   ServerException_sendExceptionThree
+#define TDataReader             ServerException_sendExceptionThreeRequestDataReader
+#define TDataWriter             ServerException_sendExceptionThreeReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
