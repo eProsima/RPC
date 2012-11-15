@@ -227,14 +227,16 @@ namespace eProsima
 
             if(request != NULL && task != NULL)
             {
-                *(unsigned int*)request = m_clientServiceId[0];
-                ((unsigned int*)request)[1] = m_clientServiceId[1];
-                ((unsigned int*)request)[2] = m_clientServiceId[2];
-                ((unsigned int*)request)[3] = m_clientServiceId[3];
+				RequestHeader *reqhead = (RequestHeader*)request;
+                reqhead->clientId.value_1 = m_clientServiceId[0];
+                reqhead->clientId.value_2 = m_clientServiceId[1];
+                reqhead->clientId.value_3 = m_clientServiceId[2];
+                reqhead->clientId.value_4 = m_clientServiceId[3];
+                reqhead->remoteServiceName = (char*)m_client->getRemoteServiceName().c_str();
 
                 m_mutex->lock();
                 /* Thread safe num_Sec handling */
-                ((unsigned int*)request)[4] = m_numSec;
+                reqhead->requestSequenceNumber = m_numSec;
                 numSec = m_numSec;
                 m_numSec++;
                 m_mutex->unlock();

@@ -99,13 +99,9 @@ classHeaderAsync(interfaceName,rettype,name,outParams) ::= <<
 class $interfaceName$_$name$CallbackHandler
 {
     public:
-        virtual void $name$($argsDecl([outParams, rettype])$)
-        {
-        }
+        virtual void $name$($argsDecl([outParams, rettype])$) = 0;
    
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 }
 >>
 

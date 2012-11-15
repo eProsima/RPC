@@ -56,10 +56,12 @@ taskDeclaration(interfaceName, name, outParams) ::= <<
 $interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    $interfaceName$_$name$Reply_initialize(&m_reply);
 }
 
 $interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
+    $interfaceName$_$name$Reply_finalize(&m_reply);
 }
 
 $interfaceName$_$name$CallbackHandler& $interfaceName$_$name$Task::getObject()
