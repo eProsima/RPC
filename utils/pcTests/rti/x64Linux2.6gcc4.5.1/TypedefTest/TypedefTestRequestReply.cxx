@@ -39,34 +39,17 @@
 #include "TypedefTestRequestReply.h"
 
 /* ========================================================================= */
-const char *getLargoRequestTYPENAME = "getLargoRequest";
+const char *TypedefTest_getLargoRequestTYPENAME = "TypedefTest_getLargoRequest";
 
-DDS_TypeCode* getLargoRequest_get_typecode()
+DDS_TypeCode* TypedefTest_getLargoRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getLargoRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member TypedefTest_getLargoRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -101,56 +84,51 @@ DDS_TypeCode* getLargoRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getLargoRequest_g_tc =
+    static DDS_TypeCode TypedefTest_getLargoRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getLargoRequest", /* Name */
+        (char *)"TypedefTest_getLargoRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        getLargoRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        TypedefTest_getLargoRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getLargoRequest*/
+    }}; /* Type code for TypedefTest_getLargoRequest*/
 
     if (is_initialized) {
-        return &getLargoRequest_g_tc;
+        return &TypedefTest_getLargoRequest_g_tc;
     }
 
 
-    getLargoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getLargoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getLargoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    TypedefTest_getLargoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    TypedefTest_getLargoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getLargoRequest_g_tc;
+    return &TypedefTest_getLargoRequest_g_tc;
 }
 
 
-RTIBool getLargoRequest_initialize(
-    getLargoRequest* sample) {
-  return getLargoRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getLargoRequest_initialize(
+    TypedefTest_getLargoRequest* sample) {
+  return TypedefTest_getLargoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getLargoRequest_initialize_ex(
-    getLargoRequest* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getLargoRequest_initialize_ex(
+    TypedefTest_getLargoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!largo_initialize_ex(&sample->l1,allocatePointers)) {
         return RTI_FALSE;
@@ -160,37 +138,32 @@ RTIBool getLargoRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getLargoRequest_finalize(
-    getLargoRequest* sample)
+void TypedefTest_getLargoRequest_finalize(
+    TypedefTest_getLargoRequest* sample)
 {
-    getLargoRequest_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getLargoRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getLargoRequest_finalize_ex(
-    getLargoRequest* sample,RTIBool deletePointers)
+void TypedefTest_getLargoRequest_finalize_ex(
+    TypedefTest_getLargoRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     largo_finalize_ex(&sample->l1,deletePointers);
             
 }
 
-RTIBool getLargoRequest_copy(
-    getLargoRequest* dst,
-    const getLargoRequest* src)
+RTIBool TypedefTest_getLargoRequest_copy(
+    TypedefTest_getLargoRequest* dst,
+    const TypedefTest_getLargoRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -209,13 +182,13 @@ RTIBool getLargoRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getLargoRequest' sequence class.
+ * Configure and implement 'TypedefTest_getLargoRequest' sequence class.
  */
-#define T getLargoRequest
-#define TSeq getLargoRequestSeq
-#define T_initialize_ex getLargoRequest_initialize_ex
-#define T_finalize_ex   getLargoRequest_finalize_ex
-#define T_copy       getLargoRequest_copy
+#define T TypedefTest_getLargoRequest
+#define TSeq TypedefTest_getLargoRequestSeq
+#define T_initialize_ex TypedefTest_getLargoRequest_initialize_ex
+#define T_finalize_ex   TypedefTest_getLargoRequest_finalize_ex
+#define T_copy       TypedefTest_getLargoRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -236,17 +209,17 @@ RTIBool getLargoRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getLargoReplyTYPENAME = "getLargoReply";
+const char *TypedefTest_getLargoReplyTYPENAME = "TypedefTest_getLargoReply";
 
-DDS_TypeCode* getLargoReply_get_typecode()
+DDS_TypeCode* TypedefTest_getLargoReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getLargoReply_g_tc_members[6]=
+    static DDS_TypeCode_Member TypedefTest_getLargoReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -258,57 +231,6 @@ DDS_TypeCode* getLargoReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -349,67 +271,52 @@ DDS_TypeCode* getLargoReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getLargoReply_g_tc =
+    static DDS_TypeCode TypedefTest_getLargoReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getLargoReply", /* Name */
+        (char *)"TypedefTest_getLargoReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        getLargoReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        TypedefTest_getLargoReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getLargoReply*/
+    }}; /* Type code for TypedefTest_getLargoReply*/
 
     if (is_initialized) {
-        return &getLargoReply_g_tc;
+        return &TypedefTest_getLargoReply_g_tc;
     }
 
 
-    getLargoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getLargoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getLargoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getLargoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getLargoReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
-    getLargoReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    TypedefTest_getLargoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    TypedefTest_getLargoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    TypedefTest_getLargoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getLargoReply_g_tc;
+    return &TypedefTest_getLargoReply_g_tc;
 }
 
 
-RTIBool getLargoReply_initialize(
-    getLargoReply* sample) {
-  return getLargoReply_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getLargoReply_initialize(
+    TypedefTest_getLargoReply* sample) {
+  return TypedefTest_getLargoReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getLargoReply_initialize_ex(
-    getLargoReply* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getLargoReply_initialize_ex(
+    TypedefTest_getLargoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!largo_initialize_ex(&sample->l2,allocatePointers)) {
         return RTI_FALSE;
@@ -423,22 +330,20 @@ RTIBool getLargoReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getLargoReply_finalize(
-    getLargoReply* sample)
+void TypedefTest_getLargoReply_finalize(
+    TypedefTest_getLargoReply* sample)
 {
-    getLargoReply_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getLargoReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getLargoReply_finalize_ex(
-    getLargoReply* sample,RTIBool deletePointers)
+void TypedefTest_getLargoReply_finalize_ex(
+    TypedefTest_getLargoReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     largo_finalize_ex(&sample->l2,deletePointers);
             
@@ -446,28 +351,13 @@ void getLargoReply_finalize_ex(
             
 }
 
-RTIBool getLargoReply_copy(
-    getLargoReply* dst,
-    const getLargoReply* src)
+RTIBool TypedefTest_getLargoReply_copy(
+    TypedefTest_getLargoReply* dst,
+    const TypedefTest_getLargoReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -491,13 +381,13 @@ RTIBool getLargoReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getLargoReply' sequence class.
+ * Configure and implement 'TypedefTest_getLargoReply' sequence class.
  */
-#define T getLargoReply
-#define TSeq getLargoReplySeq
-#define T_initialize_ex getLargoReply_initialize_ex
-#define T_finalize_ex   getLargoReply_finalize_ex
-#define T_copy       getLargoReply_copy
+#define T TypedefTest_getLargoReply
+#define TSeq TypedefTest_getLargoReplySeq
+#define T_initialize_ex TypedefTest_getLargoReply_initialize_ex
+#define T_finalize_ex   TypedefTest_getLargoReply_finalize_ex
+#define T_copy       TypedefTest_getLargoReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -518,34 +408,17 @@ RTIBool getLargoReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getLarguisimoRequestTYPENAME = "getLarguisimoRequest";
+const char *TypedefTest_getLarguisimoRequestTYPENAME = "TypedefTest_getLarguisimoRequest";
 
-DDS_TypeCode* getLarguisimoRequest_get_typecode()
+DDS_TypeCode* TypedefTest_getLarguisimoRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getLarguisimoRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member TypedefTest_getLarguisimoRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -580,56 +453,51 @@ DDS_TypeCode* getLarguisimoRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getLarguisimoRequest_g_tc =
+    static DDS_TypeCode TypedefTest_getLarguisimoRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getLarguisimoRequest", /* Name */
+        (char *)"TypedefTest_getLarguisimoRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        getLarguisimoRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        TypedefTest_getLarguisimoRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getLarguisimoRequest*/
+    }}; /* Type code for TypedefTest_getLarguisimoRequest*/
 
     if (is_initialized) {
-        return &getLarguisimoRequest_g_tc;
+        return &TypedefTest_getLarguisimoRequest_g_tc;
     }
 
 
-    getLarguisimoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getLarguisimoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getLarguisimoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)larguisimo_get_typecode();
+    TypedefTest_getLarguisimoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    TypedefTest_getLarguisimoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)larguisimo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getLarguisimoRequest_g_tc;
+    return &TypedefTest_getLarguisimoRequest_g_tc;
 }
 
 
-RTIBool getLarguisimoRequest_initialize(
-    getLarguisimoRequest* sample) {
-  return getLarguisimoRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getLarguisimoRequest_initialize(
+    TypedefTest_getLarguisimoRequest* sample) {
+  return TypedefTest_getLarguisimoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getLarguisimoRequest_initialize_ex(
-    getLarguisimoRequest* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getLarguisimoRequest_initialize_ex(
+    TypedefTest_getLarguisimoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!larguisimo_initialize_ex(&sample->ll1,allocatePointers)) {
         return RTI_FALSE;
@@ -639,37 +507,32 @@ RTIBool getLarguisimoRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getLarguisimoRequest_finalize(
-    getLarguisimoRequest* sample)
+void TypedefTest_getLarguisimoRequest_finalize(
+    TypedefTest_getLarguisimoRequest* sample)
 {
-    getLarguisimoRequest_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getLarguisimoRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getLarguisimoRequest_finalize_ex(
-    getLarguisimoRequest* sample,RTIBool deletePointers)
+void TypedefTest_getLarguisimoRequest_finalize_ex(
+    TypedefTest_getLarguisimoRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     larguisimo_finalize_ex(&sample->ll1,deletePointers);
             
 }
 
-RTIBool getLarguisimoRequest_copy(
-    getLarguisimoRequest* dst,
-    const getLarguisimoRequest* src)
+RTIBool TypedefTest_getLarguisimoRequest_copy(
+    TypedefTest_getLarguisimoRequest* dst,
+    const TypedefTest_getLarguisimoRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -688,13 +551,13 @@ RTIBool getLarguisimoRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getLarguisimoRequest' sequence class.
+ * Configure and implement 'TypedefTest_getLarguisimoRequest' sequence class.
  */
-#define T getLarguisimoRequest
-#define TSeq getLarguisimoRequestSeq
-#define T_initialize_ex getLarguisimoRequest_initialize_ex
-#define T_finalize_ex   getLarguisimoRequest_finalize_ex
-#define T_copy       getLarguisimoRequest_copy
+#define T TypedefTest_getLarguisimoRequest
+#define TSeq TypedefTest_getLarguisimoRequestSeq
+#define T_initialize_ex TypedefTest_getLarguisimoRequest_initialize_ex
+#define T_finalize_ex   TypedefTest_getLarguisimoRequest_finalize_ex
+#define T_copy       TypedefTest_getLarguisimoRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -715,17 +578,17 @@ RTIBool getLarguisimoRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getLarguisimoReplyTYPENAME = "getLarguisimoReply";
+const char *TypedefTest_getLarguisimoReplyTYPENAME = "TypedefTest_getLarguisimoReply";
 
-DDS_TypeCode* getLarguisimoReply_get_typecode()
+DDS_TypeCode* TypedefTest_getLarguisimoReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getLarguisimoReply_g_tc_members[6]=
+    static DDS_TypeCode_Member TypedefTest_getLarguisimoReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -737,57 +600,6 @@ DDS_TypeCode* getLarguisimoReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -828,67 +640,52 @@ DDS_TypeCode* getLarguisimoReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getLarguisimoReply_g_tc =
+    static DDS_TypeCode TypedefTest_getLarguisimoReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getLarguisimoReply", /* Name */
+        (char *)"TypedefTest_getLarguisimoReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        getLarguisimoReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        TypedefTest_getLarguisimoReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getLarguisimoReply*/
+    }}; /* Type code for TypedefTest_getLarguisimoReply*/
 
     if (is_initialized) {
-        return &getLarguisimoReply_g_tc;
+        return &TypedefTest_getLarguisimoReply_g_tc;
     }
 
 
-    getLarguisimoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getLarguisimoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getLarguisimoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getLarguisimoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getLarguisimoReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)larguisimo_get_typecode();
-    getLarguisimoReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)larguisimo_get_typecode();
+    TypedefTest_getLarguisimoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    TypedefTest_getLarguisimoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)larguisimo_get_typecode();
+    TypedefTest_getLarguisimoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)larguisimo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getLarguisimoReply_g_tc;
+    return &TypedefTest_getLarguisimoReply_g_tc;
 }
 
 
-RTIBool getLarguisimoReply_initialize(
-    getLarguisimoReply* sample) {
-  return getLarguisimoReply_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getLarguisimoReply_initialize(
+    TypedefTest_getLarguisimoReply* sample) {
+  return TypedefTest_getLarguisimoReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getLarguisimoReply_initialize_ex(
-    getLarguisimoReply* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getLarguisimoReply_initialize_ex(
+    TypedefTest_getLarguisimoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!larguisimo_initialize_ex(&sample->ll2,allocatePointers)) {
         return RTI_FALSE;
@@ -902,22 +699,20 @@ RTIBool getLarguisimoReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getLarguisimoReply_finalize(
-    getLarguisimoReply* sample)
+void TypedefTest_getLarguisimoReply_finalize(
+    TypedefTest_getLarguisimoReply* sample)
 {
-    getLarguisimoReply_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getLarguisimoReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getLarguisimoReply_finalize_ex(
-    getLarguisimoReply* sample,RTIBool deletePointers)
+void TypedefTest_getLarguisimoReply_finalize_ex(
+    TypedefTest_getLarguisimoReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     larguisimo_finalize_ex(&sample->ll2,deletePointers);
             
@@ -925,28 +720,13 @@ void getLarguisimoReply_finalize_ex(
             
 }
 
-RTIBool getLarguisimoReply_copy(
-    getLarguisimoReply* dst,
-    const getLarguisimoReply* src)
+RTIBool TypedefTest_getLarguisimoReply_copy(
+    TypedefTest_getLarguisimoReply* dst,
+    const TypedefTest_getLarguisimoReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -970,13 +750,13 @@ RTIBool getLarguisimoReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getLarguisimoReply' sequence class.
+ * Configure and implement 'TypedefTest_getLarguisimoReply' sequence class.
  */
-#define T getLarguisimoReply
-#define TSeq getLarguisimoReplySeq
-#define T_initialize_ex getLarguisimoReply_initialize_ex
-#define T_finalize_ex   getLarguisimoReply_finalize_ex
-#define T_copy       getLarguisimoReply_copy
+#define T TypedefTest_getLarguisimoReply
+#define TSeq TypedefTest_getLarguisimoReplySeq
+#define T_initialize_ex TypedefTest_getLarguisimoReply_initialize_ex
+#define T_finalize_ex   TypedefTest_getLarguisimoReply_finalize_ex
+#define T_copy       TypedefTest_getLarguisimoReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -997,34 +777,17 @@ RTIBool getLarguisimoReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getDatosDefRequestTYPENAME = "getDatosDefRequest";
+const char *TypedefTest_getDatosDefRequestTYPENAME = "TypedefTest_getDatosDefRequest";
 
-DDS_TypeCode* getDatosDefRequest_get_typecode()
+DDS_TypeCode* TypedefTest_getDatosDefRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getDatosDefRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member TypedefTest_getDatosDefRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1059,56 +822,51 @@ DDS_TypeCode* getDatosDefRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getDatosDefRequest_g_tc =
+    static DDS_TypeCode TypedefTest_getDatosDefRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getDatosDefRequest", /* Name */
+        (char *)"TypedefTest_getDatosDefRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        getDatosDefRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        TypedefTest_getDatosDefRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getDatosDefRequest*/
+    }}; /* Type code for TypedefTest_getDatosDefRequest*/
 
     if (is_initialized) {
-        return &getDatosDefRequest_g_tc;
+        return &TypedefTest_getDatosDefRequest_g_tc;
     }
 
 
-    getDatosDefRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getDatosDefRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getDatosDefRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)DatosDef_get_typecode();
+    TypedefTest_getDatosDefRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    TypedefTest_getDatosDefRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)DatosDef_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getDatosDefRequest_g_tc;
+    return &TypedefTest_getDatosDefRequest_g_tc;
 }
 
 
-RTIBool getDatosDefRequest_initialize(
-    getDatosDefRequest* sample) {
-  return getDatosDefRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getDatosDefRequest_initialize(
+    TypedefTest_getDatosDefRequest* sample) {
+  return TypedefTest_getDatosDefRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getDatosDefRequest_initialize_ex(
-    getDatosDefRequest* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getDatosDefRequest_initialize_ex(
+    TypedefTest_getDatosDefRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!DatosDef_initialize_ex(&sample->d1,allocatePointers)) {
         return RTI_FALSE;
@@ -1118,37 +876,32 @@ RTIBool getDatosDefRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getDatosDefRequest_finalize(
-    getDatosDefRequest* sample)
+void TypedefTest_getDatosDefRequest_finalize(
+    TypedefTest_getDatosDefRequest* sample)
 {
-    getDatosDefRequest_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getDatosDefRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getDatosDefRequest_finalize_ex(
-    getDatosDefRequest* sample,RTIBool deletePointers)
+void TypedefTest_getDatosDefRequest_finalize_ex(
+    TypedefTest_getDatosDefRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     DatosDef_finalize_ex(&sample->d1,deletePointers);
             
 }
 
-RTIBool getDatosDefRequest_copy(
-    getDatosDefRequest* dst,
-    const getDatosDefRequest* src)
+RTIBool TypedefTest_getDatosDefRequest_copy(
+    TypedefTest_getDatosDefRequest* dst,
+    const TypedefTest_getDatosDefRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1167,13 +920,13 @@ RTIBool getDatosDefRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getDatosDefRequest' sequence class.
+ * Configure and implement 'TypedefTest_getDatosDefRequest' sequence class.
  */
-#define T getDatosDefRequest
-#define TSeq getDatosDefRequestSeq
-#define T_initialize_ex getDatosDefRequest_initialize_ex
-#define T_finalize_ex   getDatosDefRequest_finalize_ex
-#define T_copy       getDatosDefRequest_copy
+#define T TypedefTest_getDatosDefRequest
+#define TSeq TypedefTest_getDatosDefRequestSeq
+#define T_initialize_ex TypedefTest_getDatosDefRequest_initialize_ex
+#define T_finalize_ex   TypedefTest_getDatosDefRequest_finalize_ex
+#define T_copy       TypedefTest_getDatosDefRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1194,17 +947,17 @@ RTIBool getDatosDefRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getDatosDefReplyTYPENAME = "getDatosDefReply";
+const char *TypedefTest_getDatosDefReplyTYPENAME = "TypedefTest_getDatosDefReply";
 
-DDS_TypeCode* getDatosDefReply_get_typecode()
+DDS_TypeCode* TypedefTest_getDatosDefReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getDatosDefReply_g_tc_members[6]=
+    static DDS_TypeCode_Member TypedefTest_getDatosDefReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1216,57 +969,6 @@ DDS_TypeCode* getDatosDefReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1307,67 +1009,52 @@ DDS_TypeCode* getDatosDefReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getDatosDefReply_g_tc =
+    static DDS_TypeCode TypedefTest_getDatosDefReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getDatosDefReply", /* Name */
+        (char *)"TypedefTest_getDatosDefReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        getDatosDefReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        TypedefTest_getDatosDefReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getDatosDefReply*/
+    }}; /* Type code for TypedefTest_getDatosDefReply*/
 
     if (is_initialized) {
-        return &getDatosDefReply_g_tc;
+        return &TypedefTest_getDatosDefReply_g_tc;
     }
 
 
-    getDatosDefReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getDatosDefReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getDatosDefReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getDatosDefReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getDatosDefReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)DatosDef_get_typecode();
-    getDatosDefReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)DatosDef_get_typecode();
+    TypedefTest_getDatosDefReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    TypedefTest_getDatosDefReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)DatosDef_get_typecode();
+    TypedefTest_getDatosDefReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)DatosDef_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getDatosDefReply_g_tc;
+    return &TypedefTest_getDatosDefReply_g_tc;
 }
 
 
-RTIBool getDatosDefReply_initialize(
-    getDatosDefReply* sample) {
-  return getDatosDefReply_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getDatosDefReply_initialize(
+    TypedefTest_getDatosDefReply* sample) {
+  return TypedefTest_getDatosDefReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getDatosDefReply_initialize_ex(
-    getDatosDefReply* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getDatosDefReply_initialize_ex(
+    TypedefTest_getDatosDefReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!DatosDef_initialize_ex(&sample->d2,allocatePointers)) {
         return RTI_FALSE;
@@ -1381,22 +1068,20 @@ RTIBool getDatosDefReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getDatosDefReply_finalize(
-    getDatosDefReply* sample)
+void TypedefTest_getDatosDefReply_finalize(
+    TypedefTest_getDatosDefReply* sample)
 {
-    getDatosDefReply_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getDatosDefReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getDatosDefReply_finalize_ex(
-    getDatosDefReply* sample,RTIBool deletePointers)
+void TypedefTest_getDatosDefReply_finalize_ex(
+    TypedefTest_getDatosDefReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     DatosDef_finalize_ex(&sample->d2,deletePointers);
             
@@ -1404,28 +1089,13 @@ void getDatosDefReply_finalize_ex(
             
 }
 
-RTIBool getDatosDefReply_copy(
-    getDatosDefReply* dst,
-    const getDatosDefReply* src)
+RTIBool TypedefTest_getDatosDefReply_copy(
+    TypedefTest_getDatosDefReply* dst,
+    const TypedefTest_getDatosDefReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1449,13 +1119,13 @@ RTIBool getDatosDefReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getDatosDefReply' sequence class.
+ * Configure and implement 'TypedefTest_getDatosDefReply' sequence class.
  */
-#define T getDatosDefReply
-#define TSeq getDatosDefReplySeq
-#define T_initialize_ex getDatosDefReply_initialize_ex
-#define T_finalize_ex   getDatosDefReply_finalize_ex
-#define T_copy       getDatosDefReply_copy
+#define T TypedefTest_getDatosDefReply
+#define TSeq TypedefTest_getDatosDefReplySeq
+#define T_initialize_ex TypedefTest_getDatosDefReply_initialize_ex
+#define T_finalize_ex   TypedefTest_getDatosDefReply_finalize_ex
+#define T_copy       TypedefTest_getDatosDefReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1476,34 +1146,17 @@ RTIBool getDatosDefReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getDatosDefondoRequestTYPENAME = "getDatosDefondoRequest";
+const char *TypedefTest_getDatosDefondoRequestTYPENAME = "TypedefTest_getDatosDefondoRequest";
 
-DDS_TypeCode* getDatosDefondoRequest_get_typecode()
+DDS_TypeCode* TypedefTest_getDatosDefondoRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getDatosDefondoRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member TypedefTest_getDatosDefondoRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1538,56 +1191,51 @@ DDS_TypeCode* getDatosDefondoRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getDatosDefondoRequest_g_tc =
+    static DDS_TypeCode TypedefTest_getDatosDefondoRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getDatosDefondoRequest", /* Name */
+        (char *)"TypedefTest_getDatosDefondoRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        getDatosDefondoRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        TypedefTest_getDatosDefondoRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getDatosDefondoRequest*/
+    }}; /* Type code for TypedefTest_getDatosDefondoRequest*/
 
     if (is_initialized) {
-        return &getDatosDefondoRequest_g_tc;
+        return &TypedefTest_getDatosDefondoRequest_g_tc;
     }
 
 
-    getDatosDefondoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getDatosDefondoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getDatosDefondoRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)DatosDefondo_get_typecode();
+    TypedefTest_getDatosDefondoRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    TypedefTest_getDatosDefondoRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)DatosDefondo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getDatosDefondoRequest_g_tc;
+    return &TypedefTest_getDatosDefondoRequest_g_tc;
 }
 
 
-RTIBool getDatosDefondoRequest_initialize(
-    getDatosDefondoRequest* sample) {
-  return getDatosDefondoRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getDatosDefondoRequest_initialize(
+    TypedefTest_getDatosDefondoRequest* sample) {
+  return TypedefTest_getDatosDefondoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getDatosDefondoRequest_initialize_ex(
-    getDatosDefondoRequest* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getDatosDefondoRequest_initialize_ex(
+    TypedefTest_getDatosDefondoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!DatosDefondo_initialize_ex(&sample->dd1,allocatePointers)) {
         return RTI_FALSE;
@@ -1597,37 +1245,32 @@ RTIBool getDatosDefondoRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getDatosDefondoRequest_finalize(
-    getDatosDefondoRequest* sample)
+void TypedefTest_getDatosDefondoRequest_finalize(
+    TypedefTest_getDatosDefondoRequest* sample)
 {
-    getDatosDefondoRequest_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getDatosDefondoRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getDatosDefondoRequest_finalize_ex(
-    getDatosDefondoRequest* sample,RTIBool deletePointers)
+void TypedefTest_getDatosDefondoRequest_finalize_ex(
+    TypedefTest_getDatosDefondoRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     DatosDefondo_finalize_ex(&sample->dd1,deletePointers);
             
 }
 
-RTIBool getDatosDefondoRequest_copy(
-    getDatosDefondoRequest* dst,
-    const getDatosDefondoRequest* src)
+RTIBool TypedefTest_getDatosDefondoRequest_copy(
+    TypedefTest_getDatosDefondoRequest* dst,
+    const TypedefTest_getDatosDefondoRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1646,13 +1289,13 @@ RTIBool getDatosDefondoRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getDatosDefondoRequest' sequence class.
+ * Configure and implement 'TypedefTest_getDatosDefondoRequest' sequence class.
  */
-#define T getDatosDefondoRequest
-#define TSeq getDatosDefondoRequestSeq
-#define T_initialize_ex getDatosDefondoRequest_initialize_ex
-#define T_finalize_ex   getDatosDefondoRequest_finalize_ex
-#define T_copy       getDatosDefondoRequest_copy
+#define T TypedefTest_getDatosDefondoRequest
+#define TSeq TypedefTest_getDatosDefondoRequestSeq
+#define T_initialize_ex TypedefTest_getDatosDefondoRequest_initialize_ex
+#define T_finalize_ex   TypedefTest_getDatosDefondoRequest_finalize_ex
+#define T_copy       TypedefTest_getDatosDefondoRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1673,17 +1316,17 @@ RTIBool getDatosDefondoRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getDatosDefondoReplyTYPENAME = "getDatosDefondoReply";
+const char *TypedefTest_getDatosDefondoReplyTYPENAME = "TypedefTest_getDatosDefondoReply";
 
-DDS_TypeCode* getDatosDefondoReply_get_typecode()
+DDS_TypeCode* TypedefTest_getDatosDefondoReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getDatosDefondoReply_g_tc_members[6]=
+    static DDS_TypeCode_Member TypedefTest_getDatosDefondoReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1695,57 +1338,6 @@ DDS_TypeCode* getDatosDefondoReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1786,67 +1378,52 @@ DDS_TypeCode* getDatosDefondoReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getDatosDefondoReply_g_tc =
+    static DDS_TypeCode TypedefTest_getDatosDefondoReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getDatosDefondoReply", /* Name */
+        (char *)"TypedefTest_getDatosDefondoReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        getDatosDefondoReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        TypedefTest_getDatosDefondoReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getDatosDefondoReply*/
+    }}; /* Type code for TypedefTest_getDatosDefondoReply*/
 
     if (is_initialized) {
-        return &getDatosDefondoReply_g_tc;
+        return &TypedefTest_getDatosDefondoReply_g_tc;
     }
 
 
-    getDatosDefondoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getDatosDefondoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getDatosDefondoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getDatosDefondoReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getDatosDefondoReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)DatosDefondo_get_typecode();
-    getDatosDefondoReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)DatosDefondo_get_typecode();
+    TypedefTest_getDatosDefondoReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    TypedefTest_getDatosDefondoReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)DatosDefondo_get_typecode();
+    TypedefTest_getDatosDefondoReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)DatosDefondo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getDatosDefondoReply_g_tc;
+    return &TypedefTest_getDatosDefondoReply_g_tc;
 }
 
 
-RTIBool getDatosDefondoReply_initialize(
-    getDatosDefondoReply* sample) {
-  return getDatosDefondoReply_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getDatosDefondoReply_initialize(
+    TypedefTest_getDatosDefondoReply* sample) {
+  return TypedefTest_getDatosDefondoReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getDatosDefondoReply_initialize_ex(
-    getDatosDefondoReply* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getDatosDefondoReply_initialize_ex(
+    TypedefTest_getDatosDefondoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!DatosDefondo_initialize_ex(&sample->dd2,allocatePointers)) {
         return RTI_FALSE;
@@ -1860,22 +1437,20 @@ RTIBool getDatosDefondoReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getDatosDefondoReply_finalize(
-    getDatosDefondoReply* sample)
+void TypedefTest_getDatosDefondoReply_finalize(
+    TypedefTest_getDatosDefondoReply* sample)
 {
-    getDatosDefondoReply_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getDatosDefondoReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getDatosDefondoReply_finalize_ex(
-    getDatosDefondoReply* sample,RTIBool deletePointers)
+void TypedefTest_getDatosDefondoReply_finalize_ex(
+    TypedefTest_getDatosDefondoReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     DatosDefondo_finalize_ex(&sample->dd2,deletePointers);
             
@@ -1883,28 +1458,13 @@ void getDatosDefondoReply_finalize_ex(
             
 }
 
-RTIBool getDatosDefondoReply_copy(
-    getDatosDefondoReply* dst,
-    const getDatosDefondoReply* src)
+RTIBool TypedefTest_getDatosDefondoReply_copy(
+    TypedefTest_getDatosDefondoReply* dst,
+    const TypedefTest_getDatosDefondoReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1928,13 +1488,13 @@ RTIBool getDatosDefondoReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getDatosDefondoReply' sequence class.
+ * Configure and implement 'TypedefTest_getDatosDefondoReply' sequence class.
  */
-#define T getDatosDefondoReply
-#define TSeq getDatosDefondoReplySeq
-#define T_initialize_ex getDatosDefondoReply_initialize_ex
-#define T_finalize_ex   getDatosDefondoReply_finalize_ex
-#define T_copy       getDatosDefondoReply_copy
+#define T TypedefTest_getDatosDefondoReply
+#define TSeq TypedefTest_getDatosDefondoReplySeq
+#define T_initialize_ex TypedefTest_getDatosDefondoReply_initialize_ex
+#define T_finalize_ex   TypedefTest_getDatosDefondoReply_finalize_ex
+#define T_copy       TypedefTest_getDatosDefondoReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1955,34 +1515,17 @@ RTIBool getDatosDefondoReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getCadenaRequestTYPENAME = "getCadenaRequest";
+const char *TypedefTest_getCadenaRequestTYPENAME = "TypedefTest_getCadenaRequest";
 
-DDS_TypeCode* getCadenaRequest_get_typecode()
+DDS_TypeCode* TypedefTest_getCadenaRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getCadenaRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member TypedefTest_getCadenaRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -2017,56 +1560,51 @@ DDS_TypeCode* getCadenaRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getCadenaRequest_g_tc =
+    static DDS_TypeCode TypedefTest_getCadenaRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getCadenaRequest", /* Name */
+        (char *)"TypedefTest_getCadenaRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        getCadenaRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        TypedefTest_getCadenaRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getCadenaRequest*/
+    }}; /* Type code for TypedefTest_getCadenaRequest*/
 
     if (is_initialized) {
-        return &getCadenaRequest_g_tc;
+        return &TypedefTest_getCadenaRequest_g_tc;
     }
 
 
-    getCadenaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getCadenaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getCadenaRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    TypedefTest_getCadenaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    TypedefTest_getCadenaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getCadenaRequest_g_tc;
+    return &TypedefTest_getCadenaRequest_g_tc;
 }
 
 
-RTIBool getCadenaRequest_initialize(
-    getCadenaRequest* sample) {
-  return getCadenaRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getCadenaRequest_initialize(
+    TypedefTest_getCadenaRequest* sample) {
+  return TypedefTest_getCadenaRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getCadenaRequest_initialize_ex(
-    getCadenaRequest* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getCadenaRequest_initialize_ex(
+    TypedefTest_getCadenaRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!cadena_initialize_ex(&sample->c1,allocatePointers)) {
         return RTI_FALSE;
@@ -2076,37 +1614,32 @@ RTIBool getCadenaRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getCadenaRequest_finalize(
-    getCadenaRequest* sample)
+void TypedefTest_getCadenaRequest_finalize(
+    TypedefTest_getCadenaRequest* sample)
 {
-    getCadenaRequest_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getCadenaRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getCadenaRequest_finalize_ex(
-    getCadenaRequest* sample,RTIBool deletePointers)
+void TypedefTest_getCadenaRequest_finalize_ex(
+    TypedefTest_getCadenaRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     cadena_finalize_ex(&sample->c1,deletePointers);
             
 }
 
-RTIBool getCadenaRequest_copy(
-    getCadenaRequest* dst,
-    const getCadenaRequest* src)
+RTIBool TypedefTest_getCadenaRequest_copy(
+    TypedefTest_getCadenaRequest* dst,
+    const TypedefTest_getCadenaRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2125,13 +1658,13 @@ RTIBool getCadenaRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getCadenaRequest' sequence class.
+ * Configure and implement 'TypedefTest_getCadenaRequest' sequence class.
  */
-#define T getCadenaRequest
-#define TSeq getCadenaRequestSeq
-#define T_initialize_ex getCadenaRequest_initialize_ex
-#define T_finalize_ex   getCadenaRequest_finalize_ex
-#define T_copy       getCadenaRequest_copy
+#define T TypedefTest_getCadenaRequest
+#define TSeq TypedefTest_getCadenaRequestSeq
+#define T_initialize_ex TypedefTest_getCadenaRequest_initialize_ex
+#define T_finalize_ex   TypedefTest_getCadenaRequest_finalize_ex
+#define T_copy       TypedefTest_getCadenaRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -2152,17 +1685,17 @@ RTIBool getCadenaRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getCadenaReplyTYPENAME = "getCadenaReply";
+const char *TypedefTest_getCadenaReplyTYPENAME = "TypedefTest_getCadenaReply";
 
-DDS_TypeCode* getCadenaReply_get_typecode()
+DDS_TypeCode* TypedefTest_getCadenaReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getCadenaReply_g_tc_members[6]=
+    static DDS_TypeCode_Member TypedefTest_getCadenaReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -2174,57 +1707,6 @@ DDS_TypeCode* getCadenaReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -2265,67 +1747,52 @@ DDS_TypeCode* getCadenaReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getCadenaReply_g_tc =
+    static DDS_TypeCode TypedefTest_getCadenaReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getCadenaReply", /* Name */
+        (char *)"TypedefTest_getCadenaReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        getCadenaReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        TypedefTest_getCadenaReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getCadenaReply*/
+    }}; /* Type code for TypedefTest_getCadenaReply*/
 
     if (is_initialized) {
-        return &getCadenaReply_g_tc;
+        return &TypedefTest_getCadenaReply_g_tc;
     }
 
 
-    getCadenaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getCadenaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getCadenaReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getCadenaReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getCadenaReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
-    getCadenaReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    TypedefTest_getCadenaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    TypedefTest_getCadenaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    TypedefTest_getCadenaReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getCadenaReply_g_tc;
+    return &TypedefTest_getCadenaReply_g_tc;
 }
 
 
-RTIBool getCadenaReply_initialize(
-    getCadenaReply* sample) {
-  return getCadenaReply_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getCadenaReply_initialize(
+    TypedefTest_getCadenaReply* sample) {
+  return TypedefTest_getCadenaReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getCadenaReply_initialize_ex(
-    getCadenaReply* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getCadenaReply_initialize_ex(
+    TypedefTest_getCadenaReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!cadena_initialize_ex(&sample->c2,allocatePointers)) {
         return RTI_FALSE;
@@ -2339,22 +1806,20 @@ RTIBool getCadenaReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getCadenaReply_finalize(
-    getCadenaReply* sample)
+void TypedefTest_getCadenaReply_finalize(
+    TypedefTest_getCadenaReply* sample)
 {
-    getCadenaReply_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getCadenaReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getCadenaReply_finalize_ex(
-    getCadenaReply* sample,RTIBool deletePointers)
+void TypedefTest_getCadenaReply_finalize_ex(
+    TypedefTest_getCadenaReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     cadena_finalize_ex(&sample->c2,deletePointers);
             
@@ -2362,28 +1827,13 @@ void getCadenaReply_finalize_ex(
             
 }
 
-RTIBool getCadenaReply_copy(
-    getCadenaReply* dst,
-    const getCadenaReply* src)
+RTIBool TypedefTest_getCadenaReply_copy(
+    TypedefTest_getCadenaReply* dst,
+    const TypedefTest_getCadenaReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2407,13 +1857,13 @@ RTIBool getCadenaReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getCadenaReply' sequence class.
+ * Configure and implement 'TypedefTest_getCadenaReply' sequence class.
  */
-#define T getCadenaReply
-#define TSeq getCadenaReplySeq
-#define T_initialize_ex getCadenaReply_initialize_ex
-#define T_finalize_ex   getCadenaReply_finalize_ex
-#define T_copy       getCadenaReply_copy
+#define T TypedefTest_getCadenaReply
+#define TSeq TypedefTest_getCadenaReplySeq
+#define T_initialize_ex TypedefTest_getCadenaReply_initialize_ex
+#define T_finalize_ex   TypedefTest_getCadenaReply_finalize_ex
+#define T_copy       TypedefTest_getCadenaReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -2434,34 +1884,17 @@ RTIBool getCadenaReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getCorreaRequestTYPENAME = "getCorreaRequest";
+const char *TypedefTest_getCorreaRequestTYPENAME = "TypedefTest_getCorreaRequest";
 
-DDS_TypeCode* getCorreaRequest_get_typecode()
+DDS_TypeCode* TypedefTest_getCorreaRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getCorreaRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member TypedefTest_getCorreaRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -2496,56 +1929,51 @@ DDS_TypeCode* getCorreaRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getCorreaRequest_g_tc =
+    static DDS_TypeCode TypedefTest_getCorreaRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getCorreaRequest", /* Name */
+        (char *)"TypedefTest_getCorreaRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        getCorreaRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        TypedefTest_getCorreaRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getCorreaRequest*/
+    }}; /* Type code for TypedefTest_getCorreaRequest*/
 
     if (is_initialized) {
-        return &getCorreaRequest_g_tc;
+        return &TypedefTest_getCorreaRequest_g_tc;
     }
 
 
-    getCorreaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getCorreaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getCorreaRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)correa_get_typecode();
+    TypedefTest_getCorreaRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    TypedefTest_getCorreaRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)correa_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getCorreaRequest_g_tc;
+    return &TypedefTest_getCorreaRequest_g_tc;
 }
 
 
-RTIBool getCorreaRequest_initialize(
-    getCorreaRequest* sample) {
-  return getCorreaRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getCorreaRequest_initialize(
+    TypedefTest_getCorreaRequest* sample) {
+  return TypedefTest_getCorreaRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getCorreaRequest_initialize_ex(
-    getCorreaRequest* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getCorreaRequest_initialize_ex(
+    TypedefTest_getCorreaRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!correa_initialize_ex(&sample->cc1,allocatePointers)) {
         return RTI_FALSE;
@@ -2555,37 +1983,32 @@ RTIBool getCorreaRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getCorreaRequest_finalize(
-    getCorreaRequest* sample)
+void TypedefTest_getCorreaRequest_finalize(
+    TypedefTest_getCorreaRequest* sample)
 {
-    getCorreaRequest_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getCorreaRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getCorreaRequest_finalize_ex(
-    getCorreaRequest* sample,RTIBool deletePointers)
+void TypedefTest_getCorreaRequest_finalize_ex(
+    TypedefTest_getCorreaRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     correa_finalize_ex(&sample->cc1,deletePointers);
             
 }
 
-RTIBool getCorreaRequest_copy(
-    getCorreaRequest* dst,
-    const getCorreaRequest* src)
+RTIBool TypedefTest_getCorreaRequest_copy(
+    TypedefTest_getCorreaRequest* dst,
+    const TypedefTest_getCorreaRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2604,13 +2027,13 @@ RTIBool getCorreaRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getCorreaRequest' sequence class.
+ * Configure and implement 'TypedefTest_getCorreaRequest' sequence class.
  */
-#define T getCorreaRequest
-#define TSeq getCorreaRequestSeq
-#define T_initialize_ex getCorreaRequest_initialize_ex
-#define T_finalize_ex   getCorreaRequest_finalize_ex
-#define T_copy       getCorreaRequest_copy
+#define T TypedefTest_getCorreaRequest
+#define TSeq TypedefTest_getCorreaRequestSeq
+#define T_initialize_ex TypedefTest_getCorreaRequest_initialize_ex
+#define T_finalize_ex   TypedefTest_getCorreaRequest_finalize_ex
+#define T_copy       TypedefTest_getCorreaRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -2631,17 +2054,17 @@ RTIBool getCorreaRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getCorreaReplyTYPENAME = "getCorreaReply";
+const char *TypedefTest_getCorreaReplyTYPENAME = "TypedefTest_getCorreaReply";
 
-DDS_TypeCode* getCorreaReply_get_typecode()
+DDS_TypeCode* TypedefTest_getCorreaReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getCorreaReply_g_tc_members[6]=
+    static DDS_TypeCode_Member TypedefTest_getCorreaReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -2653,57 +2076,6 @@ DDS_TypeCode* getCorreaReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -2744,67 +2116,52 @@ DDS_TypeCode* getCorreaReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getCorreaReply_g_tc =
+    static DDS_TypeCode TypedefTest_getCorreaReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getCorreaReply", /* Name */
+        (char *)"TypedefTest_getCorreaReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        getCorreaReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        TypedefTest_getCorreaReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getCorreaReply*/
+    }}; /* Type code for TypedefTest_getCorreaReply*/
 
     if (is_initialized) {
-        return &getCorreaReply_g_tc;
+        return &TypedefTest_getCorreaReply_g_tc;
     }
 
 
-    getCorreaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getCorreaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getCorreaReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getCorreaReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getCorreaReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)correa_get_typecode();
-    getCorreaReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)correa_get_typecode();
+    TypedefTest_getCorreaReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    TypedefTest_getCorreaReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)correa_get_typecode();
+    TypedefTest_getCorreaReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)correa_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getCorreaReply_g_tc;
+    return &TypedefTest_getCorreaReply_g_tc;
 }
 
 
-RTIBool getCorreaReply_initialize(
-    getCorreaReply* sample) {
-  return getCorreaReply_initialize_ex(sample,RTI_TRUE);
+RTIBool TypedefTest_getCorreaReply_initialize(
+    TypedefTest_getCorreaReply* sample) {
+  return TypedefTest_getCorreaReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getCorreaReply_initialize_ex(
-    getCorreaReply* sample,RTIBool allocatePointers)
+RTIBool TypedefTest_getCorreaReply_initialize_ex(
+    TypedefTest_getCorreaReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!correa_initialize_ex(&sample->cc2,allocatePointers)) {
         return RTI_FALSE;
@@ -2818,22 +2175,20 @@ RTIBool getCorreaReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getCorreaReply_finalize(
-    getCorreaReply* sample)
+void TypedefTest_getCorreaReply_finalize(
+    TypedefTest_getCorreaReply* sample)
 {
-    getCorreaReply_finalize_ex(sample,RTI_TRUE);
+    TypedefTest_getCorreaReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getCorreaReply_finalize_ex(
-    getCorreaReply* sample,RTIBool deletePointers)
+void TypedefTest_getCorreaReply_finalize_ex(
+    TypedefTest_getCorreaReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     correa_finalize_ex(&sample->cc2,deletePointers);
             
@@ -2841,28 +2196,13 @@ void getCorreaReply_finalize_ex(
             
 }
 
-RTIBool getCorreaReply_copy(
-    getCorreaReply* dst,
-    const getCorreaReply* src)
+RTIBool TypedefTest_getCorreaReply_copy(
+    TypedefTest_getCorreaReply* dst,
+    const TypedefTest_getCorreaReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2886,13 +2226,13 @@ RTIBool getCorreaReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getCorreaReply' sequence class.
+ * Configure and implement 'TypedefTest_getCorreaReply' sequence class.
  */
-#define T getCorreaReply
-#define TSeq getCorreaReplySeq
-#define T_initialize_ex getCorreaReply_initialize_ex
-#define T_finalize_ex   getCorreaReply_finalize_ex
-#define T_copy       getCorreaReply_copy
+#define T TypedefTest_getCorreaReply
+#define TSeq TypedefTest_getCorreaReplySeq
+#define T_initialize_ex TypedefTest_getCorreaReply_initialize_ex
+#define T_finalize_ex   TypedefTest_getCorreaReply_finalize_ex
+#define T_copy       TypedefTest_getCorreaReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

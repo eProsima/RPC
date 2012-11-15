@@ -7,12 +7,12 @@
 
 
 /* Defines */
-#define TName                   testServerRPC
-#define TDataReplyTypeSupport   testReplyTypeSupport
-#define TDataRequestTypeSupport testRequestTypeSupport
-#define TData                   test
-#define TDataReader             testRequestDataReader
-#define TDataWriter             testReplyDataWriter
+#define TName                   MultithreadTest_testServerRPC
+#define TDataReplyTypeSupport   MultithreadTest_testReplyTypeSupport
+#define TDataRequestTypeSupport MultithreadTest_testRequestTypeSupport
+#define TData                   MultithreadTest_test
+#define TDataReader             MultithreadTest_testRequestDataReader
+#define TDataWriter             MultithreadTest_testReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"

@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    EnumYStringTestProxy *proxy = new EnumYStringTestProxy();
+    EnumYStringTestProxy *proxy = new EnumYStringTestProxy("EnumYStringTestService");
 
     Valores  v1 = VALOR1;    
     Valores  v2 = VALOR2;    
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getEnum>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getEnum>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getString>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getString>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getStringBounded>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getStringBounded>: %s\n", ex.what());
         _exit(-1);
     }
 

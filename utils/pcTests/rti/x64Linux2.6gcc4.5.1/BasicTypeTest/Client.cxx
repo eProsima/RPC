@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    BasicTypeTestProxy *proxy = new BasicTypeTestProxy();
+    BasicTypeTestProxy *proxy = new BasicTypeTestProxy("BasicTypeTestService");
 
     DDS_Octet  oc1 = 1;    
     DDS_Octet  oc2 = 2;    
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getOctet>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getOctet>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getChar>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getChar>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getWChar>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getWChar>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getShort>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getShort>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -127,7 +127,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getUShort>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getUShort>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getLong>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getLong>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -175,7 +175,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getULong>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getULong>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getLLong>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getLLong>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -223,7 +223,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getULLong>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getULLong>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -247,7 +247,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getFloat>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getFloat>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -271,7 +271,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getDouble>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getDouble>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -295,7 +295,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getBoolean>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getBoolean>: %s\n", ex.what());
         _exit(-1);
     }
 

@@ -9,7 +9,7 @@
 #include "UnionTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(getEmpleadoClientRPC, getEmpleadoRequestDataWriter, getEmpleadoReplyDataReader);
+GENERIC_CLIENT_RPC(UnionTest_getEmpleadoClientRPC, UnionTest_getEmpleadoRequestDataWriter, UnionTest_getEmpleadoReplyDataReader);
 
 
 #endif  // _UnionTest_CLIENT_RPC_SUPPORT_H_

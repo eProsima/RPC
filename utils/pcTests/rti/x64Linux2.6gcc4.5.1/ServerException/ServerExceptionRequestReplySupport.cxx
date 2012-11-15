@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sendExceptionRequest' support classes.
+   Configure and implement 'ServerException_sendExceptionRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionRequestTYPENAME
+#define TTYPENAME   ServerException_sendExceptionRequestTYPENAME
 
 /* Defines */
-#define TDataWriter sendExceptionRequestDataWriter
-#define TData       sendExceptionRequest
+#define TDataWriter ServerException_sendExceptionRequestDataWriter
+#define TData       ServerException_sendExceptionRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionRequestTYPENAME
+#define TTYPENAME   ServerException_sendExceptionRequestTYPENAME
 
 /* Defines */
-#define TDataReader sendExceptionRequestDataReader
-#define TDataSeq    sendExceptionRequestSeq
-#define TData       sendExceptionRequest
+#define TDataReader ServerException_sendExceptionRequestDataReader
+#define TDataSeq    ServerException_sendExceptionRequestSeq
+#define TData       ServerException_sendExceptionRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sendExceptionRequestTYPENAME
-#define TPlugin_new  sendExceptionRequestPlugin_new
-#define TPlugin_delete  sendExceptionRequestPlugin_delete
+#define TTYPENAME    ServerException_sendExceptionRequestTYPENAME
+#define TPlugin_new  ServerException_sendExceptionRequestPlugin_new
+#define TPlugin_delete  ServerException_sendExceptionRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport sendExceptionRequestTypeSupport
-#define TData        sendExceptionRequest
-#define TDataReader  sendExceptionRequestDataReader
-#define TDataWriter  sendExceptionRequestDataWriter
+#define TTypeSupport ServerException_sendExceptionRequestTypeSupport
+#define TData        ServerException_sendExceptionRequest
+#define TDataReader  ServerException_sendExceptionRequestDataReader
+#define TDataWriter  ServerException_sendExceptionRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sendExceptionReply' support classes.
+   Configure and implement 'ServerException_sendExceptionReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionReplyTYPENAME
+#define TTYPENAME   ServerException_sendExceptionReplyTYPENAME
 
 /* Defines */
-#define TDataWriter sendExceptionReplyDataWriter
-#define TData       sendExceptionReply
+#define TDataWriter ServerException_sendExceptionReplyDataWriter
+#define TData       ServerException_sendExceptionReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionReplyTYPENAME
+#define TTYPENAME   ServerException_sendExceptionReplyTYPENAME
 
 /* Defines */
-#define TDataReader sendExceptionReplyDataReader
-#define TDataSeq    sendExceptionReplySeq
-#define TData       sendExceptionReply
+#define TDataReader ServerException_sendExceptionReplyDataReader
+#define TDataSeq    ServerException_sendExceptionReplySeq
+#define TData       ServerException_sendExceptionReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sendExceptionReplyTYPENAME
-#define TPlugin_new  sendExceptionReplyPlugin_new
-#define TPlugin_delete  sendExceptionReplyPlugin_delete
+#define TTYPENAME    ServerException_sendExceptionReplyTYPENAME
+#define TPlugin_new  ServerException_sendExceptionReplyPlugin_new
+#define TPlugin_delete  ServerException_sendExceptionReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport sendExceptionReplyTypeSupport
-#define TData        sendExceptionReply
-#define TDataReader  sendExceptionReplyDataReader
-#define TDataWriter  sendExceptionReplyDataWriter
+#define TTypeSupport ServerException_sendExceptionReplyTypeSupport
+#define TData        ServerException_sendExceptionReply
+#define TDataReader  ServerException_sendExceptionReplyDataReader
+#define TDataWriter  ServerException_sendExceptionReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -273,7 +273,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sendExceptionTwoRequest' support classes.
+   Configure and implement 'ServerException_sendExceptionTwoRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -289,11 +289,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionTwoRequestTYPENAME
+#define TTYPENAME   ServerException_sendExceptionTwoRequestTYPENAME
 
 /* Defines */
-#define TDataWriter sendExceptionTwoRequestDataWriter
-#define TData       sendExceptionTwoRequest
+#define TDataWriter ServerException_sendExceptionTwoRequestDataWriter
+#define TData       ServerException_sendExceptionTwoRequest
 
 
 #ifdef __cplusplus
@@ -319,12 +319,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionTwoRequestTYPENAME
+#define TTYPENAME   ServerException_sendExceptionTwoRequestTYPENAME
 
 /* Defines */
-#define TDataReader sendExceptionTwoRequestDataReader
-#define TDataSeq    sendExceptionTwoRequestSeq
-#define TData       sendExceptionTwoRequest
+#define TDataReader ServerException_sendExceptionTwoRequestDataReader
+#define TDataSeq    ServerException_sendExceptionTwoRequestSeq
+#define TData       ServerException_sendExceptionTwoRequest
 
 
 #ifdef __cplusplus
@@ -352,15 +352,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sendExceptionTwoRequestTYPENAME
-#define TPlugin_new  sendExceptionTwoRequestPlugin_new
-#define TPlugin_delete  sendExceptionTwoRequestPlugin_delete
+#define TTYPENAME    ServerException_sendExceptionTwoRequestTYPENAME
+#define TPlugin_new  ServerException_sendExceptionTwoRequestPlugin_new
+#define TPlugin_delete  ServerException_sendExceptionTwoRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport sendExceptionTwoRequestTypeSupport
-#define TData        sendExceptionTwoRequest
-#define TDataReader  sendExceptionTwoRequestDataReader
-#define TDataWriter  sendExceptionTwoRequestDataWriter
+#define TTypeSupport ServerException_sendExceptionTwoRequestTypeSupport
+#define TData        ServerException_sendExceptionTwoRequest
+#define TDataReader  ServerException_sendExceptionTwoRequestDataReader
+#define TDataWriter  ServerException_sendExceptionTwoRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -394,7 +394,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sendExceptionTwoReply' support classes.
+   Configure and implement 'ServerException_sendExceptionTwoReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -410,11 +410,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionTwoReplyTYPENAME
+#define TTYPENAME   ServerException_sendExceptionTwoReplyTYPENAME
 
 /* Defines */
-#define TDataWriter sendExceptionTwoReplyDataWriter
-#define TData       sendExceptionTwoReply
+#define TDataWriter ServerException_sendExceptionTwoReplyDataWriter
+#define TData       ServerException_sendExceptionTwoReply
 
 
 #ifdef __cplusplus
@@ -440,12 +440,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionTwoReplyTYPENAME
+#define TTYPENAME   ServerException_sendExceptionTwoReplyTYPENAME
 
 /* Defines */
-#define TDataReader sendExceptionTwoReplyDataReader
-#define TDataSeq    sendExceptionTwoReplySeq
-#define TData       sendExceptionTwoReply
+#define TDataReader ServerException_sendExceptionTwoReplyDataReader
+#define TDataSeq    ServerException_sendExceptionTwoReplySeq
+#define TData       ServerException_sendExceptionTwoReply
 
 
 #ifdef __cplusplus
@@ -473,15 +473,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sendExceptionTwoReplyTYPENAME
-#define TPlugin_new  sendExceptionTwoReplyPlugin_new
-#define TPlugin_delete  sendExceptionTwoReplyPlugin_delete
+#define TTYPENAME    ServerException_sendExceptionTwoReplyTYPENAME
+#define TPlugin_new  ServerException_sendExceptionTwoReplyPlugin_new
+#define TPlugin_delete  ServerException_sendExceptionTwoReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport sendExceptionTwoReplyTypeSupport
-#define TData        sendExceptionTwoReply
-#define TDataReader  sendExceptionTwoReplyDataReader
-#define TDataWriter  sendExceptionTwoReplyDataWriter
+#define TTypeSupport ServerException_sendExceptionTwoReplyTypeSupport
+#define TData        ServerException_sendExceptionTwoReply
+#define TDataReader  ServerException_sendExceptionTwoReplyDataReader
+#define TDataWriter  ServerException_sendExceptionTwoReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -515,7 +515,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sendExceptionThreeRequest' support classes.
+   Configure and implement 'ServerException_sendExceptionThreeRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -531,11 +531,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionThreeRequestTYPENAME
+#define TTYPENAME   ServerException_sendExceptionThreeRequestTYPENAME
 
 /* Defines */
-#define TDataWriter sendExceptionThreeRequestDataWriter
-#define TData       sendExceptionThreeRequest
+#define TDataWriter ServerException_sendExceptionThreeRequestDataWriter
+#define TData       ServerException_sendExceptionThreeRequest
 
 
 #ifdef __cplusplus
@@ -561,12 +561,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionThreeRequestTYPENAME
+#define TTYPENAME   ServerException_sendExceptionThreeRequestTYPENAME
 
 /* Defines */
-#define TDataReader sendExceptionThreeRequestDataReader
-#define TDataSeq    sendExceptionThreeRequestSeq
-#define TData       sendExceptionThreeRequest
+#define TDataReader ServerException_sendExceptionThreeRequestDataReader
+#define TDataSeq    ServerException_sendExceptionThreeRequestSeq
+#define TData       ServerException_sendExceptionThreeRequest
 
 
 #ifdef __cplusplus
@@ -594,15 +594,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sendExceptionThreeRequestTYPENAME
-#define TPlugin_new  sendExceptionThreeRequestPlugin_new
-#define TPlugin_delete  sendExceptionThreeRequestPlugin_delete
+#define TTYPENAME    ServerException_sendExceptionThreeRequestTYPENAME
+#define TPlugin_new  ServerException_sendExceptionThreeRequestPlugin_new
+#define TPlugin_delete  ServerException_sendExceptionThreeRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport sendExceptionThreeRequestTypeSupport
-#define TData        sendExceptionThreeRequest
-#define TDataReader  sendExceptionThreeRequestDataReader
-#define TDataWriter  sendExceptionThreeRequestDataWriter
+#define TTypeSupport ServerException_sendExceptionThreeRequestTypeSupport
+#define TData        ServerException_sendExceptionThreeRequest
+#define TDataReader  ServerException_sendExceptionThreeRequestDataReader
+#define TDataWriter  ServerException_sendExceptionThreeRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -636,7 +636,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sendExceptionThreeReply' support classes.
+   Configure and implement 'ServerException_sendExceptionThreeReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -652,11 +652,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionThreeReplyTYPENAME
+#define TTYPENAME   ServerException_sendExceptionThreeReplyTYPENAME
 
 /* Defines */
-#define TDataWriter sendExceptionThreeReplyDataWriter
-#define TData       sendExceptionThreeReply
+#define TDataWriter ServerException_sendExceptionThreeReplyDataWriter
+#define TData       ServerException_sendExceptionThreeReply
 
 
 #ifdef __cplusplus
@@ -682,12 +682,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sendExceptionThreeReplyTYPENAME
+#define TTYPENAME   ServerException_sendExceptionThreeReplyTYPENAME
 
 /* Defines */
-#define TDataReader sendExceptionThreeReplyDataReader
-#define TDataSeq    sendExceptionThreeReplySeq
-#define TData       sendExceptionThreeReply
+#define TDataReader ServerException_sendExceptionThreeReplyDataReader
+#define TDataSeq    ServerException_sendExceptionThreeReplySeq
+#define TData       ServerException_sendExceptionThreeReply
 
 
 #ifdef __cplusplus
@@ -715,15 +715,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sendExceptionThreeReplyTYPENAME
-#define TPlugin_new  sendExceptionThreeReplyPlugin_new
-#define TPlugin_delete  sendExceptionThreeReplyPlugin_delete
+#define TTYPENAME    ServerException_sendExceptionThreeReplyTYPENAME
+#define TPlugin_new  ServerException_sendExceptionThreeReplyPlugin_new
+#define TPlugin_delete  ServerException_sendExceptionThreeReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport sendExceptionThreeReplyTypeSupport
-#define TData        sendExceptionThreeReply
-#define TDataReader  sendExceptionThreeReplyDataReader
-#define TDataWriter  sendExceptionThreeReplyDataWriter
+#define TTypeSupport ServerException_sendExceptionThreeReplyTypeSupport
+#define TData        ServerException_sendExceptionThreeReply
+#define TDataReader  ServerException_sendExceptionThreeReplyDataReader
+#define TDataWriter  ServerException_sendExceptionThreeReplyDataWriter
 #ifdef __cplusplus
 
 

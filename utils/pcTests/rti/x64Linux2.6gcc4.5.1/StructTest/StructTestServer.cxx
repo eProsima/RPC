@@ -5,23 +5,23 @@
 #include "StructTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 #include "StructTestRequestReplyPlugin.h"
 
 #include "StructTestServerRPCSupport.h"
 
-StructTestServer::StructTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+StructTestServer::StructTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new StructTestServerImpl();
 
     createRPCs();
 }
 
-StructTestServer::StructTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+StructTestServer::StructTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new StructTestServerImpl();
     
@@ -35,14 +35,14 @@ StructTestServer::~StructTestServer()
 
 void StructTestServer::createRPCs()
 {
-    this->setRPC(new duplicateServerRPC("duplicate", this,
-                duplicateRequestUtils::registerType(getParticipant()),
-                duplicateReplyUtils::registerType(getParticipant()),
-                &StructTestServer::duplicate, getParticipant()));
-    this->setRPC(new sumaServerRPC("suma", this,
-                sumaRequestUtils::registerType(getParticipant()),
-                sumaReplyUtils::registerType(getParticipant()),
-                &StructTestServer::suma, getParticipant()));
+    this->setRPC(new StructTest_duplicateServerRPC("duplicate", this,
+                StructTest_duplicateRequestUtils::registerType(getParticipant()),
+                StructTest_duplicateReplyUtils::registerType(getParticipant()),
+                &StructTestServer::duplicate));
+    this->setRPC(new StructTest_sumaServerRPC("suma", this,
+                StructTest_sumaRequestUtils::registerType(getParticipant()),
+                StructTest_sumaReplyUtils::registerType(getParticipant()),
+                &StructTestServer::suma));
 
 }
 
@@ -53,25 +53,31 @@ void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *request
         
     Recepcion duplicate_ret;
     memset(&duplicate_ret, 0, sizeof(Recepcion));       
-    duplicateReply replyData;
+    StructTest_duplicateReply replyData;
     
 
-    duplicateRequestUtils::extractTypeData(*(duplicateRequest*)requestData, ev);
+    StructTest_duplicateRequestUtils::extractTypeData(*(StructTest_duplicateRequest*)requestData, ev);
 
     try
     {
         duplicate_ret = srv->_impl->duplicate(ev);
 
-        duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
+        StructTest_duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    duplicateRequestTypeSupport::delete_data((duplicateRequest*)requestData);
+    StructTest_duplicateRequestTypeSupport::delete_data((StructTest_duplicateRequest*)requestData);
     
     Recepcion_finalize(&duplicate_ret);    
 }
@@ -84,25 +90,31 @@ void StructTestServer::suma(eProsima::DDSRPC::Server *server, void *requestData,
         
     Recepcion suma_ret;
     memset(&suma_ret, 0, sizeof(Recepcion));       
-    sumaReply replyData;
+    StructTest_sumaReply replyData;
     
 
-    sumaRequestUtils::extractTypeData(*(sumaRequest*)requestData, ev1, ev2);
+    StructTest_sumaRequestUtils::extractTypeData(*(StructTest_sumaRequest*)requestData, ev1, ev2);
 
     try
     {
         suma_ret = srv->_impl->suma(ev1, ev2);
 
-        sumaReplyUtils::setTypeData(replyData, suma_ret);
+        StructTest_sumaReplyUtils::setTypeData(replyData, suma_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    sumaRequestTypeSupport::delete_data((sumaRequest*)requestData);
+    StructTest_sumaRequestTypeSupport::delete_data((StructTest_sumaRequest*)requestData);
     
     Recepcion_finalize(&suma_ret);    
 }

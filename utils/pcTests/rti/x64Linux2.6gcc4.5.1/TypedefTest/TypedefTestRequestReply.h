@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestRequestReply_1722561831_h
-#define TypedefTestRequestReply_1722561831_h
+#ifndef TypedefTestRequestReply_1722561027_h
+#define TypedefTestRequestReply_1722561027_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLargoRequestTYPENAME;
+extern const char *TypedefTest_getLargoRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *getLargoRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLargoRequestSeq;
+    struct TypedefTest_getLargoRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLargoRequestTypeSupport;
-    class getLargoRequestDataWriter;
-    class getLargoRequestDataReader;
+    class TypedefTest_getLargoRequestTypeSupport;
+    class TypedefTest_getLargoRequestDataWriter;
+    class TypedefTest_getLargoRequestDataReader;
 #endif
 
 #endif
@@ -59,24 +59,23 @@ extern const char *getLargoRequestTYPENAME;
             
     
 
-typedef struct getLargoRequest
+typedef struct TypedefTest_getLargoRequest
 {
 #ifdef __cplusplus
-    typedef struct getLargoRequestSeq Seq;
+    typedef struct TypedefTest_getLargoRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLargoRequestTypeSupport TypeSupport;
-    typedef getLargoRequestDataWriter DataWriter;
-    typedef getLargoRequestDataReader DataReader;
+    typedef TypedefTest_getLargoRequestTypeSupport TypeSupport;
+    typedef TypedefTest_getLargoRequestDataWriter DataWriter;
+    typedef TypedefTest_getLargoRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     largo  l1;
 
-} getLargoRequest;
+} TypedefTest_getLargoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -87,31 +86,31 @@ typedef struct getLargoRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLargoRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getLargoRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLargoRequestSeq, getLargoRequest);
+DDS_SEQUENCE(TypedefTest_getLargoRequestSeq, TypedefTest_getLargoRequest);
         
 NDDSUSERDllExport
-RTIBool getLargoRequest_initialize(
-        getLargoRequest* self);
+RTIBool TypedefTest_getLargoRequest_initialize(
+        TypedefTest_getLargoRequest* self);
         
 NDDSUSERDllExport
-RTIBool getLargoRequest_initialize_ex(
-        getLargoRequest* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getLargoRequest_initialize_ex(
+        TypedefTest_getLargoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLargoRequest_finalize(
-        getLargoRequest* self);
+void TypedefTest_getLargoRequest_finalize(
+        TypedefTest_getLargoRequest* self);
                         
 NDDSUSERDllExport
-void getLargoRequest_finalize_ex(
-        getLargoRequest* self,RTIBool deletePointers);
+void TypedefTest_getLargoRequest_finalize_ex(
+        TypedefTest_getLargoRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLargoRequest_copy(
-        getLargoRequest* dst,
-        const getLargoRequest* src);
+RTIBool TypedefTest_getLargoRequest_copy(
+        TypedefTest_getLargoRequest* dst,
+        const TypedefTest_getLargoRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -126,7 +125,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLargoReplyTYPENAME;
+extern const char *TypedefTest_getLargoReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -135,12 +134,12 @@ extern const char *getLargoReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLargoReplySeq;
+    struct TypedefTest_getLargoReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLargoReplyTypeSupport;
-    class getLargoReplyDataWriter;
-    class getLargoReplyDataReader;
+    class TypedefTest_getLargoReplyTypeSupport;
+    class TypedefTest_getLargoReplyDataWriter;
+    class TypedefTest_getLargoReplyDataReader;
 #endif
 
 #endif
@@ -148,27 +147,24 @@ extern const char *getLargoReplyTYPENAME;
             
     
 
-typedef struct getLargoReply
+typedef struct TypedefTest_getLargoReply
 {
 #ifdef __cplusplus
-    typedef struct getLargoReplySeq Seq;
+    typedef struct TypedefTest_getLargoReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLargoReplyTypeSupport TypeSupport;
-    typedef getLargoReplyDataWriter DataWriter;
-    typedef getLargoReplyDataReader DataReader;
+    typedef TypedefTest_getLargoReplyTypeSupport TypeSupport;
+    typedef TypedefTest_getLargoReplyDataWriter DataWriter;
+    typedef TypedefTest_getLargoReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     largo  l2;
     largo  getLargo_ret;
 
-} getLargoReply;
+} TypedefTest_getLargoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -179,31 +175,31 @@ typedef struct getLargoReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLargoReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getLargoReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLargoReplySeq, getLargoReply);
+DDS_SEQUENCE(TypedefTest_getLargoReplySeq, TypedefTest_getLargoReply);
         
 NDDSUSERDllExport
-RTIBool getLargoReply_initialize(
-        getLargoReply* self);
+RTIBool TypedefTest_getLargoReply_initialize(
+        TypedefTest_getLargoReply* self);
         
 NDDSUSERDllExport
-RTIBool getLargoReply_initialize_ex(
-        getLargoReply* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getLargoReply_initialize_ex(
+        TypedefTest_getLargoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLargoReply_finalize(
-        getLargoReply* self);
+void TypedefTest_getLargoReply_finalize(
+        TypedefTest_getLargoReply* self);
                         
 NDDSUSERDllExport
-void getLargoReply_finalize_ex(
-        getLargoReply* self,RTIBool deletePointers);
+void TypedefTest_getLargoReply_finalize_ex(
+        TypedefTest_getLargoReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLargoReply_copy(
-        getLargoReply* dst,
-        const getLargoReply* src);
+RTIBool TypedefTest_getLargoReply_copy(
+        TypedefTest_getLargoReply* dst,
+        const TypedefTest_getLargoReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -218,7 +214,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLarguisimoRequestTYPENAME;
+extern const char *TypedefTest_getLarguisimoRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -227,12 +223,12 @@ extern const char *getLarguisimoRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLarguisimoRequestSeq;
+    struct TypedefTest_getLarguisimoRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLarguisimoRequestTypeSupport;
-    class getLarguisimoRequestDataWriter;
-    class getLarguisimoRequestDataReader;
+    class TypedefTest_getLarguisimoRequestTypeSupport;
+    class TypedefTest_getLarguisimoRequestDataWriter;
+    class TypedefTest_getLarguisimoRequestDataReader;
 #endif
 
 #endif
@@ -240,24 +236,23 @@ extern const char *getLarguisimoRequestTYPENAME;
             
     
 
-typedef struct getLarguisimoRequest
+typedef struct TypedefTest_getLarguisimoRequest
 {
 #ifdef __cplusplus
-    typedef struct getLarguisimoRequestSeq Seq;
+    typedef struct TypedefTest_getLarguisimoRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLarguisimoRequestTypeSupport TypeSupport;
-    typedef getLarguisimoRequestDataWriter DataWriter;
-    typedef getLarguisimoRequestDataReader DataReader;
+    typedef TypedefTest_getLarguisimoRequestTypeSupport TypeSupport;
+    typedef TypedefTest_getLarguisimoRequestDataWriter DataWriter;
+    typedef TypedefTest_getLarguisimoRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     larguisimo  ll1;
 
-} getLarguisimoRequest;
+} TypedefTest_getLarguisimoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -268,31 +263,31 @@ typedef struct getLarguisimoRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLarguisimoRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getLarguisimoRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLarguisimoRequestSeq, getLarguisimoRequest);
+DDS_SEQUENCE(TypedefTest_getLarguisimoRequestSeq, TypedefTest_getLarguisimoRequest);
         
 NDDSUSERDllExport
-RTIBool getLarguisimoRequest_initialize(
-        getLarguisimoRequest* self);
+RTIBool TypedefTest_getLarguisimoRequest_initialize(
+        TypedefTest_getLarguisimoRequest* self);
         
 NDDSUSERDllExport
-RTIBool getLarguisimoRequest_initialize_ex(
-        getLarguisimoRequest* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getLarguisimoRequest_initialize_ex(
+        TypedefTest_getLarguisimoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLarguisimoRequest_finalize(
-        getLarguisimoRequest* self);
+void TypedefTest_getLarguisimoRequest_finalize(
+        TypedefTest_getLarguisimoRequest* self);
                         
 NDDSUSERDllExport
-void getLarguisimoRequest_finalize_ex(
-        getLarguisimoRequest* self,RTIBool deletePointers);
+void TypedefTest_getLarguisimoRequest_finalize_ex(
+        TypedefTest_getLarguisimoRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLarguisimoRequest_copy(
-        getLarguisimoRequest* dst,
-        const getLarguisimoRequest* src);
+RTIBool TypedefTest_getLarguisimoRequest_copy(
+        TypedefTest_getLarguisimoRequest* dst,
+        const TypedefTest_getLarguisimoRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -307,7 +302,7 @@ extern "C" {
 #endif
 
         
-extern const char *getLarguisimoReplyTYPENAME;
+extern const char *TypedefTest_getLarguisimoReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -316,12 +311,12 @@ extern const char *getLarguisimoReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getLarguisimoReplySeq;
+    struct TypedefTest_getLarguisimoReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getLarguisimoReplyTypeSupport;
-    class getLarguisimoReplyDataWriter;
-    class getLarguisimoReplyDataReader;
+    class TypedefTest_getLarguisimoReplyTypeSupport;
+    class TypedefTest_getLarguisimoReplyDataWriter;
+    class TypedefTest_getLarguisimoReplyDataReader;
 #endif
 
 #endif
@@ -329,27 +324,24 @@ extern const char *getLarguisimoReplyTYPENAME;
             
     
 
-typedef struct getLarguisimoReply
+typedef struct TypedefTest_getLarguisimoReply
 {
 #ifdef __cplusplus
-    typedef struct getLarguisimoReplySeq Seq;
+    typedef struct TypedefTest_getLarguisimoReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getLarguisimoReplyTypeSupport TypeSupport;
-    typedef getLarguisimoReplyDataWriter DataWriter;
-    typedef getLarguisimoReplyDataReader DataReader;
+    typedef TypedefTest_getLarguisimoReplyTypeSupport TypeSupport;
+    typedef TypedefTest_getLarguisimoReplyDataWriter DataWriter;
+    typedef TypedefTest_getLarguisimoReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     larguisimo  ll2;
     larguisimo  getLarguisimo_ret;
 
-} getLarguisimoReply;
+} TypedefTest_getLarguisimoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -360,31 +352,31 @@ typedef struct getLarguisimoReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getLarguisimoReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getLarguisimoReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getLarguisimoReplySeq, getLarguisimoReply);
+DDS_SEQUENCE(TypedefTest_getLarguisimoReplySeq, TypedefTest_getLarguisimoReply);
         
 NDDSUSERDllExport
-RTIBool getLarguisimoReply_initialize(
-        getLarguisimoReply* self);
+RTIBool TypedefTest_getLarguisimoReply_initialize(
+        TypedefTest_getLarguisimoReply* self);
         
 NDDSUSERDllExport
-RTIBool getLarguisimoReply_initialize_ex(
-        getLarguisimoReply* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getLarguisimoReply_initialize_ex(
+        TypedefTest_getLarguisimoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getLarguisimoReply_finalize(
-        getLarguisimoReply* self);
+void TypedefTest_getLarguisimoReply_finalize(
+        TypedefTest_getLarguisimoReply* self);
                         
 NDDSUSERDllExport
-void getLarguisimoReply_finalize_ex(
-        getLarguisimoReply* self,RTIBool deletePointers);
+void TypedefTest_getLarguisimoReply_finalize_ex(
+        TypedefTest_getLarguisimoReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getLarguisimoReply_copy(
-        getLarguisimoReply* dst,
-        const getLarguisimoReply* src);
+RTIBool TypedefTest_getLarguisimoReply_copy(
+        TypedefTest_getLarguisimoReply* dst,
+        const TypedefTest_getLarguisimoReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -399,7 +391,7 @@ extern "C" {
 #endif
 
         
-extern const char *getDatosDefRequestTYPENAME;
+extern const char *TypedefTest_getDatosDefRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -408,12 +400,12 @@ extern const char *getDatosDefRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getDatosDefRequestSeq;
+    struct TypedefTest_getDatosDefRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getDatosDefRequestTypeSupport;
-    class getDatosDefRequestDataWriter;
-    class getDatosDefRequestDataReader;
+    class TypedefTest_getDatosDefRequestTypeSupport;
+    class TypedefTest_getDatosDefRequestDataWriter;
+    class TypedefTest_getDatosDefRequestDataReader;
 #endif
 
 #endif
@@ -421,24 +413,23 @@ extern const char *getDatosDefRequestTYPENAME;
             
     
 
-typedef struct getDatosDefRequest
+typedef struct TypedefTest_getDatosDefRequest
 {
 #ifdef __cplusplus
-    typedef struct getDatosDefRequestSeq Seq;
+    typedef struct TypedefTest_getDatosDefRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getDatosDefRequestTypeSupport TypeSupport;
-    typedef getDatosDefRequestDataWriter DataWriter;
-    typedef getDatosDefRequestDataReader DataReader;
+    typedef TypedefTest_getDatosDefRequestTypeSupport TypeSupport;
+    typedef TypedefTest_getDatosDefRequestDataWriter DataWriter;
+    typedef TypedefTest_getDatosDefRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DatosDef  d1;
 
-} getDatosDefRequest;
+} TypedefTest_getDatosDefRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -449,31 +440,31 @@ typedef struct getDatosDefRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getDatosDefRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getDatosDefRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getDatosDefRequestSeq, getDatosDefRequest);
+DDS_SEQUENCE(TypedefTest_getDatosDefRequestSeq, TypedefTest_getDatosDefRequest);
         
 NDDSUSERDllExport
-RTIBool getDatosDefRequest_initialize(
-        getDatosDefRequest* self);
+RTIBool TypedefTest_getDatosDefRequest_initialize(
+        TypedefTest_getDatosDefRequest* self);
         
 NDDSUSERDllExport
-RTIBool getDatosDefRequest_initialize_ex(
-        getDatosDefRequest* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getDatosDefRequest_initialize_ex(
+        TypedefTest_getDatosDefRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getDatosDefRequest_finalize(
-        getDatosDefRequest* self);
+void TypedefTest_getDatosDefRequest_finalize(
+        TypedefTest_getDatosDefRequest* self);
                         
 NDDSUSERDllExport
-void getDatosDefRequest_finalize_ex(
-        getDatosDefRequest* self,RTIBool deletePointers);
+void TypedefTest_getDatosDefRequest_finalize_ex(
+        TypedefTest_getDatosDefRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getDatosDefRequest_copy(
-        getDatosDefRequest* dst,
-        const getDatosDefRequest* src);
+RTIBool TypedefTest_getDatosDefRequest_copy(
+        TypedefTest_getDatosDefRequest* dst,
+        const TypedefTest_getDatosDefRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -488,7 +479,7 @@ extern "C" {
 #endif
 
         
-extern const char *getDatosDefReplyTYPENAME;
+extern const char *TypedefTest_getDatosDefReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -497,12 +488,12 @@ extern const char *getDatosDefReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getDatosDefReplySeq;
+    struct TypedefTest_getDatosDefReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getDatosDefReplyTypeSupport;
-    class getDatosDefReplyDataWriter;
-    class getDatosDefReplyDataReader;
+    class TypedefTest_getDatosDefReplyTypeSupport;
+    class TypedefTest_getDatosDefReplyDataWriter;
+    class TypedefTest_getDatosDefReplyDataReader;
 #endif
 
 #endif
@@ -510,27 +501,24 @@ extern const char *getDatosDefReplyTYPENAME;
             
     
 
-typedef struct getDatosDefReply
+typedef struct TypedefTest_getDatosDefReply
 {
 #ifdef __cplusplus
-    typedef struct getDatosDefReplySeq Seq;
+    typedef struct TypedefTest_getDatosDefReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getDatosDefReplyTypeSupport TypeSupport;
-    typedef getDatosDefReplyDataWriter DataWriter;
-    typedef getDatosDefReplyDataReader DataReader;
+    typedef TypedefTest_getDatosDefReplyTypeSupport TypeSupport;
+    typedef TypedefTest_getDatosDefReplyDataWriter DataWriter;
+    typedef TypedefTest_getDatosDefReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DatosDef  d2;
     DatosDef  getDatosDef_ret;
 
-} getDatosDefReply;
+} TypedefTest_getDatosDefReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -541,31 +529,31 @@ typedef struct getDatosDefReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getDatosDefReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getDatosDefReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getDatosDefReplySeq, getDatosDefReply);
+DDS_SEQUENCE(TypedefTest_getDatosDefReplySeq, TypedefTest_getDatosDefReply);
         
 NDDSUSERDllExport
-RTIBool getDatosDefReply_initialize(
-        getDatosDefReply* self);
+RTIBool TypedefTest_getDatosDefReply_initialize(
+        TypedefTest_getDatosDefReply* self);
         
 NDDSUSERDllExport
-RTIBool getDatosDefReply_initialize_ex(
-        getDatosDefReply* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getDatosDefReply_initialize_ex(
+        TypedefTest_getDatosDefReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getDatosDefReply_finalize(
-        getDatosDefReply* self);
+void TypedefTest_getDatosDefReply_finalize(
+        TypedefTest_getDatosDefReply* self);
                         
 NDDSUSERDllExport
-void getDatosDefReply_finalize_ex(
-        getDatosDefReply* self,RTIBool deletePointers);
+void TypedefTest_getDatosDefReply_finalize_ex(
+        TypedefTest_getDatosDefReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getDatosDefReply_copy(
-        getDatosDefReply* dst,
-        const getDatosDefReply* src);
+RTIBool TypedefTest_getDatosDefReply_copy(
+        TypedefTest_getDatosDefReply* dst,
+        const TypedefTest_getDatosDefReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -580,7 +568,7 @@ extern "C" {
 #endif
 
         
-extern const char *getDatosDefondoRequestTYPENAME;
+extern const char *TypedefTest_getDatosDefondoRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -589,12 +577,12 @@ extern const char *getDatosDefondoRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getDatosDefondoRequestSeq;
+    struct TypedefTest_getDatosDefondoRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getDatosDefondoRequestTypeSupport;
-    class getDatosDefondoRequestDataWriter;
-    class getDatosDefondoRequestDataReader;
+    class TypedefTest_getDatosDefondoRequestTypeSupport;
+    class TypedefTest_getDatosDefondoRequestDataWriter;
+    class TypedefTest_getDatosDefondoRequestDataReader;
 #endif
 
 #endif
@@ -602,24 +590,23 @@ extern const char *getDatosDefondoRequestTYPENAME;
             
     
 
-typedef struct getDatosDefondoRequest
+typedef struct TypedefTest_getDatosDefondoRequest
 {
 #ifdef __cplusplus
-    typedef struct getDatosDefondoRequestSeq Seq;
+    typedef struct TypedefTest_getDatosDefondoRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getDatosDefondoRequestTypeSupport TypeSupport;
-    typedef getDatosDefondoRequestDataWriter DataWriter;
-    typedef getDatosDefondoRequestDataReader DataReader;
+    typedef TypedefTest_getDatosDefondoRequestTypeSupport TypeSupport;
+    typedef TypedefTest_getDatosDefondoRequestDataWriter DataWriter;
+    typedef TypedefTest_getDatosDefondoRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     DatosDefondo  dd1;
 
-} getDatosDefondoRequest;
+} TypedefTest_getDatosDefondoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -630,31 +617,31 @@ typedef struct getDatosDefondoRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getDatosDefondoRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getDatosDefondoRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getDatosDefondoRequestSeq, getDatosDefondoRequest);
+DDS_SEQUENCE(TypedefTest_getDatosDefondoRequestSeq, TypedefTest_getDatosDefondoRequest);
         
 NDDSUSERDllExport
-RTIBool getDatosDefondoRequest_initialize(
-        getDatosDefondoRequest* self);
+RTIBool TypedefTest_getDatosDefondoRequest_initialize(
+        TypedefTest_getDatosDefondoRequest* self);
         
 NDDSUSERDllExport
-RTIBool getDatosDefondoRequest_initialize_ex(
-        getDatosDefondoRequest* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getDatosDefondoRequest_initialize_ex(
+        TypedefTest_getDatosDefondoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getDatosDefondoRequest_finalize(
-        getDatosDefondoRequest* self);
+void TypedefTest_getDatosDefondoRequest_finalize(
+        TypedefTest_getDatosDefondoRequest* self);
                         
 NDDSUSERDllExport
-void getDatosDefondoRequest_finalize_ex(
-        getDatosDefondoRequest* self,RTIBool deletePointers);
+void TypedefTest_getDatosDefondoRequest_finalize_ex(
+        TypedefTest_getDatosDefondoRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getDatosDefondoRequest_copy(
-        getDatosDefondoRequest* dst,
-        const getDatosDefondoRequest* src);
+RTIBool TypedefTest_getDatosDefondoRequest_copy(
+        TypedefTest_getDatosDefondoRequest* dst,
+        const TypedefTest_getDatosDefondoRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -669,7 +656,7 @@ extern "C" {
 #endif
 
         
-extern const char *getDatosDefondoReplyTYPENAME;
+extern const char *TypedefTest_getDatosDefondoReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -678,12 +665,12 @@ extern const char *getDatosDefondoReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getDatosDefondoReplySeq;
+    struct TypedefTest_getDatosDefondoReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getDatosDefondoReplyTypeSupport;
-    class getDatosDefondoReplyDataWriter;
-    class getDatosDefondoReplyDataReader;
+    class TypedefTest_getDatosDefondoReplyTypeSupport;
+    class TypedefTest_getDatosDefondoReplyDataWriter;
+    class TypedefTest_getDatosDefondoReplyDataReader;
 #endif
 
 #endif
@@ -691,27 +678,24 @@ extern const char *getDatosDefondoReplyTYPENAME;
             
     
 
-typedef struct getDatosDefondoReply
+typedef struct TypedefTest_getDatosDefondoReply
 {
 #ifdef __cplusplus
-    typedef struct getDatosDefondoReplySeq Seq;
+    typedef struct TypedefTest_getDatosDefondoReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getDatosDefondoReplyTypeSupport TypeSupport;
-    typedef getDatosDefondoReplyDataWriter DataWriter;
-    typedef getDatosDefondoReplyDataReader DataReader;
+    typedef TypedefTest_getDatosDefondoReplyTypeSupport TypeSupport;
+    typedef TypedefTest_getDatosDefondoReplyDataWriter DataWriter;
+    typedef TypedefTest_getDatosDefondoReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     DatosDefondo  dd2;
     DatosDefondo  getDatosDefondo_ret;
 
-} getDatosDefondoReply;
+} TypedefTest_getDatosDefondoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -722,31 +706,31 @@ typedef struct getDatosDefondoReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getDatosDefondoReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getDatosDefondoReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getDatosDefondoReplySeq, getDatosDefondoReply);
+DDS_SEQUENCE(TypedefTest_getDatosDefondoReplySeq, TypedefTest_getDatosDefondoReply);
         
 NDDSUSERDllExport
-RTIBool getDatosDefondoReply_initialize(
-        getDatosDefondoReply* self);
+RTIBool TypedefTest_getDatosDefondoReply_initialize(
+        TypedefTest_getDatosDefondoReply* self);
         
 NDDSUSERDllExport
-RTIBool getDatosDefondoReply_initialize_ex(
-        getDatosDefondoReply* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getDatosDefondoReply_initialize_ex(
+        TypedefTest_getDatosDefondoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getDatosDefondoReply_finalize(
-        getDatosDefondoReply* self);
+void TypedefTest_getDatosDefondoReply_finalize(
+        TypedefTest_getDatosDefondoReply* self);
                         
 NDDSUSERDllExport
-void getDatosDefondoReply_finalize_ex(
-        getDatosDefondoReply* self,RTIBool deletePointers);
+void TypedefTest_getDatosDefondoReply_finalize_ex(
+        TypedefTest_getDatosDefondoReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getDatosDefondoReply_copy(
-        getDatosDefondoReply* dst,
-        const getDatosDefondoReply* src);
+RTIBool TypedefTest_getDatosDefondoReply_copy(
+        TypedefTest_getDatosDefondoReply* dst,
+        const TypedefTest_getDatosDefondoReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -761,7 +745,7 @@ extern "C" {
 #endif
 
         
-extern const char *getCadenaRequestTYPENAME;
+extern const char *TypedefTest_getCadenaRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -770,12 +754,12 @@ extern const char *getCadenaRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getCadenaRequestSeq;
+    struct TypedefTest_getCadenaRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getCadenaRequestTypeSupport;
-    class getCadenaRequestDataWriter;
-    class getCadenaRequestDataReader;
+    class TypedefTest_getCadenaRequestTypeSupport;
+    class TypedefTest_getCadenaRequestDataWriter;
+    class TypedefTest_getCadenaRequestDataReader;
 #endif
 
 #endif
@@ -783,24 +767,23 @@ extern const char *getCadenaRequestTYPENAME;
             
     
 
-typedef struct getCadenaRequest
+typedef struct TypedefTest_getCadenaRequest
 {
 #ifdef __cplusplus
-    typedef struct getCadenaRequestSeq Seq;
+    typedef struct TypedefTest_getCadenaRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getCadenaRequestTypeSupport TypeSupport;
-    typedef getCadenaRequestDataWriter DataWriter;
-    typedef getCadenaRequestDataReader DataReader;
+    typedef TypedefTest_getCadenaRequestTypeSupport TypeSupport;
+    typedef TypedefTest_getCadenaRequestDataWriter DataWriter;
+    typedef TypedefTest_getCadenaRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     cadena  c1;
 
-} getCadenaRequest;
+} TypedefTest_getCadenaRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -811,31 +794,31 @@ typedef struct getCadenaRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getCadenaRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getCadenaRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getCadenaRequestSeq, getCadenaRequest);
+DDS_SEQUENCE(TypedefTest_getCadenaRequestSeq, TypedefTest_getCadenaRequest);
         
 NDDSUSERDllExport
-RTIBool getCadenaRequest_initialize(
-        getCadenaRequest* self);
+RTIBool TypedefTest_getCadenaRequest_initialize(
+        TypedefTest_getCadenaRequest* self);
         
 NDDSUSERDllExport
-RTIBool getCadenaRequest_initialize_ex(
-        getCadenaRequest* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getCadenaRequest_initialize_ex(
+        TypedefTest_getCadenaRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getCadenaRequest_finalize(
-        getCadenaRequest* self);
+void TypedefTest_getCadenaRequest_finalize(
+        TypedefTest_getCadenaRequest* self);
                         
 NDDSUSERDllExport
-void getCadenaRequest_finalize_ex(
-        getCadenaRequest* self,RTIBool deletePointers);
+void TypedefTest_getCadenaRequest_finalize_ex(
+        TypedefTest_getCadenaRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getCadenaRequest_copy(
-        getCadenaRequest* dst,
-        const getCadenaRequest* src);
+RTIBool TypedefTest_getCadenaRequest_copy(
+        TypedefTest_getCadenaRequest* dst,
+        const TypedefTest_getCadenaRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -850,7 +833,7 @@ extern "C" {
 #endif
 
         
-extern const char *getCadenaReplyTYPENAME;
+extern const char *TypedefTest_getCadenaReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -859,12 +842,12 @@ extern const char *getCadenaReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getCadenaReplySeq;
+    struct TypedefTest_getCadenaReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getCadenaReplyTypeSupport;
-    class getCadenaReplyDataWriter;
-    class getCadenaReplyDataReader;
+    class TypedefTest_getCadenaReplyTypeSupport;
+    class TypedefTest_getCadenaReplyDataWriter;
+    class TypedefTest_getCadenaReplyDataReader;
 #endif
 
 #endif
@@ -872,27 +855,24 @@ extern const char *getCadenaReplyTYPENAME;
             
     
 
-typedef struct getCadenaReply
+typedef struct TypedefTest_getCadenaReply
 {
 #ifdef __cplusplus
-    typedef struct getCadenaReplySeq Seq;
+    typedef struct TypedefTest_getCadenaReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getCadenaReplyTypeSupport TypeSupport;
-    typedef getCadenaReplyDataWriter DataWriter;
-    typedef getCadenaReplyDataReader DataReader;
+    typedef TypedefTest_getCadenaReplyTypeSupport TypeSupport;
+    typedef TypedefTest_getCadenaReplyDataWriter DataWriter;
+    typedef TypedefTest_getCadenaReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     cadena  c2;
     cadena  getCadena_ret;
 
-} getCadenaReply;
+} TypedefTest_getCadenaReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -903,31 +883,31 @@ typedef struct getCadenaReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getCadenaReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getCadenaReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getCadenaReplySeq, getCadenaReply);
+DDS_SEQUENCE(TypedefTest_getCadenaReplySeq, TypedefTest_getCadenaReply);
         
 NDDSUSERDllExport
-RTIBool getCadenaReply_initialize(
-        getCadenaReply* self);
+RTIBool TypedefTest_getCadenaReply_initialize(
+        TypedefTest_getCadenaReply* self);
         
 NDDSUSERDllExport
-RTIBool getCadenaReply_initialize_ex(
-        getCadenaReply* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getCadenaReply_initialize_ex(
+        TypedefTest_getCadenaReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getCadenaReply_finalize(
-        getCadenaReply* self);
+void TypedefTest_getCadenaReply_finalize(
+        TypedefTest_getCadenaReply* self);
                         
 NDDSUSERDllExport
-void getCadenaReply_finalize_ex(
-        getCadenaReply* self,RTIBool deletePointers);
+void TypedefTest_getCadenaReply_finalize_ex(
+        TypedefTest_getCadenaReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getCadenaReply_copy(
-        getCadenaReply* dst,
-        const getCadenaReply* src);
+RTIBool TypedefTest_getCadenaReply_copy(
+        TypedefTest_getCadenaReply* dst,
+        const TypedefTest_getCadenaReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -942,7 +922,7 @@ extern "C" {
 #endif
 
         
-extern const char *getCorreaRequestTYPENAME;
+extern const char *TypedefTest_getCorreaRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -951,12 +931,12 @@ extern const char *getCorreaRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getCorreaRequestSeq;
+    struct TypedefTest_getCorreaRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getCorreaRequestTypeSupport;
-    class getCorreaRequestDataWriter;
-    class getCorreaRequestDataReader;
+    class TypedefTest_getCorreaRequestTypeSupport;
+    class TypedefTest_getCorreaRequestDataWriter;
+    class TypedefTest_getCorreaRequestDataReader;
 #endif
 
 #endif
@@ -964,24 +944,23 @@ extern const char *getCorreaRequestTYPENAME;
             
     
 
-typedef struct getCorreaRequest
+typedef struct TypedefTest_getCorreaRequest
 {
 #ifdef __cplusplus
-    typedef struct getCorreaRequestSeq Seq;
+    typedef struct TypedefTest_getCorreaRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getCorreaRequestTypeSupport TypeSupport;
-    typedef getCorreaRequestDataWriter DataWriter;
-    typedef getCorreaRequestDataReader DataReader;
+    typedef TypedefTest_getCorreaRequestTypeSupport TypeSupport;
+    typedef TypedefTest_getCorreaRequestDataWriter DataWriter;
+    typedef TypedefTest_getCorreaRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     correa  cc1;
 
-} getCorreaRequest;
+} TypedefTest_getCorreaRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -992,31 +971,31 @@ typedef struct getCorreaRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getCorreaRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getCorreaRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getCorreaRequestSeq, getCorreaRequest);
+DDS_SEQUENCE(TypedefTest_getCorreaRequestSeq, TypedefTest_getCorreaRequest);
         
 NDDSUSERDllExport
-RTIBool getCorreaRequest_initialize(
-        getCorreaRequest* self);
+RTIBool TypedefTest_getCorreaRequest_initialize(
+        TypedefTest_getCorreaRequest* self);
         
 NDDSUSERDllExport
-RTIBool getCorreaRequest_initialize_ex(
-        getCorreaRequest* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getCorreaRequest_initialize_ex(
+        TypedefTest_getCorreaRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getCorreaRequest_finalize(
-        getCorreaRequest* self);
+void TypedefTest_getCorreaRequest_finalize(
+        TypedefTest_getCorreaRequest* self);
                         
 NDDSUSERDllExport
-void getCorreaRequest_finalize_ex(
-        getCorreaRequest* self,RTIBool deletePointers);
+void TypedefTest_getCorreaRequest_finalize_ex(
+        TypedefTest_getCorreaRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getCorreaRequest_copy(
-        getCorreaRequest* dst,
-        const getCorreaRequest* src);
+RTIBool TypedefTest_getCorreaRequest_copy(
+        TypedefTest_getCorreaRequest* dst,
+        const TypedefTest_getCorreaRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1031,7 +1010,7 @@ extern "C" {
 #endif
 
         
-extern const char *getCorreaReplyTYPENAME;
+extern const char *TypedefTest_getCorreaReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -1040,12 +1019,12 @@ extern const char *getCorreaReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getCorreaReplySeq;
+    struct TypedefTest_getCorreaReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getCorreaReplyTypeSupport;
-    class getCorreaReplyDataWriter;
-    class getCorreaReplyDataReader;
+    class TypedefTest_getCorreaReplyTypeSupport;
+    class TypedefTest_getCorreaReplyDataWriter;
+    class TypedefTest_getCorreaReplyDataReader;
 #endif
 
 #endif
@@ -1053,27 +1032,24 @@ extern const char *getCorreaReplyTYPENAME;
             
     
 
-typedef struct getCorreaReply
+typedef struct TypedefTest_getCorreaReply
 {
 #ifdef __cplusplus
-    typedef struct getCorreaReplySeq Seq;
+    typedef struct TypedefTest_getCorreaReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getCorreaReplyTypeSupport TypeSupport;
-    typedef getCorreaReplyDataWriter DataWriter;
-    typedef getCorreaReplyDataReader DataReader;
+    typedef TypedefTest_getCorreaReplyTypeSupport TypeSupport;
+    typedef TypedefTest_getCorreaReplyDataWriter DataWriter;
+    typedef TypedefTest_getCorreaReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     correa  cc2;
     correa  getCorrea_ret;
 
-} getCorreaReply;
+} TypedefTest_getCorreaReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1084,31 +1060,31 @@ typedef struct getCorreaReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getCorreaReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* TypedefTest_getCorreaReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getCorreaReplySeq, getCorreaReply);
+DDS_SEQUENCE(TypedefTest_getCorreaReplySeq, TypedefTest_getCorreaReply);
         
 NDDSUSERDllExport
-RTIBool getCorreaReply_initialize(
-        getCorreaReply* self);
+RTIBool TypedefTest_getCorreaReply_initialize(
+        TypedefTest_getCorreaReply* self);
         
 NDDSUSERDllExport
-RTIBool getCorreaReply_initialize_ex(
-        getCorreaReply* self,RTIBool allocatePointers);
+RTIBool TypedefTest_getCorreaReply_initialize_ex(
+        TypedefTest_getCorreaReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getCorreaReply_finalize(
-        getCorreaReply* self);
+void TypedefTest_getCorreaReply_finalize(
+        TypedefTest_getCorreaReply* self);
                         
 NDDSUSERDllExport
-void getCorreaReply_finalize_ex(
-        getCorreaReply* self,RTIBool deletePointers);
+void TypedefTest_getCorreaReply_finalize_ex(
+        TypedefTest_getCorreaReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getCorreaReply_copy(
-        getCorreaReply* dst,
-        const getCorreaReply* src);
+RTIBool TypedefTest_getCorreaReply_copy(
+        TypedefTest_getCorreaReply* dst,
+        const TypedefTest_getCorreaReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -1119,4 +1095,4 @@ RTIBool getCorreaReply_copy(
 
 
 
-#endif /* TypedefTestRequestReply_1722561831_h */
+#endif /* TypedefTestRequestReply_1722561027_h */

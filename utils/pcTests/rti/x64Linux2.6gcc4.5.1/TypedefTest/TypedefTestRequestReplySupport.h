@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestRequestReplySupport_1722561831_h
-#define TypedefTestRequestReplySupport_1722561831_h
+#ifndef TypedefTestRequestReplySupport_1722561027_h
+#define TypedefTestRequestReplySupport_1722561027_h
 
 /* Uses */
 #include "TypedefTestRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getLargoRequestTypeSupport, getLargoRequest);
+DDS_TYPESUPPORT_CPP(TypedefTest_getLargoRequestTypeSupport, TypedefTest_getLargoRequest);
 
-DDS_DATAWRITER_CPP(getLargoRequestDataWriter, getLargoRequest);
-DDS_DATAREADER_CPP(getLargoRequestDataReader, getLargoRequestSeq, getLargoRequest);
+DDS_DATAWRITER_CPP(TypedefTest_getLargoRequestDataWriter, TypedefTest_getLargoRequest);
+DDS_DATAREADER_CPP(TypedefTest_getLargoRequestDataReader, TypedefTest_getLargoRequestSeq, TypedefTest_getLargoRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getLargoRequestTypeSupport, getLargoRequest);
-DDS_DATAWRITER_C(getLargoRequestDataWriter, getLargoRequest);
-DDS_DATAREADER_C(getLargoRequestDataReader, getLargoRequestSeq, getLargoRequest);
+DDS_TYPESUPPORT_C(TypedefTest_getLargoRequestTypeSupport, TypedefTest_getLargoRequest);
+DDS_DATAWRITER_C(TypedefTest_getLargoRequestDataWriter, TypedefTest_getLargoRequest);
+DDS_DATAREADER_C(TypedefTest_getLargoRequestDataReader, TypedefTest_getLargoRequestSeq, TypedefTest_getLargoRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(getLargoRequestDataReader, getLargoRequestSeq, getLargoRequest)
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getLargoReplyTypeSupport, getLargoReply);
+DDS_TYPESUPPORT_CPP(TypedefTest_getLargoReplyTypeSupport, TypedefTest_getLargoReply);
 
-DDS_DATAWRITER_CPP(getLargoReplyDataWriter, getLargoReply);
-DDS_DATAREADER_CPP(getLargoReplyDataReader, getLargoReplySeq, getLargoReply);
+DDS_DATAWRITER_CPP(TypedefTest_getLargoReplyDataWriter, TypedefTest_getLargoReply);
+DDS_DATAREADER_CPP(TypedefTest_getLargoReplyDataReader, TypedefTest_getLargoReplySeq, TypedefTest_getLargoReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getLargoReplyTypeSupport, getLargoReply);
-DDS_DATAWRITER_C(getLargoReplyDataWriter, getLargoReply);
-DDS_DATAREADER_C(getLargoReplyDataReader, getLargoReplySeq, getLargoReply);
+DDS_TYPESUPPORT_C(TypedefTest_getLargoReplyTypeSupport, TypedefTest_getLargoReply);
+DDS_DATAWRITER_C(TypedefTest_getLargoReplyDataWriter, TypedefTest_getLargoReply);
+DDS_DATAREADER_C(TypedefTest_getLargoReplyDataReader, TypedefTest_getLargoReplySeq, TypedefTest_getLargoReply);
 
 #endif
 
@@ -161,17 +161,17 @@ DDS_DATAREADER_C(getLargoReplyDataReader, getLargoReplySeq, getLargoReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getLarguisimoRequestTypeSupport, getLarguisimoRequest);
+DDS_TYPESUPPORT_CPP(TypedefTest_getLarguisimoRequestTypeSupport, TypedefTest_getLarguisimoRequest);
 
-DDS_DATAWRITER_CPP(getLarguisimoRequestDataWriter, getLarguisimoRequest);
-DDS_DATAREADER_CPP(getLarguisimoRequestDataReader, getLarguisimoRequestSeq, getLarguisimoRequest);
+DDS_DATAWRITER_CPP(TypedefTest_getLarguisimoRequestDataWriter, TypedefTest_getLarguisimoRequest);
+DDS_DATAREADER_CPP(TypedefTest_getLarguisimoRequestDataReader, TypedefTest_getLarguisimoRequestSeq, TypedefTest_getLarguisimoRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getLarguisimoRequestTypeSupport, getLarguisimoRequest);
-DDS_DATAWRITER_C(getLarguisimoRequestDataWriter, getLarguisimoRequest);
-DDS_DATAREADER_C(getLarguisimoRequestDataReader, getLarguisimoRequestSeq, getLarguisimoRequest);
+DDS_TYPESUPPORT_C(TypedefTest_getLarguisimoRequestTypeSupport, TypedefTest_getLarguisimoRequest);
+DDS_DATAWRITER_C(TypedefTest_getLarguisimoRequestDataWriter, TypedefTest_getLarguisimoRequest);
+DDS_DATAREADER_C(TypedefTest_getLarguisimoRequestDataReader, TypedefTest_getLarguisimoRequestSeq, TypedefTest_getLarguisimoRequest);
 
 #endif
 
@@ -213,17 +213,17 @@ DDS_DATAREADER_C(getLarguisimoRequestDataReader, getLarguisimoRequestSeq, getLar
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getLarguisimoReplyTypeSupport, getLarguisimoReply);
+DDS_TYPESUPPORT_CPP(TypedefTest_getLarguisimoReplyTypeSupport, TypedefTest_getLarguisimoReply);
 
-DDS_DATAWRITER_CPP(getLarguisimoReplyDataWriter, getLarguisimoReply);
-DDS_DATAREADER_CPP(getLarguisimoReplyDataReader, getLarguisimoReplySeq, getLarguisimoReply);
+DDS_DATAWRITER_CPP(TypedefTest_getLarguisimoReplyDataWriter, TypedefTest_getLarguisimoReply);
+DDS_DATAREADER_CPP(TypedefTest_getLarguisimoReplyDataReader, TypedefTest_getLarguisimoReplySeq, TypedefTest_getLarguisimoReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getLarguisimoReplyTypeSupport, getLarguisimoReply);
-DDS_DATAWRITER_C(getLarguisimoReplyDataWriter, getLarguisimoReply);
-DDS_DATAREADER_C(getLarguisimoReplyDataReader, getLarguisimoReplySeq, getLarguisimoReply);
+DDS_TYPESUPPORT_C(TypedefTest_getLarguisimoReplyTypeSupport, TypedefTest_getLarguisimoReply);
+DDS_DATAWRITER_C(TypedefTest_getLarguisimoReplyDataWriter, TypedefTest_getLarguisimoReply);
+DDS_DATAREADER_C(TypedefTest_getLarguisimoReplyDataReader, TypedefTest_getLarguisimoReplySeq, TypedefTest_getLarguisimoReply);
 
 #endif
 
@@ -265,17 +265,17 @@ DDS_DATAREADER_C(getLarguisimoReplyDataReader, getLarguisimoReplySeq, getLarguis
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getDatosDefRequestTypeSupport, getDatosDefRequest);
+DDS_TYPESUPPORT_CPP(TypedefTest_getDatosDefRequestTypeSupport, TypedefTest_getDatosDefRequest);
 
-DDS_DATAWRITER_CPP(getDatosDefRequestDataWriter, getDatosDefRequest);
-DDS_DATAREADER_CPP(getDatosDefRequestDataReader, getDatosDefRequestSeq, getDatosDefRequest);
+DDS_DATAWRITER_CPP(TypedefTest_getDatosDefRequestDataWriter, TypedefTest_getDatosDefRequest);
+DDS_DATAREADER_CPP(TypedefTest_getDatosDefRequestDataReader, TypedefTest_getDatosDefRequestSeq, TypedefTest_getDatosDefRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getDatosDefRequestTypeSupport, getDatosDefRequest);
-DDS_DATAWRITER_C(getDatosDefRequestDataWriter, getDatosDefRequest);
-DDS_DATAREADER_C(getDatosDefRequestDataReader, getDatosDefRequestSeq, getDatosDefRequest);
+DDS_TYPESUPPORT_C(TypedefTest_getDatosDefRequestTypeSupport, TypedefTest_getDatosDefRequest);
+DDS_DATAWRITER_C(TypedefTest_getDatosDefRequestDataWriter, TypedefTest_getDatosDefRequest);
+DDS_DATAREADER_C(TypedefTest_getDatosDefRequestDataReader, TypedefTest_getDatosDefRequestSeq, TypedefTest_getDatosDefRequest);
 
 #endif
 
@@ -317,17 +317,17 @@ DDS_DATAREADER_C(getDatosDefRequestDataReader, getDatosDefRequestSeq, getDatosDe
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getDatosDefReplyTypeSupport, getDatosDefReply);
+DDS_TYPESUPPORT_CPP(TypedefTest_getDatosDefReplyTypeSupport, TypedefTest_getDatosDefReply);
 
-DDS_DATAWRITER_CPP(getDatosDefReplyDataWriter, getDatosDefReply);
-DDS_DATAREADER_CPP(getDatosDefReplyDataReader, getDatosDefReplySeq, getDatosDefReply);
+DDS_DATAWRITER_CPP(TypedefTest_getDatosDefReplyDataWriter, TypedefTest_getDatosDefReply);
+DDS_DATAREADER_CPP(TypedefTest_getDatosDefReplyDataReader, TypedefTest_getDatosDefReplySeq, TypedefTest_getDatosDefReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getDatosDefReplyTypeSupport, getDatosDefReply);
-DDS_DATAWRITER_C(getDatosDefReplyDataWriter, getDatosDefReply);
-DDS_DATAREADER_C(getDatosDefReplyDataReader, getDatosDefReplySeq, getDatosDefReply);
+DDS_TYPESUPPORT_C(TypedefTest_getDatosDefReplyTypeSupport, TypedefTest_getDatosDefReply);
+DDS_DATAWRITER_C(TypedefTest_getDatosDefReplyDataWriter, TypedefTest_getDatosDefReply);
+DDS_DATAREADER_C(TypedefTest_getDatosDefReplyDataReader, TypedefTest_getDatosDefReplySeq, TypedefTest_getDatosDefReply);
 
 #endif
 
@@ -369,17 +369,17 @@ DDS_DATAREADER_C(getDatosDefReplyDataReader, getDatosDefReplySeq, getDatosDefRep
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getDatosDefondoRequestTypeSupport, getDatosDefondoRequest);
+DDS_TYPESUPPORT_CPP(TypedefTest_getDatosDefondoRequestTypeSupport, TypedefTest_getDatosDefondoRequest);
 
-DDS_DATAWRITER_CPP(getDatosDefondoRequestDataWriter, getDatosDefondoRequest);
-DDS_DATAREADER_CPP(getDatosDefondoRequestDataReader, getDatosDefondoRequestSeq, getDatosDefondoRequest);
+DDS_DATAWRITER_CPP(TypedefTest_getDatosDefondoRequestDataWriter, TypedefTest_getDatosDefondoRequest);
+DDS_DATAREADER_CPP(TypedefTest_getDatosDefondoRequestDataReader, TypedefTest_getDatosDefondoRequestSeq, TypedefTest_getDatosDefondoRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getDatosDefondoRequestTypeSupport, getDatosDefondoRequest);
-DDS_DATAWRITER_C(getDatosDefondoRequestDataWriter, getDatosDefondoRequest);
-DDS_DATAREADER_C(getDatosDefondoRequestDataReader, getDatosDefondoRequestSeq, getDatosDefondoRequest);
+DDS_TYPESUPPORT_C(TypedefTest_getDatosDefondoRequestTypeSupport, TypedefTest_getDatosDefondoRequest);
+DDS_DATAWRITER_C(TypedefTest_getDatosDefondoRequestDataWriter, TypedefTest_getDatosDefondoRequest);
+DDS_DATAREADER_C(TypedefTest_getDatosDefondoRequestDataReader, TypedefTest_getDatosDefondoRequestSeq, TypedefTest_getDatosDefondoRequest);
 
 #endif
 
@@ -421,17 +421,17 @@ DDS_DATAREADER_C(getDatosDefondoRequestDataReader, getDatosDefondoRequestSeq, ge
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getDatosDefondoReplyTypeSupport, getDatosDefondoReply);
+DDS_TYPESUPPORT_CPP(TypedefTest_getDatosDefondoReplyTypeSupport, TypedefTest_getDatosDefondoReply);
 
-DDS_DATAWRITER_CPP(getDatosDefondoReplyDataWriter, getDatosDefondoReply);
-DDS_DATAREADER_CPP(getDatosDefondoReplyDataReader, getDatosDefondoReplySeq, getDatosDefondoReply);
+DDS_DATAWRITER_CPP(TypedefTest_getDatosDefondoReplyDataWriter, TypedefTest_getDatosDefondoReply);
+DDS_DATAREADER_CPP(TypedefTest_getDatosDefondoReplyDataReader, TypedefTest_getDatosDefondoReplySeq, TypedefTest_getDatosDefondoReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getDatosDefondoReplyTypeSupport, getDatosDefondoReply);
-DDS_DATAWRITER_C(getDatosDefondoReplyDataWriter, getDatosDefondoReply);
-DDS_DATAREADER_C(getDatosDefondoReplyDataReader, getDatosDefondoReplySeq, getDatosDefondoReply);
+DDS_TYPESUPPORT_C(TypedefTest_getDatosDefondoReplyTypeSupport, TypedefTest_getDatosDefondoReply);
+DDS_DATAWRITER_C(TypedefTest_getDatosDefondoReplyDataWriter, TypedefTest_getDatosDefondoReply);
+DDS_DATAREADER_C(TypedefTest_getDatosDefondoReplyDataReader, TypedefTest_getDatosDefondoReplySeq, TypedefTest_getDatosDefondoReply);
 
 #endif
 
@@ -473,17 +473,17 @@ DDS_DATAREADER_C(getDatosDefondoReplyDataReader, getDatosDefondoReplySeq, getDat
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getCadenaRequestTypeSupport, getCadenaRequest);
+DDS_TYPESUPPORT_CPP(TypedefTest_getCadenaRequestTypeSupport, TypedefTest_getCadenaRequest);
 
-DDS_DATAWRITER_CPP(getCadenaRequestDataWriter, getCadenaRequest);
-DDS_DATAREADER_CPP(getCadenaRequestDataReader, getCadenaRequestSeq, getCadenaRequest);
+DDS_DATAWRITER_CPP(TypedefTest_getCadenaRequestDataWriter, TypedefTest_getCadenaRequest);
+DDS_DATAREADER_CPP(TypedefTest_getCadenaRequestDataReader, TypedefTest_getCadenaRequestSeq, TypedefTest_getCadenaRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getCadenaRequestTypeSupport, getCadenaRequest);
-DDS_DATAWRITER_C(getCadenaRequestDataWriter, getCadenaRequest);
-DDS_DATAREADER_C(getCadenaRequestDataReader, getCadenaRequestSeq, getCadenaRequest);
+DDS_TYPESUPPORT_C(TypedefTest_getCadenaRequestTypeSupport, TypedefTest_getCadenaRequest);
+DDS_DATAWRITER_C(TypedefTest_getCadenaRequestDataWriter, TypedefTest_getCadenaRequest);
+DDS_DATAREADER_C(TypedefTest_getCadenaRequestDataReader, TypedefTest_getCadenaRequestSeq, TypedefTest_getCadenaRequest);
 
 #endif
 
@@ -525,17 +525,17 @@ DDS_DATAREADER_C(getCadenaRequestDataReader, getCadenaRequestSeq, getCadenaReque
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getCadenaReplyTypeSupport, getCadenaReply);
+DDS_TYPESUPPORT_CPP(TypedefTest_getCadenaReplyTypeSupport, TypedefTest_getCadenaReply);
 
-DDS_DATAWRITER_CPP(getCadenaReplyDataWriter, getCadenaReply);
-DDS_DATAREADER_CPP(getCadenaReplyDataReader, getCadenaReplySeq, getCadenaReply);
+DDS_DATAWRITER_CPP(TypedefTest_getCadenaReplyDataWriter, TypedefTest_getCadenaReply);
+DDS_DATAREADER_CPP(TypedefTest_getCadenaReplyDataReader, TypedefTest_getCadenaReplySeq, TypedefTest_getCadenaReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getCadenaReplyTypeSupport, getCadenaReply);
-DDS_DATAWRITER_C(getCadenaReplyDataWriter, getCadenaReply);
-DDS_DATAREADER_C(getCadenaReplyDataReader, getCadenaReplySeq, getCadenaReply);
+DDS_TYPESUPPORT_C(TypedefTest_getCadenaReplyTypeSupport, TypedefTest_getCadenaReply);
+DDS_DATAWRITER_C(TypedefTest_getCadenaReplyDataWriter, TypedefTest_getCadenaReply);
+DDS_DATAREADER_C(TypedefTest_getCadenaReplyDataReader, TypedefTest_getCadenaReplySeq, TypedefTest_getCadenaReply);
 
 #endif
 
@@ -577,17 +577,17 @@ DDS_DATAREADER_C(getCadenaReplyDataReader, getCadenaReplySeq, getCadenaReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getCorreaRequestTypeSupport, getCorreaRequest);
+DDS_TYPESUPPORT_CPP(TypedefTest_getCorreaRequestTypeSupport, TypedefTest_getCorreaRequest);
 
-DDS_DATAWRITER_CPP(getCorreaRequestDataWriter, getCorreaRequest);
-DDS_DATAREADER_CPP(getCorreaRequestDataReader, getCorreaRequestSeq, getCorreaRequest);
+DDS_DATAWRITER_CPP(TypedefTest_getCorreaRequestDataWriter, TypedefTest_getCorreaRequest);
+DDS_DATAREADER_CPP(TypedefTest_getCorreaRequestDataReader, TypedefTest_getCorreaRequestSeq, TypedefTest_getCorreaRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getCorreaRequestTypeSupport, getCorreaRequest);
-DDS_DATAWRITER_C(getCorreaRequestDataWriter, getCorreaRequest);
-DDS_DATAREADER_C(getCorreaRequestDataReader, getCorreaRequestSeq, getCorreaRequest);
+DDS_TYPESUPPORT_C(TypedefTest_getCorreaRequestTypeSupport, TypedefTest_getCorreaRequest);
+DDS_DATAWRITER_C(TypedefTest_getCorreaRequestDataWriter, TypedefTest_getCorreaRequest);
+DDS_DATAREADER_C(TypedefTest_getCorreaRequestDataReader, TypedefTest_getCorreaRequestSeq, TypedefTest_getCorreaRequest);
 
 #endif
 
@@ -629,17 +629,17 @@ DDS_DATAREADER_C(getCorreaRequestDataReader, getCorreaRequestSeq, getCorreaReque
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getCorreaReplyTypeSupport, getCorreaReply);
+DDS_TYPESUPPORT_CPP(TypedefTest_getCorreaReplyTypeSupport, TypedefTest_getCorreaReply);
 
-DDS_DATAWRITER_CPP(getCorreaReplyDataWriter, getCorreaReply);
-DDS_DATAREADER_CPP(getCorreaReplyDataReader, getCorreaReplySeq, getCorreaReply);
+DDS_DATAWRITER_CPP(TypedefTest_getCorreaReplyDataWriter, TypedefTest_getCorreaReply);
+DDS_DATAREADER_CPP(TypedefTest_getCorreaReplyDataReader, TypedefTest_getCorreaReplySeq, TypedefTest_getCorreaReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getCorreaReplyTypeSupport, getCorreaReply);
-DDS_DATAWRITER_C(getCorreaReplyDataWriter, getCorreaReply);
-DDS_DATAREADER_C(getCorreaReplyDataReader, getCorreaReplySeq, getCorreaReply);
+DDS_TYPESUPPORT_C(TypedefTest_getCorreaReplyTypeSupport, TypedefTest_getCorreaReply);
+DDS_DATAWRITER_C(TypedefTest_getCorreaReplyDataWriter, TypedefTest_getCorreaReply);
+DDS_DATAREADER_C(TypedefTest_getCorreaReplyDataReader, TypedefTest_getCorreaReplySeq, TypedefTest_getCorreaReply);
 
 #endif
 
@@ -652,4 +652,4 @@ DDS_DATAREADER_C(getCorreaReplyDataReader, getCorreaReplySeq, getCorreaReply);
 
 
 
-#endif  /* TypedefTestRequestReplySupport_1722561831_h */
+#endif  /* TypedefTestRequestReplySupport_1722561027_h */

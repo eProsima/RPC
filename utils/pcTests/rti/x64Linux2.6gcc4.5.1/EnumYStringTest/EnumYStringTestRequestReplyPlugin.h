@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestRequestReplyPlugin_1383307673_h
-#define EnumYStringTestRequestReplyPlugin_1383307673_h
+#ifndef EnumYStringTestRequestReplyPlugin_1383307295_h
+#define EnumYStringTestRequestReplyPlugin_1383307295_h
 
 #include "EnumYStringTestRequestReply.h"
 
@@ -42,77 +42,77 @@ extern "C" {
 
 
 /* The type used to store keys for instances of type struct
- * getEnumRequest.
+ * EnumYStringTest_getEnumRequest.
  *
- * By default, this type is struct getEnumRequest
+ * By default, this type is struct EnumYStringTest_getEnumRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getEnumRequest)
+ * system (e.g. if sizeof(struct EnumYStringTest_getEnumRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getEnumRequest, the
+ * other than struct EnumYStringTest_getEnumRequest, the
  * following restriction applies: the key of struct
- * getEnumRequest must consist of a
+ * EnumYStringTest_getEnumRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getEnumRequest.
+ * first field in struct EnumYStringTest_getEnumRequest.
 */
-typedef  struct getEnumRequest getEnumRequestKeyHolder;
+typedef  struct EnumYStringTest_getEnumRequest EnumYStringTest_getEnumRequestKeyHolder;
 
 
-#define getEnumRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getEnumRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getEnumRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getEnumRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define EnumYStringTest_getEnumRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EnumYStringTest_getEnumRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EnumYStringTest_getEnumRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EnumYStringTest_getEnumRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getEnumRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getEnumRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define EnumYStringTest_getEnumRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define EnumYStringTest_getEnumRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getEnumRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getEnumRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define EnumYStringTest_getEnumRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EnumYStringTest_getEnumRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getEnumRequest*
-getEnumRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getEnumRequest*
+EnumYStringTest_getEnumRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getEnumRequest*
-getEnumRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern EnumYStringTest_getEnumRequest*
+EnumYStringTest_getEnumRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPluginSupport_copy_data(
-    getEnumRequest *out,
-    const getEnumRequest *in);
+EnumYStringTest_getEnumRequestPluginSupport_copy_data(
+    EnumYStringTest_getEnumRequest *out,
+    const EnumYStringTest_getEnumRequest *in);
 
 NDDSUSERDllExport extern void 
-getEnumRequestPluginSupport_destroy_data_ex(
-    getEnumRequest *sample,RTIBool deallocate_pointers);
+EnumYStringTest_getEnumRequestPluginSupport_destroy_data_ex(
+    EnumYStringTest_getEnumRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getEnumRequestPluginSupport_destroy_data(
-    getEnumRequest *sample);
+EnumYStringTest_getEnumRequestPluginSupport_destroy_data(
+    EnumYStringTest_getEnumRequest *sample);
 
 NDDSUSERDllExport extern void 
-getEnumRequestPluginSupport_print_data(
-    const getEnumRequest *sample,
+EnumYStringTest_getEnumRequestPluginSupport_print_data(
+    const EnumYStringTest_getEnumRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getEnumRequest*
-getEnumRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getEnumRequest*
+EnumYStringTest_getEnumRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getEnumRequest*
-getEnumRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getEnumRequestPluginSupport_destroy_key_ex(
-    getEnumRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getEnumRequest*
+EnumYStringTest_getEnumRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getEnumRequestPluginSupport_destroy_key(
-    getEnumRequestKeyHolder *key);
+EnumYStringTest_getEnumRequestPluginSupport_destroy_key_ex(
+    EnumYStringTest_getEnumRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EnumYStringTest_getEnumRequestPluginSupport_destroy_key(
+    EnumYStringTest_getEnumRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ getEnumRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getEnumRequestPlugin_on_participant_attached(
+EnumYStringTest_getEnumRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -128,34 +128,34 @@ getEnumRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getEnumRequestPlugin_on_participant_detached(
+EnumYStringTest_getEnumRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getEnumRequestPlugin_on_endpoint_attached(
+EnumYStringTest_getEnumRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getEnumRequestPlugin_on_endpoint_detached(
+EnumYStringTest_getEnumRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_copy_sample(
+EnumYStringTest_getEnumRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest *out,
-    const getEnumRequest *in);
+    EnumYStringTest_getEnumRequest *out,
+    const EnumYStringTest_getEnumRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_serialize(
+EnumYStringTest_getEnumRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getEnumRequest *sample,
+    const EnumYStringTest_getEnumRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -163,9 +163,9 @@ getEnumRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_deserialize_sample(
+EnumYStringTest_getEnumRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest *sample, 
+    EnumYStringTest_getEnumRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -173,9 +173,9 @@ getEnumRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_deserialize(
+EnumYStringTest_getEnumRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest **sample, 
+    EnumYStringTest_getEnumRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -185,7 +185,7 @@ getEnumRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getEnumRequestPlugin_skip(
+EnumYStringTest_getEnumRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -193,26 +193,26 @@ getEnumRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getEnumRequestPlugin_get_serialized_sample_max_size(
+EnumYStringTest_getEnumRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getEnumRequestPlugin_get_serialized_sample_min_size(
+EnumYStringTest_getEnumRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getEnumRequestPlugin_get_serialized_sample_size(
+EnumYStringTest_getEnumRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getEnumRequest * sample);
+    const EnumYStringTest_getEnumRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -220,19 +220,19 @@ getEnumRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getEnumRequestPlugin_get_key_kind(void);
+EnumYStringTest_getEnumRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getEnumRequestPlugin_get_serialized_key_max_size(
+EnumYStringTest_getEnumRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_serialize_key(
+EnumYStringTest_getEnumRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getEnumRequest *sample,
+    const EnumYStringTest_getEnumRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -240,9 +240,9 @@ getEnumRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_deserialize_key_sample(
+EnumYStringTest_getEnumRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest * sample,
+    EnumYStringTest_getEnumRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -250,9 +250,9 @@ getEnumRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_deserialize_key(
+EnumYStringTest_getEnumRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest ** sample,
+    EnumYStringTest_getEnumRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -261,9 +261,9 @@ getEnumRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getEnumRequestPlugin_serialized_sample_to_key(
+EnumYStringTest_getEnumRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest *sample,
+    EnumYStringTest_getEnumRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -271,25 +271,25 @@ getEnumRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_instance_to_key(
+EnumYStringTest_getEnumRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequestKeyHolder *key, 
-    const getEnumRequest *instance);
+    EnumYStringTest_getEnumRequestKeyHolder *key, 
+    const EnumYStringTest_getEnumRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_key_to_instance(
+EnumYStringTest_getEnumRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumRequest *instance, 
-    const getEnumRequestKeyHolder *key);
+    EnumYStringTest_getEnumRequest *instance, 
+    const EnumYStringTest_getEnumRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_instance_to_keyhash(
+EnumYStringTest_getEnumRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getEnumRequest *instance);
+    const EnumYStringTest_getEnumRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumRequestPlugin_serialized_sample_to_keyhash(
+EnumYStringTest_getEnumRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -298,83 +298,83 @@ getEnumRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getEnumRequestPlugin_new(void);
+EnumYStringTest_getEnumRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getEnumRequestPlugin_delete(struct PRESTypePlugin *);
+EnumYStringTest_getEnumRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getEnumReply.
+ * EnumYStringTest_getEnumReply.
  *
- * By default, this type is struct getEnumReply
+ * By default, this type is struct EnumYStringTest_getEnumReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getEnumReply)
+ * system (e.g. if sizeof(struct EnumYStringTest_getEnumReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getEnumReply, the
+ * other than struct EnumYStringTest_getEnumReply, the
  * following restriction applies: the key of struct
- * getEnumReply must consist of a
+ * EnumYStringTest_getEnumReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getEnumReply.
+ * first field in struct EnumYStringTest_getEnumReply.
 */
-typedef  struct getEnumReply getEnumReplyKeyHolder;
+typedef  struct EnumYStringTest_getEnumReply EnumYStringTest_getEnumReplyKeyHolder;
 
 
-#define getEnumReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getEnumReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getEnumReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getEnumReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define EnumYStringTest_getEnumReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EnumYStringTest_getEnumReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EnumYStringTest_getEnumReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EnumYStringTest_getEnumReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getEnumReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getEnumReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define EnumYStringTest_getEnumReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define EnumYStringTest_getEnumReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getEnumReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getEnumReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define EnumYStringTest_getEnumReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EnumYStringTest_getEnumReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getEnumReply*
-getEnumReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getEnumReply*
+EnumYStringTest_getEnumReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getEnumReply*
-getEnumReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern EnumYStringTest_getEnumReply*
+EnumYStringTest_getEnumReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPluginSupport_copy_data(
-    getEnumReply *out,
-    const getEnumReply *in);
+EnumYStringTest_getEnumReplyPluginSupport_copy_data(
+    EnumYStringTest_getEnumReply *out,
+    const EnumYStringTest_getEnumReply *in);
 
 NDDSUSERDllExport extern void 
-getEnumReplyPluginSupport_destroy_data_ex(
-    getEnumReply *sample,RTIBool deallocate_pointers);
+EnumYStringTest_getEnumReplyPluginSupport_destroy_data_ex(
+    EnumYStringTest_getEnumReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getEnumReplyPluginSupport_destroy_data(
-    getEnumReply *sample);
+EnumYStringTest_getEnumReplyPluginSupport_destroy_data(
+    EnumYStringTest_getEnumReply *sample);
 
 NDDSUSERDllExport extern void 
-getEnumReplyPluginSupport_print_data(
-    const getEnumReply *sample,
+EnumYStringTest_getEnumReplyPluginSupport_print_data(
+    const EnumYStringTest_getEnumReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getEnumReply*
-getEnumReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getEnumReply*
+EnumYStringTest_getEnumReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getEnumReply*
-getEnumReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getEnumReplyPluginSupport_destroy_key_ex(
-    getEnumReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getEnumReply*
+EnumYStringTest_getEnumReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getEnumReplyPluginSupport_destroy_key(
-    getEnumReplyKeyHolder *key);
+EnumYStringTest_getEnumReplyPluginSupport_destroy_key_ex(
+    EnumYStringTest_getEnumReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EnumYStringTest_getEnumReplyPluginSupport_destroy_key(
+    EnumYStringTest_getEnumReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -382,7 +382,7 @@ getEnumReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getEnumReplyPlugin_on_participant_attached(
+EnumYStringTest_getEnumReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -390,34 +390,34 @@ getEnumReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getEnumReplyPlugin_on_participant_detached(
+EnumYStringTest_getEnumReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getEnumReplyPlugin_on_endpoint_attached(
+EnumYStringTest_getEnumReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getEnumReplyPlugin_on_endpoint_detached(
+EnumYStringTest_getEnumReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_copy_sample(
+EnumYStringTest_getEnumReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply *out,
-    const getEnumReply *in);
+    EnumYStringTest_getEnumReply *out,
+    const EnumYStringTest_getEnumReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_serialize(
+EnumYStringTest_getEnumReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getEnumReply *sample,
+    const EnumYStringTest_getEnumReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -425,9 +425,9 @@ getEnumReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_deserialize_sample(
+EnumYStringTest_getEnumReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply *sample, 
+    EnumYStringTest_getEnumReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -435,9 +435,9 @@ getEnumReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_deserialize(
+EnumYStringTest_getEnumReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply **sample, 
+    EnumYStringTest_getEnumReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -447,7 +447,7 @@ getEnumReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getEnumReplyPlugin_skip(
+EnumYStringTest_getEnumReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -455,26 +455,26 @@ getEnumReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getEnumReplyPlugin_get_serialized_sample_max_size(
+EnumYStringTest_getEnumReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getEnumReplyPlugin_get_serialized_sample_min_size(
+EnumYStringTest_getEnumReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getEnumReplyPlugin_get_serialized_sample_size(
+EnumYStringTest_getEnumReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getEnumReply * sample);
+    const EnumYStringTest_getEnumReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -482,19 +482,19 @@ getEnumReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getEnumReplyPlugin_get_key_kind(void);
+EnumYStringTest_getEnumReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getEnumReplyPlugin_get_serialized_key_max_size(
+EnumYStringTest_getEnumReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_serialize_key(
+EnumYStringTest_getEnumReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getEnumReply *sample,
+    const EnumYStringTest_getEnumReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -502,9 +502,9 @@ getEnumReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_deserialize_key_sample(
+EnumYStringTest_getEnumReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply * sample,
+    EnumYStringTest_getEnumReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -512,9 +512,9 @@ getEnumReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_deserialize_key(
+EnumYStringTest_getEnumReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply ** sample,
+    EnumYStringTest_getEnumReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -523,9 +523,9 @@ getEnumReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getEnumReplyPlugin_serialized_sample_to_key(
+EnumYStringTest_getEnumReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply *sample,
+    EnumYStringTest_getEnumReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -533,25 +533,25 @@ getEnumReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_instance_to_key(
+EnumYStringTest_getEnumReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReplyKeyHolder *key, 
-    const getEnumReply *instance);
+    EnumYStringTest_getEnumReplyKeyHolder *key, 
+    const EnumYStringTest_getEnumReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_key_to_instance(
+EnumYStringTest_getEnumReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getEnumReply *instance, 
-    const getEnumReplyKeyHolder *key);
+    EnumYStringTest_getEnumReply *instance, 
+    const EnumYStringTest_getEnumReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_instance_to_keyhash(
+EnumYStringTest_getEnumReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getEnumReply *instance);
+    const EnumYStringTest_getEnumReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getEnumReplyPlugin_serialized_sample_to_keyhash(
+EnumYStringTest_getEnumReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -560,83 +560,83 @@ getEnumReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getEnumReplyPlugin_new(void);
+EnumYStringTest_getEnumReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getEnumReplyPlugin_delete(struct PRESTypePlugin *);
+EnumYStringTest_getEnumReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringRequest.
+ * EnumYStringTest_getStringRequest.
  *
- * By default, this type is struct getStringRequest
+ * By default, this type is struct EnumYStringTest_getStringRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringRequest)
+ * system (e.g. if sizeof(struct EnumYStringTest_getStringRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringRequest, the
+ * other than struct EnumYStringTest_getStringRequest, the
  * following restriction applies: the key of struct
- * getStringRequest must consist of a
+ * EnumYStringTest_getStringRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringRequest.
+ * first field in struct EnumYStringTest_getStringRequest.
 */
-typedef  struct getStringRequest getStringRequestKeyHolder;
+typedef  struct EnumYStringTest_getStringRequest EnumYStringTest_getStringRequestKeyHolder;
 
 
-#define getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define EnumYStringTest_getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EnumYStringTest_getStringRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EnumYStringTest_getStringRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EnumYStringTest_getStringRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define EnumYStringTest_getStringRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define EnumYStringTest_getStringRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define EnumYStringTest_getStringRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EnumYStringTest_getStringRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringRequest*
+EnumYStringTest_getStringRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern EnumYStringTest_getStringRequest*
+EnumYStringTest_getStringRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPluginSupport_copy_data(
-    getStringRequest *out,
-    const getStringRequest *in);
+EnumYStringTest_getStringRequestPluginSupport_copy_data(
+    EnumYStringTest_getStringRequest *out,
+    const EnumYStringTest_getStringRequest *in);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_data_ex(
-    getStringRequest *sample,RTIBool deallocate_pointers);
+EnumYStringTest_getStringRequestPluginSupport_destroy_data_ex(
+    EnumYStringTest_getStringRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_data(
-    getStringRequest *sample);
+EnumYStringTest_getStringRequestPluginSupport_destroy_data(
+    EnumYStringTest_getStringRequest *sample);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_print_data(
-    const getStringRequest *sample,
+EnumYStringTest_getStringRequestPluginSupport_print_data(
+    const EnumYStringTest_getStringRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringRequest*
+EnumYStringTest_getStringRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringRequest*
-getStringRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_key_ex(
-    getStringRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringRequest*
+EnumYStringTest_getStringRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringRequestPluginSupport_destroy_key(
-    getStringRequestKeyHolder *key);
+EnumYStringTest_getStringRequestPluginSupport_destroy_key_ex(
+    EnumYStringTest_getStringRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EnumYStringTest_getStringRequestPluginSupport_destroy_key(
+    EnumYStringTest_getStringRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ getStringRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringRequestPlugin_on_participant_attached(
+EnumYStringTest_getStringRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -652,34 +652,34 @@ getStringRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringRequestPlugin_on_participant_detached(
+EnumYStringTest_getStringRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringRequestPlugin_on_endpoint_attached(
+EnumYStringTest_getStringRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringRequestPlugin_on_endpoint_detached(
+EnumYStringTest_getStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_copy_sample(
+EnumYStringTest_getStringRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *out,
-    const getStringRequest *in);
+    EnumYStringTest_getStringRequest *out,
+    const EnumYStringTest_getStringRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_serialize(
+EnumYStringTest_getStringRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringRequest *sample,
+    const EnumYStringTest_getStringRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -687,9 +687,9 @@ getStringRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize_sample(
+EnumYStringTest_getStringRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *sample, 
+    EnumYStringTest_getStringRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -697,9 +697,9 @@ getStringRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize(
+EnumYStringTest_getStringRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest **sample, 
+    EnumYStringTest_getStringRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -709,7 +709,7 @@ getStringRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringRequestPlugin_skip(
+EnumYStringTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -717,26 +717,26 @@ getStringRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringRequestPlugin_get_serialized_sample_max_size(
+EnumYStringTest_getStringRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringRequestPlugin_get_serialized_sample_min_size(
+EnumYStringTest_getStringRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringRequestPlugin_get_serialized_sample_size(
+EnumYStringTest_getStringRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringRequest * sample);
+    const EnumYStringTest_getStringRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -744,19 +744,19 @@ getStringRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringRequestPlugin_get_key_kind(void);
+EnumYStringTest_getStringRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringRequestPlugin_get_serialized_key_max_size(
+EnumYStringTest_getStringRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_serialize_key(
+EnumYStringTest_getStringRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringRequest *sample,
+    const EnumYStringTest_getStringRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -764,9 +764,9 @@ getStringRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize_key_sample(
+EnumYStringTest_getStringRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest * sample,
+    EnumYStringTest_getStringRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -774,9 +774,9 @@ getStringRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_deserialize_key(
+EnumYStringTest_getStringRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest ** sample,
+    EnumYStringTest_getStringRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -785,9 +785,9 @@ getStringRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringRequestPlugin_serialized_sample_to_key(
+EnumYStringTest_getStringRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *sample,
+    EnumYStringTest_getStringRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -795,25 +795,25 @@ getStringRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_instance_to_key(
+EnumYStringTest_getStringRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequestKeyHolder *key, 
-    const getStringRequest *instance);
+    EnumYStringTest_getStringRequestKeyHolder *key, 
+    const EnumYStringTest_getStringRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_key_to_instance(
+EnumYStringTest_getStringRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringRequest *instance, 
-    const getStringRequestKeyHolder *key);
+    EnumYStringTest_getStringRequest *instance, 
+    const EnumYStringTest_getStringRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_instance_to_keyhash(
+EnumYStringTest_getStringRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringRequest *instance);
+    const EnumYStringTest_getStringRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringRequestPlugin_serialized_sample_to_keyhash(
+EnumYStringTest_getStringRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -822,83 +822,83 @@ getStringRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringRequestPlugin_new(void);
+EnumYStringTest_getStringRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringRequestPlugin_delete(struct PRESTypePlugin *);
+EnumYStringTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringReply.
+ * EnumYStringTest_getStringReply.
  *
- * By default, this type is struct getStringReply
+ * By default, this type is struct EnumYStringTest_getStringReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringReply)
+ * system (e.g. if sizeof(struct EnumYStringTest_getStringReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringReply, the
+ * other than struct EnumYStringTest_getStringReply, the
  * following restriction applies: the key of struct
- * getStringReply must consist of a
+ * EnumYStringTest_getStringReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringReply.
+ * first field in struct EnumYStringTest_getStringReply.
 */
-typedef  struct getStringReply getStringReplyKeyHolder;
+typedef  struct EnumYStringTest_getStringReply EnumYStringTest_getStringReplyKeyHolder;
 
 
-#define getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define EnumYStringTest_getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EnumYStringTest_getStringReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EnumYStringTest_getStringReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EnumYStringTest_getStringReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define EnumYStringTest_getStringReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define EnumYStringTest_getStringReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define EnumYStringTest_getStringReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EnumYStringTest_getStringReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringReply*
+EnumYStringTest_getStringReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern EnumYStringTest_getStringReply*
+EnumYStringTest_getStringReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPluginSupport_copy_data(
-    getStringReply *out,
-    const getStringReply *in);
+EnumYStringTest_getStringReplyPluginSupport_copy_data(
+    EnumYStringTest_getStringReply *out,
+    const EnumYStringTest_getStringReply *in);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_data_ex(
-    getStringReply *sample,RTIBool deallocate_pointers);
+EnumYStringTest_getStringReplyPluginSupport_destroy_data_ex(
+    EnumYStringTest_getStringReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_data(
-    getStringReply *sample);
+EnumYStringTest_getStringReplyPluginSupport_destroy_data(
+    EnumYStringTest_getStringReply *sample);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_print_data(
-    const getStringReply *sample,
+EnumYStringTest_getStringReplyPluginSupport_print_data(
+    const EnumYStringTest_getStringReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringReply*
+EnumYStringTest_getStringReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringReply*
-getStringReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_key_ex(
-    getStringReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringReply*
+EnumYStringTest_getStringReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringReplyPluginSupport_destroy_key(
-    getStringReplyKeyHolder *key);
+EnumYStringTest_getStringReplyPluginSupport_destroy_key_ex(
+    EnumYStringTest_getStringReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EnumYStringTest_getStringReplyPluginSupport_destroy_key(
+    EnumYStringTest_getStringReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -906,7 +906,7 @@ getStringReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringReplyPlugin_on_participant_attached(
+EnumYStringTest_getStringReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -914,34 +914,34 @@ getStringReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringReplyPlugin_on_participant_detached(
+EnumYStringTest_getStringReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringReplyPlugin_on_endpoint_attached(
+EnumYStringTest_getStringReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringReplyPlugin_on_endpoint_detached(
+EnumYStringTest_getStringReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_copy_sample(
+EnumYStringTest_getStringReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *out,
-    const getStringReply *in);
+    EnumYStringTest_getStringReply *out,
+    const EnumYStringTest_getStringReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_serialize(
+EnumYStringTest_getStringReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringReply *sample,
+    const EnumYStringTest_getStringReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -949,9 +949,9 @@ getStringReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize_sample(
+EnumYStringTest_getStringReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *sample, 
+    EnumYStringTest_getStringReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -959,9 +959,9 @@ getStringReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize(
+EnumYStringTest_getStringReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply **sample, 
+    EnumYStringTest_getStringReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -971,7 +971,7 @@ getStringReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringReplyPlugin_skip(
+EnumYStringTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -979,26 +979,26 @@ getStringReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringReplyPlugin_get_serialized_sample_max_size(
+EnumYStringTest_getStringReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringReplyPlugin_get_serialized_sample_min_size(
+EnumYStringTest_getStringReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringReplyPlugin_get_serialized_sample_size(
+EnumYStringTest_getStringReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringReply * sample);
+    const EnumYStringTest_getStringReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1006,19 +1006,19 @@ getStringReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringReplyPlugin_get_key_kind(void);
+EnumYStringTest_getStringReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringReplyPlugin_get_serialized_key_max_size(
+EnumYStringTest_getStringReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_serialize_key(
+EnumYStringTest_getStringReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringReply *sample,
+    const EnumYStringTest_getStringReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1026,9 +1026,9 @@ getStringReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize_key_sample(
+EnumYStringTest_getStringReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply * sample,
+    EnumYStringTest_getStringReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1036,9 +1036,9 @@ getStringReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_deserialize_key(
+EnumYStringTest_getStringReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply ** sample,
+    EnumYStringTest_getStringReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1047,9 +1047,9 @@ getStringReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringReplyPlugin_serialized_sample_to_key(
+EnumYStringTest_getStringReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *sample,
+    EnumYStringTest_getStringReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1057,25 +1057,25 @@ getStringReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_instance_to_key(
+EnumYStringTest_getStringReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReplyKeyHolder *key, 
-    const getStringReply *instance);
+    EnumYStringTest_getStringReplyKeyHolder *key, 
+    const EnumYStringTest_getStringReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_key_to_instance(
+EnumYStringTest_getStringReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringReply *instance, 
-    const getStringReplyKeyHolder *key);
+    EnumYStringTest_getStringReply *instance, 
+    const EnumYStringTest_getStringReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_instance_to_keyhash(
+EnumYStringTest_getStringReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringReply *instance);
+    const EnumYStringTest_getStringReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringReplyPlugin_serialized_sample_to_keyhash(
+EnumYStringTest_getStringReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1084,83 +1084,83 @@ getStringReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringReplyPlugin_new(void);
+EnumYStringTest_getStringReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringReplyPlugin_delete(struct PRESTypePlugin *);
+EnumYStringTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringBoundedRequest.
+ * EnumYStringTest_getStringBoundedRequest.
  *
- * By default, this type is struct getStringBoundedRequest
+ * By default, this type is struct EnumYStringTest_getStringBoundedRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringBoundedRequest)
+ * system (e.g. if sizeof(struct EnumYStringTest_getStringBoundedRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringBoundedRequest, the
+ * other than struct EnumYStringTest_getStringBoundedRequest, the
  * following restriction applies: the key of struct
- * getStringBoundedRequest must consist of a
+ * EnumYStringTest_getStringBoundedRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringBoundedRequest.
+ * first field in struct EnumYStringTest_getStringBoundedRequest.
 */
-typedef  struct getStringBoundedRequest getStringBoundedRequestKeyHolder;
+typedef  struct EnumYStringTest_getStringBoundedRequest EnumYStringTest_getStringBoundedRequestKeyHolder;
 
 
-#define getStringBoundedRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringBoundedRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringBoundedRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringBoundedRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define EnumYStringTest_getStringBoundedRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EnumYStringTest_getStringBoundedRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EnumYStringTest_getStringBoundedRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EnumYStringTest_getStringBoundedRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringBoundedRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringBoundedRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define EnumYStringTest_getStringBoundedRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define EnumYStringTest_getStringBoundedRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringBoundedRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringBoundedRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define EnumYStringTest_getStringBoundedRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EnumYStringTest_getStringBoundedRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedRequest*
+EnumYStringTest_getStringBoundedRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedRequest*
+EnumYStringTest_getStringBoundedRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPluginSupport_copy_data(
-    getStringBoundedRequest *out,
-    const getStringBoundedRequest *in);
+EnumYStringTest_getStringBoundedRequestPluginSupport_copy_data(
+    EnumYStringTest_getStringBoundedRequest *out,
+    const EnumYStringTest_getStringBoundedRequest *in);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_data_ex(
-    getStringBoundedRequest *sample,RTIBool deallocate_pointers);
+EnumYStringTest_getStringBoundedRequestPluginSupport_destroy_data_ex(
+    EnumYStringTest_getStringBoundedRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_data(
-    getStringBoundedRequest *sample);
+EnumYStringTest_getStringBoundedRequestPluginSupport_destroy_data(
+    EnumYStringTest_getStringBoundedRequest *sample);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_print_data(
-    const getStringBoundedRequest *sample,
+EnumYStringTest_getStringBoundedRequestPluginSupport_print_data(
+    const EnumYStringTest_getStringBoundedRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedRequest*
+EnumYStringTest_getStringBoundedRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedRequest*
-getStringBoundedRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_key_ex(
-    getStringBoundedRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedRequest*
+EnumYStringTest_getStringBoundedRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPluginSupport_destroy_key(
-    getStringBoundedRequestKeyHolder *key);
+EnumYStringTest_getStringBoundedRequestPluginSupport_destroy_key_ex(
+    EnumYStringTest_getStringBoundedRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EnumYStringTest_getStringBoundedRequestPluginSupport_destroy_key(
+    EnumYStringTest_getStringBoundedRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1168,7 +1168,7 @@ getStringBoundedRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringBoundedRequestPlugin_on_participant_attached(
+EnumYStringTest_getStringBoundedRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1176,34 +1176,34 @@ getStringBoundedRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPlugin_on_participant_detached(
+EnumYStringTest_getStringBoundedRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringBoundedRequestPlugin_on_endpoint_attached(
+EnumYStringTest_getStringBoundedRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringBoundedRequestPlugin_on_endpoint_detached(
+EnumYStringTest_getStringBoundedRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_copy_sample(
+EnumYStringTest_getStringBoundedRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *out,
-    const getStringBoundedRequest *in);
+    EnumYStringTest_getStringBoundedRequest *out,
+    const EnumYStringTest_getStringBoundedRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_serialize(
+EnumYStringTest_getStringBoundedRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedRequest *sample,
+    const EnumYStringTest_getStringBoundedRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1211,9 +1211,9 @@ getStringBoundedRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize_sample(
+EnumYStringTest_getStringBoundedRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *sample, 
+    EnumYStringTest_getStringBoundedRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1221,9 +1221,9 @@ getStringBoundedRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize(
+EnumYStringTest_getStringBoundedRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest **sample, 
+    EnumYStringTest_getStringBoundedRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1233,7 +1233,7 @@ getStringBoundedRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedRequestPlugin_skip(
+EnumYStringTest_getStringBoundedRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1241,26 +1241,26 @@ getStringBoundedRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedRequestPlugin_get_serialized_sample_max_size(
+EnumYStringTest_getStringBoundedRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedRequestPlugin_get_serialized_sample_min_size(
+EnumYStringTest_getStringBoundedRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringBoundedRequestPlugin_get_serialized_sample_size(
+EnumYStringTest_getStringBoundedRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringBoundedRequest * sample);
+    const EnumYStringTest_getStringBoundedRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1268,19 +1268,19 @@ getStringBoundedRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringBoundedRequestPlugin_get_key_kind(void);
+EnumYStringTest_getStringBoundedRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedRequestPlugin_get_serialized_key_max_size(
+EnumYStringTest_getStringBoundedRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_serialize_key(
+EnumYStringTest_getStringBoundedRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedRequest *sample,
+    const EnumYStringTest_getStringBoundedRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1288,9 +1288,9 @@ getStringBoundedRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize_key_sample(
+EnumYStringTest_getStringBoundedRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest * sample,
+    EnumYStringTest_getStringBoundedRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1298,9 +1298,9 @@ getStringBoundedRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_deserialize_key(
+EnumYStringTest_getStringBoundedRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest ** sample,
+    EnumYStringTest_getStringBoundedRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1309,9 +1309,9 @@ getStringBoundedRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedRequestPlugin_serialized_sample_to_key(
+EnumYStringTest_getStringBoundedRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *sample,
+    EnumYStringTest_getStringBoundedRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1319,25 +1319,25 @@ getStringBoundedRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_instance_to_key(
+EnumYStringTest_getStringBoundedRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequestKeyHolder *key, 
-    const getStringBoundedRequest *instance);
+    EnumYStringTest_getStringBoundedRequestKeyHolder *key, 
+    const EnumYStringTest_getStringBoundedRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_key_to_instance(
+EnumYStringTest_getStringBoundedRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedRequest *instance, 
-    const getStringBoundedRequestKeyHolder *key);
+    EnumYStringTest_getStringBoundedRequest *instance, 
+    const EnumYStringTest_getStringBoundedRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_instance_to_keyhash(
+EnumYStringTest_getStringBoundedRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringBoundedRequest *instance);
+    const EnumYStringTest_getStringBoundedRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
+EnumYStringTest_getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1346,83 +1346,83 @@ getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringBoundedRequestPlugin_new(void);
+EnumYStringTest_getStringBoundedRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
+EnumYStringTest_getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getStringBoundedReply.
+ * EnumYStringTest_getStringBoundedReply.
  *
- * By default, this type is struct getStringBoundedReply
+ * By default, this type is struct EnumYStringTest_getStringBoundedReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getStringBoundedReply)
+ * system (e.g. if sizeof(struct EnumYStringTest_getStringBoundedReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getStringBoundedReply, the
+ * other than struct EnumYStringTest_getStringBoundedReply, the
  * following restriction applies: the key of struct
- * getStringBoundedReply must consist of a
+ * EnumYStringTest_getStringBoundedReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getStringBoundedReply.
+ * first field in struct EnumYStringTest_getStringBoundedReply.
 */
-typedef  struct getStringBoundedReply getStringBoundedReplyKeyHolder;
+typedef  struct EnumYStringTest_getStringBoundedReply EnumYStringTest_getStringBoundedReplyKeyHolder;
 
 
-#define getStringBoundedReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getStringBoundedReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getStringBoundedReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getStringBoundedReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define EnumYStringTest_getStringBoundedReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EnumYStringTest_getStringBoundedReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EnumYStringTest_getStringBoundedReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EnumYStringTest_getStringBoundedReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getStringBoundedReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getStringBoundedReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define EnumYStringTest_getStringBoundedReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define EnumYStringTest_getStringBoundedReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getStringBoundedReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getStringBoundedReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define EnumYStringTest_getStringBoundedReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EnumYStringTest_getStringBoundedReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedReply*
+EnumYStringTest_getStringBoundedReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedReply*
+EnumYStringTest_getStringBoundedReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPluginSupport_copy_data(
-    getStringBoundedReply *out,
-    const getStringBoundedReply *in);
+EnumYStringTest_getStringBoundedReplyPluginSupport_copy_data(
+    EnumYStringTest_getStringBoundedReply *out,
+    const EnumYStringTest_getStringBoundedReply *in);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_data_ex(
-    getStringBoundedReply *sample,RTIBool deallocate_pointers);
+EnumYStringTest_getStringBoundedReplyPluginSupport_destroy_data_ex(
+    EnumYStringTest_getStringBoundedReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_data(
-    getStringBoundedReply *sample);
+EnumYStringTest_getStringBoundedReplyPluginSupport_destroy_data(
+    EnumYStringTest_getStringBoundedReply *sample);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_print_data(
-    const getStringBoundedReply *sample,
+EnumYStringTest_getStringBoundedReplyPluginSupport_print_data(
+    const EnumYStringTest_getStringBoundedReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedReply*
+EnumYStringTest_getStringBoundedReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getStringBoundedReply*
-getStringBoundedReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_key_ex(
-    getStringBoundedReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern EnumYStringTest_getStringBoundedReply*
+EnumYStringTest_getStringBoundedReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPluginSupport_destroy_key(
-    getStringBoundedReplyKeyHolder *key);
+EnumYStringTest_getStringBoundedReplyPluginSupport_destroy_key_ex(
+    EnumYStringTest_getStringBoundedReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EnumYStringTest_getStringBoundedReplyPluginSupport_destroy_key(
+    EnumYStringTest_getStringBoundedReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1430,7 +1430,7 @@ getStringBoundedReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getStringBoundedReplyPlugin_on_participant_attached(
+EnumYStringTest_getStringBoundedReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1438,34 +1438,34 @@ getStringBoundedReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPlugin_on_participant_detached(
+EnumYStringTest_getStringBoundedReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getStringBoundedReplyPlugin_on_endpoint_attached(
+EnumYStringTest_getStringBoundedReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getStringBoundedReplyPlugin_on_endpoint_detached(
+EnumYStringTest_getStringBoundedReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_copy_sample(
+EnumYStringTest_getStringBoundedReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *out,
-    const getStringBoundedReply *in);
+    EnumYStringTest_getStringBoundedReply *out,
+    const EnumYStringTest_getStringBoundedReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_serialize(
+EnumYStringTest_getStringBoundedReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedReply *sample,
+    const EnumYStringTest_getStringBoundedReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1473,9 +1473,9 @@ getStringBoundedReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize_sample(
+EnumYStringTest_getStringBoundedReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *sample, 
+    EnumYStringTest_getStringBoundedReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1483,9 +1483,9 @@ getStringBoundedReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize(
+EnumYStringTest_getStringBoundedReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply **sample, 
+    EnumYStringTest_getStringBoundedReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1495,7 +1495,7 @@ getStringBoundedReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedReplyPlugin_skip(
+EnumYStringTest_getStringBoundedReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1503,26 +1503,26 @@ getStringBoundedReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedReplyPlugin_get_serialized_sample_max_size(
+EnumYStringTest_getStringBoundedReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedReplyPlugin_get_serialized_sample_min_size(
+EnumYStringTest_getStringBoundedReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getStringBoundedReplyPlugin_get_serialized_sample_size(
+EnumYStringTest_getStringBoundedReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getStringBoundedReply * sample);
+    const EnumYStringTest_getStringBoundedReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1530,19 +1530,19 @@ getStringBoundedReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getStringBoundedReplyPlugin_get_key_kind(void);
+EnumYStringTest_getStringBoundedReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getStringBoundedReplyPlugin_get_serialized_key_max_size(
+EnumYStringTest_getStringBoundedReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_serialize_key(
+EnumYStringTest_getStringBoundedReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getStringBoundedReply *sample,
+    const EnumYStringTest_getStringBoundedReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1550,9 +1550,9 @@ getStringBoundedReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize_key_sample(
+EnumYStringTest_getStringBoundedReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply * sample,
+    EnumYStringTest_getStringBoundedReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1560,9 +1560,9 @@ getStringBoundedReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_deserialize_key(
+EnumYStringTest_getStringBoundedReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply ** sample,
+    EnumYStringTest_getStringBoundedReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1571,9 +1571,9 @@ getStringBoundedReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getStringBoundedReplyPlugin_serialized_sample_to_key(
+EnumYStringTest_getStringBoundedReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *sample,
+    EnumYStringTest_getStringBoundedReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1581,25 +1581,25 @@ getStringBoundedReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_instance_to_key(
+EnumYStringTest_getStringBoundedReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReplyKeyHolder *key, 
-    const getStringBoundedReply *instance);
+    EnumYStringTest_getStringBoundedReplyKeyHolder *key, 
+    const EnumYStringTest_getStringBoundedReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_key_to_instance(
+EnumYStringTest_getStringBoundedReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getStringBoundedReply *instance, 
-    const getStringBoundedReplyKeyHolder *key);
+    EnumYStringTest_getStringBoundedReply *instance, 
+    const EnumYStringTest_getStringBoundedReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_instance_to_keyhash(
+EnumYStringTest_getStringBoundedReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getStringBoundedReply *instance);
+    const EnumYStringTest_getStringBoundedReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
+EnumYStringTest_getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1608,10 +1608,10 @@ getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getStringBoundedReplyPlugin_new(void);
+EnumYStringTest_getStringBoundedReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
+EnumYStringTest_getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }
@@ -1625,4 +1625,4 @@ getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* EnumYStringTestRequestReplyPlugin_1383307673_h */
+#endif /* EnumYStringTestRequestReplyPlugin_1383307295_h */

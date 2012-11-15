@@ -54,22 +54,22 @@
 
 
 /* --------------------------------------------------------------------------------------
- *  Type testRequest
+ *  Type MultithreadTest_testRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-testRequest *
-testRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    testRequest *sample = NULL;
+MultithreadTest_testRequest *
+MultithreadTest_testRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    MultithreadTest_testRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, testRequest);
+        &sample, MultithreadTest_testRequest);
 
     if(sample != NULL) {
-        if (!testRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!MultithreadTest_testRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -78,44 +78,44 @@ testRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-testRequest *
-testRequestPluginSupport_create_data(void)
+MultithreadTest_testRequest *
+MultithreadTest_testRequestPluginSupport_create_data(void)
 {
-    return testRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return MultithreadTest_testRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-testRequestPluginSupport_destroy_data_ex(
-    testRequest *sample,RTIBool deallocate_pointers) {
+MultithreadTest_testRequestPluginSupport_destroy_data_ex(
+    MultithreadTest_testRequest *sample,RTIBool deallocate_pointers) {
 
-    testRequest_finalize_ex(sample,deallocate_pointers);
+    MultithreadTest_testRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-testRequestPluginSupport_destroy_data(
-    testRequest *sample) {
+MultithreadTest_testRequestPluginSupport_destroy_data(
+    MultithreadTest_testRequest *sample) {
 
-    testRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    MultithreadTest_testRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-testRequestPluginSupport_copy_data(
-    testRequest *dst,
-    const testRequest *src)
+MultithreadTest_testRequestPluginSupport_copy_data(
+    MultithreadTest_testRequest *dst,
+    const MultithreadTest_testRequest *src)
 {
-    return testRequest_copy(dst,src);
+    return MultithreadTest_testRequest_copy(dst,src);
 }
 
 
 void 
-testRequestPluginSupport_print_data(
-    const testRequest *sample,
+MultithreadTest_testRequestPluginSupport_print_data(
+    const MultithreadTest_testRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -135,11 +135,8 @@ testRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     DatoPluginSupport_print_data(
         &sample->dato1, "dato1", indent_level + 1);
@@ -147,40 +144,40 @@ testRequestPluginSupport_print_data(
 
 }
 
-testRequest *
-testRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    testRequest *key = NULL;
+MultithreadTest_testRequest *
+MultithreadTest_testRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    MultithreadTest_testRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, testRequestKeyHolder);
+        &key, MultithreadTest_testRequestKeyHolder);
 
-    testRequest_initialize_ex(key,allocate_pointers);
+    MultithreadTest_testRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-testRequest *
-testRequestPluginSupport_create_key(void)
+MultithreadTest_testRequest *
+MultithreadTest_testRequestPluginSupport_create_key(void)
 {
-    return  testRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  MultithreadTest_testRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-testRequestPluginSupport_destroy_key_ex(
-    testRequestKeyHolder *key,RTIBool deallocate_pointers)
+MultithreadTest_testRequestPluginSupport_destroy_key_ex(
+    MultithreadTest_testRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    testRequest_finalize_ex(key,deallocate_pointers);
+    MultithreadTest_testRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-testRequestPluginSupport_destroy_key(
-    testRequestKeyHolder *key) {
+MultithreadTest_testRequestPluginSupport_destroy_key(
+    MultithreadTest_testRequestKeyHolder *key) {
 
-  testRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  MultithreadTest_testRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -193,7 +190,7 @@ testRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-testRequestPlugin_on_participant_attached(
+MultithreadTest_testRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -212,7 +209,7 @@ testRequestPlugin_on_participant_attached(
 
 
 void 
-testRequestPlugin_on_participant_detached(
+MultithreadTest_testRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -221,7 +218,7 @@ testRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-testRequestPlugin_on_endpoint_attached(
+MultithreadTest_testRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -239,19 +236,19 @@ testRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            testRequestPluginSupport_create_data,
+            MultithreadTest_testRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            testRequestPluginSupport_destroy_data,
+            MultithreadTest_testRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            testRequestPluginSupport_create_key,
+            MultithreadTest_testRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            testRequestPluginSupport_destroy_key);
+            MultithreadTest_testRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = testRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = MultithreadTest_testRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -267,9 +264,9 @@ testRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                testRequestPlugin_get_serialized_sample_max_size, epd,
+                MultithreadTest_testRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            testRequestPlugin_get_serialized_sample_size,
+            MultithreadTest_testRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -283,7 +280,7 @@ testRequestPlugin_on_endpoint_attached(
 
 
 void 
-testRequestPlugin_on_endpoint_detached(
+MultithreadTest_testRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -292,13 +289,13 @@ testRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-testRequestPlugin_copy_sample(
+MultithreadTest_testRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest *dst,
-    const testRequest *src)
+    MultithreadTest_testRequest *dst,
+    const MultithreadTest_testRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return testRequestPluginSupport_copy_data(dst,src);
+    return MultithreadTest_testRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -307,9 +304,9 @@ testRequestPlugin_copy_sample(
 
 
 RTIBool 
-testRequestPlugin_serialize(
+MultithreadTest_testRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const testRequest *sample, 
+    const MultithreadTest_testRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -336,18 +333,13 @@ testRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -373,9 +365,9 @@ testRequestPlugin_serialize(
 
 
 RTIBool 
-testRequestPlugin_deserialize_sample(
+MultithreadTest_testRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest *sample,
+    MultithreadTest_testRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -400,17 +392,12 @@ testRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -437,9 +424,9 @@ testRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-testRequestPlugin_deserialize(
+MultithreadTest_testRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest **sample,
+    MultithreadTest_testRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -449,7 +436,7 @@ testRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return testRequestPlugin_deserialize_sample( 
+    return MultithreadTest_testRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -458,7 +445,7 @@ testRequestPlugin_deserialize(
 
 
 
-RTIBool testRequestPlugin_skip(
+RTIBool MultithreadTest_testRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -483,15 +470,11 @@ RTIBool testRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -516,7 +499,7 @@ RTIBool testRequestPlugin_skip(
 
 
 unsigned int 
-testRequestPlugin_get_serialized_sample_max_size(
+MultithreadTest_testRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -544,11 +527,8 @@ testRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  DatoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -562,7 +542,7 @@ testRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-testRequestPlugin_get_serialized_sample_min_size(
+MultithreadTest_testRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -590,11 +570,8 @@ testRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  DatoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -614,12 +591,12 @@ testRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-testRequestPlugin_get_serialized_sample_size(
+MultithreadTest_testRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const testRequest * sample) 
+    const MultithreadTest_testRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -644,12 +621,9 @@ testRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += DatoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -668,7 +642,7 @@ testRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-testRequestPlugin_get_key_kind(void)
+MultithreadTest_testRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -677,9 +651,9 @@ testRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-testRequestPlugin_serialize_key(
+MultithreadTest_testRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const testRequest *sample, 
+    const MultithreadTest_testRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -704,18 +678,13 @@ testRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -731,9 +700,9 @@ testRequestPlugin_serialize_key(
 }
 
 
-RTIBool testRequestPlugin_deserialize_key_sample(
+RTIBool MultithreadTest_testRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest *sample, 
+    MultithreadTest_testRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -758,17 +727,12 @@ RTIBool testRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -785,9 +749,9 @@ RTIBool testRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool testRequestPlugin_deserialize_key(
+RTIBool MultithreadTest_testRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest **sample, 
+    MultithreadTest_testRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -795,7 +759,7 @@ RTIBool testRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return testRequestPlugin_deserialize_key_sample(
+    return MultithreadTest_testRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -803,7 +767,7 @@ RTIBool testRequestPlugin_deserialize_key(
 
 
 unsigned int
-testRequestPlugin_get_serialized_key_max_size(
+MultithreadTest_testRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -833,11 +797,8 @@ testRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -848,9 +809,9 @@ testRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-testRequestPlugin_serialized_sample_to_key(
+MultithreadTest_testRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest *sample,
+    MultithreadTest_testRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -873,17 +834,12 @@ testRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -911,21 +867,16 @@ testRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-testRequestPlugin_instance_to_key(
+MultithreadTest_testRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    testRequestKeyHolder *dst, 
-    const testRequest *src)
+    MultithreadTest_testRequestKeyHolder *dst, 
+    const MultithreadTest_testRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -934,21 +885,16 @@ testRequestPlugin_instance_to_key(
 
 
 RTIBool 
-testRequestPlugin_key_to_instance(
+MultithreadTest_testRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    testRequest *dst, const
-    testRequestKeyHolder *src)
+    MultithreadTest_testRequest *dst, const
+    MultithreadTest_testRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -957,10 +903,10 @@ testRequestPlugin_key_to_instance(
 
 
 RTIBool 
-testRequestPlugin_instance_to_keyhash(
+MultithreadTest_testRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const testRequest *instance)
+    const MultithreadTest_testRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -976,7 +922,7 @@ testRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!testRequestPlugin_serialize_key(
+    if (!MultithreadTest_testRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -997,7 +943,7 @@ testRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-testRequestPlugin_serialized_sample_to_keyhash(
+MultithreadTest_testRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1005,7 +951,7 @@ testRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    testRequest * sample;
+    MultithreadTest_testRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1020,7 +966,7 @@ testRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (testRequest *)
+    sample = (MultithreadTest_testRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -1028,17 +974,12 @@ testRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1047,7 +988,7 @@ testRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!testRequestPlugin_instance_to_keyhash(
+    if (!MultithreadTest_testRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -1060,7 +1001,7 @@ testRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *testRequestPlugin_new(void) 
+struct PRESTypePlugin *MultithreadTest_testRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -1077,131 +1018,131 @@ struct PRESTypePlugin *testRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        testRequestPlugin_on_participant_attached;
+        MultithreadTest_testRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        testRequestPlugin_on_participant_detached;
+        MultithreadTest_testRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        testRequestPlugin_on_endpoint_attached;
+        MultithreadTest_testRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        testRequestPlugin_on_endpoint_detached;
+        MultithreadTest_testRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        testRequestPlugin_copy_sample;
+        MultithreadTest_testRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        testRequestPlugin_create_sample;
+        MultithreadTest_testRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        testRequestPlugin_destroy_sample;
+        MultithreadTest_testRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        testRequestPlugin_serialize;
+        MultithreadTest_testRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        testRequestPlugin_deserialize;
+        MultithreadTest_testRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        testRequestPlugin_get_serialized_sample_max_size;
+        MultithreadTest_testRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        testRequestPlugin_get_serialized_sample_min_size;
+        MultithreadTest_testRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        testRequestPlugin_get_sample;
+        MultithreadTest_testRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        testRequestPlugin_return_sample;
+        MultithreadTest_testRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        testRequestPlugin_get_key_kind;
+        MultithreadTest_testRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        testRequestPlugin_get_serialized_key_max_size;
+        MultithreadTest_testRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        testRequestPlugin_serialize_key;
+        MultithreadTest_testRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        testRequestPlugin_deserialize_key;
+        MultithreadTest_testRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        testRequestPlugin_deserialize_key_sample;
+        MultithreadTest_testRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        testRequestPlugin_instance_to_keyhash;
+        MultithreadTest_testRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        testRequestPlugin_serialized_sample_to_keyhash;
+        MultithreadTest_testRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        testRequestPlugin_get_key;
+        MultithreadTest_testRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        testRequestPlugin_return_key;
+        MultithreadTest_testRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        testRequestPlugin_instance_to_key;
+        MultithreadTest_testRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        testRequestPlugin_key_to_instance;
+        MultithreadTest_testRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)testRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)MultithreadTest_testRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        testRequestPlugin_get_buffer;
+        MultithreadTest_testRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        testRequestPlugin_return_buffer;
+        MultithreadTest_testRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        testRequestPlugin_get_serialized_sample_size;
+        MultithreadTest_testRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = testRequestTYPENAME;
+    plugin->endpointTypeName = MultithreadTest_testRequestTYPENAME;
 
     return plugin;
 }
 
 void
-testRequestPlugin_delete(struct PRESTypePlugin *plugin)
+MultithreadTest_testRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type testReply
+ *  Type MultithreadTest_testReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-testReply *
-testReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    testReply *sample = NULL;
+MultithreadTest_testReply *
+MultithreadTest_testReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    MultithreadTest_testReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, testReply);
+        &sample, MultithreadTest_testReply);
 
     if(sample != NULL) {
-        if (!testReply_initialize_ex(sample,allocate_pointers)) {
+        if (!MultithreadTest_testReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -1210,44 +1151,44 @@ testReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-testReply *
-testReplyPluginSupport_create_data(void)
+MultithreadTest_testReply *
+MultithreadTest_testReplyPluginSupport_create_data(void)
 {
-    return testReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return MultithreadTest_testReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-testReplyPluginSupport_destroy_data_ex(
-    testReply *sample,RTIBool deallocate_pointers) {
+MultithreadTest_testReplyPluginSupport_destroy_data_ex(
+    MultithreadTest_testReply *sample,RTIBool deallocate_pointers) {
 
-    testReply_finalize_ex(sample,deallocate_pointers);
+    MultithreadTest_testReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-testReplyPluginSupport_destroy_data(
-    testReply *sample) {
+MultithreadTest_testReplyPluginSupport_destroy_data(
+    MultithreadTest_testReply *sample) {
 
-    testReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    MultithreadTest_testReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-testReplyPluginSupport_copy_data(
-    testReply *dst,
-    const testReply *src)
+MultithreadTest_testReplyPluginSupport_copy_data(
+    MultithreadTest_testReply *dst,
+    const MultithreadTest_testReply *src)
 {
-    return testReply_copy(dst,src);
+    return MultithreadTest_testReply_copy(dst,src);
 }
 
 
 void 
-testReplyPluginSupport_print_data(
-    const testReply *sample,
+MultithreadTest_testReplyPluginSupport_print_data(
+    const MultithreadTest_testReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -1267,17 +1208,8 @@ testReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     DatoPluginSupport_print_data(
         &sample->dato2, "dato2", indent_level + 1);
@@ -1288,40 +1220,40 @@ testReplyPluginSupport_print_data(
 
 }
 
-testReply *
-testReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    testReply *key = NULL;
+MultithreadTest_testReply *
+MultithreadTest_testReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    MultithreadTest_testReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, testReplyKeyHolder);
+        &key, MultithreadTest_testReplyKeyHolder);
 
-    testReply_initialize_ex(key,allocate_pointers);
+    MultithreadTest_testReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-testReply *
-testReplyPluginSupport_create_key(void)
+MultithreadTest_testReply *
+MultithreadTest_testReplyPluginSupport_create_key(void)
 {
-    return  testReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  MultithreadTest_testReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-testReplyPluginSupport_destroy_key_ex(
-    testReplyKeyHolder *key,RTIBool deallocate_pointers)
+MultithreadTest_testReplyPluginSupport_destroy_key_ex(
+    MultithreadTest_testReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    testReply_finalize_ex(key,deallocate_pointers);
+    MultithreadTest_testReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-testReplyPluginSupport_destroy_key(
-    testReplyKeyHolder *key) {
+MultithreadTest_testReplyPluginSupport_destroy_key(
+    MultithreadTest_testReplyKeyHolder *key) {
 
-  testReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  MultithreadTest_testReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -1334,7 +1266,7 @@ testReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-testReplyPlugin_on_participant_attached(
+MultithreadTest_testReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -1353,7 +1285,7 @@ testReplyPlugin_on_participant_attached(
 
 
 void 
-testReplyPlugin_on_participant_detached(
+MultithreadTest_testReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -1362,7 +1294,7 @@ testReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-testReplyPlugin_on_endpoint_attached(
+MultithreadTest_testReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -1380,19 +1312,19 @@ testReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            testReplyPluginSupport_create_data,
+            MultithreadTest_testReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            testReplyPluginSupport_destroy_data,
+            MultithreadTest_testReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            testReplyPluginSupport_create_key,
+            MultithreadTest_testReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            testReplyPluginSupport_destroy_key);
+            MultithreadTest_testReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = testReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = MultithreadTest_testReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -1408,9 +1340,9 @@ testReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                testReplyPlugin_get_serialized_sample_max_size, epd,
+                MultithreadTest_testReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            testReplyPlugin_get_serialized_sample_size,
+            MultithreadTest_testReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -1424,7 +1356,7 @@ testReplyPlugin_on_endpoint_attached(
 
 
 void 
-testReplyPlugin_on_endpoint_detached(
+MultithreadTest_testReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -1433,13 +1365,13 @@ testReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-testReplyPlugin_copy_sample(
+MultithreadTest_testReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    testReply *dst,
-    const testReply *src)
+    MultithreadTest_testReply *dst,
+    const MultithreadTest_testReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return testReplyPluginSupport_copy_data(dst,src);
+    return MultithreadTest_testReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1448,9 +1380,9 @@ testReplyPlugin_copy_sample(
 
 
 RTIBool 
-testReplyPlugin_serialize(
+MultithreadTest_testReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const testReply *sample, 
+    const MultithreadTest_testReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1477,33 +1409,13 @@ testReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1534,9 +1446,9 @@ testReplyPlugin_serialize(
 
 
 RTIBool 
-testReplyPlugin_deserialize_sample(
+MultithreadTest_testReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    testReply *sample,
+    MultithreadTest_testReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1561,31 +1473,12 @@ testReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1617,9 +1510,9 @@ testReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-testReplyPlugin_deserialize(
+MultithreadTest_testReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    testReply **sample,
+    MultithreadTest_testReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -1629,7 +1522,7 @@ testReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return testReplyPlugin_deserialize_sample( 
+    return MultithreadTest_testReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1638,7 +1531,7 @@ testReplyPlugin_deserialize(
 
 
 
-RTIBool testReplyPlugin_skip(
+RTIBool MultithreadTest_testReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -1663,27 +1556,11 @@ RTIBool testReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -1712,7 +1589,7 @@ RTIBool testReplyPlugin_skip(
 
 
 unsigned int 
-testReplyPlugin_get_serialized_sample_max_size(
+MultithreadTest_testReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1740,17 +1617,8 @@ testReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  DatoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -1767,7 +1635,7 @@ testReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-testReplyPlugin_get_serialized_sample_min_size(
+MultithreadTest_testReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1795,17 +1663,8 @@ testReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  DatoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -1828,12 +1687,12 @@ testReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-testReplyPlugin_get_serialized_sample_size(
+MultithreadTest_testReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const testReply * sample) 
+    const MultithreadTest_testReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -1858,19 +1717,9 @@ testReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += DatoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -1892,7 +1741,7 @@ testReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-testReplyPlugin_get_key_kind(void)
+MultithreadTest_testReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -1901,9 +1750,9 @@ testReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-testReplyPlugin_serialize_key(
+MultithreadTest_testReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const testReply *sample, 
+    const MultithreadTest_testReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1928,28 +1777,13 @@ testReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1965,9 +1799,9 @@ testReplyPlugin_serialize_key(
 }
 
 
-RTIBool testReplyPlugin_deserialize_key_sample(
+RTIBool MultithreadTest_testReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    testReply *sample, 
+    MultithreadTest_testReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1992,26 +1826,12 @@ RTIBool testReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2028,9 +1848,9 @@ RTIBool testReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool testReplyPlugin_deserialize_key(
+RTIBool MultithreadTest_testReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    testReply **sample, 
+    MultithreadTest_testReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2038,7 +1858,7 @@ RTIBool testReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return testReplyPlugin_deserialize_key_sample(
+    return MultithreadTest_testReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -2046,7 +1866,7 @@ RTIBool testReplyPlugin_deserialize_key(
 
 
 unsigned int
-testReplyPlugin_get_serialized_key_max_size(
+MultithreadTest_testReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2076,14 +1896,8 @@ testReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -2094,9 +1908,9 @@ testReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-testReplyPlugin_serialized_sample_to_key(
+MultithreadTest_testReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    testReply *sample,
+    MultithreadTest_testReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2119,30 +1933,12 @@ testReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -2174,26 +1970,16 @@ testReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-testReplyPlugin_instance_to_key(
+MultithreadTest_testReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    testReplyKeyHolder *dst, 
-    const testReply *src)
+    MultithreadTest_testReplyKeyHolder *dst, 
+    const MultithreadTest_testReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2202,26 +1988,16 @@ testReplyPlugin_instance_to_key(
 
 
 RTIBool 
-testReplyPlugin_key_to_instance(
+MultithreadTest_testReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    testReply *dst, const
-    testReplyKeyHolder *src)
+    MultithreadTest_testReply *dst, const
+    MultithreadTest_testReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2230,10 +2006,10 @@ testReplyPlugin_key_to_instance(
 
 
 RTIBool 
-testReplyPlugin_instance_to_keyhash(
+MultithreadTest_testReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const testReply *instance)
+    const MultithreadTest_testReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -2249,7 +2025,7 @@ testReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!testReplyPlugin_serialize_key(
+    if (!MultithreadTest_testReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -2270,7 +2046,7 @@ testReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-testReplyPlugin_serialized_sample_to_keyhash(
+MultithreadTest_testReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2278,7 +2054,7 @@ testReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    testReply * sample;
+    MultithreadTest_testReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2293,7 +2069,7 @@ testReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (testReply *)
+    sample = (MultithreadTest_testReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -2301,26 +2077,12 @@ testReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2329,7 +2091,7 @@ testReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!testReplyPlugin_instance_to_keyhash(
+    if (!MultithreadTest_testReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -2342,7 +2104,7 @@ testReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *testReplyPlugin_new(void) 
+struct PRESTypePlugin *MultithreadTest_testReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -2359,110 +2121,110 @@ struct PRESTypePlugin *testReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        testReplyPlugin_on_participant_attached;
+        MultithreadTest_testReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        testReplyPlugin_on_participant_detached;
+        MultithreadTest_testReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        testReplyPlugin_on_endpoint_attached;
+        MultithreadTest_testReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        testReplyPlugin_on_endpoint_detached;
+        MultithreadTest_testReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        testReplyPlugin_copy_sample;
+        MultithreadTest_testReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        testReplyPlugin_create_sample;
+        MultithreadTest_testReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        testReplyPlugin_destroy_sample;
+        MultithreadTest_testReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        testReplyPlugin_serialize;
+        MultithreadTest_testReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        testReplyPlugin_deserialize;
+        MultithreadTest_testReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        testReplyPlugin_get_serialized_sample_max_size;
+        MultithreadTest_testReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        testReplyPlugin_get_serialized_sample_min_size;
+        MultithreadTest_testReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        testReplyPlugin_get_sample;
+        MultithreadTest_testReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        testReplyPlugin_return_sample;
+        MultithreadTest_testReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        testReplyPlugin_get_key_kind;
+        MultithreadTest_testReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        testReplyPlugin_get_serialized_key_max_size;
+        MultithreadTest_testReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        testReplyPlugin_serialize_key;
+        MultithreadTest_testReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        testReplyPlugin_deserialize_key;
+        MultithreadTest_testReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        testReplyPlugin_deserialize_key_sample;
+        MultithreadTest_testReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        testReplyPlugin_instance_to_keyhash;
+        MultithreadTest_testReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        testReplyPlugin_serialized_sample_to_keyhash;
+        MultithreadTest_testReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        testReplyPlugin_get_key;
+        MultithreadTest_testReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        testReplyPlugin_return_key;
+        MultithreadTest_testReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        testReplyPlugin_instance_to_key;
+        MultithreadTest_testReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        testReplyPlugin_key_to_instance;
+        MultithreadTest_testReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)testReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)MultithreadTest_testReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        testReplyPlugin_get_buffer;
+        MultithreadTest_testReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        testReplyPlugin_return_buffer;
+        MultithreadTest_testReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        testReplyPlugin_get_serialized_sample_size;
+        MultithreadTest_testReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = testReplyTYPENAME;
+    plugin->endpointTypeName = MultithreadTest_testReplyTYPENAME;
 
     return plugin;
 }
 
 void
-testReplyPlugin_delete(struct PRESTypePlugin *plugin)
+MultithreadTest_testReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

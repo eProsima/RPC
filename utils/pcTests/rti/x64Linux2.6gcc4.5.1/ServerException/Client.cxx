@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    ServerExceptionProxy *proxy = new ServerExceptionProxy();
+    ServerExceptionProxy *proxy = new ServerExceptionProxy("ServerExceptionService");
 
     try
     {
@@ -17,12 +17,17 @@ int main(int argc, char **argv)
         printf("TEST FAILED<sendException>: No exception\n");
         _exit(-1);
     }
-    catch(eProsima::DDSRPC::ServerException &ex)
+    catch(eProsima::DDSRPC::ServerInternalException &ex)
     {
+        if(strcmp(ex.what(), "Testing exception") != 0)
+        {
+            printf("TEST FAILED<sendException>: Bad exception message\n");
+            _exit(-1);
+        }
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<sendException>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<sendException>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -37,12 +42,17 @@ int main(int argc, char **argv)
         printf("TEST FAILED<sendExceptionTwo>: No exception\n");
         _exit(-1);
     }
-    catch(eProsima::DDSRPC::ServerException &ex)
+    catch(eProsima::DDSRPC::ServerInternalException &ex)
     {
+        if(strcmp(ex.what(), "Testing exception") != 0)
+        {
+            printf("TEST FAILED<sendException>: Bad exception message\n");
+            _exit(-1);
+        }
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<sendExceptionTwo>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<sendExceptionTwo>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -60,12 +70,17 @@ int main(int argc, char **argv)
         printf("TEST FAILED<sendExceptionThree>: No exception\n");
         _exit(-1);
     }
-    catch(eProsima::DDSRPC::ServerException &ex)
+    catch(eProsima::DDSRPC::ServerInternalException &ex)
     {
+        if(strcmp(ex.what(), "Testing exception") != 0)
+        {
+            printf("TEST FAILED<sendException>: Bad exception message\n");
+            _exit(-1);
+        }
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<sendExceptionThree>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<sendExceptionThree>: %s\n", ex.what());
         _exit(-1);
     }
 

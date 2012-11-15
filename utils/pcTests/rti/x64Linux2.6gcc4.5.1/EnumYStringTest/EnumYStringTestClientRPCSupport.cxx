@@ -6,12 +6,12 @@
 
 
 /* Defines */
-#define TName            getEnumClientRPC
-#define TDataTypeSupport getEnumReplyTypeSupport
-#define TData            getEnum
-#define TDataSeq         getEnumReplySeq
-#define TDataReader      getEnumReplyDataReader
-#define TDataWriter      getEnumRequestDataWriter
+#define TName            EnumYStringTest_getEnumClientRPC
+#define TDataTypeSupport EnumYStringTest_getEnumReplyTypeSupport
+#define TData            EnumYStringTest_getEnum
+#define TDataSeq         EnumYStringTest_getEnumReplySeq
+#define TDataReader      EnumYStringTest_getEnumReplyDataReader
+#define TDataWriter      EnumYStringTest_getEnumRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -26,12 +26,12 @@
 
 
 /* Defines */
-#define TName            getStringClientRPC
-#define TDataTypeSupport getStringReplyTypeSupport
-#define TData            getString
-#define TDataSeq         getStringReplySeq
-#define TDataReader      getStringReplyDataReader
-#define TDataWriter      getStringRequestDataWriter
+#define TName            EnumYStringTest_getStringClientRPC
+#define TDataTypeSupport EnumYStringTest_getStringReplyTypeSupport
+#define TData            EnumYStringTest_getString
+#define TDataSeq         EnumYStringTest_getStringReplySeq
+#define TDataReader      EnumYStringTest_getStringReplyDataReader
+#define TDataWriter      EnumYStringTest_getStringRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -46,12 +46,12 @@
 
 
 /* Defines */
-#define TName            getStringBoundedClientRPC
-#define TDataTypeSupport getStringBoundedReplyTypeSupport
-#define TData            getStringBounded
-#define TDataSeq         getStringBoundedReplySeq
-#define TDataReader      getStringBoundedReplyDataReader
-#define TDataWriter      getStringBoundedRequestDataWriter
+#define TName            EnumYStringTest_getStringBoundedClientRPC
+#define TDataTypeSupport EnumYStringTest_getStringBoundedReplyTypeSupport
+#define TData            EnumYStringTest_getStringBounded
+#define TDataSeq         EnumYStringTest_getStringBoundedReplySeq
+#define TDataReader      EnumYStringTest_getStringBoundedReplyDataReader
+#define TDataWriter      EnumYStringTest_getStringBoundedRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"

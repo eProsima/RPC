@@ -6,15 +6,15 @@
 #include "ServerExceptionRequestReplyPlugin.h"
 
 
-const char* sendExceptionRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sendExceptionRequestTypeSupport::get_type_name();
+        typeName = ServerException_sendExceptionRequestTypeSupport::get_type_name();
 
-        if(sendExceptionRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -23,27 +23,27 @@ const char* sendExceptionRequestUtils::registerType(DDS::DomainParticipant *clie
     return typeName;
 }
 
-void sendExceptionRequestUtils::setTypeData(sendExceptionRequest& instance)
+void ServerException_sendExceptionRequestUtils::setTypeData(ServerException_sendExceptionRequest& instance)
 {
     
 }
 
-void sendExceptionRequestUtils::extractTypeData(sendExceptionRequest& data)
+void ServerException_sendExceptionRequestUtils::extractTypeData(ServerException_sendExceptionRequest& data)
 {
   
     
 }
 
 
-const char* sendExceptionReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sendExceptionReplyTypeSupport::get_type_name();
+        typeName = ServerException_sendExceptionReplyTypeSupport::get_type_name();
 
-        if(sendExceptionReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -52,28 +52,28 @@ const char* sendExceptionReplyUtils::registerType(DDS::DomainParticipant *client
     return typeName;
 }
 
-void sendExceptionReplyUtils::setTypeData(sendExceptionReply& instance)
+void ServerException_sendExceptionReplyUtils::setTypeData(ServerException_sendExceptionReply& instance)
 {
     
 }
 
-void sendExceptionReplyUtils::extractTypeData(sendExceptionReply& data, eProsima::DDSRPC::ReturnMessage& retcode)
+void ServerException_sendExceptionReplyUtils::extractTypeData(ServerException_sendExceptionReply& data, eProsima::DDSRPC::ReturnMessage& retcode)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
   
     
 }
 
 
-const char* sendExceptionTwoRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionTwoRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sendExceptionTwoRequestTypeSupport::get_type_name();
+        typeName = ServerException_sendExceptionTwoRequestTypeSupport::get_type_name();
 
-        if(sendExceptionTwoRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionTwoRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -82,14 +82,14 @@ const char* sendExceptionTwoRequestUtils::registerType(DDS::DomainParticipant *c
     return typeName;
 }
 
-void sendExceptionTwoRequestUtils::setTypeData(sendExceptionTwoRequest& instance, /*in*/ char* message, /*inout*/ char* message2)
+void ServerException_sendExceptionTwoRequestUtils::setTypeData(ServerException_sendExceptionTwoRequest& instance, /*in*/ char* message, /*inout*/ char* message2)
 {
     instance.message = message;
     instance.message2 = message2;
     
 }
 
-void sendExceptionTwoRequestUtils::extractTypeData(sendExceptionTwoRequest& data, /*in*/ char*& message, /*inout*/ char*& message2)
+void ServerException_sendExceptionTwoRequestUtils::extractTypeData(ServerException_sendExceptionTwoRequest& data, /*in*/ char*& message, /*inout*/ char*& message2)
 {
     message = data.message;
     message2 = strdup(data.message2);  
@@ -97,15 +97,15 @@ void sendExceptionTwoRequestUtils::extractTypeData(sendExceptionTwoRequest& data
 }
 
 
-const char* sendExceptionTwoReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionTwoReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sendExceptionTwoReplyTypeSupport::get_type_name();
+        typeName = ServerException_sendExceptionTwoReplyTypeSupport::get_type_name();
 
-        if(sendExceptionTwoReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionTwoReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -114,16 +114,16 @@ const char* sendExceptionTwoReplyUtils::registerType(DDS::DomainParticipant *cli
     return typeName;
 }
 
-void sendExceptionTwoReplyUtils::setTypeData(sendExceptionTwoReply& instance, /*inout*/ char* message2, /*out*/ char* message3, /*out*/ char* sendExceptionTwo_ret)
+void ServerException_sendExceptionTwoReplyUtils::setTypeData(ServerException_sendExceptionTwoReply& instance, /*inout*/ char* message2, /*out*/ char* message3, /*out*/ char* sendExceptionTwo_ret)
 {
     instance.message2 = message2;
     instance.message3 = message3;
     instance.sendExceptionTwo_ret = sendExceptionTwo_ret;            
 }
 
-void sendExceptionTwoReplyUtils::extractTypeData(sendExceptionTwoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret)
+void ServerException_sendExceptionTwoReplyUtils::extractTypeData(ServerException_sendExceptionTwoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
     if(message2 != NULL)
     	free(message2);message2 = data.message2;
     message3 = data.message3;  
@@ -131,15 +131,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
 }
 
 
-const char* sendExceptionThreeRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionThreeRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sendExceptionThreeRequestTypeSupport::get_type_name();
+        typeName = ServerException_sendExceptionThreeRequestTypeSupport::get_type_name();
 
-        if(sendExceptionThreeRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionThreeRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -148,14 +148,14 @@ const char* sendExceptionThreeRequestUtils::registerType(DDS::DomainParticipant 
     return typeName;
 }
 
-void sendExceptionThreeRequestUtils::setTypeData(sendExceptionThreeRequest& instance, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2)
+void ServerException_sendExceptionThreeRequestUtils::setTypeData(ServerException_sendExceptionThreeRequest& instance, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2)
 {
     instance.es = es;
     instance.es2 = es2;
     
 }
 
-void sendExceptionThreeRequestUtils::extractTypeData(sendExceptionThreeRequest& data, /*in*/ Estructura& es, /*inout*/ Estructura& es2)
+void ServerException_sendExceptionThreeRequestUtils::extractTypeData(ServerException_sendExceptionThreeRequest& data, /*in*/ Estructura& es, /*inout*/ Estructura& es2)
 {
     es = data.es;
     EstructuraPluginSupport_copy_data(&es2, &data.es2);  
@@ -163,15 +163,15 @@ void sendExceptionThreeRequestUtils::extractTypeData(sendExceptionThreeRequest& 
 }
 
 
-const char* sendExceptionThreeReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionThreeReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = sendExceptionThreeReplyTypeSupport::get_type_name();
+        typeName = ServerException_sendExceptionThreeReplyTypeSupport::get_type_name();
 
-        if(sendExceptionThreeReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionThreeReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -180,16 +180,16 @@ const char* sendExceptionThreeReplyUtils::registerType(DDS::DomainParticipant *c
     return typeName;
 }
 
-void sendExceptionThreeReplyUtils::setTypeData(sendExceptionThreeReply& instance, /*inout*/ const Estructura& es2, /*out*/ const Estructura& es3, /*out*/ const Estructura& sendExceptionThree_ret)
+void ServerException_sendExceptionThreeReplyUtils::setTypeData(ServerException_sendExceptionThreeReply& instance, /*inout*/ const Estructura& es2, /*out*/ const Estructura& es3, /*out*/ const Estructura& sendExceptionThree_ret)
 {
     instance.es2 = es2;
     instance.es3 = es3;
     instance.sendExceptionThree_ret = sendExceptionThree_ret;            
 }
 
-void sendExceptionThreeReplyUtils::extractTypeData(sendExceptionThreeReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret)
+void ServerException_sendExceptionThreeReplyUtils::extractTypeData(ServerException_sendExceptionThreeReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
     Estructura_finalize(&es2);es2 = data.es2;
     es3 = data.es3;  
     sendExceptionThree_ret = data.sendExceptionThree_ret;            

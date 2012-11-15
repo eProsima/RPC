@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    UnionTestProxy *proxy = new UnionTestProxy();
+    UnionTestProxy *proxy = new UnionTestProxy("UnionTestService");
 
     Empleado em1;
     Empleado em2;
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getEmpleado>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getEmpleado>: %s\n", ex.what());
         _exit(-1);
     }
 

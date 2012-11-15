@@ -39,34 +39,17 @@
 #include "SequenceTestRequestReply.h"
 
 /* ========================================================================= */
-const char *getSLongRequestTYPENAME = "getSLongRequest";
+const char *SequenceTest_getSLongRequestTYPENAME = "SequenceTest_getSLongRequest";
 
-DDS_TypeCode* getSLongRequest_get_typecode()
+DDS_TypeCode* SequenceTest_getSLongRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getSLongRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member SequenceTest_getSLongRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -118,57 +101,52 @@ DDS_TypeCode* getSLongRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getSLongRequest_g_tc =
+    static DDS_TypeCode SequenceTest_getSLongRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getSLongRequest", /* Name */
+        (char *)"SequenceTest_getSLongRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getSLongRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        SequenceTest_getSLongRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getSLongRequest*/
+    }}; /* Type code for SequenceTest_getSLongRequest*/
 
     if (is_initialized) {
-        return &getSLongRequest_g_tc;
+        return &SequenceTest_getSLongRequest_g_tc;
     }
 
 
-    getSLongRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getSLongRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getSLongRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
-    getSLongRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    SequenceTest_getSLongRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    SequenceTest_getSLongRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    SequenceTest_getSLongRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getSLongRequest_g_tc;
+    return &SequenceTest_getSLongRequest_g_tc;
 }
 
 
-RTIBool getSLongRequest_initialize(
-    getSLongRequest* sample) {
-  return getSLongRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool SequenceTest_getSLongRequest_initialize(
+    SequenceTest_getSLongRequest* sample) {
+  return SequenceTest_getSLongRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getSLongRequest_initialize_ex(
-    getSLongRequest* sample,RTIBool allocatePointers)
+RTIBool SequenceTest_getSLongRequest_initialize_ex(
+    SequenceTest_getSLongRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!largo_initialize_ex(&sample->l1,allocatePointers)) {
         return RTI_FALSE;
@@ -182,20 +160,20 @@ RTIBool getSLongRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getSLongRequest_finalize(
-    getSLongRequest* sample)
+void SequenceTest_getSLongRequest_finalize(
+    SequenceTest_getSLongRequest* sample)
 {
-    getSLongRequest_finalize_ex(sample,RTI_TRUE);
+    SequenceTest_getSLongRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getSLongRequest_finalize_ex(
-    getSLongRequest* sample,RTIBool deletePointers)
+void SequenceTest_getSLongRequest_finalize_ex(
+    SequenceTest_getSLongRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     largo_finalize_ex(&sample->l1,deletePointers);
             
@@ -203,18 +181,13 @@ void getSLongRequest_finalize_ex(
             
 }
 
-RTIBool getSLongRequest_copy(
-    getSLongRequest* dst,
-    const getSLongRequest* src)
+RTIBool SequenceTest_getSLongRequest_copy(
+    SequenceTest_getSLongRequest* dst,
+    const SequenceTest_getSLongRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -238,13 +211,13 @@ RTIBool getSLongRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getSLongRequest' sequence class.
+ * Configure and implement 'SequenceTest_getSLongRequest' sequence class.
  */
-#define T getSLongRequest
-#define TSeq getSLongRequestSeq
-#define T_initialize_ex getSLongRequest_initialize_ex
-#define T_finalize_ex   getSLongRequest_finalize_ex
-#define T_copy       getSLongRequest_copy
+#define T SequenceTest_getSLongRequest
+#define TSeq SequenceTest_getSLongRequestSeq
+#define T_initialize_ex SequenceTest_getSLongRequest_initialize_ex
+#define T_finalize_ex   SequenceTest_getSLongRequest_finalize_ex
+#define T_copy       SequenceTest_getSLongRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -265,17 +238,17 @@ RTIBool getSLongRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getSLongReplyTYPENAME = "getSLongReply";
+const char *SequenceTest_getSLongReplyTYPENAME = "SequenceTest_getSLongReply";
 
-DDS_TypeCode* getSLongReply_get_typecode()
+DDS_TypeCode* SequenceTest_getSLongReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getSLongReply_g_tc_members[7]=
+    static DDS_TypeCode_Member SequenceTest_getSLongReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -287,57 +260,6 @@ DDS_TypeCode* getSLongReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -395,68 +317,53 @@ DDS_TypeCode* getSLongReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getSLongReply_g_tc =
+    static DDS_TypeCode SequenceTest_getSLongReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getSLongReply", /* Name */
+        (char *)"SequenceTest_getSLongReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getSLongReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        SequenceTest_getSLongReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getSLongReply*/
+    }}; /* Type code for SequenceTest_getSLongReply*/
 
     if (is_initialized) {
-        return &getSLongReply_g_tc;
+        return &SequenceTest_getSLongReply_g_tc;
     }
 
 
-    getSLongReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getSLongReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getSLongReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getSLongReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getSLongReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
-    getSLongReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
-    getSLongReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    SequenceTest_getSLongReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    SequenceTest_getSLongReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    SequenceTest_getSLongReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
+    SequenceTest_getSLongReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)largo_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getSLongReply_g_tc;
+    return &SequenceTest_getSLongReply_g_tc;
 }
 
 
-RTIBool getSLongReply_initialize(
-    getSLongReply* sample) {
-  return getSLongReply_initialize_ex(sample,RTI_TRUE);
+RTIBool SequenceTest_getSLongReply_initialize(
+    SequenceTest_getSLongReply* sample) {
+  return SequenceTest_getSLongReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getSLongReply_initialize_ex(
-    getSLongReply* sample,RTIBool allocatePointers)
+RTIBool SequenceTest_getSLongReply_initialize_ex(
+    SequenceTest_getSLongReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!largo_initialize_ex(&sample->l2,allocatePointers)) {
         return RTI_FALSE;
@@ -474,22 +381,20 @@ RTIBool getSLongReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getSLongReply_finalize(
-    getSLongReply* sample)
+void SequenceTest_getSLongReply_finalize(
+    SequenceTest_getSLongReply* sample)
 {
-    getSLongReply_finalize_ex(sample,RTI_TRUE);
+    SequenceTest_getSLongReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getSLongReply_finalize_ex(
-    getSLongReply* sample,RTIBool deletePointers)
+void SequenceTest_getSLongReply_finalize_ex(
+    SequenceTest_getSLongReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     largo_finalize_ex(&sample->l2,deletePointers);
             
@@ -499,28 +404,13 @@ void getSLongReply_finalize_ex(
             
 }
 
-RTIBool getSLongReply_copy(
-    getSLongReply* dst,
-    const getSLongReply* src)
+RTIBool SequenceTest_getSLongReply_copy(
+    SequenceTest_getSLongReply* dst,
+    const SequenceTest_getSLongReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -549,13 +439,13 @@ RTIBool getSLongReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getSLongReply' sequence class.
+ * Configure and implement 'SequenceTest_getSLongReply' sequence class.
  */
-#define T getSLongReply
-#define TSeq getSLongReplySeq
-#define T_initialize_ex getSLongReply_initialize_ex
-#define T_finalize_ex   getSLongReply_finalize_ex
-#define T_copy       getSLongReply_copy
+#define T SequenceTest_getSLongReply
+#define TSeq SequenceTest_getSLongReplySeq
+#define T_initialize_ex SequenceTest_getSLongReply_initialize_ex
+#define T_finalize_ex   SequenceTest_getSLongReply_finalize_ex
+#define T_copy       SequenceTest_getSLongReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -576,34 +466,17 @@ RTIBool getSLongReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringRequestTYPENAME = "getStringRequest";
+const char *SequenceTest_getStringRequestTYPENAME = "SequenceTest_getStringRequest";
 
-DDS_TypeCode* getStringRequest_get_typecode()
+DDS_TypeCode* SequenceTest_getStringRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getStringRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member SequenceTest_getStringRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -655,57 +528,52 @@ DDS_TypeCode* getStringRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringRequest_g_tc =
+    static DDS_TypeCode SequenceTest_getStringRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringRequest", /* Name */
+        (char *)"SequenceTest_getStringRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getStringRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        SequenceTest_getStringRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringRequest*/
+    }}; /* Type code for SequenceTest_getStringRequest*/
 
     if (is_initialized) {
-        return &getStringRequest_g_tc;
+        return &SequenceTest_getStringRequest_g_tc;
     }
 
 
-    getStringRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
-    getStringRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    SequenceTest_getStringRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    SequenceTest_getStringRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    SequenceTest_getStringRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getStringRequest_g_tc;
+    return &SequenceTest_getStringRequest_g_tc;
 }
 
 
-RTIBool getStringRequest_initialize(
-    getStringRequest* sample) {
-  return getStringRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool SequenceTest_getStringRequest_initialize(
+    SequenceTest_getStringRequest* sample) {
+  return SequenceTest_getStringRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringRequest_initialize_ex(
-    getStringRequest* sample,RTIBool allocatePointers)
+RTIBool SequenceTest_getStringRequest_initialize_ex(
+    SequenceTest_getStringRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!cadena_initialize_ex(&sample->s1,allocatePointers)) {
         return RTI_FALSE;
@@ -719,20 +587,20 @@ RTIBool getStringRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringRequest_finalize(
-    getStringRequest* sample)
+void SequenceTest_getStringRequest_finalize(
+    SequenceTest_getStringRequest* sample)
 {
-    getStringRequest_finalize_ex(sample,RTI_TRUE);
+    SequenceTest_getStringRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringRequest_finalize_ex(
-    getStringRequest* sample,RTIBool deletePointers)
+void SequenceTest_getStringRequest_finalize_ex(
+    SequenceTest_getStringRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     cadena_finalize_ex(&sample->s1,deletePointers);
             
@@ -740,18 +608,13 @@ void getStringRequest_finalize_ex(
             
 }
 
-RTIBool getStringRequest_copy(
-    getStringRequest* dst,
-    const getStringRequest* src)
+RTIBool SequenceTest_getStringRequest_copy(
+    SequenceTest_getStringRequest* dst,
+    const SequenceTest_getStringRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -775,13 +638,13 @@ RTIBool getStringRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringRequest' sequence class.
+ * Configure and implement 'SequenceTest_getStringRequest' sequence class.
  */
-#define T getStringRequest
-#define TSeq getStringRequestSeq
-#define T_initialize_ex getStringRequest_initialize_ex
-#define T_finalize_ex   getStringRequest_finalize_ex
-#define T_copy       getStringRequest_copy
+#define T SequenceTest_getStringRequest
+#define TSeq SequenceTest_getStringRequestSeq
+#define T_initialize_ex SequenceTest_getStringRequest_initialize_ex
+#define T_finalize_ex   SequenceTest_getStringRequest_finalize_ex
+#define T_copy       SequenceTest_getStringRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -802,17 +665,17 @@ RTIBool getStringRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringReplyTYPENAME = "getStringReply";
+const char *SequenceTest_getStringReplyTYPENAME = "SequenceTest_getStringReply";
 
-DDS_TypeCode* getStringReply_get_typecode()
+DDS_TypeCode* SequenceTest_getStringReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getStringReply_g_tc_members[7]=
+    static DDS_TypeCode_Member SequenceTest_getStringReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -824,57 +687,6 @@ DDS_TypeCode* getStringReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -932,68 +744,53 @@ DDS_TypeCode* getStringReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringReply_g_tc =
+    static DDS_TypeCode SequenceTest_getStringReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringReply", /* Name */
+        (char *)"SequenceTest_getStringReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getStringReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        SequenceTest_getStringReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringReply*/
+    }}; /* Type code for SequenceTest_getStringReply*/
 
     if (is_initialized) {
-        return &getStringReply_g_tc;
+        return &SequenceTest_getStringReply_g_tc;
     }
 
 
-    getStringReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getStringReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
-    getStringReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
-    getStringReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    SequenceTest_getStringReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    SequenceTest_getStringReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    SequenceTest_getStringReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
+    SequenceTest_getStringReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)cadena_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getStringReply_g_tc;
+    return &SequenceTest_getStringReply_g_tc;
 }
 
 
-RTIBool getStringReply_initialize(
-    getStringReply* sample) {
-  return getStringReply_initialize_ex(sample,RTI_TRUE);
+RTIBool SequenceTest_getStringReply_initialize(
+    SequenceTest_getStringReply* sample) {
+  return SequenceTest_getStringReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringReply_initialize_ex(
-    getStringReply* sample,RTIBool allocatePointers)
+RTIBool SequenceTest_getStringReply_initialize_ex(
+    SequenceTest_getStringReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!cadena_initialize_ex(&sample->s2,allocatePointers)) {
         return RTI_FALSE;
@@ -1011,22 +808,20 @@ RTIBool getStringReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringReply_finalize(
-    getStringReply* sample)
+void SequenceTest_getStringReply_finalize(
+    SequenceTest_getStringReply* sample)
 {
-    getStringReply_finalize_ex(sample,RTI_TRUE);
+    SequenceTest_getStringReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringReply_finalize_ex(
-    getStringReply* sample,RTIBool deletePointers)
+void SequenceTest_getStringReply_finalize_ex(
+    SequenceTest_getStringReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     cadena_finalize_ex(&sample->s2,deletePointers);
             
@@ -1036,28 +831,13 @@ void getStringReply_finalize_ex(
             
 }
 
-RTIBool getStringReply_copy(
-    getStringReply* dst,
-    const getStringReply* src)
+RTIBool SequenceTest_getStringReply_copy(
+    SequenceTest_getStringReply* dst,
+    const SequenceTest_getStringReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1086,13 +866,13 @@ RTIBool getStringReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringReply' sequence class.
+ * Configure and implement 'SequenceTest_getStringReply' sequence class.
  */
-#define T getStringReply
-#define TSeq getStringReplySeq
-#define T_initialize_ex getStringReply_initialize_ex
-#define T_finalize_ex   getStringReply_finalize_ex
-#define T_copy       getStringReply_copy
+#define T SequenceTest_getStringReply
+#define TSeq SequenceTest_getStringReplySeq
+#define T_initialize_ex SequenceTest_getStringReply_initialize_ex
+#define T_finalize_ex   SequenceTest_getStringReply_finalize_ex
+#define T_copy       SequenceTest_getStringReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1113,34 +893,17 @@ RTIBool getStringReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringBoundedRequestTYPENAME = "getStringBoundedRequest";
+const char *SequenceTest_getStringBoundedRequestTYPENAME = "SequenceTest_getStringBoundedRequest";
 
-DDS_TypeCode* getStringBoundedRequest_get_typecode()
+DDS_TypeCode* SequenceTest_getStringBoundedRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getStringBoundedRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member SequenceTest_getStringBoundedRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1192,57 +955,52 @@ DDS_TypeCode* getStringBoundedRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringBoundedRequest_g_tc =
+    static DDS_TypeCode SequenceTest_getStringBoundedRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringBoundedRequest", /* Name */
+        (char *)"SequenceTest_getStringBoundedRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getStringBoundedRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        SequenceTest_getStringBoundedRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringBoundedRequest*/
+    }}; /* Type code for SequenceTest_getStringBoundedRequest*/
 
     if (is_initialized) {
-        return &getStringBoundedRequest_g_tc;
+        return &SequenceTest_getStringBoundedRequest_g_tc;
     }
 
 
-    getStringBoundedRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringBoundedRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringBoundedRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
-    getStringBoundedRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
+    SequenceTest_getStringBoundedRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    SequenceTest_getStringBoundedRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
+    SequenceTest_getStringBoundedRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getStringBoundedRequest_g_tc;
+    return &SequenceTest_getStringBoundedRequest_g_tc;
 }
 
 
-RTIBool getStringBoundedRequest_initialize(
-    getStringBoundedRequest* sample) {
-  return getStringBoundedRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool SequenceTest_getStringBoundedRequest_initialize(
+    SequenceTest_getStringBoundedRequest* sample) {
+  return SequenceTest_getStringBoundedRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringBoundedRequest_initialize_ex(
-    getStringBoundedRequest* sample,RTIBool allocatePointers)
+RTIBool SequenceTest_getStringBoundedRequest_initialize_ex(
+    SequenceTest_getStringBoundedRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!dattos_initialize_ex(&sample->sb1,allocatePointers)) {
         return RTI_FALSE;
@@ -1256,20 +1014,20 @@ RTIBool getStringBoundedRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringBoundedRequest_finalize(
-    getStringBoundedRequest* sample)
+void SequenceTest_getStringBoundedRequest_finalize(
+    SequenceTest_getStringBoundedRequest* sample)
 {
-    getStringBoundedRequest_finalize_ex(sample,RTI_TRUE);
+    SequenceTest_getStringBoundedRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringBoundedRequest_finalize_ex(
-    getStringBoundedRequest* sample,RTIBool deletePointers)
+void SequenceTest_getStringBoundedRequest_finalize_ex(
+    SequenceTest_getStringBoundedRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     dattos_finalize_ex(&sample->sb1,deletePointers);
             
@@ -1277,18 +1035,13 @@ void getStringBoundedRequest_finalize_ex(
             
 }
 
-RTIBool getStringBoundedRequest_copy(
-    getStringBoundedRequest* dst,
-    const getStringBoundedRequest* src)
+RTIBool SequenceTest_getStringBoundedRequest_copy(
+    SequenceTest_getStringBoundedRequest* dst,
+    const SequenceTest_getStringBoundedRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1312,13 +1065,13 @@ RTIBool getStringBoundedRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringBoundedRequest' sequence class.
+ * Configure and implement 'SequenceTest_getStringBoundedRequest' sequence class.
  */
-#define T getStringBoundedRequest
-#define TSeq getStringBoundedRequestSeq
-#define T_initialize_ex getStringBoundedRequest_initialize_ex
-#define T_finalize_ex   getStringBoundedRequest_finalize_ex
-#define T_copy       getStringBoundedRequest_copy
+#define T SequenceTest_getStringBoundedRequest
+#define TSeq SequenceTest_getStringBoundedRequestSeq
+#define T_initialize_ex SequenceTest_getStringBoundedRequest_initialize_ex
+#define T_finalize_ex   SequenceTest_getStringBoundedRequest_finalize_ex
+#define T_copy       SequenceTest_getStringBoundedRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1339,17 +1092,17 @@ RTIBool getStringBoundedRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringBoundedReplyTYPENAME = "getStringBoundedReply";
+const char *SequenceTest_getStringBoundedReplyTYPENAME = "SequenceTest_getStringBoundedReply";
 
-DDS_TypeCode* getStringBoundedReply_get_typecode()
+DDS_TypeCode* SequenceTest_getStringBoundedReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getStringBoundedReply_g_tc_members[7]=
+    static DDS_TypeCode_Member SequenceTest_getStringBoundedReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1361,57 +1114,6 @@ DDS_TypeCode* getStringBoundedReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1469,68 +1171,53 @@ DDS_TypeCode* getStringBoundedReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringBoundedReply_g_tc =
+    static DDS_TypeCode SequenceTest_getStringBoundedReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringBoundedReply", /* Name */
+        (char *)"SequenceTest_getStringBoundedReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getStringBoundedReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        SequenceTest_getStringBoundedReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringBoundedReply*/
+    }}; /* Type code for SequenceTest_getStringBoundedReply*/
 
     if (is_initialized) {
-        return &getStringBoundedReply_g_tc;
+        return &SequenceTest_getStringBoundedReply_g_tc;
     }
 
 
-    getStringBoundedReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringBoundedReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringBoundedReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringBoundedReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getStringBoundedReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
-    getStringBoundedReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
-    getStringBoundedReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
+    SequenceTest_getStringBoundedReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    SequenceTest_getStringBoundedReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
+    SequenceTest_getStringBoundedReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
+    SequenceTest_getStringBoundedReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)dattos_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getStringBoundedReply_g_tc;
+    return &SequenceTest_getStringBoundedReply_g_tc;
 }
 
 
-RTIBool getStringBoundedReply_initialize(
-    getStringBoundedReply* sample) {
-  return getStringBoundedReply_initialize_ex(sample,RTI_TRUE);
+RTIBool SequenceTest_getStringBoundedReply_initialize(
+    SequenceTest_getStringBoundedReply* sample) {
+  return SequenceTest_getStringBoundedReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringBoundedReply_initialize_ex(
-    getStringBoundedReply* sample,RTIBool allocatePointers)
+RTIBool SequenceTest_getStringBoundedReply_initialize_ex(
+    SequenceTest_getStringBoundedReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!dattos_initialize_ex(&sample->sb2,allocatePointers)) {
         return RTI_FALSE;
@@ -1548,22 +1235,20 @@ RTIBool getStringBoundedReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringBoundedReply_finalize(
-    getStringBoundedReply* sample)
+void SequenceTest_getStringBoundedReply_finalize(
+    SequenceTest_getStringBoundedReply* sample)
 {
-    getStringBoundedReply_finalize_ex(sample,RTI_TRUE);
+    SequenceTest_getStringBoundedReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringBoundedReply_finalize_ex(
-    getStringBoundedReply* sample,RTIBool deletePointers)
+void SequenceTest_getStringBoundedReply_finalize_ex(
+    SequenceTest_getStringBoundedReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     dattos_finalize_ex(&sample->sb2,deletePointers);
             
@@ -1573,28 +1258,13 @@ void getStringBoundedReply_finalize_ex(
             
 }
 
-RTIBool getStringBoundedReply_copy(
-    getStringBoundedReply* dst,
-    const getStringBoundedReply* src)
+RTIBool SequenceTest_getStringBoundedReply_copy(
+    SequenceTest_getStringBoundedReply* dst,
+    const SequenceTest_getStringBoundedReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1623,13 +1293,13 @@ RTIBool getStringBoundedReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringBoundedReply' sequence class.
+ * Configure and implement 'SequenceTest_getStringBoundedReply' sequence class.
  */
-#define T getStringBoundedReply
-#define TSeq getStringBoundedReplySeq
-#define T_initialize_ex getStringBoundedReply_initialize_ex
-#define T_finalize_ex   getStringBoundedReply_finalize_ex
-#define T_copy       getStringBoundedReply_copy
+#define T SequenceTest_getStringBoundedReply
+#define TSeq SequenceTest_getStringBoundedReplySeq
+#define T_initialize_ex SequenceTest_getStringBoundedReply_initialize_ex
+#define T_finalize_ex   SequenceTest_getStringBoundedReply_finalize_ex
+#define T_copy       SequenceTest_getStringBoundedReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

@@ -6,15 +6,15 @@
 #include "MultithreadTestRequestReplyPlugin.h"
 
 
-const char* testRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* MultithreadTest_testRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = testRequestTypeSupport::get_type_name();
+        typeName = MultithreadTest_testRequestTypeSupport::get_type_name();
 
-        if(testRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(MultithreadTest_testRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -23,28 +23,28 @@ const char* testRequestUtils::registerType(DDS::DomainParticipant *clientPartici
     return typeName;
 }
 
-void testRequestUtils::setTypeData(testRequest& instance, /*in*/ const Dato& dato1)
+void MultithreadTest_testRequestUtils::setTypeData(MultithreadTest_testRequest& instance, /*in*/ const Dato& dato1)
 {
     instance.dato1 = dato1;
     
 }
 
-void testRequestUtils::extractTypeData(testRequest& data, /*in*/ Dato& dato1)
+void MultithreadTest_testRequestUtils::extractTypeData(MultithreadTest_testRequest& data, /*in*/ Dato& dato1)
 {
     dato1 = data.dato1;  
     
 }
 
 
-const char* testReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* MultithreadTest_testReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
 {
     const char *typeName = NULL;
 
     if(clientParticipant != NULL)
     {
-        typeName = testReplyTypeSupport::get_type_name();
+        typeName = MultithreadTest_testReplyTypeSupport::get_type_name();
 
-        if(testReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(MultithreadTest_testReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -53,15 +53,15 @@ const char* testReplyUtils::registerType(DDS::DomainParticipant *clientParticipa
     return typeName;
 }
 
-void testReplyUtils::setTypeData(testReply& instance, /*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret)
+void MultithreadTest_testReplyUtils::setTypeData(MultithreadTest_testReply& instance, /*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret)
 {
     instance.dato2 = dato2;
     instance.test_ret = test_ret;            
 }
 
-void testReplyUtils::extractTypeData(testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret)
+void MultithreadTest_testReplyUtils::extractTypeData(MultithreadTest_testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.ddsrpcRetCode;
+retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
     dato2 = data.dato2;  
     test_ret = data.test_ret;            
 }

@@ -8,37 +8,38 @@
 #include "client/Client.h"
 #include "ServerExceptionRequestReplyUtils.h"
 #include "ServerExceptionClientRPCSupport.h"
+#include "exceptions/Exception.h"
 
-class ServerException_sendException
+class ServerException_sendExceptionCallbackHandler
 {
     public:
         virtual void sendException()
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class ServerException_sendExceptionTwo
+class ServerException_sendExceptionTwoCallbackHandler
 {
     public:
         virtual void sendExceptionTwo(/*inout*/ char* message2, /*out*/ char* message3, /*out*/ char* sendExceptionTwo_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class ServerException_sendExceptionThree
+class ServerException_sendExceptionThreeCallbackHandler
 {
     public:
         virtual void sendExceptionThree(/*inout*/ const Estructura& es2, /*out*/ const Estructura& es3, /*out*/ const Estructura& sendExceptionThree_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
@@ -53,22 +54,24 @@ class ServerExceptionProxy : public eProsima::DDSRPC::Client
         /**
          * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        ServerExceptionProxy(int domainId = 0, long timeout = 10000);
+        ServerExceptionProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
         /**
          * \brief This constructor sets the transport that will be used by the server's proxy.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        ServerExceptionProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        ServerExceptionProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~ServerExceptionProxy();
@@ -81,11 +84,11 @@ class ServerExceptionProxy : public eProsima::DDSRPC::Client
         Estructura sendExceptionThree(/*in*/ const Estructura& es, /*inout*/ Estructura& es2, /*out*/ Estructura& es3);
         
          
-        void sendException_async(ServerException_sendException &obj);
+        void sendException_async(ServerException_sendExceptionCallbackHandler &obj);
          
-        void sendExceptionTwo_async(ServerException_sendExceptionTwo &obj, /*in*/ char* message, /*inout*/ char* message2);
+        void sendExceptionTwo_async(ServerException_sendExceptionTwoCallbackHandler &obj, /*in*/ char* message, /*inout*/ char* message2);
          
-        void sendExceptionThree_async(ServerException_sendExceptionThree &obj, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2);
+        void sendExceptionThree_async(ServerException_sendExceptionThreeCallbackHandler &obj, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2);
         
     private:
         /**

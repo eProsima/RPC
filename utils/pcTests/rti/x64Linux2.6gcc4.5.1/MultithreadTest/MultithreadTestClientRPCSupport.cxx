@@ -6,12 +6,12 @@
 
 
 /* Defines */
-#define TName            testClientRPC
-#define TDataTypeSupport testReplyTypeSupport
-#define TData            test
-#define TDataSeq         testReplySeq
-#define TDataReader      testReplyDataReader
-#define TDataWriter      testRequestDataWriter
+#define TName            MultithreadTest_testClientRPC
+#define TDataTypeSupport MultithreadTest_testReplyTypeSupport
+#define TData            MultithreadTest_test
+#define TDataSeq         MultithreadTest_testReplySeq
+#define TDataReader      MultithreadTest_testReplyDataReader
+#define TDataWriter      MultithreadTest_testRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"

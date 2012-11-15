@@ -12,51 +12,51 @@
 #include "ndds_namespace_cpp.h"
 
 
-class duplicateRequestUtils
+class StructTest_duplicateRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(duplicateRequest& instance, /*in*/ const Envio& ev);
+        static void setTypeData(StructTest_duplicateRequest& instance, /*in*/ const Envio& ev);
         
-        static void extractTypeData(duplicateRequest& data, /*in*/ Envio& ev);
+        static void extractTypeData(StructTest_duplicateRequest& data, /*in*/ Envio& ev);
 };
 
 
-class duplicateReplyUtils
+class StructTest_duplicateReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(duplicateReply& instance, /*out*/ const Recepcion& duplicate_ret);
+        static void setTypeData(StructTest_duplicateReply& instance, /*out*/ const Recepcion& duplicate_ret);
         
-        static void extractTypeData(duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret);
+        static void extractTypeData(StructTest_duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret);
 };
 
 
-class sumaRequestUtils
+class StructTest_sumaRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sumaRequest& instance, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2);
+        static void setTypeData(StructTest_sumaRequest& instance, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2);
         
-        static void extractTypeData(sumaRequest& data, /*in*/ Envio& ev1, /*in*/ Envio& ev2);
+        static void extractTypeData(StructTest_sumaRequest& data, /*in*/ Envio& ev1, /*in*/ Envio& ev2);
 };
 
 
-class sumaReplyUtils
+class StructTest_sumaReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(sumaReply& instance, /*out*/ const Recepcion& suma_ret);
+        static void setTypeData(StructTest_sumaReply& instance, /*out*/ const Recepcion& suma_ret);
         
-        static void extractTypeData(sumaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret);
+        static void extractTypeData(StructTest_sumaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret);
 };
 
  

@@ -8,37 +8,38 @@
 #include "client/Client.h"
 #include "SequenceTestRequestReplyUtils.h"
 #include "SequenceTestClientRPCSupport.h"
+#include "exceptions/Exception.h"
 
-class SequenceTest_getSLong
+class SequenceTest_getSLongCallbackHandler
 {
     public:
         virtual void getSLong(/*inout*/ const largo& l2, /*out*/ const largo& l3, /*out*/ const largo& getSLong_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class SequenceTest_getString
+class SequenceTest_getStringCallbackHandler
 {
     public:
         virtual void getString(/*inout*/ const cadena& s2, /*out*/ const cadena& s3, /*out*/ const cadena& getString_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class SequenceTest_getStringBounded
+class SequenceTest_getStringBoundedCallbackHandler
 {
     public:
         virtual void getStringBounded(/*inout*/ const dattos& sb2, /*out*/ const dattos& sb3, /*out*/ const dattos& getStringBounded_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
@@ -53,22 +54,24 @@ class SequenceTestProxy : public eProsima::DDSRPC::Client
         /**
          * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        SequenceTestProxy(int domainId = 0, long timeout = 10000);
+        SequenceTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
         /**
          * \brief This constructor sets the transport that will be used by the server's proxy.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        SequenceTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        SequenceTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~SequenceTestProxy();
@@ -81,11 +84,11 @@ class SequenceTestProxy : public eProsima::DDSRPC::Client
         dattos getStringBounded(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3);
         
          
-        void getSLong_async(SequenceTest_getSLong &obj, /*in*/ const largo& l1, /*inout*/ const largo& l2);
+        void getSLong_async(SequenceTest_getSLongCallbackHandler &obj, /*in*/ const largo& l1, /*inout*/ const largo& l2);
          
-        void getString_async(SequenceTest_getString &obj, /*in*/ const cadena& s1, /*inout*/ const cadena& s2);
+        void getString_async(SequenceTest_getStringCallbackHandler &obj, /*in*/ const cadena& s1, /*inout*/ const cadena& s2);
          
-        void getStringBounded_async(SequenceTest_getStringBounded &obj, /*in*/ const dattos& sb1, /*inout*/ const dattos& sb2);
+        void getStringBounded_async(SequenceTest_getStringBoundedCallbackHandler &obj, /*in*/ const dattos& sb1, /*inout*/ const dattos& sb2);
         
     private:
         /**

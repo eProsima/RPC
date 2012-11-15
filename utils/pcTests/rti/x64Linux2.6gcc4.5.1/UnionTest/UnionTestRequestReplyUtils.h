@@ -12,27 +12,27 @@
 #include "ndds_namespace_cpp.h"
 
 
-class getEmpleadoRequestUtils
+class UnionTest_getEmpleadoRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getEmpleadoRequest& instance, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2);
+        static void setTypeData(UnionTest_getEmpleadoRequest& instance, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2);
         
-        static void extractTypeData(getEmpleadoRequest& data, /*in*/ Empleado& em1, /*inout*/ Empleado& em2);
+        static void extractTypeData(UnionTest_getEmpleadoRequest& data, /*in*/ Empleado& em1, /*inout*/ Empleado& em2);
 };
 
 
-class getEmpleadoReplyUtils
+class UnionTest_getEmpleadoReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getEmpleadoReply& instance, /*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret);
+        static void setTypeData(UnionTest_getEmpleadoReply& instance, /*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret);
         
-        static void extractTypeData(getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret);
+        static void extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret);
 };
 
  

@@ -5,23 +5,23 @@
 #include "MultithreadTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 #include "MultithreadTestRequestReplyPlugin.h"
 
 #include "MultithreadTestServerRPCSupport.h"
 
-MultithreadTestServer::MultithreadTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new MultithreadTestServerImpl();
 
     createRPCs();
 }
 
-MultithreadTestServer::MultithreadTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new MultithreadTestServerImpl();
     
@@ -35,10 +35,10 @@ MultithreadTestServer::~MultithreadTestServer()
 
 void MultithreadTestServer::createRPCs()
 {
-    this->setRPC(new testServerRPC("test", this,
-                testRequestUtils::registerType(getParticipant()),
-                testReplyUtils::registerType(getParticipant()),
-                &MultithreadTestServer::test, getParticipant()));
+    this->setRPC(new MultithreadTest_testServerRPC("test", this,
+                MultithreadTest_testRequestUtils::registerType(getParticipant()),
+                MultithreadTest_testReplyUtils::registerType(getParticipant()),
+                &MultithreadTestServer::test));
 
 }
 
@@ -50,25 +50,31 @@ void MultithreadTestServer::test(eProsima::DDSRPC::Server *server, void *request
     Dato dato2;
     memset(&dato2, 0, sizeof(Dato));    
     DDS_Long  test_ret = 0;       
-    testReply replyData;
+    MultithreadTest_testReply replyData;
     
 
-    testRequestUtils::extractTypeData(*(testRequest*)requestData, dato1);
+    MultithreadTest_testRequestUtils::extractTypeData(*(MultithreadTest_testRequest*)requestData, dato1);
 
     try
     {
         test_ret = srv->_impl->test(dato1, dato2);
 
-        testReplyUtils::setTypeData(replyData, dato2, test_ret);
+        MultithreadTest_testReplyUtils::setTypeData(replyData, dato2, test_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    testRequestTypeSupport::delete_data((testRequest*)requestData);
+    MultithreadTest_testRequestTypeSupport::delete_data((MultithreadTest_testRequest*)requestData);
     
         
     Dato_finalize(&dato2);    

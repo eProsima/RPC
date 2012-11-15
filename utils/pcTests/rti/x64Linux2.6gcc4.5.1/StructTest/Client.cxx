@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    StructTestProxy *proxy = new StructTestProxy();
+    StructTestProxy *proxy = new StructTestProxy("StructTestService");
 
     Envio ev;
     Recepcion duplicate_ret;
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<duplicate>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<duplicate>: %s\n", ex.what());
     }
 
     Envio_finalize(&ev);    
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<suma>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<suma>: %s\n", ex.what());
     }
 
     Envio_finalize(&ev1);    

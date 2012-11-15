@@ -13,23 +13,25 @@ class StructTest_duplicateTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        StructTest_duplicateTask(StructTest_duplicate &obj,
+        StructTest_duplicateTask(StructTest_duplicateCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~StructTest_duplicateTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        StructTest_duplicate& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        StructTest_duplicateCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           StructTest_duplicate &m_obj;
+           StructTest_duplicateCallbackHandler &m_obj;
            
-           duplicateReply m_reply;
+           StructTest_duplicateReply m_reply;
 };
 
 class StructTest_sumaTask : public eProsima::DDSRPC::AsyncTask
@@ -37,23 +39,25 @@ class StructTest_sumaTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        StructTest_sumaTask(StructTest_suma &obj,
+        StructTest_sumaTask(StructTest_sumaCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~StructTest_sumaTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        StructTest_suma& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        StructTest_sumaCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           StructTest_suma &m_obj;
+           StructTest_sumaCallbackHandler &m_obj;
            
-           sumaReply m_reply;
+           StructTest_sumaReply m_reply;
 };
 
 #endif // _StructTest_ASYNC_SUPPORT_H_

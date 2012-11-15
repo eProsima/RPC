@@ -54,22 +54,22 @@
 
 
 /* --------------------------------------------------------------------------------------
- *  Type duplicateRequest
+ *  Type StructTest_duplicateRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-duplicateRequest *
-duplicateRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    duplicateRequest *sample = NULL;
+StructTest_duplicateRequest *
+StructTest_duplicateRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    StructTest_duplicateRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, duplicateRequest);
+        &sample, StructTest_duplicateRequest);
 
     if(sample != NULL) {
-        if (!duplicateRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!StructTest_duplicateRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -78,44 +78,44 @@ duplicateRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-duplicateRequest *
-duplicateRequestPluginSupport_create_data(void)
+StructTest_duplicateRequest *
+StructTest_duplicateRequestPluginSupport_create_data(void)
 {
-    return duplicateRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return StructTest_duplicateRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-duplicateRequestPluginSupport_destroy_data_ex(
-    duplicateRequest *sample,RTIBool deallocate_pointers) {
+StructTest_duplicateRequestPluginSupport_destroy_data_ex(
+    StructTest_duplicateRequest *sample,RTIBool deallocate_pointers) {
 
-    duplicateRequest_finalize_ex(sample,deallocate_pointers);
+    StructTest_duplicateRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-duplicateRequestPluginSupport_destroy_data(
-    duplicateRequest *sample) {
+StructTest_duplicateRequestPluginSupport_destroy_data(
+    StructTest_duplicateRequest *sample) {
 
-    duplicateRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    StructTest_duplicateRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-duplicateRequestPluginSupport_copy_data(
-    duplicateRequest *dst,
-    const duplicateRequest *src)
+StructTest_duplicateRequestPluginSupport_copy_data(
+    StructTest_duplicateRequest *dst,
+    const StructTest_duplicateRequest *src)
 {
-    return duplicateRequest_copy(dst,src);
+    return StructTest_duplicateRequest_copy(dst,src);
 }
 
 
 void 
-duplicateRequestPluginSupport_print_data(
-    const duplicateRequest *sample,
+StructTest_duplicateRequestPluginSupport_print_data(
+    const StructTest_duplicateRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -135,11 +135,8 @@ duplicateRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     EnvioPluginSupport_print_data(
         &sample->ev, "ev", indent_level + 1);
@@ -147,40 +144,40 @@ duplicateRequestPluginSupport_print_data(
 
 }
 
-duplicateRequest *
-duplicateRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    duplicateRequest *key = NULL;
+StructTest_duplicateRequest *
+StructTest_duplicateRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    StructTest_duplicateRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, duplicateRequestKeyHolder);
+        &key, StructTest_duplicateRequestKeyHolder);
 
-    duplicateRequest_initialize_ex(key,allocate_pointers);
+    StructTest_duplicateRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-duplicateRequest *
-duplicateRequestPluginSupport_create_key(void)
+StructTest_duplicateRequest *
+StructTest_duplicateRequestPluginSupport_create_key(void)
 {
-    return  duplicateRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  StructTest_duplicateRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-duplicateRequestPluginSupport_destroy_key_ex(
-    duplicateRequestKeyHolder *key,RTIBool deallocate_pointers)
+StructTest_duplicateRequestPluginSupport_destroy_key_ex(
+    StructTest_duplicateRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    duplicateRequest_finalize_ex(key,deallocate_pointers);
+    StructTest_duplicateRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-duplicateRequestPluginSupport_destroy_key(
-    duplicateRequestKeyHolder *key) {
+StructTest_duplicateRequestPluginSupport_destroy_key(
+    StructTest_duplicateRequestKeyHolder *key) {
 
-  duplicateRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  StructTest_duplicateRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -193,7 +190,7 @@ duplicateRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-duplicateRequestPlugin_on_participant_attached(
+StructTest_duplicateRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -212,7 +209,7 @@ duplicateRequestPlugin_on_participant_attached(
 
 
 void 
-duplicateRequestPlugin_on_participant_detached(
+StructTest_duplicateRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -221,7 +218,7 @@ duplicateRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-duplicateRequestPlugin_on_endpoint_attached(
+StructTest_duplicateRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -239,19 +236,19 @@ duplicateRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            duplicateRequestPluginSupport_create_data,
+            StructTest_duplicateRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            duplicateRequestPluginSupport_destroy_data,
+            StructTest_duplicateRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            duplicateRequestPluginSupport_create_key,
+            StructTest_duplicateRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            duplicateRequestPluginSupport_destroy_key);
+            StructTest_duplicateRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = duplicateRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = StructTest_duplicateRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -267,9 +264,9 @@ duplicateRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                duplicateRequestPlugin_get_serialized_sample_max_size, epd,
+                StructTest_duplicateRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            duplicateRequestPlugin_get_serialized_sample_size,
+            StructTest_duplicateRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -283,7 +280,7 @@ duplicateRequestPlugin_on_endpoint_attached(
 
 
 void 
-duplicateRequestPlugin_on_endpoint_detached(
+StructTest_duplicateRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -292,13 +289,13 @@ duplicateRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-duplicateRequestPlugin_copy_sample(
+StructTest_duplicateRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *dst,
-    const duplicateRequest *src)
+    StructTest_duplicateRequest *dst,
+    const StructTest_duplicateRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return duplicateRequestPluginSupport_copy_data(dst,src);
+    return StructTest_duplicateRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -307,9 +304,9 @@ duplicateRequestPlugin_copy_sample(
 
 
 RTIBool 
-duplicateRequestPlugin_serialize(
+StructTest_duplicateRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateRequest *sample, 
+    const StructTest_duplicateRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -336,18 +333,13 @@ duplicateRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -373,9 +365,9 @@ duplicateRequestPlugin_serialize(
 
 
 RTIBool 
-duplicateRequestPlugin_deserialize_sample(
+StructTest_duplicateRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *sample,
+    StructTest_duplicateRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -400,17 +392,12 @@ duplicateRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -437,9 +424,9 @@ duplicateRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-duplicateRequestPlugin_deserialize(
+StructTest_duplicateRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest **sample,
+    StructTest_duplicateRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -449,7 +436,7 @@ duplicateRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return duplicateRequestPlugin_deserialize_sample( 
+    return StructTest_duplicateRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -458,7 +445,7 @@ duplicateRequestPlugin_deserialize(
 
 
 
-RTIBool duplicateRequestPlugin_skip(
+RTIBool StructTest_duplicateRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -483,15 +470,11 @@ RTIBool duplicateRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -516,7 +499,7 @@ RTIBool duplicateRequestPlugin_skip(
 
 
 unsigned int 
-duplicateRequestPlugin_get_serialized_sample_max_size(
+StructTest_duplicateRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -544,11 +527,8 @@ duplicateRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EnvioPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -562,7 +542,7 @@ duplicateRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-duplicateRequestPlugin_get_serialized_sample_min_size(
+StructTest_duplicateRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -590,11 +570,8 @@ duplicateRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EnvioPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -614,12 +591,12 @@ duplicateRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-duplicateRequestPlugin_get_serialized_sample_size(
+StructTest_duplicateRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const duplicateRequest * sample) 
+    const StructTest_duplicateRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -644,12 +621,9 @@ duplicateRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += EnvioPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -668,7 +642,7 @@ duplicateRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-duplicateRequestPlugin_get_key_kind(void)
+StructTest_duplicateRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -677,9 +651,9 @@ duplicateRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-duplicateRequestPlugin_serialize_key(
+StructTest_duplicateRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateRequest *sample, 
+    const StructTest_duplicateRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -704,18 +678,13 @@ duplicateRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -731,9 +700,9 @@ duplicateRequestPlugin_serialize_key(
 }
 
 
-RTIBool duplicateRequestPlugin_deserialize_key_sample(
+RTIBool StructTest_duplicateRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *sample, 
+    StructTest_duplicateRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -758,17 +727,12 @@ RTIBool duplicateRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -785,9 +749,9 @@ RTIBool duplicateRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool duplicateRequestPlugin_deserialize_key(
+RTIBool StructTest_duplicateRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest **sample, 
+    StructTest_duplicateRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -795,7 +759,7 @@ RTIBool duplicateRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return duplicateRequestPlugin_deserialize_key_sample(
+    return StructTest_duplicateRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -803,7 +767,7 @@ RTIBool duplicateRequestPlugin_deserialize_key(
 
 
 unsigned int
-duplicateRequestPlugin_get_serialized_key_max_size(
+StructTest_duplicateRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -833,11 +797,8 @@ duplicateRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -848,9 +809,9 @@ duplicateRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-duplicateRequestPlugin_serialized_sample_to_key(
+StructTest_duplicateRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *sample,
+    StructTest_duplicateRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -873,17 +834,12 @@ duplicateRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -911,21 +867,16 @@ duplicateRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-duplicateRequestPlugin_instance_to_key(
+StructTest_duplicateRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequestKeyHolder *dst, 
-    const duplicateRequest *src)
+    StructTest_duplicateRequestKeyHolder *dst, 
+    const StructTest_duplicateRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -934,21 +885,16 @@ duplicateRequestPlugin_instance_to_key(
 
 
 RTIBool 
-duplicateRequestPlugin_key_to_instance(
+StructTest_duplicateRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateRequest *dst, const
-    duplicateRequestKeyHolder *src)
+    StructTest_duplicateRequest *dst, const
+    StructTest_duplicateRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -957,10 +903,10 @@ duplicateRequestPlugin_key_to_instance(
 
 
 RTIBool 
-duplicateRequestPlugin_instance_to_keyhash(
+StructTest_duplicateRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const duplicateRequest *instance)
+    const StructTest_duplicateRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -976,7 +922,7 @@ duplicateRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!duplicateRequestPlugin_serialize_key(
+    if (!StructTest_duplicateRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -997,7 +943,7 @@ duplicateRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-duplicateRequestPlugin_serialized_sample_to_keyhash(
+StructTest_duplicateRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1005,7 +951,7 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    duplicateRequest * sample;
+    StructTest_duplicateRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1020,7 +966,7 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (duplicateRequest *)
+    sample = (StructTest_duplicateRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -1028,17 +974,12 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1047,7 +988,7 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!duplicateRequestPlugin_instance_to_keyhash(
+    if (!StructTest_duplicateRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -1060,7 +1001,7 @@ duplicateRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *duplicateRequestPlugin_new(void) 
+struct PRESTypePlugin *StructTest_duplicateRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -1077,131 +1018,131 @@ struct PRESTypePlugin *duplicateRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        duplicateRequestPlugin_on_participant_attached;
+        StructTest_duplicateRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        duplicateRequestPlugin_on_participant_detached;
+        StructTest_duplicateRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        duplicateRequestPlugin_on_endpoint_attached;
+        StructTest_duplicateRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        duplicateRequestPlugin_on_endpoint_detached;
+        StructTest_duplicateRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        duplicateRequestPlugin_copy_sample;
+        StructTest_duplicateRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        duplicateRequestPlugin_create_sample;
+        StructTest_duplicateRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        duplicateRequestPlugin_destroy_sample;
+        StructTest_duplicateRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        duplicateRequestPlugin_serialize;
+        StructTest_duplicateRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        duplicateRequestPlugin_deserialize;
+        StructTest_duplicateRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        duplicateRequestPlugin_get_serialized_sample_max_size;
+        StructTest_duplicateRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        duplicateRequestPlugin_get_serialized_sample_min_size;
+        StructTest_duplicateRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        duplicateRequestPlugin_get_sample;
+        StructTest_duplicateRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        duplicateRequestPlugin_return_sample;
+        StructTest_duplicateRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        duplicateRequestPlugin_get_key_kind;
+        StructTest_duplicateRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        duplicateRequestPlugin_get_serialized_key_max_size;
+        StructTest_duplicateRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        duplicateRequestPlugin_serialize_key;
+        StructTest_duplicateRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        duplicateRequestPlugin_deserialize_key;
+        StructTest_duplicateRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        duplicateRequestPlugin_deserialize_key_sample;
+        StructTest_duplicateRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        duplicateRequestPlugin_instance_to_keyhash;
+        StructTest_duplicateRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        duplicateRequestPlugin_serialized_sample_to_keyhash;
+        StructTest_duplicateRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        duplicateRequestPlugin_get_key;
+        StructTest_duplicateRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        duplicateRequestPlugin_return_key;
+        StructTest_duplicateRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        duplicateRequestPlugin_instance_to_key;
+        StructTest_duplicateRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        duplicateRequestPlugin_key_to_instance;
+        StructTest_duplicateRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)duplicateRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)StructTest_duplicateRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        duplicateRequestPlugin_get_buffer;
+        StructTest_duplicateRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        duplicateRequestPlugin_return_buffer;
+        StructTest_duplicateRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        duplicateRequestPlugin_get_serialized_sample_size;
+        StructTest_duplicateRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = duplicateRequestTYPENAME;
+    plugin->endpointTypeName = StructTest_duplicateRequestTYPENAME;
 
     return plugin;
 }
 
 void
-duplicateRequestPlugin_delete(struct PRESTypePlugin *plugin)
+StructTest_duplicateRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type duplicateReply
+ *  Type StructTest_duplicateReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-duplicateReply *
-duplicateReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    duplicateReply *sample = NULL;
+StructTest_duplicateReply *
+StructTest_duplicateReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    StructTest_duplicateReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, duplicateReply);
+        &sample, StructTest_duplicateReply);
 
     if(sample != NULL) {
-        if (!duplicateReply_initialize_ex(sample,allocate_pointers)) {
+        if (!StructTest_duplicateReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -1210,44 +1151,44 @@ duplicateReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-duplicateReply *
-duplicateReplyPluginSupport_create_data(void)
+StructTest_duplicateReply *
+StructTest_duplicateReplyPluginSupport_create_data(void)
 {
-    return duplicateReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return StructTest_duplicateReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-duplicateReplyPluginSupport_destroy_data_ex(
-    duplicateReply *sample,RTIBool deallocate_pointers) {
+StructTest_duplicateReplyPluginSupport_destroy_data_ex(
+    StructTest_duplicateReply *sample,RTIBool deallocate_pointers) {
 
-    duplicateReply_finalize_ex(sample,deallocate_pointers);
+    StructTest_duplicateReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-duplicateReplyPluginSupport_destroy_data(
-    duplicateReply *sample) {
+StructTest_duplicateReplyPluginSupport_destroy_data(
+    StructTest_duplicateReply *sample) {
 
-    duplicateReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    StructTest_duplicateReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-duplicateReplyPluginSupport_copy_data(
-    duplicateReply *dst,
-    const duplicateReply *src)
+StructTest_duplicateReplyPluginSupport_copy_data(
+    StructTest_duplicateReply *dst,
+    const StructTest_duplicateReply *src)
 {
-    return duplicateReply_copy(dst,src);
+    return StructTest_duplicateReply_copy(dst,src);
 }
 
 
 void 
-duplicateReplyPluginSupport_print_data(
-    const duplicateReply *sample,
+StructTest_duplicateReplyPluginSupport_print_data(
+    const StructTest_duplicateReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -1267,17 +1208,8 @@ duplicateReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     RecepcionPluginSupport_print_data(
         &sample->duplicate_ret, "duplicate_ret", indent_level + 1);
@@ -1285,40 +1217,40 @@ duplicateReplyPluginSupport_print_data(
 
 }
 
-duplicateReply *
-duplicateReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    duplicateReply *key = NULL;
+StructTest_duplicateReply *
+StructTest_duplicateReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    StructTest_duplicateReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, duplicateReplyKeyHolder);
+        &key, StructTest_duplicateReplyKeyHolder);
 
-    duplicateReply_initialize_ex(key,allocate_pointers);
+    StructTest_duplicateReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-duplicateReply *
-duplicateReplyPluginSupport_create_key(void)
+StructTest_duplicateReply *
+StructTest_duplicateReplyPluginSupport_create_key(void)
 {
-    return  duplicateReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  StructTest_duplicateReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-duplicateReplyPluginSupport_destroy_key_ex(
-    duplicateReplyKeyHolder *key,RTIBool deallocate_pointers)
+StructTest_duplicateReplyPluginSupport_destroy_key_ex(
+    StructTest_duplicateReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    duplicateReply_finalize_ex(key,deallocate_pointers);
+    StructTest_duplicateReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-duplicateReplyPluginSupport_destroy_key(
-    duplicateReplyKeyHolder *key) {
+StructTest_duplicateReplyPluginSupport_destroy_key(
+    StructTest_duplicateReplyKeyHolder *key) {
 
-  duplicateReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  StructTest_duplicateReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -1331,7 +1263,7 @@ duplicateReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-duplicateReplyPlugin_on_participant_attached(
+StructTest_duplicateReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -1350,7 +1282,7 @@ duplicateReplyPlugin_on_participant_attached(
 
 
 void 
-duplicateReplyPlugin_on_participant_detached(
+StructTest_duplicateReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -1359,7 +1291,7 @@ duplicateReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-duplicateReplyPlugin_on_endpoint_attached(
+StructTest_duplicateReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -1377,19 +1309,19 @@ duplicateReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            duplicateReplyPluginSupport_create_data,
+            StructTest_duplicateReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            duplicateReplyPluginSupport_destroy_data,
+            StructTest_duplicateReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            duplicateReplyPluginSupport_create_key,
+            StructTest_duplicateReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            duplicateReplyPluginSupport_destroy_key);
+            StructTest_duplicateReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = duplicateReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = StructTest_duplicateReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -1405,9 +1337,9 @@ duplicateReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                duplicateReplyPlugin_get_serialized_sample_max_size, epd,
+                StructTest_duplicateReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            duplicateReplyPlugin_get_serialized_sample_size,
+            StructTest_duplicateReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -1421,7 +1353,7 @@ duplicateReplyPlugin_on_endpoint_attached(
 
 
 void 
-duplicateReplyPlugin_on_endpoint_detached(
+StructTest_duplicateReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -1430,13 +1362,13 @@ duplicateReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-duplicateReplyPlugin_copy_sample(
+StructTest_duplicateReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *dst,
-    const duplicateReply *src)
+    StructTest_duplicateReply *dst,
+    const StructTest_duplicateReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return duplicateReplyPluginSupport_copy_data(dst,src);
+    return StructTest_duplicateReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1445,9 +1377,9 @@ duplicateReplyPlugin_copy_sample(
 
 
 RTIBool 
-duplicateReplyPlugin_serialize(
+StructTest_duplicateReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateReply *sample, 
+    const StructTest_duplicateReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1474,33 +1406,13 @@ duplicateReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1526,9 +1438,9 @@ duplicateReplyPlugin_serialize(
 
 
 RTIBool 
-duplicateReplyPlugin_deserialize_sample(
+StructTest_duplicateReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *sample,
+    StructTest_duplicateReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1553,31 +1465,12 @@ duplicateReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1604,9 +1497,9 @@ duplicateReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-duplicateReplyPlugin_deserialize(
+StructTest_duplicateReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply **sample,
+    StructTest_duplicateReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -1616,7 +1509,7 @@ duplicateReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return duplicateReplyPlugin_deserialize_sample( 
+    return StructTest_duplicateReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1625,7 +1518,7 @@ duplicateReplyPlugin_deserialize(
 
 
 
-RTIBool duplicateReplyPlugin_skip(
+RTIBool StructTest_duplicateReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -1650,27 +1543,11 @@ RTIBool duplicateReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -1695,7 +1572,7 @@ RTIBool duplicateReplyPlugin_skip(
 
 
 unsigned int 
-duplicateReplyPlugin_get_serialized_sample_max_size(
+StructTest_duplicateReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1723,17 +1600,8 @@ duplicateReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RecepcionPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -1747,7 +1615,7 @@ duplicateReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-duplicateReplyPlugin_get_serialized_sample_min_size(
+StructTest_duplicateReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1775,17 +1643,8 @@ duplicateReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RecepcionPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -1805,12 +1664,12 @@ duplicateReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-duplicateReplyPlugin_get_serialized_sample_size(
+StructTest_duplicateReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const duplicateReply * sample) 
+    const StructTest_duplicateReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -1835,19 +1694,9 @@ duplicateReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += RecepcionPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -1866,7 +1715,7 @@ duplicateReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-duplicateReplyPlugin_get_key_kind(void)
+StructTest_duplicateReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -1875,9 +1724,9 @@ duplicateReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-duplicateReplyPlugin_serialize_key(
+StructTest_duplicateReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const duplicateReply *sample, 
+    const StructTest_duplicateReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1902,28 +1751,13 @@ duplicateReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1939,9 +1773,9 @@ duplicateReplyPlugin_serialize_key(
 }
 
 
-RTIBool duplicateReplyPlugin_deserialize_key_sample(
+RTIBool StructTest_duplicateReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *sample, 
+    StructTest_duplicateReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1966,26 +1800,12 @@ RTIBool duplicateReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2002,9 +1822,9 @@ RTIBool duplicateReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool duplicateReplyPlugin_deserialize_key(
+RTIBool StructTest_duplicateReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply **sample, 
+    StructTest_duplicateReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2012,7 +1832,7 @@ RTIBool duplicateReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return duplicateReplyPlugin_deserialize_key_sample(
+    return StructTest_duplicateReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -2020,7 +1840,7 @@ RTIBool duplicateReplyPlugin_deserialize_key(
 
 
 unsigned int
-duplicateReplyPlugin_get_serialized_key_max_size(
+StructTest_duplicateReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2050,14 +1870,8 @@ duplicateReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -2068,9 +1882,9 @@ duplicateReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-duplicateReplyPlugin_serialized_sample_to_key(
+StructTest_duplicateReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *sample,
+    StructTest_duplicateReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2093,30 +1907,12 @@ duplicateReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -2144,26 +1940,16 @@ duplicateReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-duplicateReplyPlugin_instance_to_key(
+StructTest_duplicateReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReplyKeyHolder *dst, 
-    const duplicateReply *src)
+    StructTest_duplicateReplyKeyHolder *dst, 
+    const StructTest_duplicateReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2172,26 +1958,16 @@ duplicateReplyPlugin_instance_to_key(
 
 
 RTIBool 
-duplicateReplyPlugin_key_to_instance(
+StructTest_duplicateReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    duplicateReply *dst, const
-    duplicateReplyKeyHolder *src)
+    StructTest_duplicateReply *dst, const
+    StructTest_duplicateReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2200,10 +1976,10 @@ duplicateReplyPlugin_key_to_instance(
 
 
 RTIBool 
-duplicateReplyPlugin_instance_to_keyhash(
+StructTest_duplicateReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const duplicateReply *instance)
+    const StructTest_duplicateReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -2219,7 +1995,7 @@ duplicateReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!duplicateReplyPlugin_serialize_key(
+    if (!StructTest_duplicateReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -2240,7 +2016,7 @@ duplicateReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-duplicateReplyPlugin_serialized_sample_to_keyhash(
+StructTest_duplicateReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2248,7 +2024,7 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    duplicateReply * sample;
+    StructTest_duplicateReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2263,7 +2039,7 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (duplicateReply *)
+    sample = (StructTest_duplicateReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -2271,26 +2047,12 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2299,7 +2061,7 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!duplicateReplyPlugin_instance_to_keyhash(
+    if (!StructTest_duplicateReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -2312,7 +2074,7 @@ duplicateReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *duplicateReplyPlugin_new(void) 
+struct PRESTypePlugin *StructTest_duplicateReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -2329,131 +2091,131 @@ struct PRESTypePlugin *duplicateReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        duplicateReplyPlugin_on_participant_attached;
+        StructTest_duplicateReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        duplicateReplyPlugin_on_participant_detached;
+        StructTest_duplicateReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        duplicateReplyPlugin_on_endpoint_attached;
+        StructTest_duplicateReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        duplicateReplyPlugin_on_endpoint_detached;
+        StructTest_duplicateReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        duplicateReplyPlugin_copy_sample;
+        StructTest_duplicateReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        duplicateReplyPlugin_create_sample;
+        StructTest_duplicateReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        duplicateReplyPlugin_destroy_sample;
+        StructTest_duplicateReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        duplicateReplyPlugin_serialize;
+        StructTest_duplicateReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        duplicateReplyPlugin_deserialize;
+        StructTest_duplicateReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        duplicateReplyPlugin_get_serialized_sample_max_size;
+        StructTest_duplicateReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        duplicateReplyPlugin_get_serialized_sample_min_size;
+        StructTest_duplicateReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        duplicateReplyPlugin_get_sample;
+        StructTest_duplicateReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        duplicateReplyPlugin_return_sample;
+        StructTest_duplicateReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        duplicateReplyPlugin_get_key_kind;
+        StructTest_duplicateReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        duplicateReplyPlugin_get_serialized_key_max_size;
+        StructTest_duplicateReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        duplicateReplyPlugin_serialize_key;
+        StructTest_duplicateReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        duplicateReplyPlugin_deserialize_key;
+        StructTest_duplicateReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        duplicateReplyPlugin_deserialize_key_sample;
+        StructTest_duplicateReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        duplicateReplyPlugin_instance_to_keyhash;
+        StructTest_duplicateReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        duplicateReplyPlugin_serialized_sample_to_keyhash;
+        StructTest_duplicateReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        duplicateReplyPlugin_get_key;
+        StructTest_duplicateReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        duplicateReplyPlugin_return_key;
+        StructTest_duplicateReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        duplicateReplyPlugin_instance_to_key;
+        StructTest_duplicateReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        duplicateReplyPlugin_key_to_instance;
+        StructTest_duplicateReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)duplicateReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)StructTest_duplicateReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        duplicateReplyPlugin_get_buffer;
+        StructTest_duplicateReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        duplicateReplyPlugin_return_buffer;
+        StructTest_duplicateReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        duplicateReplyPlugin_get_serialized_sample_size;
+        StructTest_duplicateReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = duplicateReplyTYPENAME;
+    plugin->endpointTypeName = StructTest_duplicateReplyTYPENAME;
 
     return plugin;
 }
 
 void
-duplicateReplyPlugin_delete(struct PRESTypePlugin *plugin)
+StructTest_duplicateReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sumaRequest
+ *  Type StructTest_sumaRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sumaRequest *
-sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sumaRequest *sample = NULL;
+StructTest_sumaRequest *
+StructTest_sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    StructTest_sumaRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sumaRequest);
+        &sample, StructTest_sumaRequest);
 
     if(sample != NULL) {
-        if (!sumaRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!StructTest_sumaRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -2462,44 +2224,44 @@ sumaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sumaRequest *
-sumaRequestPluginSupport_create_data(void)
+StructTest_sumaRequest *
+StructTest_sumaRequestPluginSupport_create_data(void)
 {
-    return sumaRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return StructTest_sumaRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_data_ex(
-    sumaRequest *sample,RTIBool deallocate_pointers) {
+StructTest_sumaRequestPluginSupport_destroy_data_ex(
+    StructTest_sumaRequest *sample,RTIBool deallocate_pointers) {
 
-    sumaRequest_finalize_ex(sample,deallocate_pointers);
+    StructTest_sumaRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_data(
-    sumaRequest *sample) {
+StructTest_sumaRequestPluginSupport_destroy_data(
+    StructTest_sumaRequest *sample) {
 
-    sumaRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    StructTest_sumaRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sumaRequestPluginSupport_copy_data(
-    sumaRequest *dst,
-    const sumaRequest *src)
+StructTest_sumaRequestPluginSupport_copy_data(
+    StructTest_sumaRequest *dst,
+    const StructTest_sumaRequest *src)
 {
-    return sumaRequest_copy(dst,src);
+    return StructTest_sumaRequest_copy(dst,src);
 }
 
 
 void 
-sumaRequestPluginSupport_print_data(
-    const sumaRequest *sample,
+StructTest_sumaRequestPluginSupport_print_data(
+    const StructTest_sumaRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -2519,11 +2281,8 @@ sumaRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     EnvioPluginSupport_print_data(
         &sample->ev1, "ev1", indent_level + 1);
@@ -2534,40 +2293,40 @@ sumaRequestPluginSupport_print_data(
 
 }
 
-sumaRequest *
-sumaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sumaRequest *key = NULL;
+StructTest_sumaRequest *
+StructTest_sumaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    StructTest_sumaRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sumaRequestKeyHolder);
+        &key, StructTest_sumaRequestKeyHolder);
 
-    sumaRequest_initialize_ex(key,allocate_pointers);
+    StructTest_sumaRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sumaRequest *
-sumaRequestPluginSupport_create_key(void)
+StructTest_sumaRequest *
+StructTest_sumaRequestPluginSupport_create_key(void)
 {
-    return  sumaRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  StructTest_sumaRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_key_ex(
-    sumaRequestKeyHolder *key,RTIBool deallocate_pointers)
+StructTest_sumaRequestPluginSupport_destroy_key_ex(
+    StructTest_sumaRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sumaRequest_finalize_ex(key,deallocate_pointers);
+    StructTest_sumaRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sumaRequestPluginSupport_destroy_key(
-    sumaRequestKeyHolder *key) {
+StructTest_sumaRequestPluginSupport_destroy_key(
+    StructTest_sumaRequestKeyHolder *key) {
 
-  sumaRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  StructTest_sumaRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -2580,7 +2339,7 @@ sumaRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sumaRequestPlugin_on_participant_attached(
+StructTest_sumaRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -2599,7 +2358,7 @@ sumaRequestPlugin_on_participant_attached(
 
 
 void 
-sumaRequestPlugin_on_participant_detached(
+StructTest_sumaRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -2608,7 +2367,7 @@ sumaRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sumaRequestPlugin_on_endpoint_attached(
+StructTest_sumaRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -2626,19 +2385,19 @@ sumaRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sumaRequestPluginSupport_create_data,
+            StructTest_sumaRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sumaRequestPluginSupport_destroy_data,
+            StructTest_sumaRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sumaRequestPluginSupport_create_key,
+            StructTest_sumaRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sumaRequestPluginSupport_destroy_key);
+            StructTest_sumaRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sumaRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = StructTest_sumaRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -2654,9 +2413,9 @@ sumaRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sumaRequestPlugin_get_serialized_sample_max_size, epd,
+                StructTest_sumaRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sumaRequestPlugin_get_serialized_sample_size,
+            StructTest_sumaRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -2670,7 +2429,7 @@ sumaRequestPlugin_on_endpoint_attached(
 
 
 void 
-sumaRequestPlugin_on_endpoint_detached(
+StructTest_sumaRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -2679,13 +2438,13 @@ sumaRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sumaRequestPlugin_copy_sample(
+StructTest_sumaRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *dst,
-    const sumaRequest *src)
+    StructTest_sumaRequest *dst,
+    const StructTest_sumaRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sumaRequestPluginSupport_copy_data(dst,src);
+    return StructTest_sumaRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -2694,9 +2453,9 @@ sumaRequestPlugin_copy_sample(
 
 
 RTIBool 
-sumaRequestPlugin_serialize(
+StructTest_sumaRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample, 
+    const StructTest_sumaRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2723,18 +2482,13 @@ sumaRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2770,9 +2524,9 @@ sumaRequestPlugin_serialize(
 
 
 RTIBool 
-sumaRequestPlugin_deserialize_sample(
+StructTest_sumaRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample,
+    StructTest_sumaRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -2797,17 +2551,12 @@ sumaRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2843,9 +2592,9 @@ sumaRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-sumaRequestPlugin_deserialize(
+StructTest_sumaRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest **sample,
+    StructTest_sumaRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -2855,7 +2604,7 @@ sumaRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sumaRequestPlugin_deserialize_sample( 
+    return StructTest_sumaRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -2864,7 +2613,7 @@ sumaRequestPlugin_deserialize(
 
 
 
-RTIBool sumaRequestPlugin_skip(
+RTIBool StructTest_sumaRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -2889,15 +2638,11 @@ RTIBool sumaRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -2930,7 +2675,7 @@ RTIBool sumaRequestPlugin_skip(
 
 
 unsigned int 
-sumaRequestPlugin_get_serialized_sample_max_size(
+StructTest_sumaRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2958,11 +2703,8 @@ sumaRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EnvioPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -2979,7 +2721,7 @@ sumaRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sumaRequestPlugin_get_serialized_sample_min_size(
+StructTest_sumaRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3007,11 +2749,8 @@ sumaRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EnvioPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -3034,12 +2773,12 @@ sumaRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sumaRequestPlugin_get_serialized_sample_size(
+StructTest_sumaRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaRequest * sample) 
+    const StructTest_sumaRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -3064,12 +2803,9 @@ sumaRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += EnvioPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -3092,7 +2828,7 @@ sumaRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sumaRequestPlugin_get_key_kind(void)
+StructTest_sumaRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -3101,9 +2837,9 @@ sumaRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-sumaRequestPlugin_serialize_key(
+StructTest_sumaRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaRequest *sample, 
+    const StructTest_sumaRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3128,18 +2864,13 @@ sumaRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3155,9 +2886,9 @@ sumaRequestPlugin_serialize_key(
 }
 
 
-RTIBool sumaRequestPlugin_deserialize_key_sample(
+RTIBool StructTest_sumaRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample, 
+    StructTest_sumaRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -3182,17 +2913,12 @@ RTIBool sumaRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3209,9 +2935,9 @@ RTIBool sumaRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool sumaRequestPlugin_deserialize_key(
+RTIBool StructTest_sumaRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest **sample, 
+    StructTest_sumaRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -3219,7 +2945,7 @@ RTIBool sumaRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sumaRequestPlugin_deserialize_key_sample(
+    return StructTest_sumaRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -3227,7 +2953,7 @@ RTIBool sumaRequestPlugin_deserialize_key(
 
 
 unsigned int
-sumaRequestPlugin_get_serialized_key_max_size(
+StructTest_sumaRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3257,11 +2983,8 @@ sumaRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -3272,9 +2995,9 @@ sumaRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sumaRequestPlugin_serialized_sample_to_key(
+StructTest_sumaRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *sample,
+    StructTest_sumaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -3297,17 +3020,12 @@ sumaRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3343,21 +3061,16 @@ sumaRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sumaRequestPlugin_instance_to_key(
+StructTest_sumaRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequestKeyHolder *dst, 
-    const sumaRequest *src)
+    StructTest_sumaRequestKeyHolder *dst, 
+    const StructTest_sumaRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -3366,21 +3079,16 @@ sumaRequestPlugin_instance_to_key(
 
 
 RTIBool 
-sumaRequestPlugin_key_to_instance(
+StructTest_sumaRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaRequest *dst, const
-    sumaRequestKeyHolder *src)
+    StructTest_sumaRequest *dst, const
+    StructTest_sumaRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -3389,10 +3097,10 @@ sumaRequestPlugin_key_to_instance(
 
 
 RTIBool 
-sumaRequestPlugin_instance_to_keyhash(
+StructTest_sumaRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaRequest *instance)
+    const StructTest_sumaRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -3408,7 +3116,7 @@ sumaRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sumaRequestPlugin_serialize_key(
+    if (!StructTest_sumaRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -3429,7 +3137,7 @@ sumaRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sumaRequestPlugin_serialized_sample_to_keyhash(
+StructTest_sumaRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -3437,7 +3145,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sumaRequest * sample;
+    StructTest_sumaRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -3452,7 +3160,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sumaRequest *)
+    sample = (StructTest_sumaRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -3460,17 +3168,12 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3479,7 +3182,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sumaRequestPlugin_instance_to_keyhash(
+    if (!StructTest_sumaRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -3492,7 +3195,7 @@ sumaRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sumaRequestPlugin_new(void) 
+struct PRESTypePlugin *StructTest_sumaRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -3509,131 +3212,131 @@ struct PRESTypePlugin *sumaRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sumaRequestPlugin_on_participant_attached;
+        StructTest_sumaRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sumaRequestPlugin_on_participant_detached;
+        StructTest_sumaRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sumaRequestPlugin_on_endpoint_attached;
+        StructTest_sumaRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sumaRequestPlugin_on_endpoint_detached;
+        StructTest_sumaRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sumaRequestPlugin_copy_sample;
+        StructTest_sumaRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sumaRequestPlugin_create_sample;
+        StructTest_sumaRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sumaRequestPlugin_destroy_sample;
+        StructTest_sumaRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sumaRequestPlugin_serialize;
+        StructTest_sumaRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sumaRequestPlugin_deserialize;
+        StructTest_sumaRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sumaRequestPlugin_get_serialized_sample_max_size;
+        StructTest_sumaRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sumaRequestPlugin_get_serialized_sample_min_size;
+        StructTest_sumaRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sumaRequestPlugin_get_sample;
+        StructTest_sumaRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sumaRequestPlugin_return_sample;
+        StructTest_sumaRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sumaRequestPlugin_get_key_kind;
+        StructTest_sumaRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sumaRequestPlugin_get_serialized_key_max_size;
+        StructTest_sumaRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sumaRequestPlugin_serialize_key;
+        StructTest_sumaRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sumaRequestPlugin_deserialize_key;
+        StructTest_sumaRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sumaRequestPlugin_deserialize_key_sample;
+        StructTest_sumaRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sumaRequestPlugin_instance_to_keyhash;
+        StructTest_sumaRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sumaRequestPlugin_serialized_sample_to_keyhash;
+        StructTest_sumaRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sumaRequestPlugin_get_key;
+        StructTest_sumaRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sumaRequestPlugin_return_key;
+        StructTest_sumaRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sumaRequestPlugin_instance_to_key;
+        StructTest_sumaRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sumaRequestPlugin_key_to_instance;
+        StructTest_sumaRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sumaRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)StructTest_sumaRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sumaRequestPlugin_get_buffer;
+        StructTest_sumaRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sumaRequestPlugin_return_buffer;
+        StructTest_sumaRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sumaRequestPlugin_get_serialized_sample_size;
+        StructTest_sumaRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sumaRequestTYPENAME;
+    plugin->endpointTypeName = StructTest_sumaRequestTYPENAME;
 
     return plugin;
 }
 
 void
-sumaRequestPlugin_delete(struct PRESTypePlugin *plugin)
+StructTest_sumaRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sumaReply
+ *  Type StructTest_sumaReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sumaReply *
-sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sumaReply *sample = NULL;
+StructTest_sumaReply *
+StructTest_sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    StructTest_sumaReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sumaReply);
+        &sample, StructTest_sumaReply);
 
     if(sample != NULL) {
-        if (!sumaReply_initialize_ex(sample,allocate_pointers)) {
+        if (!StructTest_sumaReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -3642,44 +3345,44 @@ sumaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sumaReply *
-sumaReplyPluginSupport_create_data(void)
+StructTest_sumaReply *
+StructTest_sumaReplyPluginSupport_create_data(void)
 {
-    return sumaReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return StructTest_sumaReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_data_ex(
-    sumaReply *sample,RTIBool deallocate_pointers) {
+StructTest_sumaReplyPluginSupport_destroy_data_ex(
+    StructTest_sumaReply *sample,RTIBool deallocate_pointers) {
 
-    sumaReply_finalize_ex(sample,deallocate_pointers);
+    StructTest_sumaReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_data(
-    sumaReply *sample) {
+StructTest_sumaReplyPluginSupport_destroy_data(
+    StructTest_sumaReply *sample) {
 
-    sumaReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    StructTest_sumaReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sumaReplyPluginSupport_copy_data(
-    sumaReply *dst,
-    const sumaReply *src)
+StructTest_sumaReplyPluginSupport_copy_data(
+    StructTest_sumaReply *dst,
+    const StructTest_sumaReply *src)
 {
-    return sumaReply_copy(dst,src);
+    return StructTest_sumaReply_copy(dst,src);
 }
 
 
 void 
-sumaReplyPluginSupport_print_data(
-    const sumaReply *sample,
+StructTest_sumaReplyPluginSupport_print_data(
+    const StructTest_sumaReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -3699,17 +3402,8 @@ sumaReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     RecepcionPluginSupport_print_data(
         &sample->suma_ret, "suma_ret", indent_level + 1);
@@ -3717,40 +3411,40 @@ sumaReplyPluginSupport_print_data(
 
 }
 
-sumaReply *
-sumaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sumaReply *key = NULL;
+StructTest_sumaReply *
+StructTest_sumaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    StructTest_sumaReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sumaReplyKeyHolder);
+        &key, StructTest_sumaReplyKeyHolder);
 
-    sumaReply_initialize_ex(key,allocate_pointers);
+    StructTest_sumaReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sumaReply *
-sumaReplyPluginSupport_create_key(void)
+StructTest_sumaReply *
+StructTest_sumaReplyPluginSupport_create_key(void)
 {
-    return  sumaReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  StructTest_sumaReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_key_ex(
-    sumaReplyKeyHolder *key,RTIBool deallocate_pointers)
+StructTest_sumaReplyPluginSupport_destroy_key_ex(
+    StructTest_sumaReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sumaReply_finalize_ex(key,deallocate_pointers);
+    StructTest_sumaReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sumaReplyPluginSupport_destroy_key(
-    sumaReplyKeyHolder *key) {
+StructTest_sumaReplyPluginSupport_destroy_key(
+    StructTest_sumaReplyKeyHolder *key) {
 
-  sumaReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  StructTest_sumaReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -3763,7 +3457,7 @@ sumaReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sumaReplyPlugin_on_participant_attached(
+StructTest_sumaReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -3782,7 +3476,7 @@ sumaReplyPlugin_on_participant_attached(
 
 
 void 
-sumaReplyPlugin_on_participant_detached(
+StructTest_sumaReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -3791,7 +3485,7 @@ sumaReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sumaReplyPlugin_on_endpoint_attached(
+StructTest_sumaReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -3809,19 +3503,19 @@ sumaReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sumaReplyPluginSupport_create_data,
+            StructTest_sumaReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sumaReplyPluginSupport_destroy_data,
+            StructTest_sumaReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sumaReplyPluginSupport_create_key,
+            StructTest_sumaReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sumaReplyPluginSupport_destroy_key);
+            StructTest_sumaReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sumaReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = StructTest_sumaReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -3837,9 +3531,9 @@ sumaReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sumaReplyPlugin_get_serialized_sample_max_size, epd,
+                StructTest_sumaReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sumaReplyPlugin_get_serialized_sample_size,
+            StructTest_sumaReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -3853,7 +3547,7 @@ sumaReplyPlugin_on_endpoint_attached(
 
 
 void 
-sumaReplyPlugin_on_endpoint_detached(
+StructTest_sumaReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -3862,13 +3556,13 @@ sumaReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sumaReplyPlugin_copy_sample(
+StructTest_sumaReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *dst,
-    const sumaReply *src)
+    StructTest_sumaReply *dst,
+    const StructTest_sumaReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sumaReplyPluginSupport_copy_data(dst,src);
+    return StructTest_sumaReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -3877,9 +3571,9 @@ sumaReplyPlugin_copy_sample(
 
 
 RTIBool 
-sumaReplyPlugin_serialize(
+StructTest_sumaReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample, 
+    const StructTest_sumaReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3906,33 +3600,13 @@ sumaReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -3958,9 +3632,9 @@ sumaReplyPlugin_serialize(
 
 
 RTIBool 
-sumaReplyPlugin_deserialize_sample(
+StructTest_sumaReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample,
+    StructTest_sumaReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -3985,31 +3659,12 @@ sumaReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -4036,9 +3691,9 @@ sumaReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-sumaReplyPlugin_deserialize(
+StructTest_sumaReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply **sample,
+    StructTest_sumaReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -4048,7 +3703,7 @@ sumaReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sumaReplyPlugin_deserialize_sample( 
+    return StructTest_sumaReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -4057,7 +3712,7 @@ sumaReplyPlugin_deserialize(
 
 
 
-RTIBool sumaReplyPlugin_skip(
+RTIBool StructTest_sumaReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -4082,27 +3737,11 @@ RTIBool sumaReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -4127,7 +3766,7 @@ RTIBool sumaReplyPlugin_skip(
 
 
 unsigned int 
-sumaReplyPlugin_get_serialized_sample_max_size(
+StructTest_sumaReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4155,17 +3794,8 @@ sumaReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RecepcionPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -4179,7 +3809,7 @@ sumaReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sumaReplyPlugin_get_serialized_sample_min_size(
+StructTest_sumaReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4207,17 +3837,8 @@ sumaReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RecepcionPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -4237,12 +3858,12 @@ sumaReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sumaReplyPlugin_get_serialized_sample_size(
+StructTest_sumaReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sumaReply * sample) 
+    const StructTest_sumaReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -4267,19 +3888,9 @@ sumaReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += RecepcionPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -4298,7 +3909,7 @@ sumaReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sumaReplyPlugin_get_key_kind(void)
+StructTest_sumaReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -4307,9 +3918,9 @@ sumaReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-sumaReplyPlugin_serialize_key(
+StructTest_sumaReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sumaReply *sample, 
+    const StructTest_sumaReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4334,28 +3945,13 @@ sumaReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4371,9 +3967,9 @@ sumaReplyPlugin_serialize_key(
 }
 
 
-RTIBool sumaReplyPlugin_deserialize_key_sample(
+RTIBool StructTest_sumaReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample, 
+    StructTest_sumaReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -4398,26 +3994,12 @@ RTIBool sumaReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4434,9 +4016,9 @@ RTIBool sumaReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool sumaReplyPlugin_deserialize_key(
+RTIBool StructTest_sumaReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply **sample, 
+    StructTest_sumaReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -4444,7 +4026,7 @@ RTIBool sumaReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sumaReplyPlugin_deserialize_key_sample(
+    return StructTest_sumaReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -4452,7 +4034,7 @@ RTIBool sumaReplyPlugin_deserialize_key(
 
 
 unsigned int
-sumaReplyPlugin_get_serialized_key_max_size(
+StructTest_sumaReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4482,14 +4064,8 @@ sumaReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -4500,9 +4076,9 @@ sumaReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sumaReplyPlugin_serialized_sample_to_key(
+StructTest_sumaReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *sample,
+    StructTest_sumaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -4525,30 +4101,12 @@ sumaReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -4576,26 +4134,16 @@ sumaReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sumaReplyPlugin_instance_to_key(
+StructTest_sumaReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReplyKeyHolder *dst, 
-    const sumaReply *src)
+    StructTest_sumaReplyKeyHolder *dst, 
+    const StructTest_sumaReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -4604,26 +4152,16 @@ sumaReplyPlugin_instance_to_key(
 
 
 RTIBool 
-sumaReplyPlugin_key_to_instance(
+StructTest_sumaReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sumaReply *dst, const
-    sumaReplyKeyHolder *src)
+    StructTest_sumaReply *dst, const
+    StructTest_sumaReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -4632,10 +4170,10 @@ sumaReplyPlugin_key_to_instance(
 
 
 RTIBool 
-sumaReplyPlugin_instance_to_keyhash(
+StructTest_sumaReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sumaReply *instance)
+    const StructTest_sumaReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -4651,7 +4189,7 @@ sumaReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sumaReplyPlugin_serialize_key(
+    if (!StructTest_sumaReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -4672,7 +4210,7 @@ sumaReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sumaReplyPlugin_serialized_sample_to_keyhash(
+StructTest_sumaReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -4680,7 +4218,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sumaReply * sample;
+    StructTest_sumaReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -4695,7 +4233,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sumaReply *)
+    sample = (StructTest_sumaReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -4703,26 +4241,12 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4731,7 +4255,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sumaReplyPlugin_instance_to_keyhash(
+    if (!StructTest_sumaReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -4744,7 +4268,7 @@ sumaReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sumaReplyPlugin_new(void) 
+struct PRESTypePlugin *StructTest_sumaReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -4761,110 +4285,110 @@ struct PRESTypePlugin *sumaReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sumaReplyPlugin_on_participant_attached;
+        StructTest_sumaReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sumaReplyPlugin_on_participant_detached;
+        StructTest_sumaReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sumaReplyPlugin_on_endpoint_attached;
+        StructTest_sumaReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sumaReplyPlugin_on_endpoint_detached;
+        StructTest_sumaReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sumaReplyPlugin_copy_sample;
+        StructTest_sumaReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sumaReplyPlugin_create_sample;
+        StructTest_sumaReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sumaReplyPlugin_destroy_sample;
+        StructTest_sumaReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sumaReplyPlugin_serialize;
+        StructTest_sumaReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sumaReplyPlugin_deserialize;
+        StructTest_sumaReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sumaReplyPlugin_get_serialized_sample_max_size;
+        StructTest_sumaReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sumaReplyPlugin_get_serialized_sample_min_size;
+        StructTest_sumaReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sumaReplyPlugin_get_sample;
+        StructTest_sumaReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sumaReplyPlugin_return_sample;
+        StructTest_sumaReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sumaReplyPlugin_get_key_kind;
+        StructTest_sumaReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sumaReplyPlugin_get_serialized_key_max_size;
+        StructTest_sumaReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sumaReplyPlugin_serialize_key;
+        StructTest_sumaReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sumaReplyPlugin_deserialize_key;
+        StructTest_sumaReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sumaReplyPlugin_deserialize_key_sample;
+        StructTest_sumaReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sumaReplyPlugin_instance_to_keyhash;
+        StructTest_sumaReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sumaReplyPlugin_serialized_sample_to_keyhash;
+        StructTest_sumaReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sumaReplyPlugin_get_key;
+        StructTest_sumaReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sumaReplyPlugin_return_key;
+        StructTest_sumaReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sumaReplyPlugin_instance_to_key;
+        StructTest_sumaReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sumaReplyPlugin_key_to_instance;
+        StructTest_sumaReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sumaReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)StructTest_sumaReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sumaReplyPlugin_get_buffer;
+        StructTest_sumaReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sumaReplyPlugin_return_buffer;
+        StructTest_sumaReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sumaReplyPlugin_get_serialized_sample_size;
+        StructTest_sumaReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sumaReplyTYPENAME;
+    plugin->endpointTypeName = StructTest_sumaReplyTYPENAME;
 
     return plugin;
 }
 
 void
-sumaReplyPlugin_delete(struct PRESTypePlugin *plugin)
+StructTest_sumaReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

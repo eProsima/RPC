@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestRequestReplySupport_1689902903_h
-#define SequenceTestRequestReplySupport_1689902903_h
+#ifndef SequenceTestRequestReplySupport_1689902507_h
+#define SequenceTestRequestReplySupport_1689902507_h
 
 /* Uses */
 #include "SequenceTestRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getSLongRequestTypeSupport, getSLongRequest);
+DDS_TYPESUPPORT_CPP(SequenceTest_getSLongRequestTypeSupport, SequenceTest_getSLongRequest);
 
-DDS_DATAWRITER_CPP(getSLongRequestDataWriter, getSLongRequest);
-DDS_DATAREADER_CPP(getSLongRequestDataReader, getSLongRequestSeq, getSLongRequest);
+DDS_DATAWRITER_CPP(SequenceTest_getSLongRequestDataWriter, SequenceTest_getSLongRequest);
+DDS_DATAREADER_CPP(SequenceTest_getSLongRequestDataReader, SequenceTest_getSLongRequestSeq, SequenceTest_getSLongRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getSLongRequestTypeSupport, getSLongRequest);
-DDS_DATAWRITER_C(getSLongRequestDataWriter, getSLongRequest);
-DDS_DATAREADER_C(getSLongRequestDataReader, getSLongRequestSeq, getSLongRequest);
+DDS_TYPESUPPORT_C(SequenceTest_getSLongRequestTypeSupport, SequenceTest_getSLongRequest);
+DDS_DATAWRITER_C(SequenceTest_getSLongRequestDataWriter, SequenceTest_getSLongRequest);
+DDS_DATAREADER_C(SequenceTest_getSLongRequestDataReader, SequenceTest_getSLongRequestSeq, SequenceTest_getSLongRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(getSLongRequestDataReader, getSLongRequestSeq, getSLongRequest)
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getSLongReplyTypeSupport, getSLongReply);
+DDS_TYPESUPPORT_CPP(SequenceTest_getSLongReplyTypeSupport, SequenceTest_getSLongReply);
 
-DDS_DATAWRITER_CPP(getSLongReplyDataWriter, getSLongReply);
-DDS_DATAREADER_CPP(getSLongReplyDataReader, getSLongReplySeq, getSLongReply);
+DDS_DATAWRITER_CPP(SequenceTest_getSLongReplyDataWriter, SequenceTest_getSLongReply);
+DDS_DATAREADER_CPP(SequenceTest_getSLongReplyDataReader, SequenceTest_getSLongReplySeq, SequenceTest_getSLongReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getSLongReplyTypeSupport, getSLongReply);
-DDS_DATAWRITER_C(getSLongReplyDataWriter, getSLongReply);
-DDS_DATAREADER_C(getSLongReplyDataReader, getSLongReplySeq, getSLongReply);
+DDS_TYPESUPPORT_C(SequenceTest_getSLongReplyTypeSupport, SequenceTest_getSLongReply);
+DDS_DATAWRITER_C(SequenceTest_getSLongReplyDataWriter, SequenceTest_getSLongReply);
+DDS_DATAREADER_C(SequenceTest_getSLongReplyDataReader, SequenceTest_getSLongReplySeq, SequenceTest_getSLongReply);
 
 #endif
 
@@ -161,17 +161,17 @@ DDS_DATAREADER_C(getSLongReplyDataReader, getSLongReplySeq, getSLongReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringRequestTypeSupport, getStringRequest);
+DDS_TYPESUPPORT_CPP(SequenceTest_getStringRequestTypeSupport, SequenceTest_getStringRequest);
 
-DDS_DATAWRITER_CPP(getStringRequestDataWriter, getStringRequest);
-DDS_DATAREADER_CPP(getStringRequestDataReader, getStringRequestSeq, getStringRequest);
+DDS_DATAWRITER_CPP(SequenceTest_getStringRequestDataWriter, SequenceTest_getStringRequest);
+DDS_DATAREADER_CPP(SequenceTest_getStringRequestDataReader, SequenceTest_getStringRequestSeq, SequenceTest_getStringRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringRequestTypeSupport, getStringRequest);
-DDS_DATAWRITER_C(getStringRequestDataWriter, getStringRequest);
-DDS_DATAREADER_C(getStringRequestDataReader, getStringRequestSeq, getStringRequest);
+DDS_TYPESUPPORT_C(SequenceTest_getStringRequestTypeSupport, SequenceTest_getStringRequest);
+DDS_DATAWRITER_C(SequenceTest_getStringRequestDataWriter, SequenceTest_getStringRequest);
+DDS_DATAREADER_C(SequenceTest_getStringRequestDataReader, SequenceTest_getStringRequestSeq, SequenceTest_getStringRequest);
 
 #endif
 
@@ -213,17 +213,17 @@ DDS_DATAREADER_C(getStringRequestDataReader, getStringRequestSeq, getStringReque
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringReplyTypeSupport, getStringReply);
+DDS_TYPESUPPORT_CPP(SequenceTest_getStringReplyTypeSupport, SequenceTest_getStringReply);
 
-DDS_DATAWRITER_CPP(getStringReplyDataWriter, getStringReply);
-DDS_DATAREADER_CPP(getStringReplyDataReader, getStringReplySeq, getStringReply);
+DDS_DATAWRITER_CPP(SequenceTest_getStringReplyDataWriter, SequenceTest_getStringReply);
+DDS_DATAREADER_CPP(SequenceTest_getStringReplyDataReader, SequenceTest_getStringReplySeq, SequenceTest_getStringReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringReplyTypeSupport, getStringReply);
-DDS_DATAWRITER_C(getStringReplyDataWriter, getStringReply);
-DDS_DATAREADER_C(getStringReplyDataReader, getStringReplySeq, getStringReply);
+DDS_TYPESUPPORT_C(SequenceTest_getStringReplyTypeSupport, SequenceTest_getStringReply);
+DDS_DATAWRITER_C(SequenceTest_getStringReplyDataWriter, SequenceTest_getStringReply);
+DDS_DATAREADER_C(SequenceTest_getStringReplyDataReader, SequenceTest_getStringReplySeq, SequenceTest_getStringReply);
 
 #endif
 
@@ -265,17 +265,17 @@ DDS_DATAREADER_C(getStringReplyDataReader, getStringReplySeq, getStringReply);
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringBoundedRequestTypeSupport, getStringBoundedRequest);
+DDS_TYPESUPPORT_CPP(SequenceTest_getStringBoundedRequestTypeSupport, SequenceTest_getStringBoundedRequest);
 
-DDS_DATAWRITER_CPP(getStringBoundedRequestDataWriter, getStringBoundedRequest);
-DDS_DATAREADER_CPP(getStringBoundedRequestDataReader, getStringBoundedRequestSeq, getStringBoundedRequest);
+DDS_DATAWRITER_CPP(SequenceTest_getStringBoundedRequestDataWriter, SequenceTest_getStringBoundedRequest);
+DDS_DATAREADER_CPP(SequenceTest_getStringBoundedRequestDataReader, SequenceTest_getStringBoundedRequestSeq, SequenceTest_getStringBoundedRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringBoundedRequestTypeSupport, getStringBoundedRequest);
-DDS_DATAWRITER_C(getStringBoundedRequestDataWriter, getStringBoundedRequest);
-DDS_DATAREADER_C(getStringBoundedRequestDataReader, getStringBoundedRequestSeq, getStringBoundedRequest);
+DDS_TYPESUPPORT_C(SequenceTest_getStringBoundedRequestTypeSupport, SequenceTest_getStringBoundedRequest);
+DDS_DATAWRITER_C(SequenceTest_getStringBoundedRequestDataWriter, SequenceTest_getStringBoundedRequest);
+DDS_DATAREADER_C(SequenceTest_getStringBoundedRequestDataReader, SequenceTest_getStringBoundedRequestSeq, SequenceTest_getStringBoundedRequest);
 
 #endif
 
@@ -317,17 +317,17 @@ DDS_DATAREADER_C(getStringBoundedRequestDataReader, getStringBoundedRequestSeq, 
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getStringBoundedReplyTypeSupport, getStringBoundedReply);
+DDS_TYPESUPPORT_CPP(SequenceTest_getStringBoundedReplyTypeSupport, SequenceTest_getStringBoundedReply);
 
-DDS_DATAWRITER_CPP(getStringBoundedReplyDataWriter, getStringBoundedReply);
-DDS_DATAREADER_CPP(getStringBoundedReplyDataReader, getStringBoundedReplySeq, getStringBoundedReply);
+DDS_DATAWRITER_CPP(SequenceTest_getStringBoundedReplyDataWriter, SequenceTest_getStringBoundedReply);
+DDS_DATAREADER_CPP(SequenceTest_getStringBoundedReplyDataReader, SequenceTest_getStringBoundedReplySeq, SequenceTest_getStringBoundedReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getStringBoundedReplyTypeSupport, getStringBoundedReply);
-DDS_DATAWRITER_C(getStringBoundedReplyDataWriter, getStringBoundedReply);
-DDS_DATAREADER_C(getStringBoundedReplyDataReader, getStringBoundedReplySeq, getStringBoundedReply);
+DDS_TYPESUPPORT_C(SequenceTest_getStringBoundedReplyTypeSupport, SequenceTest_getStringBoundedReply);
+DDS_DATAWRITER_C(SequenceTest_getStringBoundedReplyDataWriter, SequenceTest_getStringBoundedReply);
+DDS_DATAREADER_C(SequenceTest_getStringBoundedReplyDataReader, SequenceTest_getStringBoundedReplySeq, SequenceTest_getStringBoundedReply);
 
 #endif
 
@@ -340,4 +340,4 @@ DDS_DATAREADER_C(getStringBoundedReplyDataReader, getStringBoundedReplySeq, getS
 
 
 
-#endif  /* SequenceTestRequestReplySupport_1689902903_h */
+#endif  /* SequenceTestRequestReplySupport_1689902507_h */

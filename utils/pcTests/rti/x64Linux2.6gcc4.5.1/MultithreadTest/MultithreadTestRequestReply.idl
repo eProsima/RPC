@@ -7,18 +7,14 @@
 
 
 
-struct testRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct MultithreadTest_testRequest{
+    RequestHeader header;  //@key
     Dato dato1;
 };  //@top-level true
 
 
-struct testReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct MultithreadTest_testReply{
+    ReplyHeader header;  //@key
     Dato dato2;
     long test_ret;
 };  //@top-level true

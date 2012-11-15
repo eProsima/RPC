@@ -13,23 +13,25 @@ class EnumYStringTest_getEnumTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        EnumYStringTest_getEnumTask(EnumYStringTest_getEnum &obj,
+        EnumYStringTest_getEnumTask(EnumYStringTest_getEnumCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~EnumYStringTest_getEnumTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        EnumYStringTest_getEnum& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        EnumYStringTest_getEnumCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           EnumYStringTest_getEnum &m_obj;
+           EnumYStringTest_getEnumCallbackHandler &m_obj;
            
-           getEnumReply m_reply;
+           EnumYStringTest_getEnumReply m_reply;
 };
 
 class EnumYStringTest_getStringTask : public eProsima::DDSRPC::AsyncTask
@@ -37,23 +39,25 @@ class EnumYStringTest_getStringTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        EnumYStringTest_getStringTask(EnumYStringTest_getString &obj,
+        EnumYStringTest_getStringTask(EnumYStringTest_getStringCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~EnumYStringTest_getStringTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        EnumYStringTest_getString& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        EnumYStringTest_getStringCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           EnumYStringTest_getString &m_obj;
+           EnumYStringTest_getStringCallbackHandler &m_obj;
            
-           getStringReply m_reply;
+           EnumYStringTest_getStringReply m_reply;
 };
 
 class EnumYStringTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
@@ -61,23 +65,25 @@ class EnumYStringTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        EnumYStringTest_getStringBoundedTask(EnumYStringTest_getStringBounded &obj,
+        EnumYStringTest_getStringBoundedTask(EnumYStringTest_getStringBoundedCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~EnumYStringTest_getStringBoundedTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        EnumYStringTest_getStringBounded& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        EnumYStringTest_getStringBoundedCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           EnumYStringTest_getStringBounded &m_obj;
+           EnumYStringTest_getStringBoundedCallbackHandler &m_obj;
            
-           getStringBoundedReply m_reply;
+           EnumYStringTest_getStringBoundedReply m_reply;
 };
 
 #endif // _EnumYStringTest_ASYNC_SUPPORT_H_

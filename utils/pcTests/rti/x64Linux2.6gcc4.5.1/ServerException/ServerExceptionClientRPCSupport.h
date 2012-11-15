@@ -9,13 +9,13 @@
 #include "ServerExceptionRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(sendExceptionClientRPC, sendExceptionRequestDataWriter, sendExceptionReplyDataReader);
+GENERIC_CLIENT_RPC(ServerException_sendExceptionClientRPC, ServerException_sendExceptionRequestDataWriter, ServerException_sendExceptionReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(sendExceptionTwoClientRPC, sendExceptionTwoRequestDataWriter, sendExceptionTwoReplyDataReader);
+GENERIC_CLIENT_RPC(ServerException_sendExceptionTwoClientRPC, ServerException_sendExceptionTwoRequestDataWriter, ServerException_sendExceptionTwoReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(sendExceptionThreeClientRPC, sendExceptionThreeRequestDataWriter, sendExceptionThreeReplyDataReader);
+GENERIC_CLIENT_RPC(ServerException_sendExceptionThreeClientRPC, ServerException_sendExceptionThreeRequestDataWriter, ServerException_sendExceptionThreeReplyDataReader);
 
 
 #endif  // _ServerException_CLIENT_RPC_SUPPORT_H_

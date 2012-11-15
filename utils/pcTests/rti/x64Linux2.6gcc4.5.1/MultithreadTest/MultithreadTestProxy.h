@@ -8,15 +8,16 @@
 #include "client/Client.h"
 #include "MultithreadTestRequestReplyUtils.h"
 #include "MultithreadTestClientRPCSupport.h"
+#include "exceptions/Exception.h"
 
-class MultithreadTest_test
+class MultithreadTest_testCallbackHandler
 {
     public:
         virtual void test(/*out*/ const Dato& dato2, /*out*/ DDS_Long test_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
@@ -31,22 +32,24 @@ class MultithreadTestProxy : public eProsima::DDSRPC::Client
         /**
          * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        MultithreadTestProxy(int domainId = 0, long timeout = 10000);
+        MultithreadTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
         /**
          * \brief This constructor sets the transport that will be used by the server's proxy.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        MultithreadTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        MultithreadTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~MultithreadTestProxy();
@@ -55,7 +58,7 @@ class MultithreadTestProxy : public eProsima::DDSRPC::Client
         DDS_Long test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2);
         
          
-        void test_async(MultithreadTest_test &obj, /*in*/ const Dato& dato1);
+        void test_async(MultithreadTest_testCallbackHandler &obj, /*in*/ const Dato& dato1);
         
     private:
         /**

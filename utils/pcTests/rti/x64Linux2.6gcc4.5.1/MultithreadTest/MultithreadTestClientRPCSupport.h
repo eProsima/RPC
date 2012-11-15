@@ -9,7 +9,7 @@
 #include "MultithreadTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(testClientRPC, testRequestDataWriter, testReplyDataReader);
+GENERIC_CLIENT_RPC(MultithreadTest_testClientRPC, MultithreadTest_testRequestDataWriter, MultithreadTest_testReplyDataReader);
 
 
 #endif  // _MultithreadTest_CLIENT_RPC_SUPPORT_H_

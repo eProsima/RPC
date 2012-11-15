@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    SequenceTestProxy *proxy = new SequenceTestProxy();
+    SequenceTestProxy *proxy = new SequenceTestProxy("SequenceTestService");
 
     largo l1;
     largo l2;
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getSLong>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getSLong>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getString>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getString>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getStringBounded>: %s\n", ex.getMessage().c_str());
+        printf("TEST FAILED<getStringBounded>: %s\n", ex.what());
         _exit(-1);
     }
 

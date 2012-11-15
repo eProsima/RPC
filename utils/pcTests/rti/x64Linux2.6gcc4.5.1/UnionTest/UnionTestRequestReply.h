@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef UnionTestRequestReply_1136051261_h
-#define UnionTestRequestReply_1136051261_h
+#ifndef UnionTestRequestReply_1136051123_h
+#define UnionTestRequestReply_1136051123_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *getEmpleadoRequestTYPENAME;
+extern const char *UnionTest_getEmpleadoRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *getEmpleadoRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getEmpleadoRequestSeq;
+    struct UnionTest_getEmpleadoRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getEmpleadoRequestTypeSupport;
-    class getEmpleadoRequestDataWriter;
-    class getEmpleadoRequestDataReader;
+    class UnionTest_getEmpleadoRequestTypeSupport;
+    class UnionTest_getEmpleadoRequestDataWriter;
+    class UnionTest_getEmpleadoRequestDataReader;
 #endif
 
 #endif
@@ -59,25 +59,24 @@ extern const char *getEmpleadoRequestTYPENAME;
             
     
 
-typedef struct getEmpleadoRequest
+typedef struct UnionTest_getEmpleadoRequest
 {
 #ifdef __cplusplus
-    typedef struct getEmpleadoRequestSeq Seq;
+    typedef struct UnionTest_getEmpleadoRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getEmpleadoRequestTypeSupport TypeSupport;
-    typedef getEmpleadoRequestDataWriter DataWriter;
-    typedef getEmpleadoRequestDataReader DataReader;
+    typedef UnionTest_getEmpleadoRequestTypeSupport TypeSupport;
+    typedef UnionTest_getEmpleadoRequestDataWriter DataWriter;
+    typedef UnionTest_getEmpleadoRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     Empleado  em1;
     Empleado  em2;
 
-} getEmpleadoRequest;
+} UnionTest_getEmpleadoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -88,31 +87,31 @@ typedef struct getEmpleadoRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getEmpleadoRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* UnionTest_getEmpleadoRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getEmpleadoRequestSeq, getEmpleadoRequest);
+DDS_SEQUENCE(UnionTest_getEmpleadoRequestSeq, UnionTest_getEmpleadoRequest);
         
 NDDSUSERDllExport
-RTIBool getEmpleadoRequest_initialize(
-        getEmpleadoRequest* self);
+RTIBool UnionTest_getEmpleadoRequest_initialize(
+        UnionTest_getEmpleadoRequest* self);
         
 NDDSUSERDllExport
-RTIBool getEmpleadoRequest_initialize_ex(
-        getEmpleadoRequest* self,RTIBool allocatePointers);
+RTIBool UnionTest_getEmpleadoRequest_initialize_ex(
+        UnionTest_getEmpleadoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getEmpleadoRequest_finalize(
-        getEmpleadoRequest* self);
+void UnionTest_getEmpleadoRequest_finalize(
+        UnionTest_getEmpleadoRequest* self);
                         
 NDDSUSERDllExport
-void getEmpleadoRequest_finalize_ex(
-        getEmpleadoRequest* self,RTIBool deletePointers);
+void UnionTest_getEmpleadoRequest_finalize_ex(
+        UnionTest_getEmpleadoRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getEmpleadoRequest_copy(
-        getEmpleadoRequest* dst,
-        const getEmpleadoRequest* src);
+RTIBool UnionTest_getEmpleadoRequest_copy(
+        UnionTest_getEmpleadoRequest* dst,
+        const UnionTest_getEmpleadoRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -127,7 +126,7 @@ extern "C" {
 #endif
 
         
-extern const char *getEmpleadoReplyTYPENAME;
+extern const char *UnionTest_getEmpleadoReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -136,12 +135,12 @@ extern const char *getEmpleadoReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct getEmpleadoReplySeq;
+    struct UnionTest_getEmpleadoReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class getEmpleadoReplyTypeSupport;
-    class getEmpleadoReplyDataWriter;
-    class getEmpleadoReplyDataReader;
+    class UnionTest_getEmpleadoReplyTypeSupport;
+    class UnionTest_getEmpleadoReplyDataWriter;
+    class UnionTest_getEmpleadoReplyDataReader;
 #endif
 
 #endif
@@ -149,28 +148,25 @@ extern const char *getEmpleadoReplyTYPENAME;
             
     
 
-typedef struct getEmpleadoReply
+typedef struct UnionTest_getEmpleadoReply
 {
 #ifdef __cplusplus
-    typedef struct getEmpleadoReplySeq Seq;
+    typedef struct UnionTest_getEmpleadoReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef getEmpleadoReplyTypeSupport TypeSupport;
-    typedef getEmpleadoReplyDataWriter DataWriter;
-    typedef getEmpleadoReplyDataReader DataReader;
+    typedef UnionTest_getEmpleadoReplyTypeSupport TypeSupport;
+    typedef UnionTest_getEmpleadoReplyDataWriter DataWriter;
+    typedef UnionTest_getEmpleadoReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     Empleado  em2;
     Empleado  em3;
     Empleado  getEmpleado_ret;
 
-} getEmpleadoReply;
+} UnionTest_getEmpleadoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -181,31 +177,31 @@ typedef struct getEmpleadoReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* getEmpleadoReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* UnionTest_getEmpleadoReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(getEmpleadoReplySeq, getEmpleadoReply);
+DDS_SEQUENCE(UnionTest_getEmpleadoReplySeq, UnionTest_getEmpleadoReply);
         
 NDDSUSERDllExport
-RTIBool getEmpleadoReply_initialize(
-        getEmpleadoReply* self);
+RTIBool UnionTest_getEmpleadoReply_initialize(
+        UnionTest_getEmpleadoReply* self);
         
 NDDSUSERDllExport
-RTIBool getEmpleadoReply_initialize_ex(
-        getEmpleadoReply* self,RTIBool allocatePointers);
+RTIBool UnionTest_getEmpleadoReply_initialize_ex(
+        UnionTest_getEmpleadoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void getEmpleadoReply_finalize(
-        getEmpleadoReply* self);
+void UnionTest_getEmpleadoReply_finalize(
+        UnionTest_getEmpleadoReply* self);
                         
 NDDSUSERDllExport
-void getEmpleadoReply_finalize_ex(
-        getEmpleadoReply* self,RTIBool deletePointers);
+void UnionTest_getEmpleadoReply_finalize_ex(
+        UnionTest_getEmpleadoReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool getEmpleadoReply_copy(
-        getEmpleadoReply* dst,
-        const getEmpleadoReply* src);
+RTIBool UnionTest_getEmpleadoReply_copy(
+        UnionTest_getEmpleadoReply* dst,
+        const UnionTest_getEmpleadoReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -216,4 +212,4 @@ RTIBool getEmpleadoReply_copy(
 
 
 
-#endif /* UnionTestRequestReply_1136051261_h */
+#endif /* UnionTestRequestReply_1136051123_h */

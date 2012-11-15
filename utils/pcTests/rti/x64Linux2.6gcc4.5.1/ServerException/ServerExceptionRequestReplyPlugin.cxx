@@ -54,22 +54,22 @@
 
 
 /* --------------------------------------------------------------------------------------
- *  Type sendExceptionRequest
+ *  Type ServerException_sendExceptionRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sendExceptionRequest *
-sendExceptionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sendExceptionRequest *sample = NULL;
+ServerException_sendExceptionRequest *
+ServerException_sendExceptionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sendExceptionRequest);
+        &sample, ServerException_sendExceptionRequest);
 
     if(sample != NULL) {
-        if (!sendExceptionRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!ServerException_sendExceptionRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -78,44 +78,44 @@ sendExceptionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sendExceptionRequest *
-sendExceptionRequestPluginSupport_create_data(void)
+ServerException_sendExceptionRequest *
+ServerException_sendExceptionRequestPluginSupport_create_data(void)
 {
-    return sendExceptionRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ServerException_sendExceptionRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionRequestPluginSupport_destroy_data_ex(
-    sendExceptionRequest *sample,RTIBool deallocate_pointers) {
+ServerException_sendExceptionRequestPluginSupport_destroy_data_ex(
+    ServerException_sendExceptionRequest *sample,RTIBool deallocate_pointers) {
 
-    sendExceptionRequest_finalize_ex(sample,deallocate_pointers);
+    ServerException_sendExceptionRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sendExceptionRequestPluginSupport_destroy_data(
-    sendExceptionRequest *sample) {
+ServerException_sendExceptionRequestPluginSupport_destroy_data(
+    ServerException_sendExceptionRequest *sample) {
 
-    sendExceptionRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sendExceptionRequestPluginSupport_copy_data(
-    sendExceptionRequest *dst,
-    const sendExceptionRequest *src)
+ServerException_sendExceptionRequestPluginSupport_copy_data(
+    ServerException_sendExceptionRequest *dst,
+    const ServerException_sendExceptionRequest *src)
 {
-    return sendExceptionRequest_copy(dst,src);
+    return ServerException_sendExceptionRequest_copy(dst,src);
 }
 
 
 void 
-sendExceptionRequestPluginSupport_print_data(
-    const sendExceptionRequest *sample,
+ServerException_sendExceptionRequestPluginSupport_print_data(
+    const ServerException_sendExceptionRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -135,49 +135,46 @@ sendExceptionRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
 
 }
 
-sendExceptionRequest *
-sendExceptionRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sendExceptionRequest *key = NULL;
+ServerException_sendExceptionRequest *
+ServerException_sendExceptionRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sendExceptionRequestKeyHolder);
+        &key, ServerException_sendExceptionRequestKeyHolder);
 
-    sendExceptionRequest_initialize_ex(key,allocate_pointers);
+    ServerException_sendExceptionRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sendExceptionRequest *
-sendExceptionRequestPluginSupport_create_key(void)
+ServerException_sendExceptionRequest *
+ServerException_sendExceptionRequestPluginSupport_create_key(void)
 {
-    return  sendExceptionRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  ServerException_sendExceptionRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionRequestPluginSupport_destroy_key_ex(
-    sendExceptionRequestKeyHolder *key,RTIBool deallocate_pointers)
+ServerException_sendExceptionRequestPluginSupport_destroy_key_ex(
+    ServerException_sendExceptionRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sendExceptionRequest_finalize_ex(key,deallocate_pointers);
+    ServerException_sendExceptionRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sendExceptionRequestPluginSupport_destroy_key(
-    sendExceptionRequestKeyHolder *key) {
+ServerException_sendExceptionRequestPluginSupport_destroy_key(
+    ServerException_sendExceptionRequestKeyHolder *key) {
 
-  sendExceptionRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  ServerException_sendExceptionRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -190,7 +187,7 @@ sendExceptionRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sendExceptionRequestPlugin_on_participant_attached(
+ServerException_sendExceptionRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -209,7 +206,7 @@ sendExceptionRequestPlugin_on_participant_attached(
 
 
 void 
-sendExceptionRequestPlugin_on_participant_detached(
+ServerException_sendExceptionRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -218,7 +215,7 @@ sendExceptionRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sendExceptionRequestPlugin_on_endpoint_attached(
+ServerException_sendExceptionRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -236,19 +233,19 @@ sendExceptionRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sendExceptionRequestPluginSupport_create_data,
+            ServerException_sendExceptionRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sendExceptionRequestPluginSupport_destroy_data,
+            ServerException_sendExceptionRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sendExceptionRequestPluginSupport_create_key,
+            ServerException_sendExceptionRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sendExceptionRequestPluginSupport_destroy_key);
+            ServerException_sendExceptionRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sendExceptionRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = ServerException_sendExceptionRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -264,9 +261,9 @@ sendExceptionRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sendExceptionRequestPlugin_get_serialized_sample_max_size, epd,
+                ServerException_sendExceptionRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sendExceptionRequestPlugin_get_serialized_sample_size,
+            ServerException_sendExceptionRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -280,7 +277,7 @@ sendExceptionRequestPlugin_on_endpoint_attached(
 
 
 void 
-sendExceptionRequestPlugin_on_endpoint_detached(
+ServerException_sendExceptionRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -289,13 +286,13 @@ sendExceptionRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sendExceptionRequestPlugin_copy_sample(
+ServerException_sendExceptionRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest *dst,
-    const sendExceptionRequest *src)
+    ServerException_sendExceptionRequest *dst,
+    const ServerException_sendExceptionRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sendExceptionRequestPluginSupport_copy_data(dst,src);
+    return ServerException_sendExceptionRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -304,9 +301,9 @@ sendExceptionRequestPlugin_copy_sample(
 
 
 RTIBool 
-sendExceptionRequestPlugin_serialize(
+ServerException_sendExceptionRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionRequest *sample, 
+    const ServerException_sendExceptionRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -333,18 +330,13 @@ sendExceptionRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -360,9 +352,9 @@ sendExceptionRequestPlugin_serialize(
 
 
 RTIBool 
-sendExceptionRequestPlugin_deserialize_sample(
+ServerException_sendExceptionRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest *sample,
+    ServerException_sendExceptionRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -387,17 +379,12 @@ sendExceptionRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -415,9 +402,9 @@ sendExceptionRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-sendExceptionRequestPlugin_deserialize(
+ServerException_sendExceptionRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest **sample,
+    ServerException_sendExceptionRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -427,7 +414,7 @@ sendExceptionRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sendExceptionRequestPlugin_deserialize_sample( 
+    return ServerException_sendExceptionRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -436,7 +423,7 @@ sendExceptionRequestPlugin_deserialize(
 
 
 
-RTIBool sendExceptionRequestPlugin_skip(
+RTIBool ServerException_sendExceptionRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -461,15 +448,11 @@ RTIBool sendExceptionRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -486,7 +469,7 @@ RTIBool sendExceptionRequestPlugin_skip(
 
 
 unsigned int 
-sendExceptionRequestPlugin_get_serialized_sample_max_size(
+ServerException_sendExceptionRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -514,11 +497,8 @@ sendExceptionRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -529,7 +509,7 @@ sendExceptionRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sendExceptionRequestPlugin_get_serialized_sample_min_size(
+ServerException_sendExceptionRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -557,11 +537,8 @@ sendExceptionRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -578,12 +555,12 @@ sendExceptionRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sendExceptionRequestPlugin_get_serialized_sample_size(
+ServerException_sendExceptionRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sendExceptionRequest * sample) 
+    const ServerException_sendExceptionRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -608,12 +585,9 @@ sendExceptionRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -628,7 +602,7 @@ sendExceptionRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sendExceptionRequestPlugin_get_key_kind(void)
+ServerException_sendExceptionRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -637,9 +611,9 @@ sendExceptionRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-sendExceptionRequestPlugin_serialize_key(
+ServerException_sendExceptionRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionRequest *sample, 
+    const ServerException_sendExceptionRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -664,18 +638,13 @@ sendExceptionRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -691,9 +660,9 @@ sendExceptionRequestPlugin_serialize_key(
 }
 
 
-RTIBool sendExceptionRequestPlugin_deserialize_key_sample(
+RTIBool ServerException_sendExceptionRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest *sample, 
+    ServerException_sendExceptionRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -718,17 +687,12 @@ RTIBool sendExceptionRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -745,9 +709,9 @@ RTIBool sendExceptionRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool sendExceptionRequestPlugin_deserialize_key(
+RTIBool ServerException_sendExceptionRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest **sample, 
+    ServerException_sendExceptionRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -755,7 +719,7 @@ RTIBool sendExceptionRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sendExceptionRequestPlugin_deserialize_key_sample(
+    return ServerException_sendExceptionRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -763,7 +727,7 @@ RTIBool sendExceptionRequestPlugin_deserialize_key(
 
 
 unsigned int
-sendExceptionRequestPlugin_get_serialized_key_max_size(
+ServerException_sendExceptionRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -793,11 +757,8 @@ sendExceptionRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -808,9 +769,9 @@ sendExceptionRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sendExceptionRequestPlugin_serialized_sample_to_key(
+ServerException_sendExceptionRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest *sample,
+    ServerException_sendExceptionRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -833,17 +794,12 @@ sendExceptionRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -863,21 +819,16 @@ sendExceptionRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sendExceptionRequestPlugin_instance_to_key(
+ServerException_sendExceptionRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequestKeyHolder *dst, 
-    const sendExceptionRequest *src)
+    ServerException_sendExceptionRequestKeyHolder *dst, 
+    const ServerException_sendExceptionRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -886,21 +837,16 @@ sendExceptionRequestPlugin_instance_to_key(
 
 
 RTIBool 
-sendExceptionRequestPlugin_key_to_instance(
+ServerException_sendExceptionRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionRequest *dst, const
-    sendExceptionRequestKeyHolder *src)
+    ServerException_sendExceptionRequest *dst, const
+    ServerException_sendExceptionRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -909,10 +855,10 @@ sendExceptionRequestPlugin_key_to_instance(
 
 
 RTIBool 
-sendExceptionRequestPlugin_instance_to_keyhash(
+ServerException_sendExceptionRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sendExceptionRequest *instance)
+    const ServerException_sendExceptionRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -928,7 +874,7 @@ sendExceptionRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sendExceptionRequestPlugin_serialize_key(
+    if (!ServerException_sendExceptionRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -949,7 +895,7 @@ sendExceptionRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sendExceptionRequestPlugin_serialized_sample_to_keyhash(
+ServerException_sendExceptionRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -957,7 +903,7 @@ sendExceptionRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sendExceptionRequest * sample;
+    ServerException_sendExceptionRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -972,7 +918,7 @@ sendExceptionRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sendExceptionRequest *)
+    sample = (ServerException_sendExceptionRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -980,17 +926,12 @@ sendExceptionRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -999,7 +940,7 @@ sendExceptionRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sendExceptionRequestPlugin_instance_to_keyhash(
+    if (!ServerException_sendExceptionRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -1012,7 +953,7 @@ sendExceptionRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sendExceptionRequestPlugin_new(void) 
+struct PRESTypePlugin *ServerException_sendExceptionRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -1029,131 +970,131 @@ struct PRESTypePlugin *sendExceptionRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sendExceptionRequestPlugin_on_participant_attached;
+        ServerException_sendExceptionRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sendExceptionRequestPlugin_on_participant_detached;
+        ServerException_sendExceptionRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sendExceptionRequestPlugin_on_endpoint_attached;
+        ServerException_sendExceptionRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sendExceptionRequestPlugin_on_endpoint_detached;
+        ServerException_sendExceptionRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sendExceptionRequestPlugin_copy_sample;
+        ServerException_sendExceptionRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sendExceptionRequestPlugin_create_sample;
+        ServerException_sendExceptionRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sendExceptionRequestPlugin_destroy_sample;
+        ServerException_sendExceptionRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sendExceptionRequestPlugin_serialize;
+        ServerException_sendExceptionRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sendExceptionRequestPlugin_deserialize;
+        ServerException_sendExceptionRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sendExceptionRequestPlugin_get_serialized_sample_max_size;
+        ServerException_sendExceptionRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sendExceptionRequestPlugin_get_serialized_sample_min_size;
+        ServerException_sendExceptionRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sendExceptionRequestPlugin_get_sample;
+        ServerException_sendExceptionRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sendExceptionRequestPlugin_return_sample;
+        ServerException_sendExceptionRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sendExceptionRequestPlugin_get_key_kind;
+        ServerException_sendExceptionRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sendExceptionRequestPlugin_get_serialized_key_max_size;
+        ServerException_sendExceptionRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sendExceptionRequestPlugin_serialize_key;
+        ServerException_sendExceptionRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sendExceptionRequestPlugin_deserialize_key;
+        ServerException_sendExceptionRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sendExceptionRequestPlugin_deserialize_key_sample;
+        ServerException_sendExceptionRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sendExceptionRequestPlugin_instance_to_keyhash;
+        ServerException_sendExceptionRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sendExceptionRequestPlugin_serialized_sample_to_keyhash;
+        ServerException_sendExceptionRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sendExceptionRequestPlugin_get_key;
+        ServerException_sendExceptionRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sendExceptionRequestPlugin_return_key;
+        ServerException_sendExceptionRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sendExceptionRequestPlugin_instance_to_key;
+        ServerException_sendExceptionRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sendExceptionRequestPlugin_key_to_instance;
+        ServerException_sendExceptionRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sendExceptionRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)ServerException_sendExceptionRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sendExceptionRequestPlugin_get_buffer;
+        ServerException_sendExceptionRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sendExceptionRequestPlugin_return_buffer;
+        ServerException_sendExceptionRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sendExceptionRequestPlugin_get_serialized_sample_size;
+        ServerException_sendExceptionRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sendExceptionRequestTYPENAME;
+    plugin->endpointTypeName = ServerException_sendExceptionRequestTYPENAME;
 
     return plugin;
 }
 
 void
-sendExceptionRequestPlugin_delete(struct PRESTypePlugin *plugin)
+ServerException_sendExceptionRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sendExceptionReply
+ *  Type ServerException_sendExceptionReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sendExceptionReply *
-sendExceptionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sendExceptionReply *sample = NULL;
+ServerException_sendExceptionReply *
+ServerException_sendExceptionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sendExceptionReply);
+        &sample, ServerException_sendExceptionReply);
 
     if(sample != NULL) {
-        if (!sendExceptionReply_initialize_ex(sample,allocate_pointers)) {
+        if (!ServerException_sendExceptionReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -1162,44 +1103,44 @@ sendExceptionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sendExceptionReply *
-sendExceptionReplyPluginSupport_create_data(void)
+ServerException_sendExceptionReply *
+ServerException_sendExceptionReplyPluginSupport_create_data(void)
 {
-    return sendExceptionReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return ServerException_sendExceptionReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionReplyPluginSupport_destroy_data_ex(
-    sendExceptionReply *sample,RTIBool deallocate_pointers) {
+ServerException_sendExceptionReplyPluginSupport_destroy_data_ex(
+    ServerException_sendExceptionReply *sample,RTIBool deallocate_pointers) {
 
-    sendExceptionReply_finalize_ex(sample,deallocate_pointers);
+    ServerException_sendExceptionReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sendExceptionReplyPluginSupport_destroy_data(
-    sendExceptionReply *sample) {
+ServerException_sendExceptionReplyPluginSupport_destroy_data(
+    ServerException_sendExceptionReply *sample) {
 
-    sendExceptionReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sendExceptionReplyPluginSupport_copy_data(
-    sendExceptionReply *dst,
-    const sendExceptionReply *src)
+ServerException_sendExceptionReplyPluginSupport_copy_data(
+    ServerException_sendExceptionReply *dst,
+    const ServerException_sendExceptionReply *src)
 {
-    return sendExceptionReply_copy(dst,src);
+    return ServerException_sendExceptionReply_copy(dst,src);
 }
 
 
 void 
-sendExceptionReplyPluginSupport_print_data(
-    const sendExceptionReply *sample,
+ServerException_sendExceptionReplyPluginSupport_print_data(
+    const ServerException_sendExceptionReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -1219,55 +1160,46 @@ sendExceptionReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
 
 }
 
-sendExceptionReply *
-sendExceptionReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sendExceptionReply *key = NULL;
+ServerException_sendExceptionReply *
+ServerException_sendExceptionReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sendExceptionReplyKeyHolder);
+        &key, ServerException_sendExceptionReplyKeyHolder);
 
-    sendExceptionReply_initialize_ex(key,allocate_pointers);
+    ServerException_sendExceptionReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sendExceptionReply *
-sendExceptionReplyPluginSupport_create_key(void)
+ServerException_sendExceptionReply *
+ServerException_sendExceptionReplyPluginSupport_create_key(void)
 {
-    return  sendExceptionReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  ServerException_sendExceptionReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionReplyPluginSupport_destroy_key_ex(
-    sendExceptionReplyKeyHolder *key,RTIBool deallocate_pointers)
+ServerException_sendExceptionReplyPluginSupport_destroy_key_ex(
+    ServerException_sendExceptionReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sendExceptionReply_finalize_ex(key,deallocate_pointers);
+    ServerException_sendExceptionReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sendExceptionReplyPluginSupport_destroy_key(
-    sendExceptionReplyKeyHolder *key) {
+ServerException_sendExceptionReplyPluginSupport_destroy_key(
+    ServerException_sendExceptionReplyKeyHolder *key) {
 
-  sendExceptionReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  ServerException_sendExceptionReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -1280,7 +1212,7 @@ sendExceptionReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sendExceptionReplyPlugin_on_participant_attached(
+ServerException_sendExceptionReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -1299,7 +1231,7 @@ sendExceptionReplyPlugin_on_participant_attached(
 
 
 void 
-sendExceptionReplyPlugin_on_participant_detached(
+ServerException_sendExceptionReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -1308,7 +1240,7 @@ sendExceptionReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sendExceptionReplyPlugin_on_endpoint_attached(
+ServerException_sendExceptionReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -1326,19 +1258,19 @@ sendExceptionReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sendExceptionReplyPluginSupport_create_data,
+            ServerException_sendExceptionReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sendExceptionReplyPluginSupport_destroy_data,
+            ServerException_sendExceptionReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sendExceptionReplyPluginSupport_create_key,
+            ServerException_sendExceptionReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sendExceptionReplyPluginSupport_destroy_key);
+            ServerException_sendExceptionReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sendExceptionReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = ServerException_sendExceptionReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -1354,9 +1286,9 @@ sendExceptionReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sendExceptionReplyPlugin_get_serialized_sample_max_size, epd,
+                ServerException_sendExceptionReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sendExceptionReplyPlugin_get_serialized_sample_size,
+            ServerException_sendExceptionReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -1370,7 +1302,7 @@ sendExceptionReplyPlugin_on_endpoint_attached(
 
 
 void 
-sendExceptionReplyPlugin_on_endpoint_detached(
+ServerException_sendExceptionReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -1379,13 +1311,13 @@ sendExceptionReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sendExceptionReplyPlugin_copy_sample(
+ServerException_sendExceptionReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply *dst,
-    const sendExceptionReply *src)
+    ServerException_sendExceptionReply *dst,
+    const ServerException_sendExceptionReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sendExceptionReplyPluginSupport_copy_data(dst,src);
+    return ServerException_sendExceptionReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1394,9 +1326,9 @@ sendExceptionReplyPlugin_copy_sample(
 
 
 RTIBool 
-sendExceptionReplyPlugin_serialize(
+ServerException_sendExceptionReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionReply *sample, 
+    const ServerException_sendExceptionReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1423,33 +1355,13 @@ sendExceptionReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1465,9 +1377,9 @@ sendExceptionReplyPlugin_serialize(
 
 
 RTIBool 
-sendExceptionReplyPlugin_deserialize_sample(
+ServerException_sendExceptionReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply *sample,
+    ServerException_sendExceptionReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1492,31 +1404,12 @@ sendExceptionReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -1534,9 +1427,9 @@ sendExceptionReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-sendExceptionReplyPlugin_deserialize(
+ServerException_sendExceptionReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply **sample,
+    ServerException_sendExceptionReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -1546,7 +1439,7 @@ sendExceptionReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sendExceptionReplyPlugin_deserialize_sample( 
+    return ServerException_sendExceptionReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1555,7 +1448,7 @@ sendExceptionReplyPlugin_deserialize(
 
 
 
-RTIBool sendExceptionReplyPlugin_skip(
+RTIBool ServerException_sendExceptionReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -1580,27 +1473,11 @@ RTIBool sendExceptionReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -1617,7 +1494,7 @@ RTIBool sendExceptionReplyPlugin_skip(
 
 
 unsigned int 
-sendExceptionReplyPlugin_get_serialized_sample_max_size(
+ServerException_sendExceptionReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1645,17 +1522,8 @@ sendExceptionReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1666,7 +1534,7 @@ sendExceptionReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sendExceptionReplyPlugin_get_serialized_sample_min_size(
+ServerException_sendExceptionReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1694,17 +1562,8 @@ sendExceptionReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1721,12 +1580,12 @@ sendExceptionReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sendExceptionReplyPlugin_get_serialized_sample_size(
+ServerException_sendExceptionReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sendExceptionReply * sample) 
+    const ServerException_sendExceptionReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -1751,19 +1610,9 @@ sendExceptionReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1778,7 +1627,7 @@ sendExceptionReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sendExceptionReplyPlugin_get_key_kind(void)
+ServerException_sendExceptionReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -1787,9 +1636,9 @@ sendExceptionReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-sendExceptionReplyPlugin_serialize_key(
+ServerException_sendExceptionReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionReply *sample, 
+    const ServerException_sendExceptionReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1814,28 +1663,13 @@ sendExceptionReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1851,9 +1685,9 @@ sendExceptionReplyPlugin_serialize_key(
 }
 
 
-RTIBool sendExceptionReplyPlugin_deserialize_key_sample(
+RTIBool ServerException_sendExceptionReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply *sample, 
+    ServerException_sendExceptionReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1878,26 +1712,12 @@ RTIBool sendExceptionReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -1914,9 +1734,9 @@ RTIBool sendExceptionReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool sendExceptionReplyPlugin_deserialize_key(
+RTIBool ServerException_sendExceptionReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply **sample, 
+    ServerException_sendExceptionReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1924,7 +1744,7 @@ RTIBool sendExceptionReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sendExceptionReplyPlugin_deserialize_key_sample(
+    return ServerException_sendExceptionReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -1932,7 +1752,7 @@ RTIBool sendExceptionReplyPlugin_deserialize_key(
 
 
 unsigned int
-sendExceptionReplyPlugin_get_serialized_key_max_size(
+ServerException_sendExceptionReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1962,14 +1782,8 @@ sendExceptionReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1980,9 +1794,9 @@ sendExceptionReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sendExceptionReplyPlugin_serialized_sample_to_key(
+ServerException_sendExceptionReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply *sample,
+    ServerException_sendExceptionReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2005,30 +1819,12 @@ sendExceptionReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -2048,26 +1844,16 @@ sendExceptionReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sendExceptionReplyPlugin_instance_to_key(
+ServerException_sendExceptionReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReplyKeyHolder *dst, 
-    const sendExceptionReply *src)
+    ServerException_sendExceptionReplyKeyHolder *dst, 
+    const ServerException_sendExceptionReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2076,26 +1862,16 @@ sendExceptionReplyPlugin_instance_to_key(
 
 
 RTIBool 
-sendExceptionReplyPlugin_key_to_instance(
+ServerException_sendExceptionReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionReply *dst, const
-    sendExceptionReplyKeyHolder *src)
+    ServerException_sendExceptionReply *dst, const
+    ServerException_sendExceptionReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -2104,10 +1880,10 @@ sendExceptionReplyPlugin_key_to_instance(
 
 
 RTIBool 
-sendExceptionReplyPlugin_instance_to_keyhash(
+ServerException_sendExceptionReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sendExceptionReply *instance)
+    const ServerException_sendExceptionReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -2123,7 +1899,7 @@ sendExceptionReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sendExceptionReplyPlugin_serialize_key(
+    if (!ServerException_sendExceptionReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -2144,7 +1920,7 @@ sendExceptionReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sendExceptionReplyPlugin_serialized_sample_to_keyhash(
+ServerException_sendExceptionReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2152,7 +1928,7 @@ sendExceptionReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sendExceptionReply * sample;
+    ServerException_sendExceptionReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2167,7 +1943,7 @@ sendExceptionReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sendExceptionReply *)
+    sample = (ServerException_sendExceptionReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -2175,26 +1951,12 @@ sendExceptionReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2203,7 +1965,7 @@ sendExceptionReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sendExceptionReplyPlugin_instance_to_keyhash(
+    if (!ServerException_sendExceptionReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -2216,7 +1978,7 @@ sendExceptionReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sendExceptionReplyPlugin_new(void) 
+struct PRESTypePlugin *ServerException_sendExceptionReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -2233,131 +1995,131 @@ struct PRESTypePlugin *sendExceptionReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sendExceptionReplyPlugin_on_participant_attached;
+        ServerException_sendExceptionReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sendExceptionReplyPlugin_on_participant_detached;
+        ServerException_sendExceptionReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sendExceptionReplyPlugin_on_endpoint_attached;
+        ServerException_sendExceptionReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sendExceptionReplyPlugin_on_endpoint_detached;
+        ServerException_sendExceptionReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sendExceptionReplyPlugin_copy_sample;
+        ServerException_sendExceptionReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sendExceptionReplyPlugin_create_sample;
+        ServerException_sendExceptionReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sendExceptionReplyPlugin_destroy_sample;
+        ServerException_sendExceptionReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sendExceptionReplyPlugin_serialize;
+        ServerException_sendExceptionReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sendExceptionReplyPlugin_deserialize;
+        ServerException_sendExceptionReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sendExceptionReplyPlugin_get_serialized_sample_max_size;
+        ServerException_sendExceptionReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sendExceptionReplyPlugin_get_serialized_sample_min_size;
+        ServerException_sendExceptionReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sendExceptionReplyPlugin_get_sample;
+        ServerException_sendExceptionReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sendExceptionReplyPlugin_return_sample;
+        ServerException_sendExceptionReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sendExceptionReplyPlugin_get_key_kind;
+        ServerException_sendExceptionReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sendExceptionReplyPlugin_get_serialized_key_max_size;
+        ServerException_sendExceptionReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sendExceptionReplyPlugin_serialize_key;
+        ServerException_sendExceptionReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sendExceptionReplyPlugin_deserialize_key;
+        ServerException_sendExceptionReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sendExceptionReplyPlugin_deserialize_key_sample;
+        ServerException_sendExceptionReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sendExceptionReplyPlugin_instance_to_keyhash;
+        ServerException_sendExceptionReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sendExceptionReplyPlugin_serialized_sample_to_keyhash;
+        ServerException_sendExceptionReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sendExceptionReplyPlugin_get_key;
+        ServerException_sendExceptionReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sendExceptionReplyPlugin_return_key;
+        ServerException_sendExceptionReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sendExceptionReplyPlugin_instance_to_key;
+        ServerException_sendExceptionReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sendExceptionReplyPlugin_key_to_instance;
+        ServerException_sendExceptionReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sendExceptionReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)ServerException_sendExceptionReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sendExceptionReplyPlugin_get_buffer;
+        ServerException_sendExceptionReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sendExceptionReplyPlugin_return_buffer;
+        ServerException_sendExceptionReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sendExceptionReplyPlugin_get_serialized_sample_size;
+        ServerException_sendExceptionReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sendExceptionReplyTYPENAME;
+    plugin->endpointTypeName = ServerException_sendExceptionReplyTYPENAME;
 
     return plugin;
 }
 
 void
-sendExceptionReplyPlugin_delete(struct PRESTypePlugin *plugin)
+ServerException_sendExceptionReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sendExceptionTwoRequest
+ *  Type ServerException_sendExceptionTwoRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sendExceptionTwoRequest *
-sendExceptionTwoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sendExceptionTwoRequest *sample = NULL;
+ServerException_sendExceptionTwoRequest *
+ServerException_sendExceptionTwoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionTwoRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sendExceptionTwoRequest);
+        &sample, ServerException_sendExceptionTwoRequest);
 
     if(sample != NULL) {
-        if (!sendExceptionTwoRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!ServerException_sendExceptionTwoRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -2366,44 +2128,44 @@ sendExceptionTwoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sendExceptionTwoRequest *
-sendExceptionTwoRequestPluginSupport_create_data(void)
+ServerException_sendExceptionTwoRequest *
+ServerException_sendExceptionTwoRequestPluginSupport_create_data(void)
 {
-    return sendExceptionTwoRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ServerException_sendExceptionTwoRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionTwoRequestPluginSupport_destroy_data_ex(
-    sendExceptionTwoRequest *sample,RTIBool deallocate_pointers) {
+ServerException_sendExceptionTwoRequestPluginSupport_destroy_data_ex(
+    ServerException_sendExceptionTwoRequest *sample,RTIBool deallocate_pointers) {
 
-    sendExceptionTwoRequest_finalize_ex(sample,deallocate_pointers);
+    ServerException_sendExceptionTwoRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sendExceptionTwoRequestPluginSupport_destroy_data(
-    sendExceptionTwoRequest *sample) {
+ServerException_sendExceptionTwoRequestPluginSupport_destroy_data(
+    ServerException_sendExceptionTwoRequest *sample) {
 
-    sendExceptionTwoRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionTwoRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sendExceptionTwoRequestPluginSupport_copy_data(
-    sendExceptionTwoRequest *dst,
-    const sendExceptionTwoRequest *src)
+ServerException_sendExceptionTwoRequestPluginSupport_copy_data(
+    ServerException_sendExceptionTwoRequest *dst,
+    const ServerException_sendExceptionTwoRequest *src)
 {
-    return sendExceptionTwoRequest_copy(dst,src);
+    return ServerException_sendExceptionTwoRequest_copy(dst,src);
 }
 
 
 void 
-sendExceptionTwoRequestPluginSupport_print_data(
-    const sendExceptionTwoRequest *sample,
+ServerException_sendExceptionTwoRequestPluginSupport_print_data(
+    const ServerException_sendExceptionTwoRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -2423,11 +2185,8 @@ sendExceptionTwoRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     if (&sample->message==NULL) {
         RTICdrType_printString(
@@ -2448,40 +2207,40 @@ sendExceptionTwoRequestPluginSupport_print_data(
 
 }
 
-sendExceptionTwoRequest *
-sendExceptionTwoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sendExceptionTwoRequest *key = NULL;
+ServerException_sendExceptionTwoRequest *
+ServerException_sendExceptionTwoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionTwoRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sendExceptionTwoRequestKeyHolder);
+        &key, ServerException_sendExceptionTwoRequestKeyHolder);
 
-    sendExceptionTwoRequest_initialize_ex(key,allocate_pointers);
+    ServerException_sendExceptionTwoRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sendExceptionTwoRequest *
-sendExceptionTwoRequestPluginSupport_create_key(void)
+ServerException_sendExceptionTwoRequest *
+ServerException_sendExceptionTwoRequestPluginSupport_create_key(void)
 {
-    return  sendExceptionTwoRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  ServerException_sendExceptionTwoRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionTwoRequestPluginSupport_destroy_key_ex(
-    sendExceptionTwoRequestKeyHolder *key,RTIBool deallocate_pointers)
+ServerException_sendExceptionTwoRequestPluginSupport_destroy_key_ex(
+    ServerException_sendExceptionTwoRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sendExceptionTwoRequest_finalize_ex(key,deallocate_pointers);
+    ServerException_sendExceptionTwoRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sendExceptionTwoRequestPluginSupport_destroy_key(
-    sendExceptionTwoRequestKeyHolder *key) {
+ServerException_sendExceptionTwoRequestPluginSupport_destroy_key(
+    ServerException_sendExceptionTwoRequestKeyHolder *key) {
 
-  sendExceptionTwoRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  ServerException_sendExceptionTwoRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -2494,7 +2253,7 @@ sendExceptionTwoRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sendExceptionTwoRequestPlugin_on_participant_attached(
+ServerException_sendExceptionTwoRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -2513,7 +2272,7 @@ sendExceptionTwoRequestPlugin_on_participant_attached(
 
 
 void 
-sendExceptionTwoRequestPlugin_on_participant_detached(
+ServerException_sendExceptionTwoRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -2522,7 +2281,7 @@ sendExceptionTwoRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sendExceptionTwoRequestPlugin_on_endpoint_attached(
+ServerException_sendExceptionTwoRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -2540,19 +2299,19 @@ sendExceptionTwoRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sendExceptionTwoRequestPluginSupport_create_data,
+            ServerException_sendExceptionTwoRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sendExceptionTwoRequestPluginSupport_destroy_data,
+            ServerException_sendExceptionTwoRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sendExceptionTwoRequestPluginSupport_create_key,
+            ServerException_sendExceptionTwoRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sendExceptionTwoRequestPluginSupport_destroy_key);
+            ServerException_sendExceptionTwoRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sendExceptionTwoRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = ServerException_sendExceptionTwoRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -2568,9 +2327,9 @@ sendExceptionTwoRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sendExceptionTwoRequestPlugin_get_serialized_sample_max_size, epd,
+                ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sendExceptionTwoRequestPlugin_get_serialized_sample_size,
+            ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -2584,7 +2343,7 @@ sendExceptionTwoRequestPlugin_on_endpoint_attached(
 
 
 void 
-sendExceptionTwoRequestPlugin_on_endpoint_detached(
+ServerException_sendExceptionTwoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -2593,13 +2352,13 @@ sendExceptionTwoRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_copy_sample(
+ServerException_sendExceptionTwoRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest *dst,
-    const sendExceptionTwoRequest *src)
+    ServerException_sendExceptionTwoRequest *dst,
+    const ServerException_sendExceptionTwoRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sendExceptionTwoRequestPluginSupport_copy_data(dst,src);
+    return ServerException_sendExceptionTwoRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -2608,9 +2367,9 @@ sendExceptionTwoRequestPlugin_copy_sample(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_serialize(
+ServerException_sendExceptionTwoRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionTwoRequest *sample, 
+    const ServerException_sendExceptionTwoRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2637,18 +2396,13 @@ sendExceptionTwoRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2674,9 +2428,9 @@ sendExceptionTwoRequestPlugin_serialize(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_deserialize_sample(
+ServerException_sendExceptionTwoRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest *sample,
+    ServerException_sendExceptionTwoRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -2701,17 +2455,12 @@ sendExceptionTwoRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -2739,9 +2488,9 @@ sendExceptionTwoRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-sendExceptionTwoRequestPlugin_deserialize(
+ServerException_sendExceptionTwoRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest **sample,
+    ServerException_sendExceptionTwoRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -2751,7 +2500,7 @@ sendExceptionTwoRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sendExceptionTwoRequestPlugin_deserialize_sample( 
+    return ServerException_sendExceptionTwoRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -2760,7 +2509,7 @@ sendExceptionTwoRequestPlugin_deserialize(
 
 
 
-RTIBool sendExceptionTwoRequestPlugin_skip(
+RTIBool ServerException_sendExceptionTwoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -2785,15 +2534,11 @@ RTIBool sendExceptionTwoRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -2818,7 +2563,7 @@ RTIBool sendExceptionTwoRequestPlugin_skip(
 
 
 unsigned int 
-sendExceptionTwoRequestPlugin_get_serialized_sample_max_size(
+ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2846,11 +2591,8 @@ sendExceptionTwoRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, (255) + 1);
@@ -2867,7 +2609,7 @@ sendExceptionTwoRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sendExceptionTwoRequestPlugin_get_serialized_sample_min_size(
+ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2895,11 +2637,8 @@ sendExceptionTwoRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, 1);
@@ -2922,12 +2661,12 @@ sendExceptionTwoRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sendExceptionTwoRequestPlugin_get_serialized_sample_size(
+ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sendExceptionTwoRequest * sample) 
+    const ServerException_sendExceptionTwoRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -2952,12 +2691,9 @@ sendExceptionTwoRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += RTICdrType_getStringSerializedSize(
         current_alignment, sample->message);
@@ -2978,7 +2714,7 @@ sendExceptionTwoRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sendExceptionTwoRequestPlugin_get_key_kind(void)
+ServerException_sendExceptionTwoRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -2987,9 +2723,9 @@ sendExceptionTwoRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_serialize_key(
+ServerException_sendExceptionTwoRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionTwoRequest *sample, 
+    const ServerException_sendExceptionTwoRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3014,18 +2750,13 @@ sendExceptionTwoRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3041,9 +2772,9 @@ sendExceptionTwoRequestPlugin_serialize_key(
 }
 
 
-RTIBool sendExceptionTwoRequestPlugin_deserialize_key_sample(
+RTIBool ServerException_sendExceptionTwoRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest *sample, 
+    ServerException_sendExceptionTwoRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -3068,17 +2799,12 @@ RTIBool sendExceptionTwoRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3095,9 +2821,9 @@ RTIBool sendExceptionTwoRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool sendExceptionTwoRequestPlugin_deserialize_key(
+RTIBool ServerException_sendExceptionTwoRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest **sample, 
+    ServerException_sendExceptionTwoRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -3105,7 +2831,7 @@ RTIBool sendExceptionTwoRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sendExceptionTwoRequestPlugin_deserialize_key_sample(
+    return ServerException_sendExceptionTwoRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -3113,7 +2839,7 @@ RTIBool sendExceptionTwoRequestPlugin_deserialize_key(
 
 
 unsigned int
-sendExceptionTwoRequestPlugin_get_serialized_key_max_size(
+ServerException_sendExceptionTwoRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3143,11 +2869,8 @@ sendExceptionTwoRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -3158,9 +2881,9 @@ sendExceptionTwoRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_serialized_sample_to_key(
+ServerException_sendExceptionTwoRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest *sample,
+    ServerException_sendExceptionTwoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -3183,17 +2906,12 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3221,21 +2939,16 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_instance_to_key(
+ServerException_sendExceptionTwoRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequestKeyHolder *dst, 
-    const sendExceptionTwoRequest *src)
+    ServerException_sendExceptionTwoRequestKeyHolder *dst, 
+    const ServerException_sendExceptionTwoRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -3244,21 +2957,16 @@ sendExceptionTwoRequestPlugin_instance_to_key(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_key_to_instance(
+ServerException_sendExceptionTwoRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoRequest *dst, const
-    sendExceptionTwoRequestKeyHolder *src)
+    ServerException_sendExceptionTwoRequest *dst, const
+    ServerException_sendExceptionTwoRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -3267,10 +2975,10 @@ sendExceptionTwoRequestPlugin_key_to_instance(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_instance_to_keyhash(
+ServerException_sendExceptionTwoRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sendExceptionTwoRequest *instance)
+    const ServerException_sendExceptionTwoRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -3286,7 +2994,7 @@ sendExceptionTwoRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sendExceptionTwoRequestPlugin_serialize_key(
+    if (!ServerException_sendExceptionTwoRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -3307,7 +3015,7 @@ sendExceptionTwoRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
+ServerException_sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -3315,7 +3023,7 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sendExceptionTwoRequest * sample;
+    ServerException_sendExceptionTwoRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -3330,7 +3038,7 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sendExceptionTwoRequest *)
+    sample = (ServerException_sendExceptionTwoRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -3338,17 +3046,12 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -3357,7 +3060,7 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sendExceptionTwoRequestPlugin_instance_to_keyhash(
+    if (!ServerException_sendExceptionTwoRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -3370,7 +3073,7 @@ sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sendExceptionTwoRequestPlugin_new(void) 
+struct PRESTypePlugin *ServerException_sendExceptionTwoRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -3387,131 +3090,131 @@ struct PRESTypePlugin *sendExceptionTwoRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sendExceptionTwoRequestPlugin_on_participant_attached;
+        ServerException_sendExceptionTwoRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sendExceptionTwoRequestPlugin_on_participant_detached;
+        ServerException_sendExceptionTwoRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sendExceptionTwoRequestPlugin_on_endpoint_attached;
+        ServerException_sendExceptionTwoRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sendExceptionTwoRequestPlugin_on_endpoint_detached;
+        ServerException_sendExceptionTwoRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sendExceptionTwoRequestPlugin_copy_sample;
+        ServerException_sendExceptionTwoRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sendExceptionTwoRequestPlugin_create_sample;
+        ServerException_sendExceptionTwoRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sendExceptionTwoRequestPlugin_destroy_sample;
+        ServerException_sendExceptionTwoRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sendExceptionTwoRequestPlugin_serialize;
+        ServerException_sendExceptionTwoRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sendExceptionTwoRequestPlugin_deserialize;
+        ServerException_sendExceptionTwoRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sendExceptionTwoRequestPlugin_get_serialized_sample_max_size;
+        ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sendExceptionTwoRequestPlugin_get_serialized_sample_min_size;
+        ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sendExceptionTwoRequestPlugin_get_sample;
+        ServerException_sendExceptionTwoRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sendExceptionTwoRequestPlugin_return_sample;
+        ServerException_sendExceptionTwoRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sendExceptionTwoRequestPlugin_get_key_kind;
+        ServerException_sendExceptionTwoRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sendExceptionTwoRequestPlugin_get_serialized_key_max_size;
+        ServerException_sendExceptionTwoRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sendExceptionTwoRequestPlugin_serialize_key;
+        ServerException_sendExceptionTwoRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sendExceptionTwoRequestPlugin_deserialize_key;
+        ServerException_sendExceptionTwoRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sendExceptionTwoRequestPlugin_deserialize_key_sample;
+        ServerException_sendExceptionTwoRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sendExceptionTwoRequestPlugin_instance_to_keyhash;
+        ServerException_sendExceptionTwoRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash;
+        ServerException_sendExceptionTwoRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sendExceptionTwoRequestPlugin_get_key;
+        ServerException_sendExceptionTwoRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sendExceptionTwoRequestPlugin_return_key;
+        ServerException_sendExceptionTwoRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sendExceptionTwoRequestPlugin_instance_to_key;
+        ServerException_sendExceptionTwoRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sendExceptionTwoRequestPlugin_key_to_instance;
+        ServerException_sendExceptionTwoRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sendExceptionTwoRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)ServerException_sendExceptionTwoRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sendExceptionTwoRequestPlugin_get_buffer;
+        ServerException_sendExceptionTwoRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sendExceptionTwoRequestPlugin_return_buffer;
+        ServerException_sendExceptionTwoRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sendExceptionTwoRequestPlugin_get_serialized_sample_size;
+        ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sendExceptionTwoRequestTYPENAME;
+    plugin->endpointTypeName = ServerException_sendExceptionTwoRequestTYPENAME;
 
     return plugin;
 }
 
 void
-sendExceptionTwoRequestPlugin_delete(struct PRESTypePlugin *plugin)
+ServerException_sendExceptionTwoRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sendExceptionTwoReply
+ *  Type ServerException_sendExceptionTwoReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sendExceptionTwoReply *
-sendExceptionTwoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sendExceptionTwoReply *sample = NULL;
+ServerException_sendExceptionTwoReply *
+ServerException_sendExceptionTwoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionTwoReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sendExceptionTwoReply);
+        &sample, ServerException_sendExceptionTwoReply);
 
     if(sample != NULL) {
-        if (!sendExceptionTwoReply_initialize_ex(sample,allocate_pointers)) {
+        if (!ServerException_sendExceptionTwoReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -3520,44 +3223,44 @@ sendExceptionTwoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sendExceptionTwoReply *
-sendExceptionTwoReplyPluginSupport_create_data(void)
+ServerException_sendExceptionTwoReply *
+ServerException_sendExceptionTwoReplyPluginSupport_create_data(void)
 {
-    return sendExceptionTwoReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return ServerException_sendExceptionTwoReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionTwoReplyPluginSupport_destroy_data_ex(
-    sendExceptionTwoReply *sample,RTIBool deallocate_pointers) {
+ServerException_sendExceptionTwoReplyPluginSupport_destroy_data_ex(
+    ServerException_sendExceptionTwoReply *sample,RTIBool deallocate_pointers) {
 
-    sendExceptionTwoReply_finalize_ex(sample,deallocate_pointers);
+    ServerException_sendExceptionTwoReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sendExceptionTwoReplyPluginSupport_destroy_data(
-    sendExceptionTwoReply *sample) {
+ServerException_sendExceptionTwoReplyPluginSupport_destroy_data(
+    ServerException_sendExceptionTwoReply *sample) {
 
-    sendExceptionTwoReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionTwoReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sendExceptionTwoReplyPluginSupport_copy_data(
-    sendExceptionTwoReply *dst,
-    const sendExceptionTwoReply *src)
+ServerException_sendExceptionTwoReplyPluginSupport_copy_data(
+    ServerException_sendExceptionTwoReply *dst,
+    const ServerException_sendExceptionTwoReply *src)
 {
-    return sendExceptionTwoReply_copy(dst,src);
+    return ServerException_sendExceptionTwoReply_copy(dst,src);
 }
 
 
 void 
-sendExceptionTwoReplyPluginSupport_print_data(
-    const sendExceptionTwoReply *sample,
+ServerException_sendExceptionTwoReplyPluginSupport_print_data(
+    const ServerException_sendExceptionTwoReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -3577,17 +3280,8 @@ sendExceptionTwoReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     if (&sample->message2==NULL) {
         RTICdrType_printString(
@@ -3616,40 +3310,40 @@ sendExceptionTwoReplyPluginSupport_print_data(
 
 }
 
-sendExceptionTwoReply *
-sendExceptionTwoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sendExceptionTwoReply *key = NULL;
+ServerException_sendExceptionTwoReply *
+ServerException_sendExceptionTwoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionTwoReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sendExceptionTwoReplyKeyHolder);
+        &key, ServerException_sendExceptionTwoReplyKeyHolder);
 
-    sendExceptionTwoReply_initialize_ex(key,allocate_pointers);
+    ServerException_sendExceptionTwoReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sendExceptionTwoReply *
-sendExceptionTwoReplyPluginSupport_create_key(void)
+ServerException_sendExceptionTwoReply *
+ServerException_sendExceptionTwoReplyPluginSupport_create_key(void)
 {
-    return  sendExceptionTwoReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  ServerException_sendExceptionTwoReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionTwoReplyPluginSupport_destroy_key_ex(
-    sendExceptionTwoReplyKeyHolder *key,RTIBool deallocate_pointers)
+ServerException_sendExceptionTwoReplyPluginSupport_destroy_key_ex(
+    ServerException_sendExceptionTwoReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sendExceptionTwoReply_finalize_ex(key,deallocate_pointers);
+    ServerException_sendExceptionTwoReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sendExceptionTwoReplyPluginSupport_destroy_key(
-    sendExceptionTwoReplyKeyHolder *key) {
+ServerException_sendExceptionTwoReplyPluginSupport_destroy_key(
+    ServerException_sendExceptionTwoReplyKeyHolder *key) {
 
-  sendExceptionTwoReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  ServerException_sendExceptionTwoReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -3662,7 +3356,7 @@ sendExceptionTwoReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sendExceptionTwoReplyPlugin_on_participant_attached(
+ServerException_sendExceptionTwoReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -3681,7 +3375,7 @@ sendExceptionTwoReplyPlugin_on_participant_attached(
 
 
 void 
-sendExceptionTwoReplyPlugin_on_participant_detached(
+ServerException_sendExceptionTwoReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -3690,7 +3384,7 @@ sendExceptionTwoReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sendExceptionTwoReplyPlugin_on_endpoint_attached(
+ServerException_sendExceptionTwoReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -3708,19 +3402,19 @@ sendExceptionTwoReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sendExceptionTwoReplyPluginSupport_create_data,
+            ServerException_sendExceptionTwoReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sendExceptionTwoReplyPluginSupport_destroy_data,
+            ServerException_sendExceptionTwoReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sendExceptionTwoReplyPluginSupport_create_key,
+            ServerException_sendExceptionTwoReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sendExceptionTwoReplyPluginSupport_destroy_key);
+            ServerException_sendExceptionTwoReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sendExceptionTwoReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = ServerException_sendExceptionTwoReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -3736,9 +3430,9 @@ sendExceptionTwoReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sendExceptionTwoReplyPlugin_get_serialized_sample_max_size, epd,
+                ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sendExceptionTwoReplyPlugin_get_serialized_sample_size,
+            ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -3752,7 +3446,7 @@ sendExceptionTwoReplyPlugin_on_endpoint_attached(
 
 
 void 
-sendExceptionTwoReplyPlugin_on_endpoint_detached(
+ServerException_sendExceptionTwoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -3761,13 +3455,13 @@ sendExceptionTwoReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_copy_sample(
+ServerException_sendExceptionTwoReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply *dst,
-    const sendExceptionTwoReply *src)
+    ServerException_sendExceptionTwoReply *dst,
+    const ServerException_sendExceptionTwoReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sendExceptionTwoReplyPluginSupport_copy_data(dst,src);
+    return ServerException_sendExceptionTwoReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -3776,9 +3470,9 @@ sendExceptionTwoReplyPlugin_copy_sample(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_serialize(
+ServerException_sendExceptionTwoReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionTwoReply *sample, 
+    const ServerException_sendExceptionTwoReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3805,33 +3499,13 @@ sendExceptionTwoReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -3862,9 +3536,9 @@ sendExceptionTwoReplyPlugin_serialize(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_deserialize_sample(
+ServerException_sendExceptionTwoReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply *sample,
+    ServerException_sendExceptionTwoReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -3889,31 +3563,12 @@ sendExceptionTwoReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -3946,9 +3601,9 @@ sendExceptionTwoReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-sendExceptionTwoReplyPlugin_deserialize(
+ServerException_sendExceptionTwoReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply **sample,
+    ServerException_sendExceptionTwoReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -3958,7 +3613,7 @@ sendExceptionTwoReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sendExceptionTwoReplyPlugin_deserialize_sample( 
+    return ServerException_sendExceptionTwoReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -3967,7 +3622,7 @@ sendExceptionTwoReplyPlugin_deserialize(
 
 
 
-RTIBool sendExceptionTwoReplyPlugin_skip(
+RTIBool ServerException_sendExceptionTwoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -3992,27 +3647,11 @@ RTIBool sendExceptionTwoReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -4041,7 +3680,7 @@ RTIBool sendExceptionTwoReplyPlugin_skip(
 
 
 unsigned int 
-sendExceptionTwoReplyPlugin_get_serialized_sample_max_size(
+ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4069,17 +3708,8 @@ sendExceptionTwoReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, (255) + 1);
@@ -4099,7 +3729,7 @@ sendExceptionTwoReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sendExceptionTwoReplyPlugin_get_serialized_sample_min_size(
+ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4127,17 +3757,8 @@ sendExceptionTwoReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, 1);
@@ -4163,12 +3784,12 @@ sendExceptionTwoReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sendExceptionTwoReplyPlugin_get_serialized_sample_size(
+ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sendExceptionTwoReply * sample) 
+    const ServerException_sendExceptionTwoReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -4193,19 +3814,9 @@ sendExceptionTwoReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += RTICdrType_getStringSerializedSize(
         current_alignment, sample->message2);
@@ -4229,7 +3840,7 @@ sendExceptionTwoReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sendExceptionTwoReplyPlugin_get_key_kind(void)
+ServerException_sendExceptionTwoReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -4238,9 +3849,9 @@ sendExceptionTwoReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_serialize_key(
+ServerException_sendExceptionTwoReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionTwoReply *sample, 
+    const ServerException_sendExceptionTwoReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4265,28 +3876,13 @@ sendExceptionTwoReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4302,9 +3898,9 @@ sendExceptionTwoReplyPlugin_serialize_key(
 }
 
 
-RTIBool sendExceptionTwoReplyPlugin_deserialize_key_sample(
+RTIBool ServerException_sendExceptionTwoReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply *sample, 
+    ServerException_sendExceptionTwoReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -4329,26 +3925,12 @@ RTIBool sendExceptionTwoReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4365,9 +3947,9 @@ RTIBool sendExceptionTwoReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool sendExceptionTwoReplyPlugin_deserialize_key(
+RTIBool ServerException_sendExceptionTwoReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply **sample, 
+    ServerException_sendExceptionTwoReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -4375,7 +3957,7 @@ RTIBool sendExceptionTwoReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sendExceptionTwoReplyPlugin_deserialize_key_sample(
+    return ServerException_sendExceptionTwoReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -4383,7 +3965,7 @@ RTIBool sendExceptionTwoReplyPlugin_deserialize_key(
 
 
 unsigned int
-sendExceptionTwoReplyPlugin_get_serialized_key_max_size(
+ServerException_sendExceptionTwoReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4413,14 +3995,8 @@ sendExceptionTwoReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -4431,9 +4007,9 @@ sendExceptionTwoReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_serialized_sample_to_key(
+ServerException_sendExceptionTwoReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply *sample,
+    ServerException_sendExceptionTwoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -4456,30 +4032,12 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -4511,26 +4069,16 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_instance_to_key(
+ServerException_sendExceptionTwoReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReplyKeyHolder *dst, 
-    const sendExceptionTwoReply *src)
+    ServerException_sendExceptionTwoReplyKeyHolder *dst, 
+    const ServerException_sendExceptionTwoReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -4539,26 +4087,16 @@ sendExceptionTwoReplyPlugin_instance_to_key(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_key_to_instance(
+ServerException_sendExceptionTwoReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionTwoReply *dst, const
-    sendExceptionTwoReplyKeyHolder *src)
+    ServerException_sendExceptionTwoReply *dst, const
+    ServerException_sendExceptionTwoReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -4567,10 +4105,10 @@ sendExceptionTwoReplyPlugin_key_to_instance(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_instance_to_keyhash(
+ServerException_sendExceptionTwoReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sendExceptionTwoReply *instance)
+    const ServerException_sendExceptionTwoReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -4586,7 +4124,7 @@ sendExceptionTwoReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sendExceptionTwoReplyPlugin_serialize_key(
+    if (!ServerException_sendExceptionTwoReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -4607,7 +4145,7 @@ sendExceptionTwoReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
+ServerException_sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -4615,7 +4153,7 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sendExceptionTwoReply * sample;
+    ServerException_sendExceptionTwoReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -4630,7 +4168,7 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sendExceptionTwoReply *)
+    sample = (ServerException_sendExceptionTwoReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -4638,26 +4176,12 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -4666,7 +4190,7 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sendExceptionTwoReplyPlugin_instance_to_keyhash(
+    if (!ServerException_sendExceptionTwoReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -4679,7 +4203,7 @@ sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sendExceptionTwoReplyPlugin_new(void) 
+struct PRESTypePlugin *ServerException_sendExceptionTwoReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -4696,131 +4220,131 @@ struct PRESTypePlugin *sendExceptionTwoReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sendExceptionTwoReplyPlugin_on_participant_attached;
+        ServerException_sendExceptionTwoReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sendExceptionTwoReplyPlugin_on_participant_detached;
+        ServerException_sendExceptionTwoReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sendExceptionTwoReplyPlugin_on_endpoint_attached;
+        ServerException_sendExceptionTwoReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sendExceptionTwoReplyPlugin_on_endpoint_detached;
+        ServerException_sendExceptionTwoReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sendExceptionTwoReplyPlugin_copy_sample;
+        ServerException_sendExceptionTwoReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sendExceptionTwoReplyPlugin_create_sample;
+        ServerException_sendExceptionTwoReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sendExceptionTwoReplyPlugin_destroy_sample;
+        ServerException_sendExceptionTwoReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sendExceptionTwoReplyPlugin_serialize;
+        ServerException_sendExceptionTwoReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sendExceptionTwoReplyPlugin_deserialize;
+        ServerException_sendExceptionTwoReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sendExceptionTwoReplyPlugin_get_serialized_sample_max_size;
+        ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sendExceptionTwoReplyPlugin_get_serialized_sample_min_size;
+        ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sendExceptionTwoReplyPlugin_get_sample;
+        ServerException_sendExceptionTwoReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sendExceptionTwoReplyPlugin_return_sample;
+        ServerException_sendExceptionTwoReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sendExceptionTwoReplyPlugin_get_key_kind;
+        ServerException_sendExceptionTwoReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sendExceptionTwoReplyPlugin_get_serialized_key_max_size;
+        ServerException_sendExceptionTwoReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sendExceptionTwoReplyPlugin_serialize_key;
+        ServerException_sendExceptionTwoReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sendExceptionTwoReplyPlugin_deserialize_key;
+        ServerException_sendExceptionTwoReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sendExceptionTwoReplyPlugin_deserialize_key_sample;
+        ServerException_sendExceptionTwoReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sendExceptionTwoReplyPlugin_instance_to_keyhash;
+        ServerException_sendExceptionTwoReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash;
+        ServerException_sendExceptionTwoReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sendExceptionTwoReplyPlugin_get_key;
+        ServerException_sendExceptionTwoReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sendExceptionTwoReplyPlugin_return_key;
+        ServerException_sendExceptionTwoReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sendExceptionTwoReplyPlugin_instance_to_key;
+        ServerException_sendExceptionTwoReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sendExceptionTwoReplyPlugin_key_to_instance;
+        ServerException_sendExceptionTwoReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sendExceptionTwoReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)ServerException_sendExceptionTwoReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sendExceptionTwoReplyPlugin_get_buffer;
+        ServerException_sendExceptionTwoReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sendExceptionTwoReplyPlugin_return_buffer;
+        ServerException_sendExceptionTwoReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sendExceptionTwoReplyPlugin_get_serialized_sample_size;
+        ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sendExceptionTwoReplyTYPENAME;
+    plugin->endpointTypeName = ServerException_sendExceptionTwoReplyTYPENAME;
 
     return plugin;
 }
 
 void
-sendExceptionTwoReplyPlugin_delete(struct PRESTypePlugin *plugin)
+ServerException_sendExceptionTwoReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sendExceptionThreeRequest
+ *  Type ServerException_sendExceptionThreeRequest
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sendExceptionThreeRequest *
-sendExceptionThreeRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sendExceptionThreeRequest *sample = NULL;
+ServerException_sendExceptionThreeRequest *
+ServerException_sendExceptionThreeRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionThreeRequest *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sendExceptionThreeRequest);
+        &sample, ServerException_sendExceptionThreeRequest);
 
     if(sample != NULL) {
-        if (!sendExceptionThreeRequest_initialize_ex(sample,allocate_pointers)) {
+        if (!ServerException_sendExceptionThreeRequest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -4829,44 +4353,44 @@ sendExceptionThreeRequestPluginSupport_create_data_ex(RTIBool allocate_pointers)
 }
 
 
-sendExceptionThreeRequest *
-sendExceptionThreeRequestPluginSupport_create_data(void)
+ServerException_sendExceptionThreeRequest *
+ServerException_sendExceptionThreeRequestPluginSupport_create_data(void)
 {
-    return sendExceptionThreeRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ServerException_sendExceptionThreeRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionThreeRequestPluginSupport_destroy_data_ex(
-    sendExceptionThreeRequest *sample,RTIBool deallocate_pointers) {
+ServerException_sendExceptionThreeRequestPluginSupport_destroy_data_ex(
+    ServerException_sendExceptionThreeRequest *sample,RTIBool deallocate_pointers) {
 
-    sendExceptionThreeRequest_finalize_ex(sample,deallocate_pointers);
+    ServerException_sendExceptionThreeRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sendExceptionThreeRequestPluginSupport_destroy_data(
-    sendExceptionThreeRequest *sample) {
+ServerException_sendExceptionThreeRequestPluginSupport_destroy_data(
+    ServerException_sendExceptionThreeRequest *sample) {
 
-    sendExceptionThreeRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionThreeRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sendExceptionThreeRequestPluginSupport_copy_data(
-    sendExceptionThreeRequest *dst,
-    const sendExceptionThreeRequest *src)
+ServerException_sendExceptionThreeRequestPluginSupport_copy_data(
+    ServerException_sendExceptionThreeRequest *dst,
+    const ServerException_sendExceptionThreeRequest *src)
 {
-    return sendExceptionThreeRequest_copy(dst,src);
+    return ServerException_sendExceptionThreeRequest_copy(dst,src);
 }
 
 
 void 
-sendExceptionThreeRequestPluginSupport_print_data(
-    const sendExceptionThreeRequest *sample,
+ServerException_sendExceptionThreeRequestPluginSupport_print_data(
+    const ServerException_sendExceptionThreeRequest *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -4886,11 +4410,8 @@ sendExceptionThreeRequestPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
+    RequestHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     EstructuraPluginSupport_print_data(
         &sample->es, "es", indent_level + 1);
@@ -4901,40 +4422,40 @@ sendExceptionThreeRequestPluginSupport_print_data(
 
 }
 
-sendExceptionThreeRequest *
-sendExceptionThreeRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sendExceptionThreeRequest *key = NULL;
+ServerException_sendExceptionThreeRequest *
+ServerException_sendExceptionThreeRequestPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionThreeRequest *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sendExceptionThreeRequestKeyHolder);
+        &key, ServerException_sendExceptionThreeRequestKeyHolder);
 
-    sendExceptionThreeRequest_initialize_ex(key,allocate_pointers);
+    ServerException_sendExceptionThreeRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sendExceptionThreeRequest *
-sendExceptionThreeRequestPluginSupport_create_key(void)
+ServerException_sendExceptionThreeRequest *
+ServerException_sendExceptionThreeRequestPluginSupport_create_key(void)
 {
-    return  sendExceptionThreeRequestPluginSupport_create_key_ex(RTI_TRUE);
+    return  ServerException_sendExceptionThreeRequestPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionThreeRequestPluginSupport_destroy_key_ex(
-    sendExceptionThreeRequestKeyHolder *key,RTIBool deallocate_pointers)
+ServerException_sendExceptionThreeRequestPluginSupport_destroy_key_ex(
+    ServerException_sendExceptionThreeRequestKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sendExceptionThreeRequest_finalize_ex(key,deallocate_pointers);
+    ServerException_sendExceptionThreeRequest_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sendExceptionThreeRequestPluginSupport_destroy_key(
-    sendExceptionThreeRequestKeyHolder *key) {
+ServerException_sendExceptionThreeRequestPluginSupport_destroy_key(
+    ServerException_sendExceptionThreeRequestKeyHolder *key) {
 
-  sendExceptionThreeRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  ServerException_sendExceptionThreeRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -4947,7 +4468,7 @@ sendExceptionThreeRequestPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sendExceptionThreeRequestPlugin_on_participant_attached(
+ServerException_sendExceptionThreeRequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -4966,7 +4487,7 @@ sendExceptionThreeRequestPlugin_on_participant_attached(
 
 
 void 
-sendExceptionThreeRequestPlugin_on_participant_detached(
+ServerException_sendExceptionThreeRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -4975,7 +4496,7 @@ sendExceptionThreeRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sendExceptionThreeRequestPlugin_on_endpoint_attached(
+ServerException_sendExceptionThreeRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -4993,19 +4514,19 @@ sendExceptionThreeRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sendExceptionThreeRequestPluginSupport_create_data,
+            ServerException_sendExceptionThreeRequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sendExceptionThreeRequestPluginSupport_destroy_data,
+            ServerException_sendExceptionThreeRequestPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sendExceptionThreeRequestPluginSupport_create_key,
+            ServerException_sendExceptionThreeRequestPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sendExceptionThreeRequestPluginSupport_destroy_key);
+            ServerException_sendExceptionThreeRequestPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sendExceptionThreeRequestPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = ServerException_sendExceptionThreeRequestPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -5021,9 +4542,9 @@ sendExceptionThreeRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sendExceptionThreeRequestPlugin_get_serialized_sample_max_size, epd,
+                ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sendExceptionThreeRequestPlugin_get_serialized_sample_size,
+            ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -5037,7 +4558,7 @@ sendExceptionThreeRequestPlugin_on_endpoint_attached(
 
 
 void 
-sendExceptionThreeRequestPlugin_on_endpoint_detached(
+ServerException_sendExceptionThreeRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -5046,13 +4567,13 @@ sendExceptionThreeRequestPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_copy_sample(
+ServerException_sendExceptionThreeRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest *dst,
-    const sendExceptionThreeRequest *src)
+    ServerException_sendExceptionThreeRequest *dst,
+    const ServerException_sendExceptionThreeRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sendExceptionThreeRequestPluginSupport_copy_data(dst,src);
+    return ServerException_sendExceptionThreeRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -5061,9 +4582,9 @@ sendExceptionThreeRequestPlugin_copy_sample(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_serialize(
+ServerException_sendExceptionThreeRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionThreeRequest *sample, 
+    const ServerException_sendExceptionThreeRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5090,18 +4611,13 @@ sendExceptionThreeRequestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -5137,9 +4653,9 @@ sendExceptionThreeRequestPlugin_serialize(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_deserialize_sample(
+ServerException_sendExceptionThreeRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest *sample,
+    ServerException_sendExceptionThreeRequest *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -5164,17 +4680,12 @@ sendExceptionThreeRequestPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -5210,9 +4721,9 @@ sendExceptionThreeRequestPlugin_deserialize_sample(
  
  
 RTIBool 
-sendExceptionThreeRequestPlugin_deserialize(
+ServerException_sendExceptionThreeRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest **sample,
+    ServerException_sendExceptionThreeRequest **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -5222,7 +4733,7 @@ sendExceptionThreeRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sendExceptionThreeRequestPlugin_deserialize_sample( 
+    return ServerException_sendExceptionThreeRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -5231,7 +4742,7 @@ sendExceptionThreeRequestPlugin_deserialize(
 
 
 
-RTIBool sendExceptionThreeRequestPlugin_skip(
+RTIBool ServerException_sendExceptionThreeRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -5256,15 +4767,11 @@ RTIBool sendExceptionThreeRequestPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!RequestHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -5297,7 +4804,7 @@ RTIBool sendExceptionThreeRequestPlugin_skip(
 
 
 unsigned int 
-sendExceptionThreeRequestPlugin_get_serialized_sample_max_size(
+ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5325,11 +4832,8 @@ sendExceptionThreeRequestPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EstructuraPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -5346,7 +4850,7 @@ sendExceptionThreeRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sendExceptionThreeRequestPlugin_get_serialized_sample_min_size(
+ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5374,11 +4878,8 @@ sendExceptionThreeRequestPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EstructuraPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -5401,12 +4902,12 @@ sendExceptionThreeRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sendExceptionThreeRequestPlugin_get_serialized_sample_size(
+ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sendExceptionThreeRequest * sample) 
+    const ServerException_sendExceptionThreeRequest * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -5431,12 +4932,9 @@ sendExceptionThreeRequestPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += EstructuraPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -5459,7 +4957,7 @@ sendExceptionThreeRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sendExceptionThreeRequestPlugin_get_key_kind(void)
+ServerException_sendExceptionThreeRequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -5468,9 +4966,9 @@ sendExceptionThreeRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_serialize_key(
+ServerException_sendExceptionThreeRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionThreeRequest *sample, 
+    const ServerException_sendExceptionThreeRequest *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5495,18 +4993,13 @@ sendExceptionThreeRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!RequestHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->clientServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -5522,9 +5015,9 @@ sendExceptionThreeRequestPlugin_serialize_key(
 }
 
 
-RTIBool sendExceptionThreeRequestPlugin_deserialize_key_sample(
+RTIBool ServerException_sendExceptionThreeRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest *sample, 
+    ServerException_sendExceptionThreeRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -5549,17 +5042,12 @@ RTIBool sendExceptionThreeRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!RequestHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -5576,9 +5064,9 @@ RTIBool sendExceptionThreeRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool sendExceptionThreeRequestPlugin_deserialize_key(
+RTIBool ServerException_sendExceptionThreeRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest **sample, 
+    ServerException_sendExceptionThreeRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -5586,7 +5074,7 @@ RTIBool sendExceptionThreeRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sendExceptionThreeRequestPlugin_deserialize_key_sample(
+    return ServerException_sendExceptionThreeRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -5594,7 +5082,7 @@ RTIBool sendExceptionThreeRequestPlugin_deserialize_key(
 
 
 unsigned int
-sendExceptionThreeRequestPlugin_get_serialized_key_max_size(
+ServerException_sendExceptionThreeRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5624,11 +5112,8 @@ sendExceptionThreeRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -5639,9 +5124,9 @@ sendExceptionThreeRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_serialized_sample_to_key(
+ServerException_sendExceptionThreeRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest *sample,
+    ServerException_sendExceptionThreeRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -5664,17 +5149,12 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -5710,21 +5190,16 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_instance_to_key(
+ServerException_sendExceptionThreeRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequestKeyHolder *dst, 
-    const sendExceptionThreeRequest *src)
+    ServerException_sendExceptionThreeRequestKeyHolder *dst, 
+    const ServerException_sendExceptionThreeRequest *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -5733,21 +5208,16 @@ sendExceptionThreeRequestPlugin_instance_to_key(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_key_to_instance(
+ServerException_sendExceptionThreeRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeRequest *dst, const
-    sendExceptionThreeRequestKeyHolder *src)
+    ServerException_sendExceptionThreeRequest *dst, const
+    ServerException_sendExceptionThreeRequestKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -5756,10 +5226,10 @@ sendExceptionThreeRequestPlugin_key_to_instance(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_instance_to_keyhash(
+ServerException_sendExceptionThreeRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sendExceptionThreeRequest *instance)
+    const ServerException_sendExceptionThreeRequest *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -5775,7 +5245,7 @@ sendExceptionThreeRequestPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sendExceptionThreeRequestPlugin_serialize_key(
+    if (!ServerException_sendExceptionThreeRequestPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -5796,7 +5266,7 @@ sendExceptionThreeRequestPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
+ServerException_sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -5804,7 +5274,7 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sendExceptionThreeRequest * sample;
+    ServerException_sendExceptionThreeRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -5819,7 +5289,7 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sendExceptionThreeRequest *)
+    sample = (ServerException_sendExceptionThreeRequest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -5827,17 +5297,12 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!RequestHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->clientServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -5846,7 +5311,7 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sendExceptionThreeRequestPlugin_instance_to_keyhash(
+    if (!ServerException_sendExceptionThreeRequestPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -5859,7 +5324,7 @@ sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sendExceptionThreeRequestPlugin_new(void) 
+struct PRESTypePlugin *ServerException_sendExceptionThreeRequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -5876,131 +5341,131 @@ struct PRESTypePlugin *sendExceptionThreeRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sendExceptionThreeRequestPlugin_on_participant_attached;
+        ServerException_sendExceptionThreeRequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sendExceptionThreeRequestPlugin_on_participant_detached;
+        ServerException_sendExceptionThreeRequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sendExceptionThreeRequestPlugin_on_endpoint_attached;
+        ServerException_sendExceptionThreeRequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sendExceptionThreeRequestPlugin_on_endpoint_detached;
+        ServerException_sendExceptionThreeRequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sendExceptionThreeRequestPlugin_copy_sample;
+        ServerException_sendExceptionThreeRequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sendExceptionThreeRequestPlugin_create_sample;
+        ServerException_sendExceptionThreeRequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sendExceptionThreeRequestPlugin_destroy_sample;
+        ServerException_sendExceptionThreeRequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sendExceptionThreeRequestPlugin_serialize;
+        ServerException_sendExceptionThreeRequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sendExceptionThreeRequestPlugin_deserialize;
+        ServerException_sendExceptionThreeRequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sendExceptionThreeRequestPlugin_get_serialized_sample_max_size;
+        ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sendExceptionThreeRequestPlugin_get_serialized_sample_min_size;
+        ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sendExceptionThreeRequestPlugin_get_sample;
+        ServerException_sendExceptionThreeRequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sendExceptionThreeRequestPlugin_return_sample;
+        ServerException_sendExceptionThreeRequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sendExceptionThreeRequestPlugin_get_key_kind;
+        ServerException_sendExceptionThreeRequestPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sendExceptionThreeRequestPlugin_get_serialized_key_max_size;
+        ServerException_sendExceptionThreeRequestPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sendExceptionThreeRequestPlugin_serialize_key;
+        ServerException_sendExceptionThreeRequestPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sendExceptionThreeRequestPlugin_deserialize_key;
+        ServerException_sendExceptionThreeRequestPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sendExceptionThreeRequestPlugin_deserialize_key_sample;
+        ServerException_sendExceptionThreeRequestPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sendExceptionThreeRequestPlugin_instance_to_keyhash;
+        ServerException_sendExceptionThreeRequestPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash;
+        ServerException_sendExceptionThreeRequestPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sendExceptionThreeRequestPlugin_get_key;
+        ServerException_sendExceptionThreeRequestPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sendExceptionThreeRequestPlugin_return_key;
+        ServerException_sendExceptionThreeRequestPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sendExceptionThreeRequestPlugin_instance_to_key;
+        ServerException_sendExceptionThreeRequestPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sendExceptionThreeRequestPlugin_key_to_instance;
+        ServerException_sendExceptionThreeRequestPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sendExceptionThreeRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)ServerException_sendExceptionThreeRequest_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sendExceptionThreeRequestPlugin_get_buffer;
+        ServerException_sendExceptionThreeRequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sendExceptionThreeRequestPlugin_return_buffer;
+        ServerException_sendExceptionThreeRequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sendExceptionThreeRequestPlugin_get_serialized_sample_size;
+        ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sendExceptionThreeRequestTYPENAME;
+    plugin->endpointTypeName = ServerException_sendExceptionThreeRequestTYPENAME;
 
     return plugin;
 }
 
 void
-sendExceptionThreeRequestPlugin_delete(struct PRESTypePlugin *plugin)
+ServerException_sendExceptionThreeRequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type sendExceptionThreeReply
+ *  Type ServerException_sendExceptionThreeReply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-sendExceptionThreeReply *
-sendExceptionThreeReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    sendExceptionThreeReply *sample = NULL;
+ServerException_sendExceptionThreeReply *
+ServerException_sendExceptionThreeReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionThreeReply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, sendExceptionThreeReply);
+        &sample, ServerException_sendExceptionThreeReply);
 
     if(sample != NULL) {
-        if (!sendExceptionThreeReply_initialize_ex(sample,allocate_pointers)) {
+        if (!ServerException_sendExceptionThreeReply_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
@@ -6009,44 +5474,44 @@ sendExceptionThreeReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-sendExceptionThreeReply *
-sendExceptionThreeReplyPluginSupport_create_data(void)
+ServerException_sendExceptionThreeReply *
+ServerException_sendExceptionThreeReplyPluginSupport_create_data(void)
 {
-    return sendExceptionThreeReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return ServerException_sendExceptionThreeReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionThreeReplyPluginSupport_destroy_data_ex(
-    sendExceptionThreeReply *sample,RTIBool deallocate_pointers) {
+ServerException_sendExceptionThreeReplyPluginSupport_destroy_data_ex(
+    ServerException_sendExceptionThreeReply *sample,RTIBool deallocate_pointers) {
 
-    sendExceptionThreeReply_finalize_ex(sample,deallocate_pointers);
+    ServerException_sendExceptionThreeReply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-sendExceptionThreeReplyPluginSupport_destroy_data(
-    sendExceptionThreeReply *sample) {
+ServerException_sendExceptionThreeReplyPluginSupport_destroy_data(
+    ServerException_sendExceptionThreeReply *sample) {
 
-    sendExceptionThreeReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ServerException_sendExceptionThreeReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-sendExceptionThreeReplyPluginSupport_copy_data(
-    sendExceptionThreeReply *dst,
-    const sendExceptionThreeReply *src)
+ServerException_sendExceptionThreeReplyPluginSupport_copy_data(
+    ServerException_sendExceptionThreeReply *dst,
+    const ServerException_sendExceptionThreeReply *src)
 {
-    return sendExceptionThreeReply_copy(dst,src);
+    return ServerException_sendExceptionThreeReply_copy(dst,src);
 }
 
 
 void 
-sendExceptionThreeReplyPluginSupport_print_data(
-    const sendExceptionThreeReply *sample,
+ServerException_sendExceptionThreeReplyPluginSupport_print_data(
+    const ServerException_sendExceptionThreeReply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -6066,17 +5531,8 @@ sendExceptionThreeReplyPluginSupport_print_data(
     }
 
 
-    IdentificationPluginSupport_print_data(
-        &sample->serverServiceId, "serverServiceId", indent_level + 1);
-            
-    IdentificationPluginSupport_print_data(
-        &sample->clientServiceId, "clientServiceId", indent_level + 1);
-            
-    RTICdrType_printUnsignedLong(
-        &sample->numSec, "numSec", indent_level + 1);
-            
-    RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+    ReplyHeaderPluginSupport_print_data(
+        &sample->header, "header", indent_level + 1);
             
     EstructuraPluginSupport_print_data(
         &sample->es2, "es2", indent_level + 1);
@@ -6090,40 +5546,40 @@ sendExceptionThreeReplyPluginSupport_print_data(
 
 }
 
-sendExceptionThreeReply *
-sendExceptionThreeReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    sendExceptionThreeReply *key = NULL;
+ServerException_sendExceptionThreeReply *
+ServerException_sendExceptionThreeReplyPluginSupport_create_key_ex(RTIBool allocate_pointers){
+    ServerException_sendExceptionThreeReply *key = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &key, sendExceptionThreeReplyKeyHolder);
+        &key, ServerException_sendExceptionThreeReplyKeyHolder);
 
-    sendExceptionThreeReply_initialize_ex(key,allocate_pointers);
+    ServerException_sendExceptionThreeReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
 
-sendExceptionThreeReply *
-sendExceptionThreeReplyPluginSupport_create_key(void)
+ServerException_sendExceptionThreeReply *
+ServerException_sendExceptionThreeReplyPluginSupport_create_key(void)
 {
-    return  sendExceptionThreeReplyPluginSupport_create_key_ex(RTI_TRUE);
+    return  ServerException_sendExceptionThreeReplyPluginSupport_create_key_ex(RTI_TRUE);
 }
 
 
 void 
-sendExceptionThreeReplyPluginSupport_destroy_key_ex(
-    sendExceptionThreeReplyKeyHolder *key,RTIBool deallocate_pointers)
+ServerException_sendExceptionThreeReplyPluginSupport_destroy_key_ex(
+    ServerException_sendExceptionThreeReplyKeyHolder *key,RTIBool deallocate_pointers)
 {
-    sendExceptionThreeReply_finalize_ex(key,deallocate_pointers);
+    ServerException_sendExceptionThreeReply_finalize_ex(key,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(key);
 }
 
 
 void 
-sendExceptionThreeReplyPluginSupport_destroy_key(
-    sendExceptionThreeReplyKeyHolder *key) {
+ServerException_sendExceptionThreeReplyPluginSupport_destroy_key(
+    ServerException_sendExceptionThreeReplyKeyHolder *key) {
 
-  sendExceptionThreeReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
+  ServerException_sendExceptionThreeReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
 
@@ -6136,7 +5592,7 @@ sendExceptionThreeReplyPluginSupport_destroy_key(
 
 
 PRESTypePluginParticipantData 
-sendExceptionThreeReplyPlugin_on_participant_attached(
+ServerException_sendExceptionThreeReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -6155,7 +5611,7 @@ sendExceptionThreeReplyPlugin_on_participant_attached(
 
 
 void 
-sendExceptionThreeReplyPlugin_on_participant_detached(
+ServerException_sendExceptionThreeReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -6164,7 +5620,7 @@ sendExceptionThreeReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-sendExceptionThreeReplyPlugin_on_endpoint_attached(
+ServerException_sendExceptionThreeReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -6182,19 +5638,19 @@ sendExceptionThreeReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            sendExceptionThreeReplyPluginSupport_create_data,
+            ServerException_sendExceptionThreeReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            sendExceptionThreeReplyPluginSupport_destroy_data,
+            ServerException_sendExceptionThreeReplyPluginSupport_destroy_data,
             (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-            sendExceptionThreeReplyPluginSupport_create_key,
+            ServerException_sendExceptionThreeReplyPluginSupport_create_key,
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-            sendExceptionThreeReplyPluginSupport_destroy_key);
+            ServerException_sendExceptionThreeReplyPluginSupport_destroy_key);
 
     if (epd == NULL) {
         return NULL;
     }
    
-    serializedKeyMaxSize = sendExceptionThreeReplyPlugin_get_serialized_key_max_size(
+    serializedKeyMaxSize = ServerException_sendExceptionThreeReplyPlugin_get_serialized_key_max_size(
         epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
     
     if (!PRESTypePluginDefaultEndpointData_createMD5Stream(
@@ -6210,9 +5666,9 @@ sendExceptionThreeReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                sendExceptionThreeReplyPlugin_get_serialized_sample_max_size, epd,
+                ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            sendExceptionThreeReplyPlugin_get_serialized_sample_size,
+            ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -6226,7 +5682,7 @@ sendExceptionThreeReplyPlugin_on_endpoint_attached(
 
 
 void 
-sendExceptionThreeReplyPlugin_on_endpoint_detached(
+ServerException_sendExceptionThreeReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -6235,13 +5691,13 @@ sendExceptionThreeReplyPlugin_on_endpoint_detached(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_copy_sample(
+ServerException_sendExceptionThreeReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply *dst,
-    const sendExceptionThreeReply *src)
+    ServerException_sendExceptionThreeReply *dst,
+    const ServerException_sendExceptionThreeReply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return sendExceptionThreeReplyPluginSupport_copy_data(dst,src);
+    return ServerException_sendExceptionThreeReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -6250,9 +5706,9 @@ sendExceptionThreeReplyPlugin_copy_sample(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_serialize(
+ServerException_sendExceptionThreeReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionThreeReply *sample, 
+    const ServerException_sendExceptionThreeReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6279,33 +5735,13 @@ sendExceptionThreeReplyPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (!IdentificationPlugin_serialize(
+    if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -6351,9 +5787,9 @@ sendExceptionThreeReplyPlugin_serialize(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_deserialize_sample(
+ServerException_sendExceptionThreeReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply *sample,
+    ServerException_sendExceptionThreeReply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -6378,31 +5814,12 @@ sendExceptionThreeReplyPlugin_deserialize_sample(
     if(deserialize_sample) {
 
 
-    if (!IdentificationPlugin_deserialize_sample(
+    if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
@@ -6447,9 +5864,9 @@ sendExceptionThreeReplyPlugin_deserialize_sample(
  
  
 RTIBool 
-sendExceptionThreeReplyPlugin_deserialize(
+ServerException_sendExceptionThreeReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply **sample,
+    ServerException_sendExceptionThreeReply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -6459,7 +5876,7 @@ sendExceptionThreeReplyPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return sendExceptionThreeReplyPlugin_deserialize_sample( 
+    return ServerException_sendExceptionThreeReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -6468,7 +5885,7 @@ sendExceptionThreeReplyPlugin_deserialize(
 
 
 
-RTIBool sendExceptionThreeReplyPlugin_skip(
+RTIBool ServerException_sendExceptionThreeReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -6493,27 +5910,11 @@ RTIBool sendExceptionThreeReplyPlugin_skip(
 
     if (skip_sample) {
 
-    if (!IdentificationPlugin_skip(
+    if (!ReplyHeaderPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipUnsignedLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -6554,7 +5955,7 @@ RTIBool sendExceptionThreeReplyPlugin_skip(
 
 
 unsigned int 
-sendExceptionThreeReplyPlugin_get_serialized_sample_max_size(
+ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6582,17 +5983,8 @@ sendExceptionThreeReplyPlugin_get_serialized_sample_max_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EstructuraPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -6612,7 +6004,7 @@ sendExceptionThreeReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-sendExceptionThreeReplyPlugin_get_serialized_sample_min_size(
+ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6640,17 +6032,8 @@ sendExceptionThreeReplyPlugin_get_serialized_sample_min_size(
     }
 
 
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
             
     current_alignment +=  EstructuraPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
@@ -6676,12 +6059,12 @@ sendExceptionThreeReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-sendExceptionThreeReplyPlugin_get_serialized_sample_size(
+ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const sendExceptionThreeReply * sample) 
+    const ServerException_sendExceptionThreeReply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -6706,19 +6089,9 @@ sendExceptionThreeReplyPlugin_get_serialized_sample_size(
     }
 
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
+    current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->serverServiceId);
-            
-    current_alignment += IdentificationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->clientServiceId);
-            
-    current_alignment += RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
-            
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
+        current_alignment, &sample->header);
             
     current_alignment += EstructuraPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
@@ -6745,7 +6118,7 @@ sendExceptionThreeReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-sendExceptionThreeReplyPlugin_get_key_kind(void)
+ServerException_sendExceptionThreeReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_USER_KEY;
@@ -6754,9 +6127,9 @@ sendExceptionThreeReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_serialize_key(
+ServerException_sendExceptionThreeReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const sendExceptionThreeReply *sample, 
+    const ServerException_sendExceptionThreeReply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6781,28 +6154,13 @@ sendExceptionThreeReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (!IdentificationPlugin_serialize_key(
+    if (!ReplyHeaderPlugin_serialize_key(
             endpoint_data,
-            &sample->serverServiceId, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialize_key(
-            endpoint_data,
-            &sample->clientServiceId, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_serializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -6818,9 +6176,9 @@ sendExceptionThreeReplyPlugin_serialize_key(
 }
 
 
-RTIBool sendExceptionThreeReplyPlugin_deserialize_key_sample(
+RTIBool ServerException_sendExceptionThreeReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply *sample, 
+    ServerException_sendExceptionThreeReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -6845,26 +6203,12 @@ RTIBool sendExceptionThreeReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_deserialize_key_sample(
+    if (!ReplyHeaderPlugin_deserialize_key_sample(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_deserialize_key_sample(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -6881,9 +6225,9 @@ RTIBool sendExceptionThreeReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool sendExceptionThreeReplyPlugin_deserialize_key(
+RTIBool ServerException_sendExceptionThreeReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply **sample, 
+    ServerException_sendExceptionThreeReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -6891,7 +6235,7 @@ RTIBool sendExceptionThreeReplyPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return sendExceptionThreeReplyPlugin_deserialize_key_sample(
+    return ServerException_sendExceptionThreeReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -6899,7 +6243,7 @@ RTIBool sendExceptionThreeReplyPlugin_deserialize_key(
 
 
 unsigned int
-sendExceptionThreeReplyPlugin_get_serialized_key_max_size(
+ServerException_sendExceptionThreeReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6929,14 +6273,8 @@ sendExceptionThreeReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
+    current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  IdentificationPlugin_get_serialized_key_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
-            
-    current_alignment +=  RTICdrType_getUnsignedLongMaxSizeSerialized(
-        current_alignment);
             
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -6947,9 +6285,9 @@ sendExceptionThreeReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_serialized_sample_to_key(
+ServerException_sendExceptionThreeReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply *sample,
+    ServerException_sendExceptionThreeReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -6972,30 +6310,12 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_skipLong(stream)) {
         return RTI_FALSE;
     }
             
@@ -7039,26 +6359,16 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_key(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_instance_to_key(
+ServerException_sendExceptionThreeReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReplyKeyHolder *dst, 
-    const sendExceptionThreeReply *src)
+    ServerException_sendExceptionThreeReplyKeyHolder *dst, 
+    const ServerException_sendExceptionThreeReply *src)
 {  
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -7067,26 +6377,16 @@ sendExceptionThreeReplyPlugin_instance_to_key(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_key_to_instance(
+ServerException_sendExceptionThreeReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    sendExceptionThreeReply *dst, const
-    sendExceptionThreeReplyKeyHolder *src)
+    ServerException_sendExceptionThreeReply *dst, const
+    ServerException_sendExceptionThreeReplyKeyHolder *src)
 {
 
     if (endpoint_data) {} /* To avoid warnings */
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -7095,10 +6395,10 @@ sendExceptionThreeReplyPlugin_key_to_instance(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_instance_to_keyhash(
+ServerException_sendExceptionThreeReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const sendExceptionThreeReply *instance)
+    const ServerException_sendExceptionThreeReply *instance)
 {
     struct RTICdrStream * md5Stream = NULL;
 
@@ -7114,7 +6414,7 @@ sendExceptionThreeReplyPlugin_instance_to_keyhash(
     RTICdrStream_resetPosition(md5Stream);
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
-    if (!sendExceptionThreeReplyPlugin_serialize_key(
+    if (!ServerException_sendExceptionThreeReplyPlugin_serialize_key(
             endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
         return RTI_FALSE;
     }
@@ -7135,7 +6435,7 @@ sendExceptionThreeReplyPlugin_instance_to_keyhash(
 
 
 RTIBool 
-sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
+ServerException_sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -7143,7 +6443,7 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    sendExceptionThreeReply * sample;
+    ServerException_sendExceptionThreeReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -7158,7 +6458,7 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    sample = (sendExceptionThreeReply *)
+    sample = (ServerException_sendExceptionThreeReply *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
     if (sample == NULL) {
@@ -7166,26 +6466,12 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!IdentificationPlugin_serialized_sample_to_key(
+    if (!ReplyHeaderPlugin_serialized_sample_to_key(
             endpoint_data,
-            &sample->serverServiceId,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!IdentificationPlugin_serialized_sample_to_key(
-            endpoint_data,
-            &sample->clientServiceId,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrStream_deserializeUnsignedLong(
-        stream, &sample->numSec)) {
         return RTI_FALSE;
     }
             
@@ -7194,7 +6480,7 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
     }
 
 
-    if (!sendExceptionThreeReplyPlugin_instance_to_keyhash(
+    if (!ServerException_sendExceptionThreeReplyPlugin_instance_to_keyhash(
             endpoint_data, keyhash, sample)) {
         return RTI_FALSE;
     }
@@ -7207,7 +6493,7 @@ sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash(
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *sendExceptionThreeReplyPlugin_new(void) 
+struct PRESTypePlugin *ServerException_sendExceptionThreeReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -7224,110 +6510,110 @@ struct PRESTypePlugin *sendExceptionThreeReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        sendExceptionThreeReplyPlugin_on_participant_attached;
+        ServerException_sendExceptionThreeReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        sendExceptionThreeReplyPlugin_on_participant_detached;
+        ServerException_sendExceptionThreeReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        sendExceptionThreeReplyPlugin_on_endpoint_attached;
+        ServerException_sendExceptionThreeReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        sendExceptionThreeReplyPlugin_on_endpoint_detached;
+        ServerException_sendExceptionThreeReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        sendExceptionThreeReplyPlugin_copy_sample;
+        ServerException_sendExceptionThreeReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        sendExceptionThreeReplyPlugin_create_sample;
+        ServerException_sendExceptionThreeReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        sendExceptionThreeReplyPlugin_destroy_sample;
+        ServerException_sendExceptionThreeReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        sendExceptionThreeReplyPlugin_serialize;
+        ServerException_sendExceptionThreeReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        sendExceptionThreeReplyPlugin_deserialize;
+        ServerException_sendExceptionThreeReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        sendExceptionThreeReplyPlugin_get_serialized_sample_max_size;
+        ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        sendExceptionThreeReplyPlugin_get_serialized_sample_min_size;
+        ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        sendExceptionThreeReplyPlugin_get_sample;
+        ServerException_sendExceptionThreeReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        sendExceptionThreeReplyPlugin_return_sample;
+        ServerException_sendExceptionThreeReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        sendExceptionThreeReplyPlugin_get_key_kind;
+        ServerException_sendExceptionThreeReplyPlugin_get_key_kind;
 
 
     plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        sendExceptionThreeReplyPlugin_get_serialized_key_max_size;
+        ServerException_sendExceptionThreeReplyPlugin_get_serialized_key_max_size;
     plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
-        sendExceptionThreeReplyPlugin_serialize_key;
+        ServerException_sendExceptionThreeReplyPlugin_serialize_key;
     plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        sendExceptionThreeReplyPlugin_deserialize_key;
+        ServerException_sendExceptionThreeReplyPlugin_deserialize_key;
     plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
-        sendExceptionThreeReplyPlugin_deserialize_key_sample;
+        ServerException_sendExceptionThreeReplyPlugin_deserialize_key_sample;
 
     plugin->instanceToKeyHashFnc = 
         (PRESTypePluginInstanceToKeyHashFunction)
-        sendExceptionThreeReplyPlugin_instance_to_keyhash;
+        ServerException_sendExceptionThreeReplyPlugin_instance_to_keyhash;
     plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash;
+        ServerException_sendExceptionThreeReplyPlugin_serialized_sample_to_keyhash;
 
     plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        sendExceptionThreeReplyPlugin_get_key;
+        ServerException_sendExceptionThreeReplyPlugin_get_key;
     plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        sendExceptionThreeReplyPlugin_return_key;
+        ServerException_sendExceptionThreeReplyPlugin_return_key;
 
     plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        sendExceptionThreeReplyPlugin_instance_to_key;
+        ServerException_sendExceptionThreeReplyPlugin_instance_to_key;
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        sendExceptionThreeReplyPlugin_key_to_instance;
+        ServerException_sendExceptionThreeReplyPlugin_key_to_instance;
     plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)sendExceptionThreeReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)ServerException_sendExceptionThreeReply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        sendExceptionThreeReplyPlugin_get_buffer;
+        ServerException_sendExceptionThreeReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        sendExceptionThreeReplyPlugin_return_buffer;
+        ServerException_sendExceptionThreeReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        sendExceptionThreeReplyPlugin_get_serialized_sample_size;
+        ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = sendExceptionThreeReplyTYPENAME;
+    plugin->endpointTypeName = ServerException_sendExceptionThreeReplyTYPENAME;
 
     return plugin;
 }
 
 void
-sendExceptionThreeReplyPlugin_delete(struct PRESTypePlugin *plugin)
+ServerException_sendExceptionThreeReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

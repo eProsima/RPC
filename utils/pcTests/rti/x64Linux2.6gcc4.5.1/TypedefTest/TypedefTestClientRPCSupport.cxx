@@ -6,12 +6,12 @@
 
 
 /* Defines */
-#define TName            getLargoClientRPC
-#define TDataTypeSupport getLargoReplyTypeSupport
-#define TData            getLargo
-#define TDataSeq         getLargoReplySeq
-#define TDataReader      getLargoReplyDataReader
-#define TDataWriter      getLargoRequestDataWriter
+#define TName            TypedefTest_getLargoClientRPC
+#define TDataTypeSupport TypedefTest_getLargoReplyTypeSupport
+#define TData            TypedefTest_getLargo
+#define TDataSeq         TypedefTest_getLargoReplySeq
+#define TDataReader      TypedefTest_getLargoReplyDataReader
+#define TDataWriter      TypedefTest_getLargoRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -26,12 +26,12 @@
 
 
 /* Defines */
-#define TName            getLarguisimoClientRPC
-#define TDataTypeSupport getLarguisimoReplyTypeSupport
-#define TData            getLarguisimo
-#define TDataSeq         getLarguisimoReplySeq
-#define TDataReader      getLarguisimoReplyDataReader
-#define TDataWriter      getLarguisimoRequestDataWriter
+#define TName            TypedefTest_getLarguisimoClientRPC
+#define TDataTypeSupport TypedefTest_getLarguisimoReplyTypeSupport
+#define TData            TypedefTest_getLarguisimo
+#define TDataSeq         TypedefTest_getLarguisimoReplySeq
+#define TDataReader      TypedefTest_getLarguisimoReplyDataReader
+#define TDataWriter      TypedefTest_getLarguisimoRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -46,12 +46,12 @@
 
 
 /* Defines */
-#define TName            getDatosDefClientRPC
-#define TDataTypeSupport getDatosDefReplyTypeSupport
-#define TData            getDatosDef
-#define TDataSeq         getDatosDefReplySeq
-#define TDataReader      getDatosDefReplyDataReader
-#define TDataWriter      getDatosDefRequestDataWriter
+#define TName            TypedefTest_getDatosDefClientRPC
+#define TDataTypeSupport TypedefTest_getDatosDefReplyTypeSupport
+#define TData            TypedefTest_getDatosDef
+#define TDataSeq         TypedefTest_getDatosDefReplySeq
+#define TDataReader      TypedefTest_getDatosDefReplyDataReader
+#define TDataWriter      TypedefTest_getDatosDefRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -66,12 +66,12 @@
 
 
 /* Defines */
-#define TName            getDatosDefondoClientRPC
-#define TDataTypeSupport getDatosDefondoReplyTypeSupport
-#define TData            getDatosDefondo
-#define TDataSeq         getDatosDefondoReplySeq
-#define TDataReader      getDatosDefondoReplyDataReader
-#define TDataWriter      getDatosDefondoRequestDataWriter
+#define TName            TypedefTest_getDatosDefondoClientRPC
+#define TDataTypeSupport TypedefTest_getDatosDefondoReplyTypeSupport
+#define TData            TypedefTest_getDatosDefondo
+#define TDataSeq         TypedefTest_getDatosDefondoReplySeq
+#define TDataReader      TypedefTest_getDatosDefondoReplyDataReader
+#define TDataWriter      TypedefTest_getDatosDefondoRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -86,12 +86,12 @@
 
 
 /* Defines */
-#define TName            getCadenaClientRPC
-#define TDataTypeSupport getCadenaReplyTypeSupport
-#define TData            getCadena
-#define TDataSeq         getCadenaReplySeq
-#define TDataReader      getCadenaReplyDataReader
-#define TDataWriter      getCadenaRequestDataWriter
+#define TName            TypedefTest_getCadenaClientRPC
+#define TDataTypeSupport TypedefTest_getCadenaReplyTypeSupport
+#define TData            TypedefTest_getCadena
+#define TDataSeq         TypedefTest_getCadenaReplySeq
+#define TDataReader      TypedefTest_getCadenaReplyDataReader
+#define TDataWriter      TypedefTest_getCadenaRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"
@@ -106,12 +106,12 @@
 
 
 /* Defines */
-#define TName            getCorreaClientRPC
-#define TDataTypeSupport getCorreaReplyTypeSupport
-#define TData            getCorrea
-#define TDataSeq         getCorreaReplySeq
-#define TDataReader      getCorreaReplyDataReader
-#define TDataWriter      getCorreaRequestDataWriter
+#define TName            TypedefTest_getCorreaClientRPC
+#define TDataTypeSupport TypedefTest_getCorreaReplyTypeSupport
+#define TData            TypedefTest_getCorrea
+#define TDataSeq         TypedefTest_getCorreaReplySeq
+#define TDataReader      TypedefTest_getCorreaReplyDataReader
+#define TDataWriter      TypedefTest_getCorreaRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"

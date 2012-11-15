@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef UnionTestRequestReplySupport_1136051261_h
-#define UnionTestRequestReplySupport_1136051261_h
+#ifndef UnionTestRequestReplySupport_1136051123_h
+#define UnionTestRequestReplySupport_1136051123_h
 
 /* Uses */
 #include "UnionTestRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getEmpleadoRequestTypeSupport, getEmpleadoRequest);
+DDS_TYPESUPPORT_CPP(UnionTest_getEmpleadoRequestTypeSupport, UnionTest_getEmpleadoRequest);
 
-DDS_DATAWRITER_CPP(getEmpleadoRequestDataWriter, getEmpleadoRequest);
-DDS_DATAREADER_CPP(getEmpleadoRequestDataReader, getEmpleadoRequestSeq, getEmpleadoRequest);
+DDS_DATAWRITER_CPP(UnionTest_getEmpleadoRequestDataWriter, UnionTest_getEmpleadoRequest);
+DDS_DATAREADER_CPP(UnionTest_getEmpleadoRequestDataReader, UnionTest_getEmpleadoRequestSeq, UnionTest_getEmpleadoRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getEmpleadoRequestTypeSupport, getEmpleadoRequest);
-DDS_DATAWRITER_C(getEmpleadoRequestDataWriter, getEmpleadoRequest);
-DDS_DATAREADER_C(getEmpleadoRequestDataReader, getEmpleadoRequestSeq, getEmpleadoRequest);
+DDS_TYPESUPPORT_C(UnionTest_getEmpleadoRequestTypeSupport, UnionTest_getEmpleadoRequest);
+DDS_DATAWRITER_C(UnionTest_getEmpleadoRequestDataWriter, UnionTest_getEmpleadoRequest);
+DDS_DATAREADER_C(UnionTest_getEmpleadoRequestDataReader, UnionTest_getEmpleadoRequestSeq, UnionTest_getEmpleadoRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(getEmpleadoRequestDataReader, getEmpleadoRequestSeq, getEmplead
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(getEmpleadoReplyTypeSupport, getEmpleadoReply);
+DDS_TYPESUPPORT_CPP(UnionTest_getEmpleadoReplyTypeSupport, UnionTest_getEmpleadoReply);
 
-DDS_DATAWRITER_CPP(getEmpleadoReplyDataWriter, getEmpleadoReply);
-DDS_DATAREADER_CPP(getEmpleadoReplyDataReader, getEmpleadoReplySeq, getEmpleadoReply);
+DDS_DATAWRITER_CPP(UnionTest_getEmpleadoReplyDataWriter, UnionTest_getEmpleadoReply);
+DDS_DATAREADER_CPP(UnionTest_getEmpleadoReplyDataReader, UnionTest_getEmpleadoReplySeq, UnionTest_getEmpleadoReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(getEmpleadoReplyTypeSupport, getEmpleadoReply);
-DDS_DATAWRITER_C(getEmpleadoReplyDataWriter, getEmpleadoReply);
-DDS_DATAREADER_C(getEmpleadoReplyDataReader, getEmpleadoReplySeq, getEmpleadoReply);
+DDS_TYPESUPPORT_C(UnionTest_getEmpleadoReplyTypeSupport, UnionTest_getEmpleadoReply);
+DDS_DATAWRITER_C(UnionTest_getEmpleadoReplyDataWriter, UnionTest_getEmpleadoReply);
+DDS_DATAREADER_C(UnionTest_getEmpleadoReplyDataReader, UnionTest_getEmpleadoReplySeq, UnionTest_getEmpleadoReply);
 
 #endif
 
@@ -132,4 +132,4 @@ DDS_DATAREADER_C(getEmpleadoReplyDataReader, getEmpleadoReplySeq, getEmpleadoRep
 
 
 
-#endif  /* UnionTestRequestReplySupport_1136051261_h */
+#endif  /* UnionTestRequestReplySupport_1136051123_h */

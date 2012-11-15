@@ -11,14 +11,14 @@
 #include "BasicTypeTestAsyncSupport.h"
 #include "exceptions/Exceptions.h"
 
-BasicTypeTestProxy::BasicTypeTestProxy(int domainId, long timeout) :
-    Client(NULL, domainId, timeout)
+BasicTypeTestProxy::BasicTypeTestProxy(std::string remoteServiceName, int domainId, long timeout) :
+    Client(remoteServiceName, NULL, domainId, timeout)
 {
     createRPCs();
 }
 
-BasicTypeTestProxy::BasicTypeTestProxy(eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
-    Client(transport, domainId, timeout)
+BasicTypeTestProxy::BasicTypeTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+    Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
 }
@@ -41,53 +41,53 @@ BasicTypeTestProxy::~BasicTypeTestProxy()
 
 void BasicTypeTestProxy::createRPCs()
 {
-    this->getOctet_Service = new getOctetClientRPC("getOctet",
-                                  getOctetRequestUtils::registerType(getParticipant()),
-                                  getOctetReplyUtils::registerType(getParticipant()),
+    this->getOctet_Service = new BasicTypeTest_getOctetClientRPC("getOctet",
+                                  BasicTypeTest_getOctetRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getOctetReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getChar_Service = new getCharClientRPC("getChar",
-                                  getCharRequestUtils::registerType(getParticipant()),
-                                  getCharReplyUtils::registerType(getParticipant()),
+    this->getChar_Service = new BasicTypeTest_getCharClientRPC("getChar",
+                                  BasicTypeTest_getCharRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getCharReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getWChar_Service = new getWCharClientRPC("getWChar",
-                                  getWCharRequestUtils::registerType(getParticipant()),
-                                  getWCharReplyUtils::registerType(getParticipant()),
+    this->getWChar_Service = new BasicTypeTest_getWCharClientRPC("getWChar",
+                                  BasicTypeTest_getWCharRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getWCharReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getShort_Service = new getShortClientRPC("getShort",
-                                  getShortRequestUtils::registerType(getParticipant()),
-                                  getShortReplyUtils::registerType(getParticipant()),
+    this->getShort_Service = new BasicTypeTest_getShortClientRPC("getShort",
+                                  BasicTypeTest_getShortRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getShortReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getUShort_Service = new getUShortClientRPC("getUShort",
-                                  getUShortRequestUtils::registerType(getParticipant()),
-                                  getUShortReplyUtils::registerType(getParticipant()),
+    this->getUShort_Service = new BasicTypeTest_getUShortClientRPC("getUShort",
+                                  BasicTypeTest_getUShortRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getUShortReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getLong_Service = new getLongClientRPC("getLong",
-                                  getLongRequestUtils::registerType(getParticipant()),
-                                  getLongReplyUtils::registerType(getParticipant()),
+    this->getLong_Service = new BasicTypeTest_getLongClientRPC("getLong",
+                                  BasicTypeTest_getLongRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getLongReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getULong_Service = new getULongClientRPC("getULong",
-                                  getULongRequestUtils::registerType(getParticipant()),
-                                  getULongReplyUtils::registerType(getParticipant()),
+    this->getULong_Service = new BasicTypeTest_getULongClientRPC("getULong",
+                                  BasicTypeTest_getULongRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getULongReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getLLong_Service = new getLLongClientRPC("getLLong",
-                                  getLLongRequestUtils::registerType(getParticipant()),
-                                  getLLongReplyUtils::registerType(getParticipant()),
+    this->getLLong_Service = new BasicTypeTest_getLLongClientRPC("getLLong",
+                                  BasicTypeTest_getLLongRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getLLongReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getULLong_Service = new getULLongClientRPC("getULLong",
-                                  getULLongRequestUtils::registerType(getParticipant()),
-                                  getULLongReplyUtils::registerType(getParticipant()),
+    this->getULLong_Service = new BasicTypeTest_getULLongClientRPC("getULLong",
+                                  BasicTypeTest_getULLongRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getULLongReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getFloat_Service = new getFloatClientRPC("getFloat",
-                                  getFloatRequestUtils::registerType(getParticipant()),
-                                  getFloatReplyUtils::registerType(getParticipant()),
+    this->getFloat_Service = new BasicTypeTest_getFloatClientRPC("getFloat",
+                                  BasicTypeTest_getFloatRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getFloatReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getDouble_Service = new getDoubleClientRPC("getDouble",
-                                  getDoubleRequestUtils::registerType(getParticipant()),
-                                  getDoubleReplyUtils::registerType(getParticipant()),
+    this->getDouble_Service = new BasicTypeTest_getDoubleClientRPC("getDouble",
+                                  BasicTypeTest_getDoubleRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getDoubleReplyUtils::registerType(getParticipant()),
                                   this);
-    this->getBoolean_Service = new getBooleanClientRPC("getBoolean",
-                                  getBooleanRequestUtils::registerType(getParticipant()),
-                                  getBooleanReplyUtils::registerType(getParticipant()),
+    this->getBoolean_Service = new BasicTypeTest_getBooleanClientRPC("getBoolean",
+                                  BasicTypeTest_getBooleanRequestUtils::registerType(getParticipant()),
+                                  BasicTypeTest_getBooleanReplyUtils::registerType(getParticipant()),
                                   this);
 
 }
@@ -95,30 +95,30 @@ void BasicTypeTestProxy::createRPCs()
  
 DDS_Octet BasicTypeTestProxy::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Octet  getOctet_ret = 0;    
-    getOctetRequest instance;
-    getOctetReply retInstance;
+    BasicTypeTest_getOctetRequest instance;
+    BasicTypeTest_getOctetReply retInstance;
 
-    getOctetReply_initialize(&retInstance);    
-    getOctetRequestUtils::setTypeData(instance, oc1, oc2);
+    BasicTypeTest_getOctetReply_initialize(&retInstance);    
+    BasicTypeTest_getOctetRequestUtils::setTypeData(instance, oc1, oc2);
     retcode = getOctet_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getOctetReplyUtils::extractTypeData(retInstance, retcode, oc2, oc3, getOctet_ret);  
+        BasicTypeTest_getOctetReplyUtils::extractTypeData(retInstance, retcode, oc2, oc3, getOctet_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -131,30 +131,30 @@ DDS_Octet BasicTypeTestProxy::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet
  
 DDS_Char BasicTypeTestProxy::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Char  getChar_ret = 0;    
-    getCharRequest instance;
-    getCharReply retInstance;
+    BasicTypeTest_getCharRequest instance;
+    BasicTypeTest_getCharReply retInstance;
 
-    getCharReply_initialize(&retInstance);    
-    getCharRequestUtils::setTypeData(instance, ch1, ch2);
+    BasicTypeTest_getCharReply_initialize(&retInstance);    
+    BasicTypeTest_getCharRequestUtils::setTypeData(instance, ch1, ch2);
     retcode = getChar_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getCharReplyUtils::extractTypeData(retInstance, retcode, ch2, ch3, getChar_ret);  
+        BasicTypeTest_getCharReplyUtils::extractTypeData(retInstance, retcode, ch2, ch3, getChar_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -167,30 +167,30 @@ DDS_Char BasicTypeTestProxy::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch
  
 DDS_Wchar BasicTypeTestProxy::getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Wchar  getWChar_ret = 0;    
-    getWCharRequest instance;
-    getWCharReply retInstance;
+    BasicTypeTest_getWCharRequest instance;
+    BasicTypeTest_getWCharReply retInstance;
 
-    getWCharReply_initialize(&retInstance);    
-    getWCharRequestUtils::setTypeData(instance, wch1, wch2);
+    BasicTypeTest_getWCharReply_initialize(&retInstance);    
+    BasicTypeTest_getWCharRequestUtils::setTypeData(instance, wch1, wch2);
     retcode = getWChar_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getWCharReplyUtils::extractTypeData(retInstance, retcode, wch2, wch3, getWChar_ret);  
+        BasicTypeTest_getWCharReplyUtils::extractTypeData(retInstance, retcode, wch2, wch3, getWChar_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -203,30 +203,30 @@ DDS_Wchar BasicTypeTestProxy::getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wcha
  
 DDS_Short BasicTypeTestProxy::getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Short  getShort_ret = 0;    
-    getShortRequest instance;
-    getShortReply retInstance;
+    BasicTypeTest_getShortRequest instance;
+    BasicTypeTest_getShortReply retInstance;
 
-    getShortReply_initialize(&retInstance);    
-    getShortRequestUtils::setTypeData(instance, sh1, sh2);
+    BasicTypeTest_getShortReply_initialize(&retInstance);    
+    BasicTypeTest_getShortRequestUtils::setTypeData(instance, sh1, sh2);
     retcode = getShort_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getShortReplyUtils::extractTypeData(retInstance, retcode, sh2, sh3, getShort_ret);  
+        BasicTypeTest_getShortReplyUtils::extractTypeData(retInstance, retcode, sh2, sh3, getShort_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -239,30 +239,30 @@ DDS_Short BasicTypeTestProxy::getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short
  
 DDS_UnsignedShort BasicTypeTestProxy::getUShort(/*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_UnsignedShort  getUShort_ret = 0;    
-    getUShortRequest instance;
-    getUShortReply retInstance;
+    BasicTypeTest_getUShortRequest instance;
+    BasicTypeTest_getUShortReply retInstance;
 
-    getUShortReply_initialize(&retInstance);    
-    getUShortRequestUtils::setTypeData(instance, ush1, ush2);
+    BasicTypeTest_getUShortReply_initialize(&retInstance);    
+    BasicTypeTest_getUShortRequestUtils::setTypeData(instance, ush1, ush2);
     retcode = getUShort_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getUShortReplyUtils::extractTypeData(retInstance, retcode, ush2, ush3, getUShort_ret);  
+        BasicTypeTest_getUShortReplyUtils::extractTypeData(retInstance, retcode, ush2, ush3, getUShort_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -275,30 +275,30 @@ DDS_UnsignedShort BasicTypeTestProxy::getUShort(/*in*/ DDS_UnsignedShort ush1, /
  
 DDS_Long BasicTypeTestProxy::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Long  getLong_ret = 0;    
-    getLongRequest instance;
-    getLongReply retInstance;
+    BasicTypeTest_getLongRequest instance;
+    BasicTypeTest_getLongReply retInstance;
 
-    getLongReply_initialize(&retInstance);    
-    getLongRequestUtils::setTypeData(instance, lo1, lo2);
+    BasicTypeTest_getLongReply_initialize(&retInstance);    
+    BasicTypeTest_getLongRequestUtils::setTypeData(instance, lo1, lo2);
     retcode = getLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLongReplyUtils::extractTypeData(retInstance, retcode, lo2, lo3, getLong_ret);  
+        BasicTypeTest_getLongReplyUtils::extractTypeData(retInstance, retcode, lo2, lo3, getLong_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -311,30 +311,30 @@ DDS_Long BasicTypeTestProxy::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo
  
 DDS_UnsignedLong BasicTypeTestProxy::getULong(/*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_UnsignedLong  getULong_ret = 0;    
-    getULongRequest instance;
-    getULongReply retInstance;
+    BasicTypeTest_getULongRequest instance;
+    BasicTypeTest_getULongReply retInstance;
 
-    getULongReply_initialize(&retInstance);    
-    getULongRequestUtils::setTypeData(instance, ulo1, ulo2);
+    BasicTypeTest_getULongReply_initialize(&retInstance);    
+    BasicTypeTest_getULongRequestUtils::setTypeData(instance, ulo1, ulo2);
     retcode = getULong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getULongReplyUtils::extractTypeData(retInstance, retcode, ulo2, ulo3, getULong_ret);  
+        BasicTypeTest_getULongReplyUtils::extractTypeData(retInstance, retcode, ulo2, ulo3, getULong_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -347,30 +347,30 @@ DDS_UnsignedLong BasicTypeTestProxy::getULong(/*in*/ DDS_UnsignedLong ulo1, /*in
  
 DDS_LongLong BasicTypeTestProxy::getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_LongLong  getLLong_ret = 0;    
-    getLLongRequest instance;
-    getLLongReply retInstance;
+    BasicTypeTest_getLLongRequest instance;
+    BasicTypeTest_getLLongReply retInstance;
 
-    getLLongReply_initialize(&retInstance);    
-    getLLongRequestUtils::setTypeData(instance, llo1, llo2);
+    BasicTypeTest_getLLongReply_initialize(&retInstance);    
+    BasicTypeTest_getLLongRequestUtils::setTypeData(instance, llo1, llo2);
     retcode = getLLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getLLongReplyUtils::extractTypeData(retInstance, retcode, llo2, llo3, getLLong_ret);  
+        BasicTypeTest_getLLongReplyUtils::extractTypeData(retInstance, retcode, llo2, llo3, getLLong_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -383,30 +383,30 @@ DDS_LongLong BasicTypeTestProxy::getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DD
  
 DDS_UnsignedLongLong BasicTypeTestProxy::getULLong(/*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_UnsignedLongLong  getULLong_ret = 0;    
-    getULLongRequest instance;
-    getULLongReply retInstance;
+    BasicTypeTest_getULLongRequest instance;
+    BasicTypeTest_getULLongReply retInstance;
 
-    getULLongReply_initialize(&retInstance);    
-    getULLongRequestUtils::setTypeData(instance, ullo1, ullo2);
+    BasicTypeTest_getULLongReply_initialize(&retInstance);    
+    BasicTypeTest_getULLongRequestUtils::setTypeData(instance, ullo1, ullo2);
     retcode = getULLong_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getULLongReplyUtils::extractTypeData(retInstance, retcode, ullo2, ullo3, getULLong_ret);  
+        BasicTypeTest_getULLongReplyUtils::extractTypeData(retInstance, retcode, ullo2, ullo3, getULLong_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -419,30 +419,30 @@ DDS_UnsignedLongLong BasicTypeTestProxy::getULLong(/*in*/ DDS_UnsignedLongLong u
  
 DDS_Float BasicTypeTestProxy::getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Float  getFloat_ret = 0;    
-    getFloatRequest instance;
-    getFloatReply retInstance;
+    BasicTypeTest_getFloatRequest instance;
+    BasicTypeTest_getFloatReply retInstance;
 
-    getFloatReply_initialize(&retInstance);    
-    getFloatRequestUtils::setTypeData(instance, fl1, fl2);
+    BasicTypeTest_getFloatReply_initialize(&retInstance);    
+    BasicTypeTest_getFloatRequestUtils::setTypeData(instance, fl1, fl2);
     retcode = getFloat_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getFloatReplyUtils::extractTypeData(retInstance, retcode, fl2, fl3, getFloat_ret);  
+        BasicTypeTest_getFloatReplyUtils::extractTypeData(retInstance, retcode, fl2, fl3, getFloat_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -455,30 +455,30 @@ DDS_Float BasicTypeTestProxy::getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float
  
 DDS_Double BasicTypeTestProxy::getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Double  getDouble_ret = 0;    
-    getDoubleRequest instance;
-    getDoubleReply retInstance;
+    BasicTypeTest_getDoubleRequest instance;
+    BasicTypeTest_getDoubleReply retInstance;
 
-    getDoubleReply_initialize(&retInstance);    
-    getDoubleRequestUtils::setTypeData(instance, do1, do2);
+    BasicTypeTest_getDoubleReply_initialize(&retInstance);    
+    BasicTypeTest_getDoubleRequestUtils::setTypeData(instance, do1, do2);
     retcode = getDouble_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getDoubleReplyUtils::extractTypeData(retInstance, retcode, do2, do3, getDouble_ret);  
+        BasicTypeTest_getDoubleReplyUtils::extractTypeData(retInstance, retcode, do2, do3, getDouble_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -491,30 +491,30 @@ DDS_Double BasicTypeTestProxy::getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Do
  
 DDS_Boolean BasicTypeTestProxy::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
     DDS_Boolean  getBoolean_ret = RTI_FALSE;    
-    getBooleanRequest instance;
-    getBooleanReply retInstance;
+    BasicTypeTest_getBooleanRequest instance;
+    BasicTypeTest_getBooleanReply retInstance;
 
-    getBooleanReply_initialize(&retInstance);    
-    getBooleanRequestUtils::setTypeData(instance, bo1, bo2);
+    BasicTypeTest_getBooleanReply_initialize(&retInstance);    
+    BasicTypeTest_getBooleanRequestUtils::setTypeData(instance, bo1, bo2);
     retcode = getBoolean_Service->execute(&instance, &retInstance, getTimeout());
     
     if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
     {
-        getBooleanReplyUtils::extractTypeData(retInstance, retcode, bo2, bo3, getBoolean_ret);  
+        BasicTypeTest_getBooleanReplyUtils::extractTypeData(retInstance, retcode, bo2, bo3, getBoolean_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_ERROR:
-            throw eProsima::DDSRPC::ServerException("Error in server side");
+        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
             break;
         case eProsima::DDSRPC::NO_SERVER:
             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -526,19 +526,19 @@ DDS_Boolean BasicTypeTestProxy::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS
 }
 
  
-void BasicTypeTestProxy::getOctet_async(BasicTypeTest_getOctet &obj, /*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet oc2) 
+void BasicTypeTestProxy::getOctet_async(BasicTypeTest_getOctetCallbackHandler &obj, /*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet oc2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getOctetRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getOctetRequest instance;
     BasicTypeTest_getOctetTask *task = NULL;
-    getOctetRequestUtils::setTypeData(instance, oc1, oc2);
+    BasicTypeTest_getOctetRequestUtils::setTypeData(instance, oc1, oc2);
     task = new BasicTypeTest_getOctetTask(obj, this);
     retcode = getOctet_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -546,19 +546,19 @@ void BasicTypeTestProxy::getOctet_async(BasicTypeTest_getOctet &obj, /*in*/ DDS_
     }
 }
  
-void BasicTypeTestProxy::getChar_async(BasicTypeTest_getChar &obj, /*in*/ DDS_Char ch1, /*inout*/ DDS_Char ch2) 
+void BasicTypeTestProxy::getChar_async(BasicTypeTest_getCharCallbackHandler &obj, /*in*/ DDS_Char ch1, /*inout*/ DDS_Char ch2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getCharRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getCharRequest instance;
     BasicTypeTest_getCharTask *task = NULL;
-    getCharRequestUtils::setTypeData(instance, ch1, ch2);
+    BasicTypeTest_getCharRequestUtils::setTypeData(instance, ch1, ch2);
     task = new BasicTypeTest_getCharTask(obj, this);
     retcode = getChar_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -566,19 +566,19 @@ void BasicTypeTestProxy::getChar_async(BasicTypeTest_getChar &obj, /*in*/ DDS_Ch
     }
 }
  
-void BasicTypeTestProxy::getWChar_async(BasicTypeTest_getWChar &obj, /*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar wch2) 
+void BasicTypeTestProxy::getWChar_async(BasicTypeTest_getWCharCallbackHandler &obj, /*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar wch2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getWCharRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getWCharRequest instance;
     BasicTypeTest_getWCharTask *task = NULL;
-    getWCharRequestUtils::setTypeData(instance, wch1, wch2);
+    BasicTypeTest_getWCharRequestUtils::setTypeData(instance, wch1, wch2);
     task = new BasicTypeTest_getWCharTask(obj, this);
     retcode = getWChar_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -586,19 +586,19 @@ void BasicTypeTestProxy::getWChar_async(BasicTypeTest_getWChar &obj, /*in*/ DDS_
     }
 }
  
-void BasicTypeTestProxy::getShort_async(BasicTypeTest_getShort &obj, /*in*/ DDS_Short sh1, /*inout*/ DDS_Short sh2) 
+void BasicTypeTestProxy::getShort_async(BasicTypeTest_getShortCallbackHandler &obj, /*in*/ DDS_Short sh1, /*inout*/ DDS_Short sh2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getShortRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getShortRequest instance;
     BasicTypeTest_getShortTask *task = NULL;
-    getShortRequestUtils::setTypeData(instance, sh1, sh2);
+    BasicTypeTest_getShortRequestUtils::setTypeData(instance, sh1, sh2);
     task = new BasicTypeTest_getShortTask(obj, this);
     retcode = getShort_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -606,19 +606,19 @@ void BasicTypeTestProxy::getShort_async(BasicTypeTest_getShort &obj, /*in*/ DDS_
     }
 }
  
-void BasicTypeTestProxy::getUShort_async(BasicTypeTest_getUShort &obj, /*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort ush2) 
+void BasicTypeTestProxy::getUShort_async(BasicTypeTest_getUShortCallbackHandler &obj, /*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort ush2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getUShortRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getUShortRequest instance;
     BasicTypeTest_getUShortTask *task = NULL;
-    getUShortRequestUtils::setTypeData(instance, ush1, ush2);
+    BasicTypeTest_getUShortRequestUtils::setTypeData(instance, ush1, ush2);
     task = new BasicTypeTest_getUShortTask(obj, this);
     retcode = getUShort_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -626,19 +626,19 @@ void BasicTypeTestProxy::getUShort_async(BasicTypeTest_getUShort &obj, /*in*/ DD
     }
 }
  
-void BasicTypeTestProxy::getLong_async(BasicTypeTest_getLong &obj, /*in*/ DDS_Long lo1, /*inout*/ DDS_Long lo2) 
+void BasicTypeTestProxy::getLong_async(BasicTypeTest_getLongCallbackHandler &obj, /*in*/ DDS_Long lo1, /*inout*/ DDS_Long lo2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getLongRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getLongRequest instance;
     BasicTypeTest_getLongTask *task = NULL;
-    getLongRequestUtils::setTypeData(instance, lo1, lo2);
+    BasicTypeTest_getLongRequestUtils::setTypeData(instance, lo1, lo2);
     task = new BasicTypeTest_getLongTask(obj, this);
     retcode = getLong_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -646,19 +646,19 @@ void BasicTypeTestProxy::getLong_async(BasicTypeTest_getLong &obj, /*in*/ DDS_Lo
     }
 }
  
-void BasicTypeTestProxy::getULong_async(BasicTypeTest_getULong &obj, /*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong ulo2) 
+void BasicTypeTestProxy::getULong_async(BasicTypeTest_getULongCallbackHandler &obj, /*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong ulo2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getULongRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getULongRequest instance;
     BasicTypeTest_getULongTask *task = NULL;
-    getULongRequestUtils::setTypeData(instance, ulo1, ulo2);
+    BasicTypeTest_getULongRequestUtils::setTypeData(instance, ulo1, ulo2);
     task = new BasicTypeTest_getULongTask(obj, this);
     retcode = getULong_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -666,19 +666,19 @@ void BasicTypeTestProxy::getULong_async(BasicTypeTest_getULong &obj, /*in*/ DDS_
     }
 }
  
-void BasicTypeTestProxy::getLLong_async(BasicTypeTest_getLLong &obj, /*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong llo2) 
+void BasicTypeTestProxy::getLLong_async(BasicTypeTest_getLLongCallbackHandler &obj, /*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong llo2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getLLongRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getLLongRequest instance;
     BasicTypeTest_getLLongTask *task = NULL;
-    getLLongRequestUtils::setTypeData(instance, llo1, llo2);
+    BasicTypeTest_getLLongRequestUtils::setTypeData(instance, llo1, llo2);
     task = new BasicTypeTest_getLLongTask(obj, this);
     retcode = getLLong_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -686,19 +686,19 @@ void BasicTypeTestProxy::getLLong_async(BasicTypeTest_getLLong &obj, /*in*/ DDS_
     }
 }
  
-void BasicTypeTestProxy::getULLong_async(BasicTypeTest_getULLong &obj, /*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong ullo2) 
+void BasicTypeTestProxy::getULLong_async(BasicTypeTest_getULLongCallbackHandler &obj, /*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong ullo2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getULLongRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getULLongRequest instance;
     BasicTypeTest_getULLongTask *task = NULL;
-    getULLongRequestUtils::setTypeData(instance, ullo1, ullo2);
+    BasicTypeTest_getULLongRequestUtils::setTypeData(instance, ullo1, ullo2);
     task = new BasicTypeTest_getULLongTask(obj, this);
     retcode = getULLong_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -706,19 +706,19 @@ void BasicTypeTestProxy::getULLong_async(BasicTypeTest_getULLong &obj, /*in*/ DD
     }
 }
  
-void BasicTypeTestProxy::getFloat_async(BasicTypeTest_getFloat &obj, /*in*/ DDS_Float fl1, /*inout*/ DDS_Float fl2) 
+void BasicTypeTestProxy::getFloat_async(BasicTypeTest_getFloatCallbackHandler &obj, /*in*/ DDS_Float fl1, /*inout*/ DDS_Float fl2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getFloatRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getFloatRequest instance;
     BasicTypeTest_getFloatTask *task = NULL;
-    getFloatRequestUtils::setTypeData(instance, fl1, fl2);
+    BasicTypeTest_getFloatRequestUtils::setTypeData(instance, fl1, fl2);
     task = new BasicTypeTest_getFloatTask(obj, this);
     retcode = getFloat_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -726,19 +726,19 @@ void BasicTypeTestProxy::getFloat_async(BasicTypeTest_getFloat &obj, /*in*/ DDS_
     }
 }
  
-void BasicTypeTestProxy::getDouble_async(BasicTypeTest_getDouble &obj, /*in*/ DDS_Double do1, /*inout*/ DDS_Double do2) 
+void BasicTypeTestProxy::getDouble_async(BasicTypeTest_getDoubleCallbackHandler &obj, /*in*/ DDS_Double do1, /*inout*/ DDS_Double do2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getDoubleRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getDoubleRequest instance;
     BasicTypeTest_getDoubleTask *task = NULL;
-    getDoubleRequestUtils::setTypeData(instance, do1, do2);
+    BasicTypeTest_getDoubleRequestUtils::setTypeData(instance, do1, do2);
     task = new BasicTypeTest_getDoubleTask(obj, this);
     retcode = getDouble_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
@@ -746,19 +746,19 @@ void BasicTypeTestProxy::getDouble_async(BasicTypeTest_getDouble &obj, /*in*/ DD
     }
 }
  
-void BasicTypeTestProxy::getBoolean_async(BasicTypeTest_getBoolean &obj, /*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean bo2) 
+void BasicTypeTestProxy::getBoolean_async(BasicTypeTest_getBooleanCallbackHandler &obj, /*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean bo2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_ERROR;
-    getBooleanRequest instance;
+	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    BasicTypeTest_getBooleanRequest instance;
     BasicTypeTest_getBooleanTask *task = NULL;
-    getBooleanRequestUtils::setTypeData(instance, bo1, bo2);
+    BasicTypeTest_getBooleanRequestUtils::setTypeData(instance, bo1, bo2);
     task = new BasicTypeTest_getBooleanTask(obj, this);
     retcode = getBoolean_Service->executeAsync(&instance, task, getTimeout());
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_ERROR:
-            throw eProsima::DDSRPC::ClientException("Error in client side");
+        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
+            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
         case eProsima::DDSRPC::NO_SERVER:
              throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");

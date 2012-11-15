@@ -7,57 +7,45 @@
 
 
 
-struct getEnumRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct EnumYStringTest_getEnumRequest{
+    RequestHeader header;  //@key
     Valores v1;
     Valores v2;
 };  //@top-level true
 
 
-struct getEnumReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct EnumYStringTest_getEnumReply{
+    ReplyHeader header;  //@key
     Valores v2;
     Valores v3;
     Valores getEnum_ret;
 };  //@top-level true
 
 
-struct getStringRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct EnumYStringTest_getStringRequest{
+    RequestHeader header;  //@key
     string s1;
     string s2;
 };  //@top-level true
 
 
-struct getStringReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct EnumYStringTest_getStringReply{
+    ReplyHeader header;  //@key
     string s2;
     string s3;
     string getString_ret;
 };  //@top-level true
 
 
-struct getStringBoundedRequest{
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
+struct EnumYStringTest_getStringBoundedRequest{
+    RequestHeader header;  //@key
     string sb1;
     string sb2;
 };  //@top-level true
 
 
-struct getStringBoundedReply{
-    Identification serverServiceId;  //@key
-    Identification clientServiceId;  //@key
-    unsigned long numSec;  //@key
-    long ddsrpcRetCode;
+struct EnumYStringTest_getStringBoundedReply{
+    ReplyHeader header;  //@key
     string sb2;
     string sb3;
     string getStringBounded_ret;

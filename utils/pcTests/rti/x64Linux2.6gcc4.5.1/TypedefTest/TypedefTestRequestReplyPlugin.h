@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestRequestReplyPlugin_1722561831_h
-#define TypedefTestRequestReplyPlugin_1722561831_h
+#ifndef TypedefTestRequestReplyPlugin_1722561027_h
+#define TypedefTestRequestReplyPlugin_1722561027_h
 
 #include "TypedefTestRequestReply.h"
 
@@ -42,77 +42,77 @@ extern "C" {
 
 
 /* The type used to store keys for instances of type struct
- * getLargoRequest.
+ * TypedefTest_getLargoRequest.
  *
- * By default, this type is struct getLargoRequest
+ * By default, this type is struct TypedefTest_getLargoRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getLargoRequest)
+ * system (e.g. if sizeof(struct TypedefTest_getLargoRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getLargoRequest, the
+ * other than struct TypedefTest_getLargoRequest, the
  * following restriction applies: the key of struct
- * getLargoRequest must consist of a
+ * TypedefTest_getLargoRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getLargoRequest.
+ * first field in struct TypedefTest_getLargoRequest.
 */
-typedef  struct getLargoRequest getLargoRequestKeyHolder;
+typedef  struct TypedefTest_getLargoRequest TypedefTest_getLargoRequestKeyHolder;
 
 
-#define getLargoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getLargoRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getLargoRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getLargoRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getLargoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getLargoRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getLargoRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getLargoRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getLargoRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getLargoRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getLargoRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getLargoRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getLargoRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getLargoRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getLargoRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getLargoRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getLargoRequest*
-getLargoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLargoRequest*
+TypedefTest_getLargoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLargoRequest*
-getLargoRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getLargoRequest*
+TypedefTest_getLargoRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPluginSupport_copy_data(
-    getLargoRequest *out,
-    const getLargoRequest *in);
+TypedefTest_getLargoRequestPluginSupport_copy_data(
+    TypedefTest_getLargoRequest *out,
+    const TypedefTest_getLargoRequest *in);
 
 NDDSUSERDllExport extern void 
-getLargoRequestPluginSupport_destroy_data_ex(
-    getLargoRequest *sample,RTIBool deallocate_pointers);
+TypedefTest_getLargoRequestPluginSupport_destroy_data_ex(
+    TypedefTest_getLargoRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getLargoRequestPluginSupport_destroy_data(
-    getLargoRequest *sample);
+TypedefTest_getLargoRequestPluginSupport_destroy_data(
+    TypedefTest_getLargoRequest *sample);
 
 NDDSUSERDllExport extern void 
-getLargoRequestPluginSupport_print_data(
-    const getLargoRequest *sample,
+TypedefTest_getLargoRequestPluginSupport_print_data(
+    const TypedefTest_getLargoRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getLargoRequest*
-getLargoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLargoRequest*
+TypedefTest_getLargoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLargoRequest*
-getLargoRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getLargoRequestPluginSupport_destroy_key_ex(
-    getLargoRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLargoRequest*
+TypedefTest_getLargoRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getLargoRequestPluginSupport_destroy_key(
-    getLargoRequestKeyHolder *key);
+TypedefTest_getLargoRequestPluginSupport_destroy_key_ex(
+    TypedefTest_getLargoRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getLargoRequestPluginSupport_destroy_key(
+    TypedefTest_getLargoRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ getLargoRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getLargoRequestPlugin_on_participant_attached(
+TypedefTest_getLargoRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -128,34 +128,34 @@ getLargoRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getLargoRequestPlugin_on_participant_detached(
+TypedefTest_getLargoRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getLargoRequestPlugin_on_endpoint_attached(
+TypedefTest_getLargoRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getLargoRequestPlugin_on_endpoint_detached(
+TypedefTest_getLargoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_copy_sample(
+TypedefTest_getLargoRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest *out,
-    const getLargoRequest *in);
+    TypedefTest_getLargoRequest *out,
+    const TypedefTest_getLargoRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_serialize(
+TypedefTest_getLargoRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getLargoRequest *sample,
+    const TypedefTest_getLargoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -163,9 +163,9 @@ getLargoRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_deserialize_sample(
+TypedefTest_getLargoRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest *sample, 
+    TypedefTest_getLargoRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -173,9 +173,9 @@ getLargoRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_deserialize(
+TypedefTest_getLargoRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest **sample, 
+    TypedefTest_getLargoRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -185,7 +185,7 @@ getLargoRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getLargoRequestPlugin_skip(
+TypedefTest_getLargoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -193,26 +193,26 @@ getLargoRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getLargoRequestPlugin_get_serialized_sample_max_size(
+TypedefTest_getLargoRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getLargoRequestPlugin_get_serialized_sample_min_size(
+TypedefTest_getLargoRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getLargoRequestPlugin_get_serialized_sample_size(
+TypedefTest_getLargoRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getLargoRequest * sample);
+    const TypedefTest_getLargoRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -220,19 +220,19 @@ getLargoRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getLargoRequestPlugin_get_key_kind(void);
+TypedefTest_getLargoRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getLargoRequestPlugin_get_serialized_key_max_size(
+TypedefTest_getLargoRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_serialize_key(
+TypedefTest_getLargoRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getLargoRequest *sample,
+    const TypedefTest_getLargoRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -240,9 +240,9 @@ getLargoRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_deserialize_key_sample(
+TypedefTest_getLargoRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest * sample,
+    TypedefTest_getLargoRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -250,9 +250,9 @@ getLargoRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_deserialize_key(
+TypedefTest_getLargoRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest ** sample,
+    TypedefTest_getLargoRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -261,9 +261,9 @@ getLargoRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getLargoRequestPlugin_serialized_sample_to_key(
+TypedefTest_getLargoRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest *sample,
+    TypedefTest_getLargoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -271,25 +271,25 @@ getLargoRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_instance_to_key(
+TypedefTest_getLargoRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequestKeyHolder *key, 
-    const getLargoRequest *instance);
+    TypedefTest_getLargoRequestKeyHolder *key, 
+    const TypedefTest_getLargoRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_key_to_instance(
+TypedefTest_getLargoRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoRequest *instance, 
-    const getLargoRequestKeyHolder *key);
+    TypedefTest_getLargoRequest *instance, 
+    const TypedefTest_getLargoRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_instance_to_keyhash(
+TypedefTest_getLargoRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getLargoRequest *instance);
+    const TypedefTest_getLargoRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoRequestPlugin_serialized_sample_to_keyhash(
+TypedefTest_getLargoRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -298,83 +298,83 @@ getLargoRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getLargoRequestPlugin_new(void);
+TypedefTest_getLargoRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getLargoRequestPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getLargoRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getLargoReply.
+ * TypedefTest_getLargoReply.
  *
- * By default, this type is struct getLargoReply
+ * By default, this type is struct TypedefTest_getLargoReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getLargoReply)
+ * system (e.g. if sizeof(struct TypedefTest_getLargoReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getLargoReply, the
+ * other than struct TypedefTest_getLargoReply, the
  * following restriction applies: the key of struct
- * getLargoReply must consist of a
+ * TypedefTest_getLargoReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getLargoReply.
+ * first field in struct TypedefTest_getLargoReply.
 */
-typedef  struct getLargoReply getLargoReplyKeyHolder;
+typedef  struct TypedefTest_getLargoReply TypedefTest_getLargoReplyKeyHolder;
 
 
-#define getLargoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getLargoReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getLargoReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getLargoReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getLargoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getLargoReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getLargoReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getLargoReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getLargoReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getLargoReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getLargoReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getLargoReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getLargoReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getLargoReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getLargoReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getLargoReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getLargoReply*
-getLargoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLargoReply*
+TypedefTest_getLargoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLargoReply*
-getLargoReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getLargoReply*
+TypedefTest_getLargoReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPluginSupport_copy_data(
-    getLargoReply *out,
-    const getLargoReply *in);
+TypedefTest_getLargoReplyPluginSupport_copy_data(
+    TypedefTest_getLargoReply *out,
+    const TypedefTest_getLargoReply *in);
 
 NDDSUSERDllExport extern void 
-getLargoReplyPluginSupport_destroy_data_ex(
-    getLargoReply *sample,RTIBool deallocate_pointers);
+TypedefTest_getLargoReplyPluginSupport_destroy_data_ex(
+    TypedefTest_getLargoReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getLargoReplyPluginSupport_destroy_data(
-    getLargoReply *sample);
+TypedefTest_getLargoReplyPluginSupport_destroy_data(
+    TypedefTest_getLargoReply *sample);
 
 NDDSUSERDllExport extern void 
-getLargoReplyPluginSupport_print_data(
-    const getLargoReply *sample,
+TypedefTest_getLargoReplyPluginSupport_print_data(
+    const TypedefTest_getLargoReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getLargoReply*
-getLargoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLargoReply*
+TypedefTest_getLargoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLargoReply*
-getLargoReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getLargoReplyPluginSupport_destroy_key_ex(
-    getLargoReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLargoReply*
+TypedefTest_getLargoReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getLargoReplyPluginSupport_destroy_key(
-    getLargoReplyKeyHolder *key);
+TypedefTest_getLargoReplyPluginSupport_destroy_key_ex(
+    TypedefTest_getLargoReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getLargoReplyPluginSupport_destroy_key(
+    TypedefTest_getLargoReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -382,7 +382,7 @@ getLargoReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getLargoReplyPlugin_on_participant_attached(
+TypedefTest_getLargoReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -390,34 +390,34 @@ getLargoReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getLargoReplyPlugin_on_participant_detached(
+TypedefTest_getLargoReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getLargoReplyPlugin_on_endpoint_attached(
+TypedefTest_getLargoReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getLargoReplyPlugin_on_endpoint_detached(
+TypedefTest_getLargoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_copy_sample(
+TypedefTest_getLargoReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply *out,
-    const getLargoReply *in);
+    TypedefTest_getLargoReply *out,
+    const TypedefTest_getLargoReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_serialize(
+TypedefTest_getLargoReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getLargoReply *sample,
+    const TypedefTest_getLargoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -425,9 +425,9 @@ getLargoReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_deserialize_sample(
+TypedefTest_getLargoReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply *sample, 
+    TypedefTest_getLargoReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -435,9 +435,9 @@ getLargoReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_deserialize(
+TypedefTest_getLargoReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply **sample, 
+    TypedefTest_getLargoReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -447,7 +447,7 @@ getLargoReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getLargoReplyPlugin_skip(
+TypedefTest_getLargoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -455,26 +455,26 @@ getLargoReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getLargoReplyPlugin_get_serialized_sample_max_size(
+TypedefTest_getLargoReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getLargoReplyPlugin_get_serialized_sample_min_size(
+TypedefTest_getLargoReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getLargoReplyPlugin_get_serialized_sample_size(
+TypedefTest_getLargoReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getLargoReply * sample);
+    const TypedefTest_getLargoReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -482,19 +482,19 @@ getLargoReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getLargoReplyPlugin_get_key_kind(void);
+TypedefTest_getLargoReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getLargoReplyPlugin_get_serialized_key_max_size(
+TypedefTest_getLargoReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_serialize_key(
+TypedefTest_getLargoReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getLargoReply *sample,
+    const TypedefTest_getLargoReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -502,9 +502,9 @@ getLargoReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_deserialize_key_sample(
+TypedefTest_getLargoReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply * sample,
+    TypedefTest_getLargoReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -512,9 +512,9 @@ getLargoReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_deserialize_key(
+TypedefTest_getLargoReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply ** sample,
+    TypedefTest_getLargoReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -523,9 +523,9 @@ getLargoReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getLargoReplyPlugin_serialized_sample_to_key(
+TypedefTest_getLargoReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply *sample,
+    TypedefTest_getLargoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -533,25 +533,25 @@ getLargoReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_instance_to_key(
+TypedefTest_getLargoReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReplyKeyHolder *key, 
-    const getLargoReply *instance);
+    TypedefTest_getLargoReplyKeyHolder *key, 
+    const TypedefTest_getLargoReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_key_to_instance(
+TypedefTest_getLargoReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getLargoReply *instance, 
-    const getLargoReplyKeyHolder *key);
+    TypedefTest_getLargoReply *instance, 
+    const TypedefTest_getLargoReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_instance_to_keyhash(
+TypedefTest_getLargoReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getLargoReply *instance);
+    const TypedefTest_getLargoReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLargoReplyPlugin_serialized_sample_to_keyhash(
+TypedefTest_getLargoReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -560,83 +560,83 @@ getLargoReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getLargoReplyPlugin_new(void);
+TypedefTest_getLargoReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getLargoReplyPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getLargoReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getLarguisimoRequest.
+ * TypedefTest_getLarguisimoRequest.
  *
- * By default, this type is struct getLarguisimoRequest
+ * By default, this type is struct TypedefTest_getLarguisimoRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getLarguisimoRequest)
+ * system (e.g. if sizeof(struct TypedefTest_getLarguisimoRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getLarguisimoRequest, the
+ * other than struct TypedefTest_getLarguisimoRequest, the
  * following restriction applies: the key of struct
- * getLarguisimoRequest must consist of a
+ * TypedefTest_getLarguisimoRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getLarguisimoRequest.
+ * first field in struct TypedefTest_getLarguisimoRequest.
 */
-typedef  struct getLarguisimoRequest getLarguisimoRequestKeyHolder;
+typedef  struct TypedefTest_getLarguisimoRequest TypedefTest_getLarguisimoRequestKeyHolder;
 
 
-#define getLarguisimoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getLarguisimoRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getLarguisimoRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getLarguisimoRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getLarguisimoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getLarguisimoRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getLarguisimoRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getLarguisimoRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getLarguisimoRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getLarguisimoRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getLarguisimoRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getLarguisimoRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getLarguisimoRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getLarguisimoRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getLarguisimoRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getLarguisimoRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getLarguisimoRequest*
-getLarguisimoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoRequest*
+TypedefTest_getLarguisimoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLarguisimoRequest*
-getLarguisimoRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoRequest*
+TypedefTest_getLarguisimoRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPluginSupport_copy_data(
-    getLarguisimoRequest *out,
-    const getLarguisimoRequest *in);
+TypedefTest_getLarguisimoRequestPluginSupport_copy_data(
+    TypedefTest_getLarguisimoRequest *out,
+    const TypedefTest_getLarguisimoRequest *in);
 
 NDDSUSERDllExport extern void 
-getLarguisimoRequestPluginSupport_destroy_data_ex(
-    getLarguisimoRequest *sample,RTIBool deallocate_pointers);
+TypedefTest_getLarguisimoRequestPluginSupport_destroy_data_ex(
+    TypedefTest_getLarguisimoRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getLarguisimoRequestPluginSupport_destroy_data(
-    getLarguisimoRequest *sample);
+TypedefTest_getLarguisimoRequestPluginSupport_destroy_data(
+    TypedefTest_getLarguisimoRequest *sample);
 
 NDDSUSERDllExport extern void 
-getLarguisimoRequestPluginSupport_print_data(
-    const getLarguisimoRequest *sample,
+TypedefTest_getLarguisimoRequestPluginSupport_print_data(
+    const TypedefTest_getLarguisimoRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getLarguisimoRequest*
-getLarguisimoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoRequest*
+TypedefTest_getLarguisimoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLarguisimoRequest*
-getLarguisimoRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getLarguisimoRequestPluginSupport_destroy_key_ex(
-    getLarguisimoRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoRequest*
+TypedefTest_getLarguisimoRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getLarguisimoRequestPluginSupport_destroy_key(
-    getLarguisimoRequestKeyHolder *key);
+TypedefTest_getLarguisimoRequestPluginSupport_destroy_key_ex(
+    TypedefTest_getLarguisimoRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getLarguisimoRequestPluginSupport_destroy_key(
+    TypedefTest_getLarguisimoRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ getLarguisimoRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getLarguisimoRequestPlugin_on_participant_attached(
+TypedefTest_getLarguisimoRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -652,34 +652,34 @@ getLarguisimoRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getLarguisimoRequestPlugin_on_participant_detached(
+TypedefTest_getLarguisimoRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getLarguisimoRequestPlugin_on_endpoint_attached(
+TypedefTest_getLarguisimoRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getLarguisimoRequestPlugin_on_endpoint_detached(
+TypedefTest_getLarguisimoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_copy_sample(
+TypedefTest_getLarguisimoRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest *out,
-    const getLarguisimoRequest *in);
+    TypedefTest_getLarguisimoRequest *out,
+    const TypedefTest_getLarguisimoRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_serialize(
+TypedefTest_getLarguisimoRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getLarguisimoRequest *sample,
+    const TypedefTest_getLarguisimoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -687,9 +687,9 @@ getLarguisimoRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_deserialize_sample(
+TypedefTest_getLarguisimoRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest *sample, 
+    TypedefTest_getLarguisimoRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -697,9 +697,9 @@ getLarguisimoRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_deserialize(
+TypedefTest_getLarguisimoRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest **sample, 
+    TypedefTest_getLarguisimoRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -709,7 +709,7 @@ getLarguisimoRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getLarguisimoRequestPlugin_skip(
+TypedefTest_getLarguisimoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -717,26 +717,26 @@ getLarguisimoRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getLarguisimoRequestPlugin_get_serialized_sample_max_size(
+TypedefTest_getLarguisimoRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getLarguisimoRequestPlugin_get_serialized_sample_min_size(
+TypedefTest_getLarguisimoRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getLarguisimoRequestPlugin_get_serialized_sample_size(
+TypedefTest_getLarguisimoRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getLarguisimoRequest * sample);
+    const TypedefTest_getLarguisimoRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -744,19 +744,19 @@ getLarguisimoRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getLarguisimoRequestPlugin_get_key_kind(void);
+TypedefTest_getLarguisimoRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getLarguisimoRequestPlugin_get_serialized_key_max_size(
+TypedefTest_getLarguisimoRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_serialize_key(
+TypedefTest_getLarguisimoRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getLarguisimoRequest *sample,
+    const TypedefTest_getLarguisimoRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -764,9 +764,9 @@ getLarguisimoRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_deserialize_key_sample(
+TypedefTest_getLarguisimoRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest * sample,
+    TypedefTest_getLarguisimoRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -774,9 +774,9 @@ getLarguisimoRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_deserialize_key(
+TypedefTest_getLarguisimoRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest ** sample,
+    TypedefTest_getLarguisimoRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -785,9 +785,9 @@ getLarguisimoRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getLarguisimoRequestPlugin_serialized_sample_to_key(
+TypedefTest_getLarguisimoRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest *sample,
+    TypedefTest_getLarguisimoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -795,25 +795,25 @@ getLarguisimoRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_instance_to_key(
+TypedefTest_getLarguisimoRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequestKeyHolder *key, 
-    const getLarguisimoRequest *instance);
+    TypedefTest_getLarguisimoRequestKeyHolder *key, 
+    const TypedefTest_getLarguisimoRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_key_to_instance(
+TypedefTest_getLarguisimoRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoRequest *instance, 
-    const getLarguisimoRequestKeyHolder *key);
+    TypedefTest_getLarguisimoRequest *instance, 
+    const TypedefTest_getLarguisimoRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_instance_to_keyhash(
+TypedefTest_getLarguisimoRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getLarguisimoRequest *instance);
+    const TypedefTest_getLarguisimoRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoRequestPlugin_serialized_sample_to_keyhash(
+TypedefTest_getLarguisimoRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -822,83 +822,83 @@ getLarguisimoRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getLarguisimoRequestPlugin_new(void);
+TypedefTest_getLarguisimoRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getLarguisimoRequestPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getLarguisimoRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getLarguisimoReply.
+ * TypedefTest_getLarguisimoReply.
  *
- * By default, this type is struct getLarguisimoReply
+ * By default, this type is struct TypedefTest_getLarguisimoReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getLarguisimoReply)
+ * system (e.g. if sizeof(struct TypedefTest_getLarguisimoReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getLarguisimoReply, the
+ * other than struct TypedefTest_getLarguisimoReply, the
  * following restriction applies: the key of struct
- * getLarguisimoReply must consist of a
+ * TypedefTest_getLarguisimoReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getLarguisimoReply.
+ * first field in struct TypedefTest_getLarguisimoReply.
 */
-typedef  struct getLarguisimoReply getLarguisimoReplyKeyHolder;
+typedef  struct TypedefTest_getLarguisimoReply TypedefTest_getLarguisimoReplyKeyHolder;
 
 
-#define getLarguisimoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getLarguisimoReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getLarguisimoReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getLarguisimoReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getLarguisimoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getLarguisimoReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getLarguisimoReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getLarguisimoReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getLarguisimoReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getLarguisimoReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getLarguisimoReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getLarguisimoReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getLarguisimoReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getLarguisimoReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getLarguisimoReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getLarguisimoReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getLarguisimoReply*
-getLarguisimoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoReply*
+TypedefTest_getLarguisimoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLarguisimoReply*
-getLarguisimoReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoReply*
+TypedefTest_getLarguisimoReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPluginSupport_copy_data(
-    getLarguisimoReply *out,
-    const getLarguisimoReply *in);
+TypedefTest_getLarguisimoReplyPluginSupport_copy_data(
+    TypedefTest_getLarguisimoReply *out,
+    const TypedefTest_getLarguisimoReply *in);
 
 NDDSUSERDllExport extern void 
-getLarguisimoReplyPluginSupport_destroy_data_ex(
-    getLarguisimoReply *sample,RTIBool deallocate_pointers);
+TypedefTest_getLarguisimoReplyPluginSupport_destroy_data_ex(
+    TypedefTest_getLarguisimoReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getLarguisimoReplyPluginSupport_destroy_data(
-    getLarguisimoReply *sample);
+TypedefTest_getLarguisimoReplyPluginSupport_destroy_data(
+    TypedefTest_getLarguisimoReply *sample);
 
 NDDSUSERDllExport extern void 
-getLarguisimoReplyPluginSupport_print_data(
-    const getLarguisimoReply *sample,
+TypedefTest_getLarguisimoReplyPluginSupport_print_data(
+    const TypedefTest_getLarguisimoReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getLarguisimoReply*
-getLarguisimoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoReply*
+TypedefTest_getLarguisimoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getLarguisimoReply*
-getLarguisimoReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getLarguisimoReplyPluginSupport_destroy_key_ex(
-    getLarguisimoReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getLarguisimoReply*
+TypedefTest_getLarguisimoReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getLarguisimoReplyPluginSupport_destroy_key(
-    getLarguisimoReplyKeyHolder *key);
+TypedefTest_getLarguisimoReplyPluginSupport_destroy_key_ex(
+    TypedefTest_getLarguisimoReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getLarguisimoReplyPluginSupport_destroy_key(
+    TypedefTest_getLarguisimoReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -906,7 +906,7 @@ getLarguisimoReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getLarguisimoReplyPlugin_on_participant_attached(
+TypedefTest_getLarguisimoReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -914,34 +914,34 @@ getLarguisimoReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getLarguisimoReplyPlugin_on_participant_detached(
+TypedefTest_getLarguisimoReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getLarguisimoReplyPlugin_on_endpoint_attached(
+TypedefTest_getLarguisimoReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getLarguisimoReplyPlugin_on_endpoint_detached(
+TypedefTest_getLarguisimoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_copy_sample(
+TypedefTest_getLarguisimoReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply *out,
-    const getLarguisimoReply *in);
+    TypedefTest_getLarguisimoReply *out,
+    const TypedefTest_getLarguisimoReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_serialize(
+TypedefTest_getLarguisimoReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getLarguisimoReply *sample,
+    const TypedefTest_getLarguisimoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -949,9 +949,9 @@ getLarguisimoReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_deserialize_sample(
+TypedefTest_getLarguisimoReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply *sample, 
+    TypedefTest_getLarguisimoReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -959,9 +959,9 @@ getLarguisimoReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_deserialize(
+TypedefTest_getLarguisimoReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply **sample, 
+    TypedefTest_getLarguisimoReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -971,7 +971,7 @@ getLarguisimoReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getLarguisimoReplyPlugin_skip(
+TypedefTest_getLarguisimoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -979,26 +979,26 @@ getLarguisimoReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getLarguisimoReplyPlugin_get_serialized_sample_max_size(
+TypedefTest_getLarguisimoReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getLarguisimoReplyPlugin_get_serialized_sample_min_size(
+TypedefTest_getLarguisimoReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getLarguisimoReplyPlugin_get_serialized_sample_size(
+TypedefTest_getLarguisimoReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getLarguisimoReply * sample);
+    const TypedefTest_getLarguisimoReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1006,19 +1006,19 @@ getLarguisimoReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getLarguisimoReplyPlugin_get_key_kind(void);
+TypedefTest_getLarguisimoReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getLarguisimoReplyPlugin_get_serialized_key_max_size(
+TypedefTest_getLarguisimoReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_serialize_key(
+TypedefTest_getLarguisimoReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getLarguisimoReply *sample,
+    const TypedefTest_getLarguisimoReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1026,9 +1026,9 @@ getLarguisimoReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_deserialize_key_sample(
+TypedefTest_getLarguisimoReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply * sample,
+    TypedefTest_getLarguisimoReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1036,9 +1036,9 @@ getLarguisimoReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_deserialize_key(
+TypedefTest_getLarguisimoReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply ** sample,
+    TypedefTest_getLarguisimoReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1047,9 +1047,9 @@ getLarguisimoReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getLarguisimoReplyPlugin_serialized_sample_to_key(
+TypedefTest_getLarguisimoReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply *sample,
+    TypedefTest_getLarguisimoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1057,25 +1057,25 @@ getLarguisimoReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_instance_to_key(
+TypedefTest_getLarguisimoReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReplyKeyHolder *key, 
-    const getLarguisimoReply *instance);
+    TypedefTest_getLarguisimoReplyKeyHolder *key, 
+    const TypedefTest_getLarguisimoReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_key_to_instance(
+TypedefTest_getLarguisimoReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getLarguisimoReply *instance, 
-    const getLarguisimoReplyKeyHolder *key);
+    TypedefTest_getLarguisimoReply *instance, 
+    const TypedefTest_getLarguisimoReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_instance_to_keyhash(
+TypedefTest_getLarguisimoReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getLarguisimoReply *instance);
+    const TypedefTest_getLarguisimoReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getLarguisimoReplyPlugin_serialized_sample_to_keyhash(
+TypedefTest_getLarguisimoReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1084,83 +1084,83 @@ getLarguisimoReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getLarguisimoReplyPlugin_new(void);
+TypedefTest_getLarguisimoReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getLarguisimoReplyPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getLarguisimoReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getDatosDefRequest.
+ * TypedefTest_getDatosDefRequest.
  *
- * By default, this type is struct getDatosDefRequest
+ * By default, this type is struct TypedefTest_getDatosDefRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getDatosDefRequest)
+ * system (e.g. if sizeof(struct TypedefTest_getDatosDefRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getDatosDefRequest, the
+ * other than struct TypedefTest_getDatosDefRequest, the
  * following restriction applies: the key of struct
- * getDatosDefRequest must consist of a
+ * TypedefTest_getDatosDefRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getDatosDefRequest.
+ * first field in struct TypedefTest_getDatosDefRequest.
 */
-typedef  struct getDatosDefRequest getDatosDefRequestKeyHolder;
+typedef  struct TypedefTest_getDatosDefRequest TypedefTest_getDatosDefRequestKeyHolder;
 
 
-#define getDatosDefRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getDatosDefRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getDatosDefRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getDatosDefRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getDatosDefRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getDatosDefRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getDatosDefRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getDatosDefRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getDatosDefRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getDatosDefRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getDatosDefRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getDatosDefRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getDatosDefRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getDatosDefRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getDatosDefRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getDatosDefRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getDatosDefRequest*
-getDatosDefRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefRequest*
+TypedefTest_getDatosDefRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefRequest*
-getDatosDefRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getDatosDefRequest*
+TypedefTest_getDatosDefRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPluginSupport_copy_data(
-    getDatosDefRequest *out,
-    const getDatosDefRequest *in);
+TypedefTest_getDatosDefRequestPluginSupport_copy_data(
+    TypedefTest_getDatosDefRequest *out,
+    const TypedefTest_getDatosDefRequest *in);
 
 NDDSUSERDllExport extern void 
-getDatosDefRequestPluginSupport_destroy_data_ex(
-    getDatosDefRequest *sample,RTIBool deallocate_pointers);
+TypedefTest_getDatosDefRequestPluginSupport_destroy_data_ex(
+    TypedefTest_getDatosDefRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getDatosDefRequestPluginSupport_destroy_data(
-    getDatosDefRequest *sample);
+TypedefTest_getDatosDefRequestPluginSupport_destroy_data(
+    TypedefTest_getDatosDefRequest *sample);
 
 NDDSUSERDllExport extern void 
-getDatosDefRequestPluginSupport_print_data(
-    const getDatosDefRequest *sample,
+TypedefTest_getDatosDefRequestPluginSupport_print_data(
+    const TypedefTest_getDatosDefRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getDatosDefRequest*
-getDatosDefRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefRequest*
+TypedefTest_getDatosDefRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefRequest*
-getDatosDefRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getDatosDefRequestPluginSupport_destroy_key_ex(
-    getDatosDefRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefRequest*
+TypedefTest_getDatosDefRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getDatosDefRequestPluginSupport_destroy_key(
-    getDatosDefRequestKeyHolder *key);
+TypedefTest_getDatosDefRequestPluginSupport_destroy_key_ex(
+    TypedefTest_getDatosDefRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getDatosDefRequestPluginSupport_destroy_key(
+    TypedefTest_getDatosDefRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1168,7 +1168,7 @@ getDatosDefRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getDatosDefRequestPlugin_on_participant_attached(
+TypedefTest_getDatosDefRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1176,34 +1176,34 @@ getDatosDefRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getDatosDefRequestPlugin_on_participant_detached(
+TypedefTest_getDatosDefRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getDatosDefRequestPlugin_on_endpoint_attached(
+TypedefTest_getDatosDefRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getDatosDefRequestPlugin_on_endpoint_detached(
+TypedefTest_getDatosDefRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_copy_sample(
+TypedefTest_getDatosDefRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest *out,
-    const getDatosDefRequest *in);
+    TypedefTest_getDatosDefRequest *out,
+    const TypedefTest_getDatosDefRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_serialize(
+TypedefTest_getDatosDefRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefRequest *sample,
+    const TypedefTest_getDatosDefRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1211,9 +1211,9 @@ getDatosDefRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_deserialize_sample(
+TypedefTest_getDatosDefRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest *sample, 
+    TypedefTest_getDatosDefRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1221,9 +1221,9 @@ getDatosDefRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_deserialize(
+TypedefTest_getDatosDefRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest **sample, 
+    TypedefTest_getDatosDefRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1233,7 +1233,7 @@ getDatosDefRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefRequestPlugin_skip(
+TypedefTest_getDatosDefRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1241,26 +1241,26 @@ getDatosDefRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefRequestPlugin_get_serialized_sample_max_size(
+TypedefTest_getDatosDefRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefRequestPlugin_get_serialized_sample_min_size(
+TypedefTest_getDatosDefRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getDatosDefRequestPlugin_get_serialized_sample_size(
+TypedefTest_getDatosDefRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getDatosDefRequest * sample);
+    const TypedefTest_getDatosDefRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1268,19 +1268,19 @@ getDatosDefRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getDatosDefRequestPlugin_get_key_kind(void);
+TypedefTest_getDatosDefRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefRequestPlugin_get_serialized_key_max_size(
+TypedefTest_getDatosDefRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_serialize_key(
+TypedefTest_getDatosDefRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefRequest *sample,
+    const TypedefTest_getDatosDefRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1288,9 +1288,9 @@ getDatosDefRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_deserialize_key_sample(
+TypedefTest_getDatosDefRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest * sample,
+    TypedefTest_getDatosDefRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1298,9 +1298,9 @@ getDatosDefRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_deserialize_key(
+TypedefTest_getDatosDefRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest ** sample,
+    TypedefTest_getDatosDefRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1309,9 +1309,9 @@ getDatosDefRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefRequestPlugin_serialized_sample_to_key(
+TypedefTest_getDatosDefRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest *sample,
+    TypedefTest_getDatosDefRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1319,25 +1319,25 @@ getDatosDefRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_instance_to_key(
+TypedefTest_getDatosDefRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequestKeyHolder *key, 
-    const getDatosDefRequest *instance);
+    TypedefTest_getDatosDefRequestKeyHolder *key, 
+    const TypedefTest_getDatosDefRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_key_to_instance(
+TypedefTest_getDatosDefRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefRequest *instance, 
-    const getDatosDefRequestKeyHolder *key);
+    TypedefTest_getDatosDefRequest *instance, 
+    const TypedefTest_getDatosDefRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_instance_to_keyhash(
+TypedefTest_getDatosDefRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getDatosDefRequest *instance);
+    const TypedefTest_getDatosDefRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefRequestPlugin_serialized_sample_to_keyhash(
+TypedefTest_getDatosDefRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1346,83 +1346,83 @@ getDatosDefRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getDatosDefRequestPlugin_new(void);
+TypedefTest_getDatosDefRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getDatosDefRequestPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getDatosDefRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getDatosDefReply.
+ * TypedefTest_getDatosDefReply.
  *
- * By default, this type is struct getDatosDefReply
+ * By default, this type is struct TypedefTest_getDatosDefReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getDatosDefReply)
+ * system (e.g. if sizeof(struct TypedefTest_getDatosDefReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getDatosDefReply, the
+ * other than struct TypedefTest_getDatosDefReply, the
  * following restriction applies: the key of struct
- * getDatosDefReply must consist of a
+ * TypedefTest_getDatosDefReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getDatosDefReply.
+ * first field in struct TypedefTest_getDatosDefReply.
 */
-typedef  struct getDatosDefReply getDatosDefReplyKeyHolder;
+typedef  struct TypedefTest_getDatosDefReply TypedefTest_getDatosDefReplyKeyHolder;
 
 
-#define getDatosDefReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getDatosDefReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getDatosDefReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getDatosDefReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getDatosDefReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getDatosDefReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getDatosDefReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getDatosDefReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getDatosDefReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getDatosDefReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getDatosDefReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getDatosDefReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getDatosDefReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getDatosDefReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getDatosDefReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getDatosDefReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getDatosDefReply*
-getDatosDefReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefReply*
+TypedefTest_getDatosDefReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefReply*
-getDatosDefReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getDatosDefReply*
+TypedefTest_getDatosDefReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPluginSupport_copy_data(
-    getDatosDefReply *out,
-    const getDatosDefReply *in);
+TypedefTest_getDatosDefReplyPluginSupport_copy_data(
+    TypedefTest_getDatosDefReply *out,
+    const TypedefTest_getDatosDefReply *in);
 
 NDDSUSERDllExport extern void 
-getDatosDefReplyPluginSupport_destroy_data_ex(
-    getDatosDefReply *sample,RTIBool deallocate_pointers);
+TypedefTest_getDatosDefReplyPluginSupport_destroy_data_ex(
+    TypedefTest_getDatosDefReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getDatosDefReplyPluginSupport_destroy_data(
-    getDatosDefReply *sample);
+TypedefTest_getDatosDefReplyPluginSupport_destroy_data(
+    TypedefTest_getDatosDefReply *sample);
 
 NDDSUSERDllExport extern void 
-getDatosDefReplyPluginSupport_print_data(
-    const getDatosDefReply *sample,
+TypedefTest_getDatosDefReplyPluginSupport_print_data(
+    const TypedefTest_getDatosDefReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getDatosDefReply*
-getDatosDefReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefReply*
+TypedefTest_getDatosDefReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefReply*
-getDatosDefReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getDatosDefReplyPluginSupport_destroy_key_ex(
-    getDatosDefReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefReply*
+TypedefTest_getDatosDefReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getDatosDefReplyPluginSupport_destroy_key(
-    getDatosDefReplyKeyHolder *key);
+TypedefTest_getDatosDefReplyPluginSupport_destroy_key_ex(
+    TypedefTest_getDatosDefReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getDatosDefReplyPluginSupport_destroy_key(
+    TypedefTest_getDatosDefReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1430,7 +1430,7 @@ getDatosDefReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getDatosDefReplyPlugin_on_participant_attached(
+TypedefTest_getDatosDefReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1438,34 +1438,34 @@ getDatosDefReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getDatosDefReplyPlugin_on_participant_detached(
+TypedefTest_getDatosDefReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getDatosDefReplyPlugin_on_endpoint_attached(
+TypedefTest_getDatosDefReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getDatosDefReplyPlugin_on_endpoint_detached(
+TypedefTest_getDatosDefReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_copy_sample(
+TypedefTest_getDatosDefReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply *out,
-    const getDatosDefReply *in);
+    TypedefTest_getDatosDefReply *out,
+    const TypedefTest_getDatosDefReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_serialize(
+TypedefTest_getDatosDefReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefReply *sample,
+    const TypedefTest_getDatosDefReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1473,9 +1473,9 @@ getDatosDefReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_deserialize_sample(
+TypedefTest_getDatosDefReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply *sample, 
+    TypedefTest_getDatosDefReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1483,9 +1483,9 @@ getDatosDefReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_deserialize(
+TypedefTest_getDatosDefReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply **sample, 
+    TypedefTest_getDatosDefReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1495,7 +1495,7 @@ getDatosDefReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefReplyPlugin_skip(
+TypedefTest_getDatosDefReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1503,26 +1503,26 @@ getDatosDefReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefReplyPlugin_get_serialized_sample_max_size(
+TypedefTest_getDatosDefReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefReplyPlugin_get_serialized_sample_min_size(
+TypedefTest_getDatosDefReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getDatosDefReplyPlugin_get_serialized_sample_size(
+TypedefTest_getDatosDefReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getDatosDefReply * sample);
+    const TypedefTest_getDatosDefReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1530,19 +1530,19 @@ getDatosDefReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getDatosDefReplyPlugin_get_key_kind(void);
+TypedefTest_getDatosDefReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefReplyPlugin_get_serialized_key_max_size(
+TypedefTest_getDatosDefReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_serialize_key(
+TypedefTest_getDatosDefReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefReply *sample,
+    const TypedefTest_getDatosDefReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1550,9 +1550,9 @@ getDatosDefReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_deserialize_key_sample(
+TypedefTest_getDatosDefReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply * sample,
+    TypedefTest_getDatosDefReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1560,9 +1560,9 @@ getDatosDefReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_deserialize_key(
+TypedefTest_getDatosDefReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply ** sample,
+    TypedefTest_getDatosDefReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1571,9 +1571,9 @@ getDatosDefReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefReplyPlugin_serialized_sample_to_key(
+TypedefTest_getDatosDefReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply *sample,
+    TypedefTest_getDatosDefReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1581,25 +1581,25 @@ getDatosDefReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_instance_to_key(
+TypedefTest_getDatosDefReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReplyKeyHolder *key, 
-    const getDatosDefReply *instance);
+    TypedefTest_getDatosDefReplyKeyHolder *key, 
+    const TypedefTest_getDatosDefReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_key_to_instance(
+TypedefTest_getDatosDefReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefReply *instance, 
-    const getDatosDefReplyKeyHolder *key);
+    TypedefTest_getDatosDefReply *instance, 
+    const TypedefTest_getDatosDefReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_instance_to_keyhash(
+TypedefTest_getDatosDefReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getDatosDefReply *instance);
+    const TypedefTest_getDatosDefReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefReplyPlugin_serialized_sample_to_keyhash(
+TypedefTest_getDatosDefReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1608,83 +1608,83 @@ getDatosDefReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getDatosDefReplyPlugin_new(void);
+TypedefTest_getDatosDefReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getDatosDefReplyPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getDatosDefReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getDatosDefondoRequest.
+ * TypedefTest_getDatosDefondoRequest.
  *
- * By default, this type is struct getDatosDefondoRequest
+ * By default, this type is struct TypedefTest_getDatosDefondoRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getDatosDefondoRequest)
+ * system (e.g. if sizeof(struct TypedefTest_getDatosDefondoRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getDatosDefondoRequest, the
+ * other than struct TypedefTest_getDatosDefondoRequest, the
  * following restriction applies: the key of struct
- * getDatosDefondoRequest must consist of a
+ * TypedefTest_getDatosDefondoRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getDatosDefondoRequest.
+ * first field in struct TypedefTest_getDatosDefondoRequest.
 */
-typedef  struct getDatosDefondoRequest getDatosDefondoRequestKeyHolder;
+typedef  struct TypedefTest_getDatosDefondoRequest TypedefTest_getDatosDefondoRequestKeyHolder;
 
 
-#define getDatosDefondoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getDatosDefondoRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getDatosDefondoRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getDatosDefondoRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getDatosDefondoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getDatosDefondoRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getDatosDefondoRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getDatosDefondoRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getDatosDefondoRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getDatosDefondoRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getDatosDefondoRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getDatosDefondoRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getDatosDefondoRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getDatosDefondoRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getDatosDefondoRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getDatosDefondoRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getDatosDefondoRequest*
-getDatosDefondoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoRequest*
+TypedefTest_getDatosDefondoRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefondoRequest*
-getDatosDefondoRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoRequest*
+TypedefTest_getDatosDefondoRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPluginSupport_copy_data(
-    getDatosDefondoRequest *out,
-    const getDatosDefondoRequest *in);
+TypedefTest_getDatosDefondoRequestPluginSupport_copy_data(
+    TypedefTest_getDatosDefondoRequest *out,
+    const TypedefTest_getDatosDefondoRequest *in);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoRequestPluginSupport_destroy_data_ex(
-    getDatosDefondoRequest *sample,RTIBool deallocate_pointers);
+TypedefTest_getDatosDefondoRequestPluginSupport_destroy_data_ex(
+    TypedefTest_getDatosDefondoRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoRequestPluginSupport_destroy_data(
-    getDatosDefondoRequest *sample);
+TypedefTest_getDatosDefondoRequestPluginSupport_destroy_data(
+    TypedefTest_getDatosDefondoRequest *sample);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoRequestPluginSupport_print_data(
-    const getDatosDefondoRequest *sample,
+TypedefTest_getDatosDefondoRequestPluginSupport_print_data(
+    const TypedefTest_getDatosDefondoRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getDatosDefondoRequest*
-getDatosDefondoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoRequest*
+TypedefTest_getDatosDefondoRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefondoRequest*
-getDatosDefondoRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getDatosDefondoRequestPluginSupport_destroy_key_ex(
-    getDatosDefondoRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoRequest*
+TypedefTest_getDatosDefondoRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoRequestPluginSupport_destroy_key(
-    getDatosDefondoRequestKeyHolder *key);
+TypedefTest_getDatosDefondoRequestPluginSupport_destroy_key_ex(
+    TypedefTest_getDatosDefondoRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getDatosDefondoRequestPluginSupport_destroy_key(
+    TypedefTest_getDatosDefondoRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1692,7 +1692,7 @@ getDatosDefondoRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getDatosDefondoRequestPlugin_on_participant_attached(
+TypedefTest_getDatosDefondoRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1700,34 +1700,34 @@ getDatosDefondoRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoRequestPlugin_on_participant_detached(
+TypedefTest_getDatosDefondoRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getDatosDefondoRequestPlugin_on_endpoint_attached(
+TypedefTest_getDatosDefondoRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoRequestPlugin_on_endpoint_detached(
+TypedefTest_getDatosDefondoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_copy_sample(
+TypedefTest_getDatosDefondoRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest *out,
-    const getDatosDefondoRequest *in);
+    TypedefTest_getDatosDefondoRequest *out,
+    const TypedefTest_getDatosDefondoRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_serialize(
+TypedefTest_getDatosDefondoRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefondoRequest *sample,
+    const TypedefTest_getDatosDefondoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1735,9 +1735,9 @@ getDatosDefondoRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_deserialize_sample(
+TypedefTest_getDatosDefondoRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest *sample, 
+    TypedefTest_getDatosDefondoRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1745,9 +1745,9 @@ getDatosDefondoRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_deserialize(
+TypedefTest_getDatosDefondoRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest **sample, 
+    TypedefTest_getDatosDefondoRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1757,7 +1757,7 @@ getDatosDefondoRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefondoRequestPlugin_skip(
+TypedefTest_getDatosDefondoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -1765,26 +1765,26 @@ getDatosDefondoRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefondoRequestPlugin_get_serialized_sample_max_size(
+TypedefTest_getDatosDefondoRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefondoRequestPlugin_get_serialized_sample_min_size(
+TypedefTest_getDatosDefondoRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getDatosDefondoRequestPlugin_get_serialized_sample_size(
+TypedefTest_getDatosDefondoRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getDatosDefondoRequest * sample);
+    const TypedefTest_getDatosDefondoRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -1792,19 +1792,19 @@ getDatosDefondoRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getDatosDefondoRequestPlugin_get_key_kind(void);
+TypedefTest_getDatosDefondoRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefondoRequestPlugin_get_serialized_key_max_size(
+TypedefTest_getDatosDefondoRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_serialize_key(
+TypedefTest_getDatosDefondoRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefondoRequest *sample,
+    const TypedefTest_getDatosDefondoRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1812,9 +1812,9 @@ getDatosDefondoRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_deserialize_key_sample(
+TypedefTest_getDatosDefondoRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest * sample,
+    TypedefTest_getDatosDefondoRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1822,9 +1822,9 @@ getDatosDefondoRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_deserialize_key(
+TypedefTest_getDatosDefondoRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest ** sample,
+    TypedefTest_getDatosDefondoRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1833,9 +1833,9 @@ getDatosDefondoRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefondoRequestPlugin_serialized_sample_to_key(
+TypedefTest_getDatosDefondoRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest *sample,
+    TypedefTest_getDatosDefondoRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1843,25 +1843,25 @@ getDatosDefondoRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_instance_to_key(
+TypedefTest_getDatosDefondoRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequestKeyHolder *key, 
-    const getDatosDefondoRequest *instance);
+    TypedefTest_getDatosDefondoRequestKeyHolder *key, 
+    const TypedefTest_getDatosDefondoRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_key_to_instance(
+TypedefTest_getDatosDefondoRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoRequest *instance, 
-    const getDatosDefondoRequestKeyHolder *key);
+    TypedefTest_getDatosDefondoRequest *instance, 
+    const TypedefTest_getDatosDefondoRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_instance_to_keyhash(
+TypedefTest_getDatosDefondoRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getDatosDefondoRequest *instance);
+    const TypedefTest_getDatosDefondoRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoRequestPlugin_serialized_sample_to_keyhash(
+TypedefTest_getDatosDefondoRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -1870,83 +1870,83 @@ getDatosDefondoRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getDatosDefondoRequestPlugin_new(void);
+TypedefTest_getDatosDefondoRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getDatosDefondoRequestPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getDatosDefondoRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getDatosDefondoReply.
+ * TypedefTest_getDatosDefondoReply.
  *
- * By default, this type is struct getDatosDefondoReply
+ * By default, this type is struct TypedefTest_getDatosDefondoReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getDatosDefondoReply)
+ * system (e.g. if sizeof(struct TypedefTest_getDatosDefondoReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getDatosDefondoReply, the
+ * other than struct TypedefTest_getDatosDefondoReply, the
  * following restriction applies: the key of struct
- * getDatosDefondoReply must consist of a
+ * TypedefTest_getDatosDefondoReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getDatosDefondoReply.
+ * first field in struct TypedefTest_getDatosDefondoReply.
 */
-typedef  struct getDatosDefondoReply getDatosDefondoReplyKeyHolder;
+typedef  struct TypedefTest_getDatosDefondoReply TypedefTest_getDatosDefondoReplyKeyHolder;
 
 
-#define getDatosDefondoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getDatosDefondoReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getDatosDefondoReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getDatosDefondoReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getDatosDefondoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getDatosDefondoReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getDatosDefondoReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getDatosDefondoReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getDatosDefondoReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getDatosDefondoReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getDatosDefondoReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getDatosDefondoReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getDatosDefondoReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getDatosDefondoReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getDatosDefondoReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getDatosDefondoReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getDatosDefondoReply*
-getDatosDefondoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoReply*
+TypedefTest_getDatosDefondoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefondoReply*
-getDatosDefondoReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoReply*
+TypedefTest_getDatosDefondoReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPluginSupport_copy_data(
-    getDatosDefondoReply *out,
-    const getDatosDefondoReply *in);
+TypedefTest_getDatosDefondoReplyPluginSupport_copy_data(
+    TypedefTest_getDatosDefondoReply *out,
+    const TypedefTest_getDatosDefondoReply *in);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoReplyPluginSupport_destroy_data_ex(
-    getDatosDefondoReply *sample,RTIBool deallocate_pointers);
+TypedefTest_getDatosDefondoReplyPluginSupport_destroy_data_ex(
+    TypedefTest_getDatosDefondoReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoReplyPluginSupport_destroy_data(
-    getDatosDefondoReply *sample);
+TypedefTest_getDatosDefondoReplyPluginSupport_destroy_data(
+    TypedefTest_getDatosDefondoReply *sample);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoReplyPluginSupport_print_data(
-    const getDatosDefondoReply *sample,
+TypedefTest_getDatosDefondoReplyPluginSupport_print_data(
+    const TypedefTest_getDatosDefondoReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getDatosDefondoReply*
-getDatosDefondoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoReply*
+TypedefTest_getDatosDefondoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getDatosDefondoReply*
-getDatosDefondoReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getDatosDefondoReplyPluginSupport_destroy_key_ex(
-    getDatosDefondoReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getDatosDefondoReply*
+TypedefTest_getDatosDefondoReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoReplyPluginSupport_destroy_key(
-    getDatosDefondoReplyKeyHolder *key);
+TypedefTest_getDatosDefondoReplyPluginSupport_destroy_key_ex(
+    TypedefTest_getDatosDefondoReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getDatosDefondoReplyPluginSupport_destroy_key(
+    TypedefTest_getDatosDefondoReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -1954,7 +1954,7 @@ getDatosDefondoReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getDatosDefondoReplyPlugin_on_participant_attached(
+TypedefTest_getDatosDefondoReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -1962,34 +1962,34 @@ getDatosDefondoReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoReplyPlugin_on_participant_detached(
+TypedefTest_getDatosDefondoReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getDatosDefondoReplyPlugin_on_endpoint_attached(
+TypedefTest_getDatosDefondoReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getDatosDefondoReplyPlugin_on_endpoint_detached(
+TypedefTest_getDatosDefondoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_copy_sample(
+TypedefTest_getDatosDefondoReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply *out,
-    const getDatosDefondoReply *in);
+    TypedefTest_getDatosDefondoReply *out,
+    const TypedefTest_getDatosDefondoReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_serialize(
+TypedefTest_getDatosDefondoReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefondoReply *sample,
+    const TypedefTest_getDatosDefondoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1997,9 +1997,9 @@ getDatosDefondoReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_deserialize_sample(
+TypedefTest_getDatosDefondoReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply *sample, 
+    TypedefTest_getDatosDefondoReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -2007,9 +2007,9 @@ getDatosDefondoReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_deserialize(
+TypedefTest_getDatosDefondoReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply **sample, 
+    TypedefTest_getDatosDefondoReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2019,7 +2019,7 @@ getDatosDefondoReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefondoReplyPlugin_skip(
+TypedefTest_getDatosDefondoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -2027,26 +2027,26 @@ getDatosDefondoReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefondoReplyPlugin_get_serialized_sample_max_size(
+TypedefTest_getDatosDefondoReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefondoReplyPlugin_get_serialized_sample_min_size(
+TypedefTest_getDatosDefondoReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getDatosDefondoReplyPlugin_get_serialized_sample_size(
+TypedefTest_getDatosDefondoReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getDatosDefondoReply * sample);
+    const TypedefTest_getDatosDefondoReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -2054,19 +2054,19 @@ getDatosDefondoReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getDatosDefondoReplyPlugin_get_key_kind(void);
+TypedefTest_getDatosDefondoReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getDatosDefondoReplyPlugin_get_serialized_key_max_size(
+TypedefTest_getDatosDefondoReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_serialize_key(
+TypedefTest_getDatosDefondoReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getDatosDefondoReply *sample,
+    const TypedefTest_getDatosDefondoReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2074,9 +2074,9 @@ getDatosDefondoReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_deserialize_key_sample(
+TypedefTest_getDatosDefondoReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply * sample,
+    TypedefTest_getDatosDefondoReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -2084,9 +2084,9 @@ getDatosDefondoReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_deserialize_key(
+TypedefTest_getDatosDefondoReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply ** sample,
+    TypedefTest_getDatosDefondoReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2095,9 +2095,9 @@ getDatosDefondoReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getDatosDefondoReplyPlugin_serialized_sample_to_key(
+TypedefTest_getDatosDefondoReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply *sample,
+    TypedefTest_getDatosDefondoReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2105,25 +2105,25 @@ getDatosDefondoReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_instance_to_key(
+TypedefTest_getDatosDefondoReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReplyKeyHolder *key, 
-    const getDatosDefondoReply *instance);
+    TypedefTest_getDatosDefondoReplyKeyHolder *key, 
+    const TypedefTest_getDatosDefondoReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_key_to_instance(
+TypedefTest_getDatosDefondoReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getDatosDefondoReply *instance, 
-    const getDatosDefondoReplyKeyHolder *key);
+    TypedefTest_getDatosDefondoReply *instance, 
+    const TypedefTest_getDatosDefondoReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_instance_to_keyhash(
+TypedefTest_getDatosDefondoReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getDatosDefondoReply *instance);
+    const TypedefTest_getDatosDefondoReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getDatosDefondoReplyPlugin_serialized_sample_to_keyhash(
+TypedefTest_getDatosDefondoReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2132,83 +2132,83 @@ getDatosDefondoReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getDatosDefondoReplyPlugin_new(void);
+TypedefTest_getDatosDefondoReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getDatosDefondoReplyPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getDatosDefondoReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getCadenaRequest.
+ * TypedefTest_getCadenaRequest.
  *
- * By default, this type is struct getCadenaRequest
+ * By default, this type is struct TypedefTest_getCadenaRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getCadenaRequest)
+ * system (e.g. if sizeof(struct TypedefTest_getCadenaRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getCadenaRequest, the
+ * other than struct TypedefTest_getCadenaRequest, the
  * following restriction applies: the key of struct
- * getCadenaRequest must consist of a
+ * TypedefTest_getCadenaRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getCadenaRequest.
+ * first field in struct TypedefTest_getCadenaRequest.
 */
-typedef  struct getCadenaRequest getCadenaRequestKeyHolder;
+typedef  struct TypedefTest_getCadenaRequest TypedefTest_getCadenaRequestKeyHolder;
 
 
-#define getCadenaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getCadenaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getCadenaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getCadenaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getCadenaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getCadenaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getCadenaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getCadenaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getCadenaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getCadenaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getCadenaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getCadenaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getCadenaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getCadenaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getCadenaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getCadenaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getCadenaRequest*
-getCadenaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCadenaRequest*
+TypedefTest_getCadenaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCadenaRequest*
-getCadenaRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getCadenaRequest*
+TypedefTest_getCadenaRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPluginSupport_copy_data(
-    getCadenaRequest *out,
-    const getCadenaRequest *in);
+TypedefTest_getCadenaRequestPluginSupport_copy_data(
+    TypedefTest_getCadenaRequest *out,
+    const TypedefTest_getCadenaRequest *in);
 
 NDDSUSERDllExport extern void 
-getCadenaRequestPluginSupport_destroy_data_ex(
-    getCadenaRequest *sample,RTIBool deallocate_pointers);
+TypedefTest_getCadenaRequestPluginSupport_destroy_data_ex(
+    TypedefTest_getCadenaRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getCadenaRequestPluginSupport_destroy_data(
-    getCadenaRequest *sample);
+TypedefTest_getCadenaRequestPluginSupport_destroy_data(
+    TypedefTest_getCadenaRequest *sample);
 
 NDDSUSERDllExport extern void 
-getCadenaRequestPluginSupport_print_data(
-    const getCadenaRequest *sample,
+TypedefTest_getCadenaRequestPluginSupport_print_data(
+    const TypedefTest_getCadenaRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getCadenaRequest*
-getCadenaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCadenaRequest*
+TypedefTest_getCadenaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCadenaRequest*
-getCadenaRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getCadenaRequestPluginSupport_destroy_key_ex(
-    getCadenaRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCadenaRequest*
+TypedefTest_getCadenaRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getCadenaRequestPluginSupport_destroy_key(
-    getCadenaRequestKeyHolder *key);
+TypedefTest_getCadenaRequestPluginSupport_destroy_key_ex(
+    TypedefTest_getCadenaRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getCadenaRequestPluginSupport_destroy_key(
+    TypedefTest_getCadenaRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -2216,7 +2216,7 @@ getCadenaRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getCadenaRequestPlugin_on_participant_attached(
+TypedefTest_getCadenaRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -2224,34 +2224,34 @@ getCadenaRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getCadenaRequestPlugin_on_participant_detached(
+TypedefTest_getCadenaRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getCadenaRequestPlugin_on_endpoint_attached(
+TypedefTest_getCadenaRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getCadenaRequestPlugin_on_endpoint_detached(
+TypedefTest_getCadenaRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_copy_sample(
+TypedefTest_getCadenaRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest *out,
-    const getCadenaRequest *in);
+    TypedefTest_getCadenaRequest *out,
+    const TypedefTest_getCadenaRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_serialize(
+TypedefTest_getCadenaRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getCadenaRequest *sample,
+    const TypedefTest_getCadenaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2259,9 +2259,9 @@ getCadenaRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_deserialize_sample(
+TypedefTest_getCadenaRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest *sample, 
+    TypedefTest_getCadenaRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -2269,9 +2269,9 @@ getCadenaRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_deserialize(
+TypedefTest_getCadenaRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest **sample, 
+    TypedefTest_getCadenaRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2281,7 +2281,7 @@ getCadenaRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getCadenaRequestPlugin_skip(
+TypedefTest_getCadenaRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -2289,26 +2289,26 @@ getCadenaRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getCadenaRequestPlugin_get_serialized_sample_max_size(
+TypedefTest_getCadenaRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getCadenaRequestPlugin_get_serialized_sample_min_size(
+TypedefTest_getCadenaRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getCadenaRequestPlugin_get_serialized_sample_size(
+TypedefTest_getCadenaRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getCadenaRequest * sample);
+    const TypedefTest_getCadenaRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -2316,19 +2316,19 @@ getCadenaRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getCadenaRequestPlugin_get_key_kind(void);
+TypedefTest_getCadenaRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getCadenaRequestPlugin_get_serialized_key_max_size(
+TypedefTest_getCadenaRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_serialize_key(
+TypedefTest_getCadenaRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getCadenaRequest *sample,
+    const TypedefTest_getCadenaRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2336,9 +2336,9 @@ getCadenaRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_deserialize_key_sample(
+TypedefTest_getCadenaRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest * sample,
+    TypedefTest_getCadenaRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -2346,9 +2346,9 @@ getCadenaRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_deserialize_key(
+TypedefTest_getCadenaRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest ** sample,
+    TypedefTest_getCadenaRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2357,9 +2357,9 @@ getCadenaRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getCadenaRequestPlugin_serialized_sample_to_key(
+TypedefTest_getCadenaRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest *sample,
+    TypedefTest_getCadenaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2367,25 +2367,25 @@ getCadenaRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_instance_to_key(
+TypedefTest_getCadenaRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequestKeyHolder *key, 
-    const getCadenaRequest *instance);
+    TypedefTest_getCadenaRequestKeyHolder *key, 
+    const TypedefTest_getCadenaRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_key_to_instance(
+TypedefTest_getCadenaRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaRequest *instance, 
-    const getCadenaRequestKeyHolder *key);
+    TypedefTest_getCadenaRequest *instance, 
+    const TypedefTest_getCadenaRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_instance_to_keyhash(
+TypedefTest_getCadenaRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getCadenaRequest *instance);
+    const TypedefTest_getCadenaRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaRequestPlugin_serialized_sample_to_keyhash(
+TypedefTest_getCadenaRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2394,83 +2394,83 @@ getCadenaRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getCadenaRequestPlugin_new(void);
+TypedefTest_getCadenaRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getCadenaRequestPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getCadenaRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getCadenaReply.
+ * TypedefTest_getCadenaReply.
  *
- * By default, this type is struct getCadenaReply
+ * By default, this type is struct TypedefTest_getCadenaReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getCadenaReply)
+ * system (e.g. if sizeof(struct TypedefTest_getCadenaReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getCadenaReply, the
+ * other than struct TypedefTest_getCadenaReply, the
  * following restriction applies: the key of struct
- * getCadenaReply must consist of a
+ * TypedefTest_getCadenaReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getCadenaReply.
+ * first field in struct TypedefTest_getCadenaReply.
 */
-typedef  struct getCadenaReply getCadenaReplyKeyHolder;
+typedef  struct TypedefTest_getCadenaReply TypedefTest_getCadenaReplyKeyHolder;
 
 
-#define getCadenaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getCadenaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getCadenaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getCadenaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getCadenaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getCadenaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getCadenaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getCadenaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getCadenaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getCadenaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getCadenaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getCadenaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getCadenaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getCadenaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getCadenaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getCadenaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getCadenaReply*
-getCadenaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCadenaReply*
+TypedefTest_getCadenaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCadenaReply*
-getCadenaReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getCadenaReply*
+TypedefTest_getCadenaReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPluginSupport_copy_data(
-    getCadenaReply *out,
-    const getCadenaReply *in);
+TypedefTest_getCadenaReplyPluginSupport_copy_data(
+    TypedefTest_getCadenaReply *out,
+    const TypedefTest_getCadenaReply *in);
 
 NDDSUSERDllExport extern void 
-getCadenaReplyPluginSupport_destroy_data_ex(
-    getCadenaReply *sample,RTIBool deallocate_pointers);
+TypedefTest_getCadenaReplyPluginSupport_destroy_data_ex(
+    TypedefTest_getCadenaReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getCadenaReplyPluginSupport_destroy_data(
-    getCadenaReply *sample);
+TypedefTest_getCadenaReplyPluginSupport_destroy_data(
+    TypedefTest_getCadenaReply *sample);
 
 NDDSUSERDllExport extern void 
-getCadenaReplyPluginSupport_print_data(
-    const getCadenaReply *sample,
+TypedefTest_getCadenaReplyPluginSupport_print_data(
+    const TypedefTest_getCadenaReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getCadenaReply*
-getCadenaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCadenaReply*
+TypedefTest_getCadenaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCadenaReply*
-getCadenaReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getCadenaReplyPluginSupport_destroy_key_ex(
-    getCadenaReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCadenaReply*
+TypedefTest_getCadenaReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getCadenaReplyPluginSupport_destroy_key(
-    getCadenaReplyKeyHolder *key);
+TypedefTest_getCadenaReplyPluginSupport_destroy_key_ex(
+    TypedefTest_getCadenaReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getCadenaReplyPluginSupport_destroy_key(
+    TypedefTest_getCadenaReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -2478,7 +2478,7 @@ getCadenaReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getCadenaReplyPlugin_on_participant_attached(
+TypedefTest_getCadenaReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -2486,34 +2486,34 @@ getCadenaReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getCadenaReplyPlugin_on_participant_detached(
+TypedefTest_getCadenaReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getCadenaReplyPlugin_on_endpoint_attached(
+TypedefTest_getCadenaReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getCadenaReplyPlugin_on_endpoint_detached(
+TypedefTest_getCadenaReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_copy_sample(
+TypedefTest_getCadenaReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply *out,
-    const getCadenaReply *in);
+    TypedefTest_getCadenaReply *out,
+    const TypedefTest_getCadenaReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_serialize(
+TypedefTest_getCadenaReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getCadenaReply *sample,
+    const TypedefTest_getCadenaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2521,9 +2521,9 @@ getCadenaReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_deserialize_sample(
+TypedefTest_getCadenaReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply *sample, 
+    TypedefTest_getCadenaReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -2531,9 +2531,9 @@ getCadenaReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_deserialize(
+TypedefTest_getCadenaReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply **sample, 
+    TypedefTest_getCadenaReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2543,7 +2543,7 @@ getCadenaReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getCadenaReplyPlugin_skip(
+TypedefTest_getCadenaReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -2551,26 +2551,26 @@ getCadenaReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getCadenaReplyPlugin_get_serialized_sample_max_size(
+TypedefTest_getCadenaReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getCadenaReplyPlugin_get_serialized_sample_min_size(
+TypedefTest_getCadenaReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getCadenaReplyPlugin_get_serialized_sample_size(
+TypedefTest_getCadenaReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getCadenaReply * sample);
+    const TypedefTest_getCadenaReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -2578,19 +2578,19 @@ getCadenaReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getCadenaReplyPlugin_get_key_kind(void);
+TypedefTest_getCadenaReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getCadenaReplyPlugin_get_serialized_key_max_size(
+TypedefTest_getCadenaReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_serialize_key(
+TypedefTest_getCadenaReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getCadenaReply *sample,
+    const TypedefTest_getCadenaReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2598,9 +2598,9 @@ getCadenaReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_deserialize_key_sample(
+TypedefTest_getCadenaReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply * sample,
+    TypedefTest_getCadenaReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -2608,9 +2608,9 @@ getCadenaReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_deserialize_key(
+TypedefTest_getCadenaReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply ** sample,
+    TypedefTest_getCadenaReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2619,9 +2619,9 @@ getCadenaReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getCadenaReplyPlugin_serialized_sample_to_key(
+TypedefTest_getCadenaReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply *sample,
+    TypedefTest_getCadenaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2629,25 +2629,25 @@ getCadenaReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_instance_to_key(
+TypedefTest_getCadenaReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReplyKeyHolder *key, 
-    const getCadenaReply *instance);
+    TypedefTest_getCadenaReplyKeyHolder *key, 
+    const TypedefTest_getCadenaReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_key_to_instance(
+TypedefTest_getCadenaReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getCadenaReply *instance, 
-    const getCadenaReplyKeyHolder *key);
+    TypedefTest_getCadenaReply *instance, 
+    const TypedefTest_getCadenaReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_instance_to_keyhash(
+TypedefTest_getCadenaReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getCadenaReply *instance);
+    const TypedefTest_getCadenaReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCadenaReplyPlugin_serialized_sample_to_keyhash(
+TypedefTest_getCadenaReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2656,83 +2656,83 @@ getCadenaReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getCadenaReplyPlugin_new(void);
+TypedefTest_getCadenaReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getCadenaReplyPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getCadenaReplyPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getCorreaRequest.
+ * TypedefTest_getCorreaRequest.
  *
- * By default, this type is struct getCorreaRequest
+ * By default, this type is struct TypedefTest_getCorreaRequest
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getCorreaRequest)
+ * system (e.g. if sizeof(struct TypedefTest_getCorreaRequest)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getCorreaRequest, the
+ * other than struct TypedefTest_getCorreaRequest, the
  * following restriction applies: the key of struct
- * getCorreaRequest must consist of a
+ * TypedefTest_getCorreaRequest must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getCorreaRequest.
+ * first field in struct TypedefTest_getCorreaRequest.
 */
-typedef  struct getCorreaRequest getCorreaRequestKeyHolder;
+typedef  struct TypedefTest_getCorreaRequest TypedefTest_getCorreaRequestKeyHolder;
 
 
-#define getCorreaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getCorreaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getCorreaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getCorreaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getCorreaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getCorreaRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getCorreaRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getCorreaRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getCorreaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getCorreaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getCorreaRequestPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getCorreaRequestPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getCorreaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getCorreaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getCorreaRequestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getCorreaRequestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getCorreaRequest*
-getCorreaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCorreaRequest*
+TypedefTest_getCorreaRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCorreaRequest*
-getCorreaRequestPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getCorreaRequest*
+TypedefTest_getCorreaRequestPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPluginSupport_copy_data(
-    getCorreaRequest *out,
-    const getCorreaRequest *in);
+TypedefTest_getCorreaRequestPluginSupport_copy_data(
+    TypedefTest_getCorreaRequest *out,
+    const TypedefTest_getCorreaRequest *in);
 
 NDDSUSERDllExport extern void 
-getCorreaRequestPluginSupport_destroy_data_ex(
-    getCorreaRequest *sample,RTIBool deallocate_pointers);
+TypedefTest_getCorreaRequestPluginSupport_destroy_data_ex(
+    TypedefTest_getCorreaRequest *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getCorreaRequestPluginSupport_destroy_data(
-    getCorreaRequest *sample);
+TypedefTest_getCorreaRequestPluginSupport_destroy_data(
+    TypedefTest_getCorreaRequest *sample);
 
 NDDSUSERDllExport extern void 
-getCorreaRequestPluginSupport_print_data(
-    const getCorreaRequest *sample,
+TypedefTest_getCorreaRequestPluginSupport_print_data(
+    const TypedefTest_getCorreaRequest *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getCorreaRequest*
-getCorreaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCorreaRequest*
+TypedefTest_getCorreaRequestPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCorreaRequest*
-getCorreaRequestPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getCorreaRequestPluginSupport_destroy_key_ex(
-    getCorreaRequestKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCorreaRequest*
+TypedefTest_getCorreaRequestPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getCorreaRequestPluginSupport_destroy_key(
-    getCorreaRequestKeyHolder *key);
+TypedefTest_getCorreaRequestPluginSupport_destroy_key_ex(
+    TypedefTest_getCorreaRequestKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getCorreaRequestPluginSupport_destroy_key(
+    TypedefTest_getCorreaRequestKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -2740,7 +2740,7 @@ getCorreaRequestPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getCorreaRequestPlugin_on_participant_attached(
+TypedefTest_getCorreaRequestPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -2748,34 +2748,34 @@ getCorreaRequestPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getCorreaRequestPlugin_on_participant_detached(
+TypedefTest_getCorreaRequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getCorreaRequestPlugin_on_endpoint_attached(
+TypedefTest_getCorreaRequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getCorreaRequestPlugin_on_endpoint_detached(
+TypedefTest_getCorreaRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_copy_sample(
+TypedefTest_getCorreaRequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest *out,
-    const getCorreaRequest *in);
+    TypedefTest_getCorreaRequest *out,
+    const TypedefTest_getCorreaRequest *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_serialize(
+TypedefTest_getCorreaRequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getCorreaRequest *sample,
+    const TypedefTest_getCorreaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2783,9 +2783,9 @@ getCorreaRequestPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_deserialize_sample(
+TypedefTest_getCorreaRequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest *sample, 
+    TypedefTest_getCorreaRequest *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -2793,9 +2793,9 @@ getCorreaRequestPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_deserialize(
+TypedefTest_getCorreaRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest **sample, 
+    TypedefTest_getCorreaRequest **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2805,7 +2805,7 @@ getCorreaRequestPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getCorreaRequestPlugin_skip(
+TypedefTest_getCorreaRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -2813,26 +2813,26 @@ getCorreaRequestPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getCorreaRequestPlugin_get_serialized_sample_max_size(
+TypedefTest_getCorreaRequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getCorreaRequestPlugin_get_serialized_sample_min_size(
+TypedefTest_getCorreaRequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getCorreaRequestPlugin_get_serialized_sample_size(
+TypedefTest_getCorreaRequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getCorreaRequest * sample);
+    const TypedefTest_getCorreaRequest * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -2840,19 +2840,19 @@ getCorreaRequestPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getCorreaRequestPlugin_get_key_kind(void);
+TypedefTest_getCorreaRequestPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getCorreaRequestPlugin_get_serialized_key_max_size(
+TypedefTest_getCorreaRequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_serialize_key(
+TypedefTest_getCorreaRequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getCorreaRequest *sample,
+    const TypedefTest_getCorreaRequest *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -2860,9 +2860,9 @@ getCorreaRequestPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_deserialize_key_sample(
+TypedefTest_getCorreaRequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest * sample,
+    TypedefTest_getCorreaRequest * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -2870,9 +2870,9 @@ getCorreaRequestPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_deserialize_key(
+TypedefTest_getCorreaRequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest ** sample,
+    TypedefTest_getCorreaRequest ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -2881,9 +2881,9 @@ getCorreaRequestPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getCorreaRequestPlugin_serialized_sample_to_key(
+TypedefTest_getCorreaRequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest *sample,
+    TypedefTest_getCorreaRequest *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -2891,25 +2891,25 @@ getCorreaRequestPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_instance_to_key(
+TypedefTest_getCorreaRequestPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequestKeyHolder *key, 
-    const getCorreaRequest *instance);
+    TypedefTest_getCorreaRequestKeyHolder *key, 
+    const TypedefTest_getCorreaRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_key_to_instance(
+TypedefTest_getCorreaRequestPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaRequest *instance, 
-    const getCorreaRequestKeyHolder *key);
+    TypedefTest_getCorreaRequest *instance, 
+    const TypedefTest_getCorreaRequestKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_instance_to_keyhash(
+TypedefTest_getCorreaRequestPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getCorreaRequest *instance);
+    const TypedefTest_getCorreaRequest *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaRequestPlugin_serialized_sample_to_keyhash(
+TypedefTest_getCorreaRequestPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -2918,83 +2918,83 @@ getCorreaRequestPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getCorreaRequestPlugin_new(void);
+TypedefTest_getCorreaRequestPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getCorreaRequestPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getCorreaRequestPlugin_delete(struct PRESTypePlugin *);
 
 /* The type used to store keys for instances of type struct
- * getCorreaReply.
+ * TypedefTest_getCorreaReply.
  *
- * By default, this type is struct getCorreaReply
+ * By default, this type is struct TypedefTest_getCorreaReply
  * itself. However, if for some reason this choice is not practical for your
- * system (e.g. if sizeof(struct getCorreaReply)
+ * system (e.g. if sizeof(struct TypedefTest_getCorreaReply)
  * is very large), you may redefine this typedef in terms of another type of
  * your choosing. HOWEVER, if you define the KeyHolder type to be something
- * other than struct getCorreaReply, the
+ * other than struct TypedefTest_getCorreaReply, the
  * following restriction applies: the key of struct
- * getCorreaReply must consist of a
+ * TypedefTest_getCorreaReply must consist of a
  * single field of your redefined KeyHolder type and that field must be the
- * first field in struct getCorreaReply.
+ * first field in struct TypedefTest_getCorreaReply.
 */
-typedef  struct getCorreaReply getCorreaReplyKeyHolder;
+typedef  struct TypedefTest_getCorreaReply TypedefTest_getCorreaReplyKeyHolder;
 
 
-#define getCorreaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define getCorreaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
-#define getCorreaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define getCorreaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define TypedefTest_getCorreaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define TypedefTest_getCorreaReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define TypedefTest_getCorreaReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define TypedefTest_getCorreaReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-#define getCorreaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
-#define getCorreaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+#define TypedefTest_getCorreaReplyPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+#define TypedefTest_getCorreaReplyPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
  
 
-#define getCorreaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define getCorreaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define TypedefTest_getCorreaReplyPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define TypedefTest_getCorreaReplyPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern getCorreaReply*
-getCorreaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCorreaReply*
+TypedefTest_getCorreaReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCorreaReply*
-getCorreaReplyPluginSupport_create_data(void);
+NDDSUSERDllExport extern TypedefTest_getCorreaReply*
+TypedefTest_getCorreaReplyPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPluginSupport_copy_data(
-    getCorreaReply *out,
-    const getCorreaReply *in);
+TypedefTest_getCorreaReplyPluginSupport_copy_data(
+    TypedefTest_getCorreaReply *out,
+    const TypedefTest_getCorreaReply *in);
 
 NDDSUSERDllExport extern void 
-getCorreaReplyPluginSupport_destroy_data_ex(
-    getCorreaReply *sample,RTIBool deallocate_pointers);
+TypedefTest_getCorreaReplyPluginSupport_destroy_data_ex(
+    TypedefTest_getCorreaReply *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-getCorreaReplyPluginSupport_destroy_data(
-    getCorreaReply *sample);
+TypedefTest_getCorreaReplyPluginSupport_destroy_data(
+    TypedefTest_getCorreaReply *sample);
 
 NDDSUSERDllExport extern void 
-getCorreaReplyPluginSupport_print_data(
-    const getCorreaReply *sample,
+TypedefTest_getCorreaReplyPluginSupport_print_data(
+    const TypedefTest_getCorreaReply *sample,
     const char *desc,
     unsigned int indent);
 
 
-NDDSUSERDllExport extern getCorreaReply*
-getCorreaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCorreaReply*
+TypedefTest_getCorreaReplyPluginSupport_create_key_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern getCorreaReply*
-getCorreaReplyPluginSupport_create_key(void);
-
-NDDSUSERDllExport extern void 
-getCorreaReplyPluginSupport_destroy_key_ex(
-    getCorreaReplyKeyHolder *key,RTIBool deallocate_pointers);
+NDDSUSERDllExport extern TypedefTest_getCorreaReply*
+TypedefTest_getCorreaReplyPluginSupport_create_key(void);
 
 NDDSUSERDllExport extern void 
-getCorreaReplyPluginSupport_destroy_key(
-    getCorreaReplyKeyHolder *key);
+TypedefTest_getCorreaReplyPluginSupport_destroy_key_ex(
+    TypedefTest_getCorreaReplyKeyHolder *key,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+TypedefTest_getCorreaReplyPluginSupport_destroy_key(
+    TypedefTest_getCorreaReplyKeyHolder *key);
  
 
 /* ----------------------------------------------------------------------------
@@ -3002,7 +3002,7 @@ getCorreaReplyPluginSupport_destroy_key(
  * ---------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginParticipantData 
-getCorreaReplyPlugin_on_participant_attached(
+TypedefTest_getCorreaReplyPlugin_on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
@@ -3010,34 +3010,34 @@ getCorreaReplyPlugin_on_participant_attached(
     RTICdrTypeCode *typeCode);
 
 NDDSUSERDllExport extern void 
-getCorreaReplyPlugin_on_participant_detached(
+TypedefTest_getCorreaReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data);
     
 NDDSUSERDllExport extern PRESTypePluginEndpointData 
-getCorreaReplyPlugin_on_endpoint_attached(
+TypedefTest_getCorreaReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context);
 
 NDDSUSERDllExport extern void 
-getCorreaReplyPlugin_on_endpoint_detached(
+TypedefTest_getCorreaReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_copy_sample(
+TypedefTest_getCorreaReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply *out,
-    const getCorreaReply *in);
+    TypedefTest_getCorreaReply *out,
+    const TypedefTest_getCorreaReply *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_serialize(
+TypedefTest_getCorreaReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const getCorreaReply *sample,
+    const TypedefTest_getCorreaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3045,9 +3045,9 @@ getCorreaReplyPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_deserialize_sample(
+TypedefTest_getCorreaReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply *sample, 
+    TypedefTest_getCorreaReply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -3055,9 +3055,9 @@ getCorreaReplyPlugin_deserialize_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_deserialize(
+TypedefTest_getCorreaReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply **sample, 
+    TypedefTest_getCorreaReply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -3067,7 +3067,7 @@ getCorreaReplyPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-getCorreaReplyPlugin_skip(
+TypedefTest_getCorreaReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -3075,26 +3075,26 @@ getCorreaReplyPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-getCorreaReplyPlugin_get_serialized_sample_max_size(
+TypedefTest_getCorreaReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-getCorreaReplyPlugin_get_serialized_sample_min_size(
+TypedefTest_getCorreaReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-getCorreaReplyPlugin_get_serialized_sample_size(
+TypedefTest_getCorreaReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const getCorreaReply * sample);
+    const TypedefTest_getCorreaReply * sample);
 
 
 /* --------------------------------------------------------------------------------------
@@ -3102,19 +3102,19 @@ getCorreaReplyPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-getCorreaReplyPlugin_get_key_kind(void);
+TypedefTest_getCorreaReplyPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-getCorreaReplyPlugin_get_serialized_key_max_size(
+TypedefTest_getCorreaReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_serialize_key(
+TypedefTest_getCorreaReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const getCorreaReply *sample,
+    const TypedefTest_getCorreaReply *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3122,9 +3122,9 @@ getCorreaReplyPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_deserialize_key_sample(
+TypedefTest_getCorreaReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply * sample,
+    TypedefTest_getCorreaReply * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -3132,9 +3132,9 @@ getCorreaReplyPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_deserialize_key(
+TypedefTest_getCorreaReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply ** sample,
+    TypedefTest_getCorreaReply ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -3143,9 +3143,9 @@ getCorreaReplyPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-getCorreaReplyPlugin_serialized_sample_to_key(
+TypedefTest_getCorreaReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply *sample,
+    TypedefTest_getCorreaReply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -3153,25 +3153,25 @@ getCorreaReplyPlugin_serialized_sample_to_key(
 
  
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_instance_to_key(
+TypedefTest_getCorreaReplyPlugin_instance_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReplyKeyHolder *key, 
-    const getCorreaReply *instance);
+    TypedefTest_getCorreaReplyKeyHolder *key, 
+    const TypedefTest_getCorreaReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_key_to_instance(
+TypedefTest_getCorreaReplyPlugin_key_to_instance(
     PRESTypePluginEndpointData endpoint_data,
-    getCorreaReply *instance, 
-    const getCorreaReplyKeyHolder *key);
+    TypedefTest_getCorreaReply *instance, 
+    const TypedefTest_getCorreaReplyKeyHolder *key);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_instance_to_keyhash(
+TypedefTest_getCorreaReplyPlugin_instance_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     DDS_KeyHash_t *keyhash,
-    const getCorreaReply *instance);
+    const TypedefTest_getCorreaReply *instance);
 
 NDDSUSERDllExport extern RTIBool 
-getCorreaReplyPlugin_serialized_sample_to_keyhash(
+TypedefTest_getCorreaReplyPlugin_serialized_sample_to_keyhash(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     DDS_KeyHash_t *keyhash,
@@ -3180,10 +3180,10 @@ getCorreaReplyPlugin_serialized_sample_to_keyhash(
      
 /* Plugin Functions */
 NDDSUSERDllExport extern struct PRESTypePlugin*
-getCorreaReplyPlugin_new(void);
+TypedefTest_getCorreaReplyPlugin_new(void);
 
 NDDSUSERDllExport extern void
-getCorreaReplyPlugin_delete(struct PRESTypePlugin *);
+TypedefTest_getCorreaReplyPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }
@@ -3197,4 +3197,4 @@ getCorreaReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* TypedefTestRequestReplyPlugin_1722561831_h */
+#endif /* TypedefTestRequestReplyPlugin_1722561027_h */

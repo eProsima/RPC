@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getOctetRequest' support classes.
+   Configure and implement 'BasicTypeTest_getOctetRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getOctetRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getOctetRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getOctetRequestDataWriter
-#define TData       getOctetRequest
+#define TDataWriter BasicTypeTest_getOctetRequestDataWriter
+#define TData       BasicTypeTest_getOctetRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getOctetRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getOctetRequestTYPENAME
 
 /* Defines */
-#define TDataReader getOctetRequestDataReader
-#define TDataSeq    getOctetRequestSeq
-#define TData       getOctetRequest
+#define TDataReader BasicTypeTest_getOctetRequestDataReader
+#define TDataSeq    BasicTypeTest_getOctetRequestSeq
+#define TData       BasicTypeTest_getOctetRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getOctetRequestTYPENAME
-#define TPlugin_new  getOctetRequestPlugin_new
-#define TPlugin_delete  getOctetRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getOctetRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getOctetRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getOctetRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getOctetRequestTypeSupport
-#define TData        getOctetRequest
-#define TDataReader  getOctetRequestDataReader
-#define TDataWriter  getOctetRequestDataWriter
+#define TTypeSupport BasicTypeTest_getOctetRequestTypeSupport
+#define TData        BasicTypeTest_getOctetRequest
+#define TDataReader  BasicTypeTest_getOctetRequestDataReader
+#define TDataWriter  BasicTypeTest_getOctetRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getOctetReply' support classes.
+   Configure and implement 'BasicTypeTest_getOctetReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getOctetReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getOctetReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getOctetReplyDataWriter
-#define TData       getOctetReply
+#define TDataWriter BasicTypeTest_getOctetReplyDataWriter
+#define TData       BasicTypeTest_getOctetReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getOctetReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getOctetReplyTYPENAME
 
 /* Defines */
-#define TDataReader getOctetReplyDataReader
-#define TDataSeq    getOctetReplySeq
-#define TData       getOctetReply
+#define TDataReader BasicTypeTest_getOctetReplyDataReader
+#define TDataSeq    BasicTypeTest_getOctetReplySeq
+#define TData       BasicTypeTest_getOctetReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getOctetReplyTYPENAME
-#define TPlugin_new  getOctetReplyPlugin_new
-#define TPlugin_delete  getOctetReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getOctetReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getOctetReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getOctetReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getOctetReplyTypeSupport
-#define TData        getOctetReply
-#define TDataReader  getOctetReplyDataReader
-#define TDataWriter  getOctetReplyDataWriter
+#define TTypeSupport BasicTypeTest_getOctetReplyTypeSupport
+#define TData        BasicTypeTest_getOctetReply
+#define TDataReader  BasicTypeTest_getOctetReplyDataReader
+#define TDataWriter  BasicTypeTest_getOctetReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -273,7 +273,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getCharRequest' support classes.
+   Configure and implement 'BasicTypeTest_getCharRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -289,11 +289,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getCharRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getCharRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getCharRequestDataWriter
-#define TData       getCharRequest
+#define TDataWriter BasicTypeTest_getCharRequestDataWriter
+#define TData       BasicTypeTest_getCharRequest
 
 
 #ifdef __cplusplus
@@ -319,12 +319,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getCharRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getCharRequestTYPENAME
 
 /* Defines */
-#define TDataReader getCharRequestDataReader
-#define TDataSeq    getCharRequestSeq
-#define TData       getCharRequest
+#define TDataReader BasicTypeTest_getCharRequestDataReader
+#define TDataSeq    BasicTypeTest_getCharRequestSeq
+#define TData       BasicTypeTest_getCharRequest
 
 
 #ifdef __cplusplus
@@ -352,15 +352,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getCharRequestTYPENAME
-#define TPlugin_new  getCharRequestPlugin_new
-#define TPlugin_delete  getCharRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getCharRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getCharRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getCharRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getCharRequestTypeSupport
-#define TData        getCharRequest
-#define TDataReader  getCharRequestDataReader
-#define TDataWriter  getCharRequestDataWriter
+#define TTypeSupport BasicTypeTest_getCharRequestTypeSupport
+#define TData        BasicTypeTest_getCharRequest
+#define TDataReader  BasicTypeTest_getCharRequestDataReader
+#define TDataWriter  BasicTypeTest_getCharRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -394,7 +394,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getCharReply' support classes.
+   Configure and implement 'BasicTypeTest_getCharReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -410,11 +410,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getCharReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getCharReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getCharReplyDataWriter
-#define TData       getCharReply
+#define TDataWriter BasicTypeTest_getCharReplyDataWriter
+#define TData       BasicTypeTest_getCharReply
 
 
 #ifdef __cplusplus
@@ -440,12 +440,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getCharReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getCharReplyTYPENAME
 
 /* Defines */
-#define TDataReader getCharReplyDataReader
-#define TDataSeq    getCharReplySeq
-#define TData       getCharReply
+#define TDataReader BasicTypeTest_getCharReplyDataReader
+#define TDataSeq    BasicTypeTest_getCharReplySeq
+#define TData       BasicTypeTest_getCharReply
 
 
 #ifdef __cplusplus
@@ -473,15 +473,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getCharReplyTYPENAME
-#define TPlugin_new  getCharReplyPlugin_new
-#define TPlugin_delete  getCharReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getCharReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getCharReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getCharReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getCharReplyTypeSupport
-#define TData        getCharReply
-#define TDataReader  getCharReplyDataReader
-#define TDataWriter  getCharReplyDataWriter
+#define TTypeSupport BasicTypeTest_getCharReplyTypeSupport
+#define TData        BasicTypeTest_getCharReply
+#define TDataReader  BasicTypeTest_getCharReplyDataReader
+#define TDataWriter  BasicTypeTest_getCharReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -515,7 +515,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getWCharRequest' support classes.
+   Configure and implement 'BasicTypeTest_getWCharRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -531,11 +531,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getWCharRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getWCharRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getWCharRequestDataWriter
-#define TData       getWCharRequest
+#define TDataWriter BasicTypeTest_getWCharRequestDataWriter
+#define TData       BasicTypeTest_getWCharRequest
 
 
 #ifdef __cplusplus
@@ -561,12 +561,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getWCharRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getWCharRequestTYPENAME
 
 /* Defines */
-#define TDataReader getWCharRequestDataReader
-#define TDataSeq    getWCharRequestSeq
-#define TData       getWCharRequest
+#define TDataReader BasicTypeTest_getWCharRequestDataReader
+#define TDataSeq    BasicTypeTest_getWCharRequestSeq
+#define TData       BasicTypeTest_getWCharRequest
 
 
 #ifdef __cplusplus
@@ -594,15 +594,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getWCharRequestTYPENAME
-#define TPlugin_new  getWCharRequestPlugin_new
-#define TPlugin_delete  getWCharRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getWCharRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getWCharRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getWCharRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getWCharRequestTypeSupport
-#define TData        getWCharRequest
-#define TDataReader  getWCharRequestDataReader
-#define TDataWriter  getWCharRequestDataWriter
+#define TTypeSupport BasicTypeTest_getWCharRequestTypeSupport
+#define TData        BasicTypeTest_getWCharRequest
+#define TDataReader  BasicTypeTest_getWCharRequestDataReader
+#define TDataWriter  BasicTypeTest_getWCharRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -636,7 +636,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getWCharReply' support classes.
+   Configure and implement 'BasicTypeTest_getWCharReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -652,11 +652,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getWCharReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getWCharReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getWCharReplyDataWriter
-#define TData       getWCharReply
+#define TDataWriter BasicTypeTest_getWCharReplyDataWriter
+#define TData       BasicTypeTest_getWCharReply
 
 
 #ifdef __cplusplus
@@ -682,12 +682,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getWCharReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getWCharReplyTYPENAME
 
 /* Defines */
-#define TDataReader getWCharReplyDataReader
-#define TDataSeq    getWCharReplySeq
-#define TData       getWCharReply
+#define TDataReader BasicTypeTest_getWCharReplyDataReader
+#define TDataSeq    BasicTypeTest_getWCharReplySeq
+#define TData       BasicTypeTest_getWCharReply
 
 
 #ifdef __cplusplus
@@ -715,15 +715,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getWCharReplyTYPENAME
-#define TPlugin_new  getWCharReplyPlugin_new
-#define TPlugin_delete  getWCharReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getWCharReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getWCharReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getWCharReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getWCharReplyTypeSupport
-#define TData        getWCharReply
-#define TDataReader  getWCharReplyDataReader
-#define TDataWriter  getWCharReplyDataWriter
+#define TTypeSupport BasicTypeTest_getWCharReplyTypeSupport
+#define TData        BasicTypeTest_getWCharReply
+#define TDataReader  BasicTypeTest_getWCharReplyDataReader
+#define TDataWriter  BasicTypeTest_getWCharReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -757,7 +757,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getShortRequest' support classes.
+   Configure and implement 'BasicTypeTest_getShortRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -773,11 +773,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getShortRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getShortRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getShortRequestDataWriter
-#define TData       getShortRequest
+#define TDataWriter BasicTypeTest_getShortRequestDataWriter
+#define TData       BasicTypeTest_getShortRequest
 
 
 #ifdef __cplusplus
@@ -803,12 +803,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getShortRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getShortRequestTYPENAME
 
 /* Defines */
-#define TDataReader getShortRequestDataReader
-#define TDataSeq    getShortRequestSeq
-#define TData       getShortRequest
+#define TDataReader BasicTypeTest_getShortRequestDataReader
+#define TDataSeq    BasicTypeTest_getShortRequestSeq
+#define TData       BasicTypeTest_getShortRequest
 
 
 #ifdef __cplusplus
@@ -836,15 +836,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getShortRequestTYPENAME
-#define TPlugin_new  getShortRequestPlugin_new
-#define TPlugin_delete  getShortRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getShortRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getShortRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getShortRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getShortRequestTypeSupport
-#define TData        getShortRequest
-#define TDataReader  getShortRequestDataReader
-#define TDataWriter  getShortRequestDataWriter
+#define TTypeSupport BasicTypeTest_getShortRequestTypeSupport
+#define TData        BasicTypeTest_getShortRequest
+#define TDataReader  BasicTypeTest_getShortRequestDataReader
+#define TDataWriter  BasicTypeTest_getShortRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -878,7 +878,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getShortReply' support classes.
+   Configure and implement 'BasicTypeTest_getShortReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -894,11 +894,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getShortReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getShortReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getShortReplyDataWriter
-#define TData       getShortReply
+#define TDataWriter BasicTypeTest_getShortReplyDataWriter
+#define TData       BasicTypeTest_getShortReply
 
 
 #ifdef __cplusplus
@@ -924,12 +924,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getShortReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getShortReplyTYPENAME
 
 /* Defines */
-#define TDataReader getShortReplyDataReader
-#define TDataSeq    getShortReplySeq
-#define TData       getShortReply
+#define TDataReader BasicTypeTest_getShortReplyDataReader
+#define TDataSeq    BasicTypeTest_getShortReplySeq
+#define TData       BasicTypeTest_getShortReply
 
 
 #ifdef __cplusplus
@@ -957,15 +957,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getShortReplyTYPENAME
-#define TPlugin_new  getShortReplyPlugin_new
-#define TPlugin_delete  getShortReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getShortReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getShortReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getShortReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getShortReplyTypeSupport
-#define TData        getShortReply
-#define TDataReader  getShortReplyDataReader
-#define TDataWriter  getShortReplyDataWriter
+#define TTypeSupport BasicTypeTest_getShortReplyTypeSupport
+#define TData        BasicTypeTest_getShortReply
+#define TDataReader  BasicTypeTest_getShortReplyDataReader
+#define TDataWriter  BasicTypeTest_getShortReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -999,7 +999,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getUShortRequest' support classes.
+   Configure and implement 'BasicTypeTest_getUShortRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1015,11 +1015,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getUShortRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getUShortRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getUShortRequestDataWriter
-#define TData       getUShortRequest
+#define TDataWriter BasicTypeTest_getUShortRequestDataWriter
+#define TData       BasicTypeTest_getUShortRequest
 
 
 #ifdef __cplusplus
@@ -1045,12 +1045,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getUShortRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getUShortRequestTYPENAME
 
 /* Defines */
-#define TDataReader getUShortRequestDataReader
-#define TDataSeq    getUShortRequestSeq
-#define TData       getUShortRequest
+#define TDataReader BasicTypeTest_getUShortRequestDataReader
+#define TDataSeq    BasicTypeTest_getUShortRequestSeq
+#define TData       BasicTypeTest_getUShortRequest
 
 
 #ifdef __cplusplus
@@ -1078,15 +1078,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getUShortRequestTYPENAME
-#define TPlugin_new  getUShortRequestPlugin_new
-#define TPlugin_delete  getUShortRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getUShortRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getUShortRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getUShortRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getUShortRequestTypeSupport
-#define TData        getUShortRequest
-#define TDataReader  getUShortRequestDataReader
-#define TDataWriter  getUShortRequestDataWriter
+#define TTypeSupport BasicTypeTest_getUShortRequestTypeSupport
+#define TData        BasicTypeTest_getUShortRequest
+#define TDataReader  BasicTypeTest_getUShortRequestDataReader
+#define TDataWriter  BasicTypeTest_getUShortRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -1120,7 +1120,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getUShortReply' support classes.
+   Configure and implement 'BasicTypeTest_getUShortReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1136,11 +1136,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getUShortReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getUShortReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getUShortReplyDataWriter
-#define TData       getUShortReply
+#define TDataWriter BasicTypeTest_getUShortReplyDataWriter
+#define TData       BasicTypeTest_getUShortReply
 
 
 #ifdef __cplusplus
@@ -1166,12 +1166,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getUShortReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getUShortReplyTYPENAME
 
 /* Defines */
-#define TDataReader getUShortReplyDataReader
-#define TDataSeq    getUShortReplySeq
-#define TData       getUShortReply
+#define TDataReader BasicTypeTest_getUShortReplyDataReader
+#define TDataSeq    BasicTypeTest_getUShortReplySeq
+#define TData       BasicTypeTest_getUShortReply
 
 
 #ifdef __cplusplus
@@ -1199,15 +1199,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getUShortReplyTYPENAME
-#define TPlugin_new  getUShortReplyPlugin_new
-#define TPlugin_delete  getUShortReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getUShortReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getUShortReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getUShortReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getUShortReplyTypeSupport
-#define TData        getUShortReply
-#define TDataReader  getUShortReplyDataReader
-#define TDataWriter  getUShortReplyDataWriter
+#define TTypeSupport BasicTypeTest_getUShortReplyTypeSupport
+#define TData        BasicTypeTest_getUShortReply
+#define TDataReader  BasicTypeTest_getUShortReplyDataReader
+#define TDataWriter  BasicTypeTest_getUShortReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -1241,7 +1241,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getLongRequest' support classes.
+   Configure and implement 'BasicTypeTest_getLongRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1257,11 +1257,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getLongRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getLongRequestDataWriter
-#define TData       getLongRequest
+#define TDataWriter BasicTypeTest_getLongRequestDataWriter
+#define TData       BasicTypeTest_getLongRequest
 
 
 #ifdef __cplusplus
@@ -1287,12 +1287,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getLongRequestTYPENAME
 
 /* Defines */
-#define TDataReader getLongRequestDataReader
-#define TDataSeq    getLongRequestSeq
-#define TData       getLongRequest
+#define TDataReader BasicTypeTest_getLongRequestDataReader
+#define TDataSeq    BasicTypeTest_getLongRequestSeq
+#define TData       BasicTypeTest_getLongRequest
 
 
 #ifdef __cplusplus
@@ -1320,15 +1320,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getLongRequestTYPENAME
-#define TPlugin_new  getLongRequestPlugin_new
-#define TPlugin_delete  getLongRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getLongRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getLongRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getLongRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getLongRequestTypeSupport
-#define TData        getLongRequest
-#define TDataReader  getLongRequestDataReader
-#define TDataWriter  getLongRequestDataWriter
+#define TTypeSupport BasicTypeTest_getLongRequestTypeSupport
+#define TData        BasicTypeTest_getLongRequest
+#define TDataReader  BasicTypeTest_getLongRequestDataReader
+#define TDataWriter  BasicTypeTest_getLongRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -1362,7 +1362,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getLongReply' support classes.
+   Configure and implement 'BasicTypeTest_getLongReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1378,11 +1378,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getLongReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getLongReplyDataWriter
-#define TData       getLongReply
+#define TDataWriter BasicTypeTest_getLongReplyDataWriter
+#define TData       BasicTypeTest_getLongReply
 
 
 #ifdef __cplusplus
@@ -1408,12 +1408,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getLongReplyTYPENAME
 
 /* Defines */
-#define TDataReader getLongReplyDataReader
-#define TDataSeq    getLongReplySeq
-#define TData       getLongReply
+#define TDataReader BasicTypeTest_getLongReplyDataReader
+#define TDataSeq    BasicTypeTest_getLongReplySeq
+#define TData       BasicTypeTest_getLongReply
 
 
 #ifdef __cplusplus
@@ -1441,15 +1441,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getLongReplyTYPENAME
-#define TPlugin_new  getLongReplyPlugin_new
-#define TPlugin_delete  getLongReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getLongReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getLongReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getLongReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getLongReplyTypeSupport
-#define TData        getLongReply
-#define TDataReader  getLongReplyDataReader
-#define TDataWriter  getLongReplyDataWriter
+#define TTypeSupport BasicTypeTest_getLongReplyTypeSupport
+#define TData        BasicTypeTest_getLongReply
+#define TDataReader  BasicTypeTest_getLongReplyDataReader
+#define TDataWriter  BasicTypeTest_getLongReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -1483,7 +1483,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getULongRequest' support classes.
+   Configure and implement 'BasicTypeTest_getULongRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1499,11 +1499,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getULongRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getULongRequestDataWriter
-#define TData       getULongRequest
+#define TDataWriter BasicTypeTest_getULongRequestDataWriter
+#define TData       BasicTypeTest_getULongRequest
 
 
 #ifdef __cplusplus
@@ -1529,12 +1529,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getULongRequestTYPENAME
 
 /* Defines */
-#define TDataReader getULongRequestDataReader
-#define TDataSeq    getULongRequestSeq
-#define TData       getULongRequest
+#define TDataReader BasicTypeTest_getULongRequestDataReader
+#define TDataSeq    BasicTypeTest_getULongRequestSeq
+#define TData       BasicTypeTest_getULongRequest
 
 
 #ifdef __cplusplus
@@ -1562,15 +1562,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getULongRequestTYPENAME
-#define TPlugin_new  getULongRequestPlugin_new
-#define TPlugin_delete  getULongRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getULongRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getULongRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getULongRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getULongRequestTypeSupport
-#define TData        getULongRequest
-#define TDataReader  getULongRequestDataReader
-#define TDataWriter  getULongRequestDataWriter
+#define TTypeSupport BasicTypeTest_getULongRequestTypeSupport
+#define TData        BasicTypeTest_getULongRequest
+#define TDataReader  BasicTypeTest_getULongRequestDataReader
+#define TDataWriter  BasicTypeTest_getULongRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -1604,7 +1604,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getULongReply' support classes.
+   Configure and implement 'BasicTypeTest_getULongReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1620,11 +1620,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getULongReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getULongReplyDataWriter
-#define TData       getULongReply
+#define TDataWriter BasicTypeTest_getULongReplyDataWriter
+#define TData       BasicTypeTest_getULongReply
 
 
 #ifdef __cplusplus
@@ -1650,12 +1650,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getULongReplyTYPENAME
 
 /* Defines */
-#define TDataReader getULongReplyDataReader
-#define TDataSeq    getULongReplySeq
-#define TData       getULongReply
+#define TDataReader BasicTypeTest_getULongReplyDataReader
+#define TDataSeq    BasicTypeTest_getULongReplySeq
+#define TData       BasicTypeTest_getULongReply
 
 
 #ifdef __cplusplus
@@ -1683,15 +1683,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getULongReplyTYPENAME
-#define TPlugin_new  getULongReplyPlugin_new
-#define TPlugin_delete  getULongReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getULongReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getULongReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getULongReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getULongReplyTypeSupport
-#define TData        getULongReply
-#define TDataReader  getULongReplyDataReader
-#define TDataWriter  getULongReplyDataWriter
+#define TTypeSupport BasicTypeTest_getULongReplyTypeSupport
+#define TData        BasicTypeTest_getULongReply
+#define TDataReader  BasicTypeTest_getULongReplyDataReader
+#define TDataWriter  BasicTypeTest_getULongReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -1725,7 +1725,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getLLongRequest' support classes.
+   Configure and implement 'BasicTypeTest_getLLongRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1741,11 +1741,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLLongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getLLongRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getLLongRequestDataWriter
-#define TData       getLLongRequest
+#define TDataWriter BasicTypeTest_getLLongRequestDataWriter
+#define TData       BasicTypeTest_getLLongRequest
 
 
 #ifdef __cplusplus
@@ -1771,12 +1771,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLLongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getLLongRequestTYPENAME
 
 /* Defines */
-#define TDataReader getLLongRequestDataReader
-#define TDataSeq    getLLongRequestSeq
-#define TData       getLLongRequest
+#define TDataReader BasicTypeTest_getLLongRequestDataReader
+#define TDataSeq    BasicTypeTest_getLLongRequestSeq
+#define TData       BasicTypeTest_getLLongRequest
 
 
 #ifdef __cplusplus
@@ -1804,15 +1804,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getLLongRequestTYPENAME
-#define TPlugin_new  getLLongRequestPlugin_new
-#define TPlugin_delete  getLLongRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getLLongRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getLLongRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getLLongRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getLLongRequestTypeSupport
-#define TData        getLLongRequest
-#define TDataReader  getLLongRequestDataReader
-#define TDataWriter  getLLongRequestDataWriter
+#define TTypeSupport BasicTypeTest_getLLongRequestTypeSupport
+#define TData        BasicTypeTest_getLLongRequest
+#define TDataReader  BasicTypeTest_getLLongRequestDataReader
+#define TDataWriter  BasicTypeTest_getLLongRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -1846,7 +1846,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getLLongReply' support classes.
+   Configure and implement 'BasicTypeTest_getLLongReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1862,11 +1862,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLLongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getLLongReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getLLongReplyDataWriter
-#define TData       getLLongReply
+#define TDataWriter BasicTypeTest_getLLongReplyDataWriter
+#define TData       BasicTypeTest_getLLongReply
 
 
 #ifdef __cplusplus
@@ -1892,12 +1892,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getLLongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getLLongReplyTYPENAME
 
 /* Defines */
-#define TDataReader getLLongReplyDataReader
-#define TDataSeq    getLLongReplySeq
-#define TData       getLLongReply
+#define TDataReader BasicTypeTest_getLLongReplyDataReader
+#define TDataSeq    BasicTypeTest_getLLongReplySeq
+#define TData       BasicTypeTest_getLLongReply
 
 
 #ifdef __cplusplus
@@ -1925,15 +1925,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getLLongReplyTYPENAME
-#define TPlugin_new  getLLongReplyPlugin_new
-#define TPlugin_delete  getLLongReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getLLongReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getLLongReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getLLongReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getLLongReplyTypeSupport
-#define TData        getLLongReply
-#define TDataReader  getLLongReplyDataReader
-#define TDataWriter  getLLongReplyDataWriter
+#define TTypeSupport BasicTypeTest_getLLongReplyTypeSupport
+#define TData        BasicTypeTest_getLLongReply
+#define TDataReader  BasicTypeTest_getLLongReplyDataReader
+#define TDataWriter  BasicTypeTest_getLLongReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -1967,7 +1967,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getULLongRequest' support classes.
+   Configure and implement 'BasicTypeTest_getULLongRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -1983,11 +1983,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULLongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getULLongRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getULLongRequestDataWriter
-#define TData       getULLongRequest
+#define TDataWriter BasicTypeTest_getULLongRequestDataWriter
+#define TData       BasicTypeTest_getULLongRequest
 
 
 #ifdef __cplusplus
@@ -2013,12 +2013,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULLongRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getULLongRequestTYPENAME
 
 /* Defines */
-#define TDataReader getULLongRequestDataReader
-#define TDataSeq    getULLongRequestSeq
-#define TData       getULLongRequest
+#define TDataReader BasicTypeTest_getULLongRequestDataReader
+#define TDataSeq    BasicTypeTest_getULLongRequestSeq
+#define TData       BasicTypeTest_getULLongRequest
 
 
 #ifdef __cplusplus
@@ -2046,15 +2046,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getULLongRequestTYPENAME
-#define TPlugin_new  getULLongRequestPlugin_new
-#define TPlugin_delete  getULLongRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getULLongRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getULLongRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getULLongRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getULLongRequestTypeSupport
-#define TData        getULLongRequest
-#define TDataReader  getULLongRequestDataReader
-#define TDataWriter  getULLongRequestDataWriter
+#define TTypeSupport BasicTypeTest_getULLongRequestTypeSupport
+#define TData        BasicTypeTest_getULLongRequest
+#define TDataReader  BasicTypeTest_getULLongRequestDataReader
+#define TDataWriter  BasicTypeTest_getULLongRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -2088,7 +2088,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getULLongReply' support classes.
+   Configure and implement 'BasicTypeTest_getULLongReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2104,11 +2104,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULLongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getULLongReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getULLongReplyDataWriter
-#define TData       getULLongReply
+#define TDataWriter BasicTypeTest_getULLongReplyDataWriter
+#define TData       BasicTypeTest_getULLongReply
 
 
 #ifdef __cplusplus
@@ -2134,12 +2134,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getULLongReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getULLongReplyTYPENAME
 
 /* Defines */
-#define TDataReader getULLongReplyDataReader
-#define TDataSeq    getULLongReplySeq
-#define TData       getULLongReply
+#define TDataReader BasicTypeTest_getULLongReplyDataReader
+#define TDataSeq    BasicTypeTest_getULLongReplySeq
+#define TData       BasicTypeTest_getULLongReply
 
 
 #ifdef __cplusplus
@@ -2167,15 +2167,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getULLongReplyTYPENAME
-#define TPlugin_new  getULLongReplyPlugin_new
-#define TPlugin_delete  getULLongReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getULLongReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getULLongReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getULLongReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getULLongReplyTypeSupport
-#define TData        getULLongReply
-#define TDataReader  getULLongReplyDataReader
-#define TDataWriter  getULLongReplyDataWriter
+#define TTypeSupport BasicTypeTest_getULLongReplyTypeSupport
+#define TData        BasicTypeTest_getULLongReply
+#define TDataReader  BasicTypeTest_getULLongReplyDataReader
+#define TDataWriter  BasicTypeTest_getULLongReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -2209,7 +2209,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getFloatRequest' support classes.
+   Configure and implement 'BasicTypeTest_getFloatRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2225,11 +2225,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getFloatRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getFloatRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getFloatRequestDataWriter
-#define TData       getFloatRequest
+#define TDataWriter BasicTypeTest_getFloatRequestDataWriter
+#define TData       BasicTypeTest_getFloatRequest
 
 
 #ifdef __cplusplus
@@ -2255,12 +2255,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getFloatRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getFloatRequestTYPENAME
 
 /* Defines */
-#define TDataReader getFloatRequestDataReader
-#define TDataSeq    getFloatRequestSeq
-#define TData       getFloatRequest
+#define TDataReader BasicTypeTest_getFloatRequestDataReader
+#define TDataSeq    BasicTypeTest_getFloatRequestSeq
+#define TData       BasicTypeTest_getFloatRequest
 
 
 #ifdef __cplusplus
@@ -2288,15 +2288,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getFloatRequestTYPENAME
-#define TPlugin_new  getFloatRequestPlugin_new
-#define TPlugin_delete  getFloatRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getFloatRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getFloatRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getFloatRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getFloatRequestTypeSupport
-#define TData        getFloatRequest
-#define TDataReader  getFloatRequestDataReader
-#define TDataWriter  getFloatRequestDataWriter
+#define TTypeSupport BasicTypeTest_getFloatRequestTypeSupport
+#define TData        BasicTypeTest_getFloatRequest
+#define TDataReader  BasicTypeTest_getFloatRequestDataReader
+#define TDataWriter  BasicTypeTest_getFloatRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -2330,7 +2330,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getFloatReply' support classes.
+   Configure and implement 'BasicTypeTest_getFloatReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2346,11 +2346,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getFloatReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getFloatReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getFloatReplyDataWriter
-#define TData       getFloatReply
+#define TDataWriter BasicTypeTest_getFloatReplyDataWriter
+#define TData       BasicTypeTest_getFloatReply
 
 
 #ifdef __cplusplus
@@ -2376,12 +2376,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getFloatReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getFloatReplyTYPENAME
 
 /* Defines */
-#define TDataReader getFloatReplyDataReader
-#define TDataSeq    getFloatReplySeq
-#define TData       getFloatReply
+#define TDataReader BasicTypeTest_getFloatReplyDataReader
+#define TDataSeq    BasicTypeTest_getFloatReplySeq
+#define TData       BasicTypeTest_getFloatReply
 
 
 #ifdef __cplusplus
@@ -2409,15 +2409,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getFloatReplyTYPENAME
-#define TPlugin_new  getFloatReplyPlugin_new
-#define TPlugin_delete  getFloatReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getFloatReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getFloatReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getFloatReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getFloatReplyTypeSupport
-#define TData        getFloatReply
-#define TDataReader  getFloatReplyDataReader
-#define TDataWriter  getFloatReplyDataWriter
+#define TTypeSupport BasicTypeTest_getFloatReplyTypeSupport
+#define TData        BasicTypeTest_getFloatReply
+#define TDataReader  BasicTypeTest_getFloatReplyDataReader
+#define TDataWriter  BasicTypeTest_getFloatReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -2451,7 +2451,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getDoubleRequest' support classes.
+   Configure and implement 'BasicTypeTest_getDoubleRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2467,11 +2467,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getDoubleRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getDoubleRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getDoubleRequestDataWriter
-#define TData       getDoubleRequest
+#define TDataWriter BasicTypeTest_getDoubleRequestDataWriter
+#define TData       BasicTypeTest_getDoubleRequest
 
 
 #ifdef __cplusplus
@@ -2497,12 +2497,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getDoubleRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getDoubleRequestTYPENAME
 
 /* Defines */
-#define TDataReader getDoubleRequestDataReader
-#define TDataSeq    getDoubleRequestSeq
-#define TData       getDoubleRequest
+#define TDataReader BasicTypeTest_getDoubleRequestDataReader
+#define TDataSeq    BasicTypeTest_getDoubleRequestSeq
+#define TData       BasicTypeTest_getDoubleRequest
 
 
 #ifdef __cplusplus
@@ -2530,15 +2530,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getDoubleRequestTYPENAME
-#define TPlugin_new  getDoubleRequestPlugin_new
-#define TPlugin_delete  getDoubleRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getDoubleRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getDoubleRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getDoubleRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getDoubleRequestTypeSupport
-#define TData        getDoubleRequest
-#define TDataReader  getDoubleRequestDataReader
-#define TDataWriter  getDoubleRequestDataWriter
+#define TTypeSupport BasicTypeTest_getDoubleRequestTypeSupport
+#define TData        BasicTypeTest_getDoubleRequest
+#define TDataReader  BasicTypeTest_getDoubleRequestDataReader
+#define TDataWriter  BasicTypeTest_getDoubleRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -2572,7 +2572,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getDoubleReply' support classes.
+   Configure and implement 'BasicTypeTest_getDoubleReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2588,11 +2588,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getDoubleReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getDoubleReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getDoubleReplyDataWriter
-#define TData       getDoubleReply
+#define TDataWriter BasicTypeTest_getDoubleReplyDataWriter
+#define TData       BasicTypeTest_getDoubleReply
 
 
 #ifdef __cplusplus
@@ -2618,12 +2618,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getDoubleReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getDoubleReplyTYPENAME
 
 /* Defines */
-#define TDataReader getDoubleReplyDataReader
-#define TDataSeq    getDoubleReplySeq
-#define TData       getDoubleReply
+#define TDataReader BasicTypeTest_getDoubleReplyDataReader
+#define TDataSeq    BasicTypeTest_getDoubleReplySeq
+#define TData       BasicTypeTest_getDoubleReply
 
 
 #ifdef __cplusplus
@@ -2651,15 +2651,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getDoubleReplyTYPENAME
-#define TPlugin_new  getDoubleReplyPlugin_new
-#define TPlugin_delete  getDoubleReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getDoubleReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getDoubleReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getDoubleReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getDoubleReplyTypeSupport
-#define TData        getDoubleReply
-#define TDataReader  getDoubleReplyDataReader
-#define TDataWriter  getDoubleReplyDataWriter
+#define TTypeSupport BasicTypeTest_getDoubleReplyTypeSupport
+#define TData        BasicTypeTest_getDoubleReply
+#define TDataReader  BasicTypeTest_getDoubleReplyDataReader
+#define TDataWriter  BasicTypeTest_getDoubleReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -2693,7 +2693,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getBooleanRequest' support classes.
+   Configure and implement 'BasicTypeTest_getBooleanRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2709,11 +2709,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getBooleanRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getBooleanRequestTYPENAME
 
 /* Defines */
-#define TDataWriter getBooleanRequestDataWriter
-#define TData       getBooleanRequest
+#define TDataWriter BasicTypeTest_getBooleanRequestDataWriter
+#define TData       BasicTypeTest_getBooleanRequest
 
 
 #ifdef __cplusplus
@@ -2739,12 +2739,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getBooleanRequestTYPENAME
+#define TTYPENAME   BasicTypeTest_getBooleanRequestTYPENAME
 
 /* Defines */
-#define TDataReader getBooleanRequestDataReader
-#define TDataSeq    getBooleanRequestSeq
-#define TData       getBooleanRequest
+#define TDataReader BasicTypeTest_getBooleanRequestDataReader
+#define TDataSeq    BasicTypeTest_getBooleanRequestSeq
+#define TData       BasicTypeTest_getBooleanRequest
 
 
 #ifdef __cplusplus
@@ -2772,15 +2772,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getBooleanRequestTYPENAME
-#define TPlugin_new  getBooleanRequestPlugin_new
-#define TPlugin_delete  getBooleanRequestPlugin_delete
+#define TTYPENAME    BasicTypeTest_getBooleanRequestTYPENAME
+#define TPlugin_new  BasicTypeTest_getBooleanRequestPlugin_new
+#define TPlugin_delete  BasicTypeTest_getBooleanRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport getBooleanRequestTypeSupport
-#define TData        getBooleanRequest
-#define TDataReader  getBooleanRequestDataReader
-#define TDataWriter  getBooleanRequestDataWriter
+#define TTypeSupport BasicTypeTest_getBooleanRequestTypeSupport
+#define TData        BasicTypeTest_getBooleanRequest
+#define TDataReader  BasicTypeTest_getBooleanRequestDataReader
+#define TDataWriter  BasicTypeTest_getBooleanRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -2814,7 +2814,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'getBooleanReply' support classes.
+   Configure and implement 'BasicTypeTest_getBooleanReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -2830,11 +2830,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   getBooleanReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getBooleanReplyTYPENAME
 
 /* Defines */
-#define TDataWriter getBooleanReplyDataWriter
-#define TData       getBooleanReply
+#define TDataWriter BasicTypeTest_getBooleanReplyDataWriter
+#define TData       BasicTypeTest_getBooleanReply
 
 
 #ifdef __cplusplus
@@ -2860,12 +2860,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   getBooleanReplyTYPENAME
+#define TTYPENAME   BasicTypeTest_getBooleanReplyTYPENAME
 
 /* Defines */
-#define TDataReader getBooleanReplyDataReader
-#define TDataSeq    getBooleanReplySeq
-#define TData       getBooleanReply
+#define TDataReader BasicTypeTest_getBooleanReplyDataReader
+#define TDataSeq    BasicTypeTest_getBooleanReplySeq
+#define TData       BasicTypeTest_getBooleanReply
 
 
 #ifdef __cplusplus
@@ -2893,15 +2893,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    getBooleanReplyTYPENAME
-#define TPlugin_new  getBooleanReplyPlugin_new
-#define TPlugin_delete  getBooleanReplyPlugin_delete
+#define TTYPENAME    BasicTypeTest_getBooleanReplyTYPENAME
+#define TPlugin_new  BasicTypeTest_getBooleanReplyPlugin_new
+#define TPlugin_delete  BasicTypeTest_getBooleanReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport getBooleanReplyTypeSupport
-#define TData        getBooleanReply
-#define TDataReader  getBooleanReplyDataReader
-#define TDataWriter  getBooleanReplyDataWriter
+#define TTypeSupport BasicTypeTest_getBooleanReplyTypeSupport
+#define TData        BasicTypeTest_getBooleanReply
+#define TDataReader  BasicTypeTest_getBooleanReplyDataReader
+#define TDataWriter  BasicTypeTest_getBooleanReplyDataWriter
 #ifdef __cplusplus
 
 

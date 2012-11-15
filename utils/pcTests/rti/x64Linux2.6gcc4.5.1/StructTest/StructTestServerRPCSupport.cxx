@@ -7,12 +7,12 @@
 
 
 /* Defines */
-#define TName                   duplicateServerRPC
-#define TDataReplyTypeSupport   duplicateReplyTypeSupport
-#define TDataRequestTypeSupport duplicateRequestTypeSupport
-#define TData                   duplicate
-#define TDataReader             duplicateRequestDataReader
-#define TDataWriter             duplicateReplyDataWriter
+#define TName                   StructTest_duplicateServerRPC
+#define TDataReplyTypeSupport   StructTest_duplicateReplyTypeSupport
+#define TDataRequestTypeSupport StructTest_duplicateRequestTypeSupport
+#define TData                   StructTest_duplicate
+#define TDataReader             StructTest_duplicateRequestDataReader
+#define TDataWriter             StructTest_duplicateReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"
@@ -27,12 +27,12 @@
 
 
 /* Defines */
-#define TName                   sumaServerRPC
-#define TDataReplyTypeSupport   sumaReplyTypeSupport
-#define TDataRequestTypeSupport sumaRequestTypeSupport
-#define TData                   suma
-#define TDataReader             sumaRequestDataReader
-#define TDataWriter             sumaReplyDataWriter
+#define TName                   StructTest_sumaServerRPC
+#define TDataReplyTypeSupport   StructTest_sumaReplyTypeSupport
+#define TDataRequestTypeSupport StructTest_sumaRequestTypeSupport
+#define TData                   StructTest_suma
+#define TDataReader             StructTest_sumaRequestDataReader
+#define TDataWriter             StructTest_sumaReplyDataWriter
 
 
 #include "utils/GenericServerRPC.gen"

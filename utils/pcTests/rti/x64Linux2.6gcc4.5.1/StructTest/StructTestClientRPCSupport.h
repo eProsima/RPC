@@ -9,10 +9,10 @@
 #include "StructTestRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(duplicateClientRPC, duplicateRequestDataWriter, duplicateReplyDataReader);
+GENERIC_CLIENT_RPC(StructTest_duplicateClientRPC, StructTest_duplicateRequestDataWriter, StructTest_duplicateReplyDataReader);
 
 
-GENERIC_CLIENT_RPC(sumaClientRPC, sumaRequestDataWriter, sumaReplyDataReader);
+GENERIC_CLIENT_RPC(StructTest_sumaClientRPC, StructTest_sumaRequestDataWriter, StructTest_sumaReplyDataReader);
 
 
 #endif  // _StructTest_CLIENT_RPC_SUPPORT_H_

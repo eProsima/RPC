@@ -4,7 +4,7 @@
  */
 
 #include "ServerExceptionServerImpl.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 
 ServerExceptionServerImpl::ServerExceptionServerImpl()
 {
@@ -16,14 +16,14 @@ ServerExceptionServerImpl::~ServerExceptionServerImpl()
 
 void ServerExceptionServerImpl::sendException() 
 {
-    throw eProsima::DDSRPC::ServerException("Problem");
+    throw eProsima::DDSRPC::ServerInternalException("Testing exception");
 } 
 
 char* ServerExceptionServerImpl::sendExceptionTwo(/*in*/ char* message, /*inout*/ char*& message2, /*out*/ char*& message3) 
 {
     char*  sendExceptionTwo_ret = NULL;
 
-    throw eProsima::DDSRPC::ServerException("Problem");
+    throw eProsima::DDSRPC::ServerInternalException("Testing exception");
 
     return sendExceptionTwo_ret;
 } 
@@ -32,7 +32,7 @@ Estructura ServerExceptionServerImpl::sendExceptionThree(/*in*/ const Estructura
 {
     Estructura sendExceptionThree_ret;
 
-    throw eProsima::DDSRPC::ServerException("Problem");
+    throw eProsima::DDSRPC::ServerInternalException("Testing exception");
 
     return sendExceptionThree_ret;
 } 

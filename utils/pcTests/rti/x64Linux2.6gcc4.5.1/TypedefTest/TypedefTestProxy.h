@@ -8,70 +8,71 @@
 #include "client/Client.h"
 #include "TypedefTestRequestReplyUtils.h"
 #include "TypedefTestClientRPCSupport.h"
+#include "exceptions/Exception.h"
 
-class TypedefTest_getLargo
+class TypedefTest_getLargoCallbackHandler
 {
     public:
         virtual void getLargo(/*out*/ largo l2, /*out*/ largo getLargo_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class TypedefTest_getLarguisimo
+class TypedefTest_getLarguisimoCallbackHandler
 {
     public:
         virtual void getLarguisimo(/*out*/ larguisimo ll2, /*out*/ larguisimo getLarguisimo_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class TypedefTest_getDatosDef
+class TypedefTest_getDatosDefCallbackHandler
 {
     public:
         virtual void getDatosDef(/*out*/ const DatosDef& d2, /*out*/ const DatosDef& getDatosDef_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class TypedefTest_getDatosDefondo
+class TypedefTest_getDatosDefondoCallbackHandler
 {
     public:
         virtual void getDatosDefondo(/*out*/ const DatosDefondo& dd2, /*out*/ const DatosDefondo& getDatosDefondo_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class TypedefTest_getCadena
+class TypedefTest_getCadenaCallbackHandler
 {
     public:
         virtual void getCadena(/*out*/ cadena c2, /*out*/ cadena getCadena_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
-class TypedefTest_getCorrea
+class TypedefTest_getCorreaCallbackHandler
 {
     public:
         virtual void getCorrea(/*out*/ correa cc2, /*out*/ correa getCorrea_ret)
         {
         }
    
-        virtual void error(eProsima::DDSRPC::ReturnMessage message)
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
         }
 };
@@ -86,22 +87,24 @@ class TypedefTestProxy : public eProsima::DDSRPC::Client
         /**
          * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        TypedefTestProxy(int domainId = 0, long timeout = 10000);
+        TypedefTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
         /**
          * \brief This constructor sets the transport that will be used by the server's proxy.
          *
+         * \param remoteServiceName The name of the remote service that the proxy will offer.
          * \param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
          */
-        TypedefTestProxy(eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        TypedefTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~TypedefTestProxy();
@@ -120,17 +123,17 @@ class TypedefTestProxy : public eProsima::DDSRPC::Client
         correa getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2);
         
          
-        void getLargo_async(TypedefTest_getLargo &obj, /*in*/ largo l1);
+        void getLargo_async(TypedefTest_getLargoCallbackHandler &obj, /*in*/ largo l1);
          
-        void getLarguisimo_async(TypedefTest_getLarguisimo &obj, /*in*/ larguisimo ll1);
+        void getLarguisimo_async(TypedefTest_getLarguisimoCallbackHandler &obj, /*in*/ larguisimo ll1);
          
-        void getDatosDef_async(TypedefTest_getDatosDef &obj, /*in*/ const DatosDef& d1);
+        void getDatosDef_async(TypedefTest_getDatosDefCallbackHandler &obj, /*in*/ const DatosDef& d1);
          
-        void getDatosDefondo_async(TypedefTest_getDatosDefondo &obj, /*in*/ const DatosDefondo& dd1);
+        void getDatosDefondo_async(TypedefTest_getDatosDefondoCallbackHandler &obj, /*in*/ const DatosDefondo& dd1);
          
-        void getCadena_async(TypedefTest_getCadena &obj, /*in*/ cadena c1);
+        void getCadena_async(TypedefTest_getCadenaCallbackHandler &obj, /*in*/ cadena c1);
          
-        void getCorrea_async(TypedefTest_getCorrea &obj, /*in*/ correa cc1);
+        void getCorrea_async(TypedefTest_getCorreaCallbackHandler &obj, /*in*/ correa cc1);
         
     private:
         /**

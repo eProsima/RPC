@@ -13,23 +13,25 @@ class ServerException_sendExceptionTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        ServerException_sendExceptionTask(ServerException_sendException &obj,
+        ServerException_sendExceptionTask(ServerException_sendExceptionCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~ServerException_sendExceptionTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        ServerException_sendException& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        ServerException_sendExceptionCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           ServerException_sendException &m_obj;
+           ServerException_sendExceptionCallbackHandler &m_obj;
            
-           sendExceptionReply m_reply;
+           ServerException_sendExceptionReply m_reply;
 };
 
 class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
@@ -37,23 +39,25 @@ class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
     public:
 
         /// \brief The default constructor.
-        ServerException_sendExceptionTwoTask(ServerException_sendExceptionTwo &obj,
+        ServerException_sendExceptionTwoTask(ServerException_sendExceptionTwoCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~ServerException_sendExceptionTwoTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        ServerException_sendExceptionTwo& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        ServerException_sendExceptionTwoCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           ServerException_sendExceptionTwo &m_obj;
+           ServerException_sendExceptionTwoCallbackHandler &m_obj;
            
-           sendExceptionTwoReply m_reply;
+           ServerException_sendExceptionTwoReply m_reply;
 };
 
 class ServerException_sendExceptionThreeTask : public eProsima::DDSRPC::AsyncTask
@@ -61,23 +65,25 @@ class ServerException_sendExceptionThreeTask : public eProsima::DDSRPC::AsyncTas
     public:
 
         /// \brief The default constructor.
-        ServerException_sendExceptionThreeTask(ServerException_sendExceptionThree &obj,
+        ServerException_sendExceptionThreeTask(ServerException_sendExceptionThreeCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
         virtual ~ServerException_sendExceptionThreeTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        ServerException_sendExceptionThree& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        ServerException_sendExceptionThreeCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           ServerException_sendExceptionThree &m_obj;
+           ServerException_sendExceptionThreeCallbackHandler &m_obj;
            
-           sendExceptionThreeReply m_reply;
+           ServerException_sendExceptionThreeReply m_reply;
 };
 
 #endif // _ServerException_ASYNC_SUPPORT_H_

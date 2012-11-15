@@ -12,75 +12,75 @@
 #include "ndds_namespace_cpp.h"
 
 
-class getEnumRequestUtils
+class EnumYStringTest_getEnumRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getEnumRequest& instance, /*in*/ Valores v1, /*inout*/ Valores v2);
+        static void setTypeData(EnumYStringTest_getEnumRequest& instance, /*in*/ Valores v1, /*inout*/ Valores v2);
         
-        static void extractTypeData(getEnumRequest& data, /*in*/ Valores& v1, /*inout*/ Valores& v2);
+        static void extractTypeData(EnumYStringTest_getEnumRequest& data, /*in*/ Valores& v1, /*inout*/ Valores& v2);
 };
 
 
-class getEnumReplyUtils
+class EnumYStringTest_getEnumReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getEnumReply& instance, /*inout*/ Valores v2, /*out*/ Valores v3, /*out*/ Valores getEnum_ret);
+        static void setTypeData(EnumYStringTest_getEnumReply& instance, /*inout*/ Valores v2, /*out*/ Valores v3, /*out*/ Valores getEnum_ret);
         
-        static void extractTypeData(getEnumReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret);
+        static void extractTypeData(EnumYStringTest_getEnumReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret);
 };
 
 
-class getStringRequestUtils
+class EnumYStringTest_getStringRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getStringRequest& instance, /*in*/ char* s1, /*inout*/ char* s2);
+        static void setTypeData(EnumYStringTest_getStringRequest& instance, /*in*/ char* s1, /*inout*/ char* s2);
         
-        static void extractTypeData(getStringRequest& data, /*in*/ char*& s1, /*inout*/ char*& s2);
+        static void extractTypeData(EnumYStringTest_getStringRequest& data, /*in*/ char*& s1, /*inout*/ char*& s2);
 };
 
 
-class getStringReplyUtils
+class EnumYStringTest_getStringReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getStringReply& instance, /*inout*/ char* s2, /*out*/ char* s3, /*out*/ char* getString_ret);
+        static void setTypeData(EnumYStringTest_getStringReply& instance, /*inout*/ char* s2, /*out*/ char* s3, /*out*/ char* getString_ret);
         
-        static void extractTypeData(getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret);
+        static void extractTypeData(EnumYStringTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret);
 };
 
 
-class getStringBoundedRequestUtils
+class EnumYStringTest_getStringBoundedRequestUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getStringBoundedRequest& instance, /*in*/ char* sb1, /*inout*/ char* sb2);
+        static void setTypeData(EnumYStringTest_getStringBoundedRequest& instance, /*in*/ char* sb1, /*inout*/ char* sb2);
         
-        static void extractTypeData(getStringBoundedRequest& data, /*in*/ char*& sb1, /*inout*/ char*& sb2);
+        static void extractTypeData(EnumYStringTest_getStringBoundedRequest& data, /*in*/ char*& sb1, /*inout*/ char*& sb2);
 };
 
 
-class getStringBoundedReplyUtils
+class EnumYStringTest_getStringBoundedReplyUtils
 {
     public:
 
         static const char* registerType(DDS::DomainParticipant *clientParticipant);
          
-        static void setTypeData(getStringBoundedReply& instance, /*inout*/ char* sb2, /*out*/ char* sb3, /*out*/ char* getStringBounded_ret);
+        static void setTypeData(EnumYStringTest_getStringBoundedReply& instance, /*inout*/ char* sb2, /*out*/ char* sb3, /*out*/ char* getStringBounded_ret);
         
-        static void extractTypeData(getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret);
+        static void extractTypeData(EnumYStringTest_getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret);
 };
 
  

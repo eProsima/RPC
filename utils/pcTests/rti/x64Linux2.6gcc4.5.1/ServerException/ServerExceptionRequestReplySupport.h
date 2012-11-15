@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef ServerExceptionRequestReplySupport_2113075488_h
-#define ServerExceptionRequestReplySupport_2113075488_h
+#ifndef ServerExceptionRequestReplySupport_2113075110_h
+#define ServerExceptionRequestReplySupport_2113075110_h
 
 /* Uses */
 #include "ServerExceptionRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sendExceptionRequestTypeSupport, sendExceptionRequest);
+DDS_TYPESUPPORT_CPP(ServerException_sendExceptionRequestTypeSupport, ServerException_sendExceptionRequest);
 
-DDS_DATAWRITER_CPP(sendExceptionRequestDataWriter, sendExceptionRequest);
-DDS_DATAREADER_CPP(sendExceptionRequestDataReader, sendExceptionRequestSeq, sendExceptionRequest);
+DDS_DATAWRITER_CPP(ServerException_sendExceptionRequestDataWriter, ServerException_sendExceptionRequest);
+DDS_DATAREADER_CPP(ServerException_sendExceptionRequestDataReader, ServerException_sendExceptionRequestSeq, ServerException_sendExceptionRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sendExceptionRequestTypeSupport, sendExceptionRequest);
-DDS_DATAWRITER_C(sendExceptionRequestDataWriter, sendExceptionRequest);
-DDS_DATAREADER_C(sendExceptionRequestDataReader, sendExceptionRequestSeq, sendExceptionRequest);
+DDS_TYPESUPPORT_C(ServerException_sendExceptionRequestTypeSupport, ServerException_sendExceptionRequest);
+DDS_DATAWRITER_C(ServerException_sendExceptionRequestDataWriter, ServerException_sendExceptionRequest);
+DDS_DATAREADER_C(ServerException_sendExceptionRequestDataReader, ServerException_sendExceptionRequestSeq, ServerException_sendExceptionRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(sendExceptionRequestDataReader, sendExceptionRequestSeq, sendEx
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sendExceptionReplyTypeSupport, sendExceptionReply);
+DDS_TYPESUPPORT_CPP(ServerException_sendExceptionReplyTypeSupport, ServerException_sendExceptionReply);
 
-DDS_DATAWRITER_CPP(sendExceptionReplyDataWriter, sendExceptionReply);
-DDS_DATAREADER_CPP(sendExceptionReplyDataReader, sendExceptionReplySeq, sendExceptionReply);
+DDS_DATAWRITER_CPP(ServerException_sendExceptionReplyDataWriter, ServerException_sendExceptionReply);
+DDS_DATAREADER_CPP(ServerException_sendExceptionReplyDataReader, ServerException_sendExceptionReplySeq, ServerException_sendExceptionReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sendExceptionReplyTypeSupport, sendExceptionReply);
-DDS_DATAWRITER_C(sendExceptionReplyDataWriter, sendExceptionReply);
-DDS_DATAREADER_C(sendExceptionReplyDataReader, sendExceptionReplySeq, sendExceptionReply);
+DDS_TYPESUPPORT_C(ServerException_sendExceptionReplyTypeSupport, ServerException_sendExceptionReply);
+DDS_DATAWRITER_C(ServerException_sendExceptionReplyDataWriter, ServerException_sendExceptionReply);
+DDS_DATAREADER_C(ServerException_sendExceptionReplyDataReader, ServerException_sendExceptionReplySeq, ServerException_sendExceptionReply);
 
 #endif
 
@@ -161,17 +161,17 @@ DDS_DATAREADER_C(sendExceptionReplyDataReader, sendExceptionReplySeq, sendExcept
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sendExceptionTwoRequestTypeSupport, sendExceptionTwoRequest);
+DDS_TYPESUPPORT_CPP(ServerException_sendExceptionTwoRequestTypeSupport, ServerException_sendExceptionTwoRequest);
 
-DDS_DATAWRITER_CPP(sendExceptionTwoRequestDataWriter, sendExceptionTwoRequest);
-DDS_DATAREADER_CPP(sendExceptionTwoRequestDataReader, sendExceptionTwoRequestSeq, sendExceptionTwoRequest);
+DDS_DATAWRITER_CPP(ServerException_sendExceptionTwoRequestDataWriter, ServerException_sendExceptionTwoRequest);
+DDS_DATAREADER_CPP(ServerException_sendExceptionTwoRequestDataReader, ServerException_sendExceptionTwoRequestSeq, ServerException_sendExceptionTwoRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sendExceptionTwoRequestTypeSupport, sendExceptionTwoRequest);
-DDS_DATAWRITER_C(sendExceptionTwoRequestDataWriter, sendExceptionTwoRequest);
-DDS_DATAREADER_C(sendExceptionTwoRequestDataReader, sendExceptionTwoRequestSeq, sendExceptionTwoRequest);
+DDS_TYPESUPPORT_C(ServerException_sendExceptionTwoRequestTypeSupport, ServerException_sendExceptionTwoRequest);
+DDS_DATAWRITER_C(ServerException_sendExceptionTwoRequestDataWriter, ServerException_sendExceptionTwoRequest);
+DDS_DATAREADER_C(ServerException_sendExceptionTwoRequestDataReader, ServerException_sendExceptionTwoRequestSeq, ServerException_sendExceptionTwoRequest);
 
 #endif
 
@@ -213,17 +213,17 @@ DDS_DATAREADER_C(sendExceptionTwoRequestDataReader, sendExceptionTwoRequestSeq, 
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sendExceptionTwoReplyTypeSupport, sendExceptionTwoReply);
+DDS_TYPESUPPORT_CPP(ServerException_sendExceptionTwoReplyTypeSupport, ServerException_sendExceptionTwoReply);
 
-DDS_DATAWRITER_CPP(sendExceptionTwoReplyDataWriter, sendExceptionTwoReply);
-DDS_DATAREADER_CPP(sendExceptionTwoReplyDataReader, sendExceptionTwoReplySeq, sendExceptionTwoReply);
+DDS_DATAWRITER_CPP(ServerException_sendExceptionTwoReplyDataWriter, ServerException_sendExceptionTwoReply);
+DDS_DATAREADER_CPP(ServerException_sendExceptionTwoReplyDataReader, ServerException_sendExceptionTwoReplySeq, ServerException_sendExceptionTwoReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sendExceptionTwoReplyTypeSupport, sendExceptionTwoReply);
-DDS_DATAWRITER_C(sendExceptionTwoReplyDataWriter, sendExceptionTwoReply);
-DDS_DATAREADER_C(sendExceptionTwoReplyDataReader, sendExceptionTwoReplySeq, sendExceptionTwoReply);
+DDS_TYPESUPPORT_C(ServerException_sendExceptionTwoReplyTypeSupport, ServerException_sendExceptionTwoReply);
+DDS_DATAWRITER_C(ServerException_sendExceptionTwoReplyDataWriter, ServerException_sendExceptionTwoReply);
+DDS_DATAREADER_C(ServerException_sendExceptionTwoReplyDataReader, ServerException_sendExceptionTwoReplySeq, ServerException_sendExceptionTwoReply);
 
 #endif
 
@@ -265,17 +265,17 @@ DDS_DATAREADER_C(sendExceptionTwoReplyDataReader, sendExceptionTwoReplySeq, send
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sendExceptionThreeRequestTypeSupport, sendExceptionThreeRequest);
+DDS_TYPESUPPORT_CPP(ServerException_sendExceptionThreeRequestTypeSupport, ServerException_sendExceptionThreeRequest);
 
-DDS_DATAWRITER_CPP(sendExceptionThreeRequestDataWriter, sendExceptionThreeRequest);
-DDS_DATAREADER_CPP(sendExceptionThreeRequestDataReader, sendExceptionThreeRequestSeq, sendExceptionThreeRequest);
+DDS_DATAWRITER_CPP(ServerException_sendExceptionThreeRequestDataWriter, ServerException_sendExceptionThreeRequest);
+DDS_DATAREADER_CPP(ServerException_sendExceptionThreeRequestDataReader, ServerException_sendExceptionThreeRequestSeq, ServerException_sendExceptionThreeRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sendExceptionThreeRequestTypeSupport, sendExceptionThreeRequest);
-DDS_DATAWRITER_C(sendExceptionThreeRequestDataWriter, sendExceptionThreeRequest);
-DDS_DATAREADER_C(sendExceptionThreeRequestDataReader, sendExceptionThreeRequestSeq, sendExceptionThreeRequest);
+DDS_TYPESUPPORT_C(ServerException_sendExceptionThreeRequestTypeSupport, ServerException_sendExceptionThreeRequest);
+DDS_DATAWRITER_C(ServerException_sendExceptionThreeRequestDataWriter, ServerException_sendExceptionThreeRequest);
+DDS_DATAREADER_C(ServerException_sendExceptionThreeRequestDataReader, ServerException_sendExceptionThreeRequestSeq, ServerException_sendExceptionThreeRequest);
 
 #endif
 
@@ -317,17 +317,17 @@ DDS_DATAREADER_C(sendExceptionThreeRequestDataReader, sendExceptionThreeRequestS
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(sendExceptionThreeReplyTypeSupport, sendExceptionThreeReply);
+DDS_TYPESUPPORT_CPP(ServerException_sendExceptionThreeReplyTypeSupport, ServerException_sendExceptionThreeReply);
 
-DDS_DATAWRITER_CPP(sendExceptionThreeReplyDataWriter, sendExceptionThreeReply);
-DDS_DATAREADER_CPP(sendExceptionThreeReplyDataReader, sendExceptionThreeReplySeq, sendExceptionThreeReply);
+DDS_DATAWRITER_CPP(ServerException_sendExceptionThreeReplyDataWriter, ServerException_sendExceptionThreeReply);
+DDS_DATAREADER_CPP(ServerException_sendExceptionThreeReplyDataReader, ServerException_sendExceptionThreeReplySeq, ServerException_sendExceptionThreeReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(sendExceptionThreeReplyTypeSupport, sendExceptionThreeReply);
-DDS_DATAWRITER_C(sendExceptionThreeReplyDataWriter, sendExceptionThreeReply);
-DDS_DATAREADER_C(sendExceptionThreeReplyDataReader, sendExceptionThreeReplySeq, sendExceptionThreeReply);
+DDS_TYPESUPPORT_C(ServerException_sendExceptionThreeReplyTypeSupport, ServerException_sendExceptionThreeReply);
+DDS_DATAWRITER_C(ServerException_sendExceptionThreeReplyDataWriter, ServerException_sendExceptionThreeReply);
+DDS_DATAREADER_C(ServerException_sendExceptionThreeReplyDataReader, ServerException_sendExceptionThreeReplySeq, ServerException_sendExceptionThreeReply);
 
 #endif
 
@@ -340,4 +340,4 @@ DDS_DATAREADER_C(sendExceptionThreeReplyDataReader, sendExceptionThreeReplySeq, 
 
 
 
-#endif  /* ServerExceptionRequestReplySupport_2113075488_h */
+#endif  /* ServerExceptionRequestReplySupport_2113075110_h */

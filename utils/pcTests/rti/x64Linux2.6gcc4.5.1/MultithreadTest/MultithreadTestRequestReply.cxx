@@ -39,34 +39,17 @@
 #include "MultithreadTestRequestReply.h"
 
 /* ========================================================================= */
-const char *testRequestTYPENAME = "testRequest";
+const char *MultithreadTest_testRequestTYPENAME = "MultithreadTest_testRequest";
 
-DDS_TypeCode* testRequest_get_typecode()
+DDS_TypeCode* MultithreadTest_testRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member testRequest_g_tc_members[3]=
+    static DDS_TypeCode_Member MultithreadTest_testRequest_g_tc_members[2]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -101,56 +84,51 @@ DDS_TypeCode* testRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode testRequest_g_tc =
+    static DDS_TypeCode MultithreadTest_testRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"testRequest", /* Name */
+        (char *)"MultithreadTest_testRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
-        testRequest_g_tc_members, /* Members */
+        2, /* Number of members */
+        MultithreadTest_testRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for testRequest*/
+    }}; /* Type code for MultithreadTest_testRequest*/
 
     if (is_initialized) {
-        return &testRequest_g_tc;
+        return &MultithreadTest_testRequest_g_tc;
     }
 
 
-    testRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    testRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    testRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Dato_get_typecode();
+    MultithreadTest_testRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    MultithreadTest_testRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Dato_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &testRequest_g_tc;
+    return &MultithreadTest_testRequest_g_tc;
 }
 
 
-RTIBool testRequest_initialize(
-    testRequest* sample) {
-  return testRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool MultithreadTest_testRequest_initialize(
+    MultithreadTest_testRequest* sample) {
+  return MultithreadTest_testRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool testRequest_initialize_ex(
-    testRequest* sample,RTIBool allocatePointers)
+RTIBool MultithreadTest_testRequest_initialize_ex(
+    MultithreadTest_testRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!Dato_initialize_ex(&sample->dato1,allocatePointers)) {
         return RTI_FALSE;
@@ -160,37 +138,32 @@ RTIBool testRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void testRequest_finalize(
-    testRequest* sample)
+void MultithreadTest_testRequest_finalize(
+    MultithreadTest_testRequest* sample)
 {
-    testRequest_finalize_ex(sample,RTI_TRUE);
+    MultithreadTest_testRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void testRequest_finalize_ex(
-    testRequest* sample,RTIBool deletePointers)
+void MultithreadTest_testRequest_finalize_ex(
+    MultithreadTest_testRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     Dato_finalize_ex(&sample->dato1,deletePointers);
             
 }
 
-RTIBool testRequest_copy(
-    testRequest* dst,
-    const testRequest* src)
+RTIBool MultithreadTest_testRequest_copy(
+    MultithreadTest_testRequest* dst,
+    const MultithreadTest_testRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -209,13 +182,13 @@ RTIBool testRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'testRequest' sequence class.
+ * Configure and implement 'MultithreadTest_testRequest' sequence class.
  */
-#define T testRequest
-#define TSeq testRequestSeq
-#define T_initialize_ex testRequest_initialize_ex
-#define T_finalize_ex   testRequest_finalize_ex
-#define T_copy       testRequest_copy
+#define T MultithreadTest_testRequest
+#define TSeq MultithreadTest_testRequestSeq
+#define T_initialize_ex MultithreadTest_testRequest_initialize_ex
+#define T_finalize_ex   MultithreadTest_testRequest_finalize_ex
+#define T_copy       MultithreadTest_testRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -236,17 +209,17 @@ RTIBool testRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *testReplyTYPENAME = "testReply";
+const char *MultithreadTest_testReplyTYPENAME = "MultithreadTest_testReply";
 
-DDS_TypeCode* testReply_get_typecode()
+DDS_TypeCode* MultithreadTest_testReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member testReply_g_tc_members[6]=
+    static DDS_TypeCode_Member MultithreadTest_testReply_g_tc_members[3]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -258,57 +231,6 @@ DDS_TypeCode* testReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -349,67 +271,52 @@ DDS_TypeCode* testReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode testReply_g_tc =
+    static DDS_TypeCode MultithreadTest_testReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"testReply", /* Name */
+        (char *)"MultithreadTest_testReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        6, /* Number of members */
-        testReply_g_tc_members, /* Members */
+        3, /* Number of members */
+        MultithreadTest_testReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for testReply*/
+    }}; /* Type code for MultithreadTest_testReply*/
 
     if (is_initialized) {
-        return &testReply_g_tc;
+        return &MultithreadTest_testReply_g_tc;
     }
 
 
-    testReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    testReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    testReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    testReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    testReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)Dato_get_typecode();
-    testReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    MultithreadTest_testReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    MultithreadTest_testReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Dato_get_typecode();
+    MultithreadTest_testReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
 
     is_initialized = RTI_TRUE;
 
-    return &testReply_g_tc;
+    return &MultithreadTest_testReply_g_tc;
 }
 
 
-RTIBool testReply_initialize(
-    testReply* sample) {
-  return testReply_initialize_ex(sample,RTI_TRUE);
+RTIBool MultithreadTest_testReply_initialize(
+    MultithreadTest_testReply* sample) {
+  return MultithreadTest_testReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool testReply_initialize_ex(
-    testReply* sample,RTIBool allocatePointers)
+RTIBool MultithreadTest_testReply_initialize_ex(
+    MultithreadTest_testReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!Dato_initialize_ex(&sample->dato2,allocatePointers)) {
         return RTI_FALSE;
@@ -423,49 +330,32 @@ RTIBool testReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void testReply_finalize(
-    testReply* sample)
+void MultithreadTest_testReply_finalize(
+    MultithreadTest_testReply* sample)
 {
-    testReply_finalize_ex(sample,RTI_TRUE);
+    MultithreadTest_testReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void testReply_finalize_ex(
-    testReply* sample,RTIBool deletePointers)
+void MultithreadTest_testReply_finalize_ex(
+    MultithreadTest_testReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     Dato_finalize_ex(&sample->dato2,deletePointers);
             
 }
 
-RTIBool testReply_copy(
-    testReply* dst,
-    const testReply* src)
+RTIBool MultithreadTest_testReply_copy(
+    MultithreadTest_testReply* dst,
+    const MultithreadTest_testReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -489,13 +379,13 @@ RTIBool testReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'testReply' sequence class.
+ * Configure and implement 'MultithreadTest_testReply' sequence class.
  */
-#define T testReply
-#define TSeq testReplySeq
-#define T_initialize_ex testReply_initialize_ex
-#define T_finalize_ex   testReply_finalize_ex
-#define T_copy       testReply_copy
+#define T MultithreadTest_testReply
+#define TSeq MultithreadTest_testReplySeq
+#define T_initialize_ex MultithreadTest_testReply_initialize_ex
+#define T_finalize_ex   MultithreadTest_testReply_finalize_ex
+#define T_copy       MultithreadTest_testReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

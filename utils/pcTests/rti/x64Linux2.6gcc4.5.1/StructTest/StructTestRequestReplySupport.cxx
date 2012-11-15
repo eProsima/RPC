@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'duplicateRequest' support classes.
+   Configure and implement 'StructTest_duplicateRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   duplicateRequestTYPENAME
+#define TTYPENAME   StructTest_duplicateRequestTYPENAME
 
 /* Defines */
-#define TDataWriter duplicateRequestDataWriter
-#define TData       duplicateRequest
+#define TDataWriter StructTest_duplicateRequestDataWriter
+#define TData       StructTest_duplicateRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   duplicateRequestTYPENAME
+#define TTYPENAME   StructTest_duplicateRequestTYPENAME
 
 /* Defines */
-#define TDataReader duplicateRequestDataReader
-#define TDataSeq    duplicateRequestSeq
-#define TData       duplicateRequest
+#define TDataReader StructTest_duplicateRequestDataReader
+#define TDataSeq    StructTest_duplicateRequestSeq
+#define TData       StructTest_duplicateRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    duplicateRequestTYPENAME
-#define TPlugin_new  duplicateRequestPlugin_new
-#define TPlugin_delete  duplicateRequestPlugin_delete
+#define TTYPENAME    StructTest_duplicateRequestTYPENAME
+#define TPlugin_new  StructTest_duplicateRequestPlugin_new
+#define TPlugin_delete  StructTest_duplicateRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport duplicateRequestTypeSupport
-#define TData        duplicateRequest
-#define TDataReader  duplicateRequestDataReader
-#define TDataWriter  duplicateRequestDataWriter
+#define TTypeSupport StructTest_duplicateRequestTypeSupport
+#define TData        StructTest_duplicateRequest
+#define TDataReader  StructTest_duplicateRequestDataReader
+#define TDataWriter  StructTest_duplicateRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'duplicateReply' support classes.
+   Configure and implement 'StructTest_duplicateReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   duplicateReplyTYPENAME
+#define TTYPENAME   StructTest_duplicateReplyTYPENAME
 
 /* Defines */
-#define TDataWriter duplicateReplyDataWriter
-#define TData       duplicateReply
+#define TDataWriter StructTest_duplicateReplyDataWriter
+#define TData       StructTest_duplicateReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   duplicateReplyTYPENAME
+#define TTYPENAME   StructTest_duplicateReplyTYPENAME
 
 /* Defines */
-#define TDataReader duplicateReplyDataReader
-#define TDataSeq    duplicateReplySeq
-#define TData       duplicateReply
+#define TDataReader StructTest_duplicateReplyDataReader
+#define TDataSeq    StructTest_duplicateReplySeq
+#define TData       StructTest_duplicateReply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    duplicateReplyTYPENAME
-#define TPlugin_new  duplicateReplyPlugin_new
-#define TPlugin_delete  duplicateReplyPlugin_delete
+#define TTYPENAME    StructTest_duplicateReplyTYPENAME
+#define TPlugin_new  StructTest_duplicateReplyPlugin_new
+#define TPlugin_delete  StructTest_duplicateReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport duplicateReplyTypeSupport
-#define TData        duplicateReply
-#define TDataReader  duplicateReplyDataReader
-#define TDataWriter  duplicateReplyDataWriter
+#define TTypeSupport StructTest_duplicateReplyTypeSupport
+#define TData        StructTest_duplicateReply
+#define TDataReader  StructTest_duplicateReplyDataReader
+#define TDataWriter  StructTest_duplicateReplyDataWriter
 #ifdef __cplusplus
 
 
@@ -273,7 +273,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sumaRequest' support classes.
+   Configure and implement 'StructTest_sumaRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -289,11 +289,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaRequestTYPENAME
+#define TTYPENAME   StructTest_sumaRequestTYPENAME
 
 /* Defines */
-#define TDataWriter sumaRequestDataWriter
-#define TData       sumaRequest
+#define TDataWriter StructTest_sumaRequestDataWriter
+#define TData       StructTest_sumaRequest
 
 
 #ifdef __cplusplus
@@ -319,12 +319,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaRequestTYPENAME
+#define TTYPENAME   StructTest_sumaRequestTYPENAME
 
 /* Defines */
-#define TDataReader sumaRequestDataReader
-#define TDataSeq    sumaRequestSeq
-#define TData       sumaRequest
+#define TDataReader StructTest_sumaRequestDataReader
+#define TDataSeq    StructTest_sumaRequestSeq
+#define TData       StructTest_sumaRequest
 
 
 #ifdef __cplusplus
@@ -352,15 +352,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sumaRequestTYPENAME
-#define TPlugin_new  sumaRequestPlugin_new
-#define TPlugin_delete  sumaRequestPlugin_delete
+#define TTYPENAME    StructTest_sumaRequestTYPENAME
+#define TPlugin_new  StructTest_sumaRequestPlugin_new
+#define TPlugin_delete  StructTest_sumaRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport sumaRequestTypeSupport
-#define TData        sumaRequest
-#define TDataReader  sumaRequestDataReader
-#define TDataWriter  sumaRequestDataWriter
+#define TTypeSupport StructTest_sumaRequestTypeSupport
+#define TData        StructTest_sumaRequest
+#define TDataReader  StructTest_sumaRequestDataReader
+#define TDataWriter  StructTest_sumaRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -394,7 +394,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'sumaReply' support classes.
+   Configure and implement 'StructTest_sumaReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -410,11 +410,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaReplyTYPENAME
+#define TTYPENAME   StructTest_sumaReplyTYPENAME
 
 /* Defines */
-#define TDataWriter sumaReplyDataWriter
-#define TData       sumaReply
+#define TDataWriter StructTest_sumaReplyDataWriter
+#define TData       StructTest_sumaReply
 
 
 #ifdef __cplusplus
@@ -440,12 +440,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   sumaReplyTYPENAME
+#define TTYPENAME   StructTest_sumaReplyTYPENAME
 
 /* Defines */
-#define TDataReader sumaReplyDataReader
-#define TDataSeq    sumaReplySeq
-#define TData       sumaReply
+#define TDataReader StructTest_sumaReplyDataReader
+#define TDataSeq    StructTest_sumaReplySeq
+#define TData       StructTest_sumaReply
 
 
 #ifdef __cplusplus
@@ -473,15 +473,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    sumaReplyTYPENAME
-#define TPlugin_new  sumaReplyPlugin_new
-#define TPlugin_delete  sumaReplyPlugin_delete
+#define TTYPENAME    StructTest_sumaReplyTYPENAME
+#define TPlugin_new  StructTest_sumaReplyPlugin_new
+#define TPlugin_delete  StructTest_sumaReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport sumaReplyTypeSupport
-#define TData        sumaReply
-#define TDataReader  sumaReplyDataReader
-#define TDataWriter  sumaReplyDataWriter
+#define TTypeSupport StructTest_sumaReplyTypeSupport
+#define TData        StructTest_sumaReply
+#define TDataReader  StructTest_sumaReplyDataReader
+#define TDataWriter  StructTest_sumaReplyDataWriter
 #ifdef __cplusplus
 
 

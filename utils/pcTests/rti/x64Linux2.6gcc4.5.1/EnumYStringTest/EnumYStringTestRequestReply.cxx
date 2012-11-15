@@ -39,34 +39,17 @@
 #include "EnumYStringTestRequestReply.h"
 
 /* ========================================================================= */
-const char *getEnumRequestTYPENAME = "getEnumRequest";
+const char *EnumYStringTest_getEnumRequestTYPENAME = "EnumYStringTest_getEnumRequest";
 
-DDS_TypeCode* getEnumRequest_get_typecode()
+DDS_TypeCode* EnumYStringTest_getEnumRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getEnumRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member EnumYStringTest_getEnumRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -118,57 +101,52 @@ DDS_TypeCode* getEnumRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getEnumRequest_g_tc =
+    static DDS_TypeCode EnumYStringTest_getEnumRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getEnumRequest", /* Name */
+        (char *)"EnumYStringTest_getEnumRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getEnumRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        EnumYStringTest_getEnumRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getEnumRequest*/
+    }}; /* Type code for EnumYStringTest_getEnumRequest*/
 
     if (is_initialized) {
-        return &getEnumRequest_g_tc;
+        return &EnumYStringTest_getEnumRequest_g_tc;
     }
 
 
-    getEnumRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getEnumRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getEnumRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
-    getEnumRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
+    EnumYStringTest_getEnumRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    EnumYStringTest_getEnumRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
+    EnumYStringTest_getEnumRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getEnumRequest_g_tc;
+    return &EnumYStringTest_getEnumRequest_g_tc;
 }
 
 
-RTIBool getEnumRequest_initialize(
-    getEnumRequest* sample) {
-  return getEnumRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool EnumYStringTest_getEnumRequest_initialize(
+    EnumYStringTest_getEnumRequest* sample) {
+  return EnumYStringTest_getEnumRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getEnumRequest_initialize_ex(
-    getEnumRequest* sample,RTIBool allocatePointers)
+RTIBool EnumYStringTest_getEnumRequest_initialize_ex(
+    EnumYStringTest_getEnumRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     if (!Valores_initialize_ex(&sample->v1,allocatePointers)) {
         return RTI_FALSE;
@@ -182,20 +160,20 @@ RTIBool getEnumRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getEnumRequest_finalize(
-    getEnumRequest* sample)
+void EnumYStringTest_getEnumRequest_finalize(
+    EnumYStringTest_getEnumRequest* sample)
 {
-    getEnumRequest_finalize_ex(sample,RTI_TRUE);
+    EnumYStringTest_getEnumRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getEnumRequest_finalize_ex(
-    getEnumRequest* sample,RTIBool deletePointers)
+void EnumYStringTest_getEnumRequest_finalize_ex(
+    EnumYStringTest_getEnumRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     Valores_finalize_ex(&sample->v1,deletePointers);
             
@@ -203,18 +181,13 @@ void getEnumRequest_finalize_ex(
             
 }
 
-RTIBool getEnumRequest_copy(
-    getEnumRequest* dst,
-    const getEnumRequest* src)
+RTIBool EnumYStringTest_getEnumRequest_copy(
+    EnumYStringTest_getEnumRequest* dst,
+    const EnumYStringTest_getEnumRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -238,13 +211,13 @@ RTIBool getEnumRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getEnumRequest' sequence class.
+ * Configure and implement 'EnumYStringTest_getEnumRequest' sequence class.
  */
-#define T getEnumRequest
-#define TSeq getEnumRequestSeq
-#define T_initialize_ex getEnumRequest_initialize_ex
-#define T_finalize_ex   getEnumRequest_finalize_ex
-#define T_copy       getEnumRequest_copy
+#define T EnumYStringTest_getEnumRequest
+#define TSeq EnumYStringTest_getEnumRequestSeq
+#define T_initialize_ex EnumYStringTest_getEnumRequest_initialize_ex
+#define T_finalize_ex   EnumYStringTest_getEnumRequest_finalize_ex
+#define T_copy       EnumYStringTest_getEnumRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -265,17 +238,17 @@ RTIBool getEnumRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getEnumReplyTYPENAME = "getEnumReply";
+const char *EnumYStringTest_getEnumReplyTYPENAME = "EnumYStringTest_getEnumReply";
 
-DDS_TypeCode* getEnumReply_get_typecode()
+DDS_TypeCode* EnumYStringTest_getEnumReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member getEnumReply_g_tc_members[7]=
+    static DDS_TypeCode_Member EnumYStringTest_getEnumReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -287,57 +260,6 @@ DDS_TypeCode* getEnumReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -395,68 +317,53 @@ DDS_TypeCode* getEnumReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getEnumReply_g_tc =
+    static DDS_TypeCode EnumYStringTest_getEnumReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getEnumReply", /* Name */
+        (char *)"EnumYStringTest_getEnumReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getEnumReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        EnumYStringTest_getEnumReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getEnumReply*/
+    }}; /* Type code for EnumYStringTest_getEnumReply*/
 
     if (is_initialized) {
-        return &getEnumReply_g_tc;
+        return &EnumYStringTest_getEnumReply_g_tc;
     }
 
 
-    getEnumReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getEnumReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getEnumReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getEnumReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getEnumReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
-    getEnumReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
-    getEnumReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
+    EnumYStringTest_getEnumReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    EnumYStringTest_getEnumReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
+    EnumYStringTest_getEnumReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
+    EnumYStringTest_getEnumReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)Valores_get_typecode();
 
     is_initialized = RTI_TRUE;
 
-    return &getEnumReply_g_tc;
+    return &EnumYStringTest_getEnumReply_g_tc;
 }
 
 
-RTIBool getEnumReply_initialize(
-    getEnumReply* sample) {
-  return getEnumReply_initialize_ex(sample,RTI_TRUE);
+RTIBool EnumYStringTest_getEnumReply_initialize(
+    EnumYStringTest_getEnumReply* sample) {
+  return EnumYStringTest_getEnumReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getEnumReply_initialize_ex(
-    getEnumReply* sample,RTIBool allocatePointers)
+RTIBool EnumYStringTest_getEnumReply_initialize_ex(
+    EnumYStringTest_getEnumReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     if (!Valores_initialize_ex(&sample->v2,allocatePointers)) {
         return RTI_FALSE;
@@ -474,22 +381,20 @@ RTIBool getEnumReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getEnumReply_finalize(
-    getEnumReply* sample)
+void EnumYStringTest_getEnumReply_finalize(
+    EnumYStringTest_getEnumReply* sample)
 {
-    getEnumReply_finalize_ex(sample,RTI_TRUE);
+    EnumYStringTest_getEnumReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getEnumReply_finalize_ex(
-    getEnumReply* sample,RTIBool deletePointers)
+void EnumYStringTest_getEnumReply_finalize_ex(
+    EnumYStringTest_getEnumReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     Valores_finalize_ex(&sample->v2,deletePointers);
             
@@ -499,28 +404,13 @@ void getEnumReply_finalize_ex(
             
 }
 
-RTIBool getEnumReply_copy(
-    getEnumReply* dst,
-    const getEnumReply* src)
+RTIBool EnumYStringTest_getEnumReply_copy(
+    EnumYStringTest_getEnumReply* dst,
+    const EnumYStringTest_getEnumReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -549,13 +439,13 @@ RTIBool getEnumReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getEnumReply' sequence class.
+ * Configure and implement 'EnumYStringTest_getEnumReply' sequence class.
  */
-#define T getEnumReply
-#define TSeq getEnumReplySeq
-#define T_initialize_ex getEnumReply_initialize_ex
-#define T_finalize_ex   getEnumReply_finalize_ex
-#define T_copy       getEnumReply_copy
+#define T EnumYStringTest_getEnumReply
+#define TSeq EnumYStringTest_getEnumReplySeq
+#define T_initialize_ex EnumYStringTest_getEnumReply_initialize_ex
+#define T_finalize_ex   EnumYStringTest_getEnumReply_finalize_ex
+#define T_copy       EnumYStringTest_getEnumReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -576,36 +466,19 @@ RTIBool getEnumReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringRequestTYPENAME = "getStringRequest";
+const char *EnumYStringTest_getStringRequestTYPENAME = "EnumYStringTest_getStringRequest";
 
-DDS_TypeCode* getStringRequest_get_typecode()
+DDS_TypeCode* EnumYStringTest_getStringRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode getStringRequest_g_tc_s1_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode getStringRequest_g_tc_s2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringRequest_g_tc_s1_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringRequest_g_tc_s2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member getStringRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member EnumYStringTest_getStringRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -657,57 +530,52 @@ DDS_TypeCode* getStringRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringRequest_g_tc =
+    static DDS_TypeCode EnumYStringTest_getStringRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringRequest", /* Name */
+        (char *)"EnumYStringTest_getStringRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getStringRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        EnumYStringTest_getStringRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringRequest*/
+    }}; /* Type code for EnumYStringTest_getStringRequest*/
 
     if (is_initialized) {
-        return &getStringRequest_g_tc;
+        return &EnumYStringTest_getStringRequest_g_tc;
     }
 
 
-    getStringRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&getStringRequest_g_tc_s1_string;
-    getStringRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&getStringRequest_g_tc_s2_string;
+    EnumYStringTest_getStringRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    EnumYStringTest_getStringRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringRequest_g_tc_s1_string;
+    EnumYStringTest_getStringRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringRequest_g_tc_s2_string;
 
     is_initialized = RTI_TRUE;
 
-    return &getStringRequest_g_tc;
+    return &EnumYStringTest_getStringRequest_g_tc;
 }
 
 
-RTIBool getStringRequest_initialize(
-    getStringRequest* sample) {
-  return getStringRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool EnumYStringTest_getStringRequest_initialize(
+    EnumYStringTest_getStringRequest* sample) {
+  return EnumYStringTest_getStringRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringRequest_initialize_ex(
-    getStringRequest* sample,RTIBool allocatePointers)
+RTIBool EnumYStringTest_getStringRequest_initialize_ex(
+    EnumYStringTest_getStringRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     sample->s1 = DDS_String_alloc((255));
     if (sample->s1 == NULL) {
@@ -723,20 +591,20 @@ RTIBool getStringRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringRequest_finalize(
-    getStringRequest* sample)
+void EnumYStringTest_getStringRequest_finalize(
+    EnumYStringTest_getStringRequest* sample)
 {
-    getStringRequest_finalize_ex(sample,RTI_TRUE);
+    EnumYStringTest_getStringRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringRequest_finalize_ex(
-    getStringRequest* sample,RTIBool deletePointers)
+void EnumYStringTest_getStringRequest_finalize_ex(
+    EnumYStringTest_getStringRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     DDS_String_free(sample->s1);                
             
@@ -744,18 +612,13 @@ void getStringRequest_finalize_ex(
             
 }
 
-RTIBool getStringRequest_copy(
-    getStringRequest* dst,
-    const getStringRequest* src)
+RTIBool EnumYStringTest_getStringRequest_copy(
+    EnumYStringTest_getStringRequest* dst,
+    const EnumYStringTest_getStringRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -779,13 +642,13 @@ RTIBool getStringRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringRequest' sequence class.
+ * Configure and implement 'EnumYStringTest_getStringRequest' sequence class.
  */
-#define T getStringRequest
-#define TSeq getStringRequestSeq
-#define T_initialize_ex getStringRequest_initialize_ex
-#define T_finalize_ex   getStringRequest_finalize_ex
-#define T_copy       getStringRequest_copy
+#define T EnumYStringTest_getStringRequest
+#define TSeq EnumYStringTest_getStringRequestSeq
+#define T_initialize_ex EnumYStringTest_getStringRequest_initialize_ex
+#define T_finalize_ex   EnumYStringTest_getStringRequest_finalize_ex
+#define T_copy       EnumYStringTest_getStringRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -806,20 +669,20 @@ RTIBool getStringRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringReplyTYPENAME = "getStringReply";
+const char *EnumYStringTest_getStringReplyTYPENAME = "EnumYStringTest_getStringReply";
 
-DDS_TypeCode* getStringReply_get_typecode()
+DDS_TypeCode* EnumYStringTest_getStringReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode getStringReply_g_tc_s2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode getStringReply_g_tc_s3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode getStringReply_g_tc_getString_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringReply_g_tc_s2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringReply_g_tc_s3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringReply_g_tc_getString_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member getStringReply_g_tc_members[7]=
+    static DDS_TypeCode_Member EnumYStringTest_getStringReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -831,57 +694,6 @@ DDS_TypeCode* getStringReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -939,68 +751,53 @@ DDS_TypeCode* getStringReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringReply_g_tc =
+    static DDS_TypeCode EnumYStringTest_getStringReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringReply", /* Name */
+        (char *)"EnumYStringTest_getStringReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getStringReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        EnumYStringTest_getStringReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringReply*/
+    }}; /* Type code for EnumYStringTest_getStringReply*/
 
     if (is_initialized) {
-        return &getStringReply_g_tc;
+        return &EnumYStringTest_getStringReply_g_tc;
     }
 
 
-    getStringReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getStringReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&getStringReply_g_tc_s2_string;
-    getStringReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&getStringReply_g_tc_s3_string;
-    getStringReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)&getStringReply_g_tc_getString_ret_string;
+    EnumYStringTest_getStringReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    EnumYStringTest_getStringReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringReply_g_tc_s2_string;
+    EnumYStringTest_getStringReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringReply_g_tc_s3_string;
+    EnumYStringTest_getStringReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringReply_g_tc_getString_ret_string;
 
     is_initialized = RTI_TRUE;
 
-    return &getStringReply_g_tc;
+    return &EnumYStringTest_getStringReply_g_tc;
 }
 
 
-RTIBool getStringReply_initialize(
-    getStringReply* sample) {
-  return getStringReply_initialize_ex(sample,RTI_TRUE);
+RTIBool EnumYStringTest_getStringReply_initialize(
+    EnumYStringTest_getStringReply* sample) {
+  return EnumYStringTest_getStringReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringReply_initialize_ex(
-    getStringReply* sample,RTIBool allocatePointers)
+RTIBool EnumYStringTest_getStringReply_initialize_ex(
+    EnumYStringTest_getStringReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     sample->s2 = DDS_String_alloc((255));
     if (sample->s2 == NULL) {
@@ -1021,22 +818,20 @@ RTIBool getStringReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringReply_finalize(
-    getStringReply* sample)
+void EnumYStringTest_getStringReply_finalize(
+    EnumYStringTest_getStringReply* sample)
 {
-    getStringReply_finalize_ex(sample,RTI_TRUE);
+    EnumYStringTest_getStringReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringReply_finalize_ex(
-    getStringReply* sample,RTIBool deletePointers)
+void EnumYStringTest_getStringReply_finalize_ex(
+    EnumYStringTest_getStringReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     DDS_String_free(sample->s2);                
             
@@ -1046,28 +841,13 @@ void getStringReply_finalize_ex(
             
 }
 
-RTIBool getStringReply_copy(
-    getStringReply* dst,
-    const getStringReply* src)
+RTIBool EnumYStringTest_getStringReply_copy(
+    EnumYStringTest_getStringReply* dst,
+    const EnumYStringTest_getStringReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1096,13 +876,13 @@ RTIBool getStringReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringReply' sequence class.
+ * Configure and implement 'EnumYStringTest_getStringReply' sequence class.
  */
-#define T getStringReply
-#define TSeq getStringReplySeq
-#define T_initialize_ex getStringReply_initialize_ex
-#define T_finalize_ex   getStringReply_finalize_ex
-#define T_copy       getStringReply_copy
+#define T EnumYStringTest_getStringReply
+#define TSeq EnumYStringTest_getStringReplySeq
+#define T_initialize_ex EnumYStringTest_getStringReply_initialize_ex
+#define T_finalize_ex   EnumYStringTest_getStringReply_finalize_ex
+#define T_copy       EnumYStringTest_getStringReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1123,36 +903,19 @@ RTIBool getStringReply_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringBoundedRequestTYPENAME = "getStringBoundedRequest";
+const char *EnumYStringTest_getStringBoundedRequestTYPENAME = "EnumYStringTest_getStringBoundedRequest";
 
-DDS_TypeCode* getStringBoundedRequest_get_typecode()
+DDS_TypeCode* EnumYStringTest_getStringBoundedRequest_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode getStringBoundedRequest_g_tc_sb1_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode getStringBoundedRequest_g_tc_sb2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringBoundedRequest_g_tc_sb1_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringBoundedRequest_g_tc_sb2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member getStringBoundedRequest_g_tc_members[4]=
+    static DDS_TypeCode_Member EnumYStringTest_getStringBoundedRequest_g_tc_members[3]=
     {
         {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1204,57 +967,52 @@ DDS_TypeCode* getStringBoundedRequest_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringBoundedRequest_g_tc =
+    static DDS_TypeCode EnumYStringTest_getStringBoundedRequest_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringBoundedRequest", /* Name */
+        (char *)"EnumYStringTest_getStringBoundedRequest", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        4, /* Number of members */
-        getStringBoundedRequest_g_tc_members, /* Members */
+        3, /* Number of members */
+        EnumYStringTest_getStringBoundedRequest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringBoundedRequest*/
+    }}; /* Type code for EnumYStringTest_getStringBoundedRequest*/
 
     if (is_initialized) {
-        return &getStringBoundedRequest_g_tc;
+        return &EnumYStringTest_getStringBoundedRequest_g_tc;
     }
 
 
-    getStringBoundedRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringBoundedRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringBoundedRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&getStringBoundedRequest_g_tc_sb1_string;
-    getStringBoundedRequest_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&getStringBoundedRequest_g_tc_sb2_string;
+    EnumYStringTest_getStringBoundedRequest_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    EnumYStringTest_getStringBoundedRequest_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringBoundedRequest_g_tc_sb1_string;
+    EnumYStringTest_getStringBoundedRequest_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringBoundedRequest_g_tc_sb2_string;
 
     is_initialized = RTI_TRUE;
 
-    return &getStringBoundedRequest_g_tc;
+    return &EnumYStringTest_getStringBoundedRequest_g_tc;
 }
 
 
-RTIBool getStringBoundedRequest_initialize(
-    getStringBoundedRequest* sample) {
-  return getStringBoundedRequest_initialize_ex(sample,RTI_TRUE);
+RTIBool EnumYStringTest_getStringBoundedRequest_initialize(
+    EnumYStringTest_getStringBoundedRequest* sample) {
+  return EnumYStringTest_getStringBoundedRequest_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringBoundedRequest_initialize_ex(
-    getStringBoundedRequest* sample,RTIBool allocatePointers)
+RTIBool EnumYStringTest_getStringBoundedRequest_initialize_ex(
+    EnumYStringTest_getStringBoundedRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
             
     sample->sb1 = DDS_String_alloc((255));
     if (sample->sb1 == NULL) {
@@ -1270,20 +1028,20 @@ RTIBool getStringBoundedRequest_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringBoundedRequest_finalize(
-    getStringBoundedRequest* sample)
+void EnumYStringTest_getStringBoundedRequest_finalize(
+    EnumYStringTest_getStringBoundedRequest* sample)
 {
-    getStringBoundedRequest_finalize_ex(sample,RTI_TRUE);
+    EnumYStringTest_getStringBoundedRequest_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringBoundedRequest_finalize_ex(
-    getStringBoundedRequest* sample,RTIBool deletePointers)
+void EnumYStringTest_getStringBoundedRequest_finalize_ex(
+    EnumYStringTest_getStringBoundedRequest* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    RequestHeader_finalize_ex(&sample->header,deletePointers);
             
     DDS_String_free(sample->sb1);                
             
@@ -1291,18 +1049,13 @@ void getStringBoundedRequest_finalize_ex(
             
 }
 
-RTIBool getStringBoundedRequest_copy(
-    getStringBoundedRequest* dst,
-    const getStringBoundedRequest* src)
+RTIBool EnumYStringTest_getStringBoundedRequest_copy(
+    EnumYStringTest_getStringBoundedRequest* dst,
+    const EnumYStringTest_getStringBoundedRequest* src)
 {        
 
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
+    if (!RequestHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1326,13 +1079,13 @@ RTIBool getStringBoundedRequest_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringBoundedRequest' sequence class.
+ * Configure and implement 'EnumYStringTest_getStringBoundedRequest' sequence class.
  */
-#define T getStringBoundedRequest
-#define TSeq getStringBoundedRequestSeq
-#define T_initialize_ex getStringBoundedRequest_initialize_ex
-#define T_finalize_ex   getStringBoundedRequest_finalize_ex
-#define T_copy       getStringBoundedRequest_copy
+#define T EnumYStringTest_getStringBoundedRequest
+#define TSeq EnumYStringTest_getStringBoundedRequestSeq
+#define T_initialize_ex EnumYStringTest_getStringBoundedRequest_initialize_ex
+#define T_finalize_ex   EnumYStringTest_getStringBoundedRequest_finalize_ex
+#define T_copy       EnumYStringTest_getStringBoundedRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -1353,20 +1106,20 @@ RTIBool getStringBoundedRequest_copy(
 #undef T
 
 /* ========================================================================= */
-const char *getStringBoundedReplyTYPENAME = "getStringBoundedReply";
+const char *EnumYStringTest_getStringBoundedReplyTYPENAME = "EnumYStringTest_getStringBoundedReply";
 
-DDS_TypeCode* getStringBoundedReply_get_typecode()
+DDS_TypeCode* EnumYStringTest_getStringBoundedReply_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode getStringBoundedReply_g_tc_sb2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode getStringBoundedReply_g_tc_sb3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
-    static DDS_TypeCode getStringBoundedReply_g_tc_getStringBounded_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringBoundedReply_g_tc_sb2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringBoundedReply_g_tc_sb3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode EnumYStringTest_getStringBoundedReply_g_tc_getStringBounded_ret_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member getStringBoundedReply_g_tc_members[7]=
+    static DDS_TypeCode_Member EnumYStringTest_getStringBoundedReply_g_tc_members[4]=
     {
         {
-            (char *)"serverServiceId",/* Member name */
+            (char *)"header",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1378,57 +1131,6 @@ DDS_TypeCode* getStringBoundedReply_get_typecode()
             0, /* Ignored */
             NULL, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"clientServiceId",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"numSec",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_TRUE, /* Is a key? */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
-            NULL/* Ignored */
-        },
-        {
-            (char *)"ddsrpcRetCode",/* Member name */
-            {
-                0,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            0, /* Ignored */
-            0, /* Ignored */
-            NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
             NULL/* Ignored */
@@ -1486,68 +1188,53 @@ DDS_TypeCode* getStringBoundedReply_get_typecode()
         }
     };
 
-    static DDS_TypeCode getStringBoundedReply_g_tc =
+    static DDS_TypeCode EnumYStringTest_getStringBoundedReply_g_tc =
     {{
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"getStringBoundedReply", /* Name */
+        (char *)"EnumYStringTest_getStringBoundedReply", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        7, /* Number of members */
-        getStringBoundedReply_g_tc_members, /* Members */
+        4, /* Number of members */
+        EnumYStringTest_getStringBoundedReply_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
-    }}; /* Type code for getStringBoundedReply*/
+    }}; /* Type code for EnumYStringTest_getStringBoundedReply*/
 
     if (is_initialized) {
-        return &getStringBoundedReply_g_tc;
+        return &EnumYStringTest_getStringBoundedReply_g_tc;
     }
 
 
-    getStringBoundedReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringBoundedReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
-    getStringBoundedReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
-    getStringBoundedReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    getStringBoundedReply_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&getStringBoundedReply_g_tc_sb2_string;
-    getStringBoundedReply_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&getStringBoundedReply_g_tc_sb3_string;
-    getStringBoundedReply_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)&getStringBoundedReply_g_tc_getStringBounded_ret_string;
+    EnumYStringTest_getStringBoundedReply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    EnumYStringTest_getStringBoundedReply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringBoundedReply_g_tc_sb2_string;
+    EnumYStringTest_getStringBoundedReply_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringBoundedReply_g_tc_sb3_string;
+    EnumYStringTest_getStringBoundedReply_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&EnumYStringTest_getStringBoundedReply_g_tc_getStringBounded_ret_string;
 
     is_initialized = RTI_TRUE;
 
-    return &getStringBoundedReply_g_tc;
+    return &EnumYStringTest_getStringBoundedReply_g_tc;
 }
 
 
-RTIBool getStringBoundedReply_initialize(
-    getStringBoundedReply* sample) {
-  return getStringBoundedReply_initialize_ex(sample,RTI_TRUE);
+RTIBool EnumYStringTest_getStringBoundedReply_initialize(
+    EnumYStringTest_getStringBoundedReply* sample) {
+  return EnumYStringTest_getStringBoundedReply_initialize_ex(sample,RTI_TRUE);
 }
         
-RTIBool getStringBoundedReply_initialize_ex(
-    getStringBoundedReply* sample,RTIBool allocatePointers)
+RTIBool EnumYStringTest_getStringBoundedReply_initialize_ex(
+    EnumYStringTest_getStringBoundedReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
 
 
-    if (!Identification_initialize_ex(&sample->serverServiceId,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
-            
-    if (!Identification_initialize_ex(&sample->clientServiceId,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_initUnsignedLong(&sample->numSec)) {
-        return RTI_FALSE;
-    }                
-            
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
-        return RTI_FALSE;
-    }                
             
     sample->sb2 = DDS_String_alloc((255));
     if (sample->sb2 == NULL) {
@@ -1568,22 +1255,20 @@ RTIBool getStringBoundedReply_initialize_ex(
     return RTI_TRUE;
 }
 
-void getStringBoundedReply_finalize(
-    getStringBoundedReply* sample)
+void EnumYStringTest_getStringBoundedReply_finalize(
+    EnumYStringTest_getStringBoundedReply* sample)
 {
-    getStringBoundedReply_finalize_ex(sample,RTI_TRUE);
+    EnumYStringTest_getStringBoundedReply_finalize_ex(sample,RTI_TRUE);
 }
         
-void getStringBoundedReply_finalize_ex(
-    getStringBoundedReply* sample,RTIBool deletePointers)
+void EnumYStringTest_getStringBoundedReply_finalize_ex(
+    EnumYStringTest_getStringBoundedReply* sample,RTIBool deletePointers)
 {        
     if (sample) { } /* To avoid warnings */
     if (deletePointers) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->serverServiceId,deletePointers);
-            
-    Identification_finalize_ex(&sample->clientServiceId,deletePointers);
+    ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
     DDS_String_free(sample->sb2);                
             
@@ -1593,28 +1278,13 @@ void getStringBoundedReply_finalize_ex(
             
 }
 
-RTIBool getStringBoundedReply_copy(
-    getStringBoundedReply* dst,
-    const getStringBoundedReply* src)
+RTIBool EnumYStringTest_getStringBoundedReply_copy(
+    EnumYStringTest_getStringBoundedReply* dst,
+    const EnumYStringTest_getStringBoundedReply* src)
 {        
 
-    if (!Identification_copy(
-        &dst->serverServiceId, &src->serverServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!Identification_copy(
-        &dst->clientServiceId, &src->clientServiceId)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyUnsignedLong(
-        &dst->numSec, &src->numSec)) {
-        return RTI_FALSE;
-    }
-            
-    if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+    if (!ReplyHeader_copy(
+        &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
@@ -1643,13 +1313,13 @@ RTIBool getStringBoundedReply_copy(
  *
  * Defines:  TSeq, T
  *
- * Configure and implement 'getStringBoundedReply' sequence class.
+ * Configure and implement 'EnumYStringTest_getStringBoundedReply' sequence class.
  */
-#define T getStringBoundedReply
-#define TSeq getStringBoundedReplySeq
-#define T_initialize_ex getStringBoundedReply_initialize_ex
-#define T_finalize_ex   getStringBoundedReply_finalize_ex
-#define T_copy       getStringBoundedReply_copy
+#define T EnumYStringTest_getStringBoundedReply
+#define TSeq EnumYStringTest_getStringBoundedReplySeq
+#define T_initialize_ex EnumYStringTest_getStringBoundedReply_initialize_ex
+#define T_finalize_ex   EnumYStringTest_getStringBoundedReply_finalize_ex
+#define T_copy       EnumYStringTest_getStringBoundedReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

@@ -6,12 +6,12 @@
 
 
 /* Defines */
-#define TName            getEmpleadoClientRPC
-#define TDataTypeSupport getEmpleadoReplyTypeSupport
-#define TData            getEmpleado
-#define TDataSeq         getEmpleadoReplySeq
-#define TDataReader      getEmpleadoReplyDataReader
-#define TDataWriter      getEmpleadoRequestDataWriter
+#define TName            UnionTest_getEmpleadoClientRPC
+#define TDataTypeSupport UnionTest_getEmpleadoReplyTypeSupport
+#define TData            UnionTest_getEmpleado
+#define TDataSeq         UnionTest_getEmpleadoReplySeq
+#define TDataReader      UnionTest_getEmpleadoReplyDataReader
+#define TDataWriter      UnionTest_getEmpleadoRequestDataWriter
 
 
 #include "utils/GenericClientRPC.gen"

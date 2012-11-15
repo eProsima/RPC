@@ -11,8 +11,13 @@ int main(int argc, char **argv)
     int returnedValue = 0;
     unsigned int threadPoolSize = 5;
     eProsima::DDSRPC::ThreadPoolStrategy *pool = new eProsima::DDSRPC::ThreadPoolStrategy(threadPoolSize);
-    EnumYStringTestServer *server = new EnumYStringTestServer(pool);
-    server->wait();
+    EnumYStringTestServer *server = new EnumYStringTestServer("EnumYStringTestService", pool);
+    server->serve();
+    
+    while(1)
+    {
+        sleep(10000);
+    }
 
     delete server;
     delete pool;

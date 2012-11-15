@@ -5,23 +5,23 @@
 #include "UnionTestServer.h"
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
-#include "exceptions/ServerException.h"
+#include "exceptions/ServerInternalException.h"
 #include "UnionTestRequestReplyPlugin.h"
 
 #include "UnionTestServerRPCSupport.h"
 
-UnionTestServer::UnionTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+UnionTestServer::UnionTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     int domainId) :
-    Server(strategy, NULL, domainId)
+    Server(serviceName, strategy, NULL, domainId)
 {
     _impl = new UnionTestServerImpl();
 
     createRPCs();
 }
 
-UnionTestServer::UnionTestServer(eProsima::DDSRPC::ServerStrategy *strategy,
+UnionTestServer::UnionTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
     eProsima::DDSRPC::Transport *transport, int domainId) :
-    Server(strategy, transport, domainId)
+    Server(serviceName, strategy, transport, domainId)
 {
     _impl = new UnionTestServerImpl();
     
@@ -35,10 +35,10 @@ UnionTestServer::~UnionTestServer()
 
 void UnionTestServer::createRPCs()
 {
-    this->setRPC(new getEmpleadoServerRPC("getEmpleado", this,
-                getEmpleadoRequestUtils::registerType(getParticipant()),
-                getEmpleadoReplyUtils::registerType(getParticipant()),
-                &UnionTestServer::getEmpleado, getParticipant()));
+    this->setRPC(new UnionTest_getEmpleadoServerRPC("getEmpleado", this,
+                UnionTest_getEmpleadoRequestUtils::registerType(getParticipant()),
+                UnionTest_getEmpleadoReplyUtils::registerType(getParticipant()),
+                &UnionTestServer::getEmpleado));
 
 }
 
@@ -53,26 +53,32 @@ void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *reques
     memset(&em3, 0, sizeof(Empleado));    
     Empleado getEmpleado_ret;
     memset(&getEmpleado_ret, 0, sizeof(Empleado));       
-    getEmpleadoReply replyData;
+    UnionTest_getEmpleadoReply replyData;
     
     Empleado_initialize(&em2);    
 
-    getEmpleadoRequestUtils::extractTypeData(*(getEmpleadoRequest*)requestData, em1, em2);
+    UnionTest_getEmpleadoRequestUtils::extractTypeData(*(UnionTest_getEmpleadoRequest*)requestData, em1, em2);
 
     try
     {
         getEmpleado_ret = srv->_impl->getEmpleado(em1, em2, em3);
 
-        getEmpleadoReplyUtils::setTypeData(replyData, em2, em3, getEmpleado_ret);
+        UnionTest_getEmpleadoReplyUtils::setTypeData(replyData, em2, em3, getEmpleado_ret);
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+        replyData.header.ddsrpcRetMsg = NULL;
 
-        service->sendReply(requestData, &replyData, eProsima::DDSRPC::OPERATION_SUCCESSFUL);
+        service->sendReply(requestData, &replyData);
     }
-    catch(eProsima::DDSRPC::ServerException)
+    catch(const eProsima::DDSRPC::ServerInternalException &ex)
     {
-        service->sendReply(requestData, NULL, eProsima::DDSRPC::SERVER_ERROR);
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
+        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
     }
     
-    getEmpleadoRequestTypeSupport::delete_data((getEmpleadoRequest*)requestData);
+    UnionTest_getEmpleadoRequestTypeSupport::delete_data((UnionTest_getEmpleadoRequest*)requestData);
     
     Empleado_finalize(&getEmpleado_ret);    
     Empleado_finalize(&em2);    

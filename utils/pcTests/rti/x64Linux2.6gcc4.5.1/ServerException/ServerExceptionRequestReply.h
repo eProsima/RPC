@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef ServerExceptionRequestReply_2113075488_h
-#define ServerExceptionRequestReply_2113075488_h
+#ifndef ServerExceptionRequestReply_2113075110_h
+#define ServerExceptionRequestReply_2113075110_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *sendExceptionRequestTYPENAME;
+extern const char *ServerException_sendExceptionRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *sendExceptionRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sendExceptionRequestSeq;
+    struct ServerException_sendExceptionRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sendExceptionRequestTypeSupport;
-    class sendExceptionRequestDataWriter;
-    class sendExceptionRequestDataReader;
+    class ServerException_sendExceptionRequestTypeSupport;
+    class ServerException_sendExceptionRequestDataWriter;
+    class ServerException_sendExceptionRequestDataReader;
 #endif
 
 #endif
@@ -59,23 +59,22 @@ extern const char *sendExceptionRequestTYPENAME;
             
     
 
-typedef struct sendExceptionRequest
+typedef struct ServerException_sendExceptionRequest
 {
 #ifdef __cplusplus
-    typedef struct sendExceptionRequestSeq Seq;
+    typedef struct ServerException_sendExceptionRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sendExceptionRequestTypeSupport TypeSupport;
-    typedef sendExceptionRequestDataWriter DataWriter;
-    typedef sendExceptionRequestDataReader DataReader;
+    typedef ServerException_sendExceptionRequestTypeSupport TypeSupport;
+    typedef ServerException_sendExceptionRequestDataWriter DataWriter;
+    typedef ServerException_sendExceptionRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
 
-} sendExceptionRequest;
+} ServerException_sendExceptionRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -86,31 +85,31 @@ typedef struct sendExceptionRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sendExceptionRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* ServerException_sendExceptionRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sendExceptionRequestSeq, sendExceptionRequest);
+DDS_SEQUENCE(ServerException_sendExceptionRequestSeq, ServerException_sendExceptionRequest);
         
 NDDSUSERDllExport
-RTIBool sendExceptionRequest_initialize(
-        sendExceptionRequest* self);
+RTIBool ServerException_sendExceptionRequest_initialize(
+        ServerException_sendExceptionRequest* self);
         
 NDDSUSERDllExport
-RTIBool sendExceptionRequest_initialize_ex(
-        sendExceptionRequest* self,RTIBool allocatePointers);
+RTIBool ServerException_sendExceptionRequest_initialize_ex(
+        ServerException_sendExceptionRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sendExceptionRequest_finalize(
-        sendExceptionRequest* self);
+void ServerException_sendExceptionRequest_finalize(
+        ServerException_sendExceptionRequest* self);
                         
 NDDSUSERDllExport
-void sendExceptionRequest_finalize_ex(
-        sendExceptionRequest* self,RTIBool deletePointers);
+void ServerException_sendExceptionRequest_finalize_ex(
+        ServerException_sendExceptionRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sendExceptionRequest_copy(
-        sendExceptionRequest* dst,
-        const sendExceptionRequest* src);
+RTIBool ServerException_sendExceptionRequest_copy(
+        ServerException_sendExceptionRequest* dst,
+        const ServerException_sendExceptionRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -125,7 +124,7 @@ extern "C" {
 #endif
 
         
-extern const char *sendExceptionReplyTYPENAME;
+extern const char *ServerException_sendExceptionReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -134,12 +133,12 @@ extern const char *sendExceptionReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sendExceptionReplySeq;
+    struct ServerException_sendExceptionReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sendExceptionReplyTypeSupport;
-    class sendExceptionReplyDataWriter;
-    class sendExceptionReplyDataReader;
+    class ServerException_sendExceptionReplyTypeSupport;
+    class ServerException_sendExceptionReplyDataWriter;
+    class ServerException_sendExceptionReplyDataReader;
 #endif
 
 #endif
@@ -147,25 +146,22 @@ extern const char *sendExceptionReplyTYPENAME;
             
     
 
-typedef struct sendExceptionReply
+typedef struct ServerException_sendExceptionReply
 {
 #ifdef __cplusplus
-    typedef struct sendExceptionReplySeq Seq;
+    typedef struct ServerException_sendExceptionReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sendExceptionReplyTypeSupport TypeSupport;
-    typedef sendExceptionReplyDataWriter DataWriter;
-    typedef sendExceptionReplyDataReader DataReader;
+    typedef ServerException_sendExceptionReplyTypeSupport TypeSupport;
+    typedef ServerException_sendExceptionReplyDataWriter DataWriter;
+    typedef ServerException_sendExceptionReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
 
-} sendExceptionReply;
+} ServerException_sendExceptionReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -176,31 +172,31 @@ typedef struct sendExceptionReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sendExceptionReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* ServerException_sendExceptionReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sendExceptionReplySeq, sendExceptionReply);
+DDS_SEQUENCE(ServerException_sendExceptionReplySeq, ServerException_sendExceptionReply);
         
 NDDSUSERDllExport
-RTIBool sendExceptionReply_initialize(
-        sendExceptionReply* self);
+RTIBool ServerException_sendExceptionReply_initialize(
+        ServerException_sendExceptionReply* self);
         
 NDDSUSERDllExport
-RTIBool sendExceptionReply_initialize_ex(
-        sendExceptionReply* self,RTIBool allocatePointers);
+RTIBool ServerException_sendExceptionReply_initialize_ex(
+        ServerException_sendExceptionReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sendExceptionReply_finalize(
-        sendExceptionReply* self);
+void ServerException_sendExceptionReply_finalize(
+        ServerException_sendExceptionReply* self);
                         
 NDDSUSERDllExport
-void sendExceptionReply_finalize_ex(
-        sendExceptionReply* self,RTIBool deletePointers);
+void ServerException_sendExceptionReply_finalize_ex(
+        ServerException_sendExceptionReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sendExceptionReply_copy(
-        sendExceptionReply* dst,
-        const sendExceptionReply* src);
+RTIBool ServerException_sendExceptionReply_copy(
+        ServerException_sendExceptionReply* dst,
+        const ServerException_sendExceptionReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -215,7 +211,7 @@ extern "C" {
 #endif
 
         
-extern const char *sendExceptionTwoRequestTYPENAME;
+extern const char *ServerException_sendExceptionTwoRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -224,12 +220,12 @@ extern const char *sendExceptionTwoRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sendExceptionTwoRequestSeq;
+    struct ServerException_sendExceptionTwoRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sendExceptionTwoRequestTypeSupport;
-    class sendExceptionTwoRequestDataWriter;
-    class sendExceptionTwoRequestDataReader;
+    class ServerException_sendExceptionTwoRequestTypeSupport;
+    class ServerException_sendExceptionTwoRequestDataWriter;
+    class ServerException_sendExceptionTwoRequestDataReader;
 #endif
 
 #endif
@@ -237,25 +233,24 @@ extern const char *sendExceptionTwoRequestTYPENAME;
             
     
 
-typedef struct sendExceptionTwoRequest
+typedef struct ServerException_sendExceptionTwoRequest
 {
 #ifdef __cplusplus
-    typedef struct sendExceptionTwoRequestSeq Seq;
+    typedef struct ServerException_sendExceptionTwoRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sendExceptionTwoRequestTypeSupport TypeSupport;
-    typedef sendExceptionTwoRequestDataWriter DataWriter;
-    typedef sendExceptionTwoRequestDataReader DataReader;
+    typedef ServerException_sendExceptionTwoRequestTypeSupport TypeSupport;
+    typedef ServerException_sendExceptionTwoRequestDataWriter DataWriter;
+    typedef ServerException_sendExceptionTwoRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     char*  message; /* maximum length = (255) */
     char*  message2; /* maximum length = (255) */
 
-} sendExceptionTwoRequest;
+} ServerException_sendExceptionTwoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -266,31 +261,31 @@ typedef struct sendExceptionTwoRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sendExceptionTwoRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* ServerException_sendExceptionTwoRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sendExceptionTwoRequestSeq, sendExceptionTwoRequest);
+DDS_SEQUENCE(ServerException_sendExceptionTwoRequestSeq, ServerException_sendExceptionTwoRequest);
         
 NDDSUSERDllExport
-RTIBool sendExceptionTwoRequest_initialize(
-        sendExceptionTwoRequest* self);
+RTIBool ServerException_sendExceptionTwoRequest_initialize(
+        ServerException_sendExceptionTwoRequest* self);
         
 NDDSUSERDllExport
-RTIBool sendExceptionTwoRequest_initialize_ex(
-        sendExceptionTwoRequest* self,RTIBool allocatePointers);
+RTIBool ServerException_sendExceptionTwoRequest_initialize_ex(
+        ServerException_sendExceptionTwoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sendExceptionTwoRequest_finalize(
-        sendExceptionTwoRequest* self);
+void ServerException_sendExceptionTwoRequest_finalize(
+        ServerException_sendExceptionTwoRequest* self);
                         
 NDDSUSERDllExport
-void sendExceptionTwoRequest_finalize_ex(
-        sendExceptionTwoRequest* self,RTIBool deletePointers);
+void ServerException_sendExceptionTwoRequest_finalize_ex(
+        ServerException_sendExceptionTwoRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sendExceptionTwoRequest_copy(
-        sendExceptionTwoRequest* dst,
-        const sendExceptionTwoRequest* src);
+RTIBool ServerException_sendExceptionTwoRequest_copy(
+        ServerException_sendExceptionTwoRequest* dst,
+        const ServerException_sendExceptionTwoRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -305,7 +300,7 @@ extern "C" {
 #endif
 
         
-extern const char *sendExceptionTwoReplyTYPENAME;
+extern const char *ServerException_sendExceptionTwoReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -314,12 +309,12 @@ extern const char *sendExceptionTwoReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sendExceptionTwoReplySeq;
+    struct ServerException_sendExceptionTwoReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sendExceptionTwoReplyTypeSupport;
-    class sendExceptionTwoReplyDataWriter;
-    class sendExceptionTwoReplyDataReader;
+    class ServerException_sendExceptionTwoReplyTypeSupport;
+    class ServerException_sendExceptionTwoReplyDataWriter;
+    class ServerException_sendExceptionTwoReplyDataReader;
 #endif
 
 #endif
@@ -327,28 +322,25 @@ extern const char *sendExceptionTwoReplyTYPENAME;
             
     
 
-typedef struct sendExceptionTwoReply
+typedef struct ServerException_sendExceptionTwoReply
 {
 #ifdef __cplusplus
-    typedef struct sendExceptionTwoReplySeq Seq;
+    typedef struct ServerException_sendExceptionTwoReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sendExceptionTwoReplyTypeSupport TypeSupport;
-    typedef sendExceptionTwoReplyDataWriter DataWriter;
-    typedef sendExceptionTwoReplyDataReader DataReader;
+    typedef ServerException_sendExceptionTwoReplyTypeSupport TypeSupport;
+    typedef ServerException_sendExceptionTwoReplyDataWriter DataWriter;
+    typedef ServerException_sendExceptionTwoReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     char*  message2; /* maximum length = (255) */
     char*  message3; /* maximum length = (255) */
     char*  sendExceptionTwo_ret; /* maximum length = (255) */
 
-} sendExceptionTwoReply;
+} ServerException_sendExceptionTwoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -359,31 +351,31 @@ typedef struct sendExceptionTwoReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sendExceptionTwoReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* ServerException_sendExceptionTwoReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sendExceptionTwoReplySeq, sendExceptionTwoReply);
+DDS_SEQUENCE(ServerException_sendExceptionTwoReplySeq, ServerException_sendExceptionTwoReply);
         
 NDDSUSERDllExport
-RTIBool sendExceptionTwoReply_initialize(
-        sendExceptionTwoReply* self);
+RTIBool ServerException_sendExceptionTwoReply_initialize(
+        ServerException_sendExceptionTwoReply* self);
         
 NDDSUSERDllExport
-RTIBool sendExceptionTwoReply_initialize_ex(
-        sendExceptionTwoReply* self,RTIBool allocatePointers);
+RTIBool ServerException_sendExceptionTwoReply_initialize_ex(
+        ServerException_sendExceptionTwoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sendExceptionTwoReply_finalize(
-        sendExceptionTwoReply* self);
+void ServerException_sendExceptionTwoReply_finalize(
+        ServerException_sendExceptionTwoReply* self);
                         
 NDDSUSERDllExport
-void sendExceptionTwoReply_finalize_ex(
-        sendExceptionTwoReply* self,RTIBool deletePointers);
+void ServerException_sendExceptionTwoReply_finalize_ex(
+        ServerException_sendExceptionTwoReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sendExceptionTwoReply_copy(
-        sendExceptionTwoReply* dst,
-        const sendExceptionTwoReply* src);
+RTIBool ServerException_sendExceptionTwoReply_copy(
+        ServerException_sendExceptionTwoReply* dst,
+        const ServerException_sendExceptionTwoReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -398,7 +390,7 @@ extern "C" {
 #endif
 
         
-extern const char *sendExceptionThreeRequestTYPENAME;
+extern const char *ServerException_sendExceptionThreeRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -407,12 +399,12 @@ extern const char *sendExceptionThreeRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sendExceptionThreeRequestSeq;
+    struct ServerException_sendExceptionThreeRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sendExceptionThreeRequestTypeSupport;
-    class sendExceptionThreeRequestDataWriter;
-    class sendExceptionThreeRequestDataReader;
+    class ServerException_sendExceptionThreeRequestTypeSupport;
+    class ServerException_sendExceptionThreeRequestDataWriter;
+    class ServerException_sendExceptionThreeRequestDataReader;
 #endif
 
 #endif
@@ -420,25 +412,24 @@ extern const char *sendExceptionThreeRequestTYPENAME;
             
     
 
-typedef struct sendExceptionThreeRequest
+typedef struct ServerException_sendExceptionThreeRequest
 {
 #ifdef __cplusplus
-    typedef struct sendExceptionThreeRequestSeq Seq;
+    typedef struct ServerException_sendExceptionThreeRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sendExceptionThreeRequestTypeSupport TypeSupport;
-    typedef sendExceptionThreeRequestDataWriter DataWriter;
-    typedef sendExceptionThreeRequestDataReader DataReader;
+    typedef ServerException_sendExceptionThreeRequestTypeSupport TypeSupport;
+    typedef ServerException_sendExceptionThreeRequestDataWriter DataWriter;
+    typedef ServerException_sendExceptionThreeRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
     Estructura  es;
     Estructura  es2;
 
-} sendExceptionThreeRequest;
+} ServerException_sendExceptionThreeRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -449,31 +440,31 @@ typedef struct sendExceptionThreeRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sendExceptionThreeRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* ServerException_sendExceptionThreeRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sendExceptionThreeRequestSeq, sendExceptionThreeRequest);
+DDS_SEQUENCE(ServerException_sendExceptionThreeRequestSeq, ServerException_sendExceptionThreeRequest);
         
 NDDSUSERDllExport
-RTIBool sendExceptionThreeRequest_initialize(
-        sendExceptionThreeRequest* self);
+RTIBool ServerException_sendExceptionThreeRequest_initialize(
+        ServerException_sendExceptionThreeRequest* self);
         
 NDDSUSERDllExport
-RTIBool sendExceptionThreeRequest_initialize_ex(
-        sendExceptionThreeRequest* self,RTIBool allocatePointers);
+RTIBool ServerException_sendExceptionThreeRequest_initialize_ex(
+        ServerException_sendExceptionThreeRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sendExceptionThreeRequest_finalize(
-        sendExceptionThreeRequest* self);
+void ServerException_sendExceptionThreeRequest_finalize(
+        ServerException_sendExceptionThreeRequest* self);
                         
 NDDSUSERDllExport
-void sendExceptionThreeRequest_finalize_ex(
-        sendExceptionThreeRequest* self,RTIBool deletePointers);
+void ServerException_sendExceptionThreeRequest_finalize_ex(
+        ServerException_sendExceptionThreeRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sendExceptionThreeRequest_copy(
-        sendExceptionThreeRequest* dst,
-        const sendExceptionThreeRequest* src);
+RTIBool ServerException_sendExceptionThreeRequest_copy(
+        ServerException_sendExceptionThreeRequest* dst,
+        const ServerException_sendExceptionThreeRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -488,7 +479,7 @@ extern "C" {
 #endif
 
         
-extern const char *sendExceptionThreeReplyTYPENAME;
+extern const char *ServerException_sendExceptionThreeReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -497,12 +488,12 @@ extern const char *sendExceptionThreeReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct sendExceptionThreeReplySeq;
+    struct ServerException_sendExceptionThreeReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class sendExceptionThreeReplyTypeSupport;
-    class sendExceptionThreeReplyDataWriter;
-    class sendExceptionThreeReplyDataReader;
+    class ServerException_sendExceptionThreeReplyTypeSupport;
+    class ServerException_sendExceptionThreeReplyDataWriter;
+    class ServerException_sendExceptionThreeReplyDataReader;
 #endif
 
 #endif
@@ -510,28 +501,25 @@ extern const char *sendExceptionThreeReplyTYPENAME;
             
     
 
-typedef struct sendExceptionThreeReply
+typedef struct ServerException_sendExceptionThreeReply
 {
 #ifdef __cplusplus
-    typedef struct sendExceptionThreeReplySeq Seq;
+    typedef struct ServerException_sendExceptionThreeReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef sendExceptionThreeReplyTypeSupport TypeSupport;
-    typedef sendExceptionThreeReplyDataWriter DataWriter;
-    typedef sendExceptionThreeReplyDataReader DataReader;
+    typedef ServerException_sendExceptionThreeReplyTypeSupport TypeSupport;
+    typedef ServerException_sendExceptionThreeReplyDataWriter DataWriter;
+    typedef ServerException_sendExceptionThreeReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
     Estructura  es2;
     Estructura  es3;
     Estructura  sendExceptionThree_ret;
 
-} sendExceptionThreeReply;
+} ServerException_sendExceptionThreeReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -542,31 +530,31 @@ typedef struct sendExceptionThreeReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* sendExceptionThreeReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* ServerException_sendExceptionThreeReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(sendExceptionThreeReplySeq, sendExceptionThreeReply);
+DDS_SEQUENCE(ServerException_sendExceptionThreeReplySeq, ServerException_sendExceptionThreeReply);
         
 NDDSUSERDllExport
-RTIBool sendExceptionThreeReply_initialize(
-        sendExceptionThreeReply* self);
+RTIBool ServerException_sendExceptionThreeReply_initialize(
+        ServerException_sendExceptionThreeReply* self);
         
 NDDSUSERDllExport
-RTIBool sendExceptionThreeReply_initialize_ex(
-        sendExceptionThreeReply* self,RTIBool allocatePointers);
+RTIBool ServerException_sendExceptionThreeReply_initialize_ex(
+        ServerException_sendExceptionThreeReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void sendExceptionThreeReply_finalize(
-        sendExceptionThreeReply* self);
+void ServerException_sendExceptionThreeReply_finalize(
+        ServerException_sendExceptionThreeReply* self);
                         
 NDDSUSERDllExport
-void sendExceptionThreeReply_finalize_ex(
-        sendExceptionThreeReply* self,RTIBool deletePointers);
+void ServerException_sendExceptionThreeReply_finalize_ex(
+        ServerException_sendExceptionThreeReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool sendExceptionThreeReply_copy(
-        sendExceptionThreeReply* dst,
-        const sendExceptionThreeReply* src);
+RTIBool ServerException_sendExceptionThreeReply_copy(
+        ServerException_sendExceptionThreeReply* dst,
+        const ServerException_sendExceptionThreeReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -577,4 +565,4 @@ RTIBool sendExceptionThreeReply_copy(
 
 
 
-#endif /* ServerExceptionRequestReply_2113075488_h */
+#endif /* ServerExceptionRequestReply_2113075110_h */

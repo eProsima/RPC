@@ -10,7 +10,7 @@
 
 
 
-GENERIC_SERVER_RPC(testServerRPC, testReplyDataWriter, testRequestDataReader);
+GENERIC_SERVER_RPC(MultithreadTest_testServerRPC, MultithreadTest_testReplyDataWriter, MultithreadTest_testRequestDataReader);
 
 
 #endif  // _MultithreadTest_SERVER_RPC_SUPPORT_H_
