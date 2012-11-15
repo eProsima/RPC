@@ -29,7 +29,7 @@ class GetLongHandler : public AsyncCallTest_getLongCallbackHandler
 
         void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
-            printf("TEST FAILED<getLong>: %s\n", ex.what());
+            printf("TEST FAILED<on_exception>: %s\n", ex.what());
             m_state = 2;
         }
 
@@ -54,7 +54,7 @@ class GetBooleanHandler : public AsyncCallTest_getBooleanCallbackHandler
                     getBoolean_ret != RTI_TRUE ||
                     bo2 != RTI_TRUE)
             {
-                printf("TEST FAILED<getLong>: Wrong values\n");
+                printf("TEST FAILED<getBoolean>: Wrong values\n");
                 m_state = 2;
                 return;
             }
@@ -64,7 +64,7 @@ class GetBooleanHandler : public AsyncCallTest_getBooleanCallbackHandler
 
         void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
-            printf("TEST FAILED<getLong>: %s\n", ex.what());
+            printf("TEST FAILED<on_exception>: %s\n", ex.what());
             m_state = 2;
         }
 
@@ -100,7 +100,7 @@ class GetStringHandler : public AsyncCallTest_getStringCallbackHandler
    
         void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
-            printf("TEST FAILED<getLong>: %s\n", ex.what());
+            printf("TEST FAILED<on_exception>: %s\n", ex.what());
             m_state = 2;
         }
 
@@ -134,7 +134,7 @@ class DuplicateHandler : public AsyncCallTest_duplicateCallbackHandler
    
         void on_exception(const eProsima::DDSRPC::Exception &ex)
         {
-            printf("TEST FAILED<getLong>: %s\n", ex.what());
+            printf("TEST FAILED<on_exception>: %s\n", ex.what());
             m_state = 2;
         }
 
@@ -170,7 +170,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getLong>: %s\n", ex.what());
+        printf("TEST FAILED<getLong_async>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -192,7 +192,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getBoolean>: %s\n", ex.what());
+        printf("TEST FAILED<getBoolean_async>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -214,7 +214,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<getString>: %s\n", ex.what());
+        printf("TEST FAILED<getString_async>: %s\n", ex.what());
         _exit(-1);
     }
 
@@ -243,7 +243,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::DDSRPC::Exception &ex)
     {
-        printf("TEST FAILED<duplicate>: %s\n", ex.what());
+        printf("TEST FAILED<duplicate_async>: %s\n", ex.what());
         _exit(-1);
     }
 

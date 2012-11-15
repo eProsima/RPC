@@ -63,14 +63,18 @@ namespace eProsima
                 m_mutex = NULL;
             }
 
-            if(m_replyDataReader != NULL)
-                m_replySubscriber->delete_datareader(m_replyDataReader);
-            if(m_replyFilter != NULL)
-                m_client->getParticipant()->delete_contentfilteredtopic(m_replyFilter);
-            if(m_replyTopic != NULL)
-                m_client->getParticipant()->delete_topic(m_replyTopic);
-            if(m_replySubscriber != NULL)
+			// if not operation oneway.
+			if(m_replySubscriber != NULL)
+			{
+				if(m_replyDataReader != NULL)
+					m_replySubscriber->delete_datareader(m_replyDataReader);
+				if(m_replyFilter != NULL)
+					m_client->getParticipant()->delete_contentfilteredtopic(m_replyFilter);
+				if(m_replyTopic != NULL)
+					m_client->getParticipant()->delete_topic(m_replyTopic);
+
                 m_client->getParticipant()->delete_subscriber(m_replySubscriber);
+			}
             if(m_requestDataWriter != NULL)
                 m_requestPublisher->delete_datawriter(m_requestDataWriter);
             if(m_requestTopic)
@@ -550,28 +554,28 @@ namespace eProsima
                 {
                     if(m_requestDataWriter->enable() == DDS::RETCODE_OK)
                     {
-                        // Obtain clientServiceId.
-                        get_guid(m_clientServiceId, m_requestDataWriter);
+						// if not operation oneway.
+						if(m_replySubscriber != NULL)
+						{
+								// Obtain clientServiceId.
+							get_guid(m_clientServiceId, m_requestDataWriter);
 
-                        // Set identifier to filter topic.
-                        DDS::StringSeq stringSeq(4);
-                        char value[50];
+							// Set identifier to filter topic.
+							DDS::StringSeq stringSeq(4);
+							char value[50];
 
-                        stringSeq.length(4);
-                        SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                        stringSeq[0] = strdup(value);
-                        SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                        stringSeq[1] = strdup(value);
-                        SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                        stringSeq[2] = strdup(value);
-                        SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                        stringSeq[3] = strdup(value);
+							stringSeq.length(4);
+							SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+							stringSeq[0] = strdup(value);
+							SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+							stringSeq[1] = strdup(value);
+							SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+							stringSeq[2] = strdup(value);
+							SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+							stringSeq[3] = strdup(value);
 
-                        m_replyFilter->set_expression_parameters(stringSeq);
+							m_replyFilter->set_expression_parameters(stringSeq);
 
-                        // if not operation oneway.
-                        if(m_replySubscriber != NULL)
-                        {
                             if(m_replySubscriber->enable() == DDS::RETCODE_OK)
                             {
                                 if(m_replyTopic->enable() == DDS::RETCODE_OK)
