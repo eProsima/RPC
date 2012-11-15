@@ -9,4 +9,4 @@ union Empleado switch (char)
 interface UnionTest
 {
 	Empleado getEmpleado(in Empleado em1, inout Empleado em2, out Empleado em3);
-}; //#qos UnionTest_Library UnionTest_Profile
+};

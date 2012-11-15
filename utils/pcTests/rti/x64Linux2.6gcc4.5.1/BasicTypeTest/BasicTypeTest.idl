@@ -15,4 +15,4 @@ interface BasicTypeTest
         // Not supported yet. Our IDL parse is for CORBA-IDL 2.0 and long double is in CORBA-IDL 2.1
 	//long double getLDouble(in long double ldo1, inout long double ldo2, out long double ldo3);
 	boolean getBoolean(in boolean bo1, inout boolean bo2, out boolean bo3);
-}; //#qos BasicTypeTest_Library BasicTypeTest_Profile
+};

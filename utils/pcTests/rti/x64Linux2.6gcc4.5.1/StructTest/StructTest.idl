@@ -15,4 +15,4 @@ interface StructTest
 
 	Recepcion duplicate(in Envio ev);
 	Recepcion suma(in Envio ev1, in Envio ev2);
-}; //#qos StructTest_Library StructTest_Profile
+};
