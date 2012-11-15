@@ -36,6 +36,7 @@ int main(int argc, char **argv)
     catch(eProsima::DDSRPC::Exception &ex)
     {
         printf("TEST FAILED<duplicate>: %s\n", ex.what());
+        _exit(-1);
     }
 
     Envio_finalize(&ev);    
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
     catch(eProsima::DDSRPC::Exception &ex)
     {
         printf("TEST FAILED<suma>: %s\n", ex.what());
+        _exit(-1);
     }
 
 	Envio_finalize(&ev1);    
