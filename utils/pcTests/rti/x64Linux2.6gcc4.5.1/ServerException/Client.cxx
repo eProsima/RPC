@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     {
         if(strcmp(ex.what(), "Testing exception") != 0)
         {
-            printf("TEST FAILED<sendException>: Bad exception message\n");
+            printf("TEST FAILED<sendExceptionTwo>: Bad exception message\n");
             _exit(-1);
         }
     }
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
     {
         if(strcmp(ex.what(), "Testing exception") != 0)
         {
-            printf("TEST FAILED<sendException>: Bad exception message\n");
+            printf("TEST FAILED<sendExceptionThree>: Bad exception message\n");
             _exit(-1);
         }
     }
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
     Estructura_finalize(&es1);
     Estructura_finalize(&es2);
 
-    printf("TEST SUCCESFULLY\n");
+	printf("TEST SUCCESFULLY\n");
 
     delete(proxy);
 
