@@ -667,7 +667,7 @@ WARN_LOGFILE           =
 
 INPUT                  = ../../include/client \
                          ../../include/exceptions \
-                         ../../include/idl/rti \
+                         ../../idl/rti \
                          ../../include/server \
                          ../../include/strategies \
                          ../../include/transports \

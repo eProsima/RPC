@@ -10,7 +10,7 @@
 
 
 
-GENERIC_SERVER_RPC(foo_procedureServerRPC, foo_procedureReplyDataWriter, foo_procedureRequestDataReader);
+GENERIC_SERVER_RPC(FooInterface_FooProcedureServerRPC, FooInterface_FooProcedureReplyDataWriter, FooInterface_FooProcedureRequestDataReader);
 
 
 #endif  // _FooInterface_SERVER_RPC_SUPPORT_H_

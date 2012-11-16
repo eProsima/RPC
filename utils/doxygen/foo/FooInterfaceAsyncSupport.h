@@ -8,28 +8,44 @@
 #include "client/AsyncTask.h"
 
 
-class FooInterface_foo_procedureTask : public eProsima::DDSRPC::AsyncTask
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure FooProcedure from the server in an asynchronous call.
+ */
+class FooInterface_FooProcedureTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
-        FooInterface_foo_procedureTask(FooInterface_foo_procedure &obj,
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
+        FooInterface_FooProcedureTask(FooInterface_FooProcedureCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
         /// \brief The default destructor.
-        virtual ~FooInterface_foo_procedureTask();
+        virtual ~FooInterface_FooProcedureTask();
         
-        virtual void execute(eProsima::DDSRPC::ReturnMessage);
+        virtual void execute();
         
-        FooInterface_foo_procedure& getObject();
+        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
+        FooInterface_FooProcedureCallbackHandler& getObject();
         
         void* getReplyInstance();
         
         private:
         
-           FooInterface_foo_procedure &m_obj;
+           FooInterface_FooProcedureCallbackHandler &m_obj;
            
-           foo_procedureReply m_reply;
+           FooInterface_FooProcedureReply m_reply;
 };
 
 #endif // _FooInterface_ASYNC_SUPPORT_H_

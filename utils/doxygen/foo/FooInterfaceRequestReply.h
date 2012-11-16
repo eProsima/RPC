@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef FooInterfaceRequestReply_998276846_h
-#define FooInterfaceRequestReply_998276846_h
+#ifndef FooInterfaceRequestReply_998276712_h
+#define FooInterfaceRequestReply_998276712_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
         
-extern const char *foo_procedureRequestTYPENAME;
+extern const char *FooInterface_FooProcedureRequestTYPENAME;
         
 
 #ifdef __cplusplus
@@ -46,12 +46,12 @@ extern const char *foo_procedureRequestTYPENAME;
 
 
 #ifdef __cplusplus
-    struct foo_procedureRequestSeq;
+    struct FooInterface_FooProcedureRequestSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class foo_procedureRequestTypeSupport;
-    class foo_procedureRequestDataWriter;
-    class foo_procedureRequestDataReader;
+    class FooInterface_FooProcedureRequestTypeSupport;
+    class FooInterface_FooProcedureRequestDataWriter;
+    class FooInterface_FooProcedureRequestDataReader;
 #endif
 
 #endif
@@ -59,23 +59,22 @@ extern const char *foo_procedureRequestTYPENAME;
             
     
 
-typedef struct foo_procedureRequest
+typedef struct FooInterface_FooProcedureRequest
 {
 #ifdef __cplusplus
-    typedef struct foo_procedureRequestSeq Seq;
+    typedef struct FooInterface_FooProcedureRequestSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef foo_procedureRequestTypeSupport TypeSupport;
-    typedef foo_procedureRequestDataWriter DataWriter;
-    typedef foo_procedureRequestDataReader DataReader;
+    typedef FooInterface_FooProcedureRequestTypeSupport TypeSupport;
+    typedef FooInterface_FooProcedureRequestDataWriter DataWriter;
+    typedef FooInterface_FooProcedureRequestDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
+    RequestHeader  header;
 
-} foo_procedureRequest;
+} FooInterface_FooProcedureRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -86,31 +85,31 @@ typedef struct foo_procedureRequest
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* foo_procedureRequest_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* FooInterface_FooProcedureRequest_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(foo_procedureRequestSeq, foo_procedureRequest);
+DDS_SEQUENCE(FooInterface_FooProcedureRequestSeq, FooInterface_FooProcedureRequest);
         
 NDDSUSERDllExport
-RTIBool foo_procedureRequest_initialize(
-        foo_procedureRequest* self);
+RTIBool FooInterface_FooProcedureRequest_initialize(
+        FooInterface_FooProcedureRequest* self);
         
 NDDSUSERDllExport
-RTIBool foo_procedureRequest_initialize_ex(
-        foo_procedureRequest* self,RTIBool allocatePointers);
+RTIBool FooInterface_FooProcedureRequest_initialize_ex(
+        FooInterface_FooProcedureRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void foo_procedureRequest_finalize(
-        foo_procedureRequest* self);
+void FooInterface_FooProcedureRequest_finalize(
+        FooInterface_FooProcedureRequest* self);
                         
 NDDSUSERDllExport
-void foo_procedureRequest_finalize_ex(
-        foo_procedureRequest* self,RTIBool deletePointers);
+void FooInterface_FooProcedureRequest_finalize_ex(
+        FooInterface_FooProcedureRequest* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool foo_procedureRequest_copy(
-        foo_procedureRequest* dst,
-        const foo_procedureRequest* src);
+RTIBool FooInterface_FooProcedureRequest_copy(
+        FooInterface_FooProcedureRequest* dst,
+        const FooInterface_FooProcedureRequest* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -125,7 +124,7 @@ extern "C" {
 #endif
 
         
-extern const char *foo_procedureReplyTYPENAME;
+extern const char *FooInterface_FooProcedureReplyTYPENAME;
         
 
 #ifdef __cplusplus
@@ -134,12 +133,12 @@ extern const char *foo_procedureReplyTYPENAME;
 
 
 #ifdef __cplusplus
-    struct foo_procedureReplySeq;
+    struct FooInterface_FooProcedureReplySeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class foo_procedureReplyTypeSupport;
-    class foo_procedureReplyDataWriter;
-    class foo_procedureReplyDataReader;
+    class FooInterface_FooProcedureReplyTypeSupport;
+    class FooInterface_FooProcedureReplyDataWriter;
+    class FooInterface_FooProcedureReplyDataReader;
 #endif
 
 #endif
@@ -147,25 +146,22 @@ extern const char *foo_procedureReplyTYPENAME;
             
     
 
-typedef struct foo_procedureReply
+typedef struct FooInterface_FooProcedureReply
 {
 #ifdef __cplusplus
-    typedef struct foo_procedureReplySeq Seq;
+    typedef struct FooInterface_FooProcedureReplySeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef foo_procedureReplyTypeSupport TypeSupport;
-    typedef foo_procedureReplyDataWriter DataWriter;
-    typedef foo_procedureReplyDataReader DataReader;
+    typedef FooInterface_FooProcedureReplyTypeSupport TypeSupport;
+    typedef FooInterface_FooProcedureReplyDataWriter DataWriter;
+    typedef FooInterface_FooProcedureReplyDataReader DataReader;
 #endif
 
 #endif
 
-    Identification  serverServiceId;
-    Identification  clientServiceId;
-    DDS_UnsignedLong  numSec;
-    DDS_Long  ddsrpcRetCode;
+    ReplyHeader  header;
 
-} foo_procedureReply;
+} FooInterface_FooProcedureReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -176,31 +172,31 @@ typedef struct foo_procedureReply
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* foo_procedureReply_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* FooInterface_FooProcedureReply_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(foo_procedureReplySeq, foo_procedureReply);
+DDS_SEQUENCE(FooInterface_FooProcedureReplySeq, FooInterface_FooProcedureReply);
         
 NDDSUSERDllExport
-RTIBool foo_procedureReply_initialize(
-        foo_procedureReply* self);
+RTIBool FooInterface_FooProcedureReply_initialize(
+        FooInterface_FooProcedureReply* self);
         
 NDDSUSERDllExport
-RTIBool foo_procedureReply_initialize_ex(
-        foo_procedureReply* self,RTIBool allocatePointers);
+RTIBool FooInterface_FooProcedureReply_initialize_ex(
+        FooInterface_FooProcedureReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
-void foo_procedureReply_finalize(
-        foo_procedureReply* self);
+void FooInterface_FooProcedureReply_finalize(
+        FooInterface_FooProcedureReply* self);
                         
 NDDSUSERDllExport
-void foo_procedureReply_finalize_ex(
-        foo_procedureReply* self,RTIBool deletePointers);
+void FooInterface_FooProcedureReply_finalize_ex(
+        FooInterface_FooProcedureReply* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
-RTIBool foo_procedureReply_copy(
-        foo_procedureReply* dst,
-        const foo_procedureReply* src);
+RTIBool FooInterface_FooProcedureReply_copy(
+        FooInterface_FooProcedureReply* dst,
+        const FooInterface_FooProcedureReply* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -211,4 +207,4 @@ RTIBool foo_procedureReply_copy(
 
 
 
-#endif /* FooInterfaceRequestReply_998276846_h */
+#endif /* FooInterfaceRequestReply_998276712_h */

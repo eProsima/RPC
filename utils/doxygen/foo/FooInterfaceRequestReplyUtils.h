@@ -12,27 +12,60 @@
 #include "ndds_namespace_cpp.h"
 
 
-class foo_procedureRequestUtils
+class FooInterface_FooProcedureRequestUtils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
-        static void setTypeData(foo_procedureRequest& instance);
+        /**
+         * \brief This function registers the type of the structure FooInterface_FooProcedureRequest in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure FooInterface_FooProcedureRequest.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
         
-        static void extractTypeData(foo_procedureRequest& data);
+        /**
+         * \brief This function sets the parameters into the members of the structure FooInterface_FooProcedureRequest.
+         *
+         * \param instance Pointer to the structure FooInterface_FooProcedureRequest that will be filled. Cannot be NULL.
+         */
+        static void setTypeData(FooInterface_FooProcedureRequest& instance);
+        
+        /**
+         * \brief This function extracts the parameters from the members of the structure FooInterface_FooProcedureRequest.
+         *
+         * \param data Pointer to the structure FooInterface_FooProcedureRequest that contains the parameters' data. Cannot be NULL.
+         */
+        static void extractTypeData(FooInterface_FooProcedureRequest& data);
 };
 
 
-class foo_procedureReplyUtils
+class FooInterface_FooProcedureReplyUtils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
-        static void setTypeData(foo_procedureReply& instance);
+        /**
+         * \brief This function registers the type of the structure FooInterface_FooProcedureReply in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure FooInterface_FooProcedureReply.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
         
-        static void extractTypeData(foo_procedureReply& data, eProsima::DDSRPC::ReturnMessage& retcode);
+        /**
+         * \brief This function sets the parameters into the members of the structure FooInterface_FooProcedureReply.
+         *
+         * \param instance Pointer to the structure FooInterface_FooProcedureReply that will be filled. Cannot be NULL.
+         */
+        static void setTypeData(FooInterface_FooProcedureReply& instance);
+        
+        /**
+         * \brief This function extracts the parameters from the members of the structure FooInterface_FooProcedureReply.
+         *
+         * \param data Pointer to the structure FooInterface_FooProcedureReply that contains the parameters' data. Cannot be NULL.
+* \param retcode Internal message returned from the server.
+         */
+        static void extractTypeData(FooInterface_FooProcedureReply& data, eProsima::DDSRPC::ReturnMessage& retcode);
 };
 
  

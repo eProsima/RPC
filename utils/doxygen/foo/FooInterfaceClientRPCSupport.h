@@ -9,7 +9,7 @@
 #include "FooInterfaceRequestReplySupport.h"
 
 
-GENERIC_CLIENT_RPC(foo_procedureClientRPC, foo_procedureRequestDataWriter, foo_procedureReplyDataReader);
+GENERIC_CLIENT_RPC(FooInterface_FooProcedureClientRPC, FooInterface_FooProcedureRequestDataWriter, FooInterface_FooProcedureReplyDataReader);
 
 
 #endif  // _FooInterface_CLIENT_RPC_SUPPORT_H_

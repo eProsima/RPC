@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef FooInterfaceRequestReplySupport_998276846_h
-#define FooInterfaceRequestReplySupport_998276846_h
+#ifndef FooInterfaceRequestReplySupport_998276712_h
+#define FooInterfaceRequestReplySupport_998276712_h
 
 /* Uses */
 #include "FooInterfaceRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(foo_procedureRequestTypeSupport, foo_procedureRequest);
+DDS_TYPESUPPORT_CPP(FooInterface_FooProcedureRequestTypeSupport, FooInterface_FooProcedureRequest);
 
-DDS_DATAWRITER_CPP(foo_procedureRequestDataWriter, foo_procedureRequest);
-DDS_DATAREADER_CPP(foo_procedureRequestDataReader, foo_procedureRequestSeq, foo_procedureRequest);
+DDS_DATAWRITER_CPP(FooInterface_FooProcedureRequestDataWriter, FooInterface_FooProcedureRequest);
+DDS_DATAREADER_CPP(FooInterface_FooProcedureRequestDataReader, FooInterface_FooProcedureRequestSeq, FooInterface_FooProcedureRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(foo_procedureRequestTypeSupport, foo_procedureRequest);
-DDS_DATAWRITER_C(foo_procedureRequestDataWriter, foo_procedureRequest);
-DDS_DATAREADER_C(foo_procedureRequestDataReader, foo_procedureRequestSeq, foo_procedureRequest);
+DDS_TYPESUPPORT_C(FooInterface_FooProcedureRequestTypeSupport, FooInterface_FooProcedureRequest);
+DDS_DATAWRITER_C(FooInterface_FooProcedureRequestDataWriter, FooInterface_FooProcedureRequest);
+DDS_DATAREADER_C(FooInterface_FooProcedureRequestDataReader, FooInterface_FooProcedureRequestSeq, FooInterface_FooProcedureRequest);
 
 #endif
 
@@ -109,17 +109,17 @@ DDS_DATAREADER_C(foo_procedureRequestDataReader, foo_procedureRequestSeq, foo_pr
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(foo_procedureReplyTypeSupport, foo_procedureReply);
+DDS_TYPESUPPORT_CPP(FooInterface_FooProcedureReplyTypeSupport, FooInterface_FooProcedureReply);
 
-DDS_DATAWRITER_CPP(foo_procedureReplyDataWriter, foo_procedureReply);
-DDS_DATAREADER_CPP(foo_procedureReplyDataReader, foo_procedureReplySeq, foo_procedureReply);
+DDS_DATAWRITER_CPP(FooInterface_FooProcedureReplyDataWriter, FooInterface_FooProcedureReply);
+DDS_DATAREADER_CPP(FooInterface_FooProcedureReplyDataReader, FooInterface_FooProcedureReplySeq, FooInterface_FooProcedureReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(foo_procedureReplyTypeSupport, foo_procedureReply);
-DDS_DATAWRITER_C(foo_procedureReplyDataWriter, foo_procedureReply);
-DDS_DATAREADER_C(foo_procedureReplyDataReader, foo_procedureReplySeq, foo_procedureReply);
+DDS_TYPESUPPORT_C(FooInterface_FooProcedureReplyTypeSupport, FooInterface_FooProcedureReply);
+DDS_DATAWRITER_C(FooInterface_FooProcedureReplyDataWriter, FooInterface_FooProcedureReply);
+DDS_DATAREADER_C(FooInterface_FooProcedureReplyDataReader, FooInterface_FooProcedureReplySeq, FooInterface_FooProcedureReply);
 
 #endif
 
@@ -132,4 +132,4 @@ DDS_DATAREADER_C(foo_procedureReplyDataReader, foo_procedureReplySeq, foo_proced
 
 
 
-#endif  /* FooInterfaceRequestReplySupport_998276846_h */
+#endif  /* FooInterfaceRequestReplySupport_998276712_h */

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef FooInterfaceSupport_511704765_h
-#define FooInterfaceSupport_511704765_h
+#ifndef FooInterfaceSupport_511704764_h
+#define FooInterfaceSupport_511704764_h
 
 /* Uses */
 #include "FooInterface.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* FooInterfaceSupport_511704765_h */
+#endif  /* FooInterfaceSupport_511704764_h */

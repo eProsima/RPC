@@ -8,18 +8,22 @@
 #include "utils/Messages.h"
 #include "FooInterfaceRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the FooInterfaceServer object is created, it creates one instance of this class.
+ */
 class FooInterfaceServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        FooInterfaceServerImpl();
+        FooInterfaceServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~FooInterfaceServerImpl();
+        virtual ~FooInterfaceServerImpl(){}
 
          
-        void foo_procedure();
+        void FooProcedure();
 };
 
 #endif // _FooInterfaceSERVER_IMPL_H_

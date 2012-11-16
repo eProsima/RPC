@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef FooInterface_511704765_h
-#define FooInterface_511704765_h
+#ifndef FooInterface_511704764_h
+#define FooInterface_511704764_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -27,4 +27,4 @@
 
 
 
-#endif /* FooInterface_511704765_h */
+#endif /* FooInterface_511704764_h */

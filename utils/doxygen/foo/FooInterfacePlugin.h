@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef FooInterfacePlugin_511704765_h
-#define FooInterfacePlugin_511704765_h
+#ifndef FooInterfacePlugin_511704764_h
+#define FooInterfacePlugin_511704764_h
 
 #include "FooInterface.h"
 
@@ -47,4 +47,4 @@ extern "C" {
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* FooInterfacePlugin_511704765_h */
+#endif /* FooInterfacePlugin_511704764_h */
