@@ -7,18 +7,27 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure duplicate.
+ */
 struct StructTest_duplicateRequest{
     RequestHeader header;  //@key
     Envio ev;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure duplicate.
+ */
 struct StructTest_duplicateReply{
     ReplyHeader header;  //@key
     Recepcion duplicate_ret;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure suma.
+ */
 struct StructTest_sumaRequest{
     RequestHeader header;  //@key
     Envio ev1;
@@ -26,6 +35,9 @@ struct StructTest_sumaRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure suma.
+ */
 struct StructTest_sumaReply{
     ReplyHeader header;  //@key
     Recepcion suma_ret;

@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "UnionTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the UnionTestServer object is created, it creates one instance of this class.
+ */
 class UnionTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        UnionTestServerImpl();
+        UnionTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~UnionTestServerImpl();
+        virtual ~UnionTestServerImpl(){}
 
          
         Empleado getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Empleado& em2, /*out*/ Empleado& em3);

@@ -16,10 +16,26 @@ class UnionTest_getEmpleadoRequestUtils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
+        /**
+         * \brief This function registers the type of the structure UnionTest_getEmpleadoRequest in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure UnionTest_getEmpleadoRequest.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
+        
+        /**
+         * \brief This function sets the parameters into the members of the structure UnionTest_getEmpleadoRequest.
+         *
+         * \param instance Pointer to the structure UnionTest_getEmpleadoRequest that will be filled. Cannot be NULL.
+         */
         static void setTypeData(UnionTest_getEmpleadoRequest& instance, /*in*/ const Empleado& em1, /*inout*/ const Empleado& em2);
         
+        /**
+         * \brief This function extracts the parameters from the members of the structure UnionTest_getEmpleadoRequest.
+         *
+         * \param data Pointer to the structure UnionTest_getEmpleadoRequest that contains the parameters' data. Cannot be NULL.
+         */
         static void extractTypeData(UnionTest_getEmpleadoRequest& data, /*in*/ Empleado& em1, /*inout*/ Empleado& em2);
 };
 
@@ -28,10 +44,27 @@ class UnionTest_getEmpleadoReplyUtils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
+        /**
+         * \brief This function registers the type of the structure UnionTest_getEmpleadoReply in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure UnionTest_getEmpleadoReply.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
+        
+        /**
+         * \brief This function sets the parameters into the members of the structure UnionTest_getEmpleadoReply.
+         *
+         * \param instance Pointer to the structure UnionTest_getEmpleadoReply that will be filled. Cannot be NULL.
+         */
         static void setTypeData(UnionTest_getEmpleadoReply& instance, /*inout*/ const Empleado& em2, /*out*/ const Empleado& em3, /*out*/ const Empleado& getEmpleado_ret);
         
+        /**
+         * \brief This function extracts the parameters from the members of the structure UnionTest_getEmpleadoReply.
+         *
+         * \param data Pointer to the structure UnionTest_getEmpleadoReply that contains the parameters' data. Cannot be NULL.
+* \param retcode Internal message returned from the server.
+         */
         static void extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret);
 };
 

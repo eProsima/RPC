@@ -4,14 +4,6 @@
  */
  
 #include "HelloWorldAsyncServerImpl.h"
-
-HelloWorldAsyncServerImpl::HelloWorldAsyncServerImpl()
-{
-}
-HelloWorldAsyncServerImpl::~HelloWorldAsyncServerImpl()
-{
-}
-
  
 char* HelloWorldAsyncServerImpl::sayHello(/*in*/ char* name) 
 {

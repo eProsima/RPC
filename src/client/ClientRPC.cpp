@@ -63,6 +63,9 @@ namespace eProsima
                 m_mutex = NULL;
             }
 
+			// Delete associated asynchronous task.
+			m_client->deleteAssociatedAsyncTasks(this);
+
 			// if not operation oneway.
 			if(m_replySubscriber != NULL)
 			{

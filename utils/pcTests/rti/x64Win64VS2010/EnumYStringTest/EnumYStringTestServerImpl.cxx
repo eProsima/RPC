@@ -5,14 +5,6 @@
 
 #include "EnumYStringTestServerImpl.h"
 
-EnumYStringTestServerImpl::EnumYStringTestServerImpl()
-{
-}
-EnumYStringTestServerImpl::~EnumYStringTestServerImpl()
-{
-}
-
-
 Valores EnumYStringTestServerImpl::getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3) 
 {
     Valores  returnedValue = VALOR1;    

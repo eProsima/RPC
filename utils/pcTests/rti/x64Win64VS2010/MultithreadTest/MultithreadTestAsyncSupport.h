@@ -8,11 +8,20 @@
 #include "client/AsyncTask.h"
 
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure test from the server in an asynchronous call.
+ */
 class MultithreadTest_testTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         MultithreadTest_testTask(MultithreadTest_testCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -23,6 +32,11 @@ class MultithreadTest_testTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         MultithreadTest_testCallbackHandler& getObject();
         
         void* getReplyInstance();

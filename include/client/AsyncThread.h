@@ -11,6 +11,7 @@ namespace eProsima
 	namespace DDSRPC
 	{
         class AsyncTask;
+		class ClientRPC;
 
         typedef std::pair<DDS::QueryCondition*, AsyncTask*> AsyncTaskPair;
         typedef std::pair<boost::posix_time::time_duration, AsyncTaskPair> AsyncListPair;
@@ -45,6 +46,13 @@ namespace eProsima
 				 * \return 0 value is returned if function works succesfully. In other case, -1 value is returned.
 				 */
                 int addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
+
+				/**
+				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+				 *
+				 * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
+				 */
+				void deleteAssociatedAsyncTasks(ClientRPC *rpc);
 
             private:
 

@@ -129,6 +129,20 @@ namespace eProsima
             return returnedValue;
         }
 
+		void Client::deleteAssociatedAsyncTasks(ClientRPC *rpc)
+		{
+			const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
+
+            if(rpc != NULL)
+            {
+                m_asyncThread->deleteAssociatedAsyncTasks(rpc);
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+            }
+		}
+
 		DDS::DomainParticipant* Client::getParticipant()
 		{ 
 			return m_participant;
@@ -148,6 +162,5 @@ namespace eProsima
 		{
 			return m_remoteServiceName;
 		}
-
 	} // namespace DDSRPC
 } // namespace eProsima

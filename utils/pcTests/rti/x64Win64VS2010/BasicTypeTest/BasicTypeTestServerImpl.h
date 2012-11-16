@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "BasicTypeTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the BasicTypeTestServer object is created, it creates one instance of this class.
+ */
 class BasicTypeTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        BasicTypeTestServerImpl();
+        BasicTypeTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~BasicTypeTestServerImpl();
+        virtual ~BasicTypeTestServerImpl(){}
 
          
         DDS_Octet getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3);

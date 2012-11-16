@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef UnionTestRequestReplySupport_1136051145_h
-#define UnionTestRequestReplySupport_1136051145_h
+#ifndef UnionTestRequestReplySupport_1136051306_h
+#define UnionTestRequestReplySupport_1136051306_h
 
 /* Uses */
 #include "UnionTestRequestReply.h"
@@ -132,4 +132,4 @@ DDS_DATAREADER_C(UnionTest_getEmpleadoReplyDataReader, UnionTest_getEmpleadoRepl
 
 
 
-#endif  /* UnionTestRequestReplySupport_1136051145_h */
+#endif  /* UnionTestRequestReplySupport_1136051306_h */

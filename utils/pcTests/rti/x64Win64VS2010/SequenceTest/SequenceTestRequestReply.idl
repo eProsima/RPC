@@ -7,6 +7,9 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure getSLong.
+ */
 struct SequenceTest_getSLongRequest{
     RequestHeader header;  //@key
     largo l1;
@@ -14,6 +17,9 @@ struct SequenceTest_getSLongRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getSLong.
+ */
 struct SequenceTest_getSLongReply{
     ReplyHeader header;  //@key
     largo l2;
@@ -22,6 +28,9 @@ struct SequenceTest_getSLongReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getString.
+ */
 struct SequenceTest_getStringRequest{
     RequestHeader header;  //@key
     cadena s1;
@@ -29,6 +38,9 @@ struct SequenceTest_getStringRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getString.
+ */
 struct SequenceTest_getStringReply{
     ReplyHeader header;  //@key
     cadena s2;
@@ -37,6 +49,9 @@ struct SequenceTest_getStringReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getStringBounded.
+ */
 struct SequenceTest_getStringBoundedRequest{
     RequestHeader header;  //@key
     dattos sb1;
@@ -44,6 +59,9 @@ struct SequenceTest_getStringBoundedRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getStringBounded.
+ */
 struct SequenceTest_getStringBoundedReply{
     ReplyHeader header;  //@key
     dattos sb2;

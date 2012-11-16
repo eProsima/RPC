@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "AsyncCallTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the AsyncCallTestServer object is created, it creates one instance of this class.
+ */
 class AsyncCallTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        AsyncCallTestServerImpl();
+        AsyncCallTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~AsyncCallTestServerImpl();
+        virtual ~AsyncCallTestServerImpl(){}
 
          
         DDS_Long getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3);

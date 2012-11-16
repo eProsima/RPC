@@ -7,6 +7,9 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure getEnum.
+ */
 struct EnumYStringTest_getEnumRequest{
     RequestHeader header;  //@key
     Valores v1;
@@ -14,6 +17,9 @@ struct EnumYStringTest_getEnumRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getEnum.
+ */
 struct EnumYStringTest_getEnumReply{
     ReplyHeader header;  //@key
     Valores v2;
@@ -22,6 +28,9 @@ struct EnumYStringTest_getEnumReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getString.
+ */
 struct EnumYStringTest_getStringRequest{
     RequestHeader header;  //@key
     string s1;
@@ -29,6 +38,9 @@ struct EnumYStringTest_getStringRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getString.
+ */
 struct EnumYStringTest_getStringReply{
     ReplyHeader header;  //@key
     string s2;
@@ -37,6 +49,9 @@ struct EnumYStringTest_getStringReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getStringBounded.
+ */
 struct EnumYStringTest_getStringBoundedRequest{
     RequestHeader header;  //@key
     string sb1;
@@ -44,6 +59,9 @@ struct EnumYStringTest_getStringBoundedRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getStringBounded.
+ */
 struct EnumYStringTest_getStringBoundedReply{
     ReplyHeader header;  //@key
     string sb2;

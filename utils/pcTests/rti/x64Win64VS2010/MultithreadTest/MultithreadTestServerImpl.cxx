@@ -4,14 +4,6 @@
  */
  
 #include "MultithreadTestServerImpl.h"
-
-MultithreadTestServerImpl::MultithreadTestServerImpl()
-{
-}
-MultithreadTestServerImpl::~MultithreadTestServerImpl()
-{
-}
-
  
 DDS_Long MultithreadTestServerImpl::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2) 
 {

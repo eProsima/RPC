@@ -4,14 +4,6 @@
  */
  
 #include "SequenceTestServerImpl.h"
-
-SequenceTestServerImpl::SequenceTestServerImpl()
-{
-}
-SequenceTestServerImpl::~SequenceTestServerImpl()
-{
-}
-
  
 largo SequenceTestServerImpl::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3) 
 {

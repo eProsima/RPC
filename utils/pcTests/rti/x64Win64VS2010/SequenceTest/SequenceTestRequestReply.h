@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestRequestReply_1689902559_h
-#define SequenceTestRequestReply_1689902559_h
+#ifndef SequenceTestRequestReply_1689903042_h
+#define SequenceTestRequestReply_1689903042_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -570,4 +570,4 @@ RTIBool SequenceTest_getStringBoundedReply_copy(
 
 
 
-#endif /* SequenceTestRequestReply_1689902559_h */
+#endif /* SequenceTestRequestReply_1689903042_h */

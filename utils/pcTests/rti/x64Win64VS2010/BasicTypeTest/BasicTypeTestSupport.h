@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTestSupport_2026450142_h
-#define BasicTypeTestSupport_2026450142_h
+#ifndef BasicTypeTestSupport_2026450091_h
+#define BasicTypeTestSupport_2026450091_h
 
 /* Uses */
 #include "BasicTypeTest.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* BasicTypeTestSupport_2026450142_h */
+#endif  /* BasicTypeTestSupport_2026450091_h */

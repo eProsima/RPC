@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestPlugin_46236590_h
-#define TypedefTestPlugin_46236590_h
+#ifndef TypedefTestPlugin_46236543_h
+#define TypedefTestPlugin_46236543_h
 
 #include "TypedefTest.h"
 
@@ -1306,4 +1306,4 @@ correaPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* TypedefTestPlugin_46236590_h */
+#endif /* TypedefTestPlugin_46236543_h */

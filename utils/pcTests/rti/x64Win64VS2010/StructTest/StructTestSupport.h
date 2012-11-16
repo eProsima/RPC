@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestSupport_784352164_h
-#define StructTestSupport_784352164_h
+#ifndef StructTestSupport_784352119_h
+#define StructTestSupport_784352119_h
 
 /* Uses */
 #include "StructTest.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* StructTestSupport_784352164_h */
+#endif  /* StructTestSupport_784352119_h */

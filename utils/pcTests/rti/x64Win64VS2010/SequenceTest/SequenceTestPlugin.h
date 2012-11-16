@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestPlugin_81001484_h
-#define SequenceTestPlugin_81001484_h
+#ifndef SequenceTestPlugin_81001435_h
+#define SequenceTestPlugin_81001435_h
 
 #include "SequenceTest.h"
 
@@ -778,4 +778,4 @@ dattosPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* SequenceTestPlugin_81001484_h */
+#endif /* SequenceTestPlugin_81001435_h */

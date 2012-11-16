@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestRequestReplySupport_1722561112_h
-#define TypedefTestRequestReplySupport_1722561112_h
+#ifndef TypedefTestRequestReplySupport_1722562076_h
+#define TypedefTestRequestReplySupport_1722562076_h
 
 /* Uses */
 #include "TypedefTestRequestReply.h"
@@ -652,4 +652,4 @@ DDS_DATAREADER_C(TypedefTest_getCorreaReplyDataReader, TypedefTest_getCorreaRepl
 
 
 
-#endif  /* TypedefTestRequestReplySupport_1722561112_h */
+#endif  /* TypedefTestRequestReplySupport_1722562076_h */

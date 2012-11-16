@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "HelloWorldAsyncRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the HelloWorldAsyncServer object is created, it creates one instance of this class.
+ */
 class HelloWorldAsyncServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        HelloWorldAsyncServerImpl();
+        HelloWorldAsyncServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~HelloWorldAsyncServerImpl();
+        virtual ~HelloWorldAsyncServerImpl(){}
 
          
         char* sayHello(/*in*/ char* name);

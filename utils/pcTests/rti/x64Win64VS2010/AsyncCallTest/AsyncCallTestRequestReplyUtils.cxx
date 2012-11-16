@@ -6,15 +6,15 @@
 #include "AsyncCallTestRequestReplyPlugin.h"
 
 
-const char* AsyncCallTest_getLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_getLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_getLongRequestTypeSupport::get_type_name();
 
-        if(AsyncCallTest_getLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_getLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -38,15 +38,15 @@ void AsyncCallTest_getLongRequestUtils::extractTypeData(AsyncCallTest_getLongReq
 }
 
 
-const char* AsyncCallTest_getLongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_getLongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_getLongReplyTypeSupport::get_type_name();
 
-        if(AsyncCallTest_getLongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_getLongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -71,15 +71,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* AsyncCallTest_getBooleanRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_getBooleanRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_getBooleanRequestTypeSupport::get_type_name();
 
-        if(AsyncCallTest_getBooleanRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_getBooleanRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -103,15 +103,15 @@ void AsyncCallTest_getBooleanRequestUtils::extractTypeData(AsyncCallTest_getBool
 }
 
 
-const char* AsyncCallTest_getBooleanReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_getBooleanReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_getBooleanReplyTypeSupport::get_type_name();
 
-        if(AsyncCallTest_getBooleanReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_getBooleanReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -136,15 +136,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* AsyncCallTest_getStringRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_getStringRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_getStringRequestTypeSupport::get_type_name();
 
-        if(AsyncCallTest_getStringRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_getStringRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -168,15 +168,15 @@ void AsyncCallTest_getStringRequestUtils::extractTypeData(AsyncCallTest_getStrin
 }
 
 
-const char* AsyncCallTest_getStringReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_getStringReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_getStringReplyTypeSupport::get_type_name();
 
-        if(AsyncCallTest_getStringReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_getStringReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -202,15 +202,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* AsyncCallTest_duplicateRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_duplicateRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_duplicateRequestTypeSupport::get_type_name();
 
-        if(AsyncCallTest_duplicateRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_duplicateRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -232,15 +232,15 @@ void AsyncCallTest_duplicateRequestUtils::extractTypeData(AsyncCallTest_duplicat
 }
 
 
-const char* AsyncCallTest_duplicateReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* AsyncCallTest_duplicateReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = AsyncCallTest_duplicateReplyTypeSupport::get_type_name();
 
-        if(AsyncCallTest_duplicateReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(AsyncCallTest_duplicateReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

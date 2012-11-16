@@ -7,10 +7,12 @@
 MultithreadTest_testTask::MultithreadTest_testTask(MultithreadTest_testCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    MultithreadTest_testReply_initialize(&m_reply);
 }
 
 MultithreadTest_testTask::~MultithreadTest_testTask()
 {
+    MultithreadTest_testReply_finalize(&m_reply);
 }
 
 MultithreadTest_testCallbackHandler& MultithreadTest_testTask::getObject()

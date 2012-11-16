@@ -6,15 +6,15 @@
 #include "EnumYStringTestRequestReplyPlugin.h"
 
 
-const char* EnumYStringTest_getEnumRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* EnumYStringTest_getEnumRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = EnumYStringTest_getEnumRequestTypeSupport::get_type_name();
 
-        if(EnumYStringTest_getEnumRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(EnumYStringTest_getEnumRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -38,15 +38,15 @@ void EnumYStringTest_getEnumRequestUtils::extractTypeData(EnumYStringTest_getEnu
 }
 
 
-const char* EnumYStringTest_getEnumReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* EnumYStringTest_getEnumReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = EnumYStringTest_getEnumReplyTypeSupport::get_type_name();
 
-        if(EnumYStringTest_getEnumReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(EnumYStringTest_getEnumReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -71,15 +71,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* EnumYStringTest_getStringRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* EnumYStringTest_getStringRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = EnumYStringTest_getStringRequestTypeSupport::get_type_name();
 
-        if(EnumYStringTest_getStringRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(EnumYStringTest_getStringRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -103,15 +103,15 @@ void EnumYStringTest_getStringRequestUtils::extractTypeData(EnumYStringTest_getS
 }
 
 
-const char* EnumYStringTest_getStringReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* EnumYStringTest_getStringReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = EnumYStringTest_getStringReplyTypeSupport::get_type_name();
 
-        if(EnumYStringTest_getStringReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(EnumYStringTest_getStringReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -137,15 +137,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* EnumYStringTest_getStringBoundedRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* EnumYStringTest_getStringBoundedRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = EnumYStringTest_getStringBoundedRequestTypeSupport::get_type_name();
 
-        if(EnumYStringTest_getStringBoundedRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(EnumYStringTest_getStringBoundedRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -169,15 +169,15 @@ void EnumYStringTest_getStringBoundedRequestUtils::extractTypeData(EnumYStringTe
 }
 
 
-const char* EnumYStringTest_getStringBoundedReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* EnumYStringTest_getStringBoundedReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = EnumYStringTest_getStringBoundedReplyTypeSupport::get_type_name();
 
-        if(EnumYStringTest_getStringBoundedReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(EnumYStringTest_getStringBoundedReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

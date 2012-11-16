@@ -6,15 +6,15 @@
 #include "SequenceTestRequestReplyPlugin.h"
 
 
-const char* SequenceTest_getSLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* SequenceTest_getSLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = SequenceTest_getSLongRequestTypeSupport::get_type_name();
 
-        if(SequenceTest_getSLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(SequenceTest_getSLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -38,15 +38,15 @@ void SequenceTest_getSLongRequestUtils::extractTypeData(SequenceTest_getSLongReq
 }
 
 
-const char* SequenceTest_getSLongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* SequenceTest_getSLongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = SequenceTest_getSLongReplyTypeSupport::get_type_name();
 
-        if(SequenceTest_getSLongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(SequenceTest_getSLongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -71,15 +71,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* SequenceTest_getStringRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* SequenceTest_getStringRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = SequenceTest_getStringRequestTypeSupport::get_type_name();
 
-        if(SequenceTest_getStringRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(SequenceTest_getStringRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -103,15 +103,15 @@ void SequenceTest_getStringRequestUtils::extractTypeData(SequenceTest_getStringR
 }
 
 
-const char* SequenceTest_getStringReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* SequenceTest_getStringReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = SequenceTest_getStringReplyTypeSupport::get_type_name();
 
-        if(SequenceTest_getStringReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(SequenceTest_getStringReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -136,15 +136,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* SequenceTest_getStringBoundedRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* SequenceTest_getStringBoundedRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = SequenceTest_getStringBoundedRequestTypeSupport::get_type_name();
 
-        if(SequenceTest_getStringBoundedRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(SequenceTest_getStringBoundedRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -168,15 +168,15 @@ void SequenceTest_getStringBoundedRequestUtils::extractTypeData(SequenceTest_get
 }
 
 
-const char* SequenceTest_getStringBoundedReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* SequenceTest_getStringBoundedReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = SequenceTest_getStringBoundedReplyTypeSupport::get_type_name();
 
-        if(SequenceTest_getStringBoundedReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(SequenceTest_getStringBoundedReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

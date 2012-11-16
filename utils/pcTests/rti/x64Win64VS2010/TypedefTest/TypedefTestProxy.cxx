@@ -84,14 +84,14 @@ largo TypedefTestProxy::getLargo(/*in*/ largo l1, /*out*/ largo& l2)
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
@@ -120,14 +120,14 @@ larguisimo TypedefTestProxy::getLarguisimo(/*in*/ larguisimo ll1, /*out*/ largui
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
@@ -157,14 +157,14 @@ DatosDef TypedefTestProxy::getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosD
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
@@ -194,14 +194,14 @@ DatosDefondo TypedefTestProxy::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
@@ -230,14 +230,14 @@ cadena TypedefTestProxy::getCadena(/*in*/ cadena c1, /*out*/ cadena& c2)
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     
@@ -266,14 +266,14 @@ correa TypedefTestProxy::getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2)
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     

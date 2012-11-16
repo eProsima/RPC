@@ -8,11 +8,20 @@
 #include "client/AsyncTask.h"
 
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure duplicate from the server in an asynchronous call.
+ */
 class StructTest_duplicateTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         StructTest_duplicateTask(StructTest_duplicateCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -23,6 +32,11 @@ class StructTest_duplicateTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         StructTest_duplicateCallbackHandler& getObject();
         
         void* getReplyInstance();
@@ -34,11 +48,20 @@ class StructTest_duplicateTask : public eProsima::DDSRPC::AsyncTask
            StructTest_duplicateReply m_reply;
 };
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure suma from the server in an asynchronous call.
+ */
 class StructTest_sumaTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         StructTest_sumaTask(StructTest_sumaCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -49,6 +72,11 @@ class StructTest_sumaTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         StructTest_sumaCallbackHandler& getObject();
         
         void* getReplyInstance();

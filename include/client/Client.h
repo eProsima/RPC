@@ -14,6 +14,7 @@ namespace eProsima
         class Transport;
         class AsyncThread;
         class AsyncTask;
+		class ClientRPC;
 
 		/**
 		 * \brief This class implements the common functionalities that all server's proxies have.
@@ -38,6 +39,13 @@ namespace eProsima
 				 * \return 0 value is returned if function works successfully. In other case -1 is returned.
 				 */
                 int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
+
+				/**
+				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+				 *
+				 * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
+				 */
+				void deleteAssociatedAsyncTasks(ClientRPC *rpc);
 
 				/**
 				 * \brief This function gets the timeout used when a request is sent.

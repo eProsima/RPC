@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef OnewayCallTestRequestReplyPlugin_1352501767_h
-#define OnewayCallTestRequestReplyPlugin_1352501767_h
+#ifndef OnewayCallTestRequestReplyPlugin_1352502708_h
+#define OnewayCallTestRequestReplyPlugin_1352502708_h
 
 #include "OnewayCallTestRequestReply.h"
 
@@ -3197,4 +3197,4 @@ OnewayCallTest_getStructReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* OnewayCallTestRequestReplyPlugin_1352501767_h */
+#endif /* OnewayCallTestRequestReplyPlugin_1352502708_h */

@@ -16,10 +16,26 @@ class HelloWorldAsync_sayHelloRequestUtils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
+        /**
+         * \brief This function registers the type of the structure HelloWorldAsync_sayHelloRequest in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure HelloWorldAsync_sayHelloRequest.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
+        
+        /**
+         * \brief This function sets the parameters into the members of the structure HelloWorldAsync_sayHelloRequest.
+         *
+         * \param instance Pointer to the structure HelloWorldAsync_sayHelloRequest that will be filled. Cannot be NULL.
+         */
         static void setTypeData(HelloWorldAsync_sayHelloRequest& instance, /*in*/ char* name);
         
+        /**
+         * \brief This function extracts the parameters from the members of the structure HelloWorldAsync_sayHelloRequest.
+         *
+         * \param data Pointer to the structure HelloWorldAsync_sayHelloRequest that contains the parameters' data. Cannot be NULL.
+         */
         static void extractTypeData(HelloWorldAsync_sayHelloRequest& data, /*in*/ char*& name);
 };
 
@@ -28,10 +44,27 @@ class HelloWorldAsync_sayHelloReplyUtils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
+        /**
+         * \brief This function registers the type of the structure HelloWorldAsync_sayHelloReply in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure HelloWorldAsync_sayHelloReply.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
+        
+        /**
+         * \brief This function sets the parameters into the members of the structure HelloWorldAsync_sayHelloReply.
+         *
+         * \param instance Pointer to the structure HelloWorldAsync_sayHelloReply that will be filled. Cannot be NULL.
+         */
         static void setTypeData(HelloWorldAsync_sayHelloReply& instance, /*out*/ char* sayHello_ret);
         
+        /**
+         * \brief This function extracts the parameters from the members of the structure HelloWorldAsync_sayHelloReply.
+         *
+         * \param data Pointer to the structure HelloWorldAsync_sayHelloReply that contains the parameters' data. Cannot be NULL.
+* \param retcode Internal message returned from the server.
+         */
         static void extractTypeData(HelloWorldAsync_sayHelloReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ char*& sayHello_ret);
 };
 

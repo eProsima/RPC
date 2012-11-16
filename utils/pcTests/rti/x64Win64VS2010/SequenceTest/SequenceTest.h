@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTest_81001484_h
-#define SequenceTest_81001484_h
+#ifndef SequenceTest_81001435_h
+#define SequenceTest_81001435_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -247,4 +247,4 @@ RTIBool dattos_copy(
 
 
 
-#endif /* SequenceTest_81001484_h */
+#endif /* SequenceTest_81001435_h */

@@ -6,15 +6,15 @@
 #include "HelloWorldAsyncRequestReplyPlugin.h"
 
 
-const char* HelloWorldAsync_sayHelloRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* HelloWorldAsync_sayHelloRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = HelloWorldAsync_sayHelloRequestTypeSupport::get_type_name();
 
-        if(HelloWorldAsync_sayHelloRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(HelloWorldAsync_sayHelloRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -36,15 +36,15 @@ void HelloWorldAsync_sayHelloRequestUtils::extractTypeData(HelloWorldAsync_sayHe
 }
 
 
-const char* HelloWorldAsync_sayHelloReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* HelloWorldAsync_sayHelloReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = HelloWorldAsync_sayHelloReplyTypeSupport::get_type_name();
 
-        if(HelloWorldAsync_sayHelloReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(HelloWorldAsync_sayHelloReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

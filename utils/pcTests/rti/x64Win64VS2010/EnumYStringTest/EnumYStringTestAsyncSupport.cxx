@@ -7,10 +7,12 @@
 EnumYStringTest_getEnumTask::EnumYStringTest_getEnumTask(EnumYStringTest_getEnumCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    EnumYStringTest_getEnumReply_initialize(&m_reply);
 }
 
 EnumYStringTest_getEnumTask::~EnumYStringTest_getEnumTask()
 {
+    EnumYStringTest_getEnumReply_finalize(&m_reply);
 }
 
 EnumYStringTest_getEnumCallbackHandler& EnumYStringTest_getEnumTask::getObject()
@@ -52,10 +54,12 @@ void EnumYStringTest_getEnumTask::on_exception(const eProsima::DDSRPC::SystemExc
 EnumYStringTest_getStringTask::EnumYStringTest_getStringTask(EnumYStringTest_getStringCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    EnumYStringTest_getStringReply_initialize(&m_reply);
 }
 
 EnumYStringTest_getStringTask::~EnumYStringTest_getStringTask()
 {
+    EnumYStringTest_getStringReply_finalize(&m_reply);
 }
 
 EnumYStringTest_getStringCallbackHandler& EnumYStringTest_getStringTask::getObject()
@@ -97,10 +101,12 @@ void EnumYStringTest_getStringTask::on_exception(const eProsima::DDSRPC::SystemE
 EnumYStringTest_getStringBoundedTask::EnumYStringTest_getStringBoundedTask(EnumYStringTest_getStringBoundedCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    EnumYStringTest_getStringBoundedReply_initialize(&m_reply);
 }
 
 EnumYStringTest_getStringBoundedTask::~EnumYStringTest_getStringBoundedTask()
 {
+    EnumYStringTest_getStringBoundedReply_finalize(&m_reply);
 }
 
 EnumYStringTest_getStringBoundedCallbackHandler& EnumYStringTest_getStringBoundedTask::getObject()

@@ -7,6 +7,9 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure getOctet.
+ */
 struct BasicTypeTest_getOctetRequest{
     RequestHeader header;  //@key
     octet oc1;
@@ -14,6 +17,9 @@ struct BasicTypeTest_getOctetRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getOctet.
+ */
 struct BasicTypeTest_getOctetReply{
     ReplyHeader header;  //@key
     octet oc2;
@@ -22,6 +28,9 @@ struct BasicTypeTest_getOctetReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getChar.
+ */
 struct BasicTypeTest_getCharRequest{
     RequestHeader header;  //@key
     char ch1;
@@ -29,6 +38,9 @@ struct BasicTypeTest_getCharRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getChar.
+ */
 struct BasicTypeTest_getCharReply{
     ReplyHeader header;  //@key
     char ch2;
@@ -37,6 +49,9 @@ struct BasicTypeTest_getCharReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getWChar.
+ */
 struct BasicTypeTest_getWCharRequest{
     RequestHeader header;  //@key
     wchar wch1;
@@ -44,6 +59,9 @@ struct BasicTypeTest_getWCharRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getWChar.
+ */
 struct BasicTypeTest_getWCharReply{
     ReplyHeader header;  //@key
     wchar wch2;
@@ -52,6 +70,9 @@ struct BasicTypeTest_getWCharReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getShort.
+ */
 struct BasicTypeTest_getShortRequest{
     RequestHeader header;  //@key
     short sh1;
@@ -59,6 +80,9 @@ struct BasicTypeTest_getShortRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getShort.
+ */
 struct BasicTypeTest_getShortReply{
     ReplyHeader header;  //@key
     short sh2;
@@ -67,6 +91,9 @@ struct BasicTypeTest_getShortReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getUShort.
+ */
 struct BasicTypeTest_getUShortRequest{
     RequestHeader header;  //@key
     unsigned short ush1;
@@ -74,6 +101,9 @@ struct BasicTypeTest_getUShortRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getUShort.
+ */
 struct BasicTypeTest_getUShortReply{
     ReplyHeader header;  //@key
     unsigned short ush2;
@@ -82,6 +112,9 @@ struct BasicTypeTest_getUShortReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getLong.
+ */
 struct BasicTypeTest_getLongRequest{
     RequestHeader header;  //@key
     long lo1;
@@ -89,6 +122,9 @@ struct BasicTypeTest_getLongRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getLong.
+ */
 struct BasicTypeTest_getLongReply{
     ReplyHeader header;  //@key
     long lo2;
@@ -97,6 +133,9 @@ struct BasicTypeTest_getLongReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getULong.
+ */
 struct BasicTypeTest_getULongRequest{
     RequestHeader header;  //@key
     unsigned long ulo1;
@@ -104,6 +143,9 @@ struct BasicTypeTest_getULongRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getULong.
+ */
 struct BasicTypeTest_getULongReply{
     ReplyHeader header;  //@key
     unsigned long ulo2;
@@ -112,6 +154,9 @@ struct BasicTypeTest_getULongReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getLLong.
+ */
 struct BasicTypeTest_getLLongRequest{
     RequestHeader header;  //@key
     long long llo1;
@@ -119,6 +164,9 @@ struct BasicTypeTest_getLLongRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getLLong.
+ */
 struct BasicTypeTest_getLLongReply{
     ReplyHeader header;  //@key
     long long llo2;
@@ -127,6 +175,9 @@ struct BasicTypeTest_getLLongReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getULLong.
+ */
 struct BasicTypeTest_getULLongRequest{
     RequestHeader header;  //@key
     unsigned long long ullo1;
@@ -134,6 +185,9 @@ struct BasicTypeTest_getULLongRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getULLong.
+ */
 struct BasicTypeTest_getULLongReply{
     ReplyHeader header;  //@key
     unsigned long long ullo2;
@@ -142,6 +196,9 @@ struct BasicTypeTest_getULLongReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getFloat.
+ */
 struct BasicTypeTest_getFloatRequest{
     RequestHeader header;  //@key
     float fl1;
@@ -149,6 +206,9 @@ struct BasicTypeTest_getFloatRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getFloat.
+ */
 struct BasicTypeTest_getFloatReply{
     ReplyHeader header;  //@key
     float fl2;
@@ -157,6 +217,9 @@ struct BasicTypeTest_getFloatReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getDouble.
+ */
 struct BasicTypeTest_getDoubleRequest{
     RequestHeader header;  //@key
     double do1;
@@ -164,6 +227,9 @@ struct BasicTypeTest_getDoubleRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getDouble.
+ */
 struct BasicTypeTest_getDoubleReply{
     ReplyHeader header;  //@key
     double do2;
@@ -172,6 +238,9 @@ struct BasicTypeTest_getDoubleReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getBoolean.
+ */
 struct BasicTypeTest_getBooleanRequest{
     RequestHeader header;  //@key
     boolean bo1;
@@ -179,6 +248,9 @@ struct BasicTypeTest_getBooleanRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getBoolean.
+ */
 struct BasicTypeTest_getBooleanReply{
     ReplyHeader header;  //@key
     boolean bo2;

@@ -6,15 +6,15 @@
 #include "StructTestRequestReplyPlugin.h"
 
 
-const char* StructTest_duplicateRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* StructTest_duplicateRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = StructTest_duplicateRequestTypeSupport::get_type_name();
 
-        if(StructTest_duplicateRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(StructTest_duplicateRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -36,15 +36,15 @@ void StructTest_duplicateRequestUtils::extractTypeData(StructTest_duplicateReque
 }
 
 
-const char* StructTest_duplicateReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* StructTest_duplicateReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = StructTest_duplicateReplyTypeSupport::get_type_name();
 
-        if(StructTest_duplicateReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(StructTest_duplicateReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -66,15 +66,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* StructTest_sumaRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* StructTest_sumaRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = StructTest_sumaRequestTypeSupport::get_type_name();
 
-        if(StructTest_sumaRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(StructTest_sumaRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -98,15 +98,15 @@ void StructTest_sumaRequestUtils::extractTypeData(StructTest_sumaRequest& data, 
 }
 
 
-const char* StructTest_sumaReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* StructTest_sumaReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = StructTest_sumaReplyTypeSupport::get_type_name();
 
-        if(StructTest_sumaReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(StructTest_sumaReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

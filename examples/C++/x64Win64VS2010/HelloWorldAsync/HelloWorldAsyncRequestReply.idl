@@ -7,12 +7,18 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure sayHello.
+ */
 struct HelloWorldAsync_sayHelloRequest{
     RequestHeader header;  //@key
     string name;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure sayHello.
+ */
 struct HelloWorldAsync_sayHelloReply{
     ReplyHeader header;  //@key
     string sayHello_ret;

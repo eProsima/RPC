@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MultithreadTestPlugin_1857714594_h
-#define MultithreadTestPlugin_1857714594_h
+#ifndef MultithreadTestPlugin_1857714539_h
+#define MultithreadTestPlugin_1857714539_h
 
 #include "MultithreadTest.h"
 
@@ -250,4 +250,4 @@ DatoPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* MultithreadTestPlugin_1857714594_h */
+#endif /* MultithreadTestPlugin_1857714539_h */

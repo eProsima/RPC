@@ -6,15 +6,15 @@
 #include "OnewayCallTestRequestReplyPlugin.h"
 
 
-const char* OnewayCallTest_setLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_setLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_setLongRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_setLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_setLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -36,15 +36,15 @@ void OnewayCallTest_setLongRequestUtils::extractTypeData(OnewayCallTest_setLongR
 }
 
 
-const char* OnewayCallTest_getLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getLongRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -65,15 +65,15 @@ void OnewayCallTest_getLongRequestUtils::extractTypeData(OnewayCallTest_getLongR
 }
 
 
-const char* OnewayCallTest_getLongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getLongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getLongReplyTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getLongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getLongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -95,15 +95,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* OnewayCallTest_setBooleanRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_setBooleanRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_setBooleanRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_setBooleanRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_setBooleanRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -125,15 +125,15 @@ void OnewayCallTest_setBooleanRequestUtils::extractTypeData(OnewayCallTest_setBo
 }
 
 
-const char* OnewayCallTest_getBooleanRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getBooleanRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getBooleanRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getBooleanRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getBooleanRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -154,15 +154,15 @@ void OnewayCallTest_getBooleanRequestUtils::extractTypeData(OnewayCallTest_getBo
 }
 
 
-const char* OnewayCallTest_getBooleanReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getBooleanReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getBooleanReplyTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getBooleanReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getBooleanReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -184,15 +184,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* OnewayCallTest_setStringRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_setStringRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_setStringRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_setStringRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_setStringRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -214,15 +214,15 @@ void OnewayCallTest_setStringRequestUtils::extractTypeData(OnewayCallTest_setStr
 }
 
 
-const char* OnewayCallTest_getStringRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getStringRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getStringRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getStringRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getStringRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -243,15 +243,15 @@ void OnewayCallTest_getStringRequestUtils::extractTypeData(OnewayCallTest_getStr
 }
 
 
-const char* OnewayCallTest_getStringReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getStringReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getStringReplyTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getStringReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getStringReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -273,15 +273,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* OnewayCallTest_setStructRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_setStructRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_setStructRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_setStructRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_setStructRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -303,15 +303,15 @@ void OnewayCallTest_setStructRequestUtils::extractTypeData(OnewayCallTest_setStr
 }
 
 
-const char* OnewayCallTest_getStructRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getStructRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getStructRequestTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getStructRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getStructRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -332,15 +332,15 @@ void OnewayCallTest_getStructRequestUtils::extractTypeData(OnewayCallTest_getStr
 }
 
 
-const char* OnewayCallTest_getStructReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* OnewayCallTest_getStructReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = OnewayCallTest_getStructReplyTypeSupport::get_type_name();
 
-        if(OnewayCallTest_getStructReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(OnewayCallTest_getStructReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTestRequestReplySupport_2120089561_h
-#define BasicTypeTestRequestReplySupport_2120089561_h
+#ifndef BasicTypeTestRequestReplySupport_2120091427_h
+#define BasicTypeTestRequestReplySupport_2120091427_h
 
 /* Uses */
 #include "BasicTypeTestRequestReply.h"
@@ -1276,4 +1276,4 @@ DDS_DATAREADER_C(BasicTypeTest_getBooleanReplyDataReader, BasicTypeTest_getBoole
 
 
 
-#endif  /* BasicTypeTestRequestReplySupport_2120089561_h */
+#endif  /* BasicTypeTestRequestReplySupport_2120091427_h */

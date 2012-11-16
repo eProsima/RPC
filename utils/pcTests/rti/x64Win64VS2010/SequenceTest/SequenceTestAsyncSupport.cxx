@@ -7,10 +7,12 @@
 SequenceTest_getSLongTask::SequenceTest_getSLongTask(SequenceTest_getSLongCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    SequenceTest_getSLongReply_initialize(&m_reply);
 }
 
 SequenceTest_getSLongTask::~SequenceTest_getSLongTask()
 {
+    SequenceTest_getSLongReply_finalize(&m_reply);
 }
 
 SequenceTest_getSLongCallbackHandler& SequenceTest_getSLongTask::getObject()
@@ -55,10 +57,12 @@ void SequenceTest_getSLongTask::on_exception(const eProsima::DDSRPC::SystemExcep
 SequenceTest_getStringTask::SequenceTest_getStringTask(SequenceTest_getStringCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    SequenceTest_getStringReply_initialize(&m_reply);
 }
 
 SequenceTest_getStringTask::~SequenceTest_getStringTask()
 {
+    SequenceTest_getStringReply_finalize(&m_reply);
 }
 
 SequenceTest_getStringCallbackHandler& SequenceTest_getStringTask::getObject()
@@ -103,10 +107,12 @@ void SequenceTest_getStringTask::on_exception(const eProsima::DDSRPC::SystemExce
 SequenceTest_getStringBoundedTask::SequenceTest_getStringBoundedTask(SequenceTest_getStringBoundedCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    SequenceTest_getStringBoundedReply_initialize(&m_reply);
 }
 
 SequenceTest_getStringBoundedTask::~SequenceTest_getStringBoundedTask()
 {
+    SequenceTest_getStringBoundedReply_finalize(&m_reply);
 }
 
 SequenceTest_getStringBoundedCallbackHandler& SequenceTest_getStringBoundedTask::getObject()

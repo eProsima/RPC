@@ -157,11 +157,9 @@ namespace eProsima
                         {
                             if(it->first == boost::posix_time::milliseconds(0))
                             {
-                                //TODO Send exception
                                 it->second.second->on_exception(ServerTimeoutException("Asynchronous task exceed the time to wait the server's reply"));
                                 m_waitSet->detach_condition(it->second.first);
                                 it->second.second->getRPC()->deleteQuery(it->second.first);
-                                //TODO No borrar.
                                 delete it->second.second;
                                 it = m_vector.erase(it);
                             }
@@ -192,7 +190,12 @@ namespace eProsima
                     }
                 }
 
+				boost::lock_guard<boost::mutex> lock_guard(*m_mutex);
+
                 m_waitSet->detach_condition(m_guardWaitSet);
+
+				if(m_vector.size() > 0)
+					printf("ERROR<%s::%s>: There must not be any task in the thread's vector\n", CLASS_NAME, METHOD_NAME);
             }
             else
             {
@@ -242,6 +245,42 @@ namespace eProsima
 
             return returnedValue;
         }
+
+		void AsyncThread::deleteAssociatedAsyncTasks(ClientRPC *rpc)
+		{
+			const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
+
+            if(rpc != NULL)
+            {
+				boost::unique_lock<boost::mutex> lock(*m_mutex);
+
+                // Wake up the waitSet.
+                m_guardWaitSet->set_trigger_value(BOOLEAN_TRUE);
+                m_cond_wake_up.wait(lock);
+			    
+				// Remove tasks.
+				AsyncVector::iterator it = m_vector.begin();
+
+                while(it != m_vector.end())
+                {
+					if(it->second.second->getRPC() == rpc)
+					{
+						m_waitSet->detach_condition(it->second.first);
+						it->second.second->getRPC()->deleteQuery(it->second.first);
+						delete it->second.second;
+						it = m_vector.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+                }
+			}
+            else
+            {
+                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+            }
+		}
 
     } // namespace DDSRPC
 } // namespace eProsima

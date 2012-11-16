@@ -7,10 +7,12 @@
 BasicTypeTest_getOctetTask::BasicTypeTest_getOctetTask(BasicTypeTest_getOctetCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getOctetReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getOctetTask::~BasicTypeTest_getOctetTask()
 {
+    BasicTypeTest_getOctetReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getOctetCallbackHandler& BasicTypeTest_getOctetTask::getObject()
@@ -52,10 +54,12 @@ void BasicTypeTest_getOctetTask::on_exception(const eProsima::DDSRPC::SystemExce
 BasicTypeTest_getCharTask::BasicTypeTest_getCharTask(BasicTypeTest_getCharCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getCharReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getCharTask::~BasicTypeTest_getCharTask()
 {
+    BasicTypeTest_getCharReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getCharCallbackHandler& BasicTypeTest_getCharTask::getObject()
@@ -97,10 +101,12 @@ void BasicTypeTest_getCharTask::on_exception(const eProsima::DDSRPC::SystemExcep
 BasicTypeTest_getWCharTask::BasicTypeTest_getWCharTask(BasicTypeTest_getWCharCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getWCharReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getWCharTask::~BasicTypeTest_getWCharTask()
 {
+    BasicTypeTest_getWCharReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getWCharCallbackHandler& BasicTypeTest_getWCharTask::getObject()
@@ -142,10 +148,12 @@ void BasicTypeTest_getWCharTask::on_exception(const eProsima::DDSRPC::SystemExce
 BasicTypeTest_getShortTask::BasicTypeTest_getShortTask(BasicTypeTest_getShortCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getShortReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getShortTask::~BasicTypeTest_getShortTask()
 {
+    BasicTypeTest_getShortReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getShortCallbackHandler& BasicTypeTest_getShortTask::getObject()
@@ -187,10 +195,12 @@ void BasicTypeTest_getShortTask::on_exception(const eProsima::DDSRPC::SystemExce
 BasicTypeTest_getUShortTask::BasicTypeTest_getUShortTask(BasicTypeTest_getUShortCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getUShortReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getUShortTask::~BasicTypeTest_getUShortTask()
 {
+    BasicTypeTest_getUShortReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getUShortCallbackHandler& BasicTypeTest_getUShortTask::getObject()
@@ -232,10 +242,12 @@ void BasicTypeTest_getUShortTask::on_exception(const eProsima::DDSRPC::SystemExc
 BasicTypeTest_getLongTask::BasicTypeTest_getLongTask(BasicTypeTest_getLongCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getLongReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getLongTask::~BasicTypeTest_getLongTask()
 {
+    BasicTypeTest_getLongReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getLongCallbackHandler& BasicTypeTest_getLongTask::getObject()
@@ -277,10 +289,12 @@ void BasicTypeTest_getLongTask::on_exception(const eProsima::DDSRPC::SystemExcep
 BasicTypeTest_getULongTask::BasicTypeTest_getULongTask(BasicTypeTest_getULongCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getULongReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getULongTask::~BasicTypeTest_getULongTask()
 {
+    BasicTypeTest_getULongReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getULongCallbackHandler& BasicTypeTest_getULongTask::getObject()
@@ -322,10 +336,12 @@ void BasicTypeTest_getULongTask::on_exception(const eProsima::DDSRPC::SystemExce
 BasicTypeTest_getLLongTask::BasicTypeTest_getLLongTask(BasicTypeTest_getLLongCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getLLongReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getLLongTask::~BasicTypeTest_getLLongTask()
 {
+    BasicTypeTest_getLLongReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getLLongCallbackHandler& BasicTypeTest_getLLongTask::getObject()
@@ -367,10 +383,12 @@ void BasicTypeTest_getLLongTask::on_exception(const eProsima::DDSRPC::SystemExce
 BasicTypeTest_getULLongTask::BasicTypeTest_getULLongTask(BasicTypeTest_getULLongCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getULLongReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getULLongTask::~BasicTypeTest_getULLongTask()
 {
+    BasicTypeTest_getULLongReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getULLongCallbackHandler& BasicTypeTest_getULLongTask::getObject()
@@ -412,10 +430,12 @@ void BasicTypeTest_getULLongTask::on_exception(const eProsima::DDSRPC::SystemExc
 BasicTypeTest_getFloatTask::BasicTypeTest_getFloatTask(BasicTypeTest_getFloatCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getFloatReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getFloatTask::~BasicTypeTest_getFloatTask()
 {
+    BasicTypeTest_getFloatReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getFloatCallbackHandler& BasicTypeTest_getFloatTask::getObject()
@@ -457,10 +477,12 @@ void BasicTypeTest_getFloatTask::on_exception(const eProsima::DDSRPC::SystemExce
 BasicTypeTest_getDoubleTask::BasicTypeTest_getDoubleTask(BasicTypeTest_getDoubleCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getDoubleReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getDoubleTask::~BasicTypeTest_getDoubleTask()
 {
+    BasicTypeTest_getDoubleReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getDoubleCallbackHandler& BasicTypeTest_getDoubleTask::getObject()
@@ -502,10 +524,12 @@ void BasicTypeTest_getDoubleTask::on_exception(const eProsima::DDSRPC::SystemExc
 BasicTypeTest_getBooleanTask::BasicTypeTest_getBooleanTask(BasicTypeTest_getBooleanCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    BasicTypeTest_getBooleanReply_initialize(&m_reply);
 }
 
 BasicTypeTest_getBooleanTask::~BasicTypeTest_getBooleanTask()
 {
+    BasicTypeTest_getBooleanReply_finalize(&m_reply);
 }
 
 BasicTypeTest_getBooleanCallbackHandler& BasicTypeTest_getBooleanTask::getObject()
