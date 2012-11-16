@@ -1,5 +1,7 @@
 #include "client/AsyncTask.h"
 #include "client/ClientRPC.h"
+#include "exceptions/ClientInternalException.h"
+#include "exceptions/ServerTimeoutException.h"
 
 const char* const CLASS_NAME = "AsyncTask";
 
@@ -23,7 +25,19 @@ namespace eProsima
             if(query != NULL)
             {
                 eProsima::DDSRPC::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
-                this->execute();
+
+				if(retCode == OPERATION_SUCCESSFUL)
+				{
+					this->execute();
+				}
+				else if(retCode == CLIENT_INTERNAL_ERROR)
+				{
+					this->on_exception(ClientInternalException("Error taking the reply"));
+				}
+				else if(retCode == SERVER_TIMEOUT)
+				{
+					this->on_exception(ServerTimeoutException("Error taking the reply"));
+				}
             }
             else
             {
