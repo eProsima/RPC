@@ -16,14 +16,14 @@ namespace eProsima
         class AsyncTask;
 
 		/**
-		 * \brief This class implements the common functionalities that all server proxies have.
+		 * \brief This class implements the common functionalities that all server's proxies have.
 		 */
 		class DDSRPC_WIN32_DLL_API Client
 		{
             public:
 
 				/**
-				 * \brief This function returns the DDS domain participant that use this server proxy.
+				 * \brief This function returns the DDS domain participant that use this server's proxy.
 				 *
 				 * \return Pointer to the DDS domain participant.
 				 */
@@ -47,7 +47,7 @@ namespace eProsima
                 long getTimeout() const;
 
 				/**
-				 * \brief This function sets te timeout that the server proxy will use in each request.
+				 * \brief This function sets te timeout that the server's proxy will use in each request.
 				 *
 				 * \para milliseconds The timeout in milliseconds.
 				 */
@@ -56,7 +56,7 @@ namespace eProsima
 				/**
 				 * \brief This function returns the name of the remote service that this proxy is offering.
 				 *
-				 * \return The name of the remote service.
+				 * \return The service's name of 
 				 */
 				const std::string& getRemoteServiceName() const;
 
@@ -65,12 +65,12 @@ namespace eProsima
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param remoteServiceName The name of the remote service that the proxy will offer. 
+				 * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
 				 * \param transport The transport that will be use the server's proxy. This class doesn't delete this object in its destructor.
 				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
 				 * \param milliseconds Timout in milliseconds for all requests.
-				 * \exception eProsima::DDSRPC::ResourceException 
+				 * \exception InitializeException This exception is thrown when the initialization was wrong.
 				 */
 				Client(std::string remoteServiceName, Transport *transport, int domainId = 0, long milliseconds = 10000);
 

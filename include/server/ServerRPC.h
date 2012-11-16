@@ -23,7 +23,7 @@ namespace eProsima
 			public:
 
 				/**
-				 * \brief The constructor.
+				 * \brief The default constructor.
 				 *
 				 * \param rpcName The name of this remote procedure. Cannot be NULL.
 				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
@@ -60,39 +60,97 @@ namespace eProsima
 				/// \brief This function returns the function that is called when a new request is recevied.
 				fExecFunction getExecFunction() const;
 
+				/**
+				 * @brief This function is called when a reply wants to be sent.
+				 *        This function has to be implemented by the derived class.
+				 *
+				 * @param request Pointer to the associated request that was received from the client. Cannot be NULL.
+				 * @param reply Pointer to the reply that will be sent to the client. Cannot be NULL.
+				 * @return 0 value is returned if the reply could be sent. In other case -1 is returned.
+				 */
 				virtual int sendReply(void* request, void *reply) = 0;
 
+				/**
+				 * @brief This function deletes a request that was received from a client.
+				 *        This function has to be implemented by the derived class because that class knows the type of the request.
+				 *
+				 * @param request Pointer to the request. Cannot be NULL.
+				 */
 				virtual void deleteRequestData(void *request) = 0;
 
+				/// @brief DDS callback.
 				virtual void on_data_available(DDS::DataReader* reader) = 0;
 
+				/// @brief DDS callback.
 				virtual void on_requested_deadline_missed(
 						DDS::DataReader* reader,
 						const DDS::RequestedDeadlineMissedStatus& status) {}
 
+				/// @brief DDS callback.
 				virtual void on_requested_incompatible_qos(
 						DDS::DataReader* reader,
 						const DDS::RequestedIncompatibleQosStatus& status) {}
 
+				/// @brief DDS callback.
 				virtual void on_sample_rejected(
 						DDS::DataReader* reader,
 						const DDS::SampleRejectedStatus& status) {}
 
+				/// @brief DDS callback.
 				virtual void on_liveliness_changed(
 						DDS::DataReader* reader,
 						const DDS::LivelinessChangedStatus& status) {}
 
+				/// @brief DDS callback.
 				virtual void on_sample_lost(
 						DDS::DataReader* reader,
 						const DDS::SampleLostStatus& status) {}
 
+				/// @brief DDS callback.
 				virtual void on_subscription_matched(
 						DDS::DataReader* reader,
 						const DDS::SubscriptionMatchedStatus& status) {}
 
-			protected:
+		    protected:
 
 				/**
+				 * @brief This funcion returns the DDS datareader that receives the requests from clients.
+				 *
+				 * @return Pointer to the DDS datareader.
+				 */
+				DDS::DataReader* getRequestDatareader() const;
+
+				/**
+				 * @brief This funcion returns the DDS datawriter that sends the replies to clients.
+				 *
+				 * @return Pointer to the DDS datawriter.
+				 */
+				DDS::DataWriter* getReplyDatawriter() const;
+
+				/**
+				 * @brief This funcion returns the server that contains this remote procedure object.
+				 *
+				 * @return Pointer to the server.
+				 */
+				Server* getServer() const;
+
+		    private:
+					
+				/**
+				 * \brief This function creates the DDS entities of the server.
+				 *
+				 * \return 0 value is returned when all entities was created succesfully. In other case, -1 value is returned.
+				 */
+				int createEntities();
+
+				/**
+				 * \brief This function enables all DDS entities of the server.
+				 *
+				 * \return 0 value is returned when all entities was enabled succesfully. In other case, -1 value is returned.
+				 */
+				int enableEntities();
+
+								/**
 				 * \brief This field stores the name of the remote procedure.
 				 */
 				std::string m_rpcName;
@@ -143,22 +201,6 @@ namespace eProsima
 				DDS::DataWriter *m_replyDataWriter;
 
 				fExecFunction m_execFunction;
-
-				private:
-					
-				/**
-				 * \brief This function creates the DDS entities of the server.
-				 *
-				 * \return 0 value is returned when all entities was created succesfully. In other case, -1 value is returned.
-				 */
-				int createEntities();
-
-				/**
-				 * \brief This function enables all DDS entities of the server.
-				 *
-				 * \return 0 value is returned when all entities was enabled succesfully. In other case, -1 value is returned.
-				 */
-				int enableEntities();
 		};
 
 	} // namespace DDSRPC

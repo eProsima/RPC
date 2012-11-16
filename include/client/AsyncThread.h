@@ -37,7 +37,7 @@ namespace eProsima
                 void exit();
 
 				/**
-				 * \brief This function add a new asynchronous task.
+				 * \brief This function adds a new asynchronous task.
 				 *
 				 * \param query Associated DDS QueryCondition to the asynchronous task. Cannot be NULL.
 				 * \param task The new asynchronous task. Cannot be NULL.

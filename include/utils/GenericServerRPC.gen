@@ -50,9 +50,9 @@ int TName::sendReply(void *request, void* reply)
 	int returnedValue = -1;
 #ifndef IS_ONEWAY
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-    TDataWriter *replyDataWriter = TDataWriter::narrow(m_replyDataWriter);
+    TDataWriter *replyDataWriter = TDataWriter::narrow(getReplyDatawriter());
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-    replyDataWriter = TDataWriter::_narrow(m_replyDataWriter);
+    replyDataWriter = TDataWriter::_narrow(getReplyDatawriter());
 #endif
 	TDataReply   *replyData   = (TDataReply*)reply;
 	TDataRequest *requestData = (TDataRequest*)request;
@@ -109,10 +109,10 @@ void TName::on_data_available(DDS::DataReader* reader)
 {
 	DDS::SampleInfo info;
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-    TDataReader *requestDataReader = TDataReader::narrow(m_requestDataReader);
+    TDataReader *requestDataReader = TDataReader::narrow(getRequestDatareader());
 	TDataRequest *data = TDataRequestTypeSupport::create_data();
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-    TDataReader *requestDataReader = TDataReader::_narrow(m_requestDataReader);
+    TDataReader *requestDataReader = TDataReader::_narrow(getRequestDatareader());
 	TDataRequest *data = new TDataRequest();
 #endif
 
@@ -120,7 +120,7 @@ void TName::on_data_available(DDS::DataReader* reader)
 	{
 		if(info.valid_data == BOOLEAN_TRUE)
 		{
-			m_server->schedule(getExecFunction(), data, this);
+			getServer()->schedule(getExecFunction(), data, this);
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
 			data = TDataRequestTypeSupport::create_data();
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))

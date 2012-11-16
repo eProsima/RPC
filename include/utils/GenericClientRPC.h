@@ -27,7 +27,6 @@ public:                                                                         
   virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 protected:                                                                        \
-  virtual int registerInstance(void *data);                                       \
   virtual DDS::ReturnCode_t write(void *data);                                    \
                                                                                   \
 private:                                                                          \
@@ -48,7 +47,6 @@ public:                                                                         
   virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 protected:                                                                        \
-  virtual int registerInstance(void *data);                                       \
   virtual DDS::ReturnCode_t write(void *data);                                    \
                                                                                   \
 private:                                                                          \

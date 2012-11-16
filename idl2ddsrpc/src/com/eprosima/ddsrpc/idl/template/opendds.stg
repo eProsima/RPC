@@ -57,7 +57,7 @@ $name$ = ts->get_type_name();
 >>
 
 registerTypename(funName, type, name) ::= <<
-ts->register_type(clientParticipant, $name$)
+ts->register_type(participant, $name$)
 >>
 
 preReqIDLDefines(name) ::= <<

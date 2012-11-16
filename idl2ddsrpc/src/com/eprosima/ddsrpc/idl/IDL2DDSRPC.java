@@ -1162,9 +1162,13 @@ public class IDL2DDSRPC
             CplusplusVisitor visitor = new CplusplusVisitor(middleware);
             root = (Module)n.jjtAccept(visitor, null);
             System.out.println(file + " Parsing Complete.");
-        } catch (Exception e) {
-            System.out.println("Oops. Parser Error");
-            System.out.println(e.getMessage());
+        }
+        catch (Exception e) {
+            System.out.println("Parser Error: " + e.getMessage());
+        }
+        catch (Error e)
+        {
+            System.out.println("Parser Error: " + e.getMessage());
         }
 
         return root;		

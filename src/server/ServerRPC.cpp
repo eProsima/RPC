@@ -274,5 +274,20 @@ namespace eProsima
 			return m_execFunction;
 		}
 
+		DDS::DataReader* ServerRPC::getRequestDatareader() const
+		{
+			return m_requestDataReader;
+		}
+
+		DDS::DataWriter* ServerRPC::getReplyDatawriter() const
+		{
+			return m_replyDataWriter;
+		}
+
+		Server* ServerRPC::getServer() const
+		{
+			return m_server;
+		}
+
 	} // namespace DDSRPC
 } // namespace eProsima

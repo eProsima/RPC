@@ -82,15 +82,6 @@ namespace eProsima
 			protected:
 
 				/**
-				 * \brief This function registers the request instance into the DDS DataWriter.
-				 *        This virtual function has to be implemented by the specific code.
-				 *
-				 * \param data Pointer to the request. Cannot be NULL.
-				 * \return 0 value is returned if the function work succesfully. -1 in other case.
-				 */
-				virtual int registerInstance(void *data) = 0;
-
-				/**
 				 * \brief This function writes the request using the DDS DataWriter.
 				 *        This virtual function has to be implemented by the specific code.
 				 *
@@ -98,6 +89,22 @@ namespace eProsima
 				 * \return DDS return code that write function returns.
 				 */
 				virtual DDS::ReturnCode_t write(void *data) = 0;
+
+				/**
+				 * @brief This funcion returns the DDS datareader that receives the replies from the server.
+				 *
+				 * @return Pointer to the DDS datareader.
+				 */
+				DDS::DataReader* getReplyDatareader() const;
+
+				/**
+				 * @brief This funcion returns the DDS datawriter that sends the request to the client.
+				 *
+				 * @return Pointer to the DDS datawriter.
+				 */
+				DDS::DataWriter* getRequestDatawriter() const;
+
+		private:
 
 				/**
 				 * \brief This function creates the DDS entities used by the RPC object.
@@ -179,8 +186,6 @@ namespace eProsima
 
 				/// \brief The identifier used as client.
 				unsigned int m_clientServiceId[4];
-
-				DDS::InstanceHandle_t m_ih;
 
 				/// \brief Mutex used to ensure that sequence number is safe-thread.
 				boost::mutex *m_mutex;

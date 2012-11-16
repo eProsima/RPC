@@ -68,7 +68,7 @@ $name$ = $funName$$type$TypeSupport::get_type_name();
 >>
 
 registerTypename(funName, type, name) ::= <<
-$funName$$type$TypeSupport::register_type(clientParticipant, $name$)
+$funName$$type$TypeSupport::register_type(participant, $name$)
 >>
 
 preReqIDLDefines(name) ::= <<

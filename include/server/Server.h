@@ -21,7 +21,7 @@ namespace eProsima
 		class ServerRPC;
 	 
 		/**
-		 * \brief This class implements the common functionalities that the server have.
+		 * \brief This class implements the common functionalities that the server has.
 		 */
 		class DDSRPC_WIN32_DLL_API Server
 		{
@@ -31,6 +31,7 @@ namespace eProsima
 				/**
 				 * \brief This function starts the server to listen requests.
 				 *         The server will create the DDS entities to start listening.
+				 * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization of DDS entities was wrong.
 				 */
 				void serve();
 
@@ -68,13 +69,13 @@ namespace eProsima
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param serviceName The name of the service that the server offers. Proxies will use this name to connect with the server.
+				 * \param serviceName The service's name that proxies will use to connect with the server.
 				 * \param strategy The strategy used by the server to execute new requests.
 				 *         This class doesn't delete this object in its destructor. Cannot be NULL.
 				 * \param transport The transport that will be use the server. This class doesn't delete this object in its destructor.
 				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
-				 * \exception eProsima::DDSRPC::ResourceException 
+				 * \exception InitializeException This exception is thrown when the initialization was wrong.
 				 */
 				Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId = 0);
 

@@ -45,14 +45,14 @@ TName::TName(const char *rpcName, const char *requestTypeName,
         client)
 {
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-	requestDataWriter = TDataWriter::narrow(m_requestDataWriter);
+	requestDataWriter = TDataWriter::narrow(getRequestDatawriter());
 #ifndef IS_ONEWAY
-	replyDataReader   = TDataReader::narrow(m_replyDataReader);
+	replyDataReader   = TDataReader::narrow(getReplyDatareader());
 #endif
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-	requestDataWriter = TDataWriter::_narrow(m_requestDataWriter);
+	requestDataWriter = TDataWriter::_narrow(getRequestDatawriter());
 #ifndef IS_ONEWAY
-	replyDataReader   = TDataReader::_narrow(m_replyDataReader);
+	replyDataReader   = TDataReader::_narrow(getReplyDatareader());
 #endif
 #endif
 }
@@ -61,27 +61,12 @@ TName::~TName()
 {
 }
 
-int TName::registerInstance(void *data)
-{
-    int returnedCode = -1;
-     
-    if(requestDataWriter != NULL)
-    {    
-        m_ih = requestDataWriter->register_instance(*((TDataRequest*)data));
-        
-        if(!DDS_InstanceHandle_is_nil(&m_ih))
-            returnedCode = 0;
-    }
-    
-    return returnedCode;
-}
-
 DDS::ReturnCode_t TName::write(void *data)
 {
 	DDS::ReturnCode_t retCode = DDS::RETCODE_ERROR;
 	
 	if(requestDataWriter != NULL){
-		retCode = requestDataWriter->write(*((TDataRequest*)data), m_ih);
+		retCode = requestDataWriter->write(*((TDataRequest*)data), DDS::HANDLE_NIL);
 	}
 	return retCode;
 }

@@ -20,7 +20,7 @@ namespace eProsima
 
         ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName, Client *client) :
             m_client(client), m_requestPublisher(NULL),
-            m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0), m_ih(DDS::HANDLE_NIL)
+            m_replySubscriber(NULL), m_requestTopic(NULL), m_requestDataWriter(NULL), m_replyFilter(NULL), m_numSec(0)
         {
             const char* const METHOD_NAME = "ClientRPC";
             std::string errorMessage;
@@ -122,10 +122,6 @@ namespace eProsima
                 {
                     if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
                     {
-                        // Register instance.
-                        if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
-                            printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
-
                         if(write(request) == DDS::RETCODE_OK)
                         {
                             // Its not a oneway function.
@@ -251,10 +247,6 @@ namespace eProsima
                 {
                     if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
                     {
-                        // Register instance.
-                        if(DDS_InstanceHandle_is_nil(&m_ih) && registerInstance(request) != 0)
-                            printf("WARNING<%s::%s>: Cannot register request instance\n", CLASS_NAME, METHOD_NAME);
-
                         if(write(request) == DDS::RETCODE_OK)
                         {
                             DDS::StringSeq stringSeq(5);
@@ -635,6 +627,18 @@ namespace eProsima
                 printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
             }
         }
+
+
+		DDS::DataReader* ClientRPC::getReplyDatareader() const
+		{
+			return m_replyDataReader;
+		}
+
+
+		DDS::DataWriter* ClientRPC::getRequestDatawriter() const
+		{
+			return m_requestDataWriter;
+		}
 
     } // namespace DDSRPC
 } // namespace eProsima

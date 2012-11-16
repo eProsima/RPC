@@ -15,11 +15,20 @@ $taskDefs; separator=";\n"$$if(taskDefs)$;$endif$
 
 taskHeader(interfaceName, name) ::= <<
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure $name$ from the server in an asynchronous call.
+ */
 class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         $interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -30,6 +39,11 @@ class $interfaceName$_$name$Task : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         $interfaceName$_$name$CallbackHandler& getObject();
         
         void* getReplyInstance();

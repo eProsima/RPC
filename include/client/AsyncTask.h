@@ -14,7 +14,7 @@ namespace eProsima
         class ClientRPC;
 
 		/**
-		 * \brief This class represents each asynchronous task used to wait the reply from an asynchronous call.
+		 * \brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
 		 */
         class DDSRPC_WIN32_DLL_API AsyncTask
         {
@@ -31,13 +31,13 @@ namespace eProsima
                 virtual ~AsyncTask();
 
 				/**
-				 * \brief This function executes the callback functions when a reply is received or an error was transmitted.
+				 * \brief This function executes the callback functions when a reply is received or an exception was transmitted.
 				 *        This function should be implemented by generated asynchronous tasks.
 				 */
 				virtual void execute() = 0;
 
 				/**
-				 * \brief This function sends an exception that occurs in the client side.
+				 * \brief This function executes the callback function when an exception occurs in the client side.
 				 *        This function should be implemented by generated asynchronous tasks.
 				 *
 				 * \param ex The exception that is sent to the user.
@@ -55,7 +55,6 @@ namespace eProsima
 				 * \brief This function is called when the DDS WaitSet was waked up by the query condition of this asynchronous task.
 				 *        This funtion takes the reply.
 				 *
-				 * \param message Return code occurs till now.
 			     * \param query Query condition associated with this asynchronous task.
 				 */
 				void execute(DDS::QueryCondition *query);
@@ -69,7 +68,11 @@ namespace eProsima
 
             protected:
 
-				/// \brief Returns the allocated memory that will be used when reply will be taken.
+				/**
+				 * \brief Returns the allocated memory that will be used when reply will be taken.
+				 *
+				 * \return Pointer to the allocated memory.
+				 */
                 virtual void* getReplyInstance() = 0;
 
             private:

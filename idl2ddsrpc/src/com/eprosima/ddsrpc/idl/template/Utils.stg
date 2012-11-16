@@ -92,10 +92,27 @@ class $topicName$$templateName$Utils
 {
     public:
 
-        static const char* registerType(DDS::DomainParticipant *clientParticipant);
-         
+        /**
+         * \brief This function registers the type of the structure $topicName$$templateName$ in the DDS domain participant.
+         *
+         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
+         * \return The type name of the structure $topicName$$templateName$.
+         */
+        static const char* registerType(DDS::DomainParticipant *participant);
+        
+        /**
+         * \brief This function sets the parameters into the members of the structure $topicName$$templateName$.
+         *
+         * \param instance Pointer to the structure $topicName$$templateName$ that will be filled. Cannot be NULL.
+         */
         static void setTypeData($topicName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$);
         
+        /**
+         * \brief This function extracts the parameters from the members of the structure $topicName$$templateName$.
+         *
+         * \param data Pointer to the structure $topicName$$templateName$ that contains the parameters' data. Cannot be NULL.
+         $if(isReply)$* \param retcode Internal message returned from the server.$endif$
+         */
         static void extractTypeData($topicName$$templateName$& data$if(isReply)$, eProsima::DDSRPC::ReturnMessage& retcode$endif$$if([params, returnType])$, $endif$$argsDeclRef([params, returnType]);separator=", "$);
 };
 
@@ -120,11 +137,11 @@ class $topicName$$templateName$Utils
  */ 
 definition(topicName, templateName, params, returnType, isReply) ::= <<
 
-const char* $topicName$$templateName$Utils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* $topicName$$templateName$Utils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         $getTypename(funName=topicName, type=templateName, name="typeName")$
 
