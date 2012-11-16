@@ -937,7 +937,7 @@ public class IDL2DDSRPC
                 request.setAttribute("interfaceName", ifc.getName());
                 request.setAttribute("funName", op.getName());
                 reply.setAttribute("interfaceName", ifc.getName());
-                reply.setAttribute("", op.getName());
+                reply.setAttribute("funName", op.getName());
 
                 setRequestReplyParams(request, reply, op, "params", ifc);
                 
