@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MultithreadTestRequestReply_135729104_h
-#define MultithreadTestRequestReply_135729104_h
+#ifndef MultithreadTestRequestReply_135729245_h
+#define MultithreadTestRequestReply_135729245_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -210,4 +210,4 @@ RTIBool MultithreadTest_testReply_copy(
 
 
 
-#endif /* MultithreadTestRequestReply_135729104_h */
+#endif /* MultithreadTestRequestReply_135729245_h */

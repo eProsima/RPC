@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestRequestReplySupport_1086132757_h
-#define StructTestRequestReplySupport_1086132757_h
+#ifndef StructTestRequestReplySupport_1086133049_h
+#define StructTestRequestReplySupport_1086133049_h
 
 /* Uses */
 #include "StructTestRequestReply.h"
@@ -236,4 +236,4 @@ DDS_DATAREADER_C(StructTest_sumaReplyDataReader, StructTest_sumaReplySeq, Struct
 
 
 
-#endif  /* StructTestRequestReplySupport_1086132757_h */
+#endif  /* StructTestRequestReplySupport_1086133049_h */

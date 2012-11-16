@@ -7,6 +7,9 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure getLong.
+ */
 struct AsyncCallTest_getLongRequest{
     RequestHeader header;  //@key
     long lo1;
@@ -14,6 +17,9 @@ struct AsyncCallTest_getLongRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getLong.
+ */
 struct AsyncCallTest_getLongReply{
     ReplyHeader header;  //@key
     long lo2;
@@ -22,6 +28,9 @@ struct AsyncCallTest_getLongReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getBoolean.
+ */
 struct AsyncCallTest_getBooleanRequest{
     RequestHeader header;  //@key
     boolean bo1;
@@ -29,6 +38,9 @@ struct AsyncCallTest_getBooleanRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getBoolean.
+ */
 struct AsyncCallTest_getBooleanReply{
     ReplyHeader header;  //@key
     boolean bo2;
@@ -37,6 +49,9 @@ struct AsyncCallTest_getBooleanReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getString.
+ */
 struct AsyncCallTest_getStringRequest{
     RequestHeader header;  //@key
     string s1;
@@ -44,6 +59,9 @@ struct AsyncCallTest_getStringRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getString.
+ */
 struct AsyncCallTest_getStringReply{
     ReplyHeader header;  //@key
     string s2;
@@ -52,12 +70,18 @@ struct AsyncCallTest_getStringReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure duplicate.
+ */
 struct AsyncCallTest_duplicateRequest{
     RequestHeader header;  //@key
     Structure ev;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure duplicate.
+ */
 struct AsyncCallTest_duplicateReply{
     ReplyHeader header;  //@key
     Structure duplicate_ret;

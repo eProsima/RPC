@@ -6,15 +6,15 @@
 #include "ServerExceptionRequestReplyPlugin.h"
 
 
-const char* ServerException_sendExceptionRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = ServerException_sendExceptionRequestTypeSupport::get_type_name();
 
-        if(ServerException_sendExceptionRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -35,15 +35,15 @@ void ServerException_sendExceptionRequestUtils::extractTypeData(ServerException_
 }
 
 
-const char* ServerException_sendExceptionReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = ServerException_sendExceptionReplyTypeSupport::get_type_name();
 
-        if(ServerException_sendExceptionReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -65,15 +65,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* ServerException_sendExceptionTwoRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionTwoRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = ServerException_sendExceptionTwoRequestTypeSupport::get_type_name();
 
-        if(ServerException_sendExceptionTwoRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionTwoRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -97,15 +97,15 @@ void ServerException_sendExceptionTwoRequestUtils::extractTypeData(ServerExcepti
 }
 
 
-const char* ServerException_sendExceptionTwoReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionTwoReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = ServerException_sendExceptionTwoReplyTypeSupport::get_type_name();
 
-        if(ServerException_sendExceptionTwoReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionTwoReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -131,15 +131,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* ServerException_sendExceptionThreeRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionThreeRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = ServerException_sendExceptionThreeRequestTypeSupport::get_type_name();
 
-        if(ServerException_sendExceptionThreeRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionThreeRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -163,15 +163,15 @@ void ServerException_sendExceptionThreeRequestUtils::extractTypeData(ServerExcep
 }
 
 
-const char* ServerException_sendExceptionThreeReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* ServerException_sendExceptionThreeReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = ServerException_sendExceptionThreeReplyTypeSupport::get_type_name();
 
-        if(ServerException_sendExceptionThreeReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(ServerException_sendExceptionThreeReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

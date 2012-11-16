@@ -249,6 +249,41 @@ int main(int argc, char **argv)
 
     Structure_finalize(&ev);    
 
+	// Test the close of the proxy with pending asynchrnous tasks.
+	DDS_Long  clo1 = 1;       
+    DDS_Long  clo2 = 2;       
+    GetLongHandler cgetLong_handler;
+	DDS_Boolean  cbo1 = RTI_TRUE;       
+    DDS_Boolean  cbo2 = RTI_FALSE;       
+    GetBooleanHandler cgetBoolean_handler;
+	char*  cs1  = DDS::String_dup("PRUEBA");       
+    char*  cs2  = DDS::String_dup("PRUEBA2");       
+    GetStringHandler cgetString_handler;  
+    Structure cev;
+    DuplicateHandler cduplicate_handler;
+
+	Structure_initialize(&cev);    
+        
+    cev.dato = 10;
+    cev.message = DDS_String_dup("HOLA");
+
+    try
+    {
+        proxy->getLong_async(cgetLong_handler, clo1, clo2);
+		proxy->getBoolean_async(cgetBoolean_handler, cbo1, cbo2);
+		proxy->getString_async(cgetString_handler, cs1, cs2);
+		proxy->duplicate_async(cduplicate_handler, cev);
+    }
+    catch(eProsima::DDSRPC::Exception &ex)
+    {
+        printf("TEST FAILED<closing>: %s\n", ex.what());
+        _exit(-1);
+    }
+
+    if(cs1 != NULL) DDS::String_free(cs1);    
+    if(cs2 != NULL) DDS::String_free(cs2);  
+    Structure_finalize(&cev);   
+
     printf("TEST SUCCESFULLY\n");
 
     delete(proxy);

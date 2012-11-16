@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestSupport_46236590_h
-#define TypedefTestSupport_46236590_h
+#ifndef TypedefTestSupport_46236543_h
+#define TypedefTestSupport_46236543_h
 
 /* Uses */
 #include "TypedefTest.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* TypedefTestSupport_46236590_h */
+#endif  /* TypedefTestSupport_46236543_h */

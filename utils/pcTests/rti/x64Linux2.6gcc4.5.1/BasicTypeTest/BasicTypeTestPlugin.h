@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTestPlugin_2026450142_h
-#define BasicTypeTestPlugin_2026450142_h
+#ifndef BasicTypeTestPlugin_2026450091_h
+#define BasicTypeTestPlugin_2026450091_h
 
 #include "BasicTypeTest.h"
 
@@ -47,4 +47,4 @@ extern "C" {
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* BasicTypeTestPlugin_2026450142_h */
+#endif /* BasicTypeTestPlugin_2026450091_h */

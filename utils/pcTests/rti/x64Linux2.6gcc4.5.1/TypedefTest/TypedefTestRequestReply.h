@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTestRequestReply_1722561027_h
-#define TypedefTestRequestReply_1722561027_h
+#ifndef TypedefTestRequestReply_1722561955_h
+#define TypedefTestRequestReply_1722561955_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -1095,4 +1095,4 @@ RTIBool TypedefTest_getCorreaReply_copy(
 
 
 
-#endif /* TypedefTestRequestReply_1722561027_h */
+#endif /* TypedefTestRequestReply_1722561955_h */

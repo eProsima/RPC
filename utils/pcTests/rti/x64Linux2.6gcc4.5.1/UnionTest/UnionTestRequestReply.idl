@@ -7,6 +7,9 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure getEmpleado.
+ */
 struct UnionTest_getEmpleadoRequest{
     RequestHeader header;  //@key
     Empleado em1;
@@ -14,6 +17,9 @@ struct UnionTest_getEmpleadoRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getEmpleado.
+ */
 struct UnionTest_getEmpleadoReply{
     ReplyHeader header;  //@key
     Empleado em2;

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestSupport_81001484_h
-#define SequenceTestSupport_81001484_h
+#ifndef SequenceTestSupport_81001435_h
+#define SequenceTestSupport_81001435_h
 
 /* Uses */
 #include "SequenceTest.h"
@@ -80,4 +80,4 @@ DDS_DATAREADER_C(DatosDataReader, DatosSeq, Datos);
 
 
 
-#endif  /* SequenceTestSupport_81001484_h */
+#endif  /* SequenceTestSupport_81001435_h */

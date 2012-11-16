@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTest_928480644_h
-#define EnumYStringTest_928480644_h
+#ifndef EnumYStringTest_928480589_h
+#define EnumYStringTest_928480589_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -77,4 +77,4 @@ RTIBool Valores_copy(
 
 
 
-#endif /* EnumYStringTest_928480644_h */
+#endif /* EnumYStringTest_928480589_h */

@@ -8,11 +8,20 @@
 #include "client/AsyncTask.h"
 
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure getLong from the server in an asynchronous call.
+ */
 class OnewayCallTest_getLongTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         OnewayCallTest_getLongTask(OnewayCallTest_getLongCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -23,6 +32,11 @@ class OnewayCallTest_getLongTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         OnewayCallTest_getLongCallbackHandler& getObject();
         
         void* getReplyInstance();
@@ -34,11 +48,20 @@ class OnewayCallTest_getLongTask : public eProsima::DDSRPC::AsyncTask
            OnewayCallTest_getLongReply m_reply;
 };
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure getBoolean from the server in an asynchronous call.
+ */
 class OnewayCallTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         OnewayCallTest_getBooleanTask(OnewayCallTest_getBooleanCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -49,6 +72,11 @@ class OnewayCallTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         OnewayCallTest_getBooleanCallbackHandler& getObject();
         
         void* getReplyInstance();
@@ -60,11 +88,20 @@ class OnewayCallTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
            OnewayCallTest_getBooleanReply m_reply;
 };
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure getString from the server in an asynchronous call.
+ */
 class OnewayCallTest_getStringTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         OnewayCallTest_getStringTask(OnewayCallTest_getStringCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -75,6 +112,11 @@ class OnewayCallTest_getStringTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         OnewayCallTest_getStringCallbackHandler& getObject();
         
         void* getReplyInstance();
@@ -86,11 +128,20 @@ class OnewayCallTest_getStringTask : public eProsima::DDSRPC::AsyncTask
            OnewayCallTest_getStringReply m_reply;
 };
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure getStruct from the server in an asynchronous call.
+ */
 class OnewayCallTest_getStructTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         OnewayCallTest_getStructTask(OnewayCallTest_getStructCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -101,6 +152,11 @@ class OnewayCallTest_getStructTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         OnewayCallTest_getStructCallbackHandler& getObject();
         
         void* getReplyInstance();

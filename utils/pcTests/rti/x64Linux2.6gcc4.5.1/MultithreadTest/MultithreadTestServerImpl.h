@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "MultithreadTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the MultithreadTestServer object is created, it creates one instance of this class.
+ */
 class MultithreadTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        MultithreadTestServerImpl();
+        MultithreadTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~MultithreadTestServerImpl();
+        virtual ~MultithreadTestServerImpl(){}
 
          
         DDS_Long test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2);

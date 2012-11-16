@@ -7,10 +7,12 @@
 ServerException_sendExceptionTask::ServerException_sendExceptionTask(ServerException_sendExceptionCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    ServerException_sendExceptionReply_initialize(&m_reply);
 }
 
 ServerException_sendExceptionTask::~ServerException_sendExceptionTask()
 {
+    ServerException_sendExceptionReply_finalize(&m_reply);
 }
 
 ServerException_sendExceptionCallbackHandler& ServerException_sendExceptionTask::getObject()
@@ -49,10 +51,12 @@ void ServerException_sendExceptionTask::on_exception(const eProsima::DDSRPC::Sys
 ServerException_sendExceptionTwoTask::ServerException_sendExceptionTwoTask(ServerException_sendExceptionTwoCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    ServerException_sendExceptionTwoReply_initialize(&m_reply);
 }
 
 ServerException_sendExceptionTwoTask::~ServerException_sendExceptionTwoTask()
 {
+    ServerException_sendExceptionTwoReply_finalize(&m_reply);
 }
 
 ServerException_sendExceptionTwoCallbackHandler& ServerException_sendExceptionTwoTask::getObject()
@@ -94,10 +98,12 @@ void ServerException_sendExceptionTwoTask::on_exception(const eProsima::DDSRPC::
 ServerException_sendExceptionThreeTask::ServerException_sendExceptionThreeTask(ServerException_sendExceptionThreeCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    ServerException_sendExceptionThreeReply_initialize(&m_reply);
 }
 
 ServerException_sendExceptionThreeTask::~ServerException_sendExceptionThreeTask()
 {
+    ServerException_sendExceptionThreeReply_finalize(&m_reply);
 }
 
 ServerException_sendExceptionThreeCallbackHandler& ServerException_sendExceptionThreeTask::getObject()

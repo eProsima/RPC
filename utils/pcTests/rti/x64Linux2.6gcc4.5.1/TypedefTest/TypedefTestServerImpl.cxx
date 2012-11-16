@@ -5,14 +5,6 @@
 
 #include "TypedefTestServerImpl.h"
 
-TypedefTestServerImpl::TypedefTestServerImpl()
-{
-}
-TypedefTestServerImpl::~TypedefTestServerImpl()
-{
-}
-
-
 largo TypedefTestServerImpl::getLargo(/*in*/ largo l1, /*out*/ largo& l2) 
 {
     largo  getLargo_ret = 0;    

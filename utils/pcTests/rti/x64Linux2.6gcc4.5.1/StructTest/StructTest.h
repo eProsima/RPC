@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTest_784352164_h
-#define StructTest_784352164_h
+#ifndef StructTest_784352119_h
+#define StructTest_784352119_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -179,4 +179,4 @@ RTIBool Recepcion_copy(
 
 
 
-#endif /* StructTest_784352164_h */
+#endif /* StructTest_784352119_h */

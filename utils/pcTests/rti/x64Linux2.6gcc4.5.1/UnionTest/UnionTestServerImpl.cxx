@@ -5,14 +5,6 @@
 
 #include "UnionTestServerImpl.h"
 
-UnionTestServerImpl::UnionTestServerImpl()
-{
-}
-UnionTestServerImpl::~UnionTestServerImpl()
-{
-}
-
-
 Empleado UnionTestServerImpl::getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Empleado& em2, /*out*/ Empleado& em3) 
 {
     Empleado getEmpleado_ret;

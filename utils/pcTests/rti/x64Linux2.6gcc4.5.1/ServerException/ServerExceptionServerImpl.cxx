@@ -6,14 +6,6 @@
 #include "ServerExceptionServerImpl.h"
 #include "exceptions/ServerInternalException.h"
 
-ServerExceptionServerImpl::ServerExceptionServerImpl()
-{
-}
-ServerExceptionServerImpl::~ServerExceptionServerImpl()
-{
-}
-
-
 void ServerExceptionServerImpl::sendException() 
 {
     throw eProsima::DDSRPC::ServerInternalException("Testing exception");

@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "StructTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the StructTestServer object is created, it creates one instance of this class.
+ */
 class StructTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        StructTestServerImpl();
+        StructTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~StructTestServerImpl();
+        virtual ~StructTestServerImpl(){}
 
          
         Recepcion duplicate(/*in*/ const Envio& ev);

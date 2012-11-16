@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestPlugin_784352164_h
-#define StructTestPlugin_784352164_h
+#ifndef StructTestPlugin_784352119_h
+#define StructTestPlugin_784352119_h
 
 #include "StructTest.h"
 
@@ -453,4 +453,4 @@ RecepcionPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* StructTestPlugin_784352164_h */
+#endif /* StructTestPlugin_784352119_h */

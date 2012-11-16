@@ -8,11 +8,20 @@
 #include "client/AsyncTask.h"
 
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure sendException from the server in an asynchronous call.
+ */
 class ServerException_sendExceptionTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         ServerException_sendExceptionTask(ServerException_sendExceptionCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -23,6 +32,11 @@ class ServerException_sendExceptionTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         ServerException_sendExceptionCallbackHandler& getObject();
         
         void* getReplyInstance();
@@ -34,11 +48,20 @@ class ServerException_sendExceptionTask : public eProsima::DDSRPC::AsyncTask
            ServerException_sendExceptionReply m_reply;
 };
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure sendExceptionTwo from the server in an asynchronous call.
+ */
 class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         ServerException_sendExceptionTwoTask(ServerException_sendExceptionTwoCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -49,6 +72,11 @@ class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         ServerException_sendExceptionTwoCallbackHandler& getObject();
         
         void* getReplyInstance();
@@ -60,11 +88,20 @@ class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
            ServerException_sendExceptionTwoReply m_reply;
 };
 
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure sendExceptionThree from the server in an asynchronous call.
+ */
 class ServerException_sendExceptionThreeTask : public eProsima::DDSRPC::AsyncTask
 {
     public:
 
-        /// \brief The default constructor.
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that DDSRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
         ServerException_sendExceptionThreeTask(ServerException_sendExceptionThreeCallbackHandler &obj,
            eProsima::DDSRPC::Client *client);
 
@@ -75,6 +112,11 @@ class ServerException_sendExceptionThreeTask : public eProsima::DDSRPC::AsyncTas
         
         virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
         
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
         ServerException_sendExceptionThreeCallbackHandler& getObject();
         
         void* getReplyInstance();

@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "EnumYStringTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the EnumYStringTestServer object is created, it creates one instance of this class.
+ */
 class EnumYStringTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        EnumYStringTestServerImpl();
+        EnumYStringTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~EnumYStringTestServerImpl();
+        virtual ~EnumYStringTestServerImpl(){}
 
          
         Valores getEnum(/*in*/ Valores v1, /*inout*/ Valores& v2, /*out*/ Valores& v3);

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BasicTypeTest_2026450142_h
-#define BasicTypeTest_2026450142_h
+#ifndef BasicTypeTest_2026450091_h
+#define BasicTypeTest_2026450091_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -27,4 +27,4 @@
 
 
 
-#endif /* BasicTypeTest_2026450142_h */
+#endif /* BasicTypeTest_2026450091_h */

@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "ServerExceptionRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the ServerExceptionServer object is created, it creates one instance of this class.
+ */
 class ServerExceptionServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        ServerExceptionServerImpl();
+        ServerExceptionServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~ServerExceptionServerImpl();
+        virtual ~ServerExceptionServerImpl(){}
 
          
         void sendException();

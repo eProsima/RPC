@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef TypedefTest_46236590_h
-#define TypedefTest_46236590_h
+#ifndef TypedefTest_46236543_h
+#define TypedefTest_46236543_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -367,4 +367,4 @@ RTIBool correa_copy(
 
 
 
-#endif /* TypedefTest_46236590_h */
+#endif /* TypedefTest_46236543_h */

@@ -5,14 +5,6 @@
 
 #include "BasicTypeTestServerImpl.h"
 
-BasicTypeTestServerImpl::BasicTypeTestServerImpl()
-{
-}
-BasicTypeTestServerImpl::~BasicTypeTestServerImpl()
-{
-}
-
-
 DDS_Octet BasicTypeTestServerImpl::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3) 
 {
     DDS_Octet returnedValue;

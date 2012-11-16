@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef OnewayCallTestRequestReply_1352501692_h
-#define OnewayCallTestRequestReply_1352501692_h
+#ifndef OnewayCallTestRequestReply_1352502597_h
+#define OnewayCallTestRequestReply_1352502597_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -1085,4 +1085,4 @@ RTIBool OnewayCallTest_getStructReply_copy(
 
 
 
-#endif /* OnewayCallTestRequestReply_1352501692_h */
+#endif /* OnewayCallTestRequestReply_1352502597_h */

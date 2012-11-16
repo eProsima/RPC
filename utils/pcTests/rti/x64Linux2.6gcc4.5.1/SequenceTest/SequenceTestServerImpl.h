@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "SequenceTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the SequenceTestServer object is created, it creates one instance of this class.
+ */
 class SequenceTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        SequenceTestServerImpl();
+        SequenceTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~SequenceTestServerImpl();
+        virtual ~SequenceTestServerImpl(){}
 
          
         largo getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3);

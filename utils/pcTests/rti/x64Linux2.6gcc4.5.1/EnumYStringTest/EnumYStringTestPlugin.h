@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestPlugin_928480644_h
-#define EnumYStringTestPlugin_928480644_h
+#ifndef EnumYStringTestPlugin_928480589_h
+#define EnumYStringTestPlugin_928480589_h
 
 #include "EnumYStringTest.h"
 
@@ -148,4 +148,4 @@ ValoresPluginSupport_print_data(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* EnumYStringTestPlugin_928480644_h */
+#endif /* EnumYStringTestPlugin_928480589_h */

@@ -10,141 +10,249 @@
 #include "BasicTypeTestClientRPCSupport.h"
 #include "exceptions/Exception.h"
 
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getOctetCallbackHandler
 {
     public:
-        virtual void getOctet(/*inout*/ DDS_Octet oc2, /*out*/ DDS_Octet oc3, /*out*/ DDS_Octet getOctet_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getOctet(/*inout*/ DDS_Octet oc2, /*out*/ DDS_Octet oc3, /*out*/ DDS_Octet getOctet_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getCharCallbackHandler
 {
     public:
-        virtual void getChar(/*inout*/ DDS_Char ch2, /*out*/ DDS_Char ch3, /*out*/ DDS_Char getChar_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getChar(/*inout*/ DDS_Char ch2, /*out*/ DDS_Char ch3, /*out*/ DDS_Char getChar_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getWCharCallbackHandler
 {
     public:
-        virtual void getWChar(/*inout*/ DDS_Wchar wch2, /*out*/ DDS_Wchar wch3, /*out*/ DDS_Wchar getWChar_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getWChar(/*inout*/ DDS_Wchar wch2, /*out*/ DDS_Wchar wch3, /*out*/ DDS_Wchar getWChar_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getShortCallbackHandler
 {
     public:
-        virtual void getShort(/*inout*/ DDS_Short sh2, /*out*/ DDS_Short sh3, /*out*/ DDS_Short getShort_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getShort(/*inout*/ DDS_Short sh2, /*out*/ DDS_Short sh3, /*out*/ DDS_Short getShort_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getUShortCallbackHandler
 {
     public:
-        virtual void getUShort(/*inout*/ DDS_UnsignedShort ush2, /*out*/ DDS_UnsignedShort ush3, /*out*/ DDS_UnsignedShort getUShort_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getUShort(/*inout*/ DDS_UnsignedShort ush2, /*out*/ DDS_UnsignedShort ush3, /*out*/ DDS_UnsignedShort getUShort_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getLongCallbackHandler
 {
     public:
-        virtual void getLong(/*inout*/ DDS_Long lo2, /*out*/ DDS_Long lo3, /*out*/ DDS_Long getLong_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getLong(/*inout*/ DDS_Long lo2, /*out*/ DDS_Long lo3, /*out*/ DDS_Long getLong_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getULongCallbackHandler
 {
     public:
-        virtual void getULong(/*inout*/ DDS_UnsignedLong ulo2, /*out*/ DDS_UnsignedLong ulo3, /*out*/ DDS_UnsignedLong getULong_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getULong(/*inout*/ DDS_UnsignedLong ulo2, /*out*/ DDS_UnsignedLong ulo3, /*out*/ DDS_UnsignedLong getULong_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getLLongCallbackHandler
 {
     public:
-        virtual void getLLong(/*inout*/ DDS_LongLong llo2, /*out*/ DDS_LongLong llo3, /*out*/ DDS_LongLong getLLong_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getLLong(/*inout*/ DDS_LongLong llo2, /*out*/ DDS_LongLong llo3, /*out*/ DDS_LongLong getLLong_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getULLongCallbackHandler
 {
     public:
-        virtual void getULLong(/*inout*/ DDS_UnsignedLongLong ullo2, /*out*/ DDS_UnsignedLongLong ullo3, /*out*/ DDS_UnsignedLongLong getULLong_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getULLong(/*inout*/ DDS_UnsignedLongLong ullo2, /*out*/ DDS_UnsignedLongLong ullo3, /*out*/ DDS_UnsignedLongLong getULLong_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getFloatCallbackHandler
 {
     public:
-        virtual void getFloat(/*inout*/ DDS_Float fl2, /*out*/ DDS_Float fl3, /*out*/ DDS_Float getFloat_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getFloat(/*inout*/ DDS_Float fl2, /*out*/ DDS_Float fl3, /*out*/ DDS_Float getFloat_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getDoubleCallbackHandler
 {
     public:
-        virtual void getDouble(/*inout*/ DDS_Double do2, /*out*/ DDS_Double do3, /*out*/ DDS_Double getDouble_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getDouble(/*inout*/ DDS_Double do2, /*out*/ DDS_Double do3, /*out*/ DDS_Double getDouble_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
+/**
+ * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
 class BasicTypeTest_getBooleanCallbackHandler
 {
     public:
-        virtual void getBoolean(/*inout*/ DDS_Boolean bo2, /*out*/ DDS_Boolean bo3, /*out*/ DDS_Boolean getBoolean_ret)
-        {
-        }
-   
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex)
-        {
-        }
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void getBoolean(/*inout*/ DDS_Boolean bo2, /*out*/ DDS_Boolean bo3, /*out*/ DDS_Boolean getBoolean_ret) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
 };
 
 /**
- * \brief This class implements a specific server's proxy for the defined interface by user.
+ * \brief This class implements a specific server's proxy for the defined interface BasicTypeTest.
  */
 class BasicTypeTestProxy : public eProsima::DDSRPC::Client
 {
@@ -153,22 +261,24 @@ class BasicTypeTestProxy : public eProsima::DDSRPC::Client
         /**
          * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
          *
-         * \param remoteServiceName The name of the remote service that the proxy will offer.
+         * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
          */
         BasicTypeTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
         /**
          * \brief This constructor sets the transport that will be used by the server's proxy.
          *
-         * \param remoteServiceName The name of the remote service that the proxy will offer.
+         * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
          * \param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
          *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
+         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
          */
         BasicTypeTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
 

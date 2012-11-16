@@ -59,14 +59,14 @@ DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato
         case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ClientInternalException("Error in client side");
             break;
+        case eProsima::DDSRPC::NO_SERVER:
+            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+            break;
         case eProsima::DDSRPC::SERVER_TIMEOUT:
             throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
             throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
-            break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
             break;
     };
     

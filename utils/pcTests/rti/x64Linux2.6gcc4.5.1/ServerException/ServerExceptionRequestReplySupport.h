@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef ServerExceptionRequestReplySupport_2113075110_h
-#define ServerExceptionRequestReplySupport_2113075110_h
+#ifndef ServerExceptionRequestReplySupport_2113075603_h
+#define ServerExceptionRequestReplySupport_2113075603_h
 
 /* Uses */
 #include "ServerExceptionRequestReply.h"
@@ -340,4 +340,4 @@ DDS_DATAREADER_C(ServerException_sendExceptionThreeReplyDataReader, ServerExcept
 
 
 
-#endif  /* ServerExceptionRequestReplySupport_2113075110_h */
+#endif  /* ServerExceptionRequestReplySupport_2113075603_h */

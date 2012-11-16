@@ -7,12 +7,18 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure test.
+ */
 struct MultithreadTest_testRequest{
     RequestHeader header;  //@key
     Dato dato1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure test.
+ */
 struct MultithreadTest_testReply{
     ReplyHeader header;  //@key
     Dato dato2;

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestSupport_928480644_h
-#define EnumYStringTestSupport_928480644_h
+#ifndef EnumYStringTestSupport_928480589_h
+#define EnumYStringTestSupport_928480589_h
 
 /* Uses */
 #include "EnumYStringTest.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* EnumYStringTestSupport_928480644_h */
+#endif  /* EnumYStringTestSupport_928480589_h */

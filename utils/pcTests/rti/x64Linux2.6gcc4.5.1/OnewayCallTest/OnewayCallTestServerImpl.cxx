@@ -10,14 +10,6 @@ static DDS_Boolean b = RTI_FALSE;
 static char *s = NULL;
 static Structure st;
 
-OnewayCallTestServerImpl::OnewayCallTestServerImpl()
-{
-}
-OnewayCallTestServerImpl::~OnewayCallTestServerImpl()
-{
-}
-
- 
 void OnewayCallTestServerImpl::setLong(/*in*/ DDS_Long lo1) 
 {
 	l = lo1;

@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "OnewayCallTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the OnewayCallTestServer object is created, it creates one instance of this class.
+ */
 class OnewayCallTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        OnewayCallTestServerImpl();
+        OnewayCallTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~OnewayCallTestServerImpl();
+        virtual ~OnewayCallTestServerImpl(){}
 
          
         void setLong(/*in*/ DDS_Long lo1);

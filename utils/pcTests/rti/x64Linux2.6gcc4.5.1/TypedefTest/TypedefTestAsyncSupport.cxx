@@ -7,10 +7,12 @@
 TypedefTest_getLargoTask::TypedefTest_getLargoTask(TypedefTest_getLargoCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    TypedefTest_getLargoReply_initialize(&m_reply);
 }
 
 TypedefTest_getLargoTask::~TypedefTest_getLargoTask()
 {
+    TypedefTest_getLargoReply_finalize(&m_reply);
 }
 
 TypedefTest_getLargoCallbackHandler& TypedefTest_getLargoTask::getObject()
@@ -51,10 +53,12 @@ void TypedefTest_getLargoTask::on_exception(const eProsima::DDSRPC::SystemExcept
 TypedefTest_getLarguisimoTask::TypedefTest_getLarguisimoTask(TypedefTest_getLarguisimoCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    TypedefTest_getLarguisimoReply_initialize(&m_reply);
 }
 
 TypedefTest_getLarguisimoTask::~TypedefTest_getLarguisimoTask()
 {
+    TypedefTest_getLarguisimoReply_finalize(&m_reply);
 }
 
 TypedefTest_getLarguisimoCallbackHandler& TypedefTest_getLarguisimoTask::getObject()
@@ -95,10 +99,12 @@ void TypedefTest_getLarguisimoTask::on_exception(const eProsima::DDSRPC::SystemE
 TypedefTest_getDatosDefTask::TypedefTest_getDatosDefTask(TypedefTest_getDatosDefCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    TypedefTest_getDatosDefReply_initialize(&m_reply);
 }
 
 TypedefTest_getDatosDefTask::~TypedefTest_getDatosDefTask()
 {
+    TypedefTest_getDatosDefReply_finalize(&m_reply);
 }
 
 TypedefTest_getDatosDefCallbackHandler& TypedefTest_getDatosDefTask::getObject()
@@ -141,10 +147,12 @@ void TypedefTest_getDatosDefTask::on_exception(const eProsima::DDSRPC::SystemExc
 TypedefTest_getDatosDefondoTask::TypedefTest_getDatosDefondoTask(TypedefTest_getDatosDefondoCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    TypedefTest_getDatosDefondoReply_initialize(&m_reply);
 }
 
 TypedefTest_getDatosDefondoTask::~TypedefTest_getDatosDefondoTask()
 {
+    TypedefTest_getDatosDefondoReply_finalize(&m_reply);
 }
 
 TypedefTest_getDatosDefondoCallbackHandler& TypedefTest_getDatosDefondoTask::getObject()
@@ -187,10 +195,12 @@ void TypedefTest_getDatosDefondoTask::on_exception(const eProsima::DDSRPC::Syste
 TypedefTest_getCadenaTask::TypedefTest_getCadenaTask(TypedefTest_getCadenaCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    TypedefTest_getCadenaReply_initialize(&m_reply);
 }
 
 TypedefTest_getCadenaTask::~TypedefTest_getCadenaTask()
 {
+    TypedefTest_getCadenaReply_finalize(&m_reply);
 }
 
 TypedefTest_getCadenaCallbackHandler& TypedefTest_getCadenaTask::getObject()
@@ -231,10 +241,12 @@ void TypedefTest_getCadenaTask::on_exception(const eProsima::DDSRPC::SystemExcep
 TypedefTest_getCorreaTask::TypedefTest_getCorreaTask(TypedefTest_getCorreaCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    TypedefTest_getCorreaReply_initialize(&m_reply);
 }
 
 TypedefTest_getCorreaTask::~TypedefTest_getCorreaTask()
 {
+    TypedefTest_getCorreaReply_finalize(&m_reply);
 }
 
 TypedefTest_getCorreaCallbackHandler& TypedefTest_getCorreaTask::getObject()

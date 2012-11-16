@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestRequestReplySupport_1383307295_h
-#define EnumYStringTestRequestReplySupport_1383307295_h
+#ifndef EnumYStringTestRequestReplySupport_1383307758_h
+#define EnumYStringTestRequestReplySupport_1383307758_h
 
 /* Uses */
 #include "EnumYStringTestRequestReply.h"
@@ -340,4 +340,4 @@ DDS_DATAREADER_C(EnumYStringTest_getStringBoundedReplyDataReader, EnumYStringTes
 
 
 
-#endif  /* EnumYStringTestRequestReplySupport_1383307295_h */
+#endif  /* EnumYStringTestRequestReplySupport_1383307758_h */

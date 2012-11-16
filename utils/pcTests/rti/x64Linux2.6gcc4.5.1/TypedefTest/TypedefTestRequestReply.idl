@@ -7,12 +7,18 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure getLargo.
+ */
 struct TypedefTest_getLargoRequest{
     RequestHeader header;  //@key
     largo l1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getLargo.
+ */
 struct TypedefTest_getLargoReply{
     ReplyHeader header;  //@key
     largo l2;
@@ -20,12 +26,18 @@ struct TypedefTest_getLargoReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getLarguisimo.
+ */
 struct TypedefTest_getLarguisimoRequest{
     RequestHeader header;  //@key
     larguisimo ll1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getLarguisimo.
+ */
 struct TypedefTest_getLarguisimoReply{
     ReplyHeader header;  //@key
     larguisimo ll2;
@@ -33,12 +45,18 @@ struct TypedefTest_getLarguisimoReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getDatosDef.
+ */
 struct TypedefTest_getDatosDefRequest{
     RequestHeader header;  //@key
     DatosDef d1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getDatosDef.
+ */
 struct TypedefTest_getDatosDefReply{
     ReplyHeader header;  //@key
     DatosDef d2;
@@ -46,12 +64,18 @@ struct TypedefTest_getDatosDefReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getDatosDefondo.
+ */
 struct TypedefTest_getDatosDefondoRequest{
     RequestHeader header;  //@key
     DatosDefondo dd1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getDatosDefondo.
+ */
 struct TypedefTest_getDatosDefondoReply{
     ReplyHeader header;  //@key
     DatosDefondo dd2;
@@ -59,12 +83,18 @@ struct TypedefTest_getDatosDefondoReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getCadena.
+ */
 struct TypedefTest_getCadenaRequest{
     RequestHeader header;  //@key
     cadena c1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getCadena.
+ */
 struct TypedefTest_getCadenaReply{
     ReplyHeader header;  //@key
     cadena c2;
@@ -72,12 +102,18 @@ struct TypedefTest_getCadenaReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure getCorrea.
+ */
 struct TypedefTest_getCorreaRequest{
     RequestHeader header;  //@key
     correa cc1;
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure getCorrea.
+ */
 struct TypedefTest_getCorreaReply{
     ReplyHeader header;  //@key
     correa cc2;

@@ -7,10 +7,12 @@
 UnionTest_getEmpleadoTask::UnionTest_getEmpleadoTask(UnionTest_getEmpleadoCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    UnionTest_getEmpleadoReply_initialize(&m_reply);
 }
 
 UnionTest_getEmpleadoTask::~UnionTest_getEmpleadoTask()
 {
+    UnionTest_getEmpleadoReply_finalize(&m_reply);
 }
 
 UnionTest_getEmpleadoCallbackHandler& UnionTest_getEmpleadoTask::getObject()

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestRequestReplySupport_1689902507_h
-#define SequenceTestRequestReplySupport_1689902507_h
+#ifndef SequenceTestRequestReplySupport_1689902972_h
+#define SequenceTestRequestReplySupport_1689902972_h
 
 /* Uses */
 #include "SequenceTestRequestReply.h"
@@ -340,4 +340,4 @@ DDS_DATAREADER_C(SequenceTest_getStringBoundedReplyDataReader, SequenceTest_getS
 
 
 
-#endif  /* SequenceTestRequestReplySupport_1689902507_h */
+#endif  /* SequenceTestRequestReplySupport_1689902972_h */

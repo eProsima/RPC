@@ -5,14 +5,6 @@
 
 #include "StructTestServerImpl.h"
 
-StructTestServerImpl::StructTestServerImpl()
-{
-}
-StructTestServerImpl::~StructTestServerImpl()
-{
-}
-
-
 Recepcion StructTestServerImpl::duplicate(/*in*/ const Envio& ev) 
 {
     Recepcion duplicate_ret;

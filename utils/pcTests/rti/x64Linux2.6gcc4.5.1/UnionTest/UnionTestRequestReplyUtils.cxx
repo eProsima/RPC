@@ -6,15 +6,15 @@
 #include "UnionTestRequestReplyPlugin.h"
 
 
-const char* UnionTest_getEmpleadoRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* UnionTest_getEmpleadoRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = UnionTest_getEmpleadoRequestTypeSupport::get_type_name();
 
-        if(UnionTest_getEmpleadoRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(UnionTest_getEmpleadoRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -38,15 +38,15 @@ void UnionTest_getEmpleadoRequestUtils::extractTypeData(UnionTest_getEmpleadoReq
 }
 
 
-const char* UnionTest_getEmpleadoReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* UnionTest_getEmpleadoReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = UnionTest_getEmpleadoReplyTypeSupport::get_type_name();
 
-        if(UnionTest_getEmpleadoReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(UnionTest_getEmpleadoReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

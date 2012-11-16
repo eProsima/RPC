@@ -7,10 +7,12 @@
 StructTest_duplicateTask::StructTest_duplicateTask(StructTest_duplicateCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    StructTest_duplicateReply_initialize(&m_reply);
 }
 
 StructTest_duplicateTask::~StructTest_duplicateTask()
 {
+    StructTest_duplicateReply_finalize(&m_reply);
 }
 
 StructTest_duplicateCallbackHandler& StructTest_duplicateTask::getObject()
@@ -51,10 +53,12 @@ void StructTest_duplicateTask::on_exception(const eProsima::DDSRPC::SystemExcept
 StructTest_sumaTask::StructTest_sumaTask(StructTest_sumaCallbackHandler &obj,
    eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
 {
+    StructTest_sumaReply_initialize(&m_reply);
 }
 
 StructTest_sumaTask::~StructTest_sumaTask()
 {
+    StructTest_sumaReply_finalize(&m_reply);
 }
 
 StructTest_sumaCallbackHandler& StructTest_sumaTask::getObject()

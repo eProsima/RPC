@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef UnionTestSupport_229517788_h
-#define UnionTestSupport_229517788_h
+#ifndef UnionTestSupport_229517745_h
+#define UnionTestSupport_229517745_h
 
 /* Uses */
 #include "UnionTest.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* UnionTestSupport_229517788_h */
+#endif  /* UnionTestSupport_229517745_h */

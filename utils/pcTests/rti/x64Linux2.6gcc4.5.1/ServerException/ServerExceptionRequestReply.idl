@@ -7,16 +7,25 @@
 
 
 
+/**
+ * Topic used to receive/send requests for the procedure sendException.
+ */
 struct ServerException_sendExceptionRequest{
     RequestHeader header;  //@key
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure sendException.
+ */
 struct ServerException_sendExceptionReply{
     ReplyHeader header;  //@key
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure sendExceptionTwo.
+ */
 struct ServerException_sendExceptionTwoRequest{
     RequestHeader header;  //@key
     string message;
@@ -24,6 +33,9 @@ struct ServerException_sendExceptionTwoRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure sendExceptionTwo.
+ */
 struct ServerException_sendExceptionTwoReply{
     ReplyHeader header;  //@key
     string message2;
@@ -32,6 +44,9 @@ struct ServerException_sendExceptionTwoReply{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send requests for the procedure sendExceptionThree.
+ */
 struct ServerException_sendExceptionThreeRequest{
     RequestHeader header;  //@key
     Estructura es;
@@ -39,6 +54,9 @@ struct ServerException_sendExceptionThreeRequest{
 };  //@top-level true
 
 
+/**
+ * Topic used to receive/send replies for the procedure sendExceptionThree.
+ */
 struct ServerException_sendExceptionThreeReply{
     ReplyHeader header;  //@key
     Estructura es2;

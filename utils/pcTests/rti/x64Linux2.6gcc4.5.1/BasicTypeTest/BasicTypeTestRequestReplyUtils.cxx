@@ -6,15 +6,15 @@
 #include "BasicTypeTestRequestReplyPlugin.h"
 
 
-const char* BasicTypeTest_getOctetRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getOctetRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getOctetRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getOctetRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getOctetRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -38,15 +38,15 @@ void BasicTypeTest_getOctetRequestUtils::extractTypeData(BasicTypeTest_getOctetR
 }
 
 
-const char* BasicTypeTest_getOctetReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getOctetReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getOctetReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getOctetReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getOctetReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -71,15 +71,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getCharRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getCharRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getCharRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getCharRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getCharRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -103,15 +103,15 @@ void BasicTypeTest_getCharRequestUtils::extractTypeData(BasicTypeTest_getCharReq
 }
 
 
-const char* BasicTypeTest_getCharReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getCharReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getCharReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getCharReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getCharReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -136,15 +136,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getWCharRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getWCharRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getWCharRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getWCharRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getWCharRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -168,15 +168,15 @@ void BasicTypeTest_getWCharRequestUtils::extractTypeData(BasicTypeTest_getWCharR
 }
 
 
-const char* BasicTypeTest_getWCharReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getWCharReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getWCharReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getWCharReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getWCharReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -201,15 +201,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getShortRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getShortRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getShortRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getShortRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getShortRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -233,15 +233,15 @@ void BasicTypeTest_getShortRequestUtils::extractTypeData(BasicTypeTest_getShortR
 }
 
 
-const char* BasicTypeTest_getShortReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getShortReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getShortReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getShortReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getShortReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -266,15 +266,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getUShortRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getUShortRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getUShortRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getUShortRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getUShortRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -298,15 +298,15 @@ void BasicTypeTest_getUShortRequestUtils::extractTypeData(BasicTypeTest_getUShor
 }
 
 
-const char* BasicTypeTest_getUShortReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getUShortReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getUShortReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getUShortReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getUShortReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -331,15 +331,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getLongRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -363,15 +363,15 @@ void BasicTypeTest_getLongRequestUtils::extractTypeData(BasicTypeTest_getLongReq
 }
 
 
-const char* BasicTypeTest_getLongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getLongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getLongReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getLongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getLongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -396,15 +396,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getULongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getULongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getULongRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getULongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getULongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -428,15 +428,15 @@ void BasicTypeTest_getULongRequestUtils::extractTypeData(BasicTypeTest_getULongR
 }
 
 
-const char* BasicTypeTest_getULongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getULongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getULongReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getULongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getULongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -461,15 +461,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getLLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getLLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getLLongRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getLLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getLLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -493,15 +493,15 @@ void BasicTypeTest_getLLongRequestUtils::extractTypeData(BasicTypeTest_getLLongR
 }
 
 
-const char* BasicTypeTest_getLLongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getLLongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getLLongReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getLLongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getLLongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -526,15 +526,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getULLongRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getULLongRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getULLongRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getULLongRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getULLongRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -558,15 +558,15 @@ void BasicTypeTest_getULLongRequestUtils::extractTypeData(BasicTypeTest_getULLon
 }
 
 
-const char* BasicTypeTest_getULLongReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getULLongReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getULLongReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getULLongReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getULLongReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -591,15 +591,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getFloatRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getFloatRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getFloatRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getFloatRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getFloatRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -623,15 +623,15 @@ void BasicTypeTest_getFloatRequestUtils::extractTypeData(BasicTypeTest_getFloatR
 }
 
 
-const char* BasicTypeTest_getFloatReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getFloatReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getFloatReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getFloatReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getFloatReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -656,15 +656,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getDoubleRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getDoubleRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getDoubleRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getDoubleRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getDoubleRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -688,15 +688,15 @@ void BasicTypeTest_getDoubleRequestUtils::extractTypeData(BasicTypeTest_getDoubl
 }
 
 
-const char* BasicTypeTest_getDoubleReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getDoubleReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getDoubleReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getDoubleReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getDoubleReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -721,15 +721,15 @@ retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
 }
 
 
-const char* BasicTypeTest_getBooleanRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getBooleanRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getBooleanRequestTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getBooleanRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getBooleanRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -753,15 +753,15 @@ void BasicTypeTest_getBooleanRequestUtils::extractTypeData(BasicTypeTest_getBool
 }
 
 
-const char* BasicTypeTest_getBooleanReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* BasicTypeTest_getBooleanReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = BasicTypeTest_getBooleanReplyTypeSupport::get_type_name();
 
-        if(BasicTypeTest_getBooleanReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(BasicTypeTest_getBooleanReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

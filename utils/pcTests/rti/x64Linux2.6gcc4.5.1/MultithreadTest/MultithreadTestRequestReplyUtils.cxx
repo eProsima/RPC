@@ -6,15 +6,15 @@
 #include "MultithreadTestRequestReplyPlugin.h"
 
 
-const char* MultithreadTest_testRequestUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* MultithreadTest_testRequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = MultithreadTest_testRequestTypeSupport::get_type_name();
 
-        if(MultithreadTest_testRequestTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(MultithreadTest_testRequestTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }
@@ -36,15 +36,15 @@ void MultithreadTest_testRequestUtils::extractTypeData(MultithreadTest_testReque
 }
 
 
-const char* MultithreadTest_testReplyUtils::registerType(DDS::DomainParticipant *clientParticipant)
+const char* MultithreadTest_testReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
 
-    if(clientParticipant != NULL)
+    if(participant != NULL)
     {
         typeName = MultithreadTest_testReplyTypeSupport::get_type_name();
 
-        if(MultithreadTest_testReplyTypeSupport::register_type(clientParticipant, typeName) != DDS::RETCODE_OK)
+        if(MultithreadTest_testReplyTypeSupport::register_type(participant, typeName) != DDS::RETCODE_OK)
         {
             return NULL;
         }

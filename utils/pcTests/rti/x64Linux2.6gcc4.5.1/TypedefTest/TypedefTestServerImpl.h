@@ -8,15 +8,19 @@
 #include "utils/Messages.h"
 #include "TypedefTestRequestReplyUtils.h"
 
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the TypedefTestServer object is created, it creates one instance of this class.
+ */
 class TypedefTestServerImpl
 {
     public:
 
         /// \brief The default constructor.
-        TypedefTestServerImpl();
+        TypedefTestServerImpl(){}
 
         /// \brief The default destructor.
-        virtual ~TypedefTestServerImpl();
+        virtual ~TypedefTestServerImpl(){}
 
          
         largo getLargo(/*in*/ largo l1, /*out*/ largo& l2);
