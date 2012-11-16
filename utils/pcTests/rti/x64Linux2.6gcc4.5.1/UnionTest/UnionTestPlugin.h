@@ -35,6 +35,7 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
+#define Empleado_LAST_MEMBER_ID 0
 
 #define EmpleadoPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define EmpleadoPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -74,34 +75,7 @@ EmpleadoPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
- 
 
-/* ----------------------------------------------------------------------------
-    Callback functions:
- * ---------------------------------------------------------------------------- */
-
-NDDSUSERDllExport extern PRESTypePluginParticipantData 
-EmpleadoPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-NDDSUSERDllExport extern void 
-EmpleadoPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-    
-NDDSUSERDllExport extern PRESTypePluginEndpointData 
-EmpleadoPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-NDDSUSERDllExport extern void 
-EmpleadoPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 EmpleadoPlugin_copy_sample(
@@ -145,6 +119,7 @@ EmpleadoPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EmpleadoPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -174,6 +149,7 @@ EmpleadoPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Empleado * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -230,13 +206,6 @@ EmpleadoPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
-     
-/* Plugin Functions */
-NDDSUSERDllExport extern struct PRESTypePlugin*
-EmpleadoPlugin_new(void);
-
-NDDSUSERDllExport extern void
-EmpleadoPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }

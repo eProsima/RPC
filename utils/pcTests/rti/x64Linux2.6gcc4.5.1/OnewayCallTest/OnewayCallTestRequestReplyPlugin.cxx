@@ -36,6 +36,10 @@
   #include "cdr/cdr_type.h"
 #endif
 
+#ifndef cdr_type_object_h
+  #include "cdr/cdr_typeObject.h"
+#endif
+
 #ifndef cdr_encapsulation_h
   #include "cdr/cdr_encapsulation.h"
 #endif
@@ -69,11 +73,11 @@ OnewayCallTest_setLongRequestPluginSupport_create_data_ex(RTIBool allocate_point
         &sample, OnewayCallTest_setLongRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_setLongRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_setLongRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -138,9 +142,11 @@ OnewayCallTest_setLongRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     RTICdrType_printLong(
         &sample->lo1, "lo1", indent_level + 1);
             
+
 
 }
 
@@ -151,7 +157,7 @@ OnewayCallTest_setLongRequestPluginSupport_create_key_ex(RTIBool allocate_pointe
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_setLongRequestKeyHolder);
 
-    OnewayCallTest_setLongRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_setLongRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -180,7 +186,6 @@ OnewayCallTest_setLongRequestPluginSupport_destroy_key(
   OnewayCallTest_setLongRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -226,6 +231,8 @@ OnewayCallTest_setLongRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -257,9 +264,15 @@ OnewayCallTest_setLongRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_setLongRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -286,6 +299,7 @@ OnewayCallTest_setLongRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -302,6 +316,13 @@ OnewayCallTest_setLongRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_setLongRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_setLongRequestPlugin_serialize(
@@ -316,23 +337,23 @@ OnewayCallTest_setLongRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -343,16 +364,19 @@ OnewayCallTest_setLongRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_serializeLong(
         stream, &sample->lo1)) {
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -370,6 +394,8 @@ OnewayCallTest_setLongRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -384,25 +410,32 @@ OnewayCallTest_setLongRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_setLongRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!RTICdrStream_deserializeLong(
         stream, &sample->lo1)) {
-        return RTI_FALSE;
-    }
-            
+        goto fin;
     }
 
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -414,6 +447,7 @@ OnewayCallTest_setLongRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_setLongRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -436,6 +470,7 @@ OnewayCallTest_setLongRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_setLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -444,6 +479,8 @@ RTIBool OnewayCallTest_setLongRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -466,15 +503,24 @@ RTIBool OnewayCallTest_setLongRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -517,9 +563,11 @@ OnewayCallTest_setLongRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -560,9 +608,11 @@ OnewayCallTest_setLongRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -612,15 +662,23 @@ OnewayCallTest_setLongRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -653,6 +711,7 @@ OnewayCallTest_setLongRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -674,6 +733,7 @@ OnewayCallTest_setLongRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -722,6 +782,7 @@ RTIBool OnewayCallTest_setLongRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -786,6 +847,7 @@ OnewayCallTest_setLongRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -805,8 +867,12 @@ OnewayCallTest_setLongRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -829,12 +895,20 @@ OnewayCallTest_setLongRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -862,6 +936,7 @@ OnewayCallTest_setLongRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -880,6 +955,7 @@ OnewayCallTest_setLongRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -933,10 +1009,14 @@ OnewayCallTest_setLongRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_setLongRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_setLongRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -965,6 +1045,13 @@ OnewayCallTest_setLongRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -1124,11 +1211,11 @@ OnewayCallTest_getLongRequestPluginSupport_create_data_ex(RTIBool allocate_point
         &sample, OnewayCallTest_getLongRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getLongRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getLongRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -1194,6 +1281,7 @@ OnewayCallTest_getLongRequestPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
 
+
 }
 
 OnewayCallTest_getLongRequest *
@@ -1203,7 +1291,7 @@ OnewayCallTest_getLongRequestPluginSupport_create_key_ex(RTIBool allocate_pointe
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getLongRequestKeyHolder);
 
-    OnewayCallTest_getLongRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getLongRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -1232,7 +1320,6 @@ OnewayCallTest_getLongRequestPluginSupport_destroy_key(
   OnewayCallTest_getLongRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -1278,6 +1365,8 @@ OnewayCallTest_getLongRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -1309,9 +1398,15 @@ OnewayCallTest_getLongRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getLongRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -1338,6 +1433,7 @@ OnewayCallTest_getLongRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -1354,6 +1450,13 @@ OnewayCallTest_getLongRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getLongRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getLongRequestPlugin_serialize(
@@ -1368,23 +1471,23 @@ OnewayCallTest_getLongRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -1395,11 +1498,13 @@ OnewayCallTest_getLongRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -1417,6 +1522,8 @@ OnewayCallTest_getLongRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1431,20 +1538,27 @@ OnewayCallTest_getLongRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getLongRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1456,6 +1570,7 @@ OnewayCallTest_getLongRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getLongRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -1478,6 +1593,7 @@ OnewayCallTest_getLongRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -1486,6 +1602,8 @@ RTIBool OnewayCallTest_getLongRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -1508,11 +1626,19 @@ RTIBool OnewayCallTest_getLongRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    }
 
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1555,6 +1681,7 @@ OnewayCallTest_getLongRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1595,6 +1722,7 @@ OnewayCallTest_getLongRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1644,12 +1772,19 @@ OnewayCallTest_getLongRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -1682,6 +1817,7 @@ OnewayCallTest_getLongRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -1703,6 +1839,7 @@ OnewayCallTest_getLongRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -1751,6 +1888,7 @@ RTIBool OnewayCallTest_getLongRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -1815,6 +1953,7 @@ OnewayCallTest_getLongRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1834,8 +1973,12 @@ OnewayCallTest_getLongRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -1858,8 +2001,15 @@ OnewayCallTest_getLongRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1887,6 +2037,7 @@ OnewayCallTest_getLongRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -1905,6 +2056,7 @@ OnewayCallTest_getLongRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -1958,10 +2110,14 @@ OnewayCallTest_getLongRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getLongRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getLongRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -1990,6 +2146,13 @@ OnewayCallTest_getLongRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -2149,11 +2312,11 @@ OnewayCallTest_getLongReplyPluginSupport_create_data_ex(RTIBool allocate_pointer
         &sample, OnewayCallTest_getLongReply);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getLongReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getLongReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -2218,9 +2381,11 @@ OnewayCallTest_getLongReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     RTICdrType_printLong(
         &sample->getLong_ret, "getLong_ret", indent_level + 1);
             
+
 
 }
 
@@ -2231,7 +2396,7 @@ OnewayCallTest_getLongReplyPluginSupport_create_key_ex(RTIBool allocate_pointers
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getLongReplyKeyHolder);
 
-    OnewayCallTest_getLongReply_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getLongReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -2260,7 +2425,6 @@ OnewayCallTest_getLongReplyPluginSupport_destroy_key(
   OnewayCallTest_getLongReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -2306,6 +2470,8 @@ OnewayCallTest_getLongReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -2337,9 +2503,15 @@ OnewayCallTest_getLongReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getLongReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -2366,6 +2538,7 @@ OnewayCallTest_getLongReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -2382,6 +2555,13 @@ OnewayCallTest_getLongReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getLongReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getLongReplyPlugin_serialize(
@@ -2396,23 +2576,23 @@ OnewayCallTest_getLongReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -2423,16 +2603,19 @@ OnewayCallTest_getLongReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_serializeLong(
         stream, &sample->getLong_ret)) {
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -2450,6 +2633,8 @@ OnewayCallTest_getLongReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2464,25 +2649,32 @@ OnewayCallTest_getLongReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getLongReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!RTICdrStream_deserializeLong(
         stream, &sample->getLong_ret)) {
-        return RTI_FALSE;
-    }
-            
+        goto fin;
     }
 
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2494,6 +2686,7 @@ OnewayCallTest_getLongReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getLongReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -2516,6 +2709,7 @@ OnewayCallTest_getLongReplyPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -2524,6 +2718,8 @@ RTIBool OnewayCallTest_getLongReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -2546,15 +2742,24 @@ RTIBool OnewayCallTest_getLongReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2597,9 +2802,11 @@ OnewayCallTest_getLongReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2640,9 +2847,11 @@ OnewayCallTest_getLongReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2692,15 +2901,23 @@ OnewayCallTest_getLongReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -2733,6 +2950,7 @@ OnewayCallTest_getLongReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -2754,6 +2972,7 @@ OnewayCallTest_getLongReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -2802,6 +3021,7 @@ RTIBool OnewayCallTest_getLongReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -2866,6 +3086,7 @@ OnewayCallTest_getLongReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2885,8 +3106,12 @@ OnewayCallTest_getLongReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -2909,12 +3134,20 @@ OnewayCallTest_getLongReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_skipLong(stream)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2942,6 +3175,7 @@ OnewayCallTest_getLongReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -2960,6 +3194,7 @@ OnewayCallTest_getLongReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -3013,10 +3248,14 @@ OnewayCallTest_getLongReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getLongReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getLongReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -3045,6 +3284,13 @@ OnewayCallTest_getLongReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -3204,11 +3450,11 @@ OnewayCallTest_setBooleanRequestPluginSupport_create_data_ex(RTIBool allocate_po
         &sample, OnewayCallTest_setBooleanRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_setBooleanRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_setBooleanRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -3273,9 +3519,11 @@ OnewayCallTest_setBooleanRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     RTICdrType_printBoolean(
         &sample->bo1, "bo1", indent_level + 1);
             
+
 
 }
 
@@ -3286,7 +3534,7 @@ OnewayCallTest_setBooleanRequestPluginSupport_create_key_ex(RTIBool allocate_poi
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_setBooleanRequestKeyHolder);
 
-    OnewayCallTest_setBooleanRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_setBooleanRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -3315,7 +3563,6 @@ OnewayCallTest_setBooleanRequestPluginSupport_destroy_key(
   OnewayCallTest_setBooleanRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -3361,6 +3608,8 @@ OnewayCallTest_setBooleanRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -3392,9 +3641,15 @@ OnewayCallTest_setBooleanRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_setBooleanRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -3421,6 +3676,7 @@ OnewayCallTest_setBooleanRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -3437,6 +3693,13 @@ OnewayCallTest_setBooleanRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_setBooleanRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_setBooleanRequestPlugin_serialize(
@@ -3451,23 +3714,23 @@ OnewayCallTest_setBooleanRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -3478,16 +3741,19 @@ OnewayCallTest_setBooleanRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_serializeBoolean(
         stream, &sample->bo1)) {
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -3505,6 +3771,8 @@ OnewayCallTest_setBooleanRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -3519,25 +3787,32 @@ OnewayCallTest_setBooleanRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_setBooleanRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!RTICdrStream_deserializeBoolean(
         stream, &sample->bo1)) {
-        return RTI_FALSE;
-    }
-            
+        goto fin;
     }
 
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -3549,6 +3824,7 @@ OnewayCallTest_setBooleanRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_setBooleanRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -3571,6 +3847,7 @@ OnewayCallTest_setBooleanRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_setBooleanRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -3579,6 +3856,8 @@ RTIBool OnewayCallTest_setBooleanRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -3601,15 +3880,24 @@ RTIBool OnewayCallTest_setBooleanRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!RTICdrStream_skipBoolean(stream)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!RTICdrStream_skipBoolean(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -3652,9 +3940,11 @@ OnewayCallTest_setBooleanRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getBooleanMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -3695,9 +3985,11 @@ OnewayCallTest_setBooleanRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getBooleanMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -3747,15 +4039,23 @@ OnewayCallTest_setBooleanRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += RTICdrType_getBooleanMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -3788,6 +4088,7 @@ OnewayCallTest_setBooleanRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -3809,6 +4110,7 @@ OnewayCallTest_setBooleanRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -3857,6 +4159,7 @@ RTIBool OnewayCallTest_setBooleanRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -3921,6 +4224,7 @@ OnewayCallTest_setBooleanRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -3940,8 +4244,12 @@ OnewayCallTest_setBooleanRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -3964,12 +4272,20 @@ OnewayCallTest_setBooleanRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_skipBoolean(stream)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -3997,6 +4313,7 @@ OnewayCallTest_setBooleanRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -4015,6 +4332,7 @@ OnewayCallTest_setBooleanRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -4068,10 +4386,14 @@ OnewayCallTest_setBooleanRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_setBooleanRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_setBooleanRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -4100,6 +4422,13 @@ OnewayCallTest_setBooleanRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -4259,11 +4588,11 @@ OnewayCallTest_getBooleanRequestPluginSupport_create_data_ex(RTIBool allocate_po
         &sample, OnewayCallTest_getBooleanRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getBooleanRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getBooleanRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -4329,6 +4658,7 @@ OnewayCallTest_getBooleanRequestPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
 
+
 }
 
 OnewayCallTest_getBooleanRequest *
@@ -4338,7 +4668,7 @@ OnewayCallTest_getBooleanRequestPluginSupport_create_key_ex(RTIBool allocate_poi
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getBooleanRequestKeyHolder);
 
-    OnewayCallTest_getBooleanRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getBooleanRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -4367,7 +4697,6 @@ OnewayCallTest_getBooleanRequestPluginSupport_destroy_key(
   OnewayCallTest_getBooleanRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -4413,6 +4742,8 @@ OnewayCallTest_getBooleanRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -4444,9 +4775,15 @@ OnewayCallTest_getBooleanRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getBooleanRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -4473,6 +4810,7 @@ OnewayCallTest_getBooleanRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -4489,6 +4827,13 @@ OnewayCallTest_getBooleanRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getBooleanRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getBooleanRequestPlugin_serialize(
@@ -4503,23 +4848,23 @@ OnewayCallTest_getBooleanRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -4530,11 +4875,13 @@ OnewayCallTest_getBooleanRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -4552,6 +4899,8 @@ OnewayCallTest_getBooleanRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -4566,20 +4915,27 @@ OnewayCallTest_getBooleanRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getBooleanRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -4591,6 +4947,7 @@ OnewayCallTest_getBooleanRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getBooleanRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -4613,6 +4970,7 @@ OnewayCallTest_getBooleanRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getBooleanRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -4621,6 +4979,8 @@ RTIBool OnewayCallTest_getBooleanRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -4643,11 +5003,19 @@ RTIBool OnewayCallTest_getBooleanRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    }
 
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -4690,6 +5058,7 @@ OnewayCallTest_getBooleanRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4730,6 +5099,7 @@ OnewayCallTest_getBooleanRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4779,12 +5149,19 @@ OnewayCallTest_getBooleanRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -4817,6 +5194,7 @@ OnewayCallTest_getBooleanRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -4838,6 +5216,7 @@ OnewayCallTest_getBooleanRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -4886,6 +5265,7 @@ RTIBool OnewayCallTest_getBooleanRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -4950,6 +5330,7 @@ OnewayCallTest_getBooleanRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4969,8 +5350,12 @@ OnewayCallTest_getBooleanRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -4993,8 +5378,15 @@ OnewayCallTest_getBooleanRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -5022,6 +5414,7 @@ OnewayCallTest_getBooleanRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -5040,6 +5433,7 @@ OnewayCallTest_getBooleanRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -5093,10 +5487,14 @@ OnewayCallTest_getBooleanRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getBooleanRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getBooleanRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -5125,6 +5523,13 @@ OnewayCallTest_getBooleanRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -5284,11 +5689,11 @@ OnewayCallTest_getBooleanReplyPluginSupport_create_data_ex(RTIBool allocate_poin
         &sample, OnewayCallTest_getBooleanReply);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getBooleanReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getBooleanReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -5353,9 +5758,11 @@ OnewayCallTest_getBooleanReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     RTICdrType_printBoolean(
         &sample->getBoolean_ret, "getBoolean_ret", indent_level + 1);
             
+
 
 }
 
@@ -5366,7 +5773,7 @@ OnewayCallTest_getBooleanReplyPluginSupport_create_key_ex(RTIBool allocate_point
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getBooleanReplyKeyHolder);
 
-    OnewayCallTest_getBooleanReply_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getBooleanReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -5395,7 +5802,6 @@ OnewayCallTest_getBooleanReplyPluginSupport_destroy_key(
   OnewayCallTest_getBooleanReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -5441,6 +5847,8 @@ OnewayCallTest_getBooleanReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -5472,9 +5880,15 @@ OnewayCallTest_getBooleanReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getBooleanReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -5501,6 +5915,7 @@ OnewayCallTest_getBooleanReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -5517,6 +5932,13 @@ OnewayCallTest_getBooleanReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getBooleanReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getBooleanReplyPlugin_serialize(
@@ -5531,23 +5953,23 @@ OnewayCallTest_getBooleanReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -5558,16 +5980,19 @@ OnewayCallTest_getBooleanReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_serializeBoolean(
         stream, &sample->getBoolean_ret)) {
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -5585,6 +6010,8 @@ OnewayCallTest_getBooleanReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -5599,25 +6026,32 @@ OnewayCallTest_getBooleanReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getBooleanReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!RTICdrStream_deserializeBoolean(
         stream, &sample->getBoolean_ret)) {
-        return RTI_FALSE;
-    }
-            
+        goto fin;
     }
 
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -5629,6 +6063,7 @@ OnewayCallTest_getBooleanReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getBooleanReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -5651,6 +6086,7 @@ OnewayCallTest_getBooleanReplyPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getBooleanReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -5659,6 +6095,8 @@ RTIBool OnewayCallTest_getBooleanReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -5681,15 +6119,24 @@ RTIBool OnewayCallTest_getBooleanReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!RTICdrStream_skipBoolean(stream)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!RTICdrStream_skipBoolean(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -5732,9 +6179,11 @@ OnewayCallTest_getBooleanReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getBooleanMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -5775,9 +6224,11 @@ OnewayCallTest_getBooleanReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getBooleanMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -5827,15 +6278,23 @@ OnewayCallTest_getBooleanReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += RTICdrType_getBooleanMaxSizeSerialized(
         current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -5868,6 +6327,7 @@ OnewayCallTest_getBooleanReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -5889,6 +6349,7 @@ OnewayCallTest_getBooleanReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -5937,6 +6398,7 @@ RTIBool OnewayCallTest_getBooleanReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -6001,6 +6463,7 @@ OnewayCallTest_getBooleanReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -6020,8 +6483,12 @@ OnewayCallTest_getBooleanReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -6044,12 +6511,20 @@ OnewayCallTest_getBooleanReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_skipBoolean(stream)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -6077,6 +6552,7 @@ OnewayCallTest_getBooleanReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -6095,6 +6571,7 @@ OnewayCallTest_getBooleanReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -6148,10 +6625,14 @@ OnewayCallTest_getBooleanReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getBooleanReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getBooleanReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -6180,6 +6661,13 @@ OnewayCallTest_getBooleanReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -6339,11 +6827,11 @@ OnewayCallTest_setStringRequestPluginSupport_create_data_ex(RTIBool allocate_poi
         &sample, OnewayCallTest_setStringRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_setStringRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_setStringRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -6408,6 +6896,7 @@ OnewayCallTest_setStringRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     if (&sample->s1==NULL) {
         RTICdrType_printString(
             NULL, "s1", indent_level + 1);                
@@ -6416,6 +6905,7 @@ OnewayCallTest_setStringRequestPluginSupport_print_data(
             sample->s1, "s1", indent_level + 1);                
     }
             
+
 
 }
 
@@ -6426,7 +6916,7 @@ OnewayCallTest_setStringRequestPluginSupport_create_key_ex(RTIBool allocate_poin
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_setStringRequestKeyHolder);
 
-    OnewayCallTest_setStringRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_setStringRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -6455,7 +6945,6 @@ OnewayCallTest_setStringRequestPluginSupport_destroy_key(
   OnewayCallTest_setStringRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -6501,6 +6990,8 @@ OnewayCallTest_setStringRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -6532,9 +7023,15 @@ OnewayCallTest_setStringRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_setStringRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -6561,6 +7058,7 @@ OnewayCallTest_setStringRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -6577,6 +7075,13 @@ OnewayCallTest_setStringRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_setStringRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_setStringRequestPlugin_serialize(
@@ -6591,23 +7096,23 @@ OnewayCallTest_setStringRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -6618,16 +7123,19 @@ OnewayCallTest_setStringRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_serializeString(
         stream, sample->s1, (255) + 1)) {
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -6645,6 +7153,8 @@ OnewayCallTest_setStringRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -6659,25 +7169,33 @@ OnewayCallTest_setStringRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_setStringRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!RTICdrStream_deserializeString(
         stream, sample->s1, (255) + 1)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -6689,6 +7207,7 @@ OnewayCallTest_setStringRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_setStringRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -6711,6 +7230,7 @@ OnewayCallTest_setStringRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_setStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -6719,6 +7239,8 @@ RTIBool OnewayCallTest_setStringRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -6741,15 +7263,24 @@ RTIBool OnewayCallTest_setStringRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!RTICdrStream_skipString(stream, (255) + 1)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -6792,9 +7323,11 @@ OnewayCallTest_setStringRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, (255) + 1);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -6835,9 +7368,11 @@ OnewayCallTest_setStringRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, 1);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -6887,15 +7422,23 @@ OnewayCallTest_setStringRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += RTICdrType_getStringSerializedSize(
         current_alignment, sample->s1);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -6928,6 +7471,7 @@ OnewayCallTest_setStringRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -6949,6 +7493,7 @@ OnewayCallTest_setStringRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -6997,6 +7542,7 @@ RTIBool OnewayCallTest_setStringRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -7061,6 +7607,7 @@ OnewayCallTest_setStringRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -7080,8 +7627,12 @@ OnewayCallTest_setStringRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -7104,12 +7655,20 @@ OnewayCallTest_setStringRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_skipString(stream, (255) + 1)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -7137,6 +7696,7 @@ OnewayCallTest_setStringRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -7155,6 +7715,7 @@ OnewayCallTest_setStringRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -7208,10 +7769,14 @@ OnewayCallTest_setStringRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_setStringRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_setStringRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -7240,6 +7805,13 @@ OnewayCallTest_setStringRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -7399,11 +7971,11 @@ OnewayCallTest_getStringRequestPluginSupport_create_data_ex(RTIBool allocate_poi
         &sample, OnewayCallTest_getStringRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getStringRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getStringRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -7469,6 +8041,7 @@ OnewayCallTest_getStringRequestPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
 
+
 }
 
 OnewayCallTest_getStringRequest *
@@ -7478,7 +8051,7 @@ OnewayCallTest_getStringRequestPluginSupport_create_key_ex(RTIBool allocate_poin
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getStringRequestKeyHolder);
 
-    OnewayCallTest_getStringRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getStringRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -7507,7 +8080,6 @@ OnewayCallTest_getStringRequestPluginSupport_destroy_key(
   OnewayCallTest_getStringRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -7553,6 +8125,8 @@ OnewayCallTest_getStringRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -7584,9 +8158,15 @@ OnewayCallTest_getStringRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getStringRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -7613,6 +8193,7 @@ OnewayCallTest_getStringRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -7629,6 +8210,13 @@ OnewayCallTest_getStringRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getStringRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getStringRequestPlugin_serialize(
@@ -7643,23 +8231,23 @@ OnewayCallTest_getStringRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -7670,11 +8258,13 @@ OnewayCallTest_getStringRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -7692,6 +8282,8 @@ OnewayCallTest_getStringRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -7706,20 +8298,27 @@ OnewayCallTest_getStringRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getStringRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -7731,6 +8330,7 @@ OnewayCallTest_getStringRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getStringRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -7753,6 +8353,7 @@ OnewayCallTest_getStringRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -7761,6 +8362,8 @@ RTIBool OnewayCallTest_getStringRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -7783,11 +8386,19 @@ RTIBool OnewayCallTest_getStringRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    }
 
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -7830,6 +8441,7 @@ OnewayCallTest_getStringRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -7870,6 +8482,7 @@ OnewayCallTest_getStringRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -7919,12 +8532,19 @@ OnewayCallTest_getStringRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -7957,6 +8577,7 @@ OnewayCallTest_getStringRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -7978,6 +8599,7 @@ OnewayCallTest_getStringRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -8026,6 +8648,7 @@ RTIBool OnewayCallTest_getStringRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -8090,6 +8713,7 @@ OnewayCallTest_getStringRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -8109,8 +8733,12 @@ OnewayCallTest_getStringRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -8133,8 +8761,15 @@ OnewayCallTest_getStringRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -8162,6 +8797,7 @@ OnewayCallTest_getStringRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -8180,6 +8816,7 @@ OnewayCallTest_getStringRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -8233,10 +8870,14 @@ OnewayCallTest_getStringRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getStringRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getStringRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -8265,6 +8906,13 @@ OnewayCallTest_getStringRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -8424,11 +9072,11 @@ OnewayCallTest_getStringReplyPluginSupport_create_data_ex(RTIBool allocate_point
         &sample, OnewayCallTest_getStringReply);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getStringReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getStringReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -8493,6 +9141,7 @@ OnewayCallTest_getStringReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     if (&sample->getString_ret==NULL) {
         RTICdrType_printString(
             NULL, "getString_ret", indent_level + 1);                
@@ -8501,6 +9150,7 @@ OnewayCallTest_getStringReplyPluginSupport_print_data(
             sample->getString_ret, "getString_ret", indent_level + 1);                
     }
             
+
 
 }
 
@@ -8511,7 +9161,7 @@ OnewayCallTest_getStringReplyPluginSupport_create_key_ex(RTIBool allocate_pointe
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getStringReplyKeyHolder);
 
-    OnewayCallTest_getStringReply_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getStringReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -8540,7 +9190,6 @@ OnewayCallTest_getStringReplyPluginSupport_destroy_key(
   OnewayCallTest_getStringReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -8586,6 +9235,8 @@ OnewayCallTest_getStringReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -8617,9 +9268,15 @@ OnewayCallTest_getStringReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getStringReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -8646,6 +9303,7 @@ OnewayCallTest_getStringReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -8662,6 +9320,13 @@ OnewayCallTest_getStringReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getStringReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getStringReplyPlugin_serialize(
@@ -8676,23 +9341,23 @@ OnewayCallTest_getStringReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -8703,16 +9368,19 @@ OnewayCallTest_getStringReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_serializeString(
         stream, sample->getString_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -8730,6 +9398,8 @@ OnewayCallTest_getStringReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -8744,25 +9414,33 @@ OnewayCallTest_getStringReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getStringReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!RTICdrStream_deserializeString(
         stream, sample->getString_ret, (255) + 1)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -8774,6 +9452,7 @@ OnewayCallTest_getStringReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getStringReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -8796,6 +9475,7 @@ OnewayCallTest_getStringReplyPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -8804,6 +9484,8 @@ RTIBool OnewayCallTest_getStringReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -8826,15 +9508,24 @@ RTIBool OnewayCallTest_getStringReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!RTICdrStream_skipString(stream, (255) + 1)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -8877,9 +9568,11 @@ OnewayCallTest_getStringReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, (255) + 1);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -8920,9 +9613,11 @@ OnewayCallTest_getStringReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, 1);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -8972,15 +9667,23 @@ OnewayCallTest_getStringReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += RTICdrType_getStringSerializedSize(
         current_alignment, sample->getString_ret);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -9013,6 +9716,7 @@ OnewayCallTest_getStringReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -9034,6 +9738,7 @@ OnewayCallTest_getStringReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -9082,6 +9787,7 @@ RTIBool OnewayCallTest_getStringReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -9146,6 +9852,7 @@ OnewayCallTest_getStringReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -9165,8 +9872,12 @@ OnewayCallTest_getStringReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -9189,12 +9900,20 @@ OnewayCallTest_getStringReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrStream_skipString(stream, (255) + 1)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -9222,6 +9941,7 @@ OnewayCallTest_getStringReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -9240,6 +9960,7 @@ OnewayCallTest_getStringReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -9293,10 +10014,14 @@ OnewayCallTest_getStringReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getStringReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getStringReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -9325,6 +10050,13 @@ OnewayCallTest_getStringReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -9484,11 +10216,11 @@ OnewayCallTest_setStructRequestPluginSupport_create_data_ex(RTIBool allocate_poi
         &sample, OnewayCallTest_setStructRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_setStructRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_setStructRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -9553,9 +10285,11 @@ OnewayCallTest_setStructRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     StructurePluginSupport_print_data(
         &sample->ev, "ev", indent_level + 1);
             
+
 
 }
 
@@ -9566,7 +10300,7 @@ OnewayCallTest_setStructRequestPluginSupport_create_key_ex(RTIBool allocate_poin
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_setStructRequestKeyHolder);
 
-    OnewayCallTest_setStructRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_setStructRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -9595,7 +10329,6 @@ OnewayCallTest_setStructRequestPluginSupport_destroy_key(
   OnewayCallTest_setStructRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -9641,6 +10374,8 @@ OnewayCallTest_setStructRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -9672,9 +10407,15 @@ OnewayCallTest_setStructRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_setStructRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -9701,6 +10442,7 @@ OnewayCallTest_setStructRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -9717,6 +10459,13 @@ OnewayCallTest_setStructRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_setStructRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_setStructRequestPlugin_serialize(
@@ -9731,23 +10480,23 @@ OnewayCallTest_setStructRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -9758,6 +10507,7 @@ OnewayCallTest_setStructRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!StructurePlugin_serialize(
             endpoint_data,
             &sample->ev, 
@@ -9768,11 +10518,13 @@ OnewayCallTest_setStructRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -9790,6 +10542,8 @@ OnewayCallTest_setStructRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -9804,29 +10558,37 @@ OnewayCallTest_setStructRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_setStructRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!StructurePlugin_deserialize_sample(
             endpoint_data,
             &sample->ev,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -9838,6 +10600,7 @@ OnewayCallTest_setStructRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_setStructRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -9860,6 +10623,7 @@ OnewayCallTest_setStructRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_setStructRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -9868,6 +10632,8 @@ RTIBool OnewayCallTest_setStructRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -9890,19 +10656,28 @@ RTIBool OnewayCallTest_setStructRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!StructurePlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    }
 
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -9945,9 +10720,11 @@ OnewayCallTest_setStructRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  StructurePlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -9988,9 +10765,11 @@ OnewayCallTest_setStructRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  StructurePlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -10040,16 +10819,24 @@ OnewayCallTest_setStructRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += StructurePlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->ev);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -10082,6 +10869,7 @@ OnewayCallTest_setStructRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -10103,6 +10891,7 @@ OnewayCallTest_setStructRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -10151,6 +10940,7 @@ RTIBool OnewayCallTest_setStructRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -10215,6 +11005,7 @@ OnewayCallTest_setStructRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -10234,8 +11025,12 @@ OnewayCallTest_setStructRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -10258,16 +11053,24 @@ OnewayCallTest_setStructRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!StructurePlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -10295,6 +11098,7 @@ OnewayCallTest_setStructRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -10313,6 +11117,7 @@ OnewayCallTest_setStructRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -10366,10 +11171,14 @@ OnewayCallTest_setStructRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_setStructRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_setStructRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -10398,6 +11207,13 @@ OnewayCallTest_setStructRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -10557,11 +11373,11 @@ OnewayCallTest_getStructRequestPluginSupport_create_data_ex(RTIBool allocate_poi
         &sample, OnewayCallTest_getStructRequest);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getStructRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getStructRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -10627,6 +11443,7 @@ OnewayCallTest_getStructRequestPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
 
+
 }
 
 OnewayCallTest_getStructRequest *
@@ -10636,7 +11453,7 @@ OnewayCallTest_getStructRequestPluginSupport_create_key_ex(RTIBool allocate_poin
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getStructRequestKeyHolder);
 
-    OnewayCallTest_getStructRequest_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getStructRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -10665,7 +11482,6 @@ OnewayCallTest_getStructRequestPluginSupport_destroy_key(
   OnewayCallTest_getStructRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -10711,6 +11527,8 @@ OnewayCallTest_getStructRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -10742,9 +11560,15 @@ OnewayCallTest_getStructRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getStructRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -10771,6 +11595,7 @@ OnewayCallTest_getStructRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -10787,6 +11612,13 @@ OnewayCallTest_getStructRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getStructRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getStructRequestPlugin_serialize(
@@ -10801,23 +11633,23 @@ OnewayCallTest_getStructRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -10828,11 +11660,13 @@ OnewayCallTest_getStructRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -10850,6 +11684,8 @@ OnewayCallTest_getStructRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -10864,20 +11700,27 @@ OnewayCallTest_getStructRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getStructRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -10889,6 +11732,7 @@ OnewayCallTest_getStructRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getStructRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -10911,6 +11755,7 @@ OnewayCallTest_getStructRequestPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getStructRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -10919,6 +11764,8 @@ RTIBool OnewayCallTest_getStructRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -10941,11 +11788,19 @@ RTIBool OnewayCallTest_getStructRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    }
 
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -10988,6 +11843,7 @@ OnewayCallTest_getStructRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -11028,6 +11884,7 @@ OnewayCallTest_getStructRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -11077,12 +11934,19 @@ OnewayCallTest_getStructRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -11115,6 +11979,7 @@ OnewayCallTest_getStructRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -11136,6 +12001,7 @@ OnewayCallTest_getStructRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -11184,6 +12050,7 @@ RTIBool OnewayCallTest_getStructRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -11248,6 +12115,7 @@ OnewayCallTest_getStructRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -11267,8 +12135,12 @@ OnewayCallTest_getStructRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -11291,8 +12163,15 @@ OnewayCallTest_getStructRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -11320,6 +12199,7 @@ OnewayCallTest_getStructRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -11338,6 +12218,7 @@ OnewayCallTest_getStructRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -11391,10 +12272,14 @@ OnewayCallTest_getStructRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getStructRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getStructRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -11423,6 +12308,13 @@ OnewayCallTest_getStructRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -11582,11 +12474,11 @@ OnewayCallTest_getStructReplyPluginSupport_create_data_ex(RTIBool allocate_point
         &sample, OnewayCallTest_getStructReply);
 
     if(sample != NULL) {
-        if (!OnewayCallTest_getStructReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!OnewayCallTest_getStructReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -11651,9 +12543,11 @@ OnewayCallTest_getStructReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     StructurePluginSupport_print_data(
         &sample->getStruct_ret, "getStruct_ret", indent_level + 1);
             
+
 
 }
 
@@ -11664,7 +12558,7 @@ OnewayCallTest_getStructReplyPluginSupport_create_key_ex(RTIBool allocate_pointe
     RTIOsapiHeap_allocateStructure(
         &key, OnewayCallTest_getStructReplyKeyHolder);
 
-    OnewayCallTest_getStructReply_initialize_ex(key,allocate_pointers);
+    OnewayCallTest_getStructReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -11693,7 +12587,6 @@ OnewayCallTest_getStructReplyPluginSupport_destroy_key(
   OnewayCallTest_getStructReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -11739,6 +12632,8 @@ OnewayCallTest_getStructReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -11770,9 +12665,15 @@ OnewayCallTest_getStructReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = OnewayCallTest_getStructReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -11799,6 +12700,7 @@ OnewayCallTest_getStructReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -11815,6 +12717,13 @@ OnewayCallTest_getStructReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+OnewayCallTest_getStructReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 OnewayCallTest_getStructReplyPlugin_serialize(
@@ -11829,23 +12738,23 @@ OnewayCallTest_getStructReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -11856,6 +12765,7 @@ OnewayCallTest_getStructReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!StructurePlugin_serialize(
             endpoint_data,
             &sample->getStruct_ret, 
@@ -11866,11 +12776,13 @@ OnewayCallTest_getStructReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -11888,6 +12800,8 @@ OnewayCallTest_getStructReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -11902,29 +12816,37 @@ OnewayCallTest_getStructReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        OnewayCallTest_getStructReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!StructurePlugin_deserialize_sample(
             endpoint_data,
             &sample->getStruct_ret,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -11936,6 +12858,7 @@ OnewayCallTest_getStructReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 OnewayCallTest_getStructReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -11958,6 +12881,7 @@ OnewayCallTest_getStructReplyPlugin_deserialize(
 
 
 
+
 RTIBool OnewayCallTest_getStructReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -11966,6 +12890,8 @@ RTIBool OnewayCallTest_getStructReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -11988,19 +12914,28 @@ RTIBool OnewayCallTest_getStructReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!StructurePlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    }
 
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -12043,9 +12978,11 @@ OnewayCallTest_getStructReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  StructurePlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -12086,9 +13023,11 @@ OnewayCallTest_getStructReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  StructurePlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -12138,16 +13077,24 @@ OnewayCallTest_getStructReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += StructurePlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->getStruct_ret);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -12180,6 +13127,7 @@ OnewayCallTest_getStructReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -12201,6 +13149,7 @@ OnewayCallTest_getStructReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -12249,6 +13198,7 @@ RTIBool OnewayCallTest_getStructReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -12313,6 +13263,7 @@ OnewayCallTest_getStructReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -12332,8 +13283,12 @@ OnewayCallTest_getStructReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -12356,16 +13311,24 @@ OnewayCallTest_getStructReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!StructurePlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -12393,6 +13356,7 @@ OnewayCallTest_getStructReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -12411,6 +13375,7 @@ OnewayCallTest_getStructReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -12464,10 +13429,14 @@ OnewayCallTest_getStructReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    OnewayCallTest_getStructReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    OnewayCallTest_getStructReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -12496,6 +13465,13 @@ OnewayCallTest_getStructReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }

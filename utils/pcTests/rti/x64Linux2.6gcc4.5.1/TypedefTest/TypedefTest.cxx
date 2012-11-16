@@ -116,26 +116,34 @@ DDS_TypeCode* Datos_get_typecode()
 
 RTIBool Datos_initialize(
     Datos* sample) {
-  return Datos_initialize_ex(sample,RTI_TRUE);
+  return Datos_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Datos_initialize_ex(
-    Datos* sample,RTIBool allocatePointers)
+    Datos* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initLong(&sample->count)) {
         return RTI_FALSE;
     }                
             
-    sample->message = DDS_String_alloc((255));
-    if (sample->message == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->message = DDS_String_alloc((255));
+        if (sample->message == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->message != NULL) { 
+            sample->message[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +161,10 @@ void Datos_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
     DDS_String_free(sample->message);                
             
+
 }
 
 RTIBool Datos_copy(
@@ -167,11 +177,13 @@ RTIBool Datos_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -245,15 +257,16 @@ DDS_TypeCode* largo_get_typecode()
 RTIBool largo_initialize(
     largo* sample)
 {
-    return largo_initialize_ex(sample,RTI_TRUE);
+    return largo_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool largo_initialize_ex(
-    largo* sample,RTIBool allocatePointers)
+    largo* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
@@ -261,6 +274,7 @@ RTIBool largo_initialize_ex(
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -278,6 +292,7 @@ void largo_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
 }
 
 
@@ -291,6 +306,7 @@ RTIBool largo_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -365,22 +381,24 @@ DDS_TypeCode* DatosDef_get_typecode()
 RTIBool DatosDef_initialize(
     DatosDef* sample)
 {
-    return DatosDef_initialize_ex(sample,RTI_TRUE);
+    return DatosDef_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool DatosDef_initialize_ex(
-    DatosDef* sample,RTIBool allocatePointers)
+    DatosDef* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    if (!Datos_initialize_ex(sample,allocatePointers)) {
+    if (!Datos_initialize_ex(sample,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -400,6 +418,7 @@ void DatosDef_finalize_ex(
 
     Datos_finalize_ex(sample,deletePointers);
             
+
 }
 
 
@@ -413,6 +432,7 @@ RTIBool DatosDef_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -488,23 +508,31 @@ DDS_TypeCode* cadena_get_typecode()
 RTIBool cadena_initialize(
     cadena* sample)
 {
-    return cadena_initialize_ex(sample,RTI_TRUE);
+    return cadena_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool cadena_initialize_ex(
-    cadena* sample,RTIBool allocatePointers)
+    cadena* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    (*sample) = DDS_String_alloc((255));
-    if ((*sample) == NULL) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        (*sample) = DDS_String_alloc((255));
+        if ((*sample) == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if ((*sample) != NULL) { 
+            (*sample)[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -524,6 +552,7 @@ void cadena_finalize_ex(
 
     DDS_String_free((*sample));                
             
+
 }
 
 
@@ -537,6 +566,7 @@ RTIBool cadena_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -611,22 +641,24 @@ DDS_TypeCode* larguisimo_get_typecode()
 RTIBool larguisimo_initialize(
     larguisimo* sample)
 {
-    return larguisimo_initialize_ex(sample,RTI_TRUE);
+    return larguisimo_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool larguisimo_initialize_ex(
-    larguisimo* sample,RTIBool allocatePointers)
+    larguisimo* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    if (!largo_initialize_ex(sample,allocatePointers)) {
+    if (!largo_initialize_ex(sample,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -646,6 +678,7 @@ void larguisimo_finalize_ex(
 
     largo_finalize_ex(sample,deletePointers);
             
+
 }
 
 
@@ -659,6 +692,7 @@ RTIBool larguisimo_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -733,22 +767,24 @@ DDS_TypeCode* DatosDefondo_get_typecode()
 RTIBool DatosDefondo_initialize(
     DatosDefondo* sample)
 {
-    return DatosDefondo_initialize_ex(sample,RTI_TRUE);
+    return DatosDefondo_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool DatosDefondo_initialize_ex(
-    DatosDefondo* sample,RTIBool allocatePointers)
+    DatosDefondo* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    if (!DatosDef_initialize_ex(sample,allocatePointers)) {
+    if (!DatosDef_initialize_ex(sample,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -768,6 +804,7 @@ void DatosDefondo_finalize_ex(
 
     DatosDef_finalize_ex(sample,deletePointers);
             
+
 }
 
 
@@ -781,6 +818,7 @@ RTIBool DatosDefondo_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -855,22 +893,24 @@ DDS_TypeCode* correa_get_typecode()
 RTIBool correa_initialize(
     correa* sample)
 {
-    return correa_initialize_ex(sample,RTI_TRUE);
+    return correa_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool correa_initialize_ex(
-    correa* sample,RTIBool allocatePointers)
+    correa* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    if (!cadena_initialize_ex(sample,allocatePointers)) {
+    if (!cadena_initialize_ex(sample,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -890,6 +930,7 @@ void correa_finalize_ex(
 
     cadena_finalize_ex(sample,deletePointers);
             
+
 }
 
 
@@ -903,6 +944,7 @@ RTIBool correa_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

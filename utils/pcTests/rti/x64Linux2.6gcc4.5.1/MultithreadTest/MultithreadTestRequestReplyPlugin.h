@@ -41,6 +41,7 @@ extern "C" {
 #include "MultithreadTestPlugin.h"
 
 
+#define MultithreadTest_testRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * MultithreadTest_testRequest.
  *
@@ -55,7 +56,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct MultithreadTest_testRequest.
 */
-typedef  struct MultithreadTest_testRequest MultithreadTest_testRequestKeyHolder;
+typedef  class MultithreadTest_testRequest MultithreadTest_testRequestKeyHolder;
 
 
 #define MultithreadTest_testRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -113,7 +114,6 @@ MultithreadTest_testRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 MultithreadTest_testRequestPluginSupport_destroy_key(
     MultithreadTest_testRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,6 +141,7 @@ MultithreadTest_testRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 MultithreadTest_testRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 MultithreadTest_testRequestPlugin_copy_sample(
@@ -184,6 +185,7 @@ MultithreadTest_testRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 MultithreadTest_testRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -213,6 +215,7 @@ MultithreadTest_testRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const MultithreadTest_testRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -303,6 +306,7 @@ MultithreadTest_testRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 MultithreadTest_testRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define MultithreadTest_testReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * MultithreadTest_testReply.
  *
@@ -317,7 +321,7 @@ MultithreadTest_testRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct MultithreadTest_testReply.
 */
-typedef  struct MultithreadTest_testReply MultithreadTest_testReplyKeyHolder;
+typedef  class MultithreadTest_testReply MultithreadTest_testReplyKeyHolder;
 
 
 #define MultithreadTest_testReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -375,7 +379,6 @@ MultithreadTest_testReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 MultithreadTest_testReplyPluginSupport_destroy_key(
     MultithreadTest_testReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -403,6 +406,7 @@ MultithreadTest_testReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 MultithreadTest_testReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 MultithreadTest_testReplyPlugin_copy_sample(
@@ -446,6 +450,7 @@ MultithreadTest_testReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 MultithreadTest_testReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -475,6 +480,7 @@ MultithreadTest_testReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const MultithreadTest_testReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

@@ -58,9 +58,9 @@ extern const char *UnionTest_getEmpleadoRequestTYPENAME;
 
             
     
-
-typedef struct UnionTest_getEmpleadoRequest
+class UnionTest_getEmpleadoRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct UnionTest_getEmpleadoRequestSeq Seq;
 
@@ -71,12 +71,15 @@ typedef struct UnionTest_getEmpleadoRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     Empleado  em1;
+
     Empleado  em2;
 
-} UnionTest_getEmpleadoRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -98,7 +101,7 @@ RTIBool UnionTest_getEmpleadoRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool UnionTest_getEmpleadoRequest_initialize_ex(
-        UnionTest_getEmpleadoRequest* self,RTIBool allocatePointers);
+        UnionTest_getEmpleadoRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void UnionTest_getEmpleadoRequest_finalize(
@@ -147,9 +150,9 @@ extern const char *UnionTest_getEmpleadoReplyTYPENAME;
 
             
     
-
-typedef struct UnionTest_getEmpleadoReply
+class UnionTest_getEmpleadoReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct UnionTest_getEmpleadoReplySeq Seq;
 
@@ -160,13 +163,17 @@ typedef struct UnionTest_getEmpleadoReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     Empleado  em2;
+
     Empleado  em3;
+
     Empleado  getEmpleado_ret;
 
-} UnionTest_getEmpleadoReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -188,7 +195,7 @@ RTIBool UnionTest_getEmpleadoReply_initialize(
         
 NDDSUSERDllExport
 RTIBool UnionTest_getEmpleadoReply_initialize_ex(
-        UnionTest_getEmpleadoReply* self,RTIBool allocatePointers);
+        UnionTest_getEmpleadoReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void UnionTest_getEmpleadoReply_finalize(

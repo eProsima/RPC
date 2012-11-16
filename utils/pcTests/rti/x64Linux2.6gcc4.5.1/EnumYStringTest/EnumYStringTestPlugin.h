@@ -88,6 +88,7 @@ ValoresPlugin_get_serialized_sample_size(
     unsigned int current_alignment,
     const Valores * sample);
 
+
 /* ------------------------------------------------------------------------
     Key Management functions:
  * ------------------------------------------------------------------------ */
@@ -126,6 +127,9 @@ ValoresPlugin_serialized_sample_to_key(
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
+
+ 
+
 
 /* ----------------------------------------------------------------------------
     Support functions:

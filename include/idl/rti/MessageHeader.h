@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeader_953111818_h
-#define MessageHeader_953111818_h
+#ifndef MessageHeader_953112540_h
+#define MessageHeader_953112540_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -46,20 +46,24 @@ extern const char *IdentificationTYPENAME;
 
             
     
-
-typedef struct Identification
+class Identification                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct IdentificationSeq Seq;
 
 #endif
-
+    
     DDS_UnsignedLong  value_1;
+
     DDS_UnsignedLong  value_2;
+
     DDS_UnsignedLong  value_3;
+
     DDS_UnsignedLong  value_4;
 
-} Identification;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -81,7 +85,7 @@ RTIBool Identification_initialize(
         
 NDDSUSERDllExport
 RTIBool Identification_initialize_ex(
-        Identification* self,RTIBool allocatePointers);
+        Identification* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void Identification_finalize(
@@ -124,19 +128,22 @@ extern const char *RequestHeaderTYPENAME;
 
             
     
-
-typedef struct RequestHeader
+class RequestHeader                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct RequestHeaderSeq Seq;
 
 #endif
-
+    
     Identification  clientId;
+
     char*  remoteServiceName; /* maximum length = (255) */
+
     DDS_UnsignedLong  requestSequenceNumber;
 
-} RequestHeader;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -158,7 +165,7 @@ RTIBool RequestHeader_initialize(
         
 NDDSUSERDllExport
 RTIBool RequestHeader_initialize_ex(
-        RequestHeader* self,RTIBool allocatePointers);
+        RequestHeader* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void RequestHeader_finalize(
@@ -201,20 +208,24 @@ extern const char *ReplyHeaderTYPENAME;
 
             
     
-
-typedef struct ReplyHeader
+class ReplyHeader                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct ReplyHeaderSeq Seq;
 
 #endif
-
+    
     Identification  clientId;
+
     DDS_UnsignedLong  requestSequenceNumber;
+
     DDS_Long  ddsrpcRetCode;
+
     char*  ddsrpcRetMsg; /* maximum length = (255) */
 
-} ReplyHeader;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -236,7 +247,7 @@ RTIBool ReplyHeader_initialize(
         
 NDDSUSERDllExport
 RTIBool ReplyHeader_initialize_ex(
-        ReplyHeader* self,RTIBool allocatePointers);
+        ReplyHeader* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void ReplyHeader_finalize(
@@ -260,4 +271,4 @@ RTIBool ReplyHeader_copy(
 
 
 
-#endif /* MessageHeader_953111818_h */
+#endif /* MessageHeader_953112540_h */

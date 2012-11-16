@@ -52,9 +52,9 @@ extern const char *EstructuraTYPENAME;
 
             
     
-
-typedef struct Estructura
+class Estructura                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EstructuraSeq Seq;
 
@@ -65,11 +65,13 @@ typedef struct Estructura
 #endif
 
 #endif
-
+    
     DDS_Long  count;
+
     char*  message; /* maximum length = (255) */
 
-} Estructura;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -91,7 +93,7 @@ RTIBool Estructura_initialize(
         
 NDDSUSERDllExport
 RTIBool Estructura_initialize_ex(
-        Estructura* self,RTIBool allocatePointers);
+        Estructura* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void Estructura_finalize(

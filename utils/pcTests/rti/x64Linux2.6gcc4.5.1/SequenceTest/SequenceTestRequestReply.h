@@ -58,9 +58,9 @@ extern const char *SequenceTest_getSLongRequestTYPENAME;
 
             
     
-
-typedef struct SequenceTest_getSLongRequest
+class SequenceTest_getSLongRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct SequenceTest_getSLongRequestSeq Seq;
 
@@ -71,12 +71,15 @@ typedef struct SequenceTest_getSLongRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     largo  l1;
+
     largo  l2;
 
-} SequenceTest_getSLongRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -98,7 +101,7 @@ RTIBool SequenceTest_getSLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool SequenceTest_getSLongRequest_initialize_ex(
-        SequenceTest_getSLongRequest* self,RTIBool allocatePointers);
+        SequenceTest_getSLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void SequenceTest_getSLongRequest_finalize(
@@ -147,9 +150,9 @@ extern const char *SequenceTest_getSLongReplyTYPENAME;
 
             
     
-
-typedef struct SequenceTest_getSLongReply
+class SequenceTest_getSLongReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct SequenceTest_getSLongReplySeq Seq;
 
@@ -160,13 +163,17 @@ typedef struct SequenceTest_getSLongReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     largo  l2;
+
     largo  l3;
+
     largo  getSLong_ret;
 
-} SequenceTest_getSLongReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -188,7 +195,7 @@ RTIBool SequenceTest_getSLongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool SequenceTest_getSLongReply_initialize_ex(
-        SequenceTest_getSLongReply* self,RTIBool allocatePointers);
+        SequenceTest_getSLongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void SequenceTest_getSLongReply_finalize(
@@ -237,9 +244,9 @@ extern const char *SequenceTest_getStringRequestTYPENAME;
 
             
     
-
-typedef struct SequenceTest_getStringRequest
+class SequenceTest_getStringRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct SequenceTest_getStringRequestSeq Seq;
 
@@ -250,12 +257,15 @@ typedef struct SequenceTest_getStringRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     cadena  s1;
+
     cadena  s2;
 
-} SequenceTest_getStringRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -277,7 +287,7 @@ RTIBool SequenceTest_getStringRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool SequenceTest_getStringRequest_initialize_ex(
-        SequenceTest_getStringRequest* self,RTIBool allocatePointers);
+        SequenceTest_getStringRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void SequenceTest_getStringRequest_finalize(
@@ -326,9 +336,9 @@ extern const char *SequenceTest_getStringReplyTYPENAME;
 
             
     
-
-typedef struct SequenceTest_getStringReply
+class SequenceTest_getStringReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct SequenceTest_getStringReplySeq Seq;
 
@@ -339,13 +349,17 @@ typedef struct SequenceTest_getStringReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     cadena  s2;
+
     cadena  s3;
+
     cadena  getString_ret;
 
-} SequenceTest_getStringReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -367,7 +381,7 @@ RTIBool SequenceTest_getStringReply_initialize(
         
 NDDSUSERDllExport
 RTIBool SequenceTest_getStringReply_initialize_ex(
-        SequenceTest_getStringReply* self,RTIBool allocatePointers);
+        SequenceTest_getStringReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void SequenceTest_getStringReply_finalize(
@@ -416,9 +430,9 @@ extern const char *SequenceTest_getStringBoundedRequestTYPENAME;
 
             
     
-
-typedef struct SequenceTest_getStringBoundedRequest
+class SequenceTest_getStringBoundedRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct SequenceTest_getStringBoundedRequestSeq Seq;
 
@@ -429,12 +443,15 @@ typedef struct SequenceTest_getStringBoundedRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     dattos  sb1;
+
     dattos  sb2;
 
-} SequenceTest_getStringBoundedRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -456,7 +473,7 @@ RTIBool SequenceTest_getStringBoundedRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool SequenceTest_getStringBoundedRequest_initialize_ex(
-        SequenceTest_getStringBoundedRequest* self,RTIBool allocatePointers);
+        SequenceTest_getStringBoundedRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void SequenceTest_getStringBoundedRequest_finalize(
@@ -505,9 +522,9 @@ extern const char *SequenceTest_getStringBoundedReplyTYPENAME;
 
             
     
-
-typedef struct SequenceTest_getStringBoundedReply
+class SequenceTest_getStringBoundedReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct SequenceTest_getStringBoundedReplySeq Seq;
 
@@ -518,13 +535,17 @@ typedef struct SequenceTest_getStringBoundedReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     dattos  sb2;
+
     dattos  sb3;
+
     dattos  getStringBounded_ret;
 
-} SequenceTest_getStringBoundedReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -546,7 +567,7 @@ RTIBool SequenceTest_getStringBoundedReply_initialize(
         
 NDDSUSERDllExport
 RTIBool SequenceTest_getStringBoundedReply_initialize_ex(
-        SequenceTest_getStringBoundedReply* self,RTIBool allocatePointers);
+        SequenceTest_getStringBoundedReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void SequenceTest_getStringBoundedReply_finalize(

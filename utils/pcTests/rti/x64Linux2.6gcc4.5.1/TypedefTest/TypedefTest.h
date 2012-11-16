@@ -46,18 +46,20 @@ extern const char *DatosTYPENAME;
 
             
     
-
-typedef struct Datos
+class Datos                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct DatosSeq Seq;
 
 #endif
-
+    
     DDS_Long  count;
+
     char*  message; /* maximum length = (255) */
 
-} Datos;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -79,7 +81,7 @@ RTIBool Datos_initialize(
         
 NDDSUSERDllExport
 RTIBool Datos_initialize_ex(
-        Datos* self,RTIBool allocatePointers);
+        Datos* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void Datos_finalize(
@@ -122,7 +124,7 @@ RTIBool largo_initialize(
             
 NDDSUSERDllExport
 RTIBool largo_initialize_ex(
-        largo* self,RTIBool allocatePointers);
+        largo* self,RTIBool allocatePointers,RTIBool allocateMemory);
                     
 NDDSUSERDllExport
 void largo_finalize(
@@ -166,7 +168,7 @@ RTIBool DatosDef_initialize(
             
 NDDSUSERDllExport
 RTIBool DatosDef_initialize_ex(
-        DatosDef* self,RTIBool allocatePointers);
+        DatosDef* self,RTIBool allocatePointers,RTIBool allocateMemory);
                     
 NDDSUSERDllExport
 void DatosDef_finalize(
@@ -210,7 +212,7 @@ RTIBool cadena_initialize(
             
 NDDSUSERDllExport
 RTIBool cadena_initialize_ex(
-        cadena* self,RTIBool allocatePointers);
+        cadena* self,RTIBool allocatePointers,RTIBool allocateMemory);
                     
 NDDSUSERDllExport
 void cadena_finalize(
@@ -254,7 +256,7 @@ RTIBool larguisimo_initialize(
             
 NDDSUSERDllExport
 RTIBool larguisimo_initialize_ex(
-        larguisimo* self,RTIBool allocatePointers);
+        larguisimo* self,RTIBool allocatePointers,RTIBool allocateMemory);
                     
 NDDSUSERDllExport
 void larguisimo_finalize(
@@ -298,7 +300,7 @@ RTIBool DatosDefondo_initialize(
             
 NDDSUSERDllExport
 RTIBool DatosDefondo_initialize_ex(
-        DatosDefondo* self,RTIBool allocatePointers);
+        DatosDefondo* self,RTIBool allocatePointers,RTIBool allocateMemory);
                     
 NDDSUSERDllExport
 void DatosDefondo_finalize(
@@ -342,7 +344,7 @@ RTIBool correa_initialize(
             
 NDDSUSERDllExport
 RTIBool correa_initialize_ex(
-        correa* self,RTIBool allocatePointers);
+        correa* self,RTIBool allocatePointers,RTIBool allocateMemory);
                     
 NDDSUSERDllExport
 void correa_finalize(

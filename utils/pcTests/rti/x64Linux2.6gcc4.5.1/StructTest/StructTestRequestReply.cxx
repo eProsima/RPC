@@ -115,25 +115,27 @@ DDS_TypeCode* StructTest_duplicateRequest_get_typecode()
 
 RTIBool StructTest_duplicateRequest_initialize(
     StructTest_duplicateRequest* sample) {
-  return StructTest_duplicateRequest_initialize_ex(sample,RTI_TRUE);
+  return StructTest_duplicateRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool StructTest_duplicateRequest_initialize_ex(
-    StructTest_duplicateRequest* sample,RTIBool allocatePointers)
+    StructTest_duplicateRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Envio_initialize_ex(&sample->ev,allocatePointers)) {
+
+    if (!Envio_initialize_ex(&sample->ev,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +155,10 @@ void StructTest_duplicateRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Envio_finalize_ex(&sample->ev,deletePointers);
             
+
 }
 
 RTIBool StructTest_duplicateRequest_copy(
@@ -167,11 +171,13 @@ RTIBool StructTest_duplicateRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!Envio_copy(
         &dst->ev, &src->ev)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -285,25 +291,27 @@ DDS_TypeCode* StructTest_duplicateReply_get_typecode()
 
 RTIBool StructTest_duplicateReply_initialize(
     StructTest_duplicateReply* sample) {
-  return StructTest_duplicateReply_initialize_ex(sample,RTI_TRUE);
+  return StructTest_duplicateReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool StructTest_duplicateReply_initialize_ex(
-    StructTest_duplicateReply* sample,RTIBool allocatePointers)
+    StructTest_duplicateReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Recepcion_initialize_ex(&sample->duplicate_ret,allocatePointers)) {
+
+    if (!Recepcion_initialize_ex(&sample->duplicate_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -323,8 +331,10 @@ void StructTest_duplicateReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Recepcion_finalize_ex(&sample->duplicate_ret,deletePointers);
             
+
 }
 
 RTIBool StructTest_duplicateReply_copy(
@@ -337,11 +347,13 @@ RTIBool StructTest_duplicateReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!Recepcion_copy(
         &dst->duplicate_ret, &src->duplicate_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -473,29 +485,32 @@ DDS_TypeCode* StructTest_sumaRequest_get_typecode()
 
 RTIBool StructTest_sumaRequest_initialize(
     StructTest_sumaRequest* sample) {
-  return StructTest_sumaRequest_initialize_ex(sample,RTI_TRUE);
+  return StructTest_sumaRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool StructTest_sumaRequest_initialize_ex(
-    StructTest_sumaRequest* sample,RTIBool allocatePointers)
+    StructTest_sumaRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!Envio_initialize_ex(&sample->ev1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Envio_initialize_ex(&sample->ev1,allocatePointers)) {
+
+    if (!Envio_initialize_ex(&sample->ev2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Envio_initialize_ex(&sample->ev2,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -515,10 +530,13 @@ void StructTest_sumaRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Envio_finalize_ex(&sample->ev1,deletePointers);
             
+
     Envio_finalize_ex(&sample->ev2,deletePointers);
             
+
 }
 
 RTIBool StructTest_sumaRequest_copy(
@@ -531,16 +549,19 @@ RTIBool StructTest_sumaRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!Envio_copy(
         &dst->ev1, &src->ev1)) {
         return RTI_FALSE;
     }
             
+
     if (!Envio_copy(
         &dst->ev2, &src->ev2)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -654,25 +675,27 @@ DDS_TypeCode* StructTest_sumaReply_get_typecode()
 
 RTIBool StructTest_sumaReply_initialize(
     StructTest_sumaReply* sample) {
-  return StructTest_sumaReply_initialize_ex(sample,RTI_TRUE);
+  return StructTest_sumaReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool StructTest_sumaReply_initialize_ex(
-    StructTest_sumaReply* sample,RTIBool allocatePointers)
+    StructTest_sumaReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Recepcion_initialize_ex(&sample->suma_ret,allocatePointers)) {
+
+    if (!Recepcion_initialize_ex(&sample->suma_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -692,8 +715,10 @@ void StructTest_sumaReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Recepcion_finalize_ex(&sample->suma_ret,deletePointers);
             
+
 }
 
 RTIBool StructTest_sumaReply_copy(
@@ -706,11 +731,13 @@ RTIBool StructTest_sumaReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!Recepcion_copy(
         &dst->suma_ret, &src->suma_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

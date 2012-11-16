@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderPlugin_953111818_h
-#define MessageHeaderPlugin_953111818_h
+#ifndef MessageHeaderPlugin_953112540_h
+#define MessageHeaderPlugin_953112540_h
 
 #include "MessageHeader.h"
 
@@ -35,6 +35,7 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
+#define Identification_LAST_MEMBER_ID 0
 
 #define IdentificationPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define IdentificationPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -74,34 +75,7 @@ IdentificationPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
- 
 
-/* ----------------------------------------------------------------------------
-    Callback functions:
- * ---------------------------------------------------------------------------- */
-
-NDDSUSERDllExport extern PRESTypePluginParticipantData 
-IdentificationPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-NDDSUSERDllExport extern void 
-IdentificationPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-    
-NDDSUSERDllExport extern PRESTypePluginEndpointData 
-IdentificationPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-NDDSUSERDllExport extern void 
-IdentificationPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 IdentificationPlugin_copy_sample(
@@ -145,6 +119,7 @@ IdentificationPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 IdentificationPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -174,6 +149,7 @@ IdentificationPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Identification * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -230,14 +206,8 @@ IdentificationPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
-     
-/* Plugin Functions */
-NDDSUSERDllExport extern struct PRESTypePlugin*
-IdentificationPlugin_new(void);
 
-NDDSUSERDllExport extern void
-IdentificationPlugin_delete(struct PRESTypePlugin *);
-
+#define RequestHeader_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * RequestHeader.
  *
@@ -252,7 +222,7 @@ IdentificationPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct RequestHeader.
 */
-typedef  struct RequestHeader RequestHeaderKeyHolder;
+typedef  class RequestHeader RequestHeaderKeyHolder;
 
 
 #define RequestHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -310,34 +280,7 @@ RequestHeaderPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 RequestHeaderPluginSupport_destroy_key(
     RequestHeaderKeyHolder *key);
- 
 
-/* ----------------------------------------------------------------------------
-    Callback functions:
- * ---------------------------------------------------------------------------- */
-
-NDDSUSERDllExport extern PRESTypePluginParticipantData 
-RequestHeaderPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-NDDSUSERDllExport extern void 
-RequestHeaderPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-    
-NDDSUSERDllExport extern PRESTypePluginEndpointData 
-RequestHeaderPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-NDDSUSERDllExport extern void 
-RequestHeaderPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 RequestHeaderPlugin_copy_sample(
@@ -381,6 +324,7 @@ RequestHeaderPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 RequestHeaderPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -410,6 +354,7 @@ RequestHeaderPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const RequestHeader * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -492,14 +437,8 @@ RequestHeaderPlugin_serialized_sample_to_keyhash(
     DDS_KeyHash_t *keyhash,
     RTIBool deserialize_encapsulation,
     void *endpoint_plugin_qos); 
-     
-/* Plugin Functions */
-NDDSUSERDllExport extern struct PRESTypePlugin*
-RequestHeaderPlugin_new(void);
 
-NDDSUSERDllExport extern void
-RequestHeaderPlugin_delete(struct PRESTypePlugin *);
-
+#define ReplyHeader_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ReplyHeader.
  *
@@ -514,7 +453,7 @@ RequestHeaderPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ReplyHeader.
 */
-typedef  struct ReplyHeader ReplyHeaderKeyHolder;
+typedef  class ReplyHeader ReplyHeaderKeyHolder;
 
 
 #define ReplyHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -572,34 +511,7 @@ ReplyHeaderPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ReplyHeaderPluginSupport_destroy_key(
     ReplyHeaderKeyHolder *key);
- 
 
-/* ----------------------------------------------------------------------------
-    Callback functions:
- * ---------------------------------------------------------------------------- */
-
-NDDSUSERDllExport extern PRESTypePluginParticipantData 
-ReplyHeaderPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-NDDSUSERDllExport extern void 
-ReplyHeaderPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-    
-NDDSUSERDllExport extern PRESTypePluginEndpointData 
-ReplyHeaderPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-NDDSUSERDllExport extern void 
-ReplyHeaderPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 ReplyHeaderPlugin_copy_sample(
@@ -643,6 +555,7 @@ ReplyHeaderPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ReplyHeaderPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -672,6 +585,7 @@ ReplyHeaderPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ReplyHeader * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -754,13 +668,6 @@ ReplyHeaderPlugin_serialized_sample_to_keyhash(
     DDS_KeyHash_t *keyhash,
     RTIBool deserialize_encapsulation,
     void *endpoint_plugin_qos); 
-     
-/* Plugin Functions */
-NDDSUSERDllExport extern struct PRESTypePlugin*
-ReplyHeaderPlugin_new(void);
-
-NDDSUSERDllExport extern void
-ReplyHeaderPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }
@@ -774,4 +681,4 @@ ReplyHeaderPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* MessageHeaderPlugin_953111818_h */
+#endif /* MessageHeaderPlugin_953112540_h */

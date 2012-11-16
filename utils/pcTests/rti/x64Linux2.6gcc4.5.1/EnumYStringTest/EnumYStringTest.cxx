@@ -127,16 +127,12 @@ DDS_TypeCode* Valores_get_typecode()
 RTIBool Valores_initialize(
     Valores* sample)
 {
-    /* The following method initializes the enum value to zero. However,
-     * some enumerations may not have a member with the value zero. In such
-     * cases, it may be desirable to modify the generated code to use a valid
-     * enumeration member instead.
-     */
-    return RTICdrType_initEnum((RTICdrEnum*) sample);
+    *sample = VALOR1;
+    return RTI_TRUE;
 }
         
 RTIBool Valores_initialize_ex(
-    Valores* sample, RTIBool allocatePointers)
+    Valores* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
     /* The following method initializes the enum value to zero. However,
      * some enumerations may not have a member with the value zero. In such
@@ -144,7 +140,9 @@ RTIBool Valores_initialize_ex(
      * enumeration member instead.
      */
     if (allocatePointers) {} /* To avoid warnings */
-    return RTICdrType_initEnum((RTICdrEnum*) sample);
+    if (allocateMemory) {} /* To avoid warnings */
+    *sample = VALOR1;
+    return RTI_TRUE;
 }
 
 void Valores_finalize(
@@ -169,6 +167,36 @@ RTIBool Valores_copy(
     return RTICdrType_copyEnum((RTICdrEnum *)dst, (RTICdrEnum *)src);
 }
 
+
+RTIBool Valores_getValues(ValoresSeq * values) 
+    
+{
+    int i = 0;
+    Valores * buffer;
+
+
+    if (!values->maximum(3)) {
+        return RTI_FALSE;
+    }
+
+    if (!values->length(3)) {
+        return RTI_FALSE;
+    }
+
+    buffer = values->get_contiguous_buffer();
+    
+    buffer[i] = VALOR1;
+    i++;
+    
+    buffer[i] = VALOR2;
+    i++;
+    
+    buffer[i] = VALOR3;
+    i++;
+    
+
+    return RTI_TRUE;
+}
 
 /**
  * <<IMPLEMENTATION>>

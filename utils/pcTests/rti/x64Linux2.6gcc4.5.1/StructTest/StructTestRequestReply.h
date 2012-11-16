@@ -58,9 +58,9 @@ extern const char *StructTest_duplicateRequestTYPENAME;
 
             
     
-
-typedef struct StructTest_duplicateRequest
+class StructTest_duplicateRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct StructTest_duplicateRequestSeq Seq;
 
@@ -71,11 +71,13 @@ typedef struct StructTest_duplicateRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     Envio  ev;
 
-} StructTest_duplicateRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -97,7 +99,7 @@ RTIBool StructTest_duplicateRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool StructTest_duplicateRequest_initialize_ex(
-        StructTest_duplicateRequest* self,RTIBool allocatePointers);
+        StructTest_duplicateRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void StructTest_duplicateRequest_finalize(
@@ -146,9 +148,9 @@ extern const char *StructTest_duplicateReplyTYPENAME;
 
             
     
-
-typedef struct StructTest_duplicateReply
+class StructTest_duplicateReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct StructTest_duplicateReplySeq Seq;
 
@@ -159,11 +161,13 @@ typedef struct StructTest_duplicateReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     Recepcion  duplicate_ret;
 
-} StructTest_duplicateReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -185,7 +189,7 @@ RTIBool StructTest_duplicateReply_initialize(
         
 NDDSUSERDllExport
 RTIBool StructTest_duplicateReply_initialize_ex(
-        StructTest_duplicateReply* self,RTIBool allocatePointers);
+        StructTest_duplicateReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void StructTest_duplicateReply_finalize(
@@ -234,9 +238,9 @@ extern const char *StructTest_sumaRequestTYPENAME;
 
             
     
-
-typedef struct StructTest_sumaRequest
+class StructTest_sumaRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct StructTest_sumaRequestSeq Seq;
 
@@ -247,12 +251,15 @@ typedef struct StructTest_sumaRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     Envio  ev1;
+
     Envio  ev2;
 
-} StructTest_sumaRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -274,7 +281,7 @@ RTIBool StructTest_sumaRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool StructTest_sumaRequest_initialize_ex(
-        StructTest_sumaRequest* self,RTIBool allocatePointers);
+        StructTest_sumaRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void StructTest_sumaRequest_finalize(
@@ -323,9 +330,9 @@ extern const char *StructTest_sumaReplyTYPENAME;
 
             
     
-
-typedef struct StructTest_sumaReply
+class StructTest_sumaReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct StructTest_sumaReplySeq Seq;
 
@@ -336,11 +343,13 @@ typedef struct StructTest_sumaReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     Recepcion  suma_ret;
 
-} StructTest_sumaReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -362,7 +371,7 @@ RTIBool StructTest_sumaReply_initialize(
         
 NDDSUSERDllExport
 RTIBool StructTest_sumaReply_initialize_ex(
-        StructTest_sumaReply* self,RTIBool allocatePointers);
+        StructTest_sumaReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void StructTest_sumaReply_finalize(

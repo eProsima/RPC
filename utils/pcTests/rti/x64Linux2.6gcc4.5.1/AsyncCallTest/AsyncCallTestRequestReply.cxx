@@ -133,29 +133,32 @@ DDS_TypeCode* AsyncCallTest_getLongRequest_get_typecode()
 
 RTIBool AsyncCallTest_getLongRequest_initialize(
     AsyncCallTest_getLongRequest* sample) {
-  return AsyncCallTest_getLongRequest_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_getLongRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_getLongRequest_initialize_ex(
-    AsyncCallTest_getLongRequest* sample,RTIBool allocatePointers)
+    AsyncCallTest_getLongRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initLong(&sample->lo1)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initLong(&sample->lo2)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -175,6 +178,9 @@ void AsyncCallTest_getLongRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
+
 }
 
 RTIBool AsyncCallTest_getLongRequest_copy(
@@ -187,16 +193,19 @@ RTIBool AsyncCallTest_getLongRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->lo1, &src->lo1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->lo2, &src->lo2)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -346,33 +355,37 @@ DDS_TypeCode* AsyncCallTest_getLongReply_get_typecode()
 
 RTIBool AsyncCallTest_getLongReply_initialize(
     AsyncCallTest_getLongReply* sample) {
-  return AsyncCallTest_getLongReply_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_getLongReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_getLongReply_initialize_ex(
-    AsyncCallTest_getLongReply* sample,RTIBool allocatePointers)
+    AsyncCallTest_getLongReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initLong(&sample->lo2)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initLong(&sample->lo3)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initLong(&sample->getLong_ret)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -392,6 +405,10 @@ void AsyncCallTest_getLongReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
+
+
 }
 
 RTIBool AsyncCallTest_getLongReply_copy(
@@ -404,21 +421,25 @@ RTIBool AsyncCallTest_getLongReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->lo2, &src->lo2)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->lo3, &src->lo3)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->getLong_ret, &src->getLong_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -550,29 +571,32 @@ DDS_TypeCode* AsyncCallTest_getBooleanRequest_get_typecode()
 
 RTIBool AsyncCallTest_getBooleanRequest_initialize(
     AsyncCallTest_getBooleanRequest* sample) {
-  return AsyncCallTest_getBooleanRequest_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_getBooleanRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_getBooleanRequest_initialize_ex(
-    AsyncCallTest_getBooleanRequest* sample,RTIBool allocatePointers)
+    AsyncCallTest_getBooleanRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initBoolean(&sample->bo1)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initBoolean(&sample->bo2)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -592,6 +616,9 @@ void AsyncCallTest_getBooleanRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
+
 }
 
 RTIBool AsyncCallTest_getBooleanRequest_copy(
@@ -604,16 +631,19 @@ RTIBool AsyncCallTest_getBooleanRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->bo1, &src->bo1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->bo2, &src->bo2)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -763,33 +793,37 @@ DDS_TypeCode* AsyncCallTest_getBooleanReply_get_typecode()
 
 RTIBool AsyncCallTest_getBooleanReply_initialize(
     AsyncCallTest_getBooleanReply* sample) {
-  return AsyncCallTest_getBooleanReply_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_getBooleanReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_getBooleanReply_initialize_ex(
-    AsyncCallTest_getBooleanReply* sample,RTIBool allocatePointers)
+    AsyncCallTest_getBooleanReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initBoolean(&sample->bo2)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initBoolean(&sample->bo3)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initBoolean(&sample->getBoolean_ret)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -809,6 +843,10 @@ void AsyncCallTest_getBooleanReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
+
+
 }
 
 RTIBool AsyncCallTest_getBooleanReply_copy(
@@ -821,21 +859,25 @@ RTIBool AsyncCallTest_getBooleanReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->bo2, &src->bo2)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->bo3, &src->bo3)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->getBoolean_ret, &src->getBoolean_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -969,31 +1011,46 @@ DDS_TypeCode* AsyncCallTest_getStringRequest_get_typecode()
 
 RTIBool AsyncCallTest_getStringRequest_initialize(
     AsyncCallTest_getStringRequest* sample) {
-  return AsyncCallTest_getStringRequest_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_getStringRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_getStringRequest_initialize_ex(
-    AsyncCallTest_getStringRequest* sample,RTIBool allocatePointers)
+    AsyncCallTest_getStringRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        sample->s1 = DDS_String_alloc((255));
+        if (sample->s1 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s1 != NULL) { 
+            sample->s1[0] = '\0';
+        }
     }
             
-    sample->s1 = DDS_String_alloc((255));
-    if (sample->s1 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->s2 = DDS_String_alloc((255));
+        if (sample->s2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s2 != NULL) { 
+            sample->s2[0] = '\0';
+        }
     }
             
-    sample->s2 = DDS_String_alloc((255));
-    if (sample->s2 == NULL) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1013,10 +1070,13 @@ void AsyncCallTest_getStringRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->s1);                
             
+
     DDS_String_free(sample->s2);                
             
+
 }
 
 RTIBool AsyncCallTest_getStringRequest_copy(
@@ -1029,16 +1089,19 @@ RTIBool AsyncCallTest_getStringRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s1, src->s1, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s2, src->s2, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1191,36 +1254,58 @@ DDS_TypeCode* AsyncCallTest_getStringReply_get_typecode()
 
 RTIBool AsyncCallTest_getStringReply_initialize(
     AsyncCallTest_getStringReply* sample) {
-  return AsyncCallTest_getStringReply_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_getStringReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_getStringReply_initialize_ex(
-    AsyncCallTest_getStringReply* sample,RTIBool allocatePointers)
+    AsyncCallTest_getStringReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        sample->s2 = DDS_String_alloc((255));
+        if (sample->s2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s2 != NULL) { 
+            sample->s2[0] = '\0';
+        }
     }
             
-    sample->s2 = DDS_String_alloc((255));
-    if (sample->s2 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->s3 = DDS_String_alloc((255));
+        if (sample->s3 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s3 != NULL) { 
+            sample->s3[0] = '\0';
+        }
     }
             
-    sample->s3 = DDS_String_alloc((255));
-    if (sample->s3 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->getString_ret = DDS_String_alloc((255));
+        if (sample->getString_ret == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->getString_ret != NULL) { 
+            sample->getString_ret[0] = '\0';
+        }
     }
             
-    sample->getString_ret = DDS_String_alloc((255));
-    if (sample->getString_ret == NULL) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1240,12 +1325,16 @@ void AsyncCallTest_getStringReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->s2);                
             
+
     DDS_String_free(sample->s3);                
             
+
     DDS_String_free(sample->getString_ret);                
             
+
 }
 
 RTIBool AsyncCallTest_getStringReply_copy(
@@ -1258,21 +1347,25 @@ RTIBool AsyncCallTest_getStringReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s2, src->s2, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s3, src->s3, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->getString_ret, src->getString_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1386,25 +1479,27 @@ DDS_TypeCode* AsyncCallTest_duplicateRequest_get_typecode()
 
 RTIBool AsyncCallTest_duplicateRequest_initialize(
     AsyncCallTest_duplicateRequest* sample) {
-  return AsyncCallTest_duplicateRequest_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_duplicateRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_duplicateRequest_initialize_ex(
-    AsyncCallTest_duplicateRequest* sample,RTIBool allocatePointers)
+    AsyncCallTest_duplicateRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Structure_initialize_ex(&sample->ev,allocatePointers)) {
+
+    if (!Structure_initialize_ex(&sample->ev,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1424,8 +1519,10 @@ void AsyncCallTest_duplicateRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Structure_finalize_ex(&sample->ev,deletePointers);
             
+
 }
 
 RTIBool AsyncCallTest_duplicateRequest_copy(
@@ -1438,11 +1535,13 @@ RTIBool AsyncCallTest_duplicateRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!Structure_copy(
         &dst->ev, &src->ev)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1556,25 +1655,27 @@ DDS_TypeCode* AsyncCallTest_duplicateReply_get_typecode()
 
 RTIBool AsyncCallTest_duplicateReply_initialize(
     AsyncCallTest_duplicateReply* sample) {
-  return AsyncCallTest_duplicateReply_initialize_ex(sample,RTI_TRUE);
+  return AsyncCallTest_duplicateReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool AsyncCallTest_duplicateReply_initialize_ex(
-    AsyncCallTest_duplicateReply* sample,RTIBool allocatePointers)
+    AsyncCallTest_duplicateReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Structure_initialize_ex(&sample->duplicate_ret,allocatePointers)) {
+
+    if (!Structure_initialize_ex(&sample->duplicate_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1594,8 +1695,10 @@ void AsyncCallTest_duplicateReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Structure_finalize_ex(&sample->duplicate_ret,deletePointers);
             
+
 }
 
 RTIBool AsyncCallTest_duplicateReply_copy(
@@ -1608,11 +1711,13 @@ RTIBool AsyncCallTest_duplicateReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!Structure_copy(
         &dst->duplicate_ret, &src->duplicate_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

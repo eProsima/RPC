@@ -151,33 +151,37 @@ DDS_TypeCode* Identification_get_typecode()
 
 RTIBool Identification_initialize(
     Identification* sample) {
-  return Identification_initialize_ex(sample,RTI_TRUE);
+  return Identification_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Identification_initialize_ex(
-    Identification* sample,RTIBool allocatePointers)
+    Identification* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initUnsignedLong(&sample->value_1)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initUnsignedLong(&sample->value_2)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initUnsignedLong(&sample->value_3)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initUnsignedLong(&sample->value_4)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -195,6 +199,10 @@ void Identification_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
+
+
+
 }
 
 RTIBool Identification_copy(
@@ -207,21 +215,25 @@ RTIBool Identification_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyUnsignedLong(
         &dst->value_2, &src->value_2)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyUnsignedLong(
         &dst->value_3, &src->value_3)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyUnsignedLong(
         &dst->value_4, &src->value_4)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -354,30 +366,39 @@ DDS_TypeCode* RequestHeader_get_typecode()
 
 RTIBool RequestHeader_initialize(
     RequestHeader* sample) {
-  return RequestHeader_initialize_ex(sample,RTI_TRUE);
+  return RequestHeader_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool RequestHeader_initialize_ex(
-    RequestHeader* sample,RTIBool allocatePointers)
+    RequestHeader* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!Identification_initialize_ex(&sample->clientId,allocatePointers)) {
+    if (!Identification_initialize_ex(&sample->clientId,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    sample->remoteServiceName = DDS_String_alloc((255));
-    if (sample->remoteServiceName == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->remoteServiceName = DDS_String_alloc((255));
+        if (sample->remoteServiceName == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->remoteServiceName != NULL) { 
+            sample->remoteServiceName[0] = '\0';
+        }
     }
             
+
     if (!RTICdrType_initUnsignedLong(&sample->requestSequenceNumber)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -397,8 +418,11 @@ void RequestHeader_finalize_ex(
 
     Identification_finalize_ex(&sample->clientId,deletePointers);
             
+
     DDS_String_free(sample->remoteServiceName);                
             
+
+
 }
 
 RTIBool RequestHeader_copy(
@@ -411,16 +435,19 @@ RTIBool RequestHeader_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->remoteServiceName, src->remoteServiceName, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyUnsignedLong(
         &dst->requestSequenceNumber, &src->requestSequenceNumber)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -571,34 +598,44 @@ DDS_TypeCode* ReplyHeader_get_typecode()
 
 RTIBool ReplyHeader_initialize(
     ReplyHeader* sample) {
-  return ReplyHeader_initialize_ex(sample,RTI_TRUE);
+  return ReplyHeader_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool ReplyHeader_initialize_ex(
-    ReplyHeader* sample,RTIBool allocatePointers)
+    ReplyHeader* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!Identification_initialize_ex(&sample->clientId,allocatePointers)) {
+    if (!Identification_initialize_ex(&sample->clientId,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initUnsignedLong(&sample->requestSequenceNumber)) {
         return RTI_FALSE;
     }                
             
+
     if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
         return RTI_FALSE;
     }                
             
-    sample->ddsrpcRetMsg = DDS_String_alloc((255));
-    if (sample->ddsrpcRetMsg == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->ddsrpcRetMsg = DDS_String_alloc((255));
+        if (sample->ddsrpcRetMsg == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->ddsrpcRetMsg != NULL) { 
+            sample->ddsrpcRetMsg[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -618,8 +655,12 @@ void ReplyHeader_finalize_ex(
 
     Identification_finalize_ex(&sample->clientId,deletePointers);
             
+
+
+
     DDS_String_free(sample->ddsrpcRetMsg);                
             
+
 }
 
 RTIBool ReplyHeader_copy(
@@ -632,21 +673,25 @@ RTIBool ReplyHeader_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyUnsignedLong(
         &dst->requestSequenceNumber, &src->requestSequenceNumber)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->ddsrpcRetMsg, src->ddsrpcRetMsg, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

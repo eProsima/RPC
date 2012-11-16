@@ -41,6 +41,7 @@ extern "C" {
 #include "EnumYStringTestPlugin.h"
 
 
+#define EnumYStringTest_getEnumRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * EnumYStringTest_getEnumRequest.
  *
@@ -55,7 +56,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct EnumYStringTest_getEnumRequest.
 */
-typedef  struct EnumYStringTest_getEnumRequest EnumYStringTest_getEnumRequestKeyHolder;
+typedef  class EnumYStringTest_getEnumRequest EnumYStringTest_getEnumRequestKeyHolder;
 
 
 #define EnumYStringTest_getEnumRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -113,7 +114,6 @@ EnumYStringTest_getEnumRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getEnumRequestPluginSupport_destroy_key(
     EnumYStringTest_getEnumRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,6 +141,7 @@ EnumYStringTest_getEnumRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getEnumRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 EnumYStringTest_getEnumRequestPlugin_copy_sample(
@@ -184,6 +185,7 @@ EnumYStringTest_getEnumRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnumYStringTest_getEnumRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -213,6 +215,7 @@ EnumYStringTest_getEnumRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const EnumYStringTest_getEnumRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -303,6 +306,7 @@ EnumYStringTest_getEnumRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 EnumYStringTest_getEnumRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define EnumYStringTest_getEnumReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * EnumYStringTest_getEnumReply.
  *
@@ -317,7 +321,7 @@ EnumYStringTest_getEnumRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct EnumYStringTest_getEnumReply.
 */
-typedef  struct EnumYStringTest_getEnumReply EnumYStringTest_getEnumReplyKeyHolder;
+typedef  class EnumYStringTest_getEnumReply EnumYStringTest_getEnumReplyKeyHolder;
 
 
 #define EnumYStringTest_getEnumReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -375,7 +379,6 @@ EnumYStringTest_getEnumReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getEnumReplyPluginSupport_destroy_key(
     EnumYStringTest_getEnumReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -403,6 +406,7 @@ EnumYStringTest_getEnumReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getEnumReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 EnumYStringTest_getEnumReplyPlugin_copy_sample(
@@ -446,6 +450,7 @@ EnumYStringTest_getEnumReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnumYStringTest_getEnumReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -475,6 +480,7 @@ EnumYStringTest_getEnumReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const EnumYStringTest_getEnumReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -565,6 +571,7 @@ EnumYStringTest_getEnumReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 EnumYStringTest_getEnumReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define EnumYStringTest_getStringRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * EnumYStringTest_getStringRequest.
  *
@@ -579,7 +586,7 @@ EnumYStringTest_getEnumReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct EnumYStringTest_getStringRequest.
 */
-typedef  struct EnumYStringTest_getStringRequest EnumYStringTest_getStringRequestKeyHolder;
+typedef  class EnumYStringTest_getStringRequest EnumYStringTest_getStringRequestKeyHolder;
 
 
 #define EnumYStringTest_getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -637,7 +644,6 @@ EnumYStringTest_getStringRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringRequestPluginSupport_destroy_key(
     EnumYStringTest_getStringRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -665,6 +671,7 @@ EnumYStringTest_getStringRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 EnumYStringTest_getStringRequestPlugin_copy_sample(
@@ -708,6 +715,7 @@ EnumYStringTest_getStringRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnumYStringTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -737,6 +745,7 @@ EnumYStringTest_getStringRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const EnumYStringTest_getStringRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -827,6 +836,7 @@ EnumYStringTest_getStringRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 EnumYStringTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define EnumYStringTest_getStringReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * EnumYStringTest_getStringReply.
  *
@@ -841,7 +851,7 @@ EnumYStringTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct EnumYStringTest_getStringReply.
 */
-typedef  struct EnumYStringTest_getStringReply EnumYStringTest_getStringReplyKeyHolder;
+typedef  class EnumYStringTest_getStringReply EnumYStringTest_getStringReplyKeyHolder;
 
 
 #define EnumYStringTest_getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -899,7 +909,6 @@ EnumYStringTest_getStringReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringReplyPluginSupport_destroy_key(
     EnumYStringTest_getStringReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -927,6 +936,7 @@ EnumYStringTest_getStringReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 EnumYStringTest_getStringReplyPlugin_copy_sample(
@@ -970,6 +980,7 @@ EnumYStringTest_getStringReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnumYStringTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -999,6 +1010,7 @@ EnumYStringTest_getStringReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const EnumYStringTest_getStringReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1089,6 +1101,7 @@ EnumYStringTest_getStringReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 EnumYStringTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define EnumYStringTest_getStringBoundedRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * EnumYStringTest_getStringBoundedRequest.
  *
@@ -1103,7 +1116,7 @@ EnumYStringTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct EnumYStringTest_getStringBoundedRequest.
 */
-typedef  struct EnumYStringTest_getStringBoundedRequest EnumYStringTest_getStringBoundedRequestKeyHolder;
+typedef  class EnumYStringTest_getStringBoundedRequest EnumYStringTest_getStringBoundedRequestKeyHolder;
 
 
 #define EnumYStringTest_getStringBoundedRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1161,7 +1174,6 @@ EnumYStringTest_getStringBoundedRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringBoundedRequestPluginSupport_destroy_key(
     EnumYStringTest_getStringBoundedRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1189,6 +1201,7 @@ EnumYStringTest_getStringBoundedRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringBoundedRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 EnumYStringTest_getStringBoundedRequestPlugin_copy_sample(
@@ -1232,6 +1245,7 @@ EnumYStringTest_getStringBoundedRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnumYStringTest_getStringBoundedRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1261,6 +1275,7 @@ EnumYStringTest_getStringBoundedRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const EnumYStringTest_getStringBoundedRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1351,6 +1366,7 @@ EnumYStringTest_getStringBoundedRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 EnumYStringTest_getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define EnumYStringTest_getStringBoundedReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * EnumYStringTest_getStringBoundedReply.
  *
@@ -1365,7 +1381,7 @@ EnumYStringTest_getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct EnumYStringTest_getStringBoundedReply.
 */
-typedef  struct EnumYStringTest_getStringBoundedReply EnumYStringTest_getStringBoundedReplyKeyHolder;
+typedef  class EnumYStringTest_getStringBoundedReply EnumYStringTest_getStringBoundedReplyKeyHolder;
 
 
 #define EnumYStringTest_getStringBoundedReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1423,7 +1439,6 @@ EnumYStringTest_getStringBoundedReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringBoundedReplyPluginSupport_destroy_key(
     EnumYStringTest_getStringBoundedReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1451,6 +1466,7 @@ EnumYStringTest_getStringBoundedReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EnumYStringTest_getStringBoundedReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 EnumYStringTest_getStringBoundedReplyPlugin_copy_sample(
@@ -1494,6 +1510,7 @@ EnumYStringTest_getStringBoundedReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnumYStringTest_getStringBoundedReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1523,6 +1540,7 @@ EnumYStringTest_getStringBoundedReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const EnumYStringTest_getStringBoundedReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

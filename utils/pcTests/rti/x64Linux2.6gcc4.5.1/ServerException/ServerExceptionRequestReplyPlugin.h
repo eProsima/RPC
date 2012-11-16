@@ -41,6 +41,7 @@ extern "C" {
 #include "ServerExceptionPlugin.h"
 
 
+#define ServerException_sendExceptionRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ServerException_sendExceptionRequest.
  *
@@ -55,7 +56,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ServerException_sendExceptionRequest.
 */
-typedef  struct ServerException_sendExceptionRequest ServerException_sendExceptionRequestKeyHolder;
+typedef  class ServerException_sendExceptionRequest ServerException_sendExceptionRequestKeyHolder;
 
 
 #define ServerException_sendExceptionRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -113,7 +114,6 @@ ServerException_sendExceptionRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionRequestPluginSupport_destroy_key(
     ServerException_sendExceptionRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,6 +141,7 @@ ServerException_sendExceptionRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ServerException_sendExceptionRequestPlugin_copy_sample(
@@ -184,6 +185,7 @@ ServerException_sendExceptionRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ServerException_sendExceptionRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -213,6 +215,7 @@ ServerException_sendExceptionRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ServerException_sendExceptionRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -303,6 +306,7 @@ ServerException_sendExceptionRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 ServerException_sendExceptionRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define ServerException_sendExceptionReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ServerException_sendExceptionReply.
  *
@@ -317,7 +321,7 @@ ServerException_sendExceptionRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ServerException_sendExceptionReply.
 */
-typedef  struct ServerException_sendExceptionReply ServerException_sendExceptionReplyKeyHolder;
+typedef  class ServerException_sendExceptionReply ServerException_sendExceptionReplyKeyHolder;
 
 
 #define ServerException_sendExceptionReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -375,7 +379,6 @@ ServerException_sendExceptionReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionReplyPluginSupport_destroy_key(
     ServerException_sendExceptionReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -403,6 +406,7 @@ ServerException_sendExceptionReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ServerException_sendExceptionReplyPlugin_copy_sample(
@@ -446,6 +450,7 @@ ServerException_sendExceptionReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ServerException_sendExceptionReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -475,6 +480,7 @@ ServerException_sendExceptionReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ServerException_sendExceptionReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -565,6 +571,7 @@ ServerException_sendExceptionReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 ServerException_sendExceptionReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define ServerException_sendExceptionTwoRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ServerException_sendExceptionTwoRequest.
  *
@@ -579,7 +586,7 @@ ServerException_sendExceptionReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ServerException_sendExceptionTwoRequest.
 */
-typedef  struct ServerException_sendExceptionTwoRequest ServerException_sendExceptionTwoRequestKeyHolder;
+typedef  class ServerException_sendExceptionTwoRequest ServerException_sendExceptionTwoRequestKeyHolder;
 
 
 #define ServerException_sendExceptionTwoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -637,7 +644,6 @@ ServerException_sendExceptionTwoRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionTwoRequestPluginSupport_destroy_key(
     ServerException_sendExceptionTwoRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -665,6 +671,7 @@ ServerException_sendExceptionTwoRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionTwoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ServerException_sendExceptionTwoRequestPlugin_copy_sample(
@@ -708,6 +715,7 @@ ServerException_sendExceptionTwoRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ServerException_sendExceptionTwoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -737,6 +745,7 @@ ServerException_sendExceptionTwoRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ServerException_sendExceptionTwoRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -827,6 +836,7 @@ ServerException_sendExceptionTwoRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 ServerException_sendExceptionTwoRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define ServerException_sendExceptionTwoReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ServerException_sendExceptionTwoReply.
  *
@@ -841,7 +851,7 @@ ServerException_sendExceptionTwoRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ServerException_sendExceptionTwoReply.
 */
-typedef  struct ServerException_sendExceptionTwoReply ServerException_sendExceptionTwoReplyKeyHolder;
+typedef  class ServerException_sendExceptionTwoReply ServerException_sendExceptionTwoReplyKeyHolder;
 
 
 #define ServerException_sendExceptionTwoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -899,7 +909,6 @@ ServerException_sendExceptionTwoReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionTwoReplyPluginSupport_destroy_key(
     ServerException_sendExceptionTwoReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -927,6 +936,7 @@ ServerException_sendExceptionTwoReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionTwoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ServerException_sendExceptionTwoReplyPlugin_copy_sample(
@@ -970,6 +980,7 @@ ServerException_sendExceptionTwoReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ServerException_sendExceptionTwoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -999,6 +1010,7 @@ ServerException_sendExceptionTwoReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ServerException_sendExceptionTwoReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1089,6 +1101,7 @@ ServerException_sendExceptionTwoReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 ServerException_sendExceptionTwoReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define ServerException_sendExceptionThreeRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ServerException_sendExceptionThreeRequest.
  *
@@ -1103,7 +1116,7 @@ ServerException_sendExceptionTwoReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ServerException_sendExceptionThreeRequest.
 */
-typedef  struct ServerException_sendExceptionThreeRequest ServerException_sendExceptionThreeRequestKeyHolder;
+typedef  class ServerException_sendExceptionThreeRequest ServerException_sendExceptionThreeRequestKeyHolder;
 
 
 #define ServerException_sendExceptionThreeRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1161,7 +1174,6 @@ ServerException_sendExceptionThreeRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionThreeRequestPluginSupport_destroy_key(
     ServerException_sendExceptionThreeRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1189,6 +1201,7 @@ ServerException_sendExceptionThreeRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionThreeRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ServerException_sendExceptionThreeRequestPlugin_copy_sample(
@@ -1232,6 +1245,7 @@ ServerException_sendExceptionThreeRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ServerException_sendExceptionThreeRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1261,6 +1275,7 @@ ServerException_sendExceptionThreeRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ServerException_sendExceptionThreeRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1351,6 +1366,7 @@ ServerException_sendExceptionThreeRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 ServerException_sendExceptionThreeRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define ServerException_sendExceptionThreeReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * ServerException_sendExceptionThreeReply.
  *
@@ -1365,7 +1381,7 @@ ServerException_sendExceptionThreeRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct ServerException_sendExceptionThreeReply.
 */
-typedef  struct ServerException_sendExceptionThreeReply ServerException_sendExceptionThreeReplyKeyHolder;
+typedef  class ServerException_sendExceptionThreeReply ServerException_sendExceptionThreeReplyKeyHolder;
 
 
 #define ServerException_sendExceptionThreeReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1423,7 +1439,6 @@ ServerException_sendExceptionThreeReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionThreeReplyPluginSupport_destroy_key(
     ServerException_sendExceptionThreeReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1451,6 +1466,7 @@ ServerException_sendExceptionThreeReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ServerException_sendExceptionThreeReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ServerException_sendExceptionThreeReplyPlugin_copy_sample(
@@ -1494,6 +1510,7 @@ ServerException_sendExceptionThreeReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ServerException_sendExceptionThreeReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1523,6 +1540,7 @@ ServerException_sendExceptionThreeReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ServerException_sendExceptionThreeReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

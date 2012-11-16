@@ -58,9 +58,9 @@ extern const char *BasicTypeTest_getOctetRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getOctetRequest
+class BasicTypeTest_getOctetRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getOctetRequestSeq Seq;
 
@@ -71,12 +71,15 @@ typedef struct BasicTypeTest_getOctetRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Octet  oc1;
+
     DDS_Octet  oc2;
 
-} BasicTypeTest_getOctetRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -98,7 +101,7 @@ RTIBool BasicTypeTest_getOctetRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getOctetRequest_initialize_ex(
-        BasicTypeTest_getOctetRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getOctetRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getOctetRequest_finalize(
@@ -147,9 +150,9 @@ extern const char *BasicTypeTest_getOctetReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getOctetReply
+class BasicTypeTest_getOctetReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getOctetReplySeq Seq;
 
@@ -160,13 +163,17 @@ typedef struct BasicTypeTest_getOctetReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Octet  oc2;
+
     DDS_Octet  oc3;
+
     DDS_Octet  getOctet_ret;
 
-} BasicTypeTest_getOctetReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -188,7 +195,7 @@ RTIBool BasicTypeTest_getOctetReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getOctetReply_initialize_ex(
-        BasicTypeTest_getOctetReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getOctetReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getOctetReply_finalize(
@@ -237,9 +244,9 @@ extern const char *BasicTypeTest_getCharRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getCharRequest
+class BasicTypeTest_getCharRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getCharRequestSeq Seq;
 
@@ -250,12 +257,15 @@ typedef struct BasicTypeTest_getCharRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Char  ch1;
+
     DDS_Char  ch2;
 
-} BasicTypeTest_getCharRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -277,7 +287,7 @@ RTIBool BasicTypeTest_getCharRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getCharRequest_initialize_ex(
-        BasicTypeTest_getCharRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getCharRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getCharRequest_finalize(
@@ -326,9 +336,9 @@ extern const char *BasicTypeTest_getCharReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getCharReply
+class BasicTypeTest_getCharReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getCharReplySeq Seq;
 
@@ -339,13 +349,17 @@ typedef struct BasicTypeTest_getCharReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Char  ch2;
+
     DDS_Char  ch3;
+
     DDS_Char  getChar_ret;
 
-} BasicTypeTest_getCharReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -367,7 +381,7 @@ RTIBool BasicTypeTest_getCharReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getCharReply_initialize_ex(
-        BasicTypeTest_getCharReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getCharReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getCharReply_finalize(
@@ -416,9 +430,9 @@ extern const char *BasicTypeTest_getWCharRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getWCharRequest
+class BasicTypeTest_getWCharRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getWCharRequestSeq Seq;
 
@@ -429,12 +443,15 @@ typedef struct BasicTypeTest_getWCharRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Wchar  wch1;
+
     DDS_Wchar  wch2;
 
-} BasicTypeTest_getWCharRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -456,7 +473,7 @@ RTIBool BasicTypeTest_getWCharRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getWCharRequest_initialize_ex(
-        BasicTypeTest_getWCharRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getWCharRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getWCharRequest_finalize(
@@ -505,9 +522,9 @@ extern const char *BasicTypeTest_getWCharReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getWCharReply
+class BasicTypeTest_getWCharReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getWCharReplySeq Seq;
 
@@ -518,13 +535,17 @@ typedef struct BasicTypeTest_getWCharReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Wchar  wch2;
+
     DDS_Wchar  wch3;
+
     DDS_Wchar  getWChar_ret;
 
-} BasicTypeTest_getWCharReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -546,7 +567,7 @@ RTIBool BasicTypeTest_getWCharReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getWCharReply_initialize_ex(
-        BasicTypeTest_getWCharReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getWCharReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getWCharReply_finalize(
@@ -595,9 +616,9 @@ extern const char *BasicTypeTest_getShortRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getShortRequest
+class BasicTypeTest_getShortRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getShortRequestSeq Seq;
 
@@ -608,12 +629,15 @@ typedef struct BasicTypeTest_getShortRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Short  sh1;
+
     DDS_Short  sh2;
 
-} BasicTypeTest_getShortRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -635,7 +659,7 @@ RTIBool BasicTypeTest_getShortRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getShortRequest_initialize_ex(
-        BasicTypeTest_getShortRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getShortRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getShortRequest_finalize(
@@ -684,9 +708,9 @@ extern const char *BasicTypeTest_getShortReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getShortReply
+class BasicTypeTest_getShortReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getShortReplySeq Seq;
 
@@ -697,13 +721,17 @@ typedef struct BasicTypeTest_getShortReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Short  sh2;
+
     DDS_Short  sh3;
+
     DDS_Short  getShort_ret;
 
-} BasicTypeTest_getShortReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -725,7 +753,7 @@ RTIBool BasicTypeTest_getShortReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getShortReply_initialize_ex(
-        BasicTypeTest_getShortReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getShortReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getShortReply_finalize(
@@ -774,9 +802,9 @@ extern const char *BasicTypeTest_getUShortRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getUShortRequest
+class BasicTypeTest_getUShortRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getUShortRequestSeq Seq;
 
@@ -787,12 +815,15 @@ typedef struct BasicTypeTest_getUShortRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_UnsignedShort  ush1;
+
     DDS_UnsignedShort  ush2;
 
-} BasicTypeTest_getUShortRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -814,7 +845,7 @@ RTIBool BasicTypeTest_getUShortRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getUShortRequest_initialize_ex(
-        BasicTypeTest_getUShortRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getUShortRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getUShortRequest_finalize(
@@ -863,9 +894,9 @@ extern const char *BasicTypeTest_getUShortReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getUShortReply
+class BasicTypeTest_getUShortReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getUShortReplySeq Seq;
 
@@ -876,13 +907,17 @@ typedef struct BasicTypeTest_getUShortReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_UnsignedShort  ush2;
+
     DDS_UnsignedShort  ush3;
+
     DDS_UnsignedShort  getUShort_ret;
 
-} BasicTypeTest_getUShortReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -904,7 +939,7 @@ RTIBool BasicTypeTest_getUShortReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getUShortReply_initialize_ex(
-        BasicTypeTest_getUShortReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getUShortReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getUShortReply_finalize(
@@ -953,9 +988,9 @@ extern const char *BasicTypeTest_getLongRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getLongRequest
+class BasicTypeTest_getLongRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getLongRequestSeq Seq;
 
@@ -966,12 +1001,15 @@ typedef struct BasicTypeTest_getLongRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Long  lo1;
+
     DDS_Long  lo2;
 
-} BasicTypeTest_getLongRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -993,7 +1031,7 @@ RTIBool BasicTypeTest_getLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getLongRequest_initialize_ex(
-        BasicTypeTest_getLongRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getLongRequest_finalize(
@@ -1042,9 +1080,9 @@ extern const char *BasicTypeTest_getLongReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getLongReply
+class BasicTypeTest_getLongReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getLongReplySeq Seq;
 
@@ -1055,13 +1093,17 @@ typedef struct BasicTypeTest_getLongReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Long  lo2;
+
     DDS_Long  lo3;
+
     DDS_Long  getLong_ret;
 
-} BasicTypeTest_getLongReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1083,7 +1125,7 @@ RTIBool BasicTypeTest_getLongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getLongReply_initialize_ex(
-        BasicTypeTest_getLongReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getLongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getLongReply_finalize(
@@ -1132,9 +1174,9 @@ extern const char *BasicTypeTest_getULongRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getULongRequest
+class BasicTypeTest_getULongRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getULongRequestSeq Seq;
 
@@ -1145,12 +1187,15 @@ typedef struct BasicTypeTest_getULongRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_UnsignedLong  ulo1;
+
     DDS_UnsignedLong  ulo2;
 
-} BasicTypeTest_getULongRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1172,7 +1217,7 @@ RTIBool BasicTypeTest_getULongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getULongRequest_initialize_ex(
-        BasicTypeTest_getULongRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getULongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getULongRequest_finalize(
@@ -1221,9 +1266,9 @@ extern const char *BasicTypeTest_getULongReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getULongReply
+class BasicTypeTest_getULongReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getULongReplySeq Seq;
 
@@ -1234,13 +1279,17 @@ typedef struct BasicTypeTest_getULongReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_UnsignedLong  ulo2;
+
     DDS_UnsignedLong  ulo3;
+
     DDS_UnsignedLong  getULong_ret;
 
-} BasicTypeTest_getULongReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1262,7 +1311,7 @@ RTIBool BasicTypeTest_getULongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getULongReply_initialize_ex(
-        BasicTypeTest_getULongReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getULongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getULongReply_finalize(
@@ -1311,9 +1360,9 @@ extern const char *BasicTypeTest_getLLongRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getLLongRequest
+class BasicTypeTest_getLLongRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getLLongRequestSeq Seq;
 
@@ -1324,12 +1373,15 @@ typedef struct BasicTypeTest_getLLongRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_LongLong  llo1;
+
     DDS_LongLong  llo2;
 
-} BasicTypeTest_getLLongRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1351,7 +1403,7 @@ RTIBool BasicTypeTest_getLLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getLLongRequest_initialize_ex(
-        BasicTypeTest_getLLongRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getLLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getLLongRequest_finalize(
@@ -1400,9 +1452,9 @@ extern const char *BasicTypeTest_getLLongReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getLLongReply
+class BasicTypeTest_getLLongReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getLLongReplySeq Seq;
 
@@ -1413,13 +1465,17 @@ typedef struct BasicTypeTest_getLLongReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_LongLong  llo2;
+
     DDS_LongLong  llo3;
+
     DDS_LongLong  getLLong_ret;
 
-} BasicTypeTest_getLLongReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1441,7 +1497,7 @@ RTIBool BasicTypeTest_getLLongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getLLongReply_initialize_ex(
-        BasicTypeTest_getLLongReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getLLongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getLLongReply_finalize(
@@ -1490,9 +1546,9 @@ extern const char *BasicTypeTest_getULLongRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getULLongRequest
+class BasicTypeTest_getULLongRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getULLongRequestSeq Seq;
 
@@ -1503,12 +1559,15 @@ typedef struct BasicTypeTest_getULLongRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_UnsignedLongLong  ullo1;
+
     DDS_UnsignedLongLong  ullo2;
 
-} BasicTypeTest_getULLongRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1530,7 +1589,7 @@ RTIBool BasicTypeTest_getULLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getULLongRequest_initialize_ex(
-        BasicTypeTest_getULLongRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getULLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getULLongRequest_finalize(
@@ -1579,9 +1638,9 @@ extern const char *BasicTypeTest_getULLongReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getULLongReply
+class BasicTypeTest_getULLongReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getULLongReplySeq Seq;
 
@@ -1592,13 +1651,17 @@ typedef struct BasicTypeTest_getULLongReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_UnsignedLongLong  ullo2;
+
     DDS_UnsignedLongLong  ullo3;
+
     DDS_UnsignedLongLong  getULLong_ret;
 
-} BasicTypeTest_getULLongReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1620,7 +1683,7 @@ RTIBool BasicTypeTest_getULLongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getULLongReply_initialize_ex(
-        BasicTypeTest_getULLongReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getULLongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getULLongReply_finalize(
@@ -1669,9 +1732,9 @@ extern const char *BasicTypeTest_getFloatRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getFloatRequest
+class BasicTypeTest_getFloatRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getFloatRequestSeq Seq;
 
@@ -1682,12 +1745,15 @@ typedef struct BasicTypeTest_getFloatRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Float  fl1;
+
     DDS_Float  fl2;
 
-} BasicTypeTest_getFloatRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1709,7 +1775,7 @@ RTIBool BasicTypeTest_getFloatRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getFloatRequest_initialize_ex(
-        BasicTypeTest_getFloatRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getFloatRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getFloatRequest_finalize(
@@ -1758,9 +1824,9 @@ extern const char *BasicTypeTest_getFloatReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getFloatReply
+class BasicTypeTest_getFloatReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getFloatReplySeq Seq;
 
@@ -1771,13 +1837,17 @@ typedef struct BasicTypeTest_getFloatReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Float  fl2;
+
     DDS_Float  fl3;
+
     DDS_Float  getFloat_ret;
 
-} BasicTypeTest_getFloatReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1799,7 +1869,7 @@ RTIBool BasicTypeTest_getFloatReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getFloatReply_initialize_ex(
-        BasicTypeTest_getFloatReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getFloatReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getFloatReply_finalize(
@@ -1848,9 +1918,9 @@ extern const char *BasicTypeTest_getDoubleRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getDoubleRequest
+class BasicTypeTest_getDoubleRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getDoubleRequestSeq Seq;
 
@@ -1861,12 +1931,15 @@ typedef struct BasicTypeTest_getDoubleRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Double  do1;
+
     DDS_Double  do2;
 
-} BasicTypeTest_getDoubleRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1888,7 +1961,7 @@ RTIBool BasicTypeTest_getDoubleRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getDoubleRequest_initialize_ex(
-        BasicTypeTest_getDoubleRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getDoubleRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getDoubleRequest_finalize(
@@ -1937,9 +2010,9 @@ extern const char *BasicTypeTest_getDoubleReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getDoubleReply
+class BasicTypeTest_getDoubleReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getDoubleReplySeq Seq;
 
@@ -1950,13 +2023,17 @@ typedef struct BasicTypeTest_getDoubleReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Double  do2;
+
     DDS_Double  do3;
+
     DDS_Double  getDouble_ret;
 
-} BasicTypeTest_getDoubleReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1978,7 +2055,7 @@ RTIBool BasicTypeTest_getDoubleReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getDoubleReply_initialize_ex(
-        BasicTypeTest_getDoubleReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getDoubleReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getDoubleReply_finalize(
@@ -2027,9 +2104,9 @@ extern const char *BasicTypeTest_getBooleanRequestTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getBooleanRequest
+class BasicTypeTest_getBooleanRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getBooleanRequestSeq Seq;
 
@@ -2040,12 +2117,15 @@ typedef struct BasicTypeTest_getBooleanRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     DDS_Boolean  bo1;
+
     DDS_Boolean  bo2;
 
-} BasicTypeTest_getBooleanRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -2067,7 +2147,7 @@ RTIBool BasicTypeTest_getBooleanRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getBooleanRequest_initialize_ex(
-        BasicTypeTest_getBooleanRequest* self,RTIBool allocatePointers);
+        BasicTypeTest_getBooleanRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getBooleanRequest_finalize(
@@ -2116,9 +2196,9 @@ extern const char *BasicTypeTest_getBooleanReplyTYPENAME;
 
             
     
-
-typedef struct BasicTypeTest_getBooleanReply
+class BasicTypeTest_getBooleanReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct BasicTypeTest_getBooleanReplySeq Seq;
 
@@ -2129,13 +2209,17 @@ typedef struct BasicTypeTest_getBooleanReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     DDS_Boolean  bo2;
+
     DDS_Boolean  bo3;
+
     DDS_Boolean  getBoolean_ret;
 
-} BasicTypeTest_getBooleanReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -2157,7 +2241,7 @@ RTIBool BasicTypeTest_getBooleanReply_initialize(
         
 NDDSUSERDllExport
 RTIBool BasicTypeTest_getBooleanReply_initialize_ex(
-        BasicTypeTest_getBooleanReply* self,RTIBool allocatePointers);
+        BasicTypeTest_getBooleanReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void BasicTypeTest_getBooleanReply_finalize(
