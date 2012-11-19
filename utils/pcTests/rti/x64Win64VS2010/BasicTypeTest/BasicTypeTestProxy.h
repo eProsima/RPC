@@ -11,7 +11,7 @@
 #include "exceptions/Exception.h"
 
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getOctetCallbackHandler
@@ -28,10 +28,10 @@ class BasicTypeTest_getOctetCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getCharCallbackHandler
@@ -48,10 +48,10 @@ class BasicTypeTest_getCharCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getWCharCallbackHandler
@@ -68,10 +68,10 @@ class BasicTypeTest_getWCharCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getShortCallbackHandler
@@ -88,10 +88,10 @@ class BasicTypeTest_getShortCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getUShortCallbackHandler
@@ -108,10 +108,10 @@ class BasicTypeTest_getUShortCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getLongCallbackHandler
@@ -128,10 +128,10 @@ class BasicTypeTest_getLongCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getULongCallbackHandler
@@ -148,10 +148,10 @@ class BasicTypeTest_getULongCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getLLongCallbackHandler
@@ -168,10 +168,10 @@ class BasicTypeTest_getLLongCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getULLongCallbackHandler
@@ -188,10 +188,10 @@ class BasicTypeTest_getULLongCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getFloatCallbackHandler
@@ -208,10 +208,10 @@ class BasicTypeTest_getFloatCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getDoubleCallbackHandler
@@ -228,10 +228,10 @@ class BasicTypeTest_getDoubleCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class BasicTypeTest_getBooleanCallbackHandler
@@ -248,24 +248,24 @@ class BasicTypeTest_getBooleanCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 
 /**
  * \brief This class implements a specific server's proxy for the defined interface BasicTypeTest.
  */
-class BasicTypeTestProxy : public eProsima::DDSRPC::Client
+class BasicTypeTestProxy : public eProsima::RPCDDS::Client
 {
     public:
     
         /**
-         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
+         * \brief Default constructor. The server's proxy will use the default eProsima::RPCDDS::UDPTransport.
          *
          * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
         BasicTypeTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
@@ -277,10 +277,10 @@ class BasicTypeTestProxy : public eProsima::DDSRPC::Client
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
-        BasicTypeTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        BasicTypeTestProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTestProxy();
@@ -341,18 +341,18 @@ class BasicTypeTestProxy : public eProsima::DDSRPC::Client
          */
         void createRPCs();
         
-        eProsima::DDSRPC::ClientRPC *getOctet_Service;
-        eProsima::DDSRPC::ClientRPC *getChar_Service;
-        eProsima::DDSRPC::ClientRPC *getWChar_Service;
-        eProsima::DDSRPC::ClientRPC *getShort_Service;
-        eProsima::DDSRPC::ClientRPC *getUShort_Service;
-        eProsima::DDSRPC::ClientRPC *getLong_Service;
-        eProsima::DDSRPC::ClientRPC *getULong_Service;
-        eProsima::DDSRPC::ClientRPC *getLLong_Service;
-        eProsima::DDSRPC::ClientRPC *getULLong_Service;
-        eProsima::DDSRPC::ClientRPC *getFloat_Service;
-        eProsima::DDSRPC::ClientRPC *getDouble_Service;
-        eProsima::DDSRPC::ClientRPC *getBoolean_Service; 
+        eProsima::RPCDDS::ClientRPC *getOctet_Service;
+        eProsima::RPCDDS::ClientRPC *getChar_Service;
+        eProsima::RPCDDS::ClientRPC *getWChar_Service;
+        eProsima::RPCDDS::ClientRPC *getShort_Service;
+        eProsima::RPCDDS::ClientRPC *getUShort_Service;
+        eProsima::RPCDDS::ClientRPC *getLong_Service;
+        eProsima::RPCDDS::ClientRPC *getULong_Service;
+        eProsima::RPCDDS::ClientRPC *getLLong_Service;
+        eProsima::RPCDDS::ClientRPC *getULLong_Service;
+        eProsima::RPCDDS::ClientRPC *getFloat_Service;
+        eProsima::RPCDDS::ClientRPC *getDouble_Service;
+        eProsima::RPCDDS::ClientRPC *getBoolean_Service; 
 };
 
 #endif // _BasicTypeTest_PROXY_H_

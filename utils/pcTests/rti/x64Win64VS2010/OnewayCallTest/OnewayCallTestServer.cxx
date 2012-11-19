@@ -10,7 +10,7 @@
 
 #include "OnewayCallTestServerRPCSupport.h"
 
-OnewayCallTestServer::OnewayCallTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+OnewayCallTestServer::OnewayCallTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ OnewayCallTestServer::OnewayCallTestServer(std::string serviceName, eProsima::DD
     createRPCs();
 }
 
-OnewayCallTestServer::OnewayCallTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+OnewayCallTestServer::OnewayCallTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new OnewayCallTestServerImpl();
@@ -66,7 +66,7 @@ void OnewayCallTestServer::createRPCs()
 
 }
 
-void OnewayCallTestServer::setLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::setLong(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     DDS_Long  lo1 = 0;    
@@ -80,14 +80,14 @@ void OnewayCallTestServer::setLong(eProsima::DDSRPC::Server *server, void *reque
 srv->_impl->setLong(lo1);
 
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
     }
     
     OnewayCallTest_setLongRequestTypeSupport::delete_data((OnewayCallTest_setLongRequest*)requestData);
     
 }
-void OnewayCallTestServer::getLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::getLong(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     DDS_Long  getLong_ret = 0;       
@@ -101,16 +101,16 @@ void OnewayCallTestServer::getLong(eProsima::DDSRPC::Server *server, void *reque
         getLong_ret = srv->_impl->getLong();
 
         OnewayCallTest_getLongReplyUtils::setTypeData(replyData, getLong_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -119,7 +119,7 @@ void OnewayCallTestServer::getLong(eProsima::DDSRPC::Server *server, void *reque
     
         
 }
-void OnewayCallTestServer::setBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::setBoolean(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     DDS_Boolean  bo1 = RTI_FALSE;    
@@ -133,14 +133,14 @@ void OnewayCallTestServer::setBoolean(eProsima::DDSRPC::Server *server, void *re
 srv->_impl->setBoolean(bo1);
 
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
     }
     
     OnewayCallTest_setBooleanRequestTypeSupport::delete_data((OnewayCallTest_setBooleanRequest*)requestData);
     
 }
-void OnewayCallTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::getBoolean(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     DDS_Boolean  getBoolean_ret = RTI_FALSE;       
@@ -154,16 +154,16 @@ void OnewayCallTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *re
         getBoolean_ret = srv->_impl->getBoolean();
 
         OnewayCallTest_getBooleanReplyUtils::setTypeData(replyData, getBoolean_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -172,7 +172,7 @@ void OnewayCallTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *re
     
         
 }
-void OnewayCallTestServer::setString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::setString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     char*  s1 = NULL;    
@@ -186,14 +186,14 @@ void OnewayCallTestServer::setString(eProsima::DDSRPC::Server *server, void *req
 srv->_impl->setString(s1);
 
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
     }
     
     OnewayCallTest_setStringRequestTypeSupport::delete_data((OnewayCallTest_setStringRequest*)requestData);
     
 }
-void OnewayCallTestServer::getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::getString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     char*  getString_ret = NULL;       
@@ -207,16 +207,16 @@ void OnewayCallTestServer::getString(eProsima::DDSRPC::Server *server, void *req
         getString_ret = srv->_impl->getString();
 
         OnewayCallTest_getStringReplyUtils::setTypeData(replyData, getString_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -225,7 +225,7 @@ void OnewayCallTestServer::getString(eProsima::DDSRPC::Server *server, void *req
     
     if(getString_ret != NULL) free(getString_ret);    
 }
-void OnewayCallTestServer::setStruct(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::setStruct(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     Structure ev;
@@ -240,14 +240,14 @@ void OnewayCallTestServer::setStruct(eProsima::DDSRPC::Server *server, void *req
 srv->_impl->setStruct(ev);
 
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
     }
     
     OnewayCallTest_setStructRequestTypeSupport::delete_data((OnewayCallTest_setStructRequest*)requestData);
     
 }
-void OnewayCallTestServer::getStruct(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void OnewayCallTestServer::getStruct(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     OnewayCallTestServer *srv = dynamic_cast<OnewayCallTestServer*>(server);
     Structure getStruct_ret;
@@ -262,16 +262,16 @@ void OnewayCallTestServer::getStruct(eProsima::DDSRPC::Server *server, void *req
         getStruct_ret = srv->_impl->getStruct();
 
         OnewayCallTest_getStructReplyUtils::setTypeData(replyData, getStruct_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

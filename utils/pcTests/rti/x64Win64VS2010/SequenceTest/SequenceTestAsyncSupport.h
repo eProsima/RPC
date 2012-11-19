@@ -11,26 +11,26 @@
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getSLong from the server in an asynchronous call.
  */
-class SequenceTest_getSLongTask : public eProsima::DDSRPC::AsyncTask
+class SequenceTest_getSLongTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         SequenceTest_getSLongTask(SequenceTest_getSLongCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~SequenceTest_getSLongTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -51,26 +51,26 @@ class SequenceTest_getSLongTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getString from the server in an asynchronous call.
  */
-class SequenceTest_getStringTask : public eProsima::DDSRPC::AsyncTask
+class SequenceTest_getStringTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         SequenceTest_getStringTask(SequenceTest_getStringCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~SequenceTest_getStringTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -91,26 +91,26 @@ class SequenceTest_getStringTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getStringBounded from the server in an asynchronous call.
  */
-class SequenceTest_getStringBoundedTask : public eProsima::DDSRPC::AsyncTask
+class SequenceTest_getStringBoundedTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         SequenceTest_getStringBoundedTask(SequenceTest_getStringBoundedCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~SequenceTest_getStringBoundedTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.

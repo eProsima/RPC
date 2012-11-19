@@ -65,7 +65,7 @@ class SequenceTest_getSLongReplyUtils
          * \param data Pointer to the structure SequenceTest_getSLongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(SequenceTest_getSLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ largo& l2, /*out*/ largo& l3, /*out*/ largo& getSLong_ret);
+        static void extractTypeData(SequenceTest_getSLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ largo& l2, /*out*/ largo& l3, /*out*/ largo& getSLong_ret);
 };
 
 
@@ -122,7 +122,7 @@ class SequenceTest_getStringReplyUtils
          * \param data Pointer to the structure SequenceTest_getStringReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(SequenceTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ cadena& s2, /*out*/ cadena& s3, /*out*/ cadena& getString_ret);
+        static void extractTypeData(SequenceTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ cadena& s2, /*out*/ cadena& s3, /*out*/ cadena& getString_ret);
 };
 
 
@@ -179,7 +179,7 @@ class SequenceTest_getStringBoundedReplyUtils
          * \param data Pointer to the structure SequenceTest_getStringBoundedReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(SequenceTest_getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ dattos& sb2, /*out*/ dattos& sb3, /*out*/ dattos& getStringBounded_ret);
+        static void extractTypeData(SequenceTest_getStringBoundedReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ dattos& sb2, /*out*/ dattos& sb3, /*out*/ dattos& getStringBounded_ret);
 };
 
  

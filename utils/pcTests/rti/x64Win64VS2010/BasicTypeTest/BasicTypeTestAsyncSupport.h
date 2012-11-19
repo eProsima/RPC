@@ -11,26 +11,26 @@
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getOctet from the server in an asynchronous call.
  */
-class BasicTypeTest_getOctetTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getOctetTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getOctetTask(BasicTypeTest_getOctetCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getOctetTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -51,26 +51,26 @@ class BasicTypeTest_getOctetTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getChar from the server in an asynchronous call.
  */
-class BasicTypeTest_getCharTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getCharTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getCharTask(BasicTypeTest_getCharCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getCharTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -91,26 +91,26 @@ class BasicTypeTest_getCharTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getWChar from the server in an asynchronous call.
  */
-class BasicTypeTest_getWCharTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getWCharTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getWCharTask(BasicTypeTest_getWCharCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getWCharTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -131,26 +131,26 @@ class BasicTypeTest_getWCharTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getShort from the server in an asynchronous call.
  */
-class BasicTypeTest_getShortTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getShortTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getShortTask(BasicTypeTest_getShortCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getShortTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -171,26 +171,26 @@ class BasicTypeTest_getShortTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getUShort from the server in an asynchronous call.
  */
-class BasicTypeTest_getUShortTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getUShortTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getUShortTask(BasicTypeTest_getUShortCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getUShortTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -211,26 +211,26 @@ class BasicTypeTest_getUShortTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getLong from the server in an asynchronous call.
  */
-class BasicTypeTest_getLongTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getLongTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getLongTask(BasicTypeTest_getLongCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getLongTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -251,26 +251,26 @@ class BasicTypeTest_getLongTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getULong from the server in an asynchronous call.
  */
-class BasicTypeTest_getULongTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getULongTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getULongTask(BasicTypeTest_getULongCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getULongTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -291,26 +291,26 @@ class BasicTypeTest_getULongTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getLLong from the server in an asynchronous call.
  */
-class BasicTypeTest_getLLongTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getLLongTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getLLongTask(BasicTypeTest_getLLongCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getLLongTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -331,26 +331,26 @@ class BasicTypeTest_getLLongTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getULLong from the server in an asynchronous call.
  */
-class BasicTypeTest_getULLongTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getULLongTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getULLongTask(BasicTypeTest_getULLongCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getULLongTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -371,26 +371,26 @@ class BasicTypeTest_getULLongTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getFloat from the server in an asynchronous call.
  */
-class BasicTypeTest_getFloatTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getFloatTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getFloatTask(BasicTypeTest_getFloatCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getFloatTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -411,26 +411,26 @@ class BasicTypeTest_getFloatTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getDouble from the server in an asynchronous call.
  */
-class BasicTypeTest_getDoubleTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getDoubleTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getDoubleTask(BasicTypeTest_getDoubleCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getDoubleTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -451,26 +451,26 @@ class BasicTypeTest_getDoubleTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getBoolean from the server in an asynchronous call.
  */
-class BasicTypeTest_getBooleanTask : public eProsima::DDSRPC::AsyncTask
+class BasicTypeTest_getBooleanTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         BasicTypeTest_getBooleanTask(BasicTypeTest_getBooleanCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~BasicTypeTest_getBooleanTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.

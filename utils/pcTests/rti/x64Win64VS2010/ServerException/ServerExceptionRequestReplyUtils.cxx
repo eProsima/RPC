@@ -57,9 +57,9 @@ void ServerException_sendExceptionReplyUtils::setTypeData(ServerException_sendEx
     
 }
 
-void ServerException_sendExceptionReplyUtils::extractTypeData(ServerException_sendExceptionReply& data, eProsima::DDSRPC::ReturnMessage& retcode)
+void ServerException_sendExceptionReplyUtils::extractTypeData(ServerException_sendExceptionReply& data, eProsima::RPCDDS::ReturnMessage& retcode)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     
 }
@@ -121,9 +121,9 @@ void ServerException_sendExceptionTwoReplyUtils::setTypeData(ServerException_sen
     instance.sendExceptionTwo_ret = sendExceptionTwo_ret;            
 }
 
-void ServerException_sendExceptionTwoReplyUtils::extractTypeData(ServerException_sendExceptionTwoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret)
+void ServerException_sendExceptionTwoReplyUtils::extractTypeData(ServerException_sendExceptionTwoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     if(message2 != NULL)
     	free(message2);message2 = data.message2;
     message3 = data.message3;  
@@ -187,9 +187,9 @@ void ServerException_sendExceptionThreeReplyUtils::setTypeData(ServerException_s
     instance.sendExceptionThree_ret = sendExceptionThree_ret;            
 }
 
-void ServerException_sendExceptionThreeReplyUtils::extractTypeData(ServerException_sendExceptionThreeReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret)
+void ServerException_sendExceptionThreeReplyUtils::extractTypeData(ServerException_sendExceptionThreeReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     Estructura_finalize(&es2);es2 = data.es2;
     es3 = data.es3;  
     sendExceptionThree_ret = data.sendExceptionThree_ret;            

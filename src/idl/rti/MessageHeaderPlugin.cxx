@@ -1880,15 +1880,15 @@ ReplyHeaderPluginSupport_print_data(
             
 
     RTICdrType_printLong(
-        &sample->ddsrpcRetCode, "ddsrpcRetCode", indent_level + 1);
+        &sample->rpcddsRetCode, "rpcddsRetCode", indent_level + 1);
             
 
-    if (&sample->ddsrpcRetMsg==NULL) {
+    if (&sample->rpcddsRetMsg==NULL) {
         RTICdrType_printString(
-            NULL, "ddsrpcRetMsg", indent_level + 1);                
+            NULL, "rpcddsRetMsg", indent_level + 1);                
     } else {
         RTICdrType_printString(
-            sample->ddsrpcRetMsg, "ddsrpcRetMsg", indent_level + 1);                
+            sample->rpcddsRetMsg, "rpcddsRetMsg", indent_level + 1);                
     }
             
 
@@ -2005,13 +2005,13 @@ ReplyHeaderPlugin_serialize(
             
 
     if (!RTICdrStream_serializeLong(
-        stream, &sample->ddsrpcRetCode)) {
+        stream, &sample->rpcddsRetCode)) {
         return RTI_FALSE;
     }
             
 
     if (!RTICdrStream_serializeString(
-        stream, sample->ddsrpcRetMsg, (255) + 1)) {
+        stream, sample->rpcddsRetMsg, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -2075,12 +2075,12 @@ ReplyHeaderPlugin_deserialize_sample(
     }
 
     if (!RTICdrStream_deserializeLong(
-        stream, &sample->ddsrpcRetCode)) {
+        stream, &sample->rpcddsRetCode)) {
         goto fin;
     }
 
     if (!RTICdrStream_deserializeString(
-        stream, sample->ddsrpcRetMsg, (255) + 1)) {
+        stream, sample->rpcddsRetMsg, (255) + 1)) {
         goto fin;
     }
             
@@ -2354,7 +2354,7 @@ ReplyHeaderPlugin_get_serialized_sample_size(
             
 
     current_alignment += RTICdrType_getStringSerializedSize(
-        current_alignment, sample->ddsrpcRetMsg);
+        current_alignment, sample->rpcddsRetMsg);
             
 
     if (include_encapsulation) {

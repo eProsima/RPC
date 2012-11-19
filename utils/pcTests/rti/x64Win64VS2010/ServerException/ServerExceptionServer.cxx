@@ -10,7 +10,7 @@
 
 #include "ServerExceptionServerRPCSupport.h"
 
-ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::
     createRPCs();
 }
 
-ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+ServerExceptionServer::ServerExceptionServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new ServerExceptionServerImpl();
@@ -50,7 +50,7 @@ void ServerExceptionServer::createRPCs()
 
 }
 
-void ServerExceptionServer::sendException(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void ServerExceptionServer::sendException(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     ServerExceptionServer *srv = dynamic_cast<ServerExceptionServer*>(server);
    
@@ -64,16 +64,16 @@ void ServerExceptionServer::sendException(eProsima::DDSRPC::Server *server, void
 srv->_impl->sendException();
 
         ServerException_sendExceptionReplyUtils::setTypeData(replyData);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -81,7 +81,7 @@ srv->_impl->sendException();
     ServerException_sendExceptionRequestTypeSupport::delete_data((ServerException_sendExceptionRequest*)requestData);
     
 }
-void ServerExceptionServer::sendExceptionTwo(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void ServerExceptionServer::sendExceptionTwo(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     ServerExceptionServer *srv = dynamic_cast<ServerExceptionServer*>(server);
     char*  message = NULL;    
@@ -99,16 +99,16 @@ void ServerExceptionServer::sendExceptionTwo(eProsima::DDSRPC::Server *server, v
         sendExceptionTwo_ret = srv->_impl->sendExceptionTwo(message, message2, message3);
 
         ServerException_sendExceptionTwoReplyUtils::setTypeData(replyData, message2, message3, sendExceptionTwo_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -119,7 +119,7 @@ void ServerExceptionServer::sendExceptionTwo(eProsima::DDSRPC::Server *server, v
     if(message2 != NULL) free(message2);    
     if(message3 != NULL) free(message3);    
 }
-void ServerExceptionServer::sendExceptionThree(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void ServerExceptionServer::sendExceptionThree(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     ServerExceptionServer *srv = dynamic_cast<ServerExceptionServer*>(server);
     Estructura es;
@@ -141,16 +141,16 @@ void ServerExceptionServer::sendExceptionThree(eProsima::DDSRPC::Server *server,
         sendExceptionThree_ret = srv->_impl->sendExceptionThree(es, es2, es3);
 
         ServerException_sendExceptionThreeReplyUtils::setTypeData(replyData, es2, es3, sendExceptionThree_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

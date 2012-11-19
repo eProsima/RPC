@@ -62,9 +62,9 @@ void SequenceTest_getSLongReplyUtils::setTypeData(SequenceTest_getSLongReply& in
     instance.getSLong_ret = getSLong_ret;            
 }
 
-void SequenceTest_getSLongReplyUtils::extractTypeData(SequenceTest_getSLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ largo& l2, /*out*/ largo& l3, /*out*/ largo& getSLong_ret)
+void SequenceTest_getSLongReplyUtils::extractTypeData(SequenceTest_getSLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ largo& l2, /*out*/ largo& l3, /*out*/ largo& getSLong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     largo_finalize(&l2);l2 = data.l2;
     l3 = data.l3;  
     getSLong_ret = data.getSLong_ret;            
@@ -127,9 +127,9 @@ void SequenceTest_getStringReplyUtils::setTypeData(SequenceTest_getStringReply& 
     instance.getString_ret = getString_ret;            
 }
 
-void SequenceTest_getStringReplyUtils::extractTypeData(SequenceTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ cadena& s2, /*out*/ cadena& s3, /*out*/ cadena& getString_ret)
+void SequenceTest_getStringReplyUtils::extractTypeData(SequenceTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ cadena& s2, /*out*/ cadena& s3, /*out*/ cadena& getString_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     cadena_finalize(&s2);s2 = data.s2;
     s3 = data.s3;  
     getString_ret = data.getString_ret;            
@@ -192,9 +192,9 @@ void SequenceTest_getStringBoundedReplyUtils::setTypeData(SequenceTest_getString
     instance.getStringBounded_ret = getStringBounded_ret;            
 }
 
-void SequenceTest_getStringBoundedReplyUtils::extractTypeData(SequenceTest_getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ dattos& sb2, /*out*/ dattos& sb3, /*out*/ dattos& getStringBounded_ret)
+void SequenceTest_getStringBoundedReplyUtils::extractTypeData(SequenceTest_getStringBoundedReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ dattos& sb2, /*out*/ dattos& sb3, /*out*/ dattos& getStringBounded_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     dattos_finalize(&sb2);sb2 = data.sb2;
     sb3 = data.sb3;  
     getStringBounded_ret = data.getStringBounded_ret;            

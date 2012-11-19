@@ -10,7 +10,7 @@
 
 #include "MultithreadTestServerRPCSupport.h"
 
-MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::
     createRPCs();
 }
 
-MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+MultithreadTestServer::MultithreadTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new MultithreadTestServerImpl();
@@ -42,7 +42,7 @@ void MultithreadTestServer::createRPCs()
 
 }
 
-void MultithreadTestServer::test(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void MultithreadTestServer::test(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     MultithreadTestServer *srv = dynamic_cast<MultithreadTestServer*>(server);
     Dato dato1;
@@ -60,16 +60,16 @@ void MultithreadTestServer::test(eProsima::DDSRPC::Server *server, void *request
         test_ret = srv->_impl->test(dato1, dato2);
 
         MultithreadTest_testReplyUtils::setTypeData(replyData, dato2, test_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

@@ -5,7 +5,7 @@
 
 
 UnionTest_getEmpleadoTask::UnionTest_getEmpleadoTask(UnionTest_getEmpleadoCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     UnionTest_getEmpleadoReply_initialize(&m_reply);
 }
@@ -33,22 +33,22 @@ void UnionTest_getEmpleadoTask::execute()
         
     Empleado getEmpleado_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	UnionTest_getEmpleadoReplyUtils::extractTypeData(m_reply, retcode, em2, em3, getEmpleado_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getEmpleado(em2, em3, getEmpleado_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void UnionTest_getEmpleadoTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void UnionTest_getEmpleadoTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }

@@ -10,7 +10,7 @@
 
 #include "SequenceTestServerRPCSupport.h"
 
-SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::DDSRPC
     createRPCs();
 }
 
-SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+SequenceTestServer::SequenceTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new SequenceTestServerImpl();
@@ -50,7 +50,7 @@ void SequenceTestServer::createRPCs()
 
 }
 
-void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void SequenceTestServer::getSLong(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     SequenceTestServer *srv = dynamic_cast<SequenceTestServer*>(server);
     largo l1;
@@ -72,16 +72,16 @@ void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *reques
         getSLong_ret = srv->_impl->getSLong(l1, l2, l3);
 
         SequenceTest_getSLongReplyUtils::setTypeData(replyData, l2, l3, getSLong_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -92,7 +92,7 @@ void SequenceTestServer::getSLong(eProsima::DDSRPC::Server *server, void *reques
     largo_finalize(&l2);    
     largo_finalize(&l3);    
 }
-void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void SequenceTestServer::getString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     SequenceTestServer *srv = dynamic_cast<SequenceTestServer*>(server);
     cadena s1;
@@ -114,16 +114,16 @@ void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *reque
         getString_ret = srv->_impl->getString(s1, s2, s3);
 
         SequenceTest_getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -134,7 +134,7 @@ void SequenceTestServer::getString(eProsima::DDSRPC::Server *server, void *reque
     cadena_finalize(&s2);    
     cadena_finalize(&s3);    
 }
-void SequenceTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void SequenceTestServer::getStringBounded(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     SequenceTestServer *srv = dynamic_cast<SequenceTestServer*>(server);
     dattos sb1;
@@ -156,16 +156,16 @@ void SequenceTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void
         getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
         SequenceTest_getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

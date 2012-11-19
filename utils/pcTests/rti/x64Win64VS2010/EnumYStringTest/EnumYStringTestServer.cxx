@@ -10,7 +10,7 @@
 
 #include "EnumYStringTestServerRPCSupport.h"
 
-EnumYStringTestServer::EnumYStringTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+EnumYStringTestServer::EnumYStringTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ EnumYStringTestServer::EnumYStringTestServer(std::string serviceName, eProsima::
     createRPCs();
 }
 
-EnumYStringTestServer::EnumYStringTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+EnumYStringTestServer::EnumYStringTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new EnumYStringTestServerImpl();
@@ -50,7 +50,7 @@ void EnumYStringTestServer::createRPCs()
 
 }
 
-void EnumYStringTestServer::getEnum(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void EnumYStringTestServer::getEnum(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     EnumYStringTestServer *srv = dynamic_cast<EnumYStringTestServer*>(server);
     Valores  v1 = VALOR1;    
@@ -68,16 +68,16 @@ void EnumYStringTestServer::getEnum(eProsima::DDSRPC::Server *server, void *requ
         getEnum_ret = srv->_impl->getEnum(v1, v2, v3);
 
         EnumYStringTest_getEnumReplyUtils::setTypeData(replyData, v2, v3, getEnum_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -88,7 +88,7 @@ void EnumYStringTestServer::getEnum(eProsima::DDSRPC::Server *server, void *requ
         
         
 }
-void EnumYStringTestServer::getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void EnumYStringTestServer::getString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     EnumYStringTestServer *srv = dynamic_cast<EnumYStringTestServer*>(server);
     char*  s1 = NULL;    
@@ -106,16 +106,16 @@ void EnumYStringTestServer::getString(eProsima::DDSRPC::Server *server, void *re
         getString_ret = srv->_impl->getString(s1, s2, s3);
 
         EnumYStringTest_getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -126,7 +126,7 @@ void EnumYStringTestServer::getString(eProsima::DDSRPC::Server *server, void *re
     if(s2 != NULL) free(s2);    
     if(s3 != NULL) free(s3);    
 }
-void EnumYStringTestServer::getStringBounded(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void EnumYStringTestServer::getStringBounded(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     EnumYStringTestServer *srv = dynamic_cast<EnumYStringTestServer*>(server);
     char*  sb1 = NULL;    
@@ -144,16 +144,16 @@ void EnumYStringTestServer::getStringBounded(eProsima::DDSRPC::Server *server, v
         getStringBounded_ret = srv->_impl->getStringBounded(sb1, sb2, sb3);
 
         EnumYStringTest_getStringBoundedReplyUtils::setTypeData(replyData, sb2, sb3, getStringBounded_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

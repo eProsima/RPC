@@ -11,7 +11,7 @@
 #include "exceptions/Exception.h"
 
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class UnionTest_getEmpleadoCallbackHandler
@@ -28,24 +28,24 @@ class UnionTest_getEmpleadoCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 
 /**
  * \brief This class implements a specific server's proxy for the defined interface UnionTest.
  */
-class UnionTestProxy : public eProsima::DDSRPC::Client
+class UnionTestProxy : public eProsima::RPCDDS::Client
 {
     public:
     
         /**
-         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
+         * \brief Default constructor. The server's proxy will use the default eProsima::RPCDDS::UDPTransport.
          *
          * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
         UnionTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
@@ -57,10 +57,10 @@ class UnionTestProxy : public eProsima::DDSRPC::Client
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
-        UnionTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        UnionTestProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~UnionTestProxy();
@@ -77,7 +77,7 @@ class UnionTestProxy : public eProsima::DDSRPC::Client
          */
         void createRPCs();
         
-        eProsima::DDSRPC::ClientRPC *getEmpleado_Service; 
+        eProsima::RPCDDS::ClientRPC *getEmpleado_Service; 
 };
 
 #endif // _UnionTest_PROXY_H_

@@ -62,9 +62,9 @@ void BasicTypeTest_getOctetReplyUtils::setTypeData(BasicTypeTest_getOctetReply& 
     instance.getOctet_ret = getOctet_ret;            
 }
 
-void BasicTypeTest_getOctetReplyUtils::extractTypeData(BasicTypeTest_getOctetReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3, /*out*/ DDS_Octet& getOctet_ret)
+void BasicTypeTest_getOctetReplyUtils::extractTypeData(BasicTypeTest_getOctetReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3, /*out*/ DDS_Octet& getOctet_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     oc2 = data.oc2;
     oc3 = data.oc3;  
     getOctet_ret = data.getOctet_ret;            
@@ -127,9 +127,9 @@ void BasicTypeTest_getCharReplyUtils::setTypeData(BasicTypeTest_getCharReply& in
     instance.getChar_ret = getChar_ret;            
 }
 
-void BasicTypeTest_getCharReplyUtils::extractTypeData(BasicTypeTest_getCharReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3, /*out*/ DDS_Char& getChar_ret)
+void BasicTypeTest_getCharReplyUtils::extractTypeData(BasicTypeTest_getCharReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3, /*out*/ DDS_Char& getChar_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     ch2 = data.ch2;
     ch3 = data.ch3;  
     getChar_ret = data.getChar_ret;            
@@ -192,9 +192,9 @@ void BasicTypeTest_getWCharReplyUtils::setTypeData(BasicTypeTest_getWCharReply& 
     instance.getWChar_ret = getWChar_ret;            
 }
 
-void BasicTypeTest_getWCharReplyUtils::extractTypeData(BasicTypeTest_getWCharReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3, /*out*/ DDS_Wchar& getWChar_ret)
+void BasicTypeTest_getWCharReplyUtils::extractTypeData(BasicTypeTest_getWCharReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3, /*out*/ DDS_Wchar& getWChar_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     wch2 = data.wch2;
     wch3 = data.wch3;  
     getWChar_ret = data.getWChar_ret;            
@@ -257,9 +257,9 @@ void BasicTypeTest_getShortReplyUtils::setTypeData(BasicTypeTest_getShortReply& 
     instance.getShort_ret = getShort_ret;            
 }
 
-void BasicTypeTest_getShortReplyUtils::extractTypeData(BasicTypeTest_getShortReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3, /*out*/ DDS_Short& getShort_ret)
+void BasicTypeTest_getShortReplyUtils::extractTypeData(BasicTypeTest_getShortReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3, /*out*/ DDS_Short& getShort_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     sh2 = data.sh2;
     sh3 = data.sh3;  
     getShort_ret = data.getShort_ret;            
@@ -322,9 +322,9 @@ void BasicTypeTest_getUShortReplyUtils::setTypeData(BasicTypeTest_getUShortReply
     instance.getUShort_ret = getUShort_ret;            
 }
 
-void BasicTypeTest_getUShortReplyUtils::extractTypeData(BasicTypeTest_getUShortReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3, /*out*/ DDS_UnsignedShort& getUShort_ret)
+void BasicTypeTest_getUShortReplyUtils::extractTypeData(BasicTypeTest_getUShortReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3, /*out*/ DDS_UnsignedShort& getUShort_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     ush2 = data.ush2;
     ush3 = data.ush3;  
     getUShort_ret = data.getUShort_ret;            
@@ -387,9 +387,9 @@ void BasicTypeTest_getLongReplyUtils::setTypeData(BasicTypeTest_getLongReply& in
     instance.getLong_ret = getLong_ret;            
 }
 
-void BasicTypeTest_getLongReplyUtils::extractTypeData(BasicTypeTest_getLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret)
+void BasicTypeTest_getLongReplyUtils::extractTypeData(BasicTypeTest_getLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     lo2 = data.lo2;
     lo3 = data.lo3;  
     getLong_ret = data.getLong_ret;            
@@ -452,9 +452,9 @@ void BasicTypeTest_getULongReplyUtils::setTypeData(BasicTypeTest_getULongReply& 
     instance.getULong_ret = getULong_ret;            
 }
 
-void BasicTypeTest_getULongReplyUtils::extractTypeData(BasicTypeTest_getULongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3, /*out*/ DDS_UnsignedLong& getULong_ret)
+void BasicTypeTest_getULongReplyUtils::extractTypeData(BasicTypeTest_getULongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3, /*out*/ DDS_UnsignedLong& getULong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     ulo2 = data.ulo2;
     ulo3 = data.ulo3;  
     getULong_ret = data.getULong_ret;            
@@ -517,9 +517,9 @@ void BasicTypeTest_getLLongReplyUtils::setTypeData(BasicTypeTest_getLLongReply& 
     instance.getLLong_ret = getLLong_ret;            
 }
 
-void BasicTypeTest_getLLongReplyUtils::extractTypeData(BasicTypeTest_getLLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3, /*out*/ DDS_LongLong& getLLong_ret)
+void BasicTypeTest_getLLongReplyUtils::extractTypeData(BasicTypeTest_getLLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3, /*out*/ DDS_LongLong& getLLong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     llo2 = data.llo2;
     llo3 = data.llo3;  
     getLLong_ret = data.getLLong_ret;            
@@ -582,9 +582,9 @@ void BasicTypeTest_getULLongReplyUtils::setTypeData(BasicTypeTest_getULLongReply
     instance.getULLong_ret = getULLong_ret;            
 }
 
-void BasicTypeTest_getULLongReplyUtils::extractTypeData(BasicTypeTest_getULLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3, /*out*/ DDS_UnsignedLongLong& getULLong_ret)
+void BasicTypeTest_getULLongReplyUtils::extractTypeData(BasicTypeTest_getULLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3, /*out*/ DDS_UnsignedLongLong& getULLong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     ullo2 = data.ullo2;
     ullo3 = data.ullo3;  
     getULLong_ret = data.getULLong_ret;            
@@ -647,9 +647,9 @@ void BasicTypeTest_getFloatReplyUtils::setTypeData(BasicTypeTest_getFloatReply& 
     instance.getFloat_ret = getFloat_ret;            
 }
 
-void BasicTypeTest_getFloatReplyUtils::extractTypeData(BasicTypeTest_getFloatReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3, /*out*/ DDS_Float& getFloat_ret)
+void BasicTypeTest_getFloatReplyUtils::extractTypeData(BasicTypeTest_getFloatReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3, /*out*/ DDS_Float& getFloat_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     fl2 = data.fl2;
     fl3 = data.fl3;  
     getFloat_ret = data.getFloat_ret;            
@@ -712,9 +712,9 @@ void BasicTypeTest_getDoubleReplyUtils::setTypeData(BasicTypeTest_getDoubleReply
     instance.getDouble_ret = getDouble_ret;            
 }
 
-void BasicTypeTest_getDoubleReplyUtils::extractTypeData(BasicTypeTest_getDoubleReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3, /*out*/ DDS_Double& getDouble_ret)
+void BasicTypeTest_getDoubleReplyUtils::extractTypeData(BasicTypeTest_getDoubleReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3, /*out*/ DDS_Double& getDouble_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     do2 = data.do2;
     do3 = data.do3;  
     getDouble_ret = data.getDouble_ret;            
@@ -777,9 +777,9 @@ void BasicTypeTest_getBooleanReplyUtils::setTypeData(BasicTypeTest_getBooleanRep
     instance.getBoolean_ret = getBoolean_ret;            
 }
 
-void BasicTypeTest_getBooleanReplyUtils::extractTypeData(BasicTypeTest_getBooleanReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret)
+void BasicTypeTest_getBooleanReplyUtils::extractTypeData(BasicTypeTest_getBooleanReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     bo2 = data.bo2;
     bo3 = data.bo3;  
     getBoolean_ret = data.getBoolean_ret;            

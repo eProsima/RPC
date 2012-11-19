@@ -5,7 +5,7 @@
 
 
 SequenceTest_getSLongTask::SequenceTest_getSLongTask(SequenceTest_getSLongCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     SequenceTest_getSLongReply_initialize(&m_reply);
 }
@@ -33,29 +33,29 @@ void SequenceTest_getSLongTask::execute()
         
     largo getSLong_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	SequenceTest_getSLongReplyUtils::extractTypeData(m_reply, retcode, l2, l3, getSLong_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getSLong(l2, l3, getSLong_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void SequenceTest_getSLongTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void SequenceTest_getSLongTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 SequenceTest_getStringTask::SequenceTest_getStringTask(SequenceTest_getStringCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     SequenceTest_getStringReply_initialize(&m_reply);
 }
@@ -83,29 +83,29 @@ void SequenceTest_getStringTask::execute()
         
     cadena getString_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	SequenceTest_getStringReplyUtils::extractTypeData(m_reply, retcode, s2, s3, getString_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getString(s2, s3, getString_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void SequenceTest_getStringTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void SequenceTest_getStringTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 SequenceTest_getStringBoundedTask::SequenceTest_getStringBoundedTask(SequenceTest_getStringBoundedCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     SequenceTest_getStringBoundedReply_initialize(&m_reply);
 }
@@ -133,22 +133,22 @@ void SequenceTest_getStringBoundedTask::execute()
         
     dattos getStringBounded_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	SequenceTest_getStringBoundedReplyUtils::extractTypeData(m_reply, retcode, sb2, sb3, getStringBounded_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getStringBounded(sb2, sb3, getStringBounded_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void SequenceTest_getStringBoundedTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void SequenceTest_getStringBoundedTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }

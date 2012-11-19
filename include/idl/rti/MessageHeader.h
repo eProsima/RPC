@@ -220,9 +220,9 @@ public:
 
     DDS_UnsignedLong  requestSequenceNumber;
 
-    DDS_Long  ddsrpcRetCode;
+    DDS_Long  rpcddsRetCode;
 
-    char*  ddsrpcRetMsg; /* maximum length = (255) */
+    char*  rpcddsRetMsg; /* maximum length = (255) */
 
             
 };                        

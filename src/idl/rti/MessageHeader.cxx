@@ -491,7 +491,7 @@ DDS_TypeCode* ReplyHeader_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode ReplyHeader_g_tc_ddsrpcRetMsg_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode ReplyHeader_g_tc_rpcddsRetMsg_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
     static DDS_TypeCode_Member ReplyHeader_g_tc_members[4]=
     {
@@ -530,7 +530,7 @@ DDS_TypeCode* ReplyHeader_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"ddsrpcRetCode",/* Member name */
+            (char *)"rpcddsRetCode",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -547,7 +547,7 @@ DDS_TypeCode* ReplyHeader_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"ddsrpcRetMsg",/* Member name */
+            (char *)"rpcddsRetMsg",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -588,7 +588,7 @@ DDS_TypeCode* ReplyHeader_get_typecode()
     ReplyHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Identification_get_typecode();
     ReplyHeader_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
     ReplyHeader_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    ReplyHeader_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ReplyHeader_g_tc_ddsrpcRetMsg_string;
+    ReplyHeader_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ReplyHeader_g_tc_rpcddsRetMsg_string;
 
     is_initialized = RTI_TRUE;
 
@@ -619,19 +619,19 @@ RTIBool ReplyHeader_initialize_ex(
     }                
             
 
-    if (!RTICdrType_initLong(&sample->ddsrpcRetCode)) {
+    if (!RTICdrType_initLong(&sample->rpcddsRetCode)) {
         return RTI_FALSE;
     }                
             
 
     if (allocateMemory) {
-        sample->ddsrpcRetMsg = DDS_String_alloc((255));
-        if (sample->ddsrpcRetMsg == NULL) {
+        sample->rpcddsRetMsg = DDS_String_alloc((255));
+        if (sample->rpcddsRetMsg == NULL) {
             return RTI_FALSE;
         }
     } else {
-        if (sample->ddsrpcRetMsg != NULL) { 
-            sample->ddsrpcRetMsg[0] = '\0';
+        if (sample->rpcddsRetMsg != NULL) { 
+            sample->rpcddsRetMsg[0] = '\0';
         }
     }
             
@@ -658,7 +658,7 @@ void ReplyHeader_finalize_ex(
 
 
 
-    DDS_String_free(sample->ddsrpcRetMsg);                
+    DDS_String_free(sample->rpcddsRetMsg);                
             
 
 }
@@ -681,13 +681,13 @@ RTIBool ReplyHeader_copy(
             
 
     if (!RTICdrType_copyLong(
-        &dst->ddsrpcRetCode, &src->ddsrpcRetCode)) {
+        &dst->rpcddsRetCode, &src->rpcddsRetCode)) {
         return RTI_FALSE;
     }
             
 
     if (!RTICdrType_copyString(
-        dst->ddsrpcRetMsg, src->ddsrpcRetMsg, (255) + 1)) {
+        dst->rpcddsRetMsg, src->rpcddsRetMsg, (255) + 1)) {
         return RTI_FALSE;
     }
             

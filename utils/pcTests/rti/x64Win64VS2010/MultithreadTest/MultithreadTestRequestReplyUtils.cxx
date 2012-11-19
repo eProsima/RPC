@@ -59,9 +59,9 @@ void MultithreadTest_testReplyUtils::setTypeData(MultithreadTest_testReply& inst
     instance.test_ret = test_ret;            
 }
 
-void MultithreadTest_testReplyUtils::extractTypeData(MultithreadTest_testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret)
+void MultithreadTest_testReplyUtils::extractTypeData(MultithreadTest_testReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     dato2 = data.dato2;  
     test_ret = data.test_ret;            
 }

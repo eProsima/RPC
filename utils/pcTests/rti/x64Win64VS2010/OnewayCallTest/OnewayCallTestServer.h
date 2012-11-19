@@ -12,20 +12,20 @@
 /**
  * \brief This class implements a specific server for the defined interface by user.
  */
-class OnewayCallTestServer : public eProsima::DDSRPC::Server
+class OnewayCallTestServer : public eProsima::RPCDDS::Server
 {
     public:
     
         /**
-         * \brief Default constructor. The server will use the default eProsima::DDSRPC::UDPTransport.
+         * \brief Default constructor. The server will use the default eProsima::RPCDDS::UDPTransport.
          *
          * \param serviceName The service's name that proxies will use to connect with the server.
          * \param strategy Strategy used by server to work with new requests.
          *        This class doesn't delete this object in its destructor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
-        OnewayCallTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+        OnewayCallTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
             int domainId = 0);
 
         /**
@@ -37,22 +37,22 @@ class OnewayCallTestServer : public eProsima::DDSRPC::Server
          * \param transport The network transport that server has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
-        OnewayCallTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy, eProsima::DDSRPC::Transport *transport,
+        OnewayCallTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy, eProsima::RPCDDS::Transport *transport,
             int domainId = 0);
 
         /// \brief The default destructor.
         virtual ~OnewayCallTestServer();
 
-        static void setLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void getLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void setBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void setString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void setStruct(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
-        static void getStruct(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service);
+        static void setLong(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void getLong(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void setBoolean(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void getBoolean(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void setString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void getString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void setStruct(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+        static void getStruct(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
         
      private:
         /**

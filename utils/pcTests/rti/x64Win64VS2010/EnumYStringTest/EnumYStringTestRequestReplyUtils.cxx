@@ -62,9 +62,9 @@ void EnumYStringTest_getEnumReplyUtils::setTypeData(EnumYStringTest_getEnumReply
     instance.getEnum_ret = getEnum_ret;            
 }
 
-void EnumYStringTest_getEnumReplyUtils::extractTypeData(EnumYStringTest_getEnumReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret)
+void EnumYStringTest_getEnumReplyUtils::extractTypeData(EnumYStringTest_getEnumReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     v2 = data.v2;
     v3 = data.v3;  
     getEnum_ret = data.getEnum_ret;            
@@ -127,9 +127,9 @@ void EnumYStringTest_getStringReplyUtils::setTypeData(EnumYStringTest_getStringR
     instance.getString_ret = getString_ret;            
 }
 
-void EnumYStringTest_getStringReplyUtils::extractTypeData(EnumYStringTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret)
+void EnumYStringTest_getStringReplyUtils::extractTypeData(EnumYStringTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     if(s2 != NULL)
     	free(s2);s2 = data.s2;
     s3 = data.s3;  
@@ -193,9 +193,9 @@ void EnumYStringTest_getStringBoundedReplyUtils::setTypeData(EnumYStringTest_get
     instance.getStringBounded_ret = getStringBounded_ret;            
 }
 
-void EnumYStringTest_getStringBoundedReplyUtils::extractTypeData(EnumYStringTest_getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret)
+void EnumYStringTest_getStringBoundedReplyUtils::extractTypeData(EnumYStringTest_getStringBoundedReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     if(sb2 != NULL)
     	free(sb2);sb2 = data.sb2;
     sb3 = data.sb3;  
