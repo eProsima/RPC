@@ -87,8 +87,8 @@ public class RPCDDSGEN
                 }
                 catch(Exception ioe)
                 {
-                    System.out.println("ERROR generating files");
-                    ioe.printStackTrace();
+                    System.out.println("ERROR: Cannot generate the files");
+                    //ioe.printStackTrace();
                 }
             }
 
@@ -268,8 +268,8 @@ public class RPCDDSGEN
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
              Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
-             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR");
-             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT");
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
              auxerrorOutput.start();
              auxnormalOutput.start();
              int auxexitVal = auxddsgen.waitFor();
@@ -277,7 +277,7 @@ public class RPCDDSGEN
              if(auxexitVal != 0)
              {
             	 System.out.println("process waitFor() function returns the error value " + auxexitVal);
-                 throw new Exception();
+                 throw new Exception("process waitFor() function returns the error value " + auxexitVal);
              }
         }
         
@@ -289,16 +289,23 @@ public class RPCDDSGEN
         finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
         
         Process ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
-        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR");
-        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT");
+        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", middleware.equals("rti"));
+        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", middleware.equals("rti"));
         errorOutput.start();
         normalOutput.start();
         int exitVal = ddsgen.waitFor();
 
         if(exitVal != 0)
         {
+        	System.out.println("process waitFor() function returns the error value " + exitVal);
+            throw new Exception("process waitFor() function returns the error value " + exitVal);
+        }
+        
+        if(errorOutput.getFoundError() || normalOutput.getFoundError())
+        {
             throw new Exception();
         }
+        	
         
         // Execute tao_idl
         if(extra_command != null)
@@ -313,15 +320,16 @@ public class RPCDDSGEN
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
              Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
-             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR");
-             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT");
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
              auxerrorOutput.start();
              auxnormalOutput.start();
              int auxexitVal = auxddsgen.waitFor();
 
              if(auxexitVal != 0)
              {
-                 throw new Exception();
+            	 System.out.println("process waitFor() function returns the error value " + auxexitVal);
+                 throw new Exception("process waitFor() function returns the error value " + auxexitVal);
              }
         }
         //TO_DO: check rtiddsgen has been correctly called it may return exitVal of 0 without
@@ -1379,11 +1387,14 @@ class ProcessOutput extends Thread
 {
     InputStream is;
     String type;
+    boolean m_check_failures;
+    boolean m_found_error = false;
 
-    ProcessOutput(InputStream is, String type)
+    ProcessOutput(InputStream is, String type, boolean check_failures)
     {
         this.is = is;
         this.type = type;
+        m_check_failures = check_failures;
     }
 
     public void run()
@@ -1394,10 +1405,26 @@ class ProcessOutput extends Thread
             BufferedReader br = new BufferedReader(isr);
             String line=null;
             while ( (line = br.readLine()) != null)
-                System.out.println(line);    
-        } catch (IOException ioe)
+            {
+                System.out.println(line);
+                
+                if(m_check_failures)
+                {
+                	if(line.startsWith("Done (failures)"))
+                	{
+                		m_found_error = true;
+                	}
+                }
+            }
+        }
+        catch (IOException ioe)
         {
             ioe.printStackTrace();  
         }
+    }
+    
+    boolean getFoundError()
+    {
+    	return m_found_error;
     }
 }

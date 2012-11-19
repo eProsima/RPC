@@ -25,8 +25,8 @@ copy Client.cxx Client.cxx.backup
 copy %*ServerImpl.cxx %*ServerImpl.cxx.backup
 :: Delete all generated files.
 del *.h *.cxx %*RequestReply.idl
-:: Generates the file with DDSRPC script
-call ..\..\..\..\..\scripts\ddsrpc_rti_pcTests.bat -ppDisable "%*.idl"
+:: Generates the file with RPCDDS script
+call ..\..\..\..\..\scripts\rpcdds_rti_pcTests.bat -ppDisable "%*.idl"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 :: Copy backup to original files.
