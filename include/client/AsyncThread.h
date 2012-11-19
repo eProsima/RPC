@@ -8,7 +8,7 @@
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
         class AsyncTask;
 		class ClientRPC;
@@ -78,7 +78,7 @@ namespace eProsima
 
                 bool m_exit;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _CLIENT_ASYNCTHREAD_H_

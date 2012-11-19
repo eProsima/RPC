@@ -35,8 +35,8 @@ TName::TName(const char *rpcName, const char *requestTypeName,
 #ifndef IS_ONEWAY
         const char *replyTypeName,
 #endif
-        eProsima::DDSRPC::Client *client) :
-        eProsima::DDSRPC::ClientRPC(rpcName, requestTypeName,
+        eProsima::RPCDDS::Client *client) :
+        eProsima::RPCDDS::ClientRPC(rpcName, requestTypeName,
 #ifndef IS_ONEWAY
         replyTypeName,
 #else
@@ -71,9 +71,9 @@ DDS::ReturnCode_t TName::write(void *data)
 	return retCode;
 }
 
-eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
+eProsima::RPCDDS::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 {
-    eProsima::DDSRPC::ReturnMessage value = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage value = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
 #ifndef IS_ONEWAY
     const char* const METHOD_NAME = "takeReply";
     DDS::SampleInfoSeq infoSeq;
@@ -94,7 +94,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 					(*(TDataReply*)reply) = dataSeq[0];
 #endif
-					value = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+					value = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 				}
 		    }
 		    else
@@ -107,7 +107,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 		else if(retcode == DDS::RETCODE_NO_DATA)
 		{
 			printf("ERROR<%s::%s>: no data.\n", CLASS_NAME, METHOD_NAME);
-			value = eProsima::DDSRPC::SERVER_TIMEOUT;
+			value = eProsima::RPCDDS::SERVER_TIMEOUT;
 		}
 		else
 		{

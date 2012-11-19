@@ -2,11 +2,11 @@
 #define _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPerRequestStrategyJob;
 
@@ -14,7 +14,7 @@ namespace eProsima
 		 * \brief This class implements the thread per request strategy.
 		 *        The server creates a new thread per new incoming request.
 		 */
-        class DDSRPC_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
+        class RPCDDS_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
         {
             public:
 
@@ -37,7 +37,7 @@ namespace eProsima
             private:
 
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } //namespace eProsima
 
 #endif // _STRATEGIES_THREADPERREQUESTSTRATEGY_H_

@@ -1,23 +1,23 @@
 #ifndef _EXCEPTIONS_EXCEPTION_H_
 #define _EXCEPTIONS_EXCEPTION_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include <string>
 #include <exception>
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
 		 * \brief This abstract class is used to create exceptions.
 		 */
-        class DDSRPC_WIN32_DLL_API Exception : public std::exception
+        class RPCDDS_WIN32_DLL_API Exception : public std::exception
         {
 		public:
 
 			/// \brief Default destructor.
-			virtual ~Exception() DDSRPC_USE_NOEXCEPT;
+			virtual ~Exception() RPCDDS_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const = 0;
@@ -77,7 +77,7 @@ namespace eProsima
 
 			std::string m_message;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _EXCEPTIONS_EXCEPTION_H_

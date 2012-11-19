@@ -32,7 +32,7 @@ struct ReplyHeader
     /// @brief Sequence number of the associated request to this reply.
     unsigned long requestSequenceNumber; //@key
     /// @brief Return message code. Informs of the successful in the operation.
-    long ddsrpcRetCode;
+    long rpcddsRetCode;
     /// @brief In case of exception this attribute has an error message.
-    string ddsrpcRetMsg;
+    string rpcddsRetMsg;
 }; //@top-level false 

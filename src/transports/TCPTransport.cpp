@@ -5,7 +5,7 @@ static const char* const CLASS_NAME = "TCPTransport";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 
         TCPTransport::TCPTransport(const char *public_address, const char *server_bind_port) :
@@ -91,5 +91,5 @@ namespace eProsima
 #endif
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

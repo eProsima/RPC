@@ -11,11 +11,11 @@
 #include "boost/thread/mutex.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::ClientRPC";
+static const char* const CLASS_NAME = "eProsima::RPCDDS::ClientRPC";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 
         ClientRPC::ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName, Client *client) :
@@ -643,5 +643,5 @@ namespace eProsima
 			return m_requestDataWriter;
 		}
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

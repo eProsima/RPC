@@ -2,7 +2,7 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		ServerNotFoundException::ServerNotFoundException(const std::string &message) : SystemException(message, 4)
 		{
@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ServerNotFoundException::~ServerNotFoundException() DDSRPC_USE_NOEXCEPT
+		ServerNotFoundException::~ServerNotFoundException() RPCDDS_USE_NOEXCEPT
 		{
 		}
 
@@ -48,5 +48,5 @@ namespace eProsima
 		{
 			throw *this;
 		}
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

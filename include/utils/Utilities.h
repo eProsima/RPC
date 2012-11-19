@@ -5,7 +5,7 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         void get_guid(unsigned int *id, DDS::DataWriter *datawriter);
 

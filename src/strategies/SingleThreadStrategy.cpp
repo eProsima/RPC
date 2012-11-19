@@ -5,7 +5,7 @@ static const char* const CLASS_NAME = "SingleThreadStrategy";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         void SingleThreadStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
         {
@@ -21,6 +21,6 @@ namespace eProsima
             }
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 

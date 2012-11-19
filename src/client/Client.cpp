@@ -5,11 +5,11 @@
 #include "transports/Transport.h"
 #include "transports/UDPTransport.h"
 
-static const char* const CLASS_NAME ="eProsima::DDSRPC::Client";
+static const char* const CLASS_NAME ="eProsima::RPCDDS::Client";
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
 		Client::Client(std::string remoteServiceName, Transport *transport, int domainId, long milliseconds) : m_domainId(domainId), m_participant(NULL),
@@ -162,5 +162,5 @@ namespace eProsima
 		{
 			return m_remoteServiceName;
 		}
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima

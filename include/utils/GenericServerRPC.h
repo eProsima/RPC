@@ -18,12 +18,12 @@
 
 #define GENERIC_SERVER_RPC(TName, TDataWriter, TDataReader)                       \
                                                                                   \
-class  TName : public eProsima::DDSRPC::ServerRPC                                           \
+class  TName : public eProsima::RPCDDS::ServerRPC                                           \
 {                                                                                 \
 public:                                                                           \
-  TName(const char *rpcName, eProsima::DDSRPC::Server* server,                              \
+  TName(const char *rpcName, eProsima::RPCDDS::Server* server,                              \
         const char *requestTypeName, const char *replyTypeName,                 \
-        eProsima::DDSRPC::fExecFunction execFunction);                            \
+        eProsima::RPCDDS::fExecFunction execFunction);                            \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \
@@ -34,12 +34,12 @@ protected:                                                                      
 
 #define GENERIC_SERVER_ONEWAY_RPC(TName, TDataReader)                       \
                                                                                   \
-class  TName : public eProsima::DDSRPC::ServerRPC                                           \
+class  TName : public eProsima::RPCDDS::ServerRPC                                           \
 {                                                                                 \
 public:                                                                           \
-  TName(const char *rpcName, eProsima::DDSRPC::Server* server,                              \
+  TName(const char *rpcName, eProsima::RPCDDS::Server* server,                              \
         const char *requestTypeName,                                              \
-        eProsima::DDSRPC::fExecFunction execFunction);                            \
+        eProsima::RPCDDS::fExecFunction execFunction);                            \
   virtual ~TName();                                                               \
                                                                                   \
 protected:                                                                        \

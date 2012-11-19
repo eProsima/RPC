@@ -5,12 +5,12 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
 		 * \brief This class is thrown as an exception when the remote procedure call exceeds the maximum time.
 		 */
-        class DDSRPC_WIN32_DLL_API ServerTimeoutException : public SystemException
+        class RPCDDS_WIN32_DLL_API ServerTimeoutException : public SystemException
         {
 		public:
 
@@ -57,11 +57,11 @@ namespace eProsima
 			ServerTimeoutException& operator=(ServerTimeoutException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerTimeoutException() DDSRPC_USE_NOEXCEPT;
+			virtual ~ServerTimeoutException() RPCDDS_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 #endif // _EXCEPTIONS_SERVERTIMEOUTEXCEPTION_H_

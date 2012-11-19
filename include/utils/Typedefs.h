@@ -3,7 +3,7 @@
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 #define DDS_TIMEOUT(name, duration) DDS::Duration_t name = {duration.total_seconds(), \
     static_cast<RTI_UINT32>(duration.fractional_seconds() * (1000000000 / boost::posix_time::time_duration::traits_type::res_adjust()))};
@@ -25,7 +25,7 @@ namespace eProsima
 
 		typedef void* (*fCreateReplyData)();
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _UTILS_TYPEDEFS_H_

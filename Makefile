@@ -13,11 +13,11 @@ ifdef DDS_ROOT
 -include $(EPROSIMADIR)/building/makefiles/opendds.mk
 endif
 endif
--include $(BASEDIR)/building/makefiles/ddsrpc.mk
+-include $(BASEDIR)/building/makefiles/rpcdds.mk
 
 .PHONY: all
 
-all: ddsrpc
+all: rpcdds
 
 clean:
 	@rm -f $(OBJS)

@@ -5,12 +5,12 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
 		 * \brief This class is thrown as an exception when there is an error initializating an object.
 		 */
-        class DDSRPC_WIN32_DLL_API InitializeException : public SystemException
+        class RPCDDS_WIN32_DLL_API InitializeException : public SystemException
         {
 		public:
 
@@ -57,11 +57,11 @@ namespace eProsima
 			InitializeException& operator=(InitializeException&& ex);
 
 			/// \brief Default constructor
-			virtual ~InitializeException() DDSRPC_USE_NOEXCEPT;
+			virtual ~InitializeException() RPCDDS_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 #endif // _EXCEPTIONS_INITIALIZEEXCEPTION_H_

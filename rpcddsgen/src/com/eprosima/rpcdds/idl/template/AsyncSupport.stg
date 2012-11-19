@@ -1,0 +1,114 @@
+group AsyncSupport;
+
+header(interfaceName, taskDefs) ::= <<
+#ifndef _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
+
+$doNotEditC()$
+
+#include "client/AsyncTask.h"
+
+$taskDefs; separator=";\n"$$if(taskDefs)$;$endif$
+
+#endif // _$interfaceName$_ASYNC_SUPPORT_H_
+>>
+
+taskHeader(interfaceName, name) ::= <<
+
+/**
+ * \brief This class represents a asynchronous task created to wait the reply of the procedure $name$ from the server in an asynchronous call.
+ */
+class $interfaceName$_$name$Task : public eProsima::RPCDDS::AsyncTask
+{
+    public:
+
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that RPCDDS will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
+        $interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
+           eProsima::RPCDDS::Client *client);
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$_$name$Task();
+        
+        virtual void execute();
+        
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
+        
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
+        $interfaceName$_$name$CallbackHandler& getObject();
+        
+        void* getReplyInstance();
+        
+        private:
+        
+           $interfaceName$_$name$CallbackHandler &m_obj;
+           
+           $interfaceName$_$name$Reply m_reply;
+}
+>>
+
+definition(interfaceName, taskDecls) ::= <<
+#include "$interfaceName$Proxy.h"
+#include "$interfaceName$AsyncSupport.h"
+#include "exceptions/ServerInternalException.h"
+$ReqRepIncludes(interfaceName=interfaceName)$
+
+$taskDecls; separator="\n"$
+>>
+
+taskDeclaration(interfaceName, name, outParams) ::= <<
+
+$interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
+{
+    $interfaceName$_$name$Reply_initialize(&m_reply);
+}
+
+$interfaceName$_$name$Task::~$interfaceName$_$name$Task()
+{
+    $interfaceName$_$name$Reply_finalize(&m_reply);
+}
+
+$interfaceName$_$name$CallbackHandler& $interfaceName$_$name$Task::getObject()
+{
+    return m_obj;
+}
+
+void* $interfaceName$_$name$Task::getReplyInstance()
+{
+    return &m_reply;
+}
+
+void $interfaceName$_$name$Task::execute()
+{  
+    $outParams:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name)$}; separator="\n"$
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+	
+	$interfaceName$_$name$ReplyUtils::extractTypeData(m_reply, retcode$if(outParams)$, $endif$$extractParams(params=outParams)$);
+		
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
+	{
+		getObject().$name$($extractParams(params=outParams)$);
+	}
+	else
+	{
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
+	}
+}
+
+void $interfaceName$_$name$Task::on_exception(const eProsima::RPCDDS::SystemException &ex)
+{
+    getObject().on_exception(ex);
+}
+
+>>

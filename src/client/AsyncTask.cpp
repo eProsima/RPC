@@ -7,7 +7,7 @@ const char* const CLASS_NAME = "AsyncTask";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         AsyncTask::AsyncTask(Client *client) :
             m_client(client), m_clientRPC(NULL)
@@ -24,7 +24,7 @@ namespace eProsima
 
             if(query != NULL)
             {
-                eProsima::DDSRPC::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
+                eProsima::RPCDDS::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
 
 				if(retCode == OPERATION_SUCCESSFUL)
 				{
@@ -54,5 +54,5 @@ namespace eProsima
         {
             m_clientRPC = clientRPC;
         }
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

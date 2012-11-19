@@ -4,11 +4,11 @@
 #include "eProsima_c/eProsimaMacros.h"
 #include "exceptions/InitializeException.h"
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::ServerRPC";
+static const char* const CLASS_NAME = "eProsima::RPCDDS::ServerRPC";
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
 		ServerRPC::ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
@@ -289,5 +289,5 @@ namespace eProsima
 			return m_server;
 		}
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima

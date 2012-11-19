@@ -1,14 +1,14 @@
 #ifndef _CLIENT_ASYNCTASK_H_
 #define _CLIENT_ASYNCTASK_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
 #include "utils/Version.h"
 #include "exceptions/SystemException.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class Client;
         class ClientRPC;
@@ -16,7 +16,7 @@ namespace eProsima
 		/**
 		 * \brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
 		 */
-        class DDSRPC_WIN32_DLL_API AsyncTask
+        class RPCDDS_WIN32_DLL_API AsyncTask
         {
             public:
 
@@ -83,6 +83,6 @@ namespace eProsima
 				/// \brief Pointer to the remote procedure call.
                 ClientRPC *m_clientRPC;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 #endif // _CLIENT_ASYNCTASK_H_

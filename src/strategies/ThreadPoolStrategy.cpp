@@ -8,7 +8,7 @@ static const char* const CLASS_NAME = "ThreadPoolStrategy";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPoolStrategyJob
         {
@@ -80,5 +80,5 @@ namespace eProsima
             }
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

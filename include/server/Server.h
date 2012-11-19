@@ -1,7 +1,7 @@
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
 #include "utils/Typedefs.h"
 #include "utils/Version.h"
@@ -9,11 +9,11 @@
 #include <string>
 #include <list>
 
-#define DDSRPC_DEFAULT_PERIOD_MILLISEC 5000
+#define RPCDDS_DEFAULT_PERIOD_MILLISEC 5000
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
         class ServerStrategy;
@@ -23,7 +23,7 @@ namespace eProsima
 		/**
 		 * \brief This class implements the common functionalities that the server has.
 		 */
-		class DDSRPC_WIN32_DLL_API Server
+		class RPCDDS_WIN32_DLL_API Server
 		{
 
 			public:
@@ -31,7 +31,7 @@ namespace eProsima
 				/**
 				 * \brief This function starts the server to listen requests.
 				 *         The server will create the DDS entities to start listening.
-				 * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization of DDS entities was wrong.
+				 * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization of DDS entities was wrong.
 				 */
 				void serve();
 
@@ -123,7 +123,7 @@ namespace eProsima
 				Transport *m_transport;
 		};
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _SERVER_SERVER_H_

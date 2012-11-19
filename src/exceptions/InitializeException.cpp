@@ -2,7 +2,7 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		InitializeException::InitializeException(const std::string &message) : SystemException(message, 1)
 		{
@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		InitializeException::~InitializeException() DDSRPC_USE_NOEXCEPT
+		InitializeException::~InitializeException() RPCDDS_USE_NOEXCEPT
 		{
 		}
 
@@ -48,5 +48,5 @@ namespace eProsima
 		{
 			throw *this;
 		}
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

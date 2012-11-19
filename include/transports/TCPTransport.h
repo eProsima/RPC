@@ -2,16 +2,16 @@
 #define _TRANSPORTS_TCPTRANSPORT_H_
 
 #include "transports/Transport.h"
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
 		 * \brief This class implements the TCPv4 transport for the client and the server.
 		 */
-        class DDSRPC_WIN32_DLL_API TCPTransport : public Transport
+        class RPCDDS_WIN32_DLL_API TCPTransport : public Transport
         {
             public:
 
@@ -51,6 +51,6 @@ namespace eProsima
 				/// \brief The public address and port where the client could find the server. This attribute is only used by the client.
                 char *m_to_connect;
         };
-    } // namepsace DDSRPC
+    } // namepsace RPCDDS
 } // namespace eProsima
 #endif // _TRANSPORTS_TCPTRANSPORT_H_

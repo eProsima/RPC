@@ -1,0 +1,422 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group Server;
+
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Common Templates for C++ code generation       *
+ *                                                                      *
+ ************************************************************************
+ */
+/**
+ * headerServer: External Template
+ * Produces header file for a Server that handles requests and replies for an object that 
+ * implements the interface defined in IDL.
+ * 
+ * Params:
+ *   interfaceName : name of the interface.
+ *   funNames      : List with the names of the interface methods.
+ *   funDecls      : List whith the function headers - produced by 
+ *                   exFunctionHeader template.
+ *
+ * Uses:
+ *   include    - inherited(cplusplus)
+ *   doNotEditC - inherited(cplusplus)
+ */ 
+headerServer(interfaceName, funNames, funDecls) ::= <<
+#ifndef _$interfaceName;format="toUpper"$SKELETON_H_
+#define _$interfaceName;format="toUpper"$SKELETON_H_
+
+$doNotEditC()$
+
+#include "server/Server.h"
+#include "$interfaceName$ServerImpl.h"
+#include "$interfaceName$RequestReplyUtils.h"
+
+/**
+ * \brief This class implements a specific server for the defined interface by user.
+ */
+class $interfaceName$Server : public eProsima::RPCDDS::Server
+{
+    public:
+    
+        /**
+         * \brief Default constructor. The server will use the default eProsima::RPCDDS::UDPTransport.
+         *
+         * \param serviceName The service's name that proxies will use to connect with the server.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+         */
+        $interfaceName$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+            int domainId = 0);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server.
+         *
+         * \param serviceName The service's name that proxies will use to connect with the server.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param transport The network transport that server has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+         */
+        $interfaceName$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy, eProsima::RPCDDS::Transport *transport,
+            int domainId = 0);
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$Server();
+
+        $funDecls; separator=";\n"$;
+        
+     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        /// \brief Pointer to the server's servant implemented by the user.
+        $interfaceName$ServerImpl *_impl;
+};
+
+#endif // _$interfaceName$SKELETON_H_
+>>
+
+/**
+ * headerImpl: External Template
+ * Produces header file for a class that implements the interface defined in IDL.
+ * 
+ * Params:
+ *   interfaceName : name of the interface.
+ *   funNames      : List with the names of the interface methods.
+ *   funDecls      : List whith the function headers - produced by 
+ *                   inherited functionHeader template.
+ *
+ * Uses:
+ *   doNotEditC - inherited(cplusplus)
+ */ 
+headerImpl(interfaceName, funNames, funDecls) ::= <<
+#ifndef _$interfaceName;format="toUpper"$SERVER_IMPL_H_
+#define _$interfaceName;format="toUpper"$SERVER_IMPL_H_
+
+$doNotEditC()$
+
+#include "utils/Messages.h"
+#include "$interfaceName$RequestReplyUtils.h"
+
+/**
+ * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ *        When the $interfaceName$Server object is created, it creates one instance of this class.
+ */
+class $interfaceName$ServerImpl
+{
+    public:
+
+        /// \brief The default constructor.
+        $interfaceName$ServerImpl(){}
+
+        /// \brief The default destructor.
+        virtual ~$interfaceName$ServerImpl(){}
+
+        $funDecls; separator=";\n"$;
+};
+
+#endif // _$interfaceName$SERVER_IMPL_H_
+>>
+
+/**
+ * emptyFunctionImpl: External Template
+ * Empty implementation for a function. To be filled with user application code.
+ * Params:
+ *   interfaceName: Name of the interface whose this function belongs to.
+ *   type:         function return type.
+ *   name:         function name. 
+ *   inputParams:  list of input params objects.
+ *   inoutParams:  list of inout params objects.
+ *   outputParams: list of output params objects.
+ *
+ * Uses:
+ *  functionHeader - inherited(cplusplus)
+ *  returnType     - local
+ */ 
+emptyFunctionImpl(interfaceName,rettype,name,params,inParams,outParams,isOneway) ::= <<
+$functionHeader(class={$interfaceName$ServerImpl},...)$ 
+{
+    $if(!voidInitMap.(rettype.typeName))$
+    $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
+   
+    return $rettype.name$;
+    $endif$
+} 
+>>
+
+/**
+ * functionImpl: External Template
+ * Produces the code required to handle a request: 
+ * Extracts request Data to local variables and use them to call implementation object.
+ * Creates a reply Data object and fills it with the output values and sends it 
+ *
+ * Params:
+ *   interfaceName: Name of the interface whose this function belongs to.
+ *   type:         function return type.
+ *   name:         function name. 
+ *   inputParams:  list of input params objects.
+ *   inoutParams:  list of inout params objects.
+ *   outputParams: list of output params objects.
+ *
+ * Uses:
+ *  varDecl               - inherited(cplusplus)
+ *  nextParam             - inherited(cplusplus)
+ *  lastParam             - inherited(cplusplus)
+ *  extractTypeDataParams - inherited(cplusplus)
+ */ 
+functionImpl(interfaceName,rettype,name,string,params,inParams,outParams,isOneway) ::= <<
+$exFunctionHeader(class=interfaceName,...)$ 
+{ 
+    $interfaceName$Server *srv = dynamic_cast<$interfaceName$Server*>(server);
+    $params:{$varDecl(typeName = it.typeName, baseType = it.baseType, name = it.name, create=it.isOnlyOutput)$}; separator="\n"$
+    $varDecl(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name, create="yes")$   
+    $if(!isOneway)$$interfaceName$_$name$Reply replyData;$endif$
+    
+    $inParams:{$if(it.isOutput)$$varComplexInitialize(typeName=it.typeName, name=it.name)$$endif$}; separator="\n"$
+
+    $interfaceName$_$name$RequestUtils::extractTypeData(*($interfaceName$_$name$Request*)requestData$if(inParams)$, $endif$$extractParams(inParams)$);
+
+    try
+    {
+        $if(!voidInitMap.(rettype.typeName))$$rettype.name$ = $endif$srv->_impl->$name$($extractParams(params)$);
+
+        $if(!isOneway)$
+        $interfaceName$_$name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $extractParams(rettype)$$endif$);
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
+
+        service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
+    {
+        $if(!isOneway)$
+        memset(&replyData, 0, sizeof(replyData));
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
+        
+        service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    
+    $reqrepDestruction(type=[interfaceName, "_", name], reqrep="Request", name="requestData", void="void")$
+    
+    $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$
+    $outParams:{$varDel(typeName=it.typeName, baseType=it.baseType, name=it.name)$}; separator="\n"$
+}
+>>
+
+/**
+ * definitionServer: External Template
+ * Produces the Server implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   funNames     : list of the interface function names. 
+ *   funImpls     : list of functionImpl template outputs.
+ *
+ * Uses:
+ *   doNotEditC - inherited(cplusplus)
+ *   createRPC - local
+ */ 
+definitionServer(interfaceName, funNames, funImpls) ::= <<
+$doNotEditC()$
+
+#include "$interfaceName$Server.h"
+#include "transports/UDPTransport.h"
+#include "transports/TCPTransport.h"
+#include "exceptions/ServerInternalException.h"
+$ReqRepIncludes(interfaceName=interfaceName)$
+
+#include "$interfaceName$ServerRPCSupport.h"
+
+$interfaceName$Server::$interfaceName$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    int domainId) :
+    Server(serviceName, strategy, NULL, domainId)
+{
+    _impl = new $interfaceName$ServerImpl();
+
+    createRPCs();
+}
+
+$interfaceName$Server::$interfaceName$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
+    Server(serviceName, strategy, transport, domainId)
+{
+    _impl = new $interfaceName$ServerImpl();
+    
+    createRPCs();
+}
+
+$interfaceName$Server::~$interfaceName$Server()
+{
+    delete _impl;    
+}
+
+void $interfaceName$Server::createRPCs()
+{
+    $createRPC(...); separator="\n"$
+}
+
+$funImpls; separator="\n"$
+>>
+
+/**
+ * definitionImpl: External Template
+ * Produces the interface implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   funNames     : list of the interface function names. 
+ *   funImpls     : list of emptyFunctionImpl template outputs.
+ *
+ * Uses:
+ */ 
+definitionImpl(interfaceName, funNames, funImpls) ::= <<
+/** 
+ * Generated by RPCDDS                                              *
+ * Empty interface implementation to be filled with your own code.  *
+ */
+ 
+#include "$interfaceName$ServerImpl.h"
+
+$funImpls; separator="\n"$
+>>
+
+/**
+ * functionCall: External Template
+ * Do nothing, just required to let the same code generating Proxy and Server.
+ * Params:
+ *   type:         function return type.
+ *   name:         function name. 
+ *   inputParams:  list of input params objects.
+ *   inoutParams:  list of inout params objects.
+ *   outputParams: list of output params objects.
+ *
+ * Uses:
+ */ 
+functionCall(rettype,name,params) ::= <<
+>>
+
+/**
+ * main: External Template
+ * Generates an example server program
+ * Params:
+ *   interfaceName: Name of the interface this server provides.
+ *   invocations  : Not used. Just to have a common signature with functionHeader template. 
+ *
+ */ 
+main(interfaceName, invocations, sleep) ::= <<
+/** 
+ * Generated by RPCDDS   *
+ * Simplest server main  *
+ */
+
+#include "$interfaceName$Server.h"
+#include "strategies/ThreadPoolStrategy.h"
+
+int main(int argc, char **argv)
+{
+    int returnedValue = 0;
+    unsigned int threadPoolSize = 5;
+    eProsima::RPCDDS::ThreadPoolStrategy *pool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
+    $interfaceName$Server *server = new $interfaceName$Server("$interfaceName$Service", pool);
+    server->serve();
+    
+    while(1)
+    {
+        $sleep$(10000);
+    }
+
+    delete server;
+    delete pool;
+    
+    return 0;
+}
+
+>>
+
+/************************************************************************
+ *                                                                      *
+ *   Internal Templates: For internal use only.                         *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * lastParam: Internal Template
+ * Determines if the return value of the function should be included
+ * in a call to ReplyUtils createTypeData method.
+ * Params:
+ *   params   : List of previous arguments in the function call. Nullable.
+ *   type     :         function return type.
+ *
+ * Uses:
+ *   voidInitMap - inherited(cplusplus)
+ *   typeInitMap - inherited(cplusplus) 
+ */ 
+lastParam(params, type) ::= <<
+$if(params)$
+$if(!voidInitMap.(type))$, $endif$
+$endif$
+$if(!voidInitMap.(type))$
+$if(!typeInitMap.(type))$*$endif$returnedValue$endif$
+$endif$
+>>
+
+
+/**
+ * exFunctionHeader: External Template
+ * Produces a function header to be used in declaration & implementation 
+ * Params:
+ *   type         : function return type.
+ *   class        : Class name. Must be null for declaration and not null for implementation
+ *   inputParams  : not used. Just to have a common signature with functionHeader template.
+ *   inoutParams  : not used. Just to have a common signature with functionHeader template.
+ *   outputParams : not used. Just to have a common signature with functionHeader template.
+ *
+ * Uses:
+ */ 
+exFunctionHeader(rettype,class,name,params) ::= <<
+$if(!class)$static $endif$void $class$$if(class)$Server::$endif$$name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
+>>
+
+/**
+ * createRPC: Internal Template
+ * Produces a list of Server inherited createRPC  method calls.
+ * required to initialize this server object.
+ * Params:
+ *   funNames     : list of the interface function names. 
+ *
+ * Uses:
+ */
+createRPC(interfaceName, funNames) ::= <<
+$funNames:{this->setRPC(new $interfaceName$_$it.name$ServerRPC("$it.name$", this,
+            $interfaceName$_$it.name$RequestUtils::registerType(getParticipant()),
+            $if(!it.isOneway)$
+            $interfaceName$_$it.name$ReplyUtils::registerType(getParticipant()),
+            $endif$
+            &$interfaceName$Server::$it.name$));
+}$
+>>
+

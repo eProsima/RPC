@@ -5,12 +5,12 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
 		 * \brief This class is thrown as an exception when there is an error in the proxy side.
 		 */
-        class DDSRPC_WIN32_DLL_API ClientInternalException : public SystemException
+        class RPCDDS_WIN32_DLL_API ClientInternalException : public SystemException
         {
 		public:
 
@@ -57,11 +57,11 @@ namespace eProsima
 			ClientInternalException& operator=(ClientInternalException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ClientInternalException() DDSRPC_USE_NOEXCEPT;
+			virtual ~ClientInternalException() RPCDDS_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 #endif // _EXCEPTIONS_CLIENTINTERNALEXCEPTION_H_

@@ -11,7 +11,7 @@ static const char* const CLASS_NAME = "UDPTransport";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		UDPTransport::UDPTransport() : m_to_connect(NULL)
 		{
@@ -53,11 +53,11 @@ namespace eProsima
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
             const char* const METHOD_NAME = "setTransport";
             int returnedValue = -1;
-            OpenDDS::DCPS::TransportConfig_rch cfg = TheTransportRegistry->create_config("ddsrpc_config");
+            OpenDDS::DCPS::TransportConfig_rch cfg = TheTransportRegistry->create_config("rpcdds_config");
 
             if(cfg != NULL)
             {
-                OpenDDS::DCPS::TransportInst_rch inst = TheTransportRegistry->create_inst("ddsrpc_transport", "rtps_udp");
+                OpenDDS::DCPS::TransportInst_rch inst = TheTransportRegistry->create_inst("rpcdds_transport", "rtps_udp");
 
                 if(inst != NULL)
                 {
@@ -81,5 +81,5 @@ namespace eProsima
 #endif
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

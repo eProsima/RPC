@@ -3,7 +3,7 @@
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 		/**
 		 * \brief This enumeration type defines the success of an operation or
@@ -23,7 +23,7 @@ namespace eProsima
 			NO_SERVER
 		} ReturnMessage;
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _UTILS_MESSAGES_H_

@@ -2,11 +2,11 @@
 #define _SERVER_SERVERSTRATEGY_H_
 
 #include "utils/Typedefs.h"
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class Server;
         class  ServerRPC;
@@ -15,7 +15,7 @@ namespace eProsima
 		 * \brief This class is the base of all classes that implement a server strategy
 		 *        that could be used by the server.
 		 */
-        class DDSRPC_WIN32_DLL_API ServerStrategy
+        class RPCDDS_WIN32_DLL_API ServerStrategy
         {
             public:
 
@@ -36,7 +36,7 @@ namespace eProsima
 				 */
                 virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service) = 0;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _SERVER_SERVERSTRATEGY_H_

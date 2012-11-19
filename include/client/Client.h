@@ -1,7 +1,7 @@
 #ifndef _CLIENT_CLIENT_H_
 #define _CLIENT_CLIENT_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
 #include "utils/Version.h"
 
@@ -9,7 +9,7 @@
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
         class Transport;
         class AsyncThread;
@@ -19,7 +19,7 @@ namespace eProsima
 		/**
 		 * \brief This class implements the common functionalities that all server's proxies have.
 		 */
-		class DDSRPC_WIN32_DLL_API Client
+		class RPCDDS_WIN32_DLL_API Client
 		{
             public:
 
@@ -115,7 +115,7 @@ namespace eProsima
 				std::string m_remoteServiceName;
 		};
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _CLIENT_CLIENT_H_

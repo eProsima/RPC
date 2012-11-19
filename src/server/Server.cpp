@@ -9,11 +9,11 @@
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static const char* const CLASS_NAME ="eProsima::DDSRPC::Server";
+static const char* const CLASS_NAME ="eProsima::RPCDDS::Server";
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
 		Server::Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId) : m_serviceName(serviceName), m_domainId(domainId),
@@ -187,5 +187,5 @@ namespace eProsima
 			return m_serviceName;
 		}
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima

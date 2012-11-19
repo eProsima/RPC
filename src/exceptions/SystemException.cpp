@@ -3,7 +3,7 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {	    
 		SystemException::SystemException(const std::string &message) : Exception(message), m_minor(0)
 		{
@@ -43,7 +43,7 @@ namespace eProsima
 			return *this;
 		}
 
-		SystemException::~SystemException() DDSRPC_USE_NOEXCEPT
+		SystemException::~SystemException() RPCDDS_USE_NOEXCEPT
 		{
 		}
 
@@ -56,5 +56,5 @@ namespace eProsima
 		{
 			m_minor = minor;
 		}
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima

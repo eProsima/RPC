@@ -5,12 +5,12 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
 		 * \brief This class is thrown as an exception when the server is not found.
 		 */
-        class DDSRPC_WIN32_DLL_API ServerNotFoundException : public SystemException
+        class RPCDDS_WIN32_DLL_API ServerNotFoundException : public SystemException
         {
 		public:
 
@@ -57,11 +57,11 @@ namespace eProsima
 			ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerNotFoundException() DDSRPC_USE_NOEXCEPT;
+			virtual ~ServerNotFoundException() RPCDDS_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 #endif // _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_

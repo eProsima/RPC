@@ -7,7 +7,7 @@ static const char* const CLASS_NAME = "ThreadPerRequestStrategy";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPerRequestStrategyJob
         {
@@ -45,6 +45,6 @@ namespace eProsima
             }
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 

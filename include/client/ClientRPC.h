@@ -1,7 +1,7 @@
 #ifndef _CLIENT_CLIENTRPC_H_
 #define _CLIENT_CLIENTRPC_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
 #include "utils/Version.h"
 
@@ -12,7 +12,7 @@ namespace boost
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
         class Client;
         class AsyncTask;
@@ -20,7 +20,7 @@ namespace eProsima
 		/**
 		 * \brief This class implements a remote procedure call in server's proxy side.
 		 */
-		class DDSRPC_WIN32_DLL_API ClientRPC
+		class RPCDDS_WIN32_DLL_API ClientRPC
 		{
 			public:
 
@@ -30,7 +30,7 @@ namespace eProsima
 				 * \param rpcName The name associated with this RPC object. Cannot be NULL:
 				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
 				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
-				 * \param client Pointer to the eProsima::DDSRPC::Client class parent. Cannot be NULL.
+				 * \param client Pointer to the eProsima::RPCDDS::Client class parent. Cannot be NULL.
 				 */
 				ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName,
 					Client *client);
@@ -47,7 +47,7 @@ namespace eProsima
 				 * \param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
 				 *        The pointer can be NULL and this means that the RPC call is oneway.
 				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
-				 * \throw eProsima::DDSRPC::ServerTimeoutException
+				 * \throw eProsima::RPCDDS::ServerTimeoutException
 				 */
 				ReturnMessage execute(void *request, void* reply, long timeout);
 
@@ -130,7 +130,7 @@ namespace eProsima
 				 *
 				 * \param DDS WaitSet used to make the comprobation.
 				 * \param timeout Timeout used to the comprobation. Its value is in milliseconds.
-				 * \return DDSRPC return message.
+				 * \return RPCDDS return message.
 				 */
                 ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
 
@@ -191,7 +191,7 @@ namespace eProsima
 				boost::mutex *m_mutex;
 		};
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _CLIENT_CLIENTRPC_H_

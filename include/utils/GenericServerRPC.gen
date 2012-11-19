@@ -26,12 +26,12 @@ defined(TData)
 #define TDataReply TData_Reply(TData)
 
 
-TName::TName(const char *rpcName, eProsima::DDSRPC::Server* server, const char *requestTypeName,
+TName::TName(const char *rpcName, eProsima::RPCDDS::Server* server, const char *requestTypeName,
 #ifndef IS_ONEWAY
 		const char *replyTypeName,
 #endif
-		eProsima::DDSRPC::fExecFunction execFunction) :
-	eProsima::DDSRPC::ServerRPC(rpcName, server, requestTypeName,
+		eProsima::RPCDDS::fExecFunction execFunction) :
+	eProsima::RPCDDS::ServerRPC(rpcName, server, requestTypeName,
 #ifndef IS_ONEWAY
 			replyTypeName,
 #else

@@ -1,7 +1,7 @@
 #ifndef _SERVER_SERVERPC_H_
 #define _SERVER_SERVERRPC_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Typedefs.h"
 #include "utils/Messages.h"
 #include "utils/Version.h"
@@ -9,7 +9,7 @@
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
 		class Server;
@@ -18,7 +18,7 @@ namespace eProsima
 		/**
 		 * \brief This class implements a remote procedure call in server side.
 		 */
-		class DDSRPC_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
+		class RPCDDS_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
 		{
 			public:
 
@@ -203,7 +203,7 @@ namespace eProsima
 				fExecFunction m_execFunction;
 		};
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _SERVER_SERVERRPC_H_

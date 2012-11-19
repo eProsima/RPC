@@ -7,17 +7,17 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		/**
-		 * \brief This abstract class is used to create internal DDSRPC exceptions.
+		 * \brief This abstract class is used to create internal RPCDDS exceptions.
 		 */
-        class DDSRPC_WIN32_DLL_API SystemException : public Exception
+        class RPCDDS_WIN32_DLL_API SystemException : public Exception
         {
 		public:
 
 			/// \brief Default destructor.
-			virtual ~SystemException() DDSRPC_USE_NOEXCEPT;
+			virtual ~SystemException() RPCDDS_USE_NOEXCEPT;
 
 			/**
 			 * \brief This function returns the number associated with the system exception.
@@ -100,7 +100,7 @@ namespace eProsima
 
 			int32_t m_minor;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _EXCEPTIONS_SYSTEMEXCEPTION_H_

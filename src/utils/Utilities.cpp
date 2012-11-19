@@ -3,11 +3,11 @@
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"
 #endif
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::Utilities";
+static const char* const CLASS_NAME = "eProsima::RPCDDS::Utilities";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 
         void get_guid(unsigned int *id, DDS::DataWriter *datawriter)
@@ -103,5 +103,5 @@ namespace eProsima
 #endif
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } //namespace eProsima

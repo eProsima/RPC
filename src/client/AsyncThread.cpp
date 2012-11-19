@@ -6,11 +6,11 @@
 
 #include <stdio.h>
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::AsyncThread";
+static const char* const CLASS_NAME = "eProsima::RPCDDS::AsyncThread";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         bool asyncListSort(AsyncListPair i, AsyncListPair j)
         {
@@ -282,5 +282,5 @@ namespace eProsima
             }
 		}
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

@@ -18,13 +18,13 @@
 
 #define GENERIC_CLIENT_RPC(TName, TDataWriter, TDataReader)                       \
                                                                                   \
-class  TName : public eProsima::DDSRPC::ClientRPC                                                   \
+class  TName : public eProsima::RPCDDS::ClientRPC                                                   \
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, const char *requestTypeName,                         \
-        const char *replyTypeName, eProsima::DDSRPC::Client *client);           \
+        const char *replyTypeName, eProsima::RPCDDS::Client *client);           \
   virtual ~TName();                                                               \
-  virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
+  virtual eProsima::RPCDDS::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 protected:                                                                        \
   virtual DDS::ReturnCode_t write(void *data);                                    \
@@ -38,13 +38,13 @@ private:                                                                        
 
 #define GENERIC_CLIENT_ONEWAY_RPC(TName, TDataWriter)                       \
                                                                                   \
-class  TName : public eProsima::DDSRPC::ClientRPC                                                   \
+class  TName : public eProsima::RPCDDS::ClientRPC                                                   \
 {                                                                                 \
 public:                                                                           \
   TName(const char *rpcName, const char *requestTypeName,                         \
-        eProsima::DDSRPC::Client *client);           \
+        eProsima::RPCDDS::Client *client);           \
   virtual ~TName();                                                               \
-  virtual eProsima::DDSRPC::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
+  virtual eProsima::RPCDDS::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);       \
                                                                                   \
 protected:                                                                        \
   virtual DDS::ReturnCode_t write(void *data);                                    \

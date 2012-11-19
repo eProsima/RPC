@@ -1,0 +1,146 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group main;
+
+varComplexDecl(typeName, name, create) ::= <<
+$typeName$ $name$;
+$if(create)$
+memset(&$name$, 0, sizeof($typeName$));
+$endif$
+>>
+
+varComplexInitialize(typeName, name) ::= <<
+$if(!voidInitMap.(typeName))$
+$if(!typeInitMap.(typeName))$
+$typeName$_initialize(&$name$);
+$endif$    
+$endif$
+>>
+
+varComplexDel(typeName, name) ::= <<
+$typeName$_finalize(&$name$);
+>>
+
+ReqRepIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplyPlugin.h"
+>>
+
+ReqRepRIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplySupport.h"
+>>
+
+ReqRepSIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplySupport.h"
+>>
+
+ddsIncludes() ::= <<
+#include "ndds_namespace_cpp.h"
+>>
+
+reqrepCreation(type, reqrep, name, void, create) ::= <<
+$if(create)$$type$$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$$reqrep$TypeSupport::create_data();
+>>
+
+reqrepDestruction(type, reqrep, name, void) ::= <<
+$type$$reqrep$TypeSupport::delete_data($if(void)$($type$$reqrep$*)$endif$$name$);
+>>
+
+reqrepRefFinalize(type, reqrep, name) ::= <<
+$type$$reqrep$_finalize(&$name$);
+>>
+
+getTypename(funName, type, name) ::= <<
+$name$ = $funName$$type$TypeSupport::get_type_name();
+>>
+
+registerTypename(funName, type, name) ::= <<
+$funName$$type$TypeSupport::register_type(participant, $name$)
+>>
+
+preReqIDLDefines(name) ::= <<
+>>
+
+preRepIDLDefines(name) ::= <<
+>>
+
+keyIDLdefine() ::= <<
+ //@key
+>>
+
+levelIDLdefine() ::= <<
+ //@top-level true
+>>
+
+archMakeDefines() ::= <<
+ -DRTI_UNIX -DRTI_LINUX
+>>
+
+inclMake() ::= <<
+ -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/rpcdds/include -I\$(NDDSHOME)/rpcdds/include/idl/rti
+>>
+
+inclVS() ::= <<
+\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\rpcdds\include;\$(NDDSHOME)\rpcdds\include\idl\rti;
+>>
+
+libsMake(example) ::= <<
+ -L\$(NDDSHOME)/lib/$example$ -L\$(NDDSHOME)/rpcdds/lib/$example$ \
+       -lnddsc -lnddscore -lnddscpp
+>>
+
+libsVS(example) ::= <<
+\$(NDDSHOME)\lib\\$example$;\$(NDDSHOME)\rpcdds\lib\\$example$;
+>>
+
+sourceMake(interface) ::= <<
+COMMONCXXSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
+                $interface$Plugin.cxx $interface$RequestReplySupport.cxx $interface$Support.cxx \
+                $interface$RequestReplyUtils.cxx
+COMMONCPPSOURCES =
+>>
+
+sourceVS(interface) ::= <<
+    <ClCompile Include="$interface$RequestReply.cxx" />
+    <ClCompile Include="$interface$.cxx" />
+    <ClCompile Include="$interface$RequestReplyPlugin.cxx" />
+    <ClCompile Include="$interface$Plugin.cxx" />
+    <ClCompile Include="$interface$RequestReplySupport.cxx" />
+    <ClCompile Include="$interface$Support.cxx" />
+    <ClCompile Include="$interface$RequestReplyUtils.cxx" />
+>>
+
+sourceIVS(interface) ::= <<
+    <ClInclude Include="$interface$RequestReply.h" />
+    <ClInclude Include="$interface$.h" />
+    <ClInclude Include="$interface$RequestReplyPlugin.h" />
+    <ClInclude Include="$interface$Plugin.h" />
+    <ClInclude Include="$interface$RequestReplySupport.h" />
+    <ClInclude Include="$interface$Support.h" />
+    <ClInclude Include="$interface$RequestReplyUtils.h" />
+>>
+ 
+preprocessorDefs(conf) ::= <<
+WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+>>
+
+dependencies(conf) ::= <<
+nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; rpcdds$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
+>>
+
+extractDH(type, name) ::= <<
+$type$PluginSupport_copy_data(&$name$, &data.$name$);
+>>

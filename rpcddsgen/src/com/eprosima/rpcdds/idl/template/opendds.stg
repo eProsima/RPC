@@ -1,0 +1,149 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group opendds;
+
+varComplexDecl(typeName, name, create) ::= <<
+$typeName$ $name$();
+>>
+
+varComplexInitialize(typeName, name) ::= <<
+>>
+
+varComplexDel(typeName, name) ::= <<
+delete $name$;
+>>
+
+ReqRepIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplyTypeSupportImpl.h"
+>>
+
+ReqRepRIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplyTypeSupportImpl.h"
+>>
+
+ReqRepSIncludes(interfaceName) ::= <<
+#include "$interfaceName$RequestReplyC.h"
+>>
+
+ddsIncludes() ::= <<
+#include "dds/DdsDcpsDomainC.h"
+>>
+
+reqrepCreation(type, reqrep, name, void, create) ::= <<
+$if(create)$$type$$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$new $type$$reqrep$();
+>>
+
+reqrepDestruction(type, reqrep, name, void) ::= <<
+delete $if(void)$($type$$reqrep$*)$endif$$name$;
+>>
+
+getTypename(funName, type, name) ::= <<
+$funName$$type$TypeSupport_var ts = new $funName$$type$TypeSupportImpl;
+$name$ = ts->get_type_name();
+>>
+
+registerTypename(funName, type, name) ::= <<
+ts->register_type(participant, $name$)
+>>
+
+preReqIDLDefines(name) ::= <<
+#pragma DCPS_DATA_TYPE "$name$Request"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_1"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_2"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_3"
+#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_4"
+#pragma DCPS_DATA_KEY "$name$Request numSec"
+>>
+
+preRepIDLDefines(name) ::= <<
+#pragma DCPS_DATA_TYPE "$name$Reply"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_1"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_2"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_3"
+#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_4"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_1"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_2"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_3"
+#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_4"
+#pragma DCPS_DATA_KEY "$name$Reply numSec"
+>>
+
+keyIDLdefine() ::= <<
+>>
+
+levelIDLdefine() ::= <<
+>>
+
+archMakeDefines() ::= <<
+ -DOPENDDS_LINUX
+>>
+
+inclMake() ::= <<
+ -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(DDS_ROOT)/rpcdds/include -I\$(DDS_ROOT)/rpcdds/include/idl/opendds
+>>
+
+inclVS() ::= <<
+\$(DDS_ROOT);\$(TAO_ROOT);\$(ACE_ROOT);\$(DDS_ROOT)\rpcdds\include;\$(DDS_ROOT)\rpcdds\include\idl\opendds;
+>>
+
+libsMake(example) ::= <<
+ -L\$(DDS_ROOT)/lib -L\$(ACE_ROOT)/lib -L\$(DDS_ROOT)/rpcdds/lib/$example$ \
+       -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE
+>>
+
+libsVS(example) ::= <<
+\$(DDS_ROOT)\lib\;\$(ACE_ROOT)\lib\;\$(DDS_ROOT)\rpcdds\lib\\$example$;
+>>
+
+sourceMake(interface) ::= <<
+COMMONCXXSOURCES = $interface$RequestReplyUtils.cxx
+COMMONCPPSOURCES = $interface$C.cpp $interface$RequestReplyC.cpp \
+                $interface$RequestReplyTypeSupportC.cpp $interface$RequestReplyTypeSupportImpl.cpp \
+                $interface$TypeSupportC.cpp $interface$TypeSupportImpl.cpp
+>>
+
+sourceVS(interface) ::= <<
+    <ClCompile Include="$interface$RequestReplyUtils.cxx" />
+    <ClCompile Include="$interface$C.cpp" />
+    <ClCompile Include="$interface$RequestReplyC.cpp" />
+    <ClCompile Include="$interface$RequestReplyTypeSupportC.cpp" />
+    <ClCompile Include="$interface$RequestReplyTypeSupportImpl.cpp" />
+    <ClCompile Include="$interface$TypeSupportC.cpp" />
+    <ClCompile Include="$interface$TypeSupportImpl.cpp" />
+>>
+
+sourceIVS(interface) ::= <<
+    <ClInclude Include="$interface$RequestReplyUtils.h" />
+    <ClInclude Include="$interface$C.h" />
+    <ClInclude Include="$interface$RequestReplyC.h" />
+    <ClInclude Include="$interface$RequestReplyTypeSupportC.h" />
+    <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h" />
+    <ClInclude Include="$interface$TypeSupportC.h" />
+    <ClInclude Include="$interface$TypeSupportImpl.h" />
+>>
+
+preprocessorDefs(conf) ::= <<
+WIN32;OPENDDS_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$RPCDDS_WIN32_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+>>
+
+dependencies(conf) ::= <<
+OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO_AnyTypeCode$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ACE$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; rpcdds$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
+>>
+
+extractDH(type, name) ::= <<
+$name$ = data->$name$;
+>>

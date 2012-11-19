@@ -2,7 +2,7 @@
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
 		ServerInternalException::ServerInternalException(const std::string &message) : SystemException(message, 3)
 		{
@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ServerInternalException::~ServerInternalException() DDSRPC_USE_NOEXCEPT
+		ServerInternalException::~ServerInternalException() RPCDDS_USE_NOEXCEPT
 		{
 		}
 
@@ -48,5 +48,5 @@ namespace eProsima
 		{
 			throw *this;
 		}
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
