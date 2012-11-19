@@ -87,9 +87,9 @@ void OnewayCallTest_getLongReplyUtils::setTypeData(OnewayCallTest_getLongReply& 
     instance.getLong_ret = getLong_ret;            
 }
 
-void OnewayCallTest_getLongReplyUtils::extractTypeData(OnewayCallTest_getLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DDS_Long& getLong_ret)
+void OnewayCallTest_getLongReplyUtils::extractTypeData(OnewayCallTest_getLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DDS_Long& getLong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     getLong_ret = data.getLong_ret;            
 }
@@ -176,9 +176,9 @@ void OnewayCallTest_getBooleanReplyUtils::setTypeData(OnewayCallTest_getBooleanR
     instance.getBoolean_ret = getBoolean_ret;            
 }
 
-void OnewayCallTest_getBooleanReplyUtils::extractTypeData(OnewayCallTest_getBooleanReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DDS_Boolean& getBoolean_ret)
+void OnewayCallTest_getBooleanReplyUtils::extractTypeData(OnewayCallTest_getBooleanReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DDS_Boolean& getBoolean_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     getBoolean_ret = data.getBoolean_ret;            
 }
@@ -265,9 +265,9 @@ void OnewayCallTest_getStringReplyUtils::setTypeData(OnewayCallTest_getStringRep
     instance.getString_ret = getString_ret;            
 }
 
-void OnewayCallTest_getStringReplyUtils::extractTypeData(OnewayCallTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ char*& getString_ret)
+void OnewayCallTest_getStringReplyUtils::extractTypeData(OnewayCallTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ char*& getString_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     getString_ret = data.getString_ret;            
 }
@@ -354,9 +354,9 @@ void OnewayCallTest_getStructReplyUtils::setTypeData(OnewayCallTest_getStructRep
     instance.getStruct_ret = getStruct_ret;            
 }
 
-void OnewayCallTest_getStructReplyUtils::extractTypeData(OnewayCallTest_getStructReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Structure& getStruct_ret)
+void OnewayCallTest_getStructReplyUtils::extractTypeData(OnewayCallTest_getStructReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Structure& getStruct_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     getStruct_ret = data.getStruct_ret;            
 }

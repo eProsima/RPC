@@ -65,7 +65,7 @@ class UnionTest_getEmpleadoReplyUtils
          * \param data Pointer to the structure UnionTest_getEmpleadoReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret);
+        static void extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret);
 };
 
  

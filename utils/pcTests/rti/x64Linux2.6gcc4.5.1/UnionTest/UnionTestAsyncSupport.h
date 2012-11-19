@@ -11,26 +11,26 @@
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure getEmpleado from the server in an asynchronous call.
  */
-class UnionTest_getEmpleadoTask : public eProsima::DDSRPC::AsyncTask
+class UnionTest_getEmpleadoTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         UnionTest_getEmpleadoTask(UnionTest_getEmpleadoCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~UnionTest_getEmpleadoTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.

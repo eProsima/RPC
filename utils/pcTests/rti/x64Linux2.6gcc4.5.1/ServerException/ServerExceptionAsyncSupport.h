@@ -11,26 +11,26 @@
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure sendException from the server in an asynchronous call.
  */
-class ServerException_sendExceptionTask : public eProsima::DDSRPC::AsyncTask
+class ServerException_sendExceptionTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         ServerException_sendExceptionTask(ServerException_sendExceptionCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~ServerException_sendExceptionTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -51,26 +51,26 @@ class ServerException_sendExceptionTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure sendExceptionTwo from the server in an asynchronous call.
  */
-class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
+class ServerException_sendExceptionTwoTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         ServerException_sendExceptionTwoTask(ServerException_sendExceptionTwoCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~ServerException_sendExceptionTwoTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.
@@ -91,26 +91,26 @@ class ServerException_sendExceptionTwoTask : public eProsima::DDSRPC::AsyncTask
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure sendExceptionThree from the server in an asynchronous call.
  */
-class ServerException_sendExceptionThreeTask : public eProsima::DDSRPC::AsyncTask
+class ServerException_sendExceptionThreeTask : public eProsima::RPCDDS::AsyncTask
 {
     public:
 
         /**
          * \brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that DDSRPC will call when
+         * \param obj Object that implements the callbacks that RPCDDS will call when
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         ServerException_sendExceptionThreeTask(ServerException_sendExceptionThreeCallbackHandler &obj,
-           eProsima::DDSRPC::Client *client);
+           eProsima::RPCDDS::Client *client);
 
         /// \brief The default destructor.
         virtual ~ServerException_sendExceptionThreeTask();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::DDSRPC::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
         
         /**
          * \brief This function returns the object used by the task.

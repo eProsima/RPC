@@ -10,7 +10,7 @@
 
 #include "AsyncCallTestServerRPCSupport.h"
 
-AsyncCallTestServer::AsyncCallTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+AsyncCallTestServer::AsyncCallTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ AsyncCallTestServer::AsyncCallTestServer(std::string serviceName, eProsima::DDSR
     createRPCs();
 }
 
-AsyncCallTestServer::AsyncCallTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+AsyncCallTestServer::AsyncCallTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new AsyncCallTestServerImpl();
@@ -54,7 +54,7 @@ void AsyncCallTestServer::createRPCs()
 
 }
 
-void AsyncCallTestServer::getLong(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void AsyncCallTestServer::getLong(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     AsyncCallTestServer *srv = dynamic_cast<AsyncCallTestServer*>(server);
     DDS_Long  lo1 = 0;    
@@ -72,16 +72,16 @@ void AsyncCallTestServer::getLong(eProsima::DDSRPC::Server *server, void *reques
         getLong_ret = srv->_impl->getLong(lo1, lo2, lo3);
 
         AsyncCallTest_getLongReplyUtils::setTypeData(replyData, lo2, lo3, getLong_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -92,7 +92,7 @@ void AsyncCallTestServer::getLong(eProsima::DDSRPC::Server *server, void *reques
         
         
 }
-void AsyncCallTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void AsyncCallTestServer::getBoolean(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     AsyncCallTestServer *srv = dynamic_cast<AsyncCallTestServer*>(server);
     DDS_Boolean  bo1 = RTI_FALSE;    
@@ -110,16 +110,16 @@ void AsyncCallTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *req
         getBoolean_ret = srv->_impl->getBoolean(bo1, bo2, bo3);
 
         AsyncCallTest_getBooleanReplyUtils::setTypeData(replyData, bo2, bo3, getBoolean_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -130,7 +130,7 @@ void AsyncCallTestServer::getBoolean(eProsima::DDSRPC::Server *server, void *req
         
         
 }
-void AsyncCallTestServer::getString(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void AsyncCallTestServer::getString(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     AsyncCallTestServer *srv = dynamic_cast<AsyncCallTestServer*>(server);
     char*  s1 = NULL;    
@@ -148,16 +148,16 @@ void AsyncCallTestServer::getString(eProsima::DDSRPC::Server *server, void *requ
         getString_ret = srv->_impl->getString(s1, s2, s3);
 
         AsyncCallTest_getStringReplyUtils::setTypeData(replyData, s2, s3, getString_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -168,7 +168,7 @@ void AsyncCallTestServer::getString(eProsima::DDSRPC::Server *server, void *requ
     if(s2 != NULL) free(s2);    
     if(s3 != NULL) free(s3);    
 }
-void AsyncCallTestServer::duplicate(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void AsyncCallTestServer::duplicate(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     AsyncCallTestServer *srv = dynamic_cast<AsyncCallTestServer*>(server);
     Structure ev;
@@ -185,16 +185,16 @@ void AsyncCallTestServer::duplicate(eProsima::DDSRPC::Server *server, void *requ
         duplicate_ret = srv->_impl->duplicate(ev);
 
         AsyncCallTest_duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

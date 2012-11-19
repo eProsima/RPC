@@ -10,7 +10,7 @@ DEFINES = $(DEFINES_ARCH_SPECIFIC)
 INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../../include -I../../../../../include/idl/rti
 
 LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gcc4.5.1 \
-       -lnddsc -lnddscore -lnddscpp -lddsrpc $(SYSLIBS_x64Linux2.6gcc4.5.1)
+       -lnddsc -lnddscore -lnddscpp -lrpcdds $(SYSLIBS_x64Linux2.6gcc4.5.1)
 
 COMMONCXXSOURCES = EnumYStringTestRequestReply.cxx EnumYStringTest.cxx EnumYStringTestRequestReplyPlugin.cxx \
                 EnumYStringTestPlugin.cxx EnumYStringTestRequestReplySupport.cxx EnumYStringTestSupport.cxx \

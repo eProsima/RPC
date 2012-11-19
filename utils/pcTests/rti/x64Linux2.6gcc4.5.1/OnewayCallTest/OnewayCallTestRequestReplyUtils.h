@@ -93,7 +93,7 @@ class OnewayCallTest_getLongReplyUtils
          * \param data Pointer to the structure OnewayCallTest_getLongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(OnewayCallTest_getLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DDS_Long& getLong_ret);
+        static void extractTypeData(OnewayCallTest_getLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DDS_Long& getLong_ret);
 };
 
 
@@ -178,7 +178,7 @@ class OnewayCallTest_getBooleanReplyUtils
          * \param data Pointer to the structure OnewayCallTest_getBooleanReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(OnewayCallTest_getBooleanReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DDS_Boolean& getBoolean_ret);
+        static void extractTypeData(OnewayCallTest_getBooleanReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DDS_Boolean& getBoolean_ret);
 };
 
 
@@ -263,7 +263,7 @@ class OnewayCallTest_getStringReplyUtils
          * \param data Pointer to the structure OnewayCallTest_getStringReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(OnewayCallTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ char*& getString_ret);
+        static void extractTypeData(OnewayCallTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ char*& getString_ret);
 };
 
 
@@ -348,7 +348,7 @@ class OnewayCallTest_getStructReplyUtils
          * \param data Pointer to the structure OnewayCallTest_getStructReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(OnewayCallTest_getStructReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Structure& getStruct_ret);
+        static void extractTypeData(OnewayCallTest_getStructReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Structure& getStruct_ret);
 };
 
  

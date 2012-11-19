@@ -65,7 +65,7 @@ class TypedefTest_getLargoReplyUtils
          * \param data Pointer to the structure TypedefTest_getLargoReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(TypedefTest_getLargoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret);
+        static void extractTypeData(TypedefTest_getLargoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret);
 };
 
 
@@ -122,7 +122,7 @@ class TypedefTest_getLarguisimoReplyUtils
          * \param data Pointer to the structure TypedefTest_getLarguisimoReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(TypedefTest_getLarguisimoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret);
+        static void extractTypeData(TypedefTest_getLarguisimoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret);
 };
 
 
@@ -179,7 +179,7 @@ class TypedefTest_getDatosDefReplyUtils
          * \param data Pointer to the structure TypedefTest_getDatosDefReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(TypedefTest_getDatosDefReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret);
+        static void extractTypeData(TypedefTest_getDatosDefReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret);
 };
 
 
@@ -236,7 +236,7 @@ class TypedefTest_getDatosDefondoReplyUtils
          * \param data Pointer to the structure TypedefTest_getDatosDefondoReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(TypedefTest_getDatosDefondoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret);
+        static void extractTypeData(TypedefTest_getDatosDefondoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret);
 };
 
 
@@ -293,7 +293,7 @@ class TypedefTest_getCadenaReplyUtils
          * \param data Pointer to the structure TypedefTest_getCadenaReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(TypedefTest_getCadenaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret);
+        static void extractTypeData(TypedefTest_getCadenaReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret);
 };
 
 
@@ -350,7 +350,7 @@ class TypedefTest_getCorreaReplyUtils
          * \param data Pointer to the structure TypedefTest_getCorreaReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(TypedefTest_getCorreaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret);
+        static void extractTypeData(TypedefTest_getCorreaReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret);
 };
 
  

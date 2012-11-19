@@ -62,9 +62,9 @@ void AsyncCallTest_getLongReplyUtils::setTypeData(AsyncCallTest_getLongReply& in
     instance.getLong_ret = getLong_ret;            
 }
 
-void AsyncCallTest_getLongReplyUtils::extractTypeData(AsyncCallTest_getLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret)
+void AsyncCallTest_getLongReplyUtils::extractTypeData(AsyncCallTest_getLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     lo2 = data.lo2;
     lo3 = data.lo3;  
     getLong_ret = data.getLong_ret;            
@@ -127,9 +127,9 @@ void AsyncCallTest_getBooleanReplyUtils::setTypeData(AsyncCallTest_getBooleanRep
     instance.getBoolean_ret = getBoolean_ret;            
 }
 
-void AsyncCallTest_getBooleanReplyUtils::extractTypeData(AsyncCallTest_getBooleanReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret)
+void AsyncCallTest_getBooleanReplyUtils::extractTypeData(AsyncCallTest_getBooleanReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     bo2 = data.bo2;
     bo3 = data.bo3;  
     getBoolean_ret = data.getBoolean_ret;            
@@ -192,9 +192,9 @@ void AsyncCallTest_getStringReplyUtils::setTypeData(AsyncCallTest_getStringReply
     instance.getString_ret = getString_ret;            
 }
 
-void AsyncCallTest_getStringReplyUtils::extractTypeData(AsyncCallTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret)
+void AsyncCallTest_getStringReplyUtils::extractTypeData(AsyncCallTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     if(s2 != NULL)
     	free(s2);s2 = data.s2;
     s3 = data.s3;  
@@ -254,9 +254,9 @@ void AsyncCallTest_duplicateReplyUtils::setTypeData(AsyncCallTest_duplicateReply
     instance.duplicate_ret = duplicate_ret;            
 }
 
-void AsyncCallTest_duplicateReplyUtils::extractTypeData(AsyncCallTest_duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Structure& duplicate_ret)
+void AsyncCallTest_duplicateReplyUtils::extractTypeData(AsyncCallTest_duplicateReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Structure& duplicate_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     duplicate_ret = data.duplicate_ret;            
 }

@@ -65,7 +65,7 @@ class MultithreadTest_testReplyUtils
          * \param data Pointer to the structure MultithreadTest_testReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(MultithreadTest_testReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret);
+        static void extractTypeData(MultithreadTest_testReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Dato& dato2, /*out*/ DDS_Long& test_ret);
 };
 
  

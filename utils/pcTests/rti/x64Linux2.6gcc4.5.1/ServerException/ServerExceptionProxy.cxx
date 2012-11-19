@@ -17,7 +17,7 @@ ServerExceptionProxy::ServerExceptionProxy(std::string remoteServiceName, int do
     createRPCs();
 }
 
-ServerExceptionProxy::ServerExceptionProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+ServerExceptionProxy::ServerExceptionProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId, long timeout) :
     Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
@@ -50,7 +50,7 @@ void ServerExceptionProxy::createRPCs()
  
 void ServerExceptionProxy::sendException() 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     ServerException_sendExceptionRequest instance;
     ServerException_sendExceptionReply retInstance;
 
@@ -58,24 +58,24 @@ void ServerExceptionProxy::sendException()
     ServerException_sendExceptionRequestUtils::setTypeData(instance);
     retcode = sendException_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         ServerException_sendExceptionReplyUtils::extractTypeData(retInstance, retcode);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -84,7 +84,7 @@ void ServerExceptionProxy::sendException()
  
 char* ServerExceptionProxy::sendExceptionTwo(/*in*/ char* message, /*inout*/ char*& message2, /*out*/ char*& message3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     char*  sendExceptionTwo_ret = NULL;    
     ServerException_sendExceptionTwoRequest instance;
     ServerException_sendExceptionTwoReply retInstance;
@@ -93,24 +93,24 @@ char* ServerExceptionProxy::sendExceptionTwo(/*in*/ char* message, /*inout*/ cha
     ServerException_sendExceptionTwoRequestUtils::setTypeData(instance, message, message2);
     retcode = sendExceptionTwo_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         ServerException_sendExceptionTwoReplyUtils::extractTypeData(retInstance, retcode, message2, message3, sendExceptionTwo_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -120,7 +120,7 @@ char* ServerExceptionProxy::sendExceptionTwo(/*in*/ char* message, /*inout*/ cha
  
 Estructura ServerExceptionProxy::sendExceptionThree(/*in*/ const Estructura& es, /*inout*/ Estructura& es2, /*out*/ Estructura& es3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     Estructura sendExceptionThree_ret;
         
     ServerException_sendExceptionThreeRequest instance;
@@ -130,24 +130,24 @@ Estructura ServerExceptionProxy::sendExceptionThree(/*in*/ const Estructura& es,
     ServerException_sendExceptionThreeRequestUtils::setTypeData(instance, es, es2);
     retcode = sendExceptionThree_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         ServerException_sendExceptionThreeReplyUtils::extractTypeData(retInstance, retcode, es2, es3, sendExceptionThree_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -158,7 +158,7 @@ Estructura ServerExceptionProxy::sendExceptionThree(/*in*/ const Estructura& es,
  
 void ServerExceptionProxy::sendException_async(ServerException_sendExceptionCallbackHandler &obj) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     ServerException_sendExceptionRequest instance;
     ServerException_sendExceptionTask *task = NULL;
     ServerException_sendExceptionRequestUtils::setTypeData(instance);
@@ -167,18 +167,18 @@ void ServerExceptionProxy::sendException_async(ServerException_sendExceptionCall
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }
  
 void ServerExceptionProxy::sendExceptionTwo_async(ServerException_sendExceptionTwoCallbackHandler &obj, /*in*/ char* message, /*inout*/ char* message2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     ServerException_sendExceptionTwoRequest instance;
     ServerException_sendExceptionTwoTask *task = NULL;
     ServerException_sendExceptionTwoRequestUtils::setTypeData(instance, message, message2);
@@ -187,18 +187,18 @@ void ServerExceptionProxy::sendExceptionTwo_async(ServerException_sendExceptionT
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }
  
 void ServerExceptionProxy::sendExceptionThree_async(ServerException_sendExceptionThreeCallbackHandler &obj, /*in*/ const Estructura& es, /*inout*/ const Estructura& es2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     ServerException_sendExceptionThreeRequest instance;
     ServerException_sendExceptionThreeTask *task = NULL;
     ServerException_sendExceptionThreeRequestUtils::setTypeData(instance, es, es2);
@@ -207,11 +207,11 @@ void ServerExceptionProxy::sendExceptionThree_async(ServerException_sendExceptio
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }

@@ -17,7 +17,7 @@ SequenceTestProxy::SequenceTestProxy(std::string remoteServiceName, int domainId
     createRPCs();
 }
 
-SequenceTestProxy::SequenceTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+SequenceTestProxy::SequenceTestProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId, long timeout) :
     Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
@@ -50,7 +50,7 @@ void SequenceTestProxy::createRPCs()
  
 largo SequenceTestProxy::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     largo getSLong_ret;
         
     SequenceTest_getSLongRequest instance;
@@ -60,24 +60,24 @@ largo SequenceTestProxy::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /
     SequenceTest_getSLongRequestUtils::setTypeData(instance, l1, l2);
     retcode = getSLong_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         SequenceTest_getSLongReplyUtils::extractTypeData(retInstance, retcode, l2, l3, getSLong_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -87,7 +87,7 @@ largo SequenceTestProxy::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /
  
 cadena SequenceTestProxy::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s2, /*out*/ cadena& s3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     cadena getString_ret;
         
     SequenceTest_getStringRequest instance;
@@ -97,24 +97,24 @@ cadena SequenceTestProxy::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s
     SequenceTest_getStringRequestUtils::setTypeData(instance, s1, s2);
     retcode = getString_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         SequenceTest_getStringReplyUtils::extractTypeData(retInstance, retcode, s2, s3, getString_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -124,7 +124,7 @@ cadena SequenceTestProxy::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s
  
 dattos SequenceTestProxy::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     dattos getStringBounded_ret;
         
     SequenceTest_getStringBoundedRequest instance;
@@ -134,24 +134,24 @@ dattos SequenceTestProxy::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ d
     SequenceTest_getStringBoundedRequestUtils::setTypeData(instance, sb1, sb2);
     retcode = getStringBounded_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         SequenceTest_getStringBoundedReplyUtils::extractTypeData(retInstance, retcode, sb2, sb3, getStringBounded_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -162,7 +162,7 @@ dattos SequenceTestProxy::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ d
  
 void SequenceTestProxy::getSLong_async(SequenceTest_getSLongCallbackHandler &obj, /*in*/ const largo& l1, /*inout*/ const largo& l2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     SequenceTest_getSLongRequest instance;
     SequenceTest_getSLongTask *task = NULL;
     SequenceTest_getSLongRequestUtils::setTypeData(instance, l1, l2);
@@ -171,18 +171,18 @@ void SequenceTestProxy::getSLong_async(SequenceTest_getSLongCallbackHandler &obj
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }
  
 void SequenceTestProxy::getString_async(SequenceTest_getStringCallbackHandler &obj, /*in*/ const cadena& s1, /*inout*/ const cadena& s2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     SequenceTest_getStringRequest instance;
     SequenceTest_getStringTask *task = NULL;
     SequenceTest_getStringRequestUtils::setTypeData(instance, s1, s2);
@@ -191,18 +191,18 @@ void SequenceTestProxy::getString_async(SequenceTest_getStringCallbackHandler &o
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }
  
 void SequenceTestProxy::getStringBounded_async(SequenceTest_getStringBoundedCallbackHandler &obj, /*in*/ const dattos& sb1, /*inout*/ const dattos& sb2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     SequenceTest_getStringBoundedRequest instance;
     SequenceTest_getStringBoundedTask *task = NULL;
     SequenceTest_getStringBoundedRequestUtils::setTypeData(instance, sb1, sb2);
@@ -211,11 +211,11 @@ void SequenceTestProxy::getStringBounded_async(SequenceTest_getStringBoundedCall
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }

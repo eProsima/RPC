@@ -65,7 +65,7 @@ class EnumYStringTest_getEnumReplyUtils
          * \param data Pointer to the structure EnumYStringTest_getEnumReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(EnumYStringTest_getEnumReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret);
+        static void extractTypeData(EnumYStringTest_getEnumReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ Valores& v2, /*out*/ Valores& v3, /*out*/ Valores& getEnum_ret);
 };
 
 
@@ -122,7 +122,7 @@ class EnumYStringTest_getStringReplyUtils
          * \param data Pointer to the structure EnumYStringTest_getStringReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(EnumYStringTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret);
+        static void extractTypeData(EnumYStringTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret);
 };
 
 
@@ -179,7 +179,7 @@ class EnumYStringTest_getStringBoundedReplyUtils
          * \param data Pointer to the structure EnumYStringTest_getStringBoundedReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(EnumYStringTest_getStringBoundedReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret);
+        static void extractTypeData(EnumYStringTest_getStringBoundedReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& sb2, /*out*/ char*& sb3, /*out*/ char*& getStringBounded_ret);
 };
 
  

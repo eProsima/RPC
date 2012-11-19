@@ -65,7 +65,7 @@ class ServerException_sendExceptionReplyUtils
          * \param data Pointer to the structure ServerException_sendExceptionReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(ServerException_sendExceptionReply& data, eProsima::DDSRPC::ReturnMessage& retcode);
+        static void extractTypeData(ServerException_sendExceptionReply& data, eProsima::RPCDDS::ReturnMessage& retcode);
 };
 
 
@@ -122,7 +122,7 @@ class ServerException_sendExceptionTwoReplyUtils
          * \param data Pointer to the structure ServerException_sendExceptionTwoReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(ServerException_sendExceptionTwoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret);
+        static void extractTypeData(ServerException_sendExceptionTwoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& message2, /*out*/ char*& message3, /*out*/ char*& sendExceptionTwo_ret);
 };
 
 
@@ -179,7 +179,7 @@ class ServerException_sendExceptionThreeReplyUtils
          * \param data Pointer to the structure ServerException_sendExceptionThreeReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(ServerException_sendExceptionThreeReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret);
+        static void extractTypeData(ServerException_sendExceptionThreeReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ Estructura& es2, /*out*/ Estructura& es3, /*out*/ Estructura& sendExceptionThree_ret);
 };
 
  

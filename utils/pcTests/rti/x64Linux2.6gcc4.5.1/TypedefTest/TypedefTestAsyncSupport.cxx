@@ -5,7 +5,7 @@
 
 
 TypedefTest_getLargoTask::TypedefTest_getLargoTask(TypedefTest_getLargoCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     TypedefTest_getLargoReply_initialize(&m_reply);
 }
@@ -29,29 +29,29 @@ void TypedefTest_getLargoTask::execute()
 {  
     largo  l2 = 0;    
     largo  getLargo_ret = 0;    
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	TypedefTest_getLargoReplyUtils::extractTypeData(m_reply, retcode, l2, getLargo_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getLargo(l2, getLargo_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void TypedefTest_getLargoTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void TypedefTest_getLargoTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 TypedefTest_getLarguisimoTask::TypedefTest_getLarguisimoTask(TypedefTest_getLarguisimoCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     TypedefTest_getLarguisimoReply_initialize(&m_reply);
 }
@@ -75,29 +75,29 @@ void TypedefTest_getLarguisimoTask::execute()
 {  
     larguisimo  ll2 = 0;    
     larguisimo  getLarguisimo_ret = 0;    
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	TypedefTest_getLarguisimoReplyUtils::extractTypeData(m_reply, retcode, ll2, getLarguisimo_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getLarguisimo(ll2, getLarguisimo_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void TypedefTest_getLarguisimoTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void TypedefTest_getLarguisimoTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 TypedefTest_getDatosDefTask::TypedefTest_getDatosDefTask(TypedefTest_getDatosDefCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     TypedefTest_getDatosDefReply_initialize(&m_reply);
 }
@@ -123,29 +123,29 @@ void TypedefTest_getDatosDefTask::execute()
         
     DatosDef getDatosDef_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	TypedefTest_getDatosDefReplyUtils::extractTypeData(m_reply, retcode, d2, getDatosDef_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getDatosDef(d2, getDatosDef_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void TypedefTest_getDatosDefTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void TypedefTest_getDatosDefTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 TypedefTest_getDatosDefondoTask::TypedefTest_getDatosDefondoTask(TypedefTest_getDatosDefondoCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     TypedefTest_getDatosDefondoReply_initialize(&m_reply);
 }
@@ -171,29 +171,29 @@ void TypedefTest_getDatosDefondoTask::execute()
         
     DatosDefondo getDatosDefondo_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	TypedefTest_getDatosDefondoReplyUtils::extractTypeData(m_reply, retcode, dd2, getDatosDefondo_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getDatosDefondo(dd2, getDatosDefondo_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void TypedefTest_getDatosDefondoTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void TypedefTest_getDatosDefondoTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 TypedefTest_getCadenaTask::TypedefTest_getCadenaTask(TypedefTest_getCadenaCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     TypedefTest_getCadenaReply_initialize(&m_reply);
 }
@@ -217,29 +217,29 @@ void TypedefTest_getCadenaTask::execute()
 {  
     cadena  c2 = NULL;    
     cadena  getCadena_ret = NULL;    
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	TypedefTest_getCadenaReplyUtils::extractTypeData(m_reply, retcode, c2, getCadena_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getCadena(c2, getCadena_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void TypedefTest_getCadenaTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void TypedefTest_getCadenaTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 TypedefTest_getCorreaTask::TypedefTest_getCorreaTask(TypedefTest_getCorreaCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     TypedefTest_getCorreaReply_initialize(&m_reply);
 }
@@ -263,22 +263,22 @@ void TypedefTest_getCorreaTask::execute()
 {  
     correa  cc2 = NULL;    
     correa  getCorrea_ret = NULL;    
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	TypedefTest_getCorreaReplyUtils::extractTypeData(m_reply, retcode, cc2, getCorrea_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().getCorrea(cc2, getCorrea_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void TypedefTest_getCorreaTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void TypedefTest_getCorreaTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }

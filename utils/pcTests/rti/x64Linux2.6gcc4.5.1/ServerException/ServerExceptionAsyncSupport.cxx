@@ -5,7 +5,7 @@
 
 
 ServerException_sendExceptionTask::ServerException_sendExceptionTask(ServerException_sendExceptionCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     ServerException_sendExceptionReply_initialize(&m_reply);
 }
@@ -27,29 +27,29 @@ void* ServerException_sendExceptionTask::getReplyInstance()
 
 void ServerException_sendExceptionTask::execute()
 {  
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	ServerException_sendExceptionReplyUtils::extractTypeData(m_reply, retcode);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().sendException();
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void ServerException_sendExceptionTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void ServerException_sendExceptionTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 ServerException_sendExceptionTwoTask::ServerException_sendExceptionTwoTask(ServerException_sendExceptionTwoCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     ServerException_sendExceptionTwoReply_initialize(&m_reply);
 }
@@ -74,29 +74,29 @@ void ServerException_sendExceptionTwoTask::execute()
     char*  message2 = NULL;    
     char*  message3 = NULL;    
     char*  sendExceptionTwo_ret = NULL;    
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	ServerException_sendExceptionTwoReplyUtils::extractTypeData(m_reply, retcode, message2, message3, sendExceptionTwo_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().sendExceptionTwo(message2, message3, sendExceptionTwo_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void ServerException_sendExceptionTwoTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void ServerException_sendExceptionTwoTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 
 ServerException_sendExceptionThreeTask::ServerException_sendExceptionThreeTask(ServerException_sendExceptionThreeCallbackHandler &obj,
-   eProsima::DDSRPC::Client *client) : AsyncTask(client), m_obj(obj)
+   eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
     ServerException_sendExceptionThreeReply_initialize(&m_reply);
 }
@@ -124,22 +124,22 @@ void ServerException_sendExceptionThreeTask::execute()
         
     Estructura sendExceptionThree_ret;
         
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 	
 	ServerException_sendExceptionThreeReplyUtils::extractTypeData(m_reply, retcode, es2, es3, sendExceptionThree_ret);
 		
-	if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+	if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
 	{
 		getObject().sendExceptionThree(es2, es3, sendExceptionThree_ret);
 	}
 	else
 	{
-		if(retcode == eProsima::DDSRPC::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::DDSRPC::ServerInternalException(m_reply.header.ddsrpcRetMsg));
+		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
 	}
 }
 
-void ServerException_sendExceptionThreeTask::on_exception(const eProsima::DDSRPC::SystemException &ex)
+void ServerException_sendExceptionThreeTask::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }

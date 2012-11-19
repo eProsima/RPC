@@ -65,7 +65,7 @@ class BasicTypeTest_getOctetReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getOctetReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getOctetReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3, /*out*/ DDS_Octet& getOctet_ret);
+        static void extractTypeData(BasicTypeTest_getOctetReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3, /*out*/ DDS_Octet& getOctet_ret);
 };
 
 
@@ -122,7 +122,7 @@ class BasicTypeTest_getCharReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getCharReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getCharReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3, /*out*/ DDS_Char& getChar_ret);
+        static void extractTypeData(BasicTypeTest_getCharReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3, /*out*/ DDS_Char& getChar_ret);
 };
 
 
@@ -179,7 +179,7 @@ class BasicTypeTest_getWCharReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getWCharReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getWCharReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3, /*out*/ DDS_Wchar& getWChar_ret);
+        static void extractTypeData(BasicTypeTest_getWCharReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3, /*out*/ DDS_Wchar& getWChar_ret);
 };
 
 
@@ -236,7 +236,7 @@ class BasicTypeTest_getShortReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getShortReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getShortReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3, /*out*/ DDS_Short& getShort_ret);
+        static void extractTypeData(BasicTypeTest_getShortReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3, /*out*/ DDS_Short& getShort_ret);
 };
 
 
@@ -293,7 +293,7 @@ class BasicTypeTest_getUShortReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getUShortReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getUShortReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3, /*out*/ DDS_UnsignedShort& getUShort_ret);
+        static void extractTypeData(BasicTypeTest_getUShortReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3, /*out*/ DDS_UnsignedShort& getUShort_ret);
 };
 
 
@@ -350,7 +350,7 @@ class BasicTypeTest_getLongReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getLongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret);
+        static void extractTypeData(BasicTypeTest_getLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret);
 };
 
 
@@ -407,7 +407,7 @@ class BasicTypeTest_getULongReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getULongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getULongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3, /*out*/ DDS_UnsignedLong& getULong_ret);
+        static void extractTypeData(BasicTypeTest_getULongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3, /*out*/ DDS_UnsignedLong& getULong_ret);
 };
 
 
@@ -464,7 +464,7 @@ class BasicTypeTest_getLLongReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getLLongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getLLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3, /*out*/ DDS_LongLong& getLLong_ret);
+        static void extractTypeData(BasicTypeTest_getLLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3, /*out*/ DDS_LongLong& getLLong_ret);
 };
 
 
@@ -521,7 +521,7 @@ class BasicTypeTest_getULLongReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getULLongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getULLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3, /*out*/ DDS_UnsignedLongLong& getULLong_ret);
+        static void extractTypeData(BasicTypeTest_getULLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3, /*out*/ DDS_UnsignedLongLong& getULLong_ret);
 };
 
 
@@ -578,7 +578,7 @@ class BasicTypeTest_getFloatReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getFloatReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getFloatReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3, /*out*/ DDS_Float& getFloat_ret);
+        static void extractTypeData(BasicTypeTest_getFloatReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3, /*out*/ DDS_Float& getFloat_ret);
 };
 
 
@@ -635,7 +635,7 @@ class BasicTypeTest_getDoubleReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getDoubleReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getDoubleReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3, /*out*/ DDS_Double& getDouble_ret);
+        static void extractTypeData(BasicTypeTest_getDoubleReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3, /*out*/ DDS_Double& getDouble_ret);
 };
 
 
@@ -692,7 +692,7 @@ class BasicTypeTest_getBooleanReplyUtils
          * \param data Pointer to the structure BasicTypeTest_getBooleanReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(BasicTypeTest_getBooleanReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret);
+        static void extractTypeData(BasicTypeTest_getBooleanReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret);
 };
 
  

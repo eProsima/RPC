@@ -62,9 +62,9 @@ void UnionTest_getEmpleadoReplyUtils::setTypeData(UnionTest_getEmpleadoReply& in
     instance.getEmpleado_ret = getEmpleado_ret;            
 }
 
-void UnionTest_getEmpleadoReplyUtils::extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret)
+void UnionTest_getEmpleadoReplyUtils::extractTypeData(UnionTest_getEmpleadoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ Empleado& em2, /*out*/ Empleado& em3, /*out*/ Empleado& getEmpleado_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     Empleado_finalize(&em2);em2 = data.em2;
     em3 = data.em3;  
     getEmpleado_ret = data.getEmpleado_ret;            

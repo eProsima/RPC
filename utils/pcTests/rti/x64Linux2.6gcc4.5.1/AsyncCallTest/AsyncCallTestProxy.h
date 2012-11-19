@@ -11,7 +11,7 @@
 #include "exceptions/Exception.h"
 
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class AsyncCallTest_getLongCallbackHandler
@@ -28,10 +28,10 @@ class AsyncCallTest_getLongCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class AsyncCallTest_getBooleanCallbackHandler
@@ -48,10 +48,10 @@ class AsyncCallTest_getBooleanCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class AsyncCallTest_getStringCallbackHandler
@@ -68,10 +68,10 @@ class AsyncCallTest_getStringCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 /**
- * \brief This abstract class defines the callbacks that DDSRPC will call in an asynchronous call.
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  */
 class AsyncCallTest_duplicateCallbackHandler
@@ -88,24 +88,24 @@ class AsyncCallTest_duplicateCallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::DDSRPC::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
 };
 
 /**
  * \brief This class implements a specific server's proxy for the defined interface AsyncCallTest.
  */
-class AsyncCallTestProxy : public eProsima::DDSRPC::Client
+class AsyncCallTestProxy : public eProsima::RPCDDS::Client
 {
     public:
     
         /**
-         * \brief Default constructor. The server's proxy will use the default eProsima::DDSRPC::UDPTransport.
+         * \brief Default constructor. The server's proxy will use the default eProsima::RPCDDS::UDPTransport.
          *
          * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
         AsyncCallTestProxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
 
@@ -117,10 +117,10 @@ class AsyncCallTestProxy : public eProsima::DDSRPC::Client
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0
          * \param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eProsima::DDSRPC::ServerTimeoutException is thrown.
-         * \exception eProsima::DDSRPC::InitializeException This exception is thrown when the initialization was wrong.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
-        AsyncCallTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId = 0, long timeout = 10000);
+        AsyncCallTestProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId = 0, long timeout = 10000);
 
         /// \brief The default destructor.
         virtual ~AsyncCallTestProxy();
@@ -149,10 +149,10 @@ class AsyncCallTestProxy : public eProsima::DDSRPC::Client
          */
         void createRPCs();
         
-        eProsima::DDSRPC::ClientRPC *getLong_Service;
-        eProsima::DDSRPC::ClientRPC *getBoolean_Service;
-        eProsima::DDSRPC::ClientRPC *getString_Service;
-        eProsima::DDSRPC::ClientRPC *duplicate_Service; 
+        eProsima::RPCDDS::ClientRPC *getLong_Service;
+        eProsima::RPCDDS::ClientRPC *getBoolean_Service;
+        eProsima::RPCDDS::ClientRPC *getString_Service;
+        eProsima::RPCDDS::ClientRPC *duplicate_Service; 
 };
 
 #endif // _AsyncCallTest_PROXY_H_

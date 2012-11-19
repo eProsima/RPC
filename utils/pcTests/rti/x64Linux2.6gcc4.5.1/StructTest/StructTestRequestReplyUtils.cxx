@@ -58,9 +58,9 @@ void StructTest_duplicateReplyUtils::setTypeData(StructTest_duplicateReply& inst
     instance.duplicate_ret = duplicate_ret;            
 }
 
-void StructTest_duplicateReplyUtils::extractTypeData(StructTest_duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret)
+void StructTest_duplicateReplyUtils::extractTypeData(StructTest_duplicateReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     duplicate_ret = data.duplicate_ret;            
 }
@@ -120,9 +120,9 @@ void StructTest_sumaReplyUtils::setTypeData(StructTest_sumaReply& instance, /*ou
     instance.suma_ret = suma_ret;            
 }
 
-void StructTest_sumaReplyUtils::extractTypeData(StructTest_sumaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret)
+void StructTest_sumaReplyUtils::extractTypeData(StructTest_sumaReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     suma_ret = data.suma_ret;            
 }

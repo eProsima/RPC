@@ -17,7 +17,7 @@ StructTestProxy::StructTestProxy(std::string remoteServiceName, int domainId, lo
     createRPCs();
 }
 
-StructTestProxy::StructTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+StructTestProxy::StructTestProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId, long timeout) :
     Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
@@ -45,7 +45,7 @@ void StructTestProxy::createRPCs()
  
 Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     Recepcion duplicate_ret;
         
     StructTest_duplicateRequest instance;
@@ -55,24 +55,24 @@ Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev)
     StructTest_duplicateRequestUtils::setTypeData(instance, ev);
     retcode = duplicate_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         StructTest_duplicateReplyUtils::extractTypeData(retInstance, retcode, duplicate_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -82,7 +82,7 @@ Recepcion StructTestProxy::duplicate(/*in*/ const Envio& ev)
  
 Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     Recepcion suma_ret;
         
     StructTest_sumaRequest instance;
@@ -92,24 +92,24 @@ Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2
     StructTest_sumaRequestUtils::setTypeData(instance, ev1, ev2);
     retcode = suma_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         StructTest_sumaReplyUtils::extractTypeData(retInstance, retcode, suma_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -120,7 +120,7 @@ Recepcion StructTestProxy::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2
  
 void StructTestProxy::duplicate_async(StructTest_duplicateCallbackHandler &obj, /*in*/ const Envio& ev) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     StructTest_duplicateRequest instance;
     StructTest_duplicateTask *task = NULL;
     StructTest_duplicateRequestUtils::setTypeData(instance, ev);
@@ -129,18 +129,18 @@ void StructTestProxy::duplicate_async(StructTest_duplicateCallbackHandler &obj, 
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }
  
 void StructTestProxy::suma_async(StructTest_sumaCallbackHandler &obj, /*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     StructTest_sumaRequest instance;
     StructTest_sumaTask *task = NULL;
     StructTest_sumaRequestUtils::setTypeData(instance, ev1, ev2);
@@ -149,11 +149,11 @@ void StructTestProxy::suma_async(StructTest_sumaCallbackHandler &obj, /*in*/ con
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }

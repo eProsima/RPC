@@ -59,9 +59,9 @@ void TypedefTest_getLargoReplyUtils::setTypeData(TypedefTest_getLargoReply& inst
     instance.getLargo_ret = getLargo_ret;            
 }
 
-void TypedefTest_getLargoReplyUtils::extractTypeData(TypedefTest_getLargoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret)
+void TypedefTest_getLargoReplyUtils::extractTypeData(TypedefTest_getLargoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ largo& l2, /*out*/ largo& getLargo_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     l2 = data.l2;  
     getLargo_ret = data.getLargo_ret;            
 }
@@ -120,9 +120,9 @@ void TypedefTest_getLarguisimoReplyUtils::setTypeData(TypedefTest_getLarguisimoR
     instance.getLarguisimo_ret = getLarguisimo_ret;            
 }
 
-void TypedefTest_getLarguisimoReplyUtils::extractTypeData(TypedefTest_getLarguisimoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret)
+void TypedefTest_getLarguisimoReplyUtils::extractTypeData(TypedefTest_getLarguisimoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ larguisimo& ll2, /*out*/ larguisimo& getLarguisimo_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     ll2 = data.ll2;  
     getLarguisimo_ret = data.getLarguisimo_ret;            
 }
@@ -181,9 +181,9 @@ void TypedefTest_getDatosDefReplyUtils::setTypeData(TypedefTest_getDatosDefReply
     instance.getDatosDef_ret = getDatosDef_ret;            
 }
 
-void TypedefTest_getDatosDefReplyUtils::extractTypeData(TypedefTest_getDatosDefReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret)
+void TypedefTest_getDatosDefReplyUtils::extractTypeData(TypedefTest_getDatosDefReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DatosDef& d2, /*out*/ DatosDef& getDatosDef_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     d2 = data.d2;  
     getDatosDef_ret = data.getDatosDef_ret;            
 }
@@ -242,9 +242,9 @@ void TypedefTest_getDatosDefondoReplyUtils::setTypeData(TypedefTest_getDatosDefo
     instance.getDatosDefondo_ret = getDatosDefondo_ret;            
 }
 
-void TypedefTest_getDatosDefondoReplyUtils::extractTypeData(TypedefTest_getDatosDefondoReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret)
+void TypedefTest_getDatosDefondoReplyUtils::extractTypeData(TypedefTest_getDatosDefondoReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ DatosDefondo& dd2, /*out*/ DatosDefondo& getDatosDefondo_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     dd2 = data.dd2;  
     getDatosDefondo_ret = data.getDatosDefondo_ret;            
 }
@@ -303,9 +303,9 @@ void TypedefTest_getCadenaReplyUtils::setTypeData(TypedefTest_getCadenaReply& in
     instance.getCadena_ret = getCadena_ret;            
 }
 
-void TypedefTest_getCadenaReplyUtils::extractTypeData(TypedefTest_getCadenaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret)
+void TypedefTest_getCadenaReplyUtils::extractTypeData(TypedefTest_getCadenaReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ cadena& c2, /*out*/ cadena& getCadena_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     c2 = data.c2;  
     getCadena_ret = data.getCadena_ret;            
 }
@@ -364,9 +364,9 @@ void TypedefTest_getCorreaReplyUtils::setTypeData(TypedefTest_getCorreaReply& in
     instance.getCorrea_ret = getCorrea_ret;            
 }
 
-void TypedefTest_getCorreaReplyUtils::extractTypeData(TypedefTest_getCorreaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret)
+void TypedefTest_getCorreaReplyUtils::extractTypeData(TypedefTest_getCorreaReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ correa& cc2, /*out*/ correa& getCorrea_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     cc2 = data.cc2;  
     getCorrea_ret = data.getCorrea_ret;            
 }

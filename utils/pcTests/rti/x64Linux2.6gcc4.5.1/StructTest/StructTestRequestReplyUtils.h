@@ -65,7 +65,7 @@ class StructTest_duplicateReplyUtils
          * \param data Pointer to the structure StructTest_duplicateReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(StructTest_duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret);
+        static void extractTypeData(StructTest_duplicateReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Recepcion& duplicate_ret);
 };
 
 
@@ -122,7 +122,7 @@ class StructTest_sumaReplyUtils
          * \param data Pointer to the structure StructTest_sumaReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(StructTest_sumaReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret);
+        static void extractTypeData(StructTest_sumaReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Recepcion& suma_ret);
 };
 
  

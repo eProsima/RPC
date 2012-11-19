@@ -17,7 +17,7 @@ MultithreadTestProxy::MultithreadTestProxy(std::string remoteServiceName, int do
     createRPCs();
 }
 
-MultithreadTestProxy::MultithreadTestProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+MultithreadTestProxy::MultithreadTestProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId, long timeout) :
     Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
@@ -40,7 +40,7 @@ void MultithreadTestProxy::createRPCs()
  
 DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato2) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     DDS_Long  test_ret = 0;    
     MultithreadTest_testRequest instance;
     MultithreadTest_testReply retInstance;
@@ -49,24 +49,24 @@ DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato
     MultithreadTest_testRequestUtils::setTypeData(instance, dato1);
     retcode = test_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         MultithreadTest_testReplyUtils::extractTypeData(retInstance, retcode, dato2, test_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -77,7 +77,7 @@ DDS_Long MultithreadTestProxy::test(/*in*/ const Dato& dato1, /*out*/ Dato& dato
  
 void MultithreadTestProxy::test_async(MultithreadTest_testCallbackHandler &obj, /*in*/ const Dato& dato1) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     MultithreadTest_testRequest instance;
     MultithreadTest_testTask *task = NULL;
     MultithreadTest_testRequestUtils::setTypeData(instance, dato1);
@@ -86,11 +86,11 @@ void MultithreadTestProxy::test_async(MultithreadTest_testCallbackHandler &obj, 
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }

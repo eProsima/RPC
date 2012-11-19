@@ -10,7 +10,7 @@
 
 #include "UnionTestServerRPCSupport.h"
 
-UnionTestServer::UnionTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+UnionTestServer::UnionTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ UnionTestServer::UnionTestServer(std::string serviceName, eProsima::DDSRPC::Serv
     createRPCs();
 }
 
-UnionTestServer::UnionTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+UnionTestServer::UnionTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new UnionTestServerImpl();
@@ -42,7 +42,7 @@ void UnionTestServer::createRPCs()
 
 }
 
-void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void UnionTestServer::getEmpleado(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     UnionTestServer *srv = dynamic_cast<UnionTestServer*>(server);
     Empleado em1;
@@ -64,16 +64,16 @@ void UnionTestServer::getEmpleado(eProsima::DDSRPC::Server *server, void *reques
         getEmpleado_ret = srv->_impl->getEmpleado(em1, em2, em3);
 
         UnionTest_getEmpleadoReplyUtils::setTypeData(replyData, em2, em3, getEmpleado_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

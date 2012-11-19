@@ -65,7 +65,7 @@ class AsyncCallTest_getLongReplyUtils
          * \param data Pointer to the structure AsyncCallTest_getLongReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(AsyncCallTest_getLongReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret);
+        static void extractTypeData(AsyncCallTest_getLongReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3, /*out*/ DDS_Long& getLong_ret);
 };
 
 
@@ -122,7 +122,7 @@ class AsyncCallTest_getBooleanReplyUtils
          * \param data Pointer to the structure AsyncCallTest_getBooleanReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(AsyncCallTest_getBooleanReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret);
+        static void extractTypeData(AsyncCallTest_getBooleanReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3, /*out*/ DDS_Boolean& getBoolean_ret);
 };
 
 
@@ -179,7 +179,7 @@ class AsyncCallTest_getStringReplyUtils
          * \param data Pointer to the structure AsyncCallTest_getStringReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(AsyncCallTest_getStringReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret);
+        static void extractTypeData(AsyncCallTest_getStringReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*inout*/ char*& s2, /*out*/ char*& s3, /*out*/ char*& getString_ret);
 };
 
 
@@ -236,7 +236,7 @@ class AsyncCallTest_duplicateReplyUtils
          * \param data Pointer to the structure AsyncCallTest_duplicateReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(AsyncCallTest_duplicateReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ Structure& duplicate_ret);
+        static void extractTypeData(AsyncCallTest_duplicateReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ Structure& duplicate_ret);
 };
 
  

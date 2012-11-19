@@ -10,7 +10,7 @@
 
 #include "StructTestServerRPCSupport.h"
 
-StructTestServer::StructTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+StructTestServer::StructTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ StructTestServer::StructTestServer(std::string serviceName, eProsima::DDSRPC::Se
     createRPCs();
 }
 
-StructTestServer::StructTestServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+StructTestServer::StructTestServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new StructTestServerImpl();
@@ -46,7 +46,7 @@ void StructTestServer::createRPCs()
 
 }
 
-void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void StructTestServer::duplicate(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     StructTestServer *srv = dynamic_cast<StructTestServer*>(server);
     Envio ev;
@@ -63,16 +63,16 @@ void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *request
         duplicate_ret = srv->_impl->duplicate(ev);
 
         StructTest_duplicateReplyUtils::setTypeData(replyData, duplicate_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
@@ -81,7 +81,7 @@ void StructTestServer::duplicate(eProsima::DDSRPC::Server *server, void *request
     
     Recepcion_finalize(&duplicate_ret);    
 }
-void StructTestServer::suma(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void StructTestServer::suma(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     StructTestServer *srv = dynamic_cast<StructTestServer*>(server);
     Envio ev1;
@@ -100,16 +100,16 @@ void StructTestServer::suma(eProsima::DDSRPC::Server *server, void *requestData,
         suma_ret = srv->_impl->suma(ev1, ev2);
 
         StructTest_sumaReplyUtils::setTypeData(replyData, suma_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }
