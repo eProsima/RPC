@@ -58,9 +58,9 @@ void HelloWorldAsync_sayHelloReplyUtils::setTypeData(HelloWorldAsync_sayHelloRep
     instance.sayHello_ret = sayHello_ret;            
 }
 
-void HelloWorldAsync_sayHelloReplyUtils::extractTypeData(HelloWorldAsync_sayHelloReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ char*& sayHello_ret)
+void HelloWorldAsync_sayHelloReplyUtils::extractTypeData(HelloWorldAsync_sayHelloReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ char*& sayHello_ret)
 {
-retcode = (eProsima::DDSRPC::ReturnMessage)data.header.ddsrpcRetCode;
+retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
   
     sayHello_ret = data.sayHello_ret;            
 }

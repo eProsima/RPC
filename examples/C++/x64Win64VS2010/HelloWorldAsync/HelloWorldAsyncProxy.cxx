@@ -17,7 +17,7 @@ HelloWorldAsyncProxy::HelloWorldAsyncProxy(std::string remoteServiceName, int do
     createRPCs();
 }
 
-HelloWorldAsyncProxy::HelloWorldAsyncProxy(std::string remoteServiceName, eProsima::DDSRPC::Transport *transport, int domainId, long timeout) :
+HelloWorldAsyncProxy::HelloWorldAsyncProxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId, long timeout) :
     Client(remoteServiceName, transport, domainId, timeout)
 {
     createRPCs();
@@ -40,7 +40,7 @@ void HelloWorldAsyncProxy::createRPCs()
  
 char* HelloWorldAsyncProxy::sayHello(/*in*/ char* name) 
 {
-    eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     char*  sayHello_ret = NULL;    
     HelloWorldAsync_sayHelloRequest instance;
     HelloWorldAsync_sayHelloReply retInstance;
@@ -49,24 +49,24 @@ char* HelloWorldAsyncProxy::sayHello(/*in*/ char* name)
     HelloWorldAsync_sayHelloRequestUtils::setTypeData(instance, name);
     retcode = sayHello_Service->execute(&instance, &retInstance, getTimeout());
     
-    if(retcode == eProsima::DDSRPC::OPERATION_SUCCESSFUL)
+    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         HelloWorldAsync_sayHelloReplyUtils::extractTypeData(retInstance, retcode, sayHello_ret);  
     }
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-            throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
             break;
-        case eProsima::DDSRPC::SERVER_TIMEOUT:
-            throw eProsima::DDSRPC::ServerTimeoutException("Timeout waiting the server's reply");
+        case eProsima::RPCDDS::SERVER_TIMEOUT:
+            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
-        case eProsima::DDSRPC::SERVER_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ServerInternalException(retInstance.header.ddsrpcRetMsg);
+        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg);
             break;
     };
     
@@ -77,7 +77,7 @@ char* HelloWorldAsyncProxy::sayHello(/*in*/ char* name)
  
 void HelloWorldAsyncProxy::sayHello_async(HelloWorldAsync_sayHelloCallbackHandler &obj, /*in*/ char* name) 
 {
-	eProsima::DDSRPC::ReturnMessage retcode = eProsima::DDSRPC::CLIENT_INTERNAL_ERROR;
+	eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     HelloWorldAsync_sayHelloRequest instance;
     HelloWorldAsync_sayHelloTask *task = NULL;
     HelloWorldAsync_sayHelloRequestUtils::setTypeData(instance, name);
@@ -86,11 +86,11 @@ void HelloWorldAsyncProxy::sayHello_async(HelloWorldAsync_sayHelloCallbackHandle
     
     switch (retcode)
     {
-        case eProsima::DDSRPC::CLIENT_INTERNAL_ERROR:
-            throw eProsima::DDSRPC::ClientInternalException("Error in client side");
+        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
+            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
             break;
-        case eProsima::DDSRPC::NO_SERVER:
-             throw eProsima::DDSRPC::ServerNotFoundException("Cannot connect to the server");
+        case eProsima::RPCDDS::NO_SERVER:
+             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
     }
 }

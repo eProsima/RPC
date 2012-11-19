@@ -65,7 +65,7 @@ class HelloWorldAsync_sayHelloReplyUtils
          * \param data Pointer to the structure HelloWorldAsync_sayHelloReply that contains the parameters' data. Cannot be NULL.
 * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData(HelloWorldAsync_sayHelloReply& data, eProsima::DDSRPC::ReturnMessage& retcode, /*out*/ char*& sayHello_ret);
+        static void extractTypeData(HelloWorldAsync_sayHelloReply& data, eProsima::RPCDDS::ReturnMessage& retcode, /*out*/ char*& sayHello_ret);
 };
 
  

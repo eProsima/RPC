@@ -10,7 +10,7 @@
 
 #include "HelloWorldAsyncServerRPCSupport.h"
 
-HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
+HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
     int domainId) :
     Server(serviceName, strategy, NULL, domainId)
 {
@@ -19,8 +19,8 @@ HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::
     createRPCs();
 }
 
-HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::DDSRPC::ServerStrategy *strategy,
-    eProsima::DDSRPC::Transport *transport, int domainId) :
+HelloWorldAsyncServer::HelloWorldAsyncServer(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
     Server(serviceName, strategy, transport, domainId)
 {
     _impl = new HelloWorldAsyncServerImpl();
@@ -42,7 +42,7 @@ void HelloWorldAsyncServer::createRPCs()
 
 }
 
-void HelloWorldAsyncServer::sayHello(eProsima::DDSRPC::Server *server, void *requestData, eProsima::DDSRPC::ServerRPC *service) 
+void HelloWorldAsyncServer::sayHello(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service) 
 { 
     HelloWorldAsyncServer *srv = dynamic_cast<HelloWorldAsyncServer*>(server);
     char*  name = NULL;    
@@ -57,16 +57,16 @@ void HelloWorldAsyncServer::sayHello(eProsima::DDSRPC::Server *server, void *req
         sayHello_ret = srv->_impl->sayHello(name);
 
         HelloWorldAsync_sayHelloReplyUtils::setTypeData(replyData, sayHello_ret);
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
-        replyData.header.ddsrpcRetMsg = NULL;
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = NULL;
 
         service->sendReply(requestData, &replyData);
     }
-    catch(const eProsima::DDSRPC::ServerInternalException &ex)
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         memset(&replyData, 0, sizeof(replyData));
-        replyData.header.ddsrpcRetCode = eProsima::DDSRPC::SERVER_INTERNAL_ERROR;
-        replyData.header.ddsrpcRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = (char*)ex.what();
         
         service->sendReply(requestData, &replyData);
     }

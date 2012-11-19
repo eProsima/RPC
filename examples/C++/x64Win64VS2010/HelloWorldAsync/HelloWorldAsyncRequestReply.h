@@ -58,9 +58,9 @@ extern const char *HelloWorldAsync_sayHelloRequestTYPENAME;
 
             
     
-
-typedef struct HelloWorldAsync_sayHelloRequest
+class HelloWorldAsync_sayHelloRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct HelloWorldAsync_sayHelloRequestSeq Seq;
 
@@ -71,11 +71,13 @@ typedef struct HelloWorldAsync_sayHelloRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     char*  name; /* maximum length = (255) */
 
-} HelloWorldAsync_sayHelloRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -97,7 +99,7 @@ RTIBool HelloWorldAsync_sayHelloRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool HelloWorldAsync_sayHelloRequest_initialize_ex(
-        HelloWorldAsync_sayHelloRequest* self,RTIBool allocatePointers);
+        HelloWorldAsync_sayHelloRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void HelloWorldAsync_sayHelloRequest_finalize(
@@ -146,9 +148,9 @@ extern const char *HelloWorldAsync_sayHelloReplyTYPENAME;
 
             
     
-
-typedef struct HelloWorldAsync_sayHelloReply
+class HelloWorldAsync_sayHelloReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct HelloWorldAsync_sayHelloReplySeq Seq;
 
@@ -159,11 +161,13 @@ typedef struct HelloWorldAsync_sayHelloReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     char*  sayHello_ret; /* maximum length = (255) */
 
-} HelloWorldAsync_sayHelloReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -185,7 +189,7 @@ RTIBool HelloWorldAsync_sayHelloReply_initialize(
         
 NDDSUSERDllExport
 RTIBool HelloWorldAsync_sayHelloReply_initialize_ex(
-        HelloWorldAsync_sayHelloReply* self,RTIBool allocatePointers);
+        HelloWorldAsync_sayHelloReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void HelloWorldAsync_sayHelloReply_finalize(

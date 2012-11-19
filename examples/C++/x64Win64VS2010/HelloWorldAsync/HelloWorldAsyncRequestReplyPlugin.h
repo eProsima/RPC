@@ -41,6 +41,7 @@ extern "C" {
 #include "HelloWorldAsyncPlugin.h"
 
 
+#define HelloWorldAsync_sayHelloRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * HelloWorldAsync_sayHelloRequest.
  *
@@ -55,7 +56,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct HelloWorldAsync_sayHelloRequest.
 */
-typedef  struct HelloWorldAsync_sayHelloRequest HelloWorldAsync_sayHelloRequestKeyHolder;
+typedef  class HelloWorldAsync_sayHelloRequest HelloWorldAsync_sayHelloRequestKeyHolder;
 
 
 #define HelloWorldAsync_sayHelloRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -113,7 +114,6 @@ HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 HelloWorldAsync_sayHelloRequestPluginSupport_destroy_key(
     HelloWorldAsync_sayHelloRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,6 +141,7 @@ HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 HelloWorldAsync_sayHelloRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 HelloWorldAsync_sayHelloRequestPlugin_copy_sample(
@@ -184,6 +185,7 @@ HelloWorldAsync_sayHelloRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 HelloWorldAsync_sayHelloRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -213,6 +215,7 @@ HelloWorldAsync_sayHelloRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const HelloWorldAsync_sayHelloRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -303,6 +306,7 @@ HelloWorldAsync_sayHelloRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 HelloWorldAsync_sayHelloRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define HelloWorldAsync_sayHelloReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * HelloWorldAsync_sayHelloReply.
  *
@@ -317,7 +321,7 @@ HelloWorldAsync_sayHelloRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct HelloWorldAsync_sayHelloReply.
 */
-typedef  struct HelloWorldAsync_sayHelloReply HelloWorldAsync_sayHelloReplyKeyHolder;
+typedef  class HelloWorldAsync_sayHelloReply HelloWorldAsync_sayHelloReplyKeyHolder;
 
 
 #define HelloWorldAsync_sayHelloReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -375,7 +379,6 @@ HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 HelloWorldAsync_sayHelloReplyPluginSupport_destroy_key(
     HelloWorldAsync_sayHelloReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -403,6 +406,7 @@ HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 HelloWorldAsync_sayHelloReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 HelloWorldAsync_sayHelloReplyPlugin_copy_sample(
@@ -446,6 +450,7 @@ HelloWorldAsync_sayHelloReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 HelloWorldAsync_sayHelloReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -475,6 +480,7 @@ HelloWorldAsync_sayHelloReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const HelloWorldAsync_sayHelloReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

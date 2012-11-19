@@ -116,26 +116,34 @@ DDS_TypeCode* HelloWorldAsync_sayHelloRequest_get_typecode()
 
 RTIBool HelloWorldAsync_sayHelloRequest_initialize(
     HelloWorldAsync_sayHelloRequest* sample) {
-  return HelloWorldAsync_sayHelloRequest_initialize_ex(sample,RTI_TRUE);
+  return HelloWorldAsync_sayHelloRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool HelloWorldAsync_sayHelloRequest_initialize_ex(
-    HelloWorldAsync_sayHelloRequest* sample,RTIBool allocatePointers)
+    HelloWorldAsync_sayHelloRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    sample->name = DDS_String_alloc((255));
-    if (sample->name == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->name = DDS_String_alloc((255));
+        if (sample->name == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->name != NULL) { 
+            sample->name[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -155,8 +163,10 @@ void HelloWorldAsync_sayHelloRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->name);                
             
+
 }
 
 RTIBool HelloWorldAsync_sayHelloRequest_copy(
@@ -169,11 +179,13 @@ RTIBool HelloWorldAsync_sayHelloRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->name, src->name, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -288,26 +300,34 @@ DDS_TypeCode* HelloWorldAsync_sayHelloReply_get_typecode()
 
 RTIBool HelloWorldAsync_sayHelloReply_initialize(
     HelloWorldAsync_sayHelloReply* sample) {
-  return HelloWorldAsync_sayHelloReply_initialize_ex(sample,RTI_TRUE);
+  return HelloWorldAsync_sayHelloReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool HelloWorldAsync_sayHelloReply_initialize_ex(
-    HelloWorldAsync_sayHelloReply* sample,RTIBool allocatePointers)
+    HelloWorldAsync_sayHelloReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    sample->sayHello_ret = DDS_String_alloc((255));
-    if (sample->sayHello_ret == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->sayHello_ret = DDS_String_alloc((255));
+        if (sample->sayHello_ret == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->sayHello_ret != NULL) { 
+            sample->sayHello_ret[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -327,8 +347,10 @@ void HelloWorldAsync_sayHelloReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->sayHello_ret);                
             
+
 }
 
 RTIBool HelloWorldAsync_sayHelloReply_copy(
@@ -341,11 +363,13 @@ RTIBool HelloWorldAsync_sayHelloReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->sayHello_ret, src->sayHello_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
