@@ -10,8 +10,8 @@ cp Client.cxx Client.cxx.backup
 cp $1ServerImpl.cxx $1ServerImpl.cxx.backup
 # Delete all generated files.
 rm *.h *.cxx $1RequestReply.idl
-# Generates the file with DDSRPC script
-../../../../../scripts/ddsrpc_rti_pcTests.sh -ppDisable "$1.idl"
+# Generates the file with RPCDDS script
+../../../../../scripts/rpcdds_rti_pcTests.sh -ppDisable "$1.idl"
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Copy backup to original files.
