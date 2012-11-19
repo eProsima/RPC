@@ -116,26 +116,34 @@ DDS_TypeCode* Estructura_get_typecode()
 
 RTIBool Estructura_initialize(
     Estructura* sample) {
-  return Estructura_initialize_ex(sample,RTI_TRUE);
+  return Estructura_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Estructura_initialize_ex(
-    Estructura* sample,RTIBool allocatePointers)
+    Estructura* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initLong(&sample->count)) {
         return RTI_FALSE;
     }                
             
-    sample->message = DDS_String_alloc((255));
-    if (sample->message == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->message = DDS_String_alloc((255));
+        if (sample->message == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->message != NULL) { 
+            sample->message[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +161,10 @@ void Estructura_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
     DDS_String_free(sample->message);                
             
+
 }
 
 RTIBool Estructura_copy(
@@ -167,11 +177,13 @@ RTIBool Estructura_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

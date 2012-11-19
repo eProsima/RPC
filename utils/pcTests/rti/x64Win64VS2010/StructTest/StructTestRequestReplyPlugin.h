@@ -41,6 +41,7 @@ extern "C" {
 #include "StructTestPlugin.h"
 
 
+#define StructTest_duplicateRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * StructTest_duplicateRequest.
  *
@@ -55,7 +56,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct StructTest_duplicateRequest.
 */
-typedef  struct StructTest_duplicateRequest StructTest_duplicateRequestKeyHolder;
+typedef  class StructTest_duplicateRequest StructTest_duplicateRequestKeyHolder;
 
 
 #define StructTest_duplicateRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -113,7 +114,6 @@ StructTest_duplicateRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 StructTest_duplicateRequestPluginSupport_destroy_key(
     StructTest_duplicateRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,6 +141,7 @@ StructTest_duplicateRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 StructTest_duplicateRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 StructTest_duplicateRequestPlugin_copy_sample(
@@ -184,6 +185,7 @@ StructTest_duplicateRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 StructTest_duplicateRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -213,6 +215,7 @@ StructTest_duplicateRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const StructTest_duplicateRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -303,6 +306,7 @@ StructTest_duplicateRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 StructTest_duplicateRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define StructTest_duplicateReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * StructTest_duplicateReply.
  *
@@ -317,7 +321,7 @@ StructTest_duplicateRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct StructTest_duplicateReply.
 */
-typedef  struct StructTest_duplicateReply StructTest_duplicateReplyKeyHolder;
+typedef  class StructTest_duplicateReply StructTest_duplicateReplyKeyHolder;
 
 
 #define StructTest_duplicateReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -375,7 +379,6 @@ StructTest_duplicateReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 StructTest_duplicateReplyPluginSupport_destroy_key(
     StructTest_duplicateReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -403,6 +406,7 @@ StructTest_duplicateReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 StructTest_duplicateReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 StructTest_duplicateReplyPlugin_copy_sample(
@@ -446,6 +450,7 @@ StructTest_duplicateReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 StructTest_duplicateReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -475,6 +480,7 @@ StructTest_duplicateReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const StructTest_duplicateReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -565,6 +571,7 @@ StructTest_duplicateReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 StructTest_duplicateReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define StructTest_sumaRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * StructTest_sumaRequest.
  *
@@ -579,7 +586,7 @@ StructTest_duplicateReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct StructTest_sumaRequest.
 */
-typedef  struct StructTest_sumaRequest StructTest_sumaRequestKeyHolder;
+typedef  class StructTest_sumaRequest StructTest_sumaRequestKeyHolder;
 
 
 #define StructTest_sumaRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -637,7 +644,6 @@ StructTest_sumaRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 StructTest_sumaRequestPluginSupport_destroy_key(
     StructTest_sumaRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -665,6 +671,7 @@ StructTest_sumaRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 StructTest_sumaRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 StructTest_sumaRequestPlugin_copy_sample(
@@ -708,6 +715,7 @@ StructTest_sumaRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 StructTest_sumaRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -737,6 +745,7 @@ StructTest_sumaRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const StructTest_sumaRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -827,6 +836,7 @@ StructTest_sumaRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 StructTest_sumaRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define StructTest_sumaReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * StructTest_sumaReply.
  *
@@ -841,7 +851,7 @@ StructTest_sumaRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct StructTest_sumaReply.
 */
-typedef  struct StructTest_sumaReply StructTest_sumaReplyKeyHolder;
+typedef  class StructTest_sumaReply StructTest_sumaReplyKeyHolder;
 
 
 #define StructTest_sumaReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -899,7 +909,6 @@ StructTest_sumaReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 StructTest_sumaReplyPluginSupport_destroy_key(
     StructTest_sumaReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -927,6 +936,7 @@ StructTest_sumaReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 StructTest_sumaReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 StructTest_sumaReplyPlugin_copy_sample(
@@ -970,6 +980,7 @@ StructTest_sumaReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 StructTest_sumaReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -999,6 +1010,7 @@ StructTest_sumaReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const StructTest_sumaReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

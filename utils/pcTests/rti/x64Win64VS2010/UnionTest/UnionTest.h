@@ -51,10 +51,14 @@ typedef struct Empleado {
 
 #endif
     DDS_Char _d;
+
     struct Empleado_u
+
     {
     DDS_Long  id;
+
     char*  name; /* maximum length = (255) */
+
 
     } _u;
 } Empleado;
@@ -78,7 +82,7 @@ RTIBool Empleado_initialize(
         
 NDDSUSERDllExport
 RTIBool Empleado_initialize_ex(
-        Empleado* self,RTIBool allocatePointers);
+        Empleado* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void Empleado_finalize(
@@ -92,6 +96,11 @@ NDDSUSERDllExport
 RTIBool Empleado_copy(
         Empleado* dst,
         const Empleado* src);
+        
+
+NDDSUSERDllExport
+DDS_UnsignedLong Empleado_getDefaultDiscriminator();
+    
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.

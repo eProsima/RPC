@@ -35,6 +35,7 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
+#define Envio_LAST_MEMBER_ID 0
 
 #define EnvioPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define EnvioPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -74,34 +75,7 @@ EnvioPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
- 
 
-/* ----------------------------------------------------------------------------
-    Callback functions:
- * ---------------------------------------------------------------------------- */
-
-NDDSUSERDllExport extern PRESTypePluginParticipantData 
-EnvioPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-NDDSUSERDllExport extern void 
-EnvioPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-    
-NDDSUSERDllExport extern PRESTypePluginEndpointData 
-EnvioPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-NDDSUSERDllExport extern void 
-EnvioPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 EnvioPlugin_copy_sample(
@@ -145,6 +119,7 @@ EnvioPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 EnvioPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -174,6 +149,7 @@ EnvioPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Envio * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -230,14 +206,8 @@ EnvioPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
-     
-/* Plugin Functions */
-NDDSUSERDllExport extern struct PRESTypePlugin*
-EnvioPlugin_new(void);
 
-NDDSUSERDllExport extern void
-EnvioPlugin_delete(struct PRESTypePlugin *);
-
+#define Recepcion_LAST_MEMBER_ID 0
 
 #define RecepcionPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define RecepcionPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -277,34 +247,7 @@ RecepcionPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
- 
 
-/* ----------------------------------------------------------------------------
-    Callback functions:
- * ---------------------------------------------------------------------------- */
-
-NDDSUSERDllExport extern PRESTypePluginParticipantData 
-RecepcionPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-NDDSUSERDllExport extern void 
-RecepcionPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-    
-NDDSUSERDllExport extern PRESTypePluginEndpointData 
-RecepcionPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-NDDSUSERDllExport extern void 
-RecepcionPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 RecepcionPlugin_copy_sample(
@@ -348,6 +291,7 @@ RecepcionPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 RecepcionPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -377,6 +321,7 @@ RecepcionPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Recepcion * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -433,13 +378,6 @@ RecepcionPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
-     
-/* Plugin Functions */
-NDDSUSERDllExport extern struct PRESTypePlugin*
-RecepcionPlugin_new(void);
-
-NDDSUSERDllExport extern void
-RecepcionPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }

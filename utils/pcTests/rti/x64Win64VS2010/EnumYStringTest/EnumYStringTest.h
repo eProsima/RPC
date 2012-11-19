@@ -25,14 +25,14 @@
     #include "ndds_standalone_type.h"
 #endif
 
-
-
+ 
 typedef enum Valores
 {
     VALOR1,
     VALOR2,
     VALOR3
 } Valores;
+    
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, start exporting symbols.
@@ -53,7 +53,7 @@ RTIBool Valores_initialize(
         
 NDDSUSERDllExport
 RTIBool Valores_initialize_ex(
-        Valores* self,RTIBool allocatePointers);
+        Valores* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void Valores_finalize(
@@ -67,6 +67,11 @@ NDDSUSERDllExport
 RTIBool Valores_copy(
         Valores* dst,
         const Valores* src);
+
+
+NDDSUSERDllExport
+RTIBool Valores_getValues(ValoresSeq * values);
+    
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.

@@ -58,9 +58,9 @@ extern const char *EnumYStringTest_getEnumRequestTYPENAME;
 
             
     
-
-typedef struct EnumYStringTest_getEnumRequest
+class EnumYStringTest_getEnumRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EnumYStringTest_getEnumRequestSeq Seq;
 
@@ -71,12 +71,15 @@ typedef struct EnumYStringTest_getEnumRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     Valores  v1;
+
     Valores  v2;
 
-} EnumYStringTest_getEnumRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -98,7 +101,7 @@ RTIBool EnumYStringTest_getEnumRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool EnumYStringTest_getEnumRequest_initialize_ex(
-        EnumYStringTest_getEnumRequest* self,RTIBool allocatePointers);
+        EnumYStringTest_getEnumRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void EnumYStringTest_getEnumRequest_finalize(
@@ -147,9 +150,9 @@ extern const char *EnumYStringTest_getEnumReplyTYPENAME;
 
             
     
-
-typedef struct EnumYStringTest_getEnumReply
+class EnumYStringTest_getEnumReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EnumYStringTest_getEnumReplySeq Seq;
 
@@ -160,13 +163,17 @@ typedef struct EnumYStringTest_getEnumReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     Valores  v2;
+
     Valores  v3;
+
     Valores  getEnum_ret;
 
-} EnumYStringTest_getEnumReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -188,7 +195,7 @@ RTIBool EnumYStringTest_getEnumReply_initialize(
         
 NDDSUSERDllExport
 RTIBool EnumYStringTest_getEnumReply_initialize_ex(
-        EnumYStringTest_getEnumReply* self,RTIBool allocatePointers);
+        EnumYStringTest_getEnumReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void EnumYStringTest_getEnumReply_finalize(
@@ -237,9 +244,9 @@ extern const char *EnumYStringTest_getStringRequestTYPENAME;
 
             
     
-
-typedef struct EnumYStringTest_getStringRequest
+class EnumYStringTest_getStringRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EnumYStringTest_getStringRequestSeq Seq;
 
@@ -250,12 +257,15 @@ typedef struct EnumYStringTest_getStringRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     char*  s1; /* maximum length = (255) */
+
     char*  s2; /* maximum length = (255) */
 
-} EnumYStringTest_getStringRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -277,7 +287,7 @@ RTIBool EnumYStringTest_getStringRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool EnumYStringTest_getStringRequest_initialize_ex(
-        EnumYStringTest_getStringRequest* self,RTIBool allocatePointers);
+        EnumYStringTest_getStringRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void EnumYStringTest_getStringRequest_finalize(
@@ -326,9 +336,9 @@ extern const char *EnumYStringTest_getStringReplyTYPENAME;
 
             
     
-
-typedef struct EnumYStringTest_getStringReply
+class EnumYStringTest_getStringReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EnumYStringTest_getStringReplySeq Seq;
 
@@ -339,13 +349,17 @@ typedef struct EnumYStringTest_getStringReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     char*  s2; /* maximum length = (255) */
+
     char*  s3; /* maximum length = (255) */
+
     char*  getString_ret; /* maximum length = (255) */
 
-} EnumYStringTest_getStringReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -367,7 +381,7 @@ RTIBool EnumYStringTest_getStringReply_initialize(
         
 NDDSUSERDllExport
 RTIBool EnumYStringTest_getStringReply_initialize_ex(
-        EnumYStringTest_getStringReply* self,RTIBool allocatePointers);
+        EnumYStringTest_getStringReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void EnumYStringTest_getStringReply_finalize(
@@ -416,9 +430,9 @@ extern const char *EnumYStringTest_getStringBoundedRequestTYPENAME;
 
             
     
-
-typedef struct EnumYStringTest_getStringBoundedRequest
+class EnumYStringTest_getStringBoundedRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EnumYStringTest_getStringBoundedRequestSeq Seq;
 
@@ -429,12 +443,15 @@ typedef struct EnumYStringTest_getStringBoundedRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     char*  sb1; /* maximum length = (255) */
+
     char*  sb2; /* maximum length = (255) */
 
-} EnumYStringTest_getStringBoundedRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -456,7 +473,7 @@ RTIBool EnumYStringTest_getStringBoundedRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool EnumYStringTest_getStringBoundedRequest_initialize_ex(
-        EnumYStringTest_getStringBoundedRequest* self,RTIBool allocatePointers);
+        EnumYStringTest_getStringBoundedRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void EnumYStringTest_getStringBoundedRequest_finalize(
@@ -505,9 +522,9 @@ extern const char *EnumYStringTest_getStringBoundedReplyTYPENAME;
 
             
     
-
-typedef struct EnumYStringTest_getStringBoundedReply
+class EnumYStringTest_getStringBoundedReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct EnumYStringTest_getStringBoundedReplySeq Seq;
 
@@ -518,13 +535,17 @@ typedef struct EnumYStringTest_getStringBoundedReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     char*  sb2; /* maximum length = (255) */
+
     char*  sb3; /* maximum length = (255) */
+
     char*  getStringBounded_ret; /* maximum length = (255) */
 
-} EnumYStringTest_getStringBoundedReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -546,7 +567,7 @@ RTIBool EnumYStringTest_getStringBoundedReply_initialize(
         
 NDDSUSERDllExport
 RTIBool EnumYStringTest_getStringBoundedReply_initialize_ex(
-        EnumYStringTest_getStringBoundedReply* self,RTIBool allocatePointers);
+        EnumYStringTest_getStringBoundedReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void EnumYStringTest_getStringBoundedReply_finalize(

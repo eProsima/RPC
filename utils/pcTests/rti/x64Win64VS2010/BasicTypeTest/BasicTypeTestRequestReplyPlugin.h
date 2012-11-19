@@ -41,6 +41,7 @@ extern "C" {
 #include "BasicTypeTestPlugin.h"
 
 
+#define BasicTypeTest_getOctetRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getOctetRequest.
  *
@@ -55,7 +56,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getOctetRequest.
 */
-typedef  struct BasicTypeTest_getOctetRequest BasicTypeTest_getOctetRequestKeyHolder;
+typedef  class BasicTypeTest_getOctetRequest BasicTypeTest_getOctetRequestKeyHolder;
 
 
 #define BasicTypeTest_getOctetRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -113,7 +114,6 @@ BasicTypeTest_getOctetRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getOctetRequestPluginSupport_destroy_key(
     BasicTypeTest_getOctetRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,6 +141,7 @@ BasicTypeTest_getOctetRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getOctetRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getOctetRequestPlugin_copy_sample(
@@ -184,6 +185,7 @@ BasicTypeTest_getOctetRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getOctetRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -213,6 +215,7 @@ BasicTypeTest_getOctetRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getOctetRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -303,6 +306,7 @@ BasicTypeTest_getOctetRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getOctetRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getOctetReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getOctetReply.
  *
@@ -317,7 +321,7 @@ BasicTypeTest_getOctetRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getOctetReply.
 */
-typedef  struct BasicTypeTest_getOctetReply BasicTypeTest_getOctetReplyKeyHolder;
+typedef  class BasicTypeTest_getOctetReply BasicTypeTest_getOctetReplyKeyHolder;
 
 
 #define BasicTypeTest_getOctetReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -375,7 +379,6 @@ BasicTypeTest_getOctetReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getOctetReplyPluginSupport_destroy_key(
     BasicTypeTest_getOctetReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -403,6 +406,7 @@ BasicTypeTest_getOctetReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getOctetReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getOctetReplyPlugin_copy_sample(
@@ -446,6 +450,7 @@ BasicTypeTest_getOctetReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getOctetReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -475,6 +480,7 @@ BasicTypeTest_getOctetReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getOctetReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -565,6 +571,7 @@ BasicTypeTest_getOctetReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getOctetReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getCharRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getCharRequest.
  *
@@ -579,7 +586,7 @@ BasicTypeTest_getOctetReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getCharRequest.
 */
-typedef  struct BasicTypeTest_getCharRequest BasicTypeTest_getCharRequestKeyHolder;
+typedef  class BasicTypeTest_getCharRequest BasicTypeTest_getCharRequestKeyHolder;
 
 
 #define BasicTypeTest_getCharRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -637,7 +644,6 @@ BasicTypeTest_getCharRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getCharRequestPluginSupport_destroy_key(
     BasicTypeTest_getCharRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -665,6 +671,7 @@ BasicTypeTest_getCharRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getCharRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getCharRequestPlugin_copy_sample(
@@ -708,6 +715,7 @@ BasicTypeTest_getCharRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getCharRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -737,6 +745,7 @@ BasicTypeTest_getCharRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getCharRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -827,6 +836,7 @@ BasicTypeTest_getCharRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getCharRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getCharReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getCharReply.
  *
@@ -841,7 +851,7 @@ BasicTypeTest_getCharRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getCharReply.
 */
-typedef  struct BasicTypeTest_getCharReply BasicTypeTest_getCharReplyKeyHolder;
+typedef  class BasicTypeTest_getCharReply BasicTypeTest_getCharReplyKeyHolder;
 
 
 #define BasicTypeTest_getCharReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -899,7 +909,6 @@ BasicTypeTest_getCharReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getCharReplyPluginSupport_destroy_key(
     BasicTypeTest_getCharReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -927,6 +936,7 @@ BasicTypeTest_getCharReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getCharReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getCharReplyPlugin_copy_sample(
@@ -970,6 +980,7 @@ BasicTypeTest_getCharReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getCharReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -999,6 +1010,7 @@ BasicTypeTest_getCharReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getCharReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1089,6 +1101,7 @@ BasicTypeTest_getCharReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getCharReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getWCharRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getWCharRequest.
  *
@@ -1103,7 +1116,7 @@ BasicTypeTest_getCharReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getWCharRequest.
 */
-typedef  struct BasicTypeTest_getWCharRequest BasicTypeTest_getWCharRequestKeyHolder;
+typedef  class BasicTypeTest_getWCharRequest BasicTypeTest_getWCharRequestKeyHolder;
 
 
 #define BasicTypeTest_getWCharRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1161,7 +1174,6 @@ BasicTypeTest_getWCharRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getWCharRequestPluginSupport_destroy_key(
     BasicTypeTest_getWCharRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1189,6 +1201,7 @@ BasicTypeTest_getWCharRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getWCharRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getWCharRequestPlugin_copy_sample(
@@ -1232,6 +1245,7 @@ BasicTypeTest_getWCharRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getWCharRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1261,6 +1275,7 @@ BasicTypeTest_getWCharRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getWCharRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1351,6 +1366,7 @@ BasicTypeTest_getWCharRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getWCharRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getWCharReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getWCharReply.
  *
@@ -1365,7 +1381,7 @@ BasicTypeTest_getWCharRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getWCharReply.
 */
-typedef  struct BasicTypeTest_getWCharReply BasicTypeTest_getWCharReplyKeyHolder;
+typedef  class BasicTypeTest_getWCharReply BasicTypeTest_getWCharReplyKeyHolder;
 
 
 #define BasicTypeTest_getWCharReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1423,7 +1439,6 @@ BasicTypeTest_getWCharReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getWCharReplyPluginSupport_destroy_key(
     BasicTypeTest_getWCharReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1451,6 +1466,7 @@ BasicTypeTest_getWCharReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getWCharReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getWCharReplyPlugin_copy_sample(
@@ -1494,6 +1510,7 @@ BasicTypeTest_getWCharReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getWCharReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1523,6 +1540,7 @@ BasicTypeTest_getWCharReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getWCharReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1613,6 +1631,7 @@ BasicTypeTest_getWCharReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getWCharReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getShortRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getShortRequest.
  *
@@ -1627,7 +1646,7 @@ BasicTypeTest_getWCharReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getShortRequest.
 */
-typedef  struct BasicTypeTest_getShortRequest BasicTypeTest_getShortRequestKeyHolder;
+typedef  class BasicTypeTest_getShortRequest BasicTypeTest_getShortRequestKeyHolder;
 
 
 #define BasicTypeTest_getShortRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1685,7 +1704,6 @@ BasicTypeTest_getShortRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getShortRequestPluginSupport_destroy_key(
     BasicTypeTest_getShortRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1713,6 +1731,7 @@ BasicTypeTest_getShortRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getShortRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getShortRequestPlugin_copy_sample(
@@ -1756,6 +1775,7 @@ BasicTypeTest_getShortRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getShortRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1785,6 +1805,7 @@ BasicTypeTest_getShortRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getShortRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -1875,6 +1896,7 @@ BasicTypeTest_getShortRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getShortRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getShortReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getShortReply.
  *
@@ -1889,7 +1911,7 @@ BasicTypeTest_getShortRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getShortReply.
 */
-typedef  struct BasicTypeTest_getShortReply BasicTypeTest_getShortReplyKeyHolder;
+typedef  class BasicTypeTest_getShortReply BasicTypeTest_getShortReplyKeyHolder;
 
 
 #define BasicTypeTest_getShortReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1947,7 +1969,6 @@ BasicTypeTest_getShortReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getShortReplyPluginSupport_destroy_key(
     BasicTypeTest_getShortReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1975,6 +1996,7 @@ BasicTypeTest_getShortReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getShortReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getShortReplyPlugin_copy_sample(
@@ -2018,6 +2040,7 @@ BasicTypeTest_getShortReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getShortReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2047,6 +2070,7 @@ BasicTypeTest_getShortReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getShortReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -2137,6 +2161,7 @@ BasicTypeTest_getShortReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getShortReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getUShortRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getUShortRequest.
  *
@@ -2151,7 +2176,7 @@ BasicTypeTest_getShortReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getUShortRequest.
 */
-typedef  struct BasicTypeTest_getUShortRequest BasicTypeTest_getUShortRequestKeyHolder;
+typedef  class BasicTypeTest_getUShortRequest BasicTypeTest_getUShortRequestKeyHolder;
 
 
 #define BasicTypeTest_getUShortRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2209,7 +2234,6 @@ BasicTypeTest_getUShortRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getUShortRequestPluginSupport_destroy_key(
     BasicTypeTest_getUShortRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -2237,6 +2261,7 @@ BasicTypeTest_getUShortRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getUShortRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getUShortRequestPlugin_copy_sample(
@@ -2280,6 +2305,7 @@ BasicTypeTest_getUShortRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getUShortRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2309,6 +2335,7 @@ BasicTypeTest_getUShortRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getUShortRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -2399,6 +2426,7 @@ BasicTypeTest_getUShortRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getUShortRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getUShortReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getUShortReply.
  *
@@ -2413,7 +2441,7 @@ BasicTypeTest_getUShortRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getUShortReply.
 */
-typedef  struct BasicTypeTest_getUShortReply BasicTypeTest_getUShortReplyKeyHolder;
+typedef  class BasicTypeTest_getUShortReply BasicTypeTest_getUShortReplyKeyHolder;
 
 
 #define BasicTypeTest_getUShortReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2471,7 +2499,6 @@ BasicTypeTest_getUShortReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getUShortReplyPluginSupport_destroy_key(
     BasicTypeTest_getUShortReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -2499,6 +2526,7 @@ BasicTypeTest_getUShortReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getUShortReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getUShortReplyPlugin_copy_sample(
@@ -2542,6 +2570,7 @@ BasicTypeTest_getUShortReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getUShortReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2571,6 +2600,7 @@ BasicTypeTest_getUShortReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getUShortReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -2661,6 +2691,7 @@ BasicTypeTest_getUShortReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getUShortReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getLongRequest.
  *
@@ -2675,7 +2706,7 @@ BasicTypeTest_getUShortReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getLongRequest.
 */
-typedef  struct BasicTypeTest_getLongRequest BasicTypeTest_getLongRequestKeyHolder;
+typedef  class BasicTypeTest_getLongRequest BasicTypeTest_getLongRequestKeyHolder;
 
 
 #define BasicTypeTest_getLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2733,7 +2764,6 @@ BasicTypeTest_getLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLongRequestPluginSupport_destroy_key(
     BasicTypeTest_getLongRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -2761,6 +2791,7 @@ BasicTypeTest_getLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getLongRequestPlugin_copy_sample(
@@ -2804,6 +2835,7 @@ BasicTypeTest_getLongRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2833,6 +2865,7 @@ BasicTypeTest_getLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getLongRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -2923,6 +2956,7 @@ BasicTypeTest_getLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getLongRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getLongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getLongReply.
  *
@@ -2937,7 +2971,7 @@ BasicTypeTest_getLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getLongReply.
 */
-typedef  struct BasicTypeTest_getLongReply BasicTypeTest_getLongReplyKeyHolder;
+typedef  class BasicTypeTest_getLongReply BasicTypeTest_getLongReplyKeyHolder;
 
 
 #define BasicTypeTest_getLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2995,7 +3029,6 @@ BasicTypeTest_getLongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLongReplyPluginSupport_destroy_key(
     BasicTypeTest_getLongReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -3023,6 +3056,7 @@ BasicTypeTest_getLongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getLongReplyPlugin_copy_sample(
@@ -3066,6 +3100,7 @@ BasicTypeTest_getLongReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -3095,6 +3130,7 @@ BasicTypeTest_getLongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getLongReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -3185,6 +3221,7 @@ BasicTypeTest_getLongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getLongReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getULongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getULongRequest.
  *
@@ -3199,7 +3236,7 @@ BasicTypeTest_getLongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getULongRequest.
 */
-typedef  struct BasicTypeTest_getULongRequest BasicTypeTest_getULongRequestKeyHolder;
+typedef  class BasicTypeTest_getULongRequest BasicTypeTest_getULongRequestKeyHolder;
 
 
 #define BasicTypeTest_getULongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -3257,7 +3294,6 @@ BasicTypeTest_getULongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULongRequestPluginSupport_destroy_key(
     BasicTypeTest_getULongRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -3285,6 +3321,7 @@ BasicTypeTest_getULongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getULongRequestPlugin_copy_sample(
@@ -3328,6 +3365,7 @@ BasicTypeTest_getULongRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getULongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -3357,6 +3395,7 @@ BasicTypeTest_getULongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getULongRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -3447,6 +3486,7 @@ BasicTypeTest_getULongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getULongRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getULongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getULongReply.
  *
@@ -3461,7 +3501,7 @@ BasicTypeTest_getULongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getULongReply.
 */
-typedef  struct BasicTypeTest_getULongReply BasicTypeTest_getULongReplyKeyHolder;
+typedef  class BasicTypeTest_getULongReply BasicTypeTest_getULongReplyKeyHolder;
 
 
 #define BasicTypeTest_getULongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -3519,7 +3559,6 @@ BasicTypeTest_getULongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULongReplyPluginSupport_destroy_key(
     BasicTypeTest_getULongReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -3547,6 +3586,7 @@ BasicTypeTest_getULongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getULongReplyPlugin_copy_sample(
@@ -3590,6 +3630,7 @@ BasicTypeTest_getULongReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getULongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -3619,6 +3660,7 @@ BasicTypeTest_getULongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getULongReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -3709,6 +3751,7 @@ BasicTypeTest_getULongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getULongReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getLLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getLLongRequest.
  *
@@ -3723,7 +3766,7 @@ BasicTypeTest_getULongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getLLongRequest.
 */
-typedef  struct BasicTypeTest_getLLongRequest BasicTypeTest_getLLongRequestKeyHolder;
+typedef  class BasicTypeTest_getLLongRequest BasicTypeTest_getLLongRequestKeyHolder;
 
 
 #define BasicTypeTest_getLLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -3781,7 +3824,6 @@ BasicTypeTest_getLLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLLongRequestPluginSupport_destroy_key(
     BasicTypeTest_getLLongRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -3809,6 +3851,7 @@ BasicTypeTest_getLLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getLLongRequestPlugin_copy_sample(
@@ -3852,6 +3895,7 @@ BasicTypeTest_getLLongRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getLLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -3881,6 +3925,7 @@ BasicTypeTest_getLLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getLLongRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -3971,6 +4016,7 @@ BasicTypeTest_getLLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getLLongRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getLLongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getLLongReply.
  *
@@ -3985,7 +4031,7 @@ BasicTypeTest_getLLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getLLongReply.
 */
-typedef  struct BasicTypeTest_getLLongReply BasicTypeTest_getLLongReplyKeyHolder;
+typedef  class BasicTypeTest_getLLongReply BasicTypeTest_getLLongReplyKeyHolder;
 
 
 #define BasicTypeTest_getLLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -4043,7 +4089,6 @@ BasicTypeTest_getLLongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLLongReplyPluginSupport_destroy_key(
     BasicTypeTest_getLLongReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -4071,6 +4116,7 @@ BasicTypeTest_getLLongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getLLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getLLongReplyPlugin_copy_sample(
@@ -4114,6 +4160,7 @@ BasicTypeTest_getLLongReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getLLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -4143,6 +4190,7 @@ BasicTypeTest_getLLongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getLLongReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -4233,6 +4281,7 @@ BasicTypeTest_getLLongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getLLongReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getULLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getULLongRequest.
  *
@@ -4247,7 +4296,7 @@ BasicTypeTest_getLLongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getULLongRequest.
 */
-typedef  struct BasicTypeTest_getULLongRequest BasicTypeTest_getULLongRequestKeyHolder;
+typedef  class BasicTypeTest_getULLongRequest BasicTypeTest_getULLongRequestKeyHolder;
 
 
 #define BasicTypeTest_getULLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -4305,7 +4354,6 @@ BasicTypeTest_getULLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULLongRequestPluginSupport_destroy_key(
     BasicTypeTest_getULLongRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -4333,6 +4381,7 @@ BasicTypeTest_getULLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getULLongRequestPlugin_copy_sample(
@@ -4376,6 +4425,7 @@ BasicTypeTest_getULLongRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getULLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -4405,6 +4455,7 @@ BasicTypeTest_getULLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getULLongRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -4495,6 +4546,7 @@ BasicTypeTest_getULLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getULLongRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getULLongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getULLongReply.
  *
@@ -4509,7 +4561,7 @@ BasicTypeTest_getULLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getULLongReply.
 */
-typedef  struct BasicTypeTest_getULLongReply BasicTypeTest_getULLongReplyKeyHolder;
+typedef  class BasicTypeTest_getULLongReply BasicTypeTest_getULLongReplyKeyHolder;
 
 
 #define BasicTypeTest_getULLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -4567,7 +4619,6 @@ BasicTypeTest_getULLongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULLongReplyPluginSupport_destroy_key(
     BasicTypeTest_getULLongReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -4595,6 +4646,7 @@ BasicTypeTest_getULLongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getULLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getULLongReplyPlugin_copy_sample(
@@ -4638,6 +4690,7 @@ BasicTypeTest_getULLongReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getULLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -4667,6 +4720,7 @@ BasicTypeTest_getULLongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getULLongReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -4757,6 +4811,7 @@ BasicTypeTest_getULLongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getULLongReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getFloatRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getFloatRequest.
  *
@@ -4771,7 +4826,7 @@ BasicTypeTest_getULLongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getFloatRequest.
 */
-typedef  struct BasicTypeTest_getFloatRequest BasicTypeTest_getFloatRequestKeyHolder;
+typedef  class BasicTypeTest_getFloatRequest BasicTypeTest_getFloatRequestKeyHolder;
 
 
 #define BasicTypeTest_getFloatRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -4829,7 +4884,6 @@ BasicTypeTest_getFloatRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getFloatRequestPluginSupport_destroy_key(
     BasicTypeTest_getFloatRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -4857,6 +4911,7 @@ BasicTypeTest_getFloatRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getFloatRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getFloatRequestPlugin_copy_sample(
@@ -4900,6 +4955,7 @@ BasicTypeTest_getFloatRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getFloatRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -4929,6 +4985,7 @@ BasicTypeTest_getFloatRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getFloatRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -5019,6 +5076,7 @@ BasicTypeTest_getFloatRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getFloatRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getFloatReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getFloatReply.
  *
@@ -5033,7 +5091,7 @@ BasicTypeTest_getFloatRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getFloatReply.
 */
-typedef  struct BasicTypeTest_getFloatReply BasicTypeTest_getFloatReplyKeyHolder;
+typedef  class BasicTypeTest_getFloatReply BasicTypeTest_getFloatReplyKeyHolder;
 
 
 #define BasicTypeTest_getFloatReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -5091,7 +5149,6 @@ BasicTypeTest_getFloatReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getFloatReplyPluginSupport_destroy_key(
     BasicTypeTest_getFloatReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -5119,6 +5176,7 @@ BasicTypeTest_getFloatReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getFloatReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getFloatReplyPlugin_copy_sample(
@@ -5162,6 +5220,7 @@ BasicTypeTest_getFloatReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getFloatReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -5191,6 +5250,7 @@ BasicTypeTest_getFloatReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getFloatReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -5281,6 +5341,7 @@ BasicTypeTest_getFloatReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getFloatReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getDoubleRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getDoubleRequest.
  *
@@ -5295,7 +5356,7 @@ BasicTypeTest_getFloatReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getDoubleRequest.
 */
-typedef  struct BasicTypeTest_getDoubleRequest BasicTypeTest_getDoubleRequestKeyHolder;
+typedef  class BasicTypeTest_getDoubleRequest BasicTypeTest_getDoubleRequestKeyHolder;
 
 
 #define BasicTypeTest_getDoubleRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -5353,7 +5414,6 @@ BasicTypeTest_getDoubleRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getDoubleRequestPluginSupport_destroy_key(
     BasicTypeTest_getDoubleRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -5381,6 +5441,7 @@ BasicTypeTest_getDoubleRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getDoubleRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getDoubleRequestPlugin_copy_sample(
@@ -5424,6 +5485,7 @@ BasicTypeTest_getDoubleRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getDoubleRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -5453,6 +5515,7 @@ BasicTypeTest_getDoubleRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getDoubleRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -5543,6 +5606,7 @@ BasicTypeTest_getDoubleRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getDoubleRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getDoubleReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getDoubleReply.
  *
@@ -5557,7 +5621,7 @@ BasicTypeTest_getDoubleRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getDoubleReply.
 */
-typedef  struct BasicTypeTest_getDoubleReply BasicTypeTest_getDoubleReplyKeyHolder;
+typedef  class BasicTypeTest_getDoubleReply BasicTypeTest_getDoubleReplyKeyHolder;
 
 
 #define BasicTypeTest_getDoubleReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -5615,7 +5679,6 @@ BasicTypeTest_getDoubleReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getDoubleReplyPluginSupport_destroy_key(
     BasicTypeTest_getDoubleReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -5643,6 +5706,7 @@ BasicTypeTest_getDoubleReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getDoubleReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getDoubleReplyPlugin_copy_sample(
@@ -5686,6 +5750,7 @@ BasicTypeTest_getDoubleReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getDoubleReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -5715,6 +5780,7 @@ BasicTypeTest_getDoubleReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getDoubleReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -5805,6 +5871,7 @@ BasicTypeTest_getDoubleReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getDoubleReplyPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getBooleanRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getBooleanRequest.
  *
@@ -5819,7 +5886,7 @@ BasicTypeTest_getDoubleReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getBooleanRequest.
 */
-typedef  struct BasicTypeTest_getBooleanRequest BasicTypeTest_getBooleanRequestKeyHolder;
+typedef  class BasicTypeTest_getBooleanRequest BasicTypeTest_getBooleanRequestKeyHolder;
 
 
 #define BasicTypeTest_getBooleanRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -5877,7 +5944,6 @@ BasicTypeTest_getBooleanRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getBooleanRequestPluginSupport_destroy_key(
     BasicTypeTest_getBooleanRequestKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -5905,6 +5971,7 @@ BasicTypeTest_getBooleanRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getBooleanRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getBooleanRequestPlugin_copy_sample(
@@ -5948,6 +6015,7 @@ BasicTypeTest_getBooleanRequestPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getBooleanRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -5977,6 +6045,7 @@ BasicTypeTest_getBooleanRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getBooleanRequest * sample);
+
 
 
 /* --------------------------------------------------------------------------------------
@@ -6067,6 +6136,7 @@ BasicTypeTest_getBooleanRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 BasicTypeTest_getBooleanRequestPlugin_delete(struct PRESTypePlugin *);
 
+#define BasicTypeTest_getBooleanReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * BasicTypeTest_getBooleanReply.
  *
@@ -6081,7 +6151,7 @@ BasicTypeTest_getBooleanRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct BasicTypeTest_getBooleanReply.
 */
-typedef  struct BasicTypeTest_getBooleanReply BasicTypeTest_getBooleanReplyKeyHolder;
+typedef  class BasicTypeTest_getBooleanReply BasicTypeTest_getBooleanReplyKeyHolder;
 
 
 #define BasicTypeTest_getBooleanReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -6139,7 +6209,6 @@ BasicTypeTest_getBooleanReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getBooleanReplyPluginSupport_destroy_key(
     BasicTypeTest_getBooleanReplyKeyHolder *key);
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -6167,6 +6236,7 @@ BasicTypeTest_getBooleanReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 BasicTypeTest_getBooleanReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 BasicTypeTest_getBooleanReplyPlugin_copy_sample(
@@ -6210,6 +6280,7 @@ BasicTypeTest_getBooleanReplyPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 BasicTypeTest_getBooleanReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -6239,6 +6310,7 @@ BasicTypeTest_getBooleanReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const BasicTypeTest_getBooleanReply * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

@@ -116,26 +116,34 @@ DDS_TypeCode* Datos_get_typecode()
 
 RTIBool Datos_initialize(
     Datos* sample) {
-  return Datos_initialize_ex(sample,RTI_TRUE);
+  return Datos_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Datos_initialize_ex(
-    Datos* sample,RTIBool allocatePointers)
+    Datos* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initLong(&sample->count)) {
         return RTI_FALSE;
     }                
             
-    sample->message = DDS_String_alloc((255));
-    if (sample->message == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->message = DDS_String_alloc((255));
+        if (sample->message == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->message != NULL) { 
+            sample->message[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +161,10 @@ void Datos_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
     DDS_String_free(sample->message);                
             
+
 }
 
 RTIBool Datos_copy(
@@ -167,11 +177,13 @@ RTIBool Datos_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -247,11 +259,11 @@ DDS_TypeCode* largo_get_typecode()
 RTIBool largo_initialize(
     largo* sample)
 {
-    return largo_initialize_ex(sample,RTI_TRUE);
+    return largo_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool largo_initialize_ex(
-    largo* sample,RTIBool allocatePointers)
+    largo* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
     void* buffer = NULL;
@@ -259,16 +271,21 @@ RTIBool largo_initialize_ex(
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    DDS_LongSeq_initialize(sample);
-                
-    if (!DDS_LongSeq_set_maximum(sample,
-            (100))) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        DDS_LongSeq_initialize(sample);
+        if (!DDS_LongSeq_set_maximum(sample,
+                (100))) {
+            return RTI_FALSE;
+        }
+    } else {
+        DDS_LongSeq_set_length(sample, 0); 
     }
             
+
 
     return RTI_TRUE;
 }
@@ -288,6 +305,7 @@ void largo_finalize_ex(
 
     DDS_LongSeq_finalize(sample);
             
+
 }
 
 
@@ -301,6 +319,7 @@ RTIBool largo_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -378,11 +397,11 @@ DDS_TypeCode* cadena_get_typecode()
 RTIBool cadena_initialize(
     cadena* sample)
 {
-    return cadena_initialize_ex(sample,RTI_TRUE);
+    return cadena_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool cadena_initialize_ex(
-    cadena* sample,RTIBool allocatePointers)
+    cadena* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
     void* buffer = NULL;
@@ -390,23 +409,29 @@ RTIBool cadena_initialize_ex(
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    DDS_StringSeq_initialize(sample);
-    if (!DDS_StringSeq_set_maximum(sample,
-                                   (100))) {
-        return RTI_FALSE;
-    }
-    buffer = DDS_StringSeq_get_contiguous_bufferI(sample);
-    if (buffer == NULL) {
-        return RTI_FALSE;
-    }
-    if (!RTICdrType_initStringArray(buffer, (100),(255)+1,
-        RTI_CDR_CHAR_TYPE)) {
-        return RTI_FALSE;
+    if (allocateMemory) {    
+        DDS_StringSeq_initialize(sample);
+        if (!DDS_StringSeq_set_maximum(sample,
+                                       (100))) {
+            return RTI_FALSE;
+        }
+        buffer = DDS_StringSeq_get_contiguous_bufferI(sample);
+        if (buffer == NULL) {
+            return RTI_FALSE;
+        }
+        if (!RTICdrType_initStringArray(buffer, (100),(255)+1,
+            RTI_CDR_CHAR_TYPE)) {
+            return RTI_FALSE;
+        }
+    } else {
+        DDS_StringSeq_set_length(sample, 0);
     }
             
+
 
     return RTI_TRUE;
 }
@@ -426,6 +451,7 @@ void cadena_finalize_ex(
 
     DDS_StringSeq_finalize(sample);
             
+
 }
 
 
@@ -439,6 +465,7 @@ RTIBool cadena_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -515,11 +542,11 @@ DDS_TypeCode* dattos_get_typecode()
 RTIBool dattos_initialize(
     dattos* sample)
 {
-    return dattos_initialize_ex(sample,RTI_TRUE);
+    return dattos_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
 RTIBool dattos_initialize_ex(
-    dattos* sample,RTIBool allocatePointers)
+    dattos* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
 
     void* buffer = NULL;
@@ -527,16 +554,22 @@ RTIBool dattos_initialize_ex(
 
 
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
 
 
-    DatosSeq_initialize(sample);
-    DatosSeq_set_element_pointers_allocation(sample,allocatePointers);
-    if (!DatosSeq_set_maximum(sample,
-                                       (100))) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        DatosSeq_initialize(sample);
+        DatosSeq_set_element_pointers_allocation(sample,allocatePointers);
+        if (!DatosSeq_set_maximum(sample,
+                                           (100))) {
+            return RTI_FALSE;
+        }
+    } else {
+        DatosSeq_set_length(sample,0);
     }
             
+
 
     return RTI_TRUE;
 }
@@ -556,6 +589,7 @@ void dattos_finalize_ex(
 
     DatosSeq_finalize(sample);
             
+
 }
 
 
@@ -569,6 +603,7 @@ RTIBool dattos_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

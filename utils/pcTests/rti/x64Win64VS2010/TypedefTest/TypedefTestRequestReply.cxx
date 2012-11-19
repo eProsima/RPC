@@ -115,25 +115,27 @@ DDS_TypeCode* TypedefTest_getLargoRequest_get_typecode()
 
 RTIBool TypedefTest_getLargoRequest_initialize(
     TypedefTest_getLargoRequest* sample) {
-  return TypedefTest_getLargoRequest_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getLargoRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getLargoRequest_initialize_ex(
-    TypedefTest_getLargoRequest* sample,RTIBool allocatePointers)
+    TypedefTest_getLargoRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!largo_initialize_ex(&sample->l1,allocatePointers)) {
+
+    if (!largo_initialize_ex(&sample->l1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +155,10 @@ void TypedefTest_getLargoRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     largo_finalize_ex(&sample->l1,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getLargoRequest_copy(
@@ -167,11 +171,13 @@ RTIBool TypedefTest_getLargoRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!largo_copy(
         &dst->l1, &src->l1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -303,29 +309,32 @@ DDS_TypeCode* TypedefTest_getLargoReply_get_typecode()
 
 RTIBool TypedefTest_getLargoReply_initialize(
     TypedefTest_getLargoReply* sample) {
-  return TypedefTest_getLargoReply_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getLargoReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getLargoReply_initialize_ex(
-    TypedefTest_getLargoReply* sample,RTIBool allocatePointers)
+    TypedefTest_getLargoReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!largo_initialize_ex(&sample->l2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!largo_initialize_ex(&sample->l2,allocatePointers)) {
+
+    if (!largo_initialize_ex(&sample->getLargo_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!largo_initialize_ex(&sample->getLargo_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -345,10 +354,13 @@ void TypedefTest_getLargoReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     largo_finalize_ex(&sample->l2,deletePointers);
             
+
     largo_finalize_ex(&sample->getLargo_ret,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getLargoReply_copy(
@@ -361,16 +373,19 @@ RTIBool TypedefTest_getLargoReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!largo_copy(
         &dst->l2, &src->l2)) {
         return RTI_FALSE;
     }
             
+
     if (!largo_copy(
         &dst->getLargo_ret, &src->getLargo_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -484,25 +499,27 @@ DDS_TypeCode* TypedefTest_getLarguisimoRequest_get_typecode()
 
 RTIBool TypedefTest_getLarguisimoRequest_initialize(
     TypedefTest_getLarguisimoRequest* sample) {
-  return TypedefTest_getLarguisimoRequest_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getLarguisimoRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getLarguisimoRequest_initialize_ex(
-    TypedefTest_getLarguisimoRequest* sample,RTIBool allocatePointers)
+    TypedefTest_getLarguisimoRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!larguisimo_initialize_ex(&sample->ll1,allocatePointers)) {
+
+    if (!larguisimo_initialize_ex(&sample->ll1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -522,8 +539,10 @@ void TypedefTest_getLarguisimoRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     larguisimo_finalize_ex(&sample->ll1,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getLarguisimoRequest_copy(
@@ -536,11 +555,13 @@ RTIBool TypedefTest_getLarguisimoRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!larguisimo_copy(
         &dst->ll1, &src->ll1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -672,29 +693,32 @@ DDS_TypeCode* TypedefTest_getLarguisimoReply_get_typecode()
 
 RTIBool TypedefTest_getLarguisimoReply_initialize(
     TypedefTest_getLarguisimoReply* sample) {
-  return TypedefTest_getLarguisimoReply_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getLarguisimoReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getLarguisimoReply_initialize_ex(
-    TypedefTest_getLarguisimoReply* sample,RTIBool allocatePointers)
+    TypedefTest_getLarguisimoReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!larguisimo_initialize_ex(&sample->ll2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!larguisimo_initialize_ex(&sample->ll2,allocatePointers)) {
+
+    if (!larguisimo_initialize_ex(&sample->getLarguisimo_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!larguisimo_initialize_ex(&sample->getLarguisimo_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -714,10 +738,13 @@ void TypedefTest_getLarguisimoReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     larguisimo_finalize_ex(&sample->ll2,deletePointers);
             
+
     larguisimo_finalize_ex(&sample->getLarguisimo_ret,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getLarguisimoReply_copy(
@@ -730,16 +757,19 @@ RTIBool TypedefTest_getLarguisimoReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!larguisimo_copy(
         &dst->ll2, &src->ll2)) {
         return RTI_FALSE;
     }
             
+
     if (!larguisimo_copy(
         &dst->getLarguisimo_ret, &src->getLarguisimo_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -853,25 +883,27 @@ DDS_TypeCode* TypedefTest_getDatosDefRequest_get_typecode()
 
 RTIBool TypedefTest_getDatosDefRequest_initialize(
     TypedefTest_getDatosDefRequest* sample) {
-  return TypedefTest_getDatosDefRequest_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getDatosDefRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getDatosDefRequest_initialize_ex(
-    TypedefTest_getDatosDefRequest* sample,RTIBool allocatePointers)
+    TypedefTest_getDatosDefRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!DatosDef_initialize_ex(&sample->d1,allocatePointers)) {
+
+    if (!DatosDef_initialize_ex(&sample->d1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -891,8 +923,10 @@ void TypedefTest_getDatosDefRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DatosDef_finalize_ex(&sample->d1,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getDatosDefRequest_copy(
@@ -905,11 +939,13 @@ RTIBool TypedefTest_getDatosDefRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!DatosDef_copy(
         &dst->d1, &src->d1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1041,29 +1077,32 @@ DDS_TypeCode* TypedefTest_getDatosDefReply_get_typecode()
 
 RTIBool TypedefTest_getDatosDefReply_initialize(
     TypedefTest_getDatosDefReply* sample) {
-  return TypedefTest_getDatosDefReply_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getDatosDefReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getDatosDefReply_initialize_ex(
-    TypedefTest_getDatosDefReply* sample,RTIBool allocatePointers)
+    TypedefTest_getDatosDefReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!DatosDef_initialize_ex(&sample->d2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!DatosDef_initialize_ex(&sample->d2,allocatePointers)) {
+
+    if (!DatosDef_initialize_ex(&sample->getDatosDef_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!DatosDef_initialize_ex(&sample->getDatosDef_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1083,10 +1122,13 @@ void TypedefTest_getDatosDefReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DatosDef_finalize_ex(&sample->d2,deletePointers);
             
+
     DatosDef_finalize_ex(&sample->getDatosDef_ret,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getDatosDefReply_copy(
@@ -1099,16 +1141,19 @@ RTIBool TypedefTest_getDatosDefReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!DatosDef_copy(
         &dst->d2, &src->d2)) {
         return RTI_FALSE;
     }
             
+
     if (!DatosDef_copy(
         &dst->getDatosDef_ret, &src->getDatosDef_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1222,25 +1267,27 @@ DDS_TypeCode* TypedefTest_getDatosDefondoRequest_get_typecode()
 
 RTIBool TypedefTest_getDatosDefondoRequest_initialize(
     TypedefTest_getDatosDefondoRequest* sample) {
-  return TypedefTest_getDatosDefondoRequest_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getDatosDefondoRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getDatosDefondoRequest_initialize_ex(
-    TypedefTest_getDatosDefondoRequest* sample,RTIBool allocatePointers)
+    TypedefTest_getDatosDefondoRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!DatosDefondo_initialize_ex(&sample->dd1,allocatePointers)) {
+
+    if (!DatosDefondo_initialize_ex(&sample->dd1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1260,8 +1307,10 @@ void TypedefTest_getDatosDefondoRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DatosDefondo_finalize_ex(&sample->dd1,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getDatosDefondoRequest_copy(
@@ -1274,11 +1323,13 @@ RTIBool TypedefTest_getDatosDefondoRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!DatosDefondo_copy(
         &dst->dd1, &src->dd1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1410,29 +1461,32 @@ DDS_TypeCode* TypedefTest_getDatosDefondoReply_get_typecode()
 
 RTIBool TypedefTest_getDatosDefondoReply_initialize(
     TypedefTest_getDatosDefondoReply* sample) {
-  return TypedefTest_getDatosDefondoReply_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getDatosDefondoReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getDatosDefondoReply_initialize_ex(
-    TypedefTest_getDatosDefondoReply* sample,RTIBool allocatePointers)
+    TypedefTest_getDatosDefondoReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!DatosDefondo_initialize_ex(&sample->dd2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!DatosDefondo_initialize_ex(&sample->dd2,allocatePointers)) {
+
+    if (!DatosDefondo_initialize_ex(&sample->getDatosDefondo_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!DatosDefondo_initialize_ex(&sample->getDatosDefondo_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1452,10 +1506,13 @@ void TypedefTest_getDatosDefondoReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DatosDefondo_finalize_ex(&sample->dd2,deletePointers);
             
+
     DatosDefondo_finalize_ex(&sample->getDatosDefondo_ret,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getDatosDefondoReply_copy(
@@ -1468,16 +1525,19 @@ RTIBool TypedefTest_getDatosDefondoReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!DatosDefondo_copy(
         &dst->dd2, &src->dd2)) {
         return RTI_FALSE;
     }
             
+
     if (!DatosDefondo_copy(
         &dst->getDatosDefondo_ret, &src->getDatosDefondo_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1591,25 +1651,27 @@ DDS_TypeCode* TypedefTest_getCadenaRequest_get_typecode()
 
 RTIBool TypedefTest_getCadenaRequest_initialize(
     TypedefTest_getCadenaRequest* sample) {
-  return TypedefTest_getCadenaRequest_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getCadenaRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getCadenaRequest_initialize_ex(
-    TypedefTest_getCadenaRequest* sample,RTIBool allocatePointers)
+    TypedefTest_getCadenaRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!cadena_initialize_ex(&sample->c1,allocatePointers)) {
+
+    if (!cadena_initialize_ex(&sample->c1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1629,8 +1691,10 @@ void TypedefTest_getCadenaRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     cadena_finalize_ex(&sample->c1,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getCadenaRequest_copy(
@@ -1643,11 +1707,13 @@ RTIBool TypedefTest_getCadenaRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!cadena_copy(
         &dst->c1, &src->c1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1779,29 +1845,32 @@ DDS_TypeCode* TypedefTest_getCadenaReply_get_typecode()
 
 RTIBool TypedefTest_getCadenaReply_initialize(
     TypedefTest_getCadenaReply* sample) {
-  return TypedefTest_getCadenaReply_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getCadenaReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getCadenaReply_initialize_ex(
-    TypedefTest_getCadenaReply* sample,RTIBool allocatePointers)
+    TypedefTest_getCadenaReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!cadena_initialize_ex(&sample->c2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!cadena_initialize_ex(&sample->c2,allocatePointers)) {
+
+    if (!cadena_initialize_ex(&sample->getCadena_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!cadena_initialize_ex(&sample->getCadena_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1821,10 +1890,13 @@ void TypedefTest_getCadenaReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     cadena_finalize_ex(&sample->c2,deletePointers);
             
+
     cadena_finalize_ex(&sample->getCadena_ret,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getCadenaReply_copy(
@@ -1837,16 +1909,19 @@ RTIBool TypedefTest_getCadenaReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!cadena_copy(
         &dst->c2, &src->c2)) {
         return RTI_FALSE;
     }
             
+
     if (!cadena_copy(
         &dst->getCadena_ret, &src->getCadena_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1960,25 +2035,27 @@ DDS_TypeCode* TypedefTest_getCorreaRequest_get_typecode()
 
 RTIBool TypedefTest_getCorreaRequest_initialize(
     TypedefTest_getCorreaRequest* sample) {
-  return TypedefTest_getCorreaRequest_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getCorreaRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getCorreaRequest_initialize_ex(
-    TypedefTest_getCorreaRequest* sample,RTIBool allocatePointers)
+    TypedefTest_getCorreaRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!correa_initialize_ex(&sample->cc1,allocatePointers)) {
+
+    if (!correa_initialize_ex(&sample->cc1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1998,8 +2075,10 @@ void TypedefTest_getCorreaRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     correa_finalize_ex(&sample->cc1,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getCorreaRequest_copy(
@@ -2012,11 +2091,13 @@ RTIBool TypedefTest_getCorreaRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!correa_copy(
         &dst->cc1, &src->cc1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -2148,29 +2229,32 @@ DDS_TypeCode* TypedefTest_getCorreaReply_get_typecode()
 
 RTIBool TypedefTest_getCorreaReply_initialize(
     TypedefTest_getCorreaReply* sample) {
-  return TypedefTest_getCorreaReply_initialize_ex(sample,RTI_TRUE);
+  return TypedefTest_getCorreaReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool TypedefTest_getCorreaReply_initialize_ex(
-    TypedefTest_getCorreaReply* sample,RTIBool allocatePointers)
+    TypedefTest_getCorreaReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!correa_initialize_ex(&sample->cc2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!correa_initialize_ex(&sample->cc2,allocatePointers)) {
+
+    if (!correa_initialize_ex(&sample->getCorrea_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!correa_initialize_ex(&sample->getCorrea_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -2190,10 +2274,13 @@ void TypedefTest_getCorreaReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     correa_finalize_ex(&sample->cc2,deletePointers);
             
+
     correa_finalize_ex(&sample->getCorrea_ret,deletePointers);
             
+
 }
 
 RTIBool TypedefTest_getCorreaReply_copy(
@@ -2206,16 +2293,19 @@ RTIBool TypedefTest_getCorreaReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!correa_copy(
         &dst->cc2, &src->cc2)) {
         return RTI_FALSE;
     }
             
+
     if (!correa_copy(
         &dst->getCorrea_ret, &src->getCorrea_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

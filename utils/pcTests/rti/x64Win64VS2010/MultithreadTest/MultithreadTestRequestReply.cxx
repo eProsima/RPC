@@ -115,25 +115,27 @@ DDS_TypeCode* MultithreadTest_testRequest_get_typecode()
 
 RTIBool MultithreadTest_testRequest_initialize(
     MultithreadTest_testRequest* sample) {
-  return MultithreadTest_testRequest_initialize_ex(sample,RTI_TRUE);
+  return MultithreadTest_testRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool MultithreadTest_testRequest_initialize_ex(
-    MultithreadTest_testRequest* sample,RTIBool allocatePointers)
+    MultithreadTest_testRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Dato_initialize_ex(&sample->dato1,allocatePointers)) {
+
+    if (!Dato_initialize_ex(&sample->dato1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +155,10 @@ void MultithreadTest_testRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Dato_finalize_ex(&sample->dato1,deletePointers);
             
+
 }
 
 RTIBool MultithreadTest_testRequest_copy(
@@ -167,11 +171,13 @@ RTIBool MultithreadTest_testRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!Dato_copy(
         &dst->dato1, &src->dato1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -303,29 +309,32 @@ DDS_TypeCode* MultithreadTest_testReply_get_typecode()
 
 RTIBool MultithreadTest_testReply_initialize(
     MultithreadTest_testReply* sample) {
-  return MultithreadTest_testReply_initialize_ex(sample,RTI_TRUE);
+  return MultithreadTest_testReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool MultithreadTest_testReply_initialize_ex(
-    MultithreadTest_testReply* sample,RTIBool allocatePointers)
+    MultithreadTest_testReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Dato_initialize_ex(&sample->dato2,allocatePointers)) {
+
+    if (!Dato_initialize_ex(&sample->dato2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initLong(&sample->test_ret)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -345,8 +354,11 @@ void MultithreadTest_testReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Dato_finalize_ex(&sample->dato2,deletePointers);
             
+
+
 }
 
 RTIBool MultithreadTest_testReply_copy(
@@ -359,16 +371,19 @@ RTIBool MultithreadTest_testReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!Dato_copy(
         &dst->dato2, &src->dato2)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->test_ret, &src->test_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

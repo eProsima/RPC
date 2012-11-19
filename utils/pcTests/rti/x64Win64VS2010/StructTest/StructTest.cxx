@@ -116,26 +116,34 @@ DDS_TypeCode* Envio_get_typecode()
 
 RTIBool Envio_initialize(
     Envio* sample) {
-  return Envio_initialize_ex(sample,RTI_TRUE);
+  return Envio_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Envio_initialize_ex(
-    Envio* sample,RTIBool allocatePointers)
+    Envio* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initLong(&sample->dato)) {
         return RTI_FALSE;
     }                
             
-    sample->message = DDS_String_alloc((255));
-    if (sample->message == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->message = DDS_String_alloc((255));
+        if (sample->message == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->message != NULL) { 
+            sample->message[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -153,8 +161,10 @@ void Envio_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
     DDS_String_free(sample->message);                
             
+
 }
 
 RTIBool Envio_copy(
@@ -167,11 +177,13 @@ RTIBool Envio_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -286,26 +298,34 @@ DDS_TypeCode* Recepcion_get_typecode()
 
 RTIBool Recepcion_initialize(
     Recepcion* sample) {
-  return Recepcion_initialize_ex(sample,RTI_TRUE);
+  return Recepcion_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Recepcion_initialize_ex(
-    Recepcion* sample,RTIBool allocatePointers)
+    Recepcion* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initLong(&sample->devolucion)) {
         return RTI_FALSE;
     }                
             
-    sample->message = DDS_String_alloc((255));
-    if (sample->message == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->message = DDS_String_alloc((255));
+        if (sample->message == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->message != NULL) { 
+            sample->message[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -323,8 +343,10 @@ void Recepcion_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
     DDS_String_free(sample->message);                
             
+
 }
 
 RTIBool Recepcion_copy(
@@ -337,11 +359,13 @@ RTIBool Recepcion_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

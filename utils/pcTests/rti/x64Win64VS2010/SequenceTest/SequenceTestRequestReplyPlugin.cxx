@@ -36,6 +36,10 @@
   #include "cdr/cdr_type.h"
 #endif
 
+#ifndef cdr_type_object_h
+  #include "cdr/cdr_typeObject.h"
+#endif
+
 #ifndef cdr_encapsulation_h
   #include "cdr/cdr_encapsulation.h"
 #endif
@@ -69,11 +73,11 @@ SequenceTest_getSLongRequestPluginSupport_create_data_ex(RTIBool allocate_pointe
         &sample, SequenceTest_getSLongRequest);
 
     if(sample != NULL) {
-        if (!SequenceTest_getSLongRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!SequenceTest_getSLongRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -138,12 +142,15 @@ SequenceTest_getSLongRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     largoPluginSupport_print_data(
         &sample->l1, "l1", indent_level + 1);
             
+
     largoPluginSupport_print_data(
         &sample->l2, "l2", indent_level + 1);
             
+
 
 }
 
@@ -154,7 +161,7 @@ SequenceTest_getSLongRequestPluginSupport_create_key_ex(RTIBool allocate_pointer
     RTIOsapiHeap_allocateStructure(
         &key, SequenceTest_getSLongRequestKeyHolder);
 
-    SequenceTest_getSLongRequest_initialize_ex(key,allocate_pointers);
+    SequenceTest_getSLongRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -183,7 +190,6 @@ SequenceTest_getSLongRequestPluginSupport_destroy_key(
   SequenceTest_getSLongRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -229,6 +235,8 @@ SequenceTest_getSLongRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -260,9 +268,15 @@ SequenceTest_getSLongRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = SequenceTest_getSLongRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -289,6 +303,7 @@ SequenceTest_getSLongRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -305,6 +320,13 @@ SequenceTest_getSLongRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+SequenceTest_getSLongRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 SequenceTest_getSLongRequestPlugin_serialize(
@@ -319,23 +341,23 @@ SequenceTest_getSLongRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -346,6 +368,7 @@ SequenceTest_getSLongRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_serialize(
             endpoint_data,
             &sample->l1, 
@@ -356,6 +379,7 @@ SequenceTest_getSLongRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_serialize(
             endpoint_data,
             &sample->l2, 
@@ -366,11 +390,13 @@ SequenceTest_getSLongRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -388,6 +414,8 @@ SequenceTest_getSLongRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -402,38 +430,47 @@ SequenceTest_getSLongRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        SequenceTest_getSLongRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_deserialize_sample(
             endpoint_data,
             &sample->l1,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_deserialize_sample(
             endpoint_data,
             &sample->l2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -445,6 +482,7 @@ SequenceTest_getSLongRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 SequenceTest_getSLongRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -467,6 +505,7 @@ SequenceTest_getSLongRequestPlugin_deserialize(
 
 
 
+
 RTIBool SequenceTest_getSLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -475,6 +514,8 @@ RTIBool SequenceTest_getSLongRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -497,27 +538,37 @@ RTIBool SequenceTest_getSLongRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!largoPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!largoPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!largoPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!largoPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -560,12 +611,15 @@ SequenceTest_getSLongRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -606,12 +660,15 @@ SequenceTest_getSLongRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -661,20 +718,29 @@ SequenceTest_getSLongRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += largoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->l1);
             
+
     current_alignment += largoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->l2);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -707,6 +773,7 @@ SequenceTest_getSLongRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -728,6 +795,7 @@ SequenceTest_getSLongRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -776,6 +844,7 @@ RTIBool SequenceTest_getSLongRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -840,6 +909,7 @@ SequenceTest_getSLongRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -859,8 +929,12 @@ SequenceTest_getSLongRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -883,24 +957,33 @@ SequenceTest_getSLongRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -928,6 +1011,7 @@ SequenceTest_getSLongRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -946,6 +1030,7 @@ SequenceTest_getSLongRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -999,10 +1084,14 @@ SequenceTest_getSLongRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    SequenceTest_getSLongRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    SequenceTest_getSLongRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -1031,6 +1120,13 @@ SequenceTest_getSLongRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -1190,11 +1286,11 @@ SequenceTest_getSLongReplyPluginSupport_create_data_ex(RTIBool allocate_pointers
         &sample, SequenceTest_getSLongReply);
 
     if(sample != NULL) {
-        if (!SequenceTest_getSLongReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!SequenceTest_getSLongReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -1259,15 +1355,19 @@ SequenceTest_getSLongReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     largoPluginSupport_print_data(
         &sample->l2, "l2", indent_level + 1);
             
+
     largoPluginSupport_print_data(
         &sample->l3, "l3", indent_level + 1);
             
+
     largoPluginSupport_print_data(
         &sample->getSLong_ret, "getSLong_ret", indent_level + 1);
             
+
 
 }
 
@@ -1278,7 +1378,7 @@ SequenceTest_getSLongReplyPluginSupport_create_key_ex(RTIBool allocate_pointers)
     RTIOsapiHeap_allocateStructure(
         &key, SequenceTest_getSLongReplyKeyHolder);
 
-    SequenceTest_getSLongReply_initialize_ex(key,allocate_pointers);
+    SequenceTest_getSLongReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -1307,7 +1407,6 @@ SequenceTest_getSLongReplyPluginSupport_destroy_key(
   SequenceTest_getSLongReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -1353,6 +1452,8 @@ SequenceTest_getSLongReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -1384,9 +1485,15 @@ SequenceTest_getSLongReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = SequenceTest_getSLongReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -1413,6 +1520,7 @@ SequenceTest_getSLongReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -1429,6 +1537,13 @@ SequenceTest_getSLongReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+SequenceTest_getSLongReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 SequenceTest_getSLongReplyPlugin_serialize(
@@ -1443,23 +1558,23 @@ SequenceTest_getSLongReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -1470,6 +1585,7 @@ SequenceTest_getSLongReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_serialize(
             endpoint_data,
             &sample->l2, 
@@ -1480,6 +1596,7 @@ SequenceTest_getSLongReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_serialize(
             endpoint_data,
             &sample->l3, 
@@ -1490,6 +1607,7 @@ SequenceTest_getSLongReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_serialize(
             endpoint_data,
             &sample->getSLong_ret, 
@@ -1500,11 +1618,13 @@ SequenceTest_getSLongReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -1522,6 +1642,8 @@ SequenceTest_getSLongReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1536,47 +1658,57 @@ SequenceTest_getSLongReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        SequenceTest_getSLongReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_deserialize_sample(
             endpoint_data,
             &sample->l2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_deserialize_sample(
             endpoint_data,
             &sample->l3,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_deserialize_sample(
             endpoint_data,
             &sample->getSLong_ret,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1588,6 +1720,7 @@ SequenceTest_getSLongReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 SequenceTest_getSLongReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -1610,6 +1743,7 @@ SequenceTest_getSLongReplyPlugin_deserialize(
 
 
 
+
 RTIBool SequenceTest_getSLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -1618,6 +1752,8 @@ RTIBool SequenceTest_getSLongReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -1640,35 +1776,46 @@ RTIBool SequenceTest_getSLongReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!largoPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!largoPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!largoPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!largoPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!largoPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!largoPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1711,15 +1858,19 @@ SequenceTest_getSLongReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1760,15 +1911,19 @@ SequenceTest_getSLongReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  largoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1818,24 +1973,34 @@ SequenceTest_getSLongReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += largoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->l2);
             
+
     current_alignment += largoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->l3);
             
+
     current_alignment += largoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->getSLong_ret);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -1868,6 +2033,7 @@ SequenceTest_getSLongReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -1889,6 +2055,7 @@ SequenceTest_getSLongReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -1937,6 +2104,7 @@ RTIBool SequenceTest_getSLongReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -2001,6 +2169,7 @@ SequenceTest_getSLongReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2020,8 +2189,12 @@ SequenceTest_getSLongReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -2044,32 +2217,42 @@ SequenceTest_getSLongReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!largoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!largoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2097,6 +2280,7 @@ SequenceTest_getSLongReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -2115,6 +2299,7 @@ SequenceTest_getSLongReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -2168,10 +2353,14 @@ SequenceTest_getSLongReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    SequenceTest_getSLongReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    SequenceTest_getSLongReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -2200,6 +2389,13 @@ SequenceTest_getSLongReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -2359,11 +2555,11 @@ SequenceTest_getStringRequestPluginSupport_create_data_ex(RTIBool allocate_point
         &sample, SequenceTest_getStringRequest);
 
     if(sample != NULL) {
-        if (!SequenceTest_getStringRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!SequenceTest_getStringRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -2428,12 +2624,15 @@ SequenceTest_getStringRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     cadenaPluginSupport_print_data(
         &sample->s1, "s1", indent_level + 1);
             
+
     cadenaPluginSupport_print_data(
         &sample->s2, "s2", indent_level + 1);
             
+
 
 }
 
@@ -2444,7 +2643,7 @@ SequenceTest_getStringRequestPluginSupport_create_key_ex(RTIBool allocate_pointe
     RTIOsapiHeap_allocateStructure(
         &key, SequenceTest_getStringRequestKeyHolder);
 
-    SequenceTest_getStringRequest_initialize_ex(key,allocate_pointers);
+    SequenceTest_getStringRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -2473,7 +2672,6 @@ SequenceTest_getStringRequestPluginSupport_destroy_key(
   SequenceTest_getStringRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -2519,6 +2717,8 @@ SequenceTest_getStringRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -2550,9 +2750,15 @@ SequenceTest_getStringRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = SequenceTest_getStringRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -2579,6 +2785,7 @@ SequenceTest_getStringRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -2595,6 +2802,13 @@ SequenceTest_getStringRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+SequenceTest_getStringRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 SequenceTest_getStringRequestPlugin_serialize(
@@ -2609,23 +2823,23 @@ SequenceTest_getStringRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -2636,6 +2850,7 @@ SequenceTest_getStringRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_serialize(
             endpoint_data,
             &sample->s1, 
@@ -2646,6 +2861,7 @@ SequenceTest_getStringRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_serialize(
             endpoint_data,
             &sample->s2, 
@@ -2656,11 +2872,13 @@ SequenceTest_getStringRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -2678,6 +2896,8 @@ SequenceTest_getStringRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -2692,38 +2912,47 @@ SequenceTest_getStringRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        SequenceTest_getStringRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_deserialize_sample(
             endpoint_data,
             &sample->s1,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_deserialize_sample(
             endpoint_data,
             &sample->s2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2735,6 +2964,7 @@ SequenceTest_getStringRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 SequenceTest_getStringRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -2757,6 +2987,7 @@ SequenceTest_getStringRequestPlugin_deserialize(
 
 
 
+
 RTIBool SequenceTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -2765,6 +2996,8 @@ RTIBool SequenceTest_getStringRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -2787,27 +3020,37 @@ RTIBool SequenceTest_getStringRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!cadenaPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!cadenaPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!cadenaPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!cadenaPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2850,12 +3093,15 @@ SequenceTest_getStringRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2896,12 +3142,15 @@ SequenceTest_getStringRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2951,20 +3200,29 @@ SequenceTest_getStringRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += cadenaPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->s1);
             
+
     current_alignment += cadenaPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->s2);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -2997,6 +3255,7 @@ SequenceTest_getStringRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -3018,6 +3277,7 @@ SequenceTest_getStringRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -3066,6 +3326,7 @@ RTIBool SequenceTest_getStringRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -3130,6 +3391,7 @@ SequenceTest_getStringRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -3149,8 +3411,12 @@ SequenceTest_getStringRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -3173,24 +3439,33 @@ SequenceTest_getStringRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -3218,6 +3493,7 @@ SequenceTest_getStringRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -3236,6 +3512,7 @@ SequenceTest_getStringRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -3289,10 +3566,14 @@ SequenceTest_getStringRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    SequenceTest_getStringRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    SequenceTest_getStringRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -3321,6 +3602,13 @@ SequenceTest_getStringRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -3480,11 +3768,11 @@ SequenceTest_getStringReplyPluginSupport_create_data_ex(RTIBool allocate_pointer
         &sample, SequenceTest_getStringReply);
 
     if(sample != NULL) {
-        if (!SequenceTest_getStringReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!SequenceTest_getStringReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -3549,15 +3837,19 @@ SequenceTest_getStringReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     cadenaPluginSupport_print_data(
         &sample->s2, "s2", indent_level + 1);
             
+
     cadenaPluginSupport_print_data(
         &sample->s3, "s3", indent_level + 1);
             
+
     cadenaPluginSupport_print_data(
         &sample->getString_ret, "getString_ret", indent_level + 1);
             
+
 
 }
 
@@ -3568,7 +3860,7 @@ SequenceTest_getStringReplyPluginSupport_create_key_ex(RTIBool allocate_pointers
     RTIOsapiHeap_allocateStructure(
         &key, SequenceTest_getStringReplyKeyHolder);
 
-    SequenceTest_getStringReply_initialize_ex(key,allocate_pointers);
+    SequenceTest_getStringReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -3597,7 +3889,6 @@ SequenceTest_getStringReplyPluginSupport_destroy_key(
   SequenceTest_getStringReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -3643,6 +3934,8 @@ SequenceTest_getStringReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -3674,9 +3967,15 @@ SequenceTest_getStringReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = SequenceTest_getStringReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -3703,6 +4002,7 @@ SequenceTest_getStringReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -3719,6 +4019,13 @@ SequenceTest_getStringReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+SequenceTest_getStringReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 SequenceTest_getStringReplyPlugin_serialize(
@@ -3733,23 +4040,23 @@ SequenceTest_getStringReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -3760,6 +4067,7 @@ SequenceTest_getStringReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_serialize(
             endpoint_data,
             &sample->s2, 
@@ -3770,6 +4078,7 @@ SequenceTest_getStringReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_serialize(
             endpoint_data,
             &sample->s3, 
@@ -3780,6 +4089,7 @@ SequenceTest_getStringReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_serialize(
             endpoint_data,
             &sample->getString_ret, 
@@ -3790,11 +4100,13 @@ SequenceTest_getStringReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -3812,6 +4124,8 @@ SequenceTest_getStringReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -3826,47 +4140,57 @@ SequenceTest_getStringReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        SequenceTest_getStringReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_deserialize_sample(
             endpoint_data,
             &sample->s2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_deserialize_sample(
             endpoint_data,
             &sample->s3,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_deserialize_sample(
             endpoint_data,
             &sample->getString_ret,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -3878,6 +4202,7 @@ SequenceTest_getStringReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 SequenceTest_getStringReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -3900,6 +4225,7 @@ SequenceTest_getStringReplyPlugin_deserialize(
 
 
 
+
 RTIBool SequenceTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -3908,6 +4234,8 @@ RTIBool SequenceTest_getStringReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -3930,35 +4258,46 @@ RTIBool SequenceTest_getStringReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!cadenaPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!cadenaPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!cadenaPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!cadenaPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!cadenaPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!cadenaPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -4001,15 +4340,19 @@ SequenceTest_getStringReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4050,15 +4393,19 @@ SequenceTest_getStringReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  cadenaPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4108,24 +4455,34 @@ SequenceTest_getStringReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += cadenaPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->s2);
             
+
     current_alignment += cadenaPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->s3);
             
+
     current_alignment += cadenaPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->getString_ret);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -4158,6 +4515,7 @@ SequenceTest_getStringReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -4179,6 +4537,7 @@ SequenceTest_getStringReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -4227,6 +4586,7 @@ RTIBool SequenceTest_getStringReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -4291,6 +4651,7 @@ SequenceTest_getStringReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -4310,8 +4671,12 @@ SequenceTest_getStringReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -4334,32 +4699,42 @@ SequenceTest_getStringReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!cadenaPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!cadenaPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -4387,6 +4762,7 @@ SequenceTest_getStringReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -4405,6 +4781,7 @@ SequenceTest_getStringReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -4458,10 +4835,14 @@ SequenceTest_getStringReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    SequenceTest_getStringReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    SequenceTest_getStringReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -4490,6 +4871,13 @@ SequenceTest_getStringReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -4649,11 +5037,11 @@ SequenceTest_getStringBoundedRequestPluginSupport_create_data_ex(RTIBool allocat
         &sample, SequenceTest_getStringBoundedRequest);
 
     if(sample != NULL) {
-        if (!SequenceTest_getStringBoundedRequest_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!SequenceTest_getStringBoundedRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -4718,12 +5106,15 @@ SequenceTest_getStringBoundedRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     dattosPluginSupport_print_data(
         &sample->sb1, "sb1", indent_level + 1);
             
+
     dattosPluginSupport_print_data(
         &sample->sb2, "sb2", indent_level + 1);
             
+
 
 }
 
@@ -4734,7 +5125,7 @@ SequenceTest_getStringBoundedRequestPluginSupport_create_key_ex(RTIBool allocate
     RTIOsapiHeap_allocateStructure(
         &key, SequenceTest_getStringBoundedRequestKeyHolder);
 
-    SequenceTest_getStringBoundedRequest_initialize_ex(key,allocate_pointers);
+    SequenceTest_getStringBoundedRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -4763,7 +5154,6 @@ SequenceTest_getStringBoundedRequestPluginSupport_destroy_key(
   SequenceTest_getStringBoundedRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -4809,6 +5199,8 @@ SequenceTest_getStringBoundedRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -4840,9 +5232,15 @@ SequenceTest_getStringBoundedRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -4869,6 +5267,7 @@ SequenceTest_getStringBoundedRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -4885,6 +5284,13 @@ SequenceTest_getStringBoundedRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 SequenceTest_getStringBoundedRequestPlugin_serialize(
@@ -4899,23 +5305,23 @@ SequenceTest_getStringBoundedRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -4926,6 +5332,7 @@ SequenceTest_getStringBoundedRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_serialize(
             endpoint_data,
             &sample->sb1, 
@@ -4936,6 +5343,7 @@ SequenceTest_getStringBoundedRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_serialize(
             endpoint_data,
             &sample->sb2, 
@@ -4946,11 +5354,13 @@ SequenceTest_getStringBoundedRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -4968,6 +5378,8 @@ SequenceTest_getStringBoundedRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -4982,38 +5394,47 @@ SequenceTest_getStringBoundedRequestPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        SequenceTest_getStringBoundedRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_deserialize_sample(
             endpoint_data,
             &sample->sb1,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_deserialize_sample(
             endpoint_data,
             &sample->sb2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -5025,6 +5446,7 @@ SequenceTest_getStringBoundedRequestPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 SequenceTest_getStringBoundedRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -5047,6 +5469,7 @@ SequenceTest_getStringBoundedRequestPlugin_deserialize(
 
 
 
+
 RTIBool SequenceTest_getStringBoundedRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -5055,6 +5478,8 @@ RTIBool SequenceTest_getStringBoundedRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -5077,27 +5502,37 @@ RTIBool SequenceTest_getStringBoundedRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!dattosPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!dattosPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!dattosPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!dattosPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -5140,12 +5575,15 @@ SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -5186,12 +5624,15 @@ SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -5241,20 +5682,29 @@ SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += dattosPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->sb1);
             
+
     current_alignment += dattosPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->sb2);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -5287,6 +5737,7 @@ SequenceTest_getStringBoundedRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -5308,6 +5759,7 @@ SequenceTest_getStringBoundedRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -5356,6 +5808,7 @@ RTIBool SequenceTest_getStringBoundedRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -5420,6 +5873,7 @@ SequenceTest_getStringBoundedRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -5439,8 +5893,12 @@ SequenceTest_getStringBoundedRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -5463,24 +5921,33 @@ SequenceTest_getStringBoundedRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -5508,6 +5975,7 @@ SequenceTest_getStringBoundedRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -5526,6 +5994,7 @@ SequenceTest_getStringBoundedRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -5579,10 +6048,14 @@ SequenceTest_getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    SequenceTest_getStringBoundedRequest * sample;
+
+    RTIBool done = RTI_FALSE;
+    SequenceTest_getStringBoundedRequest * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -5611,6 +6084,13 @@ SequenceTest_getStringBoundedRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -5770,11 +6250,11 @@ SequenceTest_getStringBoundedReplyPluginSupport_create_data_ex(RTIBool allocate_
         &sample, SequenceTest_getStringBoundedReply);
 
     if(sample != NULL) {
-        if (!SequenceTest_getStringBoundedReply_initialize_ex(sample,allocate_pointers)) {
-            RTIOsapiHeap_freeStructure(&sample);
+        if (!SequenceTest_getStringBoundedReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
-    }
+    }        
     return sample; 
 }
 
@@ -5839,15 +6319,19 @@ SequenceTest_getStringBoundedReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
+
     dattosPluginSupport_print_data(
         &sample->sb2, "sb2", indent_level + 1);
             
+
     dattosPluginSupport_print_data(
         &sample->sb3, "sb3", indent_level + 1);
             
+
     dattosPluginSupport_print_data(
         &sample->getStringBounded_ret, "getStringBounded_ret", indent_level + 1);
             
+
 
 }
 
@@ -5858,7 +6342,7 @@ SequenceTest_getStringBoundedReplyPluginSupport_create_key_ex(RTIBool allocate_p
     RTIOsapiHeap_allocateStructure(
         &key, SequenceTest_getStringBoundedReplyKeyHolder);
 
-    SequenceTest_getStringBoundedReply_initialize_ex(key,allocate_pointers);
+    SequenceTest_getStringBoundedReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
     return key;
 }
 
@@ -5887,7 +6371,6 @@ SequenceTest_getStringBoundedReplyPluginSupport_destroy_key(
   SequenceTest_getStringBoundedReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
-
 
 
 /* ----------------------------------------------------------------------------
@@ -5933,6 +6416,8 @@ SequenceTest_getStringBoundedReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
+    unsigned int serializedSampleMaxSize;
+
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -5964,9 +6449,15 @@ SequenceTest_getStringBoundedReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-
     
+    
+
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        serializedSampleMaxSize = SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_max_size(
+            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
+            
+        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
+
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -5993,6 +6484,7 @@ SequenceTest_getStringBoundedReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+ 
 
 
 RTIBool 
@@ -6009,6 +6501,13 @@ SequenceTest_getStringBoundedReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
+unsigned int 
+SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
 
 RTIBool 
 SequenceTest_getStringBoundedReplyPlugin_serialize(
@@ -6023,23 +6522,23 @@ SequenceTest_getStringBoundedReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-  if (endpoint_data) {} /* To avoid warnings */
-  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
 
-  if(serialize_encapsulation) {
+        position = RTICdrStream_resetAlignment(stream);
 
-    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-        return RTI_FALSE;
     }
 
-    position = RTICdrStream_resetAlignment(stream);
 
-  }
-
-  if(serialize_sample) {
-
+    if(serialize_sample) {
+    
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -6050,6 +6549,7 @@ SequenceTest_getStringBoundedReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_serialize(
             endpoint_data,
             &sample->sb2, 
@@ -6060,6 +6560,7 @@ SequenceTest_getStringBoundedReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_serialize(
             endpoint_data,
             &sample->sb3, 
@@ -6070,6 +6571,7 @@ SequenceTest_getStringBoundedReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_serialize(
             endpoint_data,
             &sample->getStringBounded_ret, 
@@ -6080,11 +6582,13 @@ SequenceTest_getStringBoundedReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-  }
 
-  if(serialize_encapsulation) {
-    RTICdrStream_restoreAlignment(stream,position);
-  }
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
 
 
   return retval;
@@ -6102,6 +6606,8 @@ SequenceTest_getStringBoundedReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -6116,47 +6622,57 @@ SequenceTest_getStringBoundedReplyPlugin_deserialize_sample(
 
     }
     
+    
     if(deserialize_sample) {
-
-
+        SequenceTest_getStringBoundedReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_deserialize_sample(
             endpoint_data,
             &sample->sb2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_deserialize_sample(
             endpoint_data,
             &sample->sb3,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_deserialize_sample(
             endpoint_data,
             &sample->getStringBounded_ret,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -6168,6 +6684,7 @@ SequenceTest_getStringBoundedReplyPlugin_deserialize_sample(
 
  
  
+
 RTIBool 
 SequenceTest_getStringBoundedReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -6190,6 +6707,7 @@ SequenceTest_getStringBoundedReplyPlugin_deserialize(
 
 
 
+
 RTIBool SequenceTest_getStringBoundedReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -6198,6 +6716,8 @@ RTIBool SequenceTest_getStringBoundedReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -6220,35 +6740,46 @@ RTIBool SequenceTest_getStringBoundedReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
-    if (!dattosPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!dattosPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    if (!dattosPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-    }
 
+    if (!dattosPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!dattosPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+    if (!dattosPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -6291,15 +6822,19 @@ SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -6340,15 +6875,19 @@ SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     current_alignment +=  dattosPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -6398,24 +6937,34 @@ SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
+
     current_alignment += dattosPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->sb2);
             
+
     current_alignment += dattosPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->sb3);
             
+
     current_alignment += dattosPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->getStringBounded_ret);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -6448,6 +6997,7 @@ SequenceTest_getStringBoundedReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
+    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -6469,6 +7019,7 @@ SequenceTest_getStringBoundedReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -6517,6 +7068,7 @@ RTIBool SequenceTest_getStringBoundedReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
+
     }
 
 
@@ -6581,6 +7133,7 @@ SequenceTest_getStringBoundedReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
+
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -6600,8 +7153,12 @@ SequenceTest_getStringBoundedReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
+    RTIBool done = RTI_FALSE;
+
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -6624,32 +7181,42 @@ SequenceTest_getStringBoundedReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
+
     if (!dattosPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     if (!dattosPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        return RTI_FALSE;
+        goto fin;
     }
             
+
     }
 
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -6677,6 +7244,7 @@ SequenceTest_getStringBoundedReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -6695,6 +7263,7 @@ SequenceTest_getStringBoundedReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
+
     return RTI_TRUE;
 }
 
@@ -6748,10 +7317,14 @@ SequenceTest_getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-    SequenceTest_getStringBoundedReply * sample;
+
+    RTIBool done = RTI_FALSE;
+    SequenceTest_getStringBoundedReply * sample = NULL;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -6780,6 +7353,13 @@ SequenceTest_getStringBoundedReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }

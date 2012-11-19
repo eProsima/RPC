@@ -133,29 +133,32 @@ DDS_TypeCode* EnumYStringTest_getEnumRequest_get_typecode()
 
 RTIBool EnumYStringTest_getEnumRequest_initialize(
     EnumYStringTest_getEnumRequest* sample) {
-  return EnumYStringTest_getEnumRequest_initialize_ex(sample,RTI_TRUE);
+  return EnumYStringTest_getEnumRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool EnumYStringTest_getEnumRequest_initialize_ex(
-    EnumYStringTest_getEnumRequest* sample,RTIBool allocatePointers)
+    EnumYStringTest_getEnumRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!Valores_initialize_ex(&sample->v1,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Valores_initialize_ex(&sample->v1,allocatePointers)) {
+
+    if (!Valores_initialize_ex(&sample->v2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Valores_initialize_ex(&sample->v2,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -175,10 +178,13 @@ void EnumYStringTest_getEnumRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Valores_finalize_ex(&sample->v1,deletePointers);
             
+
     Valores_finalize_ex(&sample->v2,deletePointers);
             
+
 }
 
 RTIBool EnumYStringTest_getEnumRequest_copy(
@@ -191,16 +197,19 @@ RTIBool EnumYStringTest_getEnumRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!Valores_copy(
         &dst->v1, &src->v1)) {
         return RTI_FALSE;
     }
             
+
     if (!Valores_copy(
         &dst->v2, &src->v2)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -350,33 +359,37 @@ DDS_TypeCode* EnumYStringTest_getEnumReply_get_typecode()
 
 RTIBool EnumYStringTest_getEnumReply_initialize(
     EnumYStringTest_getEnumReply* sample) {
-  return EnumYStringTest_getEnumReply_initialize_ex(sample,RTI_TRUE);
+  return EnumYStringTest_getEnumReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool EnumYStringTest_getEnumReply_initialize_ex(
-    EnumYStringTest_getEnumReply* sample,RTIBool allocatePointers)
+    EnumYStringTest_getEnumReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!Valores_initialize_ex(&sample->v2,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Valores_initialize_ex(&sample->v2,allocatePointers)) {
+
+    if (!Valores_initialize_ex(&sample->v3,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Valores_initialize_ex(&sample->v3,allocatePointers)) {
+
+    if (!Valores_initialize_ex(&sample->getEnum_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Valores_initialize_ex(&sample->getEnum_ret,allocatePointers)) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -396,12 +409,16 @@ void EnumYStringTest_getEnumReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Valores_finalize_ex(&sample->v2,deletePointers);
             
+
     Valores_finalize_ex(&sample->v3,deletePointers);
             
+
     Valores_finalize_ex(&sample->getEnum_ret,deletePointers);
             
+
 }
 
 RTIBool EnumYStringTest_getEnumReply_copy(
@@ -414,21 +431,25 @@ RTIBool EnumYStringTest_getEnumReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!Valores_copy(
         &dst->v2, &src->v2)) {
         return RTI_FALSE;
     }
             
+
     if (!Valores_copy(
         &dst->v3, &src->v3)) {
         return RTI_FALSE;
     }
             
+
     if (!Valores_copy(
         &dst->getEnum_ret, &src->getEnum_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -562,31 +583,46 @@ DDS_TypeCode* EnumYStringTest_getStringRequest_get_typecode()
 
 RTIBool EnumYStringTest_getStringRequest_initialize(
     EnumYStringTest_getStringRequest* sample) {
-  return EnumYStringTest_getStringRequest_initialize_ex(sample,RTI_TRUE);
+  return EnumYStringTest_getStringRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool EnumYStringTest_getStringRequest_initialize_ex(
-    EnumYStringTest_getStringRequest* sample,RTIBool allocatePointers)
+    EnumYStringTest_getStringRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        sample->s1 = DDS_String_alloc((255));
+        if (sample->s1 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s1 != NULL) { 
+            sample->s1[0] = '\0';
+        }
     }
             
-    sample->s1 = DDS_String_alloc((255));
-    if (sample->s1 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->s2 = DDS_String_alloc((255));
+        if (sample->s2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s2 != NULL) { 
+            sample->s2[0] = '\0';
+        }
     }
             
-    sample->s2 = DDS_String_alloc((255));
-    if (sample->s2 == NULL) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -606,10 +642,13 @@ void EnumYStringTest_getStringRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->s1);                
             
+
     DDS_String_free(sample->s2);                
             
+
 }
 
 RTIBool EnumYStringTest_getStringRequest_copy(
@@ -622,16 +661,19 @@ RTIBool EnumYStringTest_getStringRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s1, src->s1, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s2, src->s2, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -784,36 +826,58 @@ DDS_TypeCode* EnumYStringTest_getStringReply_get_typecode()
 
 RTIBool EnumYStringTest_getStringReply_initialize(
     EnumYStringTest_getStringReply* sample) {
-  return EnumYStringTest_getStringReply_initialize_ex(sample,RTI_TRUE);
+  return EnumYStringTest_getStringReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool EnumYStringTest_getStringReply_initialize_ex(
-    EnumYStringTest_getStringReply* sample,RTIBool allocatePointers)
+    EnumYStringTest_getStringReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        sample->s2 = DDS_String_alloc((255));
+        if (sample->s2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s2 != NULL) { 
+            sample->s2[0] = '\0';
+        }
     }
             
-    sample->s2 = DDS_String_alloc((255));
-    if (sample->s2 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->s3 = DDS_String_alloc((255));
+        if (sample->s3 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s3 != NULL) { 
+            sample->s3[0] = '\0';
+        }
     }
             
-    sample->s3 = DDS_String_alloc((255));
-    if (sample->s3 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->getString_ret = DDS_String_alloc((255));
+        if (sample->getString_ret == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->getString_ret != NULL) { 
+            sample->getString_ret[0] = '\0';
+        }
     }
             
-    sample->getString_ret = DDS_String_alloc((255));
-    if (sample->getString_ret == NULL) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -833,12 +897,16 @@ void EnumYStringTest_getStringReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->s2);                
             
+
     DDS_String_free(sample->s3);                
             
+
     DDS_String_free(sample->getString_ret);                
             
+
 }
 
 RTIBool EnumYStringTest_getStringReply_copy(
@@ -851,21 +919,25 @@ RTIBool EnumYStringTest_getStringReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s2, src->s2, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s3, src->s3, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->getString_ret, src->getString_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -999,31 +1071,46 @@ DDS_TypeCode* EnumYStringTest_getStringBoundedRequest_get_typecode()
 
 RTIBool EnumYStringTest_getStringBoundedRequest_initialize(
     EnumYStringTest_getStringBoundedRequest* sample) {
-  return EnumYStringTest_getStringBoundedRequest_initialize_ex(sample,RTI_TRUE);
+  return EnumYStringTest_getStringBoundedRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool EnumYStringTest_getStringBoundedRequest_initialize_ex(
-    EnumYStringTest_getStringBoundedRequest* sample,RTIBool allocatePointers)
+    EnumYStringTest_getStringBoundedRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        sample->sb1 = DDS_String_alloc((255));
+        if (sample->sb1 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->sb1 != NULL) { 
+            sample->sb1[0] = '\0';
+        }
     }
             
-    sample->sb1 = DDS_String_alloc((255));
-    if (sample->sb1 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->sb2 = DDS_String_alloc((255));
+        if (sample->sb2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->sb2 != NULL) { 
+            sample->sb2[0] = '\0';
+        }
     }
             
-    sample->sb2 = DDS_String_alloc((255));
-    if (sample->sb2 == NULL) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1043,10 +1130,13 @@ void EnumYStringTest_getStringBoundedRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->sb1);                
             
+
     DDS_String_free(sample->sb2);                
             
+
 }
 
 RTIBool EnumYStringTest_getStringBoundedRequest_copy(
@@ -1059,16 +1149,19 @@ RTIBool EnumYStringTest_getStringBoundedRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->sb1, src->sb1, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->sb2, src->sb2, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1221,36 +1314,58 @@ DDS_TypeCode* EnumYStringTest_getStringBoundedReply_get_typecode()
 
 RTIBool EnumYStringTest_getStringBoundedReply_initialize(
     EnumYStringTest_getStringBoundedReply* sample) {
-  return EnumYStringTest_getStringBoundedReply_initialize_ex(sample,RTI_TRUE);
+  return EnumYStringTest_getStringBoundedReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool EnumYStringTest_getStringBoundedReply_initialize_ex(
-    EnumYStringTest_getStringBoundedReply* sample,RTIBool allocatePointers)
+    EnumYStringTest_getStringBoundedReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
-        return RTI_FALSE;
+    if (allocateMemory) {
+        sample->sb2 = DDS_String_alloc((255));
+        if (sample->sb2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->sb2 != NULL) { 
+            sample->sb2[0] = '\0';
+        }
     }
             
-    sample->sb2 = DDS_String_alloc((255));
-    if (sample->sb2 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->sb3 = DDS_String_alloc((255));
+        if (sample->sb3 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->sb3 != NULL) { 
+            sample->sb3[0] = '\0';
+        }
     }
             
-    sample->sb3 = DDS_String_alloc((255));
-    if (sample->sb3 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->getStringBounded_ret = DDS_String_alloc((255));
+        if (sample->getStringBounded_ret == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->getStringBounded_ret != NULL) { 
+            sample->getStringBounded_ret[0] = '\0';
+        }
     }
             
-    sample->getStringBounded_ret = DDS_String_alloc((255));
-    if (sample->getStringBounded_ret == NULL) {
-        return RTI_FALSE;
-    }
-            
+
 
     return RTI_TRUE;
 }
@@ -1270,12 +1385,16 @@ void EnumYStringTest_getStringBoundedReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->sb2);                
             
+
     DDS_String_free(sample->sb3);                
             
+
     DDS_String_free(sample->getStringBounded_ret);                
             
+
 }
 
 RTIBool EnumYStringTest_getStringBoundedReply_copy(
@@ -1288,21 +1407,25 @@ RTIBool EnumYStringTest_getStringBoundedReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->sb2, src->sb2, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->sb3, src->sb3, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->getStringBounded_ret, src->getStringBounded_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

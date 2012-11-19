@@ -58,9 +58,9 @@ extern const char *MultithreadTest_testRequestTYPENAME;
 
             
     
-
-typedef struct MultithreadTest_testRequest
+class MultithreadTest_testRequest                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct MultithreadTest_testRequestSeq Seq;
 
@@ -71,11 +71,13 @@ typedef struct MultithreadTest_testRequest
 #endif
 
 #endif
-
+    
     RequestHeader  header;
+
     Dato  dato1;
 
-} MultithreadTest_testRequest;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -97,7 +99,7 @@ RTIBool MultithreadTest_testRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool MultithreadTest_testRequest_initialize_ex(
-        MultithreadTest_testRequest* self,RTIBool allocatePointers);
+        MultithreadTest_testRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void MultithreadTest_testRequest_finalize(
@@ -146,9 +148,9 @@ extern const char *MultithreadTest_testReplyTYPENAME;
 
             
     
-
-typedef struct MultithreadTest_testReply
+class MultithreadTest_testReply                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct MultithreadTest_testReplySeq Seq;
 
@@ -159,12 +161,15 @@ typedef struct MultithreadTest_testReply
 #endif
 
 #endif
-
+    
     ReplyHeader  header;
+
     Dato  dato2;
+
     DDS_Long  test_ret;
 
-} MultithreadTest_testReply;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -186,7 +191,7 @@ RTIBool MultithreadTest_testReply_initialize(
         
 NDDSUSERDllExport
 RTIBool MultithreadTest_testReply_initialize_ex(
-        MultithreadTest_testReply* self,RTIBool allocatePointers);
+        MultithreadTest_testReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void MultithreadTest_testReply_finalize(

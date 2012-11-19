@@ -115,25 +115,27 @@ DDS_TypeCode* OnewayCallTest_setLongRequest_get_typecode()
 
 RTIBool OnewayCallTest_setLongRequest_initialize(
     OnewayCallTest_setLongRequest* sample) {
-  return OnewayCallTest_setLongRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_setLongRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_setLongRequest_initialize_ex(
-    OnewayCallTest_setLongRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_setLongRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initLong(&sample->lo1)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -153,6 +155,8 @@ void OnewayCallTest_setLongRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
 }
 
 RTIBool OnewayCallTest_setLongRequest_copy(
@@ -165,11 +169,13 @@ RTIBool OnewayCallTest_setLongRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->lo1, &src->lo1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -265,21 +271,22 @@ DDS_TypeCode* OnewayCallTest_getLongRequest_get_typecode()
 
 RTIBool OnewayCallTest_getLongRequest_initialize(
     OnewayCallTest_getLongRequest* sample) {
-  return OnewayCallTest_getLongRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getLongRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getLongRequest_initialize_ex(
-    OnewayCallTest_getLongRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_getLongRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -299,6 +306,7 @@ void OnewayCallTest_getLongRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
 }
 
 RTIBool OnewayCallTest_getLongRequest_copy(
@@ -311,6 +319,7 @@ RTIBool OnewayCallTest_getLongRequest_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -424,25 +433,27 @@ DDS_TypeCode* OnewayCallTest_getLongReply_get_typecode()
 
 RTIBool OnewayCallTest_getLongReply_initialize(
     OnewayCallTest_getLongReply* sample) {
-  return OnewayCallTest_getLongReply_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getLongReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getLongReply_initialize_ex(
-    OnewayCallTest_getLongReply* sample,RTIBool allocatePointers)
+    OnewayCallTest_getLongReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initLong(&sample->getLong_ret)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -462,6 +473,8 @@ void OnewayCallTest_getLongReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
 }
 
 RTIBool OnewayCallTest_getLongReply_copy(
@@ -474,11 +487,13 @@ RTIBool OnewayCallTest_getLongReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyLong(
         &dst->getLong_ret, &src->getLong_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -592,25 +607,27 @@ DDS_TypeCode* OnewayCallTest_setBooleanRequest_get_typecode()
 
 RTIBool OnewayCallTest_setBooleanRequest_initialize(
     OnewayCallTest_setBooleanRequest* sample) {
-  return OnewayCallTest_setBooleanRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_setBooleanRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_setBooleanRequest_initialize_ex(
-    OnewayCallTest_setBooleanRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_setBooleanRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initBoolean(&sample->bo1)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -630,6 +647,8 @@ void OnewayCallTest_setBooleanRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
 }
 
 RTIBool OnewayCallTest_setBooleanRequest_copy(
@@ -642,11 +661,13 @@ RTIBool OnewayCallTest_setBooleanRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->bo1, &src->bo1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -742,21 +763,22 @@ DDS_TypeCode* OnewayCallTest_getBooleanRequest_get_typecode()
 
 RTIBool OnewayCallTest_getBooleanRequest_initialize(
     OnewayCallTest_getBooleanRequest* sample) {
-  return OnewayCallTest_getBooleanRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getBooleanRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getBooleanRequest_initialize_ex(
-    OnewayCallTest_getBooleanRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_getBooleanRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -776,6 +798,7 @@ void OnewayCallTest_getBooleanRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
 }
 
 RTIBool OnewayCallTest_getBooleanRequest_copy(
@@ -788,6 +811,7 @@ RTIBool OnewayCallTest_getBooleanRequest_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -901,25 +925,27 @@ DDS_TypeCode* OnewayCallTest_getBooleanReply_get_typecode()
 
 RTIBool OnewayCallTest_getBooleanReply_initialize(
     OnewayCallTest_getBooleanReply* sample) {
-  return OnewayCallTest_getBooleanReply_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getBooleanReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getBooleanReply_initialize_ex(
-    OnewayCallTest_getBooleanReply* sample,RTIBool allocatePointers)
+    OnewayCallTest_getBooleanReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_initBoolean(&sample->getBoolean_ret)) {
         return RTI_FALSE;
     }                
             
+
 
     return RTI_TRUE;
 }
@@ -939,6 +965,8 @@ void OnewayCallTest_getBooleanReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
+
 }
 
 RTIBool OnewayCallTest_getBooleanReply_copy(
@@ -951,11 +979,13 @@ RTIBool OnewayCallTest_getBooleanReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyBoolean(
         &dst->getBoolean_ret, &src->getBoolean_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1070,26 +1100,34 @@ DDS_TypeCode* OnewayCallTest_setStringRequest_get_typecode()
 
 RTIBool OnewayCallTest_setStringRequest_initialize(
     OnewayCallTest_setStringRequest* sample) {
-  return OnewayCallTest_setStringRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_setStringRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_setStringRequest_initialize_ex(
-    OnewayCallTest_setStringRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_setStringRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    sample->s1 = DDS_String_alloc((255));
-    if (sample->s1 == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->s1 = DDS_String_alloc((255));
+        if (sample->s1 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->s1 != NULL) { 
+            sample->s1[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1109,8 +1147,10 @@ void OnewayCallTest_setStringRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->s1);                
             
+
 }
 
 RTIBool OnewayCallTest_setStringRequest_copy(
@@ -1123,11 +1163,13 @@ RTIBool OnewayCallTest_setStringRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->s1, src->s1, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1223,21 +1265,22 @@ DDS_TypeCode* OnewayCallTest_getStringRequest_get_typecode()
 
 RTIBool OnewayCallTest_getStringRequest_initialize(
     OnewayCallTest_getStringRequest* sample) {
-  return OnewayCallTest_getStringRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getStringRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getStringRequest_initialize_ex(
-    OnewayCallTest_getStringRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_getStringRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1257,6 +1300,7 @@ void OnewayCallTest_getStringRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
 }
 
 RTIBool OnewayCallTest_getStringRequest_copy(
@@ -1269,6 +1313,7 @@ RTIBool OnewayCallTest_getStringRequest_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1383,26 +1428,34 @@ DDS_TypeCode* OnewayCallTest_getStringReply_get_typecode()
 
 RTIBool OnewayCallTest_getStringReply_initialize(
     OnewayCallTest_getStringReply* sample) {
-  return OnewayCallTest_getStringReply_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getStringReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getStringReply_initialize_ex(
-    OnewayCallTest_getStringReply* sample,RTIBool allocatePointers)
+    OnewayCallTest_getStringReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    sample->getString_ret = DDS_String_alloc((255));
-    if (sample->getString_ret == NULL) {
-        return RTI_FALSE;
+
+    if (allocateMemory) {
+        sample->getString_ret = DDS_String_alloc((255));
+        if (sample->getString_ret == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->getString_ret != NULL) { 
+            sample->getString_ret[0] = '\0';
+        }
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1422,8 +1475,10 @@ void OnewayCallTest_getStringReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     DDS_String_free(sample->getString_ret);                
             
+
 }
 
 RTIBool OnewayCallTest_getStringReply_copy(
@@ -1436,11 +1491,13 @@ RTIBool OnewayCallTest_getStringReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!RTICdrType_copyString(
         dst->getString_ret, src->getString_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1554,25 +1611,27 @@ DDS_TypeCode* OnewayCallTest_setStructRequest_get_typecode()
 
 RTIBool OnewayCallTest_setStructRequest_initialize(
     OnewayCallTest_setStructRequest* sample) {
-  return OnewayCallTest_setStructRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_setStructRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_setStructRequest_initialize_ex(
-    OnewayCallTest_setStructRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_setStructRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Structure_initialize_ex(&sample->ev,allocatePointers)) {
+
+    if (!Structure_initialize_ex(&sample->ev,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1592,8 +1651,10 @@ void OnewayCallTest_setStructRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Structure_finalize_ex(&sample->ev,deletePointers);
             
+
 }
 
 RTIBool OnewayCallTest_setStructRequest_copy(
@@ -1606,11 +1667,13 @@ RTIBool OnewayCallTest_setStructRequest_copy(
         return RTI_FALSE;
     }
             
+
     if (!Structure_copy(
         &dst->ev, &src->ev)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1706,21 +1769,22 @@ DDS_TypeCode* OnewayCallTest_getStructRequest_get_typecode()
 
 RTIBool OnewayCallTest_getStructRequest_initialize(
     OnewayCallTest_getStructRequest* sample) {
-  return OnewayCallTest_getStructRequest_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getStructRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getStructRequest_initialize_ex(
-    OnewayCallTest_getStructRequest* sample,RTIBool allocatePointers)
+    OnewayCallTest_getStructRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1740,6 +1804,7 @@ void OnewayCallTest_getStructRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
+
 }
 
 RTIBool OnewayCallTest_getStructRequest_copy(
@@ -1752,6 +1817,7 @@ RTIBool OnewayCallTest_getStructRequest_copy(
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1865,25 +1931,27 @@ DDS_TypeCode* OnewayCallTest_getStructReply_get_typecode()
 
 RTIBool OnewayCallTest_getStructReply_initialize(
     OnewayCallTest_getStructReply* sample) {
-  return OnewayCallTest_getStructReply_initialize_ex(sample,RTI_TRUE);
+  return OnewayCallTest_getStructReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool OnewayCallTest_getStructReply_initialize_ex(
-    OnewayCallTest_getStructReply* sample,RTIBool allocatePointers)
+    OnewayCallTest_getStructReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
 
-
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
-    if (!Structure_initialize_ex(&sample->getStruct_ret,allocatePointers)) {
+
+    if (!Structure_initialize_ex(&sample->getStruct_ret,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -1903,8 +1971,10 @@ void OnewayCallTest_getStructReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
+
     Structure_finalize_ex(&sample->getStruct_ret,deletePointers);
             
+
 }
 
 RTIBool OnewayCallTest_getStructReply_copy(
@@ -1917,11 +1987,13 @@ RTIBool OnewayCallTest_getStructReply_copy(
         return RTI_FALSE;
     }
             
+
     if (!Structure_copy(
         &dst->getStruct_ret, &src->getStruct_ret)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
