@@ -1,18 +1,27 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _UTILS_UTILITIES_H_
 #define _UTILS_UTILITIES_H_
 
-#include "utils/Version.h"
+#include "utils/rpcdds.h"
 
 namespace eProsima
 {
     namespace RPCDDS
     {
-        void get_guid(unsigned int *id, DDS::DataWriter *datawriter);
-
-        void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
-
-        DDS::DomainParticipantFactory* getFactory(int domainId);
-    }; // namespace DDSR
+		/**
+		 * \brief This function sleeps the current thread.
+		 *
+		 * \param milliseconds Time in milliseconds that the thread will be sleeping.
+		 */
+		RPCDDS_WIN32_DLL_API void sleep(unsigned int milliseconds);
+    }; // namespace RPCDDS
 }; // namespace eProsima
 
 #endif // _UTILS_UTILITIES_H_

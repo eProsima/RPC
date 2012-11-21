@@ -6,6 +6,17 @@ setlocal EnableDelayedExpansion
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
 
+:: Save old and set NDDSTARGET environment variable
+set NDDSTARGET_OLD=%NDDSTARGET%
+set NDDSTARGET=x64Win64VS2010
+
+:: Save old and set PATH environment variable
+set PATH_OLD_OLD=%PATH%
+set PATH=..\..\..\..\..\lib\%NDDSTARGET%;D:\richi\librerias\boost_1_51_0\lib\x64;%PATH%
+
+:: Set environment for RPCDDS
+call ..\..\..\scripts\set_environment.bat set
+
 :: Find all directories.
 for /D %%D in ("*") do (
    :: Enter to the directory.
@@ -18,6 +29,7 @@ for /D %%D in ("*") do (
 )
 goto :exit
 
+:: This function execute a test in a directory. Use "call" to call this method.
 :execTest
 :: Backup of Client.cxx file.
 copy Client.cxx Client.cxx.backup
@@ -109,13 +121,22 @@ if not %errorstatus%==0 goto :EOF
 
 goto :EOF
 
-:: Fuction wait ::
+:: Fuction wait. Use "call" to call this function.
 :wait
 @ping 192.168.1.10 -n %~1 -w 1000
-goto:EOF
+goto :EOF
 
 :: Function exit ::
 :exit
+:: Restore environment for RPCDDS
+call ..\..\..\scripts\set_environment.bat restore
+
+:: Restore old value of NDDSTARGET environment variable.
+set NDDSTARGET=%NDDSTARGET_OLD%
+
+:: Restore old value of PATH environment variable.
+set PATH=%PATH_OLD_OLD%
+
 if %errorstatus%==0 (echo "TEST SUCCESFULLY") else (echo "TEST FAILED")
 exit /B %errorstatus%
 goto :EOF

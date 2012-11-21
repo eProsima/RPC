@@ -1,7 +1,14 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "server/Server.h"
 #include "server/ServerRPC.h"
 #include "exceptions/InitializeException.h"
-#include "utils/Utilities.h"
 #include "transports/Transport.h"
 #include "transports/UDPTransport.h"
 #include "server/ServerStrategy.h"

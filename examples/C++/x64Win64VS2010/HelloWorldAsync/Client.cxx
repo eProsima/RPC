@@ -7,6 +7,8 @@
 #include "HelloWorldAsyncRequestReplyPlugin.h"
 #include "exceptions/Exceptions.h"
 
+#include <iostream>
+
 class SayHelloHandler : public HelloWorldAsync_sayHelloCallbackHandler
 {
     public:
@@ -45,7 +47,7 @@ int main(int argc, char **argv)
     }
     catch(eProsima::RPCDDS::Exception &ex)
     {
-		printf("Exception\n", ex.what());
+		std::cout << ex.what() << std::endl;
     }
 
 	while(!handler.isReceived())

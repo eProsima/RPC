@@ -1,10 +1,18 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _CLIENT_ASYNCTHREAD_H_
 #define _CLIENT_ASYNCTHREAD_H_
 
 #include <vector>
 #include <boost/thread.hpp>
 
-#include "utils/Version.h"
+#include "utils/Middleware.h"
 
 namespace eProsima
 {

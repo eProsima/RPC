@@ -34,11 +34,10 @@ group Utils;
  * Uses:
  */ 
 headerFile(name, classes) ::= <<
+$fileHeader(file=[name, "RequestReplyUtils.h"], description=["This header file contains the declaration of helpful functions for the DDS messages for interface ", name, "."])$
 
 #ifndef _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 #define _$name;format="toUpper"$_REQUEST_REPLY_UTILS_H_
-
-$doNotEditC()$
 
 #include "utils/Messages.h"
 $ReqRepSIncludes(interfaceName=name)$
@@ -62,7 +61,7 @@ $classes:{$it$};separator="\n"$
  * Uses:
  */ 
 definitionFile(name, classes) ::= <<
-$doNotEditC()$
+$fileHeader(file=[name, "RequestReplyUtils.cxx"], description=["This source file contains the definition of helpful functions for the DDS messages for interface ", name, "."])$
 
 #include "$name$RequestReplyUtils.h"
 $ReqRepIncludes(interfaceName=name)$

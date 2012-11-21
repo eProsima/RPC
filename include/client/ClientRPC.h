@@ -1,9 +1,17 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _CLIENT_CLIENTRPC_H_
 #define _CLIENT_CLIENTRPC_H_
 
 #include "utils/rpcdds.h"
 #include "utils/Messages.h"
-#include "utils/Version.h"
+#include "utils/Middleware.h"
 
 namespace boost
 {

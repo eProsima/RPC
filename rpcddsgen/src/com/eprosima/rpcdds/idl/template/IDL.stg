@@ -31,10 +31,9 @@ group IDL;
  *   types  : list of IDL types definitions (structs, sequences...)
  *
  * Uses:
- *  doNotEditCplusplus - inherited(cplusplus)
  */ 
-idlFile(file, types) ::= <<
-$doNotEditCplusplus()$
+idlFile(interfaceName, file, types) ::= <<
+$fileHeader(file=[interfaceName, "RequestReply.idl"], description=["This IDL file contains the definition of the DDS messages for interface ", interfaceName, "."])$
 
 #include "MessageHeader.idl"
 $file:{#include "$it$"}$

@@ -1,8 +1,15 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "client/ClientRPC.h"
 #include "client/Client.h"
 #include "client/AsyncTask.h"
 #include "utils/Typedefs.h"
-#include "utils/Utilities.h"
 #include "eProsima_c/eProsimaMacros.h"
 #include "exceptions/InitializeException.h"
 #include "MessageHeader.h"
@@ -168,7 +175,7 @@ namespace eProsima
                                         }
                                         else if(retCode == DDS::RETCODE_TIMEOUT)
                                         {
-                                            printf("WARNING <%s::%s>: Wait timeout.\n", CLASS_NAME, METHOD_NAME);
+                                            printf("WARNING <%s::%s>: Time out expiration.\n", CLASS_NAME, METHOD_NAME);
                                             returnedValue = SERVER_TIMEOUT;
                                         }
 

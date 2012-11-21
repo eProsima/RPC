@@ -35,10 +35,10 @@ group RPCSupport;
  *  clientRPCHeader - local
  */ 
 ClientHeader(interfaceName, topicNames) ::= <<
+$fileHeader(file=[interfaceName, "ClientRPCSupport.h"], description=["This header file contains the declaration of the proxy's RPC endpoints for interface ", interfaceName, "."])$
+
 #ifndef _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
-
-$doNotEditC()$
 
 #include "utils/GenericClientRPC.h"
 $ReqRepRIncludes(interfaceName=interfaceName)$
@@ -60,10 +60,10 @@ $topicNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n
  *  clientRPCHeader - local
  */ 
 ServerHeader(interfaceName,topicNames) ::= <<
+$fileHeader(file=[interfaceName, "ServerRPCSupport.h"], description=["This header file contains the declaration of the server's RPC endpoints for interface ", interfaceName, "."])$
+
 #ifndef _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
-
-$doNotEditC()$
 
 #include "utils/GenericServerRPC.h"
 $ReqRepRIncludes(interfaceName=interfaceName)$
@@ -86,7 +86,7 @@ $topicNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n
  *  clientRPCHeader - local
  */ 
 ClientDefinition(interfaceName,topicNames) ::= <<
-$doNotEditC()$
+$fileHeader(file=[interfaceName, "ClientRPCSupport.cxx"], description=["This source file contains the definition of the proxy's RPC endpoints for interface ", interfaceName, "."])$
 
 #include "$interfaceName$ClientRPCSupport.h"
 
@@ -106,7 +106,7 @@ $topicNames:{$ClientRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
  *  clientRPCHeader - local
  */ 
 ServerDefinition(interfaceName,topicNames) ::= <<
-$doNotEditC()$
+$fileHeader(file=[interfaceName, "ServerRPCSupport.cxx"], description=["This source file contains the definition of the server's RPC endpoints for interface ", interfaceName, "."])$
 
 #include "server/Server.h"
 #include "$interfaceName$ServerRPCSupport.h"

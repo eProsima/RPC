@@ -35,6 +35,7 @@ import java.util.HashMap;
 // TO_DO: string constants...
 public class RPCDDSGEN
 {
+	private static String version = "0.1.0";
     private static String osOption = "Win32";
     private static String exampleOption = null;
     private static String languageOption = "C++";
@@ -623,10 +624,6 @@ public class RPCDDSGEN
                 if(!one_invocation)
                 {
                 	mainTemplate.setAttribute("invocations", funCall.toString());
-                	if(osOption.equals("Win32"))
-                		mainTemplate.setAttribute("sleep", "Sleep");
-                	else if(osOption.equals("Linux"))
-                		mainTemplate.setAttribute("sleep", "sleep");
                 	one_invocation = true;
                 }
                 funDecl.reset();
@@ -926,6 +923,7 @@ public class RPCDDSGEN
         {
             idlFilename = idlFile;
             StringTemplate theFile = idlTemplates.getInstanceOf("idlFile");
+            theFile.setAttribute("interfaceName", ifc.getName());
             theFile.setAttribute("file", idlFilename);
 
             StringTemplate request = idlTemplates.getInstanceOf("request");
@@ -1053,6 +1051,8 @@ public class RPCDDSGEN
     		StringTemplate solution = idlTemplates.getInstanceOf("solution");
     		StringTemplate projectClient = idlTemplates.getInstanceOf("project");
     		StringTemplate projectServer = idlTemplates.getInstanceOf("project");
+    		StringTemplate projectFilesClient = idlTemplates.getInstanceOf("projectFiles");
+    		StringTemplate projectFilesServer = idlTemplates.getInstanceOf("projectFiles");
 
     		// Obtain only the filename of the idl file.
     		lastBarraOccurrency = idlFile.lastIndexOf('/');
@@ -1070,6 +1070,7 @@ public class RPCDDSGEN
     		projectServer.setAttribute("name",stringBuf.toString());
     		projectServer.setAttribute("example", exampleOption);
     		projectServer.setAttribute("arch", arch);
+    		projectFilesServer.setAttribute("interfaceName", ifc.getName());
 
     		stringBuf.delete(ifc.getName().length(), stringBuf.length());
     		stringBuf.append("Client");
@@ -1081,6 +1082,8 @@ public class RPCDDSGEN
     		projectClient.setAttribute("example", exampleOption);
     		projectClient.setAttribute("arch", arch);
     		projectClient.setAttribute("client", "client");
+    		projectFilesClient.setAttribute("interfaceName", ifc.getName());
+    		projectFilesClient.setAttribute("client", "client");
 
     		// project configurations	
     		for(int index = 0; index < configurations.length; index++){
@@ -1113,8 +1116,28 @@ public class RPCDDSGEN
     					externalDir.append("/");	
     				}
     				externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj");
-    				returnedValue = writeFile(externalDir.toString(), projectServer);
-    				externalDir.delete(externalDirLength, externalDir.length());
+    				if(writeFile(externalDir.toString(), projectServer) == 0)
+    				{
+    					externalDir.delete(externalDirLength, externalDir.length());
+    					
+    					if(externalDirLength > 0)
+    					{
+    						externalDir.append("/");
+    					}
+    					externalDir.append(ifc.getName()).append("Client-vs2010.vcxproj.filters");
+    	    			if(writeFile(externalDir.toString(), projectFilesClient) == 0)
+    	    			{
+    	    				externalDir.delete(externalDirLength, externalDir.length());
+        					
+        					if(externalDirLength > 0)
+        					{
+        						externalDir.append("/");
+        					}
+        					externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj.filters");
+    	    				returnedValue = writeFile(externalDir.toString(), projectFilesServer);
+    	    				externalDir.delete(externalDirLength, externalDir.length());
+    	    			}
+    				}
     			}
     		}
     	}
@@ -1157,7 +1180,7 @@ public class RPCDDSGEN
         IDLParser parser = null;
         Module root = null;
         
-        System.out.println("IDL Parser Version 0.1:  Reading from file " + file + " . . .");
+        System.out.println("RPCDDSGEN Version " + version + ":  Reading from file " + file + " . . .");
         try
         {
             parser = new IDLParser(new java.io.FileInputStream(file));
@@ -1290,6 +1313,11 @@ public class RPCDDSGEN
             	else
             		return false;
             }
+            else if(arg.equals("-version"))
+            {
+            	System.out.println("RPCDDSGEN Version " + version);
+            	System.exit(0);
+            }
             else if(arg.equals("-help"))
             {
             	return false;
@@ -1332,10 +1360,15 @@ public class RPCDDSGEN
                       "   -ppDisable               : Do not use C/C++ preprocessor.\n";
     	String opendds_help = "   -t <temp dir>: Use the specific directory as temporary directory.\n";
     	
-        System.out.print("rpcddsgen help:\n\nUsage: rpcdds [options] <IDL file>\nOptions:\n" +
+        System.out.print("rpcddsgen help:\n\nUsage: rpcddsgen [options] <IDL file>\nOptions:\n" +
         		"   -help: Show help\n" +
                 "   -example <platform>: Generate solution for specific platform (example: x64Win64VS2010)\n" +
-                "   -language <C++>: Programming language (default: C++).\n" +
+        		"                        Platforms supported:\n" +
+                "                         * i86Win32VS2010\n" +
+                "                         * x64Win64VS2010\n" +
+                "                         * i86Linux2.6gcc4.4.3\n" +
+                "                         * x64Linux2.6gcc4.5.1\n" +
+        //        "   -language <C++>: Programming language (default: C++).\n" +
                 "   -replace: replace generated files.\n" +
                 (middleware.equals("rti") ? rti_help : opendds_help));
         //				"   -d <path>                : Output directory.\n");

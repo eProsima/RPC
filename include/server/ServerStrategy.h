@@ -1,3 +1,11 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _SERVER_SERVERSTRATEGY_H_
 #define _SERVER_SERVERSTRATEGY_H_
 

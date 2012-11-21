@@ -1,7 +1,15 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _TRANSPORTS_TRANSPORT_H_
 #define _TRANSPORTS_TRANSPORT_H_
 
-#include "utils/Version.h"
+#include "utils/Middleware.h"
 #include "utils/rpcdds.h"
 
 namespace eProsima

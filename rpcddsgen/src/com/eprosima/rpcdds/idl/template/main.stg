@@ -17,17 +17,14 @@
 group main;
 
 varComplexDecl(typeName, name, create) ::= <<
-$typeName$ $name$;
-$if(create)$
-memset(&$name$, 0, sizeof($typeName$));
-$endif$
+$typeName$ $name$;$if(create)$$\n$memset(&$name$, 0, sizeof($typeName$));$endif$
 >>
 
 varComplexInitialize(typeName, name) ::= <<
 $if(!voidInitMap.(typeName))$
 $if(!typeInitMap.(typeName))$
 $typeName$_initialize(&$name$);
-$endif$    
+$endif$
 $endif$
 >>
 
@@ -123,6 +120,58 @@ sourceVS(interface) ::= <<
     <ClCompile Include="$interface$RequestReplyUtils.cxx" />
 >>
 
+sourceFilesVS(interface, client) ::= <<
+    <ClCompile Include="$interface$RequestReply.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$RequestReplyPlugin.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$Plugin.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$RequestReplySupport.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$Support.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$RequestReplyUtils.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+>>
+
 sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReply.h" />
     <ClInclude Include="$interface$.h" />
@@ -131,6 +180,58 @@ sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReplySupport.h" />
     <ClInclude Include="$interface$Support.h" />
     <ClInclude Include="$interface$RequestReplyUtils.h" />
+>>
+
+sourceFilesIVS(interface, client) ::= <<
+    <ClInclude Include="$interface$RequestReply.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$RequestReplyPlugin.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$Plugin.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$RequestReplySupport.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$Support.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$RequestReplyUtils.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
 >>
  
 preprocessorDefs(conf) ::= <<

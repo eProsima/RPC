@@ -1,10 +1,18 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
 #include "utils/rpcdds.h"
 #include "utils/Messages.h"
 #include "utils/Typedefs.h"
-#include "utils/Version.h"
+#include "utils/Middleware.h"
 
 #include <string>
 #include <list>

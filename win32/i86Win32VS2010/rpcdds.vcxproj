@@ -227,6 +227,7 @@
     <ClCompile Include="..\..\src\strategies\ThreadPoolStrategy.cpp" />
     <ClCompile Include="..\..\src\transports\TCPTransport.cpp" />
     <ClCompile Include="..\..\src\transports\UDPTransport.cpp" />
+    <ClCompile Include="..\..\src\utils\Middleware.cpp" />
     <ClCompile Include="..\..\src\utils\Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +255,7 @@
     <ClInclude Include="..\..\include\transports\TCPTransport.h" />
     <ClInclude Include="..\..\include\transports\Transport.h" />
     <ClInclude Include="..\..\include\transports\UDPTransport.h" />
+    <ClInclude Include="..\..\include\utils\Middleware.h" />
     <ClInclude Include="..\..\include\utils\rpcdds.h" />
     <ClInclude Include="..\..\include\utils\GenericClientRPC.h" />
     <ClInclude Include="..\..\include\utils\GenericServerRPC.h" />

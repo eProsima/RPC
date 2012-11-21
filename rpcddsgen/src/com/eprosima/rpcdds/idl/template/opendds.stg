@@ -126,6 +126,58 @@ sourceVS(interface) ::= <<
     <ClCompile Include="$interface$TypeSupportImpl.cpp" />
 >>
 
+sourceFilesVS(interface, client) ::= <<
+    <ClCompile Include="$interface$RequestReplyUtils.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$C.cpp" >
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$RequestReplyC.cpp">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$RequestReplyTypeSupportC.cpp">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$RequestReplyTypeSupportImpl.cpp">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$TypeSupportC.cpp">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="$interface$TypeSupportImpl.cpp">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+>>
+
 sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReplyUtils.h" />
     <ClInclude Include="$interface$C.h" />
@@ -134,6 +186,58 @@ sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h" />
     <ClInclude Include="$interface$TypeSupportC.h" />
     <ClInclude Include="$interface$TypeSupportImpl.h" />
+>>
+
+sourceFilesIVS(interface, client) ::= <<
+    <ClInclude Include="$interface$RequestReplyUtils.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$C.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$RequestReplyC.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$RequestReplyTypeSupportC.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$TypeSupportC.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="$interface$TypeSupportImpl.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
 >>
 
 preprocessorDefs(conf) ::= <<

@@ -1,10 +1,10 @@
 group AsyncSupport;
 
 header(interfaceName, taskDefs) ::= <<
+$fileHeader(file=[interfaceName, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for interface ", interfaceName, "."])$
+
 #ifndef _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
 #define _$interfaceName;format="toUpper"$_ASYNC_SUPPORT_H_
-
-$doNotEditC()$
 
 #include "client/AsyncTask.h"
 
@@ -57,6 +57,8 @@ class $interfaceName$_$name$Task : public eProsima::RPCDDS::AsyncTask
 >>
 
 definition(interfaceName, taskDecls) ::= <<
+$fileHeader(file=[interfaceName, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for interface ", interfaceName, "."])$
+
 #include "$interfaceName$Proxy.h"
 #include "$interfaceName$AsyncSupport.h"
 #include "exceptions/ServerInternalException.h"

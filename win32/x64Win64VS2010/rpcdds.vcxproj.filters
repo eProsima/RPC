@@ -123,6 +123,9 @@
     <ClCompile Include="..\..\src\exceptions\SystemException.cpp">
       <Filter>Archivos de código fuente\exceptions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\utils\Middleware.cpp">
+      <Filter>Archivos de código fuente\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\client\Client.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\server\ServerStrategy.h">
       <Filter>Archivos de encabezado\server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\Middleware.h">
+      <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,13 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "server/ServerRPC.h"
 #include "server/Server.h"
-#include "utils/Utilities.h"
 #include "eProsima_c/eProsimaMacros.h"
 #include "exceptions/InitializeException.h"
 

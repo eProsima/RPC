@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\example">
+      <UniqueIdentifier>{9b5f61bc-aaf5-47e7-bcf9-daf7649bfb0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client">
+      <UniqueIdentifier>{221de19c-4f48-4fab-801b-e4be8397d3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client">
+      <UniqueIdentifier>{8028dddc-002a-4cdf-a11d-a764e6f1e434}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+        <ClCompile Include="AsyncCallTestRequestReply.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+        <ClCompile Include="AsyncCallTest.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+        <ClCompile Include="AsyncCallTestRequestReplyPlugin.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+        <ClCompile Include="AsyncCallTestPlugin.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+        <ClCompile Include="AsyncCallTestRequestReplySupport.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+        <ClCompile Include="AsyncCallTestSupport.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+        <ClCompile Include="AsyncCallTestRequestReplyUtils.cxx">
+            <Filter>Source Files\client</Filter>
+        </ClCompile>
+    <ClCompile Include="AsyncCallTestProxy.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncCallTestClientRPCSupport.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncCallTestAsyncSupport.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cxx">
+      <Filter>Source Files\example</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+        <ClInclude Include="AsyncCallTestRequestReply.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+        <ClInclude Include="AsyncCallTest.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+        <ClInclude Include="AsyncCallTestRequestReplyPlugin.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+        <ClInclude Include="AsyncCallTestPlugin.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+        <ClInclude Include="AsyncCallTestRequestReplySupport.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+        <ClInclude Include="AsyncCallTestSupport.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+        <ClInclude Include="AsyncCallTestRequestReplyUtils.h">
+            <Filter>Header Files\client</Filter>
+        </ClInclude>
+    <ClInclude Include="AsyncCallTestProxy.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncCallTestClientRPCSupport.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncCallTestAsyncSupport.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
