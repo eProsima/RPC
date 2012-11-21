@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef ServerExceptionRequestReplyPlugin_2113075603_h
-#define ServerExceptionRequestReplyPlugin_2113075603_h
+#ifndef ServerExceptionRequestReplyPlugin_2113076077_h
+#define ServerExceptionRequestReplyPlugin_2113076077_h
 
 #include "ServerExceptionRequestReply.h"
 
@@ -1643,4 +1643,4 @@ ServerException_sendExceptionThreeReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* ServerExceptionRequestReplyPlugin_2113075603_h */
+#endif /* ServerExceptionRequestReplyPlugin_2113076077_h */

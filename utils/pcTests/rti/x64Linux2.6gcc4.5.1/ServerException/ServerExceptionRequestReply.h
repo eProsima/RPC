@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef ServerExceptionRequestReply_2113075603_h
-#define ServerExceptionRequestReply_2113075603_h
+#ifndef ServerExceptionRequestReply_2113076077_h
+#define ServerExceptionRequestReply_2113076077_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -581,4 +581,4 @@ RTIBool ServerException_sendExceptionThreeReply_copy(
 
 
 
-#endif /* ServerExceptionRequestReply_2113075603_h */
+#endif /* ServerExceptionRequestReply_2113076077_h */

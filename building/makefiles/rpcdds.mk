@@ -41,6 +41,7 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Client.cpp \
 			$(BASEDIR)/src/server/Server.cpp \
 			$(BASEDIR)/src/server/ServerRPC.cpp \
 			$(BASEDIR)/src/utils/Utilities.cpp \
+			$(BASEDIR)/src/utils/Middleware.cpp \
 			$(BASEDIR)/src/transports/UDPTransport.cpp \
 			$(BASEDIR)/src/transports/TCPTransport.cpp \
 			$(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \

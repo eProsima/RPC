@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef EnumYStringTestRequestReply_1383307758_h
-#define EnumYStringTestRequestReply_1383307758_h
+#ifndef EnumYStringTestRequestReply_1383308232_h
+#define EnumYStringTestRequestReply_1383308232_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -591,4 +591,4 @@ RTIBool EnumYStringTest_getStringBoundedReply_copy(
 
 
 
-#endif /* EnumYStringTestRequestReply_1383307758_h */
+#endif /* EnumYStringTestRequestReply_1383308232_h */

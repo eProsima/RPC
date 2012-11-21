@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef StructTestRequestReply_1086133049_h
-#define StructTestRequestReply_1086133049_h
+#ifndef StructTestRequestReply_1086133513_h
+#define StructTestRequestReply_1086133513_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -395,4 +395,4 @@ RTIBool StructTest_sumaReply_copy(
 
 
 
-#endif /* StructTestRequestReply_1086133049_h */
+#endif /* StructTestRequestReply_1086133513_h */

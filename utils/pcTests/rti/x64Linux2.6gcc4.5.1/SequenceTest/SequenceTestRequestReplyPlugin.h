@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SequenceTestRequestReplyPlugin_1689902972_h
-#define SequenceTestRequestReplyPlugin_1689902972_h
+#ifndef SequenceTestRequestReplyPlugin_1689903440_h
+#define SequenceTestRequestReplyPlugin_1689903440_h
 
 #include "SequenceTestRequestReply.h"
 
@@ -1643,4 +1643,4 @@ SequenceTest_getStringBoundedReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* SequenceTestRequestReplyPlugin_1689902972_h */
+#endif /* SequenceTestRequestReplyPlugin_1689903440_h */
