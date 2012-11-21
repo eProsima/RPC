@@ -8,7 +8,11 @@
 
 #include "utils/Utilities.h"
 
-#include "boost/thread.hpp"
+#if (defined(RTI_WIN32) || defined(OPENDDS_WIN32))
+#include <Windows.h>
+#elif (defined(RTI_LINUX) || defined(OPENDDS_LINUX))
+#include <unistd.h>
+#endif
 
 static const char* const CLASS_NAME = "eProsima::RPCDDS::Utilities";
 
@@ -18,7 +22,11 @@ namespace eProsima
     {
 		void sleep(unsigned int milliseconds)
 		{
-			boost::this_thread::sleep_for(boost::chrono::milliseconds(milliseconds));
+#if (defined(RTI_WIN32) || defined(OPENDDS_WIN32))
+			Sleep(milliseconds);
+#elif (defined(RTI_LINUX) || defined(OPENDDS_LINUX))
+			usleep(milliseconds * 1000);
+#endif
 		}
     } // namespace RPCDDS
 } //namespace eProsima
