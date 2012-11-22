@@ -1,0 +1,12 @@
+struct Estructura
+{
+    1: i32 valor1,
+    2: i32 valor2,
+    3: string valor3,
+}
+
+service SimpleDelay
+{
+    i32 suma(1: i32 value1, 2: i32 value2),
+    Estructura duplicate(1: Estructura es),
+}
