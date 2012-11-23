@@ -42,7 +42,7 @@ int main(int argc, char **argv)
             try
             {
                 udpt = new eProsima::RPCDDS::UDPTransport(argv[1]);
-                proxy = new SimpleDelayProxy("SimpleDelayService");
+                proxy = new SimpleDelayProxy("SimpleDelayService", udpt);
             }
             catch(eProsima::RPCDDS::InitializeException &ex)
             {
