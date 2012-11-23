@@ -14,6 +14,7 @@
 
 #include "SimpleDelayProxy.h"
 #include "SimpleDelayRequestReplyPlugin.h"
+#include "transports/UDPTransport.h"
 #include "exceptions/Exceptions.h"
 
 #include <iostream>
@@ -21,6 +22,12 @@
 
 int main(int argc, char **argv)
 {
+    boost::chrono::duration<double> suma_call_seconds[200];
+    boost::chrono::duration<double> duplicate_call_seconds[200];
+    boost::chrono::duration<double> suma_procedure_seconds;
+    boost::chrono::duration<double> duplicate_procedure_seconds;
+    boost::chrono::duration<double> program_seconds;
+
     if(argc == 2)
     {
         uint8_t ip[4];
@@ -28,12 +35,14 @@ int main(int argc, char **argv)
         // Check that the parameter is a IP address.
         if(sscanf(argv[1], "%hhu.%hhu.%hhu.%hhu", &ip[0], &ip[1], &ip[2], &ip[3]) == 4)
         {
+            eProsima::RPCDDS::UDPTransport *udpt = NULL;
             SimpleDelayProxy *proxy = NULL;
 
             // Creation of the proxy for interface "SimpleDelay".
             try
             {
-                proxy = new SimpleDelayProxy("SimpleDelayService");
+                udpt = new eProsima::RPCDDS::UDPTransport(argv[1]);
+                proxy = new SimpleDelayProxy("SimpleDelayService", udpt);
             }
             catch(eProsima::RPCDDS::InitializeException &ex)
             {
@@ -51,12 +60,10 @@ int main(int argc, char **argv)
             {
                 boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
                 int32_t result = proxy->suma(10, i);
-                boost::chrono::duration<double> call_seconds = boost::chrono::system_clock::now() - call_start;
-                std::cout << i << " > suma: " << result << " - in " << call_seconds.count() << " seconds." << std::endl;
+                suma_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
             }
 
-            boost::chrono::duration<double> procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
-            std::cout << "Executed 200 suma procedures in " << procedure_seconds.count() << " seconds." << std::endl;
+            suma_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
 
             procedure_start = boost::chrono::system_clock::now();
             // Testing ducplicate procedure.
@@ -69,14 +76,26 @@ int main(int argc, char **argv)
 
                 boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
                 ret = proxy->duplicate(es);
-                boost::chrono::duration<double> call_seconds = boost::chrono::system_clock::now() - call_start;
-                std::cout << i << " > duplicate: {" << ret.valor1 << "," << ret.valor2 << "," << es.valor3 << "} - in " << call_seconds.count() << " seconds." << std::endl;
+                duplicate_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
             }
 
-            procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
-            std::cout << "Executed 200 duplicate procedures in " << procedure_seconds.count() << " seconds." << std::endl;
+            duplicate_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
 
             boost::chrono::duration<double> program_seconds = boost::chrono::system_clock::now() - program_start;
+
+            // Print the suma call times.
+            for(int i = 0; i < 200; ++i)
+                std::cout << i << " > suma in " << suma_call_seconds[i].count() << " seconds." << std::endl;
+            // Print the all suma procedure time.
+            std::cout << "Executed 200 suma procedures in " << suma_procedure_seconds.count() << " seconds." << std::endl;
+
+            // Print the duplicate call times.
+            for(int i = 0; i < 200; ++i)
+                std::cout << i << " > duplicate in " << duplicate_call_seconds[i].count() << " seconds." << std::endl;
+            // Print the all duplicate procedure time.
+            std::cout << "Executed 200 duplicate procedures in " << duplicate_procedure_seconds.count() << " seconds." << std::endl;
+
+            // Print total execution time.
             std::cout << "Program execution in " << program_seconds.count() << " seconds." << std::endl;
 
             delete(proxy);
