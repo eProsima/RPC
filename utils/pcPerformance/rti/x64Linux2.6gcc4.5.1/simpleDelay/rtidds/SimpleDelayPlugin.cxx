@@ -139,20 +139,53 @@ EstructuraPluginSupport_print_data(
     }
 
 
-    RTICdrType_printLong(
-        &sample->valor1, "valor1", indent_level + 1);
+    RTICdrType_printShort(
+        &sample->short1, "short1", indent_level + 1);
+            
+
+    RTICdrType_printShort(
+        &sample->short2, "short2", indent_level + 1);
             
 
     RTICdrType_printLong(
-        &sample->valor2, "valor2", indent_level + 1);
+        &sample->long1, "long1", indent_level + 1);
             
 
-    if (&sample->valor3==NULL) {
+    RTICdrType_printLong(
+        &sample->long2, "long2", indent_level + 1);
+            
+
+    RTICdrType_printLongLong(
+        &sample->llong1, "llong1", indent_level + 1);
+            
+
+    RTICdrType_printLongLong(
+        &sample->llong2, "llong2", indent_level + 1);
+            
+
+    RTICdrType_printDouble(
+        &sample->double1, "double1", indent_level + 1);
+            
+
+    RTICdrType_printDouble(
+        &sample->double2, "double2", indent_level + 1);
+            
+
+    if (&sample->string1==NULL) {
         RTICdrType_printString(
-            NULL, "valor3", indent_level + 1);                
+            NULL, "string1", indent_level + 1);                
     } else {
         RTICdrType_printString(
-            sample->valor3, "valor3", indent_level + 1);                
+            sample->string1, "string1", indent_level + 1);                
+    }
+            
+
+    if (&sample->string2==NULL) {
+        RTICdrType_printString(
+            NULL, "string2", indent_level + 1);                
+    } else {
+        RTICdrType_printString(
+            sample->string2, "string2", indent_level + 1);                
     }
             
 
@@ -310,20 +343,62 @@ EstructuraPlugin_serialize(
 
     if(serialize_sample) {
     
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->valor1)) {
+    if (!RTICdrStream_serializeShort(
+        stream, &sample->short1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeShort(
+        stream, &sample->short2)) {
         return RTI_FALSE;
     }
             
 
     if (!RTICdrStream_serializeLong(
-        stream, &sample->valor2)) {
+        stream, &sample->long1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->long2)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeLongLong(
+        stream, &sample->llong1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeLongLong(
+        stream, &sample->llong2)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeDouble(
+        stream, &sample->double1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeDouble(
+        stream, &sample->double2)) {
         return RTI_FALSE;
     }
             
 
     if (!RTICdrStream_serializeString(
-        stream, sample->valor3, (255) + 1)) {
+        stream, sample->string1, (255) + 1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeString(
+        stream, sample->string2, (255) + 1)) {
         return RTI_FALSE;
     }
             
@@ -371,18 +446,54 @@ EstructuraPlugin_deserialize_sample(
     if(deserialize_sample) {
         Estructura_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->valor1)) {
+    if (!RTICdrStream_deserializeShort(
+        stream, &sample->short1)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeShort(
+        stream, &sample->short2)) {
         goto fin;
     }
 
     if (!RTICdrStream_deserializeLong(
-        stream, &sample->valor2)) {
+        stream, &sample->long1)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->long2)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeLongLong(
+        stream, &sample->llong1)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeLongLong(
+        stream, &sample->llong2)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeDouble(
+        stream, &sample->double1)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeDouble(
+        stream, &sample->double2)) {
         goto fin;
     }
 
     if (!RTICdrStream_deserializeString(
-        stream, sample->valor3, (255) + 1)) {
+        stream, sample->string1, (255) + 1)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_deserializeString(
+        stream, sample->string2, (255) + 1)) {
         goto fin;
     }
             
@@ -456,12 +567,47 @@ RTIBool EstructuraPlugin_skip(
 
     if (skip_sample) {
 
+    if (!RTICdrStream_skipShort(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipShort(stream)) {
+        goto fin;
+    }
+            
+
     if (!RTICdrStream_skipLong(stream)) {
         goto fin;
     }
             
 
     if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipLongLong(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipLongLong(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipDouble(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipDouble(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipString(stream, (255) + 1)) {
         goto fin;
     }
             
@@ -519,12 +665,40 @@ EstructuraPlugin_get_serialized_sample_max_size(
     }
 
 
+    current_alignment +=  RTICdrType_getShortMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getShortMaxSizeSerialized(
+        current_alignment);
+            
+
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
 
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getLongLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getLongLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getDoubleMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getDoubleMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
+        current_alignment, (255) + 1);
             
 
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
@@ -568,12 +742,40 @@ EstructuraPlugin_get_serialized_sample_min_size(
     }
 
 
+    current_alignment +=  RTICdrType_getShortMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getShortMaxSizeSerialized(
+        current_alignment);
+            
+
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
 
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getLongLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getLongLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getDoubleMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getDoubleMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
+        current_alignment, 1);
             
 
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
@@ -625,16 +827,44 @@ EstructuraPlugin_get_serialized_sample_size(
     }
 
 
+    current_alignment += RTICdrType_getShortMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment += RTICdrType_getShortMaxSizeSerialized(
+        current_alignment);
+            
+
     current_alignment += RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
 
     current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment += RTICdrType_getLongLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment += RTICdrType_getLongLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment += RTICdrType_getDoubleMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment += RTICdrType_getDoubleMaxSizeSerialized(
         current_alignment);
             
 
     current_alignment += RTICdrType_getStringSerializedSize(
-        current_alignment, sample->valor3);
+        current_alignment, sample->string1);
+            
+
+    current_alignment += RTICdrType_getStringSerializedSize(
+        current_alignment, sample->string2);
             
 
     if (include_encapsulation) {

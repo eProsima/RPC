@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SimpleDelayPlugin_1048391384_h
-#define SimpleDelayPlugin_1048391384_h
+#ifndef SimpleDelayPlugin_1048391523_h
+#define SimpleDelayPlugin_1048391523_h
 
 #include "SimpleDelay.h"
 
@@ -253,4 +253,4 @@ EstructuraPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* SimpleDelayPlugin_1048391384_h */
+#endif /* SimpleDelayPlugin_1048391523_h */

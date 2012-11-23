@@ -120,8 +120,8 @@ extern "C" int publisher_main(int domainId, int sample_count)
     DDSStatusCondition *duplicateStatus;
     unsigned int seqNum = 0;
 
-    boost::chrono::duration<double> suma_call_seconds[200];
-    boost::chrono::duration<double> duplicate_call_seconds[200];
+    boost::chrono::duration<double> suma_call_seconds[1000];
+    boost::chrono::duration<double> duplicate_call_seconds[1000];
     boost::chrono::duration<double> suma_procedure_seconds;
     boost::chrono::duration<double> duplicate_procedure_seconds;
     boost::chrono::duration<double> program_seconds;
@@ -314,7 +314,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
     boost::chrono::system_clock::time_point procedure_start = boost::chrono::system_clock::now();
 
 
-    for(int i = 0; i < 200; ++i)
+    for(int i = 0; i < 1000; ++i)
     {
         DDS_ReturnCode_t retCode;
         DDSConditionSeq conds;
@@ -336,7 +336,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
         {
             if(conds.length() == 1 && conds[0] == sumaStatus)
             {
-                DDS_StatusMask triggerMask = sumaReplyReader->get_status_changes();
+                DDS_StatusMask triggerMask = SimpleDelay_sumaReply_reader->get_status_changes();
                 if(triggerMask & DDS_DATA_AVAILABLE_STATUS)
                 {
                     SimpleDelay_sumaReplySeq data_seq;
@@ -382,7 +382,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
 
     procedure_start = boost::chrono::system_clock::now();
 
-    for(int i = 0; i < 200; ++i)
+    for(int i = 0; i < 1000; ++i)
     {
         DDS_ReturnCode_t retCode;
         DDSConditionSeq conds;
@@ -402,7 +402,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
         {
             if(conds.length() == 1 && conds[0] == duplicateStatus)
             {
-                DDS_StatusMask triggerMask = duplicateReplyReader->get_status_changes();
+                DDS_StatusMask triggerMask = SimpleDelay_duplicateReply_reader->get_status_changes();
                 if(triggerMask & DDS_DATA_AVAILABLE_STATUS)
                 {
                     SimpleDelay_duplicateReplySeq data_seq;
@@ -454,16 +454,16 @@ extern "C" int publisher_main(int domainId, int sample_count)
     program_seconds = boost::chrono::system_clock::now() - program_start;
 
     // Print the suma call times.
-    for(int i = 0; i < 200; ++i)
-        std::cout << i << " > suma in " << suma_call_seconds[i].count() << " seconds." << std::endl;
+    //for(int i = 0; i < 1000; ++i)
+    //    std::cout << i << " > suma in " << suma_call_seconds[i].count() << " seconds." << std::endl;
     // Print the all suma procedure time.
-    std::cout << "Executed 200 suma procedures in " << suma_procedure_seconds.count() << " seconds." << std::endl;
+    std::cout << "Executed 1000 suma procedures in " << suma_procedure_seconds.count() << " seconds." << std::endl;
 
     // Print the duplicate call times.
-    for(int i = 0; i < 200; ++i)
-        std::cout << i << " > duplicate in " << duplicate_call_seconds[i].count() << " seconds." << std::endl;
+    //for(int i = 0; i < 1000; ++i)
+        //std::cout << i << " > duplicate in " << duplicate_call_seconds[i].count() << " seconds." << std::endl;
     // Print the all duplicate procedure time.
-    std::cout << "Executed 200 duplicate procedures in " << duplicate_procedure_seconds.count() << " seconds." << std::endl;
+    std::cout << "Executed 1000 duplicate procedures in " << duplicate_procedure_seconds.count() << " seconds." << std::endl;
 
     // Print total execution time.
     std::cout << "Program execution in " << program_seconds.count() << " seconds." << std::endl;

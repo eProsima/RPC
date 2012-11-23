@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SimpleDelay_1048391384_h
-#define SimpleDelay_1048391384_h
+#ifndef SimpleDelay_1048391523_h
+#define SimpleDelay_1048391523_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -66,11 +66,25 @@ public:
 
 #endif
     
-    DDS_Long  valor1;
+    DDS_Short  short1;
 
-    DDS_Long  valor2;
+    DDS_Short  short2;
 
-    char*  valor3; /* maximum length = (255) */
+    DDS_Long  long1;
+
+    DDS_Long  long2;
+
+    DDS_LongLong  llong1;
+
+    DDS_LongLong  llong2;
+
+    DDS_Double  double1;
+
+    DDS_Double  double2;
+
+    char*  string1; /* maximum length = (255) */
+
+    char*  string2; /* maximum length = (255) */
 
             
 };                        
@@ -119,4 +133,4 @@ RTIBool Estructura_copy(
 
 
 
-#endif /* SimpleDelay_1048391384_h */
+#endif /* SimpleDelay_1048391523_h */

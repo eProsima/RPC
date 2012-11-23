@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef SimpleDelaySupport_1048391384_h
-#define SimpleDelaySupport_1048391384_h
+#ifndef SimpleDelaySupport_1048391523_h
+#define SimpleDelaySupport_1048391523_h
 
 /* Uses */
 #include "SimpleDelay.h"
@@ -80,4 +80,4 @@ DDS_DATAREADER_C(EstructuraDataReader, EstructuraSeq, Estructura);
 
 
 
-#endif  /* SimpleDelaySupport_1048391384_h */
+#endif  /* SimpleDelaySupport_1048391523_h */
