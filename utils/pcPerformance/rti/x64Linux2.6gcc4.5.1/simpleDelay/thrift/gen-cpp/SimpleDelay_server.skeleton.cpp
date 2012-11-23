@@ -4,14 +4,17 @@
 #include "SimpleDelay.h"
 #include <netinet/in.h>
 #include <thrift/protocol/TBinaryProtocol.h>
-#include <thrift/server/TSimpleServer.h>
+#include <thrift/server/TThreadPoolServer.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
+#include <thrift/concurrency/ThreadManager.h>
+#include <thrift/concurrency/PosixThreadFactory.h>
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
+using namespace ::apache::thrift::concurrency;
 
 using boost::shared_ptr;
 
@@ -23,13 +26,13 @@ class SimpleDelayHandler : virtual public SimpleDelayIf {
 
   int32_t suma(const int32_t value1, const int32_t value2) {
     // Your implementation goes here
-    printf("suma\n");
+    //printf("suma\n");
     return value1 + value2;
   }
 
   void duplicate(Estructura& _return, const Estructura& es) {
     // Your implementation goes here
-    printf("duplicate\n");
+    //printf("duplicate\n");
     _return.valor1 = es.valor1;
     _return.valor2 = es.valor2;
     _return.valor3 = es.valor3;
@@ -44,8 +47,13 @@ int main(int argc, char **argv) {
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager();
+  shared_ptr<PosixThreadFactory> threadFactory(new PosixThreadFactory());
 
-  TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+  threadManager->threadFactory(threadFactory);
+  threadManager->start();
+
+  TThreadPoolServer server(processor, serverTransport, transportFactory, protocolFactory, threadManager);
   server.serve();
   return 0;
 }
