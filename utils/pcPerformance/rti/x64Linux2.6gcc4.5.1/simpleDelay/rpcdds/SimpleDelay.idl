@@ -1,8 +1,15 @@
 struct Estructura
 {
-    long valor1;
-    long valor2;
-    string valor3;
+    short short1;
+    short short2;
+    long long1;
+    long long2;
+    long long llong1;
+    long long llong2;
+    double double1;
+    double double2;
+    string string1;
+    string string2;
 };
 
 interface SimpleDelay

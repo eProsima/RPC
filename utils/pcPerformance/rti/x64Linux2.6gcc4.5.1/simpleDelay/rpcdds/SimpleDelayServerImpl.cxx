@@ -24,9 +24,16 @@ Estructura SimpleDelayServerImpl::duplicate(/*in*/ const Estructura& es)
 {
     Estructura duplicate_ret;
 
-    duplicate_ret.valor1 = es.valor1;
-    duplicate_ret.valor2 = es.valor2;
-    duplicate_ret.valor3 = strdup(es.valor3);
+    duplicate_ret.short1 = es.short1;
+    duplicate_ret.short2 = es.short2;
+    duplicate_ret.long1 = es.long1;
+    duplicate_ret.long2 = es.long2;
+    duplicate_ret.llong1 = es.llong1;
+    duplicate_ret.llong2 = es.llong2;
+    duplicate_ret.double1 = es.double1;
+    duplicate_ret.double2 = es.double2;
+    duplicate_ret.string1 = strdup(es.string1);
+    duplicate_ret.string2 = strdup(es.string2);
    
     return duplicate_ret;
 } 

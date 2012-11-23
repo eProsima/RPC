@@ -45,12 +45,13 @@ DDS_TypeCode* Estructura_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode Estructura_g_tc_valor3_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode Estructura_g_tc_string1_string = DDS_INITIALIZE_STRING_TYPECODE(255);
+    static DDS_TypeCode Estructura_g_tc_string2_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member Estructura_g_tc_members[3]=
+    static DDS_TypeCode_Member Estructura_g_tc_members[10]=
     {
         {
-            (char *)"valor1",/* Member name */
+            (char *)"short1",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -67,7 +68,7 @@ DDS_TypeCode* Estructura_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"valor2",/* Member name */
+            (char *)"short2",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -84,7 +85,126 @@ DDS_TypeCode* Estructura_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"valor3",/* Member name */
+            (char *)"long1",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"long2",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"llong1",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"llong2",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"double1",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"double2",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"string1",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
+        {
+            (char *)"string2",/* Member name */
             {
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -112,7 +232,7 @@ DDS_TypeCode* Estructura_get_typecode()
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
+        10, /* Number of members */
         Estructura_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
     }}; /* Type code for Estructura*/
@@ -122,9 +242,16 @@ DDS_TypeCode* Estructura_get_typecode()
     }
 
 
-    Estructura_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    Estructura_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-    Estructura_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&Estructura_g_tc_valor3_string;
+    Estructura_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
+    Estructura_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
+    Estructura_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    Estructura_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+    Estructura_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_longlong;
+    Estructura_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_longlong;
+    Estructura_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double;
+    Estructura_g_tc_members[7]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double;
+    Estructura_g_tc_members[8]._representation._typeCode = (RTICdrTypeCode *)&Estructura_g_tc_string1_string;
+    Estructura_g_tc_members[9]._representation._typeCode = (RTICdrTypeCode *)&Estructura_g_tc_string2_string;
 
     is_initialized = RTI_TRUE;
 
@@ -145,24 +272,66 @@ RTIBool Estructura_initialize_ex(
     if (allocatePointers) {} /* To avoid warnings */
     if (allocateMemory) {} /* To avoid warnings */
 
-    if (!RTICdrType_initLong(&sample->valor1)) {
+    if (!RTICdrType_initShort(&sample->short1)) {
         return RTI_FALSE;
     }                
             
 
-    if (!RTICdrType_initLong(&sample->valor2)) {
+    if (!RTICdrType_initShort(&sample->short2)) {
+        return RTI_FALSE;
+    }                
+            
+
+    if (!RTICdrType_initLong(&sample->long1)) {
+        return RTI_FALSE;
+    }                
+            
+
+    if (!RTICdrType_initLong(&sample->long2)) {
+        return RTI_FALSE;
+    }                
+            
+
+    if (!RTICdrType_initLongLong(&sample->llong1)) {
+        return RTI_FALSE;
+    }                
+            
+
+    if (!RTICdrType_initLongLong(&sample->llong2)) {
+        return RTI_FALSE;
+    }                
+            
+
+    if (!RTICdrType_initDouble(&sample->double1)) {
+        return RTI_FALSE;
+    }                
+            
+
+    if (!RTICdrType_initDouble(&sample->double2)) {
         return RTI_FALSE;
     }                
             
 
     if (allocateMemory) {
-        sample->valor3 = DDS_String_alloc((255));
-        if (sample->valor3 == NULL) {
+        sample->string1 = DDS_String_alloc((255));
+        if (sample->string1 == NULL) {
             return RTI_FALSE;
         }
     } else {
-        if (sample->valor3 != NULL) { 
-            sample->valor3[0] = '\0';
+        if (sample->string1 != NULL) { 
+            sample->string1[0] = '\0';
+        }
+    }
+            
+
+    if (allocateMemory) {
+        sample->string2 = DDS_String_alloc((255));
+        if (sample->string2 == NULL) {
+            return RTI_FALSE;
+        }
+    } else {
+        if (sample->string2 != NULL) { 
+            sample->string2[0] = '\0';
         }
     }
             
@@ -186,7 +355,16 @@ void Estructura_finalize_ex(
 
 
 
-    DDS_String_free(sample->valor3);                
+
+
+
+
+
+
+    DDS_String_free(sample->string1);                
+            
+
+    DDS_String_free(sample->string2);                
             
 
 }
@@ -196,20 +374,62 @@ RTIBool Estructura_copy(
     const Estructura* src)
 {        
 
-    if (!RTICdrType_copyLong(
-        &dst->valor1, &src->valor1)) {
+    if (!RTICdrType_copyShort(
+        &dst->short1, &src->short1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyShort(
+        &dst->short2, &src->short2)) {
         return RTI_FALSE;
     }
             
 
     if (!RTICdrType_copyLong(
-        &dst->valor2, &src->valor2)) {
+        &dst->long1, &src->long1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyLong(
+        &dst->long2, &src->long2)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyLongLong(
+        &dst->llong1, &src->llong1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyLongLong(
+        &dst->llong2, &src->llong2)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyDouble(
+        &dst->double1, &src->double1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyDouble(
+        &dst->double2, &src->double2)) {
         return RTI_FALSE;
     }
             
 
     if (!RTICdrType_copyString(
-        dst->valor3, src->valor3, (255) + 1)) {
+        dst->string1, src->string1, (255) + 1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrType_copyString(
+        dst->string2, src->string2, (255) + 1)) {
         return RTI_FALSE;
     }
             
