@@ -36,10 +36,6 @@
   #include "cdr/cdr_type.h"
 #endif
 
-#ifndef cdr_type_object_h
-  #include "cdr/cdr_typeObject.h"
-#endif
-
 #ifndef cdr_encapsulation_h
   #include "cdr/cdr_encapsulation.h"
 #endif
@@ -73,11 +69,11 @@ EnvioPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, Envio);
 
     if(sample != NULL) {
-        if (!Envio_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
-            RTIOsapiHeap_freeStructure(sample);
+        if (!Envio_initialize_ex(sample,allocate_pointers)) {
+            RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
-    }        
+    }
     return sample; 
 }
 
@@ -142,7 +138,6 @@ EnvioPluginSupport_print_data(
     RTICdrType_printLong(
         &sample->dato, "dato", indent_level + 1);
             
-
     if (&sample->message==NULL) {
         RTICdrType_printString(
             NULL, "message", indent_level + 1);                
@@ -152,10 +147,97 @@ EnvioPluginSupport_print_data(
     }
             
 
+}
+
+
+
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+
+
+PRESTypePluginParticipantData 
+EnvioPlugin_on_participant_attached(
+    void *registration_data,
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration,
+    void *container_plugin_context,
+    RTICdrTypeCode *type_code)
+{
+
+    if (registration_data) {} /* To avoid warnings */
+    if (participant_info) {} /* To avoid warnings */
+    if (top_level_registration) {} /* To avoid warnings */
+    if (container_plugin_context) {} /* To avoid warnings */
+    if (type_code) {} /* To avoid warnings */
+    return PRESTypePluginDefaultParticipantData_new(participant_info);
 
 }
 
- 
+
+void 
+EnvioPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data)
+{
+
+  PRESTypePluginDefaultParticipantData_delete(participant_data);
+}
+
+
+PRESTypePluginEndpointData
+EnvioPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *containerPluginContext)
+{
+    PRESTypePluginEndpointData epd = NULL;
+
+   if (top_level_registration) {} /* To avoid warnings */
+   if (containerPluginContext) {} /* To avoid warnings */
+
+    epd = PRESTypePluginDefaultEndpointData_new(
+            participant_data,
+            endpoint_info,
+            (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
+            EnvioPluginSupport_create_data,
+            (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
+            EnvioPluginSupport_destroy_data,
+            NULL, NULL);
+
+    if (epd == NULL) {
+        return NULL;
+    }
+
+    
+    if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        if (PRESTypePluginDefaultEndpointData_createWriterPool(
+                epd,
+                endpoint_info,
+            (PRESTypePluginGetSerializedSampleMaxSizeFunction)
+                EnvioPlugin_get_serialized_sample_max_size, epd,
+            (PRESTypePluginGetSerializedSampleSizeFunction)
+            EnvioPlugin_get_serialized_sample_size,
+            epd) == RTI_FALSE) {
+            PRESTypePluginDefaultEndpointData_delete(epd);
+            return NULL;
+        }
+    }
+    
+
+
+    return epd;    
+}
+
+
+void 
+EnvioPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data)
+{  
+
+    PRESTypePluginDefaultEndpointData_delete(endpoint_data);
+}
 
 
 RTIBool 
@@ -172,13 +254,6 @@ EnvioPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
-unsigned int 
-EnvioPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
 
 RTIBool 
 EnvioPlugin_serialize(
@@ -193,41 +268,38 @@ EnvioPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+  if (endpoint_data) {} /* To avoid warnings */
+  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
 
-    if(serialize_encapsulation) {
-  
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
+  if(serialize_encapsulation) {
 
-        position = RTICdrStream_resetAlignment(stream);
-
+    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+        return RTI_FALSE;
     }
 
+    position = RTICdrStream_resetAlignment(stream);
 
-    if(serialize_sample) {
-    
+  }
+
+  if(serialize_sample) {
+
     if (!RTICdrStream_serializeLong(
         stream, &sample->dato)) {
         return RTI_FALSE;
     }
             
-
     if (!RTICdrStream_serializeString(
         stream, sample->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+  }
 
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
+  if(serialize_encapsulation) {
+    RTICdrStream_restoreAlignment(stream,position);
+  }
 
 
   return retval;
@@ -245,8 +317,6 @@ EnvioPlugin_deserialize_sample(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -261,28 +331,21 @@ EnvioPlugin_deserialize_sample(
 
     }
     
-    
     if(deserialize_sample) {
-        Envio_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
-    
+
+
     if (!RTICdrStream_deserializeLong(
         stream, &sample->dato)) {
-        goto fin;
-    }
-
-    if (!RTICdrStream_deserializeString(
-        stream, sample->message, (255) + 1)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
+    if (!RTICdrStream_deserializeString(
+        stream, sample->message, (255) + 1)) {
+        return RTI_FALSE;
+    }
+            
     }
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -294,7 +357,6 @@ fin:
 
  
  
-
 RTIBool 
 EnvioPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -317,7 +379,6 @@ EnvioPlugin_deserialize(
 
 
 
-
 RTIBool EnvioPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -326,8 +387,6 @@ RTIBool EnvioPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -346,24 +405,15 @@ RTIBool EnvioPlugin_skip(
     if (skip_sample) {
 
     if (!RTICdrStream_skipLong(stream)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!RTICdrStream_skipString(stream, (255) + 1)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
-
     }
-    
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -406,11 +456,9 @@ EnvioPlugin_get_serialized_sample_max_size(
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
-
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, (255) + 1);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -451,11 +499,9 @@ EnvioPlugin_get_serialized_sample_min_size(
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
-
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, 1);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -504,23 +550,15 @@ EnvioPlugin_get_serialized_sample_size(
     current_alignment += RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
-
     current_alignment += RTICdrType_getStringSerializedSize(
         current_alignment, sample->message);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
-
-
-
-
-
-
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -553,7 +591,6 @@ EnvioPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
-    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -704,10 +741,6 @@ EnvioPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
-
 
     if(deserialize_encapsulation) {
         if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
@@ -729,12 +762,6 @@ EnvioPlugin_serialized_sample_to_key(
     }
 
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
-
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -749,6 +776,110 @@ fin:
 /* ------------------------------------------------------------------------
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
+ 
+struct PRESTypePlugin *EnvioPlugin_new(void) 
+{ 
+    struct PRESTypePlugin *plugin = NULL;
+    const struct PRESTypePluginVersion PLUGIN_VERSION = 
+        PRES_TYPE_PLUGIN_VERSION_2_0;
+
+    RTIOsapiHeap_allocateStructure(
+        &plugin, struct PRESTypePlugin);
+    if (plugin == NULL) {
+       return NULL;
+    }
+
+    plugin->version = PLUGIN_VERSION;
+
+    /* set up parent's function pointers */
+    plugin->onParticipantAttached =
+        (PRESTypePluginOnParticipantAttachedCallback)
+        EnvioPlugin_on_participant_attached;
+    plugin->onParticipantDetached =
+        (PRESTypePluginOnParticipantDetachedCallback)
+        EnvioPlugin_on_participant_detached;
+    plugin->onEndpointAttached =
+        (PRESTypePluginOnEndpointAttachedCallback)
+        EnvioPlugin_on_endpoint_attached;
+    plugin->onEndpointDetached =
+        (PRESTypePluginOnEndpointDetachedCallback)
+        EnvioPlugin_on_endpoint_detached;
+
+    plugin->copySampleFnc =
+        (PRESTypePluginCopySampleFunction)
+        EnvioPlugin_copy_sample;
+    plugin->createSampleFnc =
+        (PRESTypePluginCreateSampleFunction)
+        EnvioPlugin_create_sample;
+    plugin->destroySampleFnc =
+        (PRESTypePluginDestroySampleFunction)
+        EnvioPlugin_destroy_sample;
+
+    plugin->serializeFnc =
+        (PRESTypePluginSerializeFunction)
+        EnvioPlugin_serialize;
+    plugin->deserializeFnc =
+        (PRESTypePluginDeserializeFunction)
+        EnvioPlugin_deserialize;
+    plugin->getSerializedSampleMaxSizeFnc =
+        (PRESTypePluginGetSerializedSampleMaxSizeFunction)
+        EnvioPlugin_get_serialized_sample_max_size;
+    plugin->getSerializedSampleMinSizeFnc =
+        (PRESTypePluginGetSerializedSampleMinSizeFunction)
+        EnvioPlugin_get_serialized_sample_min_size;
+
+
+    plugin->getSampleFnc =
+        (PRESTypePluginGetSampleFunction)
+        EnvioPlugin_get_sample;
+    plugin->returnSampleFnc =
+        (PRESTypePluginReturnSampleFunction)
+        EnvioPlugin_return_sample;
+
+    plugin->getKeyKindFnc =
+        (PRESTypePluginGetKeyKindFunction)
+        EnvioPlugin_get_key_kind;
+
+ 
+    /* These functions are only used for keyed types. As this is not a keyed
+    type they are all set to NULL
+    */
+    plugin->serializeKeyFnc = NULL;
+    plugin->deserializeKeyFnc = NULL;
+    plugin->getKeyFnc = NULL;
+    plugin->returnKeyFnc = NULL;
+    plugin->instanceToKeyFnc = NULL;
+    plugin->keyToInstanceFnc = NULL;
+    plugin->getSerializedKeyMaxSizeFnc = NULL;
+    plugin->instanceToKeyHashFnc = NULL;
+    plugin->serializedSampleToKeyHashFnc = NULL;
+    plugin->serializedKeyToKeyHashFnc = NULL;
+    
+    plugin->typeCode =  (struct RTICdrTypeCode *)Envio_get_typecode();
+    
+    plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
+
+    /* Serialized buffer */
+    plugin->getBuffer = 
+        (PRESTypePluginGetBufferFunction)
+        EnvioPlugin_get_buffer;
+    plugin->returnBuffer = 
+        (PRESTypePluginReturnBufferFunction)
+        EnvioPlugin_return_buffer;
+    plugin->getSerializedSampleSizeFnc =
+        (PRESTypePluginGetSerializedSampleSizeFunction)
+        EnvioPlugin_get_serialized_sample_size;
+
+    plugin->endpointTypeName = EnvioTYPENAME;
+
+    return plugin;
+}
+
+void
+EnvioPlugin_delete(struct PRESTypePlugin *plugin)
+{
+    RTIOsapiHeap_freeStructure(plugin);
+} 
 
 /* --------------------------------------------------------------------------------------
  *  Type Recepcion
@@ -766,11 +897,11 @@ RecepcionPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, Recepcion);
 
     if(sample != NULL) {
-        if (!Recepcion_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
-            RTIOsapiHeap_freeStructure(sample);
+        if (!Recepcion_initialize_ex(sample,allocate_pointers)) {
+            RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
-    }        
+    }
     return sample; 
 }
 
@@ -835,7 +966,6 @@ RecepcionPluginSupport_print_data(
     RTICdrType_printLong(
         &sample->devolucion, "devolucion", indent_level + 1);
             
-
     if (&sample->message==NULL) {
         RTICdrType_printString(
             NULL, "message", indent_level + 1);                
@@ -845,10 +975,97 @@ RecepcionPluginSupport_print_data(
     }
             
 
+}
+
+
+
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+
+
+PRESTypePluginParticipantData 
+RecepcionPlugin_on_participant_attached(
+    void *registration_data,
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration,
+    void *container_plugin_context,
+    RTICdrTypeCode *type_code)
+{
+
+    if (registration_data) {} /* To avoid warnings */
+    if (participant_info) {} /* To avoid warnings */
+    if (top_level_registration) {} /* To avoid warnings */
+    if (container_plugin_context) {} /* To avoid warnings */
+    if (type_code) {} /* To avoid warnings */
+    return PRESTypePluginDefaultParticipantData_new(participant_info);
 
 }
 
- 
+
+void 
+RecepcionPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data)
+{
+
+  PRESTypePluginDefaultParticipantData_delete(participant_data);
+}
+
+
+PRESTypePluginEndpointData
+RecepcionPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *containerPluginContext)
+{
+    PRESTypePluginEndpointData epd = NULL;
+
+   if (top_level_registration) {} /* To avoid warnings */
+   if (containerPluginContext) {} /* To avoid warnings */
+
+    epd = PRESTypePluginDefaultEndpointData_new(
+            participant_data,
+            endpoint_info,
+            (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
+            RecepcionPluginSupport_create_data,
+            (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
+            RecepcionPluginSupport_destroy_data,
+            NULL, NULL);
+
+    if (epd == NULL) {
+        return NULL;
+    }
+
+    
+    if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
+        if (PRESTypePluginDefaultEndpointData_createWriterPool(
+                epd,
+                endpoint_info,
+            (PRESTypePluginGetSerializedSampleMaxSizeFunction)
+                RecepcionPlugin_get_serialized_sample_max_size, epd,
+            (PRESTypePluginGetSerializedSampleSizeFunction)
+            RecepcionPlugin_get_serialized_sample_size,
+            epd) == RTI_FALSE) {
+            PRESTypePluginDefaultEndpointData_delete(epd);
+            return NULL;
+        }
+    }
+    
+
+
+    return epd;    
+}
+
+
+void 
+RecepcionPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data)
+{  
+
+    PRESTypePluginDefaultEndpointData_delete(endpoint_data);
+}
 
 
 RTIBool 
@@ -865,13 +1082,6 @@ RecepcionPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
-unsigned int 
-RecepcionPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
 
 RTIBool 
 RecepcionPlugin_serialize(
@@ -886,41 +1096,38 @@ RecepcionPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+  if (endpoint_data) {} /* To avoid warnings */
+  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
 
-    if(serialize_encapsulation) {
-  
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
+  if(serialize_encapsulation) {
 
-        position = RTICdrStream_resetAlignment(stream);
-
+    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+        return RTI_FALSE;
     }
 
+    position = RTICdrStream_resetAlignment(stream);
 
-    if(serialize_sample) {
-    
+  }
+
+  if(serialize_sample) {
+
     if (!RTICdrStream_serializeLong(
         stream, &sample->devolucion)) {
         return RTI_FALSE;
     }
             
-
     if (!RTICdrStream_serializeString(
         stream, sample->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
+  }
 
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
+  if(serialize_encapsulation) {
+    RTICdrStream_restoreAlignment(stream,position);
+  }
 
 
   return retval;
@@ -938,8 +1145,6 @@ RecepcionPlugin_deserialize_sample(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -954,28 +1159,21 @@ RecepcionPlugin_deserialize_sample(
 
     }
     
-    
     if(deserialize_sample) {
-        Recepcion_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
-    
+
+
     if (!RTICdrStream_deserializeLong(
         stream, &sample->devolucion)) {
-        goto fin;
-    }
-
-    if (!RTICdrStream_deserializeString(
-        stream, sample->message, (255) + 1)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
+    if (!RTICdrStream_deserializeString(
+        stream, sample->message, (255) + 1)) {
+        return RTI_FALSE;
+    }
+            
     }
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -987,7 +1185,6 @@ fin:
 
  
  
-
 RTIBool 
 RecepcionPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -1010,7 +1207,6 @@ RecepcionPlugin_deserialize(
 
 
 
-
 RTIBool RecepcionPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -1019,8 +1215,6 @@ RTIBool RecepcionPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -1039,24 +1233,15 @@ RTIBool RecepcionPlugin_skip(
     if (skip_sample) {
 
     if (!RTICdrStream_skipLong(stream)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!RTICdrStream_skipString(stream, (255) + 1)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
-
     }
-    
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1099,11 +1284,9 @@ RecepcionPlugin_get_serialized_sample_max_size(
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
-
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, (255) + 1);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1144,11 +1327,9 @@ RecepcionPlugin_get_serialized_sample_min_size(
     current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
-
     current_alignment +=  RTICdrType_getStringMaxSizeSerialized(
         current_alignment, 1);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1197,23 +1378,15 @@ RecepcionPlugin_get_serialized_sample_size(
     current_alignment += RTICdrType_getLongMaxSizeSerialized(
         current_alignment);
             
-
     current_alignment += RTICdrType_getStringSerializedSize(
         current_alignment, sample->message);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
-
-
-
-
-
-
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -1246,7 +1419,6 @@ RecepcionPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
-    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -1397,10 +1569,6 @@ RecepcionPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
-
 
     if(deserialize_encapsulation) {
         if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
@@ -1422,12 +1590,6 @@ RecepcionPlugin_serialized_sample_to_key(
     }
 
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
-
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -1442,3 +1604,107 @@ fin:
 /* ------------------------------------------------------------------------
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
+ 
+struct PRESTypePlugin *RecepcionPlugin_new(void) 
+{ 
+    struct PRESTypePlugin *plugin = NULL;
+    const struct PRESTypePluginVersion PLUGIN_VERSION = 
+        PRES_TYPE_PLUGIN_VERSION_2_0;
+
+    RTIOsapiHeap_allocateStructure(
+        &plugin, struct PRESTypePlugin);
+    if (plugin == NULL) {
+       return NULL;
+    }
+
+    plugin->version = PLUGIN_VERSION;
+
+    /* set up parent's function pointers */
+    plugin->onParticipantAttached =
+        (PRESTypePluginOnParticipantAttachedCallback)
+        RecepcionPlugin_on_participant_attached;
+    plugin->onParticipantDetached =
+        (PRESTypePluginOnParticipantDetachedCallback)
+        RecepcionPlugin_on_participant_detached;
+    plugin->onEndpointAttached =
+        (PRESTypePluginOnEndpointAttachedCallback)
+        RecepcionPlugin_on_endpoint_attached;
+    plugin->onEndpointDetached =
+        (PRESTypePluginOnEndpointDetachedCallback)
+        RecepcionPlugin_on_endpoint_detached;
+
+    plugin->copySampleFnc =
+        (PRESTypePluginCopySampleFunction)
+        RecepcionPlugin_copy_sample;
+    plugin->createSampleFnc =
+        (PRESTypePluginCreateSampleFunction)
+        RecepcionPlugin_create_sample;
+    plugin->destroySampleFnc =
+        (PRESTypePluginDestroySampleFunction)
+        RecepcionPlugin_destroy_sample;
+
+    plugin->serializeFnc =
+        (PRESTypePluginSerializeFunction)
+        RecepcionPlugin_serialize;
+    plugin->deserializeFnc =
+        (PRESTypePluginDeserializeFunction)
+        RecepcionPlugin_deserialize;
+    plugin->getSerializedSampleMaxSizeFnc =
+        (PRESTypePluginGetSerializedSampleMaxSizeFunction)
+        RecepcionPlugin_get_serialized_sample_max_size;
+    plugin->getSerializedSampleMinSizeFnc =
+        (PRESTypePluginGetSerializedSampleMinSizeFunction)
+        RecepcionPlugin_get_serialized_sample_min_size;
+
+
+    plugin->getSampleFnc =
+        (PRESTypePluginGetSampleFunction)
+        RecepcionPlugin_get_sample;
+    plugin->returnSampleFnc =
+        (PRESTypePluginReturnSampleFunction)
+        RecepcionPlugin_return_sample;
+
+    plugin->getKeyKindFnc =
+        (PRESTypePluginGetKeyKindFunction)
+        RecepcionPlugin_get_key_kind;
+
+ 
+    /* These functions are only used for keyed types. As this is not a keyed
+    type they are all set to NULL
+    */
+    plugin->serializeKeyFnc = NULL;
+    plugin->deserializeKeyFnc = NULL;
+    plugin->getKeyFnc = NULL;
+    plugin->returnKeyFnc = NULL;
+    plugin->instanceToKeyFnc = NULL;
+    plugin->keyToInstanceFnc = NULL;
+    plugin->getSerializedKeyMaxSizeFnc = NULL;
+    plugin->instanceToKeyHashFnc = NULL;
+    plugin->serializedSampleToKeyHashFnc = NULL;
+    plugin->serializedKeyToKeyHashFnc = NULL;
+    
+    plugin->typeCode =  (struct RTICdrTypeCode *)Recepcion_get_typecode();
+    
+    plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
+
+    /* Serialized buffer */
+    plugin->getBuffer = 
+        (PRESTypePluginGetBufferFunction)
+        RecepcionPlugin_get_buffer;
+    plugin->returnBuffer = 
+        (PRESTypePluginReturnBufferFunction)
+        RecepcionPlugin_return_buffer;
+    plugin->getSerializedSampleSizeFnc =
+        (PRESTypePluginGetSerializedSampleSizeFunction)
+        RecepcionPlugin_get_serialized_sample_size;
+
+    plugin->endpointTypeName = RecepcionTYPENAME;
+
+    return plugin;
+}
+
+void
+RecepcionPlugin_delete(struct PRESTypePlugin *plugin)
+{
+    RTIOsapiHeap_freeStructure(plugin);
+} 

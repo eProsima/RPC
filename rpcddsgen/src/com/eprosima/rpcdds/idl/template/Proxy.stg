@@ -108,7 +108,7 @@ class $interfaceName$_$name$CallbackHandler
         /**
          * This function is called when is received the reply from the server.
          */
-        virtual void $name$($argsDecl([outParams, rettype])$) = 0;
+        virtual void $name$($argsDecl(outParams)$$if(!voidInitMap.(rettype.typeName))$$if(outParams)$, $endif$$argsDecl(rettype)$$endif$) = 0;
         
         /**
          * \brief This function is called when an exception occurs.

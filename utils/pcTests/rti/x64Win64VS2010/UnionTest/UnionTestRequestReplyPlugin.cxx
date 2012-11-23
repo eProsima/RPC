@@ -36,10 +36,6 @@
   #include "cdr/cdr_type.h"
 #endif
 
-#ifndef cdr_type_object_h
-  #include "cdr/cdr_typeObject.h"
-#endif
-
 #ifndef cdr_encapsulation_h
   #include "cdr/cdr_encapsulation.h"
 #endif
@@ -73,11 +69,11 @@ UnionTest_getEmpleadoRequestPluginSupport_create_data_ex(RTIBool allocate_pointe
         &sample, UnionTest_getEmpleadoRequest);
 
     if(sample != NULL) {
-        if (!UnionTest_getEmpleadoRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
-            RTIOsapiHeap_freeStructure(sample);
+        if (!UnionTest_getEmpleadoRequest_initialize_ex(sample,allocate_pointers)) {
+            RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
-    }        
+    }
     return sample; 
 }
 
@@ -142,15 +138,12 @@ UnionTest_getEmpleadoRequestPluginSupport_print_data(
     RequestHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
-
     EmpleadoPluginSupport_print_data(
         &sample->em1, "em1", indent_level + 1);
             
-
     EmpleadoPluginSupport_print_data(
         &sample->em2, "em2", indent_level + 1);
             
-
 
 }
 
@@ -161,7 +154,7 @@ UnionTest_getEmpleadoRequestPluginSupport_create_key_ex(RTIBool allocate_pointer
     RTIOsapiHeap_allocateStructure(
         &key, UnionTest_getEmpleadoRequestKeyHolder);
 
-    UnionTest_getEmpleadoRequest_initialize_ex(key,allocate_pointers,RTI_TRUE);
+    UnionTest_getEmpleadoRequest_initialize_ex(key,allocate_pointers);
     return key;
 }
 
@@ -190,6 +183,7 @@ UnionTest_getEmpleadoRequestPluginSupport_destroy_key(
   UnionTest_getEmpleadoRequestPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
+
 
 
 /* ----------------------------------------------------------------------------
@@ -235,8 +229,6 @@ UnionTest_getEmpleadoRequestPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
-    unsigned int serializedSampleMaxSize;
-
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -268,15 +260,9 @@ UnionTest_getEmpleadoRequestPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-    
-    
 
+    
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
-        serializedSampleMaxSize = UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_max_size(
-            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
-            
-        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
-
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -303,7 +289,6 @@ UnionTest_getEmpleadoRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
- 
 
 
 RTIBool 
@@ -320,13 +305,6 @@ UnionTest_getEmpleadoRequestPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
-unsigned int 
-UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
 
 RTIBool 
 UnionTest_getEmpleadoRequestPlugin_serialize(
@@ -341,23 +319,23 @@ UnionTest_getEmpleadoRequestPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+  if (endpoint_data) {} /* To avoid warnings */
+  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
 
-    if(serialize_encapsulation) {
-  
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
+  if(serialize_encapsulation) {
 
-        position = RTICdrStream_resetAlignment(stream);
-
+    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+        return RTI_FALSE;
     }
 
+    position = RTICdrStream_resetAlignment(stream);
 
-    if(serialize_sample) {
-    
+  }
+
+  if(serialize_sample) {
+
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -368,7 +346,6 @@ UnionTest_getEmpleadoRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_serialize(
             endpoint_data,
             &sample->em1, 
@@ -379,7 +356,6 @@ UnionTest_getEmpleadoRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_serialize(
             endpoint_data,
             &sample->em2, 
@@ -390,13 +366,11 @@ UnionTest_getEmpleadoRequestPlugin_serialize(
         return RTI_FALSE;
     }
             
+  }
 
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
+  if(serialize_encapsulation) {
+    RTICdrStream_restoreAlignment(stream,position);
+  }
 
 
   return retval;
@@ -414,8 +388,6 @@ UnionTest_getEmpleadoRequestPlugin_deserialize_sample(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -430,47 +402,38 @@ UnionTest_getEmpleadoRequestPlugin_deserialize_sample(
 
     }
     
-    
     if(deserialize_sample) {
-        UnionTest_getEmpleadoRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
-    
+
+
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_deserialize_sample(
             endpoint_data,
             &sample->em1,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_deserialize_sample(
             endpoint_data,
             &sample->em2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     }
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -482,7 +445,6 @@ fin:
 
  
  
-
 RTIBool 
 UnionTest_getEmpleadoRequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -505,7 +467,6 @@ UnionTest_getEmpleadoRequestPlugin_deserialize(
 
 
 
-
 RTIBool UnionTest_getEmpleadoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -514,8 +475,6 @@ RTIBool UnionTest_getEmpleadoRequestPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -538,37 +497,27 @@ RTIBool UnionTest_getEmpleadoRequestPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
-
     }
-    
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -611,15 +560,12 @@ UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -660,15 +606,12 @@ UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_min_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -718,29 +661,20 @@ UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
-
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->em1);
             
-
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->em2);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
-
-
-
-
-
-
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -773,7 +707,6 @@ UnionTest_getEmpleadoRequestPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
-    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -795,7 +728,6 @@ UnionTest_getEmpleadoRequestPlugin_serialize_key(
         return RTI_FALSE;
     }
             
-
     }
 
 
@@ -844,7 +776,6 @@ RTIBool UnionTest_getEmpleadoRequestPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
-
     }
 
 
@@ -909,7 +840,6 @@ UnionTest_getEmpleadoRequestPlugin_get_serialized_key_max_size(
     current_alignment +=  RequestHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -929,12 +859,8 @@ UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -957,33 +883,24 @@ UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     }
 
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1011,7 +928,6 @@ UnionTest_getEmpleadoRequestPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
-
     return RTI_TRUE;
 }
 
@@ -1030,7 +946,6 @@ UnionTest_getEmpleadoRequestPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
-
     return RTI_TRUE;
 }
 
@@ -1084,14 +999,10 @@ UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-    UnionTest_getEmpleadoRequest * sample = NULL;
+    UnionTest_getEmpleadoRequest * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -1120,13 +1031,6 @@ UnionTest_getEmpleadoRequestPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
-
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }
@@ -1286,11 +1190,11 @@ UnionTest_getEmpleadoReplyPluginSupport_create_data_ex(RTIBool allocate_pointers
         &sample, UnionTest_getEmpleadoReply);
 
     if(sample != NULL) {
-        if (!UnionTest_getEmpleadoReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
-            RTIOsapiHeap_freeStructure(sample);
+        if (!UnionTest_getEmpleadoReply_initialize_ex(sample,allocate_pointers)) {
+            RTIOsapiHeap_freeStructure(&sample);
             return NULL;
         }
-    }        
+    }
     return sample; 
 }
 
@@ -1355,19 +1259,15 @@ UnionTest_getEmpleadoReplyPluginSupport_print_data(
     ReplyHeaderPluginSupport_print_data(
         &sample->header, "header", indent_level + 1);
             
-
     EmpleadoPluginSupport_print_data(
         &sample->em2, "em2", indent_level + 1);
             
-
     EmpleadoPluginSupport_print_data(
         &sample->em3, "em3", indent_level + 1);
             
-
     EmpleadoPluginSupport_print_data(
         &sample->getEmpleado_ret, "getEmpleado_ret", indent_level + 1);
             
-
 
 }
 
@@ -1378,7 +1278,7 @@ UnionTest_getEmpleadoReplyPluginSupport_create_key_ex(RTIBool allocate_pointers)
     RTIOsapiHeap_allocateStructure(
         &key, UnionTest_getEmpleadoReplyKeyHolder);
 
-    UnionTest_getEmpleadoReply_initialize_ex(key,allocate_pointers,RTI_TRUE);
+    UnionTest_getEmpleadoReply_initialize_ex(key,allocate_pointers);
     return key;
 }
 
@@ -1407,6 +1307,7 @@ UnionTest_getEmpleadoReplyPluginSupport_destroy_key(
   UnionTest_getEmpleadoReplyPluginSupport_destroy_key_ex(key,RTI_TRUE);
 
 }
+
 
 
 /* ----------------------------------------------------------------------------
@@ -1452,8 +1353,6 @@ UnionTest_getEmpleadoReplyPlugin_on_endpoint_attached(
 {
     PRESTypePluginEndpointData epd = NULL;
 
-    unsigned int serializedSampleMaxSize;
-
     unsigned int serializedKeyMaxSize;
 
     if (top_level_registration) {} /* To avoid warnings */
@@ -1485,15 +1384,9 @@ UnionTest_getEmpleadoReplyPlugin_on_endpoint_attached(
         PRESTypePluginDefaultEndpointData_delete(epd);
         return NULL;
     }
-    
-    
 
+    
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
-        serializedSampleMaxSize = UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_max_size(
-            epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
-            
-        PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
-
         if (PRESTypePluginDefaultEndpointData_createWriterPool(
                 epd,
                 endpoint_info,
@@ -1520,7 +1413,6 @@ UnionTest_getEmpleadoReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
- 
 
 
 RTIBool 
@@ -1537,13 +1429,6 @@ UnionTest_getEmpleadoReplyPlugin_copy_sample(
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
-unsigned int 
-UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
 
 RTIBool 
 UnionTest_getEmpleadoReplyPlugin_serialize(
@@ -1558,23 +1443,23 @@ UnionTest_getEmpleadoReplyPlugin_serialize(
     char * position = NULL;
     RTIBool retval = RTI_TRUE;
 
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+  if (endpoint_data) {} /* To avoid warnings */
+  if (endpoint_plugin_qos) {} /* To avoid warnings */
 
 
-    if(serialize_encapsulation) {
-  
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
+  if(serialize_encapsulation) {
 
-        position = RTICdrStream_resetAlignment(stream);
-
+    if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+        return RTI_FALSE;
     }
 
+    position = RTICdrStream_resetAlignment(stream);
 
-    if(serialize_sample) {
-    
+  }
+
+  if(serialize_sample) {
+
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
             &sample->header, 
@@ -1585,7 +1470,6 @@ UnionTest_getEmpleadoReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_serialize(
             endpoint_data,
             &sample->em2, 
@@ -1596,7 +1480,6 @@ UnionTest_getEmpleadoReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_serialize(
             endpoint_data,
             &sample->em3, 
@@ -1607,7 +1490,6 @@ UnionTest_getEmpleadoReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_serialize(
             endpoint_data,
             &sample->getEmpleado_ret, 
@@ -1618,13 +1500,11 @@ UnionTest_getEmpleadoReplyPlugin_serialize(
         return RTI_FALSE;
     }
             
+  }
 
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
+  if(serialize_encapsulation) {
+    RTICdrStream_restoreAlignment(stream,position);
+  }
 
 
   return retval;
@@ -1642,8 +1522,6 @@ UnionTest_getEmpleadoReplyPlugin_deserialize_sample(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
@@ -1658,57 +1536,47 @@ UnionTest_getEmpleadoReplyPlugin_deserialize_sample(
 
     }
     
-    
     if(deserialize_sample) {
-        UnionTest_getEmpleadoReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
-    
+
+
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
             &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_deserialize_sample(
             endpoint_data,
             &sample->em2,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_deserialize_sample(
             endpoint_data,
             &sample->em3,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_deserialize_sample(
             endpoint_data,
             &sample->getEmpleado_ret,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     }
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1720,7 +1588,6 @@ fin:
 
  
  
-
 RTIBool 
 UnionTest_getEmpleadoReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
@@ -1743,7 +1610,6 @@ UnionTest_getEmpleadoReplyPlugin_deserialize(
 
 
 
-
 RTIBool UnionTest_getEmpleadoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
@@ -1752,8 +1618,6 @@ RTIBool UnionTest_getEmpleadoReplyPlugin_skip(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -1776,46 +1640,35 @@ RTIBool UnionTest_getEmpleadoReplyPlugin_skip(
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
-
     }
-    
 
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(skip_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -1858,19 +1711,15 @@ UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1911,19 +1760,15 @@ UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_min_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     current_alignment +=  EmpleadoPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -1973,34 +1818,24 @@ UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
-
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->em2);
             
-
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->em3);
             
-
     current_alignment += EmpleadoPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->getEmpleado_ret);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
 
     return current_alignment - initial_alignment;
 }
-
-
-
-
-
-
 
 /* --------------------------------------------------------------------------------------
     Key Management functions:
@@ -2033,7 +1868,6 @@ UnionTest_getEmpleadoReplyPlugin_serialize_key(
 
 
     if(serialize_encapsulation) {
-    
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
         }
@@ -2055,7 +1889,6 @@ UnionTest_getEmpleadoReplyPlugin_serialize_key(
         return RTI_FALSE;
     }
             
-
     }
 
 
@@ -2104,7 +1937,6 @@ RTIBool UnionTest_getEmpleadoReplyPlugin_deserialize_key_sample(
         return RTI_FALSE;
     }
             
-
     }
 
 
@@ -2169,7 +2001,6 @@ UnionTest_getEmpleadoReplyPlugin_get_serialized_key_max_size(
     current_alignment +=  ReplyHeaderPlugin_get_serialized_key_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
-
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
     }
@@ -2189,12 +2020,8 @@ UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_key(
 {
     char * position = NULL;
 
-    RTIBool done = RTI_FALSE;
-
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -2217,42 +2044,32 @@ UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_key(
         return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     if (!EmpleadoPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
-        goto fin;
+        return RTI_FALSE;
     }
             
-
     }
 
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
 
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
@@ -2280,7 +2097,6 @@ UnionTest_getEmpleadoReplyPlugin_instance_to_key(
         return RTI_FALSE;
     }
             
-
     return RTI_TRUE;
 }
 
@@ -2299,7 +2115,6 @@ UnionTest_getEmpleadoReplyPlugin_key_to_instance(
         return RTI_FALSE;
     }
             
-
     return RTI_TRUE;
 }
 
@@ -2353,14 +2168,10 @@ UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
     void *endpoint_plugin_qos) 
 {   
     char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-    UnionTest_getEmpleadoReply * sample = NULL;
+    UnionTest_getEmpleadoReply * sample;
 
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
 
 
     if(deserialize_encapsulation) {
@@ -2389,13 +2200,6 @@ UnionTest_getEmpleadoReplyPlugin_serialized_sample_to_keyhash(
         return RTI_FALSE;
     }
             
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
-        return RTI_FALSE;   
-    }
-
     if(deserialize_encapsulation) {
         RTICdrStream_restoreAlignment(stream,position);
     }

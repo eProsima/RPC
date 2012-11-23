@@ -88,6 +88,8 @@ public class RPCDDSGEN
                 }
                 catch(Exception ioe)
                 {
+                	if(!ioe.getMessage().equals(""))
+                		System.out.println(ioe.getMessage());
                     System.out.println("ERROR: Cannot generate the files");
                     //ioe.printStackTrace();
                 }
@@ -169,9 +171,9 @@ public class RPCDDSGEN
         if(middleware.equals("rti"))
         {
         	if(osOption.equals("Win32"))
-        		command = "rtiddsgen.bat";
+        		command = dds_root + "\\scripts\\rtiddsgen.bat";
         	else if(osOption.equals("Linux"))
-        		command = "rtiddsgen";
+        		command = dds_root + "\\scripts\\rtiddsgen";
         	
         	if(languageOption != null)
             {
@@ -277,7 +279,6 @@ public class RPCDDSGEN
 
              if(auxexitVal != 0)
              {
-            	 System.out.println("process waitFor() function returns the error value " + auxexitVal);
                  throw new Exception("process waitFor() function returns the error value " + auxexitVal);
              }
         }
@@ -298,13 +299,12 @@ public class RPCDDSGEN
 
         if(exitVal != 0)
         {
-        	System.out.println("process waitFor() function returns the error value " + exitVal);
             throw new Exception("process waitFor() function returns the error value " + exitVal);
         }
         
         if(errorOutput.getFoundError() || normalOutput.getFoundError())
         {
-            throw new Exception();
+            throw new Exception("");
         }
         	
         
@@ -329,7 +329,6 @@ public class RPCDDSGEN
 
              if(auxexitVal != 0)
              {
-            	 System.out.println("process waitFor() function returns the error value " + auxexitVal);
                  throw new Exception("process waitFor() function returns the error value " + auxexitVal);
              }
         }

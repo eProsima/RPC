@@ -35,7 +35,6 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
-#define Dato_LAST_MEMBER_ID 0
 
 #define DatoPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define DatoPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -75,7 +74,34 @@ DatoPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+DatoPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+DatoPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+DatoPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+DatoPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 DatoPlugin_copy_sample(
@@ -119,7 +145,6 @@ DatoPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 DatoPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -149,7 +174,6 @@ DatoPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Dato * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -206,6 +230,13 @@ DatoPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
+     
+/* Plugin Functions */
+NDDSUSERDllExport extern struct PRESTypePlugin*
+DatoPlugin_new(void);
+
+NDDSUSERDllExport extern void
+DatoPlugin_delete(struct PRESTypePlugin *);
 
 #ifdef __cplusplus
 }

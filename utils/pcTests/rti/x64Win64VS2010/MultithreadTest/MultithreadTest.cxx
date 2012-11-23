@@ -116,34 +116,26 @@ DDS_TypeCode* Dato_get_typecode()
 
 RTIBool Dato_initialize(
     Dato* sample) {
-  return Dato_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return Dato_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool Dato_initialize_ex(
-    Dato* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    Dato* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+
 
     if (!RTICdrType_initLong(&sample->count)) {
         return RTI_FALSE;
     }                
             
-
-    if (allocateMemory) {
-        sample->message = DDS_String_alloc((255));
-        if (sample->message == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->message != NULL) { 
-            sample->message[0] = '\0';
-        }
+    sample->message = DDS_String_alloc((255));
+    if (sample->message == NULL) {
+        return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -161,10 +153,8 @@ void Dato_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
-
     DDS_String_free(sample->message);                
             
-
 }
 
 RTIBool Dato_copy(
@@ -177,13 +167,11 @@ RTIBool Dato_copy(
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }

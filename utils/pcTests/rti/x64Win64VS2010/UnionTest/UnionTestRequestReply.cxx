@@ -133,32 +133,29 @@ DDS_TypeCode* UnionTest_getEmpleadoRequest_get_typecode()
 
 RTIBool UnionTest_getEmpleadoRequest_initialize(
     UnionTest_getEmpleadoRequest* sample) {
-  return UnionTest_getEmpleadoRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return UnionTest_getEmpleadoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool UnionTest_getEmpleadoRequest_initialize_ex(
-    UnionTest_getEmpleadoRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    UnionTest_getEmpleadoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Empleado_initialize_ex(&sample->em1,allocatePointers,allocateMemory)) {
+    if (!Empleado_initialize_ex(&sample->em1,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Empleado_initialize_ex(&sample->em2,allocatePointers,allocateMemory)) {
+    if (!Empleado_initialize_ex(&sample->em2,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -178,13 +175,10 @@ void UnionTest_getEmpleadoRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
-
     Empleado_finalize_ex(&sample->em1,deletePointers);
             
-
     Empleado_finalize_ex(&sample->em2,deletePointers);
             
-
 }
 
 RTIBool UnionTest_getEmpleadoRequest_copy(
@@ -197,19 +191,16 @@ RTIBool UnionTest_getEmpleadoRequest_copy(
         return RTI_FALSE;
     }
             
-
     if (!Empleado_copy(
         &dst->em1, &src->em1)) {
         return RTI_FALSE;
     }
             
-
     if (!Empleado_copy(
         &dst->em2, &src->em2)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -359,37 +350,33 @@ DDS_TypeCode* UnionTest_getEmpleadoReply_get_typecode()
 
 RTIBool UnionTest_getEmpleadoReply_initialize(
     UnionTest_getEmpleadoReply* sample) {
-  return UnionTest_getEmpleadoReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return UnionTest_getEmpleadoReply_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool UnionTest_getEmpleadoReply_initialize_ex(
-    UnionTest_getEmpleadoReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    UnionTest_getEmpleadoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Empleado_initialize_ex(&sample->em2,allocatePointers,allocateMemory)) {
+    if (!Empleado_initialize_ex(&sample->em2,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Empleado_initialize_ex(&sample->em3,allocatePointers,allocateMemory)) {
+    if (!Empleado_initialize_ex(&sample->em3,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Empleado_initialize_ex(&sample->getEmpleado_ret,allocatePointers,allocateMemory)) {
+    if (!Empleado_initialize_ex(&sample->getEmpleado_ret,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -409,16 +396,12 @@ void UnionTest_getEmpleadoReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
-
     Empleado_finalize_ex(&sample->em2,deletePointers);
             
-
     Empleado_finalize_ex(&sample->em3,deletePointers);
             
-
     Empleado_finalize_ex(&sample->getEmpleado_ret,deletePointers);
             
-
 }
 
 RTIBool UnionTest_getEmpleadoReply_copy(
@@ -431,25 +414,21 @@ RTIBool UnionTest_getEmpleadoReply_copy(
         return RTI_FALSE;
     }
             
-
     if (!Empleado_copy(
         &dst->em2, &src->em2)) {
         return RTI_FALSE;
     }
             
-
     if (!Empleado_copy(
         &dst->em3, &src->em3)) {
         return RTI_FALSE;
     }
             
-
     if (!Empleado_copy(
         &dst->getEmpleado_ret, &src->getEmpleado_ret)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }

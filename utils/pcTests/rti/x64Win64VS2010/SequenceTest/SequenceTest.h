@@ -52,9 +52,9 @@ extern const char *DatosTYPENAME;
 
             
     
-class Datos                                        
+
+typedef struct Datos
 {
-public:            
 #ifdef __cplusplus
     typedef struct DatosSeq Seq;
 
@@ -65,13 +65,11 @@ public:
 #endif
 
 #endif
-    
-    DDS_Long  count;
 
+    DDS_Long  count;
     char*  message; /* maximum length = (255) */
 
-            
-};                        
+} Datos;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -93,7 +91,7 @@ RTIBool Datos_initialize(
         
 NDDSUSERDllExport
 RTIBool Datos_initialize_ex(
-        Datos* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Datos* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void Datos_finalize(
@@ -136,7 +134,7 @@ RTIBool largo_initialize(
             
 NDDSUSERDllExport
 RTIBool largo_initialize_ex(
-        largo* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        largo* self,RTIBool allocatePointers);
                     
 NDDSUSERDllExport
 void largo_finalize(
@@ -180,7 +178,7 @@ RTIBool cadena_initialize(
             
 NDDSUSERDllExport
 RTIBool cadena_initialize_ex(
-        cadena* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        cadena* self,RTIBool allocatePointers);
                     
 NDDSUSERDllExport
 void cadena_finalize(
@@ -224,7 +222,7 @@ RTIBool dattos_initialize(
             
 NDDSUSERDllExport
 RTIBool dattos_initialize_ex(
-        dattos* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        dattos* self,RTIBool allocatePointers);
                     
 NDDSUSERDllExport
 void dattos_finalize(

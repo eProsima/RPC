@@ -97,22 +97,21 @@ DDS_TypeCode* ServerException_sendExceptionRequest_get_typecode()
 
 RTIBool ServerException_sendExceptionRequest_initialize(
     ServerException_sendExceptionRequest* sample) {
-  return ServerException_sendExceptionRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ServerException_sendExceptionRequest_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool ServerException_sendExceptionRequest_initialize_ex(
-    ServerException_sendExceptionRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    ServerException_sendExceptionRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -132,7 +131,6 @@ void ServerException_sendExceptionRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
-
 }
 
 RTIBool ServerException_sendExceptionRequest_copy(
@@ -145,7 +143,6 @@ RTIBool ServerException_sendExceptionRequest_copy(
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -241,22 +238,21 @@ DDS_TypeCode* ServerException_sendExceptionReply_get_typecode()
 
 RTIBool ServerException_sendExceptionReply_initialize(
     ServerException_sendExceptionReply* sample) {
-  return ServerException_sendExceptionReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ServerException_sendExceptionReply_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool ServerException_sendExceptionReply_initialize_ex(
-    ServerException_sendExceptionReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    ServerException_sendExceptionReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -276,7 +272,6 @@ void ServerException_sendExceptionReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
-
 }
 
 RTIBool ServerException_sendExceptionReply_copy(
@@ -289,7 +284,6 @@ RTIBool ServerException_sendExceptionReply_copy(
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -423,46 +417,31 @@ DDS_TypeCode* ServerException_sendExceptionTwoRequest_get_typecode()
 
 RTIBool ServerException_sendExceptionTwoRequest_initialize(
     ServerException_sendExceptionTwoRequest* sample) {
-  return ServerException_sendExceptionTwoRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ServerException_sendExceptionTwoRequest_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool ServerException_sendExceptionTwoRequest_initialize_ex(
-    ServerException_sendExceptionTwoRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    ServerException_sendExceptionTwoRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (allocateMemory) {
-        sample->message = DDS_String_alloc((255));
-        if (sample->message == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->message != NULL) { 
-            sample->message[0] = '\0';
-        }
+    sample->message = DDS_String_alloc((255));
+    if (sample->message == NULL) {
+        return RTI_FALSE;
     }
             
-
-    if (allocateMemory) {
-        sample->message2 = DDS_String_alloc((255));
-        if (sample->message2 == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->message2 != NULL) { 
-            sample->message2[0] = '\0';
-        }
+    sample->message2 = DDS_String_alloc((255));
+    if (sample->message2 == NULL) {
+        return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -482,13 +461,10 @@ void ServerException_sendExceptionTwoRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
-
     DDS_String_free(sample->message);                
             
-
     DDS_String_free(sample->message2);                
             
-
 }
 
 RTIBool ServerException_sendExceptionTwoRequest_copy(
@@ -501,19 +477,16 @@ RTIBool ServerException_sendExceptionTwoRequest_copy(
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->message2, src->message2, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -666,58 +639,36 @@ DDS_TypeCode* ServerException_sendExceptionTwoReply_get_typecode()
 
 RTIBool ServerException_sendExceptionTwoReply_initialize(
     ServerException_sendExceptionTwoReply* sample) {
-  return ServerException_sendExceptionTwoReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ServerException_sendExceptionTwoReply_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool ServerException_sendExceptionTwoReply_initialize_ex(
-    ServerException_sendExceptionTwoReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    ServerException_sendExceptionTwoReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (allocateMemory) {
-        sample->message2 = DDS_String_alloc((255));
-        if (sample->message2 == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->message2 != NULL) { 
-            sample->message2[0] = '\0';
-        }
+    sample->message2 = DDS_String_alloc((255));
+    if (sample->message2 == NULL) {
+        return RTI_FALSE;
     }
             
-
-    if (allocateMemory) {
-        sample->message3 = DDS_String_alloc((255));
-        if (sample->message3 == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->message3 != NULL) { 
-            sample->message3[0] = '\0';
-        }
+    sample->message3 = DDS_String_alloc((255));
+    if (sample->message3 == NULL) {
+        return RTI_FALSE;
     }
             
-
-    if (allocateMemory) {
-        sample->sendExceptionTwo_ret = DDS_String_alloc((255));
-        if (sample->sendExceptionTwo_ret == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->sendExceptionTwo_ret != NULL) { 
-            sample->sendExceptionTwo_ret[0] = '\0';
-        }
+    sample->sendExceptionTwo_ret = DDS_String_alloc((255));
+    if (sample->sendExceptionTwo_ret == NULL) {
+        return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -737,16 +688,12 @@ void ServerException_sendExceptionTwoReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
-
     DDS_String_free(sample->message2);                
             
-
     DDS_String_free(sample->message3);                
             
-
     DDS_String_free(sample->sendExceptionTwo_ret);                
             
-
 }
 
 RTIBool ServerException_sendExceptionTwoReply_copy(
@@ -759,25 +706,21 @@ RTIBool ServerException_sendExceptionTwoReply_copy(
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->message2, src->message2, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->message3, src->message3, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->sendExceptionTwo_ret, src->sendExceptionTwo_ret, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -909,32 +852,29 @@ DDS_TypeCode* ServerException_sendExceptionThreeRequest_get_typecode()
 
 RTIBool ServerException_sendExceptionThreeRequest_initialize(
     ServerException_sendExceptionThreeRequest* sample) {
-  return ServerException_sendExceptionThreeRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ServerException_sendExceptionThreeRequest_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool ServerException_sendExceptionThreeRequest_initialize_ex(
-    ServerException_sendExceptionThreeRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    ServerException_sendExceptionThreeRequest* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!RequestHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Estructura_initialize_ex(&sample->es,allocatePointers,allocateMemory)) {
+    if (!Estructura_initialize_ex(&sample->es,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Estructura_initialize_ex(&sample->es2,allocatePointers,allocateMemory)) {
+    if (!Estructura_initialize_ex(&sample->es2,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -954,13 +894,10 @@ void ServerException_sendExceptionThreeRequest_finalize_ex(
 
     RequestHeader_finalize_ex(&sample->header,deletePointers);
             
-
     Estructura_finalize_ex(&sample->es,deletePointers);
             
-
     Estructura_finalize_ex(&sample->es2,deletePointers);
             
-
 }
 
 RTIBool ServerException_sendExceptionThreeRequest_copy(
@@ -973,19 +910,16 @@ RTIBool ServerException_sendExceptionThreeRequest_copy(
         return RTI_FALSE;
     }
             
-
     if (!Estructura_copy(
         &dst->es, &src->es)) {
         return RTI_FALSE;
     }
             
-
     if (!Estructura_copy(
         &dst->es2, &src->es2)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -1135,37 +1069,33 @@ DDS_TypeCode* ServerException_sendExceptionThreeReply_get_typecode()
 
 RTIBool ServerException_sendExceptionThreeReply_initialize(
     ServerException_sendExceptionThreeReply* sample) {
-  return ServerException_sendExceptionThreeReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ServerException_sendExceptionThreeReply_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool ServerException_sendExceptionThreeReply_initialize_ex(
-    ServerException_sendExceptionThreeReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    ServerException_sendExceptionThreeReply* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers,allocateMemory)) {
+
+    if (!ReplyHeader_initialize_ex(&sample->header,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Estructura_initialize_ex(&sample->es2,allocatePointers,allocateMemory)) {
+    if (!Estructura_initialize_ex(&sample->es2,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Estructura_initialize_ex(&sample->es3,allocatePointers,allocateMemory)) {
+    if (!Estructura_initialize_ex(&sample->es3,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
-    if (!Estructura_initialize_ex(&sample->sendExceptionThree_ret,allocatePointers,allocateMemory)) {
+    if (!Estructura_initialize_ex(&sample->sendExceptionThree_ret,allocatePointers)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -1185,16 +1115,12 @@ void ServerException_sendExceptionThreeReply_finalize_ex(
 
     ReplyHeader_finalize_ex(&sample->header,deletePointers);
             
-
     Estructura_finalize_ex(&sample->es2,deletePointers);
             
-
     Estructura_finalize_ex(&sample->es3,deletePointers);
             
-
     Estructura_finalize_ex(&sample->sendExceptionThree_ret,deletePointers);
             
-
 }
 
 RTIBool ServerException_sendExceptionThreeReply_copy(
@@ -1207,25 +1133,21 @@ RTIBool ServerException_sendExceptionThreeReply_copy(
         return RTI_FALSE;
     }
             
-
     if (!Estructura_copy(
         &dst->es2, &src->es2)) {
         return RTI_FALSE;
     }
             
-
     if (!Estructura_copy(
         &dst->es3, &src->es3)) {
         return RTI_FALSE;
     }
             
-
     if (!Estructura_copy(
         &dst->sendExceptionThree_ret, &src->sendExceptionThree_ret)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }

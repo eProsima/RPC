@@ -14,7 +14,7 @@ set NDDSHOME=D:\richi\workspace\desarrollo\DDS\RTI\instalaciones\ndds.5.0.0
 
 :: Save old and set PAT environment variable.
 set PATH_OLD=%PATH%
-set PATH=%NDDSHOME%\lib\%NDDSTARGET%;%PATH%
+set PATH=%NDDSHOME%\lib\%NDDSTARGET%;%NDDSHOME%\scripts;%PATH%
 
 goto :EOF
 
