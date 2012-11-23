@@ -1,8 +1,15 @@
 struct Estructura
 {
-    1: i32 valor1,
-    2: i32 valor2,
-    3: string valor3,
+    1: i16 short1,
+    2: i16 short2,
+    3: i32 long1,
+    4: i32 long2,
+    5: i64 llong1,
+    6: i64 llong2,
+    7: double double1,
+    8: double double2,
+    9: string string1,
+    10: string string2,
 }
 
 service SimpleDelay
