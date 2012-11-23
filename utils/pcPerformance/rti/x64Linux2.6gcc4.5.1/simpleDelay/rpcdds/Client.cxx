@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 
             duplicate_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
 
-            boost::chrono::duration<double> program_seconds = boost::chrono::system_clock::now() - program_start;
+            program_seconds = boost::chrono::system_clock::now() - program_start;
 
             // Print the suma call times.
             for(int i = 0; i < 200; ++i)
