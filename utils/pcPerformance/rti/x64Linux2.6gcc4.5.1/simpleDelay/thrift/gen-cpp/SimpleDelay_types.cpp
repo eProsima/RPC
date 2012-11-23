@@ -10,14 +10,21 @@
 
 
 
-const char* Estructura::ascii_fingerprint = "4086F12A5C2D615560236565C542F3C3";
-const uint8_t Estructura::binary_fingerprint[16] = {0x40,0x86,0xF1,0x2A,0x5C,0x2D,0x61,0x55,0x60,0x23,0x65,0x65,0xC5,0x42,0xF3,0xC3};
+const char* Estructura::ascii_fingerprint = "458A70A22894331F53CE38FCD3873C8A";
+const uint8_t Estructura::binary_fingerprint[16] = {0x45,0x8A,0x70,0xA2,0x28,0x94,0x33,0x1F,0x53,0xCE,0x38,0xFC,0xD3,0x87,0x3C,0x8A};
 
 void swap(Estructura &a, Estructura &b) {
   using ::std::swap;
-  swap(a.valor1, b.valor1);
-  swap(a.valor2, b.valor2);
-  swap(a.valor3, b.valor3);
+  swap(a.short1, b.short1);
+  swap(a.short2, b.short2);
+  swap(a.long1, b.long1);
+  swap(a.long2, b.long2);
+  swap(a.llong1, b.llong1);
+  swap(a.llong2, b.llong2);
+  swap(a.double1, b.double1);
+  swap(a.double2, b.double2);
+  swap(a.string1, b.string1);
+  swap(a.string2, b.string2);
   swap(a.__isset, b.__isset);
 }
 

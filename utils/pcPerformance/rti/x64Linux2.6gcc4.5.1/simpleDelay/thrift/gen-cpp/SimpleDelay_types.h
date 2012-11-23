@@ -17,48 +17,104 @@
 
 
 typedef struct _Estructura__isset {
-  _Estructura__isset() : valor1(false), valor2(false), valor3(false) {}
-  bool valor1;
-  bool valor2;
-  bool valor3;
+  _Estructura__isset() : short1(false), short2(false), long1(false), long2(false), llong1(false), llong2(false), double1(false), double2(false), string1(false), string2(false) {}
+  bool short1;
+  bool short2;
+  bool long1;
+  bool long2;
+  bool llong1;
+  bool llong2;
+  bool double1;
+  bool double2;
+  bool string1;
+  bool string2;
 } _Estructura__isset;
 
 class Estructura {
  public:
 
-  static const char* ascii_fingerprint; // = "4086F12A5C2D615560236565C542F3C3";
-  static const uint8_t binary_fingerprint[16]; // = {0x40,0x86,0xF1,0x2A,0x5C,0x2D,0x61,0x55,0x60,0x23,0x65,0x65,0xC5,0x42,0xF3,0xC3};
+  static const char* ascii_fingerprint; // = "458A70A22894331F53CE38FCD3873C8A";
+  static const uint8_t binary_fingerprint[16]; // = {0x45,0x8A,0x70,0xA2,0x28,0x94,0x33,0x1F,0x53,0xCE,0x38,0xFC,0xD3,0x87,0x3C,0x8A};
 
-  Estructura() : valor1(0), valor2(0), valor3() {
+  Estructura() : short1(0), short2(0), long1(0), long2(0), llong1(0), llong2(0), double1(0), double2(0), string1(), string2() {
   }
 
   virtual ~Estructura() throw() {}
 
-  int32_t valor1;
-  int32_t valor2;
-  std::string valor3;
+  int16_t short1;
+  int16_t short2;
+  int32_t long1;
+  int32_t long2;
+  int64_t llong1;
+  int64_t llong2;
+  double double1;
+  double double2;
+  std::string string1;
+  std::string string2;
 
   _Estructura__isset __isset;
 
-  void __set_valor1(const int32_t val) {
-    valor1 = val;
+  void __set_short1(const int16_t val) {
+    short1 = val;
   }
 
-  void __set_valor2(const int32_t val) {
-    valor2 = val;
+  void __set_short2(const int16_t val) {
+    short2 = val;
   }
 
-  void __set_valor3(const std::string& val) {
-    valor3 = val;
+  void __set_long1(const int32_t val) {
+    long1 = val;
+  }
+
+  void __set_long2(const int32_t val) {
+    long2 = val;
+  }
+
+  void __set_llong1(const int64_t val) {
+    llong1 = val;
+  }
+
+  void __set_llong2(const int64_t val) {
+    llong2 = val;
+  }
+
+  void __set_double1(const double val) {
+    double1 = val;
+  }
+
+  void __set_double2(const double val) {
+    double2 = val;
+  }
+
+  void __set_string1(const std::string& val) {
+    string1 = val;
+  }
+
+  void __set_string2(const std::string& val) {
+    string2 = val;
   }
 
   bool operator == (const Estructura & rhs) const
   {
-    if (!(valor1 == rhs.valor1))
+    if (!(short1 == rhs.short1))
       return false;
-    if (!(valor2 == rhs.valor2))
+    if (!(short2 == rhs.short2))
       return false;
-    if (!(valor3 == rhs.valor3))
+    if (!(long1 == rhs.long1))
+      return false;
+    if (!(long2 == rhs.long2))
+      return false;
+    if (!(llong1 == rhs.llong1))
+      return false;
+    if (!(llong2 == rhs.llong2))
+      return false;
+    if (!(double1 == rhs.double1))
+      return false;
+    if (!(double2 == rhs.double2))
+      return false;
+    if (!(string1 == rhs.string1))
+      return false;
+    if (!(string2 == rhs.string2))
       return false;
     return true;
   }

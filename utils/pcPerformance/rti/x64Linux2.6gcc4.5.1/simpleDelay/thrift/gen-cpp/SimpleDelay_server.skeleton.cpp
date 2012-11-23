@@ -33,9 +33,16 @@ class SimpleDelayHandler : virtual public SimpleDelayIf {
   void duplicate(Estructura& _return, const Estructura& es) {
     // Your implementation goes here
     //printf("duplicate\n");
-    _return.valor1 = es.valor1;
-    _return.valor2 = es.valor2;
-    _return.valor3 = es.valor3;
+    _return.short1 = es.short1;
+    _return.short2 = es.short2;
+    _return.long1 = es.long1;
+    _return.long2 = es.long2;
+    _return.llong1 = es.llong1;
+    _return.llong2 = es.llong2;
+    _return.double1 = es.double1;
+    _return.double2 = es.double2;
+    _return.string1 = es.string1;
+    _return.string2 = es.string2;
   }
 
 };

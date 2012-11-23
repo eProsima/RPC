@@ -33,25 +33,81 @@ uint32_t Estructura::read(Protocol_* iprot) {
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->valor1);
-          this->__isset.valor1 = true;
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->short1);
+          this->__isset.short1 = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->valor2);
-          this->__isset.valor2 = true;
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->short2);
+          this->__isset.short2 = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->long1);
+          this->__isset.long1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->long2);
+          this->__isset.long2 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->llong1);
+          this->__isset.llong1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->llong2);
+          this->__isset.llong2 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->double1);
+          this->__isset.double1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->double2);
+          this->__isset.double2 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 9:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->valor3);
-          this->__isset.valor3 = true;
+          xfer += iprot->readString(this->string1);
+          this->__isset.string1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 10:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->string2);
+          this->__isset.string2 = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -73,16 +129,44 @@ uint32_t Estructura::write(Protocol_* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("Estructura");
 
-  xfer += oprot->writeFieldBegin("valor1", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->valor1);
+  xfer += oprot->writeFieldBegin("short1", ::apache::thrift::protocol::T_I16, 1);
+  xfer += oprot->writeI16(this->short1);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("valor2", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->valor2);
+  xfer += oprot->writeFieldBegin("short2", ::apache::thrift::protocol::T_I16, 2);
+  xfer += oprot->writeI16(this->short2);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("valor3", ::apache::thrift::protocol::T_STRING, 3);
-  xfer += oprot->writeString(this->valor3);
+  xfer += oprot->writeFieldBegin("long1", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->long1);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("long2", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->long2);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("llong1", ::apache::thrift::protocol::T_I64, 5);
+  xfer += oprot->writeI64(this->llong1);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("llong2", ::apache::thrift::protocol::T_I64, 6);
+  xfer += oprot->writeI64(this->llong2);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("double1", ::apache::thrift::protocol::T_DOUBLE, 7);
+  xfer += oprot->writeDouble(this->double1);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("double2", ::apache::thrift::protocol::T_DOUBLE, 8);
+  xfer += oprot->writeDouble(this->double2);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("string1", ::apache::thrift::protocol::T_STRING, 9);
+  xfer += oprot->writeString(this->string1);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("string2", ::apache::thrift::protocol::T_STRING, 10);
+  xfer += oprot->writeString(this->string2);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
