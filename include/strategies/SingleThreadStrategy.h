@@ -17,8 +17,9 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This class implements the sigle thread strategy.
+		 * @brief This class implements the sigle thread strategy.
 		 *        The server uses the reception thread of RTI DDS to execute the request.
+         * @ingroup STRATEGIESMODULE 
 		 */
         class RPCDDS_WIN32_DLL_API SingleThreadStrategy : public ServerStrategy
         {

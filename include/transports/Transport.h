@@ -17,8 +17,9 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This class is the base of all classes that implement a transport
+		 * @brief This class is the base of all classes that implement a transport
 		 *        that could be used by the client or the server.
+         * @ingroup TRANSPORTMODULE
 		 */
         class RPCDDS_WIN32_DLL_API Transport
         {

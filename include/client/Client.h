@@ -15,6 +15,7 @@
 
 #include <string>
 
+
 namespace eProsima
 {
 	namespace RPCDDS
@@ -25,7 +26,8 @@ namespace eProsima
 		class ClientRPC;
 
 		/**
-		 * \brief This class implements the common functionalities that all server's proxies have.
+		 * @brief This class implements the common functionalities that all server's proxies have.
+         * @ingroup CLIENTMODULE
 		 */
 		class RPCDDS_WIN32_DLL_API Client
 		{
@@ -122,7 +124,6 @@ namespace eProsima
 				/// \brief The name of the remote service that the proxy will offer.
 				std::string m_remoteServiceName;
 		};
-
 	} // namespace RPCDDS
 } // namespace eProsima
 

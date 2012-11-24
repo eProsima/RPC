@@ -17,7 +17,8 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This class implements the TCPv4 transport for the client and the server.
+		 * @brief This class implements the TCPv4 transport for the client and the server.
+         * @ingroup TRANSPORTMODULE
 		 */
         class RPCDDS_WIN32_DLL_API TCPTransport : public Transport
         {

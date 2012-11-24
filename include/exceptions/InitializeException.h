@@ -16,7 +16,8 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This class is thrown as an exception when there is an error initializating an object.
+		 * @brief This class is thrown as an exception when there is an error initializating an object.
+         * @ingroup EXCEPTIONMODULE
 		 */
         class RPCDDS_WIN32_DLL_API InitializeException : public SystemException
         {

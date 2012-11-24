@@ -26,7 +26,8 @@ namespace eProsima
         class AsyncTask;
 
 		/**
-		 * \brief This class implements a remote procedure call in server's proxy side.
+		 * @brief This class implements a remote procedure call in server's proxy side.
+         * @ingroup CLIENTMODULE
 		 */
 		class RPCDDS_WIN32_DLL_API ClientRPC
 		{

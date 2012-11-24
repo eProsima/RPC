@@ -26,7 +26,8 @@ namespace eProsima
         typedef std::vector<AsyncListPair> AsyncVector;
 
 		/**
-		 * \brief This class is a separated thread used to manage asynchronous tasks.
+		 * @brief This class is a separated thread used to manage asynchronous tasks.
+         * @ingroup CLIENTMODULE
 		 */
         class AsyncThread
         {

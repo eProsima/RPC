@@ -19,8 +19,9 @@ namespace eProsima
         class ThreadPerRequestStrategyJob;
 
 		/**
-		 * \brief This class implements the thread per request strategy.
+		 * @brief This class implements the thread per request strategy.
 		 *        The server creates a new thread per new incoming request.
+         * @ingroup STRATEGIESMODULE 
 		 */
         class RPCDDS_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
         {

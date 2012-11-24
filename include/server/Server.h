@@ -29,7 +29,8 @@ namespace eProsima
 		class ServerRPC;
 	 
 		/**
-		 * \brief This class implements the common functionalities that the server has.
+		 * @brief This class implements the common functionalities that the server has.
+         * @ingroup SERVERMODULE
 		 */
 		class RPCDDS_WIN32_DLL_API Server
 		{

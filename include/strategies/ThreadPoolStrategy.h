@@ -21,8 +21,9 @@ namespace eProsima
         class ThreadPoolStrategyImpl;
 
 		/**
-		 * \brief This class implements a thread pool strategy.
+		 * @brief This class implements a thread pool strategy.
 		 *        The server schedules the incoming requests in a free thread of the thread pool.
+         * @ingroup STRATEGIESMODULE 
 		 */
         class RPCDDS_WIN32_DLL_API ThreadPoolStrategy : public ServerStrategy
         {

@@ -22,7 +22,8 @@ namespace eProsima
         class ClientRPC;
 
 		/**
-		 * \brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
+		 * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
+         * @ingroup CLIENTMODULE
 		 */
         class RPCDDS_WIN32_DLL_API AsyncTask
         {

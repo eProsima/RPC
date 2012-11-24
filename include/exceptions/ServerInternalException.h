@@ -16,7 +16,8 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This class is thrown as an exception when there is an error in the server side.
+		 * @brief This class is thrown as an exception when there is an error in the server side.
+         * @ingroup EXCEPTIONMODULE
 		 */
         class RPCDDS_WIN32_DLL_API ServerInternalException : public SystemException
         {

@@ -20,8 +20,9 @@ namespace eProsima
         class  ServerRPC;
 
 		/**
-		 * \brief This class is the base of all classes that implement a server strategy
+		 * @brief This class is the base of all classes that implement a server strategy
 		 *        that could be used by the server.
+         * @ingroup SERVERMODULE
 		 */
         class RPCDDS_WIN32_DLL_API ServerStrategy
         {

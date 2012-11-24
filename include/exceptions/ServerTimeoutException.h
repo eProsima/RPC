@@ -16,7 +16,8 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This class is thrown as an exception when the remote procedure call exceeds the maximum time.
+		 * @brief This class is thrown as an exception when the remote procedure call exceeds the maximum time.
+         * @ingroup EXCEPTIONMODULE
 		 */
         class RPCDDS_WIN32_DLL_API ServerTimeoutException : public SystemException
         {

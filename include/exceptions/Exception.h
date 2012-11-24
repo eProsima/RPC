@@ -18,7 +18,8 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This abstract class is used to create exceptions.
+		 * @brief This abstract class is used to create exceptions.
+         * @ingroup EXCEPTIONMODULE
 		 */
         class RPCDDS_WIN32_DLL_API Exception : public std::exception
         {
@@ -35,7 +36,7 @@ namespace eProsima
 			 *
 			 * \return The error message.
 			 */
-			virtual const char* what() const throw() override;
+			virtual const char* what() const throw() ;
 
 		protected:
 

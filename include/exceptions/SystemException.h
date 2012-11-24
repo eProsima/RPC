@@ -18,7 +18,8 @@ namespace eProsima
     namespace RPCDDS
     {
 		/**
-		 * \brief This abstract class is used to create internal RPCDDS exceptions.
+		 * @brief This abstract class is used to create internal RPCDDS exceptions.
+         * @ingroup EXCEPTIONMODULE
 		 */
         class RPCDDS_WIN32_DLL_API SystemException : public Exception
         {

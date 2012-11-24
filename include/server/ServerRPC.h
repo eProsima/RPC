@@ -24,7 +24,8 @@ namespace eProsima
 		class ThreadPoolManager;
 
 		/**
-		 * \brief This class implements a remote procedure call in server side.
+		 * @brief This class implements a remote procedure call in server side.
+         * @ingroup SERVERMODULE
 		 */
 		class RPCDDS_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
 		{
