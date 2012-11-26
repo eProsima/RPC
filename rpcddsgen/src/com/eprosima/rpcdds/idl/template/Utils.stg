@@ -87,6 +87,9 @@ $classes:{$it$};separator="\n"$
  */ 
 header(topicName, templateName, params, returnType, isReply) ::= <<
 
+/**
+ * \brief This class contains helpful operations for the generated topic $topicName$$templateName$.
+ */
 class $topicName$$templateName$Utils
 {
     public:
