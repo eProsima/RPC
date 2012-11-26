@@ -116,34 +116,26 @@ DDS_TypeCode* Structure_get_typecode()
 
 RTIBool Structure_initialize(
     Structure* sample) {
-  return Structure_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return Structure_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool Structure_initialize_ex(
-    Structure* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    Structure* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+
 
     if (!RTICdrType_initLong(&sample->dato)) {
         return RTI_FALSE;
     }                
             
-
-    if (allocateMemory) {
-        sample->message = DDS_String_alloc((255));
-        if (sample->message == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->message != NULL) { 
-            sample->message[0] = '\0';
-        }
+    sample->message = DDS_String_alloc((255));
+    if (sample->message == NULL) {
+        return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -161,10 +153,8 @@ void Structure_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
-
     DDS_String_free(sample->message);                
             
-
 }
 
 RTIBool Structure_copy(
@@ -177,13 +167,11 @@ RTIBool Structure_copy(
         return RTI_FALSE;
     }
             
-
     if (!RTICdrType_copyString(
         dst->message, src->message, (255) + 1)) {
         return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }

@@ -46,20 +46,18 @@ extern const char *DatoTYPENAME;
 
             
     
-class Dato                                        
+
+typedef struct Dato
 {
-public:            
 #ifdef __cplusplus
     typedef struct DatoSeq Seq;
 
 #endif
-    
-    DDS_Long  count;
 
+    DDS_Long  count;
     char*  message; /* maximum length = (255) */
 
-            
-};                        
+} Dato;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -81,7 +79,7 @@ RTIBool Dato_initialize(
         
 NDDSUSERDllExport
 RTIBool Dato_initialize_ex(
-        Dato* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Dato* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void Dato_finalize(

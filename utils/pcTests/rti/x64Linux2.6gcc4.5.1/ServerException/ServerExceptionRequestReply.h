@@ -58,9 +58,9 @@ extern const char *ServerException_sendExceptionRequestTYPENAME;
 
             
     
-class ServerException_sendExceptionRequest                                        
+
+typedef struct ServerException_sendExceptionRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct ServerException_sendExceptionRequestSeq Seq;
 
@@ -71,11 +71,10 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
 
-            
-};                        
+} ServerException_sendExceptionRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -97,7 +96,7 @@ RTIBool ServerException_sendExceptionRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool ServerException_sendExceptionRequest_initialize_ex(
-        ServerException_sendExceptionRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ServerException_sendExceptionRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void ServerException_sendExceptionRequest_finalize(
@@ -146,9 +145,9 @@ extern const char *ServerException_sendExceptionReplyTYPENAME;
 
             
     
-class ServerException_sendExceptionReply                                        
+
+typedef struct ServerException_sendExceptionReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct ServerException_sendExceptionReplySeq Seq;
 
@@ -159,11 +158,10 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
 
-            
-};                        
+} ServerException_sendExceptionReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -185,7 +183,7 @@ RTIBool ServerException_sendExceptionReply_initialize(
         
 NDDSUSERDllExport
 RTIBool ServerException_sendExceptionReply_initialize_ex(
-        ServerException_sendExceptionReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ServerException_sendExceptionReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void ServerException_sendExceptionReply_finalize(
@@ -234,9 +232,9 @@ extern const char *ServerException_sendExceptionTwoRequestTYPENAME;
 
             
     
-class ServerException_sendExceptionTwoRequest                                        
+
+typedef struct ServerException_sendExceptionTwoRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct ServerException_sendExceptionTwoRequestSeq Seq;
 
@@ -247,15 +245,12 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
-
     char*  message; /* maximum length = (255) */
-
     char*  message2; /* maximum length = (255) */
 
-            
-};                        
+} ServerException_sendExceptionTwoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -277,7 +272,7 @@ RTIBool ServerException_sendExceptionTwoRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool ServerException_sendExceptionTwoRequest_initialize_ex(
-        ServerException_sendExceptionTwoRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ServerException_sendExceptionTwoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void ServerException_sendExceptionTwoRequest_finalize(
@@ -326,9 +321,9 @@ extern const char *ServerException_sendExceptionTwoReplyTYPENAME;
 
             
     
-class ServerException_sendExceptionTwoReply                                        
+
+typedef struct ServerException_sendExceptionTwoReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct ServerException_sendExceptionTwoReplySeq Seq;
 
@@ -339,17 +334,13 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     char*  message2; /* maximum length = (255) */
-
     char*  message3; /* maximum length = (255) */
-
     char*  sendExceptionTwo_ret; /* maximum length = (255) */
 
-            
-};                        
+} ServerException_sendExceptionTwoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -371,7 +362,7 @@ RTIBool ServerException_sendExceptionTwoReply_initialize(
         
 NDDSUSERDllExport
 RTIBool ServerException_sendExceptionTwoReply_initialize_ex(
-        ServerException_sendExceptionTwoReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ServerException_sendExceptionTwoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void ServerException_sendExceptionTwoReply_finalize(
@@ -420,9 +411,9 @@ extern const char *ServerException_sendExceptionThreeRequestTYPENAME;
 
             
     
-class ServerException_sendExceptionThreeRequest                                        
+
+typedef struct ServerException_sendExceptionThreeRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct ServerException_sendExceptionThreeRequestSeq Seq;
 
@@ -433,15 +424,12 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
-
     Estructura  es;
-
     Estructura  es2;
 
-            
-};                        
+} ServerException_sendExceptionThreeRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -463,7 +451,7 @@ RTIBool ServerException_sendExceptionThreeRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool ServerException_sendExceptionThreeRequest_initialize_ex(
-        ServerException_sendExceptionThreeRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ServerException_sendExceptionThreeRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void ServerException_sendExceptionThreeRequest_finalize(
@@ -512,9 +500,9 @@ extern const char *ServerException_sendExceptionThreeReplyTYPENAME;
 
             
     
-class ServerException_sendExceptionThreeReply                                        
+
+typedef struct ServerException_sendExceptionThreeReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct ServerException_sendExceptionThreeReplySeq Seq;
 
@@ -525,17 +513,13 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     Estructura  es2;
-
     Estructura  es3;
-
     Estructura  sendExceptionThree_ret;
 
-            
-};                        
+} ServerException_sendExceptionThreeReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -557,7 +541,7 @@ RTIBool ServerException_sendExceptionThreeReply_initialize(
         
 NDDSUSERDllExport
 RTIBool ServerException_sendExceptionThreeReply_initialize_ex(
-        ServerException_sendExceptionThreeReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ServerException_sendExceptionThreeReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void ServerException_sendExceptionThreeReply_finalize(

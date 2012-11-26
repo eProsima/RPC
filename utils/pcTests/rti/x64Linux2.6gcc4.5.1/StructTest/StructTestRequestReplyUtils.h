@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic StructTest_duplicateRequest.
+ */
 class StructTest_duplicateRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class StructTest_duplicateRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic StructTest_duplicateReply.
+ */
 class StructTest_duplicateReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class StructTest_duplicateReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic StructTest_sumaRequest.
+ */
 class StructTest_sumaRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class StructTest_sumaRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic StructTest_sumaReply.
+ */
 class StructTest_sumaReplyUtils
 {
     public:

@@ -46,20 +46,18 @@ extern const char *StructureTYPENAME;
 
             
     
-class Structure                                        
+
+typedef struct Structure
 {
-public:            
 #ifdef __cplusplus
     typedef struct StructureSeq Seq;
 
 #endif
-    
-    DDS_Long  dato;
 
+    DDS_Long  dato;
     char*  message; /* maximum length = (255) */
 
-            
-};                        
+} Structure;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -81,7 +79,7 @@ RTIBool Structure_initialize(
         
 NDDSUSERDllExport
 RTIBool Structure_initialize_ex(
-        Structure* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Structure* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void Structure_finalize(

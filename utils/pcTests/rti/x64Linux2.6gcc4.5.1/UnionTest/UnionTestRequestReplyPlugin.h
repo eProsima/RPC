@@ -41,7 +41,6 @@ extern "C" {
 #include "UnionTestPlugin.h"
 
 
-#define UnionTest_getEmpleadoRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * UnionTest_getEmpleadoRequest.
  *
@@ -56,7 +55,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct UnionTest_getEmpleadoRequest.
 */
-typedef  class UnionTest_getEmpleadoRequest UnionTest_getEmpleadoRequestKeyHolder;
+typedef  struct UnionTest_getEmpleadoRequest UnionTest_getEmpleadoRequestKeyHolder;
 
 
 #define UnionTest_getEmpleadoRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -114,6 +113,7 @@ UnionTest_getEmpleadoRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 UnionTest_getEmpleadoRequestPluginSupport_destroy_key(
     UnionTest_getEmpleadoRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,7 +141,6 @@ UnionTest_getEmpleadoRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 UnionTest_getEmpleadoRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 UnionTest_getEmpleadoRequestPlugin_copy_sample(
@@ -185,7 +184,6 @@ UnionTest_getEmpleadoRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 UnionTest_getEmpleadoRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -215,7 +213,6 @@ UnionTest_getEmpleadoRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const UnionTest_getEmpleadoRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -306,7 +303,6 @@ UnionTest_getEmpleadoRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 UnionTest_getEmpleadoRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define UnionTest_getEmpleadoReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * UnionTest_getEmpleadoReply.
  *
@@ -321,7 +317,7 @@ UnionTest_getEmpleadoRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct UnionTest_getEmpleadoReply.
 */
-typedef  class UnionTest_getEmpleadoReply UnionTest_getEmpleadoReplyKeyHolder;
+typedef  struct UnionTest_getEmpleadoReply UnionTest_getEmpleadoReplyKeyHolder;
 
 
 #define UnionTest_getEmpleadoReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -379,6 +375,7 @@ UnionTest_getEmpleadoReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 UnionTest_getEmpleadoReplyPluginSupport_destroy_key(
     UnionTest_getEmpleadoReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -406,7 +403,6 @@ UnionTest_getEmpleadoReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 UnionTest_getEmpleadoReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 UnionTest_getEmpleadoReplyPlugin_copy_sample(
@@ -450,7 +446,6 @@ UnionTest_getEmpleadoReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 UnionTest_getEmpleadoReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -480,7 +475,6 @@ UnionTest_getEmpleadoReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const UnionTest_getEmpleadoReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------

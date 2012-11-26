@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = ServerExceptionRequestReply.cxx ServerException.cxx ServerExceptionRequestReplyPlugin.cxx \
                 ServerExceptionPlugin.cxx ServerExceptionRequestReplySupport.cxx ServerExceptionSupport.cxx \
-                ServerExceptionRequestReplyUtils.cxx
+                ServerExceptionRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = ServerExceptionProxy.cxx ServerExceptionClientRPCSupport.cxx ServerExceptionAsyncSupport.cxx Client.cxx 

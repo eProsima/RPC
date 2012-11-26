@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = TypedefTestRequestReply.cxx TypedefTest.cxx TypedefTestRequestReplyPlugin.cxx \
                 TypedefTestPlugin.cxx TypedefTestRequestReplySupport.cxx TypedefTestSupport.cxx \
-                TypedefTestRequestReplyUtils.cxx
+                TypedefTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = TypedefTestProxy.cxx TypedefTestClientRPCSupport.cxx TypedefTestAsyncSupport.cxx Client.cxx 

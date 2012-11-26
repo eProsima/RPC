@@ -41,7 +41,6 @@ extern "C" {
 #include "SequenceTestPlugin.h"
 
 
-#define SequenceTest_getSLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * SequenceTest_getSLongRequest.
  *
@@ -56,7 +55,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct SequenceTest_getSLongRequest.
 */
-typedef  class SequenceTest_getSLongRequest SequenceTest_getSLongRequestKeyHolder;
+typedef  struct SequenceTest_getSLongRequest SequenceTest_getSLongRequestKeyHolder;
 
 
 #define SequenceTest_getSLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -114,6 +113,7 @@ SequenceTest_getSLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 SequenceTest_getSLongRequestPluginSupport_destroy_key(
     SequenceTest_getSLongRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,7 +141,6 @@ SequenceTest_getSLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 SequenceTest_getSLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 SequenceTest_getSLongRequestPlugin_copy_sample(
@@ -185,7 +184,6 @@ SequenceTest_getSLongRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 SequenceTest_getSLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -215,7 +213,6 @@ SequenceTest_getSLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const SequenceTest_getSLongRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -306,7 +303,6 @@ SequenceTest_getSLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 SequenceTest_getSLongRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define SequenceTest_getSLongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * SequenceTest_getSLongReply.
  *
@@ -321,7 +317,7 @@ SequenceTest_getSLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct SequenceTest_getSLongReply.
 */
-typedef  class SequenceTest_getSLongReply SequenceTest_getSLongReplyKeyHolder;
+typedef  struct SequenceTest_getSLongReply SequenceTest_getSLongReplyKeyHolder;
 
 
 #define SequenceTest_getSLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -379,6 +375,7 @@ SequenceTest_getSLongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 SequenceTest_getSLongReplyPluginSupport_destroy_key(
     SequenceTest_getSLongReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -406,7 +403,6 @@ SequenceTest_getSLongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 SequenceTest_getSLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 SequenceTest_getSLongReplyPlugin_copy_sample(
@@ -450,7 +446,6 @@ SequenceTest_getSLongReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 SequenceTest_getSLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -480,7 +475,6 @@ SequenceTest_getSLongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const SequenceTest_getSLongReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -571,7 +565,6 @@ SequenceTest_getSLongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 SequenceTest_getSLongReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define SequenceTest_getStringRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * SequenceTest_getStringRequest.
  *
@@ -586,7 +579,7 @@ SequenceTest_getSLongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct SequenceTest_getStringRequest.
 */
-typedef  class SequenceTest_getStringRequest SequenceTest_getStringRequestKeyHolder;
+typedef  struct SequenceTest_getStringRequest SequenceTest_getStringRequestKeyHolder;
 
 
 #define SequenceTest_getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -644,6 +637,7 @@ SequenceTest_getStringRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringRequestPluginSupport_destroy_key(
     SequenceTest_getStringRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -671,7 +665,6 @@ SequenceTest_getStringRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 SequenceTest_getStringRequestPlugin_copy_sample(
@@ -715,7 +708,6 @@ SequenceTest_getStringRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 SequenceTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -745,7 +737,6 @@ SequenceTest_getStringRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const SequenceTest_getStringRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -836,7 +827,6 @@ SequenceTest_getStringRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 SequenceTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define SequenceTest_getStringReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * SequenceTest_getStringReply.
  *
@@ -851,7 +841,7 @@ SequenceTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct SequenceTest_getStringReply.
 */
-typedef  class SequenceTest_getStringReply SequenceTest_getStringReplyKeyHolder;
+typedef  struct SequenceTest_getStringReply SequenceTest_getStringReplyKeyHolder;
 
 
 #define SequenceTest_getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -909,6 +899,7 @@ SequenceTest_getStringReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringReplyPluginSupport_destroy_key(
     SequenceTest_getStringReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -936,7 +927,6 @@ SequenceTest_getStringReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 SequenceTest_getStringReplyPlugin_copy_sample(
@@ -980,7 +970,6 @@ SequenceTest_getStringReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 SequenceTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1010,7 +999,6 @@ SequenceTest_getStringReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const SequenceTest_getStringReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1101,7 +1089,6 @@ SequenceTest_getStringReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 SequenceTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define SequenceTest_getStringBoundedRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * SequenceTest_getStringBoundedRequest.
  *
@@ -1116,7 +1103,7 @@ SequenceTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct SequenceTest_getStringBoundedRequest.
 */
-typedef  class SequenceTest_getStringBoundedRequest SequenceTest_getStringBoundedRequestKeyHolder;
+typedef  struct SequenceTest_getStringBoundedRequest SequenceTest_getStringBoundedRequestKeyHolder;
 
 
 #define SequenceTest_getStringBoundedRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1174,6 +1161,7 @@ SequenceTest_getStringBoundedRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringBoundedRequestPluginSupport_destroy_key(
     SequenceTest_getStringBoundedRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1201,7 +1189,6 @@ SequenceTest_getStringBoundedRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringBoundedRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 SequenceTest_getStringBoundedRequestPlugin_copy_sample(
@@ -1245,7 +1232,6 @@ SequenceTest_getStringBoundedRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 SequenceTest_getStringBoundedRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1275,7 +1261,6 @@ SequenceTest_getStringBoundedRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const SequenceTest_getStringBoundedRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1366,7 +1351,6 @@ SequenceTest_getStringBoundedRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 SequenceTest_getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define SequenceTest_getStringBoundedReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * SequenceTest_getStringBoundedReply.
  *
@@ -1381,7 +1365,7 @@ SequenceTest_getStringBoundedRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct SequenceTest_getStringBoundedReply.
 */
-typedef  class SequenceTest_getStringBoundedReply SequenceTest_getStringBoundedReplyKeyHolder;
+typedef  struct SequenceTest_getStringBoundedReply SequenceTest_getStringBoundedReplyKeyHolder;
 
 
 #define SequenceTest_getStringBoundedReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1439,6 +1423,7 @@ SequenceTest_getStringBoundedReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringBoundedReplyPluginSupport_destroy_key(
     SequenceTest_getStringBoundedReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1466,7 +1451,6 @@ SequenceTest_getStringBoundedReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 SequenceTest_getStringBoundedReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 SequenceTest_getStringBoundedReplyPlugin_copy_sample(
@@ -1510,7 +1494,6 @@ SequenceTest_getStringBoundedReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 SequenceTest_getStringBoundedReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1540,7 +1523,6 @@ SequenceTest_getStringBoundedReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const SequenceTest_getStringBoundedReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------

@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getOctetRequest.
+ */
 class BasicTypeTest_getOctetRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class BasicTypeTest_getOctetRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getOctetReply.
+ */
 class BasicTypeTest_getOctetReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class BasicTypeTest_getOctetReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getCharRequest.
+ */
 class BasicTypeTest_getCharRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class BasicTypeTest_getCharRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getCharReply.
+ */
 class BasicTypeTest_getCharReplyUtils
 {
     public:
@@ -135,6 +147,9 @@ class BasicTypeTest_getCharReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getWCharRequest.
+ */
 class BasicTypeTest_getWCharRequestUtils
 {
     public:
@@ -163,6 +178,9 @@ class BasicTypeTest_getWCharRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getWCharReply.
+ */
 class BasicTypeTest_getWCharReplyUtils
 {
     public:
@@ -192,6 +210,9 @@ class BasicTypeTest_getWCharReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getShortRequest.
+ */
 class BasicTypeTest_getShortRequestUtils
 {
     public:
@@ -220,6 +241,9 @@ class BasicTypeTest_getShortRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getShortReply.
+ */
 class BasicTypeTest_getShortReplyUtils
 {
     public:
@@ -249,6 +273,9 @@ class BasicTypeTest_getShortReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getUShortRequest.
+ */
 class BasicTypeTest_getUShortRequestUtils
 {
     public:
@@ -277,6 +304,9 @@ class BasicTypeTest_getUShortRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getUShortReply.
+ */
 class BasicTypeTest_getUShortReplyUtils
 {
     public:
@@ -306,6 +336,9 @@ class BasicTypeTest_getUShortReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getLongRequest.
+ */
 class BasicTypeTest_getLongRequestUtils
 {
     public:
@@ -334,6 +367,9 @@ class BasicTypeTest_getLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getLongReply.
+ */
 class BasicTypeTest_getLongReplyUtils
 {
     public:
@@ -363,6 +399,9 @@ class BasicTypeTest_getLongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getULongRequest.
+ */
 class BasicTypeTest_getULongRequestUtils
 {
     public:
@@ -391,6 +430,9 @@ class BasicTypeTest_getULongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getULongReply.
+ */
 class BasicTypeTest_getULongReplyUtils
 {
     public:
@@ -420,6 +462,9 @@ class BasicTypeTest_getULongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getLLongRequest.
+ */
 class BasicTypeTest_getLLongRequestUtils
 {
     public:
@@ -448,6 +493,9 @@ class BasicTypeTest_getLLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getLLongReply.
+ */
 class BasicTypeTest_getLLongReplyUtils
 {
     public:
@@ -477,6 +525,9 @@ class BasicTypeTest_getLLongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getULLongRequest.
+ */
 class BasicTypeTest_getULLongRequestUtils
 {
     public:
@@ -505,6 +556,9 @@ class BasicTypeTest_getULLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getULLongReply.
+ */
 class BasicTypeTest_getULLongReplyUtils
 {
     public:
@@ -534,6 +588,9 @@ class BasicTypeTest_getULLongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getFloatRequest.
+ */
 class BasicTypeTest_getFloatRequestUtils
 {
     public:
@@ -562,6 +619,9 @@ class BasicTypeTest_getFloatRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getFloatReply.
+ */
 class BasicTypeTest_getFloatReplyUtils
 {
     public:
@@ -591,6 +651,9 @@ class BasicTypeTest_getFloatReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getDoubleRequest.
+ */
 class BasicTypeTest_getDoubleRequestUtils
 {
     public:
@@ -619,6 +682,9 @@ class BasicTypeTest_getDoubleRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getDoubleReply.
+ */
 class BasicTypeTest_getDoubleReplyUtils
 {
     public:
@@ -648,6 +714,9 @@ class BasicTypeTest_getDoubleReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getBooleanRequest.
+ */
 class BasicTypeTest_getBooleanRequestUtils
 {
     public:
@@ -676,6 +745,9 @@ class BasicTypeTest_getBooleanRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic BasicTypeTest_getBooleanReply.
+ */
 class BasicTypeTest_getBooleanReplyUtils
 {
     public:

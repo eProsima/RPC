@@ -21,6 +21,7 @@
 /**
  * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
  *        When the FooInterfaceServer object is created, it creates one instance of this class.
+ * @ingroup FOOEXAMPLE
  */
 class FooInterfaceServerImpl
 {

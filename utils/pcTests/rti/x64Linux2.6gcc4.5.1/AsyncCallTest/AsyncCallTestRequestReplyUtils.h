@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_getLongRequest.
+ */
 class AsyncCallTest_getLongRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class AsyncCallTest_getLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_getLongReply.
+ */
 class AsyncCallTest_getLongReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class AsyncCallTest_getLongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_getBooleanRequest.
+ */
 class AsyncCallTest_getBooleanRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class AsyncCallTest_getBooleanRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_getBooleanReply.
+ */
 class AsyncCallTest_getBooleanReplyUtils
 {
     public:
@@ -135,6 +147,9 @@ class AsyncCallTest_getBooleanReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_getStringRequest.
+ */
 class AsyncCallTest_getStringRequestUtils
 {
     public:
@@ -163,6 +178,9 @@ class AsyncCallTest_getStringRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_getStringReply.
+ */
 class AsyncCallTest_getStringReplyUtils
 {
     public:
@@ -192,6 +210,9 @@ class AsyncCallTest_getStringReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_duplicateRequest.
+ */
 class AsyncCallTest_duplicateRequestUtils
 {
     public:
@@ -220,6 +241,9 @@ class AsyncCallTest_duplicateRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic AsyncCallTest_duplicateReply.
+ */
 class AsyncCallTest_duplicateReplyUtils
 {
     public:

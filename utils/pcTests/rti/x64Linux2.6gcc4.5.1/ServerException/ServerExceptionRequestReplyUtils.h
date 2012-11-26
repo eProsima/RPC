@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic ServerException_sendExceptionRequest.
+ */
 class ServerException_sendExceptionRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class ServerException_sendExceptionRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic ServerException_sendExceptionReply.
+ */
 class ServerException_sendExceptionReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class ServerException_sendExceptionReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic ServerException_sendExceptionTwoRequest.
+ */
 class ServerException_sendExceptionTwoRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class ServerException_sendExceptionTwoRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic ServerException_sendExceptionTwoReply.
+ */
 class ServerException_sendExceptionTwoReplyUtils
 {
     public:
@@ -135,6 +147,9 @@ class ServerException_sendExceptionTwoReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic ServerException_sendExceptionThreeRequest.
+ */
 class ServerException_sendExceptionThreeRequestUtils
 {
     public:
@@ -163,6 +178,9 @@ class ServerException_sendExceptionThreeRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic ServerException_sendExceptionThreeReply.
+ */
 class ServerException_sendExceptionThreeReplyUtils
 {
     public:

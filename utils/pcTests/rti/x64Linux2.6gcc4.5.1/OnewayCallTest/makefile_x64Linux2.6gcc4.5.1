@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = OnewayCallTestRequestReply.cxx OnewayCallTest.cxx OnewayCallTestRequestReplyPlugin.cxx \
                 OnewayCallTestPlugin.cxx OnewayCallTestRequestReplySupport.cxx OnewayCallTestSupport.cxx \
-                OnewayCallTestRequestReplyUtils.cxx
+                OnewayCallTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = OnewayCallTestProxy.cxx OnewayCallTestClientRPCSupport.cxx OnewayCallTestAsyncSupport.cxx Client.cxx 

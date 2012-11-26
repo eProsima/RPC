@@ -58,9 +58,9 @@ extern const char *OnewayCallTest_setLongRequestTYPENAME;
 
             
     
-class OnewayCallTest_setLongRequest                                        
+
+typedef struct OnewayCallTest_setLongRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_setLongRequestSeq Seq;
 
@@ -71,13 +71,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     DDS_Long  lo1;
 
-            
-};                        
+} OnewayCallTest_setLongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -99,7 +97,7 @@ RTIBool OnewayCallTest_setLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_setLongRequest_initialize_ex(
-        OnewayCallTest_setLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_setLongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_setLongRequest_finalize(
@@ -148,9 +146,9 @@ extern const char *OnewayCallTest_getLongRequestTYPENAME;
 
             
     
-class OnewayCallTest_getLongRequest                                        
+
+typedef struct OnewayCallTest_getLongRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getLongRequestSeq Seq;
 
@@ -161,11 +159,10 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
 
-            
-};                        
+} OnewayCallTest_getLongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -187,7 +184,7 @@ RTIBool OnewayCallTest_getLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getLongRequest_initialize_ex(
-        OnewayCallTest_getLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getLongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getLongRequest_finalize(
@@ -236,9 +233,9 @@ extern const char *OnewayCallTest_getLongReplyTYPENAME;
 
             
     
-class OnewayCallTest_getLongReply                                        
+
+typedef struct OnewayCallTest_getLongReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getLongReplySeq Seq;
 
@@ -249,13 +246,11 @@ public:
 #endif
 
 #endif
-    
-    ReplyHeader  header;
 
+    ReplyHeader  header;
     DDS_Long  getLong_ret;
 
-            
-};                        
+} OnewayCallTest_getLongReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -277,7 +272,7 @@ RTIBool OnewayCallTest_getLongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getLongReply_initialize_ex(
-        OnewayCallTest_getLongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getLongReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getLongReply_finalize(
@@ -326,9 +321,9 @@ extern const char *OnewayCallTest_setBooleanRequestTYPENAME;
 
             
     
-class OnewayCallTest_setBooleanRequest                                        
+
+typedef struct OnewayCallTest_setBooleanRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_setBooleanRequestSeq Seq;
 
@@ -339,13 +334,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     DDS_Boolean  bo1;
 
-            
-};                        
+} OnewayCallTest_setBooleanRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -367,7 +360,7 @@ RTIBool OnewayCallTest_setBooleanRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_setBooleanRequest_initialize_ex(
-        OnewayCallTest_setBooleanRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_setBooleanRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_setBooleanRequest_finalize(
@@ -416,9 +409,9 @@ extern const char *OnewayCallTest_getBooleanRequestTYPENAME;
 
             
     
-class OnewayCallTest_getBooleanRequest                                        
+
+typedef struct OnewayCallTest_getBooleanRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getBooleanRequestSeq Seq;
 
@@ -429,11 +422,10 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
 
-            
-};                        
+} OnewayCallTest_getBooleanRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -455,7 +447,7 @@ RTIBool OnewayCallTest_getBooleanRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getBooleanRequest_initialize_ex(
-        OnewayCallTest_getBooleanRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getBooleanRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getBooleanRequest_finalize(
@@ -504,9 +496,9 @@ extern const char *OnewayCallTest_getBooleanReplyTYPENAME;
 
             
     
-class OnewayCallTest_getBooleanReply                                        
+
+typedef struct OnewayCallTest_getBooleanReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getBooleanReplySeq Seq;
 
@@ -517,13 +509,11 @@ public:
 #endif
 
 #endif
-    
-    ReplyHeader  header;
 
+    ReplyHeader  header;
     DDS_Boolean  getBoolean_ret;
 
-            
-};                        
+} OnewayCallTest_getBooleanReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -545,7 +535,7 @@ RTIBool OnewayCallTest_getBooleanReply_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getBooleanReply_initialize_ex(
-        OnewayCallTest_getBooleanReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getBooleanReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getBooleanReply_finalize(
@@ -594,9 +584,9 @@ extern const char *OnewayCallTest_setStringRequestTYPENAME;
 
             
     
-class OnewayCallTest_setStringRequest                                        
+
+typedef struct OnewayCallTest_setStringRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_setStringRequestSeq Seq;
 
@@ -607,13 +597,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     char*  s1; /* maximum length = (255) */
 
-            
-};                        
+} OnewayCallTest_setStringRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -635,7 +623,7 @@ RTIBool OnewayCallTest_setStringRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_setStringRequest_initialize_ex(
-        OnewayCallTest_setStringRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_setStringRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_setStringRequest_finalize(
@@ -684,9 +672,9 @@ extern const char *OnewayCallTest_getStringRequestTYPENAME;
 
             
     
-class OnewayCallTest_getStringRequest                                        
+
+typedef struct OnewayCallTest_getStringRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getStringRequestSeq Seq;
 
@@ -697,11 +685,10 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
 
-            
-};                        
+} OnewayCallTest_getStringRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -723,7 +710,7 @@ RTIBool OnewayCallTest_getStringRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getStringRequest_initialize_ex(
-        OnewayCallTest_getStringRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getStringRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getStringRequest_finalize(
@@ -772,9 +759,9 @@ extern const char *OnewayCallTest_getStringReplyTYPENAME;
 
             
     
-class OnewayCallTest_getStringReply                                        
+
+typedef struct OnewayCallTest_getStringReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getStringReplySeq Seq;
 
@@ -785,13 +772,11 @@ public:
 #endif
 
 #endif
-    
-    ReplyHeader  header;
 
+    ReplyHeader  header;
     char*  getString_ret; /* maximum length = (255) */
 
-            
-};                        
+} OnewayCallTest_getStringReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -813,7 +798,7 @@ RTIBool OnewayCallTest_getStringReply_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getStringReply_initialize_ex(
-        OnewayCallTest_getStringReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getStringReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getStringReply_finalize(
@@ -862,9 +847,9 @@ extern const char *OnewayCallTest_setStructRequestTYPENAME;
 
             
     
-class OnewayCallTest_setStructRequest                                        
+
+typedef struct OnewayCallTest_setStructRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_setStructRequestSeq Seq;
 
@@ -875,13 +860,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     Structure  ev;
 
-            
-};                        
+} OnewayCallTest_setStructRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -903,7 +886,7 @@ RTIBool OnewayCallTest_setStructRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_setStructRequest_initialize_ex(
-        OnewayCallTest_setStructRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_setStructRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_setStructRequest_finalize(
@@ -952,9 +935,9 @@ extern const char *OnewayCallTest_getStructRequestTYPENAME;
 
             
     
-class OnewayCallTest_getStructRequest                                        
+
+typedef struct OnewayCallTest_getStructRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getStructRequestSeq Seq;
 
@@ -965,11 +948,10 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
 
-            
-};                        
+} OnewayCallTest_getStructRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -991,7 +973,7 @@ RTIBool OnewayCallTest_getStructRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getStructRequest_initialize_ex(
-        OnewayCallTest_getStructRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getStructRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getStructRequest_finalize(
@@ -1040,9 +1022,9 @@ extern const char *OnewayCallTest_getStructReplyTYPENAME;
 
             
     
-class OnewayCallTest_getStructReply                                        
+
+typedef struct OnewayCallTest_getStructReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct OnewayCallTest_getStructReplySeq Seq;
 
@@ -1053,13 +1035,11 @@ public:
 #endif
 
 #endif
-    
-    ReplyHeader  header;
 
+    ReplyHeader  header;
     Structure  getStruct_ret;
 
-            
-};                        
+} OnewayCallTest_getStructReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1081,7 +1061,7 @@ RTIBool OnewayCallTest_getStructReply_initialize(
         
 NDDSUSERDllExport
 RTIBool OnewayCallTest_getStructReply_initialize_ex(
-        OnewayCallTest_getStructReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        OnewayCallTest_getStructReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void OnewayCallTest_getStructReply_finalize(

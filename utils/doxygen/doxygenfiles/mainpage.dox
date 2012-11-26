@@ -77,3 +77,8 @@
  * @ingroup RPCDDSAPIREFERENCE
  * @brief Network transports that RPCDDS library offers. These transports define how a connection is established between a proxy and a server.
  */
+
+ /*!
+ * @defgroup FOOEXAMPLE Generated API example
+ * @brief This group contains the generated API by the tool \e rpcddsgen \e for an example of interface named FooInterface.
+ */

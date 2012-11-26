@@ -115,52 +115,29 @@ DDS_TypeCode* Empleado_get_typecode()
     return &Empleado_g_tc;
 }
 
-DDS_UnsignedLong Empleado_getDefaultDiscriminator()
-{
-
-    DDS_UnsignedLong tmp = 1;
-    
-    if (tmp > 1) tmp = 1;
-    
-    if (tmp > 2) tmp = 2;
-    
-    return tmp;
-
-}
-        
 
 RTIBool Empleado_initialize(
     Empleado* sample) {
-  return Empleado_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return Empleado_initialize_ex(sample,RTI_TRUE);
 }
         
 RTIBool Empleado_initialize_ex(
-    Empleado* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+    Empleado* sample,RTIBool allocatePointers)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
 
-    sample->_d = Empleado_getDefaultDiscriminator();
 
     if (!RTICdrType_initLong(&sample->_u.id)) {
         return RTI_FALSE;
     }                
             
-
-    if (allocateMemory) {
-        sample->_u.name = DDS_String_alloc((255));
-        if (sample->_u.name == NULL) {
-            return RTI_FALSE;
-        }
-    } else {
-        if (sample->_u.name != NULL) { 
-            sample->_u.name[0] = '\0';
-        }
+    sample->_u.name = DDS_String_alloc((255));
+    if (sample->_u.name == NULL) {
+        return RTI_FALSE;
     }
             
-
 
     return RTI_TRUE;
 }
@@ -178,10 +155,8 @@ void Empleado_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
-
     DDS_String_free(sample->_u.name);                
             
-
 }
 
 RTIBool Empleado_copy(
@@ -194,7 +169,6 @@ RTIBool Empleado_copy(
         return RTI_FALSE;
     }
             
-
     switch(src->_d) {
           case 1:
         {                                    
@@ -204,7 +178,6 @@ RTIBool Empleado_copy(
         return RTI_FALSE;
     }
             
-
         } break;
       case 2:
         {                                    
@@ -214,7 +187,6 @@ RTIBool Empleado_copy(
         return RTI_FALSE;
     }
             
-
         } break;
               
     }

@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic SequenceTest_getSLongRequest.
+ */
 class SequenceTest_getSLongRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class SequenceTest_getSLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic SequenceTest_getSLongReply.
+ */
 class SequenceTest_getSLongReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class SequenceTest_getSLongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic SequenceTest_getStringRequest.
+ */
 class SequenceTest_getStringRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class SequenceTest_getStringRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic SequenceTest_getStringReply.
+ */
 class SequenceTest_getStringReplyUtils
 {
     public:
@@ -135,6 +147,9 @@ class SequenceTest_getStringReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic SequenceTest_getStringBoundedRequest.
+ */
 class SequenceTest_getStringBoundedRequestUtils
 {
     public:
@@ -163,6 +178,9 @@ class SequenceTest_getStringBoundedRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic SequenceTest_getStringBoundedReply.
+ */
 class SequenceTest_getStringBoundedReplyUtils
 {
     public:

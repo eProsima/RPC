@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = UnionTestRequestReply.cxx UnionTest.cxx UnionTestRequestReplyPlugin.cxx \
                 UnionTestPlugin.cxx UnionTestRequestReplySupport.cxx UnionTestSupport.cxx \
-                UnionTestRequestReplyUtils.cxx
+                UnionTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = UnionTestProxy.cxx UnionTestClientRPCSupport.cxx UnionTestAsyncSupport.cxx Client.cxx 

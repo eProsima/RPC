@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getLargoRequest.
+ */
 class TypedefTest_getLargoRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class TypedefTest_getLargoRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getLargoReply.
+ */
 class TypedefTest_getLargoReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class TypedefTest_getLargoReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getLarguisimoRequest.
+ */
 class TypedefTest_getLarguisimoRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class TypedefTest_getLarguisimoRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getLarguisimoReply.
+ */
 class TypedefTest_getLarguisimoReplyUtils
 {
     public:
@@ -135,6 +147,9 @@ class TypedefTest_getLarguisimoReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getDatosDefRequest.
+ */
 class TypedefTest_getDatosDefRequestUtils
 {
     public:
@@ -163,6 +178,9 @@ class TypedefTest_getDatosDefRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getDatosDefReply.
+ */
 class TypedefTest_getDatosDefReplyUtils
 {
     public:
@@ -192,6 +210,9 @@ class TypedefTest_getDatosDefReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getDatosDefondoRequest.
+ */
 class TypedefTest_getDatosDefondoRequestUtils
 {
     public:
@@ -220,6 +241,9 @@ class TypedefTest_getDatosDefondoRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getDatosDefondoReply.
+ */
 class TypedefTest_getDatosDefondoReplyUtils
 {
     public:
@@ -249,6 +273,9 @@ class TypedefTest_getDatosDefondoReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getCadenaRequest.
+ */
 class TypedefTest_getCadenaRequestUtils
 {
     public:
@@ -277,6 +304,9 @@ class TypedefTest_getCadenaRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getCadenaReply.
+ */
 class TypedefTest_getCadenaReplyUtils
 {
     public:
@@ -306,6 +336,9 @@ class TypedefTest_getCadenaReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getCorreaRequest.
+ */
 class TypedefTest_getCorreaRequestUtils
 {
     public:
@@ -334,6 +367,9 @@ class TypedefTest_getCorreaRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic TypedefTest_getCorreaReply.
+ */
 class TypedefTest_getCorreaReplyUtils
 {
     public:

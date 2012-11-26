@@ -41,7 +41,6 @@ extern "C" {
 #include "AsyncCallTestPlugin.h"
 
 
-#define AsyncCallTest_getLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_getLongRequest.
  *
@@ -56,7 +55,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_getLongRequest.
 */
-typedef  class AsyncCallTest_getLongRequest AsyncCallTest_getLongRequestKeyHolder;
+typedef  struct AsyncCallTest_getLongRequest AsyncCallTest_getLongRequestKeyHolder;
 
 
 #define AsyncCallTest_getLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -114,6 +113,7 @@ AsyncCallTest_getLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getLongRequestPluginSupport_destroy_key(
     AsyncCallTest_getLongRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,7 +141,6 @@ AsyncCallTest_getLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_getLongRequestPlugin_copy_sample(
@@ -185,7 +184,6 @@ AsyncCallTest_getLongRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_getLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -215,7 +213,6 @@ AsyncCallTest_getLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_getLongRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -306,7 +303,6 @@ AsyncCallTest_getLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_getLongRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_getLongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_getLongReply.
  *
@@ -321,7 +317,7 @@ AsyncCallTest_getLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_getLongReply.
 */
-typedef  class AsyncCallTest_getLongReply AsyncCallTest_getLongReplyKeyHolder;
+typedef  struct AsyncCallTest_getLongReply AsyncCallTest_getLongReplyKeyHolder;
 
 
 #define AsyncCallTest_getLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -379,6 +375,7 @@ AsyncCallTest_getLongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getLongReplyPluginSupport_destroy_key(
     AsyncCallTest_getLongReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -406,7 +403,6 @@ AsyncCallTest_getLongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_getLongReplyPlugin_copy_sample(
@@ -450,7 +446,6 @@ AsyncCallTest_getLongReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_getLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -480,7 +475,6 @@ AsyncCallTest_getLongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_getLongReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -571,7 +565,6 @@ AsyncCallTest_getLongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_getLongReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_getBooleanRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_getBooleanRequest.
  *
@@ -586,7 +579,7 @@ AsyncCallTest_getLongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_getBooleanRequest.
 */
-typedef  class AsyncCallTest_getBooleanRequest AsyncCallTest_getBooleanRequestKeyHolder;
+typedef  struct AsyncCallTest_getBooleanRequest AsyncCallTest_getBooleanRequestKeyHolder;
 
 
 #define AsyncCallTest_getBooleanRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -644,6 +637,7 @@ AsyncCallTest_getBooleanRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getBooleanRequestPluginSupport_destroy_key(
     AsyncCallTest_getBooleanRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -671,7 +665,6 @@ AsyncCallTest_getBooleanRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getBooleanRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_getBooleanRequestPlugin_copy_sample(
@@ -715,7 +708,6 @@ AsyncCallTest_getBooleanRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_getBooleanRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -745,7 +737,6 @@ AsyncCallTest_getBooleanRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_getBooleanRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -836,7 +827,6 @@ AsyncCallTest_getBooleanRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_getBooleanRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_getBooleanReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_getBooleanReply.
  *
@@ -851,7 +841,7 @@ AsyncCallTest_getBooleanRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_getBooleanReply.
 */
-typedef  class AsyncCallTest_getBooleanReply AsyncCallTest_getBooleanReplyKeyHolder;
+typedef  struct AsyncCallTest_getBooleanReply AsyncCallTest_getBooleanReplyKeyHolder;
 
 
 #define AsyncCallTest_getBooleanReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -909,6 +899,7 @@ AsyncCallTest_getBooleanReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getBooleanReplyPluginSupport_destroy_key(
     AsyncCallTest_getBooleanReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -936,7 +927,6 @@ AsyncCallTest_getBooleanReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getBooleanReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_getBooleanReplyPlugin_copy_sample(
@@ -980,7 +970,6 @@ AsyncCallTest_getBooleanReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_getBooleanReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1010,7 +999,6 @@ AsyncCallTest_getBooleanReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_getBooleanReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1101,7 +1089,6 @@ AsyncCallTest_getBooleanReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_getBooleanReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_getStringRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_getStringRequest.
  *
@@ -1116,7 +1103,7 @@ AsyncCallTest_getBooleanReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_getStringRequest.
 */
-typedef  class AsyncCallTest_getStringRequest AsyncCallTest_getStringRequestKeyHolder;
+typedef  struct AsyncCallTest_getStringRequest AsyncCallTest_getStringRequestKeyHolder;
 
 
 #define AsyncCallTest_getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1174,6 +1161,7 @@ AsyncCallTest_getStringRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getStringRequestPluginSupport_destroy_key(
     AsyncCallTest_getStringRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1201,7 +1189,6 @@ AsyncCallTest_getStringRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_getStringRequestPlugin_copy_sample(
@@ -1245,7 +1232,6 @@ AsyncCallTest_getStringRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1275,7 +1261,6 @@ AsyncCallTest_getStringRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_getStringRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1366,7 +1351,6 @@ AsyncCallTest_getStringRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_getStringReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_getStringReply.
  *
@@ -1381,7 +1365,7 @@ AsyncCallTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_getStringReply.
 */
-typedef  class AsyncCallTest_getStringReply AsyncCallTest_getStringReplyKeyHolder;
+typedef  struct AsyncCallTest_getStringReply AsyncCallTest_getStringReplyKeyHolder;
 
 
 #define AsyncCallTest_getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1439,6 +1423,7 @@ AsyncCallTest_getStringReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getStringReplyPluginSupport_destroy_key(
     AsyncCallTest_getStringReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1466,7 +1451,6 @@ AsyncCallTest_getStringReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_getStringReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_getStringReplyPlugin_copy_sample(
@@ -1510,7 +1494,6 @@ AsyncCallTest_getStringReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1540,7 +1523,6 @@ AsyncCallTest_getStringReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_getStringReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1631,7 +1613,6 @@ AsyncCallTest_getStringReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_duplicateRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_duplicateRequest.
  *
@@ -1646,7 +1627,7 @@ AsyncCallTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_duplicateRequest.
 */
-typedef  class AsyncCallTest_duplicateRequest AsyncCallTest_duplicateRequestKeyHolder;
+typedef  struct AsyncCallTest_duplicateRequest AsyncCallTest_duplicateRequestKeyHolder;
 
 
 #define AsyncCallTest_duplicateRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1704,6 +1685,7 @@ AsyncCallTest_duplicateRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_duplicateRequestPluginSupport_destroy_key(
     AsyncCallTest_duplicateRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1731,7 +1713,6 @@ AsyncCallTest_duplicateRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_duplicateRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_duplicateRequestPlugin_copy_sample(
@@ -1775,7 +1756,6 @@ AsyncCallTest_duplicateRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_duplicateRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1805,7 +1785,6 @@ AsyncCallTest_duplicateRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_duplicateRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1896,7 +1875,6 @@ AsyncCallTest_duplicateRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 AsyncCallTest_duplicateRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define AsyncCallTest_duplicateReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * AsyncCallTest_duplicateReply.
  *
@@ -1911,7 +1889,7 @@ AsyncCallTest_duplicateRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct AsyncCallTest_duplicateReply.
 */
-typedef  class AsyncCallTest_duplicateReply AsyncCallTest_duplicateReplyKeyHolder;
+typedef  struct AsyncCallTest_duplicateReply AsyncCallTest_duplicateReplyKeyHolder;
 
 
 #define AsyncCallTest_duplicateReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1969,6 +1947,7 @@ AsyncCallTest_duplicateReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 AsyncCallTest_duplicateReplyPluginSupport_destroy_key(
     AsyncCallTest_duplicateReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1996,7 +1975,6 @@ AsyncCallTest_duplicateReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 AsyncCallTest_duplicateReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 AsyncCallTest_duplicateReplyPlugin_copy_sample(
@@ -2040,7 +2018,6 @@ AsyncCallTest_duplicateReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 AsyncCallTest_duplicateReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2070,7 +2047,6 @@ AsyncCallTest_duplicateReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const AsyncCallTest_duplicateReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------

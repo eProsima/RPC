@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic MultithreadTest_testRequest.
+ */
 class MultithreadTest_testRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class MultithreadTest_testRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic MultithreadTest_testReply.
+ */
 class MultithreadTest_testReplyUtils
 {
     public:

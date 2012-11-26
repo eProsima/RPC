@@ -58,9 +58,9 @@ extern const char *AsyncCallTest_getLongRequestTYPENAME;
 
             
     
-class AsyncCallTest_getLongRequest                                        
+
+typedef struct AsyncCallTest_getLongRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_getLongRequestSeq Seq;
 
@@ -71,15 +71,12 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
-
     DDS_Long  lo1;
-
     DDS_Long  lo2;
 
-            
-};                        
+} AsyncCallTest_getLongRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -101,7 +98,7 @@ RTIBool AsyncCallTest_getLongRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_getLongRequest_initialize_ex(
-        AsyncCallTest_getLongRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_getLongRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_getLongRequest_finalize(
@@ -150,9 +147,9 @@ extern const char *AsyncCallTest_getLongReplyTYPENAME;
 
             
     
-class AsyncCallTest_getLongReply                                        
+
+typedef struct AsyncCallTest_getLongReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_getLongReplySeq Seq;
 
@@ -163,17 +160,13 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     DDS_Long  lo2;
-
     DDS_Long  lo3;
-
     DDS_Long  getLong_ret;
 
-            
-};                        
+} AsyncCallTest_getLongReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -195,7 +188,7 @@ RTIBool AsyncCallTest_getLongReply_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_getLongReply_initialize_ex(
-        AsyncCallTest_getLongReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_getLongReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_getLongReply_finalize(
@@ -244,9 +237,9 @@ extern const char *AsyncCallTest_getBooleanRequestTYPENAME;
 
             
     
-class AsyncCallTest_getBooleanRequest                                        
+
+typedef struct AsyncCallTest_getBooleanRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_getBooleanRequestSeq Seq;
 
@@ -257,15 +250,12 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
-
     DDS_Boolean  bo1;
-
     DDS_Boolean  bo2;
 
-            
-};                        
+} AsyncCallTest_getBooleanRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -287,7 +277,7 @@ RTIBool AsyncCallTest_getBooleanRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_getBooleanRequest_initialize_ex(
-        AsyncCallTest_getBooleanRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_getBooleanRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_getBooleanRequest_finalize(
@@ -336,9 +326,9 @@ extern const char *AsyncCallTest_getBooleanReplyTYPENAME;
 
             
     
-class AsyncCallTest_getBooleanReply                                        
+
+typedef struct AsyncCallTest_getBooleanReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_getBooleanReplySeq Seq;
 
@@ -349,17 +339,13 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     DDS_Boolean  bo2;
-
     DDS_Boolean  bo3;
-
     DDS_Boolean  getBoolean_ret;
 
-            
-};                        
+} AsyncCallTest_getBooleanReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -381,7 +367,7 @@ RTIBool AsyncCallTest_getBooleanReply_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_getBooleanReply_initialize_ex(
-        AsyncCallTest_getBooleanReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_getBooleanReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_getBooleanReply_finalize(
@@ -430,9 +416,9 @@ extern const char *AsyncCallTest_getStringRequestTYPENAME;
 
             
     
-class AsyncCallTest_getStringRequest                                        
+
+typedef struct AsyncCallTest_getStringRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_getStringRequestSeq Seq;
 
@@ -443,15 +429,12 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
-
     char*  s1; /* maximum length = (255) */
-
     char*  s2; /* maximum length = (255) */
 
-            
-};                        
+} AsyncCallTest_getStringRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -473,7 +456,7 @@ RTIBool AsyncCallTest_getStringRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_getStringRequest_initialize_ex(
-        AsyncCallTest_getStringRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_getStringRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_getStringRequest_finalize(
@@ -522,9 +505,9 @@ extern const char *AsyncCallTest_getStringReplyTYPENAME;
 
             
     
-class AsyncCallTest_getStringReply                                        
+
+typedef struct AsyncCallTest_getStringReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_getStringReplySeq Seq;
 
@@ -535,17 +518,13 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     char*  s2; /* maximum length = (255) */
-
     char*  s3; /* maximum length = (255) */
-
     char*  getString_ret; /* maximum length = (255) */
 
-            
-};                        
+} AsyncCallTest_getStringReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -567,7 +546,7 @@ RTIBool AsyncCallTest_getStringReply_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_getStringReply_initialize_ex(
-        AsyncCallTest_getStringReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_getStringReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_getStringReply_finalize(
@@ -616,9 +595,9 @@ extern const char *AsyncCallTest_duplicateRequestTYPENAME;
 
             
     
-class AsyncCallTest_duplicateRequest                                        
+
+typedef struct AsyncCallTest_duplicateRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_duplicateRequestSeq Seq;
 
@@ -629,13 +608,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     Structure  ev;
 
-            
-};                        
+} AsyncCallTest_duplicateRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -657,7 +634,7 @@ RTIBool AsyncCallTest_duplicateRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_duplicateRequest_initialize_ex(
-        AsyncCallTest_duplicateRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_duplicateRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_duplicateRequest_finalize(
@@ -706,9 +683,9 @@ extern const char *AsyncCallTest_duplicateReplyTYPENAME;
 
             
     
-class AsyncCallTest_duplicateReply                                        
+
+typedef struct AsyncCallTest_duplicateReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct AsyncCallTest_duplicateReplySeq Seq;
 
@@ -719,13 +696,11 @@ public:
 #endif
 
 #endif
-    
-    ReplyHeader  header;
 
+    ReplyHeader  header;
     Structure  duplicate_ret;
 
-            
-};                        
+} AsyncCallTest_duplicateReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -747,7 +722,7 @@ RTIBool AsyncCallTest_duplicateReply_initialize(
         
 NDDSUSERDllExport
 RTIBool AsyncCallTest_duplicateReply_initialize_ex(
-        AsyncCallTest_duplicateReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        AsyncCallTest_duplicateReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void AsyncCallTest_duplicateReply_finalize(

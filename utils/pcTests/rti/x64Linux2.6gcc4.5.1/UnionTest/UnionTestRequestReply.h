@@ -58,9 +58,9 @@ extern const char *UnionTest_getEmpleadoRequestTYPENAME;
 
             
     
-class UnionTest_getEmpleadoRequest                                        
+
+typedef struct UnionTest_getEmpleadoRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct UnionTest_getEmpleadoRequestSeq Seq;
 
@@ -71,15 +71,12 @@ public:
 #endif
 
 #endif
-    
+
     RequestHeader  header;
-
     Empleado  em1;
-
     Empleado  em2;
 
-            
-};                        
+} UnionTest_getEmpleadoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -101,7 +98,7 @@ RTIBool UnionTest_getEmpleadoRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool UnionTest_getEmpleadoRequest_initialize_ex(
-        UnionTest_getEmpleadoRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        UnionTest_getEmpleadoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void UnionTest_getEmpleadoRequest_finalize(
@@ -150,9 +147,9 @@ extern const char *UnionTest_getEmpleadoReplyTYPENAME;
 
             
     
-class UnionTest_getEmpleadoReply                                        
+
+typedef struct UnionTest_getEmpleadoReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct UnionTest_getEmpleadoReplySeq Seq;
 
@@ -163,17 +160,13 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     Empleado  em2;
-
     Empleado  em3;
-
     Empleado  getEmpleado_ret;
 
-            
-};                        
+} UnionTest_getEmpleadoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -195,7 +188,7 @@ RTIBool UnionTest_getEmpleadoReply_initialize(
         
 NDDSUSERDllExport
 RTIBool UnionTest_getEmpleadoReply_initialize_ex(
-        UnionTest_getEmpleadoReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        UnionTest_getEmpleadoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void UnionTest_getEmpleadoReply_finalize(

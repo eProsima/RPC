@@ -13,14 +13,12 @@ RPCDDS_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/librpcddsz.a
 RPCDDS_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
 RPCDDS_LIBS= $(LIBS) -lboost_thread-mt
 
-RPCDDS_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x
-RPCDDS_CFLAGS= $(CFLAGS) -std=c++0x
+RPCDDS_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++11
+RPCDDS_CFLAGS= $(CFLAGS) -std=c++11
 
 ifdef NDDSHOME
 	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/rti
-	SPECIFIC_SRC_CPPFILES= $(BASEDIR)/src/idl/rti/MessageHeader.cxx \
-			     $(BASEDIR)/src/idl/rti/MessageHeaderPlugin.cxx \
-			     $(BASEDIR)/src/idl/rti/MessageHeaderSupport.cxx
+	SPECIFIC_SRC_CPPFILES=
 else
 ifdef DDS_ROOT
 	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/opendds

@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = StructTestRequestReply.cxx StructTest.cxx StructTestRequestReplyPlugin.cxx \
                 StructTestPlugin.cxx StructTestRequestReplySupport.cxx StructTestSupport.cxx \
-                StructTestRequestReplyUtils.cxx
+                StructTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = StructTestProxy.cxx StructTestClientRPCSupport.cxx StructTestAsyncSupport.cxx Client.cxx 

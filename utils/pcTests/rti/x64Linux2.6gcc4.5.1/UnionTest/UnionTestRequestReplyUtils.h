@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic UnionTest_getEmpleadoRequest.
+ */
 class UnionTest_getEmpleadoRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class UnionTest_getEmpleadoRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic UnionTest_getEmpleadoReply.
+ */
 class UnionTest_getEmpleadoReplyUtils
 {
     public:

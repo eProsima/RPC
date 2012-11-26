@@ -23,6 +23,7 @@
 /**
  * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
+ * @ingroup FOOEXAMPLE
  */
 class FooInterface_FooProcedureCallbackHandler
 {
@@ -43,6 +44,7 @@ class FooInterface_FooProcedureCallbackHandler
 
 /**
  * \brief This class implements a specific server's proxy for the defined interface FooInterface.
+ * @ingroup FOOEXAMPLE
  */
 class FooInterfaceProxy : public eProsima::RPCDDS::Client
 {

@@ -19,6 +19,7 @@
 
 /**
  * Topic used to receive/send requests for the procedure FooProcedure.
+ * @ingroup FOOEXAMPLE
  */
 struct FooInterface_FooProcedureRequest{
     RequestHeader header;  //@key
@@ -27,6 +28,7 @@ struct FooInterface_FooProcedureRequest{
 
 /**
  * Topic used to receive/send replies for the procedure FooProcedure.
+ * @ingroup FOOEXAMPLE
  */
 struct FooInterface_FooProcedureReply{
     ReplyHeader header;  //@key

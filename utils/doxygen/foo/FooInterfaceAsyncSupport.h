@@ -20,6 +20,7 @@
 
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure FooProcedure from the server in an asynchronous call.
+ * @ingroup FOOEXAMPLE
  */
 class FooInterface_FooProcedureTask : public eProsima::RPCDDS::AsyncTask
 {

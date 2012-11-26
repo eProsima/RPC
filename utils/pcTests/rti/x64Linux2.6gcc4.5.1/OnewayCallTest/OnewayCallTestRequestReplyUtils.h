@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_setLongRequest.
+ */
 class OnewayCallTest_setLongRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class OnewayCallTest_setLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getLongRequest.
+ */
 class OnewayCallTest_getLongRequestUtils
 {
     public:
@@ -77,6 +83,9 @@ class OnewayCallTest_getLongRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getLongReply.
+ */
 class OnewayCallTest_getLongReplyUtils
 {
     public:
@@ -106,6 +115,9 @@ class OnewayCallTest_getLongReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_setBooleanRequest.
+ */
 class OnewayCallTest_setBooleanRequestUtils
 {
     public:
@@ -134,6 +146,9 @@ class OnewayCallTest_setBooleanRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getBooleanRequest.
+ */
 class OnewayCallTest_getBooleanRequestUtils
 {
     public:
@@ -162,6 +177,9 @@ class OnewayCallTest_getBooleanRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getBooleanReply.
+ */
 class OnewayCallTest_getBooleanReplyUtils
 {
     public:
@@ -191,6 +209,9 @@ class OnewayCallTest_getBooleanReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_setStringRequest.
+ */
 class OnewayCallTest_setStringRequestUtils
 {
     public:
@@ -219,6 +240,9 @@ class OnewayCallTest_setStringRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getStringRequest.
+ */
 class OnewayCallTest_getStringRequestUtils
 {
     public:
@@ -247,6 +271,9 @@ class OnewayCallTest_getStringRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getStringReply.
+ */
 class OnewayCallTest_getStringReplyUtils
 {
     public:
@@ -276,6 +303,9 @@ class OnewayCallTest_getStringReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_setStructRequest.
+ */
 class OnewayCallTest_setStructRequestUtils
 {
     public:
@@ -304,6 +334,9 @@ class OnewayCallTest_setStructRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getStructRequest.
+ */
 class OnewayCallTest_getStructRequestUtils
 {
     public:
@@ -332,6 +365,9 @@ class OnewayCallTest_getStructRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic OnewayCallTest_getStructReply.
+ */
 class OnewayCallTest_getStructReplyUtils
 {
     public:

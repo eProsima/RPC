@@ -41,7 +41,6 @@ extern "C" {
 #include "OnewayCallTestPlugin.h"
 
 
-#define OnewayCallTest_setLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_setLongRequest.
  *
@@ -56,7 +55,7 @@ extern "C" {
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_setLongRequest.
 */
-typedef  class OnewayCallTest_setLongRequest OnewayCallTest_setLongRequestKeyHolder;
+typedef  struct OnewayCallTest_setLongRequest OnewayCallTest_setLongRequestKeyHolder;
 
 
 #define OnewayCallTest_setLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -114,6 +113,7 @@ OnewayCallTest_setLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setLongRequestPluginSupport_destroy_key(
     OnewayCallTest_setLongRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -141,7 +141,6 @@ OnewayCallTest_setLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_setLongRequestPlugin_copy_sample(
@@ -185,7 +184,6 @@ OnewayCallTest_setLongRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_setLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -215,7 +213,6 @@ OnewayCallTest_setLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_setLongRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -306,7 +303,6 @@ OnewayCallTest_setLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_setLongRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getLongRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getLongRequest.
  *
@@ -321,7 +317,7 @@ OnewayCallTest_setLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getLongRequest.
 */
-typedef  class OnewayCallTest_getLongRequest OnewayCallTest_getLongRequestKeyHolder;
+typedef  struct OnewayCallTest_getLongRequest OnewayCallTest_getLongRequestKeyHolder;
 
 
 #define OnewayCallTest_getLongRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -379,6 +375,7 @@ OnewayCallTest_getLongRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getLongRequestPluginSupport_destroy_key(
     OnewayCallTest_getLongRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -406,7 +403,6 @@ OnewayCallTest_getLongRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getLongRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getLongRequestPlugin_copy_sample(
@@ -450,7 +446,6 @@ OnewayCallTest_getLongRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getLongRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -480,7 +475,6 @@ OnewayCallTest_getLongRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getLongRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -571,7 +565,6 @@ OnewayCallTest_getLongRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getLongRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getLongReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getLongReply.
  *
@@ -586,7 +579,7 @@ OnewayCallTest_getLongRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getLongReply.
 */
-typedef  class OnewayCallTest_getLongReply OnewayCallTest_getLongReplyKeyHolder;
+typedef  struct OnewayCallTest_getLongReply OnewayCallTest_getLongReplyKeyHolder;
 
 
 #define OnewayCallTest_getLongReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -644,6 +637,7 @@ OnewayCallTest_getLongReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getLongReplyPluginSupport_destroy_key(
     OnewayCallTest_getLongReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -671,7 +665,6 @@ OnewayCallTest_getLongReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getLongReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getLongReplyPlugin_copy_sample(
@@ -715,7 +708,6 @@ OnewayCallTest_getLongReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getLongReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -745,7 +737,6 @@ OnewayCallTest_getLongReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getLongReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -836,7 +827,6 @@ OnewayCallTest_getLongReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getLongReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_setBooleanRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_setBooleanRequest.
  *
@@ -851,7 +841,7 @@ OnewayCallTest_getLongReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_setBooleanRequest.
 */
-typedef  class OnewayCallTest_setBooleanRequest OnewayCallTest_setBooleanRequestKeyHolder;
+typedef  struct OnewayCallTest_setBooleanRequest OnewayCallTest_setBooleanRequestKeyHolder;
 
 
 #define OnewayCallTest_setBooleanRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -909,6 +899,7 @@ OnewayCallTest_setBooleanRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setBooleanRequestPluginSupport_destroy_key(
     OnewayCallTest_setBooleanRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -936,7 +927,6 @@ OnewayCallTest_setBooleanRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setBooleanRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_setBooleanRequestPlugin_copy_sample(
@@ -980,7 +970,6 @@ OnewayCallTest_setBooleanRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_setBooleanRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1010,7 +999,6 @@ OnewayCallTest_setBooleanRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_setBooleanRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1101,7 +1089,6 @@ OnewayCallTest_setBooleanRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_setBooleanRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getBooleanRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getBooleanRequest.
  *
@@ -1116,7 +1103,7 @@ OnewayCallTest_setBooleanRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getBooleanRequest.
 */
-typedef  class OnewayCallTest_getBooleanRequest OnewayCallTest_getBooleanRequestKeyHolder;
+typedef  struct OnewayCallTest_getBooleanRequest OnewayCallTest_getBooleanRequestKeyHolder;
 
 
 #define OnewayCallTest_getBooleanRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1174,6 +1161,7 @@ OnewayCallTest_getBooleanRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getBooleanRequestPluginSupport_destroy_key(
     OnewayCallTest_getBooleanRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1201,7 +1189,6 @@ OnewayCallTest_getBooleanRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getBooleanRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getBooleanRequestPlugin_copy_sample(
@@ -1245,7 +1232,6 @@ OnewayCallTest_getBooleanRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getBooleanRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1275,7 +1261,6 @@ OnewayCallTest_getBooleanRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getBooleanRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1366,7 +1351,6 @@ OnewayCallTest_getBooleanRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getBooleanRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getBooleanReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getBooleanReply.
  *
@@ -1381,7 +1365,7 @@ OnewayCallTest_getBooleanRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getBooleanReply.
 */
-typedef  class OnewayCallTest_getBooleanReply OnewayCallTest_getBooleanReplyKeyHolder;
+typedef  struct OnewayCallTest_getBooleanReply OnewayCallTest_getBooleanReplyKeyHolder;
 
 
 #define OnewayCallTest_getBooleanReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1439,6 +1423,7 @@ OnewayCallTest_getBooleanReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getBooleanReplyPluginSupport_destroy_key(
     OnewayCallTest_getBooleanReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1466,7 +1451,6 @@ OnewayCallTest_getBooleanReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getBooleanReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getBooleanReplyPlugin_copy_sample(
@@ -1510,7 +1494,6 @@ OnewayCallTest_getBooleanReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getBooleanReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1540,7 +1523,6 @@ OnewayCallTest_getBooleanReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getBooleanReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1631,7 +1613,6 @@ OnewayCallTest_getBooleanReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getBooleanReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_setStringRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_setStringRequest.
  *
@@ -1646,7 +1627,7 @@ OnewayCallTest_getBooleanReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_setStringRequest.
 */
-typedef  class OnewayCallTest_setStringRequest OnewayCallTest_setStringRequestKeyHolder;
+typedef  struct OnewayCallTest_setStringRequest OnewayCallTest_setStringRequestKeyHolder;
 
 
 #define OnewayCallTest_setStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1704,6 +1685,7 @@ OnewayCallTest_setStringRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setStringRequestPluginSupport_destroy_key(
     OnewayCallTest_setStringRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1731,7 +1713,6 @@ OnewayCallTest_setStringRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_setStringRequestPlugin_copy_sample(
@@ -1775,7 +1756,6 @@ OnewayCallTest_setStringRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_setStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -1805,7 +1785,6 @@ OnewayCallTest_setStringRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_setStringRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -1896,7 +1875,6 @@ OnewayCallTest_setStringRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_setStringRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getStringRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getStringRequest.
  *
@@ -1911,7 +1889,7 @@ OnewayCallTest_setStringRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getStringRequest.
 */
-typedef  class OnewayCallTest_getStringRequest OnewayCallTest_getStringRequestKeyHolder;
+typedef  struct OnewayCallTest_getStringRequest OnewayCallTest_getStringRequestKeyHolder;
 
 
 #define OnewayCallTest_getStringRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -1969,6 +1947,7 @@ OnewayCallTest_getStringRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStringRequestPluginSupport_destroy_key(
     OnewayCallTest_getStringRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -1996,7 +1975,6 @@ OnewayCallTest_getStringRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStringRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getStringRequestPlugin_copy_sample(
@@ -2040,7 +2018,6 @@ OnewayCallTest_getStringRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getStringRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2070,7 +2047,6 @@ OnewayCallTest_getStringRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getStringRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -2161,7 +2137,6 @@ OnewayCallTest_getStringRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getStringReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getStringReply.
  *
@@ -2176,7 +2151,7 @@ OnewayCallTest_getStringRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getStringReply.
 */
-typedef  class OnewayCallTest_getStringReply OnewayCallTest_getStringReplyKeyHolder;
+typedef  struct OnewayCallTest_getStringReply OnewayCallTest_getStringReplyKeyHolder;
 
 
 #define OnewayCallTest_getStringReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2234,6 +2209,7 @@ OnewayCallTest_getStringReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStringReplyPluginSupport_destroy_key(
     OnewayCallTest_getStringReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -2261,7 +2237,6 @@ OnewayCallTest_getStringReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStringReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getStringReplyPlugin_copy_sample(
@@ -2305,7 +2280,6 @@ OnewayCallTest_getStringReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getStringReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2335,7 +2309,6 @@ OnewayCallTest_getStringReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getStringReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -2426,7 +2399,6 @@ OnewayCallTest_getStringReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_setStructRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_setStructRequest.
  *
@@ -2441,7 +2413,7 @@ OnewayCallTest_getStringReplyPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_setStructRequest.
 */
-typedef  class OnewayCallTest_setStructRequest OnewayCallTest_setStructRequestKeyHolder;
+typedef  struct OnewayCallTest_setStructRequest OnewayCallTest_setStructRequestKeyHolder;
 
 
 #define OnewayCallTest_setStructRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2499,6 +2471,7 @@ OnewayCallTest_setStructRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setStructRequestPluginSupport_destroy_key(
     OnewayCallTest_setStructRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -2526,7 +2499,6 @@ OnewayCallTest_setStructRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_setStructRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_setStructRequestPlugin_copy_sample(
@@ -2570,7 +2542,6 @@ OnewayCallTest_setStructRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_setStructRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2600,7 +2571,6 @@ OnewayCallTest_setStructRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_setStructRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -2691,7 +2661,6 @@ OnewayCallTest_setStructRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_setStructRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getStructRequest_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getStructRequest.
  *
@@ -2706,7 +2675,7 @@ OnewayCallTest_setStructRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getStructRequest.
 */
-typedef  class OnewayCallTest_getStructRequest OnewayCallTest_getStructRequestKeyHolder;
+typedef  struct OnewayCallTest_getStructRequest OnewayCallTest_getStructRequestKeyHolder;
 
 
 #define OnewayCallTest_getStructRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -2764,6 +2733,7 @@ OnewayCallTest_getStructRequestPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStructRequestPluginSupport_destroy_key(
     OnewayCallTest_getStructRequestKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -2791,7 +2761,6 @@ OnewayCallTest_getStructRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStructRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getStructRequestPlugin_copy_sample(
@@ -2835,7 +2804,6 @@ OnewayCallTest_getStructRequestPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getStructRequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -2865,7 +2833,6 @@ OnewayCallTest_getStructRequestPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getStructRequest * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -2956,7 +2923,6 @@ OnewayCallTest_getStructRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 OnewayCallTest_getStructRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define OnewayCallTest_getStructReply_LAST_MEMBER_ID 0
 /* The type used to store keys for instances of type struct
  * OnewayCallTest_getStructReply.
  *
@@ -2971,7 +2937,7 @@ OnewayCallTest_getStructRequestPlugin_delete(struct PRESTypePlugin *);
  * single field of your redefined KeyHolder type and that field must be the
  * first field in struct OnewayCallTest_getStructReply.
 */
-typedef  class OnewayCallTest_getStructReply OnewayCallTest_getStructReplyKeyHolder;
+typedef  struct OnewayCallTest_getStructReply OnewayCallTest_getStructReplyKeyHolder;
 
 
 #define OnewayCallTest_getStructReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
@@ -3029,6 +2995,7 @@ OnewayCallTest_getStructReplyPluginSupport_destroy_key_ex(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStructReplyPluginSupport_destroy_key(
     OnewayCallTest_getStructReplyKeyHolder *key);
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -3056,7 +3023,6 @@ OnewayCallTest_getStructReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 OnewayCallTest_getStructReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 OnewayCallTest_getStructReplyPlugin_copy_sample(
@@ -3100,7 +3066,6 @@ OnewayCallTest_getStructReplyPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 OnewayCallTest_getStructReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -3130,7 +3095,6 @@ OnewayCallTest_getStructReplyPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const OnewayCallTest_getStructReply * sample);
-
 
 
 /* --------------------------------------------------------------------------------------

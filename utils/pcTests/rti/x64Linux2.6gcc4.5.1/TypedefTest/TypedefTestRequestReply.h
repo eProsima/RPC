@@ -58,9 +58,9 @@ extern const char *TypedefTest_getLargoRequestTYPENAME;
 
             
     
-class TypedefTest_getLargoRequest                                        
+
+typedef struct TypedefTest_getLargoRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getLargoRequestSeq Seq;
 
@@ -71,13 +71,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     largo  l1;
 
-            
-};                        
+} TypedefTest_getLargoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -99,7 +97,7 @@ RTIBool TypedefTest_getLargoRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getLargoRequest_initialize_ex(
-        TypedefTest_getLargoRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getLargoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getLargoRequest_finalize(
@@ -148,9 +146,9 @@ extern const char *TypedefTest_getLargoReplyTYPENAME;
 
             
     
-class TypedefTest_getLargoReply                                        
+
+typedef struct TypedefTest_getLargoReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getLargoReplySeq Seq;
 
@@ -161,15 +159,12 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     largo  l2;
-
     largo  getLargo_ret;
 
-            
-};                        
+} TypedefTest_getLargoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -191,7 +186,7 @@ RTIBool TypedefTest_getLargoReply_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getLargoReply_initialize_ex(
-        TypedefTest_getLargoReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getLargoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getLargoReply_finalize(
@@ -240,9 +235,9 @@ extern const char *TypedefTest_getLarguisimoRequestTYPENAME;
 
             
     
-class TypedefTest_getLarguisimoRequest                                        
+
+typedef struct TypedefTest_getLarguisimoRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getLarguisimoRequestSeq Seq;
 
@@ -253,13 +248,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     larguisimo  ll1;
 
-            
-};                        
+} TypedefTest_getLarguisimoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -281,7 +274,7 @@ RTIBool TypedefTest_getLarguisimoRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getLarguisimoRequest_initialize_ex(
-        TypedefTest_getLarguisimoRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getLarguisimoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getLarguisimoRequest_finalize(
@@ -330,9 +323,9 @@ extern const char *TypedefTest_getLarguisimoReplyTYPENAME;
 
             
     
-class TypedefTest_getLarguisimoReply                                        
+
+typedef struct TypedefTest_getLarguisimoReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getLarguisimoReplySeq Seq;
 
@@ -343,15 +336,12 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     larguisimo  ll2;
-
     larguisimo  getLarguisimo_ret;
 
-            
-};                        
+} TypedefTest_getLarguisimoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -373,7 +363,7 @@ RTIBool TypedefTest_getLarguisimoReply_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getLarguisimoReply_initialize_ex(
-        TypedefTest_getLarguisimoReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getLarguisimoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getLarguisimoReply_finalize(
@@ -422,9 +412,9 @@ extern const char *TypedefTest_getDatosDefRequestTYPENAME;
 
             
     
-class TypedefTest_getDatosDefRequest                                        
+
+typedef struct TypedefTest_getDatosDefRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getDatosDefRequestSeq Seq;
 
@@ -435,13 +425,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     DatosDef  d1;
 
-            
-};                        
+} TypedefTest_getDatosDefRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -463,7 +451,7 @@ RTIBool TypedefTest_getDatosDefRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getDatosDefRequest_initialize_ex(
-        TypedefTest_getDatosDefRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getDatosDefRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getDatosDefRequest_finalize(
@@ -512,9 +500,9 @@ extern const char *TypedefTest_getDatosDefReplyTYPENAME;
 
             
     
-class TypedefTest_getDatosDefReply                                        
+
+typedef struct TypedefTest_getDatosDefReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getDatosDefReplySeq Seq;
 
@@ -525,15 +513,12 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     DatosDef  d2;
-
     DatosDef  getDatosDef_ret;
 
-            
-};                        
+} TypedefTest_getDatosDefReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -555,7 +540,7 @@ RTIBool TypedefTest_getDatosDefReply_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getDatosDefReply_initialize_ex(
-        TypedefTest_getDatosDefReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getDatosDefReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getDatosDefReply_finalize(
@@ -604,9 +589,9 @@ extern const char *TypedefTest_getDatosDefondoRequestTYPENAME;
 
             
     
-class TypedefTest_getDatosDefondoRequest                                        
+
+typedef struct TypedefTest_getDatosDefondoRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getDatosDefondoRequestSeq Seq;
 
@@ -617,13 +602,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     DatosDefondo  dd1;
 
-            
-};                        
+} TypedefTest_getDatosDefondoRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -645,7 +628,7 @@ RTIBool TypedefTest_getDatosDefondoRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getDatosDefondoRequest_initialize_ex(
-        TypedefTest_getDatosDefondoRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getDatosDefondoRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getDatosDefondoRequest_finalize(
@@ -694,9 +677,9 @@ extern const char *TypedefTest_getDatosDefondoReplyTYPENAME;
 
             
     
-class TypedefTest_getDatosDefondoReply                                        
+
+typedef struct TypedefTest_getDatosDefondoReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getDatosDefondoReplySeq Seq;
 
@@ -707,15 +690,12 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     DatosDefondo  dd2;
-
     DatosDefondo  getDatosDefondo_ret;
 
-            
-};                        
+} TypedefTest_getDatosDefondoReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -737,7 +717,7 @@ RTIBool TypedefTest_getDatosDefondoReply_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getDatosDefondoReply_initialize_ex(
-        TypedefTest_getDatosDefondoReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getDatosDefondoReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getDatosDefondoReply_finalize(
@@ -786,9 +766,9 @@ extern const char *TypedefTest_getCadenaRequestTYPENAME;
 
             
     
-class TypedefTest_getCadenaRequest                                        
+
+typedef struct TypedefTest_getCadenaRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getCadenaRequestSeq Seq;
 
@@ -799,13 +779,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     cadena  c1;
 
-            
-};                        
+} TypedefTest_getCadenaRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -827,7 +805,7 @@ RTIBool TypedefTest_getCadenaRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getCadenaRequest_initialize_ex(
-        TypedefTest_getCadenaRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getCadenaRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getCadenaRequest_finalize(
@@ -876,9 +854,9 @@ extern const char *TypedefTest_getCadenaReplyTYPENAME;
 
             
     
-class TypedefTest_getCadenaReply                                        
+
+typedef struct TypedefTest_getCadenaReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getCadenaReplySeq Seq;
 
@@ -889,15 +867,12 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     cadena  c2;
-
     cadena  getCadena_ret;
 
-            
-};                        
+} TypedefTest_getCadenaReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -919,7 +894,7 @@ RTIBool TypedefTest_getCadenaReply_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getCadenaReply_initialize_ex(
-        TypedefTest_getCadenaReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getCadenaReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getCadenaReply_finalize(
@@ -968,9 +943,9 @@ extern const char *TypedefTest_getCorreaRequestTYPENAME;
 
             
     
-class TypedefTest_getCorreaRequest                                        
+
+typedef struct TypedefTest_getCorreaRequest
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getCorreaRequestSeq Seq;
 
@@ -981,13 +956,11 @@ public:
 #endif
 
 #endif
-    
-    RequestHeader  header;
 
+    RequestHeader  header;
     correa  cc1;
 
-            
-};                        
+} TypedefTest_getCorreaRequest;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1009,7 +982,7 @@ RTIBool TypedefTest_getCorreaRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getCorreaRequest_initialize_ex(
-        TypedefTest_getCorreaRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getCorreaRequest* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getCorreaRequest_finalize(
@@ -1058,9 +1031,9 @@ extern const char *TypedefTest_getCorreaReplyTYPENAME;
 
             
     
-class TypedefTest_getCorreaReply                                        
+
+typedef struct TypedefTest_getCorreaReply
 {
-public:            
 #ifdef __cplusplus
     typedef struct TypedefTest_getCorreaReplySeq Seq;
 
@@ -1071,15 +1044,12 @@ public:
 #endif
 
 #endif
-    
+
     ReplyHeader  header;
-
     correa  cc2;
-
     correa  getCorrea_ret;
 
-            
-};                        
+} TypedefTest_getCorreaReply;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -1101,7 +1071,7 @@ RTIBool TypedefTest_getCorreaReply_initialize(
         
 NDDSUSERDllExport
 RTIBool TypedefTest_getCorreaReply_initialize_ex(
-        TypedefTest_getCorreaReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        TypedefTest_getCorreaReply* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void TypedefTest_getCorreaReply_finalize(

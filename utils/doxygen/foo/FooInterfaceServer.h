@@ -21,6 +21,7 @@
 
 /**
  * \brief This class implements a specific server for the defined interface by user.
+ * @ingroup FOOEXAMPLE
  */
 class FooInterfaceServer : public eProsima::RPCDDS::Server
 {

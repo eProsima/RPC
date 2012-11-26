@@ -46,20 +46,18 @@ extern const char *EnvioTYPENAME;
 
             
     
-class Envio                                        
+
+typedef struct Envio
 {
-public:            
 #ifdef __cplusplus
     typedef struct EnvioSeq Seq;
 
 #endif
-    
-    DDS_Long  dato;
 
+    DDS_Long  dato;
     char*  message; /* maximum length = (255) */
 
-            
-};                        
+} Envio;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -81,7 +79,7 @@ RTIBool Envio_initialize(
         
 NDDSUSERDllExport
 RTIBool Envio_initialize_ex(
-        Envio* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Envio* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void Envio_finalize(
@@ -124,20 +122,18 @@ extern const char *RecepcionTYPENAME;
 
             
     
-class Recepcion                                        
+
+typedef struct Recepcion
 {
-public:            
 #ifdef __cplusplus
     typedef struct RecepcionSeq Seq;
 
 #endif
-    
-    DDS_Long  devolucion;
 
+    DDS_Long  devolucion;
     char*  message; /* maximum length = (255) */
 
-            
-};                        
+} Recepcion;
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -159,7 +155,7 @@ RTIBool Recepcion_initialize(
         
 NDDSUSERDllExport
 RTIBool Recepcion_initialize_ex(
-        Recepcion* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Recepcion* self,RTIBool allocatePointers);
 
 NDDSUSERDllExport
 void Recepcion_finalize(

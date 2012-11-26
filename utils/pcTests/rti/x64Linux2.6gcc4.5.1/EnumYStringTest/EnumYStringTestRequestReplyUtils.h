@@ -21,6 +21,9 @@
 #include "ndds_namespace_cpp.h"
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic EnumYStringTest_getEnumRequest.
+ */
 class EnumYStringTest_getEnumRequestUtils
 {
     public:
@@ -49,6 +52,9 @@ class EnumYStringTest_getEnumRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic EnumYStringTest_getEnumReply.
+ */
 class EnumYStringTest_getEnumReplyUtils
 {
     public:
@@ -78,6 +84,9 @@ class EnumYStringTest_getEnumReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic EnumYStringTest_getStringRequest.
+ */
 class EnumYStringTest_getStringRequestUtils
 {
     public:
@@ -106,6 +115,9 @@ class EnumYStringTest_getStringRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic EnumYStringTest_getStringReply.
+ */
 class EnumYStringTest_getStringReplyUtils
 {
     public:
@@ -135,6 +147,9 @@ class EnumYStringTest_getStringReplyUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic EnumYStringTest_getStringBoundedRequest.
+ */
 class EnumYStringTest_getStringBoundedRequestUtils
 {
     public:
@@ -163,6 +178,9 @@ class EnumYStringTest_getStringBoundedRequestUtils
 };
 
 
+/**
+ * \brief This class contains helpful operations for the generated topic EnumYStringTest_getStringBoundedReply.
+ */
 class EnumYStringTest_getStringBoundedReplyUtils
 {
     public:

@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = BasicTypeTestRequestReply.cxx BasicTypeTest.cxx BasicTypeTestRequestReplyPlugin.cxx \
                 BasicTypeTestPlugin.cxx BasicTypeTestRequestReplySupport.cxx BasicTypeTestSupport.cxx \
-                BasicTypeTestRequestReplyUtils.cxx
+                BasicTypeTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = BasicTypeTestProxy.cxx BasicTypeTestClientRPCSupport.cxx BasicTypeTestAsyncSupport.cxx Client.cxx 

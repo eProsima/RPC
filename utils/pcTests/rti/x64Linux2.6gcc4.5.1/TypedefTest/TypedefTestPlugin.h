@@ -35,7 +35,6 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
-#define Datos_LAST_MEMBER_ID 0
 
 #define DatosPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define DatosPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -75,7 +74,34 @@ DatosPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+DatosPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+DatosPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+DatosPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+DatosPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 DatosPlugin_copy_sample(
@@ -119,7 +145,6 @@ DatosPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 DatosPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -149,7 +174,6 @@ DatosPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Datos * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
@@ -206,9 +230,14 @@ DatosPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
+     
+/* Plugin Functions */
+NDDSUSERDllExport extern struct PRESTypePlugin*
+DatosPlugin_new(void);
 
+NDDSUSERDllExport extern void
+DatosPlugin_delete(struct PRESTypePlugin *);
 
-#define largo_LAST_MEMBER_ID long_LAST_MEMBER_ID
 
 #define largoPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define largoPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -248,7 +277,34 @@ largoPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+largoPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+largoPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+largoPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+largoPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 largoPlugin_copy_sample(
@@ -313,7 +369,6 @@ largoPlugin_get_serialized_sample_size(
     const largo * sample);
 
 
-
 /* --------------------------------------------------------------------------------------
     Key Management functions:
  * -------------------------------------------------------------------------------------- */
@@ -360,8 +415,6 @@ largoPlugin_serialized_sample_to_key(
 
 
 
-#define DatosDef_LAST_MEMBER_ID Datos_LAST_MEMBER_ID
-
 #define DatosDefPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define DatosDefPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
 #define DatosDefPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
@@ -400,7 +453,34 @@ DatosDefPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+DatosDefPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+DatosDefPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+DatosDefPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+DatosDefPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 DatosDefPlugin_copy_sample(
@@ -465,7 +545,6 @@ DatosDefPlugin_get_serialized_sample_size(
     const DatosDef * sample);
 
 
-
 /* --------------------------------------------------------------------------------------
     Key Management functions:
  * -------------------------------------------------------------------------------------- */
@@ -512,8 +591,6 @@ DatosDefPlugin_serialized_sample_to_key(
 
 
 
-#define cadena_LAST_MEMBER_ID string_LAST_MEMBER_ID
-
 #define cadenaPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define cadenaPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
 #define cadenaPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
@@ -552,7 +629,34 @@ cadenaPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+cadenaPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+cadenaPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+cadenaPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+cadenaPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 cadenaPlugin_copy_sample(
@@ -617,7 +721,6 @@ cadenaPlugin_get_serialized_sample_size(
     const cadena * sample);
 
 
-
 /* --------------------------------------------------------------------------------------
     Key Management functions:
  * -------------------------------------------------------------------------------------- */
@@ -664,8 +767,6 @@ cadenaPlugin_serialized_sample_to_key(
 
 
 
-#define larguisimo_LAST_MEMBER_ID largo_LAST_MEMBER_ID
-
 #define larguisimoPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define larguisimoPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
 #define larguisimoPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
@@ -704,7 +805,34 @@ larguisimoPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+larguisimoPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+larguisimoPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+larguisimoPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+larguisimoPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 larguisimoPlugin_copy_sample(
@@ -769,7 +897,6 @@ larguisimoPlugin_get_serialized_sample_size(
     const larguisimo * sample);
 
 
-
 /* --------------------------------------------------------------------------------------
     Key Management functions:
  * -------------------------------------------------------------------------------------- */
@@ -816,8 +943,6 @@ larguisimoPlugin_serialized_sample_to_key(
 
 
 
-#define DatosDefondo_LAST_MEMBER_ID DatosDef_LAST_MEMBER_ID
-
 #define DatosDefondoPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define DatosDefondoPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
 #define DatosDefondoPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
@@ -856,7 +981,34 @@ DatosDefondoPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+DatosDefondoPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+DatosDefondoPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+DatosDefondoPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+DatosDefondoPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 DatosDefondoPlugin_copy_sample(
@@ -921,7 +1073,6 @@ DatosDefondoPlugin_get_serialized_sample_size(
     const DatosDefondo * sample);
 
 
-
 /* --------------------------------------------------------------------------------------
     Key Management functions:
  * -------------------------------------------------------------------------------------- */
@@ -968,8 +1119,6 @@ DatosDefondoPlugin_serialized_sample_to_key(
 
 
 
-#define correa_LAST_MEMBER_ID cadena_LAST_MEMBER_ID
-
 #define correaPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define correaPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
 #define correaPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
@@ -1008,7 +1157,34 @@ correaPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+correaPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+correaPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+correaPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+correaPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
 
 NDDSUSERDllExport extern RTIBool 
 correaPlugin_copy_sample(
@@ -1071,7 +1247,6 @@ correaPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const correa * sample);
-
 
 
 /* --------------------------------------------------------------------------------------

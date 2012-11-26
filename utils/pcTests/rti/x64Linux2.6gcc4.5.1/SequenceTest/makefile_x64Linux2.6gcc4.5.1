@@ -14,7 +14,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.5.1 -L../../../../../lib/x64Linux2.6gc
 
 COMMONCXXSOURCES = SequenceTestRequestReply.cxx SequenceTest.cxx SequenceTestRequestReplyPlugin.cxx \
                 SequenceTestPlugin.cxx SequenceTestRequestReplySupport.cxx SequenceTestSupport.cxx \
-                SequenceTestRequestReplyUtils.cxx
+                SequenceTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 
 CLIENTSOURCES = SequenceTestProxy.cxx SequenceTestClientRPCSupport.cxx SequenceTestAsyncSupport.cxx Client.cxx 

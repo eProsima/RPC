@@ -35,7 +35,6 @@ struct RTICdrStream;
 extern "C" {
 #endif
 
-#define Estructura_LAST_MEMBER_ID 0
 
 #define EstructuraPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define EstructuraPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -75,6 +74,7 @@ EstructuraPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
+ 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -102,7 +102,6 @@ EstructuraPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 EstructuraPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
 
 NDDSUSERDllExport extern RTIBool 
 EstructuraPlugin_copy_sample(
@@ -146,7 +145,6 @@ EstructuraPlugin_deserialize(
 
 
 
-
 NDDSUSERDllExport extern RTIBool
 EstructuraPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -176,7 +174,6 @@ EstructuraPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const Estructura * sample);
-
 
 
 /* --------------------------------------------------------------------------------------
