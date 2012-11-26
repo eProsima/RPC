@@ -87,11 +87,11 @@ archMakeDefines() ::= <<
 >>
 
 inclMake() ::= <<
- -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/rpcdds/include -I\$(NDDSHOME)/rpcdds/include/idl/rti
+ -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/rpcdds/include
 >>
 
 inclVS() ::= <<
-\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\rpcdds\include;\$(NDDSHOME)\rpcdds\include\idl\rti;
+\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\rpcdds\include;
 >>
 
 libsMake(example) ::= <<
