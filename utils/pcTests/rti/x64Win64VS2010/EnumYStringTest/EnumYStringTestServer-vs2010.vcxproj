@@ -220,6 +220,9 @@
     <ClCompile Include="EnumYStringTestRequestReplySupport.cxx" />
     <ClCompile Include="EnumYStringTestSupport.cxx" />
     <ClCompile Include="EnumYStringTestRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="EnumYStringTestServer.cxx" />
     <ClCompile Include="EnumYStringTestServerImpl.cxx" />
     <ClCompile Include="EnumYStringTestServerRPCSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="EnumYStringTestRequestReplySupport.h" />
     <ClInclude Include="EnumYStringTestSupport.h" />
     <ClInclude Include="EnumYStringTestRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="EnumYStringTestServer.h" />
     <ClInclude Include="EnumYStringTestServerImpl.h" />
     <ClInclude Include="EnumYStringTestServerRPCSupport.h" />

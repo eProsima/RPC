@@ -220,6 +220,9 @@
     <ClCompile Include="StructTestRequestReplySupport.cxx" />
     <ClCompile Include="StructTestSupport.cxx" />
     <ClCompile Include="StructTestRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="StructTestServer.cxx" />
     <ClCompile Include="StructTestServerImpl.cxx" />
     <ClCompile Include="StructTestServerRPCSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="StructTestRequestReplySupport.h" />
     <ClInclude Include="StructTestSupport.h" />
     <ClInclude Include="StructTestRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="StructTestServer.h" />
     <ClInclude Include="StructTestServerImpl.h" />
     <ClInclude Include="StructTestServerRPCSupport.h" />

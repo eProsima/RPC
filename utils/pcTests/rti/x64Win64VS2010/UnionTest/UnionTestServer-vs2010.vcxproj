@@ -220,6 +220,9 @@
     <ClCompile Include="UnionTestRequestReplySupport.cxx" />
     <ClCompile Include="UnionTestSupport.cxx" />
     <ClCompile Include="UnionTestRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="UnionTestServer.cxx" />
     <ClCompile Include="UnionTestServerImpl.cxx" />
     <ClCompile Include="UnionTestServerRPCSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="UnionTestRequestReplySupport.h" />
     <ClInclude Include="UnionTestSupport.h" />
     <ClInclude Include="UnionTestRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="UnionTestServer.h" />
     <ClInclude Include="UnionTestServerImpl.h" />
     <ClInclude Include="UnionTestServerRPCSupport.h" />

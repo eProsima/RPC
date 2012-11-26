@@ -220,6 +220,9 @@
     <ClCompile Include="BasicTypeTestRequestReplySupport.cxx" />
     <ClCompile Include="BasicTypeTestSupport.cxx" />
     <ClCompile Include="BasicTypeTestRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="BasicTypeTestProxy.cxx" />
     <ClCompile Include="BasicTypeTestClientRPCSupport.cxx" />
     <ClCompile Include="BasicTypeTestAsyncSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="BasicTypeTestRequestReplySupport.h" />
     <ClInclude Include="BasicTypeTestSupport.h" />
     <ClInclude Include="BasicTypeTestRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="BasicTypeTestProxy.h" />
     <ClInclude Include="BasicTypeTestClientRPCSupport.h" />
     <ClInclude Include="BasicTypeTestAsyncSupport.h" />

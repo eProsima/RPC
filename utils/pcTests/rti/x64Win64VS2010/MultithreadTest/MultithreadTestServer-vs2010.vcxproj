@@ -220,6 +220,9 @@
     <ClCompile Include="MultithreadTestRequestReplySupport.cxx" />
     <ClCompile Include="MultithreadTestSupport.cxx" />
     <ClCompile Include="MultithreadTestRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="MultithreadTestServer.cxx" />
     <ClCompile Include="MultithreadTestServerImpl.cxx" />
     <ClCompile Include="MultithreadTestServerRPCSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="MultithreadTestRequestReplySupport.h" />
     <ClInclude Include="MultithreadTestSupport.h" />
     <ClInclude Include="MultithreadTestRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="MultithreadTestServer.h" />
     <ClInclude Include="MultithreadTestServerImpl.h" />
     <ClInclude Include="MultithreadTestServerRPCSupport.h" />

@@ -220,6 +220,9 @@
     <ClCompile Include="OnewayCallTestRequestReplySupport.cxx" />
     <ClCompile Include="OnewayCallTestSupport.cxx" />
     <ClCompile Include="OnewayCallTestRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="OnewayCallTestProxy.cxx" />
     <ClCompile Include="OnewayCallTestClientRPCSupport.cxx" />
     <ClCompile Include="OnewayCallTestAsyncSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="OnewayCallTestRequestReplySupport.h" />
     <ClInclude Include="OnewayCallTestSupport.h" />
     <ClInclude Include="OnewayCallTestRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="OnewayCallTestProxy.h" />
     <ClInclude Include="OnewayCallTestClientRPCSupport.h" />
     <ClInclude Include="OnewayCallTestAsyncSupport.h" />

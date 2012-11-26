@@ -220,6 +220,9 @@
     <ClCompile Include="ServerExceptionRequestReplySupport.cxx" />
     <ClCompile Include="ServerExceptionSupport.cxx" />
     <ClCompile Include="ServerExceptionRequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
     <ClCompile Include="ServerExceptionProxy.cxx" />
     <ClCompile Include="ServerExceptionClientRPCSupport.cxx" />
     <ClCompile Include="ServerExceptionAsyncSupport.cxx" />
@@ -233,6 +236,9 @@
     <ClInclude Include="ServerExceptionRequestReplySupport.h" />
     <ClInclude Include="ServerExceptionSupport.h" />
     <ClInclude Include="ServerExceptionRequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
     <ClInclude Include="ServerExceptionProxy.h" />
     <ClInclude Include="ServerExceptionClientRPCSupport.h" />
     <ClInclude Include="ServerExceptionAsyncSupport.h" />

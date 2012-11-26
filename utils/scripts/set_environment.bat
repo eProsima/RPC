@@ -10,7 +10,7 @@ goto :EOF
 :set
 :: Save old and set NDDSHOME environment variable.
 set NDDSHOME_OLD=%NDDSHOME%
-set NDDSHOME=D:\richi\workspace\desarrollo\DDS\RTI\instalaciones\ndds.5.0.0
+set NDDSHOME=D:\richi\workspace\desarrollo\DDS\RTI\instalaciones\ndds.4.5f
 
 :: Save old and set PAT environment variable.
 set PATH_OLD=%PATH%

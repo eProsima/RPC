@@ -19,9 +19,6 @@
     <Filter Include="Archivos de encabezado\server">
       <UniqueIdentifier>{221de19c-4f48-4fab-801b-e4be8397d3d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\idl">
-      <UniqueIdentifier>{8028dddc-002a-4cdf-a11d-a764e6f1e434}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\utils">
       <UniqueIdentifier>{bf3ee1c0-16e2-463a-be4b-cba986afa83b}</UniqueIdentifier>
     </Filter>
@@ -36,9 +33,6 @@
     </Filter>
     <Filter Include="Archivos de código fuente\server">
       <UniqueIdentifier>{51139224-3111-4264-9981-0f6724ef705c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de código fuente\idl">
-      <UniqueIdentifier>{2e6593c1-9c75-4dde-bd59-fda5e3227178}</UniqueIdentifier>
     </Filter>
     <Filter Include="Archivos de código fuente\transports">
       <UniqueIdentifier>{742ed78e-034f-4780-951e-41c27209ccb7}</UniqueIdentifier>
@@ -74,15 +68,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\ServerRPC.cpp">
       <Filter>Archivos de código fuente\server</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeader.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderPlugin.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\transports\TCPTransport.cpp">
       <Filter>Archivos de código fuente\transports</Filter>
@@ -145,15 +130,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\server\ServerRPC.h">
       <Filter>Archivos de encabezado\server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeader.h">
-      <Filter>Archivos de encabezado\idl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h">
-      <Filter>Archivos de encabezado\idl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderPlugin.h">
-      <Filter>Archivos de encabezado\idl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\utils\rpcdds.h">
       <Filter>Archivos de encabezado\utils</Filter>

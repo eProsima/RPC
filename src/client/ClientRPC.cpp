@@ -12,7 +12,6 @@
 #include "utils/Typedefs.h"
 #include "eProsima_c/eProsimaMacros.h"
 #include "exceptions/InitializeException.h"
-#include "MessageHeader.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
@@ -102,19 +101,23 @@ namespace eProsima
             boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
             unsigned int numSec = 0;
             char value[50];
+			void *auxPointerToRequest = request;
+			char **auxPointerToRemoteServiceName = NULL;
 
             if(request != NULL)
             {
-                RequestHeader *reqhead = (RequestHeader*)request;
-                reqhead->clientId.value_1 = m_clientServiceId[0];
-                reqhead->clientId.value_2 = m_clientServiceId[1];
-                reqhead->clientId.value_3 = m_clientServiceId[2];
-                reqhead->clientId.value_4 = m_clientServiceId[3];
-                reqhead->remoteServiceName = (char*)m_client->getRemoteServiceName().c_str();
+                *(unsigned int*)auxPointerToRequest = m_clientId[0];
+				((unsigned int*)auxPointerToRequest)[1] = m_clientId[1];
+				((unsigned int*)auxPointerToRequest)[2] = m_clientId[2];
+				((unsigned int*)auxPointerToRequest)[3] = m_clientId[3];
+				auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+                *(char**)auxPointerToRequest = (char*)m_client->getRemoteServiceName().c_str();
+				auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+				auxPointerToRequest = (char**)auxPointerToRequest + 1;
 
                 m_mutex->lock();
                 /* Thread safe num_Sec handling */
-                reqhead->requestSequenceNumber = m_numSec;
+                *(unsigned int*)auxPointerToRequest = m_numSec;
                 numSec = m_numSec;
                 m_numSec++;
                 m_mutex->unlock();
@@ -137,23 +140,14 @@ namespace eProsima
                             // Its not a oneway function.
                             if(m_replySubscriber != NULL)
                             {
-                                DDS::StringSeq stringSeq(5);
+                                DDS::StringSeq stringSeq(1);
 
-                                stringSeq.length(5);
-                                SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                                stringSeq[0] = strdup(value);
-                                SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                                stringSeq[1] = strdup(value);
-                                SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                                stringSeq[2] = strdup(value);
-                                SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                                stringSeq[3] = strdup(value);
+                                stringSeq.length(1);
                                 SNPRINTF(value, 50, "%u", numSec);
-                                stringSeq[4] = strdup(value);
+                                stringSeq[0] = strdup(value);
 
                                 DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                        "header.clientId.value_1 = %0 and header.clientId.value_2 = %1 and header.clientId.value_3 = %2 and header.clientId.value_4 = %3 and header.requestSequenceNumber = %4",
-                                        stringSeq);
+                                        "header.requestSequenceNumber = %0", stringSeq);
 
                                 if(query != NULL)
                                 {
@@ -217,7 +211,7 @@ namespace eProsima
                 }
 
                 // Set the remoteServiceName to NULL.
-                reqhead->remoteServiceName = NULL;
+				*auxPointerToRemoteServiceName = NULL;
             }
             else
             {
@@ -234,19 +228,23 @@ namespace eProsima
             DDS::WaitSet *waitSet = NULL;
             unsigned int numSec = 0;
             char value[50];
+			void *auxPointerToRequest = request;
+			char **auxPointerToRemoteServiceName = NULL;
 
             if(request != NULL && task != NULL)
             {
-				RequestHeader *reqhead = (RequestHeader*)request;
-                reqhead->clientId.value_1 = m_clientServiceId[0];
-                reqhead->clientId.value_2 = m_clientServiceId[1];
-                reqhead->clientId.value_3 = m_clientServiceId[2];
-                reqhead->clientId.value_4 = m_clientServiceId[3];
-                reqhead->remoteServiceName = (char*)m_client->getRemoteServiceName().c_str();
+				*(unsigned int*)auxPointerToRequest = m_clientId[0];
+				((unsigned int*)auxPointerToRequest)[1] = m_clientId[1];
+				((unsigned int*)auxPointerToRequest)[2] = m_clientId[2];
+				((unsigned int*)auxPointerToRequest)[3] = m_clientId[3];
+				auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+                *(char**)auxPointerToRequest = (char*)m_client->getRemoteServiceName().c_str();
+				auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+				auxPointerToRequest = (char**)auxPointerToRequest + 1;
 
                 m_mutex->lock();
                 /* Thread safe num_Sec handling */
-                reqhead->requestSequenceNumber = m_numSec;
+                *(unsigned int*)auxPointerToRequest = m_numSec;
                 numSec = m_numSec;
                 m_numSec++;
                 m_mutex->unlock();
@@ -259,23 +257,14 @@ namespace eProsima
                     {
                         if(write(request) == DDS::RETCODE_OK)
                         {
-                            DDS::StringSeq stringSeq(5);
+                            DDS::StringSeq stringSeq(1);
 
-                            stringSeq.length(5);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
-                            stringSeq[0] = strdup(value);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
-                            stringSeq[1] = strdup(value);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
-                            stringSeq[2] = strdup(value);
-                            SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
-                            stringSeq[3] = strdup(value);
+                            stringSeq.length(1);
                             SNPRINTF(value, 50, "%u", numSec);
-                            stringSeq[4] = strdup(value);
+                            stringSeq[0] = strdup(value);
 
                             DDS::QueryCondition *query = m_replyDataReader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                                    "header.clientId.value_1 = %0 and header.clientId.value_2 = %1 and header.clientId.value_3 = %2 and header.clientId.value_4 = %3 and header.requestSequenceNumber = %4",
-                                    stringSeq);
+                                    "header.requestSequenceNumber = %0", stringSeq);
 
                             if(query != NULL)
                             {
@@ -308,6 +297,8 @@ namespace eProsima
                 {
                     printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
                 }
+
+				*auxPointerToRemoteServiceName = NULL;
             }
             else
             {
@@ -560,20 +551,20 @@ namespace eProsima
 						if(m_replySubscriber != NULL)
 						{
 								// Obtain clientServiceId.
-							get_guid(m_clientServiceId, m_requestDataWriter);
+							get_guid(m_clientId, m_requestDataWriter);
 
 							// Set identifier to filter topic.
 							DDS::StringSeq stringSeq(4);
 							char value[50];
 
 							stringSeq.length(4);
-							SNPRINTF(value, 50, "%u", m_clientServiceId[0]);
+							SNPRINTF(value, 50, "%u", m_clientId[0]);
 							stringSeq[0] = strdup(value);
-							SNPRINTF(value, 50, "%u", m_clientServiceId[1]);
+							SNPRINTF(value, 50, "%u", m_clientId[1]);
 							stringSeq[1] = strdup(value);
-							SNPRINTF(value, 50, "%u", m_clientServiceId[2]);
+							SNPRINTF(value, 50, "%u", m_clientId[2]);
 							stringSeq[2] = strdup(value);
-							SNPRINTF(value, 50, "%u", m_clientServiceId[3]);
+							SNPRINTF(value, 50, "%u", m_clientId[3]);
 							stringSeq[3] = strdup(value);
 
 							m_replyFilter->set_expression_parameters(stringSeq);

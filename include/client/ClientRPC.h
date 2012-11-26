@@ -194,7 +194,7 @@ namespace eProsima
 				unsigned int m_numSec;
 
 				/// \brief The identifier used as client.
-				unsigned int m_clientServiceId[4];
+				unsigned int m_clientId[4];
 
 				/// \brief Mutex used to ensure that sequence number is safe-thread.
 				boost::mutex *m_mutex;

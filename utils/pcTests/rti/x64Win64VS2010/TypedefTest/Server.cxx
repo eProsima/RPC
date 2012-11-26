@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        Sleep(10000); //eProsima::RPCDDS::sleep(10000);
+        eProsima::RPCDDS::sleep(10000);
     }
     
     // Stop and delete the server.

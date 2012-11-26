@@ -36,10 +36,6 @@
   #include "cdr/cdr_type.h"
 #endif
 
-#ifndef cdr_type_object_h
-  #include "cdr/cdr_typeObject.h"
-#endif
-
 #ifndef cdr_encapsulation_h
   #include "cdr/cdr_encapsulation.h"
 #endif
@@ -82,8 +78,6 @@ RTIBool ValoresPlugin_serialize(
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
 
-
-
     if(serialize_encapsulation) {
         if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
             return RTI_FALSE;
@@ -123,8 +117,6 @@ ValoresPlugin_deserialize_sample(
     void *endpoint_plugin_qos)
 {
     char * position = NULL;
- 
-    DDS_Enum enum_tmp; 
 
     if (endpoint_data) {} /* To avoid warnings */
     if (endpoint_plugin_qos) {} /* To avoid warnings */
@@ -140,25 +132,11 @@ ValoresPlugin_deserialize_sample(
     }
 
     if(deserialize_sample) {
- 
-        if (!RTICdrStream_deserializeEnum(stream, &enum_tmp))
+
+        if (!RTICdrStream_deserializeEnum(stream, sample))
         {
             return RTI_FALSE;
-        }
-        switch (enum_tmp) {
-
-            case VALOR1:
-                *sample=VALOR1;
-                break;
-            case VALOR2:
-                *sample=VALOR2;
-                break;
-            case VALOR3:
-                *sample=VALOR3;
-                break;
-            default:
-                return RTI_FALSE;
-        }
+        } 
 
     }
 
@@ -287,11 +265,6 @@ ValoresPlugin_get_serialized_sample_size(
     return current_alignment - initial_alignment;
 }
 
-
-
-
-
-
 /* ------------------------------------------------------------------------
     Key Management functions:
  * ------------------------------------------------------------------------ */
@@ -357,7 +330,6 @@ ValoresPlugin_serialized_sample_to_key(
             deserialize_key, endpoint_plugin_qos);
 }
 
- 
 /* ----------------------------------------------------------------------------
     Support functions:
  * ---------------------------------------------------------------------------- */
@@ -380,4 +352,5 @@ void ValoresPluginSupport_print_data(
 
     RTICdrType_printEnum((RTICdrEnum *)sample, "Valores", indent_level + 1);
 }
+
 

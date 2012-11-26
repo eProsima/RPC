@@ -218,9 +218,6 @@
     <ClCompile Include="..\..\src\exceptions\ServerNotFoundException.cpp" />
     <ClCompile Include="..\..\src\exceptions\ServerTimeoutException.cpp" />
     <ClCompile Include="..\..\src\exceptions\SystemException.cpp" />
-    <ClCompile Include="..\..\src\idl\rti\MessageHeader.cxx" />
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderPlugin.cxx" />
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
     <ClCompile Include="..\..\src\server\ServerRPC.cpp" />
     <ClCompile Include="..\..\src\strategies\SingleThreadStrategy.cpp" />
@@ -244,9 +241,6 @@
     <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h" />
     <ClInclude Include="..\..\include\exceptions\ServerTimeoutException.h" />
     <ClInclude Include="..\..\include\exceptions\SystemException.h" />
-    <ClInclude Include="..\..\include\idl\rti\MessageHeader.h" />
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderPlugin.h" />
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h" />
     <ClInclude Include="..\..\include\server\Server.h" />
     <ClInclude Include="..\..\include\server\ServerRPC.h" />
     <ClInclude Include="..\..\include\server\ServerStrategy.h" />
