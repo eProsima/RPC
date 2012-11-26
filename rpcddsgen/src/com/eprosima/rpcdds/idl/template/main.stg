@@ -106,7 +106,8 @@ libsVS(example) ::= <<
 sourceMake(interface) ::= <<
 COMMONCXXSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
                 $interface$Plugin.cxx $interface$RequestReplySupport.cxx $interface$Support.cxx \
-                $interface$RequestReplyUtils.cxx
+                $interface$RequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
 COMMONCPPSOURCES =
 >>
 
@@ -118,6 +119,9 @@ sourceVS(interface) ::= <<
     <ClCompile Include="$interface$RequestReplySupport.cxx" />
     <ClCompile Include="$interface$Support.cxx" />
     <ClCompile Include="$interface$RequestReplyUtils.cxx" />
+    <ClCompile Include="MessageHeader.cxx" />
+    <ClCompile Include="MessageHeaderPlugin.cxx" />
+    <ClCompile Include="MessageHeaderSupport.cxx" />
 >>
 
 sourceFilesVS(interface, client) ::= <<
@@ -170,6 +174,27 @@ sourceFilesVS(interface, client) ::= <<
         <Filter>Source Files\server</Filter>
         $endif$
     </ClCompile>
+    <ClCompile Include="MessageHeader.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="MessageHeaderPlugin.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
+    <ClCompile Include="MessageHeaderSupport.cxx">
+        $if(client)$
+        <Filter>Source Files\client</Filter>
+        $else$
+        <Filter>Source Files\server</Filter>
+        $endif$
+    </ClCompile>
 >>
 
 sourceIVS(interface) ::= <<
@@ -180,6 +205,9 @@ sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReplySupport.h" />
     <ClInclude Include="$interface$Support.h" />
     <ClInclude Include="$interface$RequestReplyUtils.h" />
+    <ClInclude Include="MessageHeader.h" />
+    <ClInclude Include="MessageHeaderPlugin.h" />
+    <ClInclude Include="MessageHeaderSupport.h" />
 >>
 
 sourceFilesIVS(interface, client) ::= <<
@@ -226,6 +254,27 @@ sourceFilesIVS(interface, client) ::= <<
         $endif$
     </ClInclude>
     <ClInclude Include="$interface$RequestReplyUtils.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="MessageHeader.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="MessageHeaderPlugin.h">
+        $if(client)$
+        <Filter>Header Files\client</Filter>
+        $else$
+        <Filter>Header Files\server</Filter>
+        $endif$
+    </ClInclude>
+    <ClInclude Include="MessageHeaderSupport.h">
         $if(client)$
         <Filter>Header Files\client</Filter>
         $else$
