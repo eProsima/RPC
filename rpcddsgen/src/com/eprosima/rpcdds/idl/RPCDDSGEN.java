@@ -49,6 +49,7 @@ public class RPCDDSGEN
     private static ArrayList includePaths = new ArrayList();
     private static String idlFile = null;
     private static String onlyIdlFile = null;
+    private static String idlFileLocation = null;
     private static String command = null;
     private static String extra_command = null;
     private static ArrayList lineCommand = null;
@@ -245,6 +246,8 @@ public class RPCDDSGEN
         else if(osOption.equals("Linux"))
         	 lineCommand.add("-I" + dds_root + "/rpcdds/idl");*/
         lineCommand.add("-I"+dds_root+"/rpcdds/idl");
+        if(idlFileLocation != null)
+        	lineCommand.add("-I"+idlFileLocation);
         
         // Add the include paths given as parameters.
         for(int i = 0; i < includePaths.size(); ++i)
@@ -1365,11 +1368,16 @@ public class RPCDDSGEN
 		}
 		
 		if(lastBarraOccurrency == -1)
+		{
 			onlyIdlFile = idlFile;
+		}
 		else
+		{
 			onlyIdlFile = idlFile.substring(lastBarraOccurrency + 1);
-        // Calcualte external directory.
+			idlFileLocation = idlFile.substring(0, lastBarraOccurrency);
+		}
 		
+        // Calcualte external directory.
         if(externalDir == null)
         {
            if(lastBarraOccurrency == -1)
