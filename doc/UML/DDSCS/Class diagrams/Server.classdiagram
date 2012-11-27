@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="706f4469-e312-4e5c-aada-53b35fc5fd65" name="Server" linkedPackageId="00ed295e-43a6-4407-9c57-c00994dd63c5" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="706f4469-e312-4e5c-aada-53b35fc5fd65" name="Server" linkedPackageId="00ed295e-43a6-4407-9c57-c00994dd63c5" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <ownedCommentsInternal>
     <comment Id="be0581df-6d56-42df-86a1-301d438d7f75">
       <elementDefinition Id="cb244e76-b56e-4911-b1b6-a1536a331498" />
@@ -1432,21 +1432,21 @@
           </generalization>
         </generalsInternal>
         <targetEnds>
-          <association Id="c12cd8b6-ccb1-425e-8f5e-bebc824442ac" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="f4d2bb38-0ec0-4c2d-a8cd-fe56255091cc" LastKnownName="TCPTransport" />
+          <association Id="2559087a-d436-4d43-a3fc-34b95ce0efbf" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="9d639bb2-f39b-4b86-99b4-e648271e1386" LastKnownName="TCPTransport" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="46652de4-5cb3-492c-9408-6ad19f60c1cb" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="e39991f1-15ff-49c3-ac3c-9e1943453fcb" />
+                <memberEnd Id="f50e4833-fa53-4239-8f75-871131d3e8a6" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="2b01944e-eef2-4a88-8b4b-e49e14d3893f" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="0e43af6a-6760-4b3a-97e0-d7369a1e11e3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="076dae68-4740-4cb7-9ca6-9407efb1d8fa" />
+                <memberEnd Id="91e0007b-4270-49aa-8905-41d12cbbe8e5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="779b155d-4eae-4845-a2c7-69f1cd11f921" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
-            <elementDefinition Id="6d7fb7c9-368f-4756-ab8a-9f2193fb9dba" />
+            <elementDefinition Id="4e453b16-4803-42d1-ba3c-2788835a2e38" />
           </association>
         </targetEnds>
         <ownedOperationsInternal>
@@ -1492,21 +1492,21 @@
           </generalization>
         </generalsInternal>
         <targetEnds>
-          <association Id="8cbca679-825e-4818-9f27-fe520e21f1a6" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <classMoniker Id="1916b94f-c44f-446b-80bb-49d17a6bbec5" LastKnownName="UDPTransport" />
+          <association Id="9a87dda3-5142-49d2-83be-ac4eb7549621" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="0dbed333-0f0c-4f6f-ac36-5a449c8974d5" LastKnownName="UDPTransport" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="045e9f02-306f-469e-aa05-a5b802d6f3c0" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="7b89f1ba-668f-458f-a2b4-a30940e2583a" />
+                <memberEnd Id="6fe40ee3-a25f-4d02-ad02-dd68279d16f4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="fd60733a-8af2-46da-aa61-48497b9cd71c" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="445cda79-ca7a-46ac-b038-7edb20546cb4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="14043536-2ace-4003-8b58-883088215502" />
+                <memberEnd Id="303b7590-42eb-4567-b136-12417aa0cca4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ad436006-ca3e-4720-b24c-81d692a32ecb" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
-            <elementDefinition Id="53fec478-4896-46eb-a3f8-9cd5a1148849" />
+            <elementDefinition Id="a9dde973-805c-4bb0-8e29-0cfa413fb87d" />
           </association>
         </targetEnds>
         <ownedOperationsInternal>
@@ -1518,132 +1518,6 @@
                   <elementDefinition Id="593c4661-7a3f-49c4-9ee5-72209c993f2c" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="d959c14a-4a44-4dc7-8053-b674254d3542" LastKnownName="int" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperationsInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="7a4ebcd3-2640-4387-9642-b1cd2948396c" name="DDSDomainParticipantQos" isAbstract="false" isLeaf="false" cachedFullName="DDSDomainParticipantQos">
-        <elementDefinition Id="131bce91-a206-49b6-b62a-3addfcd85181" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="1cfc6e33-d518-4298-af3f-d94c1ad17607" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
-        <elementDefinition Id="609bbadb-c736-4fa4-96f3-39dc9112d9df" />
-      </referencedType>
-    </packageHasNamedElement>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="58d17e63-48ff-4b17-a4f3-40189114075d" name="Transport" isAbstract="true" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="21e5ad2b-39aa-43d9-9ce6-6dce8999dc93" />
-        <ownedOperationsInternal>
-          <operation Id="43e815aa-dd47-40c4-877f-c6595de01fe5" name="setTransport" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="d4555d2a-3b9a-41c0-b840-9e20da8a356c" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="71be65e4-6500-404f-85cc-d5b51ba37373" name="participantQos" direction="In" isUnique="false">
-                  <elementDefinition Id="862759e1-74ce-4c4e-868c-d6f0869e7c52" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="7a4ebcd3-2640-4387-9642-b1cd2948396c" LastKnownName="DDSDomainParticipantQos" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="108bb7d6-7464-49f9-877a-1909fb3409c1" direction="Return" isUnique="false">
-                  <elementDefinition Id="8cf01f57-e8f9-4f9e-9563-6391777e429a" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="1cfc6e33-d518-4298-af3f-d94c1ad17607" LastKnownName="int" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperationsInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="f9b5430c-1002-4f71-807c-b5db0236d8f0" name="DDSDomainParticipantQos" isAbstract="false" isLeaf="false" cachedFullName="DDSDomainParticipantQos">
-        <elementDefinition Id="131bce91-a206-49b6-b62a-3addfcd85181" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="5b70d2f4-33b8-4c74-9d00-69143d71f12e" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
-        <elementDefinition Id="609bbadb-c736-4fa4-96f3-39dc9112d9df" />
-      </referencedType>
-    </packageHasNamedElement>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="f4d2bb38-0ec0-4c2d-a8cd-fe56255091cc" name="TCPTransport" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="0c243dcf-e4f1-4654-b711-8764e7bfd33d" />
-        <generalsInternal>
-          <generalization Id="514e1fb7-f0b7-4d8d-8ba3-f9e0f0d59f0d" isSubstitutable="false">
-            <classMoniker Id="58d17e63-48ff-4b17-a4f3-40189114075d" LastKnownName="Transport" />
-            <elementDefinition Id="6996e07b-87fc-4397-bcff-0715a8e8ca8d" />
-          </generalization>
-        </generalsInternal>
-        <ownedOperationsInternal>
-          <operation Id="40b684be-6d45-4276-8d88-a48f2359e839" name="setTransport" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="362504ec-019e-4c9a-979e-a519b3e828ee" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="39536946-9433-454a-b3db-302fff3c6fd8" name="participantQos" direction="In" isUnique="false">
-                  <elementDefinition Id="59f6ed6d-6990-4ee1-96e8-27e952f6604e" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="f9b5430c-1002-4f71-807c-b5db0236d8f0" LastKnownName="DDSDomainParticipantQos" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d1884be5-232e-474a-b3a4-7877c7146256" direction="Return" isUnique="false">
-                  <elementDefinition Id="2f5d60fc-4af1-499a-bad0-3087a1a7aff3" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="5b70d2f4-33b8-4c74-9d00-69143d71f12e" LastKnownName="int" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperationsInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="24c9ae3f-cae7-440b-9b51-90aca98c7b05" name="DDSDomainParticipantQos" isAbstract="false" isLeaf="false" cachedFullName="DDSDomainParticipantQos">
-        <elementDefinition Id="131bce91-a206-49b6-b62a-3addfcd85181" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="48c69670-07eb-4bb0-9ef0-6be8b840c0d8" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
-        <elementDefinition Id="609bbadb-c736-4fa4-96f3-39dc9112d9df" />
-      </referencedType>
-    </packageHasNamedElement>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="1916b94f-c44f-446b-80bb-49d17a6bbec5" name="UDPTransport" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="7b8feb49-2c14-444a-bdbc-6189d2e4a219" />
-        <generalsInternal>
-          <generalization Id="977d387a-c4eb-4005-af30-569d1d54a0ee" isSubstitutable="false">
-            <classMoniker Id="58d17e63-48ff-4b17-a4f3-40189114075d" LastKnownName="Transport" />
-            <elementDefinition Id="ff875675-453b-4250-8c95-6b1b3d11c71a" />
-          </generalization>
-        </generalsInternal>
-        <ownedOperationsInternal>
-          <operation Id="067eaca0-65fb-4201-9448-37d903b5c9e8" name="setTransport" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="8e5d3dd2-3da0-4c0f-adcd-dfec01c65a3d" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="6015bee0-4a77-43b6-bed7-30d576425bb3" name="participantQos" direction="In" isUnique="false">
-                  <elementDefinition Id="6c034095-7cff-4dbe-864a-7107bd44a45c" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="24c9ae3f-cae7-440b-9b51-90aca98c7b05" LastKnownName="DDSDomainParticipantQos" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="b822a0d2-8747-45f8-9a5c-3d08105ddaac" direction="Return" isUnique="false">
-                  <elementDefinition Id="64820361-ee16-4aa0-9d12-98bdb632b599" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="48c69670-07eb-4bb0-9ef0-6be8b840c0d8" LastKnownName="int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1672,6 +1546,107 @@
         <elementDefinition Id="fbfd5209-49b9-466e-9f62-93156bb03d64" />
       </referencedType>
     </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c392e67f-a4ab-4119-a784-79d0cac731f9" name="Transport" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f8a2f2ac-f8a4-47c6-935f-107a90464f54" />
+        <ownedOperationsInternal>
+          <operation Id="189410bf-612f-4ad6-a8f2-d7b0e4c3ddaa" name="setTransport" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c1bffa01-cf0c-40bf-87ed-a468e2f83d27" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e532368b-e80a-4b63-b171-449cfd25049e" name="participantQos" direction="In" isUnique="false">
+                  <elementDefinition Id="992a8f5f-f62d-4c16-ac90-e7084b7eb8c7" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a3a8776e-0458-4a4a-b037-bc9ede25bf1c" LastKnownName="DDSDomainParticipantQos" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ead6dd28-b50f-4c61-988f-aa65c19a8f01" direction="Return" isUnique="false">
+                  <elementDefinition Id="f2105edb-f76a-4fe3-a8b7-eecddb8656a2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d959c14a-4a44-4dc7-8053-b674254d3542" LastKnownName="int" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="a3a8776e-0458-4a4a-b037-bc9ede25bf1c" name="DDSDomainParticipantQos" isAbstract="false" isLeaf="false" cachedFullName="DDSDomainParticipantQos">
+        <elementDefinition Id="131bce91-a206-49b6-b62a-3addfcd85181" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="0dbed333-0f0c-4f6f-ac36-5a449c8974d5" name="UDPTransport" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="bea3cb38-76bc-4a8b-983d-41f62528093d" />
+        <generalsInternal>
+          <generalization Id="ba8337cc-8809-429d-8216-e568f39d8649" isSubstitutable="false">
+            <classMoniker Id="c392e67f-a4ab-4119-a784-79d0cac731f9" LastKnownName="Transport" />
+            <elementDefinition Id="b07ca966-034c-415a-90dd-e9d0d2b5e2fa" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="3927d08b-749d-4178-8047-c600881113ee" name="setTransport" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="35c7b746-401c-4fcc-b190-010f97a08a61" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="59fe5238-0375-4d57-937a-e7029858f871" name="participantQos" direction="In" isUnique="false">
+                  <elementDefinition Id="1dda85e3-ad07-4c86-95fb-bd42347fb525" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a3a8776e-0458-4a4a-b037-bc9ede25bf1c" LastKnownName="DDSDomainParticipantQos" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1adc1f06-2a0e-4dc5-9dcb-f684c9768a50" direction="Return" isUnique="false">
+                  <elementDefinition Id="37a82b17-6ac3-4f0d-9d2a-f2a6df079733" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d959c14a-4a44-4dc7-8053-b674254d3542" LastKnownName="int" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="9d639bb2-f39b-4b86-99b4-e648271e1386" name="TCPTransport" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="7bb86b35-a644-40f3-b560-60f4c76d39e5" />
+        <generalsInternal>
+          <generalization Id="3a06c295-4ab7-4989-85c7-94a02ba6e485" isSubstitutable="false">
+            <classMoniker Id="c392e67f-a4ab-4119-a784-79d0cac731f9" LastKnownName="Transport" />
+            <elementDefinition Id="62d32859-a5b7-4f48-9e54-e6afaf8612ab" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="671d5ed9-ded6-424f-a496-71cc20d97d38" name="setTransport" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0cfb87f5-5622-45a4-95cd-92b665367bd4" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9a0365ac-1179-4d18-ba4a-2888f20ad63b" name="participantQos" direction="In" isUnique="false">
+                  <elementDefinition Id="6ba6a35b-607e-46fa-ac9d-a10ff29d117a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a3a8776e-0458-4a4a-b037-bc9ede25bf1c" LastKnownName="DDSDomainParticipantQos" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c5a56fb1-8bc8-497e-b80c-1e66e2acf4d8" direction="Return" isUnique="false">
+                  <elementDefinition Id="22b38a20-5a09-4f99-9100-21493971b309" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d959c14a-4a44-4dc7-8053-b674254d3542" LastKnownName="int" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="00ed295e-43a6-4407-9c57-c00994dd63c5" name="DDSCS">
     <elementDefinition Id="d3220d26-5f30-4636-9eaa-008d70413dfd" />

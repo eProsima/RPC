@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="2ec26f85-eee1-48da-b681-05cd99575618" name="GeneratedCode" linkedPackageId="a22106e1-876f-4caa-84c5-a84963df8557" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="2ec26f85-eee1-48da-b681-05cd99575618" name="GeneratedCode" linkedPackageId="a22106e1-876f-4caa-84c5-a84963df8557" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="2789266d-40df-4281-aa98-713db884727e" name="function1ClientRPC" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -914,6 +914,480 @@
         <elementDefinition Id="8330945f-ea03-4f86-95d0-d148c4ecaaee" />
       </referencedType>
     </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="9984e5a6-9252-4489-9e37-fe36efca8586" name="BankProtocol" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="93d75c4d-1b45-4976-89d8-354ccfa25300" />
+        <ownedOperations>
+          <operation Id="644c3dfc-c2a8-4b4e-ad45-91a312a27289" name="deposit_serialize_input" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f6726229-5e74-4409-9f85-47c210094749" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="bb1ed20a-29cd-4d90-b238-9c8dd02bf9cc" direction="Return" isUnique="false">
+                  <elementDefinition Id="f5e76d85-73c0-421c-842e-81cf9573b70b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="af5153b2-749a-4972-aeb3-9797bd45be69" name="ac" direction="In" isUnique="false">
+                  <elementDefinition Id="c2f3a293-a131-4bd0-8196-8350b62ae47f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" LastKnownName="Account" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3f08887b-45d1-4ed7-a94c-148b6985f76e" name="money" direction="In" isUnique="false">
+                  <elementDefinition Id="eadf0c04-6cf8-4dee-bd0a-bc44402e1ea5" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="5b98b5cd-2d31-43d9-8dd5-5f3276a1ce2d" name="deposit_deserialize_input" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f428a057-da9e-4e88-8c45-9e9de1e8c1e6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8cdb086c-c339-4425-8989-f2219861851a" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="c2e4ec13-25d1-45f6-ad7c-61234a3dc6fa" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a1ee576-79ed-4158-93e1-6cf488d5c00e" LastKnownName="Buffer&amp;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="161f191e-ed65-42ed-8d22-185c69b010ff" name="ac" direction="In" isUnique="false">
+                  <elementDefinition Id="834d365c-12df-460f-a807-a18c5e4a4913" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" LastKnownName="Account" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="29712c29-d953-48c9-9620-f888d69bdcca" name="money" direction="In" isUnique="false">
+                  <elementDefinition Id="73b8f768-18ce-4c85-8b5a-4ae057c0d523" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f5337d00-95b2-4407-a9ce-024232ddf08e" direction="Return" isUnique="false">
+                  <elementDefinition Id="ef563ae6-1a5c-4864-97d4-e0ea27c1516c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="2998807e-9835-43d9-b6b4-36bf6c217356" name="deposit_serialize_output" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bfed73a7-fe9d-4c04-9d34-f5f5851f695c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7dd969ee-26cc-4995-9757-d06df883fb2d" direction="Return" isUnique="false">
+                  <elementDefinition Id="0b2db371-13bb-4d5f-9946-c7868b8fb063" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a1982511-2d23-44bf-92f7-88672dea2fb1" name="deposit_ret" direction="In" isUnique="false">
+                  <elementDefinition Id="e7ab489e-46bf-4148-be13-c445f20effc5" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="15240368-1987-4872-9bd1-d505d7ec0b0d" LastKnownName="ReturnCode" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="97ba0c06-f075-4e77-9270-4466f502734d" name="deposit_deserialize_output" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ba55169c-1137-4d6b-b2be-f5602b6f6914" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f6ad0def-b567-47ca-a6d5-7d7a6d3146bb" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="a1f2a4ba-8a7c-48b9-860f-5524fecf55a7" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2223b082-1474-4dac-891c-8df03b823fc8" LastKnownName="Buffer &amp;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e2029bb6-ecdb-44d3-9de2-b1598624abf5" name="deposit_ret" direction="In" isUnique="false">
+                  <elementDefinition Id="668e8976-4f9e-4300-8457-7ff1aaaa277e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="15240368-1987-4872-9bd1-d505d7ec0b0d" LastKnownName="ReturnCode" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1bf161d3-5858-4e2f-a563-7ee0c41199ab" direction="Return" isUnique="false">
+                  <elementDefinition Id="9c30c478-6e77-4975-83e8-0a6860ccb267" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="911a379f-6462-4bd3-a400-91b238a9fbb9" name="detect" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="09567e12-8626-4008-9800-3bdd0a99dbc6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="86d4f92c-4f91-4bd7-ab55-c1f39ef8217a" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="22f882ee-b49a-483f-bf94-c2428f09fc1b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d6ea8bef-10b1-41a6-b927-d910212a24a0" direction="Return" isUnique="false">
+                  <elementDefinition Id="9558f826-7d91-4afa-927b-275d77a4cdcc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" name="long" isAbstract="false" isLeaf="false" cachedFullName="long">
+        <elementDefinition Id="3955bad4-8c14-40ce-b93e-07d961c436ef" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0a1ee576-79ed-4158-93e1-6cf488d5c00e" name="Buffer&amp;" isAbstract="false" isLeaf="false" cachedFullName="Buffer&amp;">
+        <elementDefinition Id="aa1901f7-b181-4bf9-b3df-e83dee953bb6" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" name="Account" isAbstract="false" isLeaf="false" cachedFullName="Account">
+        <elementDefinition Id="af549e76-65ea-4a33-822c-179c549b62fe" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" name="Buffer" isAbstract="false" isLeaf="false" cachedFullName="Buffer">
+        <elementDefinition Id="5da3c606-5396-4083-b2c6-97345d20e997" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="15240368-1987-4872-9bd1-d505d7ec0b0d" name="ReturnCode" isAbstract="false" isLeaf="false" cachedFullName="ReturnCode">
+        <elementDefinition Id="3cd181ff-8473-4045-a7f8-16730c42281a" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="2223b082-1474-4dac-891c-8df03b823fc8" name="Buffer &amp;" isAbstract="false" isLeaf="false" cachedFullName="Buffer &amp;">
+        <elementDefinition Id="23c1c840-5942-46a1-8e76-b7855b110432" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e6e0767d-6974-4804-bebb-f9b4bf9bccd8" name="BankRestfulProtocol" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="528cfaa9-6ac8-4323-9fe6-fc86d58cf1c3" />
+        <suppliersInternal>
+          <interfaceRealization Id="b7d006ed-cb4d-4688-9a88-df499fed64cd">
+            <interfaceMoniker Id="9984e5a6-9252-4489-9e37-fe36efca8586" LastKnownName="BankProtocol" />
+            <elementDefinition Id="e3c36efd-2406-4e38-971b-297e4784c544" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="dc5f4f6d-e2cf-4250-acc5-c5fcef611880" name="deposit_serialize_input" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e95a9250-c414-4e80-83e5-ea9f90ea91b0" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="80db9c95-1f3e-4b5b-9048-52397c666e67" name="ac" direction="In" isUnique="false">
+                  <elementDefinition Id="9556187d-eec7-4b32-8678-dd644821bad4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" LastKnownName="Account" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1382e969-e86b-45f1-b6b8-c1f13617ef74" name="money" direction="In" isUnique="false">
+                  <elementDefinition Id="e374b111-048a-4f9a-878d-06518f9b7a29" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ccd78d00-0026-4140-ada1-fab1184ce14a" direction="Return" isUnique="false">
+                  <elementDefinition Id="231214af-fec8-47b1-a0fe-c6608d6a57c6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="88309f63-92f4-43ea-be95-66942020db3b" name="deposit_deserialize_input" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9207ef7e-371c-4611-a53e-7290f7f51bc1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8e9293ca-e8a4-4efa-b3ba-6e2b6ee8c0ff" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="9dce4d2e-6e0c-4c50-92e8-84c3093de921" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a1ee576-79ed-4158-93e1-6cf488d5c00e" LastKnownName="Buffer&amp;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="81254483-98d5-456f-a5a1-9dffa4e3b4cd" name="ac" direction="In" isUnique="false">
+                  <elementDefinition Id="f499f136-2a97-425b-9b5d-5f0b9d693d63" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" LastKnownName="Account" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c4daa77d-b496-49aa-9d1f-781c5c03db21" name="money" direction="In" isUnique="false">
+                  <elementDefinition Id="49088b43-9584-411c-b04a-be19d71477dd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d61e04be-d7d5-421d-89b6-4b5e2519d175" direction="Return" isUnique="false">
+                  <elementDefinition Id="845fdafe-350a-48f9-b342-febff69c001e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="35ea0670-098a-470d-8143-c3bbc074980c" name="deposit_serialize_output" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="fc9d0968-c07b-4991-bf0f-06b630edcdbd" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="440e32c5-9379-41b2-8228-7afcca172691" direction="Return" isUnique="false">
+                  <elementDefinition Id="4ba78ec4-f59f-4f61-879c-3be6de4229af" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1fece410-e99e-4e2b-9c49-98fd3092ecad" name="deposit_ret" direction="In" isUnique="false">
+                  <elementDefinition Id="ae9c0ec7-ba9a-4c01-853b-98e346ac3d5b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="15240368-1987-4872-9bd1-d505d7ec0b0d" LastKnownName="ReturnCode" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="dd3c854c-d612-47e3-86e7-74e1888ebaf3" name="deposit_deserialize_output" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="cdd2ca11-3036-4052-9d5f-6a69af019426" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1e138f8a-d630-4be9-80a3-b91525077c10" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="729829ce-d5f3-461e-954a-a10c26c46572" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2223b082-1474-4dac-891c-8df03b823fc8" LastKnownName="Buffer &amp;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="311ae631-eb6a-41a4-842c-9edb10fdbd4b" name="deposit_ret" direction="In" isUnique="false">
+                  <elementDefinition Id="b4fefbe9-7dc3-4097-87be-47da3c583fbb" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="15240368-1987-4872-9bd1-d505d7ec0b0d" LastKnownName="ReturnCode" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="03b112f3-6db5-4b01-becf-dbdb69d9c791" direction="Return" isUnique="false">
+                  <elementDefinition Id="d35ec25f-861f-4f2d-98bf-d036ec9510ce" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="8fdf032f-62fa-41c4-b7b6-3622c89aa394" name="detect" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="35450310-d63a-45b6-a827-30ceee5eedf4" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0853ec42-2eea-47d1-acbb-e9a9dd3375eb" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="0dc1aa98-840d-41db-99c5-86676d1d7731" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e11d0743-a110-4cb4-9f1f-7fdafb013922" direction="Return" isUnique="false">
+                  <elementDefinition Id="92a2c00e-8a7e-4a2f-a0a3-9bcaa3294178" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="94dc8a85-8a50-447b-9635-99dd4be02ba2" name="BankDDSProtocol" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="7fd1d6df-317d-41f1-b81b-6799a10cb0c0" />
+        <suppliersInternal>
+          <interfaceRealization Id="d6fa8fd2-9e5b-4e2c-bbdd-c25bcf9beabe">
+            <interfaceMoniker Id="9984e5a6-9252-4489-9e37-fe36efca8586" LastKnownName="BankProtocol" />
+            <elementDefinition Id="7c4cdecb-3357-4534-9bbb-5ea7af61de0d" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="4a5ace91-a51b-498f-9667-45e044fe9987" name="deposit_serialize_input" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="132ec7fe-52ab-42db-9cb0-0648281aefca" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="bbd01508-fc5d-4222-ad82-2b35c8a522b7" name="ac" direction="In" isUnique="false">
+                  <elementDefinition Id="6a03dd84-58cc-4cb1-a5c9-1727ec91afe8" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" LastKnownName="Account" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="51776f38-fa02-4205-bd83-2620ead8336d" name="money" direction="In" isUnique="false">
+                  <elementDefinition Id="e60277a3-019d-4a65-95d2-dbb5784f9f48" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="120f4f0d-de81-47e1-a33d-939a22e7257c" direction="Return" isUnique="false">
+                  <elementDefinition Id="cce55c43-d0a5-4ac1-b5c6-bee5faf8844d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="68558da4-b3bb-4398-9e6b-236a5a03b1f7" name="deposit_deserialize_input" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e6ec220f-7793-49cb-8ccd-8b13c47c485b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0fdfbe66-3ae5-461f-bce5-53751b8ed88d" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="daf2235e-0bd6-45be-851c-23a57835b3d6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a1ee576-79ed-4158-93e1-6cf488d5c00e" LastKnownName="Buffer&amp;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b61416ac-87db-45a7-9de4-d4f3ff9aa9d7" name="ac" direction="In" isUnique="false">
+                  <elementDefinition Id="56f002b3-f2cf-4749-a8b8-0090875613b6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="421b5e73-e0f8-4bbd-a6dc-d5156ed0fe1d" LastKnownName="Account" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2699edeb-b0c9-4c4c-a644-061bb370f247" name="money" direction="In" isUnique="false">
+                  <elementDefinition Id="b1c50582-7c10-4c91-a14b-8a2928bf87cf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="734f1f33-74c9-4bf4-8e79-a4fb3c158fad" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ff940bcf-5cd9-4398-8558-09b43303a1c0" direction="Return" isUnique="false">
+                  <elementDefinition Id="60334da7-324d-4cf5-bd0d-30d852e92a6e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="3e732b4a-84c6-4fb6-92a5-c336f8a01b32" name="deposit_serialize_output" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9b213147-b9d5-4afc-86a4-5402fb630ad1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0aae6b35-1d09-4f19-90ba-9fa2ab008c38" name="_serialize_output(deposit_ret" direction="In" isUnique="false">
+                  <elementDefinition Id="5a6c7277-73a5-456d-9377-7c50cb636c7f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="15240368-1987-4872-9bd1-d505d7ec0b0d" LastKnownName="ReturnCode" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="28bac291-b626-45f0-9e87-52540efb4779" direction="Return" isUnique="false">
+                  <elementDefinition Id="1e6d8f7c-6b2a-4d1a-913d-1393906e546c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="d0a4b49d-52cb-43c6-b3d6-0bfa93d4eae6" name="deposit_deserialize_output" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f3ec284a-da3a-45db-9b98-7c9b32812178" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="6f272bb0-20c8-418b-b995-ea1bcb1ee0a3" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="d0bdc356-7e26-4e2a-a2b3-6fce62aa0dc8" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2223b082-1474-4dac-891c-8df03b823fc8" LastKnownName="Buffer &amp;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f562c84d-0dbb-4fbb-b9b5-24fc9583f592" name="deposit_ret" direction="In" isUnique="false">
+                  <elementDefinition Id="63b417d4-7ecc-4cda-84c1-042b7844deda" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="15240368-1987-4872-9bd1-d505d7ec0b0d" LastKnownName="ReturnCode" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a93a55eb-80f3-4bbf-8473-10768c8f5eb4" direction="Return" isUnique="false">
+                  <elementDefinition Id="e382e5dc-67b3-4866-935b-efdf7c9fa3af" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb2379aa-ee62-4e81-a0cd-7533e218f4de" LastKnownName="void" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="4107c46b-1fb4-4e0f-8e82-d30ba21a4c98" name="detect" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="754abc40-8615-4947-b63d-c8615aa998a0" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="bfd89c63-1855-48d8-b2fd-07b4cdf10192" name="buffer" direction="In" isUnique="false">
+                  <elementDefinition Id="3d17a501-b38f-450f-90d6-1bbb894b1995" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d800009e-c7f8-4208-8737-8e5c4eed01ca" LastKnownName="Buffer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5c30403d-b8d6-4589-86e1-0f1fb6902508" direction="Return" isUnique="false">
+                  <elementDefinition Id="b0012f4d-04fb-4c9a-a120-7bc7e1fbacaa" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="128d8315-380b-4ce3-aec9-6076860bfd13" LastKnownName="char*" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="a22106e1-876f-4caa-84c5-a84963df8557" name="DDSCS">
     <elementDefinition Id="d3220d26-5f30-4636-9eaa-008d70413dfd" />
