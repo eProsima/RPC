@@ -119,7 +119,9 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
+copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010
+copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
@@ -150,7 +152,9 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
+copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010
+copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -176,7 +180,9 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
+copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010
+copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -203,7 +209,9 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
+copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010
+copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
