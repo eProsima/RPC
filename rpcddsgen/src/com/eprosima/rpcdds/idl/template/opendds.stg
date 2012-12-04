@@ -62,24 +62,10 @@ ts->register_type(participant, $name$)
 
 preReqIDLDefines(name) ::= <<
 #pragma DCPS_DATA_TYPE "$name$Request"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_1"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_2"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_3"
-#pragma DCPS_DATA_KEY "$name$Request clientServiceId.value_4"
-#pragma DCPS_DATA_KEY "$name$Request numSec"
 >>
 
 preRepIDLDefines(name) ::= <<
 #pragma DCPS_DATA_TYPE "$name$Reply"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_1"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_2"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_3"
-#pragma DCPS_DATA_KEY "$name$Reply serverServiceId.value_4"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_1"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_2"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_3"
-#pragma DCPS_DATA_KEY "$name$Reply clientServiceId.value_4"
-#pragma DCPS_DATA_KEY "$name$Reply numSec"
 >>
 
 keyIDLdefine() ::= <<

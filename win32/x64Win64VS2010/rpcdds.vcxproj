@@ -83,10 +83,10 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">$(ProjectName)d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)zd</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)z</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">rpcddsd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">rpcdds</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">rpcddszd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">rpcddsz</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
@@ -99,7 +99,7 @@
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -109,7 +109,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)d.dll</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
@@ -136,7 +136,7 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Comm
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
@@ -145,7 +145,7 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Comm
     <Link>
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName).dll</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -167,13 +167,13 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Comm
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)zd.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
@@ -197,14 +197,14 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\x64Win64VS2010</Comm
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(ProjectName)z.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>

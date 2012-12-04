@@ -15,11 +15,11 @@ struct Identification
 struct RequestHeader
 {
     /// @brief Identification of the client that sends the request.
-    Identification clientId; //@key
+    Identification clientId;
     /// @brief The service's name of the server that has to take this request.
     string<255> remoteServiceName;
     /// @brief Sequence number of the request.
-    unsigned long requestSequenceNumber; //@key
+    unsigned long requestSequenceNumber;
 }; //@top-level false 
 
 /**
@@ -28,9 +28,9 @@ struct RequestHeader
 struct ReplyHeader
 {
     /// @brief Identification of the client that sends the associated request to this reply.
-    Identification clientId; //@key
+    Identification clientId;
     /// @brief Sequence number of the associated request to this reply.
-    unsigned long requestSequenceNumber; //@key
+    unsigned long requestSequenceNumber;
     /// @brief Return message code. Informs of the successful in the operation.
     long rpcddsRetCode;
     /// @brief In case of exception this attribute has an error message.

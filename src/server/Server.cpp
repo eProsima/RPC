@@ -33,7 +33,7 @@ namespace eProsima
             {
 				if(m_transport == NULL)
 				{
-					m_transport = new UDPTransport();
+					m_transport = new UDPServerTransport();
 					m_defaultTransport = true;
 				}
 

@@ -27,7 +27,7 @@ namespace eProsima
 
             if(m_transport == NULL)
             {
-				m_transport = new UDPTransport();
+				m_transport = new UDPClientTransport();
 				m_defaultTransport = true;
 			}
 

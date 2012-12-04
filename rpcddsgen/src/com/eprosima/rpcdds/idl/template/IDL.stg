@@ -61,7 +61,7 @@ $preReqIDLDefines(name=[interfaceName, "_", funName])$
  * Topic used to receive/send requests for the procedure $funName$.
  */
 struct $interfaceName$_$funName$Request{
-    RequestHeader header; $keyIDLdefine()$
+    RequestHeader header;
     $params : {$it.typeName$ $it.name$;};separator="\n"$
 }; $levelIDLdefine()$
 >>
@@ -82,7 +82,7 @@ $preRepIDLDefines(name=[interfaceName, "_", funName])$
  * Topic used to receive/send replies for the procedure $funName$.
  */
 struct $interfaceName$_$funName$Reply{
-    ReplyHeader header; $keyIDLdefine()$
+    ReplyHeader header;
     $params : {$it.typeName$ $it.name$;};separator="\n"$
     $if(return)$$return.typeName$ $return.name$;$endif$
 }; $levelIDLdefine()$

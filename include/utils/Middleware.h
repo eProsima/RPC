@@ -21,6 +21,7 @@
 #define BOOLEAN_FALSE DDS::BOOLEAN_FALSE
 #define BOOLEAN_TRUE DDS::BOOLEAN_TRUE
 #define strdup DDS::String_dup
+#define EPROSIMA_UINT32 RTI_UINT32
 
 
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
@@ -36,6 +37,7 @@
 #define BOOLEAN_FALSE false
 #define BOOLEAN_TRUE true
 #define DDS_InstanceHandle_is_nil(ih) (ih == 0)
+#define EPROSIMA_UINT32 ::CORBA::ULong
 
 #endif
 

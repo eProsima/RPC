@@ -83,10 +83,10 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">rpcddsd</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">rpcdds</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">rpcddszd</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">rpcddsz</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">rpcddsod</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">rpcddso</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">rpcddsozd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">rpcddsoz</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
@@ -99,7 +99,7 @@
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -109,7 +109,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>ACEd.lib;TAOd.lib;TAO_AnyTypeCoded.lib;OpenDDS_Rtpsd.lib;OpenDDS_Dcpsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\rpcddsd.dll</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
@@ -136,7 +136,7 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
@@ -145,7 +145,7 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     <Link>
       <AdditionalDependencies>ACE.lib;TAO.lib;TAO_AnyTypeCode.lib;OpenDDS_Rtps.lib;OpenDDS_Dcps.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\rpcdds.dll</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -168,13 +168,13 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)\..\..\lib\i86Win32VS2010\rpcddszd.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\..\lib\i86Win32VS2010\$(TargetName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
@@ -197,14 +197,14 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)vc100.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)\..\..\lib\i86Win32VS2010\$(ProjectName)z.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\..\lib\i86Win32VS2010\$(TargetName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -225,8 +225,6 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     <ClCompile Include="..\..\src\exceptions\ServerNotFoundException.cpp" />
     <ClCompile Include="..\..\src\exceptions\ServerTimeoutException.cpp" />
     <ClCompile Include="..\..\src\exceptions\SystemException.cpp" />
-    <ClCompile Include="..\..\src\idl\opendds\MessageHeaderC.cpp" />
-    <ClCompile Include="..\..\src\idl\opendds\MessageHeaderTypeSupportImpl.cpp" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
     <ClCompile Include="..\..\src\server\ServerRPC.cpp" />
     <ClCompile Include="..\..\src\strategies\SingleThreadStrategy.cpp" />
@@ -250,8 +248,6 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h" />
     <ClInclude Include="..\..\include\exceptions\ServerTimeoutException.h" />
     <ClInclude Include="..\..\include\exceptions\SystemException.h" />
-    <ClInclude Include="..\..\include\idl\opendds\MessageHeaderC.h" />
-    <ClInclude Include="..\..\include\idl\opendds\MessageHeaderTypeSupportImpl.h" />
     <ClInclude Include="..\..\include\server\Server.h" />
     <ClInclude Include="..\..\include\server\ServerRPC.h" />
     <ClInclude Include="..\..\include\server\ServerStrategy.h" />
@@ -277,7 +273,6 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\include\idl\opendds\MessageHeaderC.inl" />
     <None Include="..\..\include\utils\GenericClientRPC.gen" />
     <None Include="..\..\include\utils\GenericServerRPC.gen" />
   </ItemGroup>

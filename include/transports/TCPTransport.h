@@ -20,7 +20,38 @@ namespace eProsima
 		 * @brief This class implements the TCPv4 transport for the client and the server.
          * @ingroup TRANSPORTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API TCPTransport : public Transport
+        class RPCDDS_WIN32_DLL_API TCPClientTransport : public Transport
+        {
+            public:
+
+				/**
+				 * \brief Default constructor for the clients.
+				 *
+				 * \param to_connect Public address and port where the server could be found by the client. By example: "218.18.3.133:7600"
+				 */
+                TCPClientTransport(const char *to_connect);
+
+				/// \brief Default destructor.
+                virtual ~TCPClientTransport();
+
+				/**
+				 * \brief This function sets the QoS of DDS to use the TCPv4 transport.
+				 *
+				 * \param participantQos Reference to the DDS domain participant QoS.
+				 */
+                int setTransport(DDS::DomainParticipantQos &participantQos);
+
+            private:
+
+				/// \brief The public address and port where the client could find the server. This attribute is only used by the client.
+                char *m_to_connect;
+        };
+
+		/**
+		 * @brief This class implements the TCPv4 transport for the servers.
+         * @ingroup TRANSPORTMODULE
+		 */
+        class RPCDDS_WIN32_DLL_API TCPServerTransport : public Transport
         {
             public:
 
@@ -32,17 +63,11 @@ namespace eProsima
 				 * \param server_bind_port Port used by the server in its machine. This port will be use in the router for port forwarding
                  *        between the public port and this port.
 				 */
-                TCPTransport(const char *public_address, const char *server_bind_port);
+                TCPServerTransport(const char *public_address, const char *server_bind_port);
 
-				/**
-				 * \brief Default constructor for clients.
-				 *
-				 * \param to_connect Public address and port where the server could be found by the client. By example: "218.18.3.133:7600"
-				 */
-                TCPTransport(const char *to_connect);
 
 				/// \brief Default destructor.
-                virtual ~TCPTransport();
+                virtual ~TCPServerTransport();
 
 				/**
 				 * \brief This function sets the QoS of DDS to use the TCPv4 transport.
@@ -57,8 +82,6 @@ namespace eProsima
                 char *m_public_address;
 				/// \brief The local port that the server use to make connections. This attribute is only used by the server.
                 char *m_server_bind_port;
-				/// \brief The public address and port where the client could find the server. This attribute is only used by the client.
-                char *m_to_connect;
         };
     } // namepsace RPCDDS
 } // namespace eProsima
