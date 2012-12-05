@@ -280,7 +280,7 @@ WIN32;OPENDDS_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$RPCDDS_WIN32_
 >>
 
 dependencies(conf) ::= <<
-OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO_AnyTypeCode$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ACE$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; rpcdds$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
+OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO_AnyTypeCode$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; ACE$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; rpcddso$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
 extractDH(type, name) ::= <<

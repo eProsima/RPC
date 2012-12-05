@@ -133,9 +133,13 @@ public class RPCDDSGEN
         	{
         		dds_root = System.getProperty("NDDSHOME");
         		
-        		if(dds_root == null)
+        		if(dds_root == null || dds_root.equals(""))
         		{
         			System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
+        			System.out.println("Note: NDDSHOME environment variable is not set in your system.");
+        		    System.out.println("      rpcddsgen uses this environment variable to find the RTI DDS middleware.");
+        		    System.out.println("      This environment variable is used by the generated solutions too.");
+        		    System.out.println("      See the User Manual document.");
         			return -1;
         		}
         	}
@@ -143,11 +147,15 @@ public class RPCDDSGEN
         	{
         		dds_root = System.getProperty("DDS_ROOT");
         		
-        		if(dds_root != null)
+        		if(dds_root != null && !dds_root.equals(""))
         			envRoot = "DDS_ROOT=" + dds_root;
         		else
         		{
         			System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
+        			System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
+        		    System.out.println("      rpcddsgen uses this environment variable to find the OpenDDS middleware.");
+        		    System.out.println("      This environment variable is used by the generated solutions too.");
+        		    System.out.println("      See the User Manual document.");
         			return -1;
         		}
         		
@@ -288,10 +296,10 @@ public class RPCDDSGEN
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
              Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
-             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
-             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
-             auxerrorOutput.start();
-             auxnormalOutput.start();
+             //ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
+             //ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
+             //auxerrorOutput.start();
+             //auxnormalOutput.start();
              int auxexitVal = auxddsgen.waitFor();
 
              if(auxexitVal != 0)
