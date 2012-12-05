@@ -4,11 +4,9 @@
 #include "SimpleDelay.h"
 #include <netinet/in.h>
 #include <thrift/protocol/TBinaryProtocol.h>
-#include <thrift/server/TThreadPoolServer.h>
+#include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
-#include <thrift/concurrency/ThreadManager.h>
-#include <thrift/concurrency/PosixThreadFactory.h>
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -49,13 +47,8 @@ int main(int argc, char **argv) {
   shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
   shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-  shared_ptr<ThreadManager> threadManager = ThreadManager::newSimpleThreadManager();
-  shared_ptr<PosixThreadFactory> threadFactory(new PosixThreadFactory());
 
-  threadManager->threadFactory(threadFactory);
-  threadManager->start();
-
-  TThreadPoolServer server(processor, serverTransport, transportFactory, protocolFactory, threadManager);
+  TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();
   return 0;
 }

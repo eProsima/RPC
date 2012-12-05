@@ -18,13 +18,16 @@ Name RPCDDS
 # Included files
 !include Sections.nsh
 !include MUI2.nsh
+!include EnvVarUpdate.nsh
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE ..\..\..\..\doc\licencias\RPCDDS_LICENSE.txt
 !insertmacro MUI_PAGE_COMPONENTS
-#!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
+var /GLOBAL RICHI_FINISH_MESSAGE
+!define MUI_FINISHPAGE_TEXT $RICHI_FINISH_MESSAGE
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -34,7 +37,7 @@ Name RPCDDS
 
 # Installer attributes
 OutFile setup.exe
-#InstallDir $PROGRAMFILES\rpcdds
+InstallDir $PROGRAMFILES\rpcdds
 CRCCheck on
 XPStyle on
 ShowInstDetails show
@@ -50,7 +53,7 @@ InstallDirRegKey HKLM "${REGKEY}" Path
 ShowUninstDetails show
 
 # Installer sections
-SectionGroup Libraries SECGRP0000
+SectionGroup "Libraries" SECGRP0000
     Section "x64 libraries" SEC0000
         SetOutPath $INSTDIR\lib\x64Win64VS2010
         SetOverwrite on
@@ -66,7 +69,26 @@ SectionGroup Libraries SECGRP0000
     SectionEnd
 SectionGroupEnd
 
-Section -post SEC0002
+SectionGroup "Environment variables" SECGRP0001
+    Section "RPCDDSHOME" SEC0002
+       ${EnvVarUpdate} $0 "RPCDDSHOME" "P" "HKLM" $INSTDIR
+       WriteRegStr HKLM "${REGKEY}\Components" "RPCDDSHOME" 1
+    SectionEnd
+    Section "Script location" SEC0003
+       ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\scripts"
+       WriteRegStr HKLM "${REGKEY}\Components" "Script location" 1
+    SectionEnd
+    Section "x64 libraries location" SEC0004
+       ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\lib\x64Win64VS2010"
+       WriteRegStr HKLM "${REGKEY}\Components" "x64 libraries location" 1
+    SectionEnd
+    Section /o "i86 libraries location" SEC0005
+       ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\lib\i86Win32VS2010"
+       WriteRegStr HKLM "${REGKEY}\Components" "i86 libraries location" 1
+    SectionEnd
+SectionGroupEnd
+
+Section -post SEC0006
     SetOutPath $INSTDIR\classes
     SetOverwrite on
     File /r ..\..\..\..\rpcddsgen\lib\*
@@ -109,6 +131,21 @@ done${UNSECTION_ID}:
     Pop $R0
 !macroend
 
+Section /o "-un.i86 libraries location" UNSEC0005
+    DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries location"
+SectionEnd
+Section /o "-un.x64 libraries location" UNSEC0004
+    DeleteRegValue HKLM "${REGKEY}\Components" "x64 libraries location"
+SectionEnd
+Section /o "-un.Script location" UNSEC0003
+    DeleteRegValue HKLM "${REGKEY}\Components" "Script location"
+SectionEnd
+
+Section /o "-un.RPCDDSHOME" UNSEC0002
+    ${un.EnvVarUpdate} $0 "RPCDDSHOME" "R" "HKLM" $INSTDIR
+    DeleteRegValue HKLM "${REGKEY}\Components" "RPCDDSHOME"
+SectionEnd
+
 Section /o "-un.i86 libraries" UNSEC0001
     RmDir /r /REBOOTOK $INSTDIR\lib\i86Win32VS2010
     DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries"
@@ -119,7 +156,7 @@ Section /o "-un.x64 libraries" UNSEC0000
     DeleteRegValue HKLM "${REGKEY}\Components" "x64 libraries"
 SectionEnd
 
-Section -un.post UNSEC0002
+Section -un.post UNSEC0006
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
     Delete /REBOOTOK $INSTDIR\uninstall.exe
     DeleteRegValue HKLM "${REGKEY}" Path
@@ -137,10 +174,12 @@ SectionEnd
 Function .onInit
     ReadEnvStr $0 NDDSHOME
     StrCmp $0 "" 0 +3
-    messageBox mb_iconstop "NDDSHOME environment variable is not set in your system. Before installing eProsima RPCDDS, set the NDDSHOME environment variable."
-    quit
+    StrCpy $RICHI_FINISH_MESSAGE "RPCDDS has been installed on your computer.$\n$\nNote: NDDSHOME environment variable is not set in your system. RPCDDS uses this environment variable to find the RTI DDS middleware. See the User Manual document.$\n$\nClick Finish to close this wizard."
+    goto +3
     strcpy $INSTDIR $0\rpcdds
+    Strcpy $RICHI_FINISH_MESSAGE "RPCDDS has been installed on your computer.$\n$\nClick Finish to close this wizard."
     InitPluginsDir
+    StrCpy $1 ${SEC0004}
 FunctionEnd
 
 # Uninstaller functions
@@ -148,11 +187,27 @@ Function un.onInit
     ReadRegStr $INSTDIR HKLM "${REGKEY}" Path
     !insertmacro SELECT_UNSECTION "x64 libraries" ${UNSEC0000}
     !insertmacro SELECT_UNSECTION "i86 libraries" ${UNSEC0001}
+    !insertmacro SELECT_UNSECTION "Remove the RPCDDSHOME environment variable" ${UNSEC0002}
+    !insertmacro SELECT_UNSECTION "Remove to the PATH environment variable the location of RPCDDS scripts." ${UNSEC0003}
+    !insertmacro SELECT_UNSECTION "Remove to the PATH environment variable the location of RPCDDS libraries for platform x64." ${UNSEC0004}
+    !insertmacro SELECT_UNSECTION "Remove to the PATH environment variable the location of RPCDDS libraries for platform i86." ${UNSEC0005}
 FunctionEnd
 
 # Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-!insertmacro MUI_DESCRIPTION_TEXT ${SECGRP0000} "RPCDDS libraries"
+!insertmacro MUI_DESCRIPTION_TEXT ${SECGRP0000} "RPCDDS libraries."
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC0000} "Libraries for x64 platform."
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC0001} "Libraries for i86 platform."
+!insertmacro MUI_DESCRIPTION_TEXT ${SECGRP0001} "Environment variables."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC0002} "Set the RPCDDSHOME environment variable."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC0003} "Add to the PATH environment variable the location of RPCDDS scripts."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC0004} "Add to the PATH environment variable the location of RPCDDS libraries for platform x64."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC0005} "Add to the PATH environment variable the location of RPCDDS libraries for platform i86."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
+
+Function .onSelChange
+!insertmacro StartRadioButtons $1
+    !insertmacro RadioButton ${SEC0004}
+    !insertmacro RadioButton ${SEC0005}
+!insertmacro EndRadioButtons
+FunctionEnd

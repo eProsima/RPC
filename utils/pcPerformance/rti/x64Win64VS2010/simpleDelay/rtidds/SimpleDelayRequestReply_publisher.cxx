@@ -447,7 +447,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
 
     SimpleDelay_duplicateReply_reader = SimpleDelay_duplicateReplyDataReader::narrow(duplicateReplyReader);
 
-    sleep(10);
+    Sleep(10000);
 
     boost::chrono::system_clock::time_point program_start = boost::chrono::system_clock::now();
 
@@ -491,9 +491,9 @@ extern "C" int publisher_main(int domainId, int sample_count)
         duplicateInstance.header.clientId.value_3 = 3;
         duplicateInstance.header.clientId.value_4 = 4;
         duplicateInstance.header.requestSequenceNumber = seqNum++;
-        duplicateInstance.es.seq.ensure_length(500, 500);
-        for(int i = 0; i < 500; ++i)
-            duplicateInstance.es.seq[i] = i;
+	duplicateInstance.es.seq.ensure_length(500, 500);
+	for(int i = 0; i < 500; ++i)
+		duplicateInstance.es.seq[i] = i;
 
         boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
         SimpleDelay_duplicateRequest_writer->write(duplicateInstance, DDS_HANDLE_NIL);

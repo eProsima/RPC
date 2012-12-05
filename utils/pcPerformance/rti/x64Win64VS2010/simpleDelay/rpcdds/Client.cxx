@@ -50,7 +50,7 @@ int main(int argc, char **argv)
                 return -1;
             }
 
-            sleep(10);
+            Sleep(10000);
 
             boost::chrono::system_clock::time_point program_start = boost::chrono::system_clock::now();
 
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
             for(int i = 0; i < 10000; ++i)
             {
                 Estructura es, ret;
-                Estructura_initialize(&es);
+				Estructura_initialize(&es);
                 es.valor1 = i;
                 es.valor2 = i*2;
                 es.valor3 = "Esto es una prueba para el test de performance rpcdds vs thrift vs rpcdds";
@@ -81,8 +81,8 @@ int main(int argc, char **argv)
                 boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
                 ret = proxy->duplicate(es);
                 duplicate_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
-                es.valor3 = NULL;
-                Estructura_finalize(&es);
+				es.valor3 = NULL;
+				Estructura_finalize(&es);
             }
 
             duplicate_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;

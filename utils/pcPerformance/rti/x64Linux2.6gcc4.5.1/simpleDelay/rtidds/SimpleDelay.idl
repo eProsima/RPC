@@ -3,6 +3,7 @@ struct Estructura
     long valor1;
     long valor2;
     string valor3;
+    sequence<long, 500> seq;
 };
 
 interface SimpleDelay
