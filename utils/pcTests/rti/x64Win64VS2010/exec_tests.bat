@@ -1,6 +1,7 @@
 :: This script runs all tests in this directory and checks their results.
 
 setlocal EnableDelayedExpansion
+setlocal EnableExpansion
 @echo off
 
 :: Initialize the returned value to 0 (all succesfully)
@@ -12,7 +13,7 @@ set NDDSTARGET=x64Win64VS2010
 
 :: Save old and set PATH environment variable
 set PATH_OLD_OLD=%PATH%
-set PATH=..\..\..\..\..\lib\%NDDSTARGET%;D:\richi\librerias\boost_1_51_0\lib\x64;%PATH%
+set PATH=..\..\..\..\..\lib\%NDDSTARGET%;%HOME%\librerias\boost_1_51_0\lib\x64;%PATH%
 
 :: Set environment for RPCDDS
 call ..\..\..\scripts\set_environment.bat set
@@ -21,7 +22,11 @@ call ..\..\..\scripts\set_environment.bat set
 for /D %%D in ("*") do (
    :: Enter to the directory.
    cd %%D
-   call :execTest %%D
+   if exist exec_test.bat (
+      call exec_test.bat
+   ) else (
+      call :execTest %%D
+   )
    :: Go out to the parent directory.
    cd ..
    :: Detect error in call.
@@ -40,10 +45,10 @@ del *.h *.cxx %*RequestReply.idl *-vs2010*
 :: Generates the file with RPCDDS script
 call ..\..\..\..\..\scripts\rpcdds_rti_pcTests.bat -ppDisable -example x64Win64VS2010 "%*.idl"
 set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :EOF
 :: Copy backup to original files.
 move Client.cxx.backup Client.cxx
 move %*ServerImpl.cxx.backup %*ServerImpl.cxx
+if not %errorstatus%==0 goto :EOF
 
 :: Start executing tests in each configuration.
 

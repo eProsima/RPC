@@ -14,7 +14,7 @@
 #include "utils/Middleware.h"
 
 #include <string>
-
+#include <vector>
 
 namespace eProsima
 {

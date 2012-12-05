@@ -148,7 +148,7 @@ namespace eProsima
                                 {
                                     it->second.second->execute(it->second.first);
                                     m_waitSet->detach_condition(it->second.first);
-                                    it->second.second->getRPC()->deleteQuery(it->second.first);
+                                    it->second.second->getRPC()->freeQuery(it->second.first);
                                     delete it->second.second;
                                     m_vector.erase(it);
                                 }
@@ -167,7 +167,7 @@ namespace eProsima
                             {
                                 it->second.second->on_exception(ServerTimeoutException("Asynchronous task exceed the time to wait the server's reply"));
                                 m_waitSet->detach_condition(it->second.first);
-                                it->second.second->getRPC()->deleteQuery(it->second.first);
+                                it->second.second->getRPC()->freeQuery(it->second.first);
                                 delete it->second.second;
                                 it = m_vector.erase(it);
                             }
@@ -274,7 +274,7 @@ namespace eProsima
 					if(it->second.second->getRPC() == rpc)
 					{
 						m_waitSet->detach_condition(it->second.first);
-						it->second.second->getRPC()->deleteQuery(it->second.first);
+						it->second.second->getRPC()->freeQuery(it->second.first);
 						delete it->second.second;
 						it = m_vector.erase(it);
 					}

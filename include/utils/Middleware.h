@@ -49,6 +49,8 @@ namespace eProsima
 
         void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
 
+		void set_max_query_condition_filters(DDS::DataReaderQos &rQos);
+
         DDS::DomainParticipantFactory* getFactory(int domainId);
     }; // namespace RPCDDS
 }; // namespace eProsima

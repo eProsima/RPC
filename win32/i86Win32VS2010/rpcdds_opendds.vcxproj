@@ -120,8 +120,8 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
-copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010
-copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Command>
+copy "$(TargetPath)" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010
+copy "$(TargetDir)$(TargetName).lib" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
@@ -153,8 +153,8 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
-copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010
-copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Command>
+copy "$(TargetPath)" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010
+copy "$(TargetDir)$(TargetName).lib" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -181,8 +181,8 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     </Lib>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
-copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010
-copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Command>
+copy "$(TargetPath)" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010
+copy "$(TargetDir)$(TargetName).lib" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -209,8 +209,8 @@ copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Comm
     </Lib>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)
-copy "$(TargetPath)" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010
-copy "$(TargetDir)$(TargetName).lib" $(NDDSHOME)\rpcdds\lib\i86Win32VS2010</Command>
+copy "$(TargetPath)" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010
+copy "$(TargetDir)$(TargetName).lib" $(DDS_ROOT)\rpcdds\lib\i86Win32VS2010</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

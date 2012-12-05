@@ -9,8 +9,10 @@ goto :EOF
 
 :set
 :: Save old and set NDDSHOME environment variable.
+set NDDSVERSION_OLD=%NDDSVERSION%
 set NDDSHOME_OLD=%NDDSHOME%
-set NDDSHOME=D:\richi\workspace\desarrollo\DDS\RTI\instalaciones\ndds.5.0.0
+set NDDSVERSION=ndds.5.0.0
+set NDDSHOME=%HOME%\workspace\desarrollo\DDS\RTI\instalaciones\%NDDSVERSION%
 
 :: Save old and set PAT environment variable.
 set PATH_OLD=%PATH%
@@ -21,6 +23,7 @@ goto :EOF
 :restore
 :: Restore old value of NDDSHOME environment variable.
 set NDDSHOME=%NDDSHOME_OLD%
+set NDDSVERSION=%NDDSVERSION_OLD%
 :: Restore old value of PATH environment variable.
 set PATH=%PATH_OLD%
 

@@ -80,6 +80,16 @@ namespace eProsima
 #endif
         }
 
+		void set_max_query_condition_filters(DDS::DataReaderQos &rQos)
+		{
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+			rQos.reader_resource_limits.max_query_condition_filters = 10;
+#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#else
+#error There not set OS.
+#endif
+		}
+
         DDS::DomainParticipantFactory* getFactory(int domainId)
         {
             const char* const METHOD_NAME = "getFactory";

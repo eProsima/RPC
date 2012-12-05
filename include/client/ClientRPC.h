@@ -13,6 +13,8 @@
 #include "utils/Messages.h"
 #include "utils/Middleware.h"
 
+#define QUERY_POOL_LENGTH 10
+
 namespace boost
 {
     class mutex;
@@ -72,11 +74,11 @@ namespace eProsima
 				ReturnMessage executeAsync(void *request, AsyncTask *task, long timeout);
 
 				/**
-				 *  \brief This auxiliar function is used to delete a DDS QueryCondition.
+				 *  \brief This auxiliar function is used to free a DDS QueryCondition.
 				 *
-				 *  \param query DDS QueryCondition to be released.
+				 *  \param query DDS QueryCondition to be free.
 				 */
-                void deleteQuery(DDS::QueryCondition *query);
+                void freeQuery(DDS::QueryCondition *query);
 
 				/**
 				 * \brief This function takes the reply from the DDS DataReader using the DDS QueryCondition.
@@ -143,6 +145,24 @@ namespace eProsima
 				 */
                 ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
 
+				/// @brief This function initializes the query conditions of the pool.
+				int initQueryPool();
+
+				/// @brief This function finalizes the query conditions of the pool.
+				void finalizeQueryPool();
+
+				/*!
+				 * @brief This function returns a free query condition from the pool.
+			     *
+				 * @return This function return a free query condition. If all query condition are in use, then NULL pointer is returned.
+				 */
+				DDS::QueryCondition* getFreeQueryFromPool();
+
+				/*!
+				 * @brief This function returns a used query condition to its freedom.
+			     */
+				void returnUsedQueryToPool(DDS::QueryCondition *query);
+
 				/**
 				 * \brief This field stores the name of the service.
 				 */
@@ -196,8 +216,13 @@ namespace eProsima
 				/// \brief The identifier used as client.
 				unsigned int m_clientId[4];
 
-				/// \brief Mutex used to ensure that sequence number is safe-thread.
+				/// \brief Mutex used to ensure that sequence number and query pool is safe-thread.
 				boost::mutex *m_mutex;
+
+				/// \brief Pool of DDSQueryConditions that are used by remote procedure calls. It's length is 10.
+				DDS::QueryCondition **m_queryPool;
+				/// \brief First position of queries that are in use.
+				int m_queriesInUseLimiter;
 		};
 
 	} // namespace RPCDDS

@@ -39,7 +39,6 @@ namespace eProsima
         int UDPClientTransport::setTransport(DDS::DomainParticipantQos &participantQos)
         {
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-            int returnedValue = -1;
 
 			if(m_to_connect != NULL)
 			{
@@ -52,12 +51,8 @@ namespace eProsima
 				pointer = strdup(buffer);
 				participantQos.discovery.initial_peers.set_at(0, pointer);
 			}
-			else
-			{
-				returnedValue = 0;
-			}
 
-			return returnedValue;
+			return 0;
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
             const char* const METHOD_NAME = "setTransport";
             int returnedValue = -1;

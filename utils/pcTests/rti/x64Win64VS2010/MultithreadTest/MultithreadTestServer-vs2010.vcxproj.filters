@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\example">
+      <UniqueIdentifier>{9b5f61bc-aaf5-47e7-bcf9-daf7649bfb0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\server">
+      <UniqueIdentifier>{bf3ee1c0-16e2-463a-be4b-cba986afa83b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\server">
+      <UniqueIdentifier>{d60eee97-5bab-4319-b63e-43d97e9425eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\skeleton">
+      <UniqueIdentifier>{2dbe3645-7041-4d88-8350-fd78cc94488e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\skeleton">
+      <UniqueIdentifier>{6ef3a181-cb45-43dd-bf68-a179d079b1bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+        <ClCompile Include="MultithreadTestRequestReply.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MultithreadTest.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MultithreadTestRequestReplyPlugin.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MultithreadTestPlugin.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MultithreadTestRequestReplySupport.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MultithreadTestSupport.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MultithreadTestRequestReplyUtils.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MessageHeader.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MessageHeaderPlugin.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MessageHeaderSupport.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+    <ClCompile Include="MultithreadTestServer.cxx">
+      <Filter>Source Files\server</Filter>
+    </ClCompile>
+    <ClCompile Include="MultithreadTestServerImpl.cxx">
+      <Filter>Source Files\skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="MultithreadTestServerRPCSupport.cxx">
+      <Filter>Source Files\server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cxx">
+      <Filter>Source Files\example</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+        <ClInclude Include="MultithreadTestRequestReply.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MultithreadTest.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MultithreadTestRequestReplyPlugin.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MultithreadTestPlugin.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MultithreadTestRequestReplySupport.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MultithreadTestSupport.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MultithreadTestRequestReplyUtils.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MessageHeader.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MessageHeaderPlugin.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MessageHeaderSupport.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+    <ClInclude Include="MultithreadTestServer.h">
+      <Filter>Header Files\server</Filter>
+    </ClInclude>
+    <ClInclude Include="MultithreadTestServerImpl.h">
+      <Filter>Header Files\skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="MultithreadTestServerRPCSupport.h">
+      <Filter>Header Files\server</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

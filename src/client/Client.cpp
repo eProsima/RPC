@@ -59,19 +59,20 @@ namespace eProsima
                         participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
                         m_participant->set_qos(participantQos);
 
-                        m_asyncThread = new AsyncThread();
+						// Create asynchronous tasks thread
+						m_asyncThread = new AsyncThread();
 
-                        if(m_asyncThread != NULL)
-                        {
-                            if(m_asyncThread->init() == 0)
-                                return;
-                            else
-                            {
+						if(m_asyncThread != NULL)
+						{
+							if(m_asyncThread->init() == 0)
+								return;
+							else
+							{
 								errorMessage = "Cannot initialize the asynchronous thread";
-                                delete m_asyncThread;
-                            }
-                        }
-                        else
+								delete m_asyncThread;
+							}
+						}
+						else
 							errorMessage = "create asynchronous thread";
                     }
 
