@@ -79,20 +79,20 @@ archMakeDefines() ::= <<
 >>
 
 inclMake() ::= <<
- -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(DDS_ROOT)/rpcdds/include -I\$(DDS_ROOT)/rpcdds/include/idl/opendds
+ -I\$(DDS_ROOT) -I\$(TAO_ROOT) -I\$(ACE_ROOT) -I\$(RPCDDSHOME)/include
 >>
 
 inclVS() ::= <<
-\$(DDS_ROOT);\$(TAO_ROOT);\$(ACE_ROOT);\$(DDS_ROOT)\rpcdds\include;\$(DDS_ROOT)\rpcdds\include\idl\opendds;
+\$(DDS_ROOT);\$(TAO_ROOT);\$(ACE_ROOT);\$(RPCDDSHOME)\include;
 >>
 
 libsMake(example) ::= <<
- -L\$(DDS_ROOT)/lib -L\$(ACE_ROOT)/lib -L\$(DDS_ROOT)/rpcdds/lib/$example$ \
+ -L\$(DDS_ROOT)/lib -L\$(ACE_ROOT)/lib -L\$(RPCDDSHOME)/lib/$example$ \
        -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE
 >>
 
 libsVS(example) ::= <<
-\$(DDS_ROOT)\lib\;\$(ACE_ROOT)\lib\;\$(DDS_ROOT)\rpcdds\lib\\$example$;
+\$(DDS_ROOT)\lib\;\$(ACE_ROOT)\lib\;\$(RPCDDSHOME)\lib\\$example$;
 >>
 
 sourceMake(interface) ::= <<

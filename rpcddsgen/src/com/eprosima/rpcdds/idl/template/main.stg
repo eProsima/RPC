@@ -87,20 +87,20 @@ archMakeDefines() ::= <<
 >>
 
 inclMake() ::= <<
- -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(NDDSHOME)/rpcdds/include
+ -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(RPCDDSHOME)/include
 >>
 
 inclVS() ::= <<
-\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(NDDSHOME)\rpcdds\include;
+\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(RPCDDSHOME)\include;
 >>
 
 libsMake(example) ::= <<
- -L\$(NDDSHOME)/lib/$example$ -L\$(NDDSHOME)/rpcdds/lib/$example$ \
+ -L\$(NDDSHOME)/lib/$example$ -L\$(RPCDDSHOME)/lib/$example$ \
        -lnddsc -lnddscore -lnddscpp
 >>
 
 libsVS(example) ::= <<
-\$(NDDSHOME)\lib\\$example$;\$(NDDSHOME)\rpcdds\lib\\$example$;
+\$(NDDSHOME)\lib\\$example$;\$(RPCDDSHOME)\lib\\$example$;
 >>
 
 sourceMake(interface) ::= <<
