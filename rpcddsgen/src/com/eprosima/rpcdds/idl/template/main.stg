@@ -294,3 +294,6 @@ nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.d
 extractDH(type, name) ::= <<
 $type$PluginSupport_copy_data(&$name$, &data.$name$);
 >>
+
+stringPointer() ::= <<
+>>

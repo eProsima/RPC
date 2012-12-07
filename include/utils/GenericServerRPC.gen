@@ -44,7 +44,7 @@ int TName::sendReply(void *request, void* reply)
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
     TDataWriter *replyDataWriter = TDataWriter::narrow(getReplyDatawriter());
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-    replyDataWriter = TDataWriter::_narrow(getReplyDatawriter());
+    TDataWriter *replyDataWriter = TDataWriter::_narrow(getReplyDatawriter());
 #endif
 	TDataReply   *replyData   = (TDataReply*)reply;
 	TDataRequest *requestData = (TDataRequest*)request;

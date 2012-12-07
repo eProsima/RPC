@@ -75,15 +75,6 @@
     <ClCompile Include="..\..\src\server\ServerRPC.cpp">
       <Filter>Archivos de código fuente\server</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeader.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderPlugin.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\idl\rti\MessageHeaderSupport.cxx">
-      <Filter>Archivos de código fuente\idl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\transports\TCPTransport.cpp">
       <Filter>Archivos de código fuente\transports</Filter>
     </ClCompile>
@@ -145,15 +136,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\server\ServerRPC.h">
       <Filter>Archivos de encabezado\server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeader.h">
-      <Filter>Archivos de encabezado\idl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderSupport.h">
-      <Filter>Archivos de encabezado\idl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\idl\rti\MessageHeaderPlugin.h">
-      <Filter>Archivos de encabezado\idl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\utils\rpcdds.h">
       <Filter>Archivos de encabezado\utils</Filter>

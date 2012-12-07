@@ -17,14 +17,13 @@
 group opendds;
 
 varComplexDecl(typeName, name, create) ::= <<
-$typeName$ $name$();
+$typeName$ $name$;
 >>
 
 varComplexInitialize(typeName, name) ::= <<
 >>
 
 varComplexDel(typeName, name) ::= <<
-delete $name$;
 >>
 
 ReqRepIncludes(interfaceName) ::= <<
@@ -99,7 +98,7 @@ sourceMake(interface) ::= <<
 COMMONCXXSOURCES = $interface$RequestReplyUtils.cxx
 COMMONCPPSOURCES = $interface$C.cpp $interface$RequestReplyC.cpp \
                 $interface$RequestReplyTypeSupportC.cpp $interface$RequestReplyTypeSupportImpl.cpp \
-                $interface$TypeSupportC.cpp $interface$TypeSupportImpl.cpp MessageHeader.cxx MessageHeaderPlugin.cxx \
+                $interface$TypeSupportImpl.cpp MessageHeader.cxx MessageHeaderPlugin.cxx \
                 MessageHeaderSupport.cxx
 >>
 
@@ -112,7 +111,6 @@ sourceVS(interface) ::= <<
     <ClCompile Include="$interface$TypeSupportC.cpp" />
     <ClCompile Include="$interface$TypeSupportImpl.cpp" />
     <ClCompile Include="MessageHeaderC.cpp" />
-    <ClCompile Include="MessageHeaderTypeSupportC.cpp" />
     <ClCompile Include="MessageHeaderTypeSupportImpl.cpp" />
 >>
 
@@ -173,13 +171,6 @@ sourceFilesVS(interface, client) ::= <<
         <Filter>Source Files\server</Filter>
         $endif$
     </ClCompile>
-    <ClCompile Include="MessageHeaderTypeSupportC.cpp">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
     <ClCompile Include="MessageHeaderTypeSupportImpl.cpp">
         $if(client)$
         <Filter>Source Files\client</Filter>
@@ -198,7 +189,6 @@ sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$TypeSupportC.h" />
     <ClInclude Include="$interface$TypeSupportImpl.h" />
     <ClInclude Include="MessageHeaderC.h" />
-    <ClInclude Include="MessageHeaderTypeSupportC.h" />
     <ClInclude Include="MessageHeaderTypeSupportImpl.h" />
 >>
 
@@ -259,13 +249,6 @@ sourceFilesIVS(interface, client) ::= <<
         <Filter>Header Files\server</Filter>
         $endif$
     </ClInclude>
-    <ClInclude Include="MessageHeaderTypeSupportC.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
     <ClInclude Include="MessageHeaderTypeSupportImpl.h">
         $if(client)$
         <Filter>Header Files\client</Filter>
@@ -285,4 +268,8 @@ OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(con
 
 extractDH(type, name) ::= <<
 $name$ = data->$name$;
+>>
+
+stringPointer() ::= <<
+.in()
 >>

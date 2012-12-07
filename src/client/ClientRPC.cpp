@@ -17,7 +17,6 @@
 #include "boost/thread/mutex.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <malloc.h>
-#include "ndds_cpp.h"
 
 static const char* const CLASS_NAME = "eProsima::RPCDDS::ClientRPC";
 

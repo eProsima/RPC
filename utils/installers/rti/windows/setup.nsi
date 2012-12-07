@@ -99,7 +99,7 @@ Section -post SEC0006
     
     SetOutPath $INSTDIR\idl
     SetOverwrite on
-    File ..\..\..\..\idl\rti\MessageHeader.idl
+    File ..\..\..\..\idl\MessageHeader.idl
     
     SetOutPath $INSTDIR\include
     SetOverwrite on

@@ -84,9 +84,9 @@ public class RPCDDSGEN
                 try
                 {
                 	// First step is to parse the file MessageHeader.idl
-                	ddsGen(messageHeaderFileLocation);
+                	ddsGen(messageHeaderFileLocation, true);
                 	// Second step is to parse the user IDL file.
-                    ddsGen(idlFile);
+                    ddsGen(idlFile, false);
                     Module root = parse(idlFile);
 
                     if(root != null && root.getError() == false)
@@ -286,7 +286,7 @@ public class RPCDDSGEN
     // if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
     // even using the well known solution of using double quotes
     // May be a problem with the Java Version deployed with RTI DDS.
-    public static void ddsGen(String file) throws Exception
+    public static void ddsGen(String file, boolean disableGenerateTypeSupport) throws Exception
     {
     	int count = 0;
         ArrayList finalCommandLine = null;
@@ -295,7 +295,7 @@ public class RPCDDSGEN
         System.out.println(file);
         
         // Execute tao_idl
-        if(extra_command != null)
+        if(middleware.equals("opendds") && extra_command != null)
         {
         	 finalCommandLine = new ArrayList();
              finalCommandLine.add(extra_command);
@@ -322,6 +322,8 @@ public class RPCDDSGEN
         
         finalCommandLine = new ArrayList();
         finalCommandLine.add(command);
+        if(disableGenerateTypeSupport && middleware.equals("opendds"))
+        	finalCommandLine.add("-SI");
         finalCommandLine.addAll(lineCommand);
         finalCommandLine.add(file);
         finalCommandArray = new String[finalCommandLine.size()];
@@ -345,7 +347,7 @@ public class RPCDDSGEN
         }
         
         // Execute tao_idl
-        if(extra_command != null)
+        if(!disableGenerateTypeSupport && middleware.equals("opendds") && extra_command != null)
         {
         	 // Get only de name of the fichero.
 	        	int lastBarraOccurrency = file.lastIndexOf('/');
@@ -1026,7 +1028,7 @@ public class RPCDDSGEN
             	
                 try
                 {
-                    ddsGen(newIdlFile);
+                    ddsGen(newIdlFile, false);
                     returnedValue = 0;
                 }
                 catch(Exception ioe)

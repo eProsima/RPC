@@ -72,12 +72,12 @@ taskDeclaration(interfaceName, name, outParams) ::= <<
 $interfaceName$_$name$Task::$interfaceName$_$name$Task($interfaceName$_$name$CallbackHandler &obj,
    eProsima::RPCDDS::Client *client) : AsyncTask(client), m_obj(obj)
 {
-    $interfaceName$_$name$Reply_initialize(&m_reply);
+    $varComplexInitialize(typeName=[interfaceName, "_", name, "Reply"], name="m_reply")$
 }
 
 $interfaceName$_$name$Task::~$interfaceName$_$name$Task()
 {
-    $interfaceName$_$name$Reply_finalize(&m_reply);
+    $varComplexDel(typeName=[interfaceName, "_", name, "Reply"], name="m_reply")$
 }
 
 $interfaceName$_$name$CallbackHandler& $interfaceName$_$name$Task::getObject()
@@ -104,7 +104,7 @@ void $interfaceName$_$name$Task::execute()
 	else
 	{
 		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg));
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointer()$));
 	}
 }
 
