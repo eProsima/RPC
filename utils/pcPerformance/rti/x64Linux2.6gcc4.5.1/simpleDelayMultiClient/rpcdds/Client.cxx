@@ -73,10 +73,10 @@ int main(int argc, char **argv)
         // Check that the parameter is a IP address.
         if(sscanf(argv[1], "%hhu.%hhu.%hhu.%hhu", &ip[0], &ip[1], &ip[2], &ip[3]) == 4)
         {
-            eProsima::RPCDDS::UDPTransport *udpt1 = NULL;
-            eProsima::RPCDDS::UDPTransport *udpt2 = NULL;
-            eProsima::RPCDDS::UDPTransport *udpt3 = NULL;
-            eProsima::RPCDDS::UDPTransport *udpt4 = NULL;
+            eProsima::RPCDDS::UDPClientTransport *udpt1 = NULL;
+            eProsima::RPCDDS::UDPClientTransport *udpt2 = NULL;
+            eProsima::RPCDDS::UDPClientTransport *udpt3 = NULL;
+            eProsima::RPCDDS::UDPClientTransport *udpt4 = NULL;
             SimpleDelayProxy *proxy1 = NULL;
             SimpleDelayProxy *proxy2 = NULL;
             SimpleDelayProxy *proxy3 = NULL;
@@ -85,13 +85,13 @@ int main(int argc, char **argv)
             // Creation of the proxy for interface "SimpleDelay".
             try
             {
-                udpt1 = new eProsima::RPCDDS::UDPTransport(argv[1]);
+                udpt1 = new eProsima::RPCDDS::UDPClientTransport(argv[1]);
                 proxy1 = new SimpleDelayProxy("SimpleDelayService", udpt1);
-                udpt2 = new eProsima::RPCDDS::UDPTransport(argv[1]);
+                udpt2 = new eProsima::RPCDDS::UDPClientTransport(argv[1]);
                 proxy2 = new SimpleDelayProxy("SimpleDelayService", udpt2);
-                udpt3 = new eProsima::RPCDDS::UDPTransport(argv[1]);
+                udpt3 = new eProsima::RPCDDS::UDPClientTransport(argv[1]);
                 proxy3 = new SimpleDelayProxy("SimpleDelayService", udpt3);
-                udpt4 = new eProsima::RPCDDS::UDPTransport(argv[1]);
+                udpt4 = new eProsima::RPCDDS::UDPClientTransport(argv[1]);
                 proxy4 = new SimpleDelayProxy("SimpleDelayService", udpt4);
             }
             catch(eProsima::RPCDDS::InitializeException &ex)
