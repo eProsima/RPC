@@ -57,7 +57,8 @@ public class RPCDDSGEN
     private static String middleware = "rti";
     private static String spTemplate = "main";
     // Location of the MessageHeader.idl file
-    private static String messageHeaderFileLocation = "MessageHeader.idl";
+    private static String messageHeaderFileName = "MessageHeader.idl";
+    private static String messageHeaderFileLocation = null;
     
     // Used to set the base template.
     private static StringTemplateGroup spTemplateGroup = null;
@@ -116,7 +117,7 @@ public class RPCDDSGEN
     public static int ddsGenInit()
     {   
         // Set environment variables.
-        String envPath = null, envLD = null, envRoot = null, dds_root = null, tao_root = null;
+        String envPath = null, envLD = null, envRoot = null, dds_root = null, tao_root = null, rpcdds_root = null;
         
         envPath = System.getProperty("PATH");
         
@@ -160,6 +161,17 @@ public class RPCDDSGEN
         		}
         		
         		tao_root = System.getProperty("TAO_ROOT");
+        	}
+        	
+        	rpcdds_root = System.getProperty("RPCDDSHOME");
+        	
+        	if(rpcdds_root == null || rpcdds_root.equals(""))
+        	{
+        		System.out.println("ERROR: Cannot find the environment variable RPCDDSHOME.");
+    			System.out.println("Note: RPCDDSHOME environment variable is not set in your system.");
+    		    System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
+    		    System.out.println("      See the User Manual document.");
+    			return -1;
         	}
         	
         	// Create final structure that stores the environment variables.
@@ -244,16 +256,15 @@ public class RPCDDSGEN
             if(tempDir != null)
             {
             	lineCommand.add("-t");
-            	lineCommand.add("tempDir");
+            	lineCommand.add(tempDir);
             }
         }
         
-        // TODO
-        /*if(osOption.equals("Win32"))
-        	 lineCommand.add("-I" + dds_root + "\\rpcdds\\idl");
+        if(osOption.equals("Win32"))
+        	 lineCommand.add("-I" + rpcdds_root + "\\idl");
         else if(osOption.equals("Linux"))
-        	 lineCommand.add("-I" + dds_root + "/rpcdds/idl");*/
-        lineCommand.add("-I"+dds_root+"/rpcdds/idl");
+        	 lineCommand.add("-I" + rpcdds_root + "/idl");
+        
         if(idlFileLocation != null)
         	lineCommand.add("-I"+idlFileLocation);
         
@@ -265,9 +276,9 @@ public class RPCDDSGEN
         
         // Set the location of file MessageHeader.idl
         if(osOption.equals("Win32"))
-    		messageHeaderFileLocation = dds_root + "\\rpcdds\\idl\\" + messageHeaderFileLocation;
+    		messageHeaderFileLocation = rpcdds_root + "\\idl\\" + messageHeaderFileName;
     	else if(osOption.equals("Linux"))
-    		messageHeaderFileLocation = dds_root + "/rpcdds/idl/"  + messageHeaderFileLocation;
+    		messageHeaderFileLocation = rpcdds_root + "/idl/"  + messageHeaderFileName;
     	
     	return 0;
     }
@@ -296,10 +307,10 @@ public class RPCDDSGEN
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
              Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
-             //ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
-             //ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
-             //auxerrorOutput.start();
-             //auxnormalOutput.start();
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
+             auxerrorOutput.start();
+             auxnormalOutput.start();
              int auxexitVal = auxddsgen.waitFor();
 
              if(auxexitVal != 0)
@@ -307,6 +318,7 @@ public class RPCDDSGEN
                  throw new Exception("process waitFor() function returns the error value " + auxexitVal);
              }
         }
+        
         
         finalCommandLine = new ArrayList();
         finalCommandLine.add(command);
@@ -331,17 +343,39 @@ public class RPCDDSGEN
         {
             throw new Exception("");
         }
-        	
         
         // Execute tao_idl
         if(extra_command != null)
         {
+        	 // Get only de name of the fichero.
+	        	int lastBarraOccurrency = file.lastIndexOf('/');
+	        	String onlyFileNameAux = null;
+	            
+	    		if(lastBarraOccurrency == -1)
+	    		{
+	    			if(osOption.equals("Win32"))
+	    			{
+	    				lastBarraOccurrency = file.lastIndexOf('\\');
+	    			}
+	    		}
+	    		
+	    		if(lastBarraOccurrency == -1)
+	    		{
+	    			onlyFileNameAux = file;
+	    		}
+	    		else
+	    		{
+	    			onlyFileNameAux = file.substring(lastBarraOccurrency + 1);
+	    		}
+	    		
+	    		onlyFileNameAux = externalDir + (osOption.equals("Win32") ? "\\" : "/") + onlyFileNameAux;
+    		
         	 finalCommandLine = new ArrayList();
              finalCommandLine.add(extra_command);
              finalCommandLine.add("-SS");
              finalCommandLine.add("-Sa");
              finalCommandLine.addAll(lineCommand);
-             finalCommandLine.add(file.subSequence(0, file.length() - 4) + "TypeSupport.idl");
+             finalCommandLine.add(onlyFileNameAux.subSequence(0, onlyFileNameAux.length() - 4) + "TypeSupport.idl");
              finalCommandArray = new String[finalCommandLine.size()];
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
@@ -953,7 +987,7 @@ public class RPCDDSGEN
 
             if(externalDirLength > 0)
             {
-                externalDir.append("/");	
+                externalDir.append((osOption.equals("Win32") ? "\\" : "/") );	
             }
 
             Operation op = null;
@@ -985,20 +1019,21 @@ public class RPCDDSGEN
 
             //System.out.println(reply.toString());
             externalDir.append(ifc.getName()).append("RequestReply.idl");
+            String newIdlFile = externalDir.toString();
             if(writeFile(externalDir.toString(), theFile) == 0)
             {
+            	externalDir.delete(externalDirLength, externalDir.length());
+            	
                 try
                 {
-                    ddsGen(externalDir.toString());
+                    ddsGen(newIdlFile);
                     returnedValue = 0;
                 }
                 catch(Exception ioe)
                 {
                     System.out.println("ERROR generating files");
                     ioe.printStackTrace();
-                }
-
-                externalDir.delete(externalDirLength, externalDir.length());
+                }     
             }
             else
             {

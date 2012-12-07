@@ -51,7 +51,7 @@ goto getarg
 :continue
 
 
-"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DTAO_ROOT="%TAO_ROOT%" -DDDS_ROOT="%DDS_ROOT%" -Djava.ext.dirs="..\..\..\..\..\rpcddsgen\lib" com.eprosima.rpcdds.idl.RPCDDSGEN -middleware opendds %args% -I../../../../../idl/opendds
+"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DTAO_ROOT="%TAO_ROOT%" -DDDS_ROOT="%DDS_ROOT%" -DRPCDDSHOME="%RPCDDSHOME%" -Djava.ext.dirs="..\..\..\..\..\rpcddsgen\lib" com.eprosima.rpcdds.idl.RPCDDSGEN -middleware opendds %args% -I../../../../../idl/opendds
 
 
 

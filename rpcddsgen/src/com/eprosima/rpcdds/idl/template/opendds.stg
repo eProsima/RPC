@@ -111,9 +111,9 @@ sourceVS(interface) ::= <<
     <ClCompile Include="$interface$RequestReplyTypeSupportImpl.cpp" />
     <ClCompile Include="$interface$TypeSupportC.cpp" />
     <ClCompile Include="$interface$TypeSupportImpl.cpp" />
-    <ClCompile Include="MessageHeader.cxx" />
-    <ClCompile Include="MessageHeaderPlugin.cxx" />
-    <ClCompile Include="MessageHeaderSupport.cxx" />
+    <ClCompile Include="MessageHeaderC.cpp" />
+    <ClCompile Include="MessageHeaderTypeSupportC.cpp" />
+    <ClCompile Include="MessageHeaderTypeSupportImpl.cpp" />
 >>
 
 sourceFilesVS(interface, client) ::= <<
@@ -166,21 +166,21 @@ sourceFilesVS(interface, client) ::= <<
         <Filter>Source Files\server</Filter>
         $endif$
     </ClCompile>
-    <ClCompile Include="MessageHeader.cxx">
+    <ClCompile Include="MessageHeaderC.cpp">
         $if(client)$
         <Filter>Source Files\client</Filter>
         $else$
         <Filter>Source Files\server</Filter>
         $endif$
     </ClCompile>
-    <ClCompile Include="MessageHeaderPlugin.cxx">
+    <ClCompile Include="MessageHeaderTypeSupportC.cpp">
         $if(client)$
         <Filter>Source Files\client</Filter>
         $else$
         <Filter>Source Files\server</Filter>
         $endif$
     </ClCompile>
-    <ClCompile Include="MessageHeaderSupport.cxx">
+    <ClCompile Include="MessageHeaderTypeSupportImpl.cpp">
         $if(client)$
         <Filter>Source Files\client</Filter>
         $else$
@@ -197,9 +197,9 @@ sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h" />
     <ClInclude Include="$interface$TypeSupportC.h" />
     <ClInclude Include="$interface$TypeSupportImpl.h" />
-    <ClInclude Include="MessageHeader.h" />
-    <ClInclude Include="MessageHeaderPlugin.h" />
-    <ClInclude Include="MessageHeaderSupport.h" />
+    <ClInclude Include="MessageHeaderC.h" />
+    <ClInclude Include="MessageHeaderTypeSupportC.h" />
+    <ClInclude Include="MessageHeaderTypeSupportImpl.h" />
 >>
 
 sourceFilesIVS(interface, client) ::= <<
@@ -252,21 +252,21 @@ sourceFilesIVS(interface, client) ::= <<
         <Filter>Header Files\server</Filter>
         $endif$
     </ClInclude>
-    <ClInclude Include="MessageHeader.h">
+    <ClInclude Include="MessageHeaderC.h">
         $if(client)$
         <Filter>Header Files\client</Filter>
         $else$
         <Filter>Header Files\server</Filter>
         $endif$
     </ClInclude>
-    <ClInclude Include="MessageHeaderPlugin.h">
+    <ClInclude Include="MessageHeaderTypeSupportC.h">
         $if(client)$
         <Filter>Header Files\client</Filter>
         $else$
         <Filter>Header Files\server</Filter>
         $endif$
     </ClInclude>
-    <ClInclude Include="MessageHeaderSupport.h">
+    <ClInclude Include="MessageHeaderTypeSupportImpl.h">
         $if(client)$
         <Filter>Header Files\client</Filter>
         $else$
