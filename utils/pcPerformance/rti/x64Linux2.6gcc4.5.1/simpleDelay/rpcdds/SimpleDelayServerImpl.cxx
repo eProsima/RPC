@@ -29,7 +29,7 @@ Estructura SimpleDelayServerImpl::duplicate(/*in*/ const Estructura& es)
     duplicate_ret.valor2 = es.valor2;
     duplicate_ret.valor3 = strdup(es.valor3);
 
-    duplicate_ret.seq.ensure_length(500,500);
+    duplicate_ret.seq.ensure_length(es.seq.length(), es.seq.length());
     for(int i = 0; i < es.seq.length(); i++)
         duplicate_ret.seq[i] = es.seq[i];
    
