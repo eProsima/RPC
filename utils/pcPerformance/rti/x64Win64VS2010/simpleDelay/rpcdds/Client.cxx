@@ -30,10 +30,10 @@ int main(int argc, char **argv)
 
     if(argc == 2)
     {
-        uint8_t ip[4];
+        uint16_t ip[4];
 
         // Check that the parameter is a IP address.
-        if(sscanf(argv[1], "%hhu.%hhu.%hhu.%hhu", &ip[0], &ip[1], &ip[2], &ip[3]) == 4)
+        if(sscanf(argv[1], "%hu.%hu.%hu.%hu", &ip[0], &ip[1], &ip[2], &ip[3]) == 4)
         {
             eProsima::RPCDDS::UDPClientTransport *udpt = NULL;
             SimpleDelayProxy *proxy = NULL;
