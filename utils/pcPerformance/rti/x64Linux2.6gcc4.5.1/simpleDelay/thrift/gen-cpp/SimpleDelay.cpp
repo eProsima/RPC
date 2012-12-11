@@ -64,8 +64,8 @@ int main(int argc, char** argv)
                     es.long1 = i;
                     es.long2 = i*2;
                     es.string1 = "Esto es una prueba para el test de performance rpcdds vs thrift vs rpcdds";
-                    for(int i = 0; i < 500; ++i)
-                        es.prueba.push_back(i);
+                    for(int j = 0; j < 500; ++j)
+                        es.prueba.push_back(j);
 
                     boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
                     client.duplicate(ret, es);
