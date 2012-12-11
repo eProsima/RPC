@@ -35,13 +35,13 @@ int main(int argc, char **argv)
         // Check that the parameter is a IP address.
         if(sscanf(argv[1], "%hhu.%hhu.%hhu.%hhu", &ip[0], &ip[1], &ip[2], &ip[3]) == 4)
         {
-            eProsima::RPCDDS::UDPTransport *udpt = NULL;
+            eProsima::RPCDDS::UDPClientTransport *udpt = NULL;
             SimpleDelayProxy *proxy = NULL;
 
             // Creation of the proxy for interface "SimpleDelay".
             try
             {
-                udpt = new eProsima::RPCDDS::UDPTransport(argv[1]);
+                udpt = new eProsima::RPCDDS::UDPClientTransport(argv[1]);
                 proxy = new SimpleDelayProxy("SimpleDelayService", udpt);
             }
             catch(eProsima::RPCDDS::InitializeException &ex)
@@ -75,8 +75,8 @@ int main(int argc, char **argv)
                 es.valor2 = i*2;
                 es.valor3 = "Esto es una prueba para el test de performance rpcdds vs thrift vs rpcdds";
                 es.seq.ensure_length(500, 500);
-                for(int i = 0; i < 500; ++i)
-                    es.seq[i] = i;
+                for(int j = 0; j < 500; ++j)
+                    es.seq[j] = j;
 
                 boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
                 ret = proxy->duplicate(es);
