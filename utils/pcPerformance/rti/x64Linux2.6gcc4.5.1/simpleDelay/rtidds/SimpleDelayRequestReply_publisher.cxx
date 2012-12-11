@@ -58,40 +58,40 @@ modification history
 #include <boost/thread.hpp>
 
 class SimpleDelay_sumaReplyListener : public DDSDataReaderListener {
-  public:
-	  SimpleDelay_sumaReplyListener(boost::condition_variable &cond) :
-		m_cond(cond)
-	  {
-	  }
+    public:
+        SimpleDelay_sumaReplyListener(boost::condition_variable &cond) :
+            m_cond(cond)
+    {
+    }
 
-    virtual void on_requested_deadline_missed(
-        DDSDataReader* /*reader*/,
-        const DDS_RequestedDeadlineMissedStatus& /*status*/) {}
-    
-    virtual void on_requested_incompatible_qos(
-        DDSDataReader* /*reader*/,
-        const DDS_RequestedIncompatibleQosStatus& /*status*/) {}
-    
-    virtual void on_sample_rejected(
-        DDSDataReader* /*reader*/,
-        const DDS_SampleRejectedStatus& /*status*/) {}
+        virtual void on_requested_deadline_missed(
+                DDSDataReader* /*reader*/,
+                const DDS_RequestedDeadlineMissedStatus& /*status*/) {}
 
-    virtual void on_liveliness_changed(
-        DDSDataReader* /*reader*/,
-        const DDS_LivelinessChangedStatus& /*status*/) {}
+        virtual void on_requested_incompatible_qos(
+                DDSDataReader* /*reader*/,
+                const DDS_RequestedIncompatibleQosStatus& /*status*/) {}
 
-    virtual void on_sample_lost(
-        DDSDataReader* /*reader*/,
-        const DDS_SampleLostStatus& /*status*/) {}
+        virtual void on_sample_rejected(
+                DDSDataReader* /*reader*/,
+                const DDS_SampleRejectedStatus& /*status*/) {}
 
-    virtual void on_subscription_matched(
-        DDSDataReader* /*reader*/,
-        const DDS_SubscriptionMatchedStatus& /*status*/) {}
+        virtual void on_liveliness_changed(
+                DDSDataReader* /*reader*/,
+                const DDS_LivelinessChangedStatus& /*status*/) {}
 
-    virtual void on_data_available(DDSDataReader* reader);
+        virtual void on_sample_lost(
+                DDSDataReader* /*reader*/,
+                const DDS_SampleLostStatus& /*status*/) {}
 
-  private:
-	boost::condition_variable &m_cond;
+        virtual void on_subscription_matched(
+                DDSDataReader* /*reader*/,
+                const DDS_SubscriptionMatchedStatus& /*status*/) {}
+
+        virtual void on_data_available(DDSDataReader* reader);
+
+    private:
+        boost::condition_variable &m_cond;
 };
 
 void SimpleDelay_sumaReplyListener::on_data_available(DDSDataReader* reader)
@@ -109,8 +109,8 @@ void SimpleDelay_sumaReplyListener::on_data_available(DDSDataReader* reader)
     }
 
     retcode = SimpleDelay_sumaReply_reader->take(
-        data_seq, info_seq, DDS_LENGTH_UNLIMITED,
-        DDS_ANY_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
+            data_seq, info_seq, DDS_LENGTH_UNLIMITED,
+            DDS_ANY_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 
     if (retcode == DDS_RETCODE_NO_DATA) {
         printf("NODATA\n");
@@ -123,7 +123,7 @@ void SimpleDelay_sumaReplyListener::on_data_available(DDSDataReader* reader)
     if(data_seq.length() > 1)
         printf("SUMA UPSS: Hemos recibido mas de un dato\n");
 
-	m_cond.notify_one();
+    m_cond.notify_one();
 
     retcode = SimpleDelay_sumaReply_reader->return_loan(data_seq, info_seq);
     if (retcode != DDS_RETCODE_OK) {
@@ -132,41 +132,41 @@ void SimpleDelay_sumaReplyListener::on_data_available(DDSDataReader* reader)
 }
 
 class SimpleDelay_duplicateReplyListener : public DDSDataReaderListener {
-  public:
-	  SimpleDelay_duplicateReplyListener(boost::condition_variable &cond) :
-		m_cond(cond)
-	  {
-	  }
+    public:
+        SimpleDelay_duplicateReplyListener(boost::condition_variable &cond) :
+            m_cond(cond)
+    {
+    }
 
-    virtual void on_requested_deadline_missed(
-        DDSDataReader* /*reader*/,
-        const DDS_RequestedDeadlineMissedStatus& /*status*/) {}
-    
-    virtual void on_requested_incompatible_qos(
-        DDSDataReader* /*reader*/,
-        const DDS_RequestedIncompatibleQosStatus& /*status*/) {}
-    
-    virtual void on_sample_rejected(
-        DDSDataReader* /*reader*/,
-        const DDS_SampleRejectedStatus& /*status*/) {}
+        virtual void on_requested_deadline_missed(
+                DDSDataReader* /*reader*/,
+                const DDS_RequestedDeadlineMissedStatus& /*status*/) {}
 
-    virtual void on_liveliness_changed(
-        DDSDataReader* /*reader*/,
-        const DDS_LivelinessChangedStatus& /*status*/) {}
+        virtual void on_requested_incompatible_qos(
+                DDSDataReader* /*reader*/,
+                const DDS_RequestedIncompatibleQosStatus& /*status*/) {}
 
-    virtual void on_sample_lost(
-        DDSDataReader* /*reader*/,
-        const DDS_SampleLostStatus& /*status*/) {}
+        virtual void on_sample_rejected(
+                DDSDataReader* /*reader*/,
+                const DDS_SampleRejectedStatus& /*status*/) {}
 
-    virtual void on_subscription_matched(
-        DDSDataReader* /*reader*/,
-        const DDS_SubscriptionMatchedStatus& /*status*/) {}
+        virtual void on_liveliness_changed(
+                DDSDataReader* /*reader*/,
+                const DDS_LivelinessChangedStatus& /*status*/) {}
 
-    virtual void on_data_available(DDSDataReader* reader);
+        virtual void on_sample_lost(
+                DDSDataReader* /*reader*/,
+                const DDS_SampleLostStatus& /*status*/) {}
 
-  private:
+        virtual void on_subscription_matched(
+                DDSDataReader* /*reader*/,
+                const DDS_SubscriptionMatchedStatus& /*status*/) {}
 
-	boost::condition_variable &m_cond;
+        virtual void on_data_available(DDSDataReader* reader);
+
+    private:
+
+        boost::condition_variable &m_cond;
 };
 
 void SimpleDelay_duplicateReplyListener::on_data_available(DDSDataReader* reader)
@@ -184,8 +184,8 @@ void SimpleDelay_duplicateReplyListener::on_data_available(DDSDataReader* reader
     }
 
     retcode = SimpleDelay_duplicateReply_reader->take(
-        data_seq, info_seq, DDS_LENGTH_UNLIMITED,
-        DDS_ANY_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
+            data_seq, info_seq, DDS_LENGTH_UNLIMITED,
+            DDS_ANY_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 
     if (retcode == DDS_RETCODE_NO_DATA) {
         printf("NODATA\n");
@@ -198,7 +198,7 @@ void SimpleDelay_duplicateReplyListener::on_data_available(DDSDataReader* reader
     if(data_seq.length() > 1)
         printf("DUPLI UPSS: Hemos recibido mas de un dato\n");
 
-	m_cond.notify_one();
+    m_cond.notify_one();
 
     retcode = SimpleDelay_duplicateReply_reader->return_loan(data_seq, info_seq);
     if (retcode != DDS_RETCODE_OK) {
@@ -460,25 +460,25 @@ extern "C" int publisher_main(int domainId, int sample_count)
 
 
     /*for(int i = 0; i < 10000; ++i)
-    {
-        DDS_ReturnCode_t retCode;
-        DDSConditionSeq conds;
-        DDS_Duration_t timeout = {30, 0};
-        sumaInstance.header.clientId.value_1 = 1;
-        sumaInstance.header.clientId.value_2 = 2;
-        sumaInstance.header.clientId.value_3 = 3;
-        sumaInstance.header.clientId.value_4 = 4;
-        sumaInstance.header.requestSequenceNumber = seqNum++;
-        sumaInstance.value1 = 10;
-        sumaInstance.value2 = i;
-        boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
-        SimpleDelay_sumaRequest_writer->write(sumaInstance, DDS_HANDLE_NIL);
+      {
+      DDS_ReturnCode_t retCode;
+      DDSConditionSeq conds;
+      DDS_Duration_t timeout = {30, 0};
+      sumaInstance.header.clientId.value_1 = 1;
+      sumaInstance.header.clientId.value_2 = 2;
+      sumaInstance.header.clientId.value_3 = 3;
+      sumaInstance.header.clientId.value_4 = 4;
+      sumaInstance.header.requestSequenceNumber = seqNum++;
+      sumaInstance.value1 = 10;
+      sumaInstance.value2 = i;
+      boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
+      SimpleDelay_sumaRequest_writer->write(sumaInstance, DDS_HANDLE_NIL);
 
-	boost::unique_lock<boost::mutex> lock(mutex);
-	cond.wait(lock);
+      boost::unique_lock<boost::mutex> lock(mutex);
+      cond.wait(lock);
 
-        suma_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
-    }*/
+      suma_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
+      }*/
 
     suma_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
 
@@ -498,8 +498,8 @@ extern "C" int publisher_main(int domainId, int sample_count)
         boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
         SimpleDelay_duplicateRequest_writer->write(duplicateInstance, DDS_HANDLE_NIL);
 
-	boost::unique_lock<boost::mutex> lock(mutex);
-	cond.wait(lock);
+        boost::unique_lock<boost::mutex> lock(mutex);
+        cond.wait(lock);
 
         duplicate_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
     }
@@ -521,7 +521,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
 
     // Print the duplicate call times.
     //for(int i = 0; i < 10000; ++i)
-        //std::cout << i << " > duplicate in " << duplicate_call_seconds[i].count() << " seconds." << std::endl;
+    //std::cout << i << " > duplicate in " << duplicate_call_seconds[i].count() << " seconds." << std::endl;
     // Print the all duplicate procedure time.
     std::cout << "Executed 10000 duplicate procedures in " << duplicate_procedure_seconds.count() << " seconds." << std::endl;
 
