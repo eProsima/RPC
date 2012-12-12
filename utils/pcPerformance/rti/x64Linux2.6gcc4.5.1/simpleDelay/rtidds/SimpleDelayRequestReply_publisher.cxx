@@ -528,6 +528,25 @@ extern "C" int publisher_main(int domainId, int sample_count)
     // Print total execution time.
     std::cout << "Program execution in " << program_seconds.count() << " seconds." << std::endl;
 
+    // Calcular latencia media y el que más tarda.
+    boost::chrono::duration<double> max_dur = duplicate_call_seconds[0];
+    int max_pos = 0;
+    boost::chrono::duration<double> suma_dur = duplicate_call_seconds[0];
+
+    for(int count = 1; count < 10000; ++count)
+    {
+        if(duplicate_call_seconds[count] > max_dur)
+        {
+            max_dur = duplicate_call_seconds[count];
+            max_pos = count;
+        }
+
+        suma_dur = suma_dur + duplicate_call_seconds[count];
+    }
+
+    std::cout << "The slowest call was " << max_pos << " with " << max_dur << std::endl;
+    std::cout << "The latency average was " << suma_dur / 10000 << std::endl;
+
     /* Delete all entities */
     return publisher_shutdown(participant);
 }
