@@ -36,7 +36,7 @@ class SimpleDelayHandler : virtual public SimpleDelayIf {
     _return.long1 = es.long1;
     _return.long2 = es.long2;
     _return.string1 = es.string1;
-    for(int i = 0; i < 500; ++i)
+    for(int i = 0; i < es.prueba.size(); ++i)
         _return.prueba.push_back(es.prueba[i]);
   }
 
