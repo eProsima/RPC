@@ -18,6 +18,7 @@
 #include "exceptions/Exceptions.h"
 
 #include <iostream>
+#include <fstream>
 #include <boost/chrono.hpp>
 
 int main(int argc, char **argv)
@@ -57,7 +58,7 @@ int main(int argc, char **argv)
 
                 boost::chrono::system_clock::time_point program_start = boost::chrono::system_clock::now();
 
-                boost::chrono::system_clock::time_point procedure_start = boost::chrono::system_clock::now();
+                //boost::chrono::system_clock::time_point procedure_start = boost::chrono::system_clock::now();
                 // Testing suma procedure.
                 /*for(int i = 0; i < 10000; ++i)
                   {
@@ -66,9 +67,9 @@ int main(int argc, char **argv)
                   suma_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
                   }*/
 
-                suma_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
+                //suma_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
 
-                procedure_start = boost::chrono::system_clock::now();
+                //procedure_start = boost::chrono::system_clock::now();
                 // Testing ducplicate procedure.
                 for(int i = 0; i < 10000; ++i)
                 {
@@ -88,7 +89,7 @@ int main(int argc, char **argv)
                     Estructura_finalize(&es);
                 }
 
-                duplicate_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
+                //duplicate_procedure_seconds = boost::chrono::system_clock::now() - procedure_start;
 
                 program_seconds = boost::chrono::system_clock::now() - program_start;
 
@@ -96,16 +97,53 @@ int main(int argc, char **argv)
                 //for(int i = 0; i < 10000; ++i)
                 //    std::cout << i << " > suma in " << suma_call_seconds[i].count() << " seconds." << std::endl;
                 // Print the all suma procedure time.
-                std::cout << "Executed 10000 suma procedures in " << suma_procedure_seconds.count() << " seconds." << std::endl;
+                //std::cout << "Executed 10000 suma procedures in " << suma_procedure_seconds.count() << " seconds." << std::endl;
 
                 // Print the duplicate call times.
                 //for(int i = 0; i < 10000; ++i)
                 //    std::cout << i << " > duplicate in " << duplicate_call_seconds[i].count() << " seconds." << std::endl;
                 // Print the all duplicate procedure time.
-                std::cout << "Executed 10000 duplicate procedures in " << duplicate_procedure_seconds.count() << " seconds." << std::endl;
+                //std::cout << "Executed 10000 duplicate procedures in " << duplicate_procedure_seconds.count() << " seconds." << std::endl;
 
                 // Print total execution time.
                 std::cout << "Program execution in " << program_seconds.count() << " seconds." << std::endl;
+
+                // Calcular latencia media y el que más tarda.
+                boost::chrono::duration<double> max_dur = duplicate_call_seconds[0];
+                int max_pos = 0;
+                boost::chrono::duration<double> min_dur = duplicate_call_seconds[0];
+                int min_pos = 0;
+                boost::chrono::duration<double> suma_dur = duplicate_call_seconds[0];
+
+                for(int count = 1; count < 10000; ++count)
+                {
+                    if(duplicate_call_seconds[count] > max_dur)
+                    {
+                        max_dur = duplicate_call_seconds[count];
+                        max_pos = count;
+                    }
+
+                    if(duplicate_call_seconds[count] < min_dur)
+                    {
+                        min_dur = duplicate_call_seconds[count];
+                        min_pos = count;
+                    }
+
+                    suma_dur = suma_dur + duplicate_call_seconds[count];
+                }
+
+                std::sort(duplicate_call_seconds, duplicate_call_seconds + 10000);
+
+                std::cout << "The faster call was " << min_pos << " with " << min_dur << std::endl;
+                std::cout << "The slowest call was " << max_pos << " with " << max_dur << std::endl;
+                std::cout << "The latency average was " << suma_dur / 10000 << std::endl;
+                std::cout << "The 5000th value was " << duplicate_call_seconds[4999] << std::endl;
+
+                // Guardar datos en ficheros.
+                std::ofstream file;
+                file.open("client.txt", std::ios::app);
+                file << min_dur << " " << max_dur << " " << suma_dur/10000 << " " << duplicate_call_seconds[4999] << std::endl;
+                file.close();
 
                 delete(proxy);
             }

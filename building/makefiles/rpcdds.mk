@@ -13,8 +13,8 @@ RPCDDS_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/librpcddsz.a
 RPCDDS_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_thread-mt
 RPCDDS_LIBS= $(LIBS) -lboost_thread-mt
 
-RPCDDS_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++11
-RPCDDS_CFLAGS= $(CFLAGS) -std=c++11
+RPCDDS_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x
+RPCDDS_CFLAGS= $(CFLAGS) -std=c++0x
 
 ifdef NDDSHOME
 	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/rti

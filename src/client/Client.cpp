@@ -47,6 +47,7 @@ namespace eProsima
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
                 m_transport->setTransport(participantQos);
 #endif
+                participantQos.transport_builtin.mask = DDS_TRANSPORTBUILTIN_UDPv4;
                 // Creating the domain participant which is associated with the client
                 m_participant = factory->create_participant(
                         m_domainId, participantQos, 

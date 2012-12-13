@@ -531,6 +531,8 @@ extern "C" int publisher_main(int domainId, int sample_count)
     // Calcular latencia media y el que más tarda.
     boost::chrono::duration<double> max_dur = duplicate_call_seconds[0];
     int max_pos = 0;
+    boost::chrono::duration<double> min_dur = duplicate_call_seconds[0];
+    int min_pos = 0;
     boost::chrono::duration<double> suma_dur = duplicate_call_seconds[0];
 
     for(int count = 1; count < 10000; ++count)
@@ -541,11 +543,21 @@ extern "C" int publisher_main(int domainId, int sample_count)
             max_pos = count;
         }
 
+        if(duplicate_call_seconds[count] < min_dur)
+        {
+            min_dur = duplicate_call_seconds[count];
+            min_pos = count;
+        }
+
         suma_dur = suma_dur + duplicate_call_seconds[count];
     }
 
+    std::sort(duplicate_call_seconds, duplicate_call_seconds + 10000);
+
+    std::cout << "The faster call was " << min_pos << " with " << min_dur << std::endl;
     std::cout << "The slowest call was " << max_pos << " with " << max_dur << std::endl;
     std::cout << "The latency average was " << suma_dur / 10000 << std::endl;
+    std::cout << "The 5000th value was " << duplicate_call_seconds[4999] << std::endl;
 
     /* Delete all entities */
     return publisher_shutdown(participant);

@@ -36,7 +36,7 @@ namespace eProsima
 			 *
 			 * \return The error message.
 			 */
-			virtual const char* what() const throw() override;
+			virtual const char* what() const throw() ;
 
 		protected:
 
