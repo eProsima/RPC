@@ -16,7 +16,7 @@ set PATH_OLD_OLD=%PATH%
 set PATH=%RPCDDSHOME%\lib\%NDDSTARGET%;%HOME%\librerias\boost_1_51_0\lib\i86;%PATH%
 
 :: Set environment for RPCDDS
-call ..\..\..\scripts\set_environment.bat set
+call ..\..\scripts\set_environment.bat set
 
 :: Find all directories.
 for /D %%D in ("*") do (
@@ -134,7 +134,7 @@ goto :EOF
 :: Function exit ::
 :exit
 :: Restore environment for RPCDDS
-call ..\..\..\scripts\set_environment.bat restore
+call ..\..\scripts\set_environment.bat restore
 
 :: Restore old value of NDDSTARGET environment variable.
 set NDDSTARGET=%NDDSTARGET_OLD%

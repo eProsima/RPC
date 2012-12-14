@@ -51,7 +51,7 @@ goto getarg
 :continue
 
 
-"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -DRPCDDSHOME="%RPCDDSHOME%" -Djava.ext.dirs="..\..\..\..\..\rpcddsgen\lib" com.eprosima.rpcdds.idl.RPCDDSGEN %args% -I../../../../../idl
+"%JAVA_HOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -DRPCDDSHOME="%RPCDDSHOME%" -Djava.ext.dirs="%RPCDDSHOME%\rpcddsgen\lib" com.eprosima.rpcdds.idl.RPCDDSGEN %args% -I%RPCDDSHOME%/idl
 
 
 

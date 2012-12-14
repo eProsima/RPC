@@ -1115,7 +1115,7 @@ public class RPCDDSGEN
     		stringBuf = new StringBuffer(ifc.getName());
     		stringBuf.append("Server");
     		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
-    		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(), serverGuid, null);
+    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(), serverGuid, null, exampleOption);
     		projectServer.setAttribute("interfaceName", ifc.getName());
     		projectServer.setAttribute("guid", serverGuid);
     		projectServer.setAttribute("name",stringBuf.toString());
@@ -1126,7 +1126,7 @@ public class RPCDDSGEN
     		stringBuf.delete(ifc.getName().length(), stringBuf.length());
     		stringBuf.append("Client");
     		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
-    		solution.setAttribute("projects.{name, guid, dependsOn}", stringBuf.toString(),clientGuid, serverGuid);
+    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(),clientGuid, serverGuid, exampleOption);
     		projectClient.setAttribute("interfaceName", ifc.getName());
     		projectClient.setAttribute("guid", clientGuid);
     		projectClient.setAttribute("name",stringBuf.toString());
@@ -1147,7 +1147,7 @@ public class RPCDDSGEN
     		{
     			externalDir.append("/");	
     		}
-    		externalDir.append(ifc.getName()).append("-vs2010.sln");
+    		externalDir.append(ifc.getName()).append("-" + exampleOption + ".sln");
     		if(writeFile(externalDir.toString(), solution) == 0)
     		{
     			externalDir.delete(externalDirLength, externalDir.length());
@@ -1157,7 +1157,7 @@ public class RPCDDSGEN
     			{
     				externalDir.append("/");	
     			}
-    			externalDir.append(ifc.getName()).append("Client-vs2010.vcxproj");
+    			externalDir.append(ifc.getName()).append("Client-" + exampleOption + ".vcxproj");
     			if(writeFile(externalDir.toString(), projectClient) == 0)
     			{
     				externalDir.delete(externalDirLength, externalDir.length());
@@ -1166,7 +1166,7 @@ public class RPCDDSGEN
     				{
     					externalDir.append("/");	
     				}
-    				externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj");
+    				externalDir.append(ifc.getName()).append("Server-" + exampleOption + ".vcxproj");
     				if(writeFile(externalDir.toString(), projectServer) == 0)
     				{
     					externalDir.delete(externalDirLength, externalDir.length());
@@ -1175,7 +1175,7 @@ public class RPCDDSGEN
     					{
     						externalDir.append("/");
     					}
-    					externalDir.append(ifc.getName()).append("Client-vs2010.vcxproj.filters");
+    					externalDir.append(ifc.getName()).append("Client-" + exampleOption + ".vcxproj.filters");
     	    			if(writeFile(externalDir.toString(), projectFilesClient) == 0)
     	    			{
     	    				externalDir.delete(externalDirLength, externalDir.length());
@@ -1184,7 +1184,7 @@ public class RPCDDSGEN
         					{
         						externalDir.append("/");
         					}
-        					externalDir.append(ifc.getName()).append("Server-vs2010.vcxproj.filters");
+        					externalDir.append(ifc.getName()).append("Server-" + exampleOption + ".vcxproj.filters");
     	    				returnedValue = writeFile(externalDir.toString(), projectFilesServer);
     	    				externalDir.delete(externalDirLength, externalDir.length());
     	    			}
