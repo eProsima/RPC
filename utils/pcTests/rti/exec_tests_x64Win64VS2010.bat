@@ -23,7 +23,7 @@ for /D %%D in ("*") do (
    :: Enter to the directory.
    cd %%D
    if exist exec_test.bat (
-      call exec_test.bat
+      call exec_test_x64Win64VS2010.bat
    ) else (
       call :execTest %%D
    )
