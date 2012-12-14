@@ -6,9 +6,9 @@ cp Client.cxx Client.cxx.backup
 # Backup of the ServerImpl.cxx file
 cp ${TEST_NAME}ServerImpl.cxx ${TEST_NAME}ServerImpl.cxx.backup
 # Delete all generated files.
-rm *.h *.cxx ${TEST_NAME}RequestReply.idl makefile_x64Linux2.6gcc4.5.1
+rm *.h *.cxx ${TEST_NAME}RequestReply.idl
 # Generates the file with RPCDDS script
-$RPCDDSHOME/scripts/rpcdds_rti_pcTests.sh -ppDisable -example x64Linux2.6gcc4.5.1 "${TEST_NAME}.idl"
+$RPCDDSHOME/scripts/rpcdds_rti_pcTests.sh -ppDisable "${TEST_NAME}.idl"
 errorstatus=$?
 # Copy backup to original files.
 mv Client.cxx.backup Client.cxx
