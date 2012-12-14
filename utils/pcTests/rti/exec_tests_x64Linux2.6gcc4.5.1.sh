@@ -9,14 +9,14 @@ cp Client.cxx Client.cxx.backup
 # Backup of the ServerImpl.cxx file
 cp $1ServerImpl.cxx $1ServerImpl.cxx.backup
 # Delete all generated files.
-rm *.h *.cxx $1RequestReply.idl
+rm *.h *.cxx $1RequestReply.idl makefile_x64Linux2.6gcc4.5.1
 # Generates the file with RPCDDS script
-../../../../../scripts/rpcdds_rti_pcTests.sh -ppDisable "$1.idl"
+$RPCDDSHOME/scripts/rpcdds_rti_pcTests.sh -ppDisable -example x64Linux2.6gcc4.5.1 "$1.idl"
 errorstatus=$?
-if [ $errorstatus != 0 ]; then return; fi
 # Copy backup to original files.
 mv Client.cxx.backup Client.cxx
 mv $1ServerImpl.cxx.backup $1ServerImpl.cxx
+if [ $errorstatus != 0 ]; then return; fi
 # Clean output directory
 rm -rf objs
 # Compile client application
@@ -43,7 +43,11 @@ killall -9 $1Server
 for dir in $(find . -type d -mindepth 1 -maxdepth 1 -printf "%f\n"); do
 # Enter to the directory.
 cd $dir
-execTest $dir
+if [ -e "exec_test_x64Linux2.6gcc4.5.1.sh" ] ; then
+    ./exec_test_x64Linux2.6gcc4.5.1.sh
+else
+    execTest $dir
+fi
 # Go out to the parent directory.
 cd ..
 # Detect error in call.
