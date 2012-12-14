@@ -88,6 +88,7 @@ ActionPlugin_get_serialized_sample_size(
     unsigned int current_alignment,
     const Action * sample);
 
+
 /* ------------------------------------------------------------------------
     Key Management functions:
  * ------------------------------------------------------------------------ */
@@ -127,6 +128,9 @@ ActionPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
+ 
+
+
 /* ----------------------------------------------------------------------------
     Support functions:
  * ---------------------------------------------------------------------------- */
@@ -136,6 +140,7 @@ ActionPluginSupport_print_data(
     const Action *sample, const char *desc, int indent_level);
 
 
+#define ControlData_LAST_MEMBER_ID 0
 
 #define ControlDataPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define ControlDataPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -175,7 +180,6 @@ ControlDataPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
- 
 
 /* ----------------------------------------------------------------------------
     Callback functions:
@@ -203,6 +207,7 @@ ControlDataPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 ControlDataPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
+
 
 NDDSUSERDllExport extern RTIBool 
 ControlDataPlugin_copy_sample(
@@ -246,6 +251,7 @@ ControlDataPlugin_deserialize(
 
 
 
+
 NDDSUSERDllExport extern RTIBool
 ControlDataPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
@@ -275,6 +281,7 @@ ControlDataPlugin_get_serialized_sample_size(
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
     const ControlData * sample);
+
 
 
 /* --------------------------------------------------------------------------------------

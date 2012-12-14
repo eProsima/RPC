@@ -338,6 +338,8 @@ int main(int argc, char** argv)
                                     boost::chrono::duration<double> min_dur = duplicate_call_seconds[0];
                                     int min_pos = 0;
                                     boost::chrono::duration<double> suma_dur = duplicate_call_seconds[0];
+                                    boost::chrono::duration<double> media;
+                                    double desviacion_media = 0;
 
                                     for(int count = 1; count < 10000; ++count)
                                     {
@@ -356,19 +358,31 @@ int main(int argc, char** argv)
                                         suma_dur = suma_dur + duplicate_call_seconds[count];
                                     }
 
+                                    // Calculo de la media.
+                                    media = suma_dur/ 10000;
+
+                                    // Calculo de la desviación estándar.
+                                    for(int count = 0; count < 10000; ++count)
+                                    {
+                                        desviacion_media += std::abs(duplicate_call_seconds[count].count() - media.count());
+                                    }
+
+                                    desviacion_media = desviacion_media/10000;
+
                                     std::sort(duplicate_call_seconds, duplicate_call_seconds + 10000);
 
-                                    std::cout << "The faster call was " << min_pos << " with " << min_dur << std::endl;
-                                    std::cout << "The slowest call was " << max_pos << " with " << max_dur << std::endl;
-                                    std::cout << "The latency average was " << suma_dur / 10000 << std::endl;
-                                    std::cout << "The 5000th value was " << duplicate_call_seconds[4999] << std::endl;
+                                    std::cout << "La llamada más rápida fue " << min_pos << " with " << min_dur << std::endl;
+                                    std::cout << "La llamada más lenta fue " << max_pos << " with " << max_dur << std::endl;
+                                    std::cout << "La media es " << media << std::endl;
+                                    std::cout << "La mediana es " << duplicate_call_seconds[4999] << std::endl;
+                                    std::cout << "La desviación media es " << desviacion_media << std::endl;
 
                                     // Guardar datos en ficheros.
                                     std::ofstream file;
                                     std::stringstream filename;
                                     filename << "client_" << appId << ".log";
                                     file.open(filename.str(), std::ios::app);
-                                    file << min_dur << " " << max_dur << " " << suma_dur/10000 << " " << duplicate_call_seconds[4999] << std::endl;
+                                    file << min_dur << " " << max_dur << " " << media << " " << duplicate_call_seconds[4999] << desviacion_media << std::endl;
                                     file.close();
                                 }
                                 else

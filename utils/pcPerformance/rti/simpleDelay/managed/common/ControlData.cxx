@@ -110,16 +110,12 @@ DDS_TypeCode* Action_get_typecode()
 RTIBool Action_initialize(
     Action* sample)
 {
-    /* The following method initializes the enum value to zero. However,
-     * some enumerations may not have a member with the value zero. In such
-     * cases, it may be desirable to modify the generated code to use a valid
-     * enumeration member instead.
-     */
-    return RTICdrType_initEnum((RTICdrEnum*) sample);
+    *sample = READY;
+    return RTI_TRUE;
 }
         
 RTIBool Action_initialize_ex(
-    Action* sample, RTIBool allocatePointers)
+    Action* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
     /* The following method initializes the enum value to zero. However,
      * some enumerations may not have a member with the value zero. In such
@@ -127,7 +123,9 @@ RTIBool Action_initialize_ex(
      * enumeration member instead.
      */
     if (allocatePointers) {} /* To avoid warnings */
-    return RTICdrType_initEnum((RTICdrEnum*) sample);
+    if (allocateMemory) {} /* To avoid warnings */
+    *sample = READY;
+    return RTI_TRUE;
 }
 
 void Action_finalize(
@@ -152,6 +150,33 @@ RTIBool Action_copy(
     return RTICdrType_copyEnum((RTICdrEnum *)dst, (RTICdrEnum *)src);
 }
 
+
+RTIBool Action_getValues(ActionSeq * values) 
+    
+{
+    int i = 0;
+    Action * buffer;
+
+
+    if (!values->maximum(2)) {
+        return RTI_FALSE;
+    }
+
+    if (!values->length(2)) {
+        return RTI_FALSE;
+    }
+
+    buffer = values->get_contiguous_buffer();
+    
+    buffer[i] = READY;
+    i++;
+    
+    buffer[i] = START;
+    i++;
+    
+
+    return RTI_TRUE;
+}
 
 /**
  * <<IMPLEMENTATION>>
@@ -260,25 +285,27 @@ DDS_TypeCode* ControlData_get_typecode()
 
 RTIBool ControlData_initialize(
     ControlData* sample) {
-  return ControlData_initialize_ex(sample,RTI_TRUE);
+  return ControlData_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool ControlData_initialize_ex(
-    ControlData* sample,RTIBool allocatePointers)
+    ControlData* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
         
     
     if (allocatePointers) {} /* To avoid warnings */
-
+    if (allocateMemory) {} /* To avoid warnings */
 
     if (!RTICdrType_initUnsignedLong(&sample->appId)) {
         return RTI_FALSE;
     }                
             
-    if (!Action_initialize_ex(&sample->action,allocatePointers)) {
+
+    if (!Action_initialize_ex(&sample->action,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }
@@ -296,8 +323,10 @@ void ControlData_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
+
     Action_finalize_ex(&sample->action,deletePointers);
             
+
 }
 
 RTIBool ControlData_copy(
@@ -310,11 +339,13 @@ RTIBool ControlData_copy(
         return RTI_FALSE;
     }
             
+
     if (!Action_copy(
         &dst->action, &src->action)) {
         return RTI_FALSE;
     }
             
+
 
     return RTI_TRUE;
 }

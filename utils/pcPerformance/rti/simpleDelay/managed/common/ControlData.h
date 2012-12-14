@@ -25,13 +25,13 @@
     #include "ndds_standalone_type.h"
 #endif
 
-
-
+ 
 typedef enum Action
 {
     READY = 0,
     START
 } Action;
+    
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, start exporting symbols.
@@ -52,7 +52,7 @@ RTIBool Action_initialize(
         
 NDDSUSERDllExport
 RTIBool Action_initialize_ex(
-        Action* self,RTIBool allocatePointers);
+        Action* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void Action_finalize(
@@ -66,6 +66,11 @@ NDDSUSERDllExport
 RTIBool Action_copy(
         Action* dst,
         const Action* src);
+
+
+NDDSUSERDllExport
+RTIBool Action_getValues(ActionSeq * values);
+    
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -101,9 +106,9 @@ extern const char *ControlDataTYPENAME;
 
             
     
-
-typedef struct ControlData
+class ControlData                                        
 {
+public:            
 #ifdef __cplusplus
     typedef struct ControlDataSeq Seq;
 
@@ -114,11 +119,13 @@ typedef struct ControlData
 #endif
 
 #endif
-
+    
     DDS_UnsignedLong  appId;
+
     Action  action;
 
-} ControlData;
+            
+};                        
     
                             
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -140,7 +147,7 @@ RTIBool ControlData_initialize(
         
 NDDSUSERDllExport
 RTIBool ControlData_initialize_ex(
-        ControlData* self,RTIBool allocatePointers);
+        ControlData* self,RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
 void ControlData_finalize(
