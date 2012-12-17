@@ -251,6 +251,7 @@ extern "C" int manager_main()
     publisher->get_default_datawriter_qos(wQos);
     wQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
     wQos.history.kind = DDS_KEEP_ALL_HISTORY_QOS;
+    wQos.durability.kind = DDS_TRANSIENT_LOCAL_DURABILITY_QOS;
     /* To customize data writer QoS, use 
        the configuration file USER_QOS_PROFILES.xml */
     writer = publisher->create_datawriter(
@@ -275,6 +276,7 @@ extern "C" int manager_main()
     subscriber->get_default_datareader_qos(rQos);
     rQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
     rQos.history.kind = DDS_KEEP_ALL_HISTORY_QOS;
+    rQos.durability.kind = DDS_TRANSIENT_LOCAL_DURABILITY_QOS;
     /* To customize the data reader QoS, use 
        the configuration file USER_QOS_PROFILES.xml */
     reader = subscriber->create_datareader(

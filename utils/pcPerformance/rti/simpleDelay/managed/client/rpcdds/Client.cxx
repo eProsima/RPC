@@ -219,6 +219,7 @@ int createDDSEntities(boost::condition_variable &cond)
     publisher->get_default_datawriter_qos(wQos);
     wQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
     wQos.history.kind = DDS_KEEP_ALL_HISTORY_QOS;
+    wQos.durability.kind = DDS_TRANSIENT_LOCAL_DURABILITY_QOS;
     /* To customize data writer QoS, use 
        the configuration file USER_QOS_PROFILES.xml */
     writer = publisher->create_datawriter(
@@ -243,6 +244,7 @@ int createDDSEntities(boost::condition_variable &cond)
     subscriber->get_default_datareader_qos(rQos);
     rQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
     rQos.history.kind = DDS_KEEP_ALL_HISTORY_QOS;
+    rQos.durability.kind = DDS_TRANSIENT_LOCAL_DURABILITY_QOS;
     /* To customize the data reader QoS, use 
        the configuration file USER_QOS_PROFILES.xml */
     reader = subscriber->create_datareader(
@@ -341,9 +343,6 @@ int main(int argc, char **argv)
 
                                 program_seconds = boost::chrono::system_clock::now() - program_start;
 
-                                // Print total execution time.
-                                std::cout << "Program execution in " << program_seconds.count() << " seconds." << std::endl;
-
                                 // Calcular latencia media y el que más tarda.
                                 boost::chrono::duration<double> max_dur = duplicate_call_seconds[0];
                                 int max_pos = 0;
@@ -381,18 +380,29 @@ int main(int argc, char **argv)
 
                                 desviacion_media = desviacion_media/10000;
 
+                                // Guardar datos de cada llamada en un fichero.
+                                std::ofstream fil;
+                                std::stringstream filenam;
+                                filenam << "client_calls_" << appId << ".log";
+                                fil.open(filenam.str(), std::ios::app);
+                                for(int count = 0; count < 10000; ++count)
+                                    fil << count << " " << duplicate_call_seconds[count] << std::endl;
+                                fil.close();
+
                                 std::sort(duplicate_call_seconds, duplicate_call_seconds + 10000);
 
-                                std::cout << "La llamada más rápida fue " << min_pos << " with " << min_dur << std::endl;
-                                std::cout << "La llamada más lenta fue " << max_pos << " with " << max_dur << std::endl;
-                                std::cout << "La media es " << media << std::endl;
-                                std::cout << "La mediana es " << duplicate_call_seconds[4999] << std::endl;
-                                std::cout << "La desviación media es " << desviacion_media << std::endl;
+                                // Print total execution time.
+                                std::cout << "Program execution in " << program_seconds << " (" << appId << ")" << std::endl;
+                                std::cout << "La llamada más rápida fue " << min_pos << " with " << min_dur << " (" << appId << ")" << std::endl;
+                                std::cout << "La llamada más lenta fue " << max_pos << " with " << max_dur << " (" << appId << ")" << std::endl;
+                                std::cout << "La media es " << media << " (" << appId << ")" << std::endl;
+                                std::cout << "La mediana es " << duplicate_call_seconds[4999] << " (" << appId << ")" << std::endl;
+                                std::cout << "La desviación media es " << desviacion_media << " (" << appId << ")" << std::endl;
 
-                                // Guardar datos en ficheros.
+                                // Guardar datos generales en un fichero.
                                 std::ofstream file;
                                 std::stringstream filename;
-                                filename << "client_" << appId << ".log";
+                                filename << "client_general_" << appId << ".log";
                                 file.open(filename.str(), std::ios::app);
                                 file << min_dur << " " << max_dur << " " << media << " " << duplicate_call_seconds[4999] << desviacion_media << std::endl;
                                 file.close();
@@ -434,7 +444,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::cout << "Usage: SimpleDelayClient <Server IP address> <Data size> <Max client number>" << std::endl;
+        std::cout << "Usage: SimpleDelayClient <Server IP address> <Data size> <Max client number> <App identifier>" << std::endl;
     }
 
     return 0;
