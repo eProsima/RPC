@@ -51,6 +51,7 @@ TName::TName(const char *rpcName, const char *requestTypeName,
 
 TName::~TName()
 {
+	deleteAssociatedAsyncTasks();
 }
 
 DDS::ReturnCode_t TName::write(void *data)

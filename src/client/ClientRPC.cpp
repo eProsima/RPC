@@ -77,9 +77,6 @@ namespace eProsima
                 m_mutex = NULL;
             }
 
-			// Delete associated asynchronous task.
-			m_client->deleteAssociatedAsyncTasks(this);
-
 			// Its not a oneway function.
 			if(m_replySubscriber != NULL)
 				finalizeQueryPool();
@@ -778,6 +775,11 @@ namespace eProsima
 					++m_queriesInUseLimiter;
 				}
 			}
+		}
+
+		void ClientRPC::deleteAssociatedAsyncTasks()
+		{
+			m_client->deleteAssociatedAsyncTasks(this);
 		}
     } // namespace RPCDDS
 } // namespace eProsima

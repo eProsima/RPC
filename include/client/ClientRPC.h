@@ -115,6 +115,12 @@ namespace eProsima
 				 */
 				DDS::DataWriter* getRequestDatawriter() const;
 
+				/**
+				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+				 *        This function is called from the derived RPC object.
+				 */
+				void deleteAssociatedAsyncTasks();
+
 		private:
 
 				/**

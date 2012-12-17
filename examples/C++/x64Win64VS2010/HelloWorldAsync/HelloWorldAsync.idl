@@ -1,7 +1,0 @@
-interface HelloWorldAsync
-
-{
-    
-    string sayHello(in string name);
-
-};
