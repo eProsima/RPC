@@ -22,7 +22,7 @@ call ..\..\scripts\set_environment.bat set
 for /D %%D in ("*") do (
    :: Enter to the directory.
    cd %%D
-   if exist exec_test.bat (
+   if exist exec_test_x64Win64VS2010.bat (
       call exec_test_x64Win64VS2010.bat
    ) else (
       call :execTest %%D

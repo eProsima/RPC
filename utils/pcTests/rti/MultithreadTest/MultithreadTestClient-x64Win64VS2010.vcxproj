@@ -91,7 +91,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(NDDSHOME)\rpcdds\include;$(HOME)\librerias\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -111,7 +111,7 @@
       <AdditionalDependencies>nddscppd.lib; nddscd.lib; nddscored.lib; rpcddsd.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(NDDSHOME)\rpcdds\lib\x64Win64VS2010;$(HOME)\librerias\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(RPCDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\objs\x64Win64VS2010\MultithreadTestClient.pdb</ProgramDatabaseFile>
@@ -122,7 +122,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(NDDSHOME)\rpcdds\include;$(HOME)\librerias\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -142,7 +142,7 @@
       <AdditionalDependencies>nddscpp.lib; nddsc.lib; nddscore.lib; rpcdds.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(NDDSHOME)\rpcdds\lib\x64Win64VS2010;$(HOME)\librerias\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(RPCDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile>.\objs\x64Win64VS2010\MultithreadTestClient.pdb</ProgramDatabaseFile>
@@ -153,7 +153,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(NDDSHOME)\rpcdds\include;$(HOME)\librerias\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -173,7 +173,7 @@
       <AdditionalDependencies>nddscppzd.lib; nddsczd.lib; nddscorezd.lib; rpcddszd.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(NDDSHOME)\rpcdds\lib\x64Win64VS2010;$(HOME)\librerias\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(RPCDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\objs\x64Win64VS2010\MultithreadTestClient.pdb</ProgramDatabaseFile>
@@ -184,7 +184,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(NDDSHOME)\rpcdds\include;$(HOME)\librerias\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -204,7 +204,7 @@
       <AdditionalDependencies>nddscppz.lib; nddscz.lib; nddscorez.lib; rpcddsz.lib;netapi32.lib;advapi32.lib;user32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\objs\x64Win64VS2010\$(ProjectName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(NDDSHOME)\rpcdds\lib\x64Win64VS2010;$(HOME)\librerias\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(RPCDDSHOME)\lib\x64Win64VS2010;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile>.\objs\x64Win64VS2010\MultithreadTestClient.pdb</ProgramDatabaseFile>
