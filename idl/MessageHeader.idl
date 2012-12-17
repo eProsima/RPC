@@ -1,0 +1,38 @@
+/**
+ * @brief This structure is used to identify clients.
+ */
+struct Identification
+{
+    unsigned long value_1;
+    unsigned long value_2;
+    unsigned long value_3;
+    unsigned long value_4;
+}; //@top-level false 
+
+/**
+ * @brief Header information used in all generated request topics.
+ */
+struct RequestHeader
+{
+    /// @brief Identification of the client that sends the request.
+    Identification clientId;
+    /// @brief The service's name of the server that has to take this request.
+    string<255> remoteServiceName;
+    /// @brief Sequence number of the request.
+    unsigned long requestSequenceNumber;
+}; //@top-level false 
+
+/**
+ * @brief Header information used in all generated reply topics.
+ */
+struct ReplyHeader
+{
+    /// @brief Identification of the client that sends the associated request to this reply.
+    Identification clientId;
+    /// @brief Sequence number of the associated request to this reply.
+    unsigned long requestSequenceNumber;
+    /// @brief Return message code. Informs of the successful in the operation.
+    long rpcddsRetCode;
+    /// @brief In case of exception this attribute has an error message.
+    string rpcddsRetMsg;
+}; //@top-level false 
