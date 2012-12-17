@@ -21,7 +21,11 @@ Recepcion StructTestServerImpl::suma(/*in*/ const Envio& ev1, /*in*/ const Envio
         
 	suma_ret.devolucion = ev1.dato + ev2.dato;
 	suma_ret.message = DDS::String_alloc(strlen(ev1.message) + strlen(ev2.message) + 1);
+#if defined(RTI_WIN32)
 	_snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
+#elif defined(RTI_LINUX)
+	snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
+#endif
    
     return suma_ret;
 } 

@@ -162,7 +162,11 @@ int main(int argc, char **argv)
 
         while(getLong_handler.getState() == 0)
         {
+#if defined(RTI_WIN32)
             Sleep(1000);
+#elif defined(RTI_LINUX)
+            sleep(1);
+#endif
         }
 
         if(getLong_handler.getState() == 2)
@@ -184,7 +188,11 @@ int main(int argc, char **argv)
 
         while(getBoolean_handler.getState() == 0)
         {
+#if defined(RTI_WIN32)
             Sleep(1000);
+#elif defined(RTI_LINUX)
+            sleep(1);
+#endif
         }
 
         if(getBoolean_handler.getState() == 2)
@@ -206,7 +214,11 @@ int main(int argc, char **argv)
 
         while(getString_handler.getState() == 0)
         {
+#if defined(RTI_WIN32)
             Sleep(1000);
+#elif defined(RTI_LINUX)
+            sleep(1);
+#endif
         }
 
         if(getString_handler.getState() == 2)
@@ -235,7 +247,11 @@ int main(int argc, char **argv)
 
         while(duplicate_handler.getState() == 0)
         {
+#if defined(RTI_WIN32)
             Sleep(1000);
+#elif defined(RTI_LINUX)
+            sleep(1);
+#endif
         }
 
         if(duplicate_handler.getState() == 2)

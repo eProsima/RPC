@@ -22,7 +22,11 @@ void* executeThread(int threadNum)
     FILE *file = NULL;
     int count = 0;
 
+#if defined(RTI_WIN32)
     _snprintf(filename, 50, "Thread%d.txt", threadNum);
+#elif defined(RTI_LINUX)
+    snprintf(filename, 50, "Thread%d.txt", threadNum);
+#endif
     file = fopen(filename, "w");
 
     if(file != NULL)
@@ -47,12 +51,20 @@ void* executeThread(int threadNum)
             try
             {
                 test_ret =  proxy->test(dato1 ,dato2);
+#if defined(RTI_WIN32)
                 _snprintf(fileLine, 255, "Received (%d)\n", count);
+#elif defined(RTI_LINUX)
+                snprintf(fileLine, 255, "Received (%d)\n", count);
+#endif
                 fwrite(fileLine, strlen(fileLine), 1, file);
             }
             catch(eProsima::RPCDDS::Exception &ex)
             {
+#if defined(RTI_WIN32)
                 _snprintf(fileLine, 255, "Error in operation (%d). %s\n", count, ex.what());
+#elif defined(RTI_LINUX)
+                snprintf(fileLine, 255, "Error in operation (%d). %s\n", count, ex.what());
+#endif
                 fwrite(fileLine, strlen(fileLine), 1, file);
             }
 
@@ -78,7 +90,11 @@ int checkFiles()
 
     for(int i = 1; i <= 4; ++i)
     {
+#if defined(RTI_WIN32)
         _snprintf(filename, 50, "Thread%d.txt", i);
+#elif defined(RTI_LINUX)
+        _snprintf(filename, 50, "Thread%d.txt", i);
+#endif
         file = fopen(filename, "r");
 
         if(file != NULL)

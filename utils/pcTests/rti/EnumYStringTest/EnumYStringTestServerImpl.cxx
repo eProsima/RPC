@@ -24,7 +24,11 @@ char* EnumYStringTestServerImpl::getString(/*in*/ char* s1, /*inout*/ char*& s2,
     returnedValue = DDS::String_dup(s1);
     DDS::String_free(s2);
     s2 = DDS::String_alloc(strlen(s1) + strlen(s3) + 1);
+#if defined(RTI_WIN32)
     _snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
+#elif defined(RTI_LINUX)
+    snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
+#endif
 
     return returnedValue;
 } 
@@ -37,7 +41,11 @@ char* EnumYStringTestServerImpl::getStringBounded(/*in*/ char* sb1, /*inout*/ ch
     returnedValue = DDS::String_dup(sb1);
     DDS::String_free(sb2);
     sb2 = DDS::String_alloc(strlen(sb1) + strlen(sb3) + 1);
+#if defined(RTI_WIN32)
     _snprintf(sb2, strlen(sb1) + strlen(sb3) + 1, "%s%s", sb1, sb3);
+#elif defined(RTI_LINUX)
+    snprintf(sb2, strlen(sb1) + strlen(sb3) + 1, "%s%s", sb1, sb3);
+#endif
 
     return returnedValue;
 } 

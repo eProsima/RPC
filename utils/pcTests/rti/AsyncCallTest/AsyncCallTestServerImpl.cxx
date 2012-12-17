@@ -35,7 +35,11 @@ char* AsyncCallTestServerImpl::getString(/*in*/ char* s1, /*inout*/ char*& s2, /
     getString_ret = DDS::String_dup(s1);
     DDS::String_free(s2);
     s2 = DDS::String_alloc(strlen(s1) + strlen(s3) + 1);
+#if defined(RTI_WIN32)
     _snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
+#elif defined(RTI_LINUX)
+    snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
+#endif
    
     return getString_ret;
 } 
