@@ -15,6 +15,7 @@
 #include "CalculatorProxy.h"
 #include "CalculatorRequestReplyPlugin.h"
 #include "exceptions/Exceptions.h"
+#include "utils/Utilities.h"
 
 #include <iostream>
 
@@ -94,7 +95,7 @@ int main(int argc, char **argv)
 				}
 
 				// Wait 10 seconds to received the server's replies.
-				Sleep(10000);
+				sleep(10000);
 
 				delete(proxy);
 			}
