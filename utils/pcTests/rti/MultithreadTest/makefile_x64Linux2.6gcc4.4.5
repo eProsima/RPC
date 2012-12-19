@@ -1,0 +1,51 @@
+CPP_x64Linux2.6gcc4.4.5 = g++
+CXXFLAGS_x64Linux2.6gcc4.4.5 = -m64 -std=c++11
+LD_x64Linux2.6gcc4.4.5 = g++
+LDFLAGS_x64Linux2.6gcc4.4.5 = -m64
+SYSLIBS_x64Linux2.6gcc4.4.5 = -ldl -lnsl -lm -lpthread -lrt
+DEFINES_ARCH_SPECIFIC =  -DRTI_UNIX -DRTI_LINUX
+
+DEFINES = $(DEFINES_ARCH_SPECIFIC)  
+
+INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../../include -I../../../../../include/idl/rti
+
+LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L../../../../../lib/x64Linux2.6gcc4.4.5 \
+       -lnddsc -lnddscore -lnddscpp -lrpcdds -lboost_thread-mt $(SYSLIBS_x64Linux2.6gcc4.4.5)
+
+COMMONCXXSOURCES = MultithreadTestRequestReply.cxx MultithreadTest.cxx MultithreadTestRequestReplyPlugin.cxx \
+                MultithreadTestPlugin.cxx MultithreadTestRequestReplySupport.cxx MultithreadTestSupport.cxx \
+                MultithreadTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+                MessageHeaderSupport.cxx
+COMMONCPPSOURCES =
+
+CLIENTSOURCES = MultithreadTestProxy.cxx MultithreadTestClientRPCSupport.cxx MultithreadTestAsyncSupport.cxx Client.cxx 
+SERVERSOURCES = MultithreadTestServer.cxx MultithreadTestServerImpl.cxx MultithreadTestServerRPCSupport.cxx Server.cxx 
+DIRECTORIES   = objs.dir objs/x64Linux2.6gcc4.4.5.dir
+COMMONOBJS    = $(COMMONCXXSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o) $(COMMONCPPSOURCES:%.cpp=objs/x64Linux2.6gcc4.4.5/%.o)
+CLIENTOBJS    = $(CLIENTSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o)
+SERVEROBJS    = $(SERVERSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o)
+CLIENTEXEC    = objs/x64Linux2.6gcc4.4.5/MultithreadTestClient
+SERVEREXEC    = objs/x64Linux2.6gcc4.4.5/MultithreadTestServer
+
+client: $(DIRECTORIES) $(COMMONOBJS) $(CLIENTOBJS) $(CLIENTEXEC)
+server: $(DIRECTORIES) $(COMMONOBJS) $(SERVEROBJS) $(SERVEREXEC)
+
+$(CLIENTEXEC) : 
+	$(LD_x64Linux2.6gcc4.4.5) $(LDFLAGS_x64Linux2.6gcc4.4.5)  -o $(@:%.out=%) $(COMMONOBJS) $(CLIENTOBJS) $(LIBS)
+
+$(SERVEREXEC) : 
+	$(LD_x64Linux2.6gcc4.4.5) $(LDFLAGS_x64Linux2.6gcc4.4.5)  -o $(@:%.out=%) $(COMMONOBJS) $(SERVEROBJS) $(LIBS)
+
+objs/x64Linux2.6gcc4.4.5/%.o : %.cxx
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+	
+objs/x64Linux2.6gcc4.4.5/%.o : %.cpp
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+
+# Here is how we create those subdirectories automatically.
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

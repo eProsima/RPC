@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     try
     {
         pool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-		transport = new eProsima::RPCDDS::TCPServerTransport("80.32.132.11", "7600");
+		transport = new eProsima::RPCDDS::TCPServerTransport("80.32.132.11:7600", "7600");
         server = new CalculatorServer("CalculatorService", pool, transport);
         server->serve();
     }

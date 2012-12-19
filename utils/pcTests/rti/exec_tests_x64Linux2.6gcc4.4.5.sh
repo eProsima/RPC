@@ -9,9 +9,9 @@ cp Client.cxx Client.cxx.backup
 # Backup of the ServerImpl.cxx file
 cp $1ServerImpl.cxx $1ServerImpl.cxx.backup
 # Delete all generated files.
-rm *.h *.cxx $1RequestReply.idl makefile_x64Linux2.6gcc4.5.1
+rm *.h *.cxx $1RequestReply.idl makefile_x64Linux2.6gcc4.4.5
 # Generates the file with RPCDDS script
-$RPCDDSHOME/scripts/rpcdds_rti_pcTests.sh -ppDisable -example x64Linux2.6gcc4.5.1 "$1.idl"
+$RPCDDSHOME/scripts/rpcdds_rti_pcTests.sh -ppDisable -example x64Linux2.6gcc4.4.5 "$1.idl"
 errorstatus=$?
 # Copy backup to original files.
 mv Client.cxx.backup Client.cxx
@@ -20,19 +20,19 @@ if [ $errorstatus != 0 ]; then return; fi
 # Clean output directory
 rm -rf objs
 # Compile client application
-make -f makefile_x64Linux2.6gcc4.5.1
+make -f makefile_x64Linux2.6gcc4.4.5
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Compile server application
-make -f makefile_x64Linux2.6gcc4.5.1 server
+make -f makefile_x64Linux2.6gcc4.4.5 server
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Execute the server in background
-objs/x64Linux2.6gcc4.5.1/$1Server &
+objs/x64Linux2.6gcc4.4.5/$1Server &
 # Wait 5 seconds
 sleep 5
 # Execute the client
-objs/x64Linux2.6gcc4.5.1/$1Client
+objs/x64Linux2.6gcc4.4.5/$1Client
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Kill server
@@ -43,8 +43,8 @@ killall -9 $1Server
 for dir in $(find . -type d -mindepth 1 -maxdepth 1 -printf "%f\n"); do
 # Enter to the directory.
 cd $dir
-if [ -e "exec_test_x64Linux2.6gcc4.5.1.sh" ] ; then
-    ./exec_test_x64Linux2.6gcc4.5.1.sh
+if [ -e "exec_test_x64Linux2.6gcc4.4.5.sh" ] ; then
+    ./exec_test_x64Linux2.6gcc4.4.5.sh
 else
     execTest $dir
 fi

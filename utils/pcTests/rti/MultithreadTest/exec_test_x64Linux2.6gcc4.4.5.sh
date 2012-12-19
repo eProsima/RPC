@@ -17,19 +17,19 @@ if [ $errorstatus != 0 ]; then return; fi
 # Clean output directory
 rm -rf objs
 # Compile client application
-make -f makefile_x64Linux2.6gcc4.5.1
+make -f makefile_x64Linux2.6gcc4.4.5
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Compile server application
-make -f makefile_x64Linux2.6gcc4.5.1 server
+make -f makefile_x64Linux2.6gcc4.4.5 server
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Execute the server in background
-objs/x64Linux2.6gcc4.5.1/${TEST_NAME}Server &
+objs/x64Linux2.6gcc4.4.5/${TEST_NAME}Server &
 # Wait 5 seconds
 sleep 5
 # Execute the client
-objs/x64Linux2.6gcc4.5.1/${TEST_NAME}Client
+objs/x64Linux2.6gcc4.4.5/${TEST_NAME}Client
 errorstatus=$?
 if [ $errorstatus != 0 ]; then return; fi
 # Kill server
