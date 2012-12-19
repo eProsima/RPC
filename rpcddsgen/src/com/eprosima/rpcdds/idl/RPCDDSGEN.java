@@ -1297,7 +1297,7 @@ public class RPCDDSGEN
             				!exampleOption.equals("x64Win64VS2010") &&
             				!exampleOption.equals("i86Linux2.6gcc4.1.2") &&
             				!exampleOption.equals("i86Linux2.6gcc4.4.3") &&
-            				!exampleOption.equals("x64Linux2.6gcc4.5.1"))
+            				!exampleOption.equals("x64Linux2.6gcc4.4.5"))
             		{
             			System.out.println("ERROR: Unknown example arch " + exampleOption);
             			return false;
@@ -1454,7 +1454,7 @@ public class RPCDDSGEN
                 "                         * i86Win32VS2010\n" +
                 "                         * x64Win64VS2010\n" +
                 "                         * i86Linux2.6gcc4.4.3\n" +
-                "                         * x64Linux2.6gcc4.5.1\n" +
+                "                         * x64Linux2.6gcc4.4.5\n" +
         //        "   -language <C++>: Programming language (default: C++).\n" +
                 "   -replace: replace generated files.\n" +
                 (middleware.equals("rti") ? rti_help : opendds_help));
