@@ -56,7 +56,7 @@ public class Module implements Named {
 		{
 			bt = new BasicType("char", "CORBA::Char", "0");
 			type_declarations.add(bt);
-			bt = new BasicType("wchar", "CORBA::Wchar", "0");
+			bt = new BasicType("wchar", "CORBA::WChar", "0");
 			type_declarations.add(bt);
 			bt = new BasicType("octet", "CORBA::Octet", "0");
 			type_declarations.add(bt);
