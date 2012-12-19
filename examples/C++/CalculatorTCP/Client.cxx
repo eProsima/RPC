@@ -52,6 +52,7 @@ int main(int argc, char **argv)
 				try
 				{
 					addition_ret = proxy->addition(value1, value2);
+					std::cout << "Addition result: " << addition_ret << std::endl;
 				}
 				catch(eProsima::RPCDDS::Exception &ex)
 				{
