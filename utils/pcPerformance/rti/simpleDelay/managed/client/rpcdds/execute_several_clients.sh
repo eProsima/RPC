@@ -8,7 +8,7 @@ if [ $# -ne $EXPECTED_ARGS ]; then
 fi
 
 for ((i=1;i<=$1;++i)); do 
-    ./objs/x64Linux2.6gcc4.5.1/SimpleDelayClient $2 $3 $1 $i &
+    ./objs/x64Linux2.6gcc4.4.5/SimpleDelayClient $2 $3 $1 $i &
 done
 
 echo "Waiting the end of all clients"
