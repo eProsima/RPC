@@ -456,6 +456,7 @@ namespace eProsima
 
                                     wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
 									wQos.history.depth = 100;
+									set_datawriter_protocol(wQos);
 
                                     m_requestDataWriter = m_requestPublisher->create_datawriter(m_requestTopic, wQos, NULL, STATUS_MASK_NONE);
 
@@ -491,6 +492,7 @@ namespace eProsima
                                                             rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
 															rQos.history.depth = 100;
 															set_max_query_condition_filters(rQos);
+															set_datareader_protocol(rQos);
 
                                                             m_replyDataReader = m_replySubscriber->create_datareader(m_replyFilter, rQos, NULL, STATUS_MASK_NONE);
 

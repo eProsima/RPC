@@ -90,6 +90,48 @@ namespace eProsima
 #endif
 		}
 
+		void set_datareader_protocol(DDS::DataReaderQos &rQos)
+		{
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+			rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.sec = 0;
+			rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.nanosec = 50000000;
+			rQos.protocol.rtps_reliable_reader.heartbeat_suppression_duration.sec = 0;
+			rQos.protocol.rtps_reliable_reader.heartbeat_suppression_duration.nanosec = 45000000;
+			rQos.protocol.rtps_reliable_reader.nack_period.sec = 0;
+			rQos.protocol.rtps_reliable_reader.nack_period.nanosec = 100000000;
+#endif
+		}
+
+		void set_datawriter_protocol(DDS::DataWriterQos &wQos)
+		{
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+			wQos.protocol.rtps_reliable_writer.low_watermark = 0;
+			wQos.protocol.rtps_reliable_writer.high_watermark = 3;
+			wQos.protocol.rtps_reliable_writer.heartbeat_period.sec = 0;
+			wQos.protocol.rtps_reliable_writer.heartbeat_period.nanosec = 100000000;
+			wQos.protocol.rtps_reliable_writer.fast_heartbeat_period.sec = 0;
+			wQos.protocol.rtps_reliable_writer.fast_heartbeat_period.nanosec = 50000000;
+			wQos.protocol.rtps_reliable_writer.late_joiner_heartbeat_period.sec = 0;
+			wQos.protocol.rtps_reliable_writer.late_joiner_heartbeat_period.nanosec = 100000000;
+			wQos.protocol.rtps_reliable_writer.max_heartbeat_retries = 100;
+#endif
+		}
+
+		void increase_buffers(DDS::DomainParticipantQos &pQos)
+		{
+#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+			pQos.receiver_pool.buffer_size = 65536;
+			int length = pQos.property.value.length();
+			pQos.property.value.ensure_length(length + 3, length + 3);
+			pQos.property.value[length].name = strdup("dds.transport.UDPv4.builtin.parent.message_size_max");
+			pQos.property.value[length++].value = strdup("65536");
+			pQos.property.value[length].name = strdup("dds.transport.UDPv4.builtin.send_socket_buffer_size");
+			pQos.property.value[length++].value = strdup("65536");
+			pQos.property.value[length].name = strdup("dds.transport.UDPv4.builtin.recv_socket_buffer_size");
+			pQos.property.value[length].value = strdup("65536");
+#endif
+		}
+
         DDS::DomainParticipantFactory* getFactory(int domainId)
         {
             const char* const METHOD_NAME = "getFactory";

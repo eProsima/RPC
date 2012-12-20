@@ -51,6 +51,12 @@ namespace eProsima
 
 		void set_max_query_condition_filters(DDS::DataReaderQos &rQos);
 
+		void set_datareader_protocol(DDS::DataReaderQos &rQos);
+
+		void set_datawriter_protocol(DDS::DataWriterQos &wQos);
+
+		void increase_buffers(DDS::DomainParticipantQos &pQos);
+
         DDS::DomainParticipantFactory* getFactory(int domainId);
     }; // namespace RPCDDS
 }; // namespace eProsima

@@ -47,6 +47,7 @@ namespace eProsima
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
                 m_transport->setTransport(participantQos);
 #endif
+				increase_buffers(participantQos);
                 // Creating the domain participant which is associated with the client
                 m_participant = factory->create_participant(
                         m_domainId, participantQos, 
