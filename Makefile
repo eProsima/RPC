@@ -14,10 +14,11 @@ ifdef DDS_ROOT
 endif
 endif
 -include $(BASEDIR)/building/makefiles/rpcdds.mk
+-include $(BASEDIR)/building/makefiles/doxygen.mk
 
-.PHONY: all
+.PHONY: all doxygen
 
-all: rpcdds
+all: rpcdds doxygen
 
 clean:
 	@rm -f $(OBJS)
