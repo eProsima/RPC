@@ -15,10 +15,11 @@ endif
 endif
 -include $(BASEDIR)/building/makefiles/rpcdds.mk
 -include $(BASEDIR)/building/makefiles/doxygen.mk
+-include $(BASEDIR)/building/makefiles/package.mk
 
 .PHONY: all doxygen
 
-all: rpcdds doxygen
+all: rpcdds doxygen package
 
 clean:
 	@rm -f $(OBJS)
