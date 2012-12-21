@@ -7,9 +7,9 @@ DEFINES_ARCH_SPECIFIC =  -DRTI_UNIX -DRTI_LINUX
 
 DEFINES = $(DEFINES_ARCH_SPECIFIC)  
 
-INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../../include -I../../../../../include/idl/rti
+INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include
 
-LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L../../../../../lib/x64Linux2.6gcc4.4.5 \
+LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
        -lnddsc -lnddscore -lnddscpp -lrpcdds -lboost_thread-mt $(SYSLIBS_x64Linux2.6gcc4.4.5)
 
 COMMONCXXSOURCES = MultithreadTestRequestReply.cxx MultithreadTest.cxx MultithreadTestRequestReplyPlugin.cxx \

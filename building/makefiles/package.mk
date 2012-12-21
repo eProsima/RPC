@@ -19,5 +19,23 @@ package:
 	# Copy IDL
 	mkdir tmp/rpcdds/idl
 	cp idl/MessageHeader.idl tmp/rpcdds/idl/
+	# Copy header files.
+	cp -r include tmp/rpcdds/
+	find tmp/rpcdds/include -iname *~ -exec rm {} \;
+	# Copy libraries.
+	mkdir tmp/rpcdds/lib
+	cp -r lib/i86Linux2.6gcc4.4.5 tmp/rpcdds/lib/
+	cp -r lib/x64Linux2.6gcc4.4.5 tmp/rpcdds/lib/
+	# Copy licenses
+	cp doc/licencias/* tmp/rpcdds/
+	cp README.html tmp/rpcdds/
+	# Remove backup files.
+	find tmp/rpcdds -iname "*~" -exec rm {} \;
+	# Create tar.
+	tar -czf rpcdds-1.0.tar.gz -C tmp rpcdds/
+	# Send tar to central computer
+	mount utils/rpcdds_versiones
+	mv rpcdds-1.0.tar.gz utils/rpcdds_versiones/
+	sudo umount utils/rpcdds_versiones
 	# Remove tmp directory
 	rm -r tmp
