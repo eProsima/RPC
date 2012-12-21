@@ -253,6 +253,7 @@ public class RPCDDSGEN
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
             
+            // Add temporary directory.
             if(tempDir != null)
             {
             	lineCommand.add("-t");
@@ -1295,8 +1296,7 @@ public class RPCDDSGEN
 
             		if(!exampleOption.equals("i86Win32VS2010") &&
             				!exampleOption.equals("x64Win64VS2010") &&
-            				!exampleOption.equals("i86Linux2.6gcc4.1.2") &&
-            				!exampleOption.equals("i86Linux2.6gcc4.4.3") &&
+            				!exampleOption.equals("i86Linux2.6gcc4.4.5") &&
             				!exampleOption.equals("x64Linux2.6gcc4.4.5"))
             		{
             			System.out.println("ERROR: Unknown example arch " + exampleOption);
@@ -1453,7 +1453,7 @@ public class RPCDDSGEN
         		"                        Platforms supported:\n" +
                 "                         * i86Win32VS2010\n" +
                 "                         * x64Win64VS2010\n" +
-                "                         * i86Linux2.6gcc4.4.3\n" +
+                "                         * i86Linux2.6gcc4.4.5\n" +
                 "                         * x64Linux2.6gcc4.4.5\n" +
         //        "   -language <C++>: Programming language (default: C++).\n" +
                 "   -replace: replace generated files.\n" +
