@@ -89,21 +89,47 @@ SectionGroup "Environment variables" SECGRP0001
 SectionGroupEnd
 
 Section -post SEC0006
+
+    # Copy documentation.
+    SetOutPath $INSTDIR\doc\html
+    SetOverwrite on
+    File /r ..\..\..\..\doc\html\*
+    
+    # Copy documentation.
+    SetOutPath $INSTDIR\doc\pdf
+    SetOverwrite on
+    File /r ..\..\..\..\doc\pdf\*
+    
+    # Copy examples.
+    SetOutPath $INSTDIR\examples
+    SetOverwrite on
+    File /r ..\..\..\..\examples\*
+    
+    # Copy rpcddsgen java classes.
     SetOutPath $INSTDIR\classes
     SetOverwrite on
     File /r ..\..\..\..\rpcddsgen\lib\*
         
+    # Copy rpcddsgen script.
     SetOutPath $INSTDIR\scripts
     SetOverwrite on
-    File ..\..\..\..\scripts\rti\rpcddsgen.bat
+    File ..\..\..\..\scripts\rpcddsgen.bat
     
+    # Copy IDL.
     SetOutPath $INSTDIR\idl
     SetOverwrite on
     File ..\..\..\..\idl\MessageHeader.idl
     
+    # Copy header files.
     SetOutPath $INSTDIR\include
     SetOverwrite on
     File /r ..\..\..\..\include\*
+    
+    # Copy licensies
+    SetOutPath $INSTDIR
+    SetOverwrite on
+    File /r ..\..\..\..\doc\licencias\*
+    File ..\..\..\..\README.html
     
     WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
     SetOutPath $INSTDIR
@@ -167,7 +193,9 @@ Section -un.post UNSEC0006
     RmDir /r /REBOOTOK $INSTDIR\idl
     RmDir /r /REBOOTOK $INSTDIR\scripts
     RmDir /r /REBOOTOK $INSTDIR\classes
-    RmDir /REBOOTOK $INSTDIR
+    RmDir /r /REBOOTOK $INSTDIR\examples
+    RmDir /r /REBOOTOK $INSTDIR\doc
+    RmDir /r /REBOOTOK $INSTDIR
 SectionEnd
 
 # Installer functions
