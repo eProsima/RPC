@@ -1,0 +1,65 @@
+<wsdl:definitions 
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+  xmlns:tns="http://eprosima.com" 
+  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" 
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+  xmlns:wsa10="http://www.w3.org/2005/08/addressing" 
+  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" targetNamespace="http://eprosima.com" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://eprosima.com" elementFormDefault="qualified" >
+  <xsd:element name="Estructura">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="value1" type="xsd:int"/>
+        <xsd:element name="value2" type="xsd:int"/>
+        <xsd:element name="value3" type="xsd:string"/>
+        <xsd:element name="seq">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="unbounded" name="integer" type="xsd:int"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISimpleDelay_Duplicate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estructura" />
+  </wsdl:message>
+  <wsdl:message name="ISimpleDelay_Duplicate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Estructura" />
+  </wsdl:message>
+  <wsdl:portType name="ISimpleDelay">
+    <wsdl:operation name="Duplicate">
+      <wsdl:input wsaw:Action="http://eprosima.com/ISimpleDelay/Estructura" message="tns:ISimpleDelay_Duplicate_InputMessage" />
+      <wsdl:output wsaw:Action="http://eprosima.com/ISimpleDelay/Estructura" message="tns:ISimpleDelay_Duplicate_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DefaultBinding_ISimpleDelay" type="tns:ISimpleDelay">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Duplicate">
+      <soap:operation soapAction="http://eprosima.com/ISimpleDelay/Duplicate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SimpleDelayService">
+        <wsdl:port name="ISimpleDelay" binding="tns:DefaultBinding_ISimpleDelay">
+            <soap:address location="http://eprosima.com/ISimpleDelay" />
+        </wsdl:port> 
+  </wsdl:service>
+</wsdl:definitions>
