@@ -25,13 +25,13 @@ SERVEROBJS    = \$(SERVERSOURCES:%.cxx=objs/$example$/%.o)
 CLIENTEXEC    = objs/$example$/$interface$Client
 SERVEREXEC    = objs/$example$/$interface$Server
 
-client: \$(DIRECTORIES) \$(COMMONOBJS) \$(CLIENTOBJS) \$(CLIENTEXEC)
-server: \$(DIRECTORIES) \$(COMMONOBJS) \$(SERVEROBJS) \$(SERVEREXEC)
+client: \$(DIRECTORIES) \$(CLIENTEXEC)
+server: \$(DIRECTORIES) \$(SERVEREXEC)
 
-\$(CLIENTEXEC) : 
+\$(CLIENTEXEC) : \$(COMMONOBJS) \$(CLIENTOBJS)
 	\$(LD_$example$) \$(LDFLAGS_$example$)  -o \$(@:%.out=%) \$(COMMONOBJS) \$(CLIENTOBJS) \$(LIBS)
 
-\$(SERVEREXEC) : 
+\$(SERVEREXEC) : \$(COMMONOBJS) \$(SERVEROBJS)
 	\$(LD_$example$) \$(LDFLAGS_$example$)  -o \$(@:%.out=%) \$(COMMONOBJS) \$(SERVEROBJS) \$(LIBS)
 
 objs/$example$/%.o : %.cxx

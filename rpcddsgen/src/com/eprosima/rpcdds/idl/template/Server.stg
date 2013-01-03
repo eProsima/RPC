@@ -203,7 +203,7 @@ $exFunctionHeader(class=interfaceName,...)$
         $if(!isOneway)$
         $interfaceName$_$name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $extractParams(rettype)$$endif$);
         replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = "";
+        replyData.header.rpcddsRetMsg = (char*)"";
 
         service->sendReply(requestData, &replyData);
         $endif$
