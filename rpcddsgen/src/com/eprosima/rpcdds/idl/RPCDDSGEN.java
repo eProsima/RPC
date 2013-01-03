@@ -1457,8 +1457,8 @@ public class RPCDDSGEN
                 "                         * x64Linux2.6gcc4.4.5\n" +
         //        "   -language <C++>: Programming language (default: C++).\n" +
                 "   -replace: replace generated files.\n" +
+                "   -d <path>: Output directory for generated files.\n" +
                 (middleware.equals("rti") ? rti_help : opendds_help));
-        //				"   -d <path>                : Output directory.\n");
     }
 
     public static int writeFile(String file, StringTemplate template)
