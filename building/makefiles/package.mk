@@ -16,6 +16,7 @@ package:
 	# Copy rpcddsgen script
 	mkdir tmp/rpcdds/scripts
 	cp scripts/rpcddsgen.sh tmp/rpcdds/scripts/
+	chmod 755 tmp/rpcdds/scripts/rpcddsgen.sh
 	# Copy IDL
 	mkdir tmp/rpcdds/idl
 	cp idl/MessageHeader.idl tmp/rpcdds/idl/
@@ -29,8 +30,9 @@ package:
 	# Copy licenses
 	cp doc/licencias/* tmp/rpcdds/
 	cp README.html tmp/rpcdds/
-	# Remove backup files.
+	# Remove backup files and svn directories.
 	find tmp/rpcdds -iname "*~" -exec rm {} \;
+	rm -rf `find tmp/rpcdds -type d -name ".svn"`
 	# Create tar.
 	tar -czf rpcdds-1.0.tar.gz -C tmp rpcdds/
 	# Send tar to central computer

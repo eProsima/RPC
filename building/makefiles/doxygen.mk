@@ -1,5 +1,5 @@
 eliminardir:
-	rm -r output/doxygen
+	rm -rf output/doxygen
 	
 output/doxygen:
 	# Call doxygen and create html and latex files
