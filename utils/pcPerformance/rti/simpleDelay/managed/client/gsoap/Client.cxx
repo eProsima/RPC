@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <boost/chrono.hpp>
 #include <boost/thread.hpp>
 
@@ -284,7 +285,10 @@ int main(int argc, char **argv)
                     if(sscanf(argv[4], "%u", &appId) == 1)
                     {
                         // Creation of the proxy for interface "SimpleDelay".
-                        DefaultBinding_USCOREISimpleDelayProxy proxy("localhost:8080");
+                        std::string host = argv[1];
+                        host += ":8080";
+
+                        DefaultBinding_USCOREISimpleDelayProxy proxy(host.c_str());
 
                         // Create DDS entities.
                         if(createDDSEntities(cond) == 0)
