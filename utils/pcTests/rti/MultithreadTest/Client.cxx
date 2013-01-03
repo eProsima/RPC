@@ -93,7 +93,7 @@ int checkFiles()
 #if defined(RTI_WIN32)
         _snprintf(filename, 50, "Thread%d.txt", i);
 #elif defined(RTI_LINUX)
-        _snprintf(filename, 50, "Thread%d.txt", i);
+        snprintf(filename, 50, "Thread%d.txt", i);
 #endif
         file = fopen(filename, "r");
 
