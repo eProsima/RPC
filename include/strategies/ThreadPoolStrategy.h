@@ -1,22 +1,31 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _STRATEGIES_THREADPOOLSTRATEGY_H_
 #define _STRATEGIES_THREADPOOLSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 
-#define DDSRPC_MIN_THREADS_DEFAULT 5
+#define RPCDDS_MIN_THREADS_DEFAULT 5
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPoolStrategyImpl;
 
 		/**
-		 * \brief This class implements a thread pool strategy.
+		 * @brief This class implements a thread pool strategy.
 		 *        The server schedules the incoming requests in a free thread of the thread pool.
+         * @ingroup STRATEGIESMODULE 
 		 */
-        class DDSRPC_WIN32_DLL_API ThreadPoolStrategy : public ServerStrategy
+        class RPCDDS_WIN32_DLL_API ThreadPoolStrategy : public ServerStrategy
         {
             public:
 
@@ -25,7 +34,7 @@ namespace eProsima
 				 *
 				 * \param threadCount Number of thread that will manage by the thread pool. Default value: 5.
 				 */
-                ThreadPoolStrategy(unsigned int threadCount = DDSRPC_MIN_THREADS_DEFAULT);
+                ThreadPoolStrategy(unsigned int threadCount = RPCDDS_MIN_THREADS_DEFAULT);
 
 				/// \brief Default destructor.
                 ~ThreadPoolStrategy();
@@ -44,7 +53,7 @@ namespace eProsima
 
                 ThreadPoolStrategyImpl *m_impl;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } //namespace eProsima
 
 #endif // _STRATEGIES_THREADPOOLSTRATEGY_H_

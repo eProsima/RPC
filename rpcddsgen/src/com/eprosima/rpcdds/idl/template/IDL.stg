@@ -1,0 +1,89 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group IDL;
+
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Common Templates for IDL types definition      *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * idlFile: External Template
+ * Produces IDL file with type definitions 
+ * Params:
+ *   file   : list of other IDL files (with user defined types) to include.
+ *   types  : list of IDL types definitions (structs, sequences...)
+ *
+ * Uses:
+ */ 
+idlFile(interfaceName, file, types) ::= <<
+$fileHeader(file=[interfaceName, "RequestReply.idl"], description=["This IDL file contains the definition of the DDS messages for interface ", interfaceName, "."])$
+
+#include "MessageHeader.idl"
+$file:{#include "$it$"}$
+
+$types:{$it$};separator="\n"$
+
+>>
+
+
+
+/**
+ * request: External Template
+ * Produces an IDL file for Request types. 
+ * Params:
+ *   name   : function name.
+ *   fields : list of function parameters. In and inout parameters for Request,
+ *            inout, out and return type for Reply.
+ *
+ */ 
+request(interfaceName, funName, params) ::= <<
+
+$preReqIDLDefines(name=[interfaceName, "_", funName])$
+
+/**
+ * Topic used to receive/send requests for the procedure $funName$.
+ */
+struct $interfaceName$_$funName$Request{
+    RequestHeader header;
+    $params : {$it.typeName$ $it.name$;};separator="\n"$
+}; $levelIDLdefine()$
+>>
+
+/**
+ * reply: External Template
+ * Produces an IDL file for Reply types. 
+ * Params:
+ *   name   : function name.
+ *   fields : list of function parameters. In and inout parameters for Request,
+ *            inout, out and return type for Reply.
+ */ 
+reply(interfaceName, funName, params, return) ::= <<
+
+$preRepIDLDefines(name=[interfaceName, "_", funName])$
+
+/**
+ * Topic used to receive/send replies for the procedure $funName$.
+ */
+struct $interfaceName$_$funName$Reply{
+    ReplyHeader header;
+    $params : {$it.typeName$ $it.name$;};separator="\n"$
+    $if(return)$$return.typeName$ $return.name$;$endif$
+}; $levelIDLdefine()$
+>>

@@ -1,0 +1,218 @@
+/* $Id$   *
+ * (c) Copyright, eProsima, 2009.                                          *
+ * All rights reserved.                                                    *    
+ *                                                                         *
+ * No duplications, whole or partial, manual or electronic, may be made    *
+ * without express written permission.  Any such copies, or                *
+ * revisions thereof, must display this notice unaltered.                  *
+ * This code contains trade secrets of                                     *
+ * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
+ *                                                                         *
+ * modification history                                                    *
+ * --------------------                                                    *
+ * 1.0,29sep09,RodM Created                                                *
+ * =====================================================================   *
+ */
+
+group RPCSupport;
+
+/************************************************************************
+ *                                                                      *
+ *   External Templates: Templates required to generate the Proxy       *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * ClientHeader: External Template
+ * Produces the ClientRPCSupport header file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   topicNames     : list of the interface function names. 
+ *
+ * Uses:
+ *  doNotEditC                - inherited(cplusplus)
+ *  clientRPCHeader - local
+ */ 
+ClientHeader(interfaceName, topicNames) ::= <<
+$fileHeader(file=[interfaceName, "ClientRPCSupport.h"], description=["This header file contains the declaration of the proxy's RPC endpoints for interface ", interfaceName, "."])$
+
+#ifndef _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
+
+#include "utils/GenericClientRPC.h"
+$ReqRepRIncludes(interfaceName=interfaceName)$
+
+$topicNames:{$ClientRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+
+#endif  // _$interfaceName;format="toUpper"$_CLIENT_RPC_SUPPORT_H_
+>>
+
+/**
+ * ServerHeader: External Template
+ * Produces the ClientRPCSupport header file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   topicNames     : list of the interface function names. 
+ *
+ * Uses:
+ *  doNotEditC                - inherited(cplusplus)
+ *  clientRPCHeader - local
+ */ 
+ServerHeader(interfaceName,topicNames) ::= <<
+$fileHeader(file=[interfaceName, "ServerRPCSupport.h"], description=["This header file contains the declaration of the server's RPC endpoints for interface ", interfaceName, "."])$
+
+#ifndef _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
+#define _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
+
+#include "utils/GenericServerRPC.h"
+$ReqRepRIncludes(interfaceName=interfaceName)$
+
+
+$topicNames:{$ServerRPCHeader(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+
+#endif  // _$interfaceName;format="toUpper"$_SERVER_RPC_SUPPORT_H_
+>>
+
+/**
+ * ClientDefinition: External Template
+ * Produces the ClientRPCSupport implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   topicNames     : list of the interface function names. 
+ *
+ * Uses:
+ *  doNotEditC                - inherited(cplusplus)
+ *  clientRPCHeader - local
+ */ 
+ClientDefinition(interfaceName,topicNames) ::= <<
+$fileHeader(file=[interfaceName, "ClientRPCSupport.cxx"], description=["This source file contains the definition of the proxy's RPC endpoints for interface ", interfaceName, "."])$
+
+#include "$interfaceName$ClientRPCSupport.h"
+
+$topicNames:{$ClientRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+
+>>
+
+/**
+ * ServerDefinition: External Template
+ * Produces the ClientRPCSupport implementation file.
+ * Params:
+ *   interfaceName: Name of the interface whose methods this proxy invokes.
+ *   topicNames     : list of the interface function names. 
+ *
+ * Uses:
+ *  doNotEditC                - inherited(cplusplus)
+ *  clientRPCHeader - local
+ */ 
+ServerDefinition(interfaceName,topicNames) ::= <<
+$fileHeader(file=[interfaceName, "ServerRPCSupport.cxx"], description=["This source file contains the definition of the server's RPC endpoints for interface ", interfaceName, "."])$
+
+#include "server/Server.h"
+#include "$interfaceName$ServerRPCSupport.h"
+
+$topicNames:{$ServerRPCImpl(name=it.name,isOneway=it.isOneway)$};separator="\n"$
+
+>>
+
+
+/************************************************************************
+ *                                                                      *
+ *   Internal Templates: For internal use only.                         *
+ *                                                                      *
+ ************************************************************************
+ */
+
+/**
+ * ClientRPCHeader: Internal Template
+
+ * Params:
+ *   name     :function name 
+ *
+ * Uses:
+ */ 
+ClientRPCHeader(name,isOneway) ::= <<
+
+$if(!isOneway)$GENERIC_CLIENT_RPC$else$GENERIC_CLIENT_ONEWAY_RPC$endif$($name$ClientRPC, $name$RequestDataWriter$if(!isOneway)$, $name$ReplyDataReader$endif$);
+
+>>
+
+/**
+ * ServerRPCHeader: Internal Template
+
+ * Params:
+ *   name     :function name 
+ *
+ * Uses:
+ */ 
+ServerRPCHeader(name,isOneway) ::= <<
+
+$if(!isOneway)$GENERIC_SERVER_RPC$else$GENERIC_SERVER_ONEWAY_RPC$endif$($name$ServerRPC$if(!isOneway)$, $name$ReplyDataWriter$endif$, $name$RequestDataReader);
+
+>>
+
+/**
+ * ClientRPCImpl: Internal Template
+ * 
+ * Params:
+ *   name     :function name 
+ *
+ * Uses:
+ */ 
+ClientRPCImpl(name,isOneway) ::= <<
+
+/* Defines */
+#define TName            $name$ClientRPC
+#define TDataTypeSupport $name$ReplyTypeSupport
+#define TData            $name$
+#define TDataSeq         $name$ReplySeq
+#define TDataReader      $name$ReplyDataReader
+#define TDataWriter      $name$RequestDataWriter
+$if(isOneway)$#define IS_ONEWAY$endif$
+
+
+#include "utils/GenericClientRPC.gen"
+
+
+#undef TName
+#undef TDataTypeSupport
+#undef TData
+#undef TDataSeq
+#undef TDataReader
+#undef TDataWriter
+$if(isOneway)$#undef IS_ONEWAY$endif$
+
+>>
+
+/**
+ * ServerRPCImpl: Internal Template
+ * 
+ * Params:
+ *   name     :function name 
+ *
+ * Uses:
+ */ 
+ServerRPCImpl(name,isOneway) ::= <<
+
+/* Defines */
+#define TName                   $name$ServerRPC
+#define TDataReplyTypeSupport   $name$ReplyTypeSupport
+#define TDataRequestTypeSupport $name$RequestTypeSupport
+#define TData                   $name$
+#define TDataReader             $name$RequestDataReader
+#define TDataWriter             $name$ReplyDataWriter
+$if(isOneway)$#define IS_ONEWAY$endif$
+
+
+#include "utils/GenericServerRPC.gen"
+
+
+#undef TName
+#undef TDataReplyTypeSupport
+#undef TDataRequestTypeSupport
+#undef TData
+#undef TDataReader
+#undef TDataWriter
+$if(isOneway)$#undef IS_ONEWAY$endif$
+
+>>

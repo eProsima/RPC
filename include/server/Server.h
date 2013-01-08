@@ -1,18 +1,27 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
 #include "utils/Typedefs.h"
-#include "utils/Version.h"
+#include "utils/Middleware.h"
 
+#include <string>
 #include <list>
 
-#define DDSRPC_DEFAULT_PERIOD_MILLISEC 5000
+#define RPCDDS_DEFAULT_PERIOD_MILLISEC 5000
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
         class ServerStrategy;
@@ -20,15 +29,26 @@ namespace eProsima
 		class ServerRPC;
 	 
 		/**
-		 * \brief This class implements the common functionalities that the server have.
+		 * @brief This class implements the common functionalities that the server has.
+         * @ingroup SERVERMODULE
 		 */
-		class DDSRPC_WIN32_DLL_API Server
+		class RPCDDS_WIN32_DLL_API Server
 		{
 
 			public:
 
-				/// \brief This function introduces the thread in a loop.
-				void wait(unsigned int milliseconds = DDSRPC_DEFAULT_PERIOD_MILLISEC);
+				/**
+				 * \brief This function starts the server to listen requests.
+				 *         The server will create the DDS entities to start listening.
+				 * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization of DDS entities was wrong.
+				 */
+				void serve();
+
+				/**
+				 * \brief This function close the server's communications.
+				 *        The server will destroy the DDS entities to close the communications.
+				 */
+				void stop();
 
 				/**
 				 * \brief This function schedules a new request that was received.
@@ -39,17 +59,34 @@ namespace eProsima
 				 */
 				void schedule(fExecFunction execFunction, void *data, ServerRPC *service);
 
+				/**
+				 * \brief This function returns the name of the server that the server offers.
+				 *
+				 * \return The name of the service.
+				 */
+				const std::string& getServiceName() const;
+
+				/**
+				 * \brief This function returns the DDS domain participant that use this server.
+				 *
+				 * \return Pointer to the DDS domain participant.
+				 */
+				DDS::DomainParticipant* getParticipant() const;
+
 			protected:
 
 				/**
 				 * \brief A constructor. The associated domain participant is created.
 				 *
-				 * \param strategy The strategy used by the server to execute new requests. Cannot be NULL.
-				 * \param transport The transport that will be use the server.
+				 * \param serviceName The service's name that proxies will use to connect with the server.
+				 * \param strategy The strategy used by the server to execute new requests.
+				 *         This class doesn't delete this object in its destructor. Cannot be NULL.
+				 * \param transport The transport that will be use the server. This class doesn't delete this object in its destructor.
+				 *        If the pointer is NULL, then a default UDPTransport will be used.
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
-				 * \exception eProsima::DDSRPC::ResourceException 
+				 * \exception InitializeException This exception is thrown when the initialization was wrong.
 				 */
-				Server(ServerStrategy *strategy, Transport *transport, int domainId = 0);
+				Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId = 0);
 
 				/// \brief The default destructor.
 				virtual ~Server();
@@ -62,14 +99,10 @@ namespace eProsima
 				 */
 				int setRPC(ServerRPC *newRPC);
 
-				/**
-				 * \brief This function returns the DDS domain participant that use this server.
-				 *
-				 * \return Pointer to the DDS domain participant.
-				 */
-				DDS::DomainParticipant* getParticipant();
-
 			private:
+
+				/// \brief The name of the service that the server offers. Proxies will use this name to connect with the server.
+				std::string m_serviceName;
 
 				/// \brief The domain identifier.
 				int m_domainId;
@@ -86,10 +119,20 @@ namespace eProsima
 				/// \brief The list that contains all the remote procedures..
 				std::list<ServerRPC*> m_rpcList;
 
+				/// This function deletes all RPC endpoints.
 				void deleteRPCs();
+
+				/**
+				 * \brief If the transport was created by this class because it is the default UDPTransport,
+				 *          then this attribute has the true value. In other case the value will be false.
+				 */
+				bool m_defaultTransport;
+
+				/// \brief Pointer to the transport which this server's proxy uses.
+				Transport *m_transport;
 		};
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _SERVER_SERVER_H_

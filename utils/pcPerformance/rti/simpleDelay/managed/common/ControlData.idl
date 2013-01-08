@@ -1,0 +1,10 @@
+enum Action
+{
+    READY = 0,
+    START
+};
+struct ControlData
+{
+    unsigned long appId;
+    Action action;
+};

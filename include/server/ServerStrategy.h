@@ -1,20 +1,30 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _SERVER_SERVERSTRATEGY_H_
 #define _SERVER_SERVERSTRATEGY_H_
 
 #include "utils/Typedefs.h"
+#include "utils/rpcdds.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class Server;
-        class ServerRPC;
+        class  ServerRPC;
 
 		/**
-		 * \brief This class is the base of all classes that implement a server strategy
+		 * @brief This class is the base of all classes that implement a server strategy
 		 *        that could be used by the server.
+         * @ingroup SERVERMODULE
 		 */
-        class ServerStrategy
+        class RPCDDS_WIN32_DLL_API ServerStrategy
         {
             public:
 
@@ -35,7 +45,7 @@ namespace eProsima
 				 */
                 virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service) = 0;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _SERVER_SERVERSTRATEGY_H_

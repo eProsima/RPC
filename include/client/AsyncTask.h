@@ -1,21 +1,31 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _CLIENT_ASYNCTASK_H_
 #define _CLIENT_ASYNCTASK_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
-#include "utils/Version.h"
+#include "utils/Middleware.h"
+#include "exceptions/SystemException.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class Client;
         class ClientRPC;
 
 		/**
-		 * \brief This class represents each asynchronous task used to wait the reply from an asynchronous call.
+		 * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
+         * @ingroup CLIENTMODULE
 		 */
-        class DDSRPC_WIN32_DLL_API AsyncTask
+        class RPCDDS_WIN32_DLL_API AsyncTask
         {
             public:
 
@@ -27,15 +37,21 @@ namespace eProsima
                 AsyncTask(Client *client);
 
 				/// \brief Default destructor.
-                ~AsyncTask();
+                virtual ~AsyncTask();
 
 				/**
-				 * \brief This function executes the callback functions when a reply is received or an error occurs.
+				 * \brief This function executes the callback functions when a reply is received or an exception was transmitted.
+				 *        This function should be implemented by generated asynchronous tasks.
+				 */
+				virtual void execute() = 0;
+
+				/**
+				 * \brief This function executes the callback function when an exception occurs in the client side.
 				 *        This function should be implemented by generated asynchronous tasks.
 				 *
-				 * \param message Return code that occurs when asynchronous task try to take the reply.
+				 * \param ex The exception that is sent to the user.
 				 */
-				virtual void execute(ReturnMessage message) = 0;
+				virtual void on_exception(const SystemException &ex) = 0;
 
 				/**
 				 * \brief This function returns the remote procedure that this task is linked with.
@@ -48,10 +64,9 @@ namespace eProsima
 				 * \brief This function is called when the DDS WaitSet was waked up by the query condition of this asynchronous task.
 				 *        This funtion takes the reply.
 				 *
-				 * \param message Return code occurs till now.
 			     * \param query Query condition associated with this asynchronous task.
 				 */
-				void execute(ReturnMessage message, DDS::QueryCondition *query);
+				void execute(DDS::QueryCondition *query);
 
 				/**
 				 * \brief This function set the remote procedure associated with this asynchronous task.
@@ -62,8 +77,12 @@ namespace eProsima
 
             protected:
 
-				/// \brief Allocated memory to be used when reply will be taken.
-                void *m_reply;
+				/**
+				 * \brief Returns the allocated memory that will be used when reply will be taken.
+				 *
+				 * \return Pointer to the allocated memory.
+				 */
+                virtual void* getReplyInstance() = 0;
 
             private:
 
@@ -73,6 +92,6 @@ namespace eProsima
 				/// \brief Pointer to the remote procedure call.
                 ClientRPC *m_clientRPC;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 #endif // _CLIENT_ASYNCTASK_H_

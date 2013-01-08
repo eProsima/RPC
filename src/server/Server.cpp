@@ -1,77 +1,99 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "server/Server.h"
 #include "server/ServerRPC.h"
-#include "exceptions/ResourceException.h"
-#include "utils/Utilities.h"
+#include "exceptions/InitializeException.h"
 #include "transports/Transport.h"
+#include "transports/UDPTransport.h"
 #include "server/ServerStrategy.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static const char* const CLASS_NAME = "eProsima::DDSRPC::Server";
+static const char* const CLASS_NAME ="eProsima::RPCDDS::Server";
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
 
-		Server::Server(ServerStrategy *strategy, Transport *transport, int domainId) : m_domainId(domainId),
-        m_strategy(strategy), m_participant(NULL)
+		Server::Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId) : m_serviceName(serviceName), m_domainId(domainId),
+        m_strategy(strategy), m_participant(NULL), m_defaultTransport(false), m_transport(transport)
 		{
 			const char* const METHOD_NAME = "Server";
+			std::string errorMessage;
 
-            if(strategy != NULL && transport != NULL)
+            if(strategy != NULL)
             {
-                DDS::DomainParticipantQos participantQos;
+				if(m_transport == NULL)
+				{
+					m_transport = new UDPServerTransport();
+					m_defaultTransport = true;
+				}
 
-#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+				DDS::DomainParticipantQos participantQos;
 
-                // Because OpenDDS, the first step is set the transport.
-                transport->setTransport(participantQos);
-#endif
+	#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 
-                // Because OpenDDS, the first step is set the transport.
-                DDS::DomainParticipantFactory *factory = getFactory(domainId);
+				// Because OpenDDS, the first step is set the transport.
+				m_transport->setTransport(participantQos);
+	#endif
 
-                if(factory != NULL)
-                {
-                    factory->get_default_participant_qos(participantQos);
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
-                    transport->setTransport(participantQos);
-#endif
-                    // Creating the domain participant which is associated with the client
-                    m_participant = factory->create_participant(
-                            domainId, participantQos, 
-                            NULL /* listener */, STATUS_MASK_NONE);
+				// Because OpenDDS, the first step is set the transport.
+				DDS::DomainParticipantFactory *factory = getFactory(m_domainId);
 
-                    if (m_participant != NULL)
-                    {
-                        if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
-                        {
-                            participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                            m_participant->set_qos(participantQos);
+				if(factory != NULL)
+				{
+					factory->get_default_participant_qos(participantQos);
+	#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+					m_transport->setTransport(participantQos);
+	#endif
 
-							printf("INFO<%s::%s>: Server is running\n", CLASS_NAME, METHOD_NAME);
+					increase_buffers(participantQos);
+					// Creating the domain participant which is associated with the client
+					m_participant = factory->create_participant(
+							m_domainId, participantQos, 
+							NULL /* listener */, STATUS_MASK_NONE);
 
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        printf("ERROR<%s::%s>: create_participant error\n", CLASS_NAME, METHOD_NAME);
-                    }
-                }
-                else
-                {
-                    printf("ERROR<%s:%s>: create factory error\n", CLASS_NAME, METHOD_NAME);
-                }
+					if (m_participant != NULL)
+					{
+						if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
+						{
+							participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+							m_participant->set_qos(participantQos);
+
+							return;
+						}
+						else
+						{
+							errorMessage = "cannot get the participant QoS";
+						}
+
+						factory->delete_participant(m_participant);
+					}
+					else
+					{
+						errorMessage = "create_participant error";
+					}
+				}
+				else
+				{
+					errorMessage = "create factory error";
+				}
             }
             else
-            {
-                printf("ERROR<%s:%s>: bad parameters\n", CLASS_NAME, METHOD_NAME);
+            {				
+			    errorMessage = "bad parameters";
             }
 
-            throw ResourceException();
+			printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+            throw InitializeException(std::move(errorMessage));
 		}
 
 		void Server::deleteRPCs()
@@ -92,6 +114,8 @@ namespace eProsima
 			const char* const METHOD_NAME = "~Server";
 			DDS::ReturnCode_t retcode;
 
+			deleteRPCs();
+
 			if(m_participant != NULL)
 			{
 				retcode = m_participant->delete_contained_entities();
@@ -105,17 +129,18 @@ namespace eProsima
 				}
 			}
 
-			deleteRPCs();
+			if(m_defaultTransport && m_transport != NULL)
+				delete m_transport;
 		}
 
-		DDS::DomainParticipant* Server::getParticipant()
+		DDS::DomainParticipant* Server::getParticipant() const
 		{ 
 			return m_participant;
 		}
 
 		int Server::setRPC(ServerRPC *newRPC)
 		{
-			const char* const METHOD_NAME = "getParticipant";
+			const char* const METHOD_NAME ="getParticipant";
 			int returnedValue = -1;
 
 			if(newRPC != NULL)
@@ -131,12 +156,34 @@ namespace eProsima
 			return returnedValue;
 		}
 
-		void Server::wait(unsigned int milliseconds)
+		void Server::serve()
 		{
-			while(1)
+			const char* const METHOD_NAME = "serve";
+			std::string errorMessage;
+
+			std::list<ServerRPC*>::iterator it;
+
+			for(it = m_rpcList.begin(); it != m_rpcList.end(); ++it)
 			{
-				boost::this_thread::sleep(boost::posix_time::milliseconds(milliseconds));
+				if((*it)->start() != 0)
+				{
+					printf("ERROR<%s::%s>: Cannot start the RPC object %s\n", CLASS_NAME, METHOD_NAME, (*it)->getRPCName());
+					throw InitializeException(std::string("Cannot start the RPC object ") + (*it)->getRPCName());
+				}
 			}
+
+			printf("INFO<%s::%s>: Server is running\n", CLASS_NAME, METHOD_NAME);	
+		}
+
+		void Server::stop()
+		{
+			const char* const METHOD_NAME = "stop";
+			for(std::list<ServerRPC*>::iterator it = m_rpcList.begin(); it != m_rpcList.end(); ++it)
+			{
+				(*it)->stop();
+			}
+
+			printf("INFO<%s::%s>: Server is stopped\n", CLASS_NAME, METHOD_NAME);
 		}
 
 		void Server::schedule(fExecFunction execFunction, void *data, ServerRPC *service)
@@ -144,5 +191,10 @@ namespace eProsima
             m_strategy->schedule(execFunction, data, this, service);
 		}
 
-	} // namespace DDSRPC
+		const std::string& Server::getServiceName() const
+		{
+			return m_serviceName;
+		}
+
+	} // namespace RPCDDS
 } // namespace eProsima

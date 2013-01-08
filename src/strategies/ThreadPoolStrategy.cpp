@@ -1,3 +1,11 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "strategies/ThreadPoolStrategy.h"
 #include "server/Server.h"
 
@@ -8,7 +16,7 @@ static const char* const CLASS_NAME = "ThreadPoolStrategy";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPoolStrategyJob
         {
@@ -80,5 +88,5 @@ namespace eProsima
             }
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima

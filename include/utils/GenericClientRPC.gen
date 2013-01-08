@@ -1,18 +1,10 @@
-/* $Id$   *
- * (c) Copyright, eProsima, 2009.                                          *
- * All rights reserved.                                                    *    
- *                                                                         *
- * No duplications, whole or partial, manual or electronic, may be made    *
- * without express written permission.  Any such copies, or                *
- * revisions thereof, must display this notice unaltered.                  *
- * This code contains trade secrets of                                     *
- * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
- *                                                                         *
- * modification history                                                    *
- * --------------------                                                    *
- * 1.0,27ene10,RodM Created                                                *
- * =====================================================================   *
- */
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
 
 #if defined(TName) && defined(TDataWriter) && defined(TDataReader) && \
     defined(TDataTypeSupport) && defined(TData) && defined(TDataSeq)
@@ -35,8 +27,8 @@ TName::TName(const char *rpcName, const char *requestTypeName,
 #ifndef IS_ONEWAY
         const char *replyTypeName,
 #endif
-        eProsima::DDSRPC::Client *client) :
-        eProsima::DDSRPC::ClientRPC(rpcName, requestTypeName,
+        eProsima::RPCDDS::Client *client) :
+        eProsima::RPCDDS::ClientRPC(rpcName, requestTypeName,
 #ifndef IS_ONEWAY
         replyTypeName,
 #else
@@ -45,35 +37,21 @@ TName::TName(const char *rpcName, const char *requestTypeName,
         client)
 {
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
-	requestDataWriter = TDataWriter::narrow(m_requestDataWriter);
+	requestDataWriter = TDataWriter::narrow(getRequestDatawriter());
 #ifndef IS_ONEWAY
-	replyDataReader   = TDataReader::narrow(m_replyDataReader);
+	replyDataReader   = TDataReader::narrow(getReplyDatareader());
 #endif
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-	requestDataWriter = TDataWriter::_narrow(m_requestDataWriter);
+	requestDataWriter = TDataWriter::_narrow(getRequestDatawriter());
 #ifndef IS_ONEWAY
-	replyDataReader   = TDataReader::_narrow(m_replyDataReader);
+	replyDataReader   = TDataReader::_narrow(getReplyDatareader());
 #endif
 #endif
 }
 
 TName::~TName()
 {
-}
-
-int TName::registerInstance(void *data)
-{
-    int returnedCode = -1;
-     
-    if(requestDataWriter != NULL)
-    {    
-        m_ih = requestDataWriter->register_instance(*((TDataRequest*)data));
-        
-        if(!DDS_InstanceHandle_is_nil(&m_ih))
-            returnedCode = 0;
-    }
-    
-    return returnedCode;
+	deleteAssociatedAsyncTasks();
 }
 
 DDS::ReturnCode_t TName::write(void *data)
@@ -81,14 +59,14 @@ DDS::ReturnCode_t TName::write(void *data)
 	DDS::ReturnCode_t retCode = DDS::RETCODE_ERROR;
 	
 	if(requestDataWriter != NULL){
-		retCode = requestDataWriter->write(*((TDataRequest*)data), m_ih);
+		retCode = requestDataWriter->write(*((TDataRequest*)data), DDS::HANDLE_NIL);
 	}
 	return retCode;
 }
 
-eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
+eProsima::RPCDDS::ReturnMessage TName::takeReply(void *reply, DDS::QueryCondition *query)
 {
-    eProsima::DDSRPC::ReturnMessage value = eProsima::DDSRPC::CLIENT_ERROR;
+    eProsima::RPCDDS::ReturnMessage value = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
 #ifndef IS_ONEWAY
     const char* const METHOD_NAME = "takeReply";
     DDS::SampleInfoSeq infoSeq;
@@ -100,7 +78,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 	    
 		if(retcode == DDS::RETCODE_OK)
 		{
-		    if(dataSeq.length() == 1)
+		    if(dataSeq.length() > 0)
 		    {
 				if (infoSeq[0].valid_data)
 				{
@@ -109,12 +87,12 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
 					(*(TDataReply*)reply) = dataSeq[0];
 #endif
-					value = eProsima::DDSRPC::OPERATION_SUCCESSFUL;
+					value = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
 				}
 		    }
 		    else
 		    {
-				printf("ERROR<%s::%s>: Sequence of replies is not supported.\n", CLASS_NAME, METHOD_NAME);
+				printf("ERROR<%s::%s>: Empty returned data.\n", CLASS_NAME, METHOD_NAME);
 		    }
 		    
 		    retcode = replyDataReader->return_loan(dataSeq, infoSeq);
@@ -122,7 +100,7 @@ eProsima::DDSRPC::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 		else if(retcode == DDS::RETCODE_NO_DATA)
 		{
 			printf("ERROR<%s::%s>: no data.\n", CLASS_NAME, METHOD_NAME);
-			value = eProsima::DDSRPC::SERVER_TIMEOUT;
+			value = eProsima::RPCDDS::SERVER_TIMEOUT;
 		}
 		else
 		{

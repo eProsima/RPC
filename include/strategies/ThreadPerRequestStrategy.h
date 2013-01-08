@@ -1,20 +1,29 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 #define _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPerRequestStrategyJob;
 
 		/**
-		 * \brief This class implements the thread per request strategy.
+		 * @brief This class implements the thread per request strategy.
 		 *        The server creates a new thread per new incoming request.
+         * @ingroup STRATEGIESMODULE 
 		 */
-        class DDSRPC_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
+        class RPCDDS_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
         {
             public:
 
@@ -37,7 +46,7 @@ namespace eProsima
             private:
 
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } //namespace eProsima
 
 #endif // _STRATEGIES_THREADPERREQUESTSTRATEGY_H_

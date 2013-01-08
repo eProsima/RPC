@@ -1,0 +1,12 @@
+union Empleado switch (char)
+{
+	case 1:
+		long id;
+	case 2:
+		string name;
+}; //@top-level false
+
+interface UnionTest
+{
+	Empleado getEmpleado(in Empleado em1, inout Empleado em2, out Empleado em3);
+};

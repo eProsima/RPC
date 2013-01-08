@@ -1,23 +1,33 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _CLIENT_ASYNCTHREAD_H_
 #define _CLIENT_ASYNCTHREAD_H_
 
 #include <vector>
 #include <boost/thread.hpp>
 
-#include "utils/Version.h"
+#include "utils/Middleware.h"
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
         class AsyncTask;
+		class ClientRPC;
 
         typedef std::pair<DDS::QueryCondition*, AsyncTask*> AsyncTaskPair;
         typedef std::pair<boost::posix_time::time_duration, AsyncTaskPair> AsyncListPair;
         typedef std::vector<AsyncListPair> AsyncVector;
 
 		/**
-		 * \brief This class is a separated thread used to manage asynchronous tasks.
+		 * @brief This class is a separated thread used to manage asynchronous tasks.
+         * @ingroup CLIENTMODULE
 		 */
         class AsyncThread
         {
@@ -37,7 +47,7 @@ namespace eProsima
                 void exit();
 
 				/**
-				 * \brief This function add a new asynchronous task.
+				 * \brief This function adds a new asynchronous task.
 				 *
 				 * \param query Associated DDS QueryCondition to the asynchronous task. Cannot be NULL.
 				 * \param task The new asynchronous task. Cannot be NULL.
@@ -45,6 +55,13 @@ namespace eProsima
 				 * \return 0 value is returned if function works succesfully. In other case, -1 value is returned.
 				 */
                 int addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
+
+				/**
+				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+				 *
+				 * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
+				 */
+				void deleteAssociatedAsyncTasks(ClientRPC *rpc);
 
             private:
 
@@ -70,7 +87,7 @@ namespace eProsima
 
                 bool m_exit;
         };
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _CLIENT_ASYNCTHREAD_H_

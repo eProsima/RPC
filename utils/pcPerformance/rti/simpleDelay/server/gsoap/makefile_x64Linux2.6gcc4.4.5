@@ -1,0 +1,46 @@
+CPP_x64Linux2.6gcc4.4.5 = g++
+CXXFLAGS_x64Linux2.6gcc4.4.5 = -m64 -std=c++0x -g
+LD_x64Linux2.6gcc4.4.5 = g++
+LDFLAGS_x64Linux2.6gcc4.4.5 = -m64
+SYSLIBS_x64Linux2.6gcc4.4.5 = -ldl -lnsl -lm -lpthread -lrt
+DEFINES_ARCH_SPECIFIC =  -DRTI_UNIX -DRTI_LINUX -DRTI_64BIT
+
+
+DEFINES = $(DEFINES_ARCH_SPECIFIC)  
+
+INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds \
+	   -I../../common/gsoap
+
+LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+       -lboost_chrono-mt -lboost_thread-mt -lboost_system-mt -lnddsc -lnddscore -lnddscpp -lgsoap++ $(SYSLIBS_x64Linux2.6gcc4.4.5)
+
+COMMONSOURCES = ../../common/gsoap/soapC.cpp ../../common/gsoap/soapDefaultBinding_USCOREISimpleDelayService.cpp
+
+COMMON_SOURCES_DIRS_AUX= $(foreach srcdir, $(dir $(COMMONSOURCES)), $(srcdir))
+COMMON_SOURCES_DIRS= $(shell echo $(COMMON_SOURCES_DIRS_AUX) | tr " " "\n" | sort | uniq | tr "\n" " ")
+SERVERSOURCES = Server.cxx
+DIRECTORIES   = objs.dir objs/x64Linux2.6gcc4.4.5.dir
+COMMONOBJS    = $(foreach obj,$(notdir $(addsuffix .o, $(basename $(COMMONSOURCES)))), objs/x64Linux2.6gcc4.4.5/$(obj))
+SERVEROBJS    = $(SERVERSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o)
+SERVEREXEC    = objs/x64Linux2.6gcc4.4.5/SimpleDelayServer
+
+server: $(DIRECTORIES) $(COMMONOBJS) $(SERVEREXEC)
+
+$(SERVEREXEC) : $(SERVEROBJS)
+	$(LD_x64Linux2.6gcc4.4.5) $(LDFLAGS_x64Linux2.6gcc4.4.5)  -o $(@:%.out=%) $(COMMONOBJS) $(SERVEROBJS) $(LIBS)
+
+vpath %.cpp $(COMMON_SOURCES_DIRS)
+
+objs/x64Linux2.6gcc4.4.5/%.o : %.cxx
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+	
+objs/x64Linux2.6gcc4.4.5/%.o : %.cpp
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+
+# Here is how we create those subdirectories automatically.
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

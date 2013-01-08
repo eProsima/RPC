@@ -13,11 +13,13 @@ ifdef DDS_ROOT
 -include $(EPROSIMADIR)/building/makefiles/opendds.mk
 endif
 endif
--include $(BASEDIR)/building/makefiles/ddsrpc.mk
+-include $(BASEDIR)/building/makefiles/rpcdds.mk
+-include $(BASEDIR)/building/makefiles/doxygen.mk
+-include $(BASEDIR)/building/makefiles/package.mk
 
-.PHONY: all
+.PHONY: all doxygen
 
-all: ddsrpc
+all: rpcdds doxygen package
 
 clean:
 	@rm -f $(OBJS)

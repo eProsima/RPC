@@ -1,0 +1,48 @@
+CPP_x64Linux2.6gcc4.4.5 = g++
+CXXFLAGS_x64Linux2.6gcc4.4.5 = -m64 -std=c++0x
+LD_x64Linux2.6gcc4.4.5 = g++
+LDFLAGS_x64Linux2.6gcc4.4.5 = -m64
+SYSLIBS_x64Linux2.6gcc4.4.5 = -ldl -lnsl -lm -lpthread -lrt
+DEFINES_ARCH_SPECIFIC =  -DRTI_UNIX -DRTI_LINUX -DRTI_64BIT
+
+
+DEFINES = $(DEFINES_ARCH_SPECIFIC)  
+
+INCLUDES = -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds \
+	   -I../../common -I../../../common/gsoap
+
+LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+       -lboost_chrono-mt -lboost_thread-mt -lboost_system-mt -lnddsc -lnddscore -lnddscpp -lgsoap++ $(SYSLIBS_x64Linux2.6gcc4.4.5)
+
+COMMONSOURCES = ../../../common/gsoap/soapC.cpp ../../../common/gsoap/soapDefaultBinding_USCOREISimpleDelayProxy.cpp \
+			 ../../common/ControlData.cxx ../../common/ControlDataPlugin.cxx ../../common/ControlDataSupport.cxx 
+
+COMMON_SOURCES_DIRS_AUX= $(foreach srcdir, $(dir $(COMMONSOURCES)), $(srcdir))
+COMMON_SOURCES_DIRS= $(shell echo $(COMMON_SOURCES_DIRS_AUX) | tr " " "\n" | sort | uniq | tr "\n" " ")
+CLIENTSOURCES = Client.cxx 
+DIRECTORIES   = objs.dir objs/x64Linux2.6gcc4.4.5.dir
+COMMONOBJS    = $(foreach obj,$(notdir $(addsuffix .o, $(basename $(COMMONSOURCES)))), objs/x64Linux2.6gcc4.4.5/$(obj))
+CLIENTOBJS    = $(CLIENTSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o)
+CLIENTEXEC    = objs/x64Linux2.6gcc4.4.5/SimpleDelayClient
+
+client: $(DIRECTORIES) $(COMMONOBJS) $(CLIENTEXEC)
+
+$(CLIENTEXEC) : $(CLIENTOBJS)
+	$(LD_x64Linux2.6gcc4.4.5) $(LDFLAGS_x64Linux2.6gcc4.4.5)  -o $(@:%.out=%) $(COMMONOBJS) $(CLIENTOBJS) $(LIBS)
+
+vpath %.cxx $(COMMON_SOURCES_DIRS)
+vpath %.cpp $(COMMON_SOURCES_DIRS)
+
+objs/x64Linux2.6gcc4.4.5/%.o : %.cxx
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+	
+objs/x64Linux2.6gcc4.4.5/%.o : %.cpp
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+
+# Here is how we create those subdirectories automatically.
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

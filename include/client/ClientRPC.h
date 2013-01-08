@@ -1,9 +1,19 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #ifndef _CLIENT_CLIENTRPC_H_
 #define _CLIENT_CLIENTRPC_H_
 
-#include "utils/ddsrpc.h"
+#include "utils/rpcdds.h"
 #include "utils/Messages.h"
-#include "utils/Version.h"
+#include "utils/Middleware.h"
+
+#define QUERY_POOL_LENGTH 10
 
 namespace boost
 {
@@ -12,15 +22,16 @@ namespace boost
 
 namespace eProsima
 {
-	namespace DDSRPC
+	namespace RPCDDS
 	{
         class Client;
         class AsyncTask;
 
 		/**
-		 * \brief This class implements a remote procedure call in server's proxy side.
+		 * @brief This class implements a remote procedure call in server's proxy side.
+         * @ingroup CLIENTMODULE
 		 */
-		class DDSRPC_WIN32_DLL_API ClientRPC
+		class RPCDDS_WIN32_DLL_API ClientRPC
 		{
 			public:
 
@@ -30,7 +41,7 @@ namespace eProsima
 				 * \param rpcName The name associated with this RPC object. Cannot be NULL:
 				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
 				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
-				 * \param client Pointer to the eProsima::DDSRPC::Client class parent. Cannot be NULL.
+				 * \param client Pointer to the eProsima::RPCDDS::Client class parent. Cannot be NULL.
 				 */
 				ClientRPC(const char *rpcName, const char *requestTypeName, const char *replyTypeName,
 					Client *client);
@@ -47,7 +58,7 @@ namespace eProsima
 				 * \param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
 				 *        The pointer can be NULL and this means that the RPC call is oneway.
 				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
-				 * \return The return message.
+				 * \throw eProsima::RPCDDS::ServerTimeoutException
 				 */
 				ReturnMessage execute(void *request, void* reply, long timeout);
 
@@ -63,11 +74,11 @@ namespace eProsima
 				ReturnMessage executeAsync(void *request, AsyncTask *task, long timeout);
 
 				/**
-				 *  \brief This auxiliar function is used to delete a DDS QueryCondition.
+				 *  \brief This auxiliar function is used to free a DDS QueryCondition.
 				 *
-				 *  \param query DDS QueryCondition to be released.
+				 *  \param query DDS QueryCondition to be free.
 				 */
-                void deleteQuery(DDS::QueryCondition *query);
+                void freeQuery(DDS::QueryCondition *query);
 
 				/**
 				 * \brief This function takes the reply from the DDS DataReader using the DDS QueryCondition.
@@ -82,15 +93,6 @@ namespace eProsima
 			protected:
 
 				/**
-				 * \brief This function registers the request instance into the DDS DataWriter.
-				 *        This virtual function has to be implemented by the specific code.
-				 *
-				 * \param data Pointer to the request. Cannot be NULL.
-				 * \return 0 value is returned if the function work succesfully. -1 in other case.
-				 */
-				virtual int registerInstance(void *data) = 0;
-
-				/**
 				 * \brief This function writes the request using the DDS DataWriter.
 				 *        This virtual function has to be implemented by the specific code.
 				 *
@@ -98,6 +100,28 @@ namespace eProsima
 				 * \return DDS return code that write function returns.
 				 */
 				virtual DDS::ReturnCode_t write(void *data) = 0;
+
+				/**
+				 * @brief This funcion returns the DDS datareader that receives the replies from the server.
+				 *
+				 * @return Pointer to the DDS datareader.
+				 */
+				DDS::DataReader* getReplyDatareader() const;
+
+				/**
+				 * @brief This funcion returns the DDS datawriter that sends the request to the client.
+				 *
+				 * @return Pointer to the DDS datawriter.
+				 */
+				DDS::DataWriter* getRequestDatawriter() const;
+
+				/**
+				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+				 *        This function is called from the derived RPC object.
+				 */
+				void deleteAssociatedAsyncTasks();
+
+		private:
 
 				/**
 				 * \brief This function creates the DDS entities used by the RPC object.
@@ -123,9 +147,27 @@ namespace eProsima
 				 *
 				 * \param DDS WaitSet used to make the comprobation.
 				 * \param timeout Timeout used to the comprobation. Its value is in milliseconds.
-				 * \return DDSRPC return message.
+				 * \return RPCDDS return message.
 				 */
                 ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
+
+				/// @brief This function initializes the query conditions of the pool.
+				int initQueryPool();
+
+				/// @brief This function finalizes the query conditions of the pool.
+				void finalizeQueryPool();
+
+				/*!
+				 * @brief This function returns a free query condition from the pool.
+			     *
+				 * @return This function return a free query condition. If all query condition are in use, then NULL pointer is returned.
+				 */
+				DDS::QueryCondition* getFreeQueryFromPool();
+
+				/*!
+				 * @brief This function returns a used query condition to its freedom.
+			     */
+				void returnUsedQueryToPool(DDS::QueryCondition *query);
 
 				/**
 				 * \brief This field stores the name of the service.
@@ -178,15 +220,18 @@ namespace eProsima
 				unsigned int m_numSec;
 
 				/// \brief The identifier used as client.
-				unsigned int m_clientServiceId[4];
+				unsigned int m_clientId[4];
 
-				DDS::InstanceHandle_t m_ih;
-
-				/// \brief Mutex used to ensure that sequence number is safe-thread.
+				/// \brief Mutex used to ensure that sequence number and query pool is safe-thread.
 				boost::mutex *m_mutex;
+
+				/// \brief Pool of DDSQueryConditions that are used by remote procedure calls. It's length is 10.
+				DDS::QueryCondition **m_queryPool;
+				/// \brief First position of queries that are in use.
+				int m_queriesInUseLimiter;
 		};
 
-	} // namespace DDSRPC
+	} // namespace RPCDDS
 } // namespace eProsima
 
 #endif // _CLIENT_CLIENTRPC_H_

@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestServer", "MultithreadTestServer-x64Win64VS2010.vcxproj", "{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestClient", "MultithreadTestClient-x64Win64VS2010.vcxproj", "{BA02399D-C1B3-8E50-7B58-4FE5323B2860}"
+	ProjectSection(ProjectDependencies) = postProject
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3} = {971CF5A9-C117-6BCD-FACE-E0AE389A13C3}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug DLL|x64 = Debug DLL|x64
+		Release DLL|x64 = Release DLL|x64
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Release DLL|x64.Build.0 = Release DLL|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Debug|x64.ActiveCfg = Debug|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Debug|x64.Build.0 = Debug|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Release|x64.ActiveCfg = Release|x64
+		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}.Release|x64.Build.0 = Release|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Release DLL|x64.Build.0 = Release DLL|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Debug|x64.ActiveCfg = Debug|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Debug|x64.Build.0 = Debug|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Release|x64.ActiveCfg = Release|x64
+		{BA02399D-C1B3-8E50-7B58-4FE5323B2860}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -7,7 +7,7 @@ Para compilar boost en 64-bits:
    bjam --toolset=msvc-9.0 address-model=64 --build-type=complete stage
 
 
-Cuando se vaya a compilar DDSRPC para un plataforma, recordar tener en cuenta:
+Cuando se vaya a compilar RPCDDS para un plataforma, recordar tener en cuenta:
 
 - NDDSHOME apunta a la plataforma correcta.
 - La dirección de BOOST apunta a la plataforma correcta.

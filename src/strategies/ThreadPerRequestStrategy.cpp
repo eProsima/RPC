@@ -1,3 +1,11 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "strategies/ThreadPerRequestStrategy.h"
 #include "server/Server.h"
 
@@ -7,7 +15,7 @@ static const char* const CLASS_NAME = "ThreadPerRequestStrategy";
 
 namespace eProsima
 {
-    namespace DDSRPC
+    namespace RPCDDS
     {
         class ThreadPerRequestStrategyJob
         {
@@ -36,7 +44,8 @@ namespace eProsima
             if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
             {
                 boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, data, server, service));
-                boost::thread *thread = new boost::thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+                boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+                thread.detach();
             }
             else
             {
@@ -44,6 +53,6 @@ namespace eProsima
             }
         }
 
-    } // namespace DDSRPC
+    } // namespace RPCDDS
 } // namespace eProsima
 
