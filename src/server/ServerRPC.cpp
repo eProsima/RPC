@@ -103,15 +103,14 @@ namespace eProsima
 
                     if((m_requestTopic = m_server->getParticipant()->create_topic(m_requestTypeName.c_str(), m_requestTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                     {
-						DDS::StringSeq stringSeq(1);
-						char value[257];
+						DDS::StringSeq stringSeq(0);
+                        stringSeq.length(0);
+						char value[285];
 
-						stringSeq.length(1);
-						SNPRINTF(value, 257, "'%s'", m_server->getServiceName().c_str());
-						stringSeq[0] = strdup(value);
+						SNPRINTF(value, 285, "header.remoteServiceName = '%s'", m_server->getServiceName().c_str());
 
 						if((m_requestFilter = m_server->getParticipant()->create_contentfilteredtopic(m_rpcName.c_str(), m_requestTopic,
-										"header.remoteServiceName = %0", stringSeq)) != NULL)
+										value, stringSeq)) != NULL)
 						{
 							DDS::DataReaderQos rQos = DDS::DataReaderQos();
 

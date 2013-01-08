@@ -98,8 +98,7 @@ sourceMake(interface) ::= <<
 COMMONCXXSOURCES = $interface$RequestReplyUtils.cxx
 COMMONCPPSOURCES = $interface$C.cpp $interface$RequestReplyC.cpp \
                 $interface$RequestReplyTypeSupportC.cpp $interface$RequestReplyTypeSupportImpl.cpp \
-                $interface$TypeSupportImpl.cpp MessageHeader.cxx MessageHeaderPlugin.cxx \
-                MessageHeaderSupport.cxx
+                $interface$TypeSupportImpl.cpp MessageHeaderC.cpp MessageHeaderTypeSupportImpl.cpp
 >>
 
 sourceVS(interface) ::= <<

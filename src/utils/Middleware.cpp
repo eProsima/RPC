@@ -144,7 +144,7 @@ namespace eProsima
             if(discovery != NULL)
             {
                 discovery->resend_period(ACE_Time_Value(3));
-                discovery->sedp_multicast(false);
+                //discovery->sedp_multicast(false);
                 std::vector<std::string> addresses;
                 discovery->spdp_send_addrs().swap(addresses);
                 TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(discovery));
