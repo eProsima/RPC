@@ -240,7 +240,7 @@ $else$
 $varComplexDel(typeName=param.typeName, name=param.name)$
 $endif$
 $endif$
-$param.name$ = data.$param.name$;
+$param.name$ = data.$param.name$$if(param.baseType.isString)$$stringPointer()$$endif$;
 $else$
 $if(param.isOutput)$
 $if(typeInitMap.(param.typeName))$
@@ -253,7 +253,7 @@ $else$
 $extractDH(type=param.typeName, name=param.name)$
 $endif$
 $else$
-$param.name$ = data.$param.name$;
+$param.name$ = data.$param.name$$if(param.baseType.isString)$$stringPointer()$$endif$;
 $endif$
 $endif$
 >>    

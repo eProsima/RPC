@@ -219,6 +219,7 @@ $exFunctionHeader(class=interfaceName,...)$
         $endif$
     }
     
+    replyData.header.rpcddsRetMsg = (char*)NULL;
     $reqrepDestruction(type=[interfaceName, "_", name], reqrep="Request", name="requestData", void="void")$
     
     $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$

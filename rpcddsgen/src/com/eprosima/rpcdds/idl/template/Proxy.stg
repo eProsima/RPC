@@ -175,7 +175,7 @@ $functionHeader(class={$interfaceName$Proxy},...)$
             throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
-            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg$stringPointer()$);
+            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg$stringPointerConst()$);
             break;
         $endif$
     };

@@ -104,7 +104,7 @@ void $interfaceName$_$name$Task::execute()
 	else
 	{
 		if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
-		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointer()$));
+		    getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointerConst()$));
 	}
 }
 

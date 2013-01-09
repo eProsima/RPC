@@ -295,5 +295,8 @@ extractDH(type, name) ::= <<
 $type$PluginSupport_copy_data(&$name$, &data.$name$);
 >>
 
+stringPointerConst() ::= <<
+>>
+
 stringPointer() ::= <<
 >>

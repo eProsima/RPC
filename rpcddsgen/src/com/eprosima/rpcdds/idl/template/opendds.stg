@@ -269,6 +269,10 @@ extractDH(type, name) ::= <<
 $name$ = data->$name$;
 >>
 
-stringPointer() ::= <<
+stringPointerConst() ::= <<
 .in()
+>>
+
+stringPointer() ::= <<
+.inout()
 >>
