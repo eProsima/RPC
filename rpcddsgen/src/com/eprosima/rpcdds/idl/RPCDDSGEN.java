@@ -259,6 +259,13 @@ public class RPCDDSGEN
             	lineCommand.add("-t");
             	lineCommand.add(tempDir);
             }
+            
+            if(externalDirLength > 0)
+            {
+            	lineCommand.add("-o");
+            	lineCommand.add(externalDir.toString());
+
+            }
         }
         
         if(osOption.equals("Win32"))
