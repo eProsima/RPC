@@ -158,9 +158,9 @@ const char* $topicName$$templateName$Utils::registerType(DDS::DomainParticipant 
 
 void $topicName$$templateName$Utils::setTypeData($topicName$$templateName$& instance$if([params, returnType])$, $endif$$argsDecl([params, returnType]);separator=", "$)
 {
-    $params : {$createDataHelper(param=it)$};separator="\n"$
+    $params : {$createDataHelper(param=it, isReply=isReply)$};separator="\n"$
     $if(returnType)$
-    $createDataHelper(param=returnType)$        
+    $createDataHelper(param=returnType, isReply=isReply)$        
     $endif$    
 }
 
@@ -211,8 +211,8 @@ $endif$
  * Uses:
  *   typeInitMap - inherited(cplusplus)
  */ 
-createDataHelper(param) ::= <<
-instance.$param.name$ = $param.name$;
+createDataHelper(param, isReply) ::= <<
+instance.$param.name$ = $if(!isReply)$$if(param.baseType.isString)$$charConstCasting()$$endif$$endif$$param.name$;
 >>    
 
 /**

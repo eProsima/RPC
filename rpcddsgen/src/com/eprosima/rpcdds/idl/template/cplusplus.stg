@@ -131,7 +131,7 @@ varDel(typeName, baseType, name) ::= <<
 $if(!voidInitMap.(typeName))$
 $if(typeInitMap.(typeName))$
 $if(baseType.isString)$
-if($name$ != NULL) free($name$);
+$varStringDel(name=name)$
 $endif$
 $else$
 $varComplexDel(typeName=typeName, name=name)$

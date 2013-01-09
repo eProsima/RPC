@@ -26,6 +26,9 @@ varComplexInitialize(typeName, name) ::= <<
 varComplexDel(typeName, name) ::= <<
 >>
 
+varStringDel(name) ::=<<
+>>
+
 ReqRepIncludes(interfaceName) ::= <<
 #include "$interfaceName$RequestReplyTypeSupportImpl.h"
 >>
@@ -266,7 +269,7 @@ OpenDDS_Dcps$if(conf.dll)$$else$s$endif$$if(conf.debug)$d$endif$.lib; TAO$if(con
 >>
 
 extractDH(type, name) ::= <<
-$name$ = data->$name$;
+$name$ = data.$name$;
 >>
 
 stringPointerConst() ::= <<
@@ -274,5 +277,19 @@ stringPointerConst() ::= <<
 >>
 
 stringPointer() ::= <<
-.inout()
+._retn()
+>>
+
+charCasting() ::= <<
+>>
+
+charConstCasting() ::= <<
+(const char*)
+>>
+
+bigObjOption() ::= <<
+<AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+>>
+
+unsetReply() ::= <<
 >>

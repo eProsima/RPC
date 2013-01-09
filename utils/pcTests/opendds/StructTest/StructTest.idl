@@ -1,0 +1,18 @@
+struct Envio
+{
+	long dato;
+	string message;
+}; //@top-level false
+
+struct Recepcion
+{
+	long devolucion;
+	string message;
+}; //@top-level false
+
+interface StructTest
+{
+
+	Recepcion duplicate(in Envio ev);
+	Recepcion suma(in Envio ev1, in Envio ev2);
+};

@@ -1,0 +1,13 @@
+enum Valores
+{
+	VALOR1,
+	VALOR2,
+	VALOR3
+}; //@top-level false
+
+interface EnumYStringTest
+{
+	Valores getEnum(in Valores v1, inout Valores v2, out Valores v3);
+	string getString(in string s1, inout string s2, out string s3);
+	string<100> getStringBounded(in string<100> sb1, inout string<200> sb2, out string<100> sb3);
+};

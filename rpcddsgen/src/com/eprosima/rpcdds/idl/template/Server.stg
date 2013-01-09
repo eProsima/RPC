@@ -203,7 +203,7 @@ $exFunctionHeader(class=interfaceName,...)$
         $if(!isOneway)$
         $interfaceName$_$name$ReplyUtils::setTypeData(replyData$if(outParams)$, $endif$$extractParams(outParams)$$if(!voidInitMap.(rettype.typeName))$, $extractParams(rettype)$$endif$);
         replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = (char*)"";
+        replyData.header.rpcddsRetMsg = $charCasting()$"";
 
         service->sendReply(requestData, &replyData);
         $endif$
@@ -211,15 +211,14 @@ $exFunctionHeader(class=interfaceName,...)$
     catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         $if(!isOneway)$
-        memset(&replyData, 0, sizeof(replyData));
+        $unsetReply()$
         replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
-        replyData.header.rpcddsRetMsg = (char*)ex.what();
+        replyData.header.rpcddsRetMsg = $charCasting()$ex.what();
         
         service->sendReply(requestData, &replyData);
         $endif$
     }
     
-    replyData.header.rpcddsRetMsg = (char*)NULL;
     $reqrepDestruction(type=[interfaceName, "_", name], reqrep="Request", name="requestData", void="void")$
     
     $varDel(typeName=rettype.typeName, baseType=rettype.baseType, name=rettype.name)$

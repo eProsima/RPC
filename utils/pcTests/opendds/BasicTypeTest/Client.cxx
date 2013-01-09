@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     // Creation of the proxy for interface "BasicTypeTest".
     try
     {
-        proxy = new BasicTypeTestProxy("BasicTypeTestService", 0, 300000L);
+        proxy = new BasicTypeTestProxy("BasicTypeTestService", 0, 30000L);
     }
     catch(eProsima::RPCDDS::InitializeException &ex)
     {

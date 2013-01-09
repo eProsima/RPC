@@ -32,6 +32,10 @@ varComplexDel(typeName, name) ::= <<
 $typeName$_finalize(&$name$);
 >>
 
+varStringDel(name) ::=<<
+if($name$ != NULL) free($name$);
+>>
+
 ReqRepIncludes(interfaceName) ::= <<
 #include "$interfaceName$RequestReplyPlugin.h"
 >>
@@ -299,4 +303,18 @@ stringPointerConst() ::= <<
 >>
 
 stringPointer() ::= <<
+>>
+
+charCasting() ::= <<
+(char*)
+>>
+
+charConstCasting() ::= <<
+>>
+
+bigObjOption() ::= <<
+>>
+
+unsetReply() ::= <<
+memset(&replyData, 0, sizeof(replyData));
 >>
