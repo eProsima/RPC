@@ -110,7 +110,6 @@ sourceVS(interface) ::= <<
     <ClCompile Include="$interface$RequestReplyC.cpp" />
     <ClCompile Include="$interface$RequestReplyTypeSupportC.cpp" />
     <ClCompile Include="$interface$RequestReplyTypeSupportImpl.cpp" />
-    <ClCompile Include="$interface$TypeSupportC.cpp" />
     <ClCompile Include="$interface$TypeSupportImpl.cpp" />
     <ClCompile Include="MessageHeaderC.cpp" />
     <ClCompile Include="MessageHeaderTypeSupportImpl.cpp" />
@@ -152,13 +151,6 @@ sourceFilesVS(interface, client) ::= <<
         <Filter>Source Files\server</Filter>
         $endif$
     </ClCompile>
-    <ClCompile Include="$interface$TypeSupportC.cpp">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
     <ClCompile Include="$interface$TypeSupportImpl.cpp">
         $if(client)$
         <Filter>Source Files\client</Filter>
@@ -188,7 +180,6 @@ sourceIVS(interface) ::= <<
     <ClInclude Include="$interface$RequestReplyC.h" />
     <ClInclude Include="$interface$RequestReplyTypeSupportC.h" />
     <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h" />
-    <ClInclude Include="$interface$TypeSupportC.h" />
     <ClInclude Include="$interface$TypeSupportImpl.h" />
     <ClInclude Include="MessageHeaderC.h" />
     <ClInclude Include="MessageHeaderTypeSupportImpl.h" />
@@ -224,13 +215,6 @@ sourceFilesIVS(interface, client) ::= <<
         $endif$
     </ClInclude>
     <ClInclude Include="$interface$RequestReplyTypeSupportImpl.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$TypeSupportC.h">
         $if(client)$
         <Filter>Header Files\client</Filter>
         $else$

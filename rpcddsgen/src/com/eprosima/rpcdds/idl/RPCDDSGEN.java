@@ -53,6 +53,7 @@ public class RPCDDSGEN
     private static String command = null;
     private static String extra_command = null;
     private static ArrayList lineCommand = null;
+    private static ArrayList lineCommandForWorkDirSet = null;
     private static String[] env_variables = null;	
     private static String middleware = "rti";
     private static String spTemplate = "main";
@@ -84,9 +85,9 @@ public class RPCDDSGEN
                 try
                 {
                 	// First step is to parse the file MessageHeader.idl
-                	ddsGen(messageHeaderFileLocation, true);
+                	ddsGen(messageHeaderFileLocation, true, false);
                 	// Second step is to parse the user IDL file.
-                    ddsGen(idlFile, false);
+                    ddsGen(idlFile, true, false);
                     Module root = parse(idlFile);
 
                     if(root != null && root.getError() == false)
@@ -194,6 +195,8 @@ public class RPCDDSGEN
         
         // Set line command.
         lineCommand = new ArrayList();
+    	// Only needed by opendds in the case of using open_idl with the generated file <Interface>RequestReply.idl
+    	lineCommandForWorkDirSet = new ArrayList();
         
         if(middleware.equals("rti"))
         {
@@ -237,7 +240,7 @@ public class RPCDDSGEN
             }
         }
         else if(middleware.equals("opendds"))
-        {
+        {   	
         	if(osOption.equals("Win32"))
         	{
         		command = "opendds_idl.exe";
@@ -252,19 +255,23 @@ public class RPCDDSGEN
             
             lineCommand.add("-I" + dds_root);
             lineCommand.add("-I" + tao_root);
+            lineCommandForWorkDirSet.add("-I" + dds_root);
+            lineCommandForWorkDirSet.add("-I" + tao_root);
             
             // Add temporary directory.
             if(tempDir != null)
             {
             	lineCommand.add("-t");
             	lineCommand.add(tempDir);
+            	lineCommandForWorkDirSet.add("-t");
+            	lineCommandForWorkDirSet.add(tempDir);
             }
             
             if(externalDirLength > 0)
             {
             	lineCommand.add("-o");
             	lineCommand.add(externalDir.toString());
-
+            	lineCommand.add("-I"+externalDir.toString());
             }
         }
         
@@ -274,12 +281,27 @@ public class RPCDDSGEN
         	 lineCommand.add("-I" + rpcdds_root + "/idl");
         
         if(idlFileLocation != null)
+        {
         	lineCommand.add("-I"+idlFileLocation);
+        	// Get the canonical path from idl file.
+        	String canon;
+        	try
+        	{
+        		canon = new File(idlFileLocation).getCanonicalPath();
+        	}
+        	catch(Exception ex)
+        	{
+        		System.out.println("ERROR: Cannot get the canonical path of the idl file.");
+        		return 1;
+        	}
+        	lineCommandForWorkDirSet.add("-I"+canon);
+        }
         
         // Add the include paths given as parameters.
         for(int i = 0; i < includePaths.size(); ++i)
         {
         	lineCommand.add(includePaths.get(i));
+        	lineCommandForWorkDirSet.add(includePaths.get(i));
         }
         
         // Set the location of file MessageHeader.idl
@@ -294,7 +316,7 @@ public class RPCDDSGEN
     // if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
     // even using the well known solution of using double quotes
     // May be a problem with the Java Version deployed with RTI DDS.
-    public static void ddsGen(String file, boolean disableGenerateTypeSupport) throws Exception
+    public static void ddsGen(String file, boolean disableGenerateTypeSupport, boolean setWorkingDirectory) throws Exception
     {
     	int count = 0;
         ArrayList finalCommandLine = null;
@@ -332,12 +354,24 @@ public class RPCDDSGEN
         finalCommandLine.add(command);
         if(disableGenerateTypeSupport && middleware.equals("opendds"))
         	finalCommandLine.add("-SI");
-        finalCommandLine.addAll(lineCommand);
-        finalCommandLine.add(file);
+        if(!setWorkingDirectory)
+        {
+        	finalCommandLine.addAll(lineCommand);
+        	finalCommandLine.add(file);
+        }
+        else
+        {
+        	finalCommandLine.addAll(lineCommandForWorkDirSet);
+        	finalCommandLine.add(file.substring(externalDir.length() + 1));
+        }
         finalCommandArray = new String[finalCommandLine.size()];
         finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
         
-        Process ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+        Process ddsgen;     
+        if(!setWorkingDirectory)
+        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+        else
+        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables, new File(externalDir.toString()));
         ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", middleware.equals("rti"));
         ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", middleware.equals("rti"));
         errorOutput.start();
@@ -1036,7 +1070,8 @@ public class RPCDDSGEN
             	
                 try
                 {
-                    ddsGen(newIdlFile, false);
+                	// Set to change the working directory using opendds_idl if user uses a output directory.
+                    ddsGen(newIdlFile, false, externalDirLength > 0 ? true : false);
                     returnedValue = 0;
                 }
                 catch(Exception ioe)
