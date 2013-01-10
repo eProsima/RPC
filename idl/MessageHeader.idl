@@ -17,7 +17,7 @@ struct RequestHeader
     /// @brief Identification of the client that sends the request.
     Identification clientId;
     /// @brief The service's name of the server that has to take this request.
-    string<255> remoteServiceName;
+    string remoteServiceName;
     /// @brief Sequence number of the request.
     unsigned long requestSequenceNumber;
 }; //@top-level false 
