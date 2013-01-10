@@ -140,7 +140,7 @@ goto :EOF
 :: Function exit ::
 :exit
 :: Remove output directory
-::rd /S /Q output
+rd /S /Q output
 
 :: Restore environment for RPCDDS
 call ..\..\scripts\set_environment.bat restore
