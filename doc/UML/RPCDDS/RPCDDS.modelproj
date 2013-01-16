@@ -6,8 +6,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1403634a-4d1b-4ba4-b69b-7c407c1203c6}</ProjectGuid>
     <ArchitectureToolsVersion>1.0.0.0</ArchitectureToolsVersion>
-    <Name>DDSCS</Name>
-    <RootNamespace>DDSCS</RootNamespace>
+    <Name>RPCDDS</Name>
+    <RootNamespace>RPCDDS</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -60,19 +60,19 @@
       <DependentUpon>Sequence diagrams\Server.sequencediagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
-    <Content Include="Class diagrams\Client.classdiagram">
+    <Content Include="Class diagrams\DDS_Proxy.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Class diagrams\Client.classdiagram.layout">
+    <Content Include="Class diagrams\DDS_Proxy.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Class diagrams\Client.classdiagram</DependentUpon>
+      <DependentUpon>Class diagrams\DDS_Proxy.classdiagram</DependentUpon>
     </Content>
-    <Content Include="Class diagrams\DDSCS Library.classdiagram">
+    <Content Include="Class diagrams\RPCDDS_DDS_Library.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Class diagrams\DDSCS Library.classdiagram.layout">
+    <Content Include="Class diagrams\RPCDDS_DDS_Library.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Class diagrams\DDSCS Library.classdiagram</DependentUpon>
+      <DependentUpon>Class diagrams\RPCDDS_DDS_Library.classdiagram</DependentUpon>
     </Content>
     <Content Include="Class diagrams\GeneratedCode.classdiagram">
       <SubType>Content</SubType>
@@ -81,14 +81,14 @@
       <SubType>Content</SubType>
       <DependentUpon>Class diagrams\GeneratedCode.classdiagram</DependentUpon>
     </Content>
-    <Content Include="Class diagrams\Server.classdiagram">
+    <Content Include="Class diagrams\DDS_Server.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Class diagrams\Server.classdiagram.layout">
+    <Content Include="Class diagrams\DDS_Server.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Class diagrams\Server.classdiagram</DependentUpon>
+      <DependentUpon>Class diagrams\DDS_Server.classdiagram</DependentUpon>
     </Content>
-    <Content Include="ModelDefinition\DDSCS.uml">
+    <Content Include="ModelDefinition\RPCDDS.uml">
       <SubType>Content</SubType>
     </Content>
     <Folder Include="Class diagrams" />

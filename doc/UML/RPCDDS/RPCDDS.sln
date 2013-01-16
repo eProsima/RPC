@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "DDSCS", "DDSCS.modelproj", "{1403634A-4D1B-4BA4-B69B-7C407C1203C6}"
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "RPCDDS", "RPCDDS.modelproj", "{1403634A-4D1B-4BA4-B69B-7C407C1203C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
