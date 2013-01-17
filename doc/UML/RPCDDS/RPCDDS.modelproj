@@ -24,6 +24,20 @@
       <SubType>Content</SubType>
       <DependentUpon>Class diagrams\Extras.classdiagram</DependentUpon>
     </Content>
+    <Content Include="Class diagrams\REST_Proxy.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class diagrams\REST_Proxy.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class diagrams\REST_Proxy.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Class diagrams\REST_Server.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class diagrams\REST_Server.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class diagrams\REST_Server.classdiagram</DependentUpon>
+    </Content>
     <Content Include="Sequence diagrams\Client async usage.sequencediagram">
       <SubType>Content</SubType>
     </Content>
