@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="f806f862-f652-4927-bb78-17893fd49349" name="REST_Server" linkedPackageId="240c6690-3541-49ff-88e9-79f4f0516ad4" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="0de0712e-3057-4824-a400-94ac8d7efe74">
-      <profileInstance Id="aabd1529-1001-4d2c-882f-0ca92c1992f1" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="bed0e07d-e372-4322-87cf-83ff121c3a0b">
-      <profileInstance Id="daaab23d-15d1-4219-b1a3-551b2cde8906" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="f806f862-f652-4927-bb78-17893fd49349" name="REST_Server" linkedPackageId="240c6690-3541-49ff-88e9-79f4f0516ad4" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="de31a792-2e9b-41d2-8ae1-34d54e6855f9" name="REST::BankServer" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -45,16 +31,16 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="874a311f-ae6e-4c42-9918-878c1b47f84e" />
           </association>
-          <association Id="f447dcee-f591-4672-af86-9aa7fdc57c20" isDerived="false" sourceEndRoleName="REST::BankServer" targetEndRoleName="REST::TCPServerTransport" isLeaf="false" isAbstract="false">
+          <association Id="f447dcee-f591-4672-af86-9aa7fdc57c20" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
             <classMoniker Id="677a07bc-4d71-45ee-bcc9-1eeef1bbb1db" LastKnownName="REST::TCPServerTransport" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="f08a42a1-2549-4a3a-a5e3-e09a44874dda" name="REST::BankServer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                <memberEnd Id="f08a42a1-2549-4a3a-a5e3-e09a44874dda" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
                   <elementDefinition Id="9fb6fa18-26d3-48a5-9243-72b02b1ced05" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="4ced3a47-c87f-4276-aa12-72adf23b94ec" name="REST::TCPServerTransport" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                <memberEnd Id="4ced3a47-c87f-4276-aa12-72adf23b94ec" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
                   <elementDefinition Id="e6c95fa3-dee4-436c-8912-dcdff262542d" />
                 </memberEnd>
               </associationHasOwnedEnds>
@@ -173,6 +159,9 @@
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
+          </operation>
+          <operation Id="9385675d-2452-4820-913d-1cdb17395202" name="serve" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c3f23c81-da40-41b5-865a-b0af48b543ae" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -373,6 +362,9 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="4020ab44-8a9f-4ad2-86d9-20eecac1951c" name="BankProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="1342e023-27a1-4539-a021-c31fcf1bc74c" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -493,6 +485,9 @@
           <operation Id="32174977-bbfb-4efc-bad4-05ea5ae2a916" name="accept" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="7e93f346-e110-485b-b84c-76aaf1238322" />
           </operation>
+          <operation Id="8e549ab7-c79a-4e9b-9f9d-e994dd206dcc" name="TCPServerTransport" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2ed7371d-8f6f-40cf-abe0-20080d2a04f8" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -528,6 +523,9 @@
           </operation>
           <operation Id="115b0963-e1ce-45c8-a450-ccee642c1788" name="close" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="9c228e7c-a7da-484d-8c0e-c511ebb1e063" />
+          </operation>
+          <operation Id="20a43ea9-0302-42e3-b7dc-dd8ba1e34f71" name="Socket" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6c390db8-dd3f-4cd4-bad6-c3486931bcda" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -617,6 +615,9 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="24a71e56-dee9-47bf-85be-ef9991d92d9a" name="AccountResourceImpl" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c47b0540-e4aa-4c51-9277-f8e158fc93ba" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -628,5 +629,19 @@
   </packagedElements>
   <package Id="240c6690-3541-49ff-88e9-79f4f0516ad4" name="RPCDDS">
     <elementDefinition Id="d3220d26-5f30-4636-9eaa-008d70413dfd" />
+    <profileInstances>
+      <packageHasProfileInstances Id="0de0712e-3057-4824-a400-94ac8d7efe74">
+        <profileInstance Id="aabd1529-1001-4d2c-882f-0ca92c1992f1" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="bed0e07d-e372-4322-87cf-83ff121c3a0b">
+        <profileInstance Id="daaab23d-15d1-4219-b1a3-551b2cde8906" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>

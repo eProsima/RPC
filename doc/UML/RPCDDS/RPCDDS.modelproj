@@ -45,33 +45,68 @@
       <SubType>Content</SubType>
       <DependentUpon>Sequence diagrams\Client async usage.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="Sequence diagrams\Client usage.sequencediagram">
+    <Content Include="Sequence diagrams\DDS_Proxy_Call_Procedure_Sync.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Sequence diagrams\Client usage.sequencediagram.layout">
+    <Content Include="Sequence diagrams\DDS_Proxy_Call_Procedure_Sync.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Sequence diagrams\Client usage.sequencediagram</DependentUpon>
+      <DependentUpon>Sequence diagrams\DDS_Proxy_Call_Procedure_Sync.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="Sequence diagrams\Client.sequencediagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Sequence diagrams\Client.sequencediagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>Sequence diagrams\Client.sequencediagram</DependentUpon>
-    </Content>
-    <Content Include="Sequence diagrams\Server usage.sequencediagram">
+    <Content Include="Sequence diagrams\DDS_Proxy_Initialization.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Sequence diagrams\Server usage.sequencediagram.layout">
+    <Content Include="Sequence diagrams\DDS_Proxy_Initialization.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Sequence diagrams\Server usage.sequencediagram</DependentUpon>
+      <DependentUpon>Sequence diagrams\DDS_Proxy_Initialization.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="Sequence diagrams\Server.sequencediagram">
+    <Content Include="Sequence diagrams\REST_Proxy_Call_Procedure_Sync.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Sequence diagrams\Server.sequencediagram.layout">
+    <Content Include="Sequence diagrams\REST_Proxy_Call_Procedure_Sync.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Sequence diagrams\Server.sequencediagram</DependentUpon>
+      <DependentUpon>Sequence diagrams\REST_Proxy_Call_Procedure_Sync.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\REST_Proxy_Initialization.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\REST_Proxy_Initialization.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\REST_Proxy_Initialization.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\REST_Server_Initialization.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\REST_Server_Initialization.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\REST_Server_Initialization.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\DDS_Server_Receive_Request.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\DDS_Server_Receive_Request.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\DDS_Server_Receive_Request.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\DDS_Server_initialization.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\DDS_Server_initialization.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\DDS_Server_initialization.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sequence diagrams\REST_Server_Receive_Request.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sequence diagrams\REST_Server_Receive_Request.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sequence diagrams\REST_Server_Receive_Request.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="User cases\Extras.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="User cases\Extras.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>User cases\Extras.usecasediagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="Class diagrams\DDS_Proxy.classdiagram">
@@ -106,6 +141,7 @@
       <SubType>Content</SubType>
     </Content>
     <Folder Include="Class diagrams" />
+    <Folder Include="User cases" />
     <Folder Include="Sequence diagrams" />
   </ItemGroup>
 </Project>
