@@ -22,8 +22,7 @@ ifdef NDDSHOME
 else
 ifdef DDS_ROOT
 	SPECIFIC_INCLUDE_DIR= -I$(BASEDIR)/include/idl/opendds
-	SPECIFIC_SRC_CPPFILES= $(BASEDIR)/src/idl/opendds/MessageHeaderC.cpp \
-			     $(BASEDIR)/src/idl/opendds/MessageHeaderTypeSupportImpl.cpp
+	SPECIFIC_SRC_CPPFILES=
 endif
 endif
 
