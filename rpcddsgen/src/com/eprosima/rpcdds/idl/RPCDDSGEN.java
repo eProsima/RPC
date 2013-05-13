@@ -211,11 +211,14 @@ public class RPCDDSGEN
             {
         		lineCommand.add("-language");
         		lineCommand.add(languageOption);
+        		lineCommandForWorkDirSet.add("-language");
+        		lineCommandForWorkDirSet.add(languageOption);
             }
 
             if(ppDisable == true)
             {
             	lineCommand.add("-ppDisable");
+            	lineCommandForWorkDirSet.add("-ppDisable");
             }
             else
             {
@@ -224,18 +227,23 @@ public class RPCDDSGEN
 
                 	lineCommand.add("-ppPath");
                 	lineCommand.add(ppPath);
+                	lineCommandForWorkDirSet.add("-ppPath");
+                	lineCommandForWorkDirSet.add(ppPath);
                 }
             }
 
             if(replace == true)
             {
             	lineCommand.add("-replace");
+            	lineCommandForWorkDirSet.add("-replace");
             }
 
             if(externalDirLength > 0)
             {
             	lineCommand.add("-d");
             	lineCommand.add(externalDir.toString());
+            	lineCommandForWorkDirSet.add("-d");
+            	lineCommandForWorkDirSet.add(externalDir.toString());
 
             }
         }
@@ -348,7 +356,6 @@ public class RPCDDSGEN
                  throw new Exception("process waitFor() function returns the error value " + auxexitVal);
              }
         }
-        
         
         finalCommandLine = new ArrayList();
         finalCommandLine.add(command);
@@ -1067,6 +1074,7 @@ public class RPCDDSGEN
             if(writeFile(externalDir.toString(), theFile) == 0)
             {
             	externalDir.delete(externalDirLength, externalDir.length());
+            	System.out.println("Extern = " + externalDir);
             	
                 try
                 {
