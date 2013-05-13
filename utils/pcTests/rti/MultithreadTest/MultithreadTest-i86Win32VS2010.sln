@@ -1,8 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestServer", "MultithreadTestServer-vs2010.vcxproj", "{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestServer", "MultithreadTestServer-i86Win32VS2010.vcxproj", "{971CF5A9-C117-6BCD-FACE-E0AE389A13C3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestClient", "MultithreadTestClient-vs2010.vcxproj", "{BA02399D-C1B3-8E50-7B58-4FE5323B2860}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTestClient", "MultithreadTestClient-i86Win32VS2010.vcxproj", "{BA02399D-C1B3-8E50-7B58-4FE5323B2860}"
 	ProjectSection(ProjectDependencies) = postProject
 		{971CF5A9-C117-6BCD-FACE-E0AE389A13C3} = {971CF5A9-C117-6BCD-FACE-E0AE389A13C3}
 	EndProjectSection
