@@ -21,10 +21,16 @@ set NDDSTARGET=%1
 set PATH_OLD_OLD=%PATH%
 :: Check if x64
 echo %1|findstr /r "x64*" >nul
-if %ERRORLEVEL%==0 set PATH=%RPCDDSHOME%\lib\%NDDSTARGET%;%HOME%\librerias\boost_1_51_0\lib\x64;%PATH%
+if %ERRORLEVEL%==0 (
+   set "PATH=%RPCDDSHOME%\lib\%NDDSTARGET%;%HOME%\librerias\boost_1_51_0\lib\x64;%PATH%"
+   set mplatform=x64
+)
 ::Check if i86
 echo %1|findstr /r "i86*" >nul
-if %ERRORLEVEL%==0 set PATH=%RPCDDSHOME%\lib\%NDDSTARGET%;%HOME%\librerias\boost_1_51_0\lib\i86;%PATH%
+if %ERRORLEVEL%==0 (
+   set "PATH=%RPCDDSHOME%\lib\%NDDSTARGET%;%HOME%\librerias\boost_1_51_0\lib\i86;%PATH%"
+   set mplatform=Win32
+)
 
 :: Set environment for RPCDDS
 call ..\..\scripts\set_environment.bat set
@@ -60,9 +66,9 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration
 :: Clean the visual solution
-msbuild "output\%2-%1.sln" /t:Clean
+msbuild "output\%2-%1.sln" /t:Clean /p:Platform="%mplatform%"
 :: Build the visual solution
-msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Release DLL"
+msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%mplatform%"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 :: Execute the server in other cmd.exe
@@ -78,9 +84,9 @@ if not %errorstatus%==0 goto :EOF
 
 :: Debug DLL Configuration
 :: Clean the visual solution
-msbuild "output\%2-%1.sln" /t:Clean
+msbuild "output\%2-%1.sln" /t:Clean /p:Platform="%mplatform%"
 :: Build the visual solution
-msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Debug DLL"
+msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%mplatform%"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 :: Execute the server in other cmd.exe
@@ -96,9 +102,9 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release Configuration
 :: Clean the visual solution
-msbuild "output\%2-%1.sln" /t:Clean
+msbuild "output\%2-%1.sln" /t:Clean /p:Platform="%mplatform%"
 :: Build the visual solution
-msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Release"
+msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Release" /p:Platform="%mplatform%"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 :: Execute the server in other cmd.exe
@@ -114,9 +120,9 @@ if not %errorstatus%==0 goto :EOF
 
 :: Debug Configuration
 :: Clean the visual solution
-msbuild "output\%2-%1.sln" /t:Clean
+msbuild "output\%2-%1.sln" /t:Clean /p:Platform="%mplatform%"
 :: Build the visual solution
-msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Debug"
+msbuild "output\%2-%1.sln" /t:Build /p:Configuration="Debug" /p:Platform="%mplatform%"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 :: Execute the server in other cmd.exe
