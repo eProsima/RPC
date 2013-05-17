@@ -1074,7 +1074,6 @@ public class RPCDDSGEN
             if(writeFile(externalDir.toString(), theFile) == 0)
             {
             	externalDir.delete(externalDirLength, externalDir.length());
-            	System.out.println("Extern = " + externalDir);
             	
                 try
                 {
