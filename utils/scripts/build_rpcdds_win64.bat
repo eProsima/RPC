@@ -16,33 +16,33 @@ call set_environment.bat set
 
 :: Release DLL Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="ReleaseDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="ReleaseDLL" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="ReleaseDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="ReleaseDLL" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
 :: Debug DLL Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="DebugDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="DebugDLL" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="DebugDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="DebugDLL" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
 :: Release Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="Release"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="Release" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="Release"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="Release" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
 :: Debug Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="Debug"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Clean /p:Configuration="Debug" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="Debug"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds.sln" /t:Build /p:Configuration="Debug" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
@@ -50,33 +50,33 @@ if not %errorstatus%==0 goto :restore
 
 :: Release DLL Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="ReleaseDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="ReleaseDLL" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="ReleaseDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="ReleaseDLL" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
 :: Debug DLL Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="DebugDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="DebugDLL" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="DebugDLL"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="DebugDLL" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
 :: Release Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="Release"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="Release" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="Release"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="Release" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 
 :: Debug Configuration
 :: Clean the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="Debug"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Clean /p:Configuration="Debug" /p:Platform="x64"
 :: Build the visual solution
-msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="Debug"
+msbuild "..\..\win32\x64Win64VS2010\rpcdds_opendds.sln" /t:Build /p:Configuration="Debug" /p:Platform="x64"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :restore
 

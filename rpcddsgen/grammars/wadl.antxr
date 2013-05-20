@@ -1,0 +1,16 @@
+header
+{
+	package com.eprosima.rpcdds.wadl.grammar;
+	import com.eprosima.rpcdds.wadl.tree.*;
+}
+
+class WADLParser extends Parser;
+
+document returns [Application application = null]
+  : <application> EOF
+  ;
+  
+<application> returns [Application application = null]
+  {application = new Application();}
+  : PCDATA
+  ;

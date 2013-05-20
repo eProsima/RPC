@@ -13,7 +13,7 @@
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
-package com.eprosima.rpcdds.idl;
+package com.eprosima.rpcdds;
 
 import org.antlr.stringtemplate.CommonGroupLoader;
 import org.antlr.stringtemplate.StringTemplate;
@@ -21,7 +21,15 @@ import org.antlr.stringtemplate.StringTemplateErrorListener;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.StringTemplateGroupLoader;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
-import com.eprosima.rpcdds.idl.ast.*;
+
+import com.eprosima.rpcdds.idl.grammar.IDLLexer;
+import com.eprosima.rpcdds.idl.grammar.IDLParser;
+import com.eprosima.rpcdds.util.Utils;
+import com.eprosima.rpcdds.idl.VSConfiguration;
+import com.eprosima.rpcdds.idl.GUIDGenerator;
+import com.eprosima.rpcdds.idl.CplusplusVisitor;
+
+// TODO Quitar
 import com.eprosima.rpcdds.idl.tree.*;
 
 import java.io.*;
@@ -35,21 +43,25 @@ import java.util.HashMap;
 // TO_DO: string constants...
 public class RPCDDSGEN
 {
-	private static String version = "0.1.0";
+	private static String version = "0.2.0";
     private static String osOption = "Win32";
     private static String exampleOption = null;
     private static String languageOption = "C++";
     private static boolean ppDisable = false;
-    private static boolean replace = false;
+    private static boolean m_replace = false;
     private static String ppPath = null;
+    // TODO Quitar external Dir.
     private static StringBuffer externalDir = null;
     private static int externalDirLength = 0;
+    
+    private static final String m_defaultOutputDir = "." + File.separator;
+    private static String m_outputDir = m_defaultOutputDir;
     private static String tempDir = null;
     // Array list of strings. Include paths
     private static ArrayList includePaths = new ArrayList();
-    private static String idlFile = null;
-    private static String onlyIdlFile = null;
-    private static String idlFileLocation = null;
+    private static String m_idlFile = null;
+    private static String m_onlyIdlFile = null;
+    private static String m_idlFileLocation = null;
     private static String command = null;
     private static String extra_command = null;
     private static ArrayList lineCommand = null;
@@ -87,13 +99,20 @@ public class RPCDDSGEN
                 	// First step is to parse the file MessageHeader.idl
                 	ddsGen(messageHeaderFileLocation, true, false);
                 	// Second step is to parse the user IDL file.
-                    ddsGen(idlFile, true, false);
-                    Module root = parse(idlFile);
+                    ddsGen(m_idlFile, true, false);
+                    
+                    // TODO Support serveral IDL files.
+                    // TODO Catch errors.
+                    // Parsing and generating code with templates.
+                    processIDL(m_idlFile);
+                    
+                    // TODO Remove old parser.
+                    /*Module root = parse(idlFile);
 
                     if(root != null && root.getError() == false)
                     {
                         returnedValue = gen(root);
-                    }
+                    }*/
                 }
                 catch(Exception ioe)
                 {
@@ -113,6 +132,31 @@ public class RPCDDSGEN
         }	
 
         System.exit(returnedValue);
+    }
+    
+    private static boolean processIDL(String idlFilename)
+    {
+        boolean returnedValue = false;
+        System.out.println("Processing the file " + idlFilename + "...");
+        
+        try
+        {
+            InputStream input = new FileInputStream(idlFilename);
+            IDLLexer lexer = new IDLLexer(input);
+            IDLParser parser = new IDLParser(lexer);
+            // Pass the filename without the extension.
+            returnedValue = parser.specification(m_outputDir, Utils.getIDLFileNameOnly(idlFilename), m_replace);
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("ERROR<FileNotFoundException>: The file " + idlFilename + "was not found.");
+        }
+        catch(Exception ex)
+        {
+            System.out.println("ERROR<Exception>: " + ex.getMessage());
+        }
+        
+        return returnedValue;
     }
     
     public static int ddsGenInit()
@@ -200,10 +244,8 @@ public class RPCDDSGEN
         
         if(middleware.equals("rti"))
         {
-        	if(osOption.equals("Win32"))
-        		command = dds_root + "\\scripts\\rtiddsgen.bat";
-        	else if(osOption.equals("Linux"))
-        		command = dds_root + "/scripts/rtiddsgen";
+            // Directory $NDDSHOME/scripts/rtiddsgen.bat
+            command = dds_root + File.separator + "scripts" + File.separator + "rtiddsgen.bat";
         	
         	// Add that creates file in the current directory.
         	
@@ -232,20 +274,17 @@ public class RPCDDSGEN
                 }
             }
 
-            if(replace == true)
+            if(m_replace == true)
             {
             	lineCommand.add("-replace");
             	lineCommandForWorkDirSet.add("-replace");
             }
 
-            if(externalDirLength > 0)
-            {
-            	lineCommand.add("-d");
-            	lineCommand.add(externalDir.toString());
-            	lineCommandForWorkDirSet.add("-d");
-            	lineCommandForWorkDirSet.add(externalDir.toString());
-
-            }
+            // Set the output directory to rtiddsgen.
+        	lineCommand.add("-d");
+        	lineCommand.add(m_outputDir);
+        	lineCommandForWorkDirSet.add("-d");
+        	lineCommandForWorkDirSet.add(m_outputDir);
         }
         else if(middleware.equals("opendds"))
         {   	
@@ -275,27 +314,23 @@ public class RPCDDSGEN
             	lineCommandForWorkDirSet.add(tempDir);
             }
             
-            if(externalDirLength > 0)
-            {
-            	lineCommand.add("-o");
-            	lineCommand.add(externalDir.toString());
-            	lineCommand.add("-I"+externalDir.toString());
-            }
+            // Set the output directory to opendds.
+        	lineCommand.add("-o");
+        	lineCommand.add(m_outputDir);
+        	lineCommand.add("-I"+ m_outputDir);
         }
         
-        if(osOption.equals("Win32"))
-        	 lineCommand.add("-I" + rpcdds_root + "\\idl");
-        else if(osOption.equals("Linux"))
-        	 lineCommand.add("-I" + rpcdds_root + "/idl");
+        // TODO No usar RPCDDSHOME sino que a través del directorio del script sacar el del IDL.
+        lineCommand.add("-I" + rpcdds_root + File.separator + "idl");
         
-        if(idlFileLocation != null)
+        if(m_idlFileLocation != null)
         {
-        	lineCommand.add("-I"+idlFileLocation);
+        	lineCommand.add("-I"+m_idlFileLocation);
         	// Get the canonical path from idl file.
         	String canon;
         	try
         	{
-        		canon = new File(idlFileLocation).getCanonicalPath();
+        		canon = new File(m_idlFileLocation).getCanonicalPath();
         	}
         	catch(Exception ex)
         	{
@@ -313,10 +348,7 @@ public class RPCDDSGEN
         }
         
         // Set the location of file MessageHeader.idl
-        if(osOption.equals("Win32"))
-    		messageHeaderFileLocation = rpcdds_root + "\\idl\\" + messageHeaderFileName;
-    	else if(osOption.equals("Linux"))
-    		messageHeaderFileLocation = rpcdds_root + "/idl/"  + messageHeaderFileName;
+        messageHeaderFileLocation = rpcdds_root + File.separator + "idl" + File.separator + messageHeaderFileName;
     	
     	return 0;
     }
@@ -369,7 +401,9 @@ public class RPCDDSGEN
         else
         {
         	finalCommandLine.addAll(lineCommandForWorkDirSet);
-        	finalCommandLine.add(file.substring(externalDir.length() + 1));
+        	// TODO Revisar funcionamiento con OpenDDS
+        	//finalCommandLine.add(file.substring(externalDir.length() + 1));
+        	finalCommandLine.add(Utils.getIDLFileNameOnly(file));
         }
         finalCommandArray = new String[finalCommandLine.size()];
         finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
@@ -378,7 +412,7 @@ public class RPCDDSGEN
         if(!setWorkingDirectory)
         	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
         else
-        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables, new File(externalDir.toString()));
+        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables, new File(m_outputDir));
         ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", middleware.equals("rti"));
         ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", middleware.equals("rti"));
         errorOutput.start();
@@ -419,7 +453,7 @@ public class RPCDDSGEN
 	    			onlyFileNameAux = file.substring(lastBarraOccurrency + 1);
 	    		}
 	    		
-	    		onlyFileNameAux = externalDir + (osOption.equals("Win32") ? "\\" : "/") + onlyFileNameAux;
+	    		onlyFileNameAux = m_outputDir + onlyFileNameAux;
     		
         	 finalCommandLine = new ArrayList();
              finalCommandLine.add(extra_command);
@@ -1031,7 +1065,7 @@ public class RPCDDSGEN
         {
             StringTemplate theFile = idlTemplates.getInstanceOf("idlFile");
             theFile.setAttribute("interfaceName", ifc.getName());
-            theFile.setAttribute("file", onlyIdlFile);
+            theFile.setAttribute("file", m_onlyIdlFile);
 
             StringTemplate request = idlTemplates.getInstanceOf("request");
             StringTemplate reply = idlTemplates.getInstanceOf("reply");
@@ -1074,7 +1108,6 @@ public class RPCDDSGEN
             if(writeFile(externalDir.toString(), theFile) == 0)
             {
             	externalDir.delete(externalDirLength, externalDir.length());
-            	System.out.println("Extern = " + externalDir);
             	
                 try
                 {
@@ -1278,7 +1311,7 @@ public class RPCDDSGEN
     	return returnedValue;
     }
 
-    public static Module parse(String file) {
+    /*public static Module parse(String file) {
         IDLParser parser = null;
         Module root = null;
         
@@ -1307,7 +1340,7 @@ public class RPCDDSGEN
         }
 
         return root;		
-    }
+    }*/
 
     public static boolean getOptions(String args[])
     {
@@ -1320,7 +1353,7 @@ public class RPCDDSGEN
 
             if(!arg.startsWith("-"))
             {
-                idlFile = arg;
+                m_idlFile = arg;
             }
             else if(arg.equals("-os"))
             {
@@ -1384,14 +1417,16 @@ public class RPCDDSGEN
             }
             else if(arg.equalsIgnoreCase("-replace"))
             {
-                replace = true;
+                m_replace = true;
             }
             else if(arg.equals("-d"))
             {
             	if(count < args.length)
             	{
+            	    // TODO Quitar externalDir.
             		externalDir = new StringBuffer(args[count++]);
             		externalDirLength = externalDir.length();
+            		m_outputDir = Utils.addFileSeparator(args[count]);
             	}
             	else
             		return false;
@@ -1444,47 +1479,20 @@ public class RPCDDSGEN
             }
         }
 
-        if(idlFile == null)
+        if(m_idlFile == null)
         {
             System.out.println("ERROR: The program expects an IDL file");
             return false;
         }
-
-        // Calculate only the IDL file name.
-        String exDir = null;
-        int lastBarraOccurrency = idlFile.lastIndexOf('/');
-        
-		if(lastBarraOccurrency == -1)
-		{
-			if(osOption.equals("Win32"))
-			{
-				lastBarraOccurrency = idlFile.lastIndexOf('\\');
-			}
-		}
 		
-		if(lastBarraOccurrency == -1)
-		{
-			onlyIdlFile = idlFile;
-		}
-		else
-		{
-			onlyIdlFile = idlFile.substring(lastBarraOccurrency + 1);
-			idlFileLocation = idlFile.substring(0, lastBarraOccurrency);
-		}
+		// Get only de IDL file. Erase the directory.
+		m_onlyIdlFile = Utils.getIDLFileOnly(m_idlFile);
+		// Get only de IDL file directory.
+		m_idlFileLocation = Utils.getIDLFileDirectoryOnly(m_idlFile);
 		
-        // Calcualte external directory.
-        if(externalDir == null)
-        {
-           if(lastBarraOccurrency == -1)
-           {
-        	   externalDir = new StringBuffer(".");
-           }
-           else
-           {
-        	   externalDir = new StringBuffer(idlFile.substring(0, lastBarraOccurrency));
-           }
-        }
-        externalDirLength = externalDir.length();
+		// Calculate the external directory
+		if(m_idlFileLocation != null)
+		    m_outputDir = m_idlFileLocation;
 
         return true;
     }
@@ -1517,7 +1525,7 @@ public class RPCDDSGEN
         try
         {
             File handle = new File(file);
-            if(!handle.exists() || replace || file.endsWith("idl"))
+            if(!handle.exists() || m_replace || file.endsWith("idl"))
             {
                 FileWriter fw = new FileWriter(file);
                 String data = template.toString();
