@@ -28,6 +28,7 @@ public class TemplateManager
     }
     
     private Map<String, StringTemplateGroup> m_groups;
+    private StringTemplateGroup middlgr = null;
     private StringTemplateGroup commongr = null;
     
     public TemplateManager(String templateLocation)
@@ -40,7 +41,8 @@ public class TemplateManager
         
         // Load common stringtemplate rules.
         // TODO Change depending RTI or OpenDDS.
-        commongr = StringTemplateGroup.loadGroup("main", DefaultTemplateLexer.class, null);
+        middlgr = StringTemplateGroup.loadGroup("main", DefaultTemplateLexer.class, null);
+        commongr = StringTemplateGroup.loadGroup("Common", DefaultTemplateLexer.class, middlgr);
     }
     
     public void addGroup(String groupname)

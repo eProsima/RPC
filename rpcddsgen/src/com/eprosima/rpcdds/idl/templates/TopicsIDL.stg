@@ -1,6 +1,11 @@
 group TopicsIDL;
 
 main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "RequestReply.idl"], description=["This IDL file contains the definition of the DDS messages for all defined interfaces by the user."])$
+
+#include "MessageHeader.idl"
+#include "$ctx.filename$"
+
 $definitions; separator="\n"$
 >>
 

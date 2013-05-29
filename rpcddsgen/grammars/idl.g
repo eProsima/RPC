@@ -157,7 +157,6 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
            interfaceObject = new Interface(name);
            // Set the name of the module to the TemplateGroup of the module.
            interfaceTemplates.setAttribute("name", name);
-           System.out.println("INTERFACE NAME = " + name);
         }
 	    ( interface_inheritance_spec )?	   
 	    LCURLY interface_body RCURLY)
