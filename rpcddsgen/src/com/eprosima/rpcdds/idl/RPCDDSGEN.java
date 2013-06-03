@@ -35,7 +35,7 @@ import java.util.HashMap;
 // TO_DO: string constants...
 public class RPCDDSGEN
 {
-	private static String version = "0.1.0";
+	private static String version = "0.1.1";
     private static String osOption = "Win32";
     private static String exampleOption = null;
     private static String languageOption = "C++";
