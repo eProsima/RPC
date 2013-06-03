@@ -5,7 +5,7 @@ Name RPCDDS
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.1
+!define VERSION 0.1.1
 !define COMPANY eProsima
 !define URL www.eprosima.com
 
