@@ -1104,7 +1104,7 @@ public class RPCDDSGEN
 
             //System.out.println(reply.toString());
             externalDir.append(ifc.getName()).append("RequestReply.idl");
-            String newIdlFile = externalDir.toString();
+            // BUG: String newIdlFile = externalDir.toString();
             if(writeFile(externalDir.toString(), theFile) == 0)
             {
             	externalDir.delete(externalDirLength, externalDir.length());
@@ -1112,7 +1112,7 @@ public class RPCDDSGEN
                 try
                 {
                 	// Set to change the working directory using opendds_idl if user uses a output directory.
-                    ddsGen(newIdlFile, false, externalDirLength > 0 ? true : false);
+                    ddsGen(ifc.getName() + "RequestReply.idl", false, externalDirLength > 0 ? true : false);
                     returnedValue = 0;
                 }
                 catch(Exception ioe)
