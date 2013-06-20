@@ -139,22 +139,31 @@ namespace eProsima
 #if (defined(RTI_WIN32) || defined(RTI_LINUX))
             return TheParticipantFactory;
 #elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-            OpenDDS::RTPS::RtpsDiscovery_rch discovery = new OpenDDS::RTPS::RtpsDiscovery("rtps");
-
-            if(discovery != NULL)
+            const OpenDDS::DCPS::Service_Participant::RepoKeyDiscoveryMap &map =  TheServiceParticipant->discoveryMap();
+            
+            if(map.find("rtps") == map.end())
             {
-                discovery->resend_period(ACE_Time_Value(3));
-                //discovery->sedp_multicast(false);
-                std::vector<std::string> addresses;
-                discovery->spdp_send_addrs().swap(addresses);
-                TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(discovery));
-                TheServiceParticipant->set_repo_domain(domainId, "rtps");
+                OpenDDS::RTPS::RtpsDiscovery_rch discovery = new OpenDDS::RTPS::RtpsDiscovery("rtps");
 
-                return TheParticipantFactory;
+                if(discovery != NULL)
+                {
+                    //discovery->resend_period(ACE_Time_Value(3));
+                    discovery->sedp_multicast(false);
+                    std::vector<std::string> addresses;
+                    discovery->spdp_send_addrs().swap(addresses);
+                    TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(discovery));    
+                    TheServiceParticipant->set_default_discovery("rtps");
+
+                    return TheParticipantFactory;
+                }
+                else
+                {
+                    printf("ERROR<%s::%s>: Cannot create discovery object\n", CLASS_NAME, METHOD_NAME);
+                }
             }
             else
             {
-                printf("ERROR<%s::%s>: Cannot create discovery object\n", CLASS_NAME, METHOD_NAME);
+                return TheParticipantFactory;
             }
 
             return NULL;

@@ -1,0 +1,10 @@
+interface Calculator
+{
+    long addition(in long x, in long y);
+
+    long substraction(in long x, in long y);
+
+    long multiplication(in long x, in long y);
+
+    long division(in long x, in long y);
+};

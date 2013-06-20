@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\example">
+      <UniqueIdentifier>{9b5f61bc-aaf5-47e7-bcf9-daf7649bfb0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\server">
+      <UniqueIdentifier>{bf3ee1c0-16e2-463a-be4b-cba986afa83b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\server">
+      <UniqueIdentifier>{d60eee97-5bab-4319-b63e-43d97e9425eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\skeleton">
+      <UniqueIdentifier>{2dbe3645-7041-4d88-8350-fd78cc94488e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\skeleton">
+      <UniqueIdentifier>{6ef3a181-cb45-43dd-bf68-a179d079b1bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+        <ClCompile Include="CalculatorRequestReplyUtils.cxx">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="CalculatorC.cpp" >
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="CalculatorRequestReplyC.cpp">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="CalculatorRequestReplyTypeSupportC.cpp">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="CalculatorRequestReplyTypeSupportImpl.cpp">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="CalculatorTypeSupportImpl.cpp">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MessageHeaderC.cpp">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+        <ClCompile Include="MessageHeaderTypeSupportImpl.cpp">
+            <Filter>Source Files\server</Filter>
+        </ClCompile>
+    <ClCompile Include="CalculatorServer.cxx">
+      <Filter>Source Files\server</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorServerImpl.cxx">
+      <Filter>Source Files\skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorServerRPCSupport.cxx">
+      <Filter>Source Files\server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cxx">
+      <Filter>Source Files\example</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+        <ClInclude Include="CalculatorRequestReplyUtils.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="CalculatorC.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="CalculatorRequestReplyC.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="CalculatorRequestReplyTypeSupportC.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="CalculatorRequestReplyTypeSupportImpl.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="CalculatorTypeSupportImpl.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MessageHeaderC.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+        <ClInclude Include="MessageHeaderTypeSupportImpl.h">
+            <Filter>Header Files\server</Filter>
+        </ClInclude>
+    <ClInclude Include="CalculatorServer.h">
+      <Filter>Header Files\server</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorServerImpl.h">
+      <Filter>Header Files\skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorServerRPCSupport.h">
+      <Filter>Header Files\server</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

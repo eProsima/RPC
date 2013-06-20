@@ -1,0 +1,43 @@
+CPP_x64Linux2.6gcc4.4.5 = g++
+CXXFLAGS_x64Linux2.6gcc4.4.5 = -m64 -std=c++11
+LD_x64Linux2.6gcc4.4.5 = g++
+LDFLAGS_x64Linux2.6gcc4.4.5 = -m64
+SYSLIBS_x64Linux2.6gcc4.4.5 = -ldl -lnsl -lm -lpthread -lrt
+DEFINES_ARCH_SPECIFIC =  -DOPENDDS_LINUX
+
+DEFINES = $(DEFINES_ARCH_SPECIFIC)  
+
+INCLUDES = -I.  -I$(DDS_ROOT) -I$(TAO_ROOT) -I$(ACE_ROOT) -I$(RPCDDSHOME)/include
+
+LIBS =  -L$(DDS_ROOT)/lib -L$(ACE_ROOT)/lib -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+       -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE -lrpcddso $(SYSLIBS_x64Linux2.6gcc4.4.5)
+
+COMMONCXXSOURCES = CalculatorRequestReplyUtils.cxx
+COMMONCPPSOURCES = CalculatorC.cpp CalculatorRequestReplyC.cpp \
+                CalculatorRequestReplyTypeSupportC.cpp CalculatorRequestReplyTypeSupportImpl.cpp \
+                CalculatorTypeSupportImpl.cpp MessageHeaderC.cpp MessageHeaderTypeSupportImpl.cpp
+
+SERVERSOURCES = CalculatorServer.cxx CalculatorServerImpl.cxx CalculatorServerRPCSupport.cxx Server.cxx 
+DIRECTORIES   = objs.dir objs/x64Linux2.6gcc4.4.5.dir
+COMMONOBJS    = $(COMMONCXXSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o) $(COMMONCPPSOURCES:%.cpp=objs/x64Linux2.6gcc4.4.5/%.o)
+SERVEROBJS    = $(SERVERSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o)
+SERVEREXEC    = objs/x64Linux2.6gcc4.4.5/CalculatorServer
+
+server: $(DIRECTORIES) $(SERVEREXEC)
+
+$(SERVEREXEC) : $(COMMONOBJS) $(SERVEROBJS)
+	$(LD_x64Linux2.6gcc4.4.5) $(LDFLAGS_x64Linux2.6gcc4.4.5)  -o $(@:%.out=%) $(COMMONOBJS) $(SERVEROBJS) $(LIBS)
+
+objs/x64Linux2.6gcc4.4.5/%.o : %.cxx
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+	
+objs/x64Linux2.6gcc4.4.5/%.o : %.cpp
+	$(CPP_x64Linux2.6gcc4.4.5) $(CXXFLAGS_x64Linux2.6gcc4.4.5)  -o $@ $(DEFINES) $(INCLUDES) -c $<
+
+# Here is how we create those subdirectories automatically.
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

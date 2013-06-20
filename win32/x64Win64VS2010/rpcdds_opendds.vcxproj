@@ -113,7 +113,7 @@
       <AdditionalLibraryDirectories>$(ACE_ROOT)\lib;$(DDS_ROOT)\lib;$(EPROSIMA_LIBRARY_PATH)\boost_1_51_0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2005\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -148,6 +148,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
+      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\$(NDDSTARGET)</Command>

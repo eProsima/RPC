@@ -283,8 +283,6 @@ public class RPCDDSGEN
             // Set the output directory to rtiddsgen.
         	lineCommand.add("-d");
         	lineCommand.add(m_outputDir);
-        	lineCommandForWorkDirSet.add("-d");
-        	lineCommandForWorkDirSet.add(m_outputDir);
         }
         else if(middleware.equals("opendds"))
         {   	

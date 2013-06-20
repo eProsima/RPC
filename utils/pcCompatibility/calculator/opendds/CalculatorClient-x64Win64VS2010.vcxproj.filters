@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\client">
+      <UniqueIdentifier>{221de19c-4f48-4fab-801b-e4be8397d3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client">
+      <UniqueIdentifier>{8028dddc-002a-4cdf-a11d-a764e6f1e434}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CalculatorRequestReplyUtils.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorC.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorRequestReplyC.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorRequestReplyTypeSupportC.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorRequestReplyTypeSupportImpl.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorTypeSupportImpl.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHeaderC.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHeaderTypeSupportImpl.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorProxy.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorClientRPCSupport.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorAsyncSupport.cxx">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CalculatorRequestReplyUtils.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorC.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorRequestReplyC.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorRequestReplyTypeSupportC.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorRequestReplyTypeSupportImpl.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorTypeSupportImpl.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHeaderC.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHeaderTypeSupportImpl.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorProxy.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorClientRPCSupport.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculatorAsyncSupport.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainWindow.resx" />
+  </ItemGroup>
+</Project>

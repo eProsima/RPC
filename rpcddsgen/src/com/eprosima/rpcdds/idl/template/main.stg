@@ -65,7 +65,7 @@ $type$$reqrep$_finalize(&$name$);
 >>
 
 getTypename(funName, type, name) ::= <<
-$name$ = $funName$$type$TypeSupport::get_type_name();
+$name$ = "$funName$$type$";
 >>
 
 registerTypename(funName, type, name) ::= <<
@@ -100,7 +100,7 @@ inclVS() ::= <<
 
 libsMake(example) ::= <<
  -L\$(NDDSHOME)/lib/$example$ -L\$(RPCDDSHOME)/lib/$example$ \
-       -lnddsc -lnddscore -lnddscpp
+       -lnddsc -lnddscore -lnddscpp -lrpcdds
 >>
 
 libsVS(example) ::= <<

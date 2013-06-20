@@ -12,7 +12,7 @@ DEFINES = \$(DEFINES_ARCH_SPECIFIC)
 
 INCLUDES = -I. $inclMake()$
 
-LIBS = $libsMake(example=example)$ -lrpcdds \$(SYSLIBS_$example$)
+LIBS = $libsMake(example=example)$ \$(SYSLIBS_$example$)
 
 $sourceMake(interface=interface)$
 

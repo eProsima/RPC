@@ -42,7 +42,7 @@ namespace eProsima
 				 *
 				 * \param participantQos Reference to the DDS domain participant QoS.
 				 */
-                int setTransport(DDS::DomainParticipantQos &participantQos);
+                int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
 
 			private:
 
@@ -69,7 +69,7 @@ namespace eProsima
 				 *
 				 * \param participantQos Reference to the DDS domain participant QoS.
 				 */
-                int setTransport(DDS::DomainParticipantQos &participantQos);
+                int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
         };
     } // namepsace RPCDDS
 } // namespace eProsima

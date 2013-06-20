@@ -37,7 +37,7 @@ namespace eProsima
 				 *
 				 * \param participantQos Reference to the DDS domain participant QoS.
 				 */
-                virtual int setTransport(DDS::DomainParticipantQos &participantQos) = 0;
+                virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
         };
     } // namespace RPCDDS
 } // namespace eProsima

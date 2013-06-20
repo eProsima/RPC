@@ -39,12 +39,6 @@ namespace eProsima
 
 				DDS::DomainParticipantQos participantQos;
 
-	#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
-
-				// Because OpenDDS, the first step is set the transport.
-				m_transport->setTransport(participantQos);
-	#endif
-
 				// Because OpenDDS, the first step is set the transport.
 				DDS::DomainParticipantFactory *factory = getFactory(m_domainId);
 
@@ -52,7 +46,7 @@ namespace eProsima
 				{
 					factory->get_default_participant_qos(participantQos);
 	#if (defined(RTI_WIN32) || defined(RTI_LINUX))
-					m_transport->setTransport(participantQos);
+					m_transport->setTransport(participantQos, NULL);
 	#endif
 
 					increase_buffers(participantQos);
@@ -66,6 +60,11 @@ namespace eProsima
 						if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
 						{
 							participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+
+#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+				            m_transport->setTransport(participantQos, m_participant);
+#endif
+
 							m_participant->set_qos(participantQos);
 
 							return;

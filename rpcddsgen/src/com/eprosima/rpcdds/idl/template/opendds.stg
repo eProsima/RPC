@@ -55,7 +55,7 @@ delete $if(void)$($type$$reqrep$*)$endif$$name$;
 
 getTypename(funName, type, name) ::= <<
 $funName$$type$TypeSupport_var ts = new $funName$$type$TypeSupportImpl;
-$name$ = ts->get_type_name();
+$name$ = CORBA::string_dup("$funName$$type$");
 >>
 
 registerTypename(funName, type, name) ::= <<
@@ -90,7 +90,7 @@ inclVS() ::= <<
 
 libsMake(example) ::= <<
  -L\$(DDS_ROOT)/lib -L\$(ACE_ROOT)/lib -L\$(RPCDDSHOME)/lib/$example$ \
-       -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE
+       -lOpenDDS_Dcps -lTAO -lTAO_AnyTypeCode -lACE -lrpcddso
 >>
 
 libsVS(example) ::= <<
