@@ -42,6 +42,8 @@ specification [String outdir, String idlFilename, boolean replace] returns [bool
     // Load template to generate Utils for topics.
     tmanager.addGroup("UtilsHeader");
     tmanager.addGroup("UtilsSource");
+    // Load template to generate Proxy for topics.
+    tmanager.addGroup("ProxyHeader");
     TemplateGroup maintemplates = tmanager.createTemplateGroup("main");
     maintemplates.setAttribute("ctx", ctx);
     
@@ -59,7 +61,10 @@ specification [String outdir, String idlFilename, boolean replace] returns [bool
         {
             if(Utils.writeFile(outdir + idlFilename + "RequestReplyUtils.cxx", maintemplates.getTemplate("UtilsSource"), replace))
             {
-                returnedValue = true;
+                if(Utils.writeFile(outdir + idlFilename + "Proxy.h", maintemplates.getTemplate("ProxyHeader"), replace))
+                {
+                    returnedValue = true;
+                }
             }
         }
     }

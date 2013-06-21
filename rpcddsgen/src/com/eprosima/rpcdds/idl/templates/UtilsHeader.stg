@@ -5,7 +5,6 @@ $fileHeader(file=[ctx.filename, "RequestReplyUtils.h"], description=["This heade
 
 #include "$ctx.filename$RequestReplyUtils.h"
 $ReqRepIncludes(interfaceName=ctx.filename)$
-#include <string>
 
 $definitions; separator="\n"$
 >>

@@ -564,9 +564,6 @@ public class RPCDDSGEN
         Interface ifc = root.getIfc();
 
 
-        	System.out.println("Generating Utils...");
-        	if(genUtils(ifc) == 0)
-        	{
         		System.out.println("Generating Client Code...");
         		if(genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
         				"functionImpl", "functionHeader", "Client", ifc, true) == 0)
@@ -623,11 +620,6 @@ public class RPCDDSGEN
         		{
         			System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Code.");
         		}
-        	}
-        	else
-        	{
-        		System.out.println("ERROR<" + METHOD_NAME + ">: Generating Utils.");
-        	}
 
         return returnedValue;
     }
