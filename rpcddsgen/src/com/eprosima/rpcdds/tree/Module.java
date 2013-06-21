@@ -14,5 +14,16 @@ public class Module extends DefinitionContainer implements Definition
         return m_name;
     }
     
-    private String m_name;
+    public void setParent(Object obj)
+    {
+        m_parent = obj;
+    }
+    
+    public Object getParent()
+    {
+        return m_parent;
+    }
+
+    private String m_name = null;
+    private Object m_parent = null;
 }

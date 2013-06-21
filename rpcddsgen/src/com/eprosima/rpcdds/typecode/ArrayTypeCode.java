@@ -41,12 +41,17 @@ public class ArrayTypeCode extends ContainerTypeCode
             prevs = second.toString();
         }
         
-        fin = getStringTemplate();
+        fin = getTypenameFromStringTemplate();
         fin.setAttribute("firs", prevf);
         fin.setAttribute("secon", prevs);
         fin.setAttribute("type", getContentTypeCode().getTypename());
         
         return fin.toString();
+    }
+    
+    public String getStTypename()
+    {
+        return "JODER";
     }
     
     public void addDimension(String dimension)

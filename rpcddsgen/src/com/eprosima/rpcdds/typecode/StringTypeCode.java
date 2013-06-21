@@ -14,7 +14,13 @@ public class StringTypeCode extends TypeCode
     @Override
     public String getTypename()
     {
-        return getStringTemplate().toString();
+        return getTypenameFromStringTemplate().toString();
+    }
+    
+    @Override
+    public String getStTypename()
+    {
+        return getSTTypenameFromStringTemplate().toString();
     }
     
     public String getMaxsize()
@@ -57,6 +63,12 @@ public class StringTypeCode extends TypeCode
         {
             return currentSize + 4 + Integer.parseInt(m_maxsize);
         }
+    }
+    
+    @Override
+    public boolean isString()
+    {
+        return true;
     }
     
     private String m_maxsize = null;

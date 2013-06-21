@@ -2,14 +2,26 @@ package com.eprosima.rpcdds.tree;
 
 import com.eprosima.rpcdds.typecode.TypeCode;
 
-public class TypeDeclaration implements Definition, Export
+public abstract class Param
 {
-    public TypeDeclaration(TypeCode typecode)
+    public abstract boolean isInput();
+    
+    public abstract boolean isOutput();
+    
+    public abstract String getComment();
+    
+    public Param(String name, TypeCode typecode)
     {
+        m_name = name;
         m_typecode = typecode;
     }
     
-    public TypeCode getTypeCode()
+    public String getName()
+    {
+        return m_name;
+    }
+    
+    public TypeCode getTypecode()
     {
         return m_typecode;
     }
@@ -24,6 +36,7 @@ public class TypeDeclaration implements Definition, Export
         return m_parent;
     }
     
+    private String m_name = null;
     private TypeCode m_typecode = null;
     private Object m_parent = null;
 }

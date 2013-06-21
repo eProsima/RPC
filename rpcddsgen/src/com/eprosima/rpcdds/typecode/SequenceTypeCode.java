@@ -15,7 +15,15 @@ public class SequenceTypeCode extends ContainerTypeCode
     @Override
     public String getTypename()
     {
-        StringTemplate st = getStringTemplate();
+        StringTemplate st = getTypenameFromStringTemplate();
+        st.setAttribute("type", getContentTypeCode().getTypename());
+        return st.toString();
+    }
+    
+    @Override
+    public String getStTypename()
+    {
+        StringTemplate st = getSTTypenameFromStringTemplate();
         st.setAttribute("type", getContentTypeCode().getTypename());
         return st.toString();
     }

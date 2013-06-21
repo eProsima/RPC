@@ -10,6 +10,9 @@ public abstract class ContainerTypeCode extends TypeCode
     @Override
     public abstract String getTypename();
     
+    @Override
+    public abstract String getStTypename();
+    
     public TypeCode getContentTypeCode()
     {
         return m_contentTypeCode;

@@ -105,6 +105,9 @@ public class RPCDDSGEN
                     // TODO Catch errors.
                     // Parsing and generating code with templates.
                     processIDL(m_idlFile);
+                    // Parse the requestreply IDL file that was generated.
+                    ddsGen(Utils.getIDLFileNameOnly(m_onlyIdlFile) + "RequestReply.idl", false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+                    returnedValue = 0; 
                     
                     // TODO Remove old parser.
                     /*Module root = parse(idlFile);
@@ -560,9 +563,7 @@ public class RPCDDSGEN
 
         Interface ifc = root.getIfc();
 
-        System.out.println("Generating Request/Response Topics...");
-        if(genIdl(ifc) == 0)
-        {
+
         	System.out.println("Generating Utils...");
         	if(genUtils(ifc) == 0)
         	{
@@ -627,11 +628,6 @@ public class RPCDDSGEN
         	{
         		System.out.println("ERROR<" + METHOD_NAME + ">: Generating Utils.");
         	}
-        }
-        else
-        {
-        	System.out.println("ERROR<" + METHOD_NAME + ">: Generating Request/Response Topics.");
-        }
 
         return returnedValue;
     }
@@ -960,174 +956,6 @@ public class RPCDDSGEN
         return returnedValue;
     }
     
-    
-    public static int genUtils(Interface ifc)
-    {
-        final String METHOD_NAME = "genUtils";
-        int returnedValue = -1;
-
-        // first load main language template
-        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("Utils", DefaultTemplateLexer.class, baseTemplateGroup);
-
-        if(utilTemplates != null)
-        {
-
-            StringTemplate headerFile = utilTemplates.getInstanceOf("headerFile");
-            StringTemplate definitionFile = utilTemplates.getInstanceOf("definitionFile");
-            StringTemplate headerRequest = utilTemplates.getInstanceOf("header");
-            StringTemplate headerReply = utilTemplates.getInstanceOf("header");
-            StringTemplate definitionRequest = utilTemplates.getInstanceOf("definition");
-            StringTemplate definitionReply = utilTemplates.getInstanceOf("definition");
-
-            if(externalDirLength > 0)
-            {
-                externalDir.append("/");	
-            }
-
-            headerFile.setAttribute("name", ifc.getName());
-            definitionFile.setAttribute("name", ifc.getName());
-
-            Operation op = null;
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
-            {						
-                op = (Operation) iter.next();
-                
-                // Request template
-                headerRequest.setAttribute("topicName", ifc.getName() + "_" + op.getName());
-                headerRequest.setAttribute("templateName", "Request");
-                definitionRequest.setAttribute("topicName", ifc.getName() + "_" + op.getName());
-                definitionRequest.setAttribute("templateName", "Request");
-
-                // Reply template
-                headerReply.setAttribute("topicName", ifc.getName() + "_" + op.getName());
-                headerReply.setAttribute("templateName", "Reply");
-                definitionReply.setAttribute("topicName", ifc.getName() + "_" + op.getName());
-                definitionReply.setAttribute("templateName", "Reply");
-
-                // Set parameters for request template and reply template
-                setRequestReplyParams(headerRequest, headerReply, op, "params", ifc);
-                setRequestReplyParams(definitionRequest, definitionReply, op, "params", ifc);
-                
-                if(!"void".equals(op.getReturnType().getTypeName())){
-                    headerReply.setAttribute("returnType", op.getReturnType());					
-                    definitionReply.setAttribute("returnType", op.getReturnType());
-                }
-                
-                headerReply.setAttribute("isReply", "yes");
-                definitionReply.setAttribute("isReply", "yes");
-                
-                headerFile.setAttribute("classes", headerRequest.toString());
-                definitionFile.setAttribute("classes", definitionRequest.toString());
-
-                // Operation is not oneway.
-                if(!op.isOneway())
-                {
-                	headerFile.setAttribute("classes", headerReply.toString());
-                	definitionFile.setAttribute("classes", definitionReply.toString());
-                }
-
-                headerRequest.reset();
-                headerReply.reset();
-                definitionRequest.reset();
-                definitionReply.reset();
-            }
-
-            //System.out.println(request.toString());
-            externalDir.append(ifc.getName()).append("RequestReplyUtils.h");
-            if(writeFile(externalDir.toString(), headerFile) == 0)
-            {
-                externalDir.deleteCharAt(externalDir.length() - 1);
-                externalDir.append("cxx");
-                returnedValue = writeFile(externalDir.toString(), definitionFile);
-
-                externalDir.delete(externalDirLength, externalDir.length());
-            }
-        }
-        else
-        {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group Utils");
-        }
-
-        return returnedValue;
-    }
-
-    public static int genIdl(Interface ifc) throws Exception
-    {
-        final String METHOD_NAME = "genIdl";
-        int returnedValue = -1;
-
-        // first load main language template
-        StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("IDL", DefaultTemplateLexer.class, baseTemplateGroup);
-
-        if(idlTemplates != null)
-        {
-            StringTemplate theFile = idlTemplates.getInstanceOf("idlFile");
-            theFile.setAttribute("interfaceName", ifc.getName());
-            theFile.setAttribute("file", m_onlyIdlFile);
-
-            StringTemplate request = idlTemplates.getInstanceOf("request");
-            StringTemplate reply = idlTemplates.getInstanceOf("reply");
-
-            if(externalDirLength > 0)
-            {
-                externalDir.append((osOption.equals("Win32") ? "\\" : "/") );	
-            }
-
-            Operation op = null;
-
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); )
-            {						
-                op = (Operation) iter.next();
-
-                request.setAttribute("interfaceName", ifc.getName());
-                request.setAttribute("funName", op.getName());
-                reply.setAttribute("interfaceName", ifc.getName());
-                reply.setAttribute("funName", op.getName());
-
-                setRequestReplyParams(request, reply, op, "params", ifc);
-                
-                if(!"void".equals(op.getReturnType().getTypeName()))
-                {
-                    reply.setAttribute("return", op.getReturnType());
-                }
-                
-                theFile.setAttribute("types", request.toString());
-                // if it is not a oneway function
-                if(!op.isOneway())
-                	theFile.setAttribute("types", reply.toString());
-                
-                request.reset();
-                reply.reset();
-            }
-
-            //System.out.println(reply.toString());
-            externalDir.append(ifc.getName()).append("RequestReply.idl");
-            // BUG: String newIdlFile = externalDir.toString();
-            if(writeFile(externalDir.toString(), theFile) == 0)
-            {
-            	externalDir.delete(externalDirLength, externalDir.length());
-            	
-                try
-                {
-                	// Set to change the working directory using opendds_idl if user uses a output directory.
-                    ddsGen(ifc.getName() + "RequestReply.idl", false, externalDirLength > 0 ? true : false);
-                    returnedValue = 0;
-                }
-                catch(Exception ioe)
-                {
-                    System.out.println("ERROR generating files");
-                    ioe.printStackTrace();
-                }     
-            }
-            else
-            {
-                System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group IDL");
-            }
-        }
-
-        return returnedValue;
-    }
-
     private static int genSolution(Interface ifc)
     {
         final String METHOD_NAME = "genSolution";

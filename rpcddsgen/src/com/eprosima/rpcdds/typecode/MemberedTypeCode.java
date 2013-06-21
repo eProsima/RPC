@@ -36,6 +36,8 @@ public abstract class MemberedTypeCode extends TypeCode
     
     public abstract String getTypename();
     
+    public abstract String getStTypename();
+    
     private String m_name = null;
     
     private String m_scope = null;

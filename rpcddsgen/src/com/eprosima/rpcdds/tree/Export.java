@@ -1,6 +1,6 @@
 package com.eprosima.rpcdds.tree;
 
-public interface Definition
+public interface Export
 {
     void setParent(Object obj);
     

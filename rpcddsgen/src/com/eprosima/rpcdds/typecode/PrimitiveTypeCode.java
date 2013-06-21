@@ -12,7 +12,13 @@ public class PrimitiveTypeCode extends TypeCode
     @Override
     public String getTypename()
     {
-        return getStringTemplate().toString();
+        return getTypenameFromStringTemplate().toString();
+    }
+    
+    @Override
+    public String getStTypename()
+    {
+        return getSTTypenameFromStringTemplate().toString();
     }
     
     public boolean isPrimitive()

@@ -28,9 +28,7 @@ $endif$
 $endif$
 >>
 
-varComplexDel(typeName, name) ::= <<
-$typeName$_finalize(&$name$);
->>
+varComplexDel(typeName, name) ::= <<$typeName$_finalize(&$name$);>>
 
 varStringDel(name) ::=<<
 if($name$ != NULL) free($name$);
@@ -64,27 +62,24 @@ reqrepRefFinalize(type, reqrep, name) ::= <<
 $type$$reqrep$_finalize(&$name$);
 >>
 
-getTypename(funName, type, name) ::= <<
-$name$ = $funName$$type$TypeSupport::get_type_name();
+getTypename(typename, name) ::= <<
+$name$ = $typename$TypeSupport::get_type_name();
 >>
 
-registerTypename(funName, type, name) ::= <<
-$funName$$type$TypeSupport::register_type(participant, $name$)
+registerTypename(typename, name) ::= <<
+$typename$TypeSupport::register_type(participant, $name$)
 >>
 
 preReqIDLDefines(name) ::= <<
 >>
 
-preRepIDLDefines(name) ::= <<
->>
+preRepIDLDefines(name) ::= <<>>
 
 keyIDLdefine() ::= <<
  //@key
 >>
 
-levelIDLdefine() ::= <<
- //@top-level true
->>
+levelIDLdefine() ::= <<//@top-level true>>
 
 archMakeDefines() ::= <<
  -DRTI_UNIX -DRTI_LINUX
@@ -295,15 +290,12 @@ dependencies(conf) ::= <<
 nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; rpcdds$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
-extractDH(type, name) ::= <<
-$type$PluginSupport_copy_data(&$name$, &data.$name$);
->>
+extractDH(type, name) ::= <<$type$PluginSupport_copy_data(&$name$, &data.$name$);>>
 
 stringPointerConst() ::= <<
 >>
 
-stringPointer() ::= <<
->>
+stringPointer() ::= <<>>
 
 charCasting() ::= <<
 (char*)

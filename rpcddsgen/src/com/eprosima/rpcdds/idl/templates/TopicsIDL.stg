@@ -4,20 +4,57 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RequestReply.idl"], description=["This IDL file contains the definition of the DDS messages for all defined interfaces by the user."])$
 
 #include "MessageHeader.idl"
-#include "$ctx.filename$"
+#include "$ctx.filename$.idl"
 
 $definitions; separator="\n"$
 >>
 
-module(name, definition_list) ::= <<
-$definition_list$
+module(module, definition_list) ::= <<
+module $module.name$
+{
+    $definition_list$
+};
 >>
 
 definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
-interface(name) ::= <<>>
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+operation(ctx, operation, param_list, return_type) ::= <<
+$preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
+/**
+ * Topic used to receive/send requests for the procedure $operation.name$.
+ */
+struct $operation.parent.name$_$operation.name$Request{
+    RequestHeader header;
+    $operation.inputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
+}; $levelIDLdefine()$
+
+$if(!operation.oneway)$
+$preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
+/**
+ * Topic used to receive/send replies for the procedure $operation.name$.
+ */
+struct $operation.parent.name$_$operation.name$Reply{
+    ReplyHeader header;
+    $operation.outputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
+    $if(operation.rettype)$$operation.rettype.typename$ $operation.name$_ret;$endif$
+}; $levelIDLdefine()$
+$endif$
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
 
 struct_type(ctx, struct) ::= <<>>
 

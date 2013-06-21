@@ -35,6 +35,7 @@ public abstract class TypeCode
     public static final int KIND_SPARSE = 0x00000017;
     
     protected static StringTemplateGroup m_typesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
+    protected static StringTemplateGroup m_stringtemplatetypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
     
     public TypeCode(int kind)
     {
@@ -47,11 +48,18 @@ public abstract class TypeCode
     }
     
     public abstract String getTypename();
+    
+    public abstract String getStTypename();
    
     
-    protected StringTemplate getStringTemplate()
+    protected StringTemplate getTypenameFromStringTemplate()
     {
         return m_typesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
+    }
+    
+    protected StringTemplate getSTTypenameFromStringTemplate()
+    {
+        return m_stringtemplatetypesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
     }
     
     // Function used in stringtemplates
@@ -64,6 +72,24 @@ public abstract class TypeCode
     public boolean isPrimitive()
     {
         return false;
+    }
+    
+    // By default a typecode is not string. Function used in stringtemplates
+    public boolean isString()
+    {
+        return false;
+    }
+    
+ // By default a typecode is not enum. Function used in stringtemplates
+    public boolean isEnum()
+    {
+        return false;
+    }
+    
+    // Used in stringtemplate for parameters
+    public boolean isPrimitiveInArguments()
+    {
+        return isPrimitive() || isEnum() || isString();
     }
     
     // By default a typecode doesn't have a max size limit. Function used in stringtemplates

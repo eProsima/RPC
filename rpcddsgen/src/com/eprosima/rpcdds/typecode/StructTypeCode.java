@@ -21,7 +21,15 @@ public class StructTypeCode extends MemberedTypeCode
     @Override
     public String getTypename()
     {
-        StringTemplate st = getStringTemplate();
+        StringTemplate st = getTypenameFromStringTemplate();
+        st.setAttribute("name", getScopedname());
+        return st.toString();
+    }
+    
+    @Override
+    public String getStTypename()
+    {
+        StringTemplate st = getSTTypenameFromStringTemplate();
         st.setAttribute("name", getScopedname());
         return st.toString();
     }

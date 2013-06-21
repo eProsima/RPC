@@ -257,4 +257,3 @@ $param.name$ = data.$param.name$$if(param.baseType.isString)$$stringPointer()$$e
 $endif$
 $endif$
 >>    
-

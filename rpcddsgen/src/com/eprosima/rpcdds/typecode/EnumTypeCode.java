@@ -19,9 +19,23 @@ public class EnumTypeCode extends MemberedTypeCode
     @Override
     public String getTypename()
     {
-        StringTemplate st = getStringTemplate();
+        StringTemplate st = getTypenameFromStringTemplate();
         st.setAttribute("name", getScopedname());
         return st.toString();
+    }
+    
+    @Override
+    public String getStTypename()
+    {
+        StringTemplate st = getSTTypenameFromStringTemplate();
+        st.setAttribute("name", getScopedname());
+        return st.toString();
+    }
+    
+    // In RPCDDS is considered primitive
+    public boolean isEnum()
+    {
+        return true;
     }
     
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)

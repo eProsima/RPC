@@ -1,0 +1,144 @@
+group UtilsSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This source file contains the definition of helpful functions for the DDS messages for interface ", ctx.filename, "."])$
+
+$definitions; separator="\n"$
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+operation(ctx, operation, param_list, return_type) ::= <<
+const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(DDS::DomainParticipant *participant)
+{
+    const char *typeName = NULL;
+
+    if(participant != NULL)
+    {
+        $getTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$
+
+        if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$ != DDS::RETCODE_OK)
+        {
+            return NULL;
+        }
+    }
+
+    return typeName;
+}
+
+void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+{
+    $operation.parameters : {$createDataHelper(param=it, isRequest="yes")$};separator="\n"$
+    $if(operation.rettypeparam)$
+    $createDataHelper(param=operation.rettypeparam, isRequest="yes")$        
+    $endif$
+}
+
+void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+{
+    $operation.parameters : {$extractDataHelper(param=it)$};separator="\n"$  
+    $if(operation.rettypeparam)$
+    $extractDataHelper(param=operation.rettypeparam)$        
+    $endif$    
+}
+
+const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS::DomainParticipant *participant)
+{
+    const char *typeName = NULL;
+
+    if(participant != NULL)
+    {
+        $getTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typeName")$
+
+        if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typeName")$ != DDS::RETCODE_OK)
+        {
+            return NULL;
+        }
+    }
+
+    return typeName;
+}
+
+void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+{
+    $operation.parameters : {$createDataHelper(param=it)$};separator="\n"$
+    $if(operation.rettypeparam)$
+    $createDataHelper(param=operation.rettypeparam)$        
+    $endif$
+}
+
+void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+{
+    retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
+    $operation.parameters : {$extractDataHelper(param=it, isReply="yes")$};separator="\n"$
+    $if(operation.rettypeparam)$
+    $extractDataHelper(param=operation.rettypeparam, isReply="yes")$        
+    $endif$  
+}
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+
+/**
+ * Utils
+ */
+createDataHelper(param, isRequest) ::= <<
+instance.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;
+>>
+
+extractDataHelper(param, isReply) ::= <<
+$if(isReply)$
+$if(param.input)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.string)$
+if($param.name$ != NULL)
+    free($param.name$);
+$endif$
+$else$
+$varComplexDel(typeName=param.stTypename, name=param.name)$
+$endif$
+$endif$
+$param.name$ = data.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$else$
+$if(param.output)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.string)$
+$param.name$ = strdup(data.$param.name$);
+$else$
+$param.name$ = data.$param.name$;
+$endif$
+$else$
+$extractDH(type=param.typecode.stTypename, name=param.name)$
+$endif$
+$else$
+$param.name$ = data.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$endif$
+$endif$
+>>

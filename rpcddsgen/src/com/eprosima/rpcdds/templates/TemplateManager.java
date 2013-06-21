@@ -41,7 +41,7 @@ public class TemplateManager
         
         // Load common stringtemplate rules.
         // TODO Change depending RTI or OpenDDS.
-        middlgr = StringTemplateGroup.loadGroup("main", DefaultTemplateLexer.class, null);
+        middlgr = StringTemplateGroup.loadGroup("rti", DefaultTemplateLexer.class, null);
         commongr = StringTemplateGroup.loadGroup("Common", DefaultTemplateLexer.class, middlgr);
     }
     
