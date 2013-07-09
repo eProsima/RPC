@@ -16,34 +16,40 @@
 
 group main;
 
-varComplexDecl(typeName, name, create) ::= <<
-$typeName$ $name$;$if(create)$$\n$memset(&$name$, 0, sizeof($typeName$));$endif$
+varComplexDecl(variable, create) ::= <<
+$if(variable)$
+$variable.typecode.stTypename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.stTypename$));$endif$
+$endif$
 >>
 
-varComplexInitialize(typeName, name) ::= <<
-$if(!voidInitMap.(typeName))$
-$if(!typeInitMap.(typeName))$
+varComplexInitializeT(typeName, name) ::= <<
 $typeName$_initialize(&$name$);
-$endif$
+>>
+
+varComplexInitialize(variable) ::= <<
+$if(variable)$
+$variable.typecode.stTypename$_initialize(&$variable.name$);
 $endif$
 >>
 
-varComplexDel(typeName, name) ::= <<$typeName$_finalize(&$name$);>>
+varComplexDelT(typeName, name) ::= <<$typeName$_finalize(&$name$);>>
+
+varComplexDel(variable) ::= <<$variable.typecode.stTypename$_finalize(&$variable.name$);>>
 
 varStringDel(name) ::=<<
 if($name$ != NULL) free($name$);
 >>
 
-ReqRepIncludes(interfaceName) ::= <<
-#include "$interfaceName$RequestReplyPlugin.h"
+ReqRepIncludes(filename) ::= <<
+#include "$filename$RequestReplyPlugin.h"
 >>
 
-ReqRepRIncludes(interfaceName) ::= <<
-#include "$interfaceName$RequestReplySupport.h"
+ReqRepRIncludes(filename) ::= <<
+#include "$filename$RequestReplySupport.h"
 >>
 
-ReqRepSIncludes(interfaceName) ::= <<
-#include "$interfaceName$RequestReplySupport.h"
+ReqRepSIncludes(filename) ::= <<
+#include "$filename$RequestReplySupport.h"
 >>
 
 ddsIncludes() ::= <<

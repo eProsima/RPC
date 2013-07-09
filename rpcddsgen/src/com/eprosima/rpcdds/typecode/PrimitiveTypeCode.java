@@ -21,9 +21,16 @@ public class PrimitiveTypeCode extends TypeCode
         return getSTTypenameFromStringTemplate().toString();
     }
     
+    @Override
     public boolean isPrimitive()
     {
         return true;
+    }
+    
+    @Override
+    public String getInitialValue()
+    {   
+        return "0";
     }
     
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)

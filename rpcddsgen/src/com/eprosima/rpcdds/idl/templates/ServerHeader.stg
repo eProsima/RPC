@@ -1,0 +1,101 @@
+group ServerHeader;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "Server.h"], description=["This header file contains the declaration of the server for all interfaces."])$
+
+#ifndef _$ctx.filename;format="toUpper"$SERVER_H_
+#define _$ctx.filename;format="toUpper"$SERVER_H_
+
+#include "server/Server.h"
+#include "$ctx.filename$ServerImpl.h"
+#include "$ctx.filename$RequestReplyUtils.h"
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename$SERVER_H_
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+/*!
+ * The export_list will be the definition of synchronize functions.
+ */
+interface(ctx, interface, export_list) ::= <<
+/**
+ * \brief This class implements a specific server for the defined interface $interface.name$ by user.
+ */
+class $interface.name$Server : public eProsima::RPCDDS::Server
+{
+    public:
+    
+        /**
+         * \brief Default constructor. The server will use the default eProsima::RPCDDS::UDPTransport.
+         *
+         * \param serviceName The service's name that proxies will use to connect with the server.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+         */
+        $interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+            int domainId = 0);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server.
+         *
+         * \param serviceName The service's name that proxies will use to connect with the server.
+         * \param strategy Strategy used by server to work with new requests.
+         *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param transport The network transport that server has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+         */
+        $interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy, eProsima::RPCDDS::Transport *transport,
+            int domainId = 0);
+
+        /// \brief The default destructor.
+        virtual ~$interface.name$Server();
+
+        $export_list$
+        
+     private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        /// \brief Pointer to the server's servant implemented by the user.
+        $interface.name$ServerImpl *_impl;
+};
+
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+operation(ctx, operation, param_list) ::= <<
+static void $operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

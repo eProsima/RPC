@@ -23,6 +23,12 @@ public class StringTypeCode extends TypeCode
         return getSTTypenameFromStringTemplate().toString();
     }
     
+    @Override
+    public String getInitialValue()
+    {   
+        return "NULL";
+    }
+    
     public String getMaxsize()
     {
         return m_maxsize;

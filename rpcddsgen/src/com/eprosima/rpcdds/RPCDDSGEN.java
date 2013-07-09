@@ -563,15 +563,6 @@ public class RPCDDSGEN
 
         Interface ifc = root.getIfc();
 
-
-        		System.out.println("Generating Client Code...");
-        		if(genHeaderAndImpl("Proxy", "Proxy", "header", "definition",
-        				"functionImpl", "functionHeader", "Client", ifc, true) == 0)
-        		{
-        			if(genRPCSupport(ifc, "Client") == 0)
-        			{
-        				if(genAsyncSupport(ifc) == 0)
-        				{
         					if(genRPCSupport(ifc, "Server") == 0)
         					{
         						System.out.println("Generating Server Code...");
@@ -605,21 +596,6 @@ public class RPCDDSGEN
         					{
         						System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Remote Code.");
         					}
-        				}
-        				else
-        				{
-        					System.out.println("ERROR<" + METHOD_NAME + ">: Generating asynchronous support.");
-        				}
-        			}
-        			else
-        			{
-        				System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Remote Code.");
-        			}
-        		}
-        		else
-        		{
-        			System.out.println("ERROR<" + METHOD_NAME + ">: Generating Client Code.");
-        		}
 
         return returnedValue;
     }
@@ -864,85 +840,6 @@ public class RPCDDSGEN
         else
         {
             System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group RPCSupport");
-        }
-
-        return returnedValue;
-    }
-    
-    public static int genAsyncSupport(Interface ifc)
-    {
-    	final String METHOD_NAME = "genAsyncSupport";
-        int returnedValue = -1;
-        // first load main language template
-        StringTemplateGroup asyncTemplates = StringTemplateGroup.loadGroup("AsyncSupport", DefaultTemplateLexer.class, baseTemplateGroup);
-
-        if(asyncTemplates != null)
-        {
-            StringTemplate header = asyncTemplates.getInstanceOf("header");
-            StringTemplate definition = asyncTemplates.getInstanceOf("definition");
-            
-            StringTemplate taskDecl = asyncTemplates.getInstanceOf("taskHeader");
-            StringTemplate taskDef = asyncTemplates.getInstanceOf("taskDeclaration");
-
-            if(externalDirLength > 0)
-            {
-                externalDir.append("/");	
-            }
-
-            header.setAttribute("interfaceName", ifc.getName());
-            
-            definition.setAttribute("interfaceName", ifc.getName());
-
-            Operation op = null;
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
-            {
-            	op = (Operation) iter.next();
-            	
-            	taskDecl.setAttribute("interfaceName", ifc.getName());
-            	taskDef.setAttribute("interfaceName", ifc.getName());
-            	      
-                taskDecl.setAttribute("name", op.getName());
-                taskDef.setAttribute("name", op.getName());
-                
-                ListIterator paramIter = null;
-                Param parameter = null;
-                for(paramIter = op.getParams().listIterator(); paramIter.hasNext();)
-                {
-                	parameter = (Param)paramIter.next();
-                	if(parameter.isOutput())
-                		taskDef.setAttribute("outParams", parameter);
-                }
-                
-                // Return Value
-                if(!"void".equals(op.getReturnType().getTypeName()))
-                {
-                	taskDef.setAttribute("outParams", op.getReturnType());				
-                }
-                
-                // If function is not oneway
-                if(!op.isOneway())
-                {
-                	header.setAttribute("taskDefs", taskDecl.toString());
-                	definition.setAttribute("taskDecls", taskDef.toString());
-                }
-                taskDecl.reset();
-                taskDef.reset();
-            }
-
-            externalDir.append(ifc.getName()).append("AsyncSupport.h");
-            if(writeFile(externalDir.toString(), header) == 0)
-            {
-                externalDir.deleteCharAt(externalDir.length() - 1);
-                externalDir.append("cxx");
-                returnedValue = writeFile(externalDir.toString(), definition);
-
-                externalDir.delete(externalDirLength, externalDir.length());
-            	returnedValue = 0;
-            }
-        }
-        else
-        {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group AsyncSupport");
         }
 
         return returnedValue;

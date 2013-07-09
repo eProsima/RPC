@@ -23,6 +23,19 @@ public class Module extends DefinitionContainer implements Definition
     {
         return m_parent;
     }
+    
+    @Override
+    public Interface getFirstInterface()
+    {
+        Interface returnedValue = null;
+        
+        for(int count = 0; returnedValue == null && count < getDefinitions().size(); ++count)
+        {
+            returnedValue = getDefinitions().get(count).getFirstInterface();
+        }
+        
+        return returnedValue;
+    }
 
     private String m_name = null;
     private Object m_parent = null;

@@ -5,4 +5,6 @@ public interface Export
     void setParent(Object obj);
     
     Object getParent();
+    
+    public boolean isOperation();
 }

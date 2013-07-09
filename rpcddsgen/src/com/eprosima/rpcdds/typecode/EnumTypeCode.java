@@ -32,6 +32,17 @@ public class EnumTypeCode extends MemberedTypeCode
         return st.toString();
     }
     
+    @Override
+    public String getInitialValue()
+    {   
+        if(getMembers().size() > 0)
+        {
+            return getMembers().get(0).getName();
+        }
+        
+        return "";
+    }
+    
     // In RPCDDS is considered primitive
     public boolean isEnum()
     {

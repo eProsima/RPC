@@ -24,6 +24,17 @@ public class TypeDeclaration implements Definition, Export
         return m_parent;
     }
     
+    public boolean isOperation()
+    {
+        return false;
+    }
+    
+    @Override
+    public Interface getFirstInterface()
+    {
+        return null;
+    }
+    
     private TypeCode m_typecode = null;
     private Object m_parent = null;
 }

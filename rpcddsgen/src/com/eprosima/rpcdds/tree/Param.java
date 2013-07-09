@@ -8,6 +8,11 @@ public abstract class Param
     
     public abstract boolean isOutput();
     
+    public boolean isOnlyOutput()
+    {        
+        return !isInput() && isOutput();
+    }
+    
     public abstract String getComment();
     
     public Param(String name, TypeCode typecode)

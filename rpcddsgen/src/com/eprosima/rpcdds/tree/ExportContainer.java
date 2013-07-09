@@ -15,5 +15,10 @@ public class ExportContainer
         exp.setParent(this);
     }
     
+    public ArrayList<Export> getExports()
+    {
+        return m_exports;
+    }
+    
     private ArrayList<Export> m_exports;
 }

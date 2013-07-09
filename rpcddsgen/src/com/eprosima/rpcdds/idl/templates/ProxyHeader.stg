@@ -1,7 +1,7 @@
 group ProxyHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file contains the declaration of the proxy for interface ", ctx.filename, "."])$
+$fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file contains the declaration of the proxy for all interfaces."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_PROXY_H_
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
@@ -21,21 +21,75 @@ namespace $module.name$
 {
     $definition_list$
 };
+
 >>
 
 definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
+/*!
+ * The export_list will be the definition of synchronize functions.
+ */
 interface(ctx, interface, export_list) ::= <<
-$export_list$
+$interface.exports : {export | $if(export.operation)$$classAsyncHeader(operation=export)$$endif$}$
+
+/**
+ * \brief This class implements a specific server's proxy for the defined interface $interface.name$.
+ */
+class $interface.name$Proxy : public eProsima::RPCDDS::Client
+{
+    public:
+    
+        /**
+         * \brief Default constructor. The server's proxy will use the default eProsima::RPCDDS::UDPTransport.
+         *
+         * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+         */
+        $interface.name$Proxy(std::string remoteServiceName, int domainId = 0, long timeout = 10000);
+
+        /**
+         * \brief This constructor sets the transport that will be used by the server's proxy.
+         *
+         * \param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
+         * \param transport The network transport that server's proxy has to use.
+         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param domainId The DDS domain that DDS will use to work. Default value: 0
+         * \param timeout Timeout used in each call to remotely procedures.
+         *        If the call exceeds the time, a eProsima::RPCDDS::ServerTimeoutException is thrown.
+         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+         */
+        $interface.name$Proxy(std::string remoteServiceName, eProsima::RPCDDS::Transport *transport, int domainId = 0, long timeout = 10000);
+
+        /// \brief The default destructor.
+        virtual ~$interface.name$Proxy();
+        
+        $export_list$
+        
+        $interface.exports : {export | $if(export.operation)$$functionAsyncHeader(operation=export)$$endif$}$
+        
+    private:
+        /**
+         * \brief This function creates all RPC endpoints for each remote procedure.
+         */
+        void createRPCs();
+        
+        $interface.exports : {export | $if(export.operation)$eProsima::RPCDDS::ClientRPC *$export.name$_Service;$\n$$endif$}$
+};
+
 >>
 
 export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-operation(ctx, operation, param_list, return_type) ::= <<
+operation(ctx, operation, param_list) ::= <<
+$paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+
 >>
 
 param_list(parameters) ::= <<>>
@@ -47,3 +101,39 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
+
+/*!
+ * Extra string templates.
+ */
+classAsyncHeader(operation) ::= <<
+$if(!operation.oneway)$
+/**
+ * \brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
+ *        These callback has to be implemented in a derived class.
+ */
+class $operation.parent.name$_$operation.name$CallbackHandler
+{
+    public:
+        /**
+         * This function is called when is received the reply from the server.
+         */
+        virtual void $operation.name$($paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam])$) = 0;
+        
+        /**
+         * \brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * \param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
+};
+
+$endif$
+>>
+
+functionAsyncHeader(operation) ::= <<
+$if(!operation.oneway)$
+void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
+
+$endif$
+>>

@@ -14,5 +14,10 @@ public class DefinitionContainer
         m_definitions.add(def);
     }
     
+    public ArrayList<Definition> getDefinitions()
+    {
+        return m_definitions;
+    }
+    
     private ArrayList<Definition> m_definitions;
 }

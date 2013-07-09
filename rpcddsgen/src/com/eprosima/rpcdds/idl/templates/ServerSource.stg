@@ -1,0 +1,133 @@
+group ServerSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
+
+#include "$ctx.filename$Server.h"
+#include "transports/UDPTransport.h"
+#include "transports/TCPTransport.h"
+#include "exceptions/ServerInternalException.h"
+$ReqRepIncludes(filename=ctx.filename)$
+
+#include "$ctx.filename$ServerRPCSupport.h"
+
+$definitions; separator="\n"$
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+/*!
+ * The export_list will be the definition of synchronize functions.
+ */
+interface(ctx, interface, export_list) ::= <<
+$interface.name$Server::$interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    int domainId) :
+    Server(serviceName, strategy, NULL, domainId)
+{
+    _impl = new $interface.name$ServerImpl();
+
+    createRPCs();
+}
+
+$interface.name$Server::$interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
+    eProsima::RPCDDS::Transport *transport, int domainId) :
+    Server(serviceName, strategy, transport, domainId)
+{
+    _impl = new $interface.name$ServerImpl();
+    
+    createRPCs();
+}
+
+$interface.name$Server::~$interface.name$Server()
+{
+    delete _impl;    
+}
+
+void $interface.name$Server::createRPCs()
+{
+    $interface.exports : {export | $if(export.operation)$$createRPC(operation=export)$$endif$}$
+}
+
+$export_list$
+
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+operation(ctx, operation, param_list) ::= <<
+void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
+{ 
+    $operation.parent.name$Server *srv = dynamic_cast<$operation.parent.name$Server*>(server);
+    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam, create="yes")$   
+    $if(!operation.oneway)$$operation.parent.name$_$operation.name$Reply replyData;$endif$
+    
+    $operation.inoutputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+
+    $operation.parent.name$_$operation.name$RequestUtils::extractTypeData(*($operation.parent.name$_$operation.name$Request*)requestData$extractParams(params=operation.inputparam, separatorInicial=", ")$);
+
+    try
+    {
+        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$srv->_impl->$operation.name$($extractParams(params=operation.parameters)$);
+
+        $if(!operation.oneway)$
+        $operation.parent.name$_$operation.name$ReplyUtils::setTypeData(replyData$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = $charCasting()$"";
+
+        service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    catch(const eProsima::RPCDDS::ServerInternalException &ex)
+    {
+        $if(!operation.oneway)$
+        $unsetReply()$
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = $charCasting()$ex.what();
+        
+        service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    
+    $reqrepDestruction(type=[operation.parent.name, "_", operation.name], reqrep="Request", name="requestData", void="void")$
+    
+    $varDel(variable=operation.rettypeparam)$
+    $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
+}
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+/*!
+ * Extra string templates.
+ */
+createRPC(operation) ::= <<
+this->setRPC(new $operation.parent.name$_$operation.name$ServerRPC("$operation.name$", this,
+            $operation.parent.name$_$operation.name$RequestUtils::registerType(getParticipant()),
+            $if(!operation.oneway)$
+            $operation.parent.name$_$operation.name$ReplyUtils::registerType(getParticipant()),
+            $endif$
+            &$operation.parent.name$Server::$operation.name$));
+
+>>

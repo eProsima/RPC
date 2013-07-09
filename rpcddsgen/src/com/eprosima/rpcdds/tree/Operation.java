@@ -27,6 +27,11 @@ public class Operation implements Export
         return m_parent;
     }
     
+    public boolean isOperation()
+    {
+        return true;
+    }
+    
     public void setOneway(boolean b)
     {
         m_isOneway = b;
@@ -68,6 +73,17 @@ public class Operation implements Export
                 output.add(m_params.get(count));
         
         return output;
+    }
+    
+    public ArrayList<Param> getInoutputparam()
+    {
+        ArrayList<Param> inoutput = new ArrayList<Param>();
+        
+        for(int count = 0; count < m_params.size(); ++count)
+            if(m_params.get(count).isInput() && m_params.get(count).isOutput())
+                inoutput.add(m_params.get(count));
+        
+        return inoutput;
     }
     
     public void setRettype(TypeCode rettype)

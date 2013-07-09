@@ -11,6 +11,7 @@ namespace $module.name$
 {
     $definition_list$
 };
+
 >>
 
 definition_list(definitions) ::= <<
@@ -25,7 +26,7 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-operation(ctx, operation, param_list, return_type) ::= <<
+operation(ctx, operation, param_list) ::= <<
 const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
@@ -43,7 +44,7 @@ const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(D
     return typeName;
 }
 
-void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
 {
     $operation.parameters : {$createDataHelper(param=it, isRequest="yes")$};separator="\n"$
     $if(operation.rettypeparam)$
@@ -51,7 +52,7 @@ void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operatio
     $endif$
 }
 
-void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
 {
     $operation.parameters : {$extractDataHelper(param=it)$};separator="\n"$  
     $if(operation.rettypeparam)$
@@ -76,7 +77,7 @@ const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS
     return typeName;
 }
 
-void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
 {
     $operation.parameters : {$createDataHelper(param=it)$};separator="\n"$
     $if(operation.rettypeparam)$
@@ -84,7 +85,7 @@ void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.
     $endif$
 }
 
-void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ");separator=", "$)
+void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
 {
     retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
     $operation.parameters : {$extractDataHelper(param=it, isReply="yes")$};separator="\n"$
@@ -106,8 +107,8 @@ union_type(ctx, union) ::= <<>>
 enum_type(ctx, enum) ::= <<>>
 
 
-/**
- * Utils
+/*!
+ * Extra string templates. Utils.
  */
 createDataHelper(param, isRequest) ::= <<
 instance.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;

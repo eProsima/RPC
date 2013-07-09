@@ -16,26 +16,60 @@ fileHeader(file, description) ::= <<
  */
 >>
 
-paramTypeByValue(type) ::= <<
-$if(type.primitiveInArguments)$
-$type.stTypename$
+paramRetType(typecode) ::= <<
+$if(typecode)$
+$typecode.stTypename$
 $else$
-const $type.stTypename$&
+void
 $endif$
 >>
 
-paramTypeByRef(type) ::= <<
-$if(type.primitiveInArguments)$
-$type.stTypename$&
+paramTypeByValue(typecode) ::= <<
+$if(typecode.primitiveInArguments)$
+$typecode.stTypename$
 $else$
-$type.stTypename$&
+const $typecode.stTypename$&
 $endif$
+>>
+
+paramTypeByRef(typecode) ::= <<
+$typecode.stTypename$&
 >>
 
 paramDeclsByValue(params, separatorInicial) ::= <<
-$separatorInicial$$params : {param |/*$param.comment$*/ $paramTypeByValue(type=param.typecode)$ $param.name$}; separator=", "$
+$if(params)$$separatorInicial$$endif$$params : {param |/*$param.comment$*/ $paramTypeByValue(typecode=param.typecode)$ $param.name$}; separator=", "$
 >>
 
 paramDeclsByRef(params, separatorInicial) ::= <<
-$separatorInicial$$params : {param |/*$param.comment$*/ $paramTypeByRef(type=param.typecode)$ $param.name$}; separator=", "$
+$if(params)$$separatorInicial$$endif$$params : {param |/*$param.comment$*/ $paramTypeByRef(typecode=param.typecode)$ $param.name$}; separator=", "$
+>>
+
+paramDeclsOnlyOutByRef(params, separatorInicial) ::= <<
+$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
+>>
+
+varDecl(variable, create) ::= <<
+$if(variable)$
+$if(variable.typecode.primitiveInArguments)$
+$variable.typecode.stTypename$  $variable.name$ = $variable.typecode.initialValue$;
+$else$
+$varComplexDecl(...)$
+$endif$
+$endif$
+>>
+
+varDel(variable) ::= <<
+$if(variable)$
+$if(variable.typecode.primitiveInArguments)$
+$if(variable.typecode.string)$
+$varStringDel(name=variable.name)$
+$endif$
+$else$
+$varComplexDel(...)$
+$endif$
+$endif$
+>>
+
+extractParams(params, separatorInicial) ::= <<
+$if(params)$$separatorInicial$$endif$$params : {param | $param.name$};separator=", "$
 >>

@@ -92,6 +92,12 @@ public abstract class TypeCode
         return isPrimitive() || isEnum() || isString();
     }
     
+    // By default there is not initial value. Function used in stringtemplates.
+    public String getInitialValue()
+    {
+        return "";
+    }
+    
     // By default a typecode doesn't have a max size limit. Function used in stringtemplates
     public String getMaxsize()
     {
