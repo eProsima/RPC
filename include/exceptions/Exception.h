@@ -9,7 +9,8 @@
 #ifndef _EXCEPTIONS_EXCEPTION_H_
 #define _EXCEPTIONS_EXCEPTION_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 #include <string>
 #include <exception>
 
@@ -21,12 +22,12 @@ namespace eProsima
 		 * @brief This abstract class is used to create exceptions.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API Exception : public std::exception
+        class RPCDDS_DllAPI Exception : public std::exception
         {
 		public:
 
 			/// \brief Default destructor.
-			virtual ~Exception() RPCDDS_USE_NOEXCEPT;
+			virtual ~Exception() EPROSIMA_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const = 0;

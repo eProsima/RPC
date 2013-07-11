@@ -40,7 +40,7 @@ namespace eProsima
 			return *this;
 		}
 
-		Exception::~Exception() RPCDDS_USE_NOEXCEPT
+		Exception::~Exception() EPROSIMA_USE_NOEXCEPT
 		{
 		}
 

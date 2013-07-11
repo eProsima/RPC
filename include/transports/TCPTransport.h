@@ -10,7 +10,7 @@
 #define _TRANSPORTS_TCPTRANSPORT_H_
 
 #include "transports/Transport.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -20,7 +20,7 @@ namespace eProsima
 		 * @brief This class implements the TCPv4 transport for the client and the server.
          * @ingroup TRANSPORTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API TCPClientTransport : public Transport
+        class RPCDDS_DllAPI TCPClientTransport : public Transport
         {
             public:
 
@@ -51,7 +51,7 @@ namespace eProsima
 		 * @brief This class implements the TCPv4 transport for the servers.
          * @ingroup TRANSPORTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API TCPServerTransport : public Transport
+        class RPCDDS_DllAPI TCPServerTransport : public Transport
         {
             public:
 

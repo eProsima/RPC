@@ -19,7 +19,7 @@ namespace eProsima
 		 * @brief This class is thrown as an exception when the server is not found.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API ServerNotFoundException : public SystemException
+        class RPCDDS_DllAPI ServerNotFoundException : public SystemException
         {
 		public:
 
@@ -66,7 +66,7 @@ namespace eProsima
 			ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerNotFoundException() RPCDDS_USE_NOEXCEPT;
+			virtual ~ServerNotFoundException() EPROSIMA_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;

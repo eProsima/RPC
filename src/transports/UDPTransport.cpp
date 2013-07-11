@@ -7,14 +7,13 @@
  *************************************************************************/
 
 #include "transports/UDPTransport.h"
-#include "eProsima_c/eProsimaMacros.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 
-#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#if defined(OPENDDS)
 #include "dds/DCPS/transport/framework/TransportRegistry.h"
 #include "dds/DCPS/transport/framework/TransportInst_rch.h"
 #include "dds/DCPS/transport/rtps_udp/RtpsUdpInst.h"
 #include "dds/DCPS/DomainParticipantImpl.h"
-#include "eProsima_c/eProsimaMacros.h"
 #endif
 
 static const char* const CLASS_NAME = "UDPTransport";
@@ -40,7 +39,7 @@ namespace eProsima
 
         int UDPClientTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
         {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 
 			if(m_to_connect != NULL)
 			{
@@ -55,7 +54,7 @@ namespace eProsima
 			}
 
 			return 0;
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
             const char* const METHOD_NAME = "setTransport";
             int returnedValue = -1;
             char cfgbuffer[50], trabuffer[50];
@@ -108,9 +107,9 @@ namespace eProsima
 
 		int UDPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
         {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			return 0;
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
             const char* const METHOD_NAME = "setTransport";
             int returnedValue = -1;
             char cfgbuffer[50], trabuffer[50];

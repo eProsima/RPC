@@ -10,7 +10,7 @@
 #define _TRANSPORTS_UDPTRANSPORT_H_
 
 #include "transports/Transport.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -20,7 +20,7 @@ namespace eProsima
 		 * @brief This class implements the UDPv4 transport that could be used by a server's proxy.
          * @ingroup TRANSPORTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API UDPClientTransport : public Transport
+        class RPCDDS_DllAPI UDPClientTransport : public Transport
         {
             public:
 
@@ -54,7 +54,7 @@ namespace eProsima
 		 * @brief This class implements the UDPv4 transport that could be used by a server.
          * @ingroup TRANSPORTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API UDPServerTransport : public Transport
+        class RPCDDS_DllAPI UDPServerTransport : public Transport
         {
             public:
 

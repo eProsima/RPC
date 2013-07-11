@@ -10,7 +10,7 @@
 #define _TRANSPORTS_TRANSPORT_H_
 
 #include "utils/Middleware.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -21,7 +21,7 @@ namespace eProsima
 		 *        that could be used by the client or the server.
          * @ingroup TRANSPORTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API Transport
+        class RPCDDS_DllAPI Transport
         {
             public:
 

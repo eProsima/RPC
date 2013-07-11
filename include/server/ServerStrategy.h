@@ -10,7 +10,7 @@
 #define _SERVER_SERVERSTRATEGY_H_
 
 #include "utils/Typedefs.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -24,7 +24,7 @@ namespace eProsima
 		 *        that could be used by the server.
          * @ingroup SERVERMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API ServerStrategy
+        class RPCDDS_DllAPI ServerStrategy
         {
             public:
 

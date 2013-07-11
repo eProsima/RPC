@@ -9,7 +9,7 @@
 #ifndef _SERVER_SERVERPC_H_
 #define _SERVER_SERVERRPC_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 #include "utils/Typedefs.h"
 #include "utils/Messages.h"
 #include "utils/Middleware.h"
@@ -27,7 +27,7 @@ namespace eProsima
 		 * @brief This class implements a remote procedure call in server side.
          * @ingroup SERVERMODULE
 		 */
-		class RPCDDS_WIN32_DLL_API ServerRPC : public DDS::DataReaderListener
+		class RPCDDS_DllAPI ServerRPC : public DDS::DataReaderListener
 		{
 			public:
 

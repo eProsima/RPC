@@ -19,7 +19,7 @@ namespace eProsima
 		 * @brief This class is thrown as an exception when there is an error initializating an object.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API InitializeException : public SystemException
+        class RPCDDS_DllAPI InitializeException : public SystemException
         {
 		public:
 
@@ -66,7 +66,7 @@ namespace eProsima
 			InitializeException& operator=(InitializeException&& ex);
 
 			/// \brief Default constructor
-			virtual ~InitializeException() RPCDDS_USE_NOEXCEPT;
+			virtual ~InitializeException() EPROSIMA_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;

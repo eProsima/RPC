@@ -21,12 +21,12 @@ namespace eProsima
 		 * @brief This abstract class is used to create internal RPCDDS exceptions.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API SystemException : public Exception
+        class RPCDDS_DllAPI SystemException : public Exception
         {
 		public:
 
 			/// \brief Default destructor.
-			virtual ~SystemException() RPCDDS_USE_NOEXCEPT;
+			virtual ~SystemException() EPROSIMA_USE_NOEXCEPT;
 
 			/**
 			 * \brief This function returns the number associated with the system exception.

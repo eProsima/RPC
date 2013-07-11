@@ -7,7 +7,7 @@
  *************************************************************************/
 
 #include "transports/TCPTransport.h"
-#include "eProsima_c/eProsimaMacros.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 
 static const char* const CLASS_NAME = "TCPTransport";
 
@@ -45,7 +45,7 @@ namespace eProsima
 
         int TCPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
 		{
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			int returnedValue = -1;
 
 			if(m_public_address != NULL &&
@@ -81,14 +81,14 @@ namespace eProsima
 			}
 
             return returnedValue;
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
             return 0;
 #endif
         }
 
 		int TCPClientTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
         {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			int returnedValue = -1;
 
 			if(m_to_connect != NULL)
@@ -131,7 +131,7 @@ namespace eProsima
 			}
 
             return returnedValue;
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
             return 0;
 #endif
         }

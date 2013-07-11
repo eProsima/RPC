@@ -8,7 +8,7 @@
 
 #include "utils/Middleware.h"
 
-#if (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#if defined(OPENDDS)
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"
 #endif
 
@@ -20,7 +20,7 @@ namespace eProsima
     {
         void get_guid(unsigned int *id, DDS::DataWriter *datawriter)
         {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
             DDS::DataWriterQos wQos;
             datawriter->get_qos(wQos);
             id[0] = ((wQos.protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
@@ -39,7 +39,7 @@ namespace eProsima
                 ((wQos.protocol.virtual_guid.value[13] << 16) & 0xFF0000) +
                 ((wQos.protocol.virtual_guid.value[14] << 8) & 0xFF00) +
                 (wQos.protocol.virtual_guid.value[15] & 0xFF);
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
             OpenDDS::DCPS::DataWriterImpl *wimpl = dynamic_cast<OpenDDS::DCPS::DataWriterImpl*>(datawriter);
             OpenDDS::DCPS::RepoId guid = wimpl->get_publication_id();
             id[0] = ((guid.guidPrefix[0] << 24) & 0xFF000000) +
@@ -65,7 +65,7 @@ namespace eProsima
 
         void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
         {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
             datareader->get_qos(rQos);
             rQos.property.value.ensure_length(rQos.property.value.length() + 1,
                     rQos.property.value.maximum() + 1);
@@ -74,7 +74,7 @@ namespace eProsima
             rQos.property.value[rQos.property.value.length() - 1].value =
                 DDS::String_dup("0");
             datareader->set_qos(rQos);
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
 #else
 #error There not set OS.
 #endif
@@ -82,9 +82,9 @@ namespace eProsima
 
 		void set_max_query_condition_filters(DDS::DataReaderQos &rQos)
 		{
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			rQos.reader_resource_limits.max_query_condition_filters = 10;
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
 #else
 #error There not set OS.
 #endif
@@ -92,7 +92,7 @@ namespace eProsima
 
 		void set_datareader_protocol(DDS::DataReaderQos &rQos)
 		{
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.sec = 0;
 			rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.nanosec = 50000000;
 			rQos.protocol.rtps_reliable_reader.heartbeat_suppression_duration.sec = 0;
@@ -104,7 +104,7 @@ namespace eProsima
 
 		void set_datawriter_protocol(DDS::DataWriterQos &wQos)
 		{
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			wQos.protocol.rtps_reliable_writer.low_watermark = 0;
 			wQos.protocol.rtps_reliable_writer.high_watermark = 3;
 			wQos.protocol.rtps_reliable_writer.heartbeat_period.sec = 0;
@@ -119,7 +119,7 @@ namespace eProsima
 
 		void increase_buffers(DDS::DomainParticipantQos &pQos)
 		{
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 			pQos.receiver_pool.buffer_size = 65536;
 			int length = pQos.property.value.length();
 			pQos.property.value.ensure_length(length + 3, length + 3);
@@ -136,9 +136,9 @@ namespace eProsima
         {
             const char* const METHOD_NAME = "getFactory";
 
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
             return TheParticipantFactory;
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
             const OpenDDS::DCPS::Service_Participant::RepoKeyDiscoveryMap &map =  TheServiceParticipant->discoveryMap();
             
             if(map.find("rtps") == map.end())

@@ -9,7 +9,7 @@
 #ifndef _CLIENT_ASYNCTASK_H_
 #define _CLIENT_ASYNCTASK_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 #include "utils/Messages.h"
 #include "utils/Middleware.h"
 #include "exceptions/SystemException.h"
@@ -25,7 +25,7 @@ namespace eProsima
 		 * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
          * @ingroup CLIENTMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API AsyncTask
+        class RPCDDS_DllAPI AsyncTask
         {
             public:
 

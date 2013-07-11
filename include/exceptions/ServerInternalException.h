@@ -19,7 +19,7 @@ namespace eProsima
 		 * @brief This class is thrown as an exception when there is an error in the server side.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API ServerInternalException : public SystemException
+        class RPCDDS_DllAPI ServerInternalException : public SystemException
         {
 		public:
 
@@ -66,7 +66,7 @@ namespace eProsima
 			ServerInternalException& operator=(ServerInternalException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerInternalException() RPCDDS_USE_NOEXCEPT;
+			virtual ~ServerInternalException() EPROSIMA_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;

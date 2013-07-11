@@ -9,7 +9,7 @@
 #ifndef _CLIENT_CLIENTRPC_H_
 #define _CLIENT_CLIENTRPC_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 #include "utils/Messages.h"
 #include "utils/Middleware.h"
 
@@ -31,7 +31,7 @@ namespace eProsima
 		 * @brief This class implements a remote procedure call in server's proxy side.
          * @ingroup CLIENTMODULE
 		 */
-		class RPCDDS_WIN32_DLL_API ClientRPC
+		class RPCDDS_DllAPI ClientRPC
 		{
 			public:
 

@@ -9,7 +9,7 @@
 #ifndef _CLIENT_CLIENT_H_
 #define _CLIENT_CLIENT_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 #include "utils/Messages.h"
 #include "utils/Middleware.h"
 
@@ -29,7 +29,7 @@ namespace eProsima
 		 * @brief This class implements the common functionalities that all server's proxies have.
          * @ingroup CLIENTMODULE
 		 */
-		class RPCDDS_WIN32_DLL_API Client
+		class RPCDDS_DllAPI Client
 		{
             public:
 

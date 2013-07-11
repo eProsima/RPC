@@ -51,7 +51,7 @@ namespace eProsima
 			return *this;
 		}
 
-		SystemException::~SystemException() RPCDDS_USE_NOEXCEPT
+		SystemException::~SystemException() EPROSIMA_USE_NOEXCEPT
 		{
 		}
 

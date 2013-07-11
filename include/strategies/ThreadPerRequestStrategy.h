@@ -10,7 +10,7 @@
 #define _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -23,7 +23,7 @@ namespace eProsima
 		 *        The server creates a new thread per new incoming request.
          * @ingroup STRATEGIESMODULE 
 		 */
-        class RPCDDS_WIN32_DLL_API ThreadPerRequestStrategy : public ServerStrategy
+        class RPCDDS_DllAPI ThreadPerRequestStrategy : public ServerStrategy
         {
             public:
 

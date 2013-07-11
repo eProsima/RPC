@@ -8,9 +8,9 @@
 
 #include "utils/Utilities.h"
 
-#if (defined(RTI_WIN32) || defined(OPENDDS_WIN32))
+#if defined(_WIN32)
 #include <Windows.h>
-#elif (defined(RTI_LINUX) || defined(OPENDDS_LINUX))
+#elif defined(__linux)
 #include <unistd.h>
 #endif
 
@@ -22,9 +22,9 @@ namespace eProsima
     {
 		void sleep(unsigned int milliseconds)
 		{
-#if (defined(RTI_WIN32) || defined(OPENDDS_WIN32))
+#if defined(WIN32)
 			Sleep(milliseconds);
-#elif (defined(RTI_LINUX) || defined(OPENDDS_LINUX))
+#elif defined(__linux)
 			usleep(milliseconds * 1000);
 #endif
 		}

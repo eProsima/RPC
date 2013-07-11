@@ -9,7 +9,7 @@
 #ifndef _UTILS_UTILITIES_H_
 #define _UTILS_UTILITIES_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -20,7 +20,7 @@ namespace eProsima
 		 *
 		 * \param milliseconds Time in milliseconds that the thread will be sleeping.
 		 */
-		RPCDDS_WIN32_DLL_API void sleep(unsigned int milliseconds);
+		RPCDDS_DllAPI void sleep(unsigned int milliseconds);
     }; // namespace RPCDDS
 }; // namespace eProsima
 

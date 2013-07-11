@@ -10,7 +10,7 @@
 #define _STRATEGIES_SINGLETHREADSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 namespace eProsima
 {
@@ -21,7 +21,7 @@ namespace eProsima
 		 *        The server uses the reception thread of RTI DDS to execute the request.
          * @ingroup STRATEGIESMODULE 
 		 */
-        class RPCDDS_WIN32_DLL_API SingleThreadStrategy : public ServerStrategy
+        class RPCDDS_DllAPI SingleThreadStrategy : public ServerStrategy
         {
             public:
 

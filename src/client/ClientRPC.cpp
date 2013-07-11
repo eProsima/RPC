@@ -10,7 +10,7 @@
 #include "client/Client.h"
 #include "client/AsyncTask.h"
 #include "utils/Typedefs.h"
-#include "eProsima_c/eProsimaMacros.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 #include "exceptions/InitializeException.h"
 
 #include "boost/config/user.hpp"

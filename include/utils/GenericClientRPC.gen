@@ -36,12 +36,12 @@ TName::TName(const char *rpcName, const char *requestTypeName,
 #endif
         client)
 {
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 	requestDataWriter = TDataWriter::narrow(getRequestDatawriter());
 #ifndef IS_ONEWAY
 	replyDataReader   = TDataReader::narrow(getReplyDatareader());
 #endif
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
 	requestDataWriter = TDataWriter::_narrow(getRequestDatawriter());
 #ifndef IS_ONEWAY
 	replyDataReader   = TDataReader::_narrow(getReplyDatareader());
@@ -82,9 +82,9 @@ eProsima::RPCDDS::ReturnMessage TName::takeReply(void *reply, DDS::QueryConditio
 		    {
 				if (infoSeq[0].valid_data)
 				{
-#if (defined(RTI_WIN32) || defined(RTI_LINUX))
+#if defined(RTI)
 					TDataTypeSupport::copy_data((TDataReply*)reply, &dataSeq[0]);
-#elif (defined(OPENDDS_WIN32) || defined(OPENDDS_LINUX))
+#elif defined(OPENDDS)
 					(*(TDataReply*)reply) = dataSeq[0];
 #endif
 					value = eProsima::RPCDDS::OPERATION_SUCCESSFUL;

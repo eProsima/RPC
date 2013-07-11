@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado\client">
+      <UniqueIdentifier>{9b5f61bc-aaf5-47e7-bcf9-daf7649bfb0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\server">
+      <UniqueIdentifier>{221de19c-4f48-4fab-801b-e4be8397d3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\utils">
+      <UniqueIdentifier>{bf3ee1c0-16e2-463a-be4b-cba986afa83b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\transports">
+      <UniqueIdentifier>{d60eee97-5bab-4319-b63e-43d97e9425eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\exceptions">
+      <UniqueIdentifier>{2dbe3645-7041-4d88-8350-fd78cc94488e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\client">
+      <UniqueIdentifier>{6ef3a181-cb45-43dd-bf68-a179d079b1bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\server">
+      <UniqueIdentifier>{51139224-3111-4264-9981-0f6724ef705c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\transports">
+      <UniqueIdentifier>{742ed78e-034f-4780-951e-41c27209ccb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\utils">
+      <UniqueIdentifier>{cd282fb3-cb10-4bf6-9d53-adc37f064363}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\strategies">
+      <UniqueIdentifier>{a9f7f6b4-2ad4-4a08-8b9e-f319eed3fb5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\strategies">
+      <UniqueIdentifier>{94cf33c4-0971-4eff-9d6c-439468819d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\exceptions">
+      <UniqueIdentifier>{69af10f1-f914-4f9a-b834-fdae970c254a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\client\AsyncTask.cpp">
+      <Filter>Archivos de código fuente\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\ClientRPC.cpp">
+      <Filter>Archivos de código fuente\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\AsyncThread.cpp">
+      <Filter>Archivos de código fuente\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\Client.cpp">
+      <Filter>Archivos de código fuente\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\Server.cpp">
+      <Filter>Archivos de código fuente\server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\ServerRPC.cpp">
+      <Filter>Archivos de código fuente\server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\TCPTransport.cpp">
+      <Filter>Archivos de código fuente\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\UDPTransport.cpp">
+      <Filter>Archivos de código fuente\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utils\Utilities.cpp">
+      <Filter>Archivos de código fuente\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\strategies\SingleThreadStrategy.cpp">
+      <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\strategies\ThreadPerRequestStrategy.cpp">
+      <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\strategies\ThreadPoolStrategy.cpp">
+      <Filter>Archivos de código fuente\strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ClientInternalException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\Exception.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\InitializeException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ServerInternalException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ServerNotFoundException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\ServerTimeoutException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\SystemException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utils\Middleware.cpp">
+      <Filter>Archivos de código fuente\utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\client\Client.h">
+      <Filter>Archivos de encabezado\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\client\ClientRPC.h">
+      <Filter>Archivos de encabezado\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\client\AsyncTask.h">
+      <Filter>Archivos de encabezado\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\client\AsyncThread.h">
+      <Filter>Archivos de encabezado\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\server\Server.h">
+      <Filter>Archivos de encabezado\server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\server\ServerRPC.h">
+      <Filter>Archivos de encabezado\server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\Messages.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\GenericClientRPC.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\GenericServerRPC.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\Typedefs.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\Utilities.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\Version.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\transports\Transport.h">
+      <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\transports\TCPTransport.h">
+      <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\transports\UDPTransport.h">
+      <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h">
+      <Filter>Archivos de encabezado\strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\strategies\ThreadPerRequestStrategy.h">
+      <Filter>Archivos de encabezado\strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h">
+      <Filter>Archivos de encabezado\strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\Exception.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerTimeoutException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\Exceptions.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ClientInternalException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\InitializeException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\ServerInternalException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\exceptions\SystemException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\server\ServerStrategy.h">
+      <Filter>Archivos de encabezado\server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utils\Middleware.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\rpcdds_dll.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\rpcdds_version.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\rpcdds.rc">
+      <Filter>Archivos de recursos</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\include\utils\GenericClientRPC.gen">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </None>
+    <None Include="..\..\include\utils\GenericServerRPC.gen">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </None>
+  </ItemGroup>
+</Project>

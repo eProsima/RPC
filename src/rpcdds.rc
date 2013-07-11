@@ -1,3 +1,4 @@
+#include "rpcdds_version.h"
 // Microsoft Visual C++ generated resource script.
 //
 #ifdef APSTUDIO_INVOKED
@@ -53,23 +54,22 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
-#define VER_FILEVERSION 0,1,1,0
-#define VER_FILEVERSION_STR "0,1,1,0"
-#define VER_PRODUCTVERSION 0,1,1,0
-#define VER_PRODUCTVERSION_STR "0,1,1,0"
+#define VER_FILEVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_RELEA,0
+#define VER_FILEVERSION_STR VERSION_STR
+#define VER_PRODUCTVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_RELEA,0
+#define VER_PRODUCTVERSION_STR VERSION_STR
 #define VER_COMPANYNAME_STR "eProsima"
 #define VER_FILEDESCRIPTION_STR "RPC over DDS"
 #define VER_LEGALCOPYRIGHT_STR "Copyright 2012 (c)"
 #define VER_PRODUCTNAME_STR "RPCDDS"
 
-#ifdef RTI_WIN32
-#ifdef EPROSIMA_C_DLL_EXPORT
+#ifdef _WIN32
+#if defined(RPCDDS_SOURCE) && defined(RPCDDS_DYN_LINK)
 
 #ifndef _DEBUG
 #define VER_DEBUG 0
@@ -104,8 +104,8 @@ BEGIN
     END
 END
 
-#endif // EPROSIMA_C_DLL_EXPORT
-#endif // RTI_WIN32
+#endif
+#endif // _WIN32
 
 #endif    // Spanish resources
 /////////////////////////////////////////////////////////////////////////////

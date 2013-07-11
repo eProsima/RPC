@@ -9,7 +9,7 @@
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 #include "utils/Messages.h"
 #include "utils/Typedefs.h"
 #include "utils/Middleware.h"
@@ -32,7 +32,7 @@ namespace eProsima
 		 * @brief This class implements the common functionalities that the server has.
          * @ingroup SERVERMODULE
 		 */
-		class RPCDDS_WIN32_DLL_API Server
+		class RPCDDS_DllAPI Server
 		{
 
 			public:

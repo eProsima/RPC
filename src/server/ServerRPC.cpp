@@ -8,7 +8,7 @@
 
 #include "server/ServerRPC.h"
 #include "server/Server.h"
-#include "eProsima_c/eProsimaMacros.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 #include "exceptions/InitializeException.h"
 
 static const char* const CLASS_NAME = "eProsima::RPCDDS::ServerRPC";

@@ -10,7 +10,7 @@
 #define _STRATEGIES_THREADPOOLSTRATEGY_H_
 
 #include "server/ServerStrategy.h"
-#include "utils/rpcdds.h"
+#include "rpcdds_dll.h"
 
 #define RPCDDS_MIN_THREADS_DEFAULT 5
 
@@ -25,7 +25,7 @@ namespace eProsima
 		 *        The server schedules the incoming requests in a free thread of the thread pool.
          * @ingroup STRATEGIESMODULE 
 		 */
-        class RPCDDS_WIN32_DLL_API ThreadPoolStrategy : public ServerStrategy
+        class RPCDDS_DllAPI ThreadPoolStrategy : public ServerStrategy
         {
             public:
 

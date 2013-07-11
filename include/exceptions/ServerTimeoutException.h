@@ -19,7 +19,7 @@ namespace eProsima
 		 * @brief This class is thrown as an exception when the remote procedure call exceeds the maximum time.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class RPCDDS_WIN32_DLL_API ServerTimeoutException : public SystemException
+        class RPCDDS_DllAPI ServerTimeoutException : public SystemException
         {
 		public:
 
@@ -66,7 +66,7 @@ namespace eProsima
 			ServerTimeoutException& operator=(ServerTimeoutException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerTimeoutException() RPCDDS_USE_NOEXCEPT;
+			virtual ~ServerTimeoutException() EPROSIMA_USE_NOEXCEPT;
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
