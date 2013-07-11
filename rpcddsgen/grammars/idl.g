@@ -8,7 +8,6 @@ header {
     import com.eprosima.rpcdds.typecode.*;
     import com.eprosima.rpcdds.tree.*;
     import com.eprosima.rpcdds.util.Pair;
-    import com.eprosima.rpcdds.util.Utils;
     
     import org.antlr.stringtemplate.StringTemplate;
    
@@ -25,90 +24,25 @@ options {
 	k=4;
 }
 
-{    
-    private TemplateManager tmanager = null;
-    private Context ctx = null;
+{
+    TemplateManager tmanager = null;
+    Context ctx = null;
 }
 
-specification [String outdir, String idlFilename, boolean replace] returns [boolean returnedValue = false]
+specification [Context context, TemplateManager templatemanager, TemplateGroup maintemplates] returns [boolean returnedValue = false]
 {
-    // Create initial context.
-    ctx = new Context(idlFilename);
-    
-    // Create template manager
-    tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
-    // Load template to generate IDL for topics.
-    tmanager.addGroup("TopicsIDL");
-    // Load template to generate Utils for topics.
-    tmanager.addGroup("UtilsHeader");
-    tmanager.addGroup("UtilsSource");
-    // Load template to generate Proxy for topics.
-    tmanager.addGroup("ProxyHeader");
-    tmanager.addGroup("ProxySource");
-    // Load template to generate example to use Proxies.
-    tmanager.addGroup("ClientExample");
-    // Load template to generate proxy RPC support files.
-    tmanager.addGroup("ClientRPCSupportHeader");
-    tmanager.addGroup("ClientRPCSupportSource");
-    // Load template to generate proxy async support files.
-    tmanager.addGroup("AsyncSupportHeader");
-    tmanager.addGroup("AsyncSupportSource");
-    // Load template to generate Server for topics.
-    tmanager.addGroup("ServerHeader");
-    tmanager.addGroup("ServerSource");
-    // Create main template for all templates.
-    TemplateGroup maintemplates = tmanager.createTemplateGroup("main");
-    maintemplates.setAttribute("ctx", ctx);
-    
     //! Used to catch each definition grammar element in the whole IDL file.
     Pair<Definition, TemplateGroup> dtg = null;
+    
+    ctx = context;
+    tmanager = templatemanager;
     
     // TODO Guardar declaraciones en el contexto.
 }
 	:   (import_dcl)* (dtg=definition{maintemplates.setAttribute("definitions", dtg.second()); ctx.addDefinition(dtg.first());})+
-{
-    // Zone used to write all files using the generated string templates.
-    System.out.println("Generating Utils Code...");
-    if(Utils.writeFile(outdir + idlFilename + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), replace))
-    {
-        if(Utils.writeFile(outdir + idlFilename + "RequestReplyUtils.h", maintemplates.getTemplate("UtilsHeader"), replace))
-        {
-            if(Utils.writeFile(outdir + idlFilename + "RequestReplyUtils.cxx", maintemplates.getTemplate("UtilsSource"), replace))
-            {
-                System.out.println("Generating Proxy Code...");
-                if(Utils.writeFile(outdir + idlFilename + "Proxy.h", maintemplates.getTemplate("ProxyHeader"), replace))
-                {
-                    if(Utils.writeFile(outdir + idlFilename + "Proxy.cxx", maintemplates.getTemplate("ProxySource"), replace))
-                    {
-                        if(Utils.writeFile(outdir + "Client.cxx", maintemplates.getTemplate("ClientExample"), replace))
-                        {
-                            if(Utils.writeFile(outdir + idlFilename + "ClientRPCSupport.h", maintemplates.getTemplate("ClientRPCSupportHeader"), replace))
-                            {
-                                if(Utils.writeFile(outdir + idlFilename + "ClientRPCSupport.cxx", maintemplates.getTemplate("ClientRPCSupportSource"), replace))
-                                {
-                                    if(Utils.writeFile(outdir + idlFilename + "AsyncSupport.h", maintemplates.getTemplate("AsyncSupportHeader"), replace))
-                                    {
-                                        if(Utils.writeFile(outdir + idlFilename + "AsyncSupport.cxx", maintemplates.getTemplate("AsyncSupportSource"), replace))
-                                        {
-                                            System.out.println("Generating Server Code...");
-                                            if(Utils.writeFile(outdir + idlFilename + "Server.h", maintemplates.getTemplate("ServerHeader"), replace))
-                                            {
-                                                if(Utils.writeFile(outdir + idlFilename + "Server.cxx", maintemplates.getTemplate("ServerSource"), replace))
-                                                {
-                                                    returnedValue = true;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+	{
+	    returnedValue = true;
+	}
 	;
 
 /*!

@@ -1,0 +1,55 @@
+group ServerSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "ServerImpl.cxx"], description=["This source file contains the definition of the skeleton for all interfaces."])$
+
+#include "$ctx.filename$ServerImpl.h"
+
+$definitions; separator="\n"$
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+/*!
+ * The export_list will be the definition of synchronize functions.
+ */
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+operation(ctx, operation, param_list) ::= <<
+$paramRetType(operation.rettype)$ $operation.parent.name$ServerImpl::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+{
+    $if(operation.rettypeparam)$
+    $varDecl(variable=operation.rettypeparam)$
+   
+    return $operation.rettypeparam.name$;
+    $endif$
+} 
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

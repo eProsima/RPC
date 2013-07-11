@@ -10,7 +10,7 @@ $fileHeader(file=[ctx.filename, "AsyncSupport.h"], description=["This header fil
 
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename$_ASYNC_SUPPORT_H_
+#endif // _$ctx.filename;format="toUpper"$_ASYNC_SUPPORT_H_
 >>
 
 module(module, definition_list) ::= <<

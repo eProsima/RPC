@@ -12,7 +12,7 @@ $fileHeader(file=[ctx.filename, "Server.h"], description=["This header file cont
 
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename$SERVER_H_
+#endif // _$ctx.filename;format="toUpper"$SERVER_H_
 >>
 
 module(module, definition_list) ::= <<

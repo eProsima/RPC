@@ -3,6 +3,9 @@ group UtilsSource;
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This source file contains the definition of helpful functions for the DDS messages for interface ", ctx.filename, "."])$
 
+#include "$ctx.filename$RequestReplyUtils.h"
+$ReqRepIncludes(filename=ctx.filename)$
+
 $definitions; separator="\n"$
 >>
 
@@ -44,22 +47,17 @@ const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(D
     return typeName;
 }
 
-void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
+void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
 {
-    $operation.parameters : {$createDataHelper(param=it, isRequest="yes")$};separator="\n"$
-    $if(operation.rettypeparam)$
-    $createDataHelper(param=operation.rettypeparam, isRequest="yes")$        
-    $endif$
+    $operation.inputparam : {$createDataHelper(param=it, isRequest="yes")$};separator="\n"$
 }
 
-void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
+void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$)
 {
-    $operation.parameters : {$extractDataHelper(param=it)$};separator="\n"$  
-    $if(operation.rettypeparam)$
-    $extractDataHelper(param=operation.rettypeparam)$        
-    $endif$    
+    $operation.inputparam : {$extractDataHelper(param=it)$};separator="\n"$  
 }
 
+$if(!operation.oneway)$
 const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
@@ -77,23 +75,24 @@ const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS
     return typeName;
 }
 
-void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
+void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
 {
-    $operation.parameters : {$createDataHelper(param=it)$};separator="\n"$
+    $operation.outputparam : {$createDataHelper(param=it)$};separator="\n"$
     $if(operation.rettypeparam)$
     $createDataHelper(param=operation.rettypeparam)$        
     $endif$
 }
 
-void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$)
+void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
 {
     retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
-    $operation.parameters : {$extractDataHelper(param=it, isReply="yes")$};separator="\n"$
+    $operation.outputparam : {$extractDataHelper(param=it, isReply="yes")$};separator="\n"$
     $if(operation.rettypeparam)$
     $extractDataHelper(param=operation.rettypeparam, isReply="yes")$        
     $endif$  
 }
 
+$endif$
 >>
 
 param_list(parameters) ::= <<>>
@@ -123,7 +122,7 @@ if($param.name$ != NULL)
     free($param.name$);
 $endif$
 $else$
-$varComplexDel(typeName=param.stTypename, name=param.name)$
+$varComplexDel(variable=param)$
 $endif$
 $endif$
 $param.name$ = data.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;

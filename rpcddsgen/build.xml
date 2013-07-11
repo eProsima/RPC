@@ -19,63 +19,63 @@
 <project name="rpcddsgen" default="jar" basedir=".">
 
 	<macrodef name="antlr">
-		<attribute name="base"/>
-		<attribute name="grammar"/>
+		<attribute name="base" />
+		<attribute name="grammar" />
 		<sequential>
 			<java classname="antlr.Tool" classpath="lib/antlr-2.7.7.jar">
-				<arg value="-o"/>
-				<arg value="@{base}"/>
-				<arg value="@{grammar}"/>
+				<arg value="-o" />
+				<arg value="@{base}" />
+				<arg value="@{grammar}" />
 			</java>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="antxr">
-		<attribute name="base"/>
-		<attribute name="grammar"/>
+		<attribute name="base" />
+		<attribute name="grammar" />
 		<sequential>
 			<java classname="com.javadude.antxr.Tool" classpath="lib/antxr.jar">
-				<arg value="-o"/>
-				<arg value="@{base}"/>
-				<arg value="@{grammar}"/>
+				<arg value="-o" />
+				<arg value="@{base}" />
+				<arg value="@{grammar}" />
 			</java>
 		</sequential>
 	</macrodef>
 
 	<target name="init">
 		<tstamp>
-			<format property="src.timestamp" pattern="dd/MM/yyyy"/>
-			<format property="year" pattern="2009-yyyy"/>
+			<format property="src.timestamp" pattern="dd/MM/yyyy" />
+			<format property="year" pattern="2009-yyyy" />
 		</tstamp>
 
 		<!-- Allow any user specific values to override the defaults -->
-		<property file="./build.properties"/>
-		<property environment="env"/>
+		<property file="./build.properties" />
+		<property environment="env" />
 
-		<property name="Name" value="${ant.project.name}"/>
-		<property name="name" value="${ant.project.name}"/>
-		<property name="copyright" value="${year} Proyectos y Sistema de Mantenimiento S.L"/>
+		<property name="Name" value="${ant.project.name}" />
+		<property name="name" value="${ant.project.name}" />
+		<property name="copyright" value="${year} Proyectos y Sistema de Mantenimiento S.L" />
 
 		<!-- Filters -->
-		<filter token="date" value="${src.timestamp}"/>
-		<filter token="version" value="${version}"/>
-		<filter token="copyright" value="${copyright}"/>
+		<filter token="date" value="${src.timestamp}" />
+		<filter token="version" value="${version}" />
+		<filter token="copyright" value="${copyright}" />
 
 		<!-- Source related properties -->
-		<property name="src.dir" value="${basedir}${file.separator}src"/>
-		<property name="src.java" value="${src.dir}"/>
-		<property name="lib.dir" value="${basedir}${file.separator}lib${file.separator}"/>
-		<property name="grammar.dir" value="${basedir}${file.separator}grammars"/>
-		<property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}"/>
-		<property name="tmp.dir" value="./tmp"/>
-		<property name="src.excludes" value=""/>
+		<property name="src.dir" value="${basedir}${file.separator}src" />
+		<property name="src.java" value="${src.dir}" />
+		<property name="lib.dir" value="${basedir}${file.separator}lib${file.separator}" />
+		<property name="grammar.dir" value="${basedir}${file.separator}grammars" />
+		<property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}" />
+		<property name="tmp.dir" value="./tmp" />
+		<property name="src.excludes" value="" />
 
 		<!-- Build related properties -->
-		<property name="build.dir" value="${basedir}${file.separator}build"/>
-		<property name="build.src" value="${build.dir}${file.separator}src"/>
-		<property name="build.classes" value="${build.dir}"/>
-		<property name="build.javadocs" value="${basedir}${file.separator}docs${file.separator}api"/>
-		<property name="build.jar" value="${lib.dir}${file.separator}${name}.jar"/>
+		<property name="build.dir" value="${basedir}${file.separator}build" />
+		<property name="build.src" value="${build.dir}${file.separator}src" />
+		<property name="build.classes" value="${build.dir}" />
+		<property name="build.javadocs" value="${basedir}${file.separator}docs${file.separator}api" />
+		<property name="build.jar" value="${lib.dir}${file.separator}${name}.jar" />
 
 		<path id="build.classpath">
 			<fileset dir="${lib.dir}">
@@ -91,20 +91,18 @@
 			</fileset>
 		</path>
 
-		<property name="build.dist" value="${build.dir}${file.separator}${name}-${version}"/>
+		<property name="build.dist" value="${build.dir}${file.separator}${name}-${version}" />
 
-		<property name="dist.basedir" value="${build.dir}"/>
-		<property name="dist.includes" value="${name}${file.separator}**"/>
-		<property name="dist.excludes"
-      value="**/prj/**,
+		<property name="dist.basedir" value="${build.dir}" />
+		<property name="dist.includes" value="${name}${file.separator}**" />
+		<property name="dist.excludes" value="**/prj/**,
             **/dist/**,
              **/test/**,
              **/model/**,
              **/build/**,
-             **/.DS_Store"
-      />
-		<property name="packages" value="${build.packages}"/>
-		<property name="library.includes" value="${bundle.includes}"/>
+             **/.DS_Store" />
+		<property name="packages" value="${build.packages}" />
+		<property name="library.includes" value="${bundle.includes}" />
 
 	</target>
 
@@ -113,7 +111,7 @@
 	<!-- Basic build targets                                                 -->
 	<!-- =================================================================== -->
 	<target name="prepare-sources" depends="init">
-		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}" />
 	</target>
 
 	<!-- =================================================================== -->
@@ -122,28 +120,34 @@
 	<target name="compile" depends="init, prepare-sources" description="Compiles the sources. (Default)">
 		<!-- Echo compilation properties -->
 		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
-		<antlr base="${src.java}${file.separator}com/eprosima/rpcdds/idl/grammar" grammar="${grammar.dir}${file.separator}idl.g"/>
+		<antlr base="${src.java}${file.separator}com/eprosima/rpcdds/idl/grammar" grammar="${grammar.dir}${file.separator}idl.g" />
 		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
-		<antxr base="${src.java}${file.separator}com/eprosima/rpcdds/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr"/>
+		<antxr base="${src.java}${file.separator}com/eprosima/rpcdds/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
-		<mkdir dir="${build.classes}"/>
-		<javac srcdir="${src.java}"
-      destdir="${build.classes}"
-      >
-			<classpath refid="build.classpath"/>
+		<mkdir dir="${build.classes}" />
+		<javac srcdir="${src.java}" destdir="${build.classes}">
+			<classpath refid="build.classpath" />
 		</javac>
 		<copy todir="${build.classes}">
-  		<fileset dir="${src.dir}" includes="**/*.stg"/>
-	</copy>
+			<fileset dir="${src.dir}" includes="**/*.stg" />
+		</copy>
+		<copy todir="${build.classes}">
+			<fileset dir="${basedir}${file.separator}../src">
+				<include name="platforms" />
+			</fileset>
+		</copy>
+		<copy todir="${build.classes}">
+			<fileset dir="${basedir}${file.separator}../include">
+				<include name="rpcdds_version.h" />
+			</fileset>
+		</copy>
 	</target>
 
 	<!-- =================================================================== -->
 	<!-- Creates the jar archive                                             -->
 	<!-- =================================================================== -->
 	<target name="jar" depends="init,compile" description="Builds the library (.jar).">
-		<jar jarfile="${build.jar}"
-      basedir="${build.classes}"
-      manifest="manifest">
+		<jar jarfile="${build.jar}" basedir="${build.classes}" manifest="manifest">
 		</jar>
 
 	</target>
@@ -152,22 +156,22 @@
 	<!-- install                                                             -->
 	<!-- =================================================================== -->
 	<target name="install" depends="init,compile,jar">
-		<mkdir dir="${env.NDDSHOME}/rpcdds"/>
+		<mkdir dir="${env.NDDSHOME}/rpcdds" />
 
 		<copy todir="${env.NDDSHOME}/rpcdds/include" overwrite="yes" preservelastmodified="yes">
 			<fileset dir="../include" excludes="**/.svn">
-				<include name="**/*.h"/>
-				<include name="**/*.gen"/>
+				<include name="**/*.h" />
+				<include name="**/*.gen" />
 			</fileset>
 		</copy>
 		<copy todir="${env.NDDSHOME}/rpcdds/lib" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="../lib" includes="**/*" excludes="**/.svn"/>
+			<fileset dir="../lib" includes="**/*" excludes="**/.svn" />
 		</copy>
 		<copy todir="${env.NDDSHOME}/scripts" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="../scripts" includes="*.bat"/>
+			<fileset dir="../scripts" includes="*.bat" />
 		</copy>
 		<copy todir="${env.NDDSHOME}/rpcdds/classes" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="${lib.dir}" includes="*.jar"/>
+			<fileset dir="${lib.dir}" includes="*.jar" />
 		</copy>
 	</target>
 
@@ -175,54 +179,49 @@
 	<!-- package                                                             -->
 	<!-- =================================================================== -->
 	<target name="package" depends="init,compile,jar">
-		<mkdir dir="${tmp.dir}/rpcdds"/>
-		<delete file="../rpcdds.zip"/>
+		<mkdir dir="${tmp.dir}/rpcdds" />
+		<delete file="../rpcdds.zip" />
 
 		<copy todir="${tmp.dir}/rpcdds" overwrite="yes" preservelastmodified="yes">
 			<fileset dir=".." excludes="**/.svn">
-				<include name="include/**/*.h"/>
-				<include name="include/**/*.gen"/>
+				<include name="include/**/*.h" />
+				<include name="include/**/*.gen" />
 			</fileset>
 		</copy>
 		<copy todir="${tmp.dir}/rpcdds" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." includes="lib/**/*" excludes="**/.svn"/>
+			<fileset dir=".." includes="lib/**/*" excludes="**/.svn" />
 		</copy>
 		<copy todir="${tmp.dir}/rpcdds" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." includes="doc/UserManual.doc" excludes="**/.svn"/>
+			<fileset dir=".." includes="doc/UserManual.doc" excludes="**/.svn" />
 		</copy>
 		<copy todir="${tmp.dir}" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." includes="scripts/**/*"/>
+			<fileset dir=".." includes="scripts/**/*" />
 		</copy>
 		<copy todir="${tmp.dir}/rpcdds/classes" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="${lib.dir}" includes="*.jar"/>
+			<fileset dir="${lib.dir}" includes="*.jar" />
 		</copy>
-		<zip destfile="../rpcdds.zip" basedir="./tmp" compress="true" >
-			<include name="**/*"/>
+		<zip destfile="../rpcdds.zip" basedir="./tmp" compress="true">
+			<include name="**/*" />
 		</zip>
-		<delete dir="${tmp.dir}"/>
+		<delete dir="${tmp.dir}" />
 	</target>
 
 	<!-- =================================================================== -->
 	<!-- Cleans up generated classes                                         -->
 	<!-- =================================================================== -->
 	<target name="clean-classes" depends="init">
-		<delete dir="${build.classes}"/>
+		<delete dir="${build.classes}" />
 	</target>
 
 	<!-- =================================================================== -->
 	<!-- launch tests                                         -->
 	<!-- =================================================================== -->
 	<target name="test" depends="jar">
-		<java 
-    	fork="true"
-  		classpathref="run.classpath"
-  		dir="${test.dir}"
-  		classname="com.eprosima.rpcdds.idl.RPCDDSGEN"
-  	>
-			<jvmarg value="-DNDDSHOME=${env.NDDSHOME}"/>
-			<arg value="-ppDisable"/>
-			<arg value="-replace"/>
-			<arg value="RateGen.idl"/>
+		<java fork="true" classpathref="run.classpath" dir="${test.dir}" classname="com.eprosima.rpcdds.idl.RPCDDSGEN">
+			<jvmarg value="-DNDDSHOME=${env.NDDSHOME}" />
+			<arg value="-ppDisable" />
+			<arg value="-replace" />
+			<arg value="RateGen.idl" />
 		</java>
 	</target>
 

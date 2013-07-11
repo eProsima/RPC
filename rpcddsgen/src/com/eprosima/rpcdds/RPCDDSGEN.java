@@ -15,132 +15,352 @@
  */
 package com.eprosima.rpcdds;
 
-import org.antlr.stringtemplate.CommonGroupLoader;
-import org.antlr.stringtemplate.StringTemplate;
-import org.antlr.stringtemplate.StringTemplateErrorListener;
-import org.antlr.stringtemplate.StringTemplateGroup;
-import org.antlr.stringtemplate.StringTemplateGroupLoader;
-import org.antlr.stringtemplate.language.DefaultTemplateLexer;
-
+import com.eprosima.rpcdds.exceptions.BadArgumentException;
+import com.eprosima.rpcdds.idl.grammar.Context;
 import com.eprosima.rpcdds.idl.grammar.IDLLexer;
 import com.eprosima.rpcdds.idl.grammar.IDLParser;
+import com.eprosima.rpcdds.templates.TemplateGroup;
+import com.eprosima.rpcdds.templates.TemplateManager;
 import com.eprosima.rpcdds.util.Utils;
-import com.eprosima.rpcdds.idl.VSConfiguration;
-import com.eprosima.rpcdds.idl.GUIDGenerator;
-import com.eprosima.rpcdds.idl.CplusplusVisitor;
-
-// TODO Quitar
-import com.eprosima.rpcdds.idl.tree.*;
+import com.eprosima.rpcdds.util.VSConfiguration;
+import com.eprosima.rpcdds.util.GUIDGenerator;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Vector;
+
+import org.antlr.stringtemplate.StringTemplate;
+import org.antlr.stringtemplate.StringTemplateGroup;
+import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
 
 
 // TO_DO: string constants...
 public class RPCDDSGEN
 {
-	private static String version = "0.2.0";
-    private static String osOption = "Win32";
-    private static String exampleOption = null;
-    private static String languageOption = "C++";
-    private static boolean ppDisable = false;
-    private static boolean m_replace = false;
-    private static String ppPath = null;
-    // TODO Quitar external Dir.
-    private static StringBuffer externalDir = null;
-    private static int externalDirLength = 0;
+    private static ArrayList<String> m_platforms = null;
+    private static String m_middleware = "rti";
     
-    private static final String m_defaultOutputDir = "." + File.separator;
-    private static String m_outputDir = m_defaultOutputDir;
-    private static String tempDir = null;
+    // TODO Quitar los sistemas operativos. Cutre.
+    private String m_osOption = "Win32";
+    private boolean m_servercode = true;
+    private boolean m_clientcode = true;
+    private String m_exampleOption = null;
+    private String m_languageOption = "C++";
+    private boolean m_ppDisable = false;
+    private boolean m_replace = false;
+    private String m_ppPath = null;
+    
+    private final String m_defaultOutputDir = "." + File.separator;
+    private String m_outputDir = m_defaultOutputDir;
+    private String m_tempDir = null;
     // Array list of strings. Include paths
-    private static ArrayList includePaths = new ArrayList();
-    private static String m_idlFile = null;
-    private static String m_onlyIdlFile = null;
-    private static String m_idlFileLocation = null;
-    private static String command = null;
-    private static String extra_command = null;
-    private static ArrayList lineCommand = null;
-    private static ArrayList lineCommandForWorkDirSet = null;
-    private static String[] env_variables = null;	
-    private static String middleware = "rti";
-    private static String spTemplate = "main";
+    private ArrayList m_includePaths = new ArrayList();
+    private Vector<String> m_idlFiles;
+    private String m_command = null;
+    private String m_extra_command = null;
+    private ArrayList m_lineCommand = null;
+    private ArrayList m_lineCommandForWorkDirSet = null;
+    private String[] m_env_variables = null;	
+    private String m_spTemplate = "main";
     // Location of the MessageHeader.idl file
-    private static String messageHeaderFileName = "MessageHeader.idl";
-    private static String messageHeaderFileLocation = null;
-    
-    // Used to set the base template.
-    private static StringTemplateGroup spTemplateGroup = null;
-    private static StringTemplateGroup baseTemplateGroup = null;
+    private String messageHeaderFileName = "MessageHeader.idl";
+    private String messageHeaderFileLocation = null;
 
     //TO_DO: external properties?
-    private static VSConfiguration configurations[]={new VSConfiguration("Debug DLL", "Win32", true, true),
+    private static VSConfiguration m_vsconfigurations[]={new VSConfiguration("Debug DLL", "Win32", true, true),
         new VSConfiguration("Release DLL", "Win32", false, true),
         new VSConfiguration("Debug", "Win32", true, false),
-        new VSConfiguration("Release", "Win32", false, false)};	
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) throws Exception
+        new VSConfiguration("Release", "Win32", false, false)};
+    
+    public RPCDDSGEN(String[] args) throws BadArgumentException
     {
-        int returnedValue = -1;
+        int count = 0;
+        String arg;
+        
+        m_idlFiles = new Vector<String>();
 
-        if(getOptions(args))
+        while(count < args.length)
         {
-            if(ddsGenInit() == 0)
+            arg = args[count++];
+
+            if(!arg.startsWith("-"))
             {
-                try
-                {
-                	// First step is to parse the file MessageHeader.idl
-                	ddsGen(messageHeaderFileLocation, true, false);
-                	// Second step is to parse the user IDL file.
-                    ddsGen(m_idlFile, true, false);
-                    
-                    // TODO Support serveral IDL files.
-                    // TODO Catch errors.
-                    // Parsing and generating code with templates.
-                    processIDL(m_idlFile);
-                    // Parse the requestreply IDL file that was generated.
-                    ddsGen(Utils.getIDLFileNameOnly(m_onlyIdlFile) + "RequestReply.idl", false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
-                    returnedValue = 0; 
-                    
-                    // TODO Remove old parser.
-                    /*Module root = parse(idlFile);
-
-                    if(root != null && root.getError() == false)
-                    {
-                        returnedValue = gen(root);
-                    }*/
-                }
-                catch(Exception ioe)
-                {
-                	if(!ioe.getMessage().equals(""))
-                		System.out.println(ioe.getMessage());
-                    System.out.println("ERROR: Cannot generate the files");
-                    //ioe.printStackTrace();
-                }
+                m_idlFiles.add(arg);
             }
+            else if(arg.equals("-os"))
+            {
+                if(count < args.length)
+                {
+                    m_osOption = args[count++];
 
-            // TO_DO: May be more than one interface defined in the idl...
-            // TO_DO: modules/namespaces
+                    if(!m_osOption.equals("Win32") &&
+                            !m_osOption.equals("Linux"))
+                    {
+                        throw new BadArgumentException("Unknown OS " + m_osOption);
+                    }
+                }
+                else
+                    throw new BadArgumentException("No operating system after -os argument");
+            }
+            else if(arg.equals("-example"))
+            {
+                if(count < args.length)
+                {
+                    m_exampleOption = args[count++];
+
+                    if(!m_platforms.contains(m_exampleOption))
+                    {
+                        throw new BadArgumentException("Unknown example arch " + m_exampleOption);
+                    }
+                }
+                else
+                    throw new BadArgumentException("No architecture after -example argument");
+            }
+            else if(arg.equals("-language"))
+            {
+                if(count < args.length)
+                {
+                    m_languageOption = args[count++];
+
+                    if(!m_languageOption.equals("C++") && !m_languageOption.equals("c++"))
+                    {
+                        throw new BadArgumentException("Unknown language " +  m_languageOption);
+                    }
+                }
+                else
+                    throw new BadArgumentException("No language after -language argument");
+            }
+            else if(arg.equals("-ppPath"))
+            {
+                if(count < args.length)
+                    m_ppPath = args[count++];
+                else
+                    throw new BadArgumentException("No URL after -ppPath argument");
+            }
+            else if(arg.equalsIgnoreCase("-ppDisable"))
+            {
+                m_ppDisable = true;
+            }
+            else if(arg.equalsIgnoreCase("-replace"))
+            {
+                m_replace = true;
+            }
+            else if(arg.equals("-d"))
+            {
+                if(count < args.length)
+                {
+                    m_outputDir = Utils.addFileSeparator(args[count]);
+                }
+                else
+                    throw new BadArgumentException("No URL after -d argument");
+            }
+            else if(arg.equals("-middleware"))
+            {
+                if(count < args.length)
+                {
+                    m_middleware = args[count++];
+                }
+                else
+                    throw new BadArgumentException("No middleware after -middleware argument");
+            }
+            else if(arg.equals("-t"))
+            {
+                if(count < args.length)
+                {
+                    m_tempDir = args[count++];
+                }
+                else
+                    throw new BadArgumentException("No URL after -t argument");
+            }
+            else if(arg.equals("-version"))
+            {
+                showVersion();
+                System.exit(0);
+            }
+            else if(arg.equals("-help"))
+            {
+                printHelp();
+                System.exit(0);
+            }
+            // Get include directories
+            else if(arg.equals("-I"))
+            {
+                if(count < args.length)
+                {
+                    m_includePaths.add(new String(arg + args[count++]));
+                }
+                else
+                    throw new BadArgumentException("No URL after -I argument");
+            }
+            else if(arg.startsWith("-I"))
+            {
+                m_includePaths.add(arg);
+            }
+            else if(arg.equals("--server"))
+            {
+                m_servercode = false;
+            }
+            else if(arg.equals("--client"))
+            {
+                m_clientcode = false;
+            }
+            else
+            {
+                throw new BadArgumentException("Unknown argument " + arg);
+            }
         }
-        else
-        {
-            printHelp();
-        }	
 
-        System.exit(returnedValue);
+        if(m_idlFiles.isEmpty())
+        {
+            throw new BadArgumentException("The program expects an IDL file");
+        }
     }
     
-    private static boolean processIDL(String idlFilename)
+    public static boolean loadPlatforms()
+    {
+        boolean returnedValue = false;
+        
+        RPCDDSGEN.m_platforms = new ArrayList<String>();
+        
+        try
+        {
+            InputStream input = RPCDDSGEN.class.getResourceAsStream("/platforms");
+            InputStreamReader ir = new InputStreamReader(input);
+            BufferedReader reader = new BufferedReader(ir);
+            String line = null;
+            while((line = reader.readLine()) != null)
+            {
+                RPCDDSGEN.m_platforms.add(line);
+            }
+            
+            returnedValue = true;
+        }
+        catch(Exception ex)
+        {
+            System.out.println("ERROR: Getting platforms. " + ex.getMessage());
+        }
+        
+        return returnedValue;
+    }
+    
+    public void showVersion()
+    {
+        try
+        {
+            InputStream input = this.getClass().getResourceAsStream("/rpcdds_version.h");
+            byte[] b = new byte[input.available()];
+            input.read(b);
+            String text = new String(b);
+            int beginindex = text.indexOf("\"");
+            int endindex = text.indexOf("\"", beginindex + 1);
+            String version = text.substring(beginindex + 1, endindex);
+            System.out.println("rpcddsgen version " + version);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("ERROR: Getting version. " + ex.getMessage());
+        }
+    }
+    
+    public boolean execute()
+    {
+        boolean returnedValue = ddsGenGlobalInit();
+        
+        for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
+        {
+            returnedValue &= process(m_idlFiles.get(count));
+        }
+        
+        // Gen solution.
+        if(m_exampleOption != null)
+        {
+            if((returnedValue = genSolution()) == false)
+                System.out.println("ERROR: While the solution was being generated");
+        }
+        
+        return returnedValue;
+    }
+    
+    private boolean process(String idlFilename)
     {
         boolean returnedValue = false;
         System.out.println("Processing the file " + idlFilename + "...");
+        
+        ArrayList idlLineCommand = new ArrayList(), idlLineCommandForWorkDirSet = new ArrayList();
+        
+        if(ddsGenInit(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet))
+        {
+            try
+            {
+                // First step is to parse the file MessageHeader.idl
+                ddsGen(messageHeaderFileLocation, idlLineCommand, idlLineCommandForWorkDirSet, true, false);
+                // Second step is to parse the user IDL file.
+                ddsGen(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet, true, false);
+                
+                // Parsing and generating code with templates.
+                if(parseIDL(idlFilename))
+                {
+                    // Parse the requestreply IDL file that was generated.
+                    ddsGen(Utils.getIDLFileNameOnly(idlFilename) + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                            false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+                    returnedValue = true;
+                }
+            }
+            catch(Exception ioe)
+            {
+                if(!ioe.getMessage().equals(""))
+                    System.out.println(ioe.getMessage());
+                System.out.println("ERROR: Cannot generate the files");
+                //ioe.printStackTrace();
+            }
+        }
+        
+        return returnedValue;
+    }
+    
+    private boolean parseIDL(String idlFilename)
+    {
+        boolean returnedValue = false;
+        
+        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+        
+        // Create initial context.
+        Context ctx = new Context(onlyFileName);
+        
+        // Create template manager
+        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
+        // Load template to generate IDL for topics.
+        tmanager.addGroup("TopicsIDL");
+        // Load template to generate Utils for topics.
+        tmanager.addGroup("UtilsHeader");
+        tmanager.addGroup("UtilsSource");
+        // Load template to generate Proxy for topics.
+        tmanager.addGroup("ProxyHeader");
+        tmanager.addGroup("ProxySource");
+        // Load template to generate example to use Proxies.
+        tmanager.addGroup("ClientExample");
+        // Load template to generate proxy RPC support files.
+        tmanager.addGroup("ClientRPCSupportHeader");
+        tmanager.addGroup("ClientRPCSupportSource");
+        // Load template to generate proxy async support files.
+        tmanager.addGroup("AsyncSupportHeader");
+        tmanager.addGroup("AsyncSupportSource");
+        // Load template to generate Server for topics.
+        tmanager.addGroup("ServerHeader");
+        tmanager.addGroup("ServerSource");
+        // Load template to generate example to use Servers.
+        tmanager.addGroup("ServerExample");
+        // Load template to generate server RPC support files.
+        tmanager.addGroup("ServerRPCSupportHeader");
+        tmanager.addGroup("ServerRPCSupportSource");
+        // Load template to generate server user implementations.
+        tmanager.addGroup("ServerImplHeader");
+        tmanager.addGroup("ServerImplSource");
+        
+        // Create main template for all templates.
+        TemplateGroup maintemplates = tmanager.createTemplateGroup("main");
+        maintemplates.setAttribute("ctx", ctx);
         
         try
         {
@@ -148,7 +368,7 @@ public class RPCDDSGEN
             IDLLexer lexer = new IDLLexer(input);
             IDLParser parser = new IDLParser(lexer);
             // Pass the filename without the extension.
-            returnedValue = parser.specification(m_outputDir, Utils.getIDLFileNameOnly(idlFilename), m_replace);
+            returnedValue = parser.specification(ctx, tmanager, maintemplates);
         }
         catch(FileNotFoundException ex)
         {
@@ -159,11 +379,74 @@ public class RPCDDSGEN
             System.out.println("ERROR<Exception>: " + ex.getMessage());
         }
         
+        // Zone used to write all files using the generated string templates.
+        
+        if(returnedValue)
+        {
+            System.out.println("Generating Utils Code...");
+            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), m_replace))
+            {
+                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReplyUtils.h", maintemplates.getTemplate("UtilsHeader"), m_replace))
+                {
+                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReplyUtils.cxx", maintemplates.getTemplate("UtilsSource"), m_replace);
+                }
+            }
+        }
+        
+        if(returnedValue && m_clientcode)
+        {
+            System.out.println("Generating Proxy Code...");
+            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.h", maintemplates.getTemplate("ProxyHeader"), m_replace))
+            {
+                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.cxx", maintemplates.getTemplate("ProxySource"), m_replace))
+                {
+                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientRPCSupport.h", maintemplates.getTemplate("ClientRPCSupportHeader"), m_replace))
+                    {
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientRPCSupport.cxx", maintemplates.getTemplate("ClientRPCSupportSource"), m_replace))
+                        {
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.h", maintemplates.getTemplate("AsyncSupportHeader"), m_replace))
+                            {
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.cxx", maintemplates.getTemplate("AsyncSupportSource"), m_replace))
+                                {
+                                    if(m_exampleOption != null)
+                                        returnedValue = Utils.writeFile(m_outputDir + "Client.cxx", maintemplates.getTemplate("ClientExample"), m_replace);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if(returnedValue && m_servercode)
+        {
+            System.out.println("Generating Server Code...");
+            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Server.h", maintemplates.getTemplate("ServerHeader"), m_replace))
+            {
+                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Server.cxx", maintemplates.getTemplate("ServerSource"), m_replace))
+                {
+                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerRPCSupport.h", maintemplates.getTemplate("ServerRPCSupportHeader"), m_replace))
+                    {
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerRPCSupport.cxx", maintemplates.getTemplate("ServerRPCSupportSource"), m_replace))
+                        {
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImpl.h", maintemplates.getTemplate("ServerImplHeader"), m_replace))
+                            {
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImpl.cxx", maintemplates.getTemplate("ServerImplSource"), m_replace))
+                                {
+                                    returnedValue = Utils.writeFile(m_outputDir + "Server.cxx", maintemplates.getTemplate("ServerExample"), m_replace);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         return returnedValue;
     }
     
-    public static int ddsGenInit()
-    {   
+    public boolean ddsGenGlobalInit()
+    {
         // Set environment variables.
         String envPath = null, envLD = null, envRoot = null, dds_root = null, tao_root = null, rpcdds_root = null;
         
@@ -171,193 +454,211 @@ public class RPCDDSGEN
         
         if(envPath != null)
         {
-        	envPath = "PATH=" + envPath;
-        	
-        	if(osOption.equals("Linux") && (envLD = System.getProperty("LD_LIBRARY_PATH")) != null)
-        	{
-        		envLD = "LD_LIBRARY_PATH=" + envLD;
-        	}
-        	
-        	if(middleware.equals("rti"))
-        	{
-        		dds_root = System.getProperty("NDDSHOME");
-        		
-        		if(dds_root == null || dds_root.equals(""))
-        		{
-        			System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
-        			System.out.println("Note: NDDSHOME environment variable is not set in your system.");
-        		    System.out.println("      rpcddsgen uses this environment variable to find the RTI DDS middleware.");
-        		    System.out.println("      This environment variable is used by the generated solutions too.");
-        		    System.out.println("      See the User Manual document.");
-        			return -1;
-        		}
-        	}
-        	else if(middleware.equals("opendds"))
-        	{
-        		dds_root = System.getProperty("DDS_ROOT");
-        		
-        		if(dds_root != null && !dds_root.equals(""))
-        			envRoot = "DDS_ROOT=" + dds_root;
-        		else
-        		{
-        			System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
-        			System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
-        		    System.out.println("      rpcddsgen uses this environment variable to find the OpenDDS middleware.");
-        		    System.out.println("      This environment variable is used by the generated solutions too.");
-        		    System.out.println("      See the User Manual document.");
-        			return -1;
-        		}
-        		
-        		tao_root = System.getProperty("TAO_ROOT");
-        	}
-        	
-        	rpcdds_root = System.getProperty("RPCDDSHOME");
-        	
-        	if(rpcdds_root == null || rpcdds_root.equals(""))
-        	{
-        		System.out.println("ERROR: Cannot find the environment variable RPCDDSHOME.");
-    			System.out.println("Note: RPCDDSHOME environment variable is not set in your system.");
-    		    System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
-    		    System.out.println("      See the User Manual document.");
-    			return -1;
-        	}
-        	
-        	// Create final structure that stores the environment variables.
-        	env_variables = new String[1 + (envLD != null ? 1 : 0) +
-        	                           (envRoot != null ? 1 : 0)];
-        	int count = 0;
-        	env_variables[count++] = envPath;
-        	
-        	if(envLD != null)
-        		env_variables[count++] = envLD;
-        	
-        	if(envRoot != null)
-        		env_variables[count++] = envRoot;
+            envPath = "PATH=" + envPath;
+            
+            if(m_osOption.equals("Linux") && (envLD = System.getProperty("LD_LIBRARY_PATH")) != null)
+            {
+                envLD = "LD_LIBRARY_PATH=" + envLD;
+            }
+            
+            if(m_middleware.equals("rti"))
+            {
+                dds_root = System.getProperty("NDDSHOME");
+                
+                if(dds_root == null || dds_root.equals(""))
+                {
+                    System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
+                    System.out.println("Note: NDDSHOME environment variable is not set in your system.");
+                    System.out.println("      rpcddsgen uses this environment variable to find the RTI DDS middleware.");
+                    System.out.println("      This environment variable is used by the generated solutions too.");
+                    System.out.println("      See the User Manual document.");
+                    return false;
+                }
+            }
+            else if(m_middleware.equals("opendds"))
+            {
+                dds_root = System.getProperty("DDS_ROOT");
+                
+                if(dds_root != null && !dds_root.equals(""))
+                    envRoot = "DDS_ROOT=" + dds_root;
+                else
+                {
+                    System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
+                    System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
+                    System.out.println("      rpcddsgen uses this environment variable to find the OpenDDS middleware.");
+                    System.out.println("      This environment variable is used by the generated solutions too.");
+                    System.out.println("      See the User Manual document.");
+                    return false;
+                }
+                
+                tao_root = System.getProperty("TAO_ROOT");
+            }
+            
+            rpcdds_root = System.getProperty("RPCDDSHOME");
+            
+            if(rpcdds_root == null || rpcdds_root.equals(""))
+            {
+                System.out.println("ERROR: Cannot find the environment variable RPCDDSHOME.");
+                System.out.println("Note: RPCDDSHOME environment variable is not set in your system.");
+                System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
+                System.out.println("      See the User Manual document.");
+                return false;
+            }
+            
+            // Create final structure that stores the environment variables.
+            m_env_variables = new String[1 + (envLD != null ? 1 : 0) +
+                                       (envRoot != null ? 1 : 0)];
+            int count = 0;
+            m_env_variables[count++] = envPath;
+            
+            if(envLD != null)
+                m_env_variables[count++] = envLD;
+            
+            if(envRoot != null)
+                m_env_variables[count++] = envRoot;
         }
         else
         {
-        	System.out.println("ERROR: Cannot find the environment variable PATH.");
-        	return -1;
+            System.out.println("ERROR: Cannot find the environment variable PATH.");
+            return false;
         }
         
-        // Set line command.
-        lineCommand = new ArrayList();
-    	// Only needed by opendds in the case of using open_idl with the generated file <Interface>RequestReply.idl
-    	lineCommandForWorkDirSet = new ArrayList();
+     // Set line command.
+        m_lineCommand = new ArrayList();
+        // Only needed by opendds in the case of using open_idl with the generated file <Interface>RequestReply.idl
+        m_lineCommandForWorkDirSet = new ArrayList();
         
-        if(middleware.equals("rti"))
+        if(m_middleware.equals("rti"))
         {
             // Directory $NDDSHOME/scripts/rtiddsgen.bat
-            command = dds_root + File.separator + "scripts" + File.separator + "rtiddsgen.bat";
-        	
-        	// Add that creates file in the current directory.
-        	
-        	if(languageOption != null)
+            m_command = dds_root + File.separator + "scripts" + File.separator + "rtiddsgen.bat";
+            
+            // Add that creates file in the current directory.
+            
+            if(m_languageOption != null)
             {
-        		lineCommand.add("-language");
-        		lineCommand.add(languageOption);
-        		lineCommandForWorkDirSet.add("-language");
-        		lineCommandForWorkDirSet.add(languageOption);
+                m_lineCommand.add("-language");
+                m_lineCommand.add(m_languageOption);
+                m_lineCommandForWorkDirSet.add("-language");
+                m_lineCommandForWorkDirSet.add(m_languageOption);
             }
 
-            if(ppDisable == true)
+            if(m_ppDisable == true)
             {
-            	lineCommand.add("-ppDisable");
-            	lineCommandForWorkDirSet.add("-ppDisable");
+                m_lineCommand.add("-ppDisable");
+                m_lineCommandForWorkDirSet.add("-ppDisable");
             }
             else
             {
-                if(ppPath != null)
+                if(m_ppPath != null)
                 {
 
-                	lineCommand.add("-ppPath");
-                	lineCommand.add(ppPath);
-                	lineCommandForWorkDirSet.add("-ppPath");
-                	lineCommandForWorkDirSet.add(ppPath);
+                    m_lineCommand.add("-ppPath");
+                    m_lineCommand.add(m_ppPath);
+                    m_lineCommandForWorkDirSet.add("-ppPath");
+                    m_lineCommandForWorkDirSet.add(m_ppPath);
                 }
             }
 
             if(m_replace == true)
             {
-            	lineCommand.add("-replace");
-            	lineCommandForWorkDirSet.add("-replace");
+                m_lineCommand.add("-replace");
+                m_lineCommandForWorkDirSet.add("-replace");
             }
 
             // Set the output directory to rtiddsgen.
-        	lineCommand.add("-d");
-        	lineCommand.add(m_outputDir);
-        }
-        else if(middleware.equals("opendds"))
-        {   	
-        	if(osOption.equals("Win32"))
-        	{
-        		command = "opendds_idl.exe";
-        		extra_command = "tao_idl.exe";
-        	}
-        	else if(osOption.equals("Linux"))
-        	{
-        		command = "opendds_idl";
-        		extra_command = "tao_idl";
-        	}
-            spTemplate = "opendds";
+            m_lineCommand.add("-d");
+            m_lineCommand.add(m_outputDir);
             
-            lineCommand.add("-I" + dds_root);
-            lineCommand.add("-I" + tao_root);
-            lineCommandForWorkDirSet.add("-I" + dds_root);
-            lineCommandForWorkDirSet.add("-I" + tao_root);
+            // Set to create namespaces
+            m_lineCommand.add("-namespace");
+            m_lineCommandForWorkDirSet.add("-namespace");
+        }
+        else if(m_middleware.equals("opendds"))
+        {       
+            if(m_osOption.equals("Win32"))
+            {
+                m_command = "opendds_idl.exe";
+                m_extra_command = "tao_idl.exe";
+            }
+            else if(m_osOption.equals("Linux"))
+            {
+                m_command = "opendds_idl";
+                m_extra_command = "tao_idl";
+            }
+            m_spTemplate = "opendds";
+            
+            m_lineCommand.add("-I" + dds_root);
+            m_lineCommand.add("-I" + tao_root);
+            m_lineCommandForWorkDirSet.add("-I" + dds_root);
+            m_lineCommandForWorkDirSet.add("-I" + tao_root);
             
             // Add temporary directory.
-            if(tempDir != null)
+            if(m_tempDir != null)
             {
-            	lineCommand.add("-t");
-            	lineCommand.add(tempDir);
-            	lineCommandForWorkDirSet.add("-t");
-            	lineCommandForWorkDirSet.add(tempDir);
+                m_lineCommand.add("-t");
+                m_lineCommand.add(m_tempDir);
+                m_lineCommandForWorkDirSet.add("-t");
+                m_lineCommandForWorkDirSet.add(m_tempDir);
             }
             
             // Set the output directory to opendds.
-        	lineCommand.add("-o");
-        	lineCommand.add(m_outputDir);
-        	lineCommand.add("-I"+ m_outputDir);
+            m_lineCommand.add("-o");
+            m_lineCommand.add(m_outputDir);
+            m_lineCommand.add("-I"+ m_outputDir);
         }
         
         // TODO No usar RPCDDSHOME sino que a través del directorio del script sacar el del IDL.
-        lineCommand.add("-I" + rpcdds_root + File.separator + "idl");
+        m_lineCommand.add("-I" + rpcdds_root + File.separator + "idl");
         
-        if(m_idlFileLocation != null)
+        // Set the location of file MessageHeader.idl
+        messageHeaderFileLocation = rpcdds_root + File.separator + "idl" + File.separator + messageHeaderFileName;
+        
+        return true;
+    }
+    
+    // TODO Lo genérico sacarlo a una function que se ejecute solo una vez.
+    public boolean ddsGenInit(String idlFilename, ArrayList idlLineCommand, ArrayList idlLineCommandForWorkDirSet)
+    {    
+        // Fill the arrays with global command line.
+        idlLineCommand.addAll(m_lineCommand);
+        idlLineCommandForWorkDirSet.addAll(m_lineCommandForWorkDirSet);
+        
+        // Get only de IDL file directory.
+        String idlFileLocation = Utils.getIDLFileDirectoryOnly(idlFilename);
+        
+        if(idlFileLocation != null)
         {
-        	lineCommand.add("-I"+m_idlFileLocation);
+            idlLineCommand.add("-I" + idlFileLocation);
         	// Get the canonical path from idl file.
         	String canon;
         	try
         	{
-        		canon = new File(m_idlFileLocation).getCanonicalPath();
+        		canon = new File(idlFileLocation).getCanonicalPath();
         	}
         	catch(Exception ex)
         	{
         		System.out.println("ERROR: Cannot get the canonical path of the idl file.");
-        		return 1;
+        		return false;
         	}
-        	lineCommandForWorkDirSet.add("-I"+canon);
+        	idlLineCommandForWorkDirSet.add("-I"+canon);
         }
         
         // Add the include paths given as parameters.
-        for(int i = 0; i < includePaths.size(); ++i)
+        for(int i = 0; i < m_includePaths.size(); ++i)
         {
-        	lineCommand.add(includePaths.get(i));
-        	lineCommandForWorkDirSet.add(includePaths.get(i));
+            idlLineCommand.add(m_includePaths.get(i));
+            idlLineCommandForWorkDirSet.add(m_includePaths.get(i));
         }
-        
-        // Set the location of file MessageHeader.idl
-        messageHeaderFileLocation = rpcdds_root + File.separator + "idl" + File.separator + messageHeaderFileName;
     	
-    	return 0;
+    	return true;
     }
     // Need to use envp to pass a Path environment variable pointing to $NDDSHOME/scripts
     // if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
     // even using the well known solution of using double quotes
     // May be a problem with the Java Version deployed with RTI DDS.
-    public static void ddsGen(String file, boolean disableGenerateTypeSupport, boolean setWorkingDirectory) throws Exception
+    public void ddsGen(String file, ArrayList idlLineCommand, ArrayList idlLineCommandForWorkDirSet,
+            boolean disableGenerateTypeSupport, boolean setWorkingDirectory) throws Exception
     {
     	int count = 0;
         ArrayList finalCommandLine = null;
@@ -366,18 +667,18 @@ public class RPCDDSGEN
         System.out.println(file);
         
         // Execute tao_idl
-        if(middleware.equals("opendds") && extra_command != null)
+        if(m_middleware.equals("opendds") && m_extra_command != null)
         {
         	 finalCommandLine = new ArrayList();
-             finalCommandLine.add(extra_command);
+             finalCommandLine.add(m_extra_command);
              finalCommandLine.add("-SS");
              finalCommandLine.add("-Sa");
-             finalCommandLine.addAll(lineCommand);
+             finalCommandLine.addAll(idlLineCommand);
              finalCommandLine.add(file);
              finalCommandArray = new String[finalCommandLine.size()];
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
-             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
              ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
              ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
              auxerrorOutput.start();
@@ -391,17 +692,17 @@ public class RPCDDSGEN
         }
         
         finalCommandLine = new ArrayList();
-        finalCommandLine.add(command);
-        if(disableGenerateTypeSupport && middleware.equals("opendds"))
+        finalCommandLine.add(m_command);
+        if(disableGenerateTypeSupport && m_middleware.equals("opendds"))
         	finalCommandLine.add("-SI");
         if(!setWorkingDirectory)
         {
-        	finalCommandLine.addAll(lineCommand);
+        	finalCommandLine.addAll(idlLineCommand);
         	finalCommandLine.add(file);
         }
         else
         {
-        	finalCommandLine.addAll(lineCommandForWorkDirSet);
+        	finalCommandLine.addAll(idlLineCommandForWorkDirSet);
         	// TODO Revisar funcionamiento con OpenDDS
         	//finalCommandLine.add(file.substring(externalDir.length() + 1));
         	finalCommandLine.add(Utils.getIDLFileNameOnly(file));
@@ -411,11 +712,11 @@ public class RPCDDSGEN
         
         Process ddsgen;     
         if(!setWorkingDirectory)
-        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
         else
-        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables, new File(m_outputDir));
-        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", middleware.equals("rti"));
-        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", middleware.equals("rti"));
+        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables, new File(m_outputDir));
+        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", m_middleware.equals("rti"));
+        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", m_middleware.equals("rti"));
         errorOutput.start();
         normalOutput.start();
         int exitVal = ddsgen.waitFor();
@@ -431,7 +732,7 @@ public class RPCDDSGEN
         }
         
         // Execute tao_idl
-        if(!disableGenerateTypeSupport && middleware.equals("opendds") && extra_command != null)
+        if(!disableGenerateTypeSupport && m_middleware.equals("opendds") && m_extra_command != null)
         {
         	 // Get only de name of the fichero.
 	        	int lastBarraOccurrency = file.lastIndexOf('/');
@@ -439,7 +740,7 @@ public class RPCDDSGEN
 	            
 	    		if(lastBarraOccurrency == -1)
 	    		{
-	    			if(osOption.equals("Win32"))
+	    			if(m_osOption.equals("Win32"))
 	    			{
 	    				lastBarraOccurrency = file.lastIndexOf('\\');
 	    			}
@@ -457,15 +758,15 @@ public class RPCDDSGEN
 	    		onlyFileNameAux = m_outputDir + onlyFileNameAux;
     		
         	 finalCommandLine = new ArrayList();
-             finalCommandLine.add(extra_command);
+             finalCommandLine.add(m_extra_command);
              finalCommandLine.add("-SS");
              finalCommandLine.add("-Sa");
-             finalCommandLine.addAll(lineCommand);
+             finalCommandLine.addAll(idlLineCommand);
              finalCommandLine.add(onlyFileNameAux.subSequence(0, onlyFileNameAux.length() - 4) + "TypeSupport.idl");
              finalCommandArray = new String[finalCommandLine.size()];
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
-             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, env_variables);
+             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
              ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
              ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
              auxerrorOutput.start();
@@ -483,6 +784,7 @@ public class RPCDDSGEN
         //ddsGenRunCheck(file);	
     }
     
+    /* TODO Quitar funciones.
     private static boolean typeIsString(Module root, String name)
     {
     	boolean returnedValue = false;
@@ -515,385 +817,141 @@ public class RPCDDSGEN
     	
     	// Return the initial value.
     	return typedecl.getInitialValue();
-    }
-
-    public static int gen(Module root) throws Exception
-    {
-        final String METHOD_NAME = "gen";
-        int returnedValue = -1;
-
-        // get a group loader containing main templates dir and target subdir
-        System.out.println("Loading Templates...");		
-        StringTemplateGroupLoader loader = 
-            new CommonGroupLoader("com/eprosima/rpcdds/idl/template", new MyErrorListener());
-        StringTemplateGroup.registerGroupLoader(loader);
-
-        spTemplateGroup = StringTemplateGroup.loadGroup(spTemplate, DefaultTemplateLexer.class, null);
-        baseTemplateGroup = StringTemplateGroup.loadGroup("cplusplus", DefaultTemplateLexer.class, spTemplateGroup);
-        Map typeInitMap = baseTemplateGroup.getMap("typeInitMap");
-
-        // Adds certain type declarations to typeInitMap, so the generation logic
-        // would treat them as simple types instead of constructed/template types.
-        TypeDecl typedecl = null, aux = null;
-        StringTemplate template = null;
-
-        for(ListIterator iter = root.getTypesDecl().listIterator(); iter.hasNext();)
-        {						
-            typedecl = (TypeDecl) iter.next();
-        	aux = typedecl;
-        	
-            if(typedecl instanceof SimpleTypedef)
-            {
-            	SimpleTypedef def = null;
-            	
-            	do
-            	{
-            		def = (SimpleTypedef)aux;
-            		aux = def.getBase();
-            	}
-            	while(aux instanceof SimpleTypedef);
-            }
-            
-            if(aux instanceof BasicType || aux instanceof EnumType)
-            {
-            	template = new StringTemplate(baseTemplateGroup, typedecl.getTemplateName());
-            	typeInitMap.put(typedecl.getName(), template);
-            }
-        }
-
-        Interface ifc = root.getIfc();
-
-        					if(genRPCSupport(ifc, "Server") == 0)
-        					{
-        						System.out.println("Generating Server Code...");
-        						if(genHeaderAndImpl("Server", "Server", "headerServer", "definitionServer",
-        								"functionImpl", "exFunctionHeader", "Server", ifc, false) == 0)
-        						{
-        							if(genHeaderAndImpl("ServerImpl", "Server", "headerImpl", "definitionImpl",
-        									"emptyFunctionImpl", "functionHeader", null, ifc, false) == 0)
-        							{
-        								if(genSolution(ifc) == 0)
-        								{
-        									System.out.println("Finished.");
-        									returnedValue = 0;
-        								}
-        								else
-        								{
-        									System.out.println("ERROR<" + METHOD_NAME + ">: Generating Solution for " + exampleOption);
-        								}
-        							}
-        							else
-        							{
-        								System.out.println("ERROR<" + METHOD_NAME + ">: Generating Serve implementation code.");
-        							}
-        						}
-        						else
-        						{
-        							System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Code.");
-        						}
-        					}
-        					else
-        					{
-        						System.out.println("ERROR<" + METHOD_NAME + ">: Generating Server Remote Code.");
-        					}
-
-        return returnedValue;
-    }
-
-    public static int genHeaderAndImpl(String suffix, String templateGroupId, String headerTemplateId,
-            String definitionTemplateId, String functionTemplateId, String functionHeaderTemplateId,
-            String main, Interface ifc, boolean withAsync)
-    {
-        final String METHOD_NAME = "genHeaderAndImpl";
-        int returnedValue = -1;
-
-        // first load main language template
-        StringTemplateGroup templatesGroup = StringTemplateGroup.loadGroup(templateGroupId, DefaultTemplateLexer.class, baseTemplateGroup);
-
-        if(templatesGroup != null)
-        {
-            // Templates for main program generation
-            StringTemplate mainTemplate = templatesGroup.getInstanceOf("main");
-            StringTemplate funCall = templatesGroup.getInstanceOf("functionCall");
-            boolean one_invocation = false;  //Check that first operation was added.
-
-            //Template for Header generation
-            StringTemplate header = templatesGroup.getInstanceOf(headerTemplateId);
-            header.setAttribute("interfaceName", ifc.getName());
-
-            //Template for Definition generation
-            StringTemplate definition = templatesGroup.getInstanceOf(definitionTemplateId);
-            definition.setAttribute("interfaceName", ifc.getName());
-
-
-            //Template for function declaration:
-            StringTemplate funDecl = templatesGroup.getInstanceOf(functionHeaderTemplateId);
-
-            //Template for function Definition:
-            StringTemplate funDef = templatesGroup.getInstanceOf(functionTemplateId);
-            
-            StringTemplate funDeclAsync = null;
-            StringTemplate classDeclAsync = null;
-            StringTemplate funDefAsync = null;
-            
-         // Asynchronous templates.
-            if(withAsync)
-            {
-            	funDeclAsync = templatesGroup.getInstanceOf(functionHeaderTemplateId + "Async");
-            	classDeclAsync = templatesGroup.getInstanceOf("classHeaderAsync");
-            	funDefAsync = templatesGroup.getInstanceOf(functionTemplateId + "Async");
-            }
-            
-
-            Operation op = null;
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext(); )
-            {						
-                op = (Operation) iter.next();
-                header.setAttribute("funNames", op.getName());
-                
-                definition.setAttribute("funNames.{name, isOneway}",
-                		op.getName(), (op.isOneway() ? "true" : null));			
-                
-                // Function Declaration
-                funDecl.setAttribute("rettype", op.getReturnType());
-                funDecl.setAttribute("name", op.getName());
-
-                // Function Definition
-                funDef.setAttribute("rettype", op.getReturnType());
-                funDef.setAttribute("name", op.getName());
-                funDef.setAttribute("interfaceName", ifc.getName());   
-                
-                // Function call
-                funCall.setAttribute("rettype", op.getReturnType());
-                funCall.setAttribute("name", op.getName());
-                
-                // Asynchronous templates.
-                if(withAsync)
-                {
-                	// Function Definition.
-                	funDeclAsync.setAttribute("interfaceName", ifc.getName());
-                	funDeclAsync.setAttribute("name", op.getName());
-                	classDeclAsync.setAttribute("interfaceName", ifc.getName());
-                	classDeclAsync.setAttribute("rettype", op.getReturnType());
-                	classDeclAsync.setAttribute("name", op.getName());
-                	funDefAsync.setAttribute("name", op.getName());
-                	funDefAsync.setAttribute("interfaceName", ifc.getName());
-                }
-
-                Param parameter = null;
-                for(ListIterator paramIter = op.getParams().listIterator(); paramIter.hasNext();){
-                    parameter = (Param)paramIter.next();
-
-                    // Set parameter in funDecl.
-                    funDecl.setAttribute("params", parameter);
-                    
-                    // Set parameter in funDef.
-                    funDef.setAttribute("params", parameter);
-                    if(parameter.isInput())
-                    	funDef.setAttribute("inParams", parameter);
-                    if(parameter.isOutput())
-                    	funDef.setAttribute("outParams", parameter);
-                    
-                    // Set parameter in funCall.
-                    funCall.setAttribute("params", parameter);
-                    
-                    // Asynchronous templates.
-                    if(withAsync)
-                    {
-                    	// Set parameter in funDeclAsync.
-                    	if(parameter.isInput())
-                    	{
-                    		funDeclAsync.setAttribute("inParams", parameter);
-                    		funDefAsync.setAttribute("inParams", parameter);
-                    	}
-                    	// Set parameter in classDeclAsync.
-                    	if(parameter.isOutput())
-                    		classDeclAsync.setAttribute("outParams", parameter);
-                    }
-                }
-
-                // In case of oneway function, set the property
-                if(op.isOneway())
-                	funDef.setAttribute("isOneway", "true");
-
-                header.setAttribute("funDecls", funDecl.toString());
-                definition.setAttribute("funImpls", funDef.toString());
-                
-                // Set asynchrnous templates.
-                if(withAsync && !op.isOneway())
-                {
-                	header.setAttribute("funDeclsAsync", funDeclAsync.toString());
-                	header.setAttribute("classDeclsAsync", classDeclAsync.toString());
-                	definition.setAttribute("funImplsAsync", funDefAsync.toString());
-                }
-                if(!one_invocation)
-                {
-                	mainTemplate.setAttribute("invocations", funCall.toString());
-                	one_invocation = true;
-                }
-                funDecl.reset();
-                funDef.reset();
-                funCall.reset();
-                if(withAsync)
-                {
-                	funDeclAsync.reset();
-                	classDeclAsync.reset();
-                	funDefAsync.reset();
-                }
-            }
-
-            if(externalDirLength > 0)
-            {
-                externalDir.append("/");	
-            }
-            //System.out.println(header.toString());
-            externalDir.append(ifc.getName()).append(suffix).append(".h");
-            if(writeFile(externalDir.toString(), header) == 0)
-            {
-                //System.out.println(definition.toString());
-                externalDir.deleteCharAt(externalDir.length() - 1);
-                externalDir.append("cxx");
-                if(writeFile(externalDir.toString(), definition) == 0)
-                {
-                    externalDir.delete(externalDirLength, externalDir.length());
-
-                    // Main
-                    if(main != null)
-                    {
-                        if(externalDirLength > 0)
-                        {
-                            externalDir.append("/");	
-                        }
-                        mainTemplate.setAttribute("interfaceName", ifc.getName());
-                        externalDir.append(main).append(".cxx");
-                        writeFile(externalDir.toString(), mainTemplate);
-                        externalDir.delete(externalDirLength, externalDir.length());						
-                    }
-                    
-                    returnedValue = 0;
-                }
-            }
-        }
-        else
-        {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group" + templateGroupId);
-        }
-
-        return returnedValue;
-    }
-
-
-
-    private static void  setRequestReplyParams(StringTemplate request, StringTemplate reply, Operation op, String attribute,
-    		Interface ifc)
-    {
-        ListIterator paramIter = null;
-        Param parameter = null;
-        for(paramIter = op.getParams().listIterator(); paramIter.hasNext();)
-        {
-            parameter = (Param)paramIter.next();
-            if(parameter.isInput())
-            	request.setAttribute(attribute, parameter);
-            if(parameter.isOutput())
-            	reply.setAttribute(attribute, parameter);
-        }
-    }
-
-    public static int genRPCSupport(Interface ifc, String side)
-    {
-        final String METHOD_NAME = "genRPCSupport";
-        int returnedValue = -1;
-        // first load main language template
-        StringTemplateGroup utilTemplates = StringTemplateGroup.loadGroup("RPCSupport", DefaultTemplateLexer.class, baseTemplateGroup);
-
-        if(utilTemplates != null)
-        {
-            StringTemplate header = utilTemplates.getInstanceOf(side + "Header");
-            StringTemplate definition = utilTemplates.getInstanceOf(side + "Definition");
-
-            if(externalDirLength > 0)
-            {
-                externalDir.append("/");	
-            }
-
-            header.setAttribute("interfaceName", ifc.getName());
-            definition.setAttribute("interfaceName", ifc.getName());
-
-            Operation op = null;
-            for(ListIterator iter = ifc.getOperations().listIterator(); iter.hasNext();)
-            {						
-                op = (Operation) iter.next();
-                header.setAttribute("topicNames.{name, isOneway}", ifc.getName() + "_" + op.getName(), (op.isOneway() ? "true" : null));
-                definition.setAttribute("topicNames.{name, isOneway}", ifc.getName() + "_" + op.getName(), (op.isOneway() ? "true" : null));
-            }
-
-            externalDir.append(ifc.getName()).append(side).append("RPCSupport.h");
-            if(writeFile(externalDir.toString(), header) == 0)
-            {
-                externalDir.deleteCharAt(externalDir.length() - 1);
-                externalDir.append("cxx");
-                returnedValue = writeFile(externalDir.toString(), definition);
-
-                externalDir.delete(externalDirLength, externalDir.length());
-            }
-        }
-        else
-        {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group RPCSupport");
-        }
-
-        return returnedValue;
-    }
+    }*/
     
-    private static int genSolution(Interface ifc)
+    private boolean genSolution()
     {
         final String METHOD_NAME = "genSolution";
-        int returnedValue = 0;
+        boolean returnedValue = true;
 
-        if(exampleOption != null)
+        if(m_exampleOption != null)
         {
-        	if(exampleOption.substring(3, 6).equals("Win"))
-        	{
-        		System.out.println("Genering VS2010 solution");
-        		
-        		if(exampleOption.startsWith("i86"))
-        		{
-        			returnedValue = genVS2010(ifc, null);
-        		}
-        		else if(exampleOption.startsWith("x64"))
-        		{
-        			for(int index = 0; index < configurations.length; index++)
-        			{
-        				configurations[index].setPlatform("x64");
-        			}
-        			
-        			returnedValue = genVS2010(ifc, "64");
-        		}
-        		else
-        			returnedValue = -1;
+            System.out.println("Generating solution for arch " + m_exampleOption  + "...");
+            
+            if(m_exampleOption.substring(3, 6).equals("Win"))
+            {
+                System.out.println("Genering VS2010 solution");
+                
+                if(m_exampleOption.startsWith("i86"))
+                {
+                    returnedValue = genVS2010(null);
+                }
+                else if(m_exampleOption.startsWith("x64"))
+                {
+                    for(int index = 0; index < m_vsconfigurations.length; index++)
+                    {
+                        m_vsconfigurations[index].setPlatform("x64");
+                    }
+                    
+                    returnedValue = genVS2010("64");
+                }
+                else
+                    returnedValue = false;
 
-        	}
-        	else if(exampleOption.substring(3, 8).equals("Linux"))
-        	{        
-        		System.out.println("Genering makefile solution");
+            }
+            /*else if(m_exampleOption.substring(3, 8).equals("Linux"))
+            {        
+                System.out.println("Genering makefile solution");
 
-        		if(exampleOption.startsWith("i86"))
-        		{
-        			returnedValue = genMakefile(ifc, "32");
-        		}
-        		else if(exampleOption.startsWith("x64"))
-        		{
-        			returnedValue = genMakefile(ifc, "64");
-        		}
-        		else
-        			returnedValue = -1;
-        	}
+                if(m_exampleOption.startsWith("i86"))
+                {
+                    returnedValue = genMakefile("32");
+                }
+                else if(m_exampleOption.startsWith("x64"))
+                {
+                    returnedValue = genMakefile("64");
+                }
+                else
+                    returnedValue = false;
+            }*/
         }
 
         return returnedValue;
     }
     
-    private static int genVS2010(Interface ifc, String arch)
+    private boolean genVS2010(String arch)
+    {
+        final String METHOD_NAME = "genVS2010";
+        boolean returnedValue = false;
+        String idlFilename = null, guid = null;
+        
+        // first load main language template
+        // TODO Change depending RTI or OpenDDS.
+        StringTemplateGroup middlgr = StringTemplateGroup.loadGroup("rti", DefaultTemplateLexer.class, null);
+        StringTemplateGroup vsTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, middlgr);
+
+        if(vsTemplates != null)
+        {
+            StringTemplate solution = vsTemplates.getInstanceOf("solution");
+            StringTemplate projectClient = vsTemplates.getInstanceOf("projectClient");;
+            StringTemplate projectFilesClient = vsTemplates.getInstanceOf("projectFilesClient");
+            StringTemplate projectServer = vsTemplates.getInstanceOf("projectServer");;
+            StringTemplate projectFilesServer = vsTemplates.getInstanceOf("projectFilesServer");
+            
+            returnedValue = true;
+            for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
+            {
+                idlFilename = Utils.getIDLFileNameOnly(m_idlFiles.get(count));
+                guid = GUIDGenerator.genGUID(idlFilename);
+                
+                solution.setAttribute("projects.{name, guid, dependsOn, example}", idlFilename + "Client", guid, null, m_exampleOption);
+                solution.setAttribute("projects.{name, guid, dependsOn, example}", idlFilename + "Server", guid, null, m_exampleOption);
+                
+                projectClient.setAttribute("guid", guid);
+                projectClient.setAttribute("name", idlFilename);
+                projectClient.setAttribute("example", m_exampleOption);
+                projectClient.setAttribute("arch", arch);
+                projectFilesClient.setAttribute("name", idlFilename);
+                
+                projectServer.setAttribute("guid", guid);
+                projectServer.setAttribute("name", idlFilename);
+                projectServer.setAttribute("example", m_exampleOption);
+                projectServer.setAttribute("arch", arch);
+                projectFilesServer.setAttribute("name", idlFilename);
+                
+                // project configurations   
+                for(int index = 0; index < m_vsconfigurations.length; index++){
+                    projectClient.setAttribute("configurations", m_vsconfigurations[index]);
+                    projectServer.setAttribute("configurations", m_vsconfigurations[index]);
+                }
+                
+                if(returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Client-" + m_exampleOption + ".vcxproj", projectClient, m_replace))
+                {
+                    if(returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Client-" + m_exampleOption + ".vcxproj.filters", projectFilesClient, m_replace))
+                    {
+                        if(returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Server-" + m_exampleOption + ".vcxproj", projectServer, m_replace))
+                        {
+                            returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Server-" + m_exampleOption + ".vcxproj.filters", projectFilesServer, m_replace);
+                        }
+                    }
+                }
+                
+                projectClient.reset();
+                projectFilesClient.reset();
+                projectServer.reset();
+                projectFilesServer.reset();
+            }
+            
+            // TODO Nombre del la solucion
+            if(returnedValue)
+            {
+                // project configurations   
+                for(int index = 0; index < m_vsconfigurations.length; index++){
+                    solution.setAttribute("configurations", m_vsconfigurations[index]);
+                }
+                
+                returnedValue = Utils.writeFile(m_outputDir + idlFilename +"-" + m_exampleOption + ".sln", solution, m_replace);
+            }
+        }
+        else
+        {
+            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group VS2010");
+        }
+        
+        return returnedValue;
+    }
+    /*
+    private int genVS2010(Interface ifc, String arch)
     {
     	final String METHOD_NAME = "genVS2010";
     	int returnedValue = -1;
@@ -914,22 +972,22 @@ public class RPCDDSGEN
     		stringBuf = new StringBuffer(ifc.getName());
     		stringBuf.append("Server");
     		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
-    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(), serverGuid, null, exampleOption);
+    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(), serverGuid, null, m_exampleOption);
     		projectServer.setAttribute("interfaceName", ifc.getName());
     		projectServer.setAttribute("guid", serverGuid);
     		projectServer.setAttribute("name",stringBuf.toString());
-    		projectServer.setAttribute("example", exampleOption);
+    		projectServer.setAttribute("example", m_exampleOption);
     		projectServer.setAttribute("arch", arch);
     		projectFilesServer.setAttribute("interfaceName", ifc.getName());
 
     		stringBuf.delete(ifc.getName().length(), stringBuf.length());
     		stringBuf.append("Client");
     		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
-    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(),clientGuid, serverGuid, exampleOption);
+    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(),clientGuid, serverGuid, m_exampleOption);
     		projectClient.setAttribute("interfaceName", ifc.getName());
     		projectClient.setAttribute("guid", clientGuid);
     		projectClient.setAttribute("name",stringBuf.toString());
-    		projectClient.setAttribute("example", exampleOption);
+    		projectClient.setAttribute("example", m_exampleOption);
     		projectClient.setAttribute("arch", arch);
     		projectClient.setAttribute("client", "client");
     		projectFilesClient.setAttribute("interfaceName", ifc.getName());
@@ -946,7 +1004,7 @@ public class RPCDDSGEN
     		{
     			externalDir.append("/");	
     		}
-    		externalDir.append(ifc.getName()).append("-" + exampleOption + ".sln");
+    		externalDir.append(ifc.getName()).append("-" + m_exampleOption + ".sln");
     		if(writeFile(externalDir.toString(), solution) == 0)
     		{
     			externalDir.delete(externalDirLength, externalDir.length());
@@ -956,7 +1014,7 @@ public class RPCDDSGEN
     			{
     				externalDir.append("/");	
     			}
-    			externalDir.append(ifc.getName()).append("Client-" + exampleOption + ".vcxproj");
+    			externalDir.append(ifc.getName()).append("Client-" + m_exampleOption + ".vcxproj");
     			if(writeFile(externalDir.toString(), projectClient) == 0)
     			{
     				externalDir.delete(externalDirLength, externalDir.length());
@@ -965,7 +1023,7 @@ public class RPCDDSGEN
     				{
     					externalDir.append("/");	
     				}
-    				externalDir.append(ifc.getName()).append("Server-" + exampleOption + ".vcxproj");
+    				externalDir.append(ifc.getName()).append("Server-" + m_exampleOption + ".vcxproj");
     				if(writeFile(externalDir.toString(), projectServer) == 0)
     				{
     					externalDir.delete(externalDirLength, externalDir.length());
@@ -974,7 +1032,7 @@ public class RPCDDSGEN
     					{
     						externalDir.append("/");
     					}
-    					externalDir.append(ifc.getName()).append("Client-" + exampleOption + ".vcxproj.filters");
+    					externalDir.append(ifc.getName()).append("Client-" + m_exampleOption + ".vcxproj.filters");
     	    			if(writeFile(externalDir.toString(), projectFilesClient) == 0)
     	    			{
     	    				externalDir.delete(externalDirLength, externalDir.length());
@@ -983,7 +1041,7 @@ public class RPCDDSGEN
         					{
         						externalDir.append("/");
         					}
-        					externalDir.append(ifc.getName()).append("Server-" + exampleOption + ".vcxproj.filters");
+        					externalDir.append(ifc.getName()).append("Server-" + m_exampleOption + ".vcxproj.filters");
     	    				returnedValue = writeFile(externalDir.toString(), projectFilesServer);
     	    				externalDir.delete(externalDirLength, externalDir.length());
     	    			}
@@ -1011,10 +1069,10 @@ public class RPCDDSGEN
     		StringTemplate makecxx = idlTemplates.getInstanceOf("makecxx");
     		
     		makecxx.setAttribute("interface", ifc.getName());
-    		makecxx.setAttribute("example", exampleOption);
+    		makecxx.setAttribute("example", m_exampleOption);
     		makecxx.setAttribute("arch", arch);
     		
-    		String extdir = externalDir.toString() + (externalDirLength > 0 ? "/" : "") + "makefile_" + exampleOption;
+    		String extdir = externalDir.toString() + (externalDirLength > 0 ? "/" : "") + "makefile_" + m_exampleOption;
     		System.out.println("Genering makefile " + extdir);
 			returnedValue = writeFile(extdir.toString(), makecxx);
     	}
@@ -1024,256 +1082,56 @@ public class RPCDDSGEN
     	}
     	
     	return returnedValue;
-    }
-
-    /*public static Module parse(String file) {
-        IDLParser parser = null;
-        Module root = null;
-        
-        System.out.println("RPCDDSGEN Version " + version + ":  Reading from file " + file + " . . .");
-        try
-        {
-            parser = new IDLParser(new java.io.FileInputStream(file));
-        } catch (java.io.FileNotFoundException e)
-        {
-            System.out.println("IDL Parser Version 0.1:  File " + file + " not found.");
-        }
-
-        try 
-        {
-            ASTStart n = parser.Start();
-            CplusplusVisitor visitor = new CplusplusVisitor(middleware);
-            root = (Module)n.jjtAccept(visitor, null);
-            System.out.println(file + " Parsing Complete.");
-        }
-        catch (Exception e) {
-            System.out.println("Parser Error: " + e.getMessage());
-        }
-        catch (Error e)
-        {
-            System.out.println("Parser Error: " + e.getMessage());
-        }
-
-        return root;		
     }*/
-
-    public static boolean getOptions(String args[])
-    {
-        int count = 0;
-        String arg;
-
-        while(count < args.length)
-        {
-            arg = args[count++];
-
-            if(!arg.startsWith("-"))
-            {
-                m_idlFile = arg;
-            }
-            else if(arg.equals("-os"))
-            {
-            	if(count < args.length)
-            	{
-            		osOption = args[count++];
-
-            		if(!osOption.equals("Win32") &&
-            				!osOption.equals("Linux"))
-            		{
-            			System.out.println("ERROR: Unknown OS " + osOption);
-            			return false;
-            		}
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.equals("-example"))
-            {
-            	if(count < args.length)
-            	{
-            		exampleOption = args[count++];
-
-            		if(!exampleOption.equals("i86Win32VS2010") &&
-            				!exampleOption.equals("x64Win64VS2010") &&
-            				!exampleOption.equals("i86Linux2.6gcc4.4.5") &&
-            				!exampleOption.equals("x64Linux2.6gcc4.4.5"))
-            		{
-            			System.out.println("ERROR: Unknown example arch " + exampleOption);
-            			return false;
-            		}
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.equals("-language"))
-            {
-            	if(count < args.length)
-            	{
-            		languageOption = args[count++];
-
-            		if(!languageOption.equals("C++") && !languageOption.equals("c++"))
-            		{
-            			System.out.println("ERROR: Unknown language " +  languageOption);
-            			return false;
-            		}
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.equals("-ppPath"))
-            {
-            	if(count < args.length)
-            		ppPath = args[count++];
-            	else
-            		return false;
-            }
-            else if(arg.equalsIgnoreCase("-ppDisable"))
-            {
-                ppDisable = true;
-            }
-            else if(arg.equalsIgnoreCase("-replace"))
-            {
-                m_replace = true;
-            }
-            else if(arg.equals("-d"))
-            {
-            	if(count < args.length)
-            	{
-            	    // TODO Quitar externalDir.
-            		externalDir = new StringBuffer(args[count++]);
-            		externalDirLength = externalDir.length();
-            		m_outputDir = Utils.addFileSeparator(args[count]);
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.equals("-middleware"))
-            {
-            	if(count < args.length)
-            	{
-            		middleware = args[count++];
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.equals("-t"))
-            {
-            	if(count < args.length)
-            	{
-            		tempDir = args[count++];
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.equals("-version"))
-            {
-            	System.out.println("RPCDDSGEN Version " + version);
-            	System.exit(0);
-            }
-            else if(arg.equals("-help"))
-            {
-            	return false;
-            }
-            // Get include directories
-            else if(arg.equals("-I"))
-            {
-            	if(count < args.length)
-            	{
-            		includePaths.add(new String(arg + args[count++]));
-            	}
-            	else
-            		return false;
-            }
-            else if(arg.startsWith("-I"))
-            {
-            	includePaths.add(arg);
-            }
-            else
-            {
-                System.out.println("ERROR: Unknown argument " + arg);
-                return false;
-            }
-        }
-
-        if(m_idlFile == null)
-        {
-            System.out.println("ERROR: The program expects an IDL file");
-            return false;
-        }
-		
-		// Get only de IDL file. Erase the directory.
-		m_onlyIdlFile = Utils.getIDLFileOnly(m_idlFile);
-		// Get only de IDL file directory.
-		m_idlFileLocation = Utils.getIDLFileDirectoryOnly(m_idlFile);
-		
-		// Calculate the external directory
-		if(m_idlFileLocation != null)
-		    m_outputDir = m_idlFileLocation;
-
-        return true;
-    }
-
 
     public static void printHelp()
     {
-    	String rti_help =  "   -ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)\n" +
-                      "   -ppDisable               : Do not use C/C++ preprocessor.\n";
-    	String opendds_help = "   -t <temp dir>: Use the specific directory as temporary directory.\n";
-    	
-        System.out.print("rpcddsgen help:\n\nUsage: rpcddsgen [options] <IDL file>\nOptions:\n" +
-        		"   -help: Show help\n" +
-        		"   -version: shows the current version of RPCDDS.\n" +
-                "   -example <platform>: Generate solution for specific platform (example: x64Win64VS2010)\n" +
-        		"                        Platforms supported:\n" +
-                "                         * i86Win32VS2010\n" +
-                "                         * x64Win64VS2010\n" +
-                "                         * i86Linux2.6gcc4.4.5\n" +
-                "                         * x64Linux2.6gcc4.4.5\n" +
+        System.out.println("rpcddsgen usage:");
+        System.out.println("\trpcddsgen [options] <IDL file> [<IDL file> ...]");
+        System.out.println("\twhere the options are:");
+        System.out.println("\t\t-help: Show help");
+        System.out.println("\t\t-version: shows the current version of RPCDDS.");
+        System.out.println("\t\t--server: disable generation of source code for server.");
+        System.out.println("\t\t--client: disable generation of source code for client.");
+        System.out.println("\t\t-example <platform>: Generate solution for specific platform (example: x64Win64VS2010)");
+        System.out.println("\t\t\tPlatforms supported:");
+        for(int count = 0; count < m_platforms.size(); ++count)
+            System.out.println("\t\t\t * " + m_platforms.get(count));
+        System.out.println("");
         //        "   -language <C++>: Programming language (default: C++).\n" +
-                "   -replace: replace generated files.\n" +
-                "   -d <path>: Output directory for generated files.\n" +
-                (middleware.equals("rti") ? rti_help : opendds_help));
-    }
-
-    public static int writeFile(String file, StringTemplate template)
-    {
-        int returnedValue = -1;
-        try
+        System.out.println("\t\t-replace: replace generated files.");
+        System.out.println("\t\t-d <path>: Output directory for generated files.");
+        
+        if(m_middleware.equals("rti"))
         {
-            File handle = new File(file);
-            if(!handle.exists() || m_replace || file.endsWith("idl"))
-            {
-                FileWriter fw = new FileWriter(file);
-                String data = template.toString();
-                fw.write(data, 0,data.length());
-                fw.close();
-            }
-            else
-            {
-                System.out.println(file + " exists. Skipping.");
-            }
-
-            returnedValue = 0;
+            System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
+            System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
         }
-        catch (IOException e)
+        else
         {
-            e.printStackTrace();
-        }	
-
-        return returnedValue;
+            System.out.println("\t\t-t <temp dir>: Use the specific directory as temporary directory.");
+        }
     }
-}
-
-class MyErrorListener implements StringTemplateErrorListener {
-
-    public void error(String arg0, Throwable arg1) {
-        System.out.println(arg0);
-        arg1.printStackTrace();
+    
+    public static void main(String[] args) throws Exception
+    {
+        if(loadPlatforms())
+        {
+            try
+            {
+                RPCDDSGEN main = new RPCDDSGEN(args);
+                main.execute();
+                System.exit(0);
+            }
+            catch(BadArgumentException ex)
+            {
+                System.out.println("ERROR<BadArgumentException>: " + ex.getMessage());
+                printHelp();
+            }
+        }
+        
+        System.exit(-1);
     }
-
-    public void warning(String arg0) {
-        System.out.println(arg0);	
-    }	
-
 }
 
 class ProcessOutput extends Thread

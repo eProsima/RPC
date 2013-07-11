@@ -14,7 +14,7 @@
  * =====================================================================   *
  */
 
-package com.eprosima.rpcdds.idl;
+package com.eprosima.rpcdds.util;
 
 public class VSConfiguration {
 	

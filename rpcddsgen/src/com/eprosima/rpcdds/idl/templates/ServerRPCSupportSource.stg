@@ -1,0 +1,64 @@
+group ServerRPCSupportSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "ServerRPCSupport.cxx"], description=["This source file contains the definition of the server's RPC endpoints for all interfaces."])$
+
+#include "server/Server.h"
+#include "$ctx.filename$ServerRPCSupport.h"
+
+$definitions; separator="\n"$
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+operation(ctx, operation, param_list) ::= <<
+/* Defines */
+#define TName                   $operation.parent.name$_$operation.name$ServerRPC
+#define TDataReplyTypeSupport   $operation.parent.name$_$operation.name$ReplyTypeSupport
+#define TDataRequestTypeSupport $operation.parent.name$_$operation.name$RequestTypeSupport
+#define TData                   $operation.parent.name$_$operation.name$
+#define TDataReader             $operation.parent.name$_$operation.name$RequestDataReader
+#define TDataWriter             $operation.parent.name$_$operation.name$ReplyDataWriter
+$if(operation.oneway)$#define IS_ONEWAY$endif$
+
+
+#include "utils/GenericServerRPC.gen"
+
+
+#undef TName
+#undef TDataReplyTypeSupport
+#undef TDataRequestTypeSupport
+#undef TData
+#undef TDataReader
+#undef TDataWriter
+$if(operation.oneway)$#undef IS_ONEWAY$endif$
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

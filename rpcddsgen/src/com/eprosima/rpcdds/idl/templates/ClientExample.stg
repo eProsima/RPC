@@ -1,7 +1,7 @@
 group ClientExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file="Client.cxx", description=["This source file shows a simple example of how to create a proxy for interface."])$
+$fileHeader(file="Client.cxx", description=["This source file shows a simple example of how to create a proxy for an interface."])$
 
 #include "$ctx.filename$Proxy.h"
 $ReqRepIncludes(filename=ctx.filename)$

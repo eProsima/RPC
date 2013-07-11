@@ -13,7 +13,7 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename$_PROXY_H_
+#endif // _$ctx.filename;format="toUpper"$_PROXY_H_
 >>
 
 module(module, definition_list) ::= <<

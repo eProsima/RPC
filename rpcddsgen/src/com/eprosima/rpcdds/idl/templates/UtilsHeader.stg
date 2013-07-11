@@ -3,10 +3,17 @@ group UtilsHeader;
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RequestReplyUtils.h"], description=["This header file contains the declaration of helpful functions for the DDS messages for interface ", ctx.filename, "."])$
 
-#include "$ctx.filename$RequestReplyUtils.h"
-$ReqRepIncludes(filename=ctx.filename)$
+#ifndef _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+#define _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+
+#include "utils/Messages.h"
+$ReqRepSIncludes(filename=ctx.filename)$
+
+$ddsIncludes()$
 
 $definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 >>
 
 module(module, definition_list) ::= <<
@@ -50,16 +57,17 @@ class $operation.parent.name$_$operation.name$RequestUtils
          *
          * \param instance Pointer to the structure $operation.parent.name$_$operation.name$Request that will be filled. Cannot be NULL.
          */
-        static void setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$);
+        static void setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
         
         /**
          * \brief This function extracts the parameters from the members of the structure $operation.parent.name$_$operation.name$Request.
          *
          * \param data Pointer to the structure $operation.parent.name$_$operation.name$Request that contains the parameters' data. Cannot be NULL.
          */
-        static void extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$);
+        static void extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$);
 };
 
+$if(!operation.oneway)$
 /**
  * \brief This class contains helpful operations for the generated topic $operation.parent.name$_$operation.name$Reply.
  */
@@ -80,7 +88,7 @@ class $operation.parent.name$_$operation.name$ReplyUtils
          *
          * \param instance Pointer to the structure $operation.parent.name$_$operation.name$Reply that will be filled. Cannot be NULL.
          */
-        static void setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$);
+        static void setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
         
         /**
          * \brief This function extracts the parameters from the members of the structure $operation.parent.name$_$operation.name$Reply.
@@ -88,10 +96,10 @@ class $operation.parent.name$_$operation.name$ReplyUtils
          * \param data Pointer to the structure $operation.parent.name$_$operation.name$Reply that contains the parameters' data. Cannot be NULL.
          * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.parameters, operation.rettypeparam], separatorInicial=", ")$);
+        static void extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
 };
 
-
+$endif$
 >>
 
 param_list(parameters) ::= <<>>

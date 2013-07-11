@@ -57,13 +57,16 @@ void* $operation.parent.name$_$operation.name$Task::getReplyInstance()
 void $operation.parent.name$_$operation.name$Task::execute()
 {  
     $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
+    $if(operation.rettypeparam)$
+    $varDecl(variable=operation.rettypeparam)$
+    $endif$
     eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
     
-    $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(m_reply, retcode$extractParams(params=operation.outputparam, separatorInicial=", ")$);
+    $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(m_reply, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
         
     if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
-        getObject().$operation.name$($extractParams(params=operation.outputparam)$);
+        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
     }
     else
     {

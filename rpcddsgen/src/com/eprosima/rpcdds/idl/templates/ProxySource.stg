@@ -124,7 +124,7 @@ enum_type(ctx, enum) ::= <<>>
  */
 functionAsyncImpl(operation) ::= <<
 $if(!operation.oneway)$
-void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
+void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
 {
     eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     $operation.parent.name$_$operation.name$Request instance;

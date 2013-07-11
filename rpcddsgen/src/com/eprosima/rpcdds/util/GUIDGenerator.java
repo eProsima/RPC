@@ -13,7 +13,7 @@
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
-package com.eprosima.rpcdds.idl;
+package com.eprosima.rpcdds.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

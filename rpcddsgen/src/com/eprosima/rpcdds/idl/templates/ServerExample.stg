@@ -1,22 +1,27 @@
-group ClientExample;
+group ServiceExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file="Client.cxx", description=["This source file shows a simple example of how to create a proxy for interface."])$
+$fileHeader(file="Server.cxx", description=["This source file shows a simple example of how to create a server for an interface."])$
 
-#include "$ctx.filename$Proxy.h"
-$ReqRepIncludes(filename=ctx.filename)$
+#include "$ctx.filename$Server.h"
+#include "strategies/ThreadPoolStrategy.h"
 #include "exceptions/Exceptions.h"
+#include "utils/Utilities.h"
 
 #include <iostream>
 
 int main(int argc, char **argv)
 {
-    $ctx.firstInterface.scopedname$Proxy *proxy = NULL;
+    unsigned int threadPoolSize = 5;
+    eProsima::RPCDDS::ThreadPoolStrategy *pool = NULL;
+    $ctx.firstInterface.scopedname$Server *server = NULL;
     
-    // Creation of the proxy for interface "$ctx.firstInterface.scopedname$".
+    // Create and initialize the server for interface "$ctx.firstInterface.scopedname$".
     try
     {
-        proxy = new $ctx.firstInterface.scopedname$Proxy("$ctx.firstInterface.name$Service");
+        pool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
+        server = new $ctx.firstInterface.scopedname$Server("$ctx.firstInterface.name$Service", pool);
+        server->serve();
     }
     catch(eProsima::RPCDDS::InitializeException &ex)
     {
@@ -24,39 +29,16 @@ int main(int argc, char **argv)
         return -1;
     }
     
-    $if(ctx.firstInterface.firstOperation.parameters)$
-    // Create and initialize parameters.
-    $ctx.firstInterface.firstOperation.parameters : {param | $varDecl(variable=param)$};separator="\n"$
-    $ctx.firstInterface.firstOperation.parameters : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
-    $endif$
-    $if(ctx.firstInterface.firstOperation.rettypeparam)$
-    // Create and initialize return value.
-    $varDecl(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $if(!ctx.firstInterface.firstOperation.rettypeparam.typecode.primitiveInArguments)$
-    $varComplexInitialize(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $endif$
-    $endif$
-
-    // Call to remote procedure "$ctx.firstInterface.firstOperation.name$".
-    try
+    while(1)
     {
-        $if(ctx.firstInterface.firstOperation.rettypeparam)$        $ctx.firstInterface.firstOperation.rettypeparam.name$ = $else$        $endif$proxy->$ctx.firstInterface.firstOperation.name$($extractParams(params=ctx.firstInterface.firstOperation.parameters)$);
+        eProsima::RPCDDS::sleep(10000);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
-    {
-        std::cout << ex.what() << std::endl;
-    }
-    $if(ctx.firstInterface.firstOperation.parameters)$
     
-    $ctx.firstInterface.firstOperation.parameters : {param | $varDel(variable=param)$}; separator="\n"$
-    $endif$
-    $if(ctx.firstInterface.firstOperation.rettypeparam)$
-
-    $varDel(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $endif$
+    // Stop and delete the server.
+    server->stop();
+    delete server;
+    delete pool;
     
-    delete(proxy);
-   
     return 0;
 }
 
