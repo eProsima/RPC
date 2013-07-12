@@ -150,7 +150,7 @@ public class RPCDDSGEN
             {
                 if(count < args.length)
                 {
-                    m_outputDir = Utils.addFileSeparator(args[count]);
+                    m_outputDir = Utils.addFileSeparator(args[count++]);
                 }
                 else
                     throw new BadArgumentException("No URL after -d argument");
@@ -285,7 +285,7 @@ public class RPCDDSGEN
     private boolean process(String idlFilename)
     {
         boolean returnedValue = false;
-        System.out.println("Processing the file " + idlFilename + "...");
+        System.out.println("Processing the file " + idlFilename + " ...");
         
         ArrayList idlLineCommand = new ArrayList(), idlLineCommandForWorkDirSet = new ArrayList();
         
@@ -664,7 +664,7 @@ public class RPCDDSGEN
         ArrayList finalCommandLine = null;
         String[] finalCommandArray = null;
         			
-        System.out.println(file);
+        System.out.println("External tool process" + file + " ...");
         
         // Execute tao_idl
         if(m_middleware.equals("opendds") && m_extra_command != null)
@@ -705,7 +705,7 @@ public class RPCDDSGEN
         	finalCommandLine.addAll(idlLineCommandForWorkDirSet);
         	// TODO Revisar funcionamiento con OpenDDS
         	//finalCommandLine.add(file.substring(externalDir.length() + 1));
-        	finalCommandLine.add(Utils.getIDLFileNameOnly(file));
+        	finalCommandLine.add(Utils.getIDLFileOnly(file));
         }
         finalCommandArray = new String[finalCommandLine.size()];
         finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);

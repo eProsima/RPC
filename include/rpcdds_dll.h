@@ -47,7 +47,7 @@
 #if !defined(RPCDDS_SOURCE) && !defined(EPROSIMA_ALL_NO_LIB) \
     && !defined(RPCDDS_NO_LIB)
 
-#include "cpp/rpcdds_version.h"
+#include "rpcdds_version.h"
 
 // Set properties.
 #if defined(RTI)
