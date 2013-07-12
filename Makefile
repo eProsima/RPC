@@ -5,6 +5,7 @@ CPP=g++
 LN=g++
 AR=ar
 CP=cp
+LNK=ln
 
 ifdef NDDSHOME
 -include $(EPROSIMADIR)/building/makefiles/dds.mk

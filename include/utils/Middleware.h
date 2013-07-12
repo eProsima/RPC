@@ -14,6 +14,7 @@
 #if defined(_WIN32)
 #define RTI_WIN32
 #else
+#define RTI_UNIX
 #define RTI_LINUX
 #endif
 
