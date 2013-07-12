@@ -88,7 +88,7 @@ keyIDLdefine() ::= <<
 levelIDLdefine() ::= <<//@top-level true>>
 
 archMakeDefines() ::= <<
- -DRTI_UNIX -DRTI_LINUX
+ -DRTI
 >>
 
 inclMake() ::= <<
@@ -289,7 +289,7 @@ sourceFilesIVS(interface, client) ::= <<
 >>
  
 preprocessorDefs(conf) ::= <<
-WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+WIN32;RTI;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
 >>
 
 dependencies(conf) ::= <<
