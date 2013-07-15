@@ -1,5 +1,7 @@
 #!/bin/sh
 
+dir="`dirname \"$0\"`"
+
 if [ x$JAVA_HOME = x ]; then
 	filename=$0
 	arch="trash"
@@ -62,4 +64,4 @@ else
 	JREHOME="${JAVA_HOME}"
 fi
 
-exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -DRPCDDSHOME="$RPCDDSHOME" -Djava.ext.dirs="$RPCDDSHOME/classes" com.eprosima.rpcdds.RPCDDSGEN -os Linux "-I$RPCDDSHOME/idl" "$@"
+exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -DRPCDDSHOME="$dir/.." -Djava.ext.dirs="$dir/../classes" com.eprosima.rpcdds.RPCDDSGEN -os Linux "-I$dir/../idl" "$@"

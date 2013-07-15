@@ -531,7 +531,7 @@ type_dcl returns [Pair<TypeDeclaration, TemplateGroup> returnPair = null]
 }
 	:
 	(
-	   "typedef"^ type_declarator
+	   "typedef"^ ttg=type_declarator
 	|   (struct_type) => ttg=struct_type
 	|   (union_type) => ttg=union_type
 	|   ttg=enum_type
@@ -543,8 +543,39 @@ type_dcl returns [Pair<TypeDeclaration, TemplateGroup> returnPair = null]
 	}
 	;
 
-type_declarator
-	:   type_spec declarators
+type_declarator returns [Pair<TypeCode, TemplateGroup> returnPair = null]
+{
+    Vector<Pair<String, ContainerTypeCode>> declvector = null;
+    TypeCode typecode = null;
+    AliasTypeCode typedefTypecode = null;
+    TemplateGroup typedefTemplates = tmanager.createTemplateGroup("type_declarator");
+}
+	:  typecode=type_spec declvector=declarators
+	{
+       for(int count = 0; count < declvector.size(); ++count)
+       {
+           typedefTypecode = new AliasTypeCode(ctx.getScope(), declvector.get(count).first());
+           
+           if(declvector.get(count).second() != null)
+           {
+               // Array declaration
+               declvector.get(count).second().setContentTypeCode(typecode);
+               typedefTypecode.setContentTypeCode(declvector.get(count).second());
+           }
+           else
+           {
+               // Simple declaration
+               typedefTypecode.setContentTypeCode(typecode);
+           }
+           
+           typedefTemplates.setAttribute("ctx", ctx);
+           typedefTemplates.setAttribute("typedefs", typedefTypecode);
+           // Add alias typecode to the map with all typecodes.
+           ctx.addTypeCode(typedefTypecode.getScopedname(), typedefTypecode);
+       }
+       
+       returnPair = new Pair<TypeCode, TemplateGroup>(typecode, typedefTemplates);
+	}
 	;
 
 type_spec returns [TypeCode typecode = null]
@@ -738,7 +769,7 @@ member returns [Vector<Pair<String, TypeCode>> newVector = new Vector<Pair<Strin
 	           {
 	               // Array declaration
 	               declvector.get(count).second().setContentTypeCode(typecode);
-	               newVector.add(new Pair<String, TypeCode>(declvector.get(count).first(), declvector.get(count).second()));
+	               
 	           }
 	           else
 	           {

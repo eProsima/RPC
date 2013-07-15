@@ -67,7 +67,7 @@ public class Context
         int lastIndex = -1;
         TypeCode returnedValue = m_types.get(name);
 
-        // Probar si no tiene scope, con el scope acutal.
+        // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
             returnedValue = m_types.get(m_scope + name);

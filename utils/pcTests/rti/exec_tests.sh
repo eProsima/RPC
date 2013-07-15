@@ -17,25 +17,20 @@ function execTest
     # Copy static test files into output directory
     cp $1/* output/
     if [ $errorstatus != 0 ]; then return; fi
-    return;
-    # Compile client application
-    make -C output -f makefile_$1
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    # Compile server application
-    make -C output -f makefile_$1 server
+    # Compile client and server example application
+    make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Execute the server in background
-    output/objs/$1/$2Server &
+    output/objs/$NDDSTARGET/$1Server &
     # Wait 5 seconds
     sleep 5
     # Execute the client
-    output/objs/$1/$2Client
+    output/objs/$NDDSTARGET/$1Client
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Kill server
-    killall -9 $2Server
+    killall -9 $1Server
 }
 
 # Set environment for RTPDDS
@@ -43,7 +38,7 @@ function execTest
 
 # Create symbolic link to EPROSIMADIR in the rpcdds folder.
 if [ ! -e "../../../include/eProsima_cpp" ]; then
-    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/eProsima_cpp
+	ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/eProsima_cpp
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 fi
@@ -57,13 +52,13 @@ fi
 for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -type d -printf "%f\n"); do
     if [ -e "$dir/exec_test.sh" ] ; then
         #./exec_test.sh
-        echo NADA
+		echo NADA
     else
-        . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-        . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+		. $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
+		. $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
         execTest $dir
-        . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
-        . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+		. $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+		. $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
     fi
 
     # Detect error in call.
@@ -73,11 +68,11 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -type d -pr
 done
 
 # Remove output directory
-rm -r output
+#rm -r output
 
 # Remove symbolic link
 if [ -e ../../../include/eProsima_cpp ]; then
-    rm ../../../include/eProsima_cpp
+	rm ../../../include/eProsima_cpp
 fi
 
 # Restore environment for RPCDDS

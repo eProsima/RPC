@@ -9,10 +9,10 @@
 #ifndef _SERVER_SERVERPC_H_
 #define _SERVER_SERVERRPC_H_
 
+#include "utils/Middleware.h"
 #include "rpcdds_dll.h"
 #include "utils/Typedefs.h"
 #include "utils/Messages.h"
-#include "utils/Middleware.h"
 #include <string>
 
 namespace eProsima

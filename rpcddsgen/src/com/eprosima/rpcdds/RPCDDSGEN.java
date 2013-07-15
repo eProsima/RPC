@@ -273,7 +273,7 @@ public class RPCDDSGEN
         }
         
         // Gen solution.
-        if(m_exampleOption != null)
+        if(returnedValue && m_exampleOption != null)
         {
             if((returnedValue = genSolution()) == false)
                 System.out.println("ERROR: While the solution was being generated");
@@ -531,7 +531,12 @@ public class RPCDDSGEN
         if(m_middleware.equals("rti"))
         {
             // Directory $NDDSHOME/scripts/rtiddsgen.bat
-            m_command = dds_root + File.separator + "scripts" + File.separator + "rtiddsgen.bat";
+            m_command = dds_root + File.separator + "scripts" + File.separator;
+            
+            if(m_osOption.equals("Win32"))
+            	m_command += "rtiddsgen.bat";
+            else if(m_osOption.equals("Linux"))
+            	m_command += "rtiddsgen";
             
             // Add that creates file in the current directory.
             
@@ -614,7 +619,6 @@ public class RPCDDSGEN
         return true;
     }
     
-    // TODO Lo genérico sacarlo a una function que se ejecute solo una vez.
     public boolean ddsGenInit(String idlFilename, ArrayList idlLineCommand, ArrayList idlLineCommandForWorkDirSet)
     {    
         // Fill the arrays with global command line.
@@ -661,7 +665,7 @@ public class RPCDDSGEN
         ArrayList finalCommandLine = null;
         String[] finalCommandArray = null;
         			
-        System.out.println("External tool process" + file + " ...");
+        System.out.println("External tool process " + file + " ...");
         
         // Execute tao_idl
         if(m_middleware.equals("opendds") && m_extra_command != null)
@@ -846,7 +850,7 @@ public class RPCDDSGEN
                     returnedValue = false;
 
             }
-            /*else if(m_exampleOption.substring(3, 8).equals("Linux"))
+            else if(m_exampleOption.substring(3, 8).equals("Linux"))
             {        
                 System.out.println("Genering makefile solution");
 
@@ -860,7 +864,7 @@ public class RPCDDSGEN
                 }
                 else
                     returnedValue = false;
-            }*/
+            }
         }
 
         return returnedValue;
@@ -947,114 +951,39 @@ public class RPCDDSGEN
         
         return returnedValue;
     }
-    /*
-    private int genVS2010(Interface ifc, String arch)
+    
+    private boolean genMakefile(String arch)
     {
-    	final String METHOD_NAME = "genVS2010";
-    	int returnedValue = -1;
-        StringBuffer idlStringBuf = null;
-        StringBuffer stringBuf = null;
-        
-    	// first load main language template
-    	StringTemplateGroup idlTemplates = StringTemplateGroup.loadGroup("VS2010", DefaultTemplateLexer.class, spTemplateGroup);
-
-    	if(idlTemplates != null)
+    	boolean returnedValue = false;
+    	String idlFilename = null;
+    	StringTemplate makecxx = null;
+    	
+    	// TODO Change depending RTI or OpenDDS.
+        StringTemplateGroup middlgr = StringTemplateGroup.loadGroup("rti", DefaultTemplateLexer.class, null);
+    	StringTemplateGroup makeTemplates = StringTemplateGroup.loadGroup("Makefile", DefaultTemplateLexer.class, middlgr);
+    	
+    	if(makeTemplates != null)
     	{
-    		StringTemplate solution = idlTemplates.getInstanceOf("solution");
-    		StringTemplate projectClient = idlTemplates.getInstanceOf("project");
-    		StringTemplate projectServer = idlTemplates.getInstanceOf("project");
-    		StringTemplate projectFilesClient = idlTemplates.getInstanceOf("projectFiles");
-    		StringTemplate projectFilesServer = idlTemplates.getInstanceOf("projectFiles");
-
-    		stringBuf = new StringBuffer(ifc.getName());
-    		stringBuf.append("Server");
-    		String serverGuid = GUIDGenerator.genGUID(stringBuf.toString());
-    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(), serverGuid, null, m_exampleOption);
-    		projectServer.setAttribute("interfaceName", ifc.getName());
-    		projectServer.setAttribute("guid", serverGuid);
-    		projectServer.setAttribute("name",stringBuf.toString());
-    		projectServer.setAttribute("example", m_exampleOption);
-    		projectServer.setAttribute("arch", arch);
-    		projectFilesServer.setAttribute("interfaceName", ifc.getName());
-
-    		stringBuf.delete(ifc.getName().length(), stringBuf.length());
-    		stringBuf.append("Client");
-    		String clientGuid = GUIDGenerator.genGUID(stringBuf.toString());
-    		solution.setAttribute("projects.{name, guid, dependsOn, example}", stringBuf.toString(),clientGuid, serverGuid, m_exampleOption);
-    		projectClient.setAttribute("interfaceName", ifc.getName());
-    		projectClient.setAttribute("guid", clientGuid);
-    		projectClient.setAttribute("name",stringBuf.toString());
-    		projectClient.setAttribute("example", m_exampleOption);
-    		projectClient.setAttribute("arch", arch);
-    		projectClient.setAttribute("client", "client");
-    		projectFilesClient.setAttribute("interfaceName", ifc.getName());
-    		projectFilesClient.setAttribute("client", "client");
-
-    		// project configurations	
-    		for(int index = 0; index < configurations.length; index++){
-    			solution.setAttribute("configurations", configurations[index]);
-    			projectClient.setAttribute("configurations", configurations[index]);
-    			projectServer.setAttribute("configurations", configurations[index]);
-    		}
-
-    		if(externalDirLength > 0)
-    		{
-    			externalDir.append("/");	
-    		}
-    		externalDir.append(ifc.getName()).append("-" + m_exampleOption + ".sln");
-    		if(writeFile(externalDir.toString(), solution) == 0)
-    		{
-    			externalDir.delete(externalDirLength, externalDir.length());
-
-    			//System.out.println(request.toString());
-    			if(externalDirLength > 0)
-    			{
-    				externalDir.append("/");	
-    			}
-    			externalDir.append(ifc.getName()).append("Client-" + m_exampleOption + ".vcxproj");
-    			if(writeFile(externalDir.toString(), projectClient) == 0)
-    			{
-    				externalDir.delete(externalDirLength, externalDir.length());
-
-    				if(externalDirLength > 0)
-    				{
-    					externalDir.append("/");	
-    				}
-    				externalDir.append(ifc.getName()).append("Server-" + m_exampleOption + ".vcxproj");
-    				if(writeFile(externalDir.toString(), projectServer) == 0)
-    				{
-    					externalDir.delete(externalDirLength, externalDir.length());
-    					
-    					if(externalDirLength > 0)
-    					{
-    						externalDir.append("/");
-    					}
-    					externalDir.append(ifc.getName()).append("Client-" + m_exampleOption + ".vcxproj.filters");
-    	    			if(writeFile(externalDir.toString(), projectFilesClient) == 0)
-    	    			{
-    	    				externalDir.delete(externalDirLength, externalDir.length());
-        					
-        					if(externalDirLength > 0)
-        					{
-        						externalDir.append("/");
-        					}
-        					externalDir.append(ifc.getName()).append("Server-" + m_exampleOption + ".vcxproj.filters");
-    	    				returnedValue = writeFile(externalDir.toString(), projectFilesServer);
-    	    				externalDir.delete(externalDirLength, externalDir.length());
-    	    			}
-    				}
-    			}
-    		}
-    	}
-    	else
-    	{
-    		System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group VS2010");
+    		makecxx = makeTemplates.getInstanceOf("makecxx");
+    		
+    		returnedValue = true;
+            for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
+            {
+            	idlFilename = Utils.getIDLFileNameOnly(m_idlFiles.get(count));
+	    			
+	    		makecxx.setAttribute("projnames", idlFilename);	
+            }
+            
+            makecxx.setAttribute("example", m_exampleOption);
+    		makecxx.setAttribute("arch", arch);	
+            
+            returnedValue = Utils.writeFile(m_outputDir + "makefile_" + m_exampleOption, makecxx, m_replace);
     	}
     	
     	return returnedValue;
     }
-    
-    private static int genMakefile(Interface ifc, String arch)
+
+    /*private static int genMakefile(Interface ifc, String arch)
     {
     	final String METHOD_NAME = "getMakefile";
     	int returnedValue = -1;
@@ -1117,8 +1046,8 @@ public class RPCDDSGEN
             try
             {
                 RPCDDSGEN main = new RPCDDSGEN(args);
-                main.execute();
-                System.exit(0);
+                if(main.execute())
+                	System.exit(0);
             }
             catch(BadArgumentException ex)
             {

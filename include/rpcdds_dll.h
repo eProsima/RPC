@@ -54,6 +54,8 @@
 #define EPROSIMA_LIB_NAME rpcdds
 #elif defined(OPENDDS)
 #define EPROSIMA_LIB_NAME rpcddso
+#else
+#error Not defined any middleware. Define RTI or OPENDDS.
 #endif
 
 #if defined(EPROSIMA_ALL_DYN_LINK) || defined(RPCDDS_DYN_LINK)

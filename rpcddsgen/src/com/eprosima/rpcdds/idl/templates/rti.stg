@@ -88,7 +88,7 @@ keyIDLdefine() ::= <<
 levelIDLdefine() ::= <<//@top-level true>>
 
 archMakeDefines() ::= <<
- -DRTI
+ -DRTI_LINUX -DRTI_UNIX
 >>
 
 inclMake() ::= <<
@@ -101,19 +101,19 @@ inclVS() ::= <<
 
 libsMake(example) ::= <<
  -L\$(NDDSHOME)/lib/$example$ -L\$(RPCDDSHOME)/lib/$example$ \
-       -lnddsc -lnddscore -lnddscpp
+       -lnddsc -lnddscore -lnddscpp -lrpcdds
 >>
 
 libsVS(example) ::= <<
 \$(NDDSHOME)\lib\\$example$;\$(RPCDDSHOME)\lib\\$example$;
 >>
 
-sourceMake(interface) ::= <<
-COMMONCXXSOURCES = $interface$RequestReply.cxx $interface$.cxx $interface$RequestReplyPlugin.cxx \
-                $interface$Plugin.cxx $interface$RequestReplySupport.cxx $interface$Support.cxx \
-                $interface$RequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
+sourceMake(projname) ::= <<
+$projname$_COMMON_SRC_CXXFILES = $projname$RequestReply.cxx $projname$.cxx $projname$RequestReplyPlugin.cxx \
+                $projname$Plugin.cxx $projname$RequestReplySupport.cxx $projname$Support.cxx \
+                $projname$RequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
                 MessageHeaderSupport.cxx
-COMMONCPPSOURCES =
+$projname$_COMMON_SRC_CPPFILES=
 >>
 
 sourceVS(interface) ::= <<
@@ -289,7 +289,7 @@ sourceFilesIVS(interface, client) ::= <<
 >>
  
 preprocessorDefs(conf) ::= <<
-WIN32;RTI;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
 >>
 
 dependencies(conf) ::= <<

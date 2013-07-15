@@ -1,0 +1,73 @@
+group Makefile;
+
+makecxx(projnames, example, arch) ::= <<
+CPP= g++
+CPPFLAGS = -c -Wall -fpic -m$arch$ -std=c++11
+LN= g++
+AR=ar
+LDFLAGS= -m$arch$
+SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
+DEFINES= $archMakeDefines()$
+
+INCLUDES= -I. $inclMake()$
+
+LIBS = $libsMake(example=example)$ \$(SYSLIBS)
+
+DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir
+
+$projnames:{
+$it$_CLIENT_TARGET= lib/$example$/lib$it$Client.so
+$it$_CLIENT_TARGET_Z= lib/$example$/lib$it$Clientz.a
+$it$_SERVER_TARGET= lib/$example$/lib$it$Server.so
+$it$_SERVER_TARGET_Z= lib/$example$/lib$it$Serverz.a
+
+$sourceMake(projname=it)$
+
+$it$_CLIENTSOURCES = $it$Proxy.cxx $it$ClientRPCSupport.cxx $it$AsyncSupport.cxx
+$it$_SERVERSOURCES = $it$Server.cxx $it$ServerImpl.cxx $it$ServerRPCSupport.cxx 
+
+$it$_COMMONOBJS    = \$($it$_COMMON_SRC_CXXFILES:%.cxx=output/$example$/%.o) \$($it$_COMMON_SRC_CPPFILES:%.cpp=output/$example$/%.o)
+$it$_CLIENTOBJS    = \$($it$_CLIENTSOURCES:%.cxx=output/$example$/%.o)
+$it$_SERVEROBJS    = \$($it$_SERVERSOURCES:%.cxx=output/$example$/%.o)
+OBJS+= \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS) \$($it$_SERVEROBJS)
+
+$it$: \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z) \$($it$_SERVER_TARGET) \$($it$_SERVER_TARGET_Z)
+
+\$($it$_CLIENT_TARGET): \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it$_CLIENT_TARGET) \$(LIBS) \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS)
+
+\$($it$_CLIENT_TARGET_Z): \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS)
+	\$(AR) -cru \$($it$_CLIENT_TARGET_Z) \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS)
+	
+\$($it$_SERVER_TARGET): \$($it$_COMMONOBJS) \$($it$_SERVEROBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it$_SERVER_TARGET) \$(LIBS) \$($it$_COMMONOBJS) \$($it$_SERVEROBJS)
+
+\$($it$_SERVER_TARGET_Z): \$($it$_COMMONOBJS) \$($it$_SERVEROBJS)
+	\$(AR) -cru \$($it$_SERVER_TARGET_Z) \$($it$_COMMONOBJS) \$($it$_SERVEROBJS)
+	
+$it$Client: \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z)
+
+$it$Server: \$($it$_SERVER_TARGET) \$($it$_SERVER_TARGET_Z)
+}; separator="\n"$
+
+output/$example$/%.o:%.cxx
+	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
+
+output/$example$/%.o:%.cpp
+	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
+
+.PHONY: $projnames:{$it$Client $it$Server}; separator=" "$
+
+all: \$(DIRECTORIES) $projnames:{$it$Client $it$Server}; separator="\\\n\t"$
+
+clean:
+	@rm -f \$(OBJS)
+
+%.dir : 
+	@echo "Checking directory \$*"
+	@if [ ! -d \$* ]; then \
+		echo "Making directory \$*"; \
+		mkdir -p \$* ; \
+	fi;
+
+>>

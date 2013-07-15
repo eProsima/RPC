@@ -40,4 +40,6 @@ type_b(name) ::= <<$name$>>
 
 type_c(name) ::= <<$name$>>
 
+type_10(name) ::= <<$name$>>
+
 type_e(type, empty) ::= <<std::vector<$type$>$empty$>>

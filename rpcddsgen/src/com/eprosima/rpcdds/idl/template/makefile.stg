@@ -19,7 +19,7 @@ $sourceMake(interface=interface)$
 CLIENTSOURCES = $interface$Proxy.cxx $interface$ClientRPCSupport.cxx $interface$AsyncSupport.cxx Client.cxx 
 SERVERSOURCES = $interface$Server.cxx $interface$ServerImpl.cxx $interface$ServerRPCSupport.cxx Server.cxx 
 DIRECTORIES   = objs.dir objs/$example$.dir
-COMMONOBJS    = \$(COMMONCXXSOURCES:%.cxx=objs/$example$/%.o) \$(COMMONCPPSOURCES:%.cpp=objs/$example$/%.o)
+COMMONOBJS    = \$($it$_COMMON_SRC_CXXFILES:%.cxx=objs/$example$/%.o) \$($it$_COMMON_SRC_CPPFILES:%.cpp=objs/$example$/%.o)
 CLIENTOBJS    = \$(CLIENTSOURCES:%.cxx=objs/$example$/%.o)
 SERVEROBJS    = \$(SERVERSOURCES:%.cxx=objs/$example$/%.o)
 CLIENTEXEC    = objs/$example$/$interface$Client

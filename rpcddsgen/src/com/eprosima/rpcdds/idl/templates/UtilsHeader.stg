@@ -106,6 +106,8 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
+type_declarator(ctx, typedefs) ::= <<>>
+
 struct_type(ctx, struct) ::= <<>>
 
 union_type(ctx, union) ::= <<>>
