@@ -1,5 +1,7 @@
 #!/bin/sh
 
+dir="`dirname \"$0\"`"
+
 if [ x$JAVA_HOME = x ]; then
 	filename=$0
 	arch="some_dummy_value_to_be_overridden_later"
@@ -62,4 +64,4 @@ else
 	JREHOME="${JAVA_HOME}"
 fi
 
-exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -DRPCDDSHOME="$RPCDDSHOME" -Djava.ext.dirs="$RPCDDSHOME/rpcddsgen/lib" com.eprosima.rpcdds.RPCDDSGEN -os Linux "-I$RPCDDSHOME/idl" "$@"
+exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -DRPCDDSHOME="$dir/.." -Djava.ext.dirs="$dir/../rpcddsgen/lib" com.eprosima.rpcdds.RPCDDSGEN -os Linux "-I$dir/../idl" "$@"

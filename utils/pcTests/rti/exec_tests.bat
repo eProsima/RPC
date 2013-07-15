@@ -10,7 +10,7 @@ set errorstatus=0
 :: Set environment for RPCDDS
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
 
-:: Create symbolic link to EPROSIMADIR in this rpcdds fold.
+:: Create symbolic link to EPROSIMADIR in this rpcdds folder.
 if not exist ..\..\..\include\eProsima_cpp mklink /D ..\..\..\include\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
@@ -136,7 +136,7 @@ goto :EOF
 :: Function exit ::
 :exit
 :: Remove output directory
-::rd /S /Q output
+rd /S /Q output
 
 if exist ..\..\..\include\eProsima_cpp rmdir /Q ..\..\..\include\eProsima_cpp
 
