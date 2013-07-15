@@ -99,9 +99,9 @@ inclVS() ::= <<
 \$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(RPCDDSHOME)\include;
 >>
 
-libsMake(example) ::= <<
+libsMake(example, version) ::= <<
  -L\$(NDDSHOME)/lib/$example$ -L\$(RPCDDSHOME)/lib/$example$ \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds
+       -lnddsc -lnddscore -lnddscpp -lrpcdds-$version$
 >>
 
 libsVS(example) ::= <<

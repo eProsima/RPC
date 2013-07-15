@@ -244,23 +244,30 @@ public class RPCDDSGEN
         return returnedValue;
     }
     
-    public void showVersion()
+    private String getVersion()
     {
-        try
+    	try
         {
-            InputStream input = this.getClass().getResourceAsStream("/rpcdds_version.h");
-            byte[] b = new byte[input.available()];
-            input.read(b);
-            String text = new String(b);
-            int beginindex = text.indexOf("\"");
-            int endindex = text.indexOf("\"", beginindex + 1);
-            String version = text.substring(beginindex + 1, endindex);
-            System.out.println("rpcddsgen version " + version);
+	    	InputStream input = this.getClass().getResourceAsStream("/rpcdds_version.h");
+	        byte[] b = new byte[input.available()];
+	        input.read(b);
+	        String text = new String(b);
+	        int beginindex = text.indexOf("\"");
+	        int endindex = text.indexOf("\"", beginindex + 1);
+	        return text.substring(beginindex + 1, endindex);
         }
         catch(Exception ex)
         {
             System.out.println("ERROR: Getting version. " + ex.getMessage());
         }
+    	
+    	return "";
+    }
+    
+    private void showVersion()
+    {
+        String version = getVersion();
+        System.out.println("rpcddsgen version " + version);
     }
     
     public boolean execute()
@@ -975,7 +982,8 @@ public class RPCDDSGEN
             }
             
             makecxx.setAttribute("example", m_exampleOption);
-    		makecxx.setAttribute("arch", arch);	
+    		makecxx.setAttribute("arch", arch);
+    		makecxx.setAttribute("version", getVersion());
             
             returnedValue = Utils.writeFile(m_outputDir + "makefile_" + m_exampleOption, makecxx, m_replace);
     	}

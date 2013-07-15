@@ -99,6 +99,8 @@ $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$
             throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg$stringPointerConst()$);
             break;
         $endif$
+        default:
+            break;
     };
     
 
@@ -143,6 +145,8 @@ void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name
         case eProsima::RPCDDS::NO_SERVER:
              throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
              break;
+        default:
+            break;
     }
 }
 

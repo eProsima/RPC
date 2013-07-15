@@ -1,6 +1,6 @@
 group Makefile;
 
-makecxx(projnames, example, arch) ::= <<
+makecxx(projnames, example, arch, version) ::= <<
 CPP= g++
 CPPFLAGS = -c -Wall -fpic -m$arch$ -std=c++11
 LN= g++
@@ -11,15 +11,17 @@ DEFINES= $archMakeDefines()$
 
 INCLUDES= -I. $inclMake()$
 
-LIBS = $libsMake(example=example)$ \$(SYSLIBS)
+LIBS = $libsMake(example=example, version=version)$ \$(SYSLIBS)
 
-DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir
+DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir bin.dir bin/$example$.dir
 
 $projnames:{
 $it$_CLIENT_TARGET= lib/$example$/lib$it$Client.so
-$it$_CLIENT_TARGET_Z= lib/$example$/lib$it$Clientz.a
+$it$_CLIENT_TARGET_Z= lib/$example$/lib$it$Client.a
 $it$_SERVER_TARGET= lib/$example$/lib$it$Server.so
-$it$_SERVER_TARGET_Z= lib/$example$/lib$it$Serverz.a
+$it$_SERVER_TARGET_Z= lib/$example$/lib$it$Server.a
+$it$_CLIENT_EXAMPLE_TARGET= bin/$example$/$it$ClientExample
+$it$_SERVER_EXAMPLE_TARGET= bin/$example$/$it$ServerExample
 
 $sourceMake(projname=it)$
 
@@ -30,8 +32,6 @@ $it$_COMMONOBJS    = \$($it$_COMMON_SRC_CXXFILES:%.cxx=output/$example$/%.o) \$(
 $it$_CLIENTOBJS    = \$($it$_CLIENTSOURCES:%.cxx=output/$example$/%.o)
 $it$_SERVEROBJS    = \$($it$_SERVERSOURCES:%.cxx=output/$example$/%.o)
 OBJS+= \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS) \$($it$_SERVEROBJS)
-
-$it$: \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z) \$($it$_SERVER_TARGET) \$($it$_SERVER_TARGET_Z)
 
 \$($it$_CLIENT_TARGET): \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS)
 	\$(LN) \$(LDFLAGS) -shared -o \$($it$_CLIENT_TARGET) \$(LIBS) \$($it$_COMMONOBJS) \$($it$_CLIENTOBJS)
@@ -45,9 +45,21 @@ $it$: \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z) \$($it$_SERVER_TARGET) \$(
 \$($it$_SERVER_TARGET_Z): \$($it$_COMMONOBJS) \$($it$_SERVEROBJS)
 	\$(AR) -cru \$($it$_SERVER_TARGET_Z) \$($it$_COMMONOBJS) \$($it$_SERVEROBJS)
 	
-$it$Client: \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z)
+$it$Client : \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z)
 
-$it$Server: \$($it$_SERVER_TARGET) \$($it$_SERVER_TARGET_Z)
+$it$Server : \$($it$_SERVER_TARGET) \$($it$_SERVER_TARGET_Z)
+	
+\$($it$_CLIENT_EXAMPLE_TARGET): output/$example$/Client.o
+	\$(LN) \$(LDFLAGS) -o \$@ -Bdynamic \$(LIBS) -Bstatic -Llib/$example$ -l$it$Client output/$example$/Client.o
+
+\$($it$_SERVER_EXAMPLE_TARGET): output/$example$/Server.o
+	\$(LN) \$(LDFLAGS) -o \$@ -Bdynamic \$(LIBS) -Bstatic -Llib/$example$ -l$it$Server output/$example$/Server.o
+
+$it$ClientExample : \$($it$_CLIENT_EXAMPLE_TARGET)
+
+$it$ServerExample : \$($it$_SERVER_EXAMPLE_TARGET)
+
+$it$: $it$Client $it$Server $it$ClientExample $it$ServerExample
 }; separator="\n"$
 
 output/$example$/%.o:%.cxx
@@ -56,9 +68,9 @@ output/$example$/%.o:%.cxx
 output/$example$/%.o:%.cpp
 	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
 
-.PHONY: $projnames:{$it$Client $it$Server}; separator=" "$
+.PHONY: $projnames:{$it$Client $it$Server $it$ClientExample $it$ServerExample}; separator="\\\n\t"$
 
-all: \$(DIRECTORIES) $projnames:{$it$Client $it$Server}; separator="\\\n\t"$
+all: \$(DIRECTORIES) $projnames:{$it$}; separator="\\\n\t"$
 
 clean:
 	@rm -f \$(OBJS)

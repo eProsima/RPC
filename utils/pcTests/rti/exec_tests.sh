@@ -22,15 +22,15 @@ function execTest
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Execute the server in background
-    output/objs/$NDDSTARGET/$1Server &
+    output/bin/$NDDSTARGET/$1ServerExample &
     # Wait 5 seconds
     sleep 5
     # Execute the client
-    output/objs/$NDDSTARGET/$1Client
+    output/bin/$NDDSTARGET/$1ClientExample
     errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
     # Kill server
-    killall -9 $1Server
+    killall -9 $1ServerExample
+    if [ $errorstatus != 0 ]; then return; fi
 }
 
 # Set environment for RTPDDS
@@ -54,11 +54,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -type d -pr
         #./exec_test.sh
 		echo NADA
     else
-		. $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-		. $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
         execTest $dir
-		. $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
-		. $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
     fi
 
     # Detect error in call.
