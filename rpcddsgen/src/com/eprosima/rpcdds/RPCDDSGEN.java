@@ -608,9 +608,6 @@ public class RPCDDSGEN
             m_lineCommand.add("-I"+ m_outputDir);
         }
         
-        // TODO No usar RPCDDSHOME sino que a través del directorio del script sacar el del IDL.
-        m_lineCommand.add("-I" + rpcdds_root + File.separator + "idl");
-        
         // Set the location of file MessageHeader.idl
         messageHeaderFileLocation = rpcdds_root + File.separator + "idl" + File.separator + messageHeaderFileName;
         
