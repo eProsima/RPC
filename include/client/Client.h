@@ -9,8 +9,8 @@
 #ifndef _CLIENT_CLIENT_H_
 #define _CLIENT_CLIENT_H_
 
-#include "utils/Middleware.h"
 #include "rpcdds_dll.h"
+#include "utils/Middleware.h"
 #include "utils/Messages.h"
 
 #include <string>

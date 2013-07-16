@@ -38,7 +38,7 @@ namespace eProsima
             if(factory != NULL)
             {
                 factory->get_default_participant_qos(participantQos);
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
                 m_transport->setTransport(participantQos, NULL);
 #endif
 				increase_buffers(participantQos);

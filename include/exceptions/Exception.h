@@ -9,7 +9,6 @@
 #ifndef _EXCEPTIONS_EXCEPTION_H_
 #define _EXCEPTIONS_EXCEPTION_H_
 
-#include "utils/Middleware.h"
 #include "rpcdds_dll.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 #include <string>

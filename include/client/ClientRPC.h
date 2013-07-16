@@ -9,8 +9,8 @@
 #ifndef _CLIENT_CLIENTRPC_H_
 #define _CLIENT_CLIENTRPC_H_
 
-#include "utils/Middleware.h"
 #include "rpcdds_dll.h"
+#include "utils/Middleware.h"
 #include "utils/Messages.h"
 
 #define QUERY_POOL_LENGTH 10

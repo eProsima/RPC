@@ -9,10 +9,9 @@
 #ifndef _CLIENT_ASYNCTHREAD_H_
 #define _CLIENT_ASYNCTHREAD_H_
 
+#include "utils/Middleware.h"
 #include <vector>
 #include <boost/thread.hpp>
-
-#include "utils/Middleware.h"
 
 namespace eProsima
 {

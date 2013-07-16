@@ -9,8 +9,8 @@
 #ifndef _TRANSPORTS_TRANSPORT_H_
 #define _TRANSPORTS_TRANSPORT_H_
 
-#include "utils/Middleware.h"
 #include "rpcdds_dll.h"
+#include "utils/Middleware.h"
 
 namespace eProsima
 {

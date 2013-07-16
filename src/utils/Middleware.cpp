@@ -20,7 +20,7 @@ namespace eProsima
     {
         void get_guid(unsigned int *id, DDS::DataWriter *datawriter)
         {
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
             DDS::DataWriterQos wQos;
             datawriter->get_qos(wQos);
             id[0] = ((wQos.protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
@@ -65,7 +65,7 @@ namespace eProsima
 
         void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
         {
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
             datareader->get_qos(rQos);
             rQos.property.value.ensure_length(rQos.property.value.length() + 1,
                     rQos.property.value.maximum() + 1);
@@ -82,7 +82,7 @@ namespace eProsima
 
 		void set_max_query_condition_filters(DDS::DataReaderQos &rQos)
 		{
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			rQos.reader_resource_limits.max_query_condition_filters = 10;
 #elif defined(OPENDDS)
 #else
@@ -92,7 +92,7 @@ namespace eProsima
 
 		void set_datareader_protocol(DDS::DataReaderQos &rQos)
 		{
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.sec = 0;
 			rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.nanosec = 50000000;
 			rQos.protocol.rtps_reliable_reader.heartbeat_suppression_duration.sec = 0;
@@ -104,7 +104,7 @@ namespace eProsima
 
 		void set_datawriter_protocol(DDS::DataWriterQos &wQos)
 		{
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			wQos.protocol.rtps_reliable_writer.low_watermark = 0;
 			wQos.protocol.rtps_reliable_writer.high_watermark = 3;
 			wQos.protocol.rtps_reliable_writer.heartbeat_period.sec = 0;
@@ -119,7 +119,7 @@ namespace eProsima
 
 		void increase_buffers(DDS::DomainParticipantQos &pQos)
 		{
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			pQos.receiver_pool.buffer_size = 65536;
 			int length = pQos.property.value.length();
 			pQos.property.value.ensure_length(length + 3, length + 3);
@@ -136,7 +136,7 @@ namespace eProsima
         {
             const char* const METHOD_NAME = "getFactory";
 
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
             return TheParticipantFactory;
 #elif defined(OPENDDS)
             const OpenDDS::DCPS::Service_Participant::RepoKeyDiscoveryMap &map =  TheServiceParticipant->discoveryMap();

@@ -41,7 +41,7 @@ int TName::sendReply(void *request, void* reply)
 {
 	int returnedValue = -1;
 #ifndef IS_ONEWAY
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
     TDataWriter *replyDataWriter = TDataWriter::narrow(getReplyDatawriter());
 #elif defined(OPENDDS)
     TDataWriter *replyDataWriter = TDataWriter::_narrow(getReplyDatawriter());
@@ -84,7 +84,7 @@ void TName::deleteRequestData(void *request)
 
 	if(requestData != NULL)
 	{
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 		TDataRequestTypeSupport::delete_data(requestData);
 #elif defined(OPENDDS)
 		delete requestData;
@@ -100,7 +100,7 @@ void TName::deleteRequestData(void *request)
 void TName::on_data_available(DDS::DataReader* reader)
 {
 	DDS::SampleInfo info;
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
     TDataReader *requestDataReader = TDataReader::narrow(getRequestDatareader());
 	TDataRequest *data = TDataRequestTypeSupport::create_data();
 #elif defined(OPENDDS)
@@ -113,7 +113,7 @@ void TName::on_data_available(DDS::DataReader* reader)
 		if(info.valid_data == BOOLEAN_TRUE)
 		{
 			getServer()->schedule(getExecFunction(), data, this);
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			data = TDataRequestTypeSupport::create_data();
 #elif defined(OPENDDS)
 			data = new TDataRequest();
@@ -121,7 +121,7 @@ void TName::on_data_available(DDS::DataReader* reader)
 		}
 	}
 	if(data != NULL){
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 		TDataRequestTypeSupport::delete_data(data);
 #elif defined(OPENDDS)
 		delete data;

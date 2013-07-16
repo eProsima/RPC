@@ -50,7 +50,7 @@
 #include "rpcdds_version.h"
 
 // Set properties.
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 #define EPROSIMA_LIB_NAME rpcdds
 #elif defined(OPENDDS)
 #define EPROSIMA_LIB_NAME rpcddso

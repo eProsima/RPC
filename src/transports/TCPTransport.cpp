@@ -45,7 +45,7 @@ namespace eProsima
 
         int TCPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
 		{
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			int returnedValue = -1;
 
 			if(m_public_address != NULL &&
@@ -88,7 +88,7 @@ namespace eProsima
 
 		int TCPClientTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
         {
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			int returnedValue = -1;
 
 			if(m_to_connect != NULL)

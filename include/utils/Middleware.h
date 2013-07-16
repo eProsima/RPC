@@ -9,22 +9,7 @@
 #ifndef _UTILS_MIDDLEWARE_H_
 #define _UTILS_MIDDLEWARE_H_
 
-#if !defined(RTI) || !defined(OPENDDS)
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
-#define RTI
-#endif
-#else
-#error Not defined any middleware.
-#endif
-
-#if defined(RTI)
-
-#if defined(_WIN32) && !defined(RTI_WIN32)
-#define RTI_WIN32
-#elif defined(__linux) && !defined(RTI_LINUX)
-#define RTI_UNIX
-#define RTI_LINUX
-#endif
 
 #include "ndds_namespace_cpp.h"
 

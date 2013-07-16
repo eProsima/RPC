@@ -9,8 +9,8 @@
 #ifndef _TRANSPORTS_TCPTRANSPORT_H_
 #define _TRANSPORTS_TCPTRANSPORT_H_
 
-#include "transports/Transport.h"
 #include "rpcdds_dll.h"
+#include "transports/Transport.h"
 
 namespace eProsima
 {

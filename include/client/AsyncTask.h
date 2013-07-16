@@ -10,8 +10,8 @@
 #define _CLIENT_ASYNCTASK_H_
 
 #include "rpcdds_dll.h"
-#include "utils/Messages.h"
 #include "utils/Middleware.h"
+#include "utils/Messages.h"
 #include "exceptions/SystemException.h"
 
 namespace eProsima

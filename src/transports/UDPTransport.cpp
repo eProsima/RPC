@@ -39,7 +39,7 @@ namespace eProsima
 
         int UDPClientTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
         {
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 
 			if(m_to_connect != NULL)
 			{
@@ -107,7 +107,7 @@ namespace eProsima
 
 		int UDPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
         {
-#if defined(RTI)
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
 			return 0;
 #elif defined(OPENDDS)
             const char* const METHOD_NAME = "setTransport";
