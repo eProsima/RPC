@@ -66,7 +66,7 @@ namespace eProsima
 			InitializeException& operator=(InitializeException&& ex);
 
 			/// \brief Default constructor
-			virtual ~InitializeException() EPROSIMA_USE_NOEXCEPT;
+			virtual ~InitializeException() throw();
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;

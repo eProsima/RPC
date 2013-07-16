@@ -66,7 +66,7 @@ namespace eProsima
 			ServerTimeoutException& operator=(ServerTimeoutException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerTimeoutException() EPROSIMA_USE_NOEXCEPT;
+			virtual ~ServerTimeoutException() throw();
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;

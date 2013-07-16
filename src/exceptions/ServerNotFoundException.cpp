@@ -48,7 +48,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ServerNotFoundException::~ServerNotFoundException() EPROSIMA_USE_NOEXCEPT
+		ServerNotFoundException::~ServerNotFoundException() throw()
 		{
 		}
 

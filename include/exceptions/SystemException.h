@@ -26,7 +26,7 @@ namespace eProsima
 		public:
 
 			/// \brief Default destructor.
-			virtual ~SystemException() EPROSIMA_USE_NOEXCEPT;
+			virtual ~SystemException() throw();
 
 			/**
 			 * \brief This function returns the number associated with the system exception.

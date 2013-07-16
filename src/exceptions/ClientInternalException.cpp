@@ -48,7 +48,7 @@ namespace eProsima
 			return *this;
 		}
 
-		ClientInternalException::~ClientInternalException() EPROSIMA_USE_NOEXCEPT
+		ClientInternalException::~ClientInternalException() throw()
 		{
 		}
 

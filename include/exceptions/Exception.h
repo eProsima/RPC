@@ -10,7 +10,6 @@
 #define _EXCEPTIONS_EXCEPTION_H_
 
 #include "rpcdds_dll.h"
-#include "eProsima_cpp/eProsimaMacros.h"
 #include <string>
 #include <exception>
 
@@ -27,7 +26,7 @@ namespace eProsima
 		public:
 
 			/// \brief Default destructor.
-			virtual ~Exception() EPROSIMA_USE_NOEXCEPT;
+			virtual ~Exception() throw();
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const = 0;
@@ -37,7 +36,7 @@ namespace eProsima
 			 *
 			 * \return The error message.
 			 */
-			virtual const char* what() const throw() override;
+			virtual const char* what() const throw();
 
 		protected:
 

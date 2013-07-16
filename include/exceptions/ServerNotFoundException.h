@@ -66,7 +66,7 @@ namespace eProsima
 			ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ServerNotFoundException() EPROSIMA_USE_NOEXCEPT;
+			virtual ~ServerNotFoundException() throw();
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;

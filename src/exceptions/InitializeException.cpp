@@ -48,7 +48,7 @@ namespace eProsima
 			return *this;
 		}
 
-		InitializeException::~InitializeException() EPROSIMA_USE_NOEXCEPT
+		InitializeException::~InitializeException() throw()
 		{
 		}
 

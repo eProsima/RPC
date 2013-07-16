@@ -66,7 +66,7 @@ namespace eProsima
 			ClientInternalException& operator=(ClientInternalException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ClientInternalException() EPROSIMA_USE_NOEXCEPT;
+			virtual ~ClientInternalException() throw();
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
