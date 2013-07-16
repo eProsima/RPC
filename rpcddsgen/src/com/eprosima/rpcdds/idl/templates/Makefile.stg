@@ -50,10 +50,10 @@ $it$Client : \$($it$_CLIENT_TARGET) \$($it$_CLIENT_TARGET_Z)
 $it$Server : \$($it$_SERVER_TARGET) \$($it$_SERVER_TARGET_Z)
 	
 \$($it$_CLIENT_EXAMPLE_TARGET): output/$example$/Client.o
-	\$(LN) \$(LDFLAGS) -o \$@ -Bdynamic \$(LIBS) -Bstatic -Llib/$example$ -l$it$Client output/$example$/Client.o
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/Client.o -Wl,-Bstatic -Llib/$example$ -l$it$Client -Wl,-Bdynamic \$(LIBS)
 
 \$($it$_SERVER_EXAMPLE_TARGET): output/$example$/Server.o
-	\$(LN) \$(LDFLAGS) -o \$@ -Bdynamic \$(LIBS) -Bstatic -Llib/$example$ -l$it$Server output/$example$/Server.o
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/Server.o -Wl,-Bstatic -Llib/$example$ -l$it$Server -Wl,-Bdynamic \$(LIBS)
 
 $it$ClientExample : \$($it$_CLIENT_EXAMPLE_TARGET)
 

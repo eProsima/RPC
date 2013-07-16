@@ -35,9 +35,21 @@ public class AliasTypeCode extends ContainerTypeCode
     }
     
     @Override
+    public boolean isPrimitive()
+    {
+        return getContentTypeCode().isPrimitive();
+    }
+    
+    @Override
+    public boolean isPrimitiveInArguments()
+    {
+        return getContentTypeCode().isPrimitiveInArguments();
+    }
+    
+    @Override
     public String getInitialValue()
     {   
-        return "0";
+        return getContentTypeCode().getInitialValue();
     }
     
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)

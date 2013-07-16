@@ -1,6 +1,8 @@
 #!/bin/bash
 
 errorstatus=0
+# @default, all targets are used (i86 and x64)
+test_targets=""
 
 # This function execute a test in a directory.
 # @param Plaform for Visual Studio.
@@ -33,6 +35,16 @@ function execTest
     if [ $errorstatus != 0 ]; then return; fi
 }
 
+# Get the optional parameter
+if [ "$1" != "" ]; then
+    if [ "$1" == "i86" ] || [ "$1" == "x64" ]; then
+        test_targets=$1
+    else
+        echo Error: Bad argument. Valid values. i86, x64
+        exit -1;
+    fi
+fi
+
 # Set environment for RTPDDS
 . $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
 
@@ -51,10 +63,28 @@ fi
 # This script runs all tests in this directory and checks their results.
 for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -type d -printf "%f\n"); do
     if [ -e "$dir/exec_test.sh" ] ; then
-        #./exec_test.sh
-		echo NADA
+        ./exec_test.sh
     else
-        execTest $dir
+        # i86 target
+        if [ $errorstatus == 0 ]; then
+            if [ "$test_targets" == "" ] || [ "$test_targets" == "i86" ]; then
+                . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                execTest $dir
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+            fi
+        fi
+        # x64 target
+        if [ $errorstatus == 0 ]; then
+            if [ "$test_targets" == "" ] || [ "$test_targets" == "x64" ]; then
+                . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                execTest $dir
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+            fi
+        fi
     fi
 
     # Detect error in call.
@@ -64,7 +94,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -type d -pr
 done
 
 # Remove output directory
-#rm -r output
+rm -r output
 
 # Remove symbolic link
 if [ -e ../../../include/eProsima_cpp ]; then
