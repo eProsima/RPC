@@ -61,7 +61,7 @@ if [ ! -d "output" ]; then
 fi
 
 # This script runs all tests in this directory and checks their results.
-for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -path ./.svn -prune -o -type d -printf "%f\n"); do
+for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.svn -prune -o -type d -printf "%f\n"); do
     if [ -e "$dir/exec_test.sh" ] ; then
         ./exec_test.sh
     else
