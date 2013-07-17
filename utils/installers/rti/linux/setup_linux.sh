@@ -103,9 +103,9 @@ function installer
     fi
 
     # Erase subversion directories
-    find . -name ".svn" -exec rm -r {} \;
+    find . -name ".svn" -exec rm -rf {} \;
     # Erase backup files from vim
-    find . -iname "*~" -exec rm {} \;
+    find . -iname "*~" -exec rm -f {} \;
 
     cd tmp
     tar cvzf "../${project}_${version}_${distroversion}-RTIDDS_5.0.0.tar.gz" $project
