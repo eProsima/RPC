@@ -36,7 +36,7 @@ function execTest
 }
 
 # Get the optional parameter
-if [ "$1" != "" ]; then
+if [ $# -ge 1 ] && [ -n $1 ]; then
     if [ "$1" == "i86" ] || [ "$1" == "x64" ]; then
         test_targets=$1
     else
@@ -67,7 +67,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
     else
         # i86 target
         if [ $errorstatus == 0 ]; then
-            if [ "$test_targets" == "" ] || [ "$test_targets" == "i86" ]; then
+            if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
                 . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
                 . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                 execTest $dir
@@ -77,7 +77,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
         fi
         # x64 target
         if [ $errorstatus == 0 ]; then
-            if [ "$test_targets" == "" ] || [ "$test_targets" == "x64" ]; then
+            if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
                 . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
                 . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                 execTest $dir
