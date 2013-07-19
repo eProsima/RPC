@@ -8,14 +8,8 @@ header {
     import com.eprosima.rpcdds.typecode.*;
     import com.eprosima.rpcdds.tree.*;
     import com.eprosima.rpcdds.util.Pair;
-    
-    import org.antlr.stringtemplate.StringTemplate;
    
     import java.util.Vector;
-    import java.util.List;
-    import java.util.ArrayList;
-    import java.util.Map;
-    import java.util.HashMap;
  }
 
 class IDLParser extends Parser;
@@ -36,8 +30,6 @@ specification [Context context, TemplateManager templatemanager, TemplateGroup m
     
     ctx = context;
     tmanager = templatemanager;
-    
-    // TODO Guardar declaraciones en el contexto.
 }
 	:   (import_dcl)* (dtg=definition{maintemplates.setAttribute("definitions", dtg.second()); ctx.addDefinition(dtg.first());})+
 	{
@@ -135,7 +127,7 @@ interf returns [Pair<Interface, TemplateGroup> itg = null]
 interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
     {
         Interface interfaceObject = null;
-        TemplateGroup interfaceTemplates = tmanager.createTemplateGroup("interface");
+        TemplateGroup interfaceTemplates = null;
         TemplateGroup tg = null;
         String name = null;
     }
@@ -145,11 +137,15 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
  	    {
            // Create the Module object.
            interfaceObject = new Interface(ctx.getScope(), name);
-           // Set the the interface object to the TemplateGroup of the module.
-           interfaceTemplates.setAttribute("interface", interfaceObject);
+           if(ctx.setScopedFileToObject(interfaceObject) || ctx.isScopeLimitToAll())
+           {
+               interfaceTemplates = tmanager.createTemplateGroup("interface");
+               // Set the the interface object to the TemplateGroup of the module.
+               interfaceTemplates.setAttribute("interface", interfaceObject);
+           }
         }
 	    ( interface_inheritance_spec )?	   
-	    LCURLY tg=interface_body[interfaceObject]{interfaceTemplates.setAttribute("export_list", tg);} RCURLY)
+	    LCURLY tg=interface_body[interfaceObject]{if(interfaceTemplates!=null)interfaceTemplates.setAttribute("export_list", tg);} RCURLY)
 	    {
            // Create the returned data.
            returnPair = new Pair<Interface, TemplateGroup>(interfaceObject, interfaceTemplates);
@@ -1381,6 +1377,15 @@ options {
 	k=4;
 }
 
+{
+    Context ctx = null;
+    
+    public void setContext(Context _ctx)
+    {
+        ctx = _ctx;
+    }
+}
+
 SEMI
 options {
   paraphrase = ";";
@@ -1591,7 +1596,7 @@ options {
 	:
 	'#'!
 	(~'\n')* '\n'!
-	{ $setType(Token.SKIP); newline(); }
+	{ ctx.setScopeFile(new String(text.getBuffer(), _begin, text.length()-_begin)); $setType(Token.SKIP); newline(); }
 	;
 
 

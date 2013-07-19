@@ -30,9 +30,9 @@ public class Interface extends ExportContainer implements Definition
         return m_parent;
     }
     
-    public Interface getFirstInterface()
+    public Interface getFirstInterface(String idlFile)
     {
-        if(getFirstOperation() != null)
+        if(getScopeFile().equals(idlFile) && getFirstOperation() != null)
             return this;
         
         return null;

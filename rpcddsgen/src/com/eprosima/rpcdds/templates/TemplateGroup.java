@@ -30,16 +30,19 @@ public class TemplateGroup
     
     public void setAttribute(String attribute, TemplateGroup tg)
     {
-        Set<Entry<String, StringTemplate>> set = m_templates.entrySet();
-        Iterator<Entry<String, StringTemplate>> it = set.iterator();
-        
-        while(it.hasNext())
-        {
-            Map.Entry<String, StringTemplate> m = (Map.Entry<String, StringTemplate>)it.next();
-            
-            // Call setAttribute
-            m.getValue().setAttribute(attribute, tg.getTemplate(m.getKey()).toString());
-        }
+    	if(tg != null)
+    	{
+	        Set<Entry<String, StringTemplate>> set = m_templates.entrySet();
+	        Iterator<Entry<String, StringTemplate>> it = set.iterator();
+	        
+	        while(it.hasNext())
+	        {
+	            Map.Entry<String, StringTemplate> m = (Map.Entry<String, StringTemplate>)it.next();
+	            
+	            // Call setAttribute
+	            m.getValue().setAttribute(attribute, tg.getTemplate(m.getKey()).toString());
+	        }
+    	}
     }
     
     public void setAttribute(String attribute, Object obj1)

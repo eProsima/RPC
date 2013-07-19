@@ -2,7 +2,7 @@ package com.eprosima.rpcdds.tree;
 
 import java.util.ArrayList;
 
-public class ExportContainer
+public class ExportContainer extends ScopedObject
 {
     protected ExportContainer()
     {

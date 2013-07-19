@@ -25,13 +25,13 @@ public class Module extends DefinitionContainer implements Definition
     }
     
     @Override
-    public Interface getFirstInterface()
+    public Interface getFirstInterface(String idlFile)
     {
         Interface returnedValue = null;
         
         for(int count = 0; returnedValue == null && count < getDefinitions().size(); ++count)
         {
-            returnedValue = getDefinitions().get(count).getFirstInterface();
+            returnedValue = getDefinitions().get(count).getFirstInterface(idlFile);
         }
         
         return returnedValue;

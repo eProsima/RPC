@@ -108,14 +108,6 @@ libsVS(example) ::= <<
 \$(NDDSHOME)\lib\\$example$;\$(RPCDDSHOME)\lib\\$example$;
 >>
 
-sourceMake(projname) ::= <<
-$projname$_COMMON_SRC_CXXFILES = $projname$RequestReply.cxx $projname$.cxx $projname$RequestReplyPlugin.cxx \
-                $projname$Plugin.cxx $projname$RequestReplySupport.cxx $projname$Support.cxx \
-                $projname$RequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
-                MessageHeaderSupport.cxx
-$projname$_COMMON_SRC_CPPFILES=
->>
-
 sourceVS(interface) ::= <<
     <ClCompile Include="$interface$RequestReply.cxx" />
     <ClCompile Include="$interface$.cxx" />

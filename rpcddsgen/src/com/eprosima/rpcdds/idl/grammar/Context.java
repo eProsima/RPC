@@ -2,18 +2,21 @@ package com.eprosima.rpcdds.idl.grammar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 import com.eprosima.rpcdds.tree.Definition;
 import com.eprosima.rpcdds.tree.Interface;
+import com.eprosima.rpcdds.tree.ScopedObject;
 import com.eprosima.rpcdds.typecode.TypeCode;
 
 public class Context
 {
-    public Context(String filename)
+    public Context(String filename, String file)
     {
         m_filename = filename;
+        m_file = file;
         m_types = new HashMap<String, TypeCode>();
+        m_dependencies = new HashSet<String>();
         m_definitions = new ArrayList<Definition>();
     }
 
@@ -30,6 +33,42 @@ public class Context
     public void setScope(String scope)
     {
         m_scope = scope;
+    }
+    
+    public String getScopeFile()
+    {
+    	return m_scopeFile;
+    }
+    
+    /*!
+     * @brief This function is call when a preprocessor line was found by the lexer.
+     * In case the line refering a file, this function sets this file as current scope file.
+     * Also this function saves the scope file in the dependecies map.
+     */
+    public void setScopeFile(String line)
+    {
+    	int index = 0;
+    	
+    	if((index = line.indexOf('"')) > 0)
+    	{
+    		String file = line.substring(index + 1, line.indexOf('"', index + 1));
+    		m_scopeFile = file;
+    		
+    		if(m_scopeFile.charAt(0) != '<' &&
+    				!m_scopeFile.equals(m_file))
+			{
+    			m_dependencies.add(m_scopeFile);
+			}
+    	}
+    }
+    
+    /*!
+     * @return True if the object belongs to the processed file.
+     */
+    public boolean setScopedFileToObject(ScopedObject object)
+    {
+    	object.setScopeFile(m_scopeFile);
+    	return m_scopeFile.equals(m_file);
     }
 
     public String getScope()
@@ -59,7 +98,11 @@ public class Context
 
     public void addTypeCode(String name, TypeCode typecode)
     {
-        m_types.put(name, typecode);
+        TypeCode prev = m_types.put(name, typecode);
+        
+        // TODO: Exception.
+        if(prev != null)
+        	System.out.println("Warning: Redefined type " + name);
     }
 
     public TypeCode getTypeCode(String name)
@@ -91,17 +134,41 @@ public class Context
     { 
         for(int count = 0; m_firstinterface == null && count < m_definitions.size(); ++count)
         {
-            m_firstinterface = m_definitions.get(count).getFirstInterface();
+            m_firstinterface = m_definitions.get(count).getFirstInterface(m_scopeFile);
         }
         
         return m_firstinterface;
     }
+    
+    public HashSet getDependencies()
+    {
+    	return m_dependencies;
+    }
+    
+    public void addDependency(String dependency)
+    {
+    	m_dependencies.add(dependency);
+    }
+    
+    public boolean isScopeLimitToAll()
+    {
+    	return m_scopeLimitToAll;
+    }
+    
+    public void setScopeLimitToAll(boolean scopeLimitToAll)
+    {
+    	m_scopeLimitToAll = scopeLimitToAll;
+    }
 
     private String m_filename = "";
+    private String m_file = "";
     private String m_scope = "";
+    private String m_scopeFile = "";
     private String m_sersym = ">>";
     private String m_typelimitation = null;
-    private Map<String, TypeCode> m_types = null;
+    private HashMap<String, TypeCode> m_types = null;
+    private HashSet<String> m_dependencies;
+    private boolean m_scopeLimitToAll = false;
     
     //! Store all global definitions.
     private ArrayList<Definition> m_definitions;

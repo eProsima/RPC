@@ -76,12 +76,14 @@ $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$
     $operation.parent.name$_$operation.name$RequestUtils::setTypeData(instance$extractParams(params=operation.inputparam, separatorInicial=", ")$);
     retcode = $operation.name$_Service->execute(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$, getTimeout());
     
+    $if(!operation.oneway)$
     if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
         $if(!operation.oneway)$
         $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);  
         $endif$
     }
+    $endif$
     
     switch (retcode)
     {

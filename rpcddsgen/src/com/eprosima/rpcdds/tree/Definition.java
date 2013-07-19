@@ -9,5 +9,5 @@ public interface Definition
     /*!
      * This function is used to search the first interface.
      */
-    public Interface getFirstInterface();
+    public Interface getFirstInterface(String idlFile);
 }

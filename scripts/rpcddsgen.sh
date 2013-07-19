@@ -64,4 +64,4 @@ else
 	JREHOME="${JAVA_HOME}"
 fi
 
-exec "${JREHOME}/bin/java" -DPATH="$PATH" -DNDDSHOME="$NDDSHOME" -DRPCDDSHOME="$dir/.." -Djava.ext.dirs="$dir/../classes" com.eprosima.rpcdds.RPCDDSGEN -os Linux "-I$dir/../idl" "$@"
+exec "${JREHOME}/bin/java" -Djava.ext.dirs="$dir/../classes" com.eprosima.rpcdds.RPCDDSGEN -os Linux "-I$dir/../idl" "$@"

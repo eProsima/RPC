@@ -30,7 +30,7 @@ public class TypeDeclaration implements Definition, Export
     }
     
     @Override
-    public Interface getFirstInterface()
+    public Interface getFirstInterface(String idlFile)
     {
         return null;
     }
