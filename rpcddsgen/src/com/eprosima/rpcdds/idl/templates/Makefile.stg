@@ -90,13 +90,13 @@ $it.name$Server : \$($it.name$_SERVER_TARGET) \$($it.name$_SERVER_TARGET_Z)
 $endif$
 
 $if(solution.clientside)$	
-\$($it.name$_CLIENT_EXAMPLE_TARGET): output/$example$/Client.o
-	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/Client.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Client -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
+\$($it.name$_CLIENT_EXAMPLE_TARGET): output/$example$/$it.name$ClientExample.o
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ClientExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Client -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
 $endif$
 
 $if(solution.serverside)$	
-\$($it.name$_SERVER_EXAMPLE_TARGET): output/$example$/Server.o
-	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/Server.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Server -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
+\$($it.name$_SERVER_EXAMPLE_TARGET): output/$example$/$it.name$ServerExample.o
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ServerExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Server -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
 $endif$
 
 $if(solution.clientside)$	

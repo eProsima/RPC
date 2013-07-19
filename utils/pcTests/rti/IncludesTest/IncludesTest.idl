@@ -1,0 +1,22 @@
+#include "SameDirectory.idl"
+#include "Util.idl"
+#include "Hide.idl"
+
+module IncludesTestNS
+{
+    struct IncludesTest
+    {
+        long count;
+	Level2NS::Level2 level;
+	SameDirectoryNS::SameDirectory sd;
+    };
+
+    interface IncludesTestIfc
+    {
+        IncludesTest set(in SameDirectoryNS::SameDirectory sd, inout Level2NS::Level2 lvl, out IncludesTest incl);
+
+	UtilNS::Util get();
+
+	void hide(in HideNS::Hide h, out HideNS::Hide ho);
+    };
+};

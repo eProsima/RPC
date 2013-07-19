@@ -71,7 +71,7 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 module returns [Pair<Module, TemplateGroup> returnPair = null]
 {
     Module moduleObject = null;
-    TemplateGroup moduleTemplates = tmanager.createTemplateGroup("module");
+    TemplateGroup moduleTemplates = null;
     TemplateGroup tg = null;
     // Store old namespace.
     String name = null, old_scope = ctx.getScope();
@@ -81,13 +81,18 @@ module returns [Pair<Module, TemplateGroup> returnPair = null]
 	     {
 	       // Create the Module object.
 	       moduleObject = new Module(name);
-	       // Set the module object to the TemplateGroup of the module.
-	       moduleTemplates.setAttribute("module", moduleObject);
+	       
+	       if(ctx.isInScopedFile() || ctx.isScopeLimitToAll())
+           {
+               moduleTemplates = tmanager.createTemplateGroup("module");
+	           // Set the module object to the TemplateGroup of the module.
+	           moduleTemplates.setAttribute("module", moduleObject);
+	       }
 	       // Update to a new namespace.
 	       ctx.setScope(old_scope + name + "::");
 	     }
 	     // Each definition is stored in the Module and each TemplateGroup is set as attribute in the TemplateGroup of the module.
-	     LCURLY! tg=d:definition_list[moduleObject]{moduleTemplates.setAttribute("definition_list", tg);} RCURLY!
+	     LCURLY! tg=d:definition_list[moduleObject]{if(moduleTemplates!=null)moduleTemplates.setAttribute("definition_list", tg);} RCURLY!
 	     {
 	       // Set the old namespace.
 	       ctx.setScope(old_scope);

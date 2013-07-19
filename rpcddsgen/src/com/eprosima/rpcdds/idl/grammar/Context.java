@@ -49,7 +49,7 @@ public class Context
     {
     	int index = 0;
     	
-    	if((index = line.indexOf('"')) > 0)
+    	if(line.charAt(0) == ' ' && (index = line.indexOf('"')) > 0)
     	{
     		String file = line.substring(index + 1, line.indexOf('"', index + 1));
     		m_scopeFile = file;
@@ -68,6 +68,14 @@ public class Context
     public boolean setScopedFileToObject(ScopedObject object)
     {
     	object.setScopeFile(m_scopeFile);
+    	return m_scopeFile.equals(m_file);
+    }
+    
+    /*!
+     * @return True if current call is in scoped file.
+     */
+    public boolean isInScopedFile()
+    {
     	return m_scopeFile.equals(m_file);
     }
 

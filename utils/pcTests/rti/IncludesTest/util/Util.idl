@@ -1,0 +1,12 @@
+module UtilNS
+{
+    struct Util
+    {
+        long count;
+    };
+
+    interface UtilIfc
+    {
+        oneway void mm(in Util ut);
+    };
+};

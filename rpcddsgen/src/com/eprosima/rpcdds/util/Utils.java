@@ -54,7 +54,7 @@ public class Utils
             index = idlFileURL.lastIndexOf('/');
         
         if(index != -1)
-            returnedValue = idlFileURL.substring(0, index);
+            returnedValue = idlFileURL.substring(0, index + 1);
         
         return returnedValue;
     }

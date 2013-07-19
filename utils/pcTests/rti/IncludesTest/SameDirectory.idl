@@ -1,0 +1,15 @@
+#include "Level2.idl"
+
+module SameDirectoryNS
+{
+    struct SameDirectory
+    {
+        long count;
+	Level2NS::Level2 level;
+    };
+
+    interface SameDirectoryIfc
+    {
+        void mk(in SameDirectory sd, out Level2NS::Level2 lvl);
+    };
+};
