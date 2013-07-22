@@ -1,5 +1,5 @@
 #include "SameDirectory.idl"
-#include "Util.idl"
+#include "util/Util.idl"
 #include "Hide.idl"
 
 module IncludesTestNS

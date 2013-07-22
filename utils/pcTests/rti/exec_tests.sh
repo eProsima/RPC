@@ -14,7 +14,7 @@ function execTest
     # Info about test
     echo "EXECUTING $1"
     # Generates the file with RPCDDS script
-    ../../../scripts/rpcdds_rti_pcTests.sh -ppDisable -d output -example $NDDSTARGET "$1/$1.idl"
+    ../../../scripts/rpcdds_rti_pcTests.sh -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     # Copy static test files into output directory
     cp $1/* output/
@@ -63,7 +63,27 @@ fi
 # This script runs all tests in this directory and checks their results.
 for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.svn -prune -o -type d -printf "%f\n"); do
     if [ -e "$dir/exec_test.sh" ] ; then
-        ./exec_test.sh
+        if [ $errorstatus == 0 ]; then
+            if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
+                . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+		$dir/exec_test.sh
+		errorstatus=$?
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+            fi
+        fi
+        # x64 target
+        if [ $errorstatus == 0 ]; then
+            if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
+                . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+		$dir/exec_test.sh
+		errorstatus=$?
+                . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+            fi
+        fi
     else
         # i86 target
         if [ $errorstatus == 0 ]; then

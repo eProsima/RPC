@@ -54,11 +54,11 @@ MultithreadTestClient : $(MultithreadTest_CLIENT_TARGET) $(MultithreadTest_CLIEN
 
 MultithreadTestServer : $(MultithreadTest_SERVER_TARGET) $(MultithreadTest_SERVER_TARGET_Z)
 	
-$(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/Client.o
-	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/Client.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestClient -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
+$(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestClient -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
 
-$(MultithreadTest_SERVER_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/Server.o
-	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/Server.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestServer -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
+$(MultithreadTest_SERVER_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestServer -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
 
 MultithreadTestClientExample : $(MultithreadTest_CLIENT_EXAMPLE_TARGET)
 
