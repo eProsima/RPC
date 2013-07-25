@@ -396,6 +396,9 @@ public class RPCDDSGEN
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
 	        // Load template to generate IDL for topics.
 	        tmanager.addGroup("TopicsIDL");
+	        // Load template to generate source for common types.
+	        tmanager.addGroup("TypesHeader");
+	        tmanager.addGroup("TypesSource");
 	        // Load template to generate Utils for topics.
 	        tmanager.addGroup("UtilsHeader");
 	        tmanager.addGroup("UtilsSource");
@@ -469,13 +472,21 @@ public class RPCDDSGEN
 	        	project.addCommonSrcFile(onlyFileName + "Support.cxx");
 		        
 		        // Zone used to write all files using the generated string templates.
+	        	if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.h", maintemplates.getTemplate("TypesHeader"), m_replace))
+                {
+            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.cxx", maintemplates.getTemplate("TypesSource"), m_replace))
+	                {
+            			project.addCommonIncludeFile(onlyFileName + "T.h");
+        	        	project.addCommonSrcFile(onlyFileName + "T.cxx");
+	                }
+                }
 		        
 		        if(ifc != null)
 		        {
 		            System.out.println("Generating Utils Code...");
 		            
 		            if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
-		            {
+		            {	            	
 		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReplyUtils.h", maintemplates.getTemplate("UtilsHeader"), m_replace))
 		                {
 		                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReplyUtils.cxx", maintemplates.getTemplate("UtilsSource"), m_replace);
@@ -763,7 +774,6 @@ public class RPCDDSGEN
         
         // Get only de IDL file directory.
         String idlFileLocation = Utils.getIDLFileDirectoryOnly(idlFilename);
-        System.out.println("Adding Include: " + idlFileLocation);
         
         if(idlFileLocation != null)
         {

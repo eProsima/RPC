@@ -29,6 +29,19 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<
+void $exception.name$Utils::setTypeData(const $exception.name$ &ex, $exception.name$_t &instance)
+{
+    $exception.members : { member |instance.$member.name$ = ex.$member.name$;}; separator="\n"$
+}
+
+void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.name$_t &data)
+{
+    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
+}
+
+>>
+
 operation(ctx, operation, param_list) ::= <<
 const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(DDS::DomainParticipant *participant)
 {
@@ -49,12 +62,12 @@ const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(D
 
 void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
 {
-    $operation.inputparam : {$createDataHelper(param=it, isRequest="yes")$};separator="\n"$
+    $operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
 }
 
 void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$)
 {
-    $operation.inputparam : {$extractDataHelper(param=it)$};separator="\n"$  
+    $operation.inputparam : {$extractDataHelper(param=it, dataname="data")$};separator="\n"$  
 }
 
 $if(!operation.oneway)$
@@ -77,18 +90,32 @@ const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS
 
 void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
 {
-    $operation.outputparam : {$createDataHelper(param=it)$};separator="\n"$
+    $if(operation.exceptions)$
+    $operation.outputparam : {$createDataHelper(param=it, dataname="instance.unio._u.st")$};separator="\n"$
     $if(operation.rettypeparam)$
-    $createDataHelper(param=operation.rettypeparam)$        
+    $createDataHelper(param=operation.rettypeparam, dataname="instance.unio._u.st")$        
+    $endif$
+    $else$
+    $operation.outputparam : {$createDataHelper(param=it, dataname="instance")$};separator="\n"$
+    $if(operation.rettypeparam)$
+    $createDataHelper(param=operation.rettypeparam, dataname="instance")$        
+    $endif$
     $endif$
 }
 
 void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
 {
     retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
-    $operation.outputparam : {$extractDataHelper(param=it, isReply="yes")$};separator="\n"$
+    $if(operation.exceptions)$
+    $operation.outputparam : {$extractDataHelper(param=it, dataname="data.unio._u.st", isReply="yes")$};separator="\n"$
     $if(operation.rettypeparam)$
-    $extractDataHelper(param=operation.rettypeparam, isReply="yes")$        
+    $extractDataHelper(param=operation.rettypeparam, dataname="data.unio._u.st", isReply="yes")$        
+    $endif$
+    $else$
+    $operation.outputparam : {$extractDataHelper(param=it, dataname="data", isReply="yes")$};separator="\n"$
+    $if(operation.rettypeparam)$
+    $extractDataHelper(param=operation.rettypeparam, dataname="data", isReply="yes")$        
+    $endif$
     $endif$  
 }
 
@@ -111,11 +138,11 @@ enum_type(ctx, enum) ::= <<>>
 /*!
  * Extra string templates. Utils.
  */
-createDataHelper(param, isRequest) ::= <<
-instance.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;
+createDataHelper(param, dataname, isRequest) ::= <<
+$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;
 >>
 
-extractDataHelper(param, isReply) ::= <<
+extractDataHelper(param, dataname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$
 $if(param.typecode.primitiveInArguments)$
@@ -127,20 +154,20 @@ $else$
 $varComplexDel(variable=param)$
 $endif$
 $endif$
-$param.name$ = data.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
 $else$
 $if(param.output)$
 $if(param.typecode.primitiveInArguments)$
 $if(param.typecode.string)$
-$param.name$ = strdup(data.$param.name$);
+$param.name$ = strdup($dataname$.$param.name$);
 $else$
-$param.name$ = data.$param.name$;
+$param.name$ = $dataname$.$param.name$;
 $endif$
 $else$
 $extractDH(type=param.typecode.stTypename, name=param.name)$
 $endif$
 $else$
-$param.name$ = data.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
 $endif$
 $endif$
 >>

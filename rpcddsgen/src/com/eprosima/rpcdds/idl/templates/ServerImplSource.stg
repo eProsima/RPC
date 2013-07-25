@@ -4,6 +4,7 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ServerImpl.cxx"], description=["This source file contains the definition of the skeleton for all interfaces."])$
 
 #include "$ctx.filename$ServerImpl.h"
+#include "$ctx.filename$T.h"
 
 $definitions; separator="\n"$
 >>
@@ -31,6 +32,8 @@ $export_list$
 export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
+
+exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.parent.name$ServerImpl::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)

@@ -1,6 +1,6 @@
 package com.eprosima.rpcdds.typecode;
 
-public abstract class Member
+public class Member
 {
     public Member()
     {

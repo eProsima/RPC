@@ -66,6 +66,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
 { 
@@ -83,6 +85,7 @@ void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *s
         $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$srv->_impl->$operation.name$($extractParams(params=operation.parameters)$);
 
         $if(!operation.oneway)$
+        $if(operation.exceptions)$replyData.unio._d = 0;$endif$
         $operation.parent.name$_$operation.name$ReplyUtils::setTypeData(replyData$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
         replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
         replyData.header.rpcddsRetMsg = $charCasting()$"";
@@ -90,6 +93,19 @@ void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *s
         service->sendReply(requestData, &replyData);
         $endif$
     }
+    $operation.exceptions : { exception |
+    catch(const $exception.scopedname$ &ex)
+    {
+        $if(!operation.oneway)$
+        replyData.unio._d = $i$;
+        $exception.scopedname$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
+        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = $charCasting()$"";
+
+        service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    }; separator="\n"$
     catch(const eProsima::RPCDDS::ServerInternalException &ex)
     {
         $if(!operation.oneway)$

@@ -31,6 +31,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 $if(!operation.oneway)$
 $operation.parent.name$_$operation.name$Task::$operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj,
@@ -62,6 +64,31 @@ void $operation.parent.name$_$operation.name$Task::execute()
     $endif$
     eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
     
+    $if(operation.exceptions)$
+    switch (m_reply.unio._d)
+    {
+        case 0:
+            $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(m_reply, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
+            if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
+		    {
+		        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+		    }
+		    else
+		    {
+		        if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
+		            getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointerConst()$));
+		    }
+            break;
+        $operation.exceptions : { exception |
+        case $i$:
+            {
+            $exception.scopedname$ ex;
+            $exception.scopedname$Utils::extractTypeData(ex, m_reply.unio._u.$exception.name$_ex);
+            getObject().on_exception(ex);
+            }
+        }; separator="\n"$
+    }
+    $else$
     $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(m_reply, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
         
     if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
@@ -73,12 +100,20 @@ void $operation.parent.name$_$operation.name$Task::execute()
         if(retcode == eProsima::RPCDDS::SERVER_INTERNAL_ERROR)
             getObject().on_exception(eProsima::RPCDDS::ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointerConst()$));
     }
+    $endif$
 }
 
 void $operation.parent.name$_$operation.name$Task::on_exception(const eProsima::RPCDDS::SystemException &ex)
 {
     getObject().on_exception(ex);
 }
+
+$if(operation.exceptions)$
+void $operation.parent.name$_$operation.name$Task::on_exception(const eProsima::RPCDDS::UserException &ex)
+{
+    getObject().on_exception(ex);
+}
+$endif$
 
 $endif$
 >>

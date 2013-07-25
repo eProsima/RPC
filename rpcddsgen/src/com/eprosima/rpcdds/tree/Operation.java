@@ -2,6 +2,7 @@ package com.eprosima.rpcdds.tree;
 
 import java.util.ArrayList;
 
+import com.eprosima.rpcdds.idl.grammar.Context;
 import com.eprosima.rpcdds.typecode.TypeCode;
 
 public class Operation implements Export
@@ -10,6 +11,8 @@ public class Operation implements Export
     {
         m_name = name;
         m_params = new ArrayList<Param>();
+        m_exceptions = new ArrayList<com.eprosima.rpcdds.tree.Exception>();
+        m_unresolvedExceptions = new ArrayList<String>();
     }
     
     public String getName()
@@ -30,6 +33,12 @@ public class Operation implements Export
     public boolean isOperation()
     {
         return true;
+    }
+    
+    @Override
+    public boolean isException()
+    {
+        return false;
     }
     
     public void setOneway(boolean b)
@@ -104,11 +113,72 @@ public class Operation implements Export
     {
         return m_rettypeparam;
     }
+    
+    public void addException(com.eprosima.rpcdds.tree.Exception exception)
+    {
+    	m_exceptions.add(exception);
+    }
+    
+    public ArrayList<com.eprosima.rpcdds.tree.Exception> getExceptions()
+    {
+    	return m_exceptions;
+    }
+    
+    public void addUnresolvedException(String ename)
+    {
+    	m_unresolvedExceptions.add(ename);
+    }
+    
+    @Override
+    public boolean resolve(Context ctx)
+    {
+    	//Resolve unresolved exceptions. This unresolved exceptions should be exceptions of the parent interface.
+    	
+    	if(m_parent != null)
+    	{
+    		if(m_parent instanceof Interface)
+    		{
+    			Interface ifc = (Interface)m_parent;
+    			
+    			for(int count = 0; count < m_unresolvedExceptions.size(); ++count)
+    			{
+    				com.eprosima.rpcdds.tree.Exception ex = ifc.getException(ctx.getScope(), m_unresolvedExceptions.get(count));
+    				
+    				if(ex != null)
+    				{
+    					
+    					m_exceptions.add(ex);
+    				}
+    				else
+    				{
+    					System.out.println("ERROR: The definition of exception " + m_unresolvedExceptions.get(count) +
+    							" was not found");
+    					//TODO
+    					//return false;
+    				}
+    			}
+    			
+    			return true;
+    		}
+    		else
+    		{
+    			System.out.println("ERROR<Operation::resolve>: Parent is not an interface");
+    		}
+    	}
+    	else
+    	{
+    		System.out.println("ERROR<Operation::resolve>: Not parent for operation");
+    	}
+    	
+    	return false;
+    }
 
     private String m_name = null;
     private Object m_parent = null;
     private boolean m_isOneway = false;
     private ArrayList<Param> m_params;
+    private ArrayList<com.eprosima.rpcdds.tree.Exception> m_exceptions;
+    private ArrayList<String> m_unresolvedExceptions;
     private TypeCode m_rettype = null;
     private Param m_rettypeparam = null;
 }

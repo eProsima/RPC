@@ -16,6 +16,18 @@
 
 group main;
 
+memberComplexInit(member) ::= <<
+$if(member)$
+memset(&$member.name$, 0, sizeof($member.typecode.stTypename$));
+$endif$
+>>
+
+memberComplexCopy(member, dataname) ::= <<
+$if(member)$
+$member.typecode.stTypename$_copy(&$member.name$, &$dataname$.$member.name$);
+$endif$
+>>
+
 varComplexDecl(variable, create) ::= <<
 $if(variable)$
 $variable.typecode.stTypename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.stTypename$));$endif$
@@ -86,6 +98,8 @@ keyIDLdefine() ::= <<
 >>
 
 levelIDLdefine() ::= <<//@top-level true>>
+
+nolevelIDLdefine() ::= <<//@top-level false>>
 
 archMakeDefines() ::= <<
  -DRTI_LINUX -DRTI_UNIX

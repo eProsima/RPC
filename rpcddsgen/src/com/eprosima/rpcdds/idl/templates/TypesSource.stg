@@ -1,0 +1,100 @@
+group TypesSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "T.cxx"], description=["This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
+
+#include "$ctx.filename$T.h"
+#include <string.h>
+
+$definitions; separator="\n"$
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<
+$exception.name$::$exception.name$() : eProsima::RPCDDS::UserException()
+{
+    $exception.members : { member |$memberInit(member=member)$}; separator="\n"$
+}
+
+$exception.name$::$exception.name$(const $exception.name$ &ex) : eProsima::RPCDDS::UserException(ex)
+{
+    $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+}
+
+$exception.name$::$exception.name$($exception.name$&& ex) : eProsima::RPCDDS::UserException(std::move(ex))
+{
+    $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+}
+
+$exception.name$& $exception.name$::operator=(const $exception.name$ &ex)
+{
+	eProsima::RPCDDS::UserException::operator=(ex);
+	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+	return *this;
+}
+
+$exception.name$& $exception.name$::operator=($exception.name$&& ex)
+{
+	eProsima::RPCDDS::UserException::operator=(std::move(ex));
+	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+	return *this;
+}
+
+$exception.name$::~$exception.name$() throw()
+{
+    $exception.members : { member |$varDel(variable=member)$}; separator="\n"$
+}
+
+void $exception.name$::raise() const
+{
+	throw *this;
+}
+
+>>
+
+operation(ctx, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+copy(member, dataname) ::= <<
+$if(member.typecode.primitiveInArguments)$
+$if(member.typecode.string)$
+if($member.name$ != NULL)
+    free($member.name$);
+$member.name$ = strdup($dataname$.$member.name$);
+$else$
+$member.name$ = $dataname$.$member.name$;
+$endif$
+$else$
+$memberComplexCopy(...)$
+$endif$
+>>

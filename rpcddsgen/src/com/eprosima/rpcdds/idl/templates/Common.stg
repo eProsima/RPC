@@ -48,6 +48,16 @@ paramDeclsOnlyOutByRef(params, separatorInicial) ::= <<
 $if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
 >>
 
+memberInit(member) ::= <<
+$if(member)$
+$if(member.typecode.primitiveInArguments)$
+$member.name$ = $member.typecode.initialValue$;
+$else$
+$memberComplexInit(...)$
+$endif$
+$endif$
+>>
+
 varDecl(variable, create) ::= <<
 $if(variable)$
 $if(variable.typecode.primitiveInArguments)$

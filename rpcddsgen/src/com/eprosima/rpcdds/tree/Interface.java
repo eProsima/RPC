@@ -1,6 +1,7 @@
 package com.eprosima.rpcdds.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Interface extends ExportContainer implements Definition
 {
@@ -38,6 +39,12 @@ public class Interface extends ExportContainer implements Definition
         return null;
     }
     
+    @Override
+    public boolean isInterface()
+    {
+    	return true;
+    }
+    
     /*!
      * @brief This function returns the first operation of the interface.
      */
@@ -49,6 +56,40 @@ public class Interface extends ExportContainer implements Definition
                 m_firstoperation = (Operation)getExports().get(count);
         }
         return m_firstoperation;
+    }
+    
+    /*!
+     * @brief This function returns the exception defined inside the interface.
+     */
+    public Exception getException(String currentScope, String ename)
+    {
+    	com.eprosima.rpcdds.tree.Exception exception = null;
+    	
+    	for(int count = 0; exception == null && count < getExports().size(); ++count)
+        {
+    		int lastIndex = -1;
+    		
+    		if(getExports().get(count).isException())
+    		{
+                String tmpname = ((com.eprosima.rpcdds.tree.Exception)getExports().get(count)).getScopedname();
+                
+                if(tmpname.equals(ename))
+                {
+                	exception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
+                }
+                else
+                {
+                	// Probar si no tiene scope, con el scope actual.
+                    if(exception == null && ((lastIndex = ename.lastIndexOf("::")) == -1) &&
+                    		tmpname.equals(currentScope + ename))
+                    {
+                    	exception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
+                    }	
+                }
+    		}
+        }
+    	
+    	return exception;
     }
 
     private String m_name = null;

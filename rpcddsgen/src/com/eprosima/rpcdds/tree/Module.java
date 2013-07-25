@@ -36,6 +36,12 @@ public class Module extends DefinitionContainer implements Definition
         
         return returnedValue;
     }
+    
+    @Override
+    public boolean isInterface()
+    {
+    	return false;
+    }
 
     private String m_name = null;
     private Object m_parent = null;

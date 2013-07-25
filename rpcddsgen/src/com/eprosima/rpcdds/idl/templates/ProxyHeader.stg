@@ -9,7 +9,8 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 #include "client/Client.h"
 #include "$ctx.filename$RequestReplyUtils.h"
 #include "$ctx.filename$ClientRPCSupport.h"
-#include "exceptions/Exception.h"
+#include "exceptions/SystemException.h"
+#include "exceptions/UserException.h"
 
 $definitions; separator="\n"$
 
@@ -87,6 +88,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
@@ -127,7 +130,10 @@ class $operation.parent.name$_$operation.name$CallbackHandler
          *
          * \param ex The exception that will be launched.
          */
-        virtual void on_exception(const eProsima::RPCDDS::Exception &ex) = 0;
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex) = 0;
+        $if(operation.exceptions)$
+        virtual void on_exception(const eProsima::RPCDDS::UserException &ex) = 0;
+        $endif$
 };
 
 $endif$

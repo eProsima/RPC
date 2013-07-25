@@ -1,0 +1,74 @@
+group TypesHeader;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "T.h"], description=["This header file contains the declaration of common types in ", ctx.filename, ".idl"])$
+
+#ifndef _$ctx.filename;format="toUpper"$T_H_
+#define _$ctx.filename;format="toUpper"$T_H_
+
+#include "exceptions/UserException.h"
+$ReqRepSIncludes(filename=ctx.filename)$
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$T_H_
+>>
+
+module(module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<
+class $exception.name$ : public eProsima::RPCDDS::UserException
+{
+public:
+    
+	$exception.name$();
+
+	$exception.name$(const $exception.name$ &ex);
+
+	$exception.name$($exception.name$&& ex);
+
+	$exception.name$& operator=(const $exception.name$ &ex);
+
+	$exception.name$& operator=($exception.name$&& ex);
+	
+	virtual ~$exception.name$() throw();
+
+	virtual void raise() const;
+	
+	// Exception members
+	$exception.members : { member | $member.typecode.stTypename$ $member.name$; }; separator="\n"$
+};
+
+>>
+
+operation(ctx, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

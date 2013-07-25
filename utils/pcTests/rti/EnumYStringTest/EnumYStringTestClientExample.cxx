@@ -7,6 +7,8 @@
 #include "EnumYStringTestRequestReplyPlugin.h"
 #include "exceptions/Exceptions.h"
 
+#include <iostream>
+
 int main(int argc, char **argv)
 {
     EnumYStringTestProxy *proxy = new EnumYStringTestProxy("EnumYStringTestService");
@@ -25,13 +27,13 @@ int main(int argc, char **argv)
                 v2 != VALOR1 ||
                 v1 != VALOR1)
         {
-            printf("TEST FAILED<getEnum>: Wrong values\n");
+            std::cout << "TEST FAILED<getEnum>: Wrong values" << std::endl;
             _exit(-1);
         }       
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getEnum>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getEnum>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -49,13 +51,13 @@ int main(int argc, char **argv)
                 strcmp(s2, "PRUEBAPRUEBA2") != 0 ||
                 strcmp(s1, "PRUEBA") != 0)
         {
-            printf("TEST FAILED<getString>: Wrong values\n");
+            std::cout << "TEST FAILED<getString>: Wrong values" << std::endl;
             _exit(-1);
         }       
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getString>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getString>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -78,13 +80,13 @@ int main(int argc, char **argv)
                 strcmp(sb2, "PRUEBAPRUEBA2") != 0 ||
                 strcmp(sb1, "PRUEBA") != 0)
         {
-            printf("TEST FAILED<getStringBounded>: Wrong values\n");
+            std::cout << "TEST FAILED<getStringBounded>: Wrong values" << std::endl;
             _exit(-1);
         }    
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getStringBounded>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getStringBounded>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -93,7 +95,7 @@ int main(int argc, char **argv)
     if(sb3 != NULL) DDS::String_free(sb3);    
     if(getStringBoundedRetValue != NULL) DDS::String_free(getStringBoundedRetValue);
 
-    printf("TEST SUCCESFULLY\n");
+    std::cout << "TEST SUCCESFULLY" << std::endl;
 
     delete(proxy);
 

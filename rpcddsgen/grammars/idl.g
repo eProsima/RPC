@@ -48,10 +48,11 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
     Pair<TypeDeclaration, TemplateGroup> tdtg = null;
     Pair<Module, TemplateGroup> mtg = null;
     Pair<Interface, TemplateGroup> itg = null;
+    Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> etg = null;
 }
 	:   (   tdtg=type_dcl SEMI! {dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}  // Type Declaration
 	    |   const_dcl SEMI!
-	    |   except_dcl SEMI!
+	    |   etg=except_dcl SEMI! {dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second()); ctx.addException(etg.first().getScopedname(), etg.first());} // Exception. It is added as global exception.
 	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());} // Interface
 	    |   mtg=module SEMI! {dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());} // Module
 	    |   (("abstract" | "custom")? "valuetype") => value SEMI!
@@ -140,11 +141,12 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
  	    "interface"^
  	    name=identifier
  	    {
-           // Create the Module object.
+           // Create the Interface object.
            interfaceObject = new Interface(ctx.getScope(), name);
            if(ctx.setScopedFileToObject(interfaceObject) || ctx.isScopeLimitToAll())
            {
                interfaceTemplates = tmanager.createTemplateGroup("interface");
+               interfaceTemplates.setAttribute("ctx", ctx);
                // Set the the interface object to the TemplateGroup of the module.
                interfaceTemplates.setAttribute("interface", interfaceObject);
            }
@@ -172,7 +174,7 @@ interface_body [ExportContainer ec] returns [TemplateGroup elTemplates = tmanage
     {
         Pair<Export, TemplateGroup> etg = null;
     }
-	:   ( etg=export{ec.add(etg.first()); elTemplates.setAttribute("exports", etg.second());} )*
+	:   ( etg=export{ec.add(etg.first()); etg.first().resolve(ctx); elTemplates.setAttribute("exports", etg.second());} )*
 	;
 
 /*!
@@ -185,10 +187,11 @@ export returns [Pair<Export, TemplateGroup> etg = null]
         // TODO Cambiar esto. No me gusta la forma.
         Pair<TypeDeclaration, TemplateGroup> tetg = null;
         Pair<Operation, TemplateGroup> oetg = null;
+        Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> eetg = null;
     }
 	:   (   tetg=type_dcl SEMI! {etg = new Pair<Export, TemplateGroup>(tetg.first(), tetg.second());}  // Type Declaration
 	    |   const_dcl SEMI!
-	    |   except_dcl SEMI!
+	    |   eetg=except_dcl SEMI! {etg = new Pair<Export, TemplateGroup>(eetg.first(), eetg.second());}  // Exception
 	    |   attr_dcl SEMI!
 	    |   oetg=op_dcl SEMI! {etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}  // Operation
 	    |   type_id_dcl SEMI!
@@ -205,8 +208,12 @@ interface_name
 	:   scoped_name
 	;
 
-scoped_name_list
-	:    scoped_name (COMMA! scoped_name)*
+scoped_name_list returns [Vector<String> retlist = null]
+{
+   String sname = null;
+   retlist = new Vector<String>();
+}
+	:    sname=scoped_name{retlist.add(sname);} (COMMA! sname=scoped_name{retlist.add(sname);})*
 	;
 
 
@@ -752,7 +759,7 @@ member_list [StructTypeCode structTP]
 	       declvector=member
 	       {
 	           for(int count = 0; count < declvector.size(); ++count)
-	               structTP.addMember(new StructMember(declvector.get(count).second(), declvector.get(count).first()));
+	               structTP.addMember(new Member(declvector.get(count).second(), declvector.get(count).first()));
 	       }
 	    )+
 	;
@@ -975,15 +982,44 @@ attr_dcl
 	|   attr_spec
 	;
 
-except_dcl
+except_dcl returns [Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> returnPair = null]
+{
+    String name = null;
+    com.eprosima.rpcdds.tree.Exception exceptionObject = null;
+    TemplateGroup exTemplates = null;
+}
 	:   "exception"^
-	    identifier
-	    LCURLY! opt_member_list RCURLY!
+	    name=identifier
+	    {
+	       // Create the Exception object.
+           exceptionObject = new com.eprosima.rpcdds.tree.Exception(ctx.getScope(), name);
+           if(ctx.setScopedFileToObject(exceptionObject) || ctx.isScopeLimitToAll())
+           {
+               exTemplates = tmanager.createTemplateGroup("exception");
+               exTemplates.setAttribute("ctx", ctx);
+               // Set the the exception object to the TemplateGroup of the module.
+               exTemplates.setAttribute("exception", exceptionObject);
+           }
+	    }
+	    LCURLY! opt_member_list[exceptionObject] RCURLY!
+	    {
+           // Create the returned data.
+           returnPair = new Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup>(exceptionObject, exTemplates);
+        }
 	;
 
 
-opt_member_list
-	:    (member)*
+opt_member_list [com.eprosima.rpcdds.tree.Exception exceptionObject]
+{
+    Vector<Pair<String, TypeCode>> declvector = null;
+}
+	:  (
+	      declvector=member
+	      {
+	          for(int count = 0; count < declvector.size(); ++count)
+	              exceptionObject.addMember(new Member(declvector.get(count).second(), declvector.get(count).first()));
+	      }
+	   )*
 	;
 
  /*!
@@ -998,6 +1034,7 @@ op_dcl returns [Pair<Operation, TemplateGroup> returnPair = null]
         String name = "";
         boolean oneway = false;
         TypeCode retType = null;
+        Vector<String> exceptions = null;
     }
 	:   (oneway=op_attribute)?
 	    retType=op_type_spec
@@ -1015,7 +1052,22 @@ op_dcl returns [Pair<Operation, TemplateGroup> returnPair = null]
            if(oneway) operationObject.setOneway(true);
         }
 	    tpl=parameter_dcls[operationObject]
-	    (raises_expr)?
+	    (
+	       exceptions=raises_expr
+	       {
+	          // Search global exceptions and add them to the operation.
+	          for(int count = 0; count < exceptions.size(); ++count)
+	          {
+	             String ename = exceptions.get(count);
+	             com.eprosima.rpcdds.tree.Exception exception = ctx.getException(ename);
+	             
+	             if(exception != null)
+	                operationObject.addException(exception);
+	             else
+	                operationObject.addUnresolvedException(ename);
+	          }
+	       }
+	    )?
 	    (context_expr)?
 	    {
 	       // Store the parameter list template group in the operation template group.
@@ -1075,8 +1127,8 @@ param_dcl returns [Pair<Param, TemplateGroup> returnPair = null]
 // 	|   "inout"
 // 	;
 
-raises_expr
-	:   "raises"^ LPAREN! scoped_name_list RPAREN!
+raises_expr returns [Vector<String> exlist = null]
+	:   "raises"^ LPAREN! exlist=scoped_name_list RPAREN!
 	;
 
 context_expr

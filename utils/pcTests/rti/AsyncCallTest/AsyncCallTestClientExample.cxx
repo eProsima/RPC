@@ -7,6 +7,8 @@
 #include "AsyncCallTestRequestReplyPlugin.h"
 #include "exceptions/Exceptions.h"
 
+#include <iostream>
+
 class GetLongHandler : public AsyncCallTest_getLongCallbackHandler
 {
     public:
@@ -19,7 +21,7 @@ class GetLongHandler : public AsyncCallTest_getLongCallbackHandler
                     getLong_ret != 1 ||
                     lo2 != 3)
             {
-                printf("TEST FAILED<getLong>: Wrong values\n");
+                std::cout << "TEST FAILED<getLong>: Wrong values" << std::endl;
                 m_state = 2;
                 return;
             }
@@ -27,9 +29,9 @@ class GetLongHandler : public AsyncCallTest_getLongCallbackHandler
             m_state = 1;
         }
 
-        void on_exception(const eProsima::RPCDDS::Exception &ex)
+        void on_exception(const eProsima::RPCDDS::SystemException &ex)
         {
-            printf("TEST FAILED<on_exception>: %s\n", ex.what());
+            std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
         }
 
@@ -54,7 +56,7 @@ class GetBooleanHandler : public AsyncCallTest_getBooleanCallbackHandler
                     getBoolean_ret != RTI_TRUE ||
                     bo2 != RTI_TRUE)
             {
-                printf("TEST FAILED<getBoolean>: Wrong values\n");
+                std::cout << "TEST FAILED<getBoolean>: Wrong values" << std::endl;
                 m_state = 2;
                 return;
             }
@@ -62,9 +64,9 @@ class GetBooleanHandler : public AsyncCallTest_getBooleanCallbackHandler
             m_state = 1;
         }
 
-        void on_exception(const eProsima::RPCDDS::Exception &ex)
+        void on_exception(const eProsima::RPCDDS::SystemException &ex)
         {
-            printf("TEST FAILED<on_exception>: %s\n", ex.what());
+            std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
         }
 
@@ -90,7 +92,7 @@ class GetStringHandler : public AsyncCallTest_getStringCallbackHandler
                     strcmp(getString_ret, "PRUEBA") != 0 ||
                     strcmp(s2, "PRUEBAPRUEBA2") != 0)
             {
-                printf("TEST FAILED<getString>: Wrong values\n");
+                std::cout << "TEST FAILED<getString>: Wrong values" << std::endl;
                 m_state = 2;
                 return;
             }       
@@ -98,9 +100,9 @@ class GetStringHandler : public AsyncCallTest_getStringCallbackHandler
             m_state = 1;
         }
    
-        void on_exception(const eProsima::RPCDDS::Exception &ex)
+        void on_exception(const eProsima::RPCDDS::SystemException &ex)
         {
-            printf("TEST FAILED<on_exception>: %s\n", ex.what());
+            std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
         }
 
@@ -124,7 +126,7 @@ class DuplicateHandler : public AsyncCallTest_duplicateCallbackHandler
             if(duplicate_ret.dato != 10 ||
                     strcmp(duplicate_ret.message, "HOLA") != 0)
             {
-                printf("TEST FAILED<duplicate>: Wrong values\n");
+                std::cout << "TEST FAILED<duplicate>: Wrong values" << std::endl;
                 m_state = 2;
                 return;
             }
@@ -132,9 +134,9 @@ class DuplicateHandler : public AsyncCallTest_duplicateCallbackHandler
             m_state = 1;
         }
    
-        void on_exception(const eProsima::RPCDDS::Exception &ex)
+        void on_exception(const eProsima::RPCDDS::SystemException &ex)
         {
-            printf("TEST FAILED<on_exception>: %s\n", ex.what());
+            std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
         }
 
@@ -172,9 +174,9 @@ int main(int argc, char **argv)
         if(getLong_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getLong_async>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getLong_async>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -198,9 +200,9 @@ int main(int argc, char **argv)
         if(getBoolean_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getBoolean_async>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getBoolean_async>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -224,9 +226,9 @@ int main(int argc, char **argv)
         if(getString_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getString_async>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getString_async>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -257,9 +259,9 @@ int main(int argc, char **argv)
         if(duplicate_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<duplicate_async>: %s\n", ex.what());
+        std::cout << "TEST FAILED<duplicate_async>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -290,9 +292,9 @@ int main(int argc, char **argv)
 		proxy->getString_async(cgetString_handler, cs1, cs2);
 		proxy->duplicate_async(cduplicate_handler, cev);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<closing>: %s\n", ex.what());
+        std::cout << "TEST FAILED<closing>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -300,7 +302,7 @@ int main(int argc, char **argv)
     if(cs2 != NULL) DDS::String_free(cs2);  
     Structure_finalize(&cev);   
 
-    printf("TEST SUCCESFULLY\n");
+    std::cout << "TEST SUCCESFULLY" << std::endl;
 
     delete(proxy);
 

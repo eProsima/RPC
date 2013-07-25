@@ -13,11 +13,6 @@ public class StructTypeCode extends MemberedTypeCode
         super(TypeCode.KIND_STRUCT, scope, name);
     }
     
-    public void addMember(StructMember member)
-    {
-        addMember((Member)member);
-    }
-    
     @Override
     public String getTypename()
     {

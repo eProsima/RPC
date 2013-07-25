@@ -9,6 +9,7 @@ $fileHeader(file=[ctx.filename, "Proxy.cxx"], description=["This source file con
 #include "transports/TCPTransport.h"
 $ReqRepIncludes(filename=ctx.filename)$
 #include "$ctx.filename$AsyncSupport.h"
+#include "$ctx.filename$T.h"
 #include "exceptions/Exceptions.h"
 
 $definitions; separator="\n"$
@@ -62,6 +63,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
@@ -79,12 +82,31 @@ $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$
     $if(!operation.oneway)$
     if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
     {
-        $if(!operation.oneway)$
-        $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);  
-        $endif$
-    }
-    $endif$
     
+    $if(operation.exceptions)$
+        switch (retInstance.unio._d)
+        {
+            case 0:
+                $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
+                break;
+            $operation.exceptions : { exception |
+            case $i$:
+                {
+                $exception.scopedname$ ex;
+                $exception.scopedname$Utils::extractTypeData(ex, retInstance.unio._u.$exception.name$_ex);
+                ex.raise();
+                }
+            }; separator="\n"$
+            default:
+                throw eProsima::RPCDDS::ClientInternalException("Error extracting information from server");
+        }
+    $else$
+        $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
+    
+    $endif$
+    }
+    
+    $endif$  
     switch (retcode)
     {
         case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:

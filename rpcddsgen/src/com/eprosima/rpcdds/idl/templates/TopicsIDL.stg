@@ -29,6 +29,15 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<
+/**
+ * Structure that encapsulates the exception $exception.scopedname$.
+ */
+struct $exception.name$_t{
+   $exception.members:{member | $member.typecode.typename$ $member.name$;}; separator="\n"$
+}; $nolevelIDLdefine()$
+>>
+
 operation(ctx, operation, param_list) ::= <<
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /**
@@ -40,14 +49,42 @@ struct $operation.parent.name$_$operation.name$Request{
 }; $levelIDLdefine()$
 
 $if(!operation.oneway)$
+$if(operation.exceptions)$
+$if([operation.outputparam, operation.rettype])$
+struct  $operation.parent.name$_$operation.name$Reply_st
+{
+   $operation.outputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
+   $if(operation.rettype)$$operation.rettype.typename$ $operation.name$_ret;$endif$
+}; $nolevelIDLdefine()$
+$endif$
+
+union $operation.parent.name$_$operation.name$Reply_union switch (long)
+{
+$if([operation.outputparam, operation.rettype])$
+   case  0:
+      $operation.parent.name$_$operation.name$Reply_st st;
+$endif$
+   $operation.exceptions : { exception |
+   case $i$:
+      $exception.scopedname$_t $exception.name$_ex;
+   }; separator="\n"$
+}; $nolevelIDLdefine()$
+
+$endif$
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /**
  * Topic used to receive/send replies for the procedure $operation.name$.
  */
 struct $operation.parent.name$_$operation.name$Reply{
     ReplyHeader header;
+$if(operation.exceptions)$
+    $operation.parent.name$_$operation.name$Reply_union unio;
+    
+$else$
     $operation.outputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
     $if(operation.rettype)$$operation.rettype.typename$ $operation.name$_ret;$endif$
+    
+$endif$
 }; $levelIDLdefine()$
 $endif$
 

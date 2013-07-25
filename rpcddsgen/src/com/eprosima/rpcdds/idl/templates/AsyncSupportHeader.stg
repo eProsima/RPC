@@ -33,6 +33,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 $if(!operation.oneway)$
 /**
@@ -57,7 +59,10 @@ class $operation.parent.name$_$operation.name$Task : public eProsima::RPCDDS::As
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);
+        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);        
+        $if(operation.exceptions)$
+        virtual void on_exception(const eProsima::RPCDDS::UserException &ex);
+        $endif$
         
         /**
          * \brief This function returns the object used by the task.

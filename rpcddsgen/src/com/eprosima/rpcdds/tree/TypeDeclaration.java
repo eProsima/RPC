@@ -1,5 +1,6 @@
 package com.eprosima.rpcdds.tree;
 
+import com.eprosima.rpcdds.idl.grammar.Context;
 import com.eprosima.rpcdds.typecode.TypeCode;
 
 public class TypeDeclaration implements Definition, Export
@@ -24,7 +25,14 @@ public class TypeDeclaration implements Definition, Export
         return m_parent;
     }
     
+    @Override
     public boolean isOperation()
+    {
+        return false;
+    }
+    
+    @Override
+    public boolean isException()
     {
         return false;
     }
@@ -33,6 +41,18 @@ public class TypeDeclaration implements Definition, Export
     public Interface getFirstInterface(String idlFile)
     {
         return null;
+    }
+    
+    @Override
+    public boolean isInterface()
+    {
+    	return false;
+    }
+    
+    @Override
+    public boolean resolve(Context ctx)
+    {
+    	return true;
     }
     
     private TypeCode m_typecode = null;

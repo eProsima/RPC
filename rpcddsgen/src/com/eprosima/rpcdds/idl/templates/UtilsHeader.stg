@@ -7,6 +7,7 @@ $fileHeader(file=[ctx.filename, "RequestReplyUtils.h"], description=["This heade
 #define _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 
 #include "utils/Messages.h"
+#include "$ctx.filename$T.h"
 $ReqRepSIncludes(filename=ctx.filename)$
 
 $ddsIncludes()$
@@ -36,6 +37,32 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<
+/**
+ * \brief This class contains helpful operations to use created structure for $exception.scopedname$ exception.
+ */
+class $exception.name$Utils
+{
+    public:
+    
+        /**
+         * \brief This function sets the members of the exception $exception.scopedname$ into the structure $exception.name$_t attributes.
+         *
+         * \param exception Reference to the exception that contains the information.
+         * \param instance Reference to the structure $exception.name$_t that will be filled.
+         */
+        static void setTypeData(const $exception.name$ &ex, $exception.name$_t &instance);
+        
+        /**
+         * \brief This function extracts the $exception.scopedname$ from the structure $exception.name$_t.
+         *
+         * \param exception Reference to the exception that will be filled.
+         * \param data Reference to the structure $exception.name$_t that contains the exception's data.
+         */
+        static void extractTypeData($exception.name$ &ex, $exception.name$_t &data);
+};
+>>
+
 operation(ctx, operation, param_list) ::= <<
 /**
  * \brief This class contains helpful operations for the generated topic $operation.parent.name$_$operation.name$Request.
@@ -55,14 +82,14 @@ class $operation.parent.name$_$operation.name$RequestUtils
         /**
          * \brief This function sets the parameters into the members of the structure $operation.parent.name$_$operation.name$Request.
          *
-         * \param instance Pointer to the structure $operation.parent.name$_$operation.name$Request that will be filled. Cannot be NULL.
+         * \param instance Reference to the structure $operation.parent.name$_$operation.name$Request that will be filled.
          */
         static void setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
         
         /**
          * \brief This function extracts the parameters from the members of the structure $operation.parent.name$_$operation.name$Request.
          *
-         * \param data Pointer to the structure $operation.parent.name$_$operation.name$Request that contains the parameters' data. Cannot be NULL.
+         * \param data Reference to the structure $operation.parent.name$_$operation.name$Request that contains the parameters' data..
          */
         static void extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$);
 };
@@ -86,14 +113,14 @@ class $operation.parent.name$_$operation.name$ReplyUtils
         /**
          * \brief This function sets the parameters into the members of the structure $operation.parent.name$_$operation.name$Reply.
          *
-         * \param instance Pointer to the structure $operation.parent.name$_$operation.name$Reply that will be filled. Cannot be NULL.
+         * \param instance Reference to the structure $operation.parent.name$_$operation.name$Reply that will be filled.
          */
         static void setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
         
         /**
          * \brief This function extracts the parameters from the members of the structure $operation.parent.name$_$operation.name$Reply.
          *
-         * \param data Pointer to the structure $operation.parent.name$_$operation.name$Reply that contains the parameters' data. Cannot be NULL.
+         * \param data Reference to the structure $operation.parent.name$_$operation.name$Reply that contains the parameters' data.
          * \param retcode Internal message returned from the server.
          */
         static void extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);

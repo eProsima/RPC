@@ -18,6 +18,7 @@ public class Context
         m_types = new HashMap<String, TypeCode>();
         m_dependencies = new HashSet<String>();
         m_definitions = new ArrayList<Definition>();
+        m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
     }
 
     public void setFilename(String filename)
@@ -104,6 +105,9 @@ public class Context
         return m_typelimitation;
     }
 
+    /*!
+     * @brief This function adds a global typecode to the context.
+     */
     public void addTypeCode(String name, TypeCode typecode)
     {
         TypeCode prev = m_types.put(name, typecode);
@@ -112,7 +116,10 @@ public class Context
         if(prev != null)
         	System.out.println("Warning: Redefined type " + name);
     }
-
+     
+    /*!
+     * @brief This function tries to retrieve a global typecode.
+     */
     public TypeCode getTypeCode(String name)
     {
         int lastIndex = -1;
@@ -122,6 +129,35 @@ public class Context
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
             returnedValue = m_types.get(m_scope + name);
+        }
+
+        return returnedValue;
+    }
+    
+    /*!
+     * @brief This function adds a global exception to the context.
+     */
+    public void addException(String name, com.eprosima.rpcdds.tree.Exception exception)
+    {
+    	com.eprosima.rpcdds.tree.Exception prev = m_exceptions.put(name, exception);
+        
+        // TODO: Exception.
+        if(prev != null)
+        	System.out.println("Warning: Redefined exception " + name);
+    }
+     
+    /*!
+     * @brief This function tries to retrieve a global typecode.
+     */
+    public com.eprosima.rpcdds.tree.Exception getException(String name)
+    {
+        int lastIndex = -1;
+        com.eprosima.rpcdds.tree.Exception returnedValue = m_exceptions.get(name);
+
+        // Probar si no tiene scope, con el scope actual.
+        if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
+        {
+            returnedValue = m_exceptions.get(m_scope + name);
         }
 
         return returnedValue;
@@ -175,6 +211,7 @@ public class Context
     private String m_sersym = ">>";
     private String m_typelimitation = null;
     private HashMap<String, TypeCode> m_types = null;
+    private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
     private HashSet<String> m_dependencies;
     private boolean m_scopeLimitToAll = false;
     

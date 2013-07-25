@@ -85,6 +85,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 static void $operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
 

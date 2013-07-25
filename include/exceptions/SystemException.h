@@ -44,6 +44,12 @@ namespace eProsima
 
 			/// \brief This function throws the object as exception.
 			virtual void raise() const = 0;
+			/**
+			 * \brief This function returns the error message.
+			 *
+			 * \return The error message.
+			 */
+			virtual const char* what() const throw();
 
 		protected:
 		    
@@ -106,6 +112,8 @@ namespace eProsima
 			SystemException& operator=(SystemException&& ex);
 
 		private:
+
+			std::string m_message;
 
 			int32_t m_minor;
         };

@@ -5,6 +5,7 @@ $fileHeader(file="Client.cxx", description=["This source file shows a simple exa
 
 #include "$ctx.filename$Proxy.h"
 $ReqRepIncludes(filename=ctx.filename)$
+#include "$ctx.filename$T.h"
 #include "exceptions/Exceptions.h"
 
 #include <iostream>
@@ -42,7 +43,13 @@ int main(int argc, char **argv)
     {
         $if(ctx.firstInterface.firstOperation.rettypeparam)$        $ctx.firstInterface.firstOperation.rettypeparam.name$ = $else$        $endif$proxy->$ctx.firstInterface.firstOperation.name$($extractParams(params=ctx.firstInterface.firstOperation.parameters)$);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    $if(ctx.firstInterface.firstOperation.exceptions)$
+    catch(eProsima::RPCDDS::UserException &ex)
+    {
+        std::cout << "User exception" << std::endl;
+    }
+    $endif$
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
     }
@@ -78,6 +85,8 @@ $export_list$
 export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
+
+exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $param_list$

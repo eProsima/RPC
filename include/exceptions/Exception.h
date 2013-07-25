@@ -31,28 +31,12 @@ namespace eProsima
 			/// \brief This function throws the object as exception.
 			virtual void raise() const = 0;
 
-			/**
-			 * \brief This function returns the error message.
-			 *
-			 * \return The error message.
-			 */
-			virtual const char* what() const throw();
-
 		protected:
 
 			/**
 			 * \brief Default constructor.
-			 *
-			 * \param message A error message. This message is copied.
 			 */
-			Exception(const std::string &message);
-
-			/**
-			 * \brief Default constructor.
-			 *
-			 * \param message A error message. This message is moved.
-			 */
-			Exception(std::string&& message);
+			Exception();
 
 			/**
 			 * \brief Default copy constructor.
@@ -81,10 +65,6 @@ namespace eProsima
 			 * \param ex Exception that will be moved.
 			 */
 			Exception& operator=(Exception&&);
-
-		private:
-
-			std::string m_message;
         };
     } // namespace RPCDDS
 } // namespace eProsima

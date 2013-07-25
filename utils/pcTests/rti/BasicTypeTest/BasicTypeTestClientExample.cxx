@@ -7,6 +7,8 @@
 #include "BasicTypeTestRequestReplyPlugin.h"
 #include "exceptions/Exceptions.h"
 
+#include <iostream>
+
 int main(int argc, char **argv)
 {
     BasicTypeTestProxy *proxy = new BasicTypeTestProxy("BasicTypeTestService");
@@ -25,13 +27,13 @@ int main(int argc, char **argv)
                 oc2 != 3 ||
                 oc1 != 1)
         {
-            printf("TEST FAILED<getOctet>: Wrong values\n");
+            std::cout << "TEST FAILED<getOctet>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getOctet>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getOctet>: " <<  ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -49,13 +51,13 @@ int main(int argc, char **argv)
                 ch2 != 3 ||
                 ch1 != 1)
         {
-            printf("TEST FAILED<getChar>: Wrong values\n");
+            std::cout << "TEST FAILED<getChar>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getChar>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getChar>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -73,13 +75,13 @@ int main(int argc, char **argv)
                 wch2 != 3 ||
                 wch1 != 1)
         {
-            printf("TEST FAILED<getWChar>: Wrong values\n");
+            std::cout << "TEST FAILED<getWChar>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getWChar>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getWChar>: %s" << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -97,13 +99,13 @@ int main(int argc, char **argv)
                 sh2 != 3 ||
                 sh1 != 1)
         {
-            printf("TEST FAILED<getShort>: Wrong values\n");
+            std::cout << "TEST FAILED<getShort>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getShort>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getShort>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -121,13 +123,13 @@ int main(int argc, char **argv)
                 ush2 != 3 ||
                 ush1 != 1)
         {
-            printf("TEST FAILED<getUShort>: Wrong values\n");
+            std::cout << "TEST FAILED<getUShort>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getUShort>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getUShort>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -145,13 +147,13 @@ int main(int argc, char **argv)
                 lo2 != 3 ||
                 lo1 != 1)
         {
-            printf("TEST FAILED<getLong>: Wrong values\n");
+            std::cout << "TEST FAILED<getLong>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getLong>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getLong>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -169,13 +171,13 @@ int main(int argc, char **argv)
                 ulo2 != 3 ||
                 ulo1 != 1)
         {
-            printf("TEST FAILED<getULong>: Wrong values\n");
+            std::cout << "TEST FAILED<getULong>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getULong>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getULong>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -193,13 +195,13 @@ int main(int argc, char **argv)
                 llo2 != 3 ||
                 llo1 != 1)
         {
-            printf("TEST FAILED<getLLong>: Wrong values\n");
+            std::cout << "TEST FAILED<getLLong>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getLLong>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getLLong>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -217,13 +219,13 @@ int main(int argc, char **argv)
                 ullo2 != 3 ||
                 ullo1 != 1)
         {
-            printf("TEST FAILED<getULLong>: Wrong values\n");
+            std::cout << "TEST FAILED<getULLong>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getULLong>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getULLong>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -241,13 +243,13 @@ int main(int argc, char **argv)
                 fl2 != 3.0 ||
                 fl1 != 1.0)
         {
-            printf("TEST FAILED<getFloat>: Wrong values\n");
+            std::cout << "TEST FAILED<getFloat>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getFloat>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getFloat>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -265,13 +267,13 @@ int main(int argc, char **argv)
                 do2 != 3.0 ||
                 do1 != 1.0)
         {
-            printf("TEST FAILED<getDouble>: Wrong values\n");
+            std::cout << "TEST FAILED<getDouble>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getDouble>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getDouble>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -289,17 +291,17 @@ int main(int argc, char **argv)
                 bo2 != RTI_TRUE ||
                 bo1 != RTI_TRUE)
         {
-            printf("TEST FAILED<getBoolean>: Wrong values\n");
+            std::cout << "TEST FAILED<getBoolean>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
-        printf("TEST FAILED<getBoolean>: %s\n", ex.what());
+        std::cout << "TEST FAILED<getBoolean>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
-    printf("TEST SUCCESFULLY\n");
+    std::cout << "TEST SUCCESFULLY" << std::endl;
 
     delete(proxy);
 

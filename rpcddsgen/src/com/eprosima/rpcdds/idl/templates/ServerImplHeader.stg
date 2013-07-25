@@ -53,6 +53,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 

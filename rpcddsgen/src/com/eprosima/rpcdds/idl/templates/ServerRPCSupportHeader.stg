@@ -34,6 +34,8 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
+exception(ctx, exception) ::= <<>>
+
 operation(ctx, operation, param_list) ::= <<
 $if(!operation.oneway)$GENERIC_SERVER_RPC$else$GENERIC_SERVER_ONEWAY_RPC$endif$($operation.parent.name$_$operation.name$ServerRPC$if(!operation.oneway)$, $operation.parent.name$_$operation.name$ReplyDataWriter$endif$, $operation.parent.name$_$operation.name$RequestDataReader);
 
