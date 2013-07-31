@@ -125,7 +125,7 @@
 		<antxr base="${src.java}${file.separator}com/eprosima/rpcdds/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" /-->
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
-		<javac srcdir="${src.java}" destdir="${build.classes}">
+		<javac target="1.6" srcdir="${src.java}" destdir="${build.classes}">
 			<classpath refid="build.classpath" />
 		</javac>
 		<copy todir="${build.classes}">
