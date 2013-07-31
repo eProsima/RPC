@@ -4,6 +4,7 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This source file contains the definition of helpful functions for the DDS messages for interface ", ctx.filename, "."])$
 
 #include "$ctx.filename$RequestReplyUtils.h"
+$ctx.includeDependencies : { include |#include "$include$Plugin.h"}; separator="\n"$
 $ReqRepIncludes(filename=ctx.filename)$
 
 $definitions; separator="\n"$
@@ -43,6 +44,8 @@ void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.nam
 >>
 
 operation(ctx, operation, param_list) ::= <<
+$operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionUtil(operation=operation, exception=exception)$$endif$}; separator="\n"$
+
 const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(DDS::DomainParticipant *participant)
 {
     const char *typeName = NULL;
@@ -170,4 +173,18 @@ $else$
 $param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
 $endif$
 $endif$
+>>
+
+createExceptionUtil(operation, exception) ::= <<
+void $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData(const $exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &instance)
+{
+    $exception.members : { member |instance.$member.name$ = ex.$member.name$;}; separator="\n"$
+}
+
+void $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData($exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &data)
+{
+    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
+}
+
+
 >>

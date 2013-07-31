@@ -11,5 +11,12 @@ public interface Definition
      */
     public Interface getFirstInterface(String idlFile);
     
+    /*!
+     * This function is used to search the first exception.
+     */
+    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile);
+    
     public boolean isInterface();
+    
+    public boolean isException();
 }

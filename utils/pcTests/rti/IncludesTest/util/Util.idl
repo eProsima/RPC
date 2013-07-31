@@ -5,6 +5,11 @@ module UtilNS
         long count;
     };
 
+    exception UtilEx
+    {
+        string msg;
+    };
+
     interface UtilIfc
     {
         oneway void mm(in Util ut);

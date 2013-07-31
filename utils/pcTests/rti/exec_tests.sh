@@ -74,7 +74,7 @@ fi
 
 # This script runs all tests in this directory and checks their results.
 for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.svn -prune -o -type d -printf "%f\n"); do
-    if [ "$test_selected" == "$dir" ]; then
+    if [ "$test_selected" == "" ] || [ "$test_selected" == "$dir" ]; then
         if [ -e "$dir/exec_test.sh" ] ; then
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then

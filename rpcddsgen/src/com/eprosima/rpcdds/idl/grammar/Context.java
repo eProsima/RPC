@@ -8,6 +8,7 @@ import com.eprosima.rpcdds.tree.Definition;
 import com.eprosima.rpcdds.tree.Interface;
 import com.eprosima.rpcdds.tree.ScopedObject;
 import com.eprosima.rpcdds.typecode.TypeCode;
+import com.eprosima.rpcdds.util.Utils;
 
 public class Context
 {
@@ -15,9 +16,11 @@ public class Context
     {
         m_filename = filename;
         m_file = file;
+        m_directoryFile = Utils.getIDLFileDirectoryOnly(file);
         m_types = new HashMap<String, TypeCode>();
         m_dependencies = new HashSet<String>();
         m_definitions = new ArrayList<Definition>();
+        m_includedependency = new HashSet<String>();
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
     }
 
@@ -68,7 +71,7 @@ public class Context
      */
     public boolean setScopedFileToObject(ScopedObject object)
     {
-    	object.setScopeFile(m_scopeFile);
+    	object.setScopeFile(m_scopeFile, m_scopeFile.equals(m_file));
     	return m_scopeFile.equals(m_file);
     }
     
@@ -172,7 +175,34 @@ public class Context
     }
     
     /*!
-     * @brief This function is used in this project ot get the first discovered interface.
+     * @brief This function is used to know if a project has to generate the Utils.
+     */
+    public boolean isProjectNeedUtils()
+    {
+    	Interface ifc = null;
+    	com.eprosima.rpcdds.tree.Exception ex = null;;
+    	
+    	if((ifc = getFirstInterface()) != null || (ex = getFirstException()) != null)
+    		return true;
+    	
+    	return false;
+    }
+    
+    /*!
+     * @brief This function is used to know if a project has to generate the Types.
+     */
+    public boolean isProjectNeedTypes()
+    {
+    	com.eprosima.rpcdds.tree.Exception ex = null;;
+    	
+    	if((ex = getFirstException()) != null)
+    		return true;
+    	
+    	return false;
+    }
+    
+    /*!
+     * @brief This function is used in this project to get the first discovered interface.
      */
     public Interface getFirstInterface()
     { 
@@ -184,14 +214,55 @@ public class Context
         return m_firstinterface;
     }
     
+    /*!
+     * @brief This function is used in this project to get the first discovered exception.
+     */
+    public com.eprosima.rpcdds.tree.Exception getFirstException()
+    {
+    	for(int count = 0; m_firstexception == null && count < m_definitions.size(); ++count)
+        {
+    		m_firstexception = m_definitions.get(count).getFirstException(m_scopeFile);
+        }
+        
+        return m_firstexception;
+    }
+    
+    /*!
+     * @brief This function get the library dependecies of a project.
+     */
     public HashSet getDependencies()
     {
     	return m_dependencies;
     }
     
+    /*!
+     * @brief This function add a new library dependency to the project.
+     */
     public void addDependency(String dependency)
     {
     	m_dependencies.add(dependency);
+    }
+    
+    /*!
+     * @brief This function add a new include dependency to the project.
+     * The include dependencies are added without the .idl extension.
+     */
+    public void addIncludeDependency(String dependency)
+    {
+    	// Remove .idl extension.
+        String dep = dependency.substring(0, dependency.length() - 4);
+        // Remove directory if it is the same than main IDL file.
+        dep = dep.replaceFirst("^" + m_directoryFile, "");
+    	m_includedependency.add(dep);
+    }
+    
+    /*!
+     * @brief This function is used in the stringtemplates. For these reason this function
+     * returns an ArrayList
+     */
+    public ArrayList<String> getIncludeDependencies()
+    {
+    	return new ArrayList<String>(m_includedependency);
     }
     
     public boolean isScopeLimitToAll()
@@ -206,6 +277,7 @@ public class Context
 
     private String m_filename = "";
     private String m_file = "";
+    private String m_directoryFile = "";
     private String m_scope = "";
     private String m_scopeFile = "";
     private String m_sersym = ">>";
@@ -213,10 +285,13 @@ public class Context
     private HashMap<String, TypeCode> m_types = null;
     private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
     private HashSet<String> m_dependencies;
+    private HashSet<String> m_includedependency;
     private boolean m_scopeLimitToAll = false;
     
     //! Store all global definitions.
     private ArrayList<Definition> m_definitions;
     //! Cache the first interface.
     private Interface m_firstinterface = null;
+  //! Cache the first exception.
+    private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
 }

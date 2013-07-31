@@ -14,6 +14,8 @@
 
 #include "MultiInterfacesTestServerImpl.h"
 
+#include "ndds/ndds_namespace_cpp.h"
+
 namespace BasicTypes
 {
     DDS_Octet BasicTypeTestServerImpl::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3)

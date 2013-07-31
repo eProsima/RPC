@@ -7,8 +7,12 @@ $fileHeader(file=[ctx.filename, "RequestReplyUtils.h"], description=["This heade
 #define _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 
 #include "utils/Messages.h"
-#include "$ctx.filename$T.h"
 $ReqRepSIncludes(filename=ctx.filename)$
+$ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
+$if(ctx.projectNeedTypes)$
+#include "$ctx.filename$T.h"
+
+$endif$
 
 $ddsIncludes()$
 
@@ -64,6 +68,8 @@ class $exception.name$Utils
 >>
 
 operation(ctx, operation, param_list) ::= <<
+$operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionUtil(operation=operation, exception=exception)$$endif$}; separator="\n"$
+
 /**
  * \brief This class contains helpful operations for the generated topic $operation.parent.name$_$operation.name$Request.
  */
@@ -140,3 +146,15 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
+
+// Utils
+createExceptionUtil(operation, exception) ::= <<
+class $operation.parent.name$_$operation.name$_$exception.name$Utils
+{
+public:
+    static void setTypeData(const $exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &instance);
+
+    static void extractTypeData($exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &data);
+};
+
+>>

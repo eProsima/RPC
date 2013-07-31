@@ -13,8 +13,11 @@
  */
 
 #include "IncludesTestProxy.h"
-#include "IncludesTestRequestReplyPlugin.h"
 #include "exceptions/Exceptions.h"
+#include "IncludesTestRequestReplyPlugin.h"
+
+#include "SameDirectoryT.h"
+#include "util/UtilT.h"
 
 #include <iostream>
 
@@ -63,11 +66,11 @@ int main(int argc, char **argv)
                 !set_ret.sd.count == 100 ||
                 !set_ret.sd.level.count == 100)
         {
-            printf("TEST FAILED<set>: Wrong values\n");
+            std::cout << "TEST FAILED<set>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
@@ -88,13 +91,14 @@ int main(int argc, char **argv)
 
         if(get_ret.count != 1010)
         {
-            printf("TEST FAILED<get>: Wrong values\n");
+            std::cout << "TEST FAILED<get>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(eProsima::RPCDDS::SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
+        _exit(-1);
     }
     
     UtilNS::Util_finalize(&get_ret);
@@ -113,7 +117,7 @@ int main(int argc, char **argv)
 
         if(ho.count != 3043)
         {
-            printf("TEST FAILED<hide>: Wrong values\n");
+            std::cout << "TEST FAILED<hide>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
@@ -125,6 +129,28 @@ int main(int argc, char **argv)
 
     HideNS::Hide_finalize(&h);
     HideNS::Hide_finalize(&ho);
+
+    ZetaNS::Zeta z, zeta_ret;
+    ZetaNS::Zeta_initialize(&z);
+    ZetaNS::Zeta_initialize(&zeta_ret);
+
+    z.count = 1021;
+
+    try
+    {
+        zeta_ret = proxy->zeta(z);
+
+        if(zeta_ret.count != 1021)
+        {
+            std::cout << "TEST FAILED<zeta>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(eProsima::RPCDDS::Exception &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        _exit(-1);
+    }
     
     delete(proxy);
    

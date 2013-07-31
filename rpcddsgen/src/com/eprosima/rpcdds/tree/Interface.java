@@ -31,6 +31,7 @@ public class Interface extends ExportContainer implements Definition
         return m_parent;
     }
     
+    @Override
     public Interface getFirstInterface(String idlFile)
     {
         if(getScopeFile().equals(idlFile) && getFirstOperation() != null)
@@ -40,9 +41,38 @@ public class Interface extends ExportContainer implements Definition
     }
     
     @Override
+    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    {
+    	
+    	if(getScopeFile().equals(idlFile))
+            return getFirstException();
+        
+        return null;
+    }
+    
+    @Override
     public boolean isInterface()
     {
     	return true;
+    }
+    
+    @Override
+    public boolean isException()
+    {
+    	return false;
+    }
+    
+    /*!
+     * @brief This function returns the first exception of the interface.
+     */
+    public com.eprosima.rpcdds.tree.Exception getFirstException()
+    {
+    	for(int count = 0; m_firstexception == null && count < getExports().size(); ++count)
+        {
+            if(getExports().get(count).isException())
+            	m_firstexception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
+        }
+        return m_firstexception;
     }
     
     /*!
@@ -98,4 +128,6 @@ public class Interface extends ExportContainer implements Definition
     
     //! Cache the first operation.
     private Operation m_firstoperation = null;
+  //! Cache the first exception.
+    private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
 }

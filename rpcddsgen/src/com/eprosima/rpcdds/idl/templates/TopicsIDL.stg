@@ -10,11 +10,13 @@ $definitions; separator="\n"$
 >>
 
 module(module, definition_list) ::= <<
+$if(module.thereAraValidDefinitions)$
 module $module.name$
 {
     $definition_list$
 };
 
+$endif$
 >>
 
 definition_list(definitions) ::= <<
@@ -39,6 +41,8 @@ struct $exception.name$_t{
 >>
 
 operation(ctx, operation, param_list) ::= <<
+$operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionStruct(operation=operation, exception=exception)$$endif$}; separator="\n"$
+
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /**
  * Topic used to receive/send requests for the procedure $operation.name$.
@@ -66,7 +70,13 @@ $if([operation.outputparam, operation.rettype])$
 $endif$
    $operation.exceptions : { exception |
    case $i$:
+      $if(exception.inScope)$
       $exception.scopedname$_t $exception.name$_ex;
+      
+      $else$
+      $operation.parent.name$_$operation.name$_$exception.name$_t $exception.name$_ex;
+      
+      $endif$
    }; separator="\n"$
 }; $nolevelIDLdefine()$
 
@@ -101,3 +111,15 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
+
+// Utils
+
+createExceptionStruct(operation, exception) ::= <<
+/**
+ * Structure that encapsulates the exception $exception.scopedname$.
+ */
+struct $operation.parent.name$_$operation.name$_$exception.name$_t{
+   $exception.members:{member | $member.typecode.typename$ $member.name$;}; separator="\n"$
+}; $nolevelIDLdefine()$
+
+>>

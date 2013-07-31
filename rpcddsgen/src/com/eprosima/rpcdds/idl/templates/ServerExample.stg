@@ -1,7 +1,7 @@
 group ServiceExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file="Server.cxx", description=["This source file shows a simple example of how to create a server for an interface."])$
+$fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
 
 #include "$ctx.filename$Server.h"
 #include "strategies/ThreadPoolStrategy.h"

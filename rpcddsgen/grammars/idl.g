@@ -1000,6 +1000,11 @@ except_dcl returns [Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> retu
                // Set the the exception object to the TemplateGroup of the module.
                exTemplates.setAttribute("exception", exceptionObject);
            }
+           // Its a dependency.
+           else
+           {
+               ctx.addIncludeDependency(ctx.getScopeFile());
+           }
 	    }
 	    LCURLY! opt_member_list[exceptionObject] RCURLY!
 	    {

@@ -32,6 +32,16 @@ public class Exception extends ScopedObject implements Export, Definition
     }
 	
 	@Override
+    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    {
+    	
+    	if(getScopeFile().equals(idlFile))
+            return this;
+        
+        return null;
+    }
+	
+	@Override
 	public boolean isInterface()
     {
     	return false;

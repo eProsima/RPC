@@ -13,6 +13,11 @@
  */
 
 #include "IncludesTestServerImpl.h"
+#include "SameDirectoryT.h"
+#include "util/UtilT.h"
+namespace ZetaNS
+{
+};
 
 namespace IncludesTestNS
 {
@@ -48,5 +53,12 @@ namespace IncludesTestNS
         ho.count = h.count;
     } 
 
+    ZetaNS::Zeta IncludesTestIfcServerImpl::zeta(/*in*/ const ZetaNS::Zeta& z)
+    {
+        ZetaNS::Zeta zeta_ret;
 
+        zeta_ret.count = z.count;
+       
+        return zeta_ret;
+    } 
 };

@@ -4,7 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ServerImpl.cxx"], description=["This source file contains the definition of the skeleton for all interfaces."])$
 
 #include "$ctx.filename$ServerImpl.h"
+$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
+$if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
+$endif$
 
 $definitions; separator="\n"$
 >>

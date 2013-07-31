@@ -8,6 +8,13 @@ $fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source f
 #include "exceptions/ServerInternalException.h"
 $ReqRepIncludes(filename=ctx.filename)$
 
+$ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$RequestReplyUtils.h"}; separator="\n"$
+$if(ctx.projectNeedTypes)$
+#include "$ctx.filename$T.h"
+
+$endif$
+#include "$ctx.filename$RequestReplyUtils.h"
+
 $definitions; separator="\n"$
 >>
 
@@ -83,7 +90,13 @@ void $operation.parent.name$_$operation.name$Task::execute()
         case $i$:
             {
             $exception.scopedname$ ex;
+            $if(exception.inScope)$
             $exception.scopedname$Utils::extractTypeData(ex, m_reply.unio._u.$exception.name$_ex);
+                
+            $else$
+            $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData(ex, m_reply.unio._u.$exception.name$_ex);
+                
+            $endif$
             getObject().on_exception(ex);
             }
         }; separator="\n"$

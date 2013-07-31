@@ -449,9 +449,12 @@ public class RPCDDSGEN
 	        
 	        if(returnedValue)
 	        {
-	        	// TODO Interfaces of other include files not take in count.
-	        	// Check there was interfaces in the processed IDL file.
+	        	// Check if the project needs to generate Utils.
+	        	boolean needsUtils = ctx.isProjectNeedUtils();
+	        	// Check there were interfaces in the processed IDL file.
 		        Interface ifc = ctx.getFirstInterface();
+		        // Check if the project needs to generate Types.
+		        boolean needsTypes = ctx.isProjectNeedTypes();
 		        
 		        if(ifc != null)
 		        {
@@ -471,17 +474,20 @@ public class RPCDDSGEN
 	        	project.addCommonIncludeFile(onlyFileName + "Support.h");
 	        	project.addCommonSrcFile(onlyFileName + "Support.cxx");
 		        
-		        // Zone used to write all files using the generated string templates.
-	        	if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.h", maintemplates.getTemplate("TypesHeader"), m_replace))
-                {
-            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.cxx", maintemplates.getTemplate("TypesSource"), m_replace))
+	        	if(returnedValue && needsTypes)
+	        	{
+			        // Zone used to write all files using the generated string templates.
+		        	if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.h", maintemplates.getTemplate("TypesHeader"), m_replace))
 	                {
-            			project.addCommonIncludeFile(onlyFileName + "T.h");
-        	        	project.addCommonSrcFile(onlyFileName + "T.cxx");
+	            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.cxx", maintemplates.getTemplate("TypesSource"), m_replace))
+		                {
+	            			project.addCommonIncludeFile(onlyFileName + "T.h");
+	        	        	project.addCommonSrcFile(onlyFileName + "T.cxx");
+		                }
 	                }
-                }
+	        	}
 		        
-		        if(ifc != null)
+		        if(returnedValue && needsUtils)
 		        {
 		            System.out.println("Generating Utils Code...");
 		            

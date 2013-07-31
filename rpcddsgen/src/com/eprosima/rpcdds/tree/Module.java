@@ -38,7 +38,42 @@ public class Module extends DefinitionContainer implements Definition
     }
     
     @Override
+    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    {
+    	com.eprosima.rpcdds.tree.Exception returnedValue = null;
+        
+        for(int count = 0; returnedValue == null && count < getDefinitions().size(); ++count)
+        {
+            returnedValue = getDefinitions().get(count).getFirstException(idlFile);
+        }
+        
+        return returnedValue;
+    }
+    
+    /*!
+     * @brief This function is used in stringtemplates to not generate module in some cases.
+     */
+    public boolean isThereAraValidDefinitions()
+    {
+    	boolean returnedValue = false;
+    	
+		for(int count = 0; !returnedValue && count < getDefinitions().size(); ++count)
+        {
+            returnedValue = getDefinitions().get(count).isInterface() ||
+            		getDefinitions().get(count).isException();
+        }
+    	
+    	return returnedValue;
+    }
+    
+    @Override
     public boolean isInterface()
+    {
+    	return false;
+    }
+    
+    @Override
+    public boolean isException()
     {
     	return false;
     }

@@ -15,7 +15,6 @@
 #include "UserExceptionsServerImpl.h"
 #include "UserExceptionsT.h"
 
-
 namespace Alfa
 {
 

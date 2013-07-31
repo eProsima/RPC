@@ -1,5 +1,5 @@
 CPP= g++
-CPPFLAGS = -c -Wall -fpic -m32 -std=c++11
+CPPFLAGS = -c -Wall -fpic -m32 -std=c++0x
 LN= g++
 AR=ar
 LDFLAGS= -m32
@@ -17,54 +17,84 @@ LIBS =  -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 
 
+MessageHeader_TARGET= lib/i86Linux2.6gcc4.4.5/libMessageHeader.so
+MessageHeader_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libMessageHeader.a
+MessageHeader_COMMON_SRC_CXXFILES = MessageHeader.cxx \
+	MessageHeaderPlugin.cxx \
+	MessageHeaderSupport.cxx
+
+MessageHeader_COMMON_SRC_CPPFILES=
+
+MessageHeader_COMMONOBJS    = $(MessageHeader_COMMON_SRC_CXXFILES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o) $(MessageHeader_COMMON_SRC_CPPFILES:%.cpp=output/i86Linux2.6gcc4.4.5/%.o)
+OBJS+= $(MessageHeader_COMMONOBJS)
+
+$(MessageHeader_TARGET): $(MessageHeader_COMMONOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MessageHeader_TARGET) $(MessageHeader_COMMONOBJS) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 
+
+$(MessageHeader_TARGET_Z): $(MessageHeader_COMMONOBJS)
+	$(AR) -cru $(MessageHeader_TARGET_Z) $(MessageHeader_COMMONOBJS)
+MessageHeader: $(MessageHeader_TARGET) $(MessageHeader_TARGET_Z)
+
+
+MultithreadTest_TARGET= lib/i86Linux2.6gcc4.4.5/libMultithreadTest.so
+MultithreadTest_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libMultithreadTest.a
 MultithreadTest_CLIENT_TARGET= lib/i86Linux2.6gcc4.4.5/libMultithreadTestClient.so
 MultithreadTest_CLIENT_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libMultithreadTestClient.a
+MultithreadTest_CLIENT_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/MultithreadTestClientExample
 MultithreadTest_SERVER_TARGET= lib/i86Linux2.6gcc4.4.5/libMultithreadTestServer.so
 MultithreadTest_SERVER_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libMultithreadTestServer.a
-MultithreadTest_CLIENT_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/MultithreadTestClientExample
 MultithreadTest_SERVER_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/MultithreadTestServerExample
+MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTest.cxx \
+	MultithreadTestPlugin.cxx \
+	MultithreadTestSupport.cxx \
+	MultithreadTestRequestReplyUtils.cxx \
+	MultithreadTestRequestReply.cxx \
+	MultithreadTestRequestReplyPlugin.cxx \
+	MultithreadTestRequestReplySupport.cxx
 
-MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTestRequestReply.cxx MultithreadTest.cxx MultithreadTestRequestReplyPlugin.cxx \
-                MultithreadTestPlugin.cxx MultithreadTestRequestReplySupport.cxx MultithreadTestSupport.cxx \
-                MultithreadTestRequestReplyUtils.cxx MessageHeader.cxx MessageHeaderPlugin.cxx \
-                MessageHeaderSupport.cxx
 MultithreadTest_COMMON_SRC_CPPFILES=
 
-MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx MultithreadTestClientRPCSupport.cxx MultithreadTestAsyncSupport.cxx
-MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx MultithreadTestServerImpl.cxx MultithreadTestServerRPCSupport.cxx 
-
+MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx \
+	MultithreadTestClientRPCSupport.cxx \
+	MultithreadTestAsyncSupport.cxx
+MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx \
+	MultithreadTestServerRPCSupport.cxx \
+	MultithreadTestServerImpl.cxx
 MultithreadTest_COMMONOBJS    = $(MultithreadTest_COMMON_SRC_CXXFILES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o) $(MultithreadTest_COMMON_SRC_CPPFILES:%.cpp=output/i86Linux2.6gcc4.4.5/%.o)
 MultithreadTest_CLIENTOBJS    = $(MultithreadTest_CLIENTSOURCES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o)
 MultithreadTest_SERVEROBJS    = $(MultithreadTest_SERVERSOURCES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o)
 OBJS+= $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS) $(MultithreadTest_SERVEROBJS)
 
-$(MultithreadTest_CLIENT_TARGET): $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS)
-	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_CLIENT_TARGET) $(LIBS) $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS)
+$(MultithreadTest_TARGET): $(MultithreadTest_COMMONOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_TARGET) $(MultithreadTest_COMMONOBJS) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lMessageHeader
 
-$(MultithreadTest_CLIENT_TARGET_Z): $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS)
-	$(AR) -cru $(MultithreadTest_CLIENT_TARGET_Z) $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS)
+$(MultithreadTest_TARGET_Z): $(MultithreadTest_COMMONOBJS)
+	$(AR) -cru $(MultithreadTest_TARGET_Z) $(MultithreadTest_COMMONOBJS)
+$(MultithreadTest_CLIENT_TARGET): $(MultithreadTest_CLIENTOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_CLIENT_TARGET) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTest $(MultithreadTest_CLIENTOBJS)
+
+$(MultithreadTest_CLIENT_TARGET_Z): $(MultithreadTest_CLIENTOBJS)
+	$(AR) -cru $(MultithreadTest_CLIENT_TARGET_Z) $(MultithreadTest_CLIENTOBJS)
 	
-$(MultithreadTest_SERVER_TARGET): $(MultithreadTest_COMMONOBJS) $(MultithreadTest_SERVEROBJS)
-	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_SERVER_TARGET) $(LIBS) $(MultithreadTest_COMMONOBJS) $(MultithreadTest_SERVEROBJS)
+$(MultithreadTest_SERVER_TARGET): $(MultithreadTest_SERVEROBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_SERVER_TARGET) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTest $(MultithreadTest_SERVEROBJS)
 
 $(MultithreadTest_SERVER_TARGET_Z): $(MultithreadTest_COMMONOBJS) $(MultithreadTest_SERVEROBJS)
-	$(AR) -cru $(MultithreadTest_SERVER_TARGET_Z) $(MultithreadTest_COMMONOBJS) $(MultithreadTest_SERVEROBJS)
-	
+	$(AR) -cru $(MultithreadTest_SERVER_TARGET_Z) $(MultithreadTest_SERVEROBJS)
 MultithreadTestClient : $(MultithreadTest_CLIENT_TARGET) $(MultithreadTest_CLIENT_TARGET_Z)
-
+	
 MultithreadTestServer : $(MultithreadTest_SERVER_TARGET) $(MultithreadTest_SERVER_TARGET_Z)
 	
 $(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o
-	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestClient -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
-
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
+	
 $(MultithreadTest_SERVER_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o
-	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestServer -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
-
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread-mt
+	
 MultithreadTestClientExample : $(MultithreadTest_CLIENT_EXAMPLE_TARGET)
-
+	
 MultithreadTestServerExample : $(MultithreadTest_SERVER_EXAMPLE_TARGET)
-
-MultithreadTest: MultithreadTestClient MultithreadTestServer MultithreadTestClientExample MultithreadTestServerExample
+MultithreadTest: $(MultithreadTest_TARGET) $(MultithreadTest_TARGET_Z) MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
 
 
 output/i86Linux2.6gcc4.4.5/%.o:%.cxx
@@ -73,9 +103,11 @@ output/i86Linux2.6gcc4.4.5/%.o:%.cxx
 output/i86Linux2.6gcc4.4.5/%.o:%.cpp
 	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-.PHONY: MultithreadTestClient MultithreadTestServer MultithreadTestClientExample MultithreadTestServerExample
+.PHONY: MessageHeader  \
+	MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
 
-all: $(DIRECTORIES) MultithreadTest
+all: $(DIRECTORIES) MessageHeader \
+	MultithreadTest
 
 clean:
 	@rm -f $(OBJS)

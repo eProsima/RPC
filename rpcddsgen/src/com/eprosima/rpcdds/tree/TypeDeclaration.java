@@ -44,6 +44,12 @@ public class TypeDeclaration implements Definition, Export
     }
     
     @Override
+    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    {
+        return null;
+    }
+    
+    @Override
     public boolean isInterface()
     {
     	return false;

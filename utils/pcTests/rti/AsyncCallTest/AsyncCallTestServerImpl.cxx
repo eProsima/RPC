@@ -4,6 +4,8 @@
  */
  
 #include "AsyncCallTestServerImpl.h"
+
+#include "ndds/ndds_namespace_cpp.h"
  
 DDS_Long AsyncCallTestServerImpl::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3) 
 {

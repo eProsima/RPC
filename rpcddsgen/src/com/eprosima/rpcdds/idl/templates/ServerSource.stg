@@ -7,9 +7,14 @@ $fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file co
 #include "transports/UDPTransport.h"
 #include "transports/TCPTransport.h"
 #include "exceptions/ServerInternalException.h"
-$ReqRepIncludes(filename=ctx.filename)$
-
 #include "$ctx.filename$ServerRPCSupport.h"
+
+$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
+$if(ctx.projectNeedTypes)$
+#include "$ctx.filename$T.h"
+
+$endif$
+#include "$ctx.filename$RequestReplyUtils.h"
 
 $definitions; separator="\n"$
 >>
@@ -98,7 +103,13 @@ void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *s
     {
         $if(!operation.oneway)$
         replyData.unio._d = $i$;
+        $if(exception.inScope)$
         $exception.scopedname$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
+                
+        $else$
+        $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
+                
+        $endif$
         replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
         replyData.header.rpcddsRetMsg = $charCasting()$"";
 
