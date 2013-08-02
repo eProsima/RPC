@@ -80,8 +80,14 @@ public abstract class TypeCode
         return false;
     }
     
- // By default a typecode is not enum. Function used in stringtemplates
+    // By default a typecode is not enum. Function used in stringtemplates
     public boolean isEnum()
+    {
+        return false;
+    }
+    
+    // By default a typecode is not array. Function used in stringtemplates
+    public boolean isArray()
     {
         return false;
     }

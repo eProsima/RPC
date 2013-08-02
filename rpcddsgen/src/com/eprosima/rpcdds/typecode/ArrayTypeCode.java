@@ -54,6 +54,12 @@ public class ArrayTypeCode extends ContainerTypeCode
         return "JODER";
     }
     
+    @Override
+    public boolean isArray()
+    {
+        return true;
+    }
+    
     public void addDimension(String dimension)
     {
         m_dimensions.add(dimension);

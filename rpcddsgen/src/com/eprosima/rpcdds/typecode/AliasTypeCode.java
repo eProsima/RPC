@@ -47,6 +47,24 @@ public class AliasTypeCode extends ContainerTypeCode
     }
     
     @Override
+    public boolean isString()
+    {
+        return getContentTypeCode().isString();
+    }
+    
+    @Override
+    public boolean isEnum()
+    {
+        return getContentTypeCode().isEnum();
+    }
+    
+    @Override
+    public boolean isArray()
+    {
+    	return getContentTypeCode().isArray();
+    }
+    
+    @Override
     public String getInitialValue()
     {   
         return getContentTypeCode().getInitialValue();

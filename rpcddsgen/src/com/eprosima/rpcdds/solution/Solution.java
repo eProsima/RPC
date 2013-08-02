@@ -8,7 +8,7 @@ public class Solution
 	{
 		m_serverside = serverside;
 		m_clientside = clientside;
-		m_projects = new ArrayList();
+		m_projects = new ArrayList<Project>();
 	}
 	
 	public void addProject(Project project)
@@ -23,8 +23,8 @@ public class Solution
 	{
 		if(m_cacheprojects == null)
 		{
-			ArrayList tmpArray = new ArrayList(m_projects);
-			m_cacheprojects = new ArrayList();
+			ArrayList<Project> tmpArray = new ArrayList<Project>(m_projects);
+			m_cacheprojects = new ArrayList<Project>();
 			
 			while(tmpArray.size() > 0)
 			{
@@ -40,7 +40,7 @@ public class Solution
 					
 					for(int acount = 0; !found && acount < m_cacheprojects.size(); ++acount)
 					{
-						if(deps.get(count).equals(((Project)m_cacheprojects.get(acount)).getFile()))
+						if(deps.get(count).equals(m_cacheprojects.get(acount).getFile()))
 						{
 							found = true;
 						}
@@ -51,7 +51,7 @@ public class Solution
 						// Search in the rest of projects to process.
 						for(int rcount = 0; !found && rcount < tmpArray.size(); ++rcount)
 						{
-							if(deps.get(count).equals(((Project)tmpArray.get(rcount)).getFile()))
+							if(deps.get(count).equals(tmpArray.get(rcount).getFile()))
 							{
 								found = true;
 							}
@@ -88,8 +88,8 @@ public class Solution
 		return m_clientside;
 	}
 	
-	private ArrayList m_projects = null;
-	private ArrayList m_cacheprojects = null;
+	private ArrayList<Project> m_projects = null;
+	private ArrayList<Project> m_cacheprojects = null;
 	boolean m_serverside = true;
 	boolean m_clientside = true;
 }

@@ -49,20 +49,27 @@ public class Context
      * In case the line refering a file, this function sets this file as current scope file.
      * Also this function saves the scope file in the dependecies map.
      */
-    public void setScopeFile(String line)
+    public void setScopeFile(String line, int nline)
     {
     	int index = 0;
     	
     	if(line.charAt(0) == ' ' && (index = line.indexOf('"')) > 0)
     	{
     		String file = line.substring(index + 1, line.indexOf('"', index + 1));
-    		m_scopeFile = file;
+    		
+    		// Remove the '.'
+			if(file.charAt(0) == '.')
+				m_scopeFile = file.substring(2, file.length());
+		    else
+		    	m_scopeFile = file;
     		
     		if(m_scopeFile.charAt(0) != '<' &&
     				!m_scopeFile.equals(m_file))
 			{
-    			m_dependencies.add(m_scopeFile);
+			    m_dependencies.add(m_scopeFile);
 			}
+    		
+    		m_currentincludeline = nline;
     	}
     }
     
@@ -175,20 +182,6 @@ public class Context
     }
     
     /*!
-     * @brief This function is used to know if a project has to generate the Utils.
-     */
-    public boolean isProjectNeedUtils()
-    {
-    	Interface ifc = null;
-    	com.eprosima.rpcdds.tree.Exception ex = null;;
-    	
-    	if((ifc = getFirstInterface()) != null || (ex = getFirstException()) != null)
-    		return true;
-    	
-    	return false;
-    }
-    
-    /*!
      * @brief This function is used to know if a project has to generate the Types.
      */
     public boolean isProjectNeedTypes()
@@ -274,6 +267,11 @@ public class Context
     {
     	m_scopeLimitToAll = scopeLimitToAll;
     }
+    
+    public int getCurrentIncludeLine()
+    {
+    	return m_currentincludeline;
+    }
 
     private String m_filename = "";
     private String m_file = "";
@@ -294,4 +292,6 @@ public class Context
     private Interface m_firstinterface = null;
   //! Cache the first exception.
     private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
+    
+    private int m_currentincludeline = 0;
 }

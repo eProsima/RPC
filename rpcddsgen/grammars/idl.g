@@ -8,6 +8,7 @@ header {
     import com.eprosima.rpcdds.typecode.*;
     import com.eprosima.rpcdds.tree.*;
     import com.eprosima.rpcdds.util.Pair;
+    import com.eprosima.rpcdds.exceptions.ParseException;
    
     import java.util.Vector;
  }
@@ -31,7 +32,7 @@ specification [Context context, TemplateManager templatemanager, TemplateGroup m
     ctx = context;
     tmanager = templatemanager;
 }
-	:   (import_dcl)* (dtg=definition{maintemplates.setAttribute("definitions", dtg.second()); ctx.addDefinition(dtg.first());})+
+	:   (import_dcl)* (dtg=definition{if(dtg!=null){maintemplates.setAttribute("definitions", dtg.second()); ctx.addDefinition(dtg.first());}})+
 	{
 	    returnedValue = true;
 	}
@@ -50,11 +51,11 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
     Pair<Interface, TemplateGroup> itg = null;
     Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> etg = null;
 }
-	:   (   tdtg=type_dcl SEMI! {dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}  // Type Declaration
+	:   (   tdtg=type_dcl SEMI! {if(tdtg!=null){dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}}  // Type Declaration
 	    |   const_dcl SEMI!
-	    |   etg=except_dcl SEMI! {dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second()); ctx.addException(etg.first().getScopedname(), etg.first());} // Exception. It is added as global exception.
-	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());} // Interface
-	    |   mtg=module SEMI! {dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());} // Module
+	    |   etg=except_dcl SEMI! {if(etg!=null){dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second()); ctx.addException(etg.first().getScopedname(), etg.first());}} // Exception. It is added as global exception.
+	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());}} // Interface
+	    |   mtg=module SEMI! {if(mtg!=null){dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());}} // Module
 	    |   (("abstract" | "custom")? "valuetype") => value SEMI!
 	    |   type_id_dcl SEMI!
 	    |   type_prefix_dcl SEMI!
@@ -93,7 +94,7 @@ module returns [Pair<Module, TemplateGroup> returnPair = null]
 	       ctx.setScope(old_scope + name + "::");
 	     }
 	     // Each definition is stored in the Module and each TemplateGroup is set as attribute in the TemplateGroup of the module.
-	     LCURLY! tg=d:definition_list[moduleObject]{if(moduleTemplates!=null)moduleTemplates.setAttribute("definition_list", tg);} RCURLY!
+	     LCURLY! tg=d:definition_list[moduleObject]{if(moduleTemplates!=null && tg!=null)moduleTemplates.setAttribute("definition_list", tg);} RCURLY!
 	     {
 	       // Set the old namespace.
 	       ctx.setScope(old_scope);
@@ -111,7 +112,7 @@ definition_list [DefinitionContainer dc] returns [TemplateGroup dlTemplates = tm
 {
     Pair<Definition, TemplateGroup> dtg = null;
 }
-	:   (dtg=definition{dc.add(dtg.first()); dlTemplates.setAttribute("definitions", dtg.second());})+
+	:   (dtg=definition{if(dtg!=null){dc.add(dtg.first()); dlTemplates.setAttribute("definitions", dtg.second());}})+
 	;
 
 /*!
@@ -152,7 +153,7 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
            }
         }
 	    ( interface_inheritance_spec )?	   
-	    LCURLY tg=interface_body[interfaceObject]{if(interfaceTemplates!=null)interfaceTemplates.setAttribute("export_list", tg);} RCURLY)
+	    LCURLY tg=interface_body[interfaceObject]{if(interfaceTemplates!=null && tg!=null)interfaceTemplates.setAttribute("export_list", tg);} RCURLY)
 	    {
            // Create the returned data.
            returnPair = new Pair<Interface, TemplateGroup>(interfaceObject, interfaceTemplates);
@@ -174,7 +175,7 @@ interface_body [ExportContainer ec] returns [TemplateGroup elTemplates = tmanage
     {
         Pair<Export, TemplateGroup> etg = null;
     }
-	:   ( etg=export{ec.add(etg.first()); etg.first().resolve(ctx); elTemplates.setAttribute("exports", etg.second());} )*
+	:   ( etg=export{if(etg!=null){ec.add(etg.first()); etg.first().resolve(ctx); elTemplates.setAttribute("exports", etg.second());}} )*
 	;
 
 /*!
@@ -189,11 +190,11 @@ export returns [Pair<Export, TemplateGroup> etg = null]
         Pair<Operation, TemplateGroup> oetg = null;
         Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> eetg = null;
     }
-	:   (   tetg=type_dcl SEMI! {etg = new Pair<Export, TemplateGroup>(tetg.first(), tetg.second());}  // Type Declaration
+	:   (   tetg=type_dcl SEMI! {if(tetg!=null){etg = new Pair<Export, TemplateGroup>(tetg.first(), tetg.second());}}  // Type Declaration
 	    |   const_dcl SEMI!
-	    |   eetg=except_dcl SEMI! {etg = new Pair<Export, TemplateGroup>(eetg.first(), eetg.second());}  // Exception
+	    |   eetg=except_dcl SEMI! {if(eetg!=null){etg = new Pair<Export, TemplateGroup>(eetg.first(), eetg.second());}}  // Exception
 	    |   attr_dcl SEMI!
-	    |   oetg=op_dcl SEMI! {etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}  // Operation
+	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}}  // Operation
 	    |   type_id_dcl SEMI!
 	    |   type_prefix_dcl SEMI!
 	    )
@@ -547,7 +548,8 @@ type_dcl returns [Pair<TypeDeclaration, TemplateGroup> returnPair = null]
 	|   constr_forward_decl
 	)
 	{
-	    returnPair = new Pair<TypeDeclaration, TemplateGroup>(new TypeDeclaration(ttg.first()), ttg.second());
+	    if(ttg!=null)
+	        returnPair = new Pair<TypeDeclaration, TemplateGroup>(new TypeDeclaration(ttg.first()), ttg.second());
 	}
 	;
 
@@ -560,29 +562,36 @@ type_declarator returns [Pair<TypeCode, TemplateGroup> returnPair = null]
 }
 	:  typecode=type_spec declvector=declarators
 	{
-       for(int count = 0; count < declvector.size(); ++count)
-       {
-           typedefTypecode = new AliasTypeCode(ctx.getScope(), declvector.get(count).first());
-           
-           if(declvector.get(count).second() != null)
-           {
-               // Array declaration
-               declvector.get(count).second().setContentTypeCode(typecode);
-               typedefTypecode.setContentTypeCode(declvector.get(count).second());
-           }
-           else
-           {
-               // Simple declaration
-               typedefTypecode.setContentTypeCode(typecode);
-           }
-           
-           typedefTemplates.setAttribute("ctx", ctx);
-           typedefTemplates.setAttribute("typedefs", typedefTypecode);
-           // Add alias typecode to the map with all typecodes.
-           ctx.addTypeCode(typedefTypecode.getScopedname(), typedefTypecode);
+	   if(typecode!=null)
+	   {
+	       for(int count = 0; count < declvector.size(); ++count)
+	       {
+	           typedefTypecode = new AliasTypeCode(ctx.getScope(), declvector.get(count).first());
+	           
+	           if(declvector.get(count).second() != null)
+	           {
+	               // Array declaration
+	               declvector.get(count).second().setContentTypeCode(typecode);
+	               typedefTypecode.setContentTypeCode(declvector.get(count).second());
+	           }
+	           else
+	           {
+	               // Simple declaration
+	               typedefTypecode.setContentTypeCode(typecode);
+	           }
+	           
+	           typedefTemplates.setAttribute("ctx", ctx);
+	           typedefTemplates.setAttribute("typedefs", typedefTypecode);
+	           // Add alias typecode to the map with all typecodes.
+	           ctx.addTypeCode(typedefTypecode.getScopedname(), typedefTypecode);
+	       }
+	       
+	       returnPair = new Pair<TypeCode, TemplateGroup>(typecode, typedefTemplates);
        }
-       
-       returnPair = new Pair<TypeCode, TemplateGroup>(typecode, typedefTemplates);
+       else
+       {
+          throw new RuntimeException("In function 'type_declarator': null pointer.");
+       }
 	}
 	;
 
@@ -598,13 +607,13 @@ simple_type_spec returns [TypeCode typecode = null]
 	:   typecode=base_type_spec
 	|   typecode=template_type_spec
 	|	literal=scoped_name
-	   {
+	    {
 	       // Find typecode in the global map.
 	       typecode = ctx.getTypeCode(literal);
 	       
 	       if(typecode == null)
-	           System.out.println("ERROR: Cannot find the typecode for " + literal);
-	   }
+	           throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The type " + literal + " cannot be found.");
+	    }
 	;
 
 base_type_spec returns [TypeCode typecode = null]
@@ -614,16 +623,16 @@ base_type_spec returns [TypeCode typecode = null]
 	|   typecode=wide_char_type		
 	|   typecode=boolean_type	
 	|   typecode=octet_type
-	|   any_type
-	|   object_type
-	|   value_base_type
+	|   any_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "Unsupported 'any' type."); }
+	|   object_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), ": Unsupported 'Object' type."); }
+	|   value_base_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "Unsupported 'ValueBase' type."); }
 	;
 
 template_type_spec returns [TypeCode typecode = null]
 	:   typecode=sequence_type
 	|   typecode=string_type
 	|   typecode=wide_string_type
-	|   fixed_pt_type
+	|   fixed_pt_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "Unsupported 'fixed' type."); }
 	;
 
 constr_type_spec
@@ -771,19 +780,26 @@ member returns [Vector<Pair<String, TypeCode>> newVector = new Vector<Pair<Strin
 }
 	:  typecode=type_spec declvector=declarators SEMI!
 	   {
-	       for(int count = 0; count < declvector.size(); ++count)
+	       if(typecode!=null)
 	       {
-	           if(declvector.get(count).second() != null)
-	           {
-	               // Array declaration
-	               declvector.get(count).second().setContentTypeCode(typecode);
-	               
-	           }
-	           else
-	           {
-	               // Simple declaration
-	               newVector.add(new Pair<String, TypeCode>(declvector.get(count).first(), typecode));
-	           }
+		       for(int count = 0; count < declvector.size(); ++count)
+		       {
+		           if(declvector.get(count).second() != null)
+		           {
+		               // Array declaration
+		               declvector.get(count).second().setContentTypeCode(typecode);
+		               
+		           }
+		           else
+		           {
+		               // Simple declaration
+		               newVector.add(new Pair<String, TypeCode>(declvector.get(count).first(), typecode));
+		           }
+		       }
+	       }
+	       else
+	       {
+	           throw new RuntimeException("In function 'member': null pointer.");
 	       }
 	   }
 	;
@@ -824,13 +840,13 @@ switch_type_spec returns [TypeCode typecode = null]
 	|   typecode=boolean_type
 	|   enum_type
 	|   literal=scoped_name
-	   {
+	    {
            // Find typecode in the global map.
            typecode = ctx.getTypeCode(literal);
            
            if(typecode == null)
-               System.out.println("ERROR: Cannot find the typecode for " + literal);
-       }
+               throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The type " + literal + " cannot be found.");
+        }
 	;
 
 switch_body [UnionTypeCode unionTP]
@@ -854,10 +870,17 @@ case_stmt [UnionTypeCode unionTP]
 	    )+
 	    element=element_spec SEMI!
 	    {
-	       member.setTypecode(element.second());
-	       member.setName(element.first());
-	       int index = unionTP.addMember(member);
-	       if(defaul) unionTP.setDefaultindex(index);
+	       if(element!=null)
+	       {
+		       member.setTypecode(element.second());
+		       member.setName(element.first());
+		       int index = unionTP.addMember(member);
+		       if(defaul) unionTP.setDefaultindex(index);
+	       }
+	       else
+	       {
+	           throw new RuntimeException("In function 'case_stmt': null pointer.");
+	       }
 	    }
 	;
 
@@ -878,15 +901,22 @@ element_spec returns [Pair<String, TypeCode> newpair = null]
 }
 	:   typecode=type_spec decl=declarator
 	    {
-            if(decl.second() != null)
-            {
-                decl.second().setContentTypeCode(typecode);
-                newpair = new Pair<String, TypeCode>(decl.first(), decl.second());
+	        if(typecode!=null)
+	        {
+	            if(decl.second() != null)
+	            {
+	                decl.second().setContentTypeCode(typecode);
+	                newpair = new Pair<String, TypeCode>(decl.first(), decl.second());
+	            }
+	            else
+	            {
+	                newpair = new Pair<String, TypeCode>(decl.first(), typecode);
+	            }
             }
             else
-            {
-                newpair = new Pair<String, TypeCode>(decl.first(), typecode);
-            }
+	        {
+	            throw new RuntimeException("In function 'element_spec': null pointer.");
+	        }
         }
 	;
 
@@ -1099,8 +1129,8 @@ param_dcl_list [Operation operation, TemplateGroup tpl]
     {
         Pair<Param, TemplateGroup> ptg = null;
     }
-	:   ptg=param_dcl{operation.add(ptg.first()); tpl.setAttribute("parameters", ptg.second());}
-	    (COMMA! ptg=param_dcl{operation.add(ptg.first()); tpl.setAttribute("parameters", ptg.second());})*
+	:   ptg=param_dcl{if(ptg!=null){operation.add(ptg.first()); tpl.setAttribute("parameters", ptg.second());}}
+	    (COMMA! ptg=param_dcl{if(ptg!=null){operation.add(ptg.first()); tpl.setAttribute("parameters", ptg.second());}})*
 	;
 
 param_dcl returns [Pair<Param, TemplateGroup> returnPair = null]
@@ -1113,16 +1143,23 @@ param_dcl returns [Pair<Param, TemplateGroup> returnPair = null]
 	:   ("in"^ | "out"^ | "inout"^)		// param_attribute
 	    typecode=param_type_spec pair=simple_declarator
 	    {
-	        Param param = null;
-	        if(literal.equals("in"))
-	            param = new InputParam(pair.first(), typecode);
-	        else if(literal.equals("out"))
-	            param = new OutputParam(pair.first(), typecode);
-	        else if(literal.equals("inout"))
-	            param = new InoutParam(pair.first(), typecode);
-	            
-	        paramTemplate.setAttribute("parameter", param);
-	        returnPair = new Pair<Param, TemplateGroup>(param, paramTemplate);
+	        if(typecode != null)
+	        {
+		        Param param = null;
+		        if(literal.equals("in"))
+		            param = new InputParam(pair.first(), typecode);
+		        else if(literal.equals("out"))
+		            param = new OutputParam(pair.first(), typecode);
+		        else if(literal.equals("inout"))
+		            param = new InoutParam(pair.first(), typecode);
+		            
+		        paramTemplate.setAttribute("parameter", param);
+		        returnPair = new Pair<Param, TemplateGroup>(param, paramTemplate);
+	        }
+	        else
+	        {
+	            throw new RuntimeException("In function 'param_dcl': null pointer.");
+	        }
 	    }
 	;
 
@@ -1157,7 +1194,7 @@ param_type_spec returns [TypeCode typecode = null]
            typecode = ctx.getTypeCode(literal);
            
            if(typecode == null)
-               System.out.println("ERROR: Cannot find the typecode for " + literal);
+               throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The type " + literal + " cannot be found.");
        }
 	;
 
@@ -1658,7 +1695,7 @@ options {
 	:
 	'#'!
 	(~'\n')* '\n'!
-	{ ctx.setScopeFile(new String(text.getBuffer(), _begin, text.length()-_begin)); $setType(Token.SKIP); newline(); }
+	{ ctx.setScopeFile(new String(text.getBuffer(), _begin, text.length()-_begin), getLine()); $setType(Token.SKIP); newline(); }
 	;
 
 

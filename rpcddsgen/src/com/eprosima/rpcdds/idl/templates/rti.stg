@@ -28,6 +28,12 @@ $member.typecode.stTypename$_copy(&$member.name$, &$dataname$.$member.name$);
 $endif$
 >>
 
+memberComplexExtract(member, dataname) ::= <<
+$if(member)$
+$member.typecode.stTypename$_copy(&$dataname$.$member.name$, &$member.name$);
+$endif$
+>>
+
 varComplexDecl(variable, create) ::= <<
 $if(variable)$
 $variable.typecode.stTypename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.stTypename$));$endif$
@@ -301,8 +307,6 @@ WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE
 dependencies(conf) ::= <<
 nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; rpcdds$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
-
-extractDH(type, name) ::= <<$type$PluginSupport_copy_data(&$name$, &data.$name$);>>
 
 stringPointerConst() ::= <<
 >>
