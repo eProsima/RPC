@@ -134,6 +134,16 @@ void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *s
     $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
 }
 
+DDS::DataReader* $operation.parent.name$Server::$operation.name$_getRequestDatareader()
+{
+    return $operation.name$_Service->getRequestDatareader();
+}
+
+DDS::DataWriter* $operation.parent.name$Server::$operation.name$_getReplyDatawriter()
+{
+    return $operation.name$_Service->getReplyDatawriter();
+}
+
 >>
 
 param_list(parameters) ::= <<>>
@@ -152,11 +162,12 @@ enum_type(ctx, enum) ::= <<>>
  * Extra string templates.
  */
 createRPC(operation) ::= <<
-this->setRPC(new $operation.parent.name$_$operation.name$ServerRPC("$operation.name$", this,
+this->$operation.name$_Service = new $operation.parent.name$_$operation.name$ServerRPC("$operation.name$", this,
             $operation.parent.name$_$operation.name$RequestUtils::registerType(getParticipant()),
             $if(!operation.oneway)$
             $operation.parent.name$_$operation.name$ReplyUtils::registerType(getParticipant()),
             $endif$
-            &$operation.parent.name$Server::$operation.name$));
+            &$operation.parent.name$Server::$operation.name$);
+this->setRPC(this->$operation.name$_Service);
 
 >>

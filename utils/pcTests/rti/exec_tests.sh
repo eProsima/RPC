@@ -20,10 +20,14 @@ function execTest
     # Generates the file with RPCDDS script
     ../../../scripts/rpcdds_rti_pcTests.sh -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
+    # Compile client and server example application
+    make -C output -f makefile_$NDDSTARGET all
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
     # Copy static test files into output directory
     cp $1/* output/
     if [ $errorstatus != 0 ]; then return; fi
-    # Compile client and server example application
+    # Compile again client and server example application
     make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi

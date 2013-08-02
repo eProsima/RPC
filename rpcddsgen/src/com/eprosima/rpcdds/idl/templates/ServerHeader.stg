@@ -74,6 +74,8 @@ class $interface.name$Server : public eProsima::RPCDDS::Server
          */
         void createRPCs();
         
+        $interface.exports : {export | $if(export.operation)$eProsima::RPCDDS::ServerRPC *$export.name$_Service;$\n$$endif$}$
+        
         /// \brief Pointer to the server's servant implemented by the user.
         $interface.name$ServerImpl *_impl;
 };
@@ -88,6 +90,10 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 static void $operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service);
+
+DDS::DataReader* $operation.name$_getRequestDatareader();
+
+DDS::DataWriter* $operation.name$_getReplyDatawriter();
 
 >>
 

@@ -70,6 +70,20 @@ namespace eProsima
 				fExecFunction getExecFunction() const;
 
 				/**
+				 * @brief This funcion returns the DDS datareader that receives the requests from clients.
+				 *
+				 * @return Pointer to the DDS datareader.
+				 */
+				DDS::DataReader* getRequestDatareader() const;
+
+				/**
+				 * @brief This funcion returns the DDS datawriter that sends the replies to clients.
+				 *
+				 * @return Pointer to the DDS datawriter.
+				 */
+				DDS::DataWriter* getReplyDatawriter() const;
+
+				/**
 				 * @brief This function is called when a reply wants to be sent.
 				 *        This function has to be implemented by the derived class.
 				 *
@@ -121,20 +135,6 @@ namespace eProsima
 						const DDS::SubscriptionMatchedStatus& status) {}
 
 		    protected:
-
-				/**
-				 * @brief This funcion returns the DDS datareader that receives the requests from clients.
-				 *
-				 * @return Pointer to the DDS datareader.
-				 */
-				DDS::DataReader* getRequestDatareader() const;
-
-				/**
-				 * @brief This funcion returns the DDS datawriter that sends the replies to clients.
-				 *
-				 * @return Pointer to the DDS datawriter.
-				 */
-				DDS::DataWriter* getReplyDatawriter() const;
 
 				/**
 				 * @brief This funcion returns the server that contains this remote procedure object.

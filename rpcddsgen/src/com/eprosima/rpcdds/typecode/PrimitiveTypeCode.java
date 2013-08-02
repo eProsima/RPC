@@ -30,7 +30,10 @@ public class PrimitiveTypeCode extends TypeCode
     @Override
     public String getInitialValue()
     {   
-        return "0";
+    	if(getKind() != KIND_LONGDOUBLE)
+    		return "= 0";
+    	
+    	return "";
     }
     
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)

@@ -92,6 +92,10 @@ exception(ctx, exception) ::= <<>>
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
+DDS::DataReader* $operation.name$_getReplyDatareader();
+
+DDS::DataWriter* $operation.name$_getRequestDatawriter();
+
 >>
 
 param_list(parameters) ::= <<>>

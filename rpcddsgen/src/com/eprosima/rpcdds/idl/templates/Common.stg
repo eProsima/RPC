@@ -51,7 +51,7 @@ $if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(
 memberInit(member) ::= <<
 $if(member)$
 $if(member.typecode.primitiveInArguments)$
-$member.name$ = $member.typecode.initialValue$;
+$member.name$ $member.typecode.initialValue$;
 $else$
 $memberComplexInit(...)$
 $endif$
@@ -61,7 +61,7 @@ $endif$
 varDecl(variable, create) ::= <<
 $if(variable)$
 $if(variable.typecode.primitiveInArguments)$
-$variable.typecode.stTypename$  $variable.name$ = $variable.typecode.initialValue$;
+$variable.typecode.stTypename$  $variable.name$ $variable.typecode.initialValue$;
 $else$
 $varComplexDecl(...)$
 $endif$

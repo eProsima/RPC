@@ -90,17 +90,6 @@ namespace eProsima
 				 */
 				virtual ReturnMessage takeReply(void *reply, DDS::QueryCondition *query) = 0;
 
-			protected:
-
-				/**
-				 * \brief This function writes the request using the DDS DataWriter.
-				 *        This virtual function has to be implemented by the specific code.
-				 *
-				 * \param data Pointer to the request. Cannot be NULL.
-				 * \return DDS return code that write function returns.
-				 */
-				virtual DDS::ReturnCode_t write(void *data) = 0;
-
 				/**
 				 * @brief This funcion returns the DDS datareader that receives the replies from the server.
 				 *
@@ -114,6 +103,17 @@ namespace eProsima
 				 * @return Pointer to the DDS datawriter.
 				 */
 				DDS::DataWriter* getRequestDatawriter() const;
+
+			protected:
+
+				/**
+				 * \brief This function writes the request using the DDS DataWriter.
+				 *        This virtual function has to be implemented by the specific code.
+				 *
+				 * \param data Pointer to the request. Cannot be NULL.
+				 * \return DDS return code that write function returns.
+				 */
+				virtual DDS::ReturnCode_t write(void *data) = 0;
 
 				/**
 				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.

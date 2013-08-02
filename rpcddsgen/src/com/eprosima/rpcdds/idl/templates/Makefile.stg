@@ -15,6 +15,8 @@ LIBS = $libsMake(example=example, version=version)$ \$(SYSLIBS)
 
 DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir bin.dir bin/$example$.dir
 
+all: \$(DIRECTORIES) $solution.projects:{$it.name$}; separator=" \\\n\t"$
+
 $solution.projects:{
 $it.name$_TARGET= lib/$example$/lib$it.name$.so
 $it.name$_TARGET_Z= lib/$example$/lib$it.name$.a
@@ -90,12 +92,12 @@ $it.name$Server : \$($it.name$_SERVER_TARGET) \$($it.name$_SERVER_TARGET_Z)
 $endif$
 
 $if(solution.clientside)$	
-\$($it.name$_CLIENT_EXAMPLE_TARGET): output/$example$/$it.name$ClientExample.o
+\$($it.name$_CLIENT_EXAMPLE_TARGET): output/$example$/$it.name$ClientExample.o lib/$example$/lib$it.name$Client.a lib/$example$/lib$it.name$.a $it.dependencies : {dep | lib/$example$/lib$dep$.a}; separator=" "$
 	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ClientExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Client -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
 $endif$
 
 $if(solution.serverside)$	
-\$($it.name$_SERVER_EXAMPLE_TARGET): output/$example$/$it.name$ServerExample.o
+\$($it.name$_SERVER_EXAMPLE_TARGET): output/$example$/$it.name$ServerExample.o lib/$example$/lib$it.name$Server.a lib/$example$/lib$it.name$.a $it.dependencies : {dep | lib/$example$/lib$dep$.a}; separator=" "$
 	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ServerExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Server -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
 $endif$
 
@@ -118,8 +120,6 @@ output/$example$/%.o:%.cpp
 	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
 
 .PHONY: $solution.projects:{$it.name$ $if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
-
-all: \$(DIRECTORIES) $solution.projects:{$it.name$}; separator=" \\\n\t"$
 
 clean:
 	@rm -f \$(OBJS)

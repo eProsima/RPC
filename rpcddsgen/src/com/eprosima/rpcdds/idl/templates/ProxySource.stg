@@ -145,6 +145,16 @@ $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$
     $endif$
 }
 
+DDS::DataReader* $operation.parent.name$Proxy::$operation.name$_getReplyDatareader()
+{
+    return $operation.name$_Service->getReplyDatareader();
+}
+
+DDS::DataWriter* $operation.parent.name$Proxy::$operation.name$_getRequestDatawriter()
+{
+    return $operation.name$_Service->getRequestDatawriter();
+}
+
 >>
 
 param_list(parameters) ::= <<>>

@@ -26,7 +26,7 @@ public class StringTypeCode extends TypeCode
     @Override
     public String getInitialValue()
     {   
-        return "NULL";
+        return "= NULL";
     }
     
     public String getMaxsize()

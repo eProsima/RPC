@@ -43,6 +43,9 @@ $paramRetType(operation.rettype)$ $operation.parent.name$ServerImpl::$operation.
 {
     $if(operation.rettypeparam)$
     $varDecl(variable=operation.rettypeparam)$
+    $if(!operation.rettypeparam.typecode.primitiveInArguments)$
+    $varComplexInitialize(variable=operation.rettypeparam)$
+    $endif$
    
     return $operation.rettypeparam.name$;
     $endif$
