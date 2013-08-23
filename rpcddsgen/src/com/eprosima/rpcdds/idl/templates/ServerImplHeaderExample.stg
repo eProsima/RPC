@@ -1,0 +1,68 @@
+group ServerImplHeaderExample;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "ServerImplExample.h"], description=["This header file contains an example of the declaration of a servant."])$
+
+#ifndef _$ctx.filename;format="toUpper"$SERVER_IMPL_EXAMPLE_H_
+#define _$ctx.filename;format="toUpper"$SERVER_IMPL_EXAMPLE_H_
+
+#include "$ctx.filename$ServerImpl.h"
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$SERVER_IMPL_EXAMPLE_H_
+>>
+
+module(module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+/*!
+ * The export_list will be the definition of synchronize functions.
+ */
+interface(ctx, interface, export_list) ::= <<
+/**
+ * \brief This class is an example of a servant and it implements the remote procedures of the servant.
+ */
+class $interface.name$ServerImplExample : public $interface.scopedname$ServerImpl
+{
+    public:
+
+        /// \brief The default constructor.
+        $interface.name$ServerImplExample(){}
+
+        /// \brief The default destructor.
+        virtual ~$interface.name$ServerImplExample(){}
+
+        $export_list$;
+};
+
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

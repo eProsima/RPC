@@ -436,7 +436,8 @@ public class RPCDDSGEN
 	        tmanager.addGroup("ServerRPCSupportSource");
 	        // Load template to generate server user implementations.
 	        tmanager.addGroup("ServerImplHeader");
-	        tmanager.addGroup("ServerImplSource");
+	        tmanager.addGroup("ServerImplHeaderExample");
+	        tmanager.addGroup("ServerImplSourceExample");
 	        
 	        // Create main template for all templates.
 	        TemplateGroup maintemplates = tmanager.createTemplateGroup("main");
@@ -568,18 +569,22 @@ public class RPCDDSGEN
 		                        {
 		                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImpl.h", maintemplates.getTemplate("ServerImplHeader"), m_replace))
 		                            {
-		                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImpl.cxx", maintemplates.getTemplate("ServerImplSource"), m_replace))
-		                                {
-		                                	project.addServerIncludeFile(onlyFileName + "Server.h");
-		                                	project.addServerSrcFile(onlyFileName + "Server.cxx");
-		                                	project.addServerIncludeFile(onlyFileName + "ServerRPCSupport.h");
-		                                	project.addServerSrcFile(onlyFileName + "ServerRPCSupport.cxx");
-		                                	project.addServerIncludeFile(onlyFileName + "ServerImpl.h");
-		                                	project.addServerSrcFile(onlyFileName + "ServerImpl.cxx");
-		                                	
-		                                	if(m_exampleOption != null)
-		                                		returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerExample.cxx", maintemplates.getTemplate("ServerExample"), m_replace);
-		                                }
+	                                	project.addServerIncludeFile(onlyFileName + "Server.h");
+	                                	project.addServerSrcFile(onlyFileName + "Server.cxx");
+	                                	project.addServerIncludeFile(onlyFileName + "ServerRPCSupport.h");
+	                                	project.addServerSrcFile(onlyFileName + "ServerRPCSupport.cxx");
+	                                	project.addServerIncludeFile(onlyFileName + "ServerImpl.h");
+	                                	
+	                                	if(m_exampleOption != null)
+	                                	{
+	                                		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.h", maintemplates.getTemplate("ServerImplHeaderExample"), m_replace))
+	    		                            {
+	    		                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.cxx", maintemplates.getTemplate("ServerImplSourceExample"), m_replace))
+	    		                                {
+	    		                                	returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerExample.cxx", maintemplates.getTemplate("ServerExample"), m_replace);
+	    		                                }
+	    		                            }
+	                                	}
 		                            }
 		                        }
 		                    }
@@ -1143,6 +1148,10 @@ public class RPCDDSGEN
         
         // Add command
         lineCommand.add(ppPath);
+        
+        // TODO Funciona en windows=
+        // Added to not generate line controls in preprocessor output file.
+        lineCommand.add("-ffreestanding");
         
         // Add the include paths given as parameters.
         for(int i = 0; i < m_includePaths.size(); ++i)

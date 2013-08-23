@@ -43,10 +43,10 @@ int main(int argc, char **argv)
 	{
 		getSLong_ret = proxy->getSLong(l1, l2, l3);
 
-        if(l3.get_at(0) != 3 || l3.get_at(1) != 4 ||
-                getSLong_ret.get_at(0) != 1 || getSLong_ret.get_at(1) != 2 ||
-                l2.get_at(0) != 4 || l2.get_at(1) != 6 ||
-                l1.get_at(0) != 1 || l1.get_at(1) != 2)
+        if(l3.length() != 2 || l3.get_at(0) != 3 || l3.get_at(1) != 4 ||
+                getSLong_ret.length() != 2 || getSLong_ret.get_at(0) != 1 || getSLong_ret.get_at(1) != 2 ||
+                l2.length() != 2 || l2.get_at(0) != 4 || l2.get_at(1) != 6 ||
+                l1.length() != 2 || l1.get_at(0) != 1 || l1.get_at(1) != 2)
         {
             std::cout << "TEST FAILED<getSLong>: Wrong values " << std::endl;
             _exit(-1);
@@ -90,10 +90,10 @@ int main(int argc, char **argv)
     {
         getString_ret = proxy->getString(s1, s2, s3);
 
-        if(strcmp(s3.get_at(0), "PRUEBA3")  != 0 || strcmp(s3.get_at(1), "PRUEBA4")  != 0 ||
-                strcmp(getString_ret.get_at(0), "PRUEBA")  != 0  || strcmp(getString_ret.get_at(1), "PRUEBA2")  != 0 ||
-                strcmp(s2.get_at(0), "PRUEBA")  != 0  || strcmp(s2.get_at(1), "PRUEBA2")  != 0 ||
-                strcmp(s1.get_at(0), "PRUEBA")  != 0  || strcmp(s1.get_at(1), "PRUEBA2")  != 0)
+        if(s3.length() != 2 || strcmp(s3.get_at(0), "PRUEBA3")  != 0 || strcmp(s3.get_at(1), "PRUEBA4")  != 0 ||
+                getString_ret.length() != 2 || strcmp(getString_ret.get_at(0), "PRUEBA")  != 0  || strcmp(getString_ret.get_at(1), "PRUEBA2")  != 0 ||
+                s2.length() != 2 || strcmp(s2.get_at(0), "PRUEBA")  != 0  || strcmp(s2.get_at(1), "PRUEBA2")  != 0 ||
+                s1.length() != 2 || strcmp(s1.get_at(0), "PRUEBA")  != 0  || strcmp(s1.get_at(1), "PRUEBA2")  != 0)
         {
             std::cout << "TEST FAILED<getString>: Wrong values" << std::endl;
             _exit(-1);
@@ -143,10 +143,10 @@ int main(int argc, char **argv)
     {
         getStringBounded_ret = proxy->getStringBounded(sb1, sb2, sb3);
 
-        if(sb3.get_at(0).count != 3 || strcmp(sb3.get_at(0).message, "PRUEBA3")  != 0 || sb3.get_at(1).count != 4 || strcmp(sb3.get_at(1).message, "PRUEBA4")  != 0 ||
-                getStringBounded_ret.get_at(0).count != 1 || strcmp(getStringBounded_ret.get_at(0).message, "PRUEBA")  != 0  || getStringBounded_ret.get_at(1).count != 2 || strcmp(getStringBounded_ret.get_at(1).message, "PRUEBA2")  != 0 ||
-                sb2.get_at(0).count != 1 || strcmp(sb2.get_at(0).message, "PRUEBA")  != 0  || sb2.get_at(1).count != 2 || strcmp(sb2.get_at(1).message, "PRUEBA2")  != 0 ||
-                sb1.get_at(0).count != 1 || strcmp(sb1.get_at(0).message, "PRUEBA")  != 0  || sb1.get_at(1).count != 2 || strcmp(sb1.get_at(1).message, "PRUEBA2")  != 0)
+        if(sb3.length() != 2 || sb3.get_at(0).count != 3 || strcmp(sb3.get_at(0).message, "PRUEBA3")  != 0 || sb3.get_at(1).count != 4 || strcmp(sb3.get_at(1).message, "PRUEBA4")  != 0 ||
+                getStringBounded_ret.length() != 2 || getStringBounded_ret.get_at(0).count != 1 || strcmp(getStringBounded_ret.get_at(0).message, "PRUEBA")  != 0  || getStringBounded_ret.get_at(1).count != 2 || strcmp(getStringBounded_ret.get_at(1).message, "PRUEBA2")  != 0 ||
+                sb2.length() != 2 || sb2.get_at(0).count != 1 || strcmp(sb2.get_at(0).message, "PRUEBA")  != 0  || sb2.get_at(1).count != 2 || strcmp(sb2.get_at(1).message, "PRUEBA2")  != 0 ||
+                sb1.length() != 2 || sb1.get_at(0).count != 1 || strcmp(sb1.get_at(0).message, "PRUEBA")  != 0  || sb1.get_at(1).count != 2 || strcmp(sb1.get_at(1).message, "PRUEBA2")  != 0)
         {
             std::cout << "TEST FAILED<getStringBounded>: Wrong values" << std::endl;
             _exit(-1);

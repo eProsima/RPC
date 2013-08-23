@@ -43,11 +43,12 @@ class $interface.name$Server : public eProsima::RPCDDS::Server
          * \param serviceName The service's name that proxies will use to connect with the server.
          * \param strategy Strategy used by server to work with new requests.
          *        This class doesn't delete this object in its destructor. Cannot be NULL.
+         * \param servant Servant that server will use to invoke user's functions.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0.
          * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
         $interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
-            int domainId = 0);
+            $interface.name$ServerImpl &servant, int domainId = 0);
 
         /**
          * \brief This constructor sets the transport that will be used by the server.
@@ -57,11 +58,12 @@ class $interface.name$Server : public eProsima::RPCDDS::Server
          *        This class doesn't delete this object in its destructor. Cannot be NULL.
          * \param transport The network transport that server has to use.
          *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
+         * \param servant Servant that server will use to invoke user's functions.
          * \param domainId The DDS domain that DDS will use to work. Default value: 0.
          * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
         $interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy, eProsima::RPCDDS::Transport *transport,
-            int domainId = 0);
+            $interface.name$ServerImpl &servant, int domainId = 0);
 
         /// \brief The default destructor.
         virtual ~$interface.name$Server();
@@ -77,7 +79,7 @@ class $interface.name$Server : public eProsima::RPCDDS::Server
         $interface.exports : {export | $if(export.operation)$eProsima::RPCDDS::ServerRPC *$export.name$_Service;$\n$$endif$}$
         
         /// \brief Pointer to the server's servant implemented by the user.
-        $interface.name$ServerImpl *_impl;
+        $interface.name$ServerImpl &_impl;
 };
 
 >>

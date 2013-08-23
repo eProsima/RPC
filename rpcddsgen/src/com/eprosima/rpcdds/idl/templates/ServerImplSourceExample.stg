@@ -1,9 +1,9 @@
-group ServerSource;
+group ServerImplSourceExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "ServerImpl.cxx"], description=["This source file contains the definition of the skeleton for all interfaces."])$
+$fileHeader(file=[ctx.filename, "ServerImplExample.cxx"], description=["This source file contains an example of the declaration of a servant."])$
 
-#include "$ctx.filename$ServerImpl.h"
+#include "$ctx.filename$ServerImplExample.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
@@ -13,10 +13,7 @@ $definitions; separator="\n"$
 >>
 
 module(module, definition_list) ::= <<
-namespace $module.name$
-{
-    $definition_list$
-};
+$definition_list$
 
 >>
 
@@ -39,7 +36,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-$paramRetType(operation.rettype)$ $operation.parent.name$ServerImpl::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $operation.parent.name$ServerImplExample::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
     $if(operation.rettypeparam)$
     $varDecl(variable=operation.rettypeparam)$

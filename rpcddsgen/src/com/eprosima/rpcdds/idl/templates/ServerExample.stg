@@ -7,6 +7,7 @@ $fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source 
 #include "strategies/ThreadPoolStrategy.h"
 #include "exceptions/Exceptions.h"
 #include "utils/Utilities.h"
+#include "$ctx.filename$ServerImplExample.h"
 
 #include <iostream>
 
@@ -15,12 +16,13 @@ int main(int argc, char **argv)
     unsigned int threadPoolSize = 5;
     eProsima::RPCDDS::ThreadPoolStrategy *pool = NULL;
     $ctx.firstInterface.scopedname$Server *server = NULL;
+    $ctx.firstInterface.name$ServerImplExample servant;
     
     // Create and initialize the server for interface "$ctx.firstInterface.scopedname$".
     try
     {
         pool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        server = new $ctx.firstInterface.scopedname$Server("$ctx.firstInterface.name$Service", pool);
+        server = new $ctx.firstInterface.scopedname$Server("$ctx.firstInterface.name$Service", pool, servant);
         server->serve();
     }
     catch(eProsima::RPCDDS::InitializeException &ex)

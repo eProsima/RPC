@@ -98,7 +98,7 @@ $endif$
 
 $if(solution.serverside)$	
 \$($it.name$_SERVER_EXAMPLE_TARGET): output/$example$/$it.name$ServerExample.o lib/$example$/lib$it.name$Server.a lib/$example$/lib$it.name$.a $it.dependencies : {dep | lib/$example$/lib$dep$.a}; separator=" "$
-	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ServerExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Server -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ServerImplExample.o output/$example$/$it.name$ServerExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Server -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
 $endif$
 
 $if(solution.clientside)$	
@@ -106,7 +106,7 @@ $it.name$ClientExample : \$($it.name$_CLIENT_EXAMPLE_TARGET)
 $endif$
 
 $if(solution.serverside)$	
-$it.name$ServerExample : \$($it.name$_SERVER_EXAMPLE_TARGET)
+$it.name$ServerExample : output/$example$/$it.name$ServerImplExample.o \$($it.name$_SERVER_EXAMPLE_TARGET)
 $endif$
 $endif$
 

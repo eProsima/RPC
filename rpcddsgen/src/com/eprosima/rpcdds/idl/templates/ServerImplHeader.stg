@@ -1,4 +1,4 @@
-group ServerHeader;
+group ServerImplHeader;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ServerImpl.h"], description=["This header file contains the declaration of the skeleton for all interfaces."])$
@@ -32,7 +32,6 @@ $definitions; separator="\n"$
 interface(ctx, interface, export_list) ::= <<
 /**
  * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
- *        When the $interface.name$Server object is created, it creates one instance of this class.
  */
 class $interface.name$ServerImpl
 {
@@ -56,7 +55,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-$paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
 
 >>
 

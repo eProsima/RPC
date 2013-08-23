@@ -3,11 +3,11 @@
  * Empty interface implementation to be filled with your own code.  *
  */
  
-#include "AsyncCallTestServerImpl.h"
+#include "AsyncCallTestServerImplExample.h"
 
 #include "ndds/ndds_namespace_cpp.h"
  
-DDS_Long AsyncCallTestServerImpl::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3) 
+DDS_Long AsyncCallTestServerImplExample::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3) 
 {
     DDS_Long  getLong_ret = 0;    
 
@@ -18,7 +18,7 @@ DDS_Long AsyncCallTestServerImpl::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Lon
     return getLong_ret;
 } 
  
-DDS_Boolean AsyncCallTestServerImpl::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3) 
+DDS_Boolean AsyncCallTestServerImplExample::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3) 
 {
     DDS_Boolean  getBoolean_ret = RTI_FALSE;    
 
@@ -29,7 +29,7 @@ DDS_Boolean AsyncCallTestServerImpl::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*
     return getBoolean_ret;
 } 
  
-char* AsyncCallTestServerImpl::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
+char* AsyncCallTestServerImplExample::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
 {
     char*  getString_ret = NULL;    
 
@@ -46,7 +46,7 @@ char* AsyncCallTestServerImpl::getString(/*in*/ char* s1, /*inout*/ char*& s2, /
     return getString_ret;
 } 
  
-Structure AsyncCallTestServerImpl::duplicate(/*in*/ const Structure& ev) 
+Structure AsyncCallTestServerImplExample::duplicate(/*in*/ const Structure& ev) 
 {
     Structure duplicate_ret;
         
