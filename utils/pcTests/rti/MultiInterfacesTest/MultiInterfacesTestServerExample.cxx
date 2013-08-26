@@ -16,6 +16,7 @@
 #include "strategies/ThreadPoolStrategy.h"
 #include "exceptions/Exceptions.h"
 #include "utils/Utilities.h"
+#include "MultiInterfacesTestServerImplExample.h"
 
 #include <iostream>
 
@@ -25,16 +26,19 @@ int main(int argc, char **argv)
     eProsima::RPCDDS::ThreadPoolStrategy *basicpool = NULL;
     eProsima::RPCDDS::ThreadPoolStrategy *structpool = NULL;
     BasicTypes::BasicTypeTestServer *basicserver = NULL;
+    BasicTypeTestServerImplExample bservant;
     Struct::StructTestServer *structserver = NULL;
+    StructTestServerImplExample sservant;
+
     
     // Create and initialize the server for interface "BasicTypes::BasicTypeTest".
     try
     {
         basicpool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        basicserver = new BasicTypes::BasicTypeTestServer("BasicTypeTestService", basicpool);
+        basicserver = new BasicTypes::BasicTypeTestServer("BasicTypeTestService", basicpool, bservant);
         basicserver->serve();
         structpool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        structserver = new Struct::StructTestServer("StructTestService", structpool);
+        structserver = new Struct::StructTestServer("StructTestService", structpool, sservant);
         structserver->serve();
     }
     catch(eProsima::RPCDDS::InitializeException &ex)

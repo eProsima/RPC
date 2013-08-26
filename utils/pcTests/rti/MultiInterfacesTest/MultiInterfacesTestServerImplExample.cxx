@@ -148,33 +148,26 @@ DDS_Boolean BasicTypeTestServerImplExample::getBoolean(/*in*/ DDS_Boolean bo1, /
     return getBoolean_ret;
 } 
 
-
-};
-
-namespace Struct
+Struct::Recepcion StructTestServerImplExample::duplicate(/*in*/ const Struct::Envio& ev)
 {
+    Struct::Recepcion duplicate_ret;
 
+    duplicate_ret.devolucion = ev.dato;
+    duplicate_ret.message = DDS::String_dup(ev.message);
 
-    Struct::Recepcion StructTestServerImplExample::duplicate(/*in*/ const Struct::Envio& ev)
-    {
-        Struct::Recepcion duplicate_ret;
+    return duplicate_ret;
+} 
 
-        duplicate_ret.devolucion = ev.dato;
-        duplicate_ret.message = DDS::String_dup(ev.message);
+Struct::Recepcion StructTestServerImplExample::suma(/*in*/ const Struct::Envio& ev1, /*in*/ const Struct::Envio& ev2)
+{
+    Struct::Recepcion suma_ret;
 
-        return duplicate_ret;
-    } 
-
-    Struct::Recepcion StructTestServerImplExample::suma(/*in*/ const Struct::Envio& ev1, /*in*/ const Struct::Envio& ev2)
-    {
-        Struct::Recepcion suma_ret;
-
-        suma_ret.devolucion = ev1.dato + ev2.dato;
-        suma_ret.message = DDS::String_alloc(strlen(ev1.message) + strlen(ev2.message) + 1);
+    suma_ret.devolucion = ev1.dato + ev2.dato;
+    suma_ret.message = DDS::String_alloc(strlen(ev1.message) + strlen(ev2.message) + 1);
 #if defined(RTI_WIN32)
-        _snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
+    _snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
 #elif defined(RTI_LINUX)
-        snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
+    snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
 #endif
-        return suma_ret;
-    } 
+    return suma_ret;
+} 

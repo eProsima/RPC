@@ -20,7 +20,7 @@ if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 cp IncludesTest/IncludesTestClientExample.cxx output
 errorstatus=$?
 if [ $errorstatus != 0 ]; then exit $errorstatus; fi
-cp IncludesTest/IncludesTestServerImpl.cxx output
+cp IncludesTest/IncludesTestServerImplExample.cxx output
 errorstatus=$?
 if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 
