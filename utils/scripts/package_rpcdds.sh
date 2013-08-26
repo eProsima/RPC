@@ -70,7 +70,7 @@ function package
 
     # Execute RPCDDS tests
     cd utils/pcTests/rti
-    #./exec_tests.sh $package_targets
+    ./exec_tests.sh $package_targets
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../..
