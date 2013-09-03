@@ -1,17 +1,43 @@
-:: This script runs all tests in this directory and checks their results.
+:: This script runs all tests in this directory and checks their results. Supports two optional parameters.
+:: @param The unit test to be run. If it isn't set, then all unit tests are run.
+:: @param Second parameter is the used architecture. Supported i86 and x64. If it isn't set all architectures are used.
 
 setlocal EnableDelayedExpansion
-setlocal EnableExpansion
 @echo off
 
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
+set test_selected=""
+:: @default, all targets are used (i86 and x64)
+set test_targets=""
+
+:: Get number of arguments
+set argC=0
+for %%x in (%*) do set /A argC+=1
+
+:: Get the optional parameter
+if %argC% geq 1 (
+    if "%1"=="i86" set test_targets=%1
+    if "%1"=="x64" set test_targets=%1
+    if "!test_targets!"=="" (
+        set test_selected=%1
+
+        if %argC% geq 2 (
+            if "%2"=="i86" set test_targets=%2
+            if "%2"=="x64" set test_targets=%2
+            if "!test_targets!"=="" (
+                echo Error: Bad argument in second parameter. Valid values: i86, x64
+                exit /b -1
+            )
+        )
+    )
+)
 
 :: Set environment for RPCDDS
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
 
 :: Create symbolic link to EPROSIMADIR in this rpcdds folder.
-if not exist ..\..\..\include\eProsima_cpp mklink /D ..\..\..\include\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
+if not exist ..\..\..\include\eProsima_cpp mklink /J ..\..\..\include\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
@@ -138,11 +164,12 @@ goto :EOF
 :: Remove output directory
 rd /S /Q output
 
+:: Remove symbolic link from EPROSIMADIR
 if exist ..\..\..\include\eProsima_cpp rmdir /Q ..\..\..\include\eProsima_cpp
 
 :: Restore environment for RPCDDS
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTIversion
 
 if %errorstatus%==0 (echo "TEST SUCCESFULLY") else (echo "TEST FAILED")
-exit /B %errorstatus%
+exit /b %errorstatus%
 goto :EOF
