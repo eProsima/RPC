@@ -1,4 +1,4 @@
-group Types;
+group rtiTypes;
 
 type_5() ::= <<DDS_Float>>
 
@@ -42,4 +42,4 @@ type_c(name) ::= <<$name$>>
 
 type_10(name) ::= <<$name$>>
 
-type_e(type, empty) ::= <<std::vector<$type$>$empty$>>
+type_e(type, maxsize, empty) ::= <<std::vector<$type$>$empty$>>

@@ -51,7 +51,7 @@ public class ArrayTypeCode extends ContainerTypeCode
     
     public String getStTypename()
     {
-        return "JODER";
+        return "Error";
     }
     
     @Override

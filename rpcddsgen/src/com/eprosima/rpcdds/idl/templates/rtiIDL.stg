@@ -1,0 +1,69 @@
+group rtiIDL;
+
+main(ctx, definitions) ::= <<
+$ctx.directIncludeDependencies : {include | #include "$include$"}; separator="\n"$
+
+$definitions; separator="\n"$
+
+>>
+
+module(module, definition_list) ::= <<
+$if(module.thereAreTypeDeclarations)$
+module $module.name$
+{
+    $definition_list$
+};
+
+$endif$
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<
+$typedefs : {typedef | typedef $typedef.contentTypeCode.typename$ $typedef.typename$;}; separator="\n"$
+
+>>
+
+struct_type(ctx, struct) ::= <<
+struct $struct.name$
+{
+$struct.members : { member |    $member.typecode.typename$ $member.name$;}; separator="\n"$
+}; //@top-level false
+
+>>
+
+union_type(ctx, union) ::= <<
+union $union.name$ switch ($union.discriminator.typename$)
+{
+$union.members : { member | $if(member.default)$    default:$else$$member.labels : { label |    case $label$:}; separator="\n"$$endif$$\n$        $member.typecode.typename$ $member.name$;}; separator="\n"$
+};  //@top-level false
+
+>>
+
+enum_type(ctx, enum) ::= <<
+enum $enum.name$
+{
+$enum.members : {member |    $member.name$}; separator=",\n"$
+}; //@top-level false
+
+>>

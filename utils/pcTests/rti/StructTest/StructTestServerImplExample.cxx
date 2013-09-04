@@ -40,3 +40,13 @@ Recepcion StructTestServerImplExample::suma(/*in*/ const Envio& ev1, /*in*/ cons
    
     return suma_ret;
 } 
+
+InnerStruct StructTestServerImplExample::inner(/*in*/ const InnerStruct& inn)
+{
+    InnerStruct inner_ret;
+
+    inner_ret.count = inn.count;
+    inner_ret.message = DDS::String_dup(inn.message);
+   
+    return inner_ret;
+} 

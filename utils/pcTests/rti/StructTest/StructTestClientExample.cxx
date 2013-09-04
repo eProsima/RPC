@@ -91,6 +91,35 @@ int main(int argc, char **argv)
 	Envio_finalize(&ev2);    
 	Recepcion_finalize(&suma_ret);    
 
+    InnerStruct inn;
+    InnerStruct inn_res;
+
+    InnerStruct_initialize(&inn);
+    InnerStruct_initialize(&inn_res);
+
+    inn.count = 43;
+    inn.message = DDS_String_dup("PAPITO");
+
+    try
+    {
+        inn_res = proxy->inner(inn);
+
+        if(inn.count != 43 ||
+                strcmp(inn_res.message, "PAPITO") != 0)
+        {
+            std::cout << "TEST FAILED<inner>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(eProsima::RPCDDS::SystemException &ex)
+    {
+        std::cout << "TEST FAILED<inner>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    InnerStruct_finalize(&inn);
+    InnerStruct_finalize(&inn_res);
+
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
 	delete(proxy);

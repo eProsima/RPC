@@ -47,8 +47,16 @@ public abstract class TypeCode
         return m_kind;
     }
     
+    /*|
+     * @brief This function returns the typename with the scope that is obtained using the m_typesgr string template.
+     * @return The IDL typename.
+     */
     public abstract String getTypename();
     
+    /*|
+     * @brief This function returns a typename with scope that is obtained using the m_stringtemplatetypesgr string template.
+     * @return The typename.
+     */
     public abstract String getStTypename();
    
     

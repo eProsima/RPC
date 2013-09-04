@@ -10,7 +10,7 @@ $definitions; separator="\n"$
 >>
 
 module(module, definition_list) ::= <<
-$if(module.thereAraValidDefinitions)$
+$if(module.thereAreValidDefinitions)$
 module $module.name$
 {
     $definition_list$

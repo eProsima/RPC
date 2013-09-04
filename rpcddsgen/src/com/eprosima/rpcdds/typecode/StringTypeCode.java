@@ -2,6 +2,8 @@ package com.eprosima.rpcdds.typecode;
 
 import java.util.List;
 
+import org.antlr.stringtemplate.StringTemplate;
+
 import com.eprosima.rpcdds.util.Pair;
 
 public class StringTypeCode extends TypeCode
@@ -11,6 +13,7 @@ public class StringTypeCode extends TypeCode
         super(kind);
         m_maxsize = maxsize;
     }
+    
     @Override
     public String getTypename()
     {

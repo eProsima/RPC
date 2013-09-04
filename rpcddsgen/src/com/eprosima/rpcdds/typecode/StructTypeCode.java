@@ -1,6 +1,7 @@
 package com.eprosima.rpcdds.typecode;
 
 import com.eprosima.rpcdds.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -3,9 +3,13 @@ package com.eprosima.rpcdds.idl.grammar;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import com.eprosima.rpcdds.tree.Definition;
 import com.eprosima.rpcdds.tree.Interface;
+import com.eprosima.rpcdds.tree.Notebook;
 import com.eprosima.rpcdds.tree.ScopedObject;
 import com.eprosima.rpcdds.typecode.TypeCode;
 import com.eprosima.rpcdds.util.Utils;
@@ -21,7 +25,11 @@ public class Context
         m_dependencies = new HashSet<String>();
         m_definitions = new ArrayList<Definition>();
         m_includedependency = new HashSet<String>();
+        m_directIncludeDependencies = new ArrayList<String>();
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
+        m_globalAnnotations = new HashMap<String, String>();
+        m_lvl1Annotations = new HashMap<String, String>();
+        m_lvl2Annotations = new HashMap<String, String>();
     }
 
     public void setFilename(String filename)
@@ -46,30 +54,82 @@ public class Context
     
     /*!
      * @brief This function is call when a preprocessor line was found by the lexer.
-     * In case the line refering a file, this function sets this file as current scope file.
-     * Also this function saves the scope file in the dependecies map.
+     * In case the line referring to the content included file, this function sets this file as current scope file.
+     * Also this function saves the scope file in the library dependecy map.
+     * In case it is a #include directive, this is saved as direct include dependency.
      */
-    public void setScopeFile(String line, int nline)
-    {
-    	int index = 0;
-    	
-    	if(line.charAt(0) == ' ' && (index = line.indexOf('"')) > 0)
+    public void processPreprocessorLine(String line, int nline)
+    { 	
+    	// If there is a line referring to the content of an included file.
+    	if(line.charAt(0) == ' ')
     	{
-    		String file = line.substring(index + 1, line.indexOf('"', index + 1));
-    		
-    		// Remove the '.'
-			if(file.charAt(0) == '.')
-				m_scopeFile = file.substring(2, file.length());
-		    else
-		    	m_scopeFile = file;
-    		
-    		if(m_scopeFile.charAt(0) != '<' &&
-    				!m_scopeFile.equals(m_file))
-			{
-			    m_dependencies.add(m_scopeFile);
-			}
-    		
-    		m_currentincludeline = nline;
+    	    /* The received preprocessor line has the following form:
+             * ' numline filename flags'
+    	     * where:
+    	     * - numline Number of the line where the include was.
+    	     * - filename The filename whose content was included.
+    	     * - flags
+    	     */
+    	    Scanner scanner = new Scanner(line);
+    	    
+    	    // Read numline
+    	    int numline = scanner.nextInt();
+    	    
+    	    // Read filename
+    	    String filename = scanner.next("\".*\"");
+    	    
+    	    // Read flags.
+    	    boolean systemFile = false, enteringFile = false, exitingFile = false;
+    	    try
+    	    {
+    	        while(true)
+    	        {
+    	            Integer flag = scanner.nextInt();
+
+    	            if(flag == 1)
+    	                enteringFile = true;
+    	            else if(flag == 2)
+    	                exitingFile = true;
+    	            else if(flag == 3)
+    	                systemFile = true;
+    	        }
+    	    }
+    	    catch(NoSuchElementException ex)
+    	    {
+    	        // The line finishes.
+    	    }
+    	    
+    	    // Only not system files are processed.
+    	    if(!systemFile)
+    	    {
+	            String file = filename.substring(1, filename.length() - 1);
+	            
+	            //if it is a idl file.
+	            if(file.substring(file.length() - 4, file.length()).equals(".idl"))
+	            {
+	                // Remove the '.'
+	                if(file.charAt(0) == '.')
+	                    m_scopeFile = file.substring(2, file.length());
+	                else
+	                    m_scopeFile = file;
+	                
+	                // Add to dependency if there is different IDL file than the processed.
+	                if(!m_scopeFile.equals(m_file))
+	                {
+	                    m_dependencies.add(m_scopeFile);
+	                }
+	                
+	                //Update the current line.
+	                m_currentincludeline = nline - (numline - 1);
+    	        }
+    	    }
+    	}
+    	// If there is a direct include file, then insert in direct include dependency array.
+    	else if(line.substring(0, 7).equals("include"))
+    	{
+    	    int index = line.indexOf('"');
+    	    String file = line.substring(index + 1, line.indexOf('"', index + 1));
+    	    m_directIncludeDependencies.add(file);
     	}
     }
     
@@ -221,7 +281,7 @@ public class Context
     }
     
     /*!
-     * @brief This function get the library dependecies of a project.
+     * @brief This function get the library dependencies of a project.
      */
     public HashSet getDependencies()
     {
@@ -238,6 +298,8 @@ public class Context
     
     /*!
      * @brief This function add a new include dependency to the project.
+     * This dependency will be needed to include our generated file with the types that
+     * the DDS middleware doesn't generate (right now only exceptions).
      * The include dependencies are added without the .idl extension.
      */
     public void addIncludeDependency(String dependency)
@@ -256,6 +318,88 @@ public class Context
     public ArrayList<String> getIncludeDependencies()
     {
     	return new ArrayList<String>(m_includedependency);
+    }
+    
+    /*!
+     * @brief This function is used in the stringtemplates. For these reason this function
+     * returns an ArrayList
+     */
+    public ArrayList<String> getDirectIncludeDependencies()
+    {
+        return m_directIncludeDependencies;
+    }
+    
+    /*!
+     * @brief This function stores a global annotation in the context
+     * @param id Identifier of the annotation.
+     * @param value Value of the annotation.
+     */
+    public void addGlobalAnnotation(String id, String value)
+    {
+    	String oldValue = m_globalAnnotations.put(id, value);
+    	
+    	// TODO Lanzar una excepción.
+    	if(oldValue != null)
+    		System.out.println("Global annotation " + id + " was redefined");
+    }
+    
+    /*!
+     * @brief This function returns all global annotations.
+     * @return Map with all global annotations.
+     */
+    public HashMap<String, String>getGlobalAnnotations()
+    {
+        return m_globalAnnotations;
+    }
+    
+    /*!
+     * @brief This function add a temporarily annotation in level 1.
+     * This annotation will be linked with a future object.
+     * @param id Identifier of the annotation.
+     * @param value Value of the annotation.
+     */
+    public void addLvl1Annotation(String id, String value)
+    {
+    	String oldValue = m_lvl1Annotations.put(id, value);
+    	
+    	// TODO Lanzar una excepción.
+    	if(oldValue != null)
+    		System.out.println("Annotation " + id + " was redefined");
+    }
+    
+    /*!
+     * @brief This function add a temporarily annotation in level 2.
+     * This annotation will be linked with a future object.
+     * @param id Identifier of the annotation.
+     * @param value Value of the annotation.
+     */
+    public void addLvl2Annotation(String id, String value)
+    {
+        String oldValue = m_lvl2Annotations.put(id, value);
+        
+        // TODO Lanzar una excepción.
+        if(oldValue != null)
+            System.out.println("Annotation " + id + " was redefined");
+    }
+    
+    /*!
+     * @brief This function links the temporarily annotations on level 1 with an object.
+     * @param notebook The object where the temporarily annotations will be stored.
+     */
+    public void setLvl1Annotations(Notebook notebook)
+    {
+        notebook.addAnnotations(m_lvl1Annotations);
+        m_lvl1Annotations.clear();
+    }
+    
+    /*!
+     * @brief This function links the temporarily annotations on level 2 with an object.
+     * @param notebook The object where the temporarily annotations will be stored.
+     */
+    public void setLvl2Annotations(Notebook notebook)
+    {
+        notebook.addAnnotations(m_lvl2Annotations);
+        m_lvl2Annotations.clear();
     }
     
     public boolean isScopeLimitToAll()
@@ -280,10 +424,22 @@ public class Context
     private String m_scopeFile = "";
     private String m_sersym = ">>";
     private String m_typelimitation = null;
+    //! Map that contains all types that were found processing the IDL file (after preprocessing).
     private HashMap<String, TypeCode> m_types = null;
+    //! Map that contains all exceptions that were found processing the IDL file (after preprocessing).
     private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
-    private HashSet<String> m_dependencies;
-    private HashSet<String> m_includedependency;
+    //! Set that contains the library dependencies that were found because there was a line of the preprocessor.
+    private HashSet<String> m_dependencies = null;
+    //! Set that contains the include dependencies that force to include our type generated file (right now only with exceptions).
+    private HashSet<String> m_includedependency = null;
+    //! Set that contains the direct include dependencies in the IDL file. Used to regenerate the IDL in a supported form.
+    private ArrayList<String> m_directIncludeDependencies = null;
+    //! Map that contains all global annotations in the IDL file.
+    private HashMap<String, String> m_globalAnnotations = null;
+    //! Map that contains temporarily the annotations in level 1 before to be linked with an element.
+    private HashMap<String, String> m_lvl1Annotations = null;
+    //! Map that contains temporarily the annotations in level 2 before to be linked with an element.
+    private HashMap<String, String> m_lvl2Annotations = null;
     private boolean m_scopeLimitToAll = false;
     
     //! Store all global definitions.

@@ -47,6 +47,12 @@ public class Exception extends ScopedObject implements Export, Definition
     	return false;
     }
 	
+	@Override
+    public boolean isTypeDeclaration()
+    {
+        return false;
+    }
+	
 	public void setParent(Object obj)
     {
         m_parent = obj;

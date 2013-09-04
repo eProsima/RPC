@@ -17,6 +17,7 @@ public class SequenceTypeCode extends ContainerTypeCode
     {
         StringTemplate st = getTypenameFromStringTemplate();
         st.setAttribute("type", getContentTypeCode().getTypename());
+        st.setAttribute("maxsize", m_maxsize);
         return st.toString();
     }
     
@@ -25,6 +26,7 @@ public class SequenceTypeCode extends ContainerTypeCode
     {
         StringTemplate st = getSTTypenameFromStringTemplate();
         st.setAttribute("type", getContentTypeCode().getTypename());
+        st.setAttribute("maxsize", m_maxsize);
         return st.toString();
     }
 

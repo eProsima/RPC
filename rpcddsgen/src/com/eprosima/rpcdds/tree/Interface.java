@@ -3,12 +3,13 @@ package com.eprosima.rpcdds.tree;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Interface extends ExportContainer implements Definition
+public class Interface extends ExportContainer implements Definition, Notebook
 {
     public Interface(String scope, String name)
     {
         m_name = name;
         m_scope = scope;
+        m_annotations = new HashMap<String, String>();
     }
     
     public String getName()
@@ -60,6 +61,12 @@ public class Interface extends ExportContainer implements Definition
     public boolean isException()
     {
     	return false;
+    }
+    
+    @Override
+    public boolean isTypeDeclaration()
+    {
+        return false;
     }
     
     /*!
@@ -121,6 +128,33 @@ public class Interface extends ExportContainer implements Definition
     	
     	return exception;
     }
+    
+    /*!
+     * @brief This function is used in stringtemplates to not generate module in some cases (Right now in generated user idl).
+     */
+    public boolean isThereAreTypeDeclarations()
+    {
+        boolean returnedValue = false;
+        
+        for(int count = 0; !returnedValue && count < getExports().size(); ++count)
+        {
+            returnedValue = getExports().get(count).isTypeDeclaration();
+        }
+        
+        return returnedValue;
+    }
+    
+    @Override
+    public void addAnnotations(HashMap<String, String> annotations)
+    {
+        m_annotations.putAll(annotations);
+    }
+    
+    @Override
+    public HashMap<String, String> getAnnotations()
+    {
+        return m_annotations;
+    }
 
     private String m_name = null;
     private String m_scope = null;
@@ -128,6 +162,8 @@ public class Interface extends ExportContainer implements Definition
     
     //! Cache the first operation.
     private Operation m_firstoperation = null;
-  //! Cache the first exception.
+    //! Cache the first exception.
     private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
+    //! Map that stores the annotations of the interface.
+    HashMap<String, String> m_annotations = null;
 }

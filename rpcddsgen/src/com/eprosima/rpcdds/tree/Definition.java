@@ -19,4 +19,6 @@ public interface Definition
     public boolean isInterface();
     
     public boolean isException();
+    
+    public boolean isTypeDeclaration();
 }

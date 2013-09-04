@@ -34,8 +34,10 @@ public abstract class MemberedTypeCode extends TypeCode
         return m_members.size() - 1;
     }
     
+    @Override
     public abstract String getTypename();
     
+    @Override
     public abstract String getStTypename();
     
     private String m_name = null;

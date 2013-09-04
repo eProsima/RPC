@@ -1,11 +1,12 @@
 package com.eprosima.rpcdds.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.eprosima.rpcdds.idl.grammar.Context;
 import com.eprosima.rpcdds.typecode.TypeCode;
 
-public class Operation implements Export
+public class Operation implements Export, Notebook
 {
     public Operation(String name)
     {
@@ -13,6 +14,7 @@ public class Operation implements Export
         m_params = new ArrayList<Param>();
         m_exceptions = new ArrayList<com.eprosima.rpcdds.tree.Exception>();
         m_unresolvedExceptions = new ArrayList<String>();
+        m_annotations = new HashMap<String, String>();
     }
     
     public String getName()
@@ -37,6 +39,12 @@ public class Operation implements Export
     
     @Override
     public boolean isException()
+    {
+        return false;
+    }
+    
+    @Override
+    public boolean isTypeDeclaration()
     {
         return false;
     }
@@ -172,6 +180,18 @@ public class Operation implements Export
     	
     	return false;
     }
+    
+    @Override
+    public void addAnnotations(HashMap<String, String> annotations)
+    {
+        m_annotations.putAll(annotations);
+    }
+    
+    @Override
+    public HashMap<String, String> getAnnotations()
+    {
+        return m_annotations;
+    }
 
     private String m_name = null;
     private Object m_parent = null;
@@ -181,4 +201,6 @@ public class Operation implements Export
     private ArrayList<String> m_unresolvedExceptions;
     private TypeCode m_rettype = null;
     private Param m_rettypeparam = null;
+    //! Map that stores the annotations of the interface.
+    HashMap<String, String> m_annotations = null;
 }

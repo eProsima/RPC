@@ -54,7 +54,7 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 	:   (   tdtg=type_dcl SEMI! {if(tdtg!=null){dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}}  // Type Declaration
 	    |   const_dcl SEMI!
 	    |   etg=except_dcl SEMI! {if(etg!=null){dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second()); ctx.addException(etg.first().getScopedname(), etg.first());}} // Exception. It is added as global exception.
-	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());}} // Interface
+	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second()); ctx.setLvl1Annotations(itg.first());}} // Interface
 	    |   mtg=module SEMI! {if(mtg!=null){dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());}} // Module
 	    |   (("abstract" | "custom")? "valuetype") => value SEMI!
 	    |   type_id_dcl SEMI!
@@ -62,6 +62,8 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 	    |   (("abstract" | "custom")? "eventtype") => event SEMI!
 	    |   component SEMI!
 	    |   home_dcl SEMI!
+	    |   global_annotation
+	    |   lvl1_annotation
 	    )
 	;
 
@@ -194,9 +196,10 @@ export returns [Pair<Export, TemplateGroup> etg = null]
 	    |   const_dcl SEMI!
 	    |   eetg=except_dcl SEMI! {if(eetg!=null){etg = new Pair<Export, TemplateGroup>(eetg.first(), eetg.second());}}  // Exception
 	    |   attr_dcl SEMI!
-	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}}  // Operation
+	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second()); ctx.setLvl2Annotations(oetg.first());}}  // Operation
 	    |   type_id_dcl SEMI!
 	    |   type_prefix_dcl SEMI!
+	    |   lvl2_annotation
 	    )
 	;
 
@@ -1427,6 +1430,52 @@ event_elem_dcl
 // 	:
 // 	;
 
+/* Annotations introduces to support RESTful in RPCDDS */
+global_annotation
+    {
+        String id = null, value = null;
+    }
+    :
+        LBRACK! LBRACK! id=identifier LPAREN! value=literal RPAREN! RBRACK! RBRACK!
+        {
+            ctx.addGlobalAnnotation(id, value);
+        }
+    ;
+    
+lvl1_annotation
+    {
+        Pair<String, String> annotation = null;
+    }
+    :
+        annotation=annotation
+        {
+            ctx.addLvl1Annotation(annotation.first(), annotation.second());
+        }
+    ;
+    
+lvl2_annotation
+    {
+        Pair<String, String> annotation = null;
+    }
+    :
+        annotation=annotation
+        {
+            ctx.addLvl2Annotation(annotation.first(), annotation.second());
+        }
+    ;
+    
+    
+annotation returns [Pair<String, String> annotation = null;]
+    {
+        String id = null, value = null;
+    }
+    :
+        LBRACK! id=identifier LPAREN! value=literal RPAREN! RBRACK!
+        {
+            annotation = new Pair<String, String>(id, value);
+        }
+    ;
+
 /* literals */
 integer_literal returns [String literal = LT(1).getText()]
 	:   INT
@@ -1695,7 +1744,7 @@ options {
 	:
 	'#'!
 	(~'\n')* '\n'!
-	{ ctx.setScopeFile(new String(text.getBuffer(), _begin, text.length()-_begin), getLine()); $setType(Token.SKIP); newline(); }
+	{ ctx.processPreprocessorLine(new String(text.getBuffer(), _begin, text.length()-_begin), getLine()); $setType(Token.SKIP); newline(); }
 	;
 
 

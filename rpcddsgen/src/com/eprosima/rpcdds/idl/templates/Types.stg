@@ -42,4 +42,4 @@ type_c(name) ::= <<$name$>>
 
 type_10(name) ::= <<$name$>>
 
-type_e(type, empty) ::= <<std::vector<$type$>$empty$>>
+type_e(type, maxsize, empty) ::= <<sequence<$type$$if(maxsize)$, $maxsize$$endif$>$empty$>>

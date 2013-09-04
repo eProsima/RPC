@@ -1,5 +1,7 @@
 package com.eprosima.rpcdds.typecode;
 
+import org.antlr.stringtemplate.StringTemplate;
+
 import com.eprosima.rpcdds.util.Pair;
 
 public class PrimitiveTypeCode extends TypeCode

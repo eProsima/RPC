@@ -352,14 +352,16 @@ public class RPCDDSGEN
                 // Parsing and generating code with templates.
                 if((project = parseIDL(idlFilename)) != null)
                 {
-                	// Parse the user IDL file using external tool.
+                    String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+                    
+                	// Parse the user IDL file that was generated using external tool.
                     // Note:The file are put in project info inside parseIDL function.
-                    ddsGen(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet, true, false);
+                    ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
                     
                 	if(!project.getUnique())
                 	{
-                		// Parse the requestreply IDL file that was generated.
-                		String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+                		// Parse the requestreply IDL file that was generated using external tool.
                 		ddsGen(m_tempDir + onlyFileName + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
                             false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
                 		
@@ -373,6 +375,17 @@ public class RPCDDSGEN
         	        	project.addCommonSrcFile(onlyFileName + "RequestReplySupport.cxx");
                 	}
                     returnedValue = true;
+                    
+                    // Remove temporarily files.
+                    File file = new File(m_tempDir + onlyFileName + ".idl");
+                    
+                    if(!file.delete())
+                        System.out.println("WARNING: Cannot delete the temporarily file " + m_tempDir + onlyFileName + ".idl");
+                    
+                    file = new File(m_tempDir + onlyFileName + "RequestReply.idl");
+                    
+                    if(!file.delete())
+                        System.out.println("WARNING: Cannot delete the temporarily file " + m_tempDir + onlyFileName + "RequestReply.idl");
                 }
             }
             catch(Exception ioe)
@@ -407,6 +420,9 @@ public class RPCDDSGEN
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
+	        // TODO OpenDDS not
+	        // Load template to generate the supported IDL to RTI.
+	        tmanager.addGroup("rtiIDL");
 	        // Load template to generate IDL for topics.
 	        tmanager.addGroup("TopicsIDL");
 	        // Load template to generate source for common types.
@@ -494,6 +510,10 @@ public class RPCDDSGEN
 	        	project.addCommonSrcFile(onlyFileName + "Plugin.cxx");
 	        	project.addCommonIncludeFile(onlyFileName + "Support.h");
 	        	project.addCommonSrcFile(onlyFileName + "Support.cxx");
+	        	
+	        	// TODO OpenDDS not
+	        	// Generate the supported IDL to RTI.
+	        	returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true);
 		        
 	        	if(returnedValue && needsTypes)
 	        	{
@@ -804,6 +824,11 @@ public class RPCDDSGEN
         
         if(idlFileLocation != null)
         {
+            // Add the temporary directory to search includes to find generated user idl file. (This could be used in future with OpenDDS).
+            //idlLineCommand.add("-I" + m_tempDir);
+            //idlLineCommandForWorkDirSet.add("-I" + m_tempDir);
+            
+            // Add IDL file location.
             idlLineCommand.add("-I" + idlFileLocation);
         	// Get the canonical path from idl file.
         	String canon;
@@ -1150,8 +1175,8 @@ public class RPCDDSGEN
         lineCommand.add(ppPath);
         
         // TODO Funciona en windows=
-        // Added to not generate line controls in preprocessor output file.
-        lineCommand.add("-ffreestanding");
+        // Added to include the #include in the preprocessor output.
+        lineCommand.add("-dI");
         
         // Add the include paths given as parameters.
         for(int i = 0; i < m_includePaths.size(); ++i)

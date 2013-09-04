@@ -56,6 +56,12 @@ public class TypeDeclaration implements Definition, Export
     }
     
     @Override
+    public boolean isTypeDeclaration()
+    {
+        return true;
+    }
+    
+    @Override
     public boolean resolve(Context ctx)
     {
     	return true;
