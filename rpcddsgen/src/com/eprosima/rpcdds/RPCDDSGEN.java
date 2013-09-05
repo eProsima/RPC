@@ -375,17 +375,6 @@ public class RPCDDSGEN
         	        	project.addCommonSrcFile(onlyFileName + "RequestReplySupport.cxx");
                 	}
                     returnedValue = true;
-                    
-                    // Remove temporarily files.
-                    File file = new File(m_tempDir + onlyFileName + ".idl");
-                    
-                    if(!file.delete())
-                        System.out.println("WARNING: Cannot delete the temporarily file " + m_tempDir + onlyFileName + ".idl");
-                    
-                    file = new File(m_tempDir + onlyFileName + "RequestReply.idl");
-                    
-                    if(!file.delete())
-                        System.out.println("WARNING: Cannot delete the temporarily file " + m_tempDir + onlyFileName + "RequestReply.idl");
                 }
             }
             catch(Exception ioe)
