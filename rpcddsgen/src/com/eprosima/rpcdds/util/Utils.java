@@ -25,6 +25,25 @@ public class Utils
         return returnedValue;
     }
     
+    public static String getWADLFileNameOnly(String wadlFilename)
+    {
+        int index = -1;
+        String auxString = wadlFilename, returnedValue = null;
+        
+        index = wadlFilename.lastIndexOf(File.separator);
+        
+        if(index == -1)
+            index = wadlFilename.lastIndexOf('/');
+        
+        if(index != -1)
+            auxString = wadlFilename.substring(index + 1);
+        
+        // Remove '.wadl'
+        returnedValue = auxString.substring(0, auxString.length() - 5);
+        
+        return returnedValue;
+    }
+    
     public static String getIDLFileOnly(String idlFileURL)
     {
         int index = -1;
@@ -99,4 +118,10 @@ public class Utils
 
         return returnedValue;
     }
+    
+	public static String getFileExtension(String fileName) {
+		int lastDot = fileName.lastIndexOf(".");
+		
+		return fileName.substring(lastDot+1);
+	}
 }

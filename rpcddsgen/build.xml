@@ -121,8 +121,8 @@
 		<!-- Echo compilation properties -->
 		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
 		<antlr base="${src.java}${file.separator}com/eprosima/rpcdds/idl/grammar" grammar="${grammar.dir}${file.separator}idl.g" />
-		<!--echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
-		<antxr base="${src.java}${file.separator}com/eprosima/rpcdds/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" /-->
+		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
+		<antxr base="${src.java}${file.separator}com/eprosima/rpcdds/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
 		<javac source="1.6" target="1.6" srcdir="${src.java}" destdir="${build.classes}">

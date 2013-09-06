@@ -28,6 +28,13 @@ import com.eprosima.rpcdds.tree.Interface;
 import com.eprosima.rpcdds.util.Utils;
 import com.eprosima.rpcdds.util.VSConfiguration;
 import com.eprosima.rpcdds.util.GUIDGenerator;
+import com.eprosima.rpcdds.wadl.grammar.WADLParser;
+import com.eprosima.rpcdds.wadl.idl.IDLConverter;
+import com.eprosima.rpcdds.wadl.idl.IDLConverterException;
+import com.eprosima.rpcdds.wadl.tree.Application;
+import com.javadude.antxr.RecognitionException;
+import com.javadude.antxr.TokenStreamException;
+import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -337,11 +344,63 @@ public class RPCDDSGEN
         return returnedValue;
     }
     
+    private String toIDL(String wadlFilename) throws IDLConverterException {    	
+    	if(!Utils.getFileExtension(wadlFilename).equals("wadl"))
+    		return wadlFilename; // Already an IDL file
+    	
+    	System.out.println("Converting WADL file to IDL ...");
+    	
+		BasicCrimsonXMLTokenStream stream = null;
+		try
+		{
+			stream = new BasicCrimsonXMLTokenStream(new FileReader(wadlFilename),
+						WADLParser.class,
+				        true,  // namespace-aware
+				        false); // no validation
+		}
+		catch(Exception ex)
+		{
+			throw new IDLConverterException(ex.getMessage());
+		}
+		
+		WADLParser parser = new WADLParser(stream);
+		
+		Application application = new Application();
+		
+		try
+		{
+			application = parser.document();
+		}
+		catch(TokenStreamException ex)
+		{
+			throw new IDLConverterException(ex.getMessage() + ": " + ex.getCause().getMessage());
+		}
+		catch(RecognitionException ex)
+		{
+			throw new IDLConverterException(ex.getMessage() + ": " + ex.getCause().getMessage());
+		}
+		
+		IDLConverter idlConverter = new IDLConverter(application, wadlFilename, m_tempDir); 
+
+    	return idlConverter.toIDL();
+    }
+        
     private Project process(String idlFilename)
     {
         boolean returnedValue = false;
         Project project = null;
         System.out.println("Processing the file " + idlFilename + " ...");
+        
+        // Ruben:
+        // If the input file is a WADL file, we first convert it to IDL
+        try {
+        	idlFilename = toIDL(idlFilename);
+		} catch (IDLConverterException e) {
+			System.out.println(e.getMessage());
+            System.out.println("ERROR: Cannot generate the files");
+            return null;
+		}
+        //
         
         ArrayList idlLineCommand = new ArrayList(), idlLineCommandForWorkDirSet = new ArrayList();
         
@@ -1208,7 +1267,7 @@ public class RPCDDSGEN
     public static void printHelp()
     {
         System.out.println("rpcddsgen usage:");
-        System.out.println("\trpcddsgen [options] <IDL file> [<IDL file> ...]");
+        System.out.println("\trpcddsgen [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
         System.out.println("\t\t-help: Show help");
         System.out.println("\t\t-version: shows the current version of RPCDDS.");
@@ -1232,6 +1291,7 @@ public class RPCDDSGEN
         {
             System.out.println("\t\t-t <temp dir>: Use the specific directory as temporary directory.");
         }
+        System.out.println("\tand the files can be WADL files or IDL files.");
     }
     
     public static void main(String[] args) throws Exception

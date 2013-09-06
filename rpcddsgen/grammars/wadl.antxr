@@ -1,16 +1,205 @@
 header
 {
-	package com.eprosima.rpcdds.wadl.grammar;
-	import com.eprosima.rpcdds.wadl.tree.*;
+    package com.eprosima.rpcdds.wadl.grammar;
+    import com.eprosima.rpcdds.wadl.tree.*;
+    import java.lang.StringBuilder;
+    import java.util.Iterator;
+    import com.javadude.antxr.scanner.Attribute;
 }
 
 class WADLParser extends Parser;
 
+options
+{
+  xmlns="http://wadl.dev.java.net/2009/02";
+}
+
 document returns [Application application = null]
-  : <application> EOF
+  : application=<application> EOF
+  ;
+
+// TODO Representation and resource_type
+<application> returns [Application application = null]
+  {
+    // TODO XXX SEMANTIC VALIDATION
+  
+    application = new Application(@targetNamespace);
+    Grammar grammar = null;
+    Resources resources = null;
+    Method method = null;
+    Param param = null;
+    Doc doc = null;
+    Representation representation = null;
+    ResourceType resource_type = null;
+  }
+  :
+  (doc=<doc>{application.add(doc);})*
+  (grammar=<grammars>{application.setGrammar(grammar);})?
+  (resources=<resources>{application.add(resources);})*
+  (
+    resource_type=<resource_type>{application.add(resource_type);} |
+    method=<method>{application.add(method);} |
+    representation=<representation>{application.add(representation);} |
+    param=<param>{application.add(param);}
+  )*
+  {
+    application.updateStructure();
+  }
   ;
   
-<application> returns [Application application = null]
-  {application = new Application();}
-  : PCDATA
+<doc> returns [Doc doc = null;]
+  {
+    doc = new Doc(@title, @ref);
+    String text = null;
+  }
+  :
+  //(text=otherTag{doc.add(text);})*
+  value:PCDATA{doc.add(value.getText());}
+  ;
+ 
+<grammars> returns [Grammar grammar = null]
+  {
+      grammar = new Grammar();
+      Include include = null;
+      Doc doc = null;
+  }
+  :
+  (doc=<doc>{grammar.add(doc);})*
+  (include=<include>{grammar.add(include);})*
+  ( 
+    {StringBuilder buffer = new StringBuilder();}
+    schemaTag[buffer]
+    {grammar.setLaxTex(buffer.toString());}
+  )?
+  ;
+
+<resources> returns [Resources resources = null]
+  {
+    resources = new Resources(@base);
+    Resource resource = null;
+    Doc doc = null;
+  }
+  :
+  (doc=<doc>{resources.add(doc);})*
+  (resource=<resource>{resources.add(resource);})*
+  ;
+  
+<resource> returns [Resource resource = null]
+  {
+    resource = new Resource(@id, @type, @queryType, @path);
+    Param param = null; 
+    Resource resourceChild = null;
+    Method method = null;
+    Doc doc = null;
+  }
+  :
+  (doc=<doc>{resource.add(doc);})*
+  (param=<param>{resource.add(param);})*
+  (method=<method>{method.setParentResource(resource); resource.add(method);})*
+  (resourceChild=<resource>{resourceChild.setParentResource(resource); resource.add(resourceChild);})*
+  ;
+  
+//TODO Request, response
+<method> returns [Method method = null]
+  {
+    method = new Method(@id, @name, @href);
+    Doc doc = null;
+    Request request = null;
+    Response response = null;
+  }
+  :
+  (doc=<doc>{method.add(doc);})*
+  (request=<request>{method.setRequest(request);})?
+  (response=<response>{method.add(response);})*
+  ;
+  
+<include> returns [Include include = null]
+  {
+    include = new Include(@href);
+    Doc doc = null;
+  }
+  :
+  (doc=<doc>{include.add(doc);})*
+  ;
+  
+// TODO: Option, Link and attributes.
+<param> returns [Param param = null]
+  {
+    param = new Param(@href, @name, @style, @id, @type, @required, @repeating, @fixed, @path);
+    Doc doc = null;
+  }
+  :
+  (doc=<doc>{param.add(doc);})*
+  ;
+  
+  <request> returns [Request request = null]
+  {
+    request = new Request();
+    Param param = null;
+    Representation representation = null;
+  }
+  :
+  (representation=<representation>{request.add(representation);})*
+  (param=<param>{request.add(param);})*
+  ;
+  
+<response> returns [Response response = null]
+  {
+    response = new Response(@status);
+    Representation representation = null;
+  }
+  :
+  (representation=<representation>{response.add(representation);})*
+  ;
+  
+  <representation> returns [Representation representation = null]
+  {
+    representation = new Representation(@href, @id, @mediaType, @element, @profile);
+  }
+  :
+  ;
+  
+  <resource_type> returns [ResourceType resource_type = null]
+  {
+    resource_type = new ResourceType();
+  }
+  :
+  ;
+
+// This expression catches an XML Schema.
+schemaTag[StringBuilder buffer]
+  {
+    // Take the XML tag.
+    String tag = LT(1).getText();
+    // Store the XML tag.
+    buffer.append("<" + tag);
+    // Take the attributes.
+    Iterator it = ((XMLToken)LT(1)).getAttributes();
+    // Process attributes.
+    while(it.hasNext())
+    {
+      Attribute attr = (Attribute)it.next();
+      buffer.append(" " + (attr.getNamespace() != null ? attr.getNamespace() : "") +
+      attr.getLocalName() + "=\"" + attr.getValue() + "\"");
+    }
+    // Close the tag.
+    buffer.append(">\n");
+  }
+  :
+  OTHER_TAG
+  (
+    schemaTag[buffer]
+  )*
+  XML_END_TAG
+  {buffer.append("</" + tag + ">\n");}
+  ;
+  
+otherTag
+  :
+  OTHER_TAG
+  (
+    otherTag |
+    PCDATA
+  )*
+  XML_END_TAG
   ;
