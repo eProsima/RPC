@@ -1,11 +1,12 @@
-group UtilsHeader;
+group DDSProtocolHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "RequestReplyUtils.h"], description=["This header file contains the declaration of helpful functions for the DDS messages for interface ", ctx.filename, "."])$
+$fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
 
-#ifndef _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
-#define _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+#ifndef _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
+#define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
+#include "protocols/Protocol.h"
 #include "utils/Messages.h"
 $ReqRepSIncludes(filename=ctx.filename)$
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
@@ -16,9 +17,36 @@ $endif$
 
 $ddsIncludes()$
 
+namespace eprosima
+{
+    namespace rpcdds
+    {
+        namespace protocol
+        {
+            namespace dds
+            {
+                class $ctx.filename$Protocol : public Protocol
+                {
+                    public:
+                    
+                        bool isCompatibleTransport(eprosima::rpcdds::transport::Transport *transport);
+                        
+                    private:
+                    
+                        $ctx.interfaces : { interface |
+                        $interface.operations : { operation |
+                            const char* const $interface.formatedScopedname$_$operation.name$_str = "$interface.formatedScopedname$_$operation.name$";
+                        }; separator="\n"$
+                        }; separator="\n"$
+                };
+            } // namespace dds
+        } // namespace protocol
+    } // namespace rpcdds
+} // namespace eprosima
+
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
+#endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 >>
 
 module(ctx, module, definition_list) ::= <<
@@ -31,6 +59,7 @@ namespace $module.name$
 
 definition_list(definitions) ::= <<
 $definitions; separator="\n"$
+
 >>
 
 interface(ctx, interface, export_list) ::= <<
@@ -39,6 +68,7 @@ $export_list$
 
 export_list(exports) ::= <<
 $exports; separator="\n"$
+
 >>
 
 exception(ctx, exception) ::= <<
@@ -129,7 +159,7 @@ class $operation.parent.name$_$operation.name$ReplyUtils
          * \param data Reference to the structure $operation.parent.name$_$operation.name$Reply that contains the parameters' data.
          * \param retcode Internal message returned from the server.
          */
-        static void extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
+        static void extractTypeData($operation.parent.name$_$operation.name$Reply& data, eprosima::rpcdds::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
 };
 
 $endif$

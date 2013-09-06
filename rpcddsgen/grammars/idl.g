@@ -91,6 +91,7 @@ module returns [Pair<Module, TemplateGroup> returnPair = null]
                moduleTemplates = tmanager.createTemplateGroup("module");
 	           // Set the module object to the TemplateGroup of the module.
 	           moduleTemplates.setAttribute("module", moduleObject);
+	           moduleTemplates.setAttribute("ctx", ctx);
 	       }
 	       // Update to a new namespace.
 	       ctx.setScope(old_scope + name + "::");
@@ -152,6 +153,7 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
                interfaceTemplates.setAttribute("ctx", ctx);
                // Set the the interface object to the TemplateGroup of the module.
                interfaceTemplates.setAttribute("interface", interfaceObject);
+               ctx.addInterface(interfaceObject.getScopedname(), interfaceObject);
            }
         }
 	    ( interface_inheritance_spec )?	   

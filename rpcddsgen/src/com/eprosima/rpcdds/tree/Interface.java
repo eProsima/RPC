@@ -21,6 +21,17 @@ public class Interface extends ExportContainer implements Definition, Notebook
     {
         return m_scope + m_name;
     }
+    
+    /*
+     * @brief This function returns the scoped name of the interface but
+     * changing "::" by "_".
+     */
+    public String getFormatedScopedname()
+    {
+        String ret = m_scope + m_name;
+        
+        return ret.replaceAll("::", "_");
+    }
 
     public void setParent(Object obj)
     {
@@ -130,6 +141,28 @@ public class Interface extends ExportContainer implements Definition, Notebook
     }
     
     /*!
+     * @brief This function returns all operations of the interface.
+     * This function is used in the string templates.
+     */
+    public ArrayList<Operation> getOperations()
+    {
+        if(m_operations == null)
+        {
+            m_operations = new ArrayList<Operation>();
+            
+            for(int count = 0; count < getExports().size(); ++count)
+            {
+                if(getExports().get(count).isOperation())
+                {
+                    m_operations.add((Operation)getExports().get(count));
+                }
+            }
+        }
+        
+        return m_operations;
+    }
+    
+    /*!
      * @brief This function is used in stringtemplates to not generate module in some cases (Right now in generated user idl).
      */
     public boolean isThereAreTypeDeclarations()
@@ -160,6 +193,8 @@ public class Interface extends ExportContainer implements Definition, Notebook
     private String m_scope = null;
     private Object m_parent = null;
     
+    //! Contains all operations.
+    private ArrayList<Operation> m_operations = null;
     //! Cache the first operation.
     private Operation m_firstoperation = null;
     //! Cache the first exception.

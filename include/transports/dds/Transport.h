@@ -53,6 +53,17 @@ namespace eprosima
                                 return m_subscriber;
                             }
 
+                        /*!
+                         * @brief This function creates a new procedure endpoint.
+                         * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
+                         *
+                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
+                         * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. Cannot be NULL.
+                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL:
+                         * @return 0 value is returned if the function works successfully. In other case -1 is returned.
+                         */
+                        virtual int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename) = 0;
+
                     protected:
 
                         /*!

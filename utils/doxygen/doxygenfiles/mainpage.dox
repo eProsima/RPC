@@ -43,7 +43,7 @@
  */
 
  /*!
- * @defgroup CLIENTMODULE Client Module
+ * @defgroup PROXYMODULE Client Module
  * @ingroup RPCDDSAPIREFERENCE
  * @brief This group contains related API to create a client application.
  * This API is used by the tool \e rpcddsgen to generate custom code based in a defined interface.

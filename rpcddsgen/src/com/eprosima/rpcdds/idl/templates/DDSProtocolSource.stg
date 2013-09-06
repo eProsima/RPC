@@ -1,10 +1,46 @@
-group UtilsSource;
+group DDSProtocolSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This source file contains the definition of helpful functions for the DDS messages for interface ", ctx.filename, "."])$
+$fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
 
-#include "$ctx.filename$RequestReplyUtils.h"
+#include "$ctx.filename$DDSProtocol.h"
+#include "transports/Transport.h"
+#include "transports/dds/Transport.h"
 $ReqRepIncludes(filename=ctx.filename)$
+
+using namespace eprosima::rpcdds;
+using namespace ::protocol;
+using namespace ::protocol::dds;
+using namespace ::transport;
+
+bool $ctx.filename$Protocol::isCompatibleTransport(Transport *transport)
+{
+    const char *typename = NULL;
+    
+    if(transport != NULL)
+    {
+        if(strcmp(transport->getType(), "DDS") == 0)
+        {
+            eprosima::rpcdds::transport::dds::Transport *ddstransport = dynamic_cast<eprosima::rpcdds::transport::dds::Transport*>(transport);
+            
+            if(ddstransport != NULL)
+            {
+                $ctx.interfaces : { interface |
+                $interface.operations : { operation |
+                $getTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typename")$
+
+                if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$ != DDS::RETCODE_OK)
+                {
+                    return NULL;
+                }
+                }; separator="\n"$
+                }; separator="\n"$
+            }
+        }
+    }
+    
+    return false;
+}
 
 $definitions; separator="\n"$
 >>
@@ -49,7 +85,7 @@ const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(D
 {
     const char *typeName = NULL;
 
-    if(participant != NULL)
+    /*if(participant != NULL)
     {
         $getTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$
 
@@ -57,19 +93,19 @@ const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(D
         {
             return NULL;
         }
-    }
+    }*/
 
     return typeName;
 }
 
 void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
 {
-    $operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
+    //$operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
 }
 
 void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$)
 {
-    $operation.inputparam : {$extractDataHelper(param=it, dataname="data")$};separator="\n"$  
+    //$operation.inputparam : {$extractDataHelper(param=it, dataname="data")$};separator="\n"$  
 }
 
 $if(!operation.oneway)$
@@ -77,7 +113,7 @@ const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS
 {
     const char *typeName = NULL;
 
-    if(participant != NULL)
+    /*if(participant != NULL)
     {
         $getTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typeName")$
 
@@ -85,14 +121,14 @@ const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS
         {
             return NULL;
         }
-    }
+    }*/
 
     return typeName;
 }
 
 void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
 {
-    $if(operation.exceptions)$
+    /*$if(operation.exceptions)$
     $operation.outputparam : {$createDataHelper(param=it, dataname="instance.unio._u.st")$};separator="\n"$
     $if(operation.rettypeparam)$
     $createDataHelper(param=operation.rettypeparam, dataname="instance.unio._u.st")$        
@@ -102,12 +138,12 @@ void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.
     $if(operation.rettypeparam)$
     $createDataHelper(param=operation.rettypeparam, dataname="instance")$        
     $endif$
-    $endif$
+    $endif$*/
 }
 
-void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eProsima::RPCDDS::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
+void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eprosima::rpcdds::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
 {
-    retcode = (eProsima::RPCDDS::ReturnMessage)data.header.rpcddsRetCode;
+    /*retcode = (eprosima::rpcdds::ReturnMessage)data.header.rpcddsRetCode;
     $if(operation.exceptions)$
     $operation.outputparam : {$extractDataHelper(param=it, dataname="data.unio._u.st", isReply="yes")$};separator="\n"$
     $if(operation.rettypeparam)$
@@ -118,7 +154,7 @@ void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operat
     $if(operation.rettypeparam)$
     $extractDataHelper(param=operation.rettypeparam, dataname="data", isReply="yes")$        
     $endif$
-    $endif$  
+    $endif$  */
 }
 
 $endif$

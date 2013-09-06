@@ -476,9 +476,9 @@ public class RPCDDSGEN
 	        // Load template to generate source for common types.
 	        tmanager.addGroup("TypesHeader");
 	        tmanager.addGroup("TypesSource");
-	        // Load template to generate Utils for topics.
-	        tmanager.addGroup("UtilsHeader");
-	        tmanager.addGroup("UtilsSource");
+	        // Load template to generate the DDS protocol.
+	        tmanager.addGroup("DDSProtocolHeader");
+	        tmanager.addGroup("DDSProtocolSource");
 	        // Load template to generate Proxy for topics.
 	        tmanager.addGroup("ProxyHeader");
 	        tmanager.addGroup("ProxySource");
@@ -582,12 +582,12 @@ public class RPCDDSGEN
 		            
 		            if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
 		            {	            	
-		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReplyUtils.h", maintemplates.getTemplate("UtilsHeader"), m_replace))
+		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
 		                {
-		                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RequestReplyUtils.cxx", maintemplates.getTemplate("UtilsSource"), m_replace);
+		                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
 		                    
-		                    project.addCommonIncludeFile(onlyFileName + "RequestReplyUtils.h");
-		                    project.addCommonSrcFile(onlyFileName + "RequestReplyUtils.cxx");
+		                    project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
+		                    project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
 		                }
 		            }
 		        }

@@ -14,7 +14,7 @@ $definitions; separator="\n"$
 #endif  // _$ctx.filename;format="toUpper"$_SERVER_RPC_SUPPORT_H_
 >>
 
-module(module, definition_list) ::= <<
+module(ctx, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$

@@ -9,7 +9,7 @@ $fileHeader(file=[ctx.filename, "RequestReply.idl"], description=["This IDL file
 $definitions; separator="\n"$
 >>
 
-module(module, definition_list) ::= <<
+module(ctx, module, definition_list) ::= <<
 $if(module.thereAreValidDefinitions)$
 module $module.name$
 {

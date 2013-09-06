@@ -9,7 +9,7 @@ $fileHeader(file=[ctx.filename, "T.cxx"], description=["This source file contain
 $definitions; separator="\n"$
 >>
 
-module(module, definition_list) ::= <<
+module(ctx, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$

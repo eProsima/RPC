@@ -27,6 +27,7 @@ public class Context
         m_includedependency = new HashSet<String>();
         m_directIncludeDependencies = new ArrayList<String>();
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
+        m_interfaces = new HashMap<String, Interface>();
         m_globalAnnotations = new HashMap<String, String>();
         m_lvl1Annotations = new HashMap<String, String>();
         m_lvl2Annotations = new HashMap<String, String>();
@@ -234,6 +235,28 @@ public class Context
     }
     
     /*!
+     * @brief This function adds a interface to the context.
+     * This function is used in the parser.
+     */
+    public void addInterface(String name, Interface interf)
+    {
+        Interface prev = m_interfaces.put(name, interf);
+        
+        // TODO: Excepción
+        if(prev != null)
+            System.out.println("Warning: Redefined interface " + name);
+    }
+    
+    /*!
+     * @brief This function returns all interfaces.
+     * This function is used in string templates.
+     */
+    public ArrayList<Interface> getInterfaces()
+    {
+        return new ArrayList<Interface>(m_interfaces.values());
+    }
+    
+    /*!
      * @brief This function stores a global definition of the IDL file.
      */
     public void addDefinition(Definition definition)
@@ -424,10 +447,7 @@ public class Context
     private String m_scopeFile = "";
     private String m_sersym = ">>";
     private String m_typelimitation = null;
-    //! Map that contains all types that were found processing the IDL file (after preprocessing).
-    private HashMap<String, TypeCode> m_types = null;
-    //! Map that contains all exceptions that were found processing the IDL file (after preprocessing).
-    private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
+    
     //! Set that contains the library dependencies that were found because there was a line of the preprocessor.
     private HashSet<String> m_dependencies = null;
     //! Set that contains the include dependencies that force to include our type generated file (right now only with exceptions).
@@ -444,6 +464,12 @@ public class Context
     
     //! Store all global definitions.
     private ArrayList<Definition> m_definitions;
+  //! Map that contains all types that were found processing the IDL file (after preprocessing).
+    private HashMap<String, TypeCode> m_types = null;
+    //! Map that contains all global exceptions that were found processing the IDL file (after preprocessing).
+    private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
+    //! Map that contains all interfaces that were found processing the IDL file (after preprocessing):
+    private HashMap<String, Interface> m_interfaces = null;
     //! Cache the first interface.
     private Interface m_firstinterface = null;
   //! Cache the first exception.

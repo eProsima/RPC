@@ -7,7 +7,7 @@ $definitions; separator="\n"$
 
 >>
 
-module(module, definition_list) ::= <<
+module(ctx, module, definition_list) ::= <<
 $if(module.thereAreTypeDeclarations)$
 module $module.name$
 {

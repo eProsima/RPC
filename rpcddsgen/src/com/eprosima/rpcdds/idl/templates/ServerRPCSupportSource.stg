@@ -9,7 +9,7 @@ $fileHeader(file=[ctx.filename, "ServerRPCSupport.cxx"], description=["This sour
 $definitions; separator="\n"$
 >>
 
-module(module, definition_list) ::= <<
+module(ctx, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$
