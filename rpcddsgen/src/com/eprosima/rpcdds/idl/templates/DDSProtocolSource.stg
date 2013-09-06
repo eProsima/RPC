@@ -29,10 +29,18 @@ bool $ctx.filename$Protocol::isCompatibleTransport(Transport *transport)
                 $interface.operations : { operation |
                 $getTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typename")$
 
-                if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$ != DDS::RETCODE_OK)
+                if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typename")$ != DDS::RETCODE_OK)
                 {
-                    return NULL;
+                    return false;
                 }
+                
+                $getTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typename")$
+
+                if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typename")$ != DDS::RETCODE_OK)
+                {
+                    return false;
+                }
+        
                 }; separator="\n"$
                 }; separator="\n"$
             }

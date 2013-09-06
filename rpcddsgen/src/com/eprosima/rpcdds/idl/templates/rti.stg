@@ -91,7 +91,7 @@ $name$ = $typename$TypeSupport::get_type_name();
 >>
 
 registerTypename(typename, name) ::= <<
-$typename$TypeSupport::register_type(participant, $name$)
+$typename$TypeSupport::register_type(ddstransport->getParticipant(), $name$)
 >>
 
 preReqIDLDefines(name) ::= <<
