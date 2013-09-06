@@ -13,54 +13,51 @@
 
 const char* const CLASS_NAME = "AsyncTask";
 
-namespace eProsima
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+
+AsyncTask::AsyncTask(Proxy *proxy) :
+    m_proxy(proxy), m_proxyRPC(NULL)
 {
-    namespace RPCDDS
+}
+
+AsyncTask::~AsyncTask()
+{
+}
+
+void AsyncTask::execute(DDS::QueryCondition *query)
+{
+    const char* const METHOD_NAME = "execute";
+
+    if(query != NULL)
     {
-        AsyncTask::AsyncTask(Client *client) :
-            m_client(client), m_clientRPC(NULL)
+        ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
+
+        if(retCode == OPERATION_SUCCESSFUL)
         {
+            this->execute();
         }
-
-        AsyncTask::~AsyncTask()
+        else if(retCode == CLIENT_INTERNAL_ERROR)
         {
+            this->on_exception(ClientInternalException("Error taking the reply"));
         }
-
-        void AsyncTask::execute(DDS::QueryCondition *query)
+        else if(retCode == SERVER_TIMEOUT)
         {
-            const char* const METHOD_NAME = "execute";
-
-            if(query != NULL)
-            {
-                eProsima::RPCDDS::ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
-
-				if(retCode == OPERATION_SUCCESSFUL)
-				{
-					this->execute();
-				}
-				else if(retCode == CLIENT_INTERNAL_ERROR)
-				{
-					this->on_exception(ClientInternalException("Error taking the reply"));
-				}
-				else if(retCode == SERVER_TIMEOUT)
-				{
-					this->on_exception(ServerTimeoutException("Error taking the reply"));
-				}
-            }
-            else
-            {
-                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-            }
+            this->on_exception(ServerTimeoutException("Error taking the reply"));
         }
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+}
 
-        ClientRPC* AsyncTask::getRPC()
-        {
-            return m_clientRPC;
-        }
+ClientRPC* AsyncTask::getRPC()
+{
+    return m_clientRPC;
+}
 
-        void AsyncTask::setClientRPC(ClientRPC *clientRPC)
-        {
-            m_clientRPC = clientRPC;
-        }
-    } // namespace RPCDDS
-} // namespace eProsima
+void AsyncTask::setClientRPC(ClientRPC *clientRPC)
+{
+    m_clientRPC = clientRPC;
+}

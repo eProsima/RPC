@@ -14,19 +14,13 @@
 #include <unistd.h>
 #endif
 
-static const char* const CLASS_NAME = "eProsima::RPCDDS::Utilities";
+static const char* const CLASS_NAME = "eprosima::rpcdds::Utilities";
 
-namespace eProsima
+void eprosima::rpcdds::sleep(unsigned int milliseconds)
 {
-    namespace RPCDDS
-    {
-		void sleep(unsigned int milliseconds)
-		{
 #if defined(WIN32)
-			Sleep(milliseconds);
+    Sleep(milliseconds);
 #elif defined(__linux)
-			usleep(milliseconds * 1000);
+    usleep(milliseconds * 1000);
 #endif
-		}
-    } // namespace RPCDDS
-} //namespace eProsima
+}

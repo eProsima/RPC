@@ -9,9 +9,9 @@
 #ifndef _UTILS_MESSAGES_H_
 #define _UTILS_MESSAGES_H_
 
-namespace eProsima
+namespace eprosima
 {
-	namespace RPCDDS
+	namespace rpcdds
 	{
 		/**
 		 * \brief This enumeration type defines the success of an operation or
@@ -31,7 +31,7 @@ namespace eProsima
 			NO_SERVER
 		} ReturnMessage;
 
-	} // namespace RPCDDS
-} // namespace eProsima
+	} // namespace rpcdds
+} // namespace eprosima
 
 #endif // _UTILS_MESSAGES_H_

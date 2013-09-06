@@ -8,53 +8,49 @@
 
 #include <exceptions/ServerTimeoutException.h>
 
-namespace eProsima
+using namespace eprosima::rpcdds::exception;
+
+ServerTimeoutException::ServerTimeoutException(const std::string &message) : SystemException(message, 5)
 {
-    namespace RPCDDS
+}
+
+ServerTimeoutException::ServerTimeoutException(std::string&& message) : SystemException(std::move(message), 5)
+{
+}
+
+ServerTimeoutException::ServerTimeoutException(const ServerTimeoutException &ex) : SystemException(ex)
+{
+}
+
+ServerTimeoutException::ServerTimeoutException(ServerTimeoutException&& ex) : SystemException(std::move(ex))
+{
+}
+
+ServerTimeoutException& ServerTimeoutException::operator=(const ServerTimeoutException &ex)
+{
+    if(this != &ex)
     {
-		ServerTimeoutException::ServerTimeoutException(const std::string &message) : SystemException(message, 5)
-		{
-		}
+        SystemException::operator=(ex);
+    }
 
-		ServerTimeoutException::ServerTimeoutException(std::string&& message) : SystemException(std::move(message), 5)
-		{
-		}
+    return *this;
+}
 
-		ServerTimeoutException::ServerTimeoutException(const ServerTimeoutException &ex) : SystemException(ex)
-		{
-		}
+ServerTimeoutException& ServerTimeoutException::operator=(ServerTimeoutException&& ex)
+{
+    if(this != &ex)
+    {
+        SystemException::operator=(std::move(ex));
+    }
 
-		ServerTimeoutException::ServerTimeoutException(ServerTimeoutException&& ex) : SystemException(std::move(ex))
-		{
-		}
+    return *this;
+}
 
-		ServerTimeoutException& ServerTimeoutException::operator=(const ServerTimeoutException &ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(ex);
-			}
+ServerTimeoutException::~ServerTimeoutException() throw()
+{
+}
 
-			return *this;
-		}
-
-		ServerTimeoutException& ServerTimeoutException::operator=(ServerTimeoutException&& ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(std::move(ex));
-			}
-
-			return *this;
-		}
-
-		ServerTimeoutException::~ServerTimeoutException() throw()
-		{
-		}
-
-		void ServerTimeoutException::raise() const
-		{
-			throw *this;
-		}
-    } // namespace RPCDDS
-} // namespace eProsima
+void ServerTimeoutException::raise() const
+{
+    throw *this;
+}

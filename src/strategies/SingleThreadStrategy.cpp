@@ -11,24 +11,18 @@
 
 static const char* const CLASS_NAME = "SingleThreadStrategy";
 
-namespace eProsima
+using namespace eprosima::rpcdds;
+
+void SingleThreadStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
 {
-    namespace RPCDDS
+    const char* const METHOD_NAME = "schedule";
+
+    if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
     {
-        void SingleThreadStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
-        {
-            const char* const METHOD_NAME = "schedule";
-
-            if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
-            {
-                execFunction(server, data, service);
-            }
-            else
-            {
-                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-            }
-        }
-
-    } // namespace RPCDDS
-} // namespace eProsima
-
+        execFunction(server, data, service);
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+}

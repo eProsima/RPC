@@ -12,9 +12,9 @@
 #include "server/ServerStrategy.h"
 #include "rpcdds_dll.h"
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
         class ThreadPerRequestStrategyJob;
 
@@ -46,8 +46,8 @@ namespace eProsima
             private:
 
         };
-    } // namespace RPCDDS
-} //namespace eProsima
+    } // namespace rpcdds
+} //namespace eprosima
 
 #endif // _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 

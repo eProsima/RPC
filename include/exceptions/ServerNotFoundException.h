@@ -11,66 +11,69 @@
 
 #include <exceptions/SystemException.h>
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
-		/**
-		 * @brief This class is thrown as an exception when the server is not found.
-         * @ingroup EXCEPTIONMODULE
-		 */
-        class RPCDDS_DllAPI ServerNotFoundException : public SystemException
+        namespace exception
         {
-		public:
+            /**
+             * @brief This class is thrown as an exception when the server is not found.
+             * @ingroup EXCEPTIONMODULE
+             */
+            class RPCDDS_DllAPI ServerNotFoundException : public SystemException
+            {
+                public:
 
-			/**
-			 * \brief Default constructor.
-			 *
-			 * \param message A error message. This message is copied.
-			 */
-			ServerNotFoundException(const std::string &message);
+                    /**
+                     * \brief Default constructor.
+                     *
+                     * \param message A error message. This message is copied.
+                     */
+                    ServerNotFoundException(const std::string &message);
 
-			/**
-			 * \brief Default constructor.
-			 *
-			 * \param message A error message. This message is moved.
-			 */
-			ServerNotFoundException(std::string&& message);
+                    /**
+                     * \brief Default constructor.
+                     *
+                     * \param message A error message. This message is moved.
+                     */
+                    ServerNotFoundException(std::string&& message);
 
-			/**
-			 * \brief Default copy constructor.
-			 *
-			 * \param ex ServerNotFoundException that will be copied.
-			 */
-			ServerNotFoundException(const ServerNotFoundException &ex);
+                    /**
+                     * \brief Default copy constructor.
+                     *
+                     * \param ex ServerNotFoundException that will be copied.
+                     */
+                    ServerNotFoundException(const ServerNotFoundException &ex);
 
-			/**
-			 * \brief Default move constructor.
-			 *
-			 * \param ex ServerNotFoundException that will be moved.
-			 */
-			ServerNotFoundException(ServerNotFoundException&& ex);
+                    /**
+                     * \brief Default move constructor.
+                     *
+                     * \param ex ServerNotFoundException that will be moved.
+                     */
+                    ServerNotFoundException(ServerNotFoundException&& ex);
 
-			/**
-			 * \brief Assigment operation.
-			 *
-			 * \param ex ServerNotFoundException that will be copied.
-			 */
-			ServerNotFoundException& operator=(const ServerNotFoundException &ex);
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex ServerNotFoundException that will be copied.
+                     */
+                    ServerNotFoundException& operator=(const ServerNotFoundException &ex);
 
-			/**
-			 * \brief Assigment operation.
-			 *
-			 * \param ex ServerNotFoundException that will be moved.
-			 */
-			ServerNotFoundException& operator=(ServerNotFoundException&& ex);
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex ServerNotFoundException that will be moved.
+                     */
+                    ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
-			/// \brief Default constructor
-			virtual ~ServerNotFoundException() throw();
+                    /// \brief Default constructor
+                    virtual ~ServerNotFoundException() throw();
 
-			/// \brief This function throws the object as exception.
-			virtual void raise() const;
-        };
-    } // namespace RPCDDS
-} // namespace eProsima
+                    /// \brief This function throws the object as exception.
+                    virtual void raise() const;
+            };
+        } // namespace exception
+    } // namespace rpcdds
+} // namespace eprosima
 #endif // _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_

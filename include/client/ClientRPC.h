@@ -10,7 +10,7 @@
 #define _CLIENT_CLIENTRPC_H_
 
 #include "rpcdds_dll.h"
-#include "utils/Middleware.h"
+#include "utils/dds/Middleware.h"
 #include "utils/Messages.h"
 
 #define QUERY_POOL_LENGTH 10
@@ -20,9 +20,9 @@ namespace boost
     class mutex;
 }
 
-namespace eProsima
+namespace eprosima
 {
-	namespace RPCDDS
+	namespace rpcdds
 	{
         class Client;
         class AsyncTask;
@@ -231,7 +231,7 @@ namespace eProsima
 				int m_queriesInUseLimiter;
 		};
 
-	} // namespace RPCDDS
-} // namespace eProsima
+	} // namespace rpcdds
+} // namespace eprosima
 
 #endif // _CLIENT_CLIENTRPC_H_

@@ -13,9 +13,9 @@
 
 static const char* const CLASS_NAME = "ThreadPerRequestStrategy";
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
         class ThreadPerRequestStrategyJob
         {
@@ -36,23 +36,23 @@ namespace eProsima
                 Server *m_server;
                 ServerRPC *m_service;
         };
+    } // namespace rpcdds
+} // namespace eprosima
 
-        void ThreadPerRequestStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
-        {
-            const char* const METHOD_NAME = "schedule";
+using namespace eprosima::rpcdds;
 
-            if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
-            {
-                boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, data, server, service));
-                boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
-                thread.detach();
-            }
-            else
-            {
-                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-            }
-        }
+void ThreadPerRequestStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
+{
+    const char* const METHOD_NAME = "schedule";
 
-    } // namespace RPCDDS
-} // namespace eProsima
-
+    if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
+    {
+        boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, data, server, service));
+        boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+        thread.detach();
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+}

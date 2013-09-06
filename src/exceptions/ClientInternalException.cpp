@@ -8,53 +8,49 @@
 
 #include <exceptions/ClientInternalException.h>
 
-namespace eProsima
+using namespace eprosima::rpcdds::exception;
+
+ClientInternalException::ClientInternalException(const std::string &message) : SystemException(message, 2)
 {
-    namespace RPCDDS
+}
+
+ClientInternalException::ClientInternalException(std::string&& message) : SystemException(std::move(message), 2)
+{
+}
+
+ClientInternalException::ClientInternalException(const ClientInternalException &ex) : SystemException(ex)
+{
+}
+
+ClientInternalException::ClientInternalException(ClientInternalException&& ex) : SystemException(std::move(ex))
+{
+}
+
+ClientInternalException& ClientInternalException::operator=(const ClientInternalException &ex)
+{
+    if(this != &ex)
     {
-		ClientInternalException::ClientInternalException(const std::string &message) : SystemException(message, 2)
-		{
-		}
+        SystemException::operator=(ex);
+    }
 
-		ClientInternalException::ClientInternalException(std::string&& message) : SystemException(std::move(message), 2)
-		{
-		}
+    return *this;
+}
 
-		ClientInternalException::ClientInternalException(const ClientInternalException &ex) : SystemException(ex)
-		{
-		}
+ClientInternalException& ClientInternalException::operator=(ClientInternalException&& ex)
+{
+    if(this != &ex)
+    {
+        SystemException::operator=(std::move(ex));
+    }
 
-		ClientInternalException::ClientInternalException(ClientInternalException&& ex) : SystemException(std::move(ex))
-		{
-		}
+    return *this;
+}
 
-		ClientInternalException& ClientInternalException::operator=(const ClientInternalException &ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(ex);
-			}
+ClientInternalException::~ClientInternalException() throw()
+{
+}
 
-			return *this;
-		}
-
-		ClientInternalException& ClientInternalException::operator=(ClientInternalException&& ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(std::move(ex));
-			}
-
-			return *this;
-		}
-
-		ClientInternalException::~ClientInternalException() throw()
-		{
-		}
-
-		void ClientInternalException::raise() const
-		{
-			throw *this;
-		}
-    } // namespace RPCDDS
-} // namespace eProsima
+void ClientInternalException::raise() const
+{
+    throw *this;
+}

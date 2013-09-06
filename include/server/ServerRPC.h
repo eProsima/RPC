@@ -9,15 +9,15 @@
 #ifndef _SERVER_SERVERPC_H_
 #define _SERVER_SERVERRPC_H_
 
-#include "utils/Middleware.h"
+#include "utils/dds/Middleware.h"
 #include "rpcdds_dll.h"
 #include "utils/Typedefs.h"
 #include "utils/Messages.h"
 #include <string>
 
-namespace eProsima
+namespace eprosima
 {
-	namespace RPCDDS
+	namespace rpcdds
 	{
 
 		class Server;
@@ -212,7 +212,7 @@ namespace eProsima
 				fExecFunction m_execFunction;
 		};
 
-	} // namespace RPCDDS
-} // namespace eProsima
+	} // namespace rpcdds
+} // namespace eprosima
 
 #endif // _SERVER_SERVERRPC_H_

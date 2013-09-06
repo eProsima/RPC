@@ -11,9 +11,9 @@
 
 #include "rpcdds_dll.h"
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
 		/**
 		 * \brief This function sleeps the current thread.
@@ -21,7 +21,7 @@ namespace eProsima
 		 * \param milliseconds Time in milliseconds that the thread will be sleeping.
 		 */
 		RPCDDS_DllAPI void sleep(unsigned int milliseconds);
-    }; // namespace RPCDDS
-}; // namespace eProsima
+    }; // namespace rpcdds
+}; // namespace eprosima
 
 #endif // _UTILS_UTILITIES_H_

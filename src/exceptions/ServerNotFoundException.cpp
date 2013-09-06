@@ -8,53 +8,49 @@
 
 #include <exceptions/ServerNotFoundException.h>
 
-namespace eProsima
+using namespace eprosima::rpcdds::exception;
+
+ServerNotFoundException::ServerNotFoundException(const std::string &message) : SystemException(message, 4)
 {
-    namespace RPCDDS
+}
+
+ServerNotFoundException::ServerNotFoundException(std::string&& message) : SystemException(std::move(message), 4)
+{
+}
+
+ServerNotFoundException::ServerNotFoundException(const ServerNotFoundException &ex) : SystemException(ex)
+{
+}
+
+ServerNotFoundException::ServerNotFoundException(ServerNotFoundException&& ex) : SystemException(std::move(ex))
+{
+}
+
+ServerNotFoundException& ServerNotFoundException::operator=(const ServerNotFoundException &ex)
+{
+    if(this != &ex)
     {
-		ServerNotFoundException::ServerNotFoundException(const std::string &message) : SystemException(message, 4)
-		{
-		}
+        SystemException::operator=(ex);
+    }
 
-		ServerNotFoundException::ServerNotFoundException(std::string&& message) : SystemException(std::move(message), 4)
-		{
-		}
+    return *this;
+}
 
-		ServerNotFoundException::ServerNotFoundException(const ServerNotFoundException &ex) : SystemException(ex)
-		{
-		}
+ServerNotFoundException& ServerNotFoundException::operator=(ServerNotFoundException&& ex)
+{
+    if(this != &ex)
+    {
+        SystemException::operator=(std::move(ex));
+    }
 
-		ServerNotFoundException::ServerNotFoundException(ServerNotFoundException&& ex) : SystemException(std::move(ex))
-		{
-		}
+    return *this;
+}
 
-		ServerNotFoundException& ServerNotFoundException::operator=(const ServerNotFoundException &ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(ex);
-			}
+ServerNotFoundException::~ServerNotFoundException() throw()
+{
+}
 
-			return *this;
-		}
-
-		ServerNotFoundException& ServerNotFoundException::operator=(ServerNotFoundException&& ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(std::move(ex));
-			}
-
-			return *this;
-		}
-
-		ServerNotFoundException::~ServerNotFoundException() throw()
-		{
-		}
-
-		void ServerNotFoundException::raise() const
-		{
-			throw *this;
-		}
-    } // namespace RPCDDS
-} // namespace eProsima
+void ServerNotFoundException::raise() const
+{
+    throw *this;
+}

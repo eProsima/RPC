@@ -14,9 +14,9 @@
 
 static const char* const CLASS_NAME = "ThreadPoolStrategy";
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
         class ThreadPoolStrategyJob
         {
@@ -61,32 +61,33 @@ namespace eProsima
 
                 boost::threadpool::pool *m_pool;
         };
+    } // namespace rpcdds
+} // namespace eprosima
 
-        ThreadPoolStrategy::ThreadPoolStrategy(unsigned int threadCount) : m_impl(NULL)
-        {
-            m_impl = new ThreadPoolStrategyImpl(threadCount);
-        }
+using namespace eprosima::rpcdds;
 
-        ThreadPoolStrategy::~ThreadPoolStrategy()
-        {
-            if(m_impl != NULL)
-                delete m_impl;
-        }
+ThreadPoolStrategy::ThreadPoolStrategy(unsigned int threadCount) : m_impl(NULL)
+{
+    m_impl = new ThreadPoolStrategyImpl(threadCount);
+}
 
-        void ThreadPoolStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
-        {
-            const char* const METHOD_NAME = "schedule";
+ThreadPoolStrategy::~ThreadPoolStrategy()
+{
+    if(m_impl != NULL)
+        delete m_impl;
+}
 
-            if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
-            {
-                boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(execFunction, data, server, service));
-                boost::threadpool::schedule(*m_impl->getPool(), boost::bind(&ThreadPoolStrategyJob::run, job));
-            }
-            else
-            {
-                printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-            }
-        }
+void ThreadPoolStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
+{
+    const char* const METHOD_NAME = "schedule";
 
-    } // namespace RPCDDS
-} // namespace eProsima
+    if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
+    {
+        boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(execFunction, data, server, service));
+        boost::threadpool::schedule(*m_impl->getPool(), boost::bind(&ThreadPoolStrategyJob::run, job));
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+}

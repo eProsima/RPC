@@ -13,60 +13,63 @@
 #include <string>
 #include <exception>
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
-		/**
-		 * @brief This abstract class is used to create exceptions.
-         * @ingroup EXCEPTIONMODULE
-		 */
-        class RPCDDS_DllAPI Exception : public std::exception
+        namespace exception
         {
-		public:
+            /**
+             * @brief This abstract class is used to create exceptions.
+             * @ingroup EXCEPTIONMODULE
+             */
+            class RPCDDS_DllAPI Exception : public std::exception
+            {
+                public:
 
-			/// \brief Default destructor.
-			virtual ~Exception() throw();
+                    /// \brief Default destructor.
+                    virtual ~Exception() throw();
 
-			/// \brief This function throws the object as exception.
-			virtual void raise() const = 0;
+                    /// \brief This function throws the object as exception.
+                    virtual void raise() const = 0;
 
-		protected:
+                protected:
 
-			/**
-			 * \brief Default constructor.
-			 */
-			Exception();
+                    /**
+                     * \brief Default constructor.
+                     */
+                    Exception();
 
-			/**
-			 * \brief Default copy constructor.
-			 *
-			 * \param ex Exception that will be copied.
-			 */
-			Exception(const Exception &ex);
+                    /**
+                     * \brief Default copy constructor.
+                     *
+                     * \param ex Exception that will be copied.
+                     */
+                    Exception(const Exception &ex);
 
-			/**
-			 * \brief Default move constructor.
-			 *
-			 * \param ex Exception that will be moved.
-			 */
-			Exception(Exception&& ex);
+                    /**
+                     * \brief Default move constructor.
+                     *
+                     * \param ex Exception that will be moved.
+                     */
+                    Exception(Exception&& ex);
 
-			/**
-			 * \brief Assigment operation.
-			 *
-			 * \param ex Exception that will be copied.
-			 */
-			Exception& operator=(const Exception &ex);
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex Exception that will be copied.
+                     */
+                    Exception& operator=(const Exception &ex);
 
-			/**
-			 * \brief Assigment operation.
-			 *
-			 * \param ex Exception that will be moved.
-			 */
-			Exception& operator=(Exception&&);
-        };
-    } // namespace RPCDDS
-} // namespace eProsima
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex Exception that will be moved.
+                     */
+                    Exception& operator=(Exception&&);
+            };
+        } // namespace exception
+    } // namespace rpcdds
+} // namespace eprosima
 
 #endif // _EXCEPTIONS_EXCEPTION_H_

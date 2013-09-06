@@ -12,9 +12,9 @@
 #include "server/ServerStrategy.h"
 #include "rpcdds_dll.h"
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
 		/**
 		 * @brief This class implements the sigle thread strategy.
@@ -41,7 +41,7 @@ namespace eProsima
 				 */
                 virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service);
         };
-    } // namespace RPCDDS
-} //namespace eProsima
+    } // namespace rpcdds
+} //namespace eprosima
 
 #endif // _STRATEGIES_SINGLETHREADSTRATEGY_H_

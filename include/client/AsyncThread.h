@@ -9,84 +9,87 @@
 #ifndef _CLIENT_ASYNCTHREAD_H_
 #define _CLIENT_ASYNCTHREAD_H_
 
-#include "utils/Middleware.h"
+#include "utils/dds/Middleware.h"
 #include <vector>
 #include <boost/thread.hpp>
 
-namespace eProsima
+namespace eprosima
 {
-	namespace RPCDDS
-	{
-        class AsyncTask;
-		class ClientRPC;
-
-        typedef std::pair<DDS::QueryCondition*, AsyncTask*> AsyncTaskPair;
-        typedef std::pair<boost::posix_time::time_duration, AsyncTaskPair> AsyncListPair;
-        typedef std::vector<AsyncListPair> AsyncVector;
-
-		/**
-		 * @brief This class is a separated thread used to manage asynchronous tasks.
-         * @ingroup CLIENTMODULE
-		 */
-        class AsyncThread
+    namespace rpcdds
+    {
+        namespace proxy
         {
-            public:
+            class AsyncTask;
+            class ClientRPC;
 
-				/// \brief Default constructor.
-                AsyncThread();
+            typedef std::pair<DDS::QueryCondition*, AsyncTask*> AsyncTaskPair;
+            typedef std::pair<boost::posix_time::time_duration, AsyncTaskPair> AsyncListPair;
+            typedef std::vector<AsyncListPair> AsyncVector;
 
-				/**
-				 * \brief This function initializes all internal objects.
-				 *
-				 * \return 0 value is returned if all objects was created succesfully. In other case -1 value is returned.
-				 */
-                int init();
+            /**
+             * @brief This class is a separated thread used to manage asynchronous tasks.
+             * @ingroup CLIENTMODULE
+             */
+            class AsyncThread
+            {
+                public:
 
-				/// \brief This function deletes the internal objects.
-                void exit();
+                    /// \brief Default constructor.
+                    AsyncThread();
 
-				/**
-				 * \brief This function adds a new asynchronous task.
-				 *
-				 * \param query Associated DDS QueryCondition to the asynchronous task. Cannot be NULL.
-				 * \param task The new asynchronous task. Cannot be NULL.
-				 * \param timeout The time in milliseconds that will be waiting to the reply.
-				 * \return 0 value is returned if function works succesfully. In other case, -1 value is returned.
-				 */
-                int addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
+                    /**
+                     * \brief This function initializes all internal objects.
+                     *
+                     * \return 0 value is returned if all objects was created succesfully. In other case -1 value is returned.
+                     */
+                    int init();
 
-				/**
-				 * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
-				 *
-				 * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
-				 */
-				void deleteAssociatedAsyncTasks(ClientRPC *rpc);
+                    /// \brief This function deletes the internal objects.
+                    void exit();
 
-            private:
+                    /**
+                     * \brief This function adds a new asynchronous task.
+                     *
+                     * \param query Associated DDS QueryCondition to the asynchronous task. Cannot be NULL.
+                     * \param task The new asynchronous task. Cannot be NULL.
+                     * \param timeout The time in milliseconds that will be waiting to the reply.
+                     * \return 0 value is returned if function works succesfully. In other case, -1 value is returned.
+                     */
+                    int addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
 
-				/// \brief This function is executed by the new created thread.
-                void run();
+                    /**
+                     * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+                     *
+                     * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
+                     */
+                    void deleteAssociatedAsyncTasks(ClientRPC *rpc);
 
-				/// \brief The separated thread that executes the functionality of this object..
-                boost::thread m_thread;
+                private:
 
-				/// \brief Vector with all asynchronous tasks.
-                AsyncVector m_vector;
+                    /// \brief This function is executed by the new created thread.
+                    void run();
 
-				/// \brief Mutex
-				boost::mutex *m_mutex;
-				/// \brief Variable condition.
-                boost::condition_variable m_cond_wake_up;
+                    /// \brief The separated thread that executes the functionality of this object..
+                    boost::thread m_thread;
 
-                DDS::GuardCondition *m_guardWaitSet;
+                    /// \brief Vector with all asynchronous tasks.
+                    AsyncVector m_vector;
 
-                DDS::WaitSet *m_waitSet;
+                    /// \brief Mutex
+                    boost::mutex *m_mutex;
+                    /// \brief Variable condition.
+                    boost::condition_variable m_cond_wake_up;
 
-                DDS::Duration_t m_timeout;
+                    DDS::GuardCondition *m_guardWaitSet;
 
-                bool m_exit;
-        };
-    } // namespace RPCDDS
-} // namespace eProsima
+                    DDS::WaitSet *m_waitSet;
+
+                    DDS::Duration_t m_timeout;
+
+                    bool m_exit;
+            };
+        } // namespace proxy
+    } // namespace rpcdds
+} // namespace eprosima
 
 #endif // _CLIENT_ASYNCTHREAD_H_

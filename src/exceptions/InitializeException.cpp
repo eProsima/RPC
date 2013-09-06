@@ -8,53 +8,49 @@
 
 #include <exceptions/InitializeException.h>
 
-namespace eProsima
+using namespace eprosima::rpcdds::exception;
+
+InitializeException::InitializeException(const std::string &message) : SystemException(message, 1)
 {
-    namespace RPCDDS
+}
+
+InitializeException::InitializeException(std::string&& message) : SystemException(std::move(message), 1)
+{
+}
+
+InitializeException::InitializeException(const InitializeException &ex) : SystemException(ex)
+{
+}
+
+InitializeException::InitializeException(InitializeException&& ex) : SystemException(std::move(ex))
+{
+}
+
+InitializeException& InitializeException::operator=(const InitializeException &ex)
+{
+    if(this != &ex)
     {
-		InitializeException::InitializeException(const std::string &message) : SystemException(message, 1)
-		{
-		}
+        SystemException::operator=(ex);
+    }
 
-		InitializeException::InitializeException(std::string&& message) : SystemException(std::move(message), 1)
-		{
-		}
+    return *this;
+}
 
-		InitializeException::InitializeException(const InitializeException &ex) : SystemException(ex)
-		{
-		}
+InitializeException& InitializeException::operator=(InitializeException&& ex)
+{
+    if(this != &ex)
+    {
+        SystemException::operator=(std::move(ex));
+    }
 
-		InitializeException::InitializeException(InitializeException&& ex) : SystemException(std::move(ex))
-		{
-		}
+    return *this;
+}
 
-		InitializeException& InitializeException::operator=(const InitializeException &ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(ex);
-			}
+InitializeException::~InitializeException() throw()
+{
+}
 
-			return *this;
-		}
-
-		InitializeException& InitializeException::operator=(InitializeException&& ex)
-		{
-			if(this != &ex)
-			{
-				SystemException::operator=(std::move(ex));
-			}
-
-			return *this;
-		}
-
-		InitializeException::~InitializeException() throw()
-		{
-		}
-
-		void InitializeException::raise() const
-		{
-			throw *this;
-		}
-    } // namespace RPCDDS
-} // namespace eProsima
+void InitializeException::raise() const
+{
+    throw *this;
+}

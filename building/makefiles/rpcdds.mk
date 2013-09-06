@@ -50,28 +50,33 @@ RPCDDS_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 
-RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Client.cpp \
-			$(BASEDIR)/src/client/AsyncTask.cpp \
-			$(BASEDIR)/src/client/AsyncThread.cpp \
-			$(BASEDIR)/src/client/ClientRPC.cpp \
-			$(BASEDIR)/src/server/Server.cpp \
-			$(BASEDIR)/src/server/ServerRPC.cpp \
-			$(BASEDIR)/src/utils/Utilities.cpp \
-			$(BASEDIR)/src/utils/Middleware.cpp \
-			$(BASEDIR)/src/transports/UDPTransport.cpp \
-			$(BASEDIR)/src/transports/TCPTransport.cpp \
-			$(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
-			$(BASEDIR)/src/strategies/SingleThreadStrategy.cpp \
-			$(BASEDIR)/src/strategies/ThreadPerRequestStrategy.cpp \
-			$(BASEDIR)/src/exceptions/Exception.cpp \
-			$(BASEDIR)/src/exceptions/ClientInternalException.cpp \
-			$(BASEDIR)/src/exceptions/InitializeException.cpp \
-			$(BASEDIR)/src/exceptions/ServerInternalException.cpp \
-			$(BASEDIR)/src/exceptions/ServerNotFoundException.cpp \
-			$(BASEDIR)/src/exceptions/ServerTimeoutException.cpp \
-			$(BASEDIR)/src/exceptions/SystemException.cpp \
-			$(BASEDIR)/src/exceptions/UserException.cpp \
-			$(SPECIFIC_SRC_CPPFILES)
+RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
+		     $(BASEDIR)/src/server/Server.cpp \
+		     $(BASEDIR)/src/server/ServerRPC.cpp \
+		     $(BASEDIR)/src/utils/Utilities.cpp \
+		     $(BASEDIR)/src/utils/dds/Middleware.cpp \
+		     $(BASEDIR)/src/transports/dds/Transport.cpp \
+		     $(BASEDIR)/src/transports/dds/UDPProxyTransport.cpp \
+		     $(BASEDIR)/src/transports/dds/UDPServerTransport.cpp \
+		     $(BASEDIR)/src/transports/dds/TCPProxyTransport.cpp \
+		     $(BASEDIR)/src/transports/dds/TCPServerTransport.cpp \
+		     $(BASEDIR)/src/transports/dds/components/ProxyProcedureEndpoint.cpp \
+		     $(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
+		     $(BASEDIR)/src/strategies/SingleThreadStrategy.cpp \
+		     $(BASEDIR)/src/strategies/ThreadPerRequestStrategy.cpp \
+		     $(BASEDIR)/src/exceptions/Exception.cpp \
+		     $(BASEDIR)/src/exceptions/ClientInternalException.cpp \
+		     $(BASEDIR)/src/exceptions/InitializeException.cpp \
+		     $(BASEDIR)/src/exceptions/ServerInternalException.cpp \
+		     $(BASEDIR)/src/exceptions/ServerNotFoundException.cpp \
+		     $(BASEDIR)/src/exceptions/ServerTimeoutException.cpp \
+		     $(BASEDIR)/src/exceptions/SystemException.cpp \
+		     $(BASEDIR)/src/exceptions/UserException.cpp \
+		     $(SPECIFIC_SRC_CPPFILES)
+
+		     #$(BASEDIR)/src/client/AsyncTask.cpp \
+		     #$(BASEDIR)/src/client/AsyncThread.cpp \
+		     #$(BASEDIR)/src/client/ClientRPC.cpp \
 
 # Project sources are copied to the current directory
 RPCDDS_SRCS= $(RPCDDS_SRC_CFILES) $(RPCDDS_SRC_CPPFILES)

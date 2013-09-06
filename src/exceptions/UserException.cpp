@@ -8,37 +8,32 @@
 
 #include "exceptions/UserException.h"
 
+using namespace eprosima::rpcdds::exception;
 
-namespace eProsima
+UserException::UserException() : Exception()
 {
-    namespace RPCDDS
-    {	    
-		UserException::UserException() : Exception()
-		{
-		}
+}
 
-		UserException::UserException(const UserException &ex) : Exception(ex)
-		{
-		}
+UserException::UserException(const UserException &ex) : Exception(ex)
+{
+}
 
-		UserException::UserException(UserException&& ex) : Exception(std::move(ex))
-		{
-		}
+UserException::UserException(UserException&& ex) : Exception(std::move(ex))
+{
+}
 
-		UserException& UserException::operator=(const UserException &ex)
-		{
-			Exception::operator=(ex);
-			return *this;
-		}
+UserException& UserException::operator=(const UserException &ex)
+{
+    Exception::operator=(ex);
+    return *this;
+}
 
-		UserException& UserException::operator=(UserException&& ex)
-		{
-			Exception::operator=(std::move(ex));
-			return *this;
-		}
+UserException& UserException::operator=(UserException&& ex)
+{
+    Exception::operator=(std::move(ex));
+    return *this;
+}
 
-		UserException::~UserException() throw()
-		{
-		}
-	} // namespace RPCDDS
-} // namespace eProsima
+UserException::~UserException() throw()
+{
+}

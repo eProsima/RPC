@@ -13,61 +13,64 @@
 
 #include <stdint.h>
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
-		/**
-		 * @brief This abstract class is used to create user exceptions.
-         * @ingroup EXCEPTIONMODULE
-		 */
-        class RPCDDS_DllAPI UserException : public Exception
+        namespace exception
         {
-		public:
+            /**
+             * @brief This abstract class is used to create user exceptions.
+             * @ingroup EXCEPTIONMODULE
+             */
+            class RPCDDS_DllAPI UserException : public Exception
+            {
+                public:
 
-			/// \brief Default destructor.
-			virtual ~UserException() throw();
+                    /// \brief Default destructor.
+                    virtual ~UserException() throw();
 
-			/// \brief This function throws the object as exception.
-			virtual void raise() const = 0;
+                    /// \brief This function throws the object as exception.
+                    virtual void raise() const = 0;
 
-		protected:
-		    
-			/**
-			 * \brief Default constructor.
-			 */
-			UserException();
+                protected:
 
-			/**
-			 * \brief Default copy constructor.
-			 *
-			 * \param ex UserException that will be copied.
-			 */
-			UserException(const UserException &ex);
+                    /**
+                     * \brief Default constructor.
+                     */
+                    UserException();
 
-			/**
-			 * \brief Default move constructor.
-			 *
-			 * \param ex UserException that will be moved.
-			 */
-			UserException(UserException&& ex);
+                    /**
+                     * \brief Default copy constructor.
+                     *
+                     * \param ex UserException that will be copied.
+                     */
+                    UserException(const UserException &ex);
 
-			/**
-			 * \brief Assigment operation.
-			 *
-			 * \param ex UserException that will be copied.
-			 */
-			UserException& operator=(const UserException &ex);
+                    /**
+                     * \brief Default move constructor.
+                     *
+                     * \param ex UserException that will be moved.
+                     */
+                    UserException(UserException&& ex);
 
-			/**
-			 * \brief Assigment operation.
-			 *
-			 * \param ex UserException that will be moved.
-			 */
-			UserException& operator=(UserException&& ex);
-        };
-    } // namespace RPCDDS
-} // namespace eProsima
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex UserException that will be copied.
+                     */
+                    UserException& operator=(const UserException &ex);
+
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex UserException that will be moved.
+                     */
+                    UserException& operator=(UserException&& ex);
+            };
+        } // namespace exception
+    } // namespace rpcdds
+} // namespace eprosima
 
 #endif // _EXCEPTIONS_USEREXCEPTION_H_
 

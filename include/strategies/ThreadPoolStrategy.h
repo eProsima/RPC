@@ -14,9 +14,9 @@
 
 #define RPCDDS_MIN_THREADS_DEFAULT 5
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
         class ThreadPoolStrategyImpl;
 
@@ -53,7 +53,7 @@ namespace eProsima
 
                 ThreadPoolStrategyImpl *m_impl;
         };
-    } // namespace RPCDDS
-} //namespace eProsima
+    } // namespace rpcdds
+} //namespace eprosima
 
 #endif // _STRATEGIES_THREADPOOLSTRATEGY_H_

@@ -6,8 +6,8 @@
  *
  *************************************************************************/
 
-#ifndef _UTILS_MIDDLEWARE_H_
-#define _UTILS_MIDDLEWARE_H_
+#ifndef _UTILS_DDS_MIDDLEWARE_H_
+#define _UTILS_DDS_MIDDLEWARE_H_
 
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
 
@@ -41,24 +41,30 @@
 
 #endif
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
-        void get_guid(unsigned int *id, DDS::DataWriter *datawriter);
+        namespace util
+        {
+            namespace dds
+            {
+                void get_guid(unsigned int *id, DDS::DataWriter *datawriter);
 
-        void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
+                void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
 
-		void set_max_query_condition_filters(DDS::DataReaderQos &rQos);
+                void set_max_query_condition_filters(DDS::DataReaderQos &rQos);
 
-		void set_datareader_protocol(DDS::DataReaderQos &rQos);
+                void set_datareader_protocol(DDS::DataReaderQos &rQos);
 
-		void set_datawriter_protocol(DDS::DataWriterQos &wQos);
+                void set_datawriter_protocol(DDS::DataWriterQos &wQos);
 
-		void increase_buffers(DDS::DomainParticipantQos &pQos);
+                void increase_buffers(DDS::DomainParticipantQos &pQos);
 
-        DDS::DomainParticipantFactory* getFactory(int domainId);
-    }; // namespace RPCDDS
-}; // namespace eProsima
+                DDS::DomainParticipantFactory* getFactory(int domainId);
+            } //namespace dds
+        } // namespace util
+    } // namespace rpcdds
+} // namespace eprosima
 
-#endif // _UTILS_MIDDLEWARE_H_
+#endif // _UTILS_DDS_MIDDLEWARE_H_

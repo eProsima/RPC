@@ -9,7 +9,7 @@
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
-#include "utils/Middleware.h"
+#include "utils/dds/Middleware.h"
 #include "rpcdds_dll.h"
 #include "utils/Messages.h"
 #include "utils/Typedefs.h"
@@ -19,13 +19,13 @@
 
 #define RPCDDS_DEFAULT_PERIOD_MILLISEC 5000
 
-namespace eProsima
+namespace eprosima
 {
-	namespace RPCDDS
+	namespace rpcdds
 	{
 
         class ServerStrategy;
-        class Transport;
+        class ServerTransport;
 		class ServerRPC;
 	 
 		/**
@@ -86,7 +86,7 @@ namespace eProsima
 				 * \param domainId The domain id's value that the server proxy will set in the domain participant.
 				 * \exception InitializeException This exception is thrown when the initialization was wrong.
 				 */
-				Server(std::string serviceName, ServerStrategy *strategy, Transport *transport, int domainId = 0);
+				Server(std::string serviceName, ServerStrategy *strategy, ServerTransport *transport, int domainId = 0);
 
 				/// \brief The default destructor.
 				virtual ~Server();
@@ -129,10 +129,10 @@ namespace eProsima
 				bool m_defaultTransport;
 
 				/// \brief Pointer to the transport which this server's proxy uses.
-				Transport *m_transport;
+				ServerTransport *m_transport;
 		};
 
-	} // namespace RPCDDS
-} // namespace eProsima
+	} // namespace rpcdds
+} // namespace eprosima
 
 #endif // _SERVER_SERVER_H_

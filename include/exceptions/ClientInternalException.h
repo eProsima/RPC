@@ -11,10 +11,12 @@
 
 #include <exceptions/SystemException.h>
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
+        namespace exception
+        {
 		/**
 		 * @brief This class is thrown as an exception when there is an error in the proxy side.
          * @ingroup EXCEPTIONMODULE
@@ -71,6 +73,7 @@ namespace eProsima
 			/// \brief This function throws the object as exception.
 			virtual void raise() const;
         };
-    } // namespace RPCDDS
-} // namespace eProsima
+        } // namespace exception
+    } // namespace rpcdds
+} // namespace eprosima
 #endif // _EXCEPTIONS_CLIENTINTERNALEXCEPTION_H_

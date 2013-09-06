@@ -12,9 +12,9 @@
 #include "utils/Typedefs.h"
 #include "rpcdds_dll.h"
 
-namespace eProsima
+namespace eprosima
 {
-    namespace RPCDDS
+    namespace rpcdds
     {
         class Server;
         class  ServerRPC;
@@ -45,7 +45,7 @@ namespace eProsima
 				 */
                 virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service) = 0;
         };
-    } // namespace RPCDDS
-} // namespace eProsima
+    } // namespace rpcdds
+} // namespace eprosima
 
 #endif // _SERVER_SERVERSTRATEGY_H_
