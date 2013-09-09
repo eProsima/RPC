@@ -55,6 +55,12 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/server/ServerRPC.cpp \
 		     $(BASEDIR)/src/utils/Utilities.cpp \
 		     $(BASEDIR)/src/utils/dds/Middleware.cpp \
+		     $(BASEDIR)/src/protocols/rest/FastBuffer.cpp \
+		     $(BASEDIR)/src/protocols/rest/HTTPEntities.cpp \
+		     $(BASEDIR)/src/protocols/rest/HTTPSerializer.cpp \
+		     $(BASEDIR)/src/transports/connection.cpp \
+		     $(BASEDIR)/src/transports/TCPProxyTransport.cpp \
+		     $(BASEDIR)/src/transports/TCPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/Transport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPServerTransport.cpp \

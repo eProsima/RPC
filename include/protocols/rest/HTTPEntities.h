@@ -1,0 +1,224 @@
+#ifndef TCP_SERIALIZER_HTTPENTITIES
+#define TCP_SERIALIZER_HTTPENTITIES
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+namespace eProsima
+{
+	
+	namespace httpser
+	{
+
+		enum Method {GET, PUT, POST, DELETE};
+
+		class HTTPMethod
+		{
+		private:
+
+			std::string data_;
+
+		public:
+
+			HTTPMethod();
+
+			HTTPMethod(Method method);
+
+			~HTTPMethod();
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+
+		};
+
+		class HTTPUri
+		{
+		private:
+			
+			std::string data_;
+
+		public:
+			
+			HTTPUri();
+
+			HTTPUri(std::string &base, std::string &path);
+
+			~HTTPUri();
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+		};
+
+		class HTTPParam
+		{
+		private:
+
+			std::string data_;
+
+		public:
+				
+			HTTPParam();
+
+			HTTPParam(std::string &name, std::string &value);
+
+			~HTTPParam();
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+
+		};
+
+		class HTTPParameters
+		{
+		private:
+
+			size_t size_;
+
+			std::string data_;
+
+			std::vector<HTTPParam> params_;
+
+		public:
+
+			HTTPParameters();
+
+			~HTTPParameters();
+
+			inline size_t& get_size()
+			{
+				return size_;
+			}
+
+			inline std::vector<HTTPParam>& get_params()
+			{
+				return params_;
+			}
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+
+			void addParam(HTTPParam &param);
+
+		};
+
+		class HTTPVersion
+		{
+		private:
+
+			std::string data_;
+
+			HTTPVersion(std::string &version);
+
+		public:
+
+			HTTPVersion();
+
+			static HTTPVersion HTTPVersionRequest();
+
+			static HTTPVersion HTTPVersionResponse();
+
+			static HTTPVersion HTTPVersionRequest(std::string &version);
+
+			static HTTPVersion HTTPVersionResponse(std::string &version);
+
+			~HTTPVersion();
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+		};
+
+		class HTTPData
+		{
+		private:
+
+			std::string data_;
+
+		public:
+
+			HTTPData();
+
+			HTTPData(std::string &clength, std::string &ctype, std::string &data);
+
+			~HTTPData();
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+
+		};
+
+		class HTTPResponseCode
+		{
+		private:
+
+			std::string data_;
+			
+		public:
+
+			HTTPResponseCode();
+
+			HTTPResponseCode(std::string &code, std::string &text);
+
+			~HTTPResponseCode();
+
+			inline std::string& get_data()
+			{
+				return data_;
+			}
+
+			inline void set_data(std::string &data)
+			{
+				data_ = data;
+			}
+
+		};
+
+	
+	} //namespace httpser
+
+} //namespace eProsima
+
+#endif //TCP_SERIALIZER_HTTPENTITIES
