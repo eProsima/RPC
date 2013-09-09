@@ -28,9 +28,14 @@ ProxyTransport::~ProxyTransport()
     // TODO Delete map
 }
 
-const char* getType() const
+const char* ProxyTransport::getType() const
 {
     return "DDS";
+}
+
+TransportBehaviour ProxyTransport::getBehaviour()
+{
+    return PROXY_BEHAVIOUR;
 }
 
 int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename)

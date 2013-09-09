@@ -67,6 +67,7 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/exceptions/Exception.cpp \
 		     $(BASEDIR)/src/exceptions/ClientInternalException.cpp \
 		     $(BASEDIR)/src/exceptions/InitializeException.cpp \
+		     $(BASEDIR)/src/exceptions/IncompatibleException.cpp \
 		     $(BASEDIR)/src/exceptions/ServerInternalException.cpp \
 		     $(BASEDIR)/src/exceptions/ServerNotFoundException.cpp \
 		     $(BASEDIR)/src/exceptions/ServerTimeoutException.cpp \

@@ -6,16 +6,18 @@ $fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This sou
 #include "$ctx.filename$DDSProtocol.h"
 #include "transports/Transport.h"
 #include "transports/dds/Transport.h"
+#include "exceptions/IncompatibleException.h"
 $ReqRepIncludes(filename=ctx.filename)$
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol;
 using namespace ::protocol::dds;
 using namespace ::transport;
+using namespace ::exception;
 
 bool $ctx.filename$Protocol::isCompatibleTransport(Transport *transport)
 {
-    const char *typename = NULL;
+    const char *requesttypeName = NULL, *replytypeName = NULL;
     
     if(transport != NULL)
     {
@@ -27,23 +29,37 @@ bool $ctx.filename$Protocol::isCompatibleTransport(Transport *transport)
             {
                 $ctx.interfaces : { interface |
                 $interface.operations : { operation |
-                $getTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typename")$
+                
+                $getTypename(typename=[operation.parent.scopedname,"_",operation.name,"Request"], name="requesttypeName")$
 
-                if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typename")$ != DDS::RETCODE_OK)
+                if($registerTypename(typename=[operation.parent.scopedname,"_",operation.name,"Request"], name="requesttypeName")$ != DDS::RETCODE_OK)
                 {
                     return false;
                 }
                 
-                $getTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typename")$
+                $getTypename(typename=[operation.parent.scopedname,"_",operation.name,"Reply"], name="replytypeName")$
 
-                if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typename")$ != DDS::RETCODE_OK)
+                if($registerTypename(typename=[operation.parent.scopedname,"_",operation.name,"Reply"], name="replytypeName")$ != DDS::RETCODE_OK)
                 {
                     return false;
                 }
-        
+                
+                if(!ddstransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
+                    (ddstransport->getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? requesttypeName : $if(operation.oneway)$NULL$else$replytypeName$endif$),
+                    (ddstransport->getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? $if(operation.oneway)$NULL$else$replytypeName$endif$ : requesttypeName)))
+                    {
+                        return false;
+                    }
+                          
                 }; separator="\n"$
                 }; separator="\n"$
+                
+                return true;  
             }
+        }
+        else
+        {
+            throw IncompatibleException("protocol and transport are incompatibles");
         }
     }
     

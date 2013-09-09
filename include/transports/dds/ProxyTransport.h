@@ -56,6 +56,12 @@ namespace eprosima
                          */
                         int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename);
 
+                        /*!
+                         * 2brief This function returns the behaviour of the transport.
+                         * @return The behaviour of the transport.
+                         */
+                        TransportBehaviour getBehaviour();
+
                     protected:
 
                         /*!
