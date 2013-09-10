@@ -31,6 +31,9 @@ public class Context
         m_globalAnnotations = new HashMap<String, String>();
         m_lvl1Annotations = new HashMap<String, String>();
         m_lvl2Annotations = new HashMap<String, String>();
+        // The scope file has to be initialized because could occur the preprocessor
+        // is not called (using -ppDisable).
+        m_scopeFile = file;
     }
 
     public void setFilename(String filename)
