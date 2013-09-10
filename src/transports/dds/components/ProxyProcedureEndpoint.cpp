@@ -7,7 +7,6 @@
  *************************************************************************/
 
 #include "transports/dds/components/ProxyProcedureEndpoint.h"
-#include "transports/dds/Transport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 #include "utils/Typedefs.h"
 
@@ -23,7 +22,7 @@ using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
 ProxyProcedureEndpoint::ProxyProcedureEndpoint(Transport *transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
-    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL), m_queryPool(NULL), m_numSec(0)
+    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL), m_copy_data(NULL), m_dataSize(0), m_queryPool(NULL), m_numSec(0)
 {
 }
 
@@ -33,7 +32,7 @@ ProxyProcedureEndpoint::~ProxyProcedureEndpoint()
 }
 
 int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
-        Copy_data copy_data)
+        Transport::Copy_data copy_data, int dataSize)
 {
     const char* const METHOD_NAME = "initialize";
     m_mutex =  new boost::mutex();
@@ -48,6 +47,7 @@ int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypen
                 if(initQueryPool() == 0)
                 {
                     m_copy_data = copy_data;
+                    m_dataSize = dataSize;
                     return 0;
                 }
                 else
@@ -548,4 +548,16 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
 
 ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition *query)
 {
+    const char* const METHOD_NAME = "takeReply";
+    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
+
+    if(reply != NULL && query != NULL)
+    {
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+
+    return returnedValue;
 }

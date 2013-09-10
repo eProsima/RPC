@@ -13,8 +13,8 @@ static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::TCPProx
 
 using namespace eprosima::rpcdds::transport::dds;
 
-TCPProxyTransport::TCPProxyTransport(const char *to_connect, int domainId) :
-    m_to_connect(NULL), ProxyTransport(domainId)
+TCPProxyTransport::TCPProxyTransport(const char *to_connect, std::string &remoteServiceName, int domainId, long milliseconds) :
+    m_to_connect(NULL), ProxyTransport(remoteServiceName, domainId, milliseconds)
 {
     m_to_connect = strdup(to_connect);
 }

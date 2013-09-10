@@ -56,17 +56,7 @@ $interface.exports : {export | $if(export.operation)$$classAsyncHeader(operation
 class $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
 {
     public:
-    
-        /*!
-         * @brief Default constructor.
-         *
-         * @param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
-         * @param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eprosima::rpcdds::exception::ServerTimeoutException is thrown.
-         * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
-         */
-        //$interface.name$Proxy(std::string remoteServiceName, long timeout = 10000);
-
+   
         /*!
          * @brief This constructor sets the transport that will be used by the server's proxy.
          *
@@ -79,8 +69,8 @@ class $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
          *        If the call exceeds the time, a eprosima::rpcdds::exception::ServerTimeoutException is thrown.
          * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
-        $interface.name$Proxy(std::string remoteServiceName, eprosima::rpcdds::transport::ProxyTransport *transport,
-            eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol, long timeout = 10000);
+        $interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport *transport,
+            eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol);
 
         //! @brief The default destructor.
         virtual ~$interface.name$Proxy();

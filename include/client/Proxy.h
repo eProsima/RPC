@@ -58,40 +58,17 @@ namespace eprosima
                      */
                     //void deleteAssociatedAsyncTasks(ClientRPC *rpc);
 
-                    /*!
-                     * @brief This function gets the timeout used when a request is sent.
-                     *
-                     * @return The time out used by the server proxy. It is in milliseconds.
-                     */
-                    long getTimeout() const;
-
-                    /*!
-                     * @brief This function sets te timeout that the server's proxy will use in each request.
-                     *
-                     * @para milliseconds The timeout in milliseconds.
-                     */
-                    void setTimeout(long milliseconds);
-
-                    /*!
-                     * @brief This function returns the name of the remote service that this proxy is offering.
-                     *
-                     * @return The service's name of 
-                     */
-                    const std::string& getRemoteServiceName() const;
-
                 protected:
 
                     /*!
                      * @brief A constructor. The associated domain participant is created.
                      *
-                     * @param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it. 
                      * @param transport The transport that will be use the server's proxy. This class doesn't delete this object in its destructor.
                      * @param protocol The protocol used to send the information over the transport. This class doesn't delete this object in its destructor.
-                     * @param milliseconds Timout in milliseconds for all requests.
                      * @exception InitializeException This exception is thrown when the initialization was wrong.
                      */
-                    Proxy(std::string remoteServiceName, eprosima::rpcdds::transport::ProxyTransport *transport,
-                            eprosima::rpcdds::protocol::Protocol *protocol, long milliseconds = 10000);
+                    Proxy(eprosima::rpcdds::transport::ProxyTransport *transport,
+                            eprosima::rpcdds::protocol::Protocol *protocol);
 
                     //! @brief The default destructor.
                     virtual ~Proxy();
@@ -113,17 +90,11 @@ namespace eprosima
                     //! @brief Thread object that manages asynchronous repliess from servers.
                     AsyncThread *m_asyncThread;
 
-                    //! @brief Timeout used in each remote procedure call. It value is in milliseconds.
-                    long m_timeout;
-
                     //! @brief Pointer to the transport which this server's proxy uses.
                     eprosima::rpcdds::transport::ProxyTransport *m_transport;
 
                     //! @brief Pointer to the protocol which this server's proxy uses.
                     eprosima::rpcdds::protocol::Protocol *m_protocol;
-
-                    //! @brief The name of the remote service that the proxy will offer.
-                    std::string m_remoteServiceName;
             };
         } // namespace proxy
     } // namespace rpcdds

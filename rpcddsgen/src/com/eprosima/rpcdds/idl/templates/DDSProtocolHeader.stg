@@ -26,6 +26,8 @@ namespace eprosima
                 {
                     public:
                     
+                        $ctx.filename$Protocol();
+                    
                         bool setTransport(eprosima::rpcdds::transport::Transport *transport);
                         
                         $definitions; separator="\n"$

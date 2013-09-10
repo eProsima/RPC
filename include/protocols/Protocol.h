@@ -9,6 +9,7 @@
 #define _PROTOCOLS_PROTOCOL_H_
 
 #include "rpcdds_dll.h"
+#include <stdio.h>
 
 namespace eprosima
 {
@@ -26,6 +27,20 @@ namespace eprosima
                 public:
 
                     virtual bool setTransport(eprosima::rpcdds::transport::Transport *transport) = 0;
+
+                protected:
+
+                    Protocol() : m_transport(NULL){}
+
+                    inline
+                        eprosima::rpcdds::transport::Transport* getTransport(){return m_transport;}
+
+                    inline
+                        void _setTransport(eprosima::rpcdds::transport::Transport *transport){m_transport = transport;}
+
+                private:
+
+                    eprosima::rpcdds::transport::Transport *m_transport;
             };
         } // namespace protocol
     } // namespace rpcdds

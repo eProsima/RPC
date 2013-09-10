@@ -25,6 +25,10 @@ namespace eprosima
                              
                     $definitions; separator="\n"$
                     
+                protected:
+                
+                    $ctx.filename$Protocol() : Protocol(){}
+                    
             };
         } // namespace protocol
     } // namespace rpcdds

@@ -18,7 +18,14 @@ using namespace ::exception;
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ProxyTransport";
 
-ProxyTransport::ProxyTransport(int domainId) : Transport(domainId)
+typedef struct encapsulation
+{
+    const char *name;
+    void *data;
+} encapsulation;
+
+ProxyTransport::ProxyTransport(std::string &remoteServiceName, int domainId, long milliseconds) :
+    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), ::transport::dds::Transport(domainId)
 {
 }
 
@@ -38,14 +45,14 @@ TransportBehaviour ProxyTransport::getBehaviour()
 }
 
 int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-        ProxyProcedureEndpoint::Copy_data copy_data);
+        ::transport::dds::Transport::Copy_data copy_data, int dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     ProxyProcedureEndpoint *pe = new ProxyProcedureEndpoint(this);
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, copy_data))
+        if(pe->initialize(name, writertypename, readertypename, copy_data, dataSize))
         {
             std::pair<std::map<const char*, ProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ProxyProcedureEndpoint*>(name, pe));
 
@@ -63,4 +70,28 @@ int ProxyTransport::createProcedureEndpoint(const char *name, const char *writer
     }
 
     return -1;
+}
+
+ReturnMessage ProxyTransport::send(void *request, void* reply)
+{
+    const char* const METHOD_NAME = "send";
+    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
+    encapsulation *encap = (encapsulation*)request;
+    std::map<const char*, ProxyProcedureEndpoint*>::iterator it;
+
+    if(request != NULL && reply != NULL)
+    {
+        it = m_procedureEndpoints.find(encap->name);
+
+        if(it != m_procedureEndpoints.end())
+        {
+            returnedValue = (*it).second->send(request, reply, m_remoteServiceName.c_str(), m_timeout);
+        }
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+
+    return returnedValue;
 }

@@ -1,24 +1,23 @@
 group DDSProtocolSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
+$fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
 
 #include "$ctx.filename$DDSProtocol.h"
 #include "transports/Transport.h"
-#include "transports/dds/Transport.h"
+#include "transports/dds/ProxyTransport.h"
 #include "exceptions/Exceptions.h"
-$ReqRepIncludes(filename=ctx.filename)$
+$ReqRepSIncludes(filename=ctx.filename)$
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol::dds;
 using namespace ::transport;
 using namespace ::exception;
 
-typedef struct encapsulation
+
+$ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol()
 {
-    const char *name;
-    void *data;
-} encapsulation;
+}
 
 bool $ctx.filename$Protocol::setTransport(Transport *transport)
 {
@@ -51,13 +50,17 @@ bool $ctx.filename$Protocol::setTransport(Transport *transport)
                 
                 if(!ddstransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                     (ddstransport->getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? requesttypeName : $if(operation.oneway)$NULL$else$replytypeName$endif$),
-                    (ddstransport->getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? $if(operation.oneway)$NULL$else$replytypeName$endif$ : requesttypeName)))
+                    (ddstransport->getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? $if(operation.oneway)$NULL$else$replytypeName$endif$ : requesttypeName),
+                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$ReplyTypeSupport::copy_data,
+                    sizeof($operation.parent.scopedname$_$operation.name$Reply)))
                     {
                         return false;
                     }
                           
                 }; separator="\n"$
                 }; separator="\n"$
+                
+                Protocol::_setTransport(transport);
                 
                 return true;  
             }
@@ -119,7 +122,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
 
 
-    retcode = ((eprosima::rpcdds::transport::dds::ProxyTransport*)getTransport())->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
+    retcode = ((eprosima::rpcdds::transport::dds::ProxyTransport*)Protocol::getTransport())->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
     
     $if(!operation.oneway)$
     if(retcode == OPERATION_SUCCESSFUL)

@@ -19,9 +19,8 @@ using namespace ::proxy;
 using namespace ::transport;
 using namespace ::exception;
 
-Proxy::Proxy(std::string remoteServiceName, ProxyTransport *transport,
-        eprosima::rpcdds::protocol::Protocol *protocol, long milliseconds) :
-    m_timeout(milliseconds), m_transport(transport), m_protocol(protocol), m_remoteServiceName(remoteServiceName)
+Proxy::Proxy(ProxyTransport *transport, eprosima::rpcdds::protocol::Protocol *protocol) :
+    m_transport(transport), m_protocol(protocol)
 {
     const char* const METHOD_NAME ="Proxy";
     std::string errorMessage;
@@ -92,18 +91,3 @@ Proxy::~Proxy()
    printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
    }
    }*/
-
-long Proxy::getTimeout() const
-{
-    return m_timeout;
-}
-
-void Proxy::setTimeout(long milliseconds)
-{
-    m_timeout = milliseconds;
-}
-
-const std::string& Proxy::getRemoteServiceName() const
-{
-    return m_remoteServiceName;
-}

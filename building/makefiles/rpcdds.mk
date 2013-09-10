@@ -62,6 +62,7 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/transports/TCPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/TCPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/Transport.cpp \
+		     $(BASEDIR)/src/transports/dds/ProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSTCPProxyTransport.cpp \

@@ -33,8 +33,8 @@ interface(ctx, interface, export_list) ::= <<
     createRPCs();
 }*/
 
-$interface.name$Proxy::$interface.name$Proxy(std::string remoteServiceName, eprosima::rpcdds::transport::ProxyTransport *transport,
-    eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol, long timeout) : Proxy(remoteServiceName, transport, protocol, timeout)
+$interface.name$Proxy::$interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport *transport,
+    eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol) : Proxy(transport, protocol)
 {
 }
 

@@ -8,6 +8,7 @@
 #ifndef _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
 
+#include "transports/dds/Transport.h"
 #include "utils/dds/Middleware.h"
 #include "utils/Messages.h"
 
@@ -24,8 +25,6 @@ namespace eprosima
         {
             namespace dds
             {
-                class Transport;
-
                 /*!
                  * @brief This class represents a remote endpoint used by a proxy.
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
@@ -33,8 +32,6 @@ namespace eprosima
                 class ProxyProcedureEndpoint
                 {
                     public:
-
-                        typedef void (*Copy_data)(void *src, void *dst);
 
                         /*!
                          * @brief Default constructor.
@@ -54,7 +51,7 @@ namespace eprosima
                          * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
-                                Copy_data copy_data);
+                                Transport::Copy_data copy_data, int dataSize);
 
                         /*!
                          * @brief This function finalizes the proxy procedure endpoint.
@@ -148,7 +145,9 @@ namespace eprosima
                         DDS::DataReader *m_reader;
 
                         //! @brief Pointer to the function used to copy data when it is received.
-                        Copy_data m_copy_data;
+                        Transport::Copy_data m_copy_data;
+
+                        int m_dataSize;
 
                         //! @brief Pool of DDSQueryConditions that are used by the proxy procedure endpoint. It's length is 10.
                         DDS::QueryCondition **m_queryPool;

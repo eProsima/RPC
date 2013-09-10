@@ -39,6 +39,8 @@ namespace eprosima
                 {
                     public:
 
+                        typedef void (*Copy_data)(void *src, void *dst);
+
                         /*!
                          * @brief Default destructor.
                          */
@@ -71,7 +73,8 @@ namespace eprosima
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL:
                          * @return 0 value is returned if the function works successfully. In other case -1 is returned.
                          */
-                        virtual int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename) = 0;
+                        virtual int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+                                Copy_data copy_data, int dataSize) = 0;
 
                         /*!
                          * 2brief This function returns the behaviour of the transport.

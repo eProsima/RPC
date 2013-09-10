@@ -55,7 +55,9 @@ namespace eprosima
                          * @return 0 value is returned if the function works successfully. In other case -1 is returned.
                          */
                         int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-                                ProxyProcedureEndpoint::Copy_data copy_data);
+                                Transport::Copy_data copy_data, int dataSize);
+
+                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 
                         /*!
                          * 2brief This function returns the behaviour of the transport.
@@ -69,7 +71,7 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        ProxyTransport(int domainId = 0);
+                        ProxyTransport(std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
 
                     private:
 
@@ -87,6 +89,10 @@ namespace eprosima
                          * Then always the same string in memory has to be used and not a copy.
                          */
                         std::map<const char*, ProxyProcedureEndpoint*> m_procedureEndpoints;
+
+                        std::string m_remoteServiceName;
+
+                        long m_timeout;
                 };
             } // namespace dds
         } // namespace transport
