@@ -22,7 +22,9 @@ using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
 ProxyProcedureEndpoint::ProxyProcedureEndpoint(Transport *transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
-    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL), m_copy_data(NULL), m_dataSize(0), m_queryPool(NULL), m_numSec(0)
+    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL),
+    m_copy_data(NULL), m_dataSize(0), m_queryPool(NULL), m_queriesInUseLimiter(QUERY_POOL_LENGTH),
+    m_numSec(0)
 {
 }
 
@@ -320,6 +322,47 @@ void ProxyProcedureEndpoint::finalizeQueryPool()
     m_queryPool = NULL;
 }
 
+DDS::QueryCondition* ProxyProcedureEndpoint::getFreeQueryFromPool()
+{
+    DDS::QueryCondition *returnedValue = NULL;
+
+    // If there is a free query condition.
+    if(m_queriesInUseLimiter != 0)
+    {
+        returnedValue = m_queryPool[--m_queriesInUseLimiter];
+    }
+
+    return returnedValue;
+}
+
+void ProxyProcedureEndpoint::returnUsedQueryToPool(DDS::QueryCondition *query)
+{
+    int count = m_queriesInUseLimiter;
+
+    if(query != NULL)
+    {
+        // Search the position of the query.
+        for(; count < QUERY_POOL_LENGTH; ++count)
+        {
+            if(m_queryPool[count] == query)
+                break;
+        }
+
+        // Check that the query was found.
+        if(count != QUERY_POOL_LENGTH)
+        {
+            if(count != m_queriesInUseLimiter)
+            {
+                DDS::QueryCondition *tmp = m_queryPool[m_queriesInUseLimiter];
+                m_queryPool[m_queriesInUseLimiter] = m_queryPool[count];
+                m_queryPool[count] = tmp;
+            }
+
+            ++m_queriesInUseLimiter;
+        }
+    }
+}
+
 ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply, const char *remoteServiceName, long timeout)
 {
     const char* const METHOD_NAME = "send";
@@ -553,6 +596,44 @@ ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition
 
     if(reply != NULL && query != NULL)
     {
+        DDS::Boolean loaned = BOOLEAN_TRUE;
+        void **sampleArray = NULL;
+        int sampleCount = 0;
+        DDS::SampleInfoSeq infoSeq;
+
+        DDS::ReturnCode_t retCode = DDS_DataReader_read_or_take_w_condition_untypedI(
+                m_reader->get_c_datareaderI(), &loaned, &sampleArray, &sampleCount,
+                &infoSeq, 1, 1, BOOLEAN_TRUE, reply, m_dataSize, 1,
+                (DDS_ReadCondition*)query->get_c_condition(), BOOLEAN_TRUE);
+
+        if(retCode == DDS::RETCODE_OK)
+        {
+            if(sampleCount == 1)
+            { 
+				if (infoSeq[0].valid_data)
+				{
+                    if(loaned)
+                    {
+                        m_copy_data(reply, sampleArray[0]);
+                        DDS_DataReader_return_loan_untypedI(m_reader->get_c_datareaderI(),
+                                sampleArray, sampleCount, &infoSeq);
+                    }
+                }
+            }
+		    else
+		    {
+				printf("ERROR<%s::%s>: Empty returned data.\n", CLASS_NAME, METHOD_NAME);
+		    }
+        }
+		else if(retCode == DDS::RETCODE_NO_DATA)
+		{
+			printf("ERROR<%s::%s>: no data.\n", CLASS_NAME, METHOD_NAME);
+			returnedValue = SERVER_TIMEOUT;
+		}
+		else
+		{
+			printf("ERROR<%s::%s>: take error %d\n", CLASS_NAME, METHOD_NAME, retCode);
+		}
     }
     else
     {

@@ -33,7 +33,7 @@ namespace eprosima
                          * @brief Default constructor for server's proxies.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        UDPProxyTransport(std::string &remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        UDPProxyTransport(std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         /*!
                          * @brief Constructor for server's proxies.
@@ -41,10 +41,12 @@ namespace eprosima
                          * @param to_connect IP address where the server could be found by the proxy. By example: "192.168.1.3"
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        UDPProxyTransport(const char *to_connect, std::string &remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        UDPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
                         virtual ~UDPProxyTransport();
+
+                    private:
 
                         /*!
                          * @brief This function sets the QoS of DDS to use the UDPv4 transport.
@@ -53,8 +55,6 @@ namespace eprosima
                          * @param participant The domain participant that will be set to use UDPv4 transport.
                          */
                         int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
-
-                    private:
 
                         //! @brief The IP address where the proxy could find the server. This attribute is only used by the proxy.
                         char *m_to_connect;

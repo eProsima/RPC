@@ -32,6 +32,8 @@ namespace eprosima
 
                     Protocol() : m_transport(NULL){}
 
+                    virtual ~Protocol(){}
+
                     inline
                         eprosima::rpcdds::transport::Transport* getTransport(){return m_transport;}
 

@@ -84,21 +84,15 @@ namespace eprosima
 
                     protected:
 
+                        typedef int (*setTransport)(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+
                         /*!
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        Transport(int domainId = 0);
+                        Transport(setTransport setter, int domainId = 0);
 
                     private:
-
-                        /*!
-                         * @brief This function sets the QoS of DDS to use a DDS middleware transport that the child class implements.
-                         *        This function has to be implemented by the child classes.
-                         *
-                         * @param participantQos Reference to the DDS domain participant QoS.
-                         */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
 
                         //! \brief The domain identifier that will be used in DDS.
                         int m_domainId;

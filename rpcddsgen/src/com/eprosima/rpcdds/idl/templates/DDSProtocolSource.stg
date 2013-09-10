@@ -14,8 +14,16 @@ using namespace ::protocol::dds;
 using namespace ::transport;
 using namespace ::exception;
 
-
 $ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol()
+$ctx.interfaces : { interface |
+$interface.operations : { operation |
+, $interface.formatedScopedname$_$operation.name$_str("$interface.formatedScopedname$_$operation.name$")
+}; separator="\n"$
+}; separator="\n"$
+{
+}
+
+$ctx.filename$Protocol::~$ctx.filename$Protocol()
 {
 }
 

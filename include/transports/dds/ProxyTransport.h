@@ -71,17 +71,15 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        ProxyTransport(std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
+                        ProxyTransport(Transport::setTransport setter,
+                                std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
 
                     private:
 
-                        /*!
-                         * @brief This function sets the QoS of DDS to use a DDS middleware transport that the child class implements.
-                         *        This function has to be implemented by the child classes.
-                         *
-                         * @param participantQos Reference to the DDS domain participant QoS.
-                         */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
+                        //TODO TEMPORAL
+                        bool connect(){return true;}
+                        bool send(const char* buffer){return true;}
+                        char* receive(){return NULL;}
 
                         /*!
                          * @brief Map containing the proxy procedure endpoints that were created to communicate.

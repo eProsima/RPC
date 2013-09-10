@@ -152,6 +152,9 @@ namespace eprosima
                         //! @brief Pool of DDSQueryConditions that are used by the proxy procedure endpoint. It's length is 10.
                         DDS::QueryCondition **m_queryPool;
 
+                        /// \brief First position of queries that are in use.
+                        int m_queriesInUseLimiter;
+
                         //! @brief The identifier used as proxy.
                         unsigned int m_proxyId[4];
 

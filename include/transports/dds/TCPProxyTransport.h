@@ -35,7 +35,7 @@ namespace eprosima
                          * @param to_connect Public address and port where the server could be found by the proxy. By example: "218.18.3.133:7600"
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        TCPProxyTransport(const char *to_connect, std::string &remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        TCPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
                         virtual ~TCPProxyTransport();

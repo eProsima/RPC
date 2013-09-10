@@ -29,6 +29,8 @@ namespace eprosima
                 
                     $ctx.filename$Protocol() : Protocol(){}
                     
+                    virtual ~$ctx.filename$Protocol(){}
+                    
             };
         } // namespace protocol
     } // namespace rpcdds

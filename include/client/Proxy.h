@@ -30,8 +30,8 @@ namespace eprosima
 
         namespace proxy
         {
-            class AsyncThread;
-            class AsyncTask;
+            //class AsyncThread;
+            //class AsyncTask;
 
             /*!
              * @brief This class implements the common functionalities that all server's proxies have.
@@ -88,7 +88,7 @@ namespace eprosima
                 private:
 
                     //! @brief Thread object that manages asynchronous repliess from servers.
-                    AsyncThread *m_asyncThread;
+                    //AsyncThread *m_asyncThread;
 
                     //! @brief Pointer to the transport which this server's proxy uses.
                     eprosima::rpcdds::transport::ProxyTransport *m_transport;

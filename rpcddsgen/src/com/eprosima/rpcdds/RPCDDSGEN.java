@@ -485,12 +485,9 @@ public class RPCDDSGEN
 	        tmanager.addGroup("ProxySource");
 	        // Load template to generate example to use Proxies.
 	        tmanager.addGroup("ClientExample");
-	        // Load template to generate proxy RPC support files.
-	        tmanager.addGroup("ClientRPCSupportHeader");
-	        tmanager.addGroup("ClientRPCSupportSource");
 	        // Load template to generate proxy async support files.
-	        tmanager.addGroup("AsyncSupportHeader");
-	        tmanager.addGroup("AsyncSupportSource");
+	        //tmanager.addGroup("AsyncSupportHeader");
+	        //tmanager.addGroup("AsyncSupportSource");
 	        // Load template to generate Server for topics.
 	        tmanager.addGroup("ServerHeader");
 	        tmanager.addGroup("ServerSource");
@@ -604,27 +601,19 @@ public class RPCDDSGEN
 		            {
 		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.cxx", maintemplates.getTemplate("ProxySource"), m_replace))
 		                {
-		                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientRPCSupport.h", maintemplates.getTemplate("ClientRPCSupportHeader"), m_replace))
-		                    {
-		                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientRPCSupport.cxx", maintemplates.getTemplate("ClientRPCSupportSource"), m_replace))
-		                        {
-		                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.h", maintemplates.getTemplate("AsyncSupportHeader"), m_replace))
-		                            {
-		                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.cxx", maintemplates.getTemplate("AsyncSupportSource"), m_replace))
-		                                {
-		                                	project.addClientIncludeFile(onlyFileName + "Proxy.h");
-		                                	project.addClientSrcFile(onlyFileName + "Proxy.cxx");
-		                                	project.addClientIncludeFile(onlyFileName + "ClientRPCSupport.h");
-		                                	project.addClientSrcFile(onlyFileName + "ClientRPCSupport.cxx");
-		                                	project.addClientIncludeFile(onlyFileName + "AsyncSupport.h");
-		                                	project.addClientSrcFile(onlyFileName + "AsyncSupport.cxx");
-		                                	
-		                                    if(m_exampleOption != null)
-		                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientExample.cxx", maintemplates.getTemplate("ClientExample"), m_replace);
-		                                }
-		                            }
-		                        }
-		                    }
+                            //if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.h", maintemplates.getTemplate("AsyncSupportHeader"), m_replace))
+                            {
+                                //if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.cxx", maintemplates.getTemplate("AsyncSupportSource"), m_replace))
+                                {
+                                	project.addClientIncludeFile(onlyFileName + "Proxy.h");
+                                	project.addClientSrcFile(onlyFileName + "Proxy.cxx");;
+                                	//project.addClientIncludeFile(onlyFileName + "AsyncSupport.h");
+                                	//project.addClientSrcFile(onlyFileName + "AsyncSupport.cxx");
+                                	
+                                    if(m_exampleOption != null)
+                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientExample.cxx", maintemplates.getTemplate("ClientExample"), m_replace);
+                                }
+                            }
 		                }
 		            }
 		        }

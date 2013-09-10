@@ -27,6 +27,8 @@ namespace eprosima
                     public:
                     
                         $ctx.filename$Protocol();
+                        
+                        virtual ~$ctx.filename$Protocol();
                     
                         bool setTransport(eprosima::rpcdds::transport::Transport *transport);
                         
@@ -36,7 +38,7 @@ namespace eprosima
                     
                         $ctx.interfaces : { interface |
                         $interface.operations : { operation |
-                            const char* const $interface.formatedScopedname$_$operation.name$_str = "$interface.formatedScopedname$_$operation.name$";
+                            const char* const $interface.formatedScopedname$_$operation.name$_str;
                         }; separator="\n"$
                         }; separator="\n"$
                 };

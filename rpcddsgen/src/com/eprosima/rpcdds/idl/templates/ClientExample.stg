@@ -4,6 +4,8 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source file shows a simple example of how to create a proxy for an interface."])$
 
 #include "$ctx.filename$Proxy.h"
+#include "$ctx.filename$DDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 $ReqRepIncludes(filename=ctx.filename)$
 
@@ -15,16 +17,25 @@ $endif$
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
+    $ctx.filename$Protocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
     $ctx.firstInterface.scopedname$Proxy *proxy = NULL;
     
     // Creation of the proxy for interface "$ctx.firstInterface.scopedname$".
     try
     {
-        proxy = new $ctx.firstInterface.scopedname$Proxy("$ctx.firstInterface.name$Service");
+        protocol = new $ctx.filename$Protocol();
+        transport = new UDPProxyTransport("$ctx.firstInterface.name$Service");
+        proxy = new $ctx.firstInterface.scopedname$Proxy(transport, protocol);
     }
-    catch(eProsima::RPCDDS::InitializeException &ex)
+    catch(InitializeException &ex)
     {
         std::cout << ex.what() << std::endl;
         return -1;
@@ -49,12 +60,12 @@ int main(int argc, char **argv)
         $if(ctx.firstInterface.firstOperation.rettypeparam)$        $ctx.firstInterface.firstOperation.rettypeparam.name$ = $else$        $endif$proxy->$ctx.firstInterface.firstOperation.name$($extractParams(params=ctx.firstInterface.firstOperation.parameters)$);
     }
     $if(ctx.firstInterface.firstOperation.exceptions)$
-    catch(eProsima::RPCDDS::UserException &ex)
+    catch(UserException &ex)
     {
         std::cout << "User exception" << std::endl;
     }
     $endif$
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
     }
@@ -68,6 +79,8 @@ int main(int argc, char **argv)
     $endif$
     
     delete(proxy);
+    delete(transport);
+    delete(protocol);
    
     return 0;
 }

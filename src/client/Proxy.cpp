@@ -28,20 +28,20 @@ Proxy::Proxy(ProxyTransport *transport, eprosima::rpcdds::protocol::Protocol *pr
     if(protocol->setTransport(transport))
     {
         // Create asynchronous tasks thread
-        m_asyncThread = new AsyncThread();
+        //m_asyncThread = new AsyncThread();
 
-        if(m_asyncThread != NULL)
+        //if(m_asyncThread != NULL)
         {
-            if(m_asyncThread->init() == 0)
+            //if(m_asyncThread->init() == 0)
                 return;
-            else
+            //else
             {
                 errorMessage = "Cannot initialize the asynchronous thread";
-                delete m_asyncThread;
+            //    delete m_asyncThread;
             }
         }
-        else
-            errorMessage = "create asynchronous thread";
+        //else
+        //    errorMessage = "create asynchronous thread";
     }
 
     printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
@@ -50,11 +50,11 @@ Proxy::Proxy(ProxyTransport *transport, eprosima::rpcdds::protocol::Protocol *pr
 
 Proxy::~Proxy()
 {
-    if(m_asyncThread != NULL)
+    /*if(m_asyncThread != NULL)
     {
         m_asyncThread->exit();
         delete m_asyncThread;
-    }
+    }*/
 }
 
 // TODO

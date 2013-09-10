@@ -14,9 +14,7 @@
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::util::dds::Middleware";
 
-using namespace eprosima::rpcdds::util::dds;
-
-void get_guid(unsigned int *id, DDS::DataWriter *datawriter)
+void eprosima::rpcdds::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     DDS::DataWriterQos wQos;
@@ -61,7 +59,7 @@ void get_guid(unsigned int *id, DDS::DataWriter *datawriter)
 #endif
 }
 
-void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
+void eprosima::rpcdds::util::dds::set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     datareader->get_qos(rQos);
@@ -78,7 +76,7 @@ void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos
 #endif
 }
 
-void set_max_query_condition_filters(DDS::DataReaderQos &rQos)
+void eprosima::rpcdds::util::dds::set_max_query_condition_filters(DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     rQos.reader_resource_limits.max_query_condition_filters = 10;
@@ -88,7 +86,7 @@ void set_max_query_condition_filters(DDS::DataReaderQos &rQos)
 #endif
 }
 
-void set_datareader_protocol(DDS::DataReaderQos &rQos)
+void eprosima::rpcdds::util::dds::set_datareader_protocol(DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.sec = 0;
@@ -100,7 +98,7 @@ void set_datareader_protocol(DDS::DataReaderQos &rQos)
 #endif
 }
 
-void set_datawriter_protocol(DDS::DataWriterQos &wQos)
+void eprosima::rpcdds::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     wQos.protocol.rtps_reliable_writer.low_watermark = 0;
@@ -115,7 +113,7 @@ void set_datawriter_protocol(DDS::DataWriterQos &wQos)
 #endif
 }
 
-void increase_buffers(DDS::DomainParticipantQos &pQos)
+void eprosima::rpcdds::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     pQos.receiver_pool.buffer_size = 65536;
@@ -130,7 +128,7 @@ void increase_buffers(DDS::DomainParticipantQos &pQos)
 #endif
 }
 
-DDS::DomainParticipantFactory* getFactory(int domainId)
+DDS::DomainParticipantFactory* eprosima::rpcdds::util::dds::getFactory(int domainId)
 {
     const char* const METHOD_NAME = "getFactory";
 

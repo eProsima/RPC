@@ -18,7 +18,7 @@ using namespace ::exception;
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::Transport";
 
-Transport::Transport(int domainId) : m_domainId(domainId) , m_participant(NULL),
+Transport::Transport(setTransport setter, int domainId) : m_domainId(domainId) , m_participant(NULL),
     m_publisher(NULL), m_subscriber(NULL)
 {
     const char* const METHOD_NAME = "Transport";
@@ -32,7 +32,7 @@ Transport::Transport(int domainId) : m_domainId(domainId) , m_participant(NULL),
     {
         factory->get_default_participant_qos(participantQos);
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
-        setTransport(participantQos, NULL);
+        setter(participantQos, NULL);
 #endif
         // In some DDS middleware is good increase the buffer of sockets.
         increase_buffers(participantQos);
@@ -46,7 +46,7 @@ Transport::Transport(int domainId) : m_domainId(domainId) , m_participant(NULL),
             if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
             {
 #if defined(OPENDDS)
-                setTransport(participantQos, m_participant);
+                setter(participantQos, m_participant);
 #endif
                 m_participant->set_qos(participantQos);
 
