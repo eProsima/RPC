@@ -7,7 +7,7 @@ $fileHeader(file=[ctx.filename, "Protocol.h"], description=["This header file co
 #define _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 
 #include "protocols/Protocol.h"
-$ReqRepSIncludes(filename=ctx.filename)$
+#include "$ctx.filename$.h"
 
 $ddsIncludes()$
 
