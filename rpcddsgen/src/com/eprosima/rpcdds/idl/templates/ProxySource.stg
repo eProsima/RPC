@@ -5,19 +5,8 @@ $fileHeader(file=[ctx.filename, "Proxy.cxx"], description=["This source file con
 
 #include "$ctx.filename$Proxy.h"
 #include "transports/ProxyTransport.h"
-#include "protocols/Protocol.h"
+#include "$ctx.filename$Protocol.h"
 //#include "$ctx.filename$AsyncSupport.h"
-#include "exceptions/Exceptions.h"
-/*
-$ReqRepIncludes(filename=ctx.filename)$
-
-$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
-$if(ctx.projectNeedTypes)$
-#include "$ctx.filename$T.h"
-
-$endif$
-#include "$ctx.filename$RequestReplyUtils.h"
-*/
 
 $definitions; separator="\n"$
 >>
@@ -44,8 +33,8 @@ interface(ctx, interface, export_list) ::= <<
     createRPCs();
 }*/
 
-$interface.name$Proxy::$interface.name$Proxy(std::string remoteServiceName, eprosima::rpcdds:transport::ProxyTransport *transport,
-    eprosima::rpcdds::protocol::Protocol *protocol, long timeout) : Proxy(remoteServiceName, transport, protocol, timeout)
+$interface.name$Proxy::$interface.name$Proxy(std::string remoteServiceName, eprosima::rpcdds::transport::ProxyTransport *transport,
+    eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol, long timeout) : Proxy(remoteServiceName, transport, protocol, timeout)
 {
 }
 
@@ -55,9 +44,8 @@ $interface.name$Proxy::~$interface.name$Proxy()
 
 $export_list$
 
-$interface.exports : {export | $if(export.operation)$$functionAsyncImpl(operation=export)$$endif$}$
-
 >>
+//$interface.exports : {export | $if(export.operation)$$functionAsyncImpl(operation=export)$$endif$}$
 
 export_list(exports) ::= <<
 $exports; separator="\n"$
@@ -68,75 +56,13 @@ exception(ctx, exception) ::= <<>>
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
-    /*eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
-    $varDecl(variable=operation.rettypeparam)$
-    $operation.parent.name$_$operation.name$Request instance;
-    $if(!operation.oneway)$
-    $operation.parent.name$_$operation.name$Reply retInstance;
-
-    $varComplexInitializeT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="retInstance")$
+    $if(operation.rettypeparam)$
+    $paramRetType(operation.rettype)$ $operation.rettypeparam.name$ =
     $endif$
-    $operation.parent.name$_$operation.name$RequestUtils::setTypeData(instance$extractParams(params=operation.inputparam, separatorInicial=", ")$);
-    retcode = $operation.name$_Service->execute(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$, getTimeout());
-    
-    $if(!operation.oneway)$
-    if(retcode == eProsima::RPCDDS::OPERATION_SUCCESSFUL)
-    {
-    
-    $if(operation.exceptions)$
-        switch (retInstance.unio._d)
-        {
-            case 0:
-                $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
-                break;
-            $operation.exceptions : { exception |
-            case $i$:
-                {
-                $exception.scopedname$ ex;
-                $if(exception.inScope)$
-                $exception.scopedname$Utils::extractTypeData(ex, retInstance.unio._u.$exception.name$_ex);
-                
-                $else$
-                $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData(ex, retInstance.unio._u.$exception.name$_ex);
-                
-                $endif$
-                ex.raise();
-                }
-            }; separator="\n"$
-            default:
-                throw eProsima::RPCDDS::ClientInternalException("Error extracting information from server");
-        }
-    $else$
-        $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
-    
-    $endif$
-    }
-    
-    $endif$  
-    switch (retcode)
-    {
-        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
-            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
-            break;
-        case eProsima::RPCDDS::NO_SERVER:
-            throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
-            break;
-        $if(!operation.oneway)$
-        case eProsima::RPCDDS::SERVER_TIMEOUT:
-            throw eProsima::RPCDDS::ServerTimeoutException("Timeout waiting the server's reply");
-            break;
-        case eProsima::RPCDDS::SERVER_INTERNAL_ERROR:
-            throw eProsima::RPCDDS::ServerInternalException(retInstance.header.rpcddsRetMsg$stringPointerConst()$);
-            break;
-        $endif$
-        default:
-            break;
-    };
-    
-
+    ((eprosima::rpcdds::protocol::$ctx.filename$Protocol*)getProtocol())->$operation.parent.formatedScopedname$_$operation.name$($extractParams(params=operation.parameters)$);
     $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
-    $endif$*/
+    $endif$
 }
 
 >>
@@ -160,7 +86,7 @@ functionAsyncImpl(operation) ::= <<
 $if(!operation.oneway)$
 void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
 {
-    /*eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
+    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
     $operation.parent.name$_$operation.name$Request instance;
     $operation.parent.name$_$operation.name$Task *task = NULL;
     $operation.parent.name$_$operation.name$RequestUtils::setTypeData(instance$extractParams(params=operation.inputparam, separatorInicial=", ")$);
@@ -180,5 +106,5 @@ void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name
     }
 }
 
-$endif$*/
+$endif$
 >>

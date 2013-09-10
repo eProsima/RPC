@@ -25,7 +25,7 @@ namespace eprosima
             {
                 public:
 
-                    virtual bool isCompatibleTransport(eprosima::rpcdds::transport::Transport *transport) = 0;
+                    virtual bool setTransport(eprosima::rpcdds::transport::Transport *transport) = 0;
             };
         } // namespace protocol
     } // namespace rpcdds

@@ -26,7 +26,7 @@ Proxy::Proxy(std::string remoteServiceName, ProxyTransport *transport,
     const char* const METHOD_NAME ="Proxy";
     std::string errorMessage;
 
-    if(protocol->isCompatibleTransport(transport))
+    if(protocol->setTransport(transport))
     {
         // Create asynchronous tasks thread
         m_asyncThread = new AsyncThread();

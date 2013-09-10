@@ -7,7 +7,6 @@
  *************************************************************************/
 
 #include "transports/dds/ProxyTransport.h"
-#include "transports/dds/components/ProxyProcedureEndpoint.h"
 #include "exceptions/InitializeException.h"
 
 #include <string>
@@ -38,14 +37,15 @@ TransportBehaviour ProxyTransport::getBehaviour()
     return PROXY_BEHAVIOUR;
 }
 
-int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename)
+int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+        ProxyProcedureEndpoint::Copy_data copy_data);
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     ProxyProcedureEndpoint *pe = new ProxyProcedureEndpoint(this);
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename))
+        if(pe->initialize(name, writertypename, readertypename, copy_data))
         {
             std::pair<std::map<const char*, ProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ProxyProcedureEndpoint*>(name, pe));
 

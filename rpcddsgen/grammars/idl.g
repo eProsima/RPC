@@ -1084,6 +1084,7 @@ op_dcl returns [Pair<Operation, TemplateGroup> returnPair = null]
            operationObject = new Operation(name);
            // Set the the interface object to the TemplateGroup of the module.
            operationTemplates.setAttribute("operation", operationObject);
+           operationTemplates.setAttribute("ctx", ctx);
            
            // Set return type
            operationObject.setRettype(retType);

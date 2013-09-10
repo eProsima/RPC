@@ -95,6 +95,18 @@ namespace eprosima
 
                     //! @brief The default destructor.
                     virtual ~Proxy();
+                    
+                    inline
+                        eprosima::rpcdds::protocol::Protocol* getProtocol() const
+                        {
+                            return m_protocol;
+                        }
+
+                    inline
+                        eprosima::rpcdds::transport::ProxyTransport* getTransport() const
+                        {
+                            return m_transport;
+                        }
 
                 private:
 

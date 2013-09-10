@@ -22,7 +22,7 @@ namespace eprosima
         
         namespace protocol
         {
-            class Protocol;
+            class $ctx.filename$Protocol;
         }
     }
 }
@@ -80,14 +80,14 @@ class $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
          * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
         $interface.name$Proxy(std::string remoteServiceName, eprosima::rpcdds::transport::ProxyTransport *transport,
-            eprosima::rpcdds::protocol::Protocol *protocol, long timeout = 10000);
+            eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol, long timeout = 10000);
 
         //! @brief The default destructor.
         virtual ~$interface.name$Proxy();
         
         $export_list$
         
-        $interface.exports : {export | $if(export.operation)$$functionAsyncHeader(operation=export)$$endif$}$
+        $interface.exports : {export | $if(export.operation)$//$functionAsyncHeader(operation=export)$$endif$}$
 };
 
 >>

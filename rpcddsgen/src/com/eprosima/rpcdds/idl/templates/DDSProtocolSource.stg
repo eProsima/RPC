@@ -6,16 +6,21 @@ $fileHeader(file=[ctx.filename, "RequestReplyUtils.cxx"], description=["This sou
 #include "$ctx.filename$DDSProtocol.h"
 #include "transports/Transport.h"
 #include "transports/dds/Transport.h"
-#include "exceptions/IncompatibleException.h"
+#include "exceptions/Exceptions.h"
 $ReqRepIncludes(filename=ctx.filename)$
 
 using namespace eprosima::rpcdds;
-using namespace ::protocol;
 using namespace ::protocol::dds;
 using namespace ::transport;
 using namespace ::exception;
 
-bool $ctx.filename$Protocol::isCompatibleTransport(Transport *transport)
+typedef struct encapsulation
+{
+    const char *name;
+    void *data;
+} encapsulation;
+
+bool $ctx.filename$Protocol::setTransport(Transport *transport)
 {
     const char *requesttypeName = NULL, *replytypeName = NULL;
     
@@ -70,10 +75,7 @@ $definitions; separator="\n"$
 >>
 
 module(ctx, module, definition_list) ::= <<
-namespace $module.name$
-{
-    $definition_list$
-};
+$definition_list$
 
 >>
 
@@ -103,85 +105,86 @@ void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.nam
 >>
 
 operation(ctx, operation, param_list) ::= <<
-$operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionUtil(operation=operation, exception=exception)$$endif$}; separator="\n"$
-
-const char* $operation.parent.name$_$operation.name$RequestUtils::registerType(DDS::DomainParticipant *participant)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
-    const char *typeName = NULL;
+    ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
+    $varDecl(variable=operation.rettypeparam)$
+    $operation.parent.scopedname$_$operation.name$Request instance;
+    $if(!operation.oneway)$
+    $operation.parent.scopedname$_$operation.name$Reply retInstance;
 
-    /*if(participant != NULL)
-    {
-        $getTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$
-
-        if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Request"], name="typeName")$ != DDS::RETCODE_OK)
-        {
-            return NULL;
-        }
-    }*/
-
-    return typeName;
-}
-
-void $operation.parent.name$_$operation.name$RequestUtils::setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
-{
-    //$operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
-}
-
-void $operation.parent.name$_$operation.name$RequestUtils::extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$)
-{
-    //$operation.inputparam : {$extractDataHelper(param=it, dataname="data")$};separator="\n"$  
-}
-
-$if(!operation.oneway)$
-const char* $operation.parent.name$_$operation.name$ReplyUtils::registerType(DDS::DomainParticipant *participant)
-{
-    const char *typeName = NULL;
-
-    /*if(participant != NULL)
-    {
-        $getTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typeName")$
-
-        if($registerTypename(typename=[operation.parent.name,"_",operation.name,"Reply"], name="typeName")$ != DDS::RETCODE_OK)
-        {
-            return NULL;
-        }
-    }*/
-
-    return typeName;
-}
-
-void $operation.parent.name$_$operation.name$ReplyUtils::setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
-{
-    /*$if(operation.exceptions)$
-    $operation.outputparam : {$createDataHelper(param=it, dataname="instance.unio._u.st")$};separator="\n"$
-    $if(operation.rettypeparam)$
-    $createDataHelper(param=operation.rettypeparam, dataname="instance.unio._u.st")$        
+    $varComplexInitializeT(typeName=[operation.parent.scopedname, "_", operation.name, "Reply"], name="retInstance")$
     $endif$
-    $else$
-    $operation.outputparam : {$createDataHelper(param=it, dataname="instance")$};separator="\n"$
-    $if(operation.rettypeparam)$
-    $createDataHelper(param=operation.rettypeparam, dataname="instance")$        
-    $endif$
-    $endif$*/
-}
+    
+    $operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
 
-void $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData($operation.parent.name$_$operation.name$Reply& data, eprosima::rpcdds::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$)
-{
-    /*retcode = (eprosima::rpcdds::ReturnMessage)data.header.rpcddsRetCode;
+
+    retcode = ((eprosima::rpcdds::transport::dds::ProxyTransport*)getTransport())->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
+    
+    $if(!operation.oneway)$
+    if(retcode == OPERATION_SUCCESSFUL)
+    {
+    
     $if(operation.exceptions)$
-    $operation.outputparam : {$extractDataHelper(param=it, dataname="data.unio._u.st", isReply="yes")$};separator="\n"$
-    $if(operation.rettypeparam)$
-    $extractDataHelper(param=operation.rettypeparam, dataname="data.unio._u.st", isReply="yes")$        
-    $endif$
+        switch (retInstance.unio._d)
+        {
+            case 0:
+                $operation.parent.name$_$operation.name$ReplyUtils::extractTypeData(retInstance, retcode$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
+                break;
+            $operation.exceptions : { exception |
+            case $i$:
+                {
+                $exception.scopedname$ ex;
+                $if(exception.inScope)$
+                $exception.scopedname$Utils::extractTypeData(ex, retInstance.unio._u.$exception.name$_ex);
+                
+                $else$
+                $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData(ex, retInstance.unio._u.$exception.name$_ex);
+                
+                $endif$
+                ex.raise();
+                }
+            }; separator="\n"$
+            default:
+                throw ClientInternalException("Error extracting information from server");
+        }
     $else$
-    $operation.outputparam : {$extractDataHelper(param=it, dataname="data", isReply="yes")$};separator="\n"$
-    $if(operation.rettypeparam)$
-    $extractDataHelper(param=operation.rettypeparam, dataname="data", isReply="yes")$        
+        retcode = (ReturnMessage)retInstance.header.rpcddsRetCode;
+        $operation.outputparam : {$extractDataHelper(param=it, dataname="retInstance", isReply="yes")$};separator="\n"$
+        $if(operation.rettypeparam)$
+        $extractDataHelper(param=operation.rettypeparam, dataname="retInstance", isReply="yes")$        
+        $endif$
+    
     $endif$
-    $endif$  */
+    }
+    
+    $endif$  
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case NO_SERVER:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        $if(!operation.oneway)$
+        case SERVER_TIMEOUT:
+            throw ServerTimeoutException("Timeout waiting the server's reply");
+            break;
+        case SERVER_INTERNAL_ERROR:
+            throw ServerInternalException(retInstance.header.rpcddsRetMsg$stringPointerConst()$);
+            break;
+        $endif$
+        default:
+            break;
+    };
+    
+
+    $if(operation.rettypeparam)$
+    return $operation.rettypeparam.name$;
+    $endif$
 }
 
-$endif$
 >>
 
 param_list(parameters) ::= <<>>

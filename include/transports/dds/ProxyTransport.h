@@ -11,6 +11,7 @@
 #include "rpcdds_dll.h"
 #include "transports/dds/Transport.h"
 #include "transports/ProxyTransport.h"
+#include "transports/dds/components/ProxyProcedureEndpoint.h"
 #include "utils/dds/Middleware.h"
 
 #include <map>
@@ -23,8 +24,6 @@ namespace eprosima
         {
             namespace dds
             {
-                class ProxyProcedureEndpoint;
-
                 /*!
                  * @brief This class is the base of all classes that implement a transport
                  * using DDS. This transport could be used by the proxy.
@@ -52,9 +51,11 @@ namespace eprosima
                          * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
                          * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. Cannot be NULL.
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL:
+                         * @param copy_data Pointer to the function used to copy data when it is received.
                          * @return 0 value is returned if the function works successfully. In other case -1 is returned.
                          */
-                        int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename);
+                        int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+                                ProxyProcedureEndpoint::Copy_data copy_data);
 
                         /*!
                          * 2brief This function returns the behaviour of the transport.

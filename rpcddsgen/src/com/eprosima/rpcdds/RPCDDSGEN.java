@@ -477,6 +477,7 @@ public class RPCDDSGEN
 	        tmanager.addGroup("TypesHeader");
 	        tmanager.addGroup("TypesSource");
 	        // Load template to generate the DDS protocol.
+	        tmanager.addGroup("ProtocolHeader");
 	        tmanager.addGroup("DDSProtocolHeader");
 	        tmanager.addGroup("DDSProtocolSource");
 	        // Load template to generate Proxy for topics.
@@ -581,14 +582,18 @@ public class RPCDDSGEN
 		            System.out.println("Generating Utils Code...");
 		            
 		            if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
-		            {	            	
-		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
-		                {
-		                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
-		                    
-		                    project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
-		                    project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
-		                }
+		            {	
+		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                        {
+    		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+    		                {
+    		                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+    		                    
+    		                    project.addCommonIncludeFile(onlyFileName + "Protocol.h");
+    		                    project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
+    		                    project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
+    		                }
+                        }
 		            }
 		        }
 		        

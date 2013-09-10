@@ -1,0 +1,70 @@
+group ProtocolHeader;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "Protocol.h"], description=["This header file contains the declaration of the interface for all protocols."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_PROTOCOL_H_
+#define _$ctx.filename;format="toUpper"$_PROTOCOL_H_
+
+#include "protocols/Protocol.h"
+$ReqRepSIncludes(filename=ctx.filename)$
+
+$ddsIncludes()$
+
+namespace eprosima
+{
+    namespace rpcdds
+    {
+        namespace protocol
+        {
+            class $ctx.filename$Protocol : public Protocol
+            {
+                public:
+                
+                    virtual bool setTransport(eprosima::rpcdds::transport::Transport *transport) = 0;
+                             
+                    $definitions; separator="\n"$
+                    
+            };
+        } // namespace protocol
+    } // namespace rpcdds
+} // namespace eprosima
+
+#endif // _$ctx.filename;format="toUpper"$_PROTOCOL_H_
+>>
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+virtual $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

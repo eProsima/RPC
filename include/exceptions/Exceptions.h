@@ -11,6 +11,7 @@
 
 #include "exceptions/ClientInternalException.h"
 #include "exceptions/InitializeException.h"
+#include "exceptions/IncompatibleException.h"
 #include "exceptions/ServerInternalException.h"
 #include "exceptions/ServerTimeoutException.h"
 #include "exceptions/ServerNotFoundException.h"

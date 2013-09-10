@@ -9,6 +9,7 @@
 #include "transports/dds/components/ProxyProcedureEndpoint.h"
 #include "transports/dds/Transport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
+#include "utils/Typedefs.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
@@ -22,7 +23,7 @@ using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
 ProxyProcedureEndpoint::ProxyProcedureEndpoint(Transport *transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
-    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL), m_queryPool(NULL)
+    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL), m_queryPool(NULL), m_numSec(0)
 {
 }
 
@@ -31,7 +32,8 @@ ProxyProcedureEndpoint::~ProxyProcedureEndpoint()
     finalize();
 }
 
-int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename)
+int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
+        Copy_data copy_data)
 {
     const char* const METHOD_NAME = "initialize";
     m_mutex =  new boost::mutex();
@@ -45,6 +47,7 @@ int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypen
                 // Initialize query pool if it's not a oneway function.
                 if(initQueryPool() == 0)
                 {
+                    m_copy_data = copy_data;
                     return 0;
                 }
                 else
@@ -315,4 +318,234 @@ void ProxyProcedureEndpoint::finalizeQueryPool()
 
     free(m_queryPool);
     m_queryPool = NULL;
+}
+
+ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply, const char *remoteServiceName, long timeout)
+{
+    const char* const METHOD_NAME = "send";
+    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
+    DDS::WaitSet *waitSet = NULL;
+    DDS::ReturnCode_t retCode;
+    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
+    unsigned int numSec = 0;
+    char value[50];
+    void *auxPointerToRequest = request;
+    char **auxPointerToRemoteServiceName = NULL;
+    DDS::QueryCondition *query = NULL;
+
+    if(request != NULL)
+    {
+        *(unsigned int*)auxPointerToRequest = m_proxyId[0];
+        ((unsigned int*)auxPointerToRequest)[1] = m_proxyId[1];
+        ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
+        ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
+        auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+        *(char**)auxPointerToRequest = (char*)remoteServiceName;
+        auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+        auxPointerToRequest = (char**)auxPointerToRequest + 1;
+
+        m_mutex->lock();
+        /* Thread safe num_Sec handling */
+        *(unsigned int*)auxPointerToRequest = m_numSec;
+        numSec = m_numSec;
+        m_numSec++;
+
+        // Take a free query condition.
+        // Its not a oneway function.
+        if(m_reader != NULL)
+            query = getFreeQueryFromPool();
+        m_mutex->unlock();
+
+        if(m_reader == NULL || query != NULL)
+        {
+            waitSet = new DDS::WaitSet();
+
+            if(waitSet != NULL)
+            {
+                if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
+                {
+                    DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
+
+                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS::RETCODE_OK)
+                    {
+                        // Its not a oneway function.
+                        if(m_reader != NULL)
+                        {
+                            DDS::StringSeq stringSeq(1);
+
+                            stringSeq.length(1);
+                            SNPRINTF(value, 50, "%u", numSec);
+                            stringSeq[0] = strdup(value);
+                            retCode = query->set_query_parameters(stringSeq);
+
+                            if(retCode == DDS::RETCODE_OK)
+                            {
+                                retCode = waitSet->attach_condition(query);
+
+                                if(retCode == DDS::RETCODE_OK)
+                                {
+                                    DDS::ConditionSeq conds;
+                                    DDS_TIMEOUT(ddsTimeout, tTimeout);
+
+                                    retCode = waitSet->wait(conds, ddsTimeout);
+
+                                    if(retCode == DDS::RETCODE_OK)
+                                    {
+                                        if(conds.length() == 1 && conds[0] == query)
+                                        {
+                                            returnedValue = takeReply(reply, query);
+                                        }
+                                    }
+                                    else if(retCode == DDS::RETCODE_TIMEOUT)
+                                    {
+                                        printf("WARNING <%s::%s>: Time out expiration.\n", CLASS_NAME, METHOD_NAME);
+                                        returnedValue = SERVER_TIMEOUT;
+                                    }
+
+                                    waitSet->detach_condition(query);
+                                }
+                                else
+                                {
+                                    printf("ERROR <%s::%s>: Cannot attach query condition\n", CLASS_NAME, METHOD_NAME);
+                                }
+                            }
+                            else
+                            {
+                                printf("ERROR <%s::%s>: Cannot set the sequence number to the query condition\n", CLASS_NAME, METHOD_NAME);
+                            }
+                        }
+                        else
+                        {
+                            returnedValue = OPERATION_SUCCESSFUL;
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
+                else
+                {
+                    printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+                    returnedValue = NO_SERVER;
+                }
+
+                delete waitSet;
+            }
+            else
+            {
+                printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+            }
+
+            // Its not a oneway function.
+            if(m_reader != NULL)
+            {
+                m_mutex->lock();
+                returnUsedQueryToPool(query);
+                m_mutex->unlock();
+            }
+        }
+        else
+        {
+            printf("ERROR <%s::%s>: Cannot get a free query condition\n", CLASS_NAME, METHOD_NAME);
+        }
+
+        // Set the remoteServiceName to NULL.
+        *auxPointerToRemoteServiceName = NULL;
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameter(data)\n", CLASS_NAME, METHOD_NAME);
+    }
+
+    return returnedValue;
+}
+
+ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSet, long timeout)
+{
+    const char* const METHOD_NAME = "checkServerConnection";
+    ReturnMessage returnedValue = OPERATION_SUCCESSFUL;
+    DDS::StatusCondition *statusCondition = NULL;
+    DDS::ReturnCode_t retCode;
+    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
+    DDS_TIMEOUT(ddsTimeout, tTimeout);
+
+    if(waitSet != NULL)
+    {
+        // Detect request datareader from server.
+        DDS::PublicationMatchedStatus pms;
+        m_writer->get_publication_matched_status(pms);
+
+        if(pms.current_count < 1)
+        {
+            returnedValue = NO_SERVER;
+            statusCondition = m_writer->get_statuscondition();
+
+            if(statusCondition != NULL)
+            {
+                statusCondition->set_enabled_statuses(DDS::PUBLICATION_MATCHED_STATUS);
+
+                if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
+                {
+                    DDS::ConditionSeq conds;
+
+                    retCode = waitSet->wait(conds, ddsTimeout);
+
+                    if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
+                        returnedValue = OPERATION_SUCCESSFUL;
+
+                    waitSet->detach_condition(statusCondition);
+                }
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Cannot get status condition from request datawriter.\n", CLASS_NAME, METHOD_NAME);
+            }
+        }
+
+        if(returnedValue == OPERATION_SUCCESSFUL && m_reader != NULL)
+        {
+            // Detect reply datawriter from server.
+            DDS::SubscriptionMatchedStatus sms;
+            m_reader->get_subscription_matched_status(sms);
+
+            if(sms.current_count < 1)
+            {
+                returnedValue = NO_SERVER;
+                statusCondition = m_reader->get_statuscondition();
+
+                if(statusCondition != NULL)
+                {
+                    statusCondition->set_enabled_statuses(DDS::SUBSCRIPTION_MATCHED_STATUS);
+
+                    if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
+                    {
+                        DDS::ConditionSeq conds;
+                        retCode = waitSet->wait(conds, ddsTimeout);
+
+                        if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
+                        {
+                            returnedValue = OPERATION_SUCCESSFUL;
+                        }
+
+                        waitSet->detach_condition(statusCondition);
+                    }
+                }
+                else
+                {
+                    printf("ERROR<%s::%s>: Cannot get status condition from reply datareader.\n", CLASS_NAME, METHOD_NAME);
+                }
+            }
+        }
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+
+    return returnedValue;
+}
+
+ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition *query)
+{
 }

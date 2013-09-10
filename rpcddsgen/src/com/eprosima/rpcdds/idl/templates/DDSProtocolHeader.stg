@@ -6,16 +6,13 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file
 #ifndef _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 #define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
-#include "protocols/Protocol.h"
+#include "$ctx.filename$Protocol.h"
 #include "utils/Messages.h"
-$ReqRepSIncludes(filename=ctx.filename)$
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
 
 $endif$
-
-$ddsIncludes()$
 
 namespace eprosima
 {
@@ -25,11 +22,13 @@ namespace eprosima
         {
             namespace dds
             {
-                class $ctx.filename$Protocol : public Protocol
+                class $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
-                        bool isCompatibleTransport(eprosima::rpcdds::transport::Transport *transport);
+                        bool setTransport(eprosima::rpcdds::transport::Transport *transport);
+                        
+                        $definitions; separator="\n"$
                         
                     private:
                     
@@ -44,16 +43,11 @@ namespace eprosima
     } // namespace rpcdds
 } // namespace eprosima
 
-$definitions; separator="\n"$
-
 #endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 >>
 
 module(ctx, module, definition_list) ::= <<
-namespace $module.name$
-{
-    $definition_list$
-};
+$definition_list$
 
 >>
 
@@ -71,98 +65,11 @@ $exports; separator="\n"$
 
 >>
 
-exception(ctx, exception) ::= <<
-/**
- * \brief This class contains helpful operations to use created structure for $exception.scopedname$ exception.
- */
-class $exception.name$Utils
-{
-    public:
-    
-        /**
-         * \brief This function sets the members of the exception $exception.scopedname$ into the structure $exception.name$_t attributes.
-         *
-         * \param exception Reference to the exception that contains the information.
-         * \param instance Reference to the structure $exception.name$_t that will be filled.
-         */
-        static void setTypeData(const $exception.name$ &ex, $exception.name$_t &instance);
-        
-        /**
-         * \brief This function extracts the $exception.scopedname$ from the structure $exception.name$_t.
-         *
-         * \param exception Reference to the exception that will be filled.
-         * \param data Reference to the structure $exception.name$_t that contains the exception's data.
-         */
-        static void extractTypeData($exception.name$ &ex, $exception.name$_t &data);
-};
->>
+exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-$operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionUtil(operation=operation, exception=exception)$$endif$}; separator="\n"$
+$paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
-/**
- * \brief This class contains helpful operations for the generated topic $operation.parent.name$_$operation.name$Request.
- */
-class $operation.parent.name$_$operation.name$RequestUtils
-{
-    public:
-
-        /**
-         * \brief This function registers the type of the structure $operation.parent.name$_$operation.name$Request in the DDS domain participant.
-         *
-         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
-         * \return The type name of the structure $operation.parent.name$_$operation.name$Request.
-         */
-        static const char* registerType(DDS::DomainParticipant *participant);
-        
-        /**
-         * \brief This function sets the parameters into the members of the structure $operation.parent.name$_$operation.name$Request.
-         *
-         * \param instance Reference to the structure $operation.parent.name$_$operation.name$Request that will be filled.
-         */
-        static void setTypeData($operation.parent.name$_$operation.name$Request& instance$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
-        
-        /**
-         * \brief This function extracts the parameters from the members of the structure $operation.parent.name$_$operation.name$Request.
-         *
-         * \param data Reference to the structure $operation.parent.name$_$operation.name$Request that contains the parameters' data..
-         */
-        static void extractTypeData($operation.parent.name$_$operation.name$Request& data$paramDeclsByRef(params=operation.inputparam, separatorInicial=", ")$);
-};
-
-$if(!operation.oneway)$
-/**
- * \brief This class contains helpful operations for the generated topic $operation.parent.name$_$operation.name$Reply.
- */
-class $operation.parent.name$_$operation.name$ReplyUtils
-{
-    public:
-
-        /**
-         * \brief This function registers the type of the structure $operation.parent.name$_$operation.name$Reply in the DDS domain participant.
-         *
-         * \param participant Pointer to the DDS domain participant. Cannot be NULL.
-         * \return The type name of the structure $operation.parent.name$_$operation.name$Reply.
-         */
-        static const char* registerType(DDS::DomainParticipant *participant);
-        
-        /**
-         * \brief This function sets the parameters into the members of the structure $operation.parent.name$_$operation.name$Reply.
-         *
-         * \param instance Reference to the structure $operation.parent.name$_$operation.name$Reply that will be filled.
-         */
-        static void setTypeData($operation.parent.name$_$operation.name$Reply& instance$paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
-        
-        /**
-         * \brief This function extracts the parameters from the members of the structure $operation.parent.name$_$operation.name$Reply.
-         *
-         * \param data Reference to the structure $operation.parent.name$_$operation.name$Reply that contains the parameters' data.
-         * \param retcode Internal message returned from the server.
-         */
-        static void extractTypeData($operation.parent.name$_$operation.name$Reply& data, eprosima::rpcdds::ReturnMessage& retcode$paramDeclsByRef(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
-};
-
-$endif$
 >>
 
 param_list(parameters) ::= <<>>
@@ -176,15 +83,3 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
-
-// Utils
-createExceptionUtil(operation, exception) ::= <<
-class $operation.parent.name$_$operation.name$_$exception.name$Utils
-{
-public:
-    static void setTypeData(const $exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &instance);
-
-    static void extractTypeData($exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &data);
-};
-
->>

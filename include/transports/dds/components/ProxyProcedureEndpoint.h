@@ -9,6 +9,7 @@
 #define _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
 
 #include "utils/dds/Middleware.h"
+#include "utils/Messages.h"
 
 namespace boost
 {
@@ -33,6 +34,8 @@ namespace eprosima
                 {
                     public:
 
+                        typedef void (*Copy_data)(void *src, void *dst);
+
                         /*!
                          * @brief Default constructor.
                          * @param Transport that is creating the proxy procedure endpoint. Cannot be NULL.
@@ -47,9 +50,11 @@ namespace eprosima
                          * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
                          * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. Cannot be NULL.
                          * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. Cannot be NULL:
+                         * @param copy_data Pointer to the function used to copy data when it is received.
                          * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
-                        int initialize(const char *name, const char *writertypename, const char *readertypename);
+                        int initialize(const char *name, const char *writertypename, const char *readertypename,
+                                Copy_data copy_data);
 
                         /*!
                          * @brief This function finalizes the proxy procedure endpoint.
@@ -57,6 +62,19 @@ namespace eprosima
                          */
                         void finalize();
 
+                        /*!
+                         * @brief This function sends a synchronous RPC call.
+                         * Usually this function sends the  request to the server and waits the reply.
+                         * Wait mechanism is implemented with a DDS WaitSet.
+                         *
+                         * @param request Pointer to the allocated request. Cannot be NULL.
+                         * @param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
+                         *        The pointer can be NULL and this means that the RPC call is oneway.
+                         * @param remoteServiceName The remote service name that will be called.
+                         * @param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
+                         * @throw eProsima::RPCDDS::ServerTimeoutException
+                         */
+                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply, const char *remoteServiceName, long timeout);
 
                     private:
 
@@ -76,11 +94,37 @@ namespace eprosima
                          */
                         int enableEntities();
 
+                        /*!
+                         * @brief This functio checks that the server was discovery.
+                         *
+                         * @param DDS WaitSet used to make the comprobation.
+                         * @param timeout Timeout used to the comprobation. Its value is in milliseconds.
+                         * @return RPCDDS return message.
+                         */
+                        ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
+
                         //! @brief This function initializes the query conditions of the pool.
                         int initQueryPool();
 
-                        /// @brief This function finalizes the query conditions of the pool.
+                        //! @brief This function finalizes the query conditions of the pool.
                         void finalizeQueryPool();
+
+                        /*!
+                         * @brief This function returns a free query condition from the pool.
+                         *
+                         * @return This function return a free query condition. If all query condition are in use, then NULL pointer is returned.
+                         */
+                        DDS::QueryCondition* getFreeQueryFromPool();
+
+                        /*!
+                         * @brief This function returns a used query condition to its freedom.
+                         */
+                        void returnUsedQueryToPool(DDS::QueryCondition *query);
+
+                        /*!
+                         * @brief This function take a sample from the datareader.
+                         */
+                        eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 
                         //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
                         boost::mutex *m_mutex;
@@ -103,11 +147,17 @@ namespace eprosima
                         //! @brief The data reader used to receive.
                         DDS::DataReader *m_reader;
 
+                        //! @brief Pointer to the function used to copy data when it is received.
+                        Copy_data m_copy_data;
+
                         //! @brief Pool of DDSQueryConditions that are used by the proxy procedure endpoint. It's length is 10.
                         DDS::QueryCondition **m_queryPool;
 
                         //! @brief The identifier used as proxy.
                         unsigned int m_proxyId[4];
+
+                        /// \brief The next sequence number for a request.
+                        unsigned int m_numSec;
                 };
             } // namespace dds
         } // namespace transport
