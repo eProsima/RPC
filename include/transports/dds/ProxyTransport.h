@@ -29,7 +29,7 @@ namespace eprosima
                  * using DDS. This transport could be used by the proxy.
                  * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI ProxyTransport : public eprosima::rpcdds::transport::ProxyTransport, Transport
+                class RPCDDS_DllAPI ProxyTransport : public eprosima::rpcdds::transport::ProxyTransport, public Transport
                 {
                     public:
 
@@ -42,7 +42,7 @@ namespace eprosima
                          * @brief This function returns the type of the transport.
                          *        This function has to be implemented by the child classes.
                          */
-                        const char* getType() const;
+                        virtual const char* getType() const;
 
                         /*!
                          * @brief This function creates a new proxy procedure endpoint.
@@ -67,12 +67,13 @@ namespace eprosima
 
                     protected:
 
+                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
+
                         /*!
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        ProxyTransport(Transport::setTransport setter,
-                                std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
+                        ProxyTransport(std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
 
                     private:
 

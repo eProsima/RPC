@@ -21,7 +21,7 @@ static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::UDPProx
 using namespace eprosima::rpcdds::transport::dds;
 
 UDPProxyTransport::UDPProxyTransport(std::string remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
-    ProxyTransport(UDPProxyTransport::setTransport, remoteServiceName, domainId, milliseconds)
+    ProxyTransport(remoteServiceName, domainId, milliseconds)
 {
 }
 
@@ -40,7 +40,6 @@ UDPProxyTransport::~UDPProxyTransport()
 int UDPProxyTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
-
     if(m_to_connect != NULL)
     {
         char buffer[100];

@@ -46,15 +46,15 @@ namespace eprosima
                         //! @brief Default destructor.
                         virtual ~UDPProxyTransport();
 
-                    private:
-
                         /*!
                          * @brief This function sets the QoS of DDS to use the UDPv4 transport.
                          *
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport.
                          */
-                        int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+
+                    private:
 
                         //! @brief The IP address where the proxy could find the server. This attribute is only used by the proxy.
                         char *m_to_connect;

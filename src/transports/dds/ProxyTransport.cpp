@@ -24,9 +24,9 @@ typedef struct encapsulation
     void *data;
 } encapsulation;
 
-ProxyTransport::ProxyTransport(::transport::dds::Transport::setTransport setter,
-        std::string &remoteServiceName, int domainId, long milliseconds) :
-    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), ::transport::dds::Transport(setter, domainId)
+ProxyTransport::ProxyTransport(std::string &remoteServiceName, int domainId, long milliseconds) :
+    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), ::transport::ProxyTransport(),
+    ::transport::dds::Transport(domainId)
 {
 }
 
@@ -53,7 +53,7 @@ int ProxyTransport::createProcedureEndpoint(const char *name, const char *writer
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, copy_data, dataSize))
+        if(pe->initialize(name, writertypename, readertypename, copy_data, dataSize) == 0)
         {
             std::pair<std::map<const char*, ProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ProxyProcedureEndpoint*>(name, pe));
 
@@ -86,7 +86,7 @@ ReturnMessage ProxyTransport::send(void *request, void* reply)
 
         if(it != m_procedureEndpoints.end())
         {
-            returnedValue = (*it).second->send(request, reply, m_remoteServiceName.c_str(), m_timeout);
+            returnedValue = (*it).second->send(encap->data, reply, m_remoteServiceName.c_str(), m_timeout);
         }
     }
     else

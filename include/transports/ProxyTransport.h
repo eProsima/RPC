@@ -25,10 +25,10 @@ class RPCDDS_DllAPI ProxyTransport : public Transport
 public:
 
 	//! \brief Default constructor.
-	ProxyTransport() {}
+	ProxyTransport(){}
 
 	//! \brief Default destructor.
-	virtual ~ProxyTransport() {}
+	virtual ~ProxyTransport(){}
 
 	/*!
 	 * @brief This function returns the type of the transport.

@@ -46,6 +46,8 @@ namespace eprosima
                          */
                         virtual ~Transport();
 
+                        void initialize();
+
                         inline
                             DDS::DomainParticipant* getParticipant() const
                             {
@@ -84,13 +86,13 @@ namespace eprosima
 
                     protected:
 
-                        typedef int (*setTransport)(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
 
                         /*!
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        Transport(setTransport setter, int domainId = 0);
+                        Transport(int domainId = 0);
 
                     private:
 

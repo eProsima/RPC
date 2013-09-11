@@ -18,99 +18,107 @@ using namespace ::exception;
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::Transport";
 
-Transport::Transport(setTransport setter, int domainId) : m_domainId(domainId) , m_participant(NULL),
+Transport::Transport(int domainId) : m_domainId(domainId) , m_participant(NULL),
     m_publisher(NULL), m_subscriber(NULL)
 {
-    const char* const METHOD_NAME = "Transport";
-    std::string errorMessage;
-    DDS::DomainParticipantFactory *factory = getFactory(domainId);
-    DDS::DomainParticipantQos participantQos;
-    DDS::PublisherQos publisherQos;
-    DDS::SubscriberQos subscriberQos;
+}
 
-    if(factory != NULL)
+void Transport::initialize()
+{
+    const char* const METHOD_NAME = "initialize";
+
+    if(m_participant == NULL)
     {
-        factory->get_default_participant_qos(participantQos);
-#if defined(RTI_WIN32) || defined(RTI_LINUX)
-        setter(participantQos, NULL);
-#endif
-        // In some DDS middleware is good increase the buffer of sockets.
-        increase_buffers(participantQos);
-        // Creating the domain participant that will be used to create DDS entities.
-        m_participant = factory->create_participant(
-                m_domainId, participantQos, 
-                NULL /* listener */, STATUS_MASK_NONE);
+        std::string errorMessage;
+        DDS::DomainParticipantFactory *factory = getFactory(m_domainId);
+        DDS::DomainParticipantQos participantQos;
+        DDS::PublisherQos publisherQos;
+        DDS::SubscriberQos subscriberQos;
 
-        if (m_participant != NULL)
+        if(factory != NULL)
         {
-            if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
-            {
-#if defined(OPENDDS)
-                setter(participantQos, m_participant);
+            factory->get_default_participant_qos(participantQos);
+#if defined(RTI_WIN32) || defined(RTI_LINUX)
+            setTransport(participantQos, NULL);
 #endif
-                m_participant->set_qos(participantQos);
+            // In some DDS middleware is good increase the buffer of sockets.
+            increase_buffers(participantQos);
+            // Creating the domain participant that will be used to create DDS entities.
+            m_participant = factory->create_participant(
+                    m_domainId, participantQos, 
+                    NULL /* listener */, STATUS_MASK_NONE);
 
-                // Creating the publisher that will be used to create datawriter entities.
-                m_publisher = m_participant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
-
-                if(m_publisher != NULL)
+            if (m_participant != NULL)
+            {
+                if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
                 {
-                    if(m_publisher->get_qos(publisherQos) == DDS::RETCODE_OK)
+#if defined(OPENDDS)
+                    setTransport(participantQos, m_participant);
+#endif
+                    m_participant->set_qos(participantQos);
+
+                    // Creating the publisher that will be used to create datawriter entities.
+                    m_publisher = m_participant->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
+
+                    if(m_publisher != NULL)
                     {
-                        publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                        m_publisher->set_qos(publisherQos);
-
-                        // Creating the subscriber that will be used to create datareader entities.
-                        m_subscriber = m_participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
-
-                        if(m_subscriber != NULL)
+                        if(m_publisher->get_qos(publisherQos) == DDS::RETCODE_OK)
                         {
-                            if(m_subscriber->get_qos(subscriberQos) == DDS::RETCODE_OK)
-                            {
-                                subscriberQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                                m_subscriber->set_qos(subscriberQos);
+                            publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                            m_publisher->set_qos(publisherQos);
 
-                                return;
+                            // Creating the subscriber that will be used to create datareader entities.
+                            m_subscriber = m_participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
+
+                            if(m_subscriber != NULL)
+                            {
+                                if(m_subscriber->get_qos(subscriberQos) == DDS::RETCODE_OK)
+                                {
+                                    subscriberQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
+                                    m_subscriber->set_qos(subscriberQos);
+
+                                    return;
+                                }
+                                else
+                                {
+                                    errorMessage = "subscriber get_qos() error";
+                                }
+
+                                m_participant->delete_subscriber(m_subscriber);
                             }
                             else
                             {
-                                errorMessage = "subscriber get_qos() error";
+                                errorMessage = "create_subscriber() error";
                             }
-
-                            m_participant->delete_subscriber(m_subscriber);
                         }
                         else
                         {
-                            errorMessage = "create_subscriber() error";
+                            errorMessage = "publisher get_qos() error";
                         }
+
+                        m_participant->delete_publisher(m_publisher);
                     }
                     else
                     {
-                        errorMessage = "publisher get_qos() error";
+                        errorMessage = "create_publisher() error";
                     }
+                }
 
-                    m_participant->delete_publisher(m_publisher);
-                }
-                else
-                {
-                    errorMessage = "create_publisher() error";
-                }
+                factory->delete_participant(m_participant);
             }
-
-            factory->delete_participant(m_participant);
+            else
+            {
+                errorMessage = "create_participant error";
+            }
         }
         else
         {
-            errorMessage = "create_participant error";
+            errorMessage = "create factory error";
         }
-    }
-    else
-    {
-        errorMessage = "create factory error";
-    }
 
-    printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
-    throw InitializeException(std::move(errorMessage));
+        printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
+        throw InitializeException(std::move(errorMessage));
+    }
 }
 
 Transport::~Transport()
@@ -145,5 +153,7 @@ Transport::~Transport()
         if (retcode != DDS::RETCODE_OK) {
             printf("ERROR<~%s:%s> delete_participant() error %d\n", CLASS_NAME, METHOD_NAME, retcode);
         }
+
+        m_participant = NULL;
     }
 }

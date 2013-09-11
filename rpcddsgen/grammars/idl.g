@@ -54,7 +54,7 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 	:   (   tdtg=type_dcl SEMI! {if(tdtg!=null){dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}}  // Type Declaration
 	    |   const_dcl SEMI!
 	    |   etg=except_dcl SEMI! {if(etg!=null){dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second()); ctx.addException(etg.first().getScopedname(), etg.first());}} // Exception. It is added as global exception.
-	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second()); ctx.setLvl1Annotations(itg.first());}} // Interface
+	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());}} // Interface
 	    |   mtg=module SEMI! {if(mtg!=null){dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());}} // Module
 	    |   (("abstract" | "custom")? "valuetype") => value SEMI!
 	    |   type_id_dcl SEMI!
@@ -63,7 +63,7 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 	    |   component SEMI!
 	    |   home_dcl SEMI!
 	    |   global_annotation
-	    |   lvl1_annotation
+	    |   annotation
 	    )
 	;
 
@@ -147,6 +147,8 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
  	    {
            // Create the Interface object.
            interfaceObject = new Interface(ctx.getScope(), name);
+           // Set temporarily annotations.
+           ctx.setTmpAnnotations(interfaceObject);
            if(ctx.setScopedFileToObject(interfaceObject) || ctx.isScopeLimitToAll())
            {
                interfaceTemplates = tmanager.createTemplateGroup("interface");
@@ -198,10 +200,10 @@ export returns [Pair<Export, TemplateGroup> etg = null]
 	    |   const_dcl SEMI!
 	    |   eetg=except_dcl SEMI! {if(eetg!=null){etg = new Pair<Export, TemplateGroup>(eetg.first(), eetg.second());}}  // Exception
 	    |   attr_dcl SEMI!
-	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second()); ctx.setLvl2Annotations(oetg.first());}}  // Operation
+	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}}  // Operation
 	    |   type_id_dcl SEMI!
 	    |   type_prefix_dcl SEMI!
-	    |   lvl2_annotation
+	    |   annotation
 	    )
 	;
 
@@ -249,7 +251,6 @@ value_forward_dcl
 value_box_dcl
 	:   "valuetype"^
 	    identifier
-	    type_spec
 	;
 
 value_abs_dcl
@@ -1082,6 +1083,8 @@ op_dcl returns [Pair<Operation, TemplateGroup> returnPair = null]
 	    {
            // Create the Operation object.
            operationObject = new Operation(name);
+           // Set temporarily annotations.
+           ctx.setTmpAnnotations(operationObject);
            // Set the the interface object to the TemplateGroup of the module.
            operationTemplates.setAttribute("operation", operationObject);
            operationTemplates.setAttribute("ctx", ctx);
@@ -1445,39 +1448,16 @@ global_annotation
         }
     ;
     
-lvl1_annotation
-    {
-        Pair<String, String> annotation = null;
-    }
-    :
-        annotation=annotation
-        {
-            ctx.addLvl1Annotation(annotation.first(), annotation.second());
-        }
-    ;
-    
-lvl2_annotation
-    {
-        Pair<String, String> annotation = null;
-    }
-    :
-        annotation=annotation
-        {
-            ctx.addLvl2Annotation(annotation.first(), annotation.second());
-        }
-    ;
-    
-    
-annotation returns [Pair<String, String> annotation = null;]
+annotation
     {
         String id = null, value = null;
     }
     :
         LBRACK! id=identifier LPAREN! value=literal RPAREN! RBRACK!
         {
-            annotation = new Pair<String, String>(id, value);
+            ctx.addTmpAnnotation(id, value);
         }
-    ;
+    ;    
 
 /* literals */
 integer_literal returns [String literal = LT(1).getText()]

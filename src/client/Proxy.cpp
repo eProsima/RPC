@@ -43,6 +43,8 @@ Proxy::Proxy(ProxyTransport *transport, eprosima::rpcdds::protocol::Protocol *pr
         //else
         //    errorMessage = "create asynchronous thread";
     }
+    else
+        errorMessage = "Cannot bind protocol with the transport";
 
     printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
     throw InitializeException(std::move(errorMessage));

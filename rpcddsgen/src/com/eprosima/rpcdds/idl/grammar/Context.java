@@ -29,8 +29,7 @@ public class Context
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
         m_interfaces = new HashMap<String, Interface>();
         m_globalAnnotations = new HashMap<String, String>();
-        m_lvl1Annotations = new HashMap<String, String>();
-        m_lvl2Annotations = new HashMap<String, String>();
+        m_tmpAnnotations = new HashMap<String, String>();
         // The scope file has to be initialized because could occur the preprocessor
         // is not called (using -ppDisable).
         m_scopeFile = file;
@@ -379,14 +378,14 @@ public class Context
     }
     
     /*!
-     * @brief This function add a temporarily annotation in level 1.
+     * @brief This function add a temporarily annotation.
      * This annotation will be linked with a future object.
      * @param id Identifier of the annotation.
      * @param value Value of the annotation.
      */
-    public void addLvl1Annotation(String id, String value)
+    public void addTmpAnnotation(String id, String value)
     {
-    	String oldValue = m_lvl1Annotations.put(id, value);
+    	String oldValue = m_tmpAnnotations.put(id, value);
     	
     	// TODO Lanzar una excepción.
     	if(oldValue != null)
@@ -394,38 +393,13 @@ public class Context
     }
     
     /*!
-     * @brief This function add a temporarily annotation in level 2.
-     * This annotation will be linked with a future object.
-     * @param id Identifier of the annotation.
-     * @param value Value of the annotation.
-     */
-    public void addLvl2Annotation(String id, String value)
-    {
-        String oldValue = m_lvl2Annotations.put(id, value);
-        
-        // TODO Lanzar una excepción.
-        if(oldValue != null)
-            System.out.println("Annotation " + id + " was redefined");
-    }
-    
-    /*!
-     * @brief This function links the temporarily annotations on level 1 with an object.
+     * @brief This function links the temporarily annotations with an object.
      * @param notebook The object where the temporarily annotations will be stored.
      */
-    public void setLvl1Annotations(Notebook notebook)
+    public void setTmpAnnotations(Notebook notebook)
     {
-        notebook.addAnnotations(m_lvl1Annotations);
-        m_lvl1Annotations.clear();
-    }
-    
-    /*!
-     * @brief This function links the temporarily annotations on level 2 with an object.
-     * @param notebook The object where the temporarily annotations will be stored.
-     */
-    public void setLvl2Annotations(Notebook notebook)
-    {
-        notebook.addAnnotations(m_lvl2Annotations);
-        m_lvl2Annotations.clear();
+        notebook.addAnnotations(m_tmpAnnotations);
+        m_tmpAnnotations.clear();
     }
     
     public boolean isScopeLimitToAll()
@@ -459,10 +433,8 @@ public class Context
     private ArrayList<String> m_directIncludeDependencies = null;
     //! Map that contains all global annotations in the IDL file.
     private HashMap<String, String> m_globalAnnotations = null;
-    //! Map that contains temporarily the annotations in level 1 before to be linked with an element.
-    private HashMap<String, String> m_lvl1Annotations = null;
-    //! Map that contains temporarily the annotations in level 2 before to be linked with an element.
-    private HashMap<String, String> m_lvl2Annotations = null;
+    //! Map that contains temporarily the annotations before to be linked with an element.
+    private HashMap<String, String> m_tmpAnnotations = null;
     private boolean m_scopeLimitToAll = false;
     
     //! Store all global definitions.
