@@ -601,6 +601,8 @@ ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition
         int sampleCount = 0;
         DDS::SampleInfoSeq infoSeq;
 
+        infoSeq.ensure_length(1, 1);
+
         DDS::ReturnCode_t retCode = DDS_DataReader_read_or_take_w_condition_untypedI(
                 m_reader->get_c_datareaderI(), &loaned, &sampleArray, &sampleCount,
                 &infoSeq, 1, 1, BOOLEAN_TRUE, reply, m_dataSize, 1,
@@ -618,6 +620,8 @@ ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition
                         DDS_DataReader_return_loan_untypedI(m_reader->get_c_datareaderI(),
                                 sampleArray, sampleCount, &infoSeq);
                     }
+
+                    returnedValue = OPERATION_SUCCESSFUL;
                 }
             }
 		    else
