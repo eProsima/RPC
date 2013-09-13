@@ -41,6 +41,16 @@ public abstract class Param
         return m_parent;
     }
     
+    ////////// RESTful block //////////
+    
+    public boolean getBodyParam ()
+    {
+    	String bodyParam = ((Operation)getParent()).getBody();   	
+        return getName().equals(bodyParam);
+    }
+    
+    /////// End of RESTful block //////
+    
     private String m_name = null;
     private TypeCode m_typecode = null;
     private Object m_parent = null;

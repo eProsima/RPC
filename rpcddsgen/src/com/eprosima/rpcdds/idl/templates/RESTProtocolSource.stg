@@ -1,0 +1,294 @@
+group RESTProtocolSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "RESTProtocol.cxx"], description=["This source file contains the definition of the protocol used to create REST messages."])$
+
+#include <string>
+#include "$ctx.filename$RESTProtocol.h"
+#include "transports/Transport.h"
+#include "exceptions/Exceptions.h"
+#include "transports/TCPProxyTransport.h"
+#include "protocols/rest/HTTPSerializer.h"
+
+using namespace std;
+using namespace eProsima::httpser;
+using namespace eprosima::rpcdds;
+using namespace eprosima::rpcdds::protocol::rest;
+using namespace eprosima::rpcdds::transport;
+using namespace eprosima::rpcdds::exception;
+using namespace eprosima::rpcdds::util::rest;
+
+$ctx.filename$Protocol::$ctx.filename$Protocol(){
+    initializePathTree();
+}
+
+void $ctx.filename$Protocol::initializePathTree(){
+    ResourceMethodResolver resourceMethodResolver;
+    pathTree = new PathTree();
+    $ctx.interfaces : {interface|pathTree->addPath("$interface.path$");
+    
+    $interface.operations : {operation| resourceMethodResolver }$
+    
+}$
+}
+
+bool $ctx.filename$Protocol::setTransport(Transport *transport)
+{
+    const char *requesttypeName = NULL, *replytypeName = NULL;
+    
+    if(transport != NULL)
+    {
+        if(strcmp(transport->getType(), "RAW") != 0)
+        {
+            throw IncompatibleException("protocol and transport are incompatibles");
+        }
+        
+        _setTransport(transport);
+    }
+    
+    return false;
+}
+
+$definitions; separator="\n"$
+
+// Server
+char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
+    char* httpResponse = NULL;
+    
+    return httpResponse;
+}
+>>
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<
+void $exception.name$Utils::setTypeData(const $exception.name$ &ex, $exception.name$_t &instance)
+{
+    $exception.members : { member |instance.$member.name$ = ex.$member.name$;}; separator="\n"$
+}
+
+void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.name$_t &data)
+{
+    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
+}
+
+>>
+
+operation(ctx, operation, param_list) ::= <<
+$if(operation.parent.pathHasBrackets)$
+string $ctx.filename$Protocol::expandPath_$operation.name$(string path, $first(operation.parameters).name$ $first(operation.parameters).name$)
+{
+    stringstream stream;
+    string expandedPath = "";
+    string pathSegment = "";
+    char *p = strtok(_strdup(path.c_str()), "/");
+
+    $expandPathSegment(param=first(operation.parameters))$
+
+    if(expandedPath.size() == 0)
+        expandedPath = path;
+    return expandedPath;
+}
+
+$endif$
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+{
+     stringstream stream;
+     eprosima::rpcdds::transport::ProxyTransport *proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport*>( getTransport() );
+     // XXX TODO if NULL -> error
+     
+     // Resource Base URI = $ctx.resourceBaseUri$
+     // Path = $operation.parent.path$
+     // Method = $operation.method$
+     // Body Parameter = $operation.body$
+
+     // Serialize HTTP message
+     char* httpRequestBuffer = (char*)malloc(8192);
+     memset(httpRequestBuffer, 0, 8192);
+          
+     FastBuffer fastBuffer(httpRequestBuffer, 8192);
+     HTTPSerializer* httpSerializer = new HTTPSerializer(fastBuffer);
+
+     HTTPMethod method(HTTP_$operation.method$);
+     httpSerializer->serialize(method);
+     
+     string baseURI = "$ctx.resourceBaseUri$";
+     string pathURI = "$operation.parent.path$";
+     $if(operation.parent.pathHasBrackets)$
+     pathURI = expandPath_$operation.name$(pathURI, $first(operation.parameters).name$);
+     $endif$
+     HTTPUri httpUri(baseURI, pathURI);
+     httpSerializer->serialize(httpUri);
+     
+     $if(operation.parent.pathHasBrackets)$
+        $serializeHTTPParams(params=rest(operation.parameters))$
+     $else$
+        $serializeHTTPParams(params=operation.parameters)$
+     $endif$
+     
+     string stringVersionRequest = "HTTP/1.1";
+     HTTPVersion versionRequest = HTTPVersion::HTTPVersionRequest(stringVersionRequest);
+     httpSerializer->serialize(versionRequest);
+     
+     $serializeHTTPBodyParams(params=operation.parameters)$
+
+     // HTTP connection
+     proxyTransport->connect();
+     proxyTransport->send(httpRequestBuffer);
+     char* httpResponseBuffer = proxyTransport->receive();
+
+     // XXX TODO deserialize HTTP response
+          
+     $paramRetType(operation.rettype)$ retType;
+
+     return retType;
+}
+
+>>
+
+expandPathSegment(param) ::= <<
+    $param.typecode.members : {member |
+    // Expand $member.name$
+    while (p) {
+        pathSegment = p;
+        p = strtok(NULL, "/");
+        if(pathSegment.at(0) == '{' && pathSegment.at(pathSegment.size() - 1) == '}')
+            break;
+        expandedPath += pathSegment + "/";
+    }
+    stream << $param.name$.$member.name$;
+    expandedPath += stream.str() + "/";
+    stream = stringstream();
+    }$
+>>
+
+serializeHTTPParams(params) ::= <<
+$if(params)$
+HTTPParameters httpParameters;
+string paramName;
+string paramValue;
+HTTPParam httpParam;
+$endif$
+
+$params : {param |
+$if(!param.bodyParam)$
+paramName = "$param.name$";
+stream << $param.name$;
+paramValue = stream.str();
+stream = stringstream();
+httpParam = HTTPParam(paramName, paramValue);
+httpParameters.addParam(httpParam);
+
+$endif$
+}$       
+$if(params)$httpSerializer->serialize(httpParameters, httpParameters.get_size());
+$endif$
+>>
+
+serializeHTTPBodyParams(params) ::= <<
+$params : {param | $if(param.bodyParam)$// TODO XXX Serializing body parameter $param.name$
+string data = "";
+// XXX TODO Fill data
+switch($param.name$._d) {
+$param.typecode.members : {member | case $first(member.labels)$:
+data = $param.name$._u.$member.name$;
+break;
+}$}
+stream << data.length();
+HTTPData httpData;
+httpData = HTTPData(stream.str(), std::string("application/xml"), data); // XXX TODO MEDIATYPE
+stream = stringstream();
+httpSerializer->serialize(httpData);
+$endif$}$  
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+
+/*!
+ * Extra string templates. Utils.
+ */
+createDataHelper(param, dataname, isRequest) ::= <<
+$if(param.typecode.array)$
+$memberComplexExtract(member=param, dataname=dataname)$
+$else$
+$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;
+$endif$
+>>
+
+extractDataHelper(param, dataname, isReply) ::= <<
+$if(isReply)$
+$if(param.input)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.string)$
+if($param.name$ != NULL)
+    free($param.name$);
+$endif$
+$else$
+$varComplexDel(variable=param)$
+$endif$
+$endif$
+$if(param.typecode.array)$
+$memberComplexCopy(member=param, dataname=dataname)$
+$else$
+$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$endif$
+$else$
+$if(param.output)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.string)$
+$param.name$ = strdup($dataname$.$param.name$);
+$else$
+$param.name$ = $dataname$.$param.name$;
+$endif$
+$else$
+$memberComplexCopy(member=param, dataname=dataname)$
+$endif$
+$else$
+$if(param.typecode.array)$
+$memberComplexCopy(member=param, dataname=dataname)$
+$else$
+$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$endif$
+$endif$
+$endif$
+>>
+
+createExceptionUtil(operation, exception) ::= <<
+void $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData(const $exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &instance)
+{
+    $exception.members : { member |instance.$member.name$ = ex.$member.name$;}; separator="\n"$
+}
+
+void $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData($exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &data)
+{
+    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
+}
+
+
+>>

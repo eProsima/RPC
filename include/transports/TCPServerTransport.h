@@ -42,7 +42,7 @@ public:
 
 	void stop();
 
-	const char* getType() {return "raw";}
+	const char* getType() {return "RAW";}
 
 };
 

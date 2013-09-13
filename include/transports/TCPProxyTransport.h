@@ -28,7 +28,7 @@ public:
 
 	TCPProxyTransport(const std::string& serverAddress);
 
-	const char* getType() {return "raw";}
+	const char* getType() {return "RAW";}
 
 	bool connect();
 

@@ -1,0 +1,97 @@
+group RESTProtocolHeader;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header file contains the declaration of the protocol used to create REST messages."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
+#define _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
+
+#include "$ctx.filename$Protocol.h"
+#include "utils/Messages.h"
+#include "utils/rest/PathTree.h"
+#include <string>
+$ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
+$if(ctx.projectNeedTypes)$
+#include "$ctx.filename$T.h"
+
+$endif$
+using namespace std;
+namespace eprosima
+{
+    namespace rpcdds
+    {
+        namespace protocol
+        {
+            namespace rest
+            {
+                class $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
+                {
+                    public:
+                    
+                        $ctx.filename$Protocol();
+                        
+                        virtual ~$ctx.filename$Protocol();
+                    
+                        bool setTransport(eprosima::rpcdds::transport::Transport *transport);
+                        
+                        $definitions; separator="\n"$
+                        
+                        // Server
+                        char* proccessRequest(char* httpRequest);
+                        
+                    private:
+                        eprosima::rpcdds::util::rest::PathTree* pathTree;
+                        
+                        void initializePathTree();
+                    
+                };
+            } // namespace rest
+        } // namespace protocol
+    } // namespace rpcdds
+} // namespace eprosima
+
+#endif // _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
+>>
+
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$if(operation.parent.pathHasBrackets)$
+string expandPath_$operation.name$(string path, $first(operation.parameters).name$ $first(operation.parameters).name$);
+
+$endif$
+$paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

@@ -11,7 +11,7 @@ namespace eProsima
 	namespace httpser
 	{
 
-		enum Method {GET, PUT, POST, DELETE};
+		enum Method {HTTP_GET, HTTP_PUT, HTTP_POST, HTTP_DELETE};
 
 		class HTTPMethod
 		{

@@ -416,6 +416,14 @@ public class Context
     {
     	return m_currentincludeline;
     }
+    
+    ////////// RESTful block //////////
+    
+    public String getResourceBaseUri() {
+    	return m_globalAnnotations.get("RESOURCES_BASE_URI");
+    }
+    
+    /////// End of RESTful block //////
 
     private String m_filename = "";
     private String m_file = "";
@@ -451,4 +459,5 @@ public class Context
     private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
     
     private int m_currentincludeline = 0;
+   
 }

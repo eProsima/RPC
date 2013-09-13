@@ -192,6 +192,18 @@ public class Operation implements Export, Notebook
     {
         return m_annotations;
     }
+    
+    ////////// RESTful block //////////
+    
+    public String getMethod() {
+    	return getAnnotations().get("METHOD");
+    }
+    
+    public String getBody() {
+    	return getAnnotations().get("BODY");
+    }
+        
+    /////// End of RESTful block //////
 
     private String m_name = null;
     private Object m_parent = null;

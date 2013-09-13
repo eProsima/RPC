@@ -14,16 +14,16 @@ namespace eProsima
 		{
 			switch(method)
 			{
-			case GET:
+			case HTTP_GET:
 				data_ = "GET ";
 				break;
-			case PUT:
+			case HTTP_PUT:
 				data_ = "PUT ";
 				break;
-			case POST:
+			case HTTP_POST:
 				data_ = "POST ";
 				break;
-			case DELETE:
+			case HTTP_DELETE:
 				data_ = "DELETE ";
 				break;
 			}

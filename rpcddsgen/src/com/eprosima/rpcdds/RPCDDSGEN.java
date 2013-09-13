@@ -62,6 +62,7 @@ public class RPCDDSGEN
     private boolean m_ppDisable = false;
     private boolean m_replace = false;
     private String m_ppPath = null;
+    private String m_protocol = "dds"; // Default protocol -> DDS
     
     private final String m_defaultOutputDir = "." + File.separator;
     private String m_outputDir = m_defaultOutputDir;
@@ -92,6 +93,12 @@ public class RPCDDSGEN
         String arg;
         
         m_idlFiles = new Vector<String>();
+        
+        // Load available protocols
+        ArrayList<String> availableProtocols = new ArrayList<String>();
+        availableProtocols.add("dds");
+        availableProtocols.add("rest");
+        //
 
         while(count < args.length)
         {
@@ -186,6 +193,24 @@ public class RPCDDSGEN
                 else
                     throw new BadArgumentException("No URL after -t argument");
             }
+            else if(arg.equalsIgnoreCase("-protocol")) {
+                if(count < args.length)
+                {
+                    m_protocol = args[count++];
+                    
+                    boolean available = false;
+                    for(String protocol: availableProtocols) {
+                    	if(m_protocol.equalsIgnoreCase(protocol)) {
+                    		available = true;
+                    		break;
+                    	}
+                    }
+                    if(!available)
+                        throw new BadArgumentException("Unknown protocol " + m_protocol);
+                }
+                else
+                    throw new BadArgumentException("No protocol after -protocol argument");
+            }
             else if(arg.equals("-version"))
             {
                 showVersion();
@@ -217,7 +242,7 @@ public class RPCDDSGEN
             else if(arg.equals("--client"))
             {
                 m_clientcode = false;
-            }
+            }           
             else
             {
                 throw new BadArgumentException("Unknown argument " + arg);
@@ -380,7 +405,7 @@ public class RPCDDSGEN
 			throw new IDLConverterException(ex.getMessage() + ": " + ex.getCause().getMessage());
 		}
 		
-		IDLConverter idlConverter = new IDLConverter(application, wadlFilename, m_tempDir); 
+		IDLConverter idlConverter = new IDLConverter(application, wadlFilename, m_outputDir); 
 
     	return idlConverter.toIDL();
     }
@@ -408,8 +433,26 @@ public class RPCDDSGEN
         {
             try
             {
+            	
+            	// TODO XXX Tests Ruben -> REST 
+                if((project = parseIDLtoREST(idlFilename)) != null) {
+                    String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+                    
+                	// Parse the user IDL file that was generated using external tool.
+                    // Note:The file are put in project info inside parseIDL function.
+                    ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+                }
+                	
+            	if(project != null)
+            		return project;            	
+            	if(project == null)
+            		return project;
+            	// END TODO XXX
+            	
+            	
                 // Parsing and generating code with templates.
-                if((project = parseIDL(idlFilename)) != null)
+                if((project = parseIDLtoDDS(idlFilename)) != null)
                 {
                     String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
                     
@@ -448,7 +491,135 @@ public class RPCDDSGEN
         return returnedValue ? project : null;
     }
     
-    private Project parseIDL(String idlFilename)
+    private Project parseIDLtoREST(String idlFilename) {
+    	
+        boolean returnedValue = false;
+        String idlParseFileName = idlFilename;
+        Project project = null;
+    	
+        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+        
+        if(!m_ppDisable)
+        {
+        	idlParseFileName = callPreprocessor(idlFilename);
+        }        
+        
+        if(idlParseFileName != null)
+        {
+	        // Create initial context.
+	        Context ctx = new Context(onlyFileName, idlFilename);
+	        
+	        // Create template manager
+	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
+	       
+	        // Load template to generate the supported IDL to RTI.
+	        tmanager.addGroup("rtiIDL");
+	        // Load template to generate the DDS protocol.
+	        tmanager.addGroup("ProtocolHeader");
+	        tmanager.addGroup("RESTProtocolHeader");
+	        tmanager.addGroup("RESTProtocolSource");
+	       
+	        
+	        
+	        // Create main template for all templates.
+	        TemplateGroup maintemplates = tmanager.createTemplateGroup("main");
+	        maintemplates.setAttribute("ctx", ctx);	        
+	        
+	        try
+	        {
+	            InputStream input = new FileInputStream(idlParseFileName);
+	            IDLLexer lexer = new IDLLexer(input);
+	            lexer.setContext(ctx);
+	            IDLParser parser = new IDLParser(lexer);
+	            // Pass the filename without the extension.
+	            returnedValue = parser.specification(ctx, tmanager, maintemplates);
+	        }
+	        catch(FileNotFoundException ex)
+	        {
+	            System.out.println("ERROR<FileNotFoundException>: The file " + idlParseFileName + "was not found.");
+	        }
+	        catch(ParseException ex)
+	        {
+	        	System.out.println("ERROR<ParseException>: " + ex.getMessage());
+	        }
+	        catch(Exception ex)
+	        {
+	            System.out.println("ERROR<Exception>: " + ex.getMessage());
+	        }
+	        
+	        if(returnedValue)
+	        {
+	        	// Check there were interfaces in the processed IDL file.
+		        Interface ifc = ctx.getFirstInterface();
+		        // Check if the project needs to generate Types.
+		        boolean needsTypes = ctx.isProjectNeedTypes();
+		        
+		        if(ifc != null)
+		        {
+		        	// If there are interfaces, the project dependes in MessageHeader.idl project.
+		        	ctx.addDependency(m_messageHeaderFileLocation);
+		        }
+	        	
+	        	// Create information of project for solution.
+	        	project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
+	        	
+	        	if(ifc == null)
+			    {   // Set project as only one library.
+			        project.setUnique(true);
+			    }
+	        	
+	        	// Set files generated by rtiddsgen
+	        	// TODO Set the opendds files.
+	        	project.addCommonIncludeFile(onlyFileName + ".h");
+	        	project.addCommonSrcFile(onlyFileName + ".cxx");
+	        	project.addCommonIncludeFile(onlyFileName + "Plugin.h");
+	        	project.addCommonSrcFile(onlyFileName + "Plugin.cxx");
+	        	project.addCommonIncludeFile(onlyFileName + "Support.h");
+	        	project.addCommonSrcFile(onlyFileName + "Support.cxx");
+	        	
+	        	// TODO OpenDDS not
+	        	// Generate the supported IDL to RTI.
+	        	returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true);
+	        	
+		        if(returnedValue && ifc != null)
+		        {
+		            System.out.println("Generating Utils Code...");
+		            	
+		            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                    {
+			            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RESTProtocol.h", maintemplates.getTemplate("RESTProtocolHeader"), m_replace))
+	                    {
+				            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "RESTProtocol.cxx", maintemplates.getTemplate("RESTProtocolSource"), m_replace))
+		                    {
+				            	project.addCommonIncludeFile(onlyFileName + "Protocol.h");
+			            		project.addCommonIncludeFile(onlyFileName + "RESTProtocol.h");
+			            		project.addCommonIncludeFile(onlyFileName + "RESTProtocol.cxx");
+		                    }
+	                    }
+                    }         
+		        }
+		        
+
+	        }
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+        }
+        
+		return project;
+	}
+
+	private Project parseIDLtoDDS(String idlFilename)
     {
         boolean returnedValue = false;
         String idlParseFileName = idlFilename;

@@ -188,6 +188,21 @@ public class Interface extends ExportContainer implements Definition, Notebook
     {
         return m_annotations;
     }
+    
+    ////////// RESTful block //////////
+    
+    public String getPath() {
+    	return getAnnotations().get("PATH");
+    }
+    
+    public boolean getPathHasBrackets() {
+    	if(getPath().contains("{") && getPath().contains("}"))
+    		return true;
+    	
+    	return false;
+    }
+    
+    /////// End of RESTful block //////
 
     private String m_name = null;
     private String m_scope = null;

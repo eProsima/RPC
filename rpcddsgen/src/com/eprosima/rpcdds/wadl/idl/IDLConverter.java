@@ -354,7 +354,7 @@ public class IDLConverter {
 						+ " is not defined.");
 			}
 
-			idlParameters.add(getIDLType(type) + " " + embeddedParameter);
+			idlParameters.add(getIDLType(type) + " " + embeddedParameter + "_");
 		}
 
 		if (idlParameters.size() > 0) {
