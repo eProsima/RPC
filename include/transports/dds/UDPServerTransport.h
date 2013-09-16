@@ -10,7 +10,7 @@
 #define _TRANSPORTS_DDS_UDPSERVERTRANSPORT_H_
 
 #include "rpcdds_dll.h"
-#include "transports/dds/Transport.h"
+#include "transports/dds/ServerTransport.h"
 
 namespace eprosima
 {
@@ -25,7 +25,7 @@ namespace eprosima
                  * This transport only could be used by a server.
                  * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI UDPServerTransport : public Transport
+                class RPCDDS_DllAPI UDPServerTransport : public ServerTransport
                 {
                     public:
 
@@ -33,7 +33,7 @@ namespace eprosima
                          * @brief Default constructor for servers.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        UDPServerTransport(int domainId = 0);
+                        UDPServerTransport(std::string serviceName, int domainId = 0);
 
                         //! @brief Default destructor.
                         virtual ~UDPServerTransport();

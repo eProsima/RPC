@@ -20,7 +20,7 @@ static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::UDPServ
 
 using namespace eprosima::rpcdds::transport::dds;
 
-UDPServerTransport::UDPServerTransport(int domainId) : Transport(domainId)
+UDPServerTransport::UDPServerTransport(std::string serviceName, int domainId) : ServerTransport(serviceName, domainId)
 {
 }
 

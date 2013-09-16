@@ -13,34 +13,34 @@
 #include "transports/Transport.h"
 
 namespace eprosima {
-namespace rpcdds {
-namespace transport {
-/*!
- * @brief This interface is the base of all classes that implement a transport
- *        that could be used by a server.
- * @ingroup TRANSPORTMODULE
- */
-class RPCDDS_DllAPI ServerTransport : public Transport
-{
-public:
+    namespace rpcdds {
+        namespace transport {
+            /*!
+             * @brief This interface is the base of all classes that implement a transport
+             *        that could be used by a server.
+             * @ingroup TRANSPORTMODULE
+             */
+            class RPCDDS_DllAPI ServerTransport : public Transport
+            {
+                public:
 
-	//! \brief Default constructor.
-	ServerTransport() {}
+                    //! \brief Default constructor.
+                    ServerTransport() {}
 
-	//! \brief Default destructor.
-	virtual ~ServerTransport() {}
+                    //! \brief Default destructor.
+                    virtual ~ServerTransport() {}
 
-	/*!
-	 * @brief This function returns the type of the transport.
-	 *        This function has to be implemented by the child classes.
-	 */
-	virtual const char* getType() const = 0;
+                    /*!
+                     * @brief This function returns the type of the transport.
+                     *        This function has to be implemented by the child classes.
+                     */
+                    virtual const char* getType() const = 0;
 
-	virtual void run() = 0;
-	virtual void stop() = 0;
-};
-}
- // namespace transport
-}// namespace rpcdds
+                    virtual void run() = 0;
+                    virtual void stop() = 0;
+            };
+        }
+        // namespace transport
+    }// namespace rpcdds
 } // namespace eprosima
 #endif // _TRANSPORTS_SERVERTRANSPORT_H_

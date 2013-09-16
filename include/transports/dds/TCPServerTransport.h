@@ -10,7 +10,7 @@
 #define _TRANSPORTS_DDS_TCPSERVERTRANSPORT_H_
 
 #include "rpcdds_dll.h"
-#include "transports/dds/Transport.h"
+#include "transports/dds/ServerTransport.h"
 
 namespace eprosima
 {
@@ -25,7 +25,7 @@ namespace eprosima
                  * This transport only could be used by a server.
                  * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI TCPServerTransport : public Transport
+                class RPCDDS_DllAPI TCPServerTransport : public ServerTransport
                 {
                     public:
 
@@ -38,7 +38,7 @@ namespace eprosima
                          *        between the public port and this port.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        TCPServerTransport(const char *public_address, const char *server_bind_port, int domainId);
+                        TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId);
 
 
                         //! @brief Default destructor.

@@ -63,11 +63,13 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/transports/TCPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/Transport.cpp \
 		     $(BASEDIR)/src/transports/dds/ProxyTransport.cpp \
+		     $(BASEDIR)/src/transports/dds/ServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSTCPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSTCPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/components/ProxyProcedureEndpoint.cpp \
+		     $(BASEDIR)/src/transports/dds/components/ServerProcedureEndpoint.cpp \
 		     $(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
 		     $(BASEDIR)/src/strategies/SingleThreadStrategy.cpp \
 		     $(BASEDIR)/src/strategies/ThreadPerRequestStrategy.cpp \

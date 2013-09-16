@@ -11,8 +11,6 @@
 #include "rpcdds_dll.h"
 #include "utils/dds/Middleware.h"
 
-#include <map>
-
 namespace eprosima
 {
     namespace rpcdds

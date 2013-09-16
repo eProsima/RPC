@@ -5,13 +5,13 @@
  * RPCDDS_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#ifndef _TRANSPORTS_DDS_PROXYTRANSPORT_H_
-#define _TRANSPORTS_DDS_PROXYTRANSPORT_H_
+#ifndef _TRANSPORTS_DDS_SERVERTRANSPORT_H_
+#define _TRANSPORTS_DDS_SERVERTRANSPORT_H_
 
 #include "rpcdds_dll.h"
 #include "transports/dds/Transport.h"
-#include "transports/ProxyTransport.h"
-#include "transports/dds/components/ProxyProcedureEndpoint.h"
+#include "transports/ServerTransport.h"
+#include "transports/dds/components/ServerProcedureEndpoint.h"
 #include "utils/dds/Middleware.h"
 
 #include <string>
@@ -25,19 +25,14 @@ namespace eprosima
         {
             namespace dds
             {
-                /*!
-                 * @brief This class is the base of all classes that implement a transport
-                 * using DDS. This transport could be used by the proxy.
-                 * @ingroup TRANSPORTMODULE
-                 */
-                class RPCDDS_DllAPI ProxyTransport : public eprosima::rpcdds::transport::ProxyTransport, public Transport
+                class RPCDDS_DllAPI ServerTransport : public eprosima::rpcdds::transport::ServerTransport, public Transport
                 {
                     public:
 
                         /*!
                          * @brief Default destructor.
                          */
-                        virtual ~ProxyTransport();
+                        virtual ~ServerTransport();
 
                         /*!
                          * @brief This function returns the type of the transport.
@@ -58,13 +53,15 @@ namespace eprosima
                         int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Copy_data copy_data, int dataSize);
 
-                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
-
                         /*!
                          * 2brief This function returns the behaviour of the transport.
                          * @return The behaviour of the transport.
                          */
                         TransportBehaviour getBehaviour();
+
+                        virtual void run();
+
+                        virtual void stop();
 
                     protected:
 
@@ -74,29 +71,22 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        ProxyTransport(std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
+                        ServerTransport(std::string &serviceName, int domainId = 0);
 
                     private:
-
-                        //TODO TEMPORAL
-                        bool connect(){return true;}
-                        bool send(const char* buffer){return true;}
-                        char* receive(){return NULL;}
 
                         /*!
                          * @brief Map containing the proxy procedure endpoints that were created to communicate.
                          * The key of the map is the pointer where the name is allocated instead the name.
                          * Then always the same string in memory has to be used and not a copy.
                          */
-                        std::map<const char*, ProxyProcedureEndpoint*> m_procedureEndpoints;
+                        std::map<const char*, ServerProcedureEndpoint*> m_procedureEndpoints;
 
-                        std::string m_remoteServiceName;
-
-                        long m_timeout;
+                        std::string m_serviceName;
                 };
             } // namespace dds
         } // namespace transport
     } // namespace rpcdds
 } // namespace eprosima
 
-#endif // _TRANSPORTS_DDS_PROXYTRANSPORT_H_
+#endif // _TRANSPORTS_DDS_SERVERTRANSPORT_H_
