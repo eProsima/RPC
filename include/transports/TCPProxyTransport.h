@@ -9,7 +9,9 @@
 #include "boost/asio.hpp"
 #include "boost/array.hpp"
 
-namespace REST {
+namespace eprosima {
+namespace rpcdds {
+namespace transport {
 class RPCDDS_DllAPI TCPProxyTransport:
 public eprosima::rpcdds::transport::ProxyTransport
 {
@@ -28,7 +30,7 @@ public:
 
 	TCPProxyTransport(const std::string& serverAddress);
 
-	const char* getType() {return "RAW";}
+	virtual const char* getType() const {return "RAW";}
 
 	bool connect();
 
@@ -36,6 +38,8 @@ public:
 
 	char* receive();
 };
-}
+}// namespace transport
+}// namespace rpcdds
+} // namespace eprosima
 
 #endif

@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 namespace eProsima
 {
 	
@@ -88,6 +90,9 @@ namespace eProsima
 				data_ = data;
 			}
 
+			string getName() { return ""; } // TODO
+			string getValue() { return ""; } // TODO
+
 		};
 
 		class HTTPParameters
@@ -127,6 +132,14 @@ namespace eProsima
 			}
 
 			void addParam(HTTPParam &param);
+
+			bool containsParam(string paramName) {
+				for(vector<HTTPParam>::iterator it = params_.begin(); it != params_.end(); ++it) {
+					HTTPParam param = *it;
+
+				}
+				return false;
+			}
 
 		};
 
@@ -188,6 +201,9 @@ namespace eProsima
 				data_ = data;
 			}
 
+			string getData() { return ""; }
+			string getMediaType() { return ""; }
+
 		};
 
 		class HTTPResponseCode
@@ -213,6 +229,8 @@ namespace eProsima
 			{
 				data_ = data;
 			}
+
+			int getStatus() { return 0; }
 
 		};
 

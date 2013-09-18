@@ -424,6 +424,67 @@ public class IDLConverter {
 		writeln("};");
 		writeln();
 	}
+	
+	private void toIDLStruct(ArrayList<Response> responses, String responseType) throws IDLConverterException {
+		
+		boolean hasEmptyReturnType = false;
+		boolean hasXMLMediaType = false;
+		boolean hasJSONMediaType = false;
+		for (Response response : responses) {			
+			if(response.getRepresentations().size() == 0) {
+				hasEmptyReturnType = true;
+				continue;
+			}
+			
+			for(Representation representation: response.getRepresentations()) {
+				if(representation.getMediaType().contains("xml"))
+					hasXMLMediaType = true;
+				else if(representation.getMediaType().contains("json"))
+					hasJSONMediaType = true;
+				else
+					throw new IDLConverterException("Mediatype not supported: '" + representation.getMediaType() + "'");
+			}
+		}
+		
+		if(hasEmptyReturnType) {
+			writeln("struct Empty" + responseType);
+			writeln("{");
+			++numTabs;
+			
+			writeln("long status;");
+			
+			--numTabs;
+			writeln("};");
+			writeln();
+		}
+		
+		if(hasXMLMediaType) {
+			writeln("struct XML" + responseType);
+			writeln("{");
+			++numTabs;
+			
+			writeln("long status;");
+			writeln("string xmlRepresentation;");
+			
+			--numTabs;
+			writeln("};");
+			writeln();
+		}
+		
+		if(hasJSONMediaType) {
+			writeln("struct JSON" + responseType);
+			writeln("{");
+			++numTabs;
+			
+			writeln("long status;");
+			writeln("string jsonRepresentation;");
+			
+			--numTabs;
+			writeln("};");
+			writeln();
+		}
+		
+	}
 
 	/*
 	 * !
@@ -454,7 +515,7 @@ public class IDLConverter {
 	 * 
 	 * @responseType Type for the union computed using getResponseType method
 	 */
-	private void toIDL(ArrayList<Response> responses, String responseType) {
+	private void toIDL(ArrayList<Response> responses, String responseType) throws IDLConverterException {
 		if (responses.size() == 0)
 			return;
 
@@ -462,10 +523,44 @@ public class IDLConverter {
 		writeln("{");
 		++numTabs;
 
+		boolean hasEmptyReturnType = false;
+		boolean hasXMLMediaType = false;
+		boolean hasJSONMediaType = false;
+		for (Response response : responses) {			
+			if(response.getRepresentations().size() == 0) {
+				hasEmptyReturnType = true;
+				continue;
+			}
+			
+			for(Representation representation: response.getRepresentations()) {
+				if(representation.getMediaType().contains("xml"))
+					hasXMLMediaType = true;
+				else if(representation.getMediaType().contains("json"))
+					hasJSONMediaType = true;
+				else
+					throw new IDLConverterException("Mediatype not supported: '" + representation.getMediaType() + "'");
+			}
+		}
+		
+		if(hasEmptyReturnType) {
+			writeln("case 0:");
+			writeln("\tEmpty" + responseType + " empty"+responseType+";");
+		}
+		if(hasXMLMediaType) {
+			writeln("case 1:");
+			writeln("\tXML" + responseType + " xml"+responseType+";");
+		}
+		if(hasJSONMediaType) {
+			writeln("case 2:");
+			writeln("\tJSON" + responseType + " json"+responseType+";");			
+		}
+		
+		/*
 		int responseIndex = 0;
 		for (Response response : responses) {
 			toIDLCase(response, responseType, ++responseIndex);
 		}
+		*/
 
 		--numTabs;
 		writeln("};");
@@ -479,12 +574,16 @@ public class IDLConverter {
 	 * 
 	 * @param resource Resource to translate
 	 */
-	private void toIDL(Method method) {
+	private void toIDL(Method method) throws IDLConverterException {
 
+		/*
 		int responseIndex = 0;
 		for (Response response : method.getResponses()) {
 			toIDLStruct(response, getResponseType(method), ++responseIndex);
 		}
+		*/
+		toIDLStruct(method.getResponses(), getResponseType(method));
+		
 		toIDL(method.getResponses(), getResponseType(method));
 
 		toIDLRequestUnion(method);
@@ -547,7 +646,7 @@ public class IDLConverter {
 	 * We translate this data as a Union. This method generates this union.
 	 * @param method
 	 */
-	private void toIDLRequestUnion(Method method) {
+	private void toIDLRequestUnion(Method method) throws IDLConverterException {
 		if (method == null || method.getRequest() == null
 				|| method.getRequest().getRepresentations().size() == 0)
 			return;
@@ -556,8 +655,30 @@ public class IDLConverter {
 		writeln("{");
 		++numTabs;
 
-		// TODO check type
+		// Check mediaTypes
+		boolean hasXMLMediaType = false;
+		boolean hasJSONMediaType = false;
+		for (Representation representation : method.getRequest()
+				.getRepresentations()) {
+			if(representation.getMediaType().contains("xml"))
+				hasXMLMediaType = true;
+			else if(representation.getMediaType().contains("json"))
+				hasJSONMediaType = true;
+			else
+				throw new IDLConverterException("Mediatype not supported: '" + representation.getMediaType() + "'");
+		}
+		
+		if(hasXMLMediaType) {
+			writeln("case 1:");
+			writeln("\tstring xmlRepresentation;");			
+		}
+		
+		if(hasJSONMediaType) {
+			writeln("case 2:");
+			writeln("\tstring jsonRepresentation;");			
+		}
 
+		/*
 		int representationIndex = 0;
 		for (Representation representation : method.getRequest()
 				.getRepresentations()) {
@@ -565,6 +686,7 @@ public class IDLConverter {
 			writeln("\tstring "
 					+ getCompatibleName(representation.getElement()) + ";");
 		}
+		*/
 
 		--numTabs;
 		writeln("};");

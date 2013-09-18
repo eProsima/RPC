@@ -1,6 +1,8 @@
 #include "transports/TCPProxyTransport.h"
 
-namespace REST {
+namespace eprosima {
+namespace rpcdds {
+namespace transport {
 TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress) {
 	io_service_ = new boost::asio::io_service();
 	resolver_ = new boost::asio::ip::tcp::resolver(*io_service_);
@@ -61,5 +63,6 @@ char* TCPProxyTransport::receive() {
 	return buffer_;
 	//return NULL;
 }
-
-}
+}// namespace transport
+}// namespace rpcdds
+} // namespace eprosima

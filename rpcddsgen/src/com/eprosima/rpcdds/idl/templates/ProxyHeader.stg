@@ -10,6 +10,7 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 #include "exceptions/SystemException.h"
 #include "exceptions/UserException.h"
 #include "utils/dds/Middleware.h"
+#include "$ctx.filename$.h"
 
 namespace eprosima
 {

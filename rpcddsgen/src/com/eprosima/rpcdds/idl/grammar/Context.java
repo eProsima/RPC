@@ -10,7 +10,10 @@ import java.util.Scanner;
 import com.eprosima.rpcdds.tree.Definition;
 import com.eprosima.rpcdds.tree.Interface;
 import com.eprosima.rpcdds.tree.Notebook;
+import com.eprosima.rpcdds.tree.Operation;
 import com.eprosima.rpcdds.tree.ScopedObject;
+import com.eprosima.rpcdds.typecode.Member;
+import com.eprosima.rpcdds.typecode.StructTypeCode;
 import com.eprosima.rpcdds.typecode.TypeCode;
 import com.eprosima.rpcdds.util.Utils;
 
@@ -421,6 +424,37 @@ public class Context
     
     public String getResourceBaseUri() {
     	return m_globalAnnotations.get("RESOURCES_BASE_URI");
+    }
+    
+    public String getDeserializeCode() {    	
+    	PathTree pathTree = new PathTree();
+    	for(Interface iface: getInterfaces()) {
+    		String path = iface.getPath();
+    		
+    		pathTree.addInterfaceName(path, iface.getName());
+   			for(Operation operation: iface.getOperations()) {
+   				System.out.println("Adding " + operation.getName());
+   	   			pathTree.addMethod(operation);
+    		}
+
+    		if(iface.getPathHasBrackets()) {
+    			// Path has brackets -> embedded parameters
+    			int pos = iface.getName().indexOf("Resource");
+    			String structName = iface.getName().substring(0, pos);
+    			if(getTypeCode(structName) instanceof StructTypeCode) {
+    				StructTypeCode struct = (StructTypeCode)getTypeCode(structName);
+    				for(Member member: struct.getMembers()) {
+    					String type = member.getTypecode().getTypename();
+    					String name = "{" + member.getName().substring(0, member.getName().length() - 1) + "}";
+    					pos = path.indexOf(name);
+    					String variablePath = path.substring(0, pos + name.length());   
+    					pathTree.setVariableType(variablePath, type);
+    				}
+    			}
+    		}
+    	}    
+    	    	
+    	return pathTree.getIterationCode();
     }
     
     /////// End of RESTful block //////

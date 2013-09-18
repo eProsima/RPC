@@ -8,7 +8,7 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header fil
 
 #include "$ctx.filename$Protocol.h"
 #include "utils/Messages.h"
-#include "utils/rest/PathTree.h"
+#include "protocols/rest/HTTPSerializer.h"
 #include <string>
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
@@ -16,6 +16,7 @@ $if(ctx.projectNeedTypes)$
 
 $endif$
 using namespace std;
+using namespace eProsima::httpser;
 namespace eprosima
 {
     namespace rpcdds
@@ -31,7 +32,7 @@ namespace eprosima
                         $ctx.filename$Protocol();
                         
                         virtual ~$ctx.filename$Protocol();
-                    
+                        
                         bool setTransport(eprosima::rpcdds::transport::Transport *transport);
                         
                         $definitions; separator="\n"$
@@ -40,9 +41,6 @@ namespace eprosima
                         char* proccessRequest(char* httpRequest);
                         
                     private:
-                        eprosima::rpcdds::util::rest::PathTree* pathTree;
-                        
-                        void initializePathTree();
                     
                 };
             } // namespace rest
@@ -76,9 +74,14 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+char* deserialize_$operation.parent.formatedScopedname$_$operation.name$(HTTPSerializer* httpSerializer);
+
+$if(operation.parent.pathHasBrackets)$
+void deserializePath_$operation.name$(string actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$);
+$endif$
+
 $if(operation.parent.pathHasBrackets)$
 string expandPath_$operation.name$(string path, $first(operation.parameters).name$ $first(operation.parameters).name$);
-
 $endif$
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 

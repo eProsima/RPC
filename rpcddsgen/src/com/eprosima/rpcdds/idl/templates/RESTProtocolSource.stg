@@ -8,7 +8,6 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.cxx"], description=["This source f
 #include "transports/Transport.h"
 #include "exceptions/Exceptions.h"
 #include "transports/TCPProxyTransport.h"
-#include "protocols/rest/HTTPSerializer.h"
 
 using namespace std;
 using namespace eProsima::httpser;
@@ -16,21 +15,6 @@ using namespace eprosima::rpcdds;
 using namespace eprosima::rpcdds::protocol::rest;
 using namespace eprosima::rpcdds::transport;
 using namespace eprosima::rpcdds::exception;
-using namespace eprosima::rpcdds::util::rest;
-
-$ctx.filename$Protocol::$ctx.filename$Protocol(){
-    initializePathTree();
-}
-
-void $ctx.filename$Protocol::initializePathTree(){
-    ResourceMethodResolver resourceMethodResolver;
-    pathTree = new PathTree();
-    $ctx.interfaces : {interface|pathTree->addPath("$interface.path$");
-    
-    $interface.operations : {operation| resourceMethodResolver }$
-    
-}$
-}
 
 bool $ctx.filename$Protocol::setTransport(Transport *transport)
 {
@@ -54,6 +38,12 @@ $definitions; separator="\n"$
 // Server
 char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     char* httpResponse = NULL;
+    
+    char* buffer = NULL; // Buffer with the HTTP request
+    string path = "" ; // Path in the HTTP request
+    HTTPParameters httpParams;
+    HTTPSerializer* httpSerializer;
+    $ctx.deserializeCode$
     
     return httpResponse;
 }
@@ -109,6 +99,7 @@ $endif$
 $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
      stringstream stream;
+     string mediaType;
      eprosima::rpcdds::transport::ProxyTransport *proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport*>( getTransport() );
      // XXX TODO if NULL -> error
      
@@ -153,12 +144,134 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      char* httpResponseBuffer = proxyTransport->receive();
 
      // XXX TODO deserialize HTTP response
-          
-     $paramRetType(operation.rettype)$ retType;
-
-     return retType;
+    HTTPSerializer* httpResponseSerializer; // XXX TODO
+    HTTPVersion versionResponse;
+    httpResponseSerializer->deserialize(versionResponse);
+    HTTPResponseCode httpResponseCode;
+    httpResponseSerializer->deserialize(httpResponseCode);
+    HTTPData httpData;
+    httpSerializer->deserialize(httpData);
+    data = httpData.getData();
+    
+    $paramRetType(operation.rettype)$ retType;
+    
+    discriminator = 0;
+    mediaType = httpData.getMediaType();
+    if(mediaType.find("xml") != string::npos) {
+        discriminator = 1;
+    } 
+    if(mediaType.find("json") != string::npos) {
+        discriminator = 2;
+    }
+    
+    retType._d = discriminator;
+    switch(discriminator) {
+    $operation.rettype.members : {member | case $first(member.labels)$:
+    retType._u.$member.name$.$first(member.typecode.members).name$ = httpResponseCode.getStatus();
+    $if(rest(member.typecode.members))$
+    retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = _strdup(data.c_str());
+    $endif$
+    }$
+    }
+              
+    return retType;
 }
 
+$if(operation.parent.pathHasBrackets)$
+void $ctx.filename$Protocol::deserializePath_$operation.name$(string actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$)
+{
+    string templatePath = "$operation.parent.path$";
+    stringstream stream;
+    int prevTemplatePos = 0;
+    int prevActualPos = 0;
+    int templatePos = 0;
+    int actualPos = 0;
+    string templatePathSegment;
+    string actualPathSegment;
+    
+    $deserializePathSegment(param=first(operation.parameters))$
+}
+$endif$
+
+char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(HTTPSerializer* httpSerializer) {
+    string mediaType;
+    stringstream stream;
+    HTTPUri httpUri;
+    httpSerializer->deserialize(httpUri);    
+    HTTPParameters httpParams;
+    int numParams;
+    httpSerializer->deserialize(httpParams, numParams);    
+    HTTPData httpData;
+    httpSerializer->deserialize(httpData);
+    
+    $if(operation.parent.pathHasBrackets)$
+    $first(operation.parameters).name$ $first(operation.parameters).name$;
+    deserializePath_$operation.name$(httpUri.get_data(), $first(operation.parameters).name$);
+    $deserializeHTTPParams(params=rest(operation.parameters))$
+    $else$
+    $deserializeHTTPParams(params=operation.parameters)$
+    $endif$
+    
+    $deserializeHTTPBodyParams(params=operation.parameters)$
+    
+    $paramRetType(operation.rettype)$ $paramRetType(operation.rettype)$; // = $operation.name$_impl($implCallParams(params = operation.parameters)$);
+    $serializeServerResponse(rettype=operation.rettype)$
+
+    char* httpResponse;    
+    return httpResponse;
+}
+>>
+
+implCallParams(params) ::= <<
+$if(first(params).parent.parent.pathHasBrackets)$ $first(operation.parameters).name$ $rest(params) : { param |, $param.name$ }$ $else$ $params : { param |$param.name$}; separator=", "$ $endif$
+>>
+
+serializeServerResponse(rettype) ::= <<
+HTTPSerializer* httpResponseSerializer; // XXX TODO
+string stringVersionResponse = "HTTP/1.1";
+HTTPVersion versionResponse = HTTPVersion::HTTPVersionResponse(stringVersionResponse);
+httpResponseSerializer->serialize(versionResponse);
+
+int httpResponseStatus = 0;
+string responseData = "";
+switch($rettype.name$._d) {
+$rettype.members : {member |    case $first(member.labels)$:
+    httpResponseStatus = $rettype.name$._u.$member.name$.status;
+$first(rest(member.typecode.members)) : {member2 |      responseData = $rettype.name$._u.$member.name$.$member2.name$; }$
+    break;
+}$}
+stream << httpResponseStatus;
+string code = stream.str();
+string status = "";
+HTTPResponseCode httpResponseCode(code, status);
+stream = stringstream();
+httpResponseSerializer->serialize(httpResponseCode);
+if(responseData.size()>0) {
+    stream << responseData.length();
+    HTTPData httpData(std::string(stream.str()), std::string("application/xml"), responseData); // XXX TODO MEDIATYPE
+    stream = stringstream();
+}
+
+>>
+
+deserializePathSegment(param) ::= <<
+    $param.typecode.members : {member |
+    // Deserialize $member.name$
+    while (templatePos != string::npos && actualPos != string::npos) {
+        templatePos = templatePath.find("/", prevTemplatePos);
+        actualPos = actualPath.find("/", prevActualPos);
+        templatePathSegment = templatePath.substr(prevTemplatePos, templatePos - prevTemplatePos);
+        actualPathSegment = actualPath.substr(prevActualPos, actualPos - prevActualPos);
+        prevTemplatePos = templatePos + 1;
+        prevActualPos = actualPos + 1;
+        if(templatePathSegment.at(0) == '{' && templatePathSegment.at(templatePathSegment.size() - 1) == '}') {
+            stream << actualPathSegment;
+            stream $ctx.sersym$ $param.name$.$member.name$;
+            stream = stringstream();
+            break;
+        }
+    }
+    }$
 >>
 
 expandPathSegment(param) ::= <<
@@ -175,6 +288,29 @@ expandPathSegment(param) ::= <<
     expandedPath += stream.str() + "/";
     stream = stringstream();
     }$
+>>
+
+deserializeHTTPParams(params) ::= <<
+$if(params)$
+HTTPParam httpParam;
+$params : {param |$if(!param.bodyParam)$$param.typecode.typename$ $param.name$; $endif$
+}$
+for(vector<HTTPParam>::iterator it = httpParams.get_params().begin(); it != httpParams.get_params().end(); ++it) {
+    httpParam = *it;
+$endif$
+$params : {param |
+$if(!param.bodyParam)$
+    // Deserialize $param.name$
+    if(httpParam.getName().compare("$param.name$") == 0) {
+        stream << httpParam.getValue();
+        stream $ctx.sersym$ $param.name$;
+        stream = stringstream();
+    }
+$endif$
+}$
+$if(params)$
+}
+$endif$
 >>
 
 serializeHTTPParams(params) ::= <<
@@ -201,20 +337,43 @@ $endif$
 >>
 
 serializeHTTPBodyParams(params) ::= <<
-$params : {param | $if(param.bodyParam)$// TODO XXX Serializing body parameter $param.name$
 string data = "";
-// XXX TODO Fill data
-switch($param.name$._d) {
+int discriminator = 0;
+$params : {param|$if(param.bodyParam)$// TODO XXX Serializing body parameter $param.name$
+discriminator = $param.name$._d;
+switch(discriminator) {
 $param.typecode.members : {member | case $first(member.labels)$:
-data = $param.name$._u.$member.name$;
-break;
+    data = $param.name$._u.$member.name$;}$
+}
+if(data.size() > 0) {
+    if(discriminator == 1)
+        mediaType = "application/xml";
+    else if(discriminator == 2)
+        mediaType = "application/json";
+    stream << data.size();
+    HTTPData httpData(stream.str(), mediaType, data);
+    stream = stringstream();
+    httpSerializer->serialize(httpData);
+}$endif$}$
+>>
+
+deserializeHTTPBodyParams(params) ::= <<
+$params : {param | $if(param.bodyParam)$// TODO XXX Deserializing body parameter $param.name$
+$param.name$ $param.name$;
+mediaType = httpData.getMediaType();
+int discriminator = 0;
+if(mediaType.find("xml") != string::npos)
+    discriminator = 1;
+if(mediaType.find("json") != string::npos)
+    discriminator = 2;
+    
+$param.name$._d = discriminator;
+switch(discriminator) {
+$param.typecode.members : {member | case $first(member.labels)$:
+$param.name$._u.$member.name$ = _strdup(httpData.getData().c_str());
 }$}
-stream << data.length();
-HTTPData httpData;
-httpData = HTTPData(stream.str(), std::string("application/xml"), data); // XXX TODO MEDIATYPE
-stream = stringstream();
-httpSerializer->serialize(httpData);
-$endif$}$  
+$endif$
+}$
 >>
 
 param_list(parameters) ::= <<>>
