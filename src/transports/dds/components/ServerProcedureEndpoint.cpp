@@ -7,9 +7,12 @@
  *************************************************************************/
 
 #include "transports/dds/components/ServerProcedureEndpoint.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
+
+const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerProcedureEndpoint";
 
 
 ServerProcedureEndpoint::ServerProcedureEndpoint(Transport *transport) : m_transport(NULL),
@@ -22,13 +25,20 @@ ServerProcedureEndpoint::~ServerProcedureEndpoint()
 {
 }
 
-int ServerProcedureEndpoint::initialize(const char *writertypename, const char *readertypename,
+int ServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
         Transport::Copy_data copy_data, int dataSize)
 {
-    m_writerTypeName = writertypename;
-    m_readerTypeName = readertypename;
-    m_copy_data = copy_data;
-    m_dataSize = dataSize;
+    if(name != NULL && readertypename != NULL && copy_data != NULL)
+    {
+        m_name = name;
+        m_writerTypeName = writertypename;
+        m_readerTypeName = readertypename;
+        m_copy_data = copy_data;
+        m_dataSize = dataSize;
+        return 0;
+    }
+
+    return -1;
 }
 
 int ServerProcedureEndpoint::start(std::string &serviceName)
@@ -63,68 +73,49 @@ int ServerProcedureEndpoint::createEntities(std::string &serviceName)
 
         SNPRINTF(value, 285, "header.remoteServiceName = '%s'", serviceName.c_str());
 
-        if((m_filter = m_transport->getParticipant()->create_contentfilteredtopic(m_rpcName.c_str(), m_requestTopic,
+        if((m_filter = m_transport->getParticipant()->create_contentfilteredtopic(m_name, m_readerTopic,
                         value, stringSeq)) != NULL)
         {
             DDS::DataReaderQos rQos = DDS::DataReaderQos();
 
-            m_requestSubscriber->get_default_datareader_qos(rQos);
+            m_transport->getSubscriber()->get_default_datareader_qos(rQos);
             rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
             rQos.history.depth = 100;
             ::util::dds::set_datareader_protocol(rQos);
 
-            m_requestDataReader = m_requestSubscriber->create_datareader(m_requestFilter, rQos, this, DDS::DATA_AVAILABLE_STATUS);
+            m_reader = m_transport->getSubscriber()->create_datareader(m_filter, rQos, this, DDS::DATA_AVAILABLE_STATUS);
 
-            if(m_requestDataReader != NULL)
+            if(m_reader != NULL)
             {
-                ::util::dds::set_redundant_feature(m_requestDataReader, rQos);
+                ::util::dds::set_redundant_feature(m_reader, rQos);
 
-                if(!m_replyTypeName.empty())
+                if(!m_writerTypeName.empty())
                 {
-                    if((m_replyPublisher = m_server->getParticipant()->create_publisher(PUBLISHER_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                    if((m_writerTopic = m_transport->getParticipant()->create_topic(m_writerTypeName.c_str(), m_writerTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                     {
-                        if(m_replyPublisher->get_qos(publisherQos) == DDS::RETCODE_OK)
+                        DDS::DataWriterQos wQos = DDS:: DataWriterQos();
+
+                        m_transport->getPublisher()->get_default_datawriter_qos(wQos);
+                        wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+                        wQos.history.depth = 100;
+                        ::util::dds::set_datawriter_protocol(wQos);
+
+                        m_writer = m_transport->getPublisher()->create_datawriter(m_writerTopic, wQos, NULL, STATUS_MASK_NONE);
+
+                        if(m_writer != NULL)
                         {
-                            publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-                            m_replyPublisher->set_qos(publisherQos);
-
-                            if((m_replyTopic = m_server->getParticipant()->create_topic(m_replyTypeName.c_str(), m_replyTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
-                            {
-                                DDS::DataWriterQos wQos = DDS:: DataWriterQos();
-
-                                m_replyPublisher->get_default_datawriter_qos(wQos);
-                                wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
-                                wQos.history.depth = 100;
-                                ::util::dds::set_datawriter_protocol(wQos);
-
-                                m_replyDataWriter = m_replyPublisher->create_datawriter(m_replyTopic, wQos, NULL, STATUS_MASK_NONE);
-
-                                if(m_replyDataWriter != NULL)
-                                {
-                                    return 0;
-                                }
-                                else
-                                {
-                                    printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
-                                }
-
-                                m_server->getParticipant()->delete_topic(m_replyTopic);
-                            }
-                            else
-                            {
-                                printf("ERROR<%s::%s: Cannot create the request topic\n", CLASS_NAME, METHOD_NAME);
-                            }
+                            return 0;
                         }
                         else
                         {
-                            printf("ERROR <%s::%s>: Cannot get the publisher qos\n", CLASS_NAME, METHOD_NAME);
+                            printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
                         }
 
-                        m_server->getParticipant()->delete_publisher(m_replyPublisher);
+                        m_transport->getParticipant()->delete_topic(m_writerTopic);
                     }
                     else
                     {
-                        printf("ERROR<%s::%s: Cannot create the request publisher\n", CLASS_NAME, METHOD_NAME);
+                        printf("ERROR<%s::%s: Cannot create the request topic\n", CLASS_NAME, METHOD_NAME);
                     }
                 }
                 else
@@ -132,21 +123,21 @@ int ServerProcedureEndpoint::createEntities(std::string &serviceName)
                     return 0;
                 }
 
-                m_requestSubscriber->delete_datareader(m_requestDataReader);
+                m_transport->getSubscriber()->delete_datareader(m_reader);
             }
             else
             {
                 printf("ERROR<%s::%s: Cannot create the request data reader\n", CLASS_NAME, METHOD_NAME);
             }
 
-            m_server->getParticipant()->delete_contentfilteredtopic(m_requestFilter);
+            m_transport->getParticipant()->delete_contentfilteredtopic(m_filter);
         }
         else
         {
             printf("ERROR<%s::%s>: Cannot create the request filter\n", CLASS_NAME, METHOD_NAME);
         }
 
-        m_server->getParticipant()->delete_topic(m_requestTopic);
+        m_transport->getParticipant()->delete_topic(m_readerTopic);
     }
     else
     {

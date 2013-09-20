@@ -26,7 +26,7 @@ namespace eprosima
                  * @brief This class represents a remote endpoint used by a proxy.
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
                  */
-                class ServerProcedureEndpoint
+                class ServerProcedureEndpoint : public DDS::DataReaderListener
                 {
                     public:
 
@@ -39,7 +39,7 @@ namespace eprosima
                         //! @brief Default destructor.
                         virtual ~ServerProcedureEndpoint();
 
-                        int initialize(const char *writertypename, const char *readertypename,
+                        int initialize(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Copy_data copy_data, int dataSize);
 
                         int start(std::string &serviceName);
@@ -63,6 +63,8 @@ namespace eprosima
                         //! @brief Transport that created the proxy procedure endpoint.
                         Transport *m_transport;
                         
+                        const char *m_name;
+
                         std::string m_writerTypeName;
 
                         std::string m_readerTypeName;

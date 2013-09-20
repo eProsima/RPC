@@ -43,7 +43,7 @@ int ServerTransport::createProcedureEndpoint(const char *name, const char *write
 
     if(pe != NULL)
     {
-        if(pe->initialize(writertypename, readertypename, copy_data, dataSize) == 0)
+        if(pe->initialize(name, writertypename, readertypename, copy_data, dataSize) == 0)
         {
             std::pair<std::map<const char*, ServerProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ServerProcedureEndpoint*>(name, pe));
 
