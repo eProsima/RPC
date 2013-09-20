@@ -44,6 +44,41 @@ namespace eprosima
 
                         int start(std::string &serviceName);
 
+                        void stop();
+
+                        /// @brief DDS callback.
+                        virtual void on_data_available(DDS::DataReader* reader);
+
+                        /// @brief DDS callback.
+                        virtual void on_requested_deadline_missed(
+                                DDS::DataReader* reader,
+                                const DDS::RequestedDeadlineMissedStatus& status) {}
+
+                        /// @brief DDS callback.
+                        virtual void on_requested_incompatible_qos(
+                                DDS::DataReader* reader,
+                                const DDS::RequestedIncompatibleQosStatus& status) {}
+
+                        /// @brief DDS callback.
+                        virtual void on_sample_rejected(
+                                DDS::DataReader* reader,
+                                const DDS::SampleRejectedStatus& status) {}
+
+                        /// @brief DDS callback.
+                        virtual void on_liveliness_changed(
+                                DDS::DataReader* reader,
+                                const DDS::LivelinessChangedStatus& status) {}
+
+                        /// @brief DDS callback.
+                        virtual void on_sample_lost(
+                                DDS::DataReader* reader,
+                                const DDS::SampleLostStatus& status) {}
+
+                        /// @brief DDS callback.
+                        virtual void on_subscription_matched(
+                                DDS::DataReader* reader,
+                                const DDS::SubscriptionMatchedStatus& status) {}
+
                     private:
 
                         /*!
@@ -62,7 +97,7 @@ namespace eprosima
 
                         //! @brief Transport that created the proxy procedure endpoint.
                         Transport *m_transport;
-                        
+
                         const char *m_name;
 
                         std::string m_writerTypeName;
