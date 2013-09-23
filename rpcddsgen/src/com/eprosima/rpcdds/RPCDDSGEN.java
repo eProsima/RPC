@@ -438,19 +438,18 @@ public class RPCDDSGEN
             {
             	
             	// TODO XXX Tests Ruben -> REST 
-                if((project = parseIDLtoREST(idlFilename)) != null) {
-                    String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
-                    
-                	// Parse the user IDL file that was generated using external tool.
-                    // Note:The file are put in project info inside parseIDL function.
-                    ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
-                }
-                	
-            	if(project != null)
-            		return project;            	
-            	if(project == null)
-            		return project;
+            	if(m_protocol.equalsIgnoreCase("rest")) {
+	                if((project = parseIDLtoREST(idlFilename)) != null) {
+	                    String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+	                    
+	                	// Parse the user IDL file that was generated using external tool.
+	                    // Note:The file are put in project info inside parseIDL function.
+	                    ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+	                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+	                }
+	                	
+	            	return project;     
+            	}
             	// END TODO XXX
             	
             	
@@ -595,7 +594,7 @@ public class RPCDDSGEN
 		                    {
 				            	project.addCommonIncludeFile(onlyFileName + "Protocol.h");
 			            		project.addCommonIncludeFile(onlyFileName + "RESTProtocol.h");
-			            		project.addCommonIncludeFile(onlyFileName + "RESTProtocol.cxx");
+			            		project.addCommonSrcFile(onlyFileName + "RESTProtocol.cxx");
 		                    }
 	                    }
                     }         
