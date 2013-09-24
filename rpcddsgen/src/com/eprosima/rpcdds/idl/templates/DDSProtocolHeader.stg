@@ -30,7 +30,7 @@ namespace eprosima
                         
                         virtual ~$ctx.filename$Protocol();
                     
-                        virtual bool setTransport(eprosima::rpcdds::transport::Transport *transport);
+                        virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
                         $definitions; separator="\n"$
                         

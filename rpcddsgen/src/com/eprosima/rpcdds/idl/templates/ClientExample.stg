@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     {
         protocol = new $ctx.filename$Protocol();
         transport = new UDPProxyTransport("$ctx.firstInterface.name$Service");
-        proxy = new $ctx.firstInterface.scopedname$Proxy(transport, protocol);
+        proxy = new $ctx.firstInterface.scopedname$Proxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
     {

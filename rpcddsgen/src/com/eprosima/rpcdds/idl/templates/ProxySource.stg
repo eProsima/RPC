@@ -27,14 +27,8 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-/*$interface.name$Proxy::$interface.name$Proxy(std::string remoteServiceName, int domainId, long timeout) :
-    Client(remoteServiceName, NULL, domainId, timeout)
-{
-    createRPCs();
-}*/
-
-$interface.name$Proxy::$interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport *transport,
-    eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol) : Proxy(transport, protocol)
+$interface.name$Proxy::$interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
+    eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol) : Proxy(transport, protocol)
 {
 }
 
@@ -59,7 +53,7 @@ $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$
     $if(operation.rettypeparam)$
     $paramRetType(operation.rettype)$ $operation.rettypeparam.name$ =
     $endif$
-    ((eprosima::rpcdds::protocol::$ctx.filename$Protocol*)getProtocol())->$operation.parent.formatedScopedname$_$operation.name$($extractParams(params=operation.parameters)$);
+    dynamic_cast<eprosima::rpcdds::protocol::$ctx.filename$Protocol&>(getProtocol()).$operation.parent.formatedScopedname$_$operation.name$($extractParams(params=operation.parameters)$);
     $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
     $endif$

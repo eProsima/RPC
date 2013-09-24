@@ -70,8 +70,8 @@ class $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
          *        If the call exceeds the time, a eprosima::rpcdds::exception::ServerTimeoutException is thrown.
          * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
-        $interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport *transport,
-            eprosima::rpcdds::protocol::$ctx.filename$Protocol *protocol);
+        $interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
+            eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol);
 
         //! @brief The default destructor.
         virtual ~$interface.name$Proxy();
