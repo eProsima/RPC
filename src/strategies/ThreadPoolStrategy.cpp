@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of RPCDDS is licensed to you under the terms described in the
  * RPCDDS_LICENSE file included in this distribution.
@@ -7,7 +7,7 @@
  *************************************************************************/
 
 #include "strategies/ThreadPoolStrategy.h"
-#include "server/Server.h"
+#include "transports/ServerTransport.h"
 
 #include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"
@@ -18,53 +18,58 @@ namespace eprosima
 {
     namespace rpcdds
     {
-        class ThreadPoolStrategyJob
+        namespace strategy
         {
-            public:
-                ThreadPoolStrategyJob(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
-                    : m_execFunction(execFunction), m_data(data), m_server(server), m_service(service)
-                {
-                }
+            class ThreadPoolStrategyJob
+            {
+                public:
+                    ThreadPoolStrategyJob(fExecFunction execFunction,
+                            eprosima::rpcdds::transport::ServerTransport &transport, void *data)
+                        : m_execFunction(execFunction), m_transport(transport), m_data(data)
+                    {
+                    }
 
-                void run()
-                {
-                    m_execFunction(m_server, m_data, m_service);
-                }
+                    void run()
+                    {
+                        m_execFunction(m_transport, m_data);
+                    }
 
-            private:
-                fExecFunction m_execFunction;
-                void *m_data;
-                Server *m_server;
-                ServerRPC *m_service;
-        };
+                private:
+                    fExecFunction m_execFunction;
+                    eprosima::rpcdds::transport::ServerTransport &m_transport;
+                    void *m_data;
+            };
 
-        class ThreadPoolStrategyImpl
-        {
-            public:
+            class ThreadPoolStrategyImpl
+            {
+                public:
 
-                ThreadPoolStrategyImpl(unsigned int threadCount)
-                {
-                    m_pool = new boost::threadpool::pool(threadCount);
-                }
+                    ThreadPoolStrategyImpl(unsigned int threadCount)
+                    {
+                        m_pool = new boost::threadpool::pool(threadCount);
+                    }
 
-                virtual ~ThreadPoolStrategyImpl()
-                {
-                    delete m_pool;
-                }
+                    virtual ~ThreadPoolStrategyImpl()
+                    {
+                        delete m_pool;
+                    }
 
-                boost::threadpool::pool* getPool()
-                {
-                    return m_pool;
-                }
+                    boost::threadpool::pool* getPool()
+                    {
+                        return m_pool;
+                    }
 
-            private:
+                private:
 
-                boost::threadpool::pool *m_pool;
-        };
+                    boost::threadpool::pool *m_pool;
+            };
+        } // namespace strategy
     } // namespace rpcdds
 } // namespace eprosima
 
 using namespace eprosima::rpcdds;
+using namespace ::strategy;
+using namespace ::transport;
 
 ThreadPoolStrategy::ThreadPoolStrategy(unsigned int threadCount) : m_impl(NULL)
 {
@@ -77,13 +82,14 @@ ThreadPoolStrategy::~ThreadPoolStrategy()
         delete m_impl;
 }
 
-void ThreadPoolStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
+void ThreadPoolStrategy::schedule(fExecFunction execFunction,
+        ServerTransport &transport, void *data)
 {
     const char* const METHOD_NAME = "schedule";
 
-    if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
+    if(execFunction != NULL && data != NULL)
     {
-        boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(execFunction, data, server, service));
+        boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(execFunction, transport, data));
         boost::threadpool::schedule(*m_impl->getPool(), boost::bind(&ThreadPoolStrategyJob::run, job));
     }
     else

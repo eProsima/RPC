@@ -8,7 +8,7 @@
 #ifndef _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
 
-#include "transports/dds/Transport.h"
+#include "transports/dds/ProxyTransport.h"
 #include "utils/dds/Middleware.h"
 #include "utils/Messages.h"
 
@@ -37,7 +37,7 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that is creating the proxy procedure endpoint. Cannot be NULL.
                          */
-                        ProxyProcedureEndpoint(Transport *transport);
+                        ProxyProcedureEndpoint(ProxyTransport &transport);
 
                         //! @brief Default destructor.
                         virtual ~ProxyProcedureEndpoint();
@@ -127,7 +127,7 @@ namespace eprosima
                         boost::mutex *m_mutex;
 
                         //! @brief Transport that created the proxy procedure endpoint.
-                        Transport *m_transport;
+                        ProxyTransport &m_transport;
 
                         //!@brief The topic used to send.
                         DDS::Topic *m_writerTopic;

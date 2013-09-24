@@ -1,5 +1,5 @@
 #include "transports/TCPServerTransport.h"
-//#include "eProsima_cpp/eProsimaMacros.h"
+
 #include <iostream>
 #include <boost/thread.hpp>
 #include <string.h>
@@ -7,15 +7,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace eprosima {
-namespace rpcdds {
-namespace transport {
-
-void worker(eprosima::rpcdds::Server* s, void* connection,
-		eprosima::rpcdds::ServerRPC* srpc);
-
-void handle_read(const boost::system::error_code& error,
-		std::size_t bytes_transferred, char* buffer_);
+using namespace eprosima::rpcdds;
+using namespace ::transport;
 
 void TCPServerTransport::init(const std::string& address,
 		const std::string& port) {
@@ -163,10 +156,7 @@ void TCPServerTransport::handle_accept(const boost::system::error_code& e) {
 	 * Thread creation
 	 *
 	 */
-	//new_connection_->thread_ = boost::shared_ptr<boost::thread>(new boost::thread(REST::worker, new_connection_));
-	/*eProsima::RPCDDS::ThreadPoolStrategy tps(5);
-	 eProsima::RPCDDS::ServerRPC *srpc = new eProsima::RPCDDS::ServerRPC
-	 tps.schedule(REST::worker, (void*) &new_connection_, new eProsima::RPCDDS::Server("null",tps, this, 0), srpc);*/
+    getStrategy().schedule(TCPServerTransport::worker, *this, (void*)&new_connection_);
 
 	new_connection_ = boost::shared_ptr < connection > (new connection());
 	new_connection_->master_io_service_ = &io_service_;
@@ -183,42 +173,25 @@ void TCPServerTransport::handle_accept(const boost::system::error_code& e) {
 	 );*/
 }
 
-void worker(eprosima::rpcdds::Server* s, void* connection,
-		eprosima::rpcdds::ServerRPC* srpc) {
+void TCPServerTransport::worker(ServerTransport &transport, void* connection)
+{
 	boost::shared_ptr<eprosima::rpcdds::transport::connection> conn = *(boost::shared_ptr<
 			eprosima::rpcdds::transport::connection>*) (connection);
+    boost::system::error_code ec;
 	boost::asio::ip::tcp::socket &socket = *(conn->socket_);
 	boost::asio::socket_base::non_blocking_io make_non_blocking(true);
 	socket.io_control(make_non_blocking);
 
 	std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
+    // TODO : El tamaño esta fijo estáticamente. Habrá que investigarlo.
 	char buffer_[8192];
 
-	boost::asio::async_read(socket, boost::asio::buffer(buffer_),
-			boost::bind(&eprosima::rpcdds::transport::handle_read, boost::asio::placeholders::error,
-					boost::asio::placeholders::bytes_transferred, buffer_));
+    // TODO : Comprobar return.
+	boost::asio::read(socket, boost::asio::buffer(buffer_), ec);
+
+    // TODO : Call the protocol
 
 	socket.get_io_service().run();
 
 }
-
-void handle_read(const boost::system::error_code& error,
-		std::size_t bytes_transferred, char* buffer_) {
-	std::cout << "Execute handler" << std::endl;
-	if (!error) {
-		std::cout << "Received " << bytes_transferred << " bytes, data: ";
-#if defined(TEST)
-		std::string cadena(buffer_);
-		std::cout << cadena << std::endl;
-#else
-		std::cout.write(buffer_, bytes_transferred);
-		std::cout << std::endl;
-#endif
-
-	}
-}
-
-} // namespace transport
-} // namespace rpcdds
-} // namespace eprosima

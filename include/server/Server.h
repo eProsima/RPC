@@ -9,10 +9,8 @@
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
-#include "utils/dds/Middleware.h"
 #include "rpcdds_dll.h"
 #include "utils/Messages.h"
-#include "utils/Typedefs.h"
 
 #include <string>
 #include <list>
@@ -23,10 +21,17 @@ namespace eprosima
 {
 	namespace rpcdds
 	{
-
         class ServerStrategy;
-        class ServerTransport;
-		class ServerRPC;
+
+        namespace transport
+        {
+            class ServerTransport;
+        }
+
+        namespace protocol
+        {
+            class Protocol;
+        }
 	 
 		/**
 		 * @brief This class implements the common functionalities that the server has.

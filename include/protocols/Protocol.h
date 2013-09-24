@@ -26,7 +26,7 @@ namespace eprosima
             {
                 public:
 
-                    virtual bool setTransport(eprosima::rpcdds::transport::Transport *transport) = 0;
+                    virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport) = 0;
 
                 protected:
 
@@ -35,10 +35,10 @@ namespace eprosima
                     virtual ~Protocol(){}
 
                     inline
-                        eprosima::rpcdds::transport::Transport* getTransport(){return m_transport;}
+                        eprosima::rpcdds::transport::Transport& getTransport() const {return *m_transport;}
 
                     inline
-                        void _setTransport(eprosima::rpcdds::transport::Transport *transport){m_transport = transport;}
+                        void _setTransport(eprosima::rpcdds::transport::Transport &transport){m_transport = &transport;}
 
                 private:
 

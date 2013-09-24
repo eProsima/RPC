@@ -21,7 +21,7 @@ static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ProxyPr
 using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
-ProxyProcedureEndpoint::ProxyProcedureEndpoint(Transport *transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
+ProxyProcedureEndpoint::ProxyProcedureEndpoint(ProxyTransport &transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
     m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL),
     m_copy_data(NULL), m_dataSize(0), m_queryPool(NULL), m_queriesInUseLimiter(QUERY_POOL_LENGTH),
     m_numSec(0)
@@ -80,18 +80,18 @@ void ProxyProcedureEndpoint::finalize()
     {
         finalizeQueryPool();
 
-        m_transport->getSubscriber()->delete_datareader(m_reader);
+        m_transport.getSubscriber()->delete_datareader(m_reader);
 
         if(m_filter != NULL)
-            m_transport->getParticipant()->delete_contentfilteredtopic(m_filter);
+            m_transport.getParticipant()->delete_contentfilteredtopic(m_filter);
         if(m_readerTopic != NULL)
-            m_transport->getParticipant()->delete_topic(m_readerTopic);
+            m_transport.getParticipant()->delete_topic(m_readerTopic);
     }
 
     if(m_writer != NULL)
-        m_transport->getPublisher()->delete_datawriter(m_writer);
+        m_transport.getPublisher()->delete_datawriter(m_writer);
     if(m_writerTopic)
-        m_transport->getParticipant()->delete_topic(m_writerTopic);
+        m_transport.getParticipant()->delete_topic(m_writerTopic);
 
     if(m_mutex != NULL)
     {
@@ -108,25 +108,25 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
     {
         if(writertypename != NULL)
         {
-            if((m_writerTopic = m_transport->getParticipant()->create_topic(writertypename, writertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+            if((m_writerTopic = m_transport.getParticipant()->create_topic(writertypename, writertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
             {
                 DDS::DataWriterQos wQos = DDS::DataWriterQos();
 
-                m_transport->getPublisher()->get_default_datawriter_qos(wQos);
+                m_transport.getPublisher()->get_default_datawriter_qos(wQos);
 
                 // TODO
                 wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
                 wQos.history.depth = 100;
                 ::util::dds::set_datawriter_protocol(wQos);
 
-                m_writer = m_transport->getPublisher()->create_datawriter(m_writerTopic, wQos, NULL, STATUS_MASK_NONE);
+                m_writer = m_transport.getPublisher()->create_datawriter(m_writerTopic, wQos, NULL, STATUS_MASK_NONE);
 
                 if(m_writer != NULL)
                 {                              
                     // Is not oneway operation
                     if(readertypename != NULL)
                     {
-                        if((m_readerTopic = m_transport->getParticipant()->create_topic(readertypename, readertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                        if((m_readerTopic = m_transport.getParticipant()->create_topic(readertypename, readertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                         {
                             DDS::StringSeq stringSeq(4);
                             stringSeq.length(4);
@@ -135,13 +135,13 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                             stringSeq[2] = strdup("0");
                             stringSeq[3] = strdup("0");
 
-                            if((m_filter = m_transport->getParticipant()->create_contentfilteredtopic(name, m_readerTopic,
+                            if((m_filter = m_transport.getParticipant()->create_contentfilteredtopic(name, m_readerTopic,
                                             "header.clientId.value_1 = %0 and header.clientId.value_2 = %1 and header.clientId.value_3 = %2 and header.clientId.value_4 = %3",
                                             stringSeq)) != NULL)
                             {
                                 DDS::DataReaderQos rQos = DDS::DataReaderQos();
 
-                                m_transport->getSubscriber()->get_default_datareader_qos(rQos);
+                                m_transport.getSubscriber()->get_default_datareader_qos(rQos);
 
                                 // TODO
                                 rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
@@ -149,21 +149,21 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                                 ::util::dds::set_max_query_condition_filters(rQos);
                                 ::util::dds::set_datareader_protocol(rQos);
 
-                                m_reader = m_transport->getSubscriber()->create_datareader(m_filter, rQos, NULL, STATUS_MASK_NONE);
+                                m_reader = m_transport.getSubscriber()->create_datareader(m_filter, rQos, NULL, STATUS_MASK_NONE);
 
                                 if(m_reader != NULL)
                                 {
                                     return 0;
                                 }
 
-                                m_transport->getParticipant()->delete_contentfilteredtopic(m_filter);
+                                m_transport.getParticipant()->delete_contentfilteredtopic(m_filter);
                             }
                             else
                             {
                                 printf("ERROR<%s::%s>: Cannot create the content filter\n", CLASS_NAME, METHOD_NAME);
                             }
 
-                            m_transport->getParticipant()->delete_topic(m_readerTopic);
+                            m_transport.getParticipant()->delete_topic(m_readerTopic);
                         }
                         else
                         {
@@ -175,14 +175,14 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                         return 0;
                     }
 
-                    m_transport->getPublisher()->delete_datawriter(m_writer);
+                    m_transport.getPublisher()->delete_datawriter(m_writer);
                 }
                 else
                 {
                     printf("ERROR<%s::%s>: Cannot create the data writer\n", CLASS_NAME, METHOD_NAME);
                 }
 
-                m_transport->getParticipant()->delete_topic(m_writerTopic);
+                m_transport.getParticipant()->delete_topic(m_writerTopic);
             }
             else
             {

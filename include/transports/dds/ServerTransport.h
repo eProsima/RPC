@@ -11,7 +11,6 @@
 #include "rpcdds_dll.h"
 #include "transports/dds/Transport.h"
 #include "transports/ServerTransport.h"
-#include "transports/dds/components/ServerProcedureEndpoint.h"
 #include "utils/dds/Middleware.h"
 
 #include <string>
@@ -25,6 +24,8 @@ namespace eprosima
         {
             namespace dds
             {
+                class ServerProcedureEndpoint;
+
                 class RPCDDS_DllAPI ServerTransport : public eprosima::rpcdds::transport::ServerTransport, public Transport
                 {
                     public:
@@ -57,7 +58,9 @@ namespace eprosima
                          * 2brief This function returns the behaviour of the transport.
                          * @return The behaviour of the transport.
                          */
-                        TransportBehaviour getBehaviour();
+                        TransportBehaviour getBehaviour() const;
+
+                        static void process(eprosima::rpcdds::transport::ServerTransport &transport, void *data);
 
                         virtual void run();
 

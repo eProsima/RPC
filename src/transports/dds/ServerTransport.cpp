@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "transports/dds/ServerTransport.h"
+#include "transports/dds/components/ServerProcedureEndpoint.h"
 #include "exceptions/InitializeException.h"
 
 using namespace eprosima::rpcdds;
@@ -30,7 +31,7 @@ const char* ServerTransport::getType() const
     return "DDS";
 }
 
-TransportBehaviour ServerTransport::getBehaviour()
+TransportBehaviour ServerTransport::getBehaviour() const
 {
     return SERVER_BEHAVIOUR;
 }
@@ -39,7 +40,7 @@ int ServerTransport::createProcedureEndpoint(const char *name, const char *write
         ::transport::dds::Transport::Copy_data copy_data, int dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
-    ServerProcedureEndpoint *pe = new ServerProcedureEndpoint(this);
+    ServerProcedureEndpoint *pe = new ServerProcedureEndpoint(*this);
 
     if(pe != NULL)
     {
@@ -61,6 +62,10 @@ int ServerTransport::createProcedureEndpoint(const char *name, const char *write
     }
 
     return -1;
+}
+
+void ServerTransport::process(eprosima::rpcdds::transport::ServerTransport &transport, void *data)
+{
 }
 
 void ServerTransport::run()

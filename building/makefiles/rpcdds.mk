@@ -51,8 +51,6 @@ RPCDDS_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    $(SPECIFIC_INCLUDE_DIR)
 
 RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
-		     $(BASEDIR)/src/server/Server.cpp \
-		     $(BASEDIR)/src/server/ServerRPC.cpp \
 		     $(BASEDIR)/src/utils/Utilities.cpp \
 		     $(BASEDIR)/src/utils/dds/Middleware.cpp \
 		     $(BASEDIR)/src/protocols/rest/FastBuffer.cpp \

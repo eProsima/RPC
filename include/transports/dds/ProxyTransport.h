@@ -11,7 +11,7 @@
 #include "rpcdds_dll.h"
 #include "transports/dds/Transport.h"
 #include "transports/ProxyTransport.h"
-#include "transports/dds/components/ProxyProcedureEndpoint.h"
+#include "utils/Messages.h"
 #include "utils/dds/Middleware.h"
 
 #include <string>
@@ -25,6 +25,8 @@ namespace eprosima
         {
             namespace dds
             {
+                class ProxyProcedureEndpoint;
+
                 /*!
                  * @brief This class is the base of all classes that implement a transport
                  * using DDS. This transport could be used by the proxy.

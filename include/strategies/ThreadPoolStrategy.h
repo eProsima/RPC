@@ -9,7 +9,7 @@
 #ifndef _STRATEGIES_THREADPOOLSTRATEGY_H_
 #define _STRATEGIES_THREADPOOLSTRATEGY_H_
 
-#include "server/ServerStrategy.h"
+#include "strategies/ServerStrategy.h"
 #include "rpcdds_dll.h"
 
 #define RPCDDS_MIN_THREADS_DEFAULT 5
@@ -18,41 +18,42 @@ namespace eprosima
 {
     namespace rpcdds
     {
-        class ThreadPoolStrategyImpl;
-
-		/**
-		 * @brief This class implements a thread pool strategy.
-		 *        The server schedules the incoming requests in a free thread of the thread pool.
-         * @ingroup STRATEGIESMODULE 
-		 */
-        class RPCDDS_DllAPI ThreadPoolStrategy : public ServerStrategy
+        namespace strategy
         {
-            public:
+            class ThreadPoolStrategyImpl;
 
-				/**
-				 * \brief Default constructor.
-				 *
-				 * \param threadCount Number of thread that will manage by the thread pool. Default value: 5.
-				 */
-                ThreadPoolStrategy(unsigned int threadCount = RPCDDS_MIN_THREADS_DEFAULT);
+            /**
+             * @brief This class implements a thread pool strategy.
+             *        The server schedules the incoming requests in a free thread of the thread pool.
+             * @ingroup STRATEGIESMODULE 
+             */
+            class RPCDDS_DllAPI ThreadPoolStrategy : public ServerStrategy
+            {
+                public:
 
-				/// \brief Default destructor.
-                ~ThreadPoolStrategy();
+                    /**
+                     * \brief Default constructor.
+                     *
+                     * \param threadCount Number of thread that will manage by the thread pool. Default value: 5.
+                     */
+                    ThreadPoolStrategy(unsigned int threadCount = RPCDDS_MIN_THREADS_DEFAULT);
 
-				/**
-				 * \brief This function schedules a incoming request in a free thread of the thread pool.
-				 *
-				 * \param execFunction Function that has to be call when the request will be processed.
-				 * \param data The request. Cannot be NULL.
-				 * \param server A pointer to the server. Cannot be NULL.
-				 * \param service A pointer to the remote procedure service. Cannot be NULL.
-				 */
-                virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service);
+                    /// \brief Default destructor.
+                    ~ThreadPoolStrategy();
 
-            private:
+                    /**
+                     * \brief This function schedules a incoming request in a free thread of the thread pool.
+                     *
+                     * \param data The request. Cannot be NULL.
+                     */
+                    virtual void schedule(fExecFunction execFunction,
+                            eprosima::rpcdds::transport::ServerTransport &transport, void *data);
 
-                ThreadPoolStrategyImpl *m_impl;
-        };
+                private:
+
+                    ThreadPoolStrategyImpl *m_impl;
+            };
+        } // namespace strategy
     } // namespace rpcdds
 } //namespace eprosima
 

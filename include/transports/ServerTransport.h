@@ -12,9 +12,17 @@
 #include "rpcdds_dll.h"
 #include "transports/Transport.h"
 
-namespace eprosima {
-    namespace rpcdds {
-        namespace transport {
+namespace eprosima
+{
+    namespace rpcdds
+    {
+        namespace strategy
+        {
+            class ServerStrategy;
+        }
+
+        namespace transport
+        {
             /*!
              * @brief This interface is the base of all classes that implement a transport
              *        that could be used by a server.
@@ -25,10 +33,22 @@ namespace eprosima {
                 public:
 
                     //! \brief Default constructor.
-                    ServerTransport() {}
+                    ServerTransport(){}
 
                     //! \brief Default destructor.
-                    virtual ~ServerTransport() {}
+                    virtual ~ServerTransport(){}
+
+                    inline
+                        void setStrategy(eprosima::rpcdds::strategy::ServerStrategy &strategy)
+                        {
+                            m_strategy = &strategy;
+                        }
+
+                    inline
+                        eprosima::rpcdds::strategy::ServerStrategy& getStrategy() const
+                        {
+                            return *m_strategy;
+                        }
 
                     /*!
                      * @brief This function returns the type of the transport.
@@ -38,6 +58,10 @@ namespace eprosima {
 
                     virtual void run() = 0;
                     virtual void stop() = 0;
+
+                private:
+
+                    eprosima::rpcdds::strategy::ServerStrategy *m_strategy;
             };
         }
         // namespace transport

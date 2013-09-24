@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "transports/dds/ProxyTransport.h"
+#include "transports/dds/components/ProxyProcedureEndpoint.h"
 #include "exceptions/InitializeException.h"
 
 #include <string>
@@ -49,7 +50,7 @@ int ProxyTransport::createProcedureEndpoint(const char *name, const char *writer
         ::transport::dds::Transport::Copy_data copy_data, int dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
-    ProxyProcedureEndpoint *pe = new ProxyProcedureEndpoint(this);
+    ProxyProcedureEndpoint *pe = new ProxyProcedureEndpoint(*this);
 
     if(pe != NULL)
     {

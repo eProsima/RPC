@@ -9,43 +9,41 @@
 #ifndef _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 #define _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 
-#include "server/ServerStrategy.h"
+#include "strategies/ServerStrategy.h"
 #include "rpcdds_dll.h"
 
 namespace eprosima
 {
     namespace rpcdds
     {
-        class ThreadPerRequestStrategyJob;
-
-		/**
-		 * @brief This class implements the thread per request strategy.
-		 *        The server creates a new thread per new incoming request.
-         * @ingroup STRATEGIESMODULE 
-		 */
-        class RPCDDS_DllAPI ThreadPerRequestStrategy : public ServerStrategy
+        namespace strategy
         {
-            public:
+            class ThreadPerRequestStrategyJob;
 
-				/// \brief Default constructor.
-				ThreadPerRequestStrategy(){};
+            /**
+             * @brief This class implements the thread per request strategy.
+             *        The server creates a new thread per new incoming request.
+             * @ingroup STRATEGIESMODULE 
+             */
+            class RPCDDS_DllAPI ThreadPerRequestStrategy : public ServerStrategy
+            {
+                public:
 
-				/// \brief Default destructor.
-				virtual ~ThreadPerRequestStrategy(){};
+                    /// \brief Default constructor.
+                    ThreadPerRequestStrategy(){};
 
-				/**
-				 * \brief This function creates a new thread that will process the request.
-				 *
-				 * \param execFunction Function that has to be call when the request will be processed.
-				 * \param data The request. Cannot be NULL.
-				 * \param server A pointer to the server. Cannot be NULL.
-				 * \param service A pointer to the remote procedure service. Cannot be NULL.
-				 */
-                virtual void schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service);
+                    /// \brief Default destructor.
+                    virtual ~ThreadPerRequestStrategy(){};
 
-            private:
-
-        };
+                    /**
+                     * \brief This function creates a new thread that will process the request.
+                     *
+                     * \param data The request. Cannot be NULL.
+                     */
+                    virtual void schedule(fExecFunction execFunction,
+                            eprosima::rpcdds::transport::ServerTransport &transport, void *data);
+            };
+        } // namespace strategy
     } // namespace rpcdds
 } //namespace eprosima
 

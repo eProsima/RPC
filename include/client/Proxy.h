@@ -67,20 +67,20 @@ namespace eprosima
                      * @param protocol The protocol used to send the information over the transport. This class doesn't delete this object in its destructor.
                      * @exception InitializeException This exception is thrown when the initialization was wrong.
                      */
-                    Proxy(eprosima::rpcdds::transport::ProxyTransport *transport,
-                            eprosima::rpcdds::protocol::Protocol *protocol);
+                    Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
+                            eprosima::rpcdds::protocol::Protocol &protocol);
 
                     //! @brief The default destructor.
                     virtual ~Proxy();
                     
                     inline
-                        eprosima::rpcdds::protocol::Protocol* getProtocol() const
+                        eprosima::rpcdds::protocol::Protocol& getProtocol() const
                         {
                             return m_protocol;
                         }
 
                     inline
-                        eprosima::rpcdds::transport::ProxyTransport* getTransport() const
+                        eprosima::rpcdds::transport::ProxyTransport& getTransport() const
                         {
                             return m_transport;
                         }
@@ -91,10 +91,10 @@ namespace eprosima
                     //AsyncThread *m_asyncThread;
 
                     //! @brief Pointer to the transport which this server's proxy uses.
-                    eprosima::rpcdds::transport::ProxyTransport *m_transport;
+                    eprosima::rpcdds::transport::ProxyTransport &m_transport;
 
                     //! @brief Pointer to the protocol which this server's proxy uses.
-                    eprosima::rpcdds::protocol::Protocol *m_protocol;
+                    eprosima::rpcdds::protocol::Protocol &m_protocol;
             };
         } // namespace proxy
     } // namespace rpcdds

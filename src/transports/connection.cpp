@@ -3,9 +3,8 @@
 #include <vector>
 #include <boost/bind.hpp>
 
-namespace eprosima {
-namespace rpcdds {
-namespace transport {
+using namespace eprosima::rpcdds;
+using namespace ::transport;
 
 void function() {
 	//Do something
@@ -42,8 +41,4 @@ void connection::start() {
 			boost::bind(&connection::handle_read, shared_from_this(),
 					boost::asio::placeholders::error,
 					boost::asio::placeholders::bytes_transferred));
-}
-
-}
-}
 }

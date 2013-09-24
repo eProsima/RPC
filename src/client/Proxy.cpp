@@ -17,15 +17,16 @@ static const char* const CLASS_NAME ="eprosima::rpcdds::proxy::Proxy";
 using namespace eprosima::rpcdds;
 using namespace ::proxy;
 using namespace ::transport;
+using namespace ::protocol;
 using namespace ::exception;
 
-Proxy::Proxy(ProxyTransport *transport, eprosima::rpcdds::protocol::Protocol *protocol) :
+Proxy::Proxy(ProxyTransport &transport, Protocol &protocol) :
     m_transport(transport), m_protocol(protocol)
 {
     const char* const METHOD_NAME ="Proxy";
     std::string errorMessage;
 
-    if(protocol->setTransport(transport))
+    if(protocol.setTransport(transport))
     {
         // Create asynchronous tasks thread
         //m_asyncThread = new AsyncThread();

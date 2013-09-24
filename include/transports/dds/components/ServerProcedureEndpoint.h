@@ -8,7 +8,7 @@
 #ifndef _TRANSPORTS_DDS_COMPONENT_SERVERPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENT_SERVERPROCEDUREENDPOINT_H_
 
-#include "transports/dds/Transport.h"
+#include "transports/dds/ServerTransport.h"
 #include "utils/dds/Middleware.h"
 #include "utils/Messages.h"
 
@@ -34,7 +34,7 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that is creating the proxy procedure endpoint. Cannot be NULL.
                          */
-                        ServerProcedureEndpoint(Transport *transport);
+                        ServerProcedureEndpoint(ServerTransport &transport);
 
                         //! @brief Default destructor.
                         virtual ~ServerProcedureEndpoint();
@@ -96,7 +96,7 @@ namespace eprosima
 
 
                         //! @brief Transport that created the proxy procedure endpoint.
-                        Transport *m_transport;
+                        ServerTransport &m_transport;
 
                         const char *m_name;
 

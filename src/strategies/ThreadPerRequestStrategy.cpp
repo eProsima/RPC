@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of RPCDDS is licensed to you under the terms described in the
  * RPCDDS_LICENSE file included in this distribution.
@@ -7,7 +7,7 @@
  *************************************************************************/
 
 #include "strategies/ThreadPerRequestStrategy.h"
-#include "server/Server.h"
+#include "transports/ServerTransport.h"
 
 #include "boost/thread.hpp"
 
@@ -17,37 +17,43 @@ namespace eprosima
 {
     namespace rpcdds
     {
-        class ThreadPerRequestStrategyJob
+        namespace strategy
         {
-            public:
-                ThreadPerRequestStrategyJob(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
-                    : m_execFunction(execFunction), m_data(data), m_server(server), m_service(service)
-                {
-                }
+            class ThreadPerRequestStrategyJob
+            {
+                public:
+                    ThreadPerRequestStrategyJob(fExecFunction execFunction,
+                            eprosima::rpcdds::transport::ServerTransport &transport, void *data)
+                        : m_execFunction(execFunction), m_transport(transport), m_data(data)
+                    {
+                    }
 
-                void run()
-                {
-                    m_execFunction(m_server, m_data, m_service);
-                }
+                    void run()
+                    {
+                        m_execFunction(m_transport, m_data);
+                    }
 
-            private:
-                fExecFunction m_execFunction;
-                void *m_data;
-                Server *m_server;
-                ServerRPC *m_service;
-        };
+                private:
+                    fExecFunction m_execFunction;
+                    eprosima::rpcdds::transport::ServerTransport &m_transport;
+                    void *m_data;
+            };
+        } // namespace strategy
     } // namespace rpcdds
 } // namespace eprosima
 
 using namespace eprosima::rpcdds;
+using namespace ::strategy;
+using namespace ::transport;
 
-void ThreadPerRequestStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
+void ThreadPerRequestStrategy::schedule(fExecFunction execFunction,
+        ServerTransport &transport, void *data)
 {
     const char* const METHOD_NAME = "schedule";
 
-    if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
+    if(execFunction != NULL && data != NULL)
     {
-        boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, data, server, service));
+        boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, transport, data));
         boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
         thread.detach();
     }

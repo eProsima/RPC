@@ -7,19 +7,22 @@
  *************************************************************************/
 
 #include "strategies/SingleThreadStrategy.h"
-#include "server/Server.h"
+#include "transports/ServerTransport.h"
 
 static const char* const CLASS_NAME = "SingleThreadStrategy";
 
 using namespace eprosima::rpcdds;
+using namespace ::strategy;
+using namespace ::transport;
 
-void SingleThreadStrategy::schedule(fExecFunction execFunction, void *data, Server *server, ServerRPC *service)
+void SingleThreadStrategy::schedule(fExecFunction execFunction,
+        ServerTransport &transport, void *data)
 {
     const char* const METHOD_NAME = "schedule";
 
-    if(execFunction != NULL && data != NULL && server != NULL && service != NULL)
+    if(execFunction != NULL && data != NULL)
     {
-        execFunction(server, data, service);
+        execFunction(transport, data);
     }
     else
     {
