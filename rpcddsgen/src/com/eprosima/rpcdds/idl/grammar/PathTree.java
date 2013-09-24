@@ -153,11 +153,8 @@ public class PathTree {
 	public void setVariableType(String path, String type) {
 		addPath(path);
 		PathTree node = resolvePath(path);
-		
-		System.out.println("-> " + path);
-		
+				
 		if(node.isVariableNode()) {
-			System.out.println("Variable");
 			if(isNumeric(type))
 				node.numericVariable = true;
 			else if(isBoolean(type))
@@ -233,7 +230,7 @@ public class PathTree {
 				code += method.getIterationCode();
 			}
 		} else {
-			code += "return NULL; // ERROR NO OPERATIONS\n";
+			code += "return http404Response; // ERROR NO OPERATIONS\n";
 		}
 		code += "}\n";
 				

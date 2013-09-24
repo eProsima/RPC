@@ -16,7 +16,7 @@ $if(ctx.projectNeedTypes)$
 
 $endif$
 using namespace std;
-using namespace eProsima::httpser;
+using namespace eprosima::httpser;
 namespace eprosima
 {
     namespace rpcdds
@@ -33,7 +33,7 @@ namespace eprosima
                         
                         virtual ~$ctx.filename$Protocol();
                         
-                        bool setTransport(eprosima::rpcdds::transport::Transport *transport);
+                        bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
                         $definitions; separator="\n"$
                         

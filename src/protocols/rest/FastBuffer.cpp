@@ -4,7 +4,7 @@
 
 #define BUFFER_START_LENGTH 200
 
-namespace eProsima
+namespace eprosima
 {
 
 	namespace httpser

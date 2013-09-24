@@ -6,7 +6,7 @@
 #include <string.h>
 #include <cstddef>
 
-namespace eProsima
+namespace eprosima
 {
 
 	namespace httpser

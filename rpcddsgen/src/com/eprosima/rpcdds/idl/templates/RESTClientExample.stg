@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     {
         protocol = new $ctx.filename$Protocol();
         transport = new TCPProxyTransport("127.0.0.1");
-        proxy = new $ctx.firstInterface.scopedname$Proxy(transport, protocol);
+        proxy = new $ctx.firstInterface.scopedname$Proxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
     {

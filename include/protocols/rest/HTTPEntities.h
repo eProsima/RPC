@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace eProsima
+namespace eprosima
 {
 	
 	namespace httpser
@@ -44,8 +44,8 @@ namespace eProsima
 		class HTTPUri
 		{
 		private:
-			
-			std::string data_;
+			std::string baseUri;
+			std::string path;
 
 		public:
 			
@@ -55,15 +55,19 @@ namespace eProsima
 
 			~HTTPUri();
 
-			inline std::string& get_data()
+			inline std::string get_data()
 			{
-				return data_;
+				return baseUri+path;
 			}
 
 			inline void set_data(std::string &data)
 			{
-				data_ = data;
+				int pathPos = data.find(baseUri) + baseUri.size();
+				baseUri = data.substr(0, pathPos);
+				path = data.substr(pathPos);
 			}
+
+			std::string getPath() { return path; }
 		};
 
 		class HTTPParam
@@ -71,6 +75,8 @@ namespace eProsima
 		private:
 
 			std::string data_;
+			string name;
+			string value;
 
 		public:
 				
@@ -88,11 +94,17 @@ namespace eProsima
 			inline void set_data(std::string &data)
 			{
 				data_ = data;
+				name = data.substr(0, data.find("="));
+				value = data.substr(data.find("=")+1, data.size());
 			}
 
-			string getName() { return ""; } // TODO
-			string getValue() { return ""; } // TODO
+			string getName() {
+				return name;
+			}
 
+			string getValue() {
+				return value;
+			}
 		};
 
 		class HTTPParameters
@@ -126,21 +138,20 @@ namespace eProsima
 				return data_;
 			}
 
-			inline void set_data(std::string &data)
-			{
-				data_ = data;
-			}
+			void set_data(std::string &data);
 
 			void addParam(HTTPParam &param);
-
-			bool containsParam(string paramName) {
+			
+			bool containsParam(string name) {
+				HTTPParam param;
 				for(vector<HTTPParam>::iterator it = params_.begin(); it != params_.end(); ++it) {
-					HTTPParam param = *it;
-
+					param = *it;
+					if(param.getName().compare(name) == 0)
+						return true;
 				}
+
 				return false;
 			}
-
 		};
 
 		class HTTPVersion
@@ -201,8 +212,8 @@ namespace eProsima
 				data_ = data;
 			}
 
-			string getData() { return ""; }
-			string getMediaType() { return ""; }
+			string getMediaType();
+			string getData();
 
 		};
 
@@ -230,7 +241,10 @@ namespace eProsima
 				data_ = data;
 			}
 
-			int getStatus() { return 0; }
+			int getStatusCode() {
+				string statusCode = data_.substr(1, data_.find_last_of(" ") - 1);
+				return atoi(statusCode.c_str());
+			}
 
 		};
 

@@ -433,7 +433,6 @@ public class Context
     		
     		pathTree.addInterfaceName(path, iface.getName());
    			for(Operation operation: iface.getOperations()) {
-   				System.out.println("Adding " + operation.getName());
    	   			pathTree.addMethod(operation);
     		}
 

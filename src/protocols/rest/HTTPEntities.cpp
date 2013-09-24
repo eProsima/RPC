@@ -1,6 +1,7 @@
-#include "protocols/rest/HTTPEntities.h"
+#include "HTTPEntities.h"
+#include <sstream>
 
-namespace eProsima
+namespace eprosima
 {
 	
 	namespace httpser
@@ -33,9 +34,9 @@ namespace eProsima
 
 		//URI
 
-		HTTPUri::HTTPUri() : data_(""){}
+		HTTPUri::HTTPUri() : baseUri(""), path("") {}
 
-		HTTPUri::HTTPUri(std::string &base, std::string &path) : data_(base+=path+=""){}
+		HTTPUri::HTTPUri(std::string &base, std::string &path) : baseUri(base), path(path) { }
 
 		HTTPUri::~HTTPUri(){}
 
@@ -47,29 +48,25 @@ namespace eProsima
 
 		HTTPVersion HTTPVersion::HTTPVersionRequest()
 		{
-			std::string empty = "";
-			HTTPVersion ret(empty);
+			HTTPVersion ret(std::string(""));
 			return ret;
 		}
 
 		HTTPVersion HTTPVersion::HTTPVersionResponse()
 		{
-			std::string empty = "";
-			HTTPVersion ret(empty);
+			HTTPVersion ret(std::string(""));	
 			return ret;
 		}
 
 		HTTPVersion HTTPVersion::HTTPVersionRequest(std::string &version)
 		{
-			std::string httpVersion = " "+version+"\n";
-			HTTPVersion ret(httpVersion);
+			HTTPVersion ret(std::string(" "+version+"\r\n"));		
 			return ret;
 		}
 
 		HTTPVersion HTTPVersion::HTTPVersionResponse(std::string &version)
 		{
-			std::string httpVersion = " "+version;
-			HTTPVersion ret(httpVersion);
+			HTTPVersion ret(std::string(version+" "));
 			return ret;
 		}
 
@@ -81,16 +78,40 @@ namespace eProsima
 
 		HTTPData::HTTPData(std::string &clength, std::string &ctype, std::string &data)
 		{
-			data_ += std::string("Content Type: ");
-			data_ += clength;
-			data_ += "\n";
 			data_ += std::string("Content Length: ");
+			data_ += clength;
+			data_ += "\r\n";
+			data_ += std::string("Content Type: ");
 			data_ += ctype;
-			data_ += "\n\n";
+			data_ += "\r\n";
+			data_ += "\r\n";
 			data_ += data;
 		}
 
 		HTTPData::~HTTPData(){}
+
+		string HTTPData::getMediaType() {
+			int beginPos = 0;
+			int endPos = 0;
+			int mediaTypePos = 0;
+			string line = "";
+			while(endPos < data_.size()) {
+				line = data_.substr(beginPos, endPos - beginPos);
+				beginPos = endPos;
+				endPos = data_.find("\n", beginPos + 1);
+
+				mediaTypePos = line.find("Content Type: ");
+				if(mediaTypePos != string::npos) {
+					return line.substr(15, line.size()-16); // "Content Type: ".size() = 14 # final "\r\n" = 2
+				}
+			}
+			
+			return "";
+		}
+
+		string HTTPData::getData() {
+			return data_.substr(data_.find_last_of("\n") + 1);
+		}
 
 		//CODE
 
@@ -105,9 +126,9 @@ namespace eProsima
 
 		//PARAM
 
-		HTTPParam::HTTPParam() : data_(""){}
+		HTTPParam::HTTPParam() : data_(""), name(""), value("") {}
 
-		HTTPParam::HTTPParam(std::string &name, std::string &value) : data_(name+std::string("=")+value){}
+		HTTPParam::HTTPParam(std::string &name, std::string &value) : data_(name+std::string("=")+value), name(name), value(value){}
 
 		HTTPParam::~HTTPParam(){}
 
@@ -125,6 +146,29 @@ namespace eProsima
 			data_+=param.get_data();
 			params_.push_back(param);
 			++size_;
+		}
+
+		void HTTPParameters::set_data(std::string &data) {
+			params_.clear();
+			size_ = 0;
+			data_ = "?";
+
+			string params = data.substr(1, data.size()); // Ignoring initial '?'
+			int beginAmpersand = 0;
+			int endAmpersand = 0;
+			string param;
+			string name;
+			string value;
+			HTTPParam httpParam;
+			while(endAmpersand < params.size()) {
+				endAmpersand = params.find("&", beginAmpersand);
+				param = params.substr(beginAmpersand, endAmpersand);
+				name = param.substr(0, param.find("="));
+				value = param.substr(param.find("=")+1, param.size());
+				httpParam = HTTPParam(name, value);
+				addParam(httpParam);
+				beginAmpersand = endAmpersand + 1;
+			 }
 		}
 
 

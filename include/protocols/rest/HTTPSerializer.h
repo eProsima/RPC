@@ -7,10 +7,10 @@
 #include <array>
 #include <vector>
 
-#include "protocols/rest/FastBuffer.h"
-#include "protocols/rest/HTTPEntities.h"
+#include "FastBuffer.h"
+#include "HTTPEntities.h"
 
-namespace eProsima
+namespace eprosima
 {
 	
 	namespace httpser
@@ -30,7 +30,7 @@ namespace eProsima
 
 			FastBuffer::iterator m_lastPosition_;
 
-			size_t m_lastDataSize_;
+			//size_t m_lastDataSize_;
 
 			// Backup data
 
@@ -38,7 +38,7 @@ namespace eProsima
 
 			FastBuffer::iterator m_alignPosition_bck;
 
-			size_t m_lastDataSize_bck;
+			//size_t m_lastDataSize_bck;
 
 			//Functions
 
@@ -48,7 +48,7 @@ namespace eProsima
 
 			bool resize(size_t minSizeInc);
 
-			inline size_t alignment(size_t dataSize) const {return dataSize > m_lastDataSize_ ? (dataSize - ((m_currentPosition_ - m_alignPosition_) % dataSize)) & (dataSize-1) : 0;}
+			//inline size_t alignment(size_t dataSize) const {return dataSize > m_lastDataSize_ ? (dataSize - ((m_currentPosition_ - m_alignPosition_) % dataSize)) & (dataSize-1) : 0;}
 
 			inline void makeAlign(size_t align){m_currentPosition_ += align;}
 			
@@ -60,9 +60,9 @@ namespace eProsima
 
 			void reset();
 			
-			HTTPSerializer& serialize(uint32_t &integer);
+			//HTTPSerializer& serialize(uint32_t &integer);
 
-			HTTPSerializer& deserialize(uint32_t &integer);
+			//HTTPSerializer& deserialize(uint32_t &integer);
 
 			HTTPSerializer& serialize(std::string &string_t);
 
@@ -91,11 +91,14 @@ namespace eProsima
 			HTTPSerializer& serialize(HTTPParam &param);
 
 			HTTPSerializer& deserialize(HTTPParam &param);
+
+			HTTPSerializer& serialize(HTTPParameters &params);
+
+			HTTPSerializer& deserialize(HTTPParameters &params);
 			
 			HTTPSerializer& serialize(HTTPParameters &params, size_t numElements);
 
 			HTTPSerializer& deserialize(HTTPParameters &params, size_t numElements);
-
 		};
 	
 	} //namespace httpser

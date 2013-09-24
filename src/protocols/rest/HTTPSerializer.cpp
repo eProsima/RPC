@@ -1,12 +1,12 @@
-#include "protocols/rest/HTTPSerializer.h"
+#include "HTTPSerializer.h"
 
-namespace eProsima
+namespace eprosima
 {
 
 	namespace httpser
 	{
 
-		HTTPSerializer::HTTPSerializer(FastBuffer &buffer) : buffer_(buffer), m_lastDataSize_(0), m_currentPosition_(buffer.begin()), m_alignPosition_(buffer.begin()), m_lastPosition_(buffer.end())
+		HTTPSerializer::HTTPSerializer(FastBuffer &buffer) : buffer_(buffer), /*m_lastDataSize_(0),*/ m_currentPosition_(buffer.begin()), m_alignPosition_(buffer.begin()), m_lastPosition_(buffer.end())
 		{
 
 		}
@@ -20,14 +20,14 @@ namespace eProsima
 		{
 			 m_currentPosition_bck = serializer.m_currentPosition_;
 			 m_alignPosition_bck = serializer.m_alignPosition_;
-			 m_lastDataSize_bck = serializer.m_lastDataSize_;
+			 //m_lastDataSize_bck = serializer.m_lastDataSize_;
 		}
 
 		void HTTPSerializer::setState()
 		{
 			m_currentPosition_ = m_currentPosition_bck;
 			m_alignPosition_ = m_alignPosition_bck;
-			m_lastDataSize_ = m_lastDataSize_bck;
+			//m_lastDataSize_ = m_lastDataSize_bck;
 		}
 
 		bool HTTPSerializer::resize(size_t minSizeInc)
@@ -45,9 +45,10 @@ namespace eProsima
 		{
 			m_currentPosition_ = buffer_.begin();
 			m_alignPosition_ = buffer_.begin();
-			m_lastDataSize_ = 0;
+			//m_lastDataSize_ = 0;
 		}
 
+		/*
 		HTTPSerializer& HTTPSerializer::serialize(uint32_t &integer)
 		{
 			size_t align = alignment(sizeof(integer));
@@ -56,7 +57,7 @@ namespace eProsima
 			if(((m_lastPosition_ - m_currentPosition_) >= sizeAligned) || resize(sizeAligned))
 			{
 				// Save last datasize.
-				m_lastDataSize_ = sizeof(integer);
+				//m_lastDataSize_ = sizeof(integer);
     
 				// Align.
 				makeAlign(align);
@@ -78,7 +79,7 @@ namespace eProsima
 			if((m_lastPosition_ - m_currentPosition_) >= sizeAligned)
 			{
 				// Save last datasize.
-				m_lastDataSize_ = sizeof(integer);
+				//m_lastDataSize_ = sizeof(integer);
 
 				// Align
 				makeAlign(align);
@@ -90,20 +91,21 @@ namespace eProsima
 
 			//throw NotEnoughMemoryException(NotEnoughMemoryException::NOT_ENOUGH_MEMORY_MESSAGE_DEFAULT);
 		}
+		*/
 
 		HTTPSerializer& HTTPSerializer::serialize(std::string &string_t)
 		{
 			uint32_t length = (uint32_t)string_t.length();
 		    state(*this);
 	
-		    serialize(length);
+		    //serialize(length);
 			
 			if(length > 0)
 			{
 				if(((m_lastPosition_ - m_currentPosition_) >= length) || resize(length))
 				{
 					// Save last datasize.
-					m_lastDataSize_ = sizeof(uint8_t);
+					//m_lastDataSize_ = sizeof(uint8_t);
 					m_currentPosition_.memcopy(string_t.c_str(), length);
 					m_currentPosition_ += length;
 				}
@@ -122,7 +124,7 @@ namespace eProsima
 			uint32_t length = 0;
 			state(*this);
 
-			deserialize(length);
+			//deserialize(length);
 
 			if(length == 0)
 			{
@@ -132,7 +134,7 @@ namespace eProsima
 			else if((m_lastPosition_ - m_currentPosition_) >= length)
 			{
 				// Save last datasize.
-				m_lastDataSize_ = sizeof(uint8_t);
+				//m_lastDataSize_ = sizeof(uint8_t);
 
 				string_t = std::string(&m_currentPosition_, length - ((&m_currentPosition_)[length-1] == '\0' ? 1 : 0));
 				m_currentPosition_ += length;
@@ -150,7 +152,17 @@ namespace eProsima
 
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPMethod &method)
 		{
-			return HTTPSerializer::deserialize(method.get_data());
+			m_currentPosition_bck = m_currentPosition_;
+			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+			++m_currentPosition_;
+			while(actualChar.compare(" ") != 0) {
+				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+				++m_currentPosition_;
+			}
+
+			int length = m_currentPosition_ - m_currentPosition_bck;
+			method.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPUri &uri)
@@ -160,7 +172,18 @@ namespace eProsima
 
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPUri &uri)
 		{
-			return HTTPSerializer::deserialize(uri.get_data());
+			m_currentPosition_bck = m_currentPosition_;
+			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+			++m_currentPosition_;
+			while(actualChar.compare(" ") != 0 && actualChar.compare("?") != 0) {
+				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+				++m_currentPosition_;
+			}
+			m_currentPosition_ += -1;
+
+			int length = m_currentPosition_ - m_currentPosition_bck;
+			uri.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPVersion &version)
@@ -170,7 +193,29 @@ namespace eProsima
 
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPVersion &version)
 		{
-			return HTTPSerializer::deserialize(version.get_data());
+			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+			string endChar;
+			if(actualChar.compare(" ") == 0) {
+				// Request Version
+				endChar = "\n";
+			} else {
+				// Response Version
+				endChar = " ";
+			}
+
+			m_currentPosition_bck = m_currentPosition_;
+			++m_currentPosition_;
+			while(actualChar.compare(endChar) != 0) {
+				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+				++m_currentPosition_;
+			}
+			if(endChar.compare(" ") == 0) {
+				m_currentPosition_ += -1;
+			}
+
+			int length = m_currentPosition_ - m_currentPosition_bck;
+			version.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPData &data)
@@ -180,7 +225,18 @@ namespace eProsima
 
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPData &data)
 		{
-			return HTTPSerializer::deserialize(data.get_data());
+			m_currentPosition_bck = m_currentPosition_;
+			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+			++m_currentPosition_;
+			while(actualChar.compare("\0") != 0) {
+				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+				++m_currentPosition_;
+			}
+			m_currentPosition_ += -1;
+
+			int length = m_currentPosition_ - m_currentPosition_bck;
+			data.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPResponseCode &responseCode)
@@ -190,7 +246,17 @@ namespace eProsima
 
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPResponseCode &responseCode)
 		{
-			return HTTPSerializer::deserialize(responseCode.get_data());
+			m_currentPosition_bck = m_currentPosition_;
+			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+			++m_currentPosition_;
+			while(actualChar.compare("\n") != 0) {
+				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+				++m_currentPosition_;
+			}
+
+			int length = m_currentPosition_ - m_currentPosition_bck;
+			responseCode.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPParam &param)
@@ -201,6 +267,29 @@ namespace eProsima
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPParam &param)
 		{
 			return HTTPSerializer::deserialize(param.get_data());
+		}
+
+		HTTPSerializer& HTTPSerializer::serialize(HTTPParameters &params)
+		{
+			return HTTPSerializer::serialize(params.get_data());
+		}
+
+		HTTPSerializer& HTTPSerializer::deserialize(HTTPParameters &params)
+		{
+			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+			if(actualChar.compare("?") != 0)
+				return *this; // No parameters here
+			m_currentPosition_bck = m_currentPosition_;
+			++m_currentPosition_;
+			while(actualChar.compare(" ") != 0) {
+				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
+				++m_currentPosition_;
+			}
+			m_currentPosition_ += -1;
+
+			int length = m_currentPosition_ - m_currentPosition_bck;
+			params.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPParameters &params, size_t numElements)
