@@ -39,6 +39,11 @@ namespace eprosima
 				data_ = data;
 			}
 
+			inline void set_data(std::string &&data)
+			{
+				data_ = std::move(data);
+			}
+
 		};
 
 		class HTTPUri
@@ -65,6 +70,11 @@ namespace eprosima
 				int pathPos = data.find(baseUri) + baseUri.size();
 				baseUri = data.substr(0, pathPos);
 				path = data.substr(pathPos);
+			}
+
+			inline void set_data(std::string &&data)
+			{
+				set_data(std::move(data));
 			}
 
 			std::string getPath() { return path; }
@@ -96,6 +106,11 @@ namespace eprosima
 				data_ = data;
 				name = data.substr(0, data.find("="));
 				value = data.substr(data.find("=")+1, data.size());
+			}
+
+			inline void set_data(std::string &&data)
+			{
+				set_data(std::move(data));
 			}
 
 			string getName() {
@@ -140,6 +155,11 @@ namespace eprosima
 
 			void set_data(std::string &data);
 
+			inline void set_data(std::string &&data)
+			{
+				set_data(std::move(data));
+			}
+
 			void addParam(HTTPParam &param);
 			
 			bool containsParam(string name) {
@@ -162,6 +182,8 @@ namespace eprosima
 
 			HTTPVersion(std::string &version);
 
+HTTPVersion(std::string &&version);
+
 		public:
 
 			HTTPVersion();
@@ -179,6 +201,11 @@ namespace eprosima
 			inline void set_data(std::string &data)
 			{
 				data_ = data;
+			}
+
+			inline void set_data(std::string &&data)
+			{
+				data_ = std::move(data);
 			}
 
 			inline std::string& get_data()
@@ -212,6 +239,11 @@ namespace eprosima
 				data_ = data;
 			}
 
+			inline void set_data(std::string &&data)
+			{
+				data_ = std::move(data);
+			}
+
 			string getMediaType();
 			string getData();
 
@@ -239,6 +271,11 @@ namespace eprosima
 			inline void set_data(std::string &data)
 			{
 				data_ = data;
+			}
+
+			inline void set_data(std::string &&data)
+			{
+				data_ = std::move(data);
 			}
 
 			int getStatusCode() {

@@ -1,4 +1,4 @@
-#include "HTTPEntities.h"
+#include "protocols/rest/HTTPEntities.h"
 #include <sstream>
 
 namespace eprosima
@@ -45,6 +45,8 @@ namespace eprosima
 		HTTPVersion::HTTPVersion() : data_(""){}
 
 		HTTPVersion::HTTPVersion(std::string &version) : data_(version){}
+
+		HTTPVersion::HTTPVersion(std::string &&version) : data_(std::move(version)){}
 
 		HTTPVersion HTTPVersion::HTTPVersionRequest()
 		{

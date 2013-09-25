@@ -448,7 +448,7 @@ public class RPCDDSGEN
 	                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
 	                }
 	                	
-	            	return project;     
+	            	return project;
             	}
             	// END TODO XXX
             	

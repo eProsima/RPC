@@ -1,4 +1,4 @@
-#include "HTTPSerializer.h"
+#include "protocols/rest/HTTPSerializer.h"
 
 namespace eprosima
 {
