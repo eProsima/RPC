@@ -107,7 +107,7 @@ string $ctx.filename$Protocol::expandPath_$operation.name$(string path, $first(o
     stringstream stream;
     string expandedPath = "";
     string pathSegment = "";
-    char *p = strtok(_strdup(path.c_str()), "/");
+    char *p = strtok(strdup(path.c_str()), "/");
 
     $expandPathSegment(param=first(operation.parameters))$
 
@@ -192,7 +192,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $operation.rettype.members : {member | case $first(member.labels)$:
     retType._u.$member.name$.$first(member.typecode.members).name$ = httpResponseCode.getStatusCode();
     $if(rest(member.typecode.members))$
-    retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = _strdup(data.c_str());
+    retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(data.c_str());
     $endif$
     }$
     }
@@ -407,7 +407,7 @@ if(mediaType.find("json") != string::npos)
 $param.name$._d = discriminator;
 switch(discriminator) {
 $param.typecode.members : {member | case $first(member.labels)$:
-$param.name$._u.$member.name$ = _strdup(httpData.getData().c_str());
+$param.name$._u.$member.name$ = strdup(httpData.getData().c_str());
 }$}
 $endif$
 }$
