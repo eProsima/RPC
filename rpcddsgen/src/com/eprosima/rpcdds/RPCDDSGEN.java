@@ -1357,12 +1357,16 @@ public class RPCDDSGEN
     
     private boolean genMakefile(Solution solution, String arch)
     {
+    	String makefileSTG = "Makefile";
+    	if(m_protocol.equalsIgnoreCase("rest"))
+    		makefileSTG = "RESTMakefile";
+    	
     	boolean returnedValue = false;
     	StringTemplate makecxx = null;
     	
     	// TODO Change depending RTI or OpenDDS.
         StringTemplateGroup middlgr = StringTemplateGroup.loadGroup("rti", DefaultTemplateLexer.class, null);
-    	StringTemplateGroup makeTemplates = StringTemplateGroup.loadGroup("Makefile", DefaultTemplateLexer.class, middlgr);
+    	StringTemplateGroup makeTemplates = StringTemplateGroup.loadGroup("RESTMakefile", DefaultTemplateLexer.class, middlgr);
     	
     	if(makeTemplates != null)
     	{

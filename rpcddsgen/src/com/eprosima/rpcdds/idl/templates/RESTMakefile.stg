@@ -1,0 +1,134 @@
+group Makefile;
+
+makecxx(solution, example, arch, version) ::= <<
+CPP= g++
+CPPFLAGS = -c -Wall -fpic -m$arch$ -std=c++0x
+LN= g++
+AR=ar
+LDFLAGS= -m$arch$
+SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
+DEFINES= $archMakeDefines()$
+
+INCLUDES= -I. $inclMake()$
+
+LIBS = $libsMake(example=example, version=version)$ -lboost_system-mt \$(SYSLIBS)
+
+DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir bin.dir bin/$example$.dir
+
+all: \$(DIRECTORIES) $solution.projects:{$it.name$ $if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
+
+$solution.projects:{
+$it.name$_TARGET= lib/$example$/lib$it.name$.so
+$it.name$_TARGET_Z= lib/$example$/lib$it.name$.a
+$if(!it.unique)$
+$if(solution.clientside)$
+$it.name$_CLIENT_TARGET= lib/$example$/lib$it.name$Client.so
+$it.name$_CLIENT_TARGET_Z= lib/$example$/lib$it.name$Client.a
+$it.name$_CLIENT_EXAMPLE_TARGET= bin/$example$/$it.name$ClientExample
+$endif$
+
+$if(solution.serverside)$
+$it.name$_SERVER_TARGET= lib/$example$/lib$it.name$Server.so
+$it.name$_SERVER_TARGET_Z= lib/$example$/lib$it.name$Server.a
+$it.name$_SERVER_EXAMPLE_TARGET= bin/$example$/$it.name$ServerExample
+$endif$
+$endif$
+
+$it.name$_COMMON_SRC_CXXFILES = $it.commonSrcFiles : {srcfile | $srcfile$}; separator=" \\\n\t"$
+
+$it.name$_COMMON_SRC_CPPFILES=
+
+$if(!it.unique)$
+$if(solution.clientside)$
+$it.name$_CLIENTSOURCES = $it.clientSrcFiles : {srcfile | $srcfile$}; separator=" \\\n\t"$
+$endif$
+
+$if(solution.serverside)$
+$it.name$_SERVERSOURCES = $it.serverSrcFiles : {srcfile | $srcfile$}; separator=" \\\n\t"$
+$endif$
+$endif$
+
+$it.name$_COMMONOBJS    = \$($it.name$_COMMON_SRC_CXXFILES:%.cxx=output/$example$/%.o) \$($it.name$_COMMON_SRC_CPPFILES:%.cpp=output/$example$/%.o)
+$if(!it.unique)$
+$if(solution.clientside)$
+$it.name$_CLIENTOBJS    = \$($it.name$_CLIENTSOURCES:%.cxx=output/$example$/%.o)
+$endif$
+
+$if(solution.serverside)$
+$it.name$_SERVEROBJS    = \$($it.name$_SERVERSOURCES:%.cxx=output/$example$/%.o)
+$endif$
+$endif$
+
+OBJS+= \$($it.name$_COMMONOBJS)$if(!it.unique)$$if(solution.clientside)$ \$($it.name$_CLIENTOBJS)$endif$$if(solution.serverside)$ \$($it.name$_SERVEROBJS)$endif$$endif$
+
+\$($it.name$_TARGET): \$($it.name$_COMMONOBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_TARGET) \$($it.name$_COMMONOBJS) \$(LIBS) -Llib/$example$ $it.dependencies : {dep | -l$dep$}; separator=" "$
+
+\$($it.name$_TARGET_Z): \$($it.name$_COMMONOBJS)
+	\$(AR) -cru \$($it.name$_TARGET_Z) \$($it.name$_COMMONOBJS)
+$if(!it.unique)$
+$if(solution.clientside)$
+\$($it.name$_CLIENT_TARGET): \$($it.name$_CLIENTOBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_CLIENT_TARGET) \$(LIBS) -Llib/$example$ -l$it.name$ \$($it.name$_CLIENTOBJS)
+
+\$($it.name$_CLIENT_TARGET_Z): \$($it.name$_CLIENTOBJS)
+	\$(AR) -cru \$($it.name$_CLIENT_TARGET_Z) \$($it.name$_CLIENTOBJS)
+$endif$
+
+$if(solution.serverside)$	
+\$($it.name$_SERVER_TARGET): \$($it.name$_SERVEROBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_SERVER_TARGET) \$(LIBS) -Llib/$example$ -l$it.name$ \$($it.name$_SERVEROBJS)
+
+\$($it.name$_SERVER_TARGET_Z): \$($it.name$_COMMONOBJS) \$($it.name$_SERVEROBJS)
+	\$(AR) -cru \$($it.name$_SERVER_TARGET_Z) \$($it.name$_SERVEROBJS)
+$endif$
+
+$if(solution.clientside)$
+$it.name$Client : \$($it.name$_CLIENT_TARGET) \$($it.name$_CLIENT_TARGET_Z)
+$endif$
+
+$if(solution.serverside)$	
+$it.name$Server : \$($it.name$_SERVER_TARGET) \$($it.name$_SERVER_TARGET_Z)
+$endif$
+
+$if(solution.clientside)$	
+\$($it.name$_CLIENT_EXAMPLE_TARGET): output/$example$/$it.name$ClientExample.o lib/$example$/lib$it.name$Client.a lib/$example$/lib$it.name$.a $it.dependencies : {dep | lib/$example$/lib$dep$.a}; separator=" "$
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ClientExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Client -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
+$endif$
+
+$if(solution.serverside)$	
+\$($it.name$_SERVER_EXAMPLE_TARGET): output/$example$/$it.name$ServerExample.o output/$example$/$it.name$ServerImplExample.o lib/$example$/lib$it.name$Server.a lib/$example$/lib$it.name$.a $it.dependencies : {dep | lib/$example$/lib$dep$.a}; separator=" "$
+	\$(LN) \$(LDFLAGS) -o \$@ output/$example$/$it.name$ServerImplExample.o output/$example$/$it.name$ServerExample.o -Wl,-Bstatic -Llib/$example$ -l$it.name$Server -l$it.name$ $it.dependencies : {dep | -l$dep$}; separator=" "$ -Wl,-Bdynamic \$(LIBS)
+$endif$
+
+$if(solution.clientside)$	
+$it.name$ClientExample : \$($it.name$_CLIENT_EXAMPLE_TARGET)
+$endif$
+
+$if(solution.serverside)$	
+$it.name$ServerExample : \$($it.name$_SERVER_EXAMPLE_TARGET)
+$endif$
+$endif$
+
+$it.name$: \$($it.name$_TARGET) \$($it.name$_TARGET_Z)$if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$
+}; separator="\n"$
+
+output/$example$/%.o:%.cxx
+	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
+
+output/$example$/%.o:%.cpp
+	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
+
+.PHONY: $solution.projects:{$it.name$ $if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
+
+clean:
+	@rm -f \$(OBJS)
+
+%.dir : 
+	@echo "Checking directory \$*"
+	@if [ ! -d \$* ]; then \
+		echo "Making directory \$*"; \
+		mkdir -p \$* ; \
+	fi;
+
+>>

@@ -16,10 +16,12 @@ using namespace eprosima::rpcdds::protocol::rest;
 using namespace eprosima::rpcdds::transport;
 using namespace eprosima::rpcdds::exception;
 
+$ctx.filename$Protocol::$ctx.filename$Protocol() {}
+
+$ctx.filename$Protocol::~$ctx.filename$Protocol() {}
+
 bool $ctx.filename$Protocol::setTransport(Transport &transport)
-{
-    const char *requesttypeName = NULL, *replytypeName = NULL;
-    
+{    
     if(strcmp(transport.getType(), "RAW") != 0)
     {
         throw IncompatibleException("protocol and transport are incompatibles");
@@ -35,7 +37,7 @@ $definitions; separator="\n"$
 // Server
 char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     // Not found error serialization
-    char http404Response[1024];
+    char* http404Response = (char*)malloc(1024);
     memset(http404Response, 0, 1024);
     FastBuffer fastBuffer404(http404Response, 1024);
     HTTPSerializer* http404Serializer = new HTTPSerializer(fastBuffer404);
@@ -205,10 +207,10 @@ void $ctx.filename$Protocol::deserializePath_$operation.name$(string actualPath,
 {
     string templatePath = "$operation.parent.path$";
     stringstream stream;
-    int prevTemplatePos = 0;
-    int prevActualPos = 0;
-    int templatePos = 0;
-    int actualPos = 0;
+    unsigned int prevTemplatePos = 0;
+    unsigned int prevActualPos = 0;
+    unsigned int templatePos = 0;
+    unsigned int actualPos = 0;
     string templatePathSegment;
     string actualPathSegment;
     

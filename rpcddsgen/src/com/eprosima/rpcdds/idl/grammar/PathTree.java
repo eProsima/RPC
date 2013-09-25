@@ -213,7 +213,7 @@ public class PathTree {
 			code += "string tag;\n";
 			code += "string rest;\n";
 			code += "string aux;\n";
-			code += "int pos;\n";
+			code += "unsigned int pos;\n";
 			code += "char* p;\n";
 		}
 				
@@ -248,7 +248,7 @@ public class PathTree {
 		for(PathTree child: children) {
 			if(child.isVariableNode()) {
 				if(child.isNumeric()) {
-					code += "strtol(_strdup(tag.c_str()), &p, 10);\n";
+					code += "strtol(strdup(tag.c_str()), &p, 10);\n";
 					code += "if(!*p) {\n";
 					code += "aux = path;\n";
 					code += "path = rest;\n";
