@@ -275,12 +275,17 @@ stream << httpResponseStatus;
 string code = stream.str();
 string status = "";
 HTTPResponseCode httpResponseCode(code, status);
-stream = stringstream();
+stream.clear();
 httpResponseSerializer->serialize(httpResponseCode);
 if(responseData.size()>0) {
     stream << responseData.length();
-    HTTPData httpData(std::string(stream.str()), std::string("application/xml"), responseData);
-    stream = stringstream();
+    string size = stream.str();
+    if(SearchResponse._d == 1)
+        mediaType = "application/xml";
+    else if(SearchResponse._d == 2)
+        mediaType = "application/json";
+    HTTPData httpData(size, mediaType, responseData);
+    stream.clear();
 }
 
 >>
@@ -298,7 +303,7 @@ deserializePathSegment(param) ::= <<
         if(templatePathSegment.at(0) == '{' && templatePathSegment.at(templatePathSegment.size() - 1) == '}') {
             stream << actualPathSegment;
             stream $ctx.sersym$ $param.name$.$member.name$;
-            stream = stringstream();
+            stream.clear();
             break;
         }
     }
@@ -317,7 +322,7 @@ expandPathSegment(param) ::= <<
     }
     stream << $param.name$.$member.name$;
     expandedPath += stream.str() + "/";
-    stream = stringstream();
+    stream.clear();
     }$
 >>
 
@@ -335,7 +340,7 @@ $if(!param.bodyParam)$
     if(httpParam.getName().compare("$param.name$") == 0) {
         stream << httpParam.getValue();
         stream $ctx.sersym$ $param.name$;
-        stream = stringstream();
+        stream.clear();
     }
 $endif$
 }$
@@ -357,7 +362,7 @@ $if(!param.bodyParam)$
 paramName = "$param.name$";
 stream << $param.name$;
 paramValue = stream.str();
-stream = stringstream();
+stream.clear();
 httpParam = HTTPParam(paramName, paramValue);
 httpParameters.addParam(httpParam);
 
@@ -377,13 +382,14 @@ $param.typecode.members : {member | case $first(member.labels)$:
     data = $param.name$._u.$member.name$;}$
 }
 if(data.size() > 0) {
+    string size = stream.str();
     if(discriminator == 1)
         mediaType = "application/xml";
     else if(discriminator == 2)
         mediaType = "application/json";
     stream << data.size();
-    HTTPData httpData(stream.str(), mediaType, data);
-    stream = stringstream();
+    HTTPData httpData(size, mediaType, data);
+    stream.clear();
     httpSerializer->serialize(httpData);
 }$endif$}$
 >>
