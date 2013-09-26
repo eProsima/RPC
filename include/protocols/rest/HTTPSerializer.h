@@ -64,9 +64,7 @@ namespace eprosima
 
 			//HTTPSerializer& deserialize(uint32_t &integer);
 
-			HTTPSerializer& serialize(std::string &string_t);
-
-			HTTPSerializer& serialize(std::string &&string_t) { return serialize(std::move(string_t)); }
+			HTTPSerializer& serialize(const std::string &string_t);
 
 			HTTPSerializer& deserialize(std::string &string_t);
 

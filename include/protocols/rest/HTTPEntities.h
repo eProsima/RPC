@@ -34,7 +34,7 @@ namespace eprosima
 				return data_;
 			}
 
-			inline void set_data(std::string &data)
+			inline void set_data(const std::string &data)
 			{
 				data_ = data;
 			}
@@ -65,16 +65,11 @@ namespace eprosima
 				return baseUri+path;
 			}
 
-			inline void set_data(std::string &data)
+			inline void set_data(const std::string &data)
 			{
 				int pathPos = data.find(baseUri) + baseUri.size();
 				baseUri = data.substr(0, pathPos);
 				path = data.substr(pathPos);
-			}
-
-			inline void set_data(std::string &&data)
-			{
-				set_data(std::move(data));
 			}
 
 			std::string getPath() { return path; }
@@ -101,7 +96,7 @@ namespace eprosima
 				return data_;
 			}
 
-			inline void set_data(std::string &data)
+			inline void set_data(const std::string &data)
 			{
 				data_ = data;
 				name = data.substr(0, data.find("="));
@@ -110,7 +105,9 @@ namespace eprosima
 
 			inline void set_data(std::string &&data)
 			{
-				set_data(std::move(data));
+				data_ = std::move(data);
+				name = data.substr(0, data.find("="));
+				value = data.substr(data.find("=")+1, data.size());
 			}
 
 			string getName() {
@@ -180,9 +177,9 @@ namespace eprosima
 
 			std::string data_;
 
-			HTTPVersion(std::string &version);
+			HTTPVersion(const std::string &version);
 
-HTTPVersion(std::string &&version);
+			HTTPVersion(std::string &&version);
 
 		public:
 
@@ -198,7 +195,7 @@ HTTPVersion(std::string &&version);
 
 			~HTTPVersion();
 
-			inline void set_data(std::string &data)
+			inline void set_data(const std::string &data)
 			{
 				data_ = data;
 			}
