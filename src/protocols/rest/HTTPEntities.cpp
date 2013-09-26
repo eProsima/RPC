@@ -62,7 +62,7 @@ namespace eprosima
 
 		HTTPVersion HTTPVersion::HTTPVersionRequest(std::string &version)
 		{
-			HTTPVersion ret(std::string(" "+version+"\r\n"));		
+			HTTPVersion ret(std::string(" "+version));		
 			return ret;
 		}
 
@@ -80,6 +80,7 @@ namespace eprosima
 
 		HTTPData::HTTPData(std::string &clength, std::string &ctype, std::string &data)
 		{
+			data_ += "\r\n";
 			data_ += std::string("Content Length: ");
 			data_ += clength;
 			data_ += "\r\n";
@@ -121,7 +122,7 @@ namespace eprosima
 
 		HTTPResponseCode::HTTPResponseCode(std::string &code, std::string &text)
 		{
-			data_ = code+=std::string(" ")+=text+=std::string("\n");
+			data_ = code+std::string(" ")+text;
 		}
 
 		HTTPResponseCode::~HTTPResponseCode(){};
