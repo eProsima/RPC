@@ -53,6 +53,7 @@ Proxy::Proxy(ProxyTransport &transport, Protocol &protocol) :
 
 Proxy::~Proxy()
 {
+    // TODO
     /*if(m_asyncThread != NULL)
     {
         m_asyncThread->exit();

@@ -8,12 +8,19 @@
 
 #include "transports/dds/ServerTransport.h"
 #include "transports/dds/components/ServerProcedureEndpoint.h"
+#include "protocols/Protocol.h"
 #include "exceptions/InitializeException.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerTransport";
+
+typedef struct encapsulation
+{
+    ServerProcedureEndpoint *endpoint;
+    void *data;
+} encapsulation;
 
 ServerTransport::ServerTransport(std::string &serviceName, int domainId) :
     m_serviceName(serviceName), ::transport::ServerTransport(),
@@ -37,14 +44,15 @@ TransportBehaviour ServerTransport::getBehaviour() const
 }
 
 int ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-        ::transport::dds::Transport::Copy_data copy_data, int dataSize)
+        Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
+        Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     ServerProcedureEndpoint *pe = new ServerProcedureEndpoint(*this);
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, copy_data, dataSize) == 0)
+        if(pe->initialize(name, writertypename, readertypename, initialize_data, finalize_data, processFunc, dataSize) == 0)
         {
             std::pair<std::map<const char*, ServerProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ServerProcedureEndpoint*>(name, pe));
 
@@ -66,6 +74,17 @@ int ServerTransport::createProcedureEndpoint(const char *name, const char *write
 
 void ServerTransport::process(eprosima::rpcdds::transport::ServerTransport &transport, void *data)
 {
+    const char* const METHOD_NAME = "process";
+    encapsulation *encap = (encapsulation*)data;
+
+    if(encap != NULL)
+    {
+        encap->endpoint->getProcessFunc()(transport.getLinkedProtocol(), encap->data, encap->endpoint); 
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameter\n", CLASS_NAME, METHOD_NAME);
+    }
 }
 
 void ServerTransport::run()
@@ -83,4 +102,5 @@ void ServerTransport::run()
 
 void ServerTransport::stop()
 {
+    //TODO
 }

@@ -689,9 +689,6 @@ public class RPCDDSGEN
 	        tmanager.addGroup("ServerSource");
 	        // Load template to generate example to use Servers.
 	        tmanager.addGroup("ServerExample");
-	        // Load template to generate server RPC support files.
-	        tmanager.addGroup("ServerRPCSupportHeader");
-	        tmanager.addGroup("ServerRPCSupportSource");
 	        // Load template to generate server user implementations.
 	        tmanager.addGroup("ServerImplHeader");
 	        tmanager.addGroup("ServerImplHeaderExample");
@@ -821,31 +818,23 @@ public class RPCDDSGEN
 		            {
 		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Server.cxx", maintemplates.getTemplate("ServerSource"), m_replace))
 		                {
-		                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerRPCSupport.h", maintemplates.getTemplate("ServerRPCSupportHeader"), m_replace))
-		                    {
-		                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerRPCSupport.cxx", maintemplates.getTemplate("ServerRPCSupportSource"), m_replace))
-		                        {
-		                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImpl.h", maintemplates.getTemplate("ServerImplHeader"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImpl.h", maintemplates.getTemplate("ServerImplHeader"), m_replace))
+                            {
+                            	project.addServerIncludeFile(onlyFileName + "Server.h");
+                            	project.addServerSrcFile(onlyFileName + "Server.cxx");
+                            	project.addServerIncludeFile(onlyFileName + "ServerImpl.h");
+                            	
+                            	if(m_exampleOption != null)
+                            	{
+                            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.h", maintemplates.getTemplate("ServerImplHeaderExample"), m_replace))
 		                            {
-	                                	project.addServerIncludeFile(onlyFileName + "Server.h");
-	                                	project.addServerSrcFile(onlyFileName + "Server.cxx");
-	                                	project.addServerIncludeFile(onlyFileName + "ServerRPCSupport.h");
-	                                	project.addServerSrcFile(onlyFileName + "ServerRPCSupport.cxx");
-	                                	project.addServerIncludeFile(onlyFileName + "ServerImpl.h");
-	                                	
-	                                	if(m_exampleOption != null)
-	                                	{
-	                                		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.h", maintemplates.getTemplate("ServerImplHeaderExample"), m_replace))
-	    		                            {
-	    		                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.cxx", maintemplates.getTemplate("ServerImplSourceExample"), m_replace))
-	    		                                {
-	    		                                	returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerExample.cxx", maintemplates.getTemplate("ServerExample"), m_replace);
-	    		                                }
-	    		                            }
-	                                	}
+		                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.cxx", maintemplates.getTemplate("ServerImplSourceExample"), m_replace))
+		                                {
+		                                	returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerExample.cxx", maintemplates.getTemplate("ServerExample"), m_replace);
+		                                }
 		                            }
-		                        }
-		                    }
+                            	}
+                            }
 		                }
 		            }
 		        }

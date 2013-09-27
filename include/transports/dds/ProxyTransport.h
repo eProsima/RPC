@@ -58,7 +58,8 @@ namespace eprosima
                          * @return 0 value is returned if the function works successfully. In other case -1 is returned.
                          */
                         int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-                                Transport::Copy_data copy_data, int dataSize);
+                                Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
+                                Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize);
 
                         eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 
@@ -66,7 +67,7 @@ namespace eprosima
                          * 2brief This function returns the behaviour of the transport.
                          * @return The behaviour of the transport.
                          */
-                        TransportBehaviour getBehaviour();
+                        TransportBehaviour getBehaviour() const;
 
                     protected:
 

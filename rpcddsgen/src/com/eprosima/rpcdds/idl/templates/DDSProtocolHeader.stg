@@ -7,6 +7,7 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file
 #define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
+#include "transports/components/Endpoint.h"
 #include "utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
@@ -73,6 +74,9 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+
+static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
+    void *data , eprosima::rpcdds::transport::Endpoint*);
 
 >>
 

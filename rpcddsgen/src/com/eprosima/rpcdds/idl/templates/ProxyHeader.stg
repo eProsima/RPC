@@ -16,11 +16,6 @@ namespace eprosima
 {
     namespace rpcdds
     {
-        namespace transport
-        {
-            class ProxyTransport;
-        }
-        
         namespace protocol
         {
             class $ctx.filename$Protocol;

@@ -5,8 +5,8 @@
  * RPCDDS_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#ifndef _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
-#define _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
+#ifndef _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
+#define _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 
 #include "transports/dds/ProxyTransport.h"
 #include "utils/dds/Middleware.h"
@@ -165,4 +165,4 @@ namespace eprosima
         } // namespace transport
     } // namespace rpcdds
 } // namespace eprosima
-#endif // _TRANSPORTS_DDS_COMPONENT_PROXYPROCEDUREENDPOINT_H_
+#endif // _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_

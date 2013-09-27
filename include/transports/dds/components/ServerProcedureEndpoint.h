@@ -5,10 +5,11 @@
  * RPCDDS_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#ifndef _TRANSPORTS_DDS_COMPONENT_SERVERPROCEDUREENDPOINT_H_
-#define _TRANSPORTS_DDS_COMPONENT_SERVERPROCEDUREENDPOINT_H_
+#ifndef _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
+#define _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 
 #include "transports/dds/ServerTransport.h"
+#include "transports/components/Endpoint.h"
 #include "utils/dds/Middleware.h"
 #include "utils/Messages.h"
 
@@ -26,7 +27,7 @@ namespace eprosima
                  * @brief This class represents a remote endpoint used by a proxy.
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
                  */
-                class ServerProcedureEndpoint : public DDS::DataReaderListener
+                class ServerProcedureEndpoint : public Endpoint, public DDS::DataReaderListener
                 {
                     public:
 
@@ -40,11 +41,15 @@ namespace eprosima
                         virtual ~ServerProcedureEndpoint();
 
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
-                                Transport::Copy_data copy_data, int dataSize);
+                                Transport::Initialize_data initialize_data, Transport::Finalize_data finalize_data,
+                                Transport::ProcessFunc, int dataSize);
 
                         int start(std::string &serviceName);
 
                         void stop();
+
+                        inline
+                            Transport::ProcessFunc getProcessFunc(){return m_process_func;}
 
                         /// @brief DDS callback.
                         virtual void on_data_available(DDS::DataReader* reader);
@@ -118,7 +123,11 @@ namespace eprosima
                         //! @brief The data reader used to receive.
                         DDS::DataReader *m_reader;
 
-                        Transport::Copy_data m_copy_data;
+                        Transport::Initialize_data m_initialize_data;
+
+                        Transport::Finalize_data m_finalize_data;
+
+                        Transport::ProcessFunc m_process_func;
 
                         int m_dataSize;
                 };
@@ -126,4 +135,4 @@ namespace eprosima
         } // namespace transport
     } // namespace rpcdds
 } // namespace eprosima
-#endif // _TRANSPORTS_DDS_COMPONENT_SERVERPROCEDUREENDPOINT_H_
+#endif // _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_

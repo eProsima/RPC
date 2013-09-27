@@ -5,27 +5,39 @@ $fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source 
 
 #include "$ctx.filename$Server.h"
 #include "strategies/ThreadPoolStrategy.h"
+#include "$ctx.filename$DDSProtocol.h"
+#include "transports/dds/UDPServerTransport.h"
 #include "exceptions/Exceptions.h"
 #include "utils/Utilities.h"
 #include "$ctx.filename$ServerImplExample.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::strategy;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
     unsigned int threadPoolSize = 5;
-    eProsima::RPCDDS::ThreadPoolStrategy *pool = NULL;
+    ThreadPoolStrategy *pool = NULL;
+    $ctx.filename$Protocol *protocol = NULL;
+    UDPServerTransport *transport = NULL;
     $ctx.firstInterface.scopedname$Server *server = NULL;
     $ctx.firstInterface.name$ServerImplExample servant;
     
     // Create and initialize the server for interface "$ctx.firstInterface.scopedname$".
     try
     {
-        pool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        server = new $ctx.firstInterface.scopedname$Server("$ctx.firstInterface.name$Service", pool, servant);
+        pool = new ThreadPoolStrategy(threadPoolSize);
+        protocol = new $ctx.filename$Protocol();
+        transport = new UDPServerTransport("$ctx.firstInterface.name$Service");
+        server = new $ctx.firstInterface.scopedname$Server(*pool, *transport, *protocol, servant);
         server->serve();
     }
-    catch(eProsima::RPCDDS::InitializeException &ex)
+    catch(InitializeException &ex)
     {
         std::cout << ex.what() << std::endl;
         return -1;
@@ -33,12 +45,14 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        eProsima::RPCDDS::sleep(10000);
+        eprosima::rpcdds::sleep(10000);
     }
     
     // Stop and delete the server.
     server->stop();
     delete server;
+    delete protocol;
+    delete transport;
     delete pool;
     
     return 0;

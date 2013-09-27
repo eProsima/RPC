@@ -63,7 +63,17 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
         if(ddstransport.createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
             (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? requesttypeName : $if(operation.oneway)$NULL$else$replytypeName$endif$),
             (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? $if(operation.oneway)$NULL$else$replytypeName$endif$ : requesttypeName),
-            (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::copy_data,
+            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ?
+                (::transport::dds::Transport::Initialize_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::initialize_data :
+                (::transport::dds::Transport::Initialize_data)$interface.scopedname$_$operation.name$RequestTypeSupport::initialize_data),
+            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ?
+                (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::copy_data :
+                (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$RequestTypeSupport::copy_data),
+            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ?
+                (::transport::dds::Transport::Finalize_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::finalize_data :
+                (::transport::dds::Transport::Finalize_data)$interface.scopedname$_$operation.name$RequestTypeSupport::finalize_data),
+            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? NULL :
+                $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_serve),
             sizeof($interface.scopedname$_$operation.name$Reply)) != 0)
             {
                 return false;
@@ -196,6 +206,12 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
     $endif$
+}
+
+void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
+    void *data , eprosima::rpcdds::transport::Endpoint*)
+{
+printf("Leido $operation.parent.formatedScopedname$_$operation.name$\n");
 }
 
 >>

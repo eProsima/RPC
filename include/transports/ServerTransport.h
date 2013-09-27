@@ -11,11 +11,20 @@
 
 #include "rpcdds_dll.h"
 #include "transports/Transport.h"
+#include "transports/components/Endpoint.h"
+
+#include <stdio.h>
 
 namespace eprosima
 {
     namespace rpcdds
     {
+        namespace protocol
+        {
+            class Protocol;
+        }
+
+
         namespace strategy
         {
             class ServerStrategy;
@@ -33,7 +42,8 @@ namespace eprosima
                 public:
 
                     //! \brief Default constructor.
-                    ServerTransport(){}
+                    ServerTransport() : m_strategy(NULL)
+                    {}
 
                     //! \brief Default destructor.
                     virtual ~ServerTransport(){}
@@ -42,6 +52,18 @@ namespace eprosima
                         void setStrategy(eprosima::rpcdds::strategy::ServerStrategy &strategy)
                         {
                             m_strategy = &strategy;
+                        }
+
+                    inline
+                        void linkProtocol(eprosima::rpcdds::protocol::Protocol &protocol)
+                        {
+                            m_protocol = &protocol;
+                        }
+
+                    inline
+                        eprosima::rpcdds::protocol::Protocol& getLinkedProtocol()
+                        {
+                            return *m_protocol;
                         }
 
                     inline
@@ -62,6 +84,8 @@ namespace eprosima
                 private:
 
                     eprosima::rpcdds::strategy::ServerStrategy *m_strategy;
+
+                    eprosima::rpcdds::protocol::Protocol *m_protocol;
             };
         }
         // namespace transport

@@ -15,8 +15,15 @@ namespace eprosima
 {
     namespace rpcdds
     {
+        namespace protocol
+        {
+            class Protocol;
+        }
+
         namespace transport
         {
+            class Endpoint;
+
             namespace dds
             {
                 /*!
@@ -37,7 +44,11 @@ namespace eprosima
                 {
                     public:
 
+                        typedef void (*Initialize_data)(void *data);
                         typedef void (*Copy_data)(void *src, void *dst);
+                        typedef void (*Finalize_data)(void *data);
+                        typedef void (*ProcessFunc)(eprosima::rpcdds::protocol::Protocol&, void*,
+                                eprosima::rpcdds::transport::Endpoint*);
 
                         /*!
                          * @brief Default destructor.
@@ -74,13 +85,14 @@ namespace eprosima
                          * @return 0 value is returned if the function works successfully. In other case -1 is returned.
                          */
                         virtual int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-                                Copy_data copy_data, int dataSize) = 0;
+                                Initialize_data initialize_data, Copy_data copy_data, Finalize_data finalize_data,
+                                ProcessFunc processFunc, int dataSize) = 0;
 
                         /*!
                          * 2brief This function returns the behaviour of the transport.
                          * @return The behaviour of the transport.
                          */
-                        virtual TransportBehaviour getBehaviour() = 0;
+                        virtual TransportBehaviour getBehaviour() const = 0;
 
                     protected:
 

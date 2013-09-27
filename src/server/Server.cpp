@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of RPCDDS is licensed to you under the terms described in the
  * RPCDDS_LICENSE file included in this distribution.
@@ -7,181 +7,57 @@
  *************************************************************************/
 
 #include "server/Server.h"
-#include "server/ServerRPC.h"
 #include "exceptions/InitializeException.h"
+#include "strategies/ServerStrategy.h"
 #include "transports/ServerTransport.h"
-#include "server/ServerStrategy.h"
+#include "protocols/Protocol.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static const char* const CLASS_NAME ="eProsima::RPCDDS::Server";
+static const char* const CLASS_NAME ="eprosima::rpcdds::server::Server";
 
 using namespace eprosima::rpcdds;
+using namespace ::server;
+using namespace ::strategy;
+using namespace ::transport;
+using namespace ::protocol;
 using namespace ::exception;
 
-Server::Server(std::string serviceName, ServerStrategy *strategy, ServerTransport *transport, int domainId) : m_serviceName(serviceName), m_domainId(domainId),
-    m_strategy(strategy), m_participant(NULL), m_defaultTransport(false), m_transport(transport)
+Server::Server(ServerStrategy &strategy, ServerTransport &transport, Protocol &protocol) :
+    m_strategy(strategy), m_transport(transport), m_protocol(protocol)
 {
-    const char* const METHOD_NAME = "Server";
+    const char* const METHOD_NAME ="Server";
     std::string errorMessage;
 
-    if(strategy != NULL)
+    if(protocol.setTransport(transport))
     {
-        /*if(m_transport == NULL)
-        {
-            m_transport = new UDPServerTransport();
-            m_defaultTransport = true;
-        }*/
-
-        DDS::DomainParticipantQos participantQos;
-
-        // Because OpenDDS, the first step is set the transport.
-        DDS::DomainParticipantFactory *factory = ::util::dds::getFactory(m_domainId);
-
-        if(factory != NULL)
-        {
-            factory->get_default_participant_qos(participantQos);
-
-            ::util::dds::increase_buffers(participantQos);
-            // Creating the domain participant which is associated with the client
-            m_participant = factory->create_participant(
-                    m_domainId, participantQos, 
-                    NULL /* listener */, STATUS_MASK_NONE);
-
-            if (m_participant != NULL)
-            {
-                if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
-                {
-                    participantQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
-
-
-                    m_participant->set_qos(participantQos);
-
-                    return;
-                }
-                else
-                {
-                    errorMessage = "cannot get the participant QoS";
-                }
-
-                factory->delete_participant(m_participant);
-            }
-            else
-            {
-                errorMessage = "create_participant error";
-            }
-        }
-        else
-        {
-            errorMessage = "create factory error";
-        }
+        transport.setStrategy(strategy);
+        transport.linkProtocol(protocol);
+        return;
     }
     else
-    {				
-        errorMessage = "bad parameters";
+    {
+        errorMessage = "Cannot bind protocol with the transport";
     }
 
     printf("ERROR<%s::%s>: %s\n", CLASS_NAME, METHOD_NAME, errorMessage.c_str());
     throw InitializeException(std::move(errorMessage));
 }
 
-void Server::deleteRPCs()
-{
-    ServerRPC *rpc = NULL;
-    std::list<ServerRPC*>::iterator it = m_rpcList.begin();
-
-    while(it != m_rpcList.end())
-    {
-        rpc = *it;
-        it = m_rpcList.erase(it);
-        delete rpc;
-    }
-}
-
 Server::~Server()
 {
-    const char* const METHOD_NAME = "~Server";
-    DDS::ReturnCode_t retcode;
-
-    deleteRPCs();
-
-    if(m_participant != NULL)
-    {
-        retcode = m_participant->delete_contained_entities();
-        if (retcode != DDS::RETCODE_OK) {
-            printf("ERROR<~%s::%s>: delete_contained_entities error %d\n", CLASS_NAME, METHOD_NAME, retcode);
-        }
-
-        retcode = TheParticipantFactory->delete_participant(m_participant);
-        if (retcode != DDS::RETCODE_OK) {
-            printf("ERROR<~%s::%s> delete_participant error %d\n", CLASS_NAME, METHOD_NAME, retcode);
-        }
-    }
-
-    if(m_defaultTransport && m_transport != NULL)
-        delete m_transport;
-}
-
-DDS::DomainParticipant* Server::getParticipant() const
-{ 
-    return m_participant;
-}
-
-int Server::setRPC(ServerRPC *newRPC)
-{
-    const char* const METHOD_NAME ="getParticipant";
-    int returnedValue = -1;
-
-    if(newRPC != NULL)
-    {
-        m_rpcList.push_back(newRPC);
-        returnedValue = 0;
-    }
-    else
-    {
-        printf("ERROR<%s::%s>: Cannot create the structure of the new remote service\n", CLASS_NAME, METHOD_NAME);
-    }
-
-    return returnedValue;
 }
 
 void Server::serve()
 {
-    const char* const METHOD_NAME = "serve";
-    std::string errorMessage;
-
-    std::list<ServerRPC*>::iterator it;
-
-    for(it = m_rpcList.begin(); it != m_rpcList.end(); ++it)
-    {
-        if((*it)->start() != 0)
-        {
-            printf("ERROR<%s::%s>: Cannot start the RPC object %s\n", CLASS_NAME, METHOD_NAME, (*it)->getRPCName());
-            throw InitializeException(std::string("Cannot start the RPC object ") + (*it)->getRPCName());
-        }
-    }
-
+    const char* const METHOD_NAME = "server";
+    m_transport.run();
     printf("INFO<%s::%s>: Server is running\n", CLASS_NAME, METHOD_NAME);	
 }
 
 void Server::stop()
 {
     const char* const METHOD_NAME = "stop";
-    for(std::list<ServerRPC*>::iterator it = m_rpcList.begin(); it != m_rpcList.end(); ++it)
-    {
-        (*it)->stop();
-    }
-
     printf("INFO<%s::%s>: Server is stopped\n", CLASS_NAME, METHOD_NAME);
-}
-
-void Server::schedule(fExecFunction execFunction, void *data, ServerRPC *service)
-{
-    m_strategy->schedule(execFunction, data, this, service);
-}
-
-const std::string& Server::getServiceName() const
-{
-    return m_serviceName;
 }

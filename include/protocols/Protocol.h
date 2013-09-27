@@ -18,6 +18,7 @@ namespace eprosima
         namespace transport
         {
             class Transport;
+            class Endpoint;
         }
 
         namespace protocol

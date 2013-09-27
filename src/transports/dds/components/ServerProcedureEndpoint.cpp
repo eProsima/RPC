@@ -17,14 +17,14 @@ const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerProcedur
 
 typedef struct encapsulation
 {
-    const char *name;
+    eprosima::rpcdds::transport::Endpoint *endpoint;
     void *data;
 } encapsulation;
 
 
 ServerProcedureEndpoint::ServerProcedureEndpoint(ServerTransport &transport) : m_transport(transport),
-    m_writerTopic(NULL), m_readerTopic(NULL), m_writer(NULL), m_reader(NULL), m_copy_data(NULL),
-    m_dataSize(0)
+    m_writerTopic(NULL), m_readerTopic(NULL), m_writer(NULL), m_reader(NULL), m_initialize_data(NULL),
+    m_finalize_data(NULL), m_process_func(NULL), m_dataSize(0)
 {
 }
 
@@ -33,14 +33,18 @@ ServerProcedureEndpoint::~ServerProcedureEndpoint()
 }
 
 int ServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
-        Transport::Copy_data copy_data, int dataSize)
+        Transport::Initialize_data initialize_data, Transport::Finalize_data finalize_data,
+        Transport::ProcessFunc processFunc, int dataSize)
 {
-    if(name != NULL && readertypename != NULL && copy_data != NULL)
+    if(name != NULL && readertypename != NULL && initialize_data != NULL && finalize_data != NULL &&
+            processFunc != NULL && dataSize > 0)
     {
         m_name = name;
         m_writerTypeName = writertypename;
         m_readerTypeName = readertypename;
-        m_copy_data = copy_data;
+        m_initialize_data = initialize_data;
+        m_finalize_data = finalize_data;
+        m_process_func = processFunc;
         m_dataSize = dataSize;
         return 0;
     }
@@ -233,9 +237,10 @@ void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 {
     const char* const METHOD_NAME = "on_data_available";
 	DDS::SampleInfo info;
-    encapsulation *encap = (encapsulation*)calloc(1, sizeof(encapsulation));
-    encap->name = m_name;
-    encap->data = calloc(1, m_dataSize);
+    encapsulation *encap = (encapsulation*)calloc(1, sizeof(encapsulation) + m_dataSize);
+    encap->endpoint = this;
+    encap->data = &encap->data + 1;
+    m_initialize_data(encap->data);
 
 	while(encap->data != NULL && DDS_DataReader_read_or_take_next_sample_untypedI(reader->get_c_datareaderI(),
                 encap->data, &info, BOOLEAN_TRUE) == DDS::RETCODE_OK)
@@ -244,15 +249,16 @@ void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 		{
 			m_transport.getStrategy().schedule(ServerTransport::process, m_transport, (void*)encap);
             
-            encapsulation *encap = (encapsulation*)calloc(1, sizeof(encapsulation));
-            encap->name = m_name;
-			encap->data =  calloc(1, m_dataSize);
+            encap = (encapsulation*)calloc(1, sizeof(encapsulation) + m_dataSize);
+            encap->endpoint = this;
+			encap->data =  &encap->data + 1;
+            m_initialize_data(encap->data);
 		}
 	}
 
 	if(encap->data != NULL)
     {
-        free(encap->data);
+        m_finalize_data(encap->data);
         free(encap);
 	}
 }

@@ -4,17 +4,16 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
 
 #include "$ctx.filename$Server.h"
-#include "transports/UDPTransport.h"
-#include "transports/TCPTransport.h"
+#include "strategies/ServerStrategy.h"
+#include "transports/ServerTransport.h"
+#include "$ctx.filename$Protocol.h"
 #include "exceptions/ServerInternalException.h"
-#include "$ctx.filename$ServerRPCSupport.h"
 
 $ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
 
 $endif$
-#include "$ctx.filename$RequestReplyUtils.h"
 
 $definitions; separator="\n"$
 >>
@@ -35,27 +34,14 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-$interface.name$Server::$interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
-    $interface.name$ServerImpl &servant, int domainId) :
-    Server(serviceName, strategy, NULL, domainId), _impl(servant)
+$interface.name$Server::$interface.name$Server(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
+            eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
+    Server(strategy, transport, protocol), _impl(servant)
 {
-    createRPCs();
-}
-
-$interface.name$Server::$interface.name$Server(std::string serviceName, eProsima::RPCDDS::ServerStrategy *strategy,
-    eProsima::RPCDDS::Transport *transport, $interface.name$ServerImpl &servant, int domainId) :
-    Server(serviceName, strategy, transport, domainId), _impl(servant)
-{
-    createRPCs();
 }
 
 $interface.name$Server::~$interface.name$Server()
 {   
-}
-
-void $interface.name$Server::createRPCs()
-{
-    $interface.exports : {export | $if(export.operation)$$createRPC(operation=export)$$endif$}$
 }
 
 $export_list$
@@ -69,7 +55,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
+/*void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
 { 
     $operation.parent.name$Server *srv = dynamic_cast<$operation.parent.name$Server*>(server);
     $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
@@ -127,17 +113,7 @@ void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *s
     
     $varDel(variable=operation.rettypeparam)$
     $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
-}
-
-DDS::DataReader* $operation.parent.name$Server::$operation.name$_getRequestDatareader()
-{
-    return $operation.name$_Service->getRequestDatareader();
-}
-
-DDS::DataWriter* $operation.parent.name$Server::$operation.name$_getReplyDatawriter()
-{
-    return $operation.name$_Service->getReplyDatawriter();
-}
+}*/
 
 >>
 

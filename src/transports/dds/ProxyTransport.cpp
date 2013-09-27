@@ -41,13 +41,14 @@ const char* ProxyTransport::getType() const
     return "DDS";
 }
 
-TransportBehaviour ProxyTransport::getBehaviour()
+TransportBehaviour ProxyTransport::getBehaviour() const
 {
     return PROXY_BEHAVIOUR;
 }
 
 int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-        ::transport::dds::Transport::Copy_data copy_data, int dataSize)
+        Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
+        Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     ProxyProcedureEndpoint *pe = new ProxyProcedureEndpoint(*this);

@@ -19,6 +19,7 @@ namespace eprosima
         namespace transport
         {
             class ServerTransport;
+            class Endpoint;
         }
 
         namespace strategy
