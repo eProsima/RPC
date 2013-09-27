@@ -62,7 +62,7 @@ namespace eprosima
 
 		HTTPVersion HTTPVersion::HTTPVersionRequest(std::string &version)
 		{
-			HTTPVersion ret(std::string(" "+version));		
+			HTTPVersion ret(std::string(" "+version+"\r\n"));		
 			return ret;
 		}
 
@@ -76,17 +76,18 @@ namespace eprosima
 
 		//DATA
 
-		HTTPData::HTTPData() : data_(""){}
+		HTTPData::HTTPData() : data_("\r\n"){}
 
 		HTTPData::HTTPData(std::string &clength, std::string &ctype, std::string &data)
 		{
-			data_ += "\r\n";
-			data_ += std::string("Content Length: ");
+			data_ += std::string("Content-Length: ");
 			data_ += clength;
 			data_ += "\r\n";
-			data_ += std::string("Content Type: ");
+
+			data_ += std::string("Content-Type: ");
 			data_ += ctype;
 			data_ += "\r\n";
+
 			data_ += "\r\n";
 			data_ += data;
 		}
@@ -103,7 +104,7 @@ namespace eprosima
 				beginPos = endPos;
 				endPos = data_.find("\n", beginPos + 1);
 
-				mediaTypePos = line.find("Content Type: ");
+				mediaTypePos = line.find("Content-Type: ");
 				if(mediaTypePos != string::npos) {
 					return line.substr(15, line.size()-16); // "Content Type: ".size() = 14 # final "\r\n" = 2
 				}
@@ -113,7 +114,7 @@ namespace eprosima
 		}
 
 		string HTTPData::getData() {
-			return data_.substr(data_.find_last_of("\n") + 1);
+			return data_.substr(data_.find_last_of("\r\n\r\n") + 1);
 		}
 
 		//CODE
@@ -122,7 +123,7 @@ namespace eprosima
 
 		HTTPResponseCode::HTTPResponseCode(std::string &code, std::string &text)
 		{
-			data_ = code+std::string(" ")+text;
+			data_ = code+std::string(" ")+text+std::string("\r\n");
 		}
 
 		HTTPResponseCode::~HTTPResponseCode(){};

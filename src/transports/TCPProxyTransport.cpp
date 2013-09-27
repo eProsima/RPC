@@ -46,20 +46,21 @@ bool TCPProxyTransport::send(const char* buffer) {
 }
 
 char* TCPProxyTransport::receive() {
-	/*std::cout << "RECIEVE SOME DATA " << std::endl;
-	 boost::system::error_code error;
-	 while(true){
-	 size_t len = socket_->read_some(
-	 buffer_,
-	 error
-	 );
-	 if(error == boost::asio::error::eof){
-	 break;
-	 }else if(error){
-	 throw boost::system::system_error(error);
-	 }
-	 std::cout.write(buffer_, len);
-	 }*/
+	std::cout << "RECEIVE SOME DATA " << std::endl;
+	boost::system::error_code error = boost::system::error_code();
+	while(true){
+		size_t len = socket_->read_some(
+			boost::asio::buffer(buffer_),
+			error
+		);
+			
+		if(error == boost::asio::error::eof){
+			break;
+		}else if(error){
+			throw boost::system::system_error(error);
+		}
+		std::cout.write(buffer_, len);
+	}
 	return buffer_;
 	//return NULL;
 }

@@ -194,24 +194,24 @@ namespace eprosima
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPVersion &version)
 		{
 			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
-			string endChar = " ";
-			
+			string endChar;
 			if(actualChar.compare(" ") == 0) {
 				// Request Version
-				endChar = "\r";
+				endChar = "\n";
 			} else {
 				// Response Version
 				endChar = " ";
 			}
-			
 
 			m_currentPosition_bck = m_currentPosition_;
 			++m_currentPosition_;
-			while(actualChar.compare(endChar) != 0 && actualChar.compare("") != 0 ) {
+			while(actualChar.compare(endChar) != 0) {
 				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
 				++m_currentPosition_;
 			}
-			m_currentPosition_ += -1;
+			if(endChar.compare(" ") == 0) {
+				m_currentPosition_ += -1;
+			}
 
 			int length = m_currentPosition_ - m_currentPosition_bck;
 			version.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
@@ -235,10 +235,7 @@ namespace eprosima
 			m_currentPosition_ += -1;
 
 			int length = m_currentPosition_ - m_currentPosition_bck;
-			if(length)
-				data.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
-			else
-				data.set_data(std::string(""));
+			data.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
 			return *this;
 		}
 
@@ -252,11 +249,10 @@ namespace eprosima
 			m_currentPosition_bck = m_currentPosition_;
 			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
 			++m_currentPosition_;
-			while(actualChar.compare("\r") != 0 && actualChar.compare("") != 0 ) {
+			while(actualChar.compare("\n") != 0) {
 				actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
 				++m_currentPosition_;
 			}
-			m_currentPosition_ += -1;
 
 			int length = m_currentPosition_ - m_currentPosition_bck;
 			responseCode.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
