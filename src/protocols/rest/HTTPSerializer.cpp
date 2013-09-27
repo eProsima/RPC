@@ -93,7 +93,7 @@ namespace eprosima
 		}
 		*/
 
-		HTTPSerializer& HTTPSerializer::serialize(std::string &string_t)
+		HTTPSerializer& HTTPSerializer::serialize(const  std::string &string_t)
 		{
 			uint32_t length = (uint32_t)string_t.length();
 		    state(*this);
@@ -294,7 +294,7 @@ namespace eprosima
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPParameters &params, size_t numElements)
 		{
-			for(int i=0; i < numElements; ++i){
+			for(unsigned int i=0; i < numElements; ++i){
 				HTTPSerializer::serialize(params.get_params().at(i));
 			}
 			return *this;
@@ -304,7 +304,7 @@ namespace eprosima
 		{
 			HTTPParam param;
 			std::string parametersData = "";
-			for(int i=0; i < numElements; ++i){
+			for(unsigned int i=0; i < numElements; ++i){
 				HTTPSerializer::deserialize(param);
 				params.addParam(param);
 			}

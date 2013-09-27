@@ -44,7 +44,7 @@ namespace eprosima
 
 		HTTPVersion::HTTPVersion() : data_(""){}
 
-		HTTPVersion::HTTPVersion(std::string &version) : data_(version){}
+		HTTPVersion::HTTPVersion(const std::string &version) : data_(version){}
 
 		HTTPVersion::HTTPVersion(std::string &&version) : data_(std::move(version)){}
 
@@ -95,9 +95,9 @@ namespace eprosima
 		HTTPData::~HTTPData(){}
 
 		string HTTPData::getMediaType() {
-			int beginPos = 0;
-			int endPos = 0;
-			int mediaTypePos = 0;
+			unsigned int beginPos = 0;
+			unsigned int endPos = 0;
+			unsigned int mediaTypePos = 0;
 			string line = "";
 			while(endPos < data_.size()) {
 				line = data_.substr(beginPos, endPos - beginPos);
@@ -138,13 +138,18 @@ namespace eprosima
 
 		//PARAMETERS
 
-		HTTPParameters::HTTPParameters() : size_(0), data_("?"), params_() {}
+		HTTPParameters::HTTPParameters() : size_(0), data_(""), params_() {}
 
 		HTTPParameters::~HTTPParameters(){}
 
 		void HTTPParameters::addParam(HTTPParam &param)
 		{
-			if(params_.size() != 0){
+			if(param.getValue().size()==0)
+				return;
+
+			if(params_.size() == 0){
+				data_+="?";
+			} else {
 				data_+="&";
 			}
 			data_+=param.get_data();
@@ -155,11 +160,15 @@ namespace eprosima
 		void HTTPParameters::set_data(std::string &data) {
 			params_.clear();
 			size_ = 0;
-			data_ = "?";
+			data_ = "";
 
+			if(data.size()==0)
+				return;
+
+			data_ = "?";
 			string params = data.substr(1, data.size()); // Ignoring initial '?'
-			int beginAmpersand = 0;
-			int endAmpersand = 0;
+			unsigned int beginAmpersand = 0;
+			unsigned int endAmpersand = 0;
 			string param;
 			string name;
 			string value;
@@ -172,7 +181,7 @@ namespace eprosima
 				httpParam = HTTPParam(name, value);
 				addParam(httpParam);
 				beginAmpersand = endAmpersand + 1;
-			 }
+			}
 		}
 
 
