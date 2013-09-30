@@ -62,7 +62,16 @@ namespace eprosima
 
 			inline std::string get_data()
 			{
-				return baseUri+path;
+				string sentUri = baseUri+path;
+				unsigned int posInit = sentUri.find("//");
+				if(posInit == string::npos)
+					posInit = 0;
+				else
+					posInit += 2; // 2 characters, for "//"
+				unsigned int posEnd = sentUri.find("/", posInit);
+				sentUri = sentUri.substr(posEnd);
+
+				return sentUri;
 			}
 
 			inline void set_data(const std::string &data)
