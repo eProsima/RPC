@@ -8,6 +8,7 @@ $fileHeader(file=[ctx.filename, "Protocol.h"], description=["This header file co
 
 #include "protocols/Protocol.h"
 #include "$ctx.filename$.h"
+#include "$ctx.filename$ServerImpl.h"
 
 $ddsIncludes()$
 
@@ -22,6 +23,13 @@ namespace eprosima
                 public:
                 
                     virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport) = 0;
+                    
+                    $ctx.interfaces : { interface |
+                    void link$interface.name$Impl($interface.scopedname$ServerImpl &impl)
+                    {
+                        _$interface.name$_impl = &impl;
+                    }
+                    }; separator="\n"$
                              
                     $definitions; separator="\n"$
                     
@@ -30,6 +38,10 @@ namespace eprosima
                     $ctx.filename$Protocol() : Protocol(){}
                     
                     virtual ~$ctx.filename$Protocol(){}
+                
+                	$ctx.interfaces : { interface |                      
+                    $interface.scopedname$ServerImpl *_$interface.name$_impl;
+                    }; separator="\n"$
                     
             };
         } // namespace protocol

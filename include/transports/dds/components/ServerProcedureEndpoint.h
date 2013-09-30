@@ -51,6 +51,8 @@ namespace eprosima
                         inline
                             Transport::ProcessFunc getProcessFunc(){return m_process_func;}
 
+                        int sendReply(void *data);
+
                         /// @brief DDS callback.
                         virtual void on_data_available(DDS::DataReader* reader);
 

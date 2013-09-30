@@ -6,6 +6,7 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source fi
 #include "$ctx.filename$DDSProtocol.h"
 #include "transports/Transport.h"
 #include "transports/dds/ProxyTransport.h"
+#include "transports/dds/ServerTransport.h"
 #include "exceptions/Exceptions.h"
 $ReqRepSIncludes(filename=ctx.filename)$
 
@@ -209,9 +210,90 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 }
 
 void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
-    void *data , eprosima::rpcdds::transport::Endpoint*)
+    void *data , eprosima::rpcdds::transport::Endpoint *endpoint)
 {
-printf("Leido $operation.parent.formatedScopedname$_$operation.name$\n");
+    $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
+    $operation.parent.scopedname$_$operation.name$Request &requestData = *($operation.parent.scopedname$_$operation.name$Request*)data;
+    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam, create="yes")$   
+    $if(!operation.oneway)$
+    $operation.parent.scopedname$_$operation.name$Reply replyData;
+    replyData.header.clientId.value_1 = requestData.header.clientId.value_1;
+	replyData.header.clientId.value_2 = requestData.header.clientId.value_2;
+	replyData.header.clientId.value_3 = requestData.header.clientId.value_3;
+	replyData.header.clientId.value_4 = requestData.header.clientId.value_4;
+	replyData.header.requestSequenceNumber = requestData.header.requestSequenceNumber;
+    $endif$
+    
+    $operation.inoutputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+    
+    $operation.inputparam : {param | $extractDataHelper(param=param, dataname="requestData")$};separator="\n"$
+    
+    
+    
+    try
+    {
+        if(_protocol._$operation.parent.name$_impl != NULL)
+        {
+	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.name$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+	
+	        $if(!operation.oneway)$
+	        $if(operation.exceptions)$replyData.unio._d = 0;$endif$
+	        
+	        $if(operation.exceptions)$
+		    $operation.outputparam : {$createDataHelper(param=it, dataname="replyData.unio._u.st")$};separator="\n"$
+		    $if(operation.rettypeparam)$
+		    $createDataHelper(param=operation.rettypeparam, dataname="replyData.unio._u.st")$        
+		    $endif$
+		    $else$
+		    $operation.outputparam : {$createDataHelper(param=it, dataname="replyData")$};separator="\n"$
+		    $if(operation.rettypeparam)$
+		    $createDataHelper(param=operation.rettypeparam, dataname="replyData")$        
+		    $endif$
+		    $endif$
+	        
+	        replyData.header.rpcddsRetCode = OPERATION_SUCCESSFUL;
+	        replyData.header.rpcddsRetMsg = $charCasting()$"";
+	
+	        dynamic_cast<eprosima::rpcdds::transport::dds::ServerTransport&>(_protocol.Protocol::getTransport()).sendReply(&replyData, endpoint);
+	        $endif$
+        }
+        // TODO Send exception.
+    }
+    $operation.exceptions : { exception |
+    catch(const $exception.scopedname$ &ex)
+    {
+        $if(!operation.oneway)$
+        replyData.unio._d = $i$;
+        $if(exception.inScope)$
+        $exception.scopedname$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
+                
+        $else$
+        $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
+                
+        $endif$
+        replyData.header.rpcddsRetCode = OPERATION_SUCCESSFUL;
+        replyData.header.rpcddsRetMsg = $charCasting()$"";
+
+        service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    }; separator="\n"$
+    catch(const ServerInternalException &ex)
+    {
+        $if(!operation.oneway)$
+        $unsetReply()$
+        replyData.header.rpcddsRetCode = SERVER_INTERNAL_ERROR;
+        replyData.header.rpcddsRetMsg = $charCasting()$ex.what();
+        
+        //service->sendReply(requestData, &replyData);
+        $endif$
+    }
+    
+    $reqrepRefFinalize(type=[operation.parent.scopedname, "_", operation.name], reqrep="Request", name="requestData")$
+    
+    $varDel(variable=operation.rettypeparam)$
+    $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
 }
 
 >>

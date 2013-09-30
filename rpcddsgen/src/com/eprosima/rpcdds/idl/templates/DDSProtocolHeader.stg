@@ -37,9 +37,9 @@ namespace eprosima
                         
                     private:
                     
-                        $ctx.interfaces : { interface |
+                        $ctx.interfaces : { interface |                      
                         $interface.operations : { operation |
-                            const char* const $interface.formatedScopedname$_$operation.name$_str;
+                        const char* const $interface.formatedScopedname$_$operation.name$_str;
                         }; separator="\n"$
                         }; separator="\n"$
                 };
@@ -76,7 +76,7 @@ operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
 static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
-    void *data , eprosima::rpcdds::transport::Endpoint*);
+    void *data , eprosima::rpcdds::transport::Endpoint *endpoint);
 
 >>
 

@@ -67,6 +67,8 @@ namespace eprosima
 
                         virtual void stop();
 
+                        void sendReply(void *data, Endpoint *endpoint);
+
                     protected:
 
                         virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;

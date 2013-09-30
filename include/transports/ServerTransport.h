@@ -80,6 +80,7 @@ namespace eprosima
 
                     virtual void run() = 0;
                     virtual void stop() = 0;
+                    virtual void sendReply(void *data, Endpoint *endpoint) = 0;
 
                 private:
 

@@ -233,6 +233,40 @@ int ServerProcedureEndpoint::enableEntities()
     return returnedValue;
 }
 
+int ServerProcedureEndpoint::sendReply(void *data)
+{
+    const char* const METHOD_NAME = "sendReply";
+	int returnedValue = -1;
+
+    if(data != NULL)
+    {
+        if(m_writer != NULL)
+        {
+            DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
+
+            if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), data, &ih) == DDS::RETCODE_OK)
+            {
+                printf("SENT\n");
+                returnedValue = 0;
+            }
+            else
+            {
+                printf("ERROR<%s::%s>: Cannot send the reply. Datawriter error.\n", CLASS_NAME, METHOD_NAME);
+            }
+        }
+        else
+        {
+            printf("ERROR<%s::%s>: DataWrite was not created. Maybe this is a oneway procedure.\n", CLASS_NAME, METHOD_NAME);
+        }
+	}
+	else
+	{
+		printf("ERROR<%s::%s>: Bad parameter (requestData)\n", CLASS_NAME, METHOD_NAME);
+	}
+
+	return returnedValue;
+}
+
 void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 {
     const char* const METHOD_NAME = "on_data_available";

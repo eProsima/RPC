@@ -80,11 +80,23 @@ void ServerTransport::process(eprosima::rpcdds::transport::ServerTransport &tran
     if(encap != NULL)
     {
         encap->endpoint->getProcessFunc()(transport.getLinkedProtocol(), encap->data, encap->endpoint); 
+        free(encap);
     }
     else
     {
         printf("ERROR<%s::%s>: Bad parameter\n", CLASS_NAME, METHOD_NAME);
     }
+}
+
+void ServerTransport::sendReply(void *data, Endpoint *endpoint)
+{
+    ServerProcedureEndpoint *procedure = dynamic_cast<ServerProcedureEndpoint*>(endpoint);
+
+    if(procedure != NULL)
+    {
+        procedure->sendReply(data);
+    }
+    // TODO Launch exception
 }
 
 void ServerTransport::run()

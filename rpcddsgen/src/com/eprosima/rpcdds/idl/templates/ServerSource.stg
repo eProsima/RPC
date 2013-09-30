@@ -38,6 +38,7 @@ $interface.name$Server::$interface.name$Server(eprosima::rpcdds::strategy::Serve
             eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
     Server(strategy, transport, protocol), _impl(servant)
 {
+   protocol.link$interface.name$Impl(servant);
 }
 
 $interface.name$Server::~$interface.name$Server()
@@ -128,17 +129,3 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
-
-/*!
- * Extra string templates.
- */
-createRPC(operation) ::= <<
-this->$operation.name$_Service = new $operation.parent.name$_$operation.name$ServerRPC("$operation.name$", this,
-            $operation.parent.name$_$operation.name$RequestUtils::registerType(getParticipant()),
-            $if(!operation.oneway)$
-            $operation.parent.name$_$operation.name$ReplyUtils::registerType(getParticipant()),
-            $endif$
-            &$operation.parent.name$Server::$operation.name$);
-this->setRPC(this->$operation.name$_Service);
-
->>
