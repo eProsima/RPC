@@ -78,8 +78,33 @@ namespace eprosima
 
 		HTTPData::HTTPData() : data_("\r\n"){}
 
-		HTTPData::HTTPData(std::string &clength, std::string &ctype, std::string &data)
-		{
+		HTTPData::HTTPData(std::string &host) {
+			unsigned int posInit = host.find("//");
+			if(posInit == string::npos)
+				posInit = 0;
+			else
+				posInit += 2; // 2 characters, for "//"
+			unsigned int posEnd = host.find("/", posInit);
+			string realHost = host.substr(posInit, posEnd - posInit);
+
+			data_ = "Host: ";
+			data_ += host.substr(posInit, posEnd - posInit);
+			data_ += "\r\n\r\n";
+		}
+
+		HTTPData::HTTPData(std::string &host, std::string &clength, std::string &ctype, std::string &data) {
+			unsigned int posInit = host.find("//");
+			if(posInit == string::npos)
+				posInit = 0;
+			else
+				posInit += 2; // 2 characters, for "//"
+			unsigned int posEnd = host.find("/", posInit);
+			string realHost = host.substr(posInit, posEnd - posInit);
+
+			data_ = "Host: ";
+			data_ += host.substr(posInit, posEnd - posInit);
+			data_ += "\r\n";
+
 			data_ += std::string("Content-Length: ");
 			data_ += clength;
 			data_ += "\r\n";
