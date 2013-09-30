@@ -76,7 +76,8 @@ public class Method
 	}
 
 	public void setGlobalRepresentations(ArrayList<Representation> globalRepresentations) {
-		request.setGlobalRepresentations(globalRepresentations);
+		if(request != null)
+			request.setGlobalRepresentations(globalRepresentations);
 		
 		for(Response response: m_responses) {
 			response.setGlobalRepresentations(globalRepresentations);

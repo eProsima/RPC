@@ -30,6 +30,8 @@ public:
 
 	TCPProxyTransport(const std::string& serverAddress);
 
+	TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort);
+
 	virtual const char* getType() const {return "RAW";}
 
 	bool connect();

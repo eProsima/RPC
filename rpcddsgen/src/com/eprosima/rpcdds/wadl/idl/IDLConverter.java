@@ -291,7 +291,8 @@ public class IDLConverter {
 			}
 		}
 		idlParameters = embeddedParameters + queryParameters + idlParameters;
-		idlParameters = idlParameters.substring(0, idlParameters.length() - 2); // Final
+		if(idlParameters.length() > 0)
+			idlParameters = idlParameters.substring(0, idlParameters.length() - 2); // Final
 																				// comma
 																				// and
 																				// space

@@ -29,7 +29,7 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
         
     _setTransport(transport);
         
-    return false;
+    return true;
 }
 
 $definitions; separator="\n"$
@@ -159,6 +159,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      HTTPVersion versionRequest = HTTPVersion::HTTPVersionRequest(stringVersionRequest);
      httpSerializer->serialize(versionRequest);
      
+     HTTPData httpData;
      $serializeHTTPBodyParams(params=operation.parameters)$
 
     // HTTP connection
@@ -174,11 +175,12 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     httpResponseSerializer->deserialize(versionResponse);
     HTTPResponseCode httpResponseCode;
     httpResponseSerializer->deserialize(httpResponseCode);
-    HTTPData httpData;
+
     httpSerializer->deserialize(httpData);
     data = httpData.getData();
     
     $paramRetType(operation.rettype)$ retType;
+    $paramRetType(operation.rettype)$_initialize(&retType);
     
     discriminator = 0;
     mediaType = httpData.getMediaType();
@@ -196,6 +198,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $if(rest(member.typecode.members))$
     retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(data.c_str());
     $endif$
+    break;
     }$
     }
               
@@ -277,7 +280,7 @@ stream << httpResponseStatus;
 string code = stream.str();
 string status = "";
 HTTPResponseCode httpResponseCode(code, status);
-stream.clear();
+stream.str(std::string());
 httpResponseSerializer->serialize(httpResponseCode);
 if(responseData.size()>0) {
     stream << responseData.length();
@@ -287,7 +290,7 @@ if(responseData.size()>0) {
     else if(SearchResponse._d == 2)
         mediaType = "application/json";
     HTTPData httpData(size, mediaType, responseData);
-    stream.clear();
+    stream.str(std::string());
 }
 
 >>
@@ -305,7 +308,7 @@ deserializePathSegment(param) ::= <<
         if(templatePathSegment.at(0) == '{' && templatePathSegment.at(templatePathSegment.size() - 1) == '}') {
             stream << actualPathSegment;
             stream $ctx.sersym$ $param.name$.$member.name$;
-            stream.clear();
+            stream.str(std::string());
             break;
         }
     }
@@ -324,7 +327,7 @@ expandPathSegment(param) ::= <<
     }
     stream << $param.name$.$member.name$;
     expandedPath += stream.str() + "/";
-    stream.clear();
+    stream.str(std::string());
     }$
 >>
 
@@ -342,7 +345,7 @@ $if(!param.bodyParam)$
     if(httpParam.getName().compare("$param.name$") == 0) {
         stream << httpParam.getValue();
         stream $ctx.sersym$ $param.name$;
-        stream.clear();
+        stream.str(std::string());
     }
 $endif$
 }$
@@ -364,13 +367,13 @@ $if(!param.bodyParam)$
 paramName = "$param.name$";
 stream << $param.name$;
 paramValue = stream.str();
-stream.clear();
+stream.str(std::string());
 httpParam = HTTPParam(paramName, paramValue);
 httpParameters.addParam(httpParam);
 
 $endif$
 }$       
-$if(params)$httpSerializer->serialize(httpParameters, httpParameters.get_size());
+$if(params)$httpSerializer->serialize(httpParameters);
 $endif$
 >>
 
@@ -381,17 +384,21 @@ $params : {param|$if(param.bodyParam)$// Serializing body parameter $param.name$
 discriminator = $param.name$._d;
 switch(discriminator) {
 $param.typecode.members : {member | case $first(member.labels)$:
-    data = $param.name$._u.$member.name$;}$
+    data = $param.name$._u.$member.name$;
+    break;
+    }$
 }
 if(data.size() > 0) {
+	stream << data.size();
     string size = stream.str();
     if(discriminator == 1)
         mediaType = "application/xml";
     else if(discriminator == 2)
         mediaType = "application/json";
-    stream << data.size();
-    HTTPData httpData(size, mediaType, data);
-    stream.clear();
+    httpData = HTTPData(size, mediaType, data);
+    stream.str(std::string());
+    httpSerializer->serialize(httpData);
+} else {
     httpSerializer->serialize(httpData);
 }$endif$}$
 >>
@@ -410,6 +417,7 @@ $param.name$._d = discriminator;
 switch(discriminator) {
 $param.typecode.members : {member | case $first(member.labels)$:
 $param.name$._u.$member.name$ = strdup(httpData.getData().c_str());
+break;
 }$}
 $endif$
 }$
