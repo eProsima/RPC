@@ -87,9 +87,28 @@ namespace eprosima
 			unsigned int posEnd = host.find("/", posInit);
 			string realHost = host.substr(posInit, posEnd - posInit);
 
-			data_ = "Host: ";
+			data_ += "Host: ";
 			data_ += host.substr(posInit, posEnd - posInit);
-			data_ += "\r\n\r\n";
+			data_ += "\r\n";
+
+			data_ += "Connection: close\r\n";
+
+			data_ += "\r\n";
+		}
+
+		HTTPData::HTTPData(std::string &clength, std::string &ctype, std::string &data) {
+			data_ += "Connection: close\r\n";
+
+			data_ += std::string("Content-Length: ");
+			data_ += clength;
+			data_ += "\r\n";
+
+			data_ += std::string("Content-Type: ");
+			data_ += ctype;
+			data_ += "\r\n";
+
+			data_ += "\r\n";
+			data_ += data;
 		}
 
 		HTTPData::HTTPData(std::string &host, std::string &clength, std::string &ctype, std::string &data) {
@@ -104,6 +123,8 @@ namespace eprosima
 			data_ = "Host: ";
 			data_ += host.substr(posInit, posEnd - posInit);
 			data_ += "\r\n";
+
+			data_ += "Connection: close\r\n";
 
 			data_ += std::string("Content-Length: ");
 			data_ += clength;
@@ -126,11 +147,12 @@ namespace eprosima
 			string line = "";
 			while(endPos < data_.size()) {
 				line = data_.substr(beginPos, endPos - beginPos);
+
 				beginPos = endPos;
 				endPos = data_.find("\n", beginPos + 1);
 
 				mediaTypePos = line.find("Content-Type: ");
-				if(mediaTypePos != string::npos) {
+				if(mediaTypePos != (unsigned int)string::npos) {
 					return line.substr(15, line.size()-16); // "Content Type: ".size() = 14 # final "\r\n" = 2
 				}
 			}
@@ -139,7 +161,10 @@ namespace eprosima
 		}
 
 		string HTTPData::getData() {
-			return data_.substr(data_.find_last_of("\r\n\r\n") + 1);
+			size_t pos = data_.find("\r\n\r\n") + 4; // 4 = "\r\n\r\n".size()
+			if(pos >= data_.size())
+				return "";
+			return data_.substr(pos);
 		}
 
 		//CODE

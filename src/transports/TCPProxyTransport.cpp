@@ -61,11 +61,19 @@ bool TCPProxyTransport::send(const char* buffer) {
 
 char* TCPProxyTransport::receive() {
 	boost::system::error_code error = boost::system::error_code();
+	memset(&buffer_, 0, 8192);
+	size_t actualPos = 0;
+	char* response = NULL;
 	while(true){
 		size_t len = socket_->read_some(
-			boost::asio::buffer(buffer_),
+			boost::asio::buffer(buffer_, 8192),
 			error
 		);
+
+		response = (char*)realloc(response, actualPos+len);
+		memcpy(response + actualPos, buffer_, len);
+
+		actualPos += len;
 			
 		if(error == boost::asio::error::eof){
 			break;
@@ -73,14 +81,8 @@ char* TCPProxyTransport::receive() {
 			throw boost::system::system_error(error);
 		}
 	}
-	return buffer_;
-/*
-	memset(&buffer_, 0, 8192);
-	boost::system::error_code error = boost::system::error_code();
-	boost::asio::read(*socket_, boost::asio::buffer(buffer_), error);
 
-	return buffer_;
-*/
+	return response;
 }
 }// namespace transport
 }// namespace rpcdds

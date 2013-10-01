@@ -159,7 +159,6 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      HTTPVersion versionRequest = HTTPVersion::HTTPVersionRequest(stringVersionRequest);
      httpSerializer->serialize(versionRequest);
      
-     HTTPData httpData;
      $serializeHTTPBodyParams(params=operation.parameters)$
 
     // HTTP connection
@@ -176,7 +175,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     HTTPResponseCode httpResponseCode;
     httpResponseSerializer->deserialize(httpResponseCode);
 
-    httpSerializer->deserialize(httpData);
+    httpResponseSerializer->deserialize(httpData);
     data = httpData.getData();
     
     $paramRetType(operation.rettype)$ retType;
@@ -258,7 +257,7 @@ char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_
 >>
 
 implCallParams(params) ::= <<
-$if(first(params).parent.parent.pathHasBrackets)$ $first(operation.parameters).name$ $rest(params) : { param |, $param.name$ }$ $else$ $params : { param |$param.name$}; separator=", "$ $endif$
+$if(first(params))$ $if(first(params).parent.parent.pathHasBrackets)$ $first(operation.parameters).name$ $rest(params) : { param |, $param.name$ }$ $else$ $params : { param |$param.name$}; separator=", "$ $endif$ $endif$
 >>
 
 serializeServerResponse(rettype) ::= <<
@@ -285,9 +284,9 @@ httpResponseSerializer->serialize(httpResponseCode);
 if(responseData.size()>0) {
     stream << responseData.length();
     string size = stream.str();
-    if(SearchResponse._d == 1)
+    if($rettype.name$._d == 1)
         mediaType = "application/xml";
-    else if(SearchResponse._d == 2)
+    else if($rettype.name$._d == 2)
         mediaType = "application/json";
     HTTPData httpData(size, mediaType, responseData);
     stream.str(std::string());
@@ -378,6 +377,7 @@ $endif$
 >>
 
 serializeHTTPBodyParams(params) ::= <<
+HTTPData httpData(baseURI);
 string data = "";
 int discriminator = 0;
 $params : {param|$if(param.bodyParam)$// Serializing body parameter $param.name$
@@ -395,12 +395,13 @@ if(data.size() > 0) {
         mediaType = "application/xml";
     else if(discriminator == 2)
         mediaType = "application/json";
-    httpData = HTTPData(size, mediaType, data);
+    httpData = HTTPData(baseURI, size, mediaType, data);
     stream.str(std::string());
     httpSerializer->serialize(httpData);
-} else {
-    httpSerializer->serialize(httpData);
 }$endif$}$
+if(data.size() == 0) {
+    httpSerializer->serialize(httpData);
+}
 >>
 
 deserializeHTTPBodyParams(params) ::= <<

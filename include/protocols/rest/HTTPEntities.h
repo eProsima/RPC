@@ -233,6 +233,8 @@ namespace eprosima
 
 			HTTPData(std::string &host);
 
+			HTTPData(std::string &clength, std::string &ctype, std::string &data);
+
 			HTTPData(std::string &host, std::string &clength, std::string &ctype, std::string &data);
 
 			~HTTPData();

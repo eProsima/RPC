@@ -224,7 +224,7 @@ namespace eprosima
 		}
 
 		HTTPSerializer& HTTPSerializer::deserialize(HTTPData &data)
-		{
+		{	
 			m_currentPosition_bck = m_currentPosition_;
 			string actualChar = std::string(&m_currentPosition_, 1 - ((&m_currentPosition_)[1-1] == '\0' ? 1 : 0));
 			++m_currentPosition_;
@@ -235,6 +235,7 @@ namespace eprosima
 			m_currentPosition_ += -1;
 
 			int length = m_currentPosition_ - m_currentPosition_bck;
+
 			data.set_data(std::string(&m_currentPosition_bck, length - ((&m_currentPosition_bck)[length-1] == '\0' ? 1 : 0)));
 			return *this;
 		}
