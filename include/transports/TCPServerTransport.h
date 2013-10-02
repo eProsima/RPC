@@ -18,6 +18,7 @@ namespace eprosima
             class RPCDDS_DllAPI TCPServerTransport : public ServerTransport, private boost::noncopyable
             {
                 private:
+			void (*callback)(ServerTransport&, void*);
 
                     boost::asio::io_service io_service_;
                     boost::asio::ip::tcp::acceptor acceptor_;
@@ -35,9 +36,11 @@ namespace eprosima
 
                     std::string get_ip_address(boost::asio::io_service& io_service, std::string hostname, std::string port);
 
-                    static void worker(ServerTransport &transport, void* connection);
+                    
 
                 public:
+
+		static void worker(ServerTransport &transport, void* connection);
 
                     TCPServerTransport(const char* to_connect);
 
@@ -46,6 +49,8 @@ namespace eprosima
                     void stop();
 
                     const char* getType() {return "RAW";}
+
+			void setCallback(void (*callback)(ServerTransport&, void*)) {this->callback = callback; }
 
             };
 

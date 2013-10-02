@@ -49,6 +49,8 @@ void TCPServerTransport::init(const std::string& address,
 
 TCPServerTransport::TCPServerTransport(const char* to_connect) :
 		acceptor_(io_service_) {
+	callback = &TCPServerTransport::worker;
+
 	if (to_connect != NULL) {
 		std::string str(to_connect);
 		size_t index = str.find(':', 1);
@@ -58,7 +60,7 @@ TCPServerTransport::TCPServerTransport(const char* to_connect) :
 		init(address, port);
 	} else {
 		//TCPServerTransport::TCPServerTransport("127.0.0.1", "6960");
-		init("127.0.0.1", "6960");
+		init("127.0.0.1", "6960"); // TODO XXX PORT
 	}
 }
 
@@ -156,7 +158,7 @@ void TCPServerTransport::handle_accept(const boost::system::error_code& e) {
 	 * Thread creation
 	 *
 	 */
-    getStrategy().schedule(TCPServerTransport::worker, *this, (void*)&new_connection_);
+    getStrategy().schedule(callback, *this, (void*)&new_connection_);
 
 	new_connection_ = boost::shared_ptr < connection > (new connection());
 	new_connection_->master_io_service_ = &io_service_;
