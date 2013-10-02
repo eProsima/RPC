@@ -63,12 +63,6 @@ namespace eprosima
 
                         eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 
-                        /*!
-                         * 2brief This function returns the behaviour of the transport.
-                         * @return The behaviour of the transport.
-                         */
-                        TransportBehaviour getBehaviour() const;
-
                     protected:
 
                         virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;

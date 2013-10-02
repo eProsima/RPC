@@ -73,6 +73,15 @@ namespace eprosima
                         }
 
                     /*!
+                     * 2brief This function returns the behaviour of the transport.
+                     * @return The behaviour of the transport.
+                     */
+                    TransportBehaviour getBehaviour() const
+                    {
+                        return SERVER_BEHAVIOUR;
+                    }
+
+                    /*!
                      * @brief This function returns the type of the transport.
                      *        This function has to be implemented by the child classes.
                      */

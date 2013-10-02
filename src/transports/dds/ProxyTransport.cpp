@@ -41,11 +41,6 @@ const char* ProxyTransport::getType() const
     return "DDS";
 }
 
-TransportBehaviour ProxyTransport::getBehaviour() const
-{
-    return PROXY_BEHAVIOUR;
-}
-
 int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
         Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
         Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)

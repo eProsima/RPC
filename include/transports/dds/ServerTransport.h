@@ -55,12 +55,6 @@ namespace eprosima
                                 Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
                                 Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize);
 
-                        /*!
-                         * 2brief This function returns the behaviour of the transport.
-                         * @return The behaviour of the transport.
-                         */
-                        TransportBehaviour getBehaviour() const;
-
                         static void process(eprosima::rpcdds::transport::ServerTransport &transport, void *data);
 
                         virtual void run();

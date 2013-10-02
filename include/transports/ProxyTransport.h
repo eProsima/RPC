@@ -39,6 +39,15 @@ namespace eprosima
                      */
                     virtual const char* getType() const = 0;
 
+                    /*!
+                     * 2brief This function returns the behaviour of the transport.
+                     * @return The behaviour of the transport.
+                     */
+                    TransportBehaviour getBehaviour() const
+                    {
+                        return PROXY_BEHAVIOUR;
+                    }
+
                     virtual bool connect() = 0;
                     virtual bool send(const char* buffer) = 0;
                     virtual char* receive() = 0;

@@ -27,15 +27,6 @@ namespace eprosima
             namespace dds
             {
                 /*!
-                 * @brief This enumeration specifies the behaviour
-                 * of the transport
-                 */
-                typedef enum TransportBehaviour
-                {
-                    PROXY_BEHAVIOUR,
-                    SERVER_BEHAVIOUR
-                } TransportBehaviour;
-                /*!
                  * @brief This class is the base of all classes that implement a transport
                  * using DDS. This transport could be used by the proxy or the server.
                  * @ingroup TRANSPORTMODULE
@@ -87,12 +78,6 @@ namespace eprosima
                         virtual int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
                                 Initialize_data initialize_data, Copy_data copy_data, Finalize_data finalize_data,
                                 ProcessFunc processFunc, int dataSize) = 0;
-
-                        /*!
-                         * 2brief This function returns the behaviour of the transport.
-                         * @return The behaviour of the transport.
-                         */
-                        virtual TransportBehaviour getBehaviour() const = 0;
 
                     protected:
 

@@ -18,6 +18,16 @@ namespace eprosima
         namespace transport
         {
             /*!
+             * @brief This enumeration specifies the behaviour
+             * of the transport
+             */
+            typedef enum TransportBehaviour
+            {
+                PROXY_BEHAVIOUR,
+                SERVER_BEHAVIOUR
+            } TransportBehaviour;
+
+            /*!
              * @brief This class is the base of all classes that implement a transport
              *        that could be used by the proxy or the server.
              * @ingroup TRANSPORTMODULE
@@ -37,6 +47,12 @@ namespace eprosima
                      *        This function has to be implemented by the child classes.
                      */
                     virtual const char* getType() const = 0;
+
+                    /*!
+                     * 2brief This function returns the behaviour of the transport.
+                     * @return The behaviour of the transport.
+                     */
+                    virtual TransportBehaviour getBehaviour() const = 0;
             };
         } // namespace transport
     } // namespace RPCDDS

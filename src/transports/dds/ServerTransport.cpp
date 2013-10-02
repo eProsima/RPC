@@ -38,11 +38,6 @@ const char* ServerTransport::getType() const
     return "DDS";
 }
 
-TransportBehaviour ServerTransport::getBehaviour() const
-{
-    return SERVER_BEHAVIOUR;
-}
-
 int ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
         Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
         Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)
