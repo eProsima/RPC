@@ -176,7 +176,8 @@ void TCPServerTransport::handle_accept(const boost::system::error_code& e) {
 
 void TCPServerTransport::worker(ServerTransport &transport, void* connection)
 {
-	callback(getLinkedProtocol(), transport, connection);
+	TCPServerTransport& tcpServerTransport = dynamic_cast<TCPServerTransport&>(transport);
+	tcpServerTransport.callback(transport.getLinkedProtocol(), transport, connection);
 
 	/*
 	boost::shared_ptr<eprosima::rpcdds::transport::connection> conn = *(boost::shared_ptr<
