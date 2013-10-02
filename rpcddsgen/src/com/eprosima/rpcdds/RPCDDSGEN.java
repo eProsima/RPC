@@ -530,7 +530,7 @@ public class RPCDDSGEN
 	        tmanager.addGroup("ServerHeader");
 	        tmanager.addGroup("ServerSource");
 	        // Load template to generate example to use Servers.
-	        tmanager.addGroup("ServerExample");
+	        tmanager.addGroup("RESTServerExample");
 	        // Load template to generate server user implementations.
 	        tmanager.addGroup("ServerImplHeader");
 	        tmanager.addGroup("ServerImplHeaderExample");
@@ -653,7 +653,7 @@ public class RPCDDSGEN
 		                            {
 		                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerImplExample.cxx", maintemplates.getTemplate("ServerImplSourceExample"), m_replace))
 		                                {
-		                                	returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerExample.cxx", maintemplates.getTemplate("ServerExample"), m_replace);
+		                                	returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ServerExample.cxx", maintemplates.getTemplate("RESTServerExample"), m_replace);
 		                                }
 		                            }
                             	}
