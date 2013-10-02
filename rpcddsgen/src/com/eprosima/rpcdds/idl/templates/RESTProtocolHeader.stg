@@ -9,6 +9,7 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header fil
 #include "$ctx.filename$Protocol.h"
 #include "utils/Messages.h"
 #include "protocols/rest/HTTPSerializer.h"
+#include "transports/TCPServerTransport.h"
 #include <string>
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
@@ -34,6 +35,8 @@ namespace eprosima
                         virtual ~$ctx.filename$Protocol();
                         
                         bool setTransport(eprosima::rpcdds::transport::Transport &transport);
+                        
+                        static void worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection);
                         
                         $definitions; separator="\n"$
                         

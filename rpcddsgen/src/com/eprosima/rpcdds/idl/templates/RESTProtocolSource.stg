@@ -26,10 +26,49 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
     {
         throw IncompatibleException("protocol and transport are incompatibles");
     }
+    
+    if(transport.getBehaviour() == SERVER_BEHAVIOUR) {
+        // If this is a server transport, we set its callback
+        eprosima::rpcdds::transport::TCPServerTransport &serverTransport = dynamic_cast<eprosima::rpcdds::transport::TCPServerTransport&>( transport );
+        serverTransport.setCallback(&$ctx.filename$Protocol::worker);
+    }
         
     _setTransport(transport);
         
     return true;
+}
+
+void $ctx.filename$Protocol::worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection) {
+    boost::shared_ptr<eprosima::rpcdds::transport::connection> conn = *(boost::shared_ptr<
+            eprosima::rpcdds::transport::connection>*) (connection);
+    boost::system::error_code ec = boost::system::error_code();
+    boost::asio::ip::tcp::socket &socket = *(conn->socket_);
+    boost::asio::socket_base::non_blocking_io make_non_blocking(true);
+    socket.io_control(make_non_blocking);
+
+    std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
+
+    // TODO : El tamaño esta fijo estáticamente. Habrá que investigarlo.
+    char* buffer_ = (char*)malloc(8192);
+
+    // TODO : Comprobar return.
+    boost::asio::read(socket, boost::asio::buffer(buffer_, 8192), ec);
+
+    // TODO : Call the protocol
+    eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
+    char* responseBuffer = restProtocol.proccessRequest(buffer_);
+    size_t bytes_sent = boost::asio::write(socket, boost::asio::buffer(responseBuffer, strlen(responseBuffer)+1), boost::asio::transfer_all(), ec);
+    if(bytes_sent == 0) {
+        cout << "Error sending response." << endl;
+    }
+
+    // XXX close?
+
+    free(buffer_);
+    if(responseBuffer)
+        free(responseBuffer);
+
+    socket.get_io_service().run();
 }
 
 $definitions; separator="\n"$
@@ -247,7 +286,7 @@ char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_
     
     $deserializeHTTPBodyParams(params=operation.parameters)$
     
-    $paramRetType(operation.rettype)$ $paramRetType(operation.rettype)$; // = $operation.name$_impl($implCallParams(params = operation.parameters)$);
+    $paramRetType(operation.rettype)$ $paramRetType(operation.rettype)$ = _$operation.parent.formatedScopedname$_impl->$operation.name$($implCallParams(params = operation.parameters)$);
     
     char* httpResponse = (char*) malloc(8192);
     memset(httpResponse, 0, 8192);
@@ -333,7 +372,7 @@ expandPathSegment(param) ::= <<
 deserializeHTTPParams(params) ::= <<
 $if(params)$
 HTTPParam httpParam;
-$params : {param |$if(!param.bodyParam)$$param.typecode.typename$ $param.name$; $endif$
+$params : {param |$if(!param.bodyParam)$$varDecl(variable=param)$$endif$
 }$
 for(vector<HTTPParam>::iterator it = httpParams.get_params().begin(); it != httpParams.get_params().end(); ++it) {
     httpParam = *it;
@@ -342,6 +381,9 @@ $params : {param |
 $if(!param.bodyParam)$
     // Deserialize $param.name$
     if(httpParam.getName().compare("$param.name$") == 0) {
+        $if(param.typecode.string)$
+        $param.name$ = (char*)malloc(sizeof(char)*(httpParam.getValue().size()+1));
+        memset($param.name$, 0, sizeof(char)*(httpParam.getValue().size()+1));$endif$
         stream << httpParam.getValue();
         stream $ctx.sersym$ $param.name$;
         stream.str(std::string());

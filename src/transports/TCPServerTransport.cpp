@@ -49,7 +49,6 @@ void TCPServerTransport::init(const std::string& address,
 
 TCPServerTransport::TCPServerTransport(const char* to_connect) :
 		acceptor_(io_service_) {
-	callback = &TCPServerTransport::worker;
 
 	if (to_connect != NULL) {
 		std::string str(to_connect);
@@ -158,7 +157,7 @@ void TCPServerTransport::handle_accept(const boost::system::error_code& e) {
 	 * Thread creation
 	 *
 	 */
-    getStrategy().schedule(callback, *this, (void*)&new_connection_);
+    getStrategy().schedule(&TCPServerTransport::worker, *this, (void*)&new_connection_);
 
 	new_connection_ = boost::shared_ptr < connection > (new connection());
 	new_connection_->master_io_service_ = &io_service_;
@@ -177,6 +176,9 @@ void TCPServerTransport::handle_accept(const boost::system::error_code& e) {
 
 void TCPServerTransport::worker(ServerTransport &transport, void* connection)
 {
+	callback(getLinkedProtocol(), transport, connection);
+
+	/*
 	boost::shared_ptr<eprosima::rpcdds::transport::connection> conn = *(boost::shared_ptr<
 			eprosima::rpcdds::transport::connection>*) (connection);
     boost::system::error_code ec;
@@ -195,5 +197,6 @@ void TCPServerTransport::worker(ServerTransport &transport, void* connection)
     // TODO : Call the protocol
 
 	socket.get_io_service().run();
+	*/
 
 }
