@@ -21,18 +21,16 @@ namespace eprosima
 					void (*callback)(eprosima::rpcdds::protocol::Protocol&, ServerTransport&, void*);
 
                     boost::asio::io_service io_service_;
+                    boost::asio::io_service::work work_;
                     boost::asio::ip::tcp::acceptor acceptor_;
+                    boost::thread *thread_;
                     //connection_ptr new_connection_;
 
-                    boost::shared_ptr<connection> new_connection_;
-
                     void init(const std::string& address, const std::string& port);
-                    //TCPServerTransport(const std::string& address, const std::string& port, const std::string& doc_root);
-                    TCPServerTransport(const std::string& address, const std::string& port);
 
                     void start_accept();
 
-                    void handle_accept(const boost::system::error_code& e);
+                    void handle_accept(boost::shared_ptr<connection> con, const boost::system::error_code& e);
 
                     std::string get_ip_address(boost::asio::io_service& io_service, std::string hostname, std::string port);
 
