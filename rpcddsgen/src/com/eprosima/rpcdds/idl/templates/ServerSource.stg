@@ -38,6 +38,7 @@ $interface.name$Server::$interface.name$Server(eprosima::rpcdds::strategy::Serve
             eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
     Server(strategy, transport, protocol), _impl(servant)
 {
+   protocol.activateInterface("$interface.scopedname$");
    protocol.link$interface.name$Impl(servant);
 }
 

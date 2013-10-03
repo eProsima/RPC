@@ -246,7 +246,6 @@ int ServerProcedureEndpoint::sendReply(void *data)
 
             if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), data, &ih) == DDS::RETCODE_OK)
             {
-                printf("SENT\n");
                 returnedValue = 0;
             }
             else

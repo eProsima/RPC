@@ -5,8 +5,16 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source fi
 
 #include "$ctx.filename$DDSProtocol.h"
 #include "transports/Transport.h"
+$if(ctx.client)$
 #include "transports/dds/ProxyTransport.h"
+#include "transports/dds/components/ProxyProcedureEndpoint.h"
+
+$endif$
+$if(ctx.server)$
 #include "transports/dds/ServerTransport.h"
+#include "transports/dds/components/ServerProcedureEndpoint.h"
+
+$endif$
 #include "exceptions/Exceptions.h"
 $ReqRepSIncludes(filename=ctx.filename)$
 
@@ -15,18 +23,18 @@ using namespace ::protocol::dds;
 using namespace ::transport;
 using namespace ::exception;
 
-typedef struct encapsulation
-{
-    const char *name;
-    void *data;
-} encapsulation;
-
-$ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol()
+$ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol(), m_ddsTransport(NULL)
 $ctx.interfaces : { interface |
 $interface.operations : { operation |
 , $interface.formatedScopedname$_$operation.name$_str("$interface.formatedScopedname$_$operation.name$")
-}; separator="\n"$
-}; separator="\n"$
+$if(ctx.client)$
+, $interface.formatedScopedname$_$operation.name$_pe(NULL)
+$endif$
+$if(ctx.server)$
+, $interface.formatedScopedname$_$operation.name$_se(NULL)
+$endif$
+}$
+}$
 {
 }
 
@@ -36,52 +44,11 @@ $ctx.filename$Protocol::~$ctx.filename$Protocol()
 
 bool $ctx.filename$Protocol::setTransport(Transport &transport)
 {
-    const char *requesttypeName = NULL, *replytypeName = NULL;
-    
     if(strcmp(transport.getType(), "DDS") == 0)
     {
-        eprosima::rpcdds::transport::dds::Transport &ddstransport = dynamic_cast<eprosima::rpcdds::transport::dds::Transport&>(transport);
+        m_ddsTransport = dynamic_cast<eprosima::rpcdds::transport::dds::Transport*>(&transport);
         
-        ddstransport.initialize();
-        
-        $ctx.interfaces : { interface |
-        $interface.operations : { operation |
-        
-        $getTypename(typename=[interface.scopedname,"_",operation.name,"Request"], name="requesttypeName")$
-
-        if($registerTypename(typename=[interface.scopedname,"_",operation.name,"Request"], name="requesttypeName")$ != DDS::RETCODE_OK)
-        {
-            return false;
-        }
-        
-        $getTypename(typename=[interface.scopedname,"_",operation.name,"Reply"], name="replytypeName")$
-
-        if($registerTypename(typename=[interface.scopedname,"_",operation.name,"Reply"], name="replytypeName")$ != DDS::RETCODE_OK)
-        {
-            return false;
-        }
-        
-        if(ddstransport.createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
-            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? requesttypeName : $if(operation.oneway)$NULL$else$replytypeName$endif$),
-            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? $if(operation.oneway)$NULL$else$replytypeName$endif$ : requesttypeName),
-            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ?
-                (::transport::dds::Transport::Initialize_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::initialize_data :
-                (::transport::dds::Transport::Initialize_data)$interface.scopedname$_$operation.name$RequestTypeSupport::initialize_data),
-            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ?
-                (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::copy_data :
-                (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$RequestTypeSupport::copy_data),
-            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ?
-                (::transport::dds::Transport::Finalize_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::finalize_data :
-                (::transport::dds::Transport::Finalize_data)$interface.scopedname$_$operation.name$RequestTypeSupport::finalize_data),
-            (ddstransport.getBehaviour() == ::transport::dds::PROXY_BEHAVIOUR ? NULL :
-                $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_serve),
-            sizeof($interface.scopedname$_$operation.name$Reply)) != 0)
-            {
-                return false;
-            }
-                  
-        }; separator="\n"$
-        }; separator="\n"$
+        m_ddsTransport->initialize();
         
         Protocol::_setTransport(transport);
         
@@ -90,6 +57,120 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
     else
     {
         throw IncompatibleException("protocol and transport are incompatibles");
+    }
+    
+    return false;
+}
+
+// TODO Si falla que elimine los creados.
+bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
+{
+    const char *requesttypeName = NULL, *replytypeName = NULL;
+
+    if(m_ddsTransport != NULL)
+    {
+        ::transport::TransportBehaviour behaviour = dynamic_cast<::transport::Transport*>(m_ddsTransport)->getBehaviour();
+        
+        $if(first(ctx.interfaces))$
+        if(strcmp(interfaceName, "$first(ctx.interfaces).scopedname$") == 0)
+        {
+            $first(ctx.interfaces).operations : { operation |
+            $getTypename(typename=[first(ctx.interfaces).scopedname,"_",operation.name,"Request"], name="requesttypeName")$
+    
+            if($registerTypename(typename=[first(ctx.interfaces).scopedname,"_",operation.name,"Request"], name="requesttypeName")$ != DDS::RETCODE_OK)
+            {
+                return false;
+            }
+            
+            $getTypename(typename=[first(ctx.interfaces).scopedname,"_",operation.name,"Reply"], name="replytypeName")$
+    
+            if($registerTypename(typename=[first(ctx.interfaces).scopedname,"_",operation.name,"Reply"], name="replytypeName")$ != DDS::RETCODE_OK)
+            {
+                return false;
+            }
+            
+            $if(ctx.client)$
+            if(behaviour == ::transport::PROXY_BEHAVIOUR)
+            {
+                $first(ctx.interfaces).formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
+                requesttypeName,
+                $if(operation.oneway)$NULL$else$replytypeName$endif$,
+                (::transport::dds::Transport::Initialize_data)$first(ctx.interfaces).scopedname$_$operation.name$ReplyTypeSupport::initialize_data,
+                (::transport::dds::Transport::Copy_data)$first(ctx.interfaces).scopedname$_$operation.name$ReplyTypeSupport::copy_data,
+                (::transport::dds::Transport::Finalize_data)$first(ctx.interfaces).scopedname$_$operation.name$ReplyTypeSupport::finalize_data,
+                NULL,
+                sizeof($first(ctx.interfaces).scopedname$_$operation.name$Reply)));
+            }
+            $endif$
+            $if(ctx.server)$
+            if(behaviour == ::transport::SERVER_BEHAVIOUR)
+            {
+                $first(ctx.interfaces).formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
+                    $if(operation.oneway)$NULL$else$replytypeName$endif$,
+                    requesttypeName,
+                    (::transport::dds::Transport::Initialize_data)$first(ctx.interfaces).scopedname$_$operation.name$RequestTypeSupport::initialize_data,
+                    (::transport::dds::Transport::Copy_data)$first(ctx.interfaces).scopedname$_$operation.name$RequestTypeSupport::copy_data,
+                    (::transport::dds::Transport::Finalize_data)$first(ctx.interfaces).scopedname$_$operation.name$RequestTypeSupport::finalize_data,
+                    $ctx.filename$Protocol::$first(ctx.interfaces).formatedScopedname$_$operation.name$_serve,
+                    sizeof($first(ctx.interfaces).scopedname$_$operation.name$Reply)));
+            }
+            $endif$
+            }; separator="\n"$
+        }
+        $rest(ctx.interfaces) : {interface |
+        else if(strcmp(interfaceName, "$interface.scopedname$") == 0)
+        {
+            $interface.operations : { operation |
+            $getTypename(typename=[interface.scopedname,"_",operation.name,"Request"], name="requesttypeName")$
+    
+            if($registerTypename(typename=[interface.scopedname,"_",operation.name,"Request"], name="requesttypeName")$ != DDS::RETCODE_OK)
+            {
+                return false;
+            }
+            
+            $getTypename(typename=[interface.scopedname,"_",operation.name,"Reply"], name="replytypeName")$
+    
+            if($registerTypename(typename=[interface.scopedname,"_",operation.name,"Reply"], name="replytypeName")$ != DDS::RETCODE_OK)
+            {
+                return false;
+            }
+            
+            $if(ctx.client)$
+            if(behaviour == ::transport::PROXY_BEHAVIOUR)
+            {
+                $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
+                requesttypeName,
+                $if(operation.oneway)$NULL$else$replytypeName$endif$,
+                (::transport::dds::Transport::Initialize_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::initialize_data,
+                (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::copy_data,
+                (::transport::dds::Transport::Finalize_data)$interface.scopedname$_$operation.name$ReplyTypeSupport::finalize_data,
+                NULL,
+                sizeof($interface.scopedname$_$operation.name$Reply)));
+            }
+            $endif$
+            $if(ctx.server)$
+            if(behaviour == ::transport::SERVER_BEHAVIOUR)
+            {
+                $interface.formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
+                    $if(operation.oneway)$NULL$else$replytypeName$endif$,
+                    requesttypeName,
+                    (::transport::dds::Transport::Initialize_data)$interface.scopedname$_$operation.name$RequestTypeSupport::initialize_data,
+                    (::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$RequestTypeSupport::copy_data,
+                    (::transport::dds::Transport::Finalize_data)$interface.scopedname$_$operation.name$RequestTypeSupport::finalize_data,
+                    $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve,
+                    sizeof($interface.scopedname$_$operation.name$Reply)));
+            }
+            $endif$
+            }; separator="\n"$
+        }
+        
+        return true;
+    }$
+    $endif$
+    }
+    else
+    {
+      // TODO Trace.
     }
     
     return false;
@@ -129,6 +210,7 @@ void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.nam
 >>
 
 operation(ctx, operation, param_list) ::= <<
+$if(ctx.client)$
 $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
     ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
@@ -142,8 +224,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     
     $operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
 
-    encapsulation encap = {$operation.parent.formatedScopedname$_$operation.name$_str, &instance};
-    retcode = dynamic_cast<eprosima::rpcdds::transport::dds::ProxyTransport&>(Protocol::getTransport()).send(&encap, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
+    retcode = $operation.parent.formatedScopedname$_$operation.name$_pe->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
     
     $if(!operation.oneway)$
     if(retcode == OPERATION_SUCCESSFUL)
@@ -208,7 +289,9 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     return $operation.rettypeparam.name$;
     $endif$
 }
+$endif$
 
+$if(ctx.server)$
 void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
     void *data , eprosima::rpcdds::transport::Endpoint *endpoint)
 {
@@ -255,7 +338,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
 	        replyData.header.rpcddsRetCode = OPERATION_SUCCESSFUL;
 	        replyData.header.rpcddsRetMsg = $charCasting()$"";
 	
-	        dynamic_cast<eprosima::rpcdds::transport::dds::ServerTransport&>(_protocol.Protocol::getTransport()).sendReply(&replyData, endpoint);
+	        _protocol.$operation.parent.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
 	        $endif$
         }
         // TODO Send exception.
@@ -295,6 +378,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     $varDel(variable=operation.rettypeparam)$
     $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
 }
+$endif$
 
 >>
 

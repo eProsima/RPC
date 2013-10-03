@@ -30,6 +30,7 @@ interface(ctx, interface, export_list) ::= <<
 $interface.name$Proxy::$interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
     eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol) : Proxy(transport, protocol)
 {
+    protocol.activateInterface("$interface.scopedname$");
 }
 
 $interface.name$Proxy::~$interface.name$Proxy()

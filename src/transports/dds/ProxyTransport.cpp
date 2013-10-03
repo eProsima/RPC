@@ -33,7 +33,14 @@ ProxyTransport::ProxyTransport(std::string &remoteServiceName, int domainId, lon
 
 ProxyTransport::~ProxyTransport()
 {
-    // TODO Delete map
+    std::map<const char*, ProxyProcedureEndpoint*>::iterator it = m_procedureEndpoints.begin();
+
+    for(; it != m_procedureEndpoints.end(); ++it)
+    {
+        delete(it->second);
+    }
+
+    m_procedureEndpoints.erase(m_procedureEndpoints.begin(), m_procedureEndpoints.end());
 }
 
 const char* ProxyTransport::getType() const
@@ -41,7 +48,17 @@ const char* ProxyTransport::getType() const
     return "DDS";
 }
 
-int ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+std::string& ProxyTransport::getRemoteServiceName()
+{
+    return m_remoteServiceName;
+}
+
+long ProxyTransport::getTimeout()
+{
+    return m_timeout;
+}
+
+::transport::Endpoint* ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
         Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
         Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -56,7 +73,7 @@ int ProxyTransport::createProcedureEndpoint(const char *name, const char *writer
 
             if(retmap.second == true)
             {
-                return 0;
+                return pe;
             }
             else
             {
@@ -67,7 +84,7 @@ int ProxyTransport::createProcedureEndpoint(const char *name, const char *writer
         delete pe;
     }
 
-    return -1;
+    return NULL;
 }
 
 ReturnMessage ProxyTransport::send(void *request, void* reply)
@@ -83,7 +100,7 @@ ReturnMessage ProxyTransport::send(void *request, void* reply)
 
         if(it != m_procedureEndpoints.end())
         {
-            returnedValue = (*it).second->send(encap->data, reply, m_remoteServiceName.c_str(), m_timeout);
+            returnedValue = (*it).second->send(encap->data, reply);
         }
     }
     else

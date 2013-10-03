@@ -19,10 +19,12 @@ import com.eprosima.rpcdds.util.Utils;
 
 public class Context
 {
-    public Context(String filename, String file)
+    public Context(String filename, String file, boolean clientcode, boolean servercode)
     {
         m_filename = filename;
         m_file = file;
+        m_clientcode = clientcode;
+        m_servercode = servercode;
         m_directoryFile = Utils.getIDLFileDirectoryOnly(file);
         m_types = new HashMap<String, TypeCode>();
         m_dependencies = new HashSet<String>();
@@ -420,6 +422,16 @@ public class Context
     	return m_currentincludeline;
     }
     
+    public boolean isClient()
+    {
+        return m_clientcode;
+    }
+    
+    public boolean isServer()
+    {
+        return m_servercode;
+    }
+    
     ////////// RESTful block //////////
     
     public String getResourceBaseUri() {
@@ -480,7 +492,7 @@ public class Context
     
     //! Store all global definitions.
     private ArrayList<Definition> m_definitions;
-  //! Map that contains all types that were found processing the IDL file (after preprocessing).
+    //! Map that contains all types that were found processing the IDL file (after preprocessing).
     private HashMap<String, TypeCode> m_types = null;
     //! Map that contains all global exceptions that were found processing the IDL file (after preprocessing).
     private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
@@ -488,9 +500,14 @@ public class Context
     private HashMap<String, Interface> m_interfaces = null;
     //! Cache the first interface.
     private Interface m_firstinterface = null;
-  //! Cache the first exception.
+    //! Cache the first exception.
     private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
     
     private int m_currentincludeline = 0;
+    
+    // Stores if the user will generate the client source.
+    private boolean m_clientcode = true;
+    // Stores if the user will generate the server source.
+    private boolean m_servercode = true;
    
 }

@@ -363,13 +363,13 @@ void ProxyProcedureEndpoint::returnUsedQueryToPool(DDS::QueryCondition *query)
     }
 }
 
-ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply, const char *remoteServiceName, long timeout)
+ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 {
     const char* const METHOD_NAME = "send";
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
     DDS::WaitSet *waitSet = NULL;
     DDS::ReturnCode_t retCode;
-    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
+    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
     void *auxPointerToRequest = request;
@@ -383,7 +383,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply, const cha
         ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
         ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
         auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
-        *(char**)auxPointerToRequest = (char*)remoteServiceName;
+        *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
         auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
         auxPointerToRequest = (char**)auxPointerToRequest + 1;
 
@@ -405,7 +405,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply, const cha
 
             if(waitSet != NULL)
             {
-                if(checkServerConnection(waitSet, timeout) == OPERATION_SUCCESSFUL)
+                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OPERATION_SUCCESSFUL)
                 {
                     DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
 

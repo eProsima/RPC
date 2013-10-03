@@ -75,7 +75,8 @@ namespace eprosima
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL:
                          * @return 0 value is returned if the function works successfully. In other case -1 is returned.
                          */
-                        virtual int createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+                        virtual eprosima::rpcdds::transport::Endpoint*
+                            createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
                                 Initialize_data initialize_data, Copy_data copy_data, Finalize_data finalize_data,
                                 ProcessFunc processFunc, int dataSize) = 0;
 

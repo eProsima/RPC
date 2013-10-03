@@ -13,14 +13,36 @@
  */
 
 #include "EnumYStringTestProxy.h"
+#include "EnumYStringTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "EnumYStringTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    EnumYStringTestProxy *proxy = new EnumYStringTestProxy("EnumYStringTestService");
+    EnumYStringTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    EnumYStringTestProxy *proxy;
+        
+    // Creation of the proxy for interface "EnumYStringTest".
+    try
+    {
+        protocol = new EnumYStringTestProtocol();
+        transport = new UDPProxyTransport("EnumYStringTestService");
+        proxy = new EnumYStringTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     Valores  v1 = VALOR1;    
     Valores  v2 = VALOR2;    
@@ -40,7 +62,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }       
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getEnum>: " << ex.what() << std::endl;
         _exit(-1);
@@ -64,7 +86,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }       
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getString>: " << ex.what() << std::endl;
         _exit(-1);
@@ -93,7 +115,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }    
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getStringBounded>: " << ex.what() << std::endl;
         _exit(-1);
@@ -107,6 +129,8 @@ int main(int argc, char **argv)
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
     delete(proxy);
+    delete(transport);
+    delete(protocol);
 
     _exit(0);
     return 0;

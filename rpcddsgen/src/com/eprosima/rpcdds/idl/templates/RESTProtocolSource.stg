@@ -38,6 +38,11 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
     return true;
 }
 
+bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
+{
+    return true;
+}
+
 void $ctx.filename$Protocol::worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection) {
     boost::shared_ptr<eprosima::rpcdds::transport::connection> conn = *(boost::shared_ptr<
             eprosima::rpcdds::transport::connection>*) (connection);

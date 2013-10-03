@@ -7,7 +7,6 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file
 #define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "transports/components/Endpoint.h"
 #include "utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
@@ -19,6 +18,20 @@ namespace eprosima
 {
     namespace rpcdds
     {
+        namespace transport
+        {
+            namespace dds
+            {
+                $if(ctx.client)$
+                class ProxyProcedureEndpoint;
+                $endif$
+                $if(ctx.server)$
+                class ServerProcedureEndpoint;
+                $endif$
+                class Transport;
+            }
+        }
+        
         namespace protocol
         {
             namespace dds
@@ -33,13 +46,26 @@ namespace eprosima
                     
                         virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
+                        bool activateInterface(const char* interfaceName);
+                        
                         $definitions; separator="\n"$
                         
                     private:
                     
-                        $ctx.interfaces : { interface |                      
+                        eprosima::rpcdds::transport::dds::Transport *m_ddsTransport;
+                    
+                        $ctx.interfaces : { interface |
                         $interface.operations : { operation |
                         const char* const $interface.formatedScopedname$_$operation.name$_str;
+                        
+                        $if(ctx.client)$
+                        eprosima::rpcdds::transport::dds::ProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
+                        $endif$
+                        
+                        $if(ctx.server)$
+                        eprosima::rpcdds::transport::dds::ServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
+                        $endif$
+                        
                         }; separator="\n"$
                         }; separator="\n"$
                 };
@@ -73,10 +99,14 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+$if(ctx.client)$
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+$endif$
 
+$if(ctx.server)$
 static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
     void *data , eprosima::rpcdds::transport::Endpoint *endpoint);
+$endif$
 
 >>
 

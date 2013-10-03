@@ -36,6 +36,8 @@ namespace eprosima
                         
                         bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
+                        bool activateInterface(const char* interfaceName);
+                        
                         static void worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection);
                         
                         $definitions; separator="\n"$

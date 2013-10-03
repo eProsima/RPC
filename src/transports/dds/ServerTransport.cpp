@@ -30,7 +30,14 @@ ServerTransport::ServerTransport(std::string &serviceName, int domainId) :
 
 ServerTransport::~ServerTransport()
 {
-    // TODO Delete map
+    std::map<const char*, ServerProcedureEndpoint*>::iterator it = m_procedureEndpoints.begin();
+
+    for(; it != m_procedureEndpoints.end(); ++it)
+    {
+        delete(it->second);
+    }
+
+    m_procedureEndpoints.erase(m_procedureEndpoints.begin(), m_procedureEndpoints.end());
 }
 
 const char* ServerTransport::getType() const
@@ -38,7 +45,7 @@ const char* ServerTransport::getType() const
     return "DDS";
 }
 
-int ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+::transport::Endpoint* ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
         Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
         Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -53,7 +60,7 @@ int ServerTransport::createProcedureEndpoint(const char *name, const char *write
 
             if(retmap.second == true)
             {
-                return 0;
+                return pe;
             }
             else
             {
@@ -64,7 +71,7 @@ int ServerTransport::createProcedureEndpoint(const char *name, const char *write
         delete pe;
     }
 
-    return -1;
+    return NULL;
 }
 
 void ServerTransport::process(eprosima::rpcdds::transport::ServerTransport &transport, void *data)

@@ -9,6 +9,7 @@
 #define _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 
 #include "transports/dds/ProxyTransport.h"
+#include "transports/components/Endpoint.h"
 #include "utils/dds/Middleware.h"
 #include "utils/Messages.h"
 
@@ -29,7 +30,7 @@ namespace eprosima
                  * @brief This class represents a remote endpoint used by a proxy.
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
                  */
-                class ProxyProcedureEndpoint
+                class ProxyProcedureEndpoint : public Endpoint
                 {
                     public:
 
@@ -71,7 +72,7 @@ namespace eprosima
                          * @param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
                          * @throw eProsima::RPCDDS::ServerTimeoutException
                          */
-                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply, const char *remoteServiceName, long timeout);
+                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 
                     private:
 
