@@ -34,9 +34,9 @@ namespace eprosima
 
 		//URI
 
-		HTTPUri::HTTPUri() : baseUri(""), path("") {}
+		HTTPUri::HTTPUri() : host(""), baseUri(""), path("") {}
 
-		HTTPUri::HTTPUri(std::string &base, std::string &path) : baseUri(base), path(path) { }
+		HTTPUri::HTTPUri(std::string &path) : host(""), baseUri(""), path(path) { }
 
 		HTTPUri::~HTTPUri(){}
 
@@ -79,12 +79,12 @@ namespace eprosima
 		HTTPData::HTTPData() : data_("\r\n"){}
 
 		HTTPData::HTTPData(std::string &host) {
-			unsigned int posInit = host.find("//");
+			size_t posInit = host.find("//");
 			if(posInit == string::npos)
 				posInit = 0;
 			else
 				posInit += 2; // 2 characters, for "//"
-			unsigned int posEnd = host.find("/", posInit);
+			size_t posEnd = host.find("/", posInit);
 			string realHost = host.substr(posInit, posEnd - posInit);
 
 			data_ += "Host: ";
@@ -112,12 +112,12 @@ namespace eprosima
 		}
 
 		HTTPData::HTTPData(std::string &host, std::string &clength, std::string &ctype, std::string &data) {
-			unsigned int posInit = host.find("//");
+			size_t posInit = host.find("//");
 			if(posInit == string::npos)
 				posInit = 0;
 			else
 				posInit += 2; // 2 characters, for "//"
-			unsigned int posEnd = host.find("/", posInit);
+			size_t posEnd = host.find("/", posInit);
 			string realHost = host.substr(posInit, posEnd - posInit);
 
 			data_ = "Host: ";
@@ -141,9 +141,9 @@ namespace eprosima
 		HTTPData::~HTTPData(){}
 
 		string HTTPData::getMediaType() {
-			unsigned int beginPos = 0;
-			unsigned int endPos = 0;
-			unsigned int mediaTypePos = 0;
+			size_t beginPos = 0;
+			size_t endPos = 0;
+			size_t mediaTypePos = 0;
 			string line = "";
 			while(endPos < data_.size()) {
 				line = data_.substr(beginPos, endPos - beginPos);
@@ -152,7 +152,7 @@ namespace eprosima
 				endPos = data_.find("\n", beginPos + 1);
 
 				mediaTypePos = line.find("Content-Type: ");
-				if(mediaTypePos != (unsigned int)string::npos) {
+				if(mediaTypePos != string::npos) {
 					return line.substr(15, line.size()-16); // "Content Type: ".size() = 14 # final "\r\n" = 2
 				}
 			}
@@ -217,8 +217,8 @@ namespace eprosima
 
 			data_ = "?";
 			string params = data.substr(1, data.size()); // Ignoring initial '?'
-			unsigned int beginAmpersand = 0;
-			unsigned int endAmpersand = 0;
+			size_t beginAmpersand = 0;
+			size_t endAmpersand = 0;
 			string param;
 			string name;
 			string value;

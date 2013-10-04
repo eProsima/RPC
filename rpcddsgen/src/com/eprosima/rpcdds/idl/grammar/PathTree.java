@@ -213,7 +213,7 @@ public class PathTree {
 			code += "string tag;\n";
 			code += "string rest;\n";
 			code += "string aux;\n";
-			code += "unsigned int pos;\n";
+			code += "size_t pos;\n";
 			code += "char* p;\n";
 		}
 				

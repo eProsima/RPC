@@ -49,39 +49,80 @@ namespace eprosima
 		class HTTPUri
 		{
 		private:
+			std::string host;
 			std::string baseUri;
+
 			std::string path;
 
 		public:
 			
 			HTTPUri();
 
-			HTTPUri(std::string &base, std::string &path);
+			HTTPUri(std::string &path);
 
 			~HTTPUri();
 
-			inline std::string get_data()
-			{
-				string sentUri = baseUri+path;
-				unsigned int posInit = sentUri.find("//");
+			void setHost(string host) {
+				// REMOVE http:// and final /
+				size_t posInit = host.find("//");
 				if(posInit == string::npos)
 					posInit = 0;
 				else
 					posInit += 2; // 2 characters, for "//"
-				unsigned int posEnd = sentUri.find("/", posInit);
-				sentUri = sentUri.substr(posEnd);
+				size_t posEnd = host.find("/", posInit);
+				string realHost = host.substr(posInit, posEnd - posInit);
 
-				return sentUri;
+				this->host = realHost;
+				// TODO XXX If BaseUri -> switch host path in baseUri
 			}
 
-			inline void set_data(const std::string &data)
+			void setBaseUri(string baseUri) {
+				// REMOVE http://
+				size_t posInit = baseUri.find("//");
+				if(posInit == string::npos)
+					posInit = 0;
+				else
+					posInit += 2; // 2 characters, for "//"
+				string realBaseUri = baseUri.substr(posInit);
+
+				this->baseUri = realBaseUri;
+				// TODO XXX If host -> switch host path in baseUri
+			}
+
+			std::string getPath() { 
+				return path; 
+			}
+
+			std::string getResourcePath() {
+				// (host + path) - baseUri
+				string completeURL = host + path;
+				size_t pos = completeURL.find(baseUri);
+				if(pos != string::npos)
+					return completeURL.substr(pos + baseUri.size());
+				return path; 
+			}
+
+			inline std::string get_data()
 			{
-				int pathPos = data.find(baseUri) + baseUri.size();
-				baseUri = data.substr(0, pathPos);
-				path = data.substr(pathPos);
+				/*
+				string sentUri = baseUri+path;
+				size_t posInit = sentUri.find("//");
+				if(posInit == string::npos)
+					posInit = 0;
+				else
+					posInit += 2; // 2 characters, for "//"
+				size_t posEnd = sentUri.find("/", posInit);
+				sentUri = sentUri.substr(posEnd);
+				*/
+
+				return path;
 			}
 
-			std::string getPath() { return path; }
+			inline void set_data(std::string &data)
+			{
+				path = data;
+			}
+
 		};
 
 		class HTTPParam

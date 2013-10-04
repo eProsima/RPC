@@ -26,6 +26,11 @@ public class PathTreeMethod {
 	}
 
 	public String getIterationCode() {		
+		System.out.println("Method: " + name);
+		for(String parameter: queryParameters) {
+			System.out.println("Parameter: " + parameter);
+		}
+		
 		String code = "";
 
 		if (queryParameters.size() > 0) {
@@ -39,6 +44,9 @@ public class PathTreeMethod {
 			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(httpSerializer); // MATCHING\n";
 			
 			code += "}\n";
+		} else {
+			code += "// XXX TODO\n";
+			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(httpSerializer); // MATCHING\n";
 		}
 		
 		return code;

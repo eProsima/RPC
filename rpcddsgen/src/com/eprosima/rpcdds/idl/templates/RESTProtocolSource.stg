@@ -253,10 +253,10 @@ void $ctx.filename$Protocol::deserializePath_$operation.name$(string actualPath,
 {
     string templatePath = "$operation.parent.path$";
     stringstream stream;
-    unsigned int prevTemplatePos = 0;
-    unsigned int prevActualPos = 0;
-    unsigned int templatePos = 0;
-    unsigned int actualPos = 0;
+    size_t prevTemplatePos = 0;
+    size_t prevActualPos = 0;
+    size_t templatePos = 0;
+    size_t actualPos = 0;
     string templatePathSegment;
     string actualPathSegment;
     
