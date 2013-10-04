@@ -49,7 +49,7 @@ namespace eprosima
                     const char* getType() const {return "RAW";}
 
 					void setCallback(void (*callback)(eprosima::rpcdds::protocol::Protocol&, ServerTransport&, void*)) {this->callback = callback; }
-					void sendReply(void *data, Endpoint *endpoint) { /* XXX TODO IMPLEMENTAR */ getStrategy()  }
+					void sendReply(void *data, Endpoint *endpoint) { /* XXX TODO IMPLEMENTAR */ }
             };
 
         }

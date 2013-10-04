@@ -118,7 +118,7 @@ namespace eprosima
 				return path;
 			}
 
-			inline void set_data(std::string &data)
+			inline void set_data(std::string data)
 			{
 				path = data;
 			}
