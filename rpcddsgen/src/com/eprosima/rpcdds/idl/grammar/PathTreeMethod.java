@@ -45,7 +45,6 @@ public class PathTreeMethod {
 			
 			code += "}\n";
 		} else {
-			code += "// XXX TODO\n";
 			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(httpSerializer); // MATCHING\n";
 		}
 		
