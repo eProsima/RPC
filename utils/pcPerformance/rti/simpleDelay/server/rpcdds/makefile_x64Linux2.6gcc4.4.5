@@ -16,12 +16,12 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc
 
 COMMONSOURCES = ../../common/rpcdds/SimpleDelayRequestReply.cxx ../../common/rpcdds/SimpleDelay.cxx ../../common/rpcdds/SimpleDelayRequestReplyPlugin.cxx \
                 ../../common/rpcdds/SimpleDelayPlugin.cxx ../../common/rpcdds/SimpleDelayRequestReplySupport.cxx ../../common/rpcdds/SimpleDelaySupport.cxx \
-                ../../common/rpcdds/SimpleDelayRequestReplyUtils.cxx ../../common/rpcdds/MessageHeader.cxx ../../common/rpcdds/MessageHeaderPlugin.cxx \
-		../../common/rpcdds/MessageHeaderSupport.cxx ../../common/rpcdds/SimpleDelayServer.cxx ../../common/rpcdds/SimpleDelayServerRPCSupport.cxx
+                ../../common/rpcdds/SimpleDelayDDSProtocol.cxx ../../common/rpcdds/MessageHeader.cxx ../../common/rpcdds/MessageHeaderPlugin.cxx \
+		../../common/rpcdds/MessageHeaderSupport.cxx ../../common/rpcdds/SimpleDelayServer.cxx
 
 COMMON_SOURCES_DIRS_AUX= $(foreach srcdir, $(dir $(COMMONSOURCES)), $(srcdir))
 COMMON_SOURCES_DIRS= $(shell echo $(COMMON_SOURCES_DIRS_AUX) | tr " " "\n" | sort | uniq | tr "\n" " ")
-SERVERSOURCES = Server.cxx SimpleDelayServerImpl.cxx
+SERVERSOURCES = Server.cxx SimpleDelayServerImplExample.cxx
 DIRECTORIES   = objs.dir objs/x64Linux2.6gcc4.4.5.dir
 COMMONOBJS    = $(foreach obj,$(notdir $(addsuffix .o, $(basename $(COMMONSOURCES)))), objs/x64Linux2.6gcc4.4.5/$(obj))
 SERVEROBJS    = $(SERVERSOURCES:%.cxx=objs/x64Linux2.6gcc4.4.5/%.o)

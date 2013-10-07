@@ -14,25 +14,39 @@
 
 #include "SimpleDelayServer.h"
 #include "strategies/ThreadPoolStrategy.h"
+#include "SimpleDelayDDSProtocol.h"
+#include "transports/dds/UDPServerTransport.h"
+#include "SimpleDelayServerImplExample.h"
 #include "exceptions/Exceptions.h"
 #include "utils/Utilities.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::protocol::dds;
+using namespace ::transport::dds;
+using namespace ::strategy;
+using namespace ::exception;
+
 int main(int argc, char **argv)
 {
     unsigned int threadPoolSize = 100;
-    eProsima::RPCDDS::ThreadPoolStrategy *pool = NULL;
+    ThreadPoolStrategy *pool = NULL;
+    SimpleDelayProtocol *protocol = NULL;
+    UDPServerTransport *transport = NULL;
+    SimpleDelayServerImplExample impl;
     SimpleDelayServer *server = NULL;
     
     // Create and initialize the server for interface "SimpleDelay".
     try
     {
-        pool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        server = new SimpleDelayServer("SimpleDelayService", pool);
+        pool = new ThreadPoolStrategy(threadPoolSize);
+        protocol = new SimpleDelayProtocol();
+        transport = new UDPServerTransport("SimpleDelayService");
+        server = new SimpleDelayServer(*pool, *transport, *protocol, impl);
         server->serve();
     }
-    catch(eProsima::RPCDDS::InitializeException &ex)
+    catch(InitializeException &ex)
     {
         std::cout << ex.what() << std::endl;
         return -1;
@@ -40,12 +54,14 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        eProsima::RPCDDS::sleep(10000);
+        eprosima::rpcdds::sleep(10000);
     }
     
     // Stop and delete the server.
     server->stop();
     delete server;
+    delete transport;
+    delete protocol;
     delete pool;
     
     return 0;

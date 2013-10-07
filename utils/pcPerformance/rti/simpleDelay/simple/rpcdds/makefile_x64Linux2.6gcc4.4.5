@@ -1,5 +1,5 @@
 CPP_x64Linux2.6gcc4.4.5 = g++
-CXXFLAGS_x64Linux2.6gcc4.4.5 = -m64 -std=c++11
+CXXFLAGS_x64Linux2.6gcc4.4.5 = -m64 -std=c++0x
 LD_x64Linux2.6gcc4.4.5 = g++
 LDFLAGS_x64Linux2.6gcc4.4.5 = -m64
 SYSLIBS_x64Linux2.6gcc4.4.5 = -ldl -lnsl -lm -lpthread -lrt
@@ -16,9 +16,8 @@ LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc
 
 COMMONSOURCES = ../../common/rpcdds/SimpleDelayRequestReply.cxx ../../common/rpcdds/SimpleDelay.cxx ../../common/rpcdds/SimpleDelayRequestReplyPlugin.cxx \
                 ../../common/rpcdds/SimpleDelayPlugin.cxx ../../common/rpcdds/SimpleDelayRequestReplySupport.cxx ../../common/rpcdds/SimpleDelaySupport.cxx \
-                ../../common/rpcdds/SimpleDelayRequestReplyUtils.cxx ../../common/rpcdds/MessageHeader.cxx ../../common/rpcdds/MessageHeaderPlugin.cxx \
-		../../common/rpcdds/MessageHeaderSupport.cxx ../../common/rpcdds/SimpleDelayProxy.cxx ../../common/rpcdds/SimpleDelayClientRPCSupport.cxx \
-		../../common/rpcdds/SimpleDelayAsyncSupport.cxx
+                ../../common/rpcdds/SimpleDelayDDSProtocol.cxx ../../common/rpcdds/MessageHeader.cxx ../../common/rpcdds/MessageHeaderPlugin.cxx \
+		../../common/rpcdds/MessageHeaderSupport.cxx ../../common/rpcdds/SimpleDelayProxy.cxx
 
 COMMON_SOURCES_DIRS_AUX= $(foreach srcdir, $(dir $(COMMONSOURCES)), $(srcdir))
 COMMON_SOURCES_DIRS= $(shell echo $(COMMON_SOURCES_DIRS_AUX) | tr " " "\n" | sort | uniq | tr "\n" " ")

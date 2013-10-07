@@ -13,13 +13,18 @@
  */
 
 #include "SimpleDelayProxy.h"
-#include "SimpleDelayRequestReplyPlugin.h"
-#include "transports/UDPTransport.h"
+#include "SimpleDelayDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 
 #include <iostream>
 #include <fstream>
 #include <boost/chrono.hpp>
+
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
 
 int main(int argc, char **argv)
 {
@@ -39,16 +44,18 @@ int main(int argc, char **argv)
         {
             if(sscanf(argv[2], "%u", &data_size) == 1)
             {
-                eProsima::RPCDDS::UDPClientTransport *udpt = NULL;
+                SimpleDelayProtocol *protocol = NULL;
+                UDPProxyTransport *transport = NULL;
                 SimpleDelayProxy *proxy = NULL;
 
                 // Creation of the proxy for interface "SimpleDelay".
                 try
                 {
-                    udpt = new eProsima::RPCDDS::UDPClientTransport(argv[1]);
-                    proxy = new SimpleDelayProxy("SimpleDelayService", udpt);
+                    protocol = new SimpleDelayProtocol();
+                    transport = new UDPProxyTransport(argv[1], "SimpleDelayService");
+                    proxy = new SimpleDelayProxy(*transport, *protocol);
                 }
-                catch(eProsima::RPCDDS::InitializeException &ex)
+                catch(InitializeException &ex)
                 {
                     std::cout << ex.what() << std::endl;
                     return -1;
@@ -145,7 +152,9 @@ int main(int argc, char **argv)
                 file << min_dur << " " << max_dur << " " << suma_dur/10000 << " " << duplicate_call_seconds[4999] << std::endl;
                 file.close();
 
-                delete(proxy);
+                delete proxy;
+                delete transport;
+                delete protocol;
             }
             else
             {
