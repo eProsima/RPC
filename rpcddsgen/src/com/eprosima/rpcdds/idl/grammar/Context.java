@@ -438,6 +438,21 @@ public class Context
     	return m_globalAnnotations.get("RESOURCES_BASE_URI");
     }
     
+    public String getResourceHost() {
+    	String path =  m_globalAnnotations.get("RESOURCES_BASE_URI");
+    	int posInit = path.indexOf("//");
+    	if(posInit == -1)
+    		posInit = 0;
+    	else
+    		posInit += 2;
+    	
+    	int posEnd = path.indexOf('/', posInit);
+    	if(posEnd == -1)
+    		posEnd = path.length()-1;
+    	
+    	return path.substring(posInit, posEnd);    	
+    }
+    
     public String getDeserializeCode() {    	
     	PathTree pathTree = new PathTree();
     	for(Interface iface: getInterfaces()) {

@@ -59,7 +59,7 @@ TCPServerTransport::TCPServerTransport(const char* to_connect) : work_(io_servic
 		init(address, port);
 	} else {
 		//TCPServerTransport::TCPServerTransport("127.0.0.1", "6960");
-		init("127.0.0.1", "6960"); // TODO XXX PORT
+		init("127.0.0.1", "80");
 	}
 }
 
@@ -85,10 +85,10 @@ std::string TCPServerTransport::get_ip_address(
 
 void TCPServerTransport::start_accept() {
 	//connection::pointer new_connection = connection::create(acceptor_.get_io_service());
-    boost::shared_ptr<connection>new_connection(new connection());
+	connection* new_connection = new connection();
 	new_connection->master_io_service_ = &io_service_;
 	std::cout << "Begin accept" << std::endl;
-	acceptor_.async_accept(*new_connection->socket(),
+	acceptor_.async_accept(*new_connection->socket_,
 			boost::bind(&TCPServerTransport::handle_accept, this, new_connection,
 					boost::asio::placeholders::error));
 }
@@ -101,7 +101,7 @@ void TCPServerTransport::stop() {
 	io_service_.stop();
 }
 
-void TCPServerTransport::handle_accept(boost::shared_ptr<connection> con, const boost::system::error_code& e) {
+void TCPServerTransport::handle_accept(connection* con, const boost::system::error_code& e) {
 	if (e) {
 		std::cerr << "Acceptor failed: " << e.message() << std::endl;
 		return;
@@ -116,7 +116,7 @@ void TCPServerTransport::handle_accept(boost::shared_ptr<connection> con, const 
 	 * Thread creation
 	 *
 	 */
-    getStrategy().schedule(&TCPServerTransport::worker, *this, (void*)con.get());
+    getStrategy().schedule(&TCPServerTransport::worker, *this, (void*)con);
 
     start_accept();
 }

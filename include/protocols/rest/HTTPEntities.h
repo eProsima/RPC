@@ -104,8 +104,15 @@ namespace eprosima
 
 			inline std::string get_data()
 			{
-				/*
-				string sentUri = baseUri+path;
+				// (baseUri + path) - host
+				string completeURL = "";
+				if(baseUri.at(baseUri.size()-1) != '/' && path.at(0) != '/') {
+					completeURL = baseUri + "/" + path;
+				} else {
+					completeURL = baseUri + path;
+				}
+				
+				string sentUri = completeURL;
 				size_t posInit = sentUri.find("//");
 				if(posInit == string::npos)
 					posInit = 0;
@@ -113,9 +120,8 @@ namespace eprosima
 					posInit += 2; // 2 characters, for "//"
 				size_t posEnd = sentUri.find("/", posInit);
 				sentUri = sentUri.substr(posEnd);
-				*/
-
-				return path;
+				
+				return sentUri;
 			}
 
 			inline void set_data(std::string data)

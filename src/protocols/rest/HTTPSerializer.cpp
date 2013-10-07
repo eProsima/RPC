@@ -143,6 +143,7 @@ namespace eprosima
 
 			setState();
 			//throw NotEnoughMemoryException(NotEnoughMemoryException::NOT_ENOUGH_MEMORY_MESSAGE_DEFAULT);
+			return *this;
 		}
 
 		HTTPSerializer& HTTPSerializer::serialize(HTTPMethod &method)

@@ -47,6 +47,8 @@ namespace eprosima
                         
                     private:
                     
+                    	static int deserializeContentLength(char* buffer);
+                    
                 };
             } // namespace rest
         } // namespace protocol

@@ -30,7 +30,7 @@ namespace eprosima
 
                     void start_accept();
 
-                    void handle_accept(boost::shared_ptr<connection> con, const boost::system::error_code& e);
+                    void handle_accept(connection* con, const boost::system::error_code& e);
 
                     std::string get_ip_address(boost::asio::io_service& io_service, std::string hostname, std::string port);
 

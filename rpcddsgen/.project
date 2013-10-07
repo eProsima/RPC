@@ -10,4 +10,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>sf.eclipse.javacc.javaccnature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/com/eprosima/rpcdds/idl/templates/RESTServerExample.stg</name>
+			<type>1</type>
+			<location>/home/rubenrumu/workspace/desarrollo/proyectos/rpcdds_restful/rpcddsgen/src/com/eprosima/rpcdds/idl/templates/RESTServerExample.stg</location>
+		</link>
+	</linkedResources>
 </projectDescription>

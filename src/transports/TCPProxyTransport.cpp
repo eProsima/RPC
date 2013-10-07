@@ -9,12 +9,20 @@ namespace eprosima {
 namespace rpcdds {
 namespace transport {
 TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress) {
+	string host = "127.0.0.1";
+	string port = "80";
+	if (serverAddress.size() > 0) {
+		size_t index = serverAddress.find(':', 1);
+		host = serverAddress.substr(0, index);
+		if(index != string::npos)
+			port = serverAddress.substr(index + 1, serverAddress.size());
+	}
 	io_service_ = new boost::asio::io_service();
 	resolver_ = new boost::asio::ip::tcp::resolver(*io_service_);
 	query_ = new boost::asio::ip::tcp::resolver::query(
-			boost::asio::ip::tcp::v4(), serverAddress, "6960");
+			boost::asio::ip::tcp::v4(), host, port);
 	socket_ = new boost::asio::ip::tcp::socket(*io_service_);
-	serverAddress_ = serverAddress;
+	serverAddress_ = host;
 	endpoint_iterator_ = resolver_->resolve(*query_);
 	memset(&buffer_, 0, 8192);
 }
@@ -45,11 +53,10 @@ bool TCPProxyTransport::connect() {
 bool TCPProxyTransport::send(const char* buffer) {
 	boost::system::error_code error = boost::system::error_code();
 
-	std::string s(buffer);
-	memcpy(buffer_, buffer, s.size());
-	buffer_[s.size()+1] = 0;
+	size_t size = strlen(buffer);
+	memcpy(buffer_, buffer, size);
 	size_t bytes_sent = 0;
-	bytes_sent = boost::asio::write(*socket_, boost::asio::buffer(buffer_, s.size()+1),
+	bytes_sent = boost::asio::write(*socket_, boost::asio::buffer(buffer_, size),
 			boost::asio::transfer_all(), error);
 	if (bytes_sent == 0) {
 		std::cout << "Error sending data" << std::endl;

@@ -26,10 +26,6 @@ public class PathTreeMethod {
 	}
 
 	public String getIterationCode() {		
-		System.out.println("Method: " + name);
-		for(String parameter: queryParameters) {
-			System.out.println("Parameter: " + parameter);
-		}
 		
 		String code = "";
 

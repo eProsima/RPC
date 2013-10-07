@@ -43,37 +43,79 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
     return true;
 }
 
+int Prueba2Protocol::deserializeContentLength(char* buffer) {
+	char contentLength[16];
+	strcpy(contentLength, "Content-Length:");
+	char *p = strtok(buffer, "\r\n");
+	while(p) {
+		if(memcmp(p, contentLength, 15) == 0) {
+			return atoi(p+15); // 15 = "Content-Length:"
+		}
+		p = strtok(NULL, "\r\n");
+	}
+
+	return 0;
+}
+
 void $ctx.filename$Protocol::worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection) {
-    boost::shared_ptr<eprosima::rpcdds::transport::connection> conn = *(boost::shared_ptr<
-            eprosima::rpcdds::transport::connection>*) (connection);
+    eprosima::rpcdds::transport::connection* conn = (eprosima::rpcdds::transport::connection*) (connection);
     boost::system::error_code ec = boost::system::error_code();
     boost::asio::ip::tcp::socket &socket = *(conn->socket_);
-    boost::asio::socket_base::non_blocking_io make_non_blocking(true);
-    socket.io_control(make_non_blocking);
+    //boost::asio::socket_base::non_blocking_io make_non_blocking(true);
+    //socket.io_control(make_non_blocking);
 
-    std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
+	std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
-    // TODO : El tamaño esta fijo estáticamente. Habrá que investigarlo.
+    // TODO : El tamaï¿½o esta fijo estï¿½ticamente. Habrï¿½ que investigarlo.
     char* buffer_ = (char*)malloc(8192);
+    memset(buffer_, 0, 8192);
 
     // TODO : Comprobar return.
-    boost::asio::read(socket, boost::asio::buffer(buffer_, 8192), ec);
+    size_t bytes_read = 0;
+    size_t total = 0;
+    while(true) {
+    	bytes_read = boost::asio::read(socket, boost::asio::buffer(buffer_ + total, 1), ec);
+    	total += bytes_read;
+
+        if(total >= 4) {
+        	// /r/n/r/n -> end of HTTP header
+        	if(buffer_[total-4] == '\r' &&
+        		buffer_[total-3] == '\n' &&
+        		buffer_[total-2] == '\r' &&
+        		buffer_[total-1] == '\n') {
+        		break;
+        	}
+        }
+		if(ec == boost::asio::error::eof || bytes_read == 0){
+			break;
+		}else if(ec){
+			throw boost::system::system_error(ec);
+		}
+    }
+
+    // If content-length -> read content-length
+    int contentLength = deserializeContentLength(buffer_);
+    if(contentLength > 0) {
+    	bytes_read = boost::asio::read(socket, boost::asio::buffer(buffer_ + total, contentLength), ec);
+    	total += bytes_read;
+    }
 
     // TODO : Call the protocol
-    eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
-    char* responseBuffer = restProtocol.proccessRequest(buffer_);
+    eprosima::rpcdds::protocol::rest::Prueba2Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::Prueba2Protocol&>( protocol );
+    char* responseBuffer = NULL;
+
+    responseBuffer = restProtocol.proccessRequest(buffer_);
     size_t bytes_sent = boost::asio::write(socket, boost::asio::buffer(responseBuffer, strlen(responseBuffer)+1), boost::asio::transfer_all(), ec);
     if(bytes_sent == 0) {
         cout << "Error sending response." << endl;
     }
 
     // XXX close?
+    conn->socket_.get()->close(ec);
 
     free(buffer_);
     if(responseBuffer)
         free(responseBuffer);
-
-    socket.get_io_service().run();
 }
 
 $definitions; separator="\n"$
@@ -96,16 +138,20 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
 
     // HTTP Request deserialization
     HTTPMethod httpMethod;
+    string host = "$ctx.resourceHost$";
     string baseUri = "$ctx.resourceBaseUri$"; // We give the serializator our base uri
     string path = "";
-    HTTPUri httpUri = HTTPUri(baseUri, path);
-    HTTPParameters httpParams;
+    HTTPUri httpUri = HTTPUri();
+    httpUri.setHost(host);
+    httpUri.setBaseUri(baseUri);
+    HTTPParameters httpParams;   
+    
 
     FastBuffer requestFastBuffer(httpRequest, 8192);
     HTTPSerializer* httpSerializer = new HTTPSerializer(requestFastBuffer);
     httpSerializer->deserialize(httpMethod);
     httpSerializer->deserialize(httpUri);
-    path = httpUri.getPath();
+    path = httpUri.getResourcePath();
     httpSerializer->deserialize(httpParams);
     httpSerializer->reset();
     //
@@ -185,12 +231,15 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      HTTPMethod method(HTTP_$operation.method$);
      httpSerializer->serialize(method);
      
+     string host = "$ctx.resourceHost$";
      string baseURI = "$ctx.resourceBaseUri$";
      string pathURI = "$operation.parent.path$";
      $if(operation.parent.pathHasBrackets)$
      pathURI = expandPath_$operation.name$(pathURI, $first(operation.parameters).name$);
      $endif$
-     HTTPUri httpUri(baseURI, pathURI);
+     HTTPUri httpUri(pathURI);
+     httpUri.setHost(host);
+     httpUri.setBaseUri(baseURI);
      httpSerializer->serialize(httpUri);
      
      $if(operation.parent.pathHasBrackets)$
@@ -268,9 +317,12 @@ char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_
     string mediaType;
     stringstream stream;
     HTTPMethod httpMethod;
+    string host = "$ctx.resourceHost$";
     string baseUri = "$ctx.resourceBaseUri$"; // We give the serializator our base uri
     string path = "";
-    HTTPUri httpUri = HTTPUri(baseUri, path);
+    HTTPUri httpUri = HTTPUri(path);
+    httpUri.setHost(host);
+    httpUri.setBaseUri(baseUri);
     HTTPParameters httpParams;
     HTTPVersion httpRequestVersion;
     HTTPData httpData;
@@ -333,6 +385,7 @@ if(responseData.size()>0) {
     else if($rettype.name$._d == 2)
         mediaType = "application/json";
     HTTPData httpData(size, mediaType, responseData);
+	httpResponseSerializer->serialize(httpData);
     stream.str(std::string());
 }
 
