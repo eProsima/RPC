@@ -13,14 +13,36 @@
  */
 
 #include "SequenceTestProxy.h"
+#include "SequenceTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "SequenceTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-	SequenceTestProxy *proxy = new SequenceTestProxy("SequenceTestService");
+    SequenceTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+	SequenceTestProxy *proxy = NULL;
+    
+    // Creation of the proxy for interface "SequenceTest".
+    try
+    {
+        protocol = new SequenceTestProtocol();
+        transport = new UDPProxyTransport("SequenceTestService");
+        proxy = new SequenceTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
 	largo l1;
 	largo l2;
@@ -52,7 +74,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getSLong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -99,7 +121,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getString>: " << ex.what() << std::endl;
         _exit(-1);
@@ -152,7 +174,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getStringBounded>: " << ex.what() << std::endl;
         _exit(-1);
@@ -167,6 +189,8 @@ int main(int argc, char **argv)
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
 	delete(proxy);
+    delete(transport);
+    delete(protocol);
 
 	_exit(0);
 	return 0;

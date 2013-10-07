@@ -13,14 +13,35 @@
  */
 
 #include "TypedefTestProxy.h"
+#include "TypedefTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "TypedefTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    TypedefTestProxy *proxy = new TypedefTestProxy("TypedefTestService");
+    TypedefTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    TypedefTestProxy *proxy = NULL;
+    
+    try
+    {
+        protocol = new TypedefTestProtocol();
+        transport = new UDPProxyTransport("TypedefTestService");
+        proxy = new TypedefTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     largo  l1 = 1;    
     largo  l2 = 0;       
@@ -38,7 +59,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getLargo>: " << ex.what() << std::endl;
         _exit(-1);
@@ -60,7 +81,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getLarguisimo>: " << ex.what() << std::endl;
         _exit(-1);
@@ -89,7 +110,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getDatosDef>: " << ex.what() << std::endl;
         _exit(-1);
@@ -122,7 +143,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getDatosDef>: " << ex.what() << std::endl;
         _exit(-1);
@@ -148,7 +169,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getCadena>: " << ex.what() << std::endl;
         _exit(-1);
@@ -174,7 +195,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getCadena>: " << ex.what() << std::endl;
         _exit(-1);
@@ -186,7 +207,9 @@ int main(int argc, char **argv)
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
-    delete(proxy);
+    delete proxy;
+    delete transport;
+    delete protocol;
 
     _exit(0);
     return 0;

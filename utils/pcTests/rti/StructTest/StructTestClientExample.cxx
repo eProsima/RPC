@@ -13,14 +13,36 @@
  */
 
 #include "StructTestProxy.h"
+#include "StructTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "StructTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    StructTestProxy *proxy = new StructTestProxy("StructTestService");
+    StructTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    StructTestProxy *proxy = NULL;
+    
+    // Creation of the proxy for interface "StructTest".
+    try
+    {
+        protocol = new StructTestProtocol();
+        transport = new UDPProxyTransport("StructTestService");
+        proxy = new StructTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
     
     Envio ev;
     Recepcion duplicate_ret;
@@ -44,7 +66,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<duplicate>: " << ex.what() << std::endl;
         _exit(-1);
@@ -81,7 +103,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<suma>: " << ex.what() << std::endl;
         _exit(-1);
@@ -111,7 +133,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<inner>: " << ex.what() << std::endl;
         _exit(-1);
@@ -123,6 +145,8 @@ int main(int argc, char **argv)
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
 	delete(proxy);
+    delete(transport);
+    delete(protocol);
 
 	_exit(0);
 	return 0;

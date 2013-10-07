@@ -13,14 +13,36 @@
  */
 
 #include "UnionTestProxy.h"
+#include "UnionTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "UnionTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    UnionTestProxy *proxy = new UnionTestProxy("UnionTestService");
+    UnionTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    UnionTestProxy *proxy = NULL;
+    
+    // Creation of the proxy for interface "UnionTest".
+    try
+    {
+        protocol = new UnionTestProtocol();
+        transport = new UDPProxyTransport("UnionTestService");
+        proxy = new UnionTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     Empleado em1;
     Empleado em2;
@@ -50,7 +72,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout <<  "TEST FAILED<getEmpleado>: " << ex.what() << std::endl;
         _exit(-1);
@@ -63,7 +85,9 @@ int main(int argc, char **argv)
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
-    delete(proxy);
+    delete proxy;
+    delete transport;
+    delete protocol;
 
     _exit(0);
     return 0;

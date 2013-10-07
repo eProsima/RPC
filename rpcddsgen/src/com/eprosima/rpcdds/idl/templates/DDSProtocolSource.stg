@@ -112,7 +112,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                     (::transport::dds::Transport::Copy_data)$first(ctx.interfaces).scopedname$_$operation.name$RequestTypeSupport::copy_data,
                     (::transport::dds::Transport::Finalize_data)$first(ctx.interfaces).scopedname$_$operation.name$RequestTypeSupport::finalize_data,
                     $ctx.filename$Protocol::$first(ctx.interfaces).formatedScopedname$_$operation.name$_serve,
-                    sizeof($first(ctx.interfaces).scopedname$_$operation.name$Reply)));
+                    sizeof($first(ctx.interfaces).scopedname$_$operation.name$Request)));
             }
             $endif$
             }; separator="\n"$
