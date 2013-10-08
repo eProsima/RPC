@@ -80,7 +80,10 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+$if(ctx.client)$
 virtual $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
+$endif$
+
 >>
 
 param_list(parameters) ::= <<>>
