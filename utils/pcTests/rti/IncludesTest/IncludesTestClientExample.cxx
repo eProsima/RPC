@@ -13,6 +13,8 @@
  */
 
 #include "IncludesTestProxy.h"
+#include "IncludesTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "IncludesTestRequestReplyPlugin.h"
 
@@ -21,16 +23,25 @@
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
+    IncludesTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
     IncludesTestNS::IncludesTestIfcProxy *proxy = NULL;
     
     // Creation of the proxy for interface "IncludesTestNS::IncludesTestIfc".
     try
     {
-        proxy = new IncludesTestNS::IncludesTestIfcProxy("IncludesTestIfcService");
+        protocol = new IncludesTestProtocol();
+        transport = new UDPProxyTransport("IncludesTestService");
+        proxy = new IncludesTestNS::IncludesTestIfcProxy(*transport, *protocol);
     }
-    catch(eProsima::RPCDDS::InitializeException &ex)
+    catch(InitializeException &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
@@ -70,7 +81,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
@@ -95,7 +106,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
@@ -121,7 +132,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(Exception &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
@@ -146,13 +157,15 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(Exception &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
     }
     
-    delete(proxy);
+    delete proxy;
+    delete transport;
+    delete protocol;
    
     return 0;
 }

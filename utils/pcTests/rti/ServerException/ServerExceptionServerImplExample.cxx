@@ -15,16 +15,19 @@
 #include "ServerExceptionServerImplExample.h"
 #include "exceptions/ServerInternalException.h"
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+
 void ServerExceptionServerImplExample::sendException() 
 {
-	throw eProsima::RPCDDS::ServerInternalException("Testing exception");
+	throw ServerInternalException("Testing exception");
 } 
 
 char* ServerExceptionServerImplExample::sendExceptionTwo(/*in*/ char* message, /*inout*/ char*& message2, /*out*/ char*& message3) 
 {
     char*  sendExceptionTwo_ret = NULL;
 
-    throw eProsima::RPCDDS::ServerInternalException("Testing exception");
+    throw ServerInternalException("Testing exception");
 
     return sendExceptionTwo_ret;
 } 
@@ -33,7 +36,7 @@ Estructura ServerExceptionServerImplExample::sendExceptionThree(/*in*/ const Est
 {
     Estructura sendExceptionThree_ret;
 
-    throw eProsima::RPCDDS::ServerInternalException("Testing exception");
+    throw ServerInternalException("Testing exception");
 
     return sendExceptionThree_ret;
 } 

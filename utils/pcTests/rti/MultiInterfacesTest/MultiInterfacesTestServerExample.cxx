@@ -14,17 +14,27 @@
 
 #include "MultiInterfacesTestServer.h"
 #include "strategies/ThreadPoolStrategy.h"
+#include "MultiInterfacesTestDDSProtocol.h"
+#include "transports/dds/UDPServerTransport.h"
 #include "exceptions/Exceptions.h"
 #include "utils/Utilities.h"
 #include "MultiInterfacesTestServerImplExample.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+using namespace ::strategy;
+
 int main(int argc, char **argv)
 {
     unsigned int threadPoolSize = 5;
-    eProsima::RPCDDS::ThreadPoolStrategy *basicpool = NULL;
-    eProsima::RPCDDS::ThreadPoolStrategy *structpool = NULL;
+    ThreadPoolStrategy *basicpool = NULL;
+    ThreadPoolStrategy *structpool = NULL;
+    MultiInterfacesTestProtocol *protocol = NULL;
+    UDPServerTransport *transport = NULL;
     BasicTypes::BasicTypeTestServer *basicserver = NULL;
     BasicTypeTestServerImplExample bservant;
     Struct::StructTestServer *structserver = NULL;
@@ -34,14 +44,16 @@ int main(int argc, char **argv)
     // Create and initialize the server for interface "BasicTypes::BasicTypeTest".
     try
     {
-        basicpool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        basicserver = new BasicTypes::BasicTypeTestServer("BasicTypeTestService", basicpool, bservant);
+        protocol = new MultiInterfacesTestProtocol();
+        transport = new UDPServerTransport("MultiInterfacesTestService");
+        basicpool = new ThreadPoolStrategy(threadPoolSize);
+        basicserver = new BasicTypes::BasicTypeTestServer(*basicpool, *transport, *protocol, bservant);
         basicserver->serve();
-        structpool = new eProsima::RPCDDS::ThreadPoolStrategy(threadPoolSize);
-        structserver = new Struct::StructTestServer("StructTestService", structpool, sservant);
+        structpool = new ThreadPoolStrategy(threadPoolSize);
+        structserver = new Struct::StructTestServer(*structpool, *transport, *protocol, sservant);
         structserver->serve();
     }
-    catch(eProsima::RPCDDS::InitializeException &ex)
+    catch(InitializeException &ex)
     {
         std::cout << ex.what() << std::endl;
         return -1;
@@ -49,7 +61,7 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        eProsima::RPCDDS::sleep(10000);
+        eprosima::rpcdds::sleep(10000);
     }
     
     // Stop and delete the server.
@@ -59,6 +71,8 @@ int main(int argc, char **argv)
     delete basicpool;
     delete structserver;
     delete structpool;
+    delete transport;
+    delete protocol;
     
     return 0;
 }

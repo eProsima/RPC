@@ -324,5 +324,5 @@ bigObjOption() ::= <<
 >>
 
 unsetReply() ::= <<
-memset(&replyData, 0, sizeof(replyData));
+memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
 >>

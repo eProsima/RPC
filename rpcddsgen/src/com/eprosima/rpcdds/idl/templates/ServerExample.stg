@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new $ctx.filename$Protocol();
-        transport = new UDPServerTransport("$ctx.firstInterface.name$Service");
+        transport = new UDPServerTransport("$ctx.filename$Service");
         server = new $ctx.firstInterface.scopedname$Server(*pool, *transport, *protocol, servant);
         server->serve();
     }

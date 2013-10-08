@@ -13,6 +13,8 @@
  */
 
 #include "UserExceptionsProxy.h"
+#include "UserExceptionsDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "UserExceptionsRequestReplyPlugin.h"
 
@@ -20,16 +22,25 @@
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
+    UserExceptionsProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
     Beta::IfcProxy *proxy = NULL;
     
     // Creation of the proxy for interface "Beta::Ifc".
     try
     {
-        proxy = new Beta::IfcProxy("IfcService");
+        protocol = new UserExceptionsProtocol();
+        transport = new UDPProxyTransport("UserExceptionsService");
+        proxy = new Beta::IfcProxy(*transport, *protocol);
     }
-    catch(eProsima::RPCDDS::InitializeException &ex)
+    catch(InitializeException &ex)
     {
         std::cout << ex.what() << std::endl;
         _exit(-1);
@@ -55,12 +66,12 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::UserException &ex)
+    catch(UserException &ex)
     {
         std::cout << "TEST FAILED<sendLevel1>: Different user exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(Exception &ex)
     {
         std::cout << "TEST FAILED<sendLevel1>: System exception: " << ex.what() << std::endl;
         _exit(-1);
@@ -79,12 +90,12 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::UserException &ex)
+    catch(UserException &ex)
     {
         std::cout << "TEST FAILED<sendLevel2>: Different user exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(Exception &ex)
     {
         std::cout << "TEST FAILED<sendLevel2>: System exception: " << ex.what() << std::endl;
         _exit(-1);
@@ -103,12 +114,12 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::UserException &ex)
+    catch(UserException &ex)
     {
         std::cout << "TEST FAILED<sendExcep>: Different user exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(Exception &ex)
     {
         std::cout << "TEST FAILED<sendExcep>: System exception: " << ex.what() << std::endl;
         _exit(-1);
@@ -127,12 +138,12 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::UserException &ex)
+    catch(UserException &ex)
     {
         std::cout << "TEST FAILED<sendExcepIntern>: Different user exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::Exception &ex)
+    catch(Exception &ex)
     {
         std::cout << "TEST FAILED<sendExcepIntern>: System exception: " << ex.what() << std::endl;
         _exit(-1);
@@ -140,7 +151,9 @@ int main(int argc, char **argv)
     
 	printf("TEST SUCCESFULLY\n");
 
-    delete(proxy);
+    delete proxy;
+    delete transport;
+    delete protocol;
 
 	_exit(0);
     return 0;

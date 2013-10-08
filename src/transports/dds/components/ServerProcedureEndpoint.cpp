@@ -10,6 +10,9 @@
 #include "strategies/ServerStrategy.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
+#include "boost/config/user.hpp"
+#include "boost/thread/mutex.hpp"
+
 using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
@@ -24,12 +27,17 @@ typedef struct encapsulation
 
 ServerProcedureEndpoint::ServerProcedureEndpoint(ServerTransport &transport) : m_transport(transport),
     m_writerTopic(NULL), m_readerTopic(NULL), m_writer(NULL), m_reader(NULL), m_initialize_data(NULL),
-    m_finalize_data(NULL), m_process_func(NULL), m_dataSize(0)
+    m_finalize_data(NULL), m_process_func(NULL), m_dataSize(0), m_mutex(NULL), m_started(0)
 {
 }
 
 ServerProcedureEndpoint::~ServerProcedureEndpoint()
 {
+    if(m_mutex != NULL)
+    {
+        delete m_mutex;
+        m_mutex = NULL;
+    }
 }
 
 int ServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
@@ -39,14 +47,20 @@ int ServerProcedureEndpoint::initialize(const char *name, const char *writertype
     if(name != NULL && readertypename != NULL && initialize_data != NULL && finalize_data != NULL &&
             processFunc != NULL && dataSize > 0)
     {
-        m_name = name;
-        m_writerTypeName = writertypename;
-        m_readerTypeName = readertypename;
-        m_initialize_data = initialize_data;
-        m_finalize_data = finalize_data;
-        m_process_func = processFunc;
-        m_dataSize = dataSize;
-        return 0;
+        m_mutex =  new boost::mutex();
+
+        if(m_mutex != NULL)
+        {
+            m_name = name;
+            if(writertypename != NULL)
+                m_writerTypeName = writertypename;
+            m_readerTypeName = readertypename;
+            m_initialize_data = initialize_data;
+            m_finalize_data = finalize_data;
+            m_process_func = processFunc;
+            m_dataSize = dataSize;
+            return 0;
+        }
     }
 
     return -1;
@@ -57,48 +71,65 @@ int ServerProcedureEndpoint::start(std::string &serviceName)
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
 
-    if(createEntities(serviceName) == 0)
+    m_mutex->lock();
+    if(m_started++ == 0)
     {
-        if((returnedValue = enableEntities()) != 0)
+        if(createEntities(serviceName) == 0)
         {
-            printf("ERROR<%s::%s>: Cannot enable the DDS entities\n", CLASS_NAME, METHOD_NAME);
+            if((returnedValue = enableEntities()) != 0)
+            {
+                printf("ERROR<%s::%s>: Cannot enable the DDS entities\n", CLASS_NAME, METHOD_NAME);
+                // TODO Borrar en caso de error los endpo8ints.
+                --m_started;
+            }
+        }
+        else
+        {
+            printf("ERROR<%s::%s>: Cannot create the DDS entities\n", CLASS_NAME, METHOD_NAME);
+            --m_started;
         }
     }
     else
-    {
-        printf("ERROR<%s::%s>: Cannot create the DDS entities\n", CLASS_NAME, METHOD_NAME);
-    }
+        returnedValue = 0;
+
+    m_mutex->unlock();
 
     return returnedValue;
 }
 
 void ServerProcedureEndpoint::stop()
 {
-    if(m_writer != NULL)
+    m_mutex->lock();
+    if(--m_started == 0)
     {
-        m_transport.getPublisher()->delete_datawriter(m_writer);
-        m_writer = NULL;
+        if(m_writer != NULL)
+        {
+            m_transport.getPublisher()->delete_datawriter(m_writer);
+            m_writer = NULL;
+        }
+        if(m_writerTopic != NULL)
+        {
+            m_transport.getParticipant()->delete_topic(m_writerTopic);
+            m_writerTopic = NULL;
+        }
+        if(m_reader != NULL)
+        {
+            m_transport.getSubscriber()->delete_datareader(m_reader);
+            m_reader = NULL;
+        }
+        if(m_filter != NULL)
+        {
+            m_transport.getParticipant()->delete_contentfilteredtopic(m_filter);
+            m_filter = NULL;
+        }
+        if(m_readerTopic != NULL)
+        {
+            m_transport.getParticipant()->delete_topic(m_readerTopic);
+            m_readerTopic = NULL;
+        }
     }
-    if(m_writerTopic != NULL)
-    {
-        m_transport.getParticipant()->delete_topic(m_writerTopic);
-        m_writerTopic = NULL;
-    }
-    if(m_reader != NULL)
-    {
-        m_transport.getSubscriber()->delete_datareader(m_reader);
-        m_reader = NULL;
-    }
-    if(m_filter != NULL)
-    {
-        m_transport.getParticipant()->delete_contentfilteredtopic(m_filter);
-        m_filter = NULL;
-    }
-    if(m_readerTopic != NULL)
-    {
-        m_transport.getParticipant()->delete_topic(m_readerTopic);
-        m_readerTopic = NULL;
-    }
+
+    m_mutex->unlock();
 }
 
 int ServerProcedureEndpoint::createEntities(std::string &serviceName)

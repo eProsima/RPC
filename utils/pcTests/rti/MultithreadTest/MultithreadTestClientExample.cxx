@@ -13,15 +13,23 @@
  */
 
 #include "MultithreadTestProxy.h"
+#include "MultithreadTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "MultithreadTestRequestReplyPlugin.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static struct RTIOsapiThreadFactory *factory = NULL;
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 static boost::thread thread1, thread2, thread3, thread4;
-static MultithreadTestProxy *proxy = NULL;
+static MultithreadTestProtocol *proto = NULL;
+static UDPProxyTransport *transp = NULL;
+static MultithreadTestProxy *prox = NULL;
 static int run = 0;
 
 void* executeThread(int threadNum)
@@ -59,7 +67,7 @@ void* executeThread(int threadNum)
 
             try
             {
-                test_ret =  proxy->test(dato1 ,dato2);
+                test_ret =  prox->test(dato1 ,dato2);
 #if defined(_WIN32)
                 _snprintf(fileLine, 255, "Received (%d)\n", count);
 #elif defined(__linux)
@@ -67,7 +75,7 @@ void* executeThread(int threadNum)
 #endif
                 fwrite(fileLine, strlen(fileLine), 1, file);
             }
-            catch(eProsima::RPCDDS::Exception &ex)
+            catch(Exception &ex)
             {
 #if defined(RTI_WIN32)
                 _snprintf(fileLine, 255, "Error in operation (%d). %s\n", count, ex.what());
@@ -129,7 +137,6 @@ int checkFiles()
 
 int createThreads()
 {
-    const char* const METHOD_NAME = "createThreads";
     int returnedValue = -1;
 
     thread1 = boost::thread(executeThread, 1);
@@ -145,9 +152,11 @@ int main(int argc, char **argv)
 {
     const char* const METHOD_NAME = "main";
 
-    proxy = new MultithreadTestProxy("MultithreadTestService");
+    proto = new MultithreadTestProtocol();
+    transp = new UDPProxyTransport("MultithreadTestService");
+    prox = new MultithreadTestProxy(*transp, *proto);
 
-    if(proxy != NULL)
+    if(prox != NULL)
     {
         // Create threads
         if(createThreads() == 0)
@@ -174,7 +183,9 @@ int main(int argc, char **argv)
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
-    delete(proxy);
+    delete prox;
+    delete transp;
+    delete proto;
 
     _exit(0);
     return 0;

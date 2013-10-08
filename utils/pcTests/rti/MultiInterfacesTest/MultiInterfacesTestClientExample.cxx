@@ -13,14 +13,36 @@
  */
 
 #include "MultiInterfacesTestProxy.h"
+#include "MultiInterfacesTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "MultiInterfacesTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    BasicTypes::BasicTypeTestProxy *basicproxy = new BasicTypes::BasicTypeTestProxy("BasicTypeTestService");
+    MultiInterfacesTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    BasicTypes::BasicTypeTestProxy *basicproxy = NULL;
+    
+    // Creation of the proxy for interface "BasicTypes::BasicTypeTest".
+    try
+    {
+        protocol = new MultiInterfacesTestProtocol();
+        transport = new UDPProxyTransport("MultiInterfacesTestService");
+        basicproxy = new BasicTypes::BasicTypeTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     DDS_Octet  oc1 = 1;    
     DDS_Octet  oc2 = 2;    
@@ -40,7 +62,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getOctet>: " << ex.what() << std::endl;
         _exit(-1);
@@ -64,7 +86,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getChar>: " << ex.what() << std::endl;
         _exit(-1);
@@ -88,7 +110,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getWChar>: " << ex.what() << std::endl;
         _exit(-1);
@@ -112,7 +134,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getShort>: " << ex.what() << std::endl;
         _exit(-1);
@@ -136,7 +158,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getUShort>: " << ex.what() << std::endl;
         _exit(-1);
@@ -160,7 +182,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getLong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -184,7 +206,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getULong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -208,7 +230,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getLLong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -232,7 +254,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getULLong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -256,7 +278,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getFloat>: " << ex.what() << std::endl;
         _exit(-1);
@@ -280,7 +302,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getDouble>:  " << ex.what() << std::endl;
         _exit(-1);
@@ -304,15 +326,15 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getBoolean>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
-    delete(basicproxy);
+    delete basicproxy;
 
-    Struct::StructTestProxy *structproxy = new Struct::StructTestProxy("StructTestService");
+    Struct::StructTestProxy *structproxy = new Struct::StructTestProxy(*transport, *protocol);
     
     Struct::Envio ev;
     Struct::Recepcion duplicate_ret;
@@ -336,7 +358,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<duplicate>: " << ex.what() << std::endl;
         _exit(-1);
@@ -373,7 +395,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<suma>: " << ex.what() << std::endl;
         _exit(-1);
@@ -385,23 +407,9 @@ int main(int argc, char **argv)
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
-	delete(structproxy);
+	delete structproxy;
+    delete protocol;
+    delete transport;
    
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -46,7 +46,7 @@ int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypen
             if(enableEntities() == 0)
             {
                 // Initialize query pool if it's not a oneway function.
-                if(initQueryPool() == 0)
+                if(m_reader == NULL || initQueryPool() == 0)
                 {
                     m_copy_data = copy_data;
                     m_dataSize = dataSize;

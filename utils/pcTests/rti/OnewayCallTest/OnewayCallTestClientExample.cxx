@@ -13,14 +13,36 @@
  */
 
 #include "OnewayCallTestProxy.h"
+#include "OnewayCallTestDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "OnewayCallTestRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    OnewayCallTestProxy *proxy = new OnewayCallTestProxy("OnewayCallTestService");
+    OnewayCallTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    OnewayCallTestProxy *proxy = NULL;
+    
+    // Creation of the proxy for interface "OnewayCallTest".
+    try
+    {
+        protocol = new OnewayCallTestProtocol();
+        transport = new UDPProxyTransport("OnewayCallTestService");
+        proxy = new OnewayCallTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     DDS_Long lo1 = 10;       
 
@@ -28,7 +50,7 @@ int main(int argc, char **argv)
     {
         proxy->setLong(lo1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<setLong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -46,7 +68,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getLong>: " << ex.what() << std::endl;
         _exit(-1);
@@ -58,7 +80,7 @@ int main(int argc, char **argv)
     {
         proxy->setBoolean(bo1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<setBoolean>: " << ex.what() << std::endl;
         _exit(-1);
@@ -76,7 +98,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getBoolean>: " << ex.what() << std::endl;
         _exit(-1);
@@ -88,7 +110,7 @@ int main(int argc, char **argv)
     {
         proxy->setString(s1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<setString>: " << ex.what() << std::endl;
         _exit(-1);
@@ -108,7 +130,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getString>: " << ex.what() << std::endl;
         _exit(-1);
@@ -125,7 +147,7 @@ int main(int argc, char **argv)
     {
         proxy->setStruct(st1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<setStruct>: " << ex.what() << std::endl;
         _exit(-1);
@@ -147,7 +169,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getStruct>: " << ex.what() << std::endl;
         _exit(-1);
@@ -157,7 +179,9 @@ int main(int argc, char **argv)
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
-    delete(proxy);
+    delete proxy;
+    delete transport;
+    delete protocol;
 
     _exit(0);
     return 0;

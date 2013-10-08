@@ -50,18 +50,16 @@ MultithreadTest_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/MultithreadTestSe
 MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTest.cxx \
 	MultithreadTestPlugin.cxx \
 	MultithreadTestSupport.cxx \
-	MultithreadTestRequestReplyUtils.cxx \
+	MultithreadTestDDSProtocol.cxx \
 	MultithreadTestRequestReply.cxx \
 	MultithreadTestRequestReplyPlugin.cxx \
 	MultithreadTestRequestReplySupport.cxx
 
 MultithreadTest_COMMON_SRC_CPPFILES=
 
-MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx \
-	MultithreadTestClientRPCSupport.cxx \
-	MultithreadTestAsyncSupport.cxx
-MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx \
-	MultithreadTestServerRPCSupport.cxx
+MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx
+	#MultithreadTestAsyncSupport.cxx
+MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx
 MultithreadTest_COMMONOBJS    = $(MultithreadTest_COMMON_SRC_CXXFILES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o) $(MultithreadTest_COMMON_SRC_CPPFILES:%.cpp=output/x64Linux2.6gcc4.4.5/%.o)
 MultithreadTest_CLIENTOBJS    = $(MultithreadTest_CLIENTSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
 MultithreadTest_SERVEROBJS    = $(MultithreadTest_SERVERSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)

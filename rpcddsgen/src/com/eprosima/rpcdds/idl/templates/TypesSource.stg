@@ -6,6 +6,9 @@ $fileHeader(file=[ctx.filename, "T.cxx"], description=["This source file contain
 #include "$ctx.filename$T.h"
 #include <string.h>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+
 $definitions; separator="\n"$
 >>
 
@@ -30,31 +33,31 @@ $exports; separator="\n"$
 >>
 
 exception(ctx, exception) ::= <<
-$exception.name$::$exception.name$() : eProsima::RPCDDS::UserException()
+$exception.name$::$exception.name$() : UserException()
 {
     $exception.members : { member |$memberInit(member=member)$}; separator="\n"$
 }
 
-$exception.name$::$exception.name$(const $exception.name$ &ex) : eProsima::RPCDDS::UserException(ex)
+$exception.name$::$exception.name$(const $exception.name$ &ex) : UserException(ex)
 {
     $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
 }
 
-$exception.name$::$exception.name$($exception.name$&& ex) : eProsima::RPCDDS::UserException(std::move(ex))
+$exception.name$::$exception.name$($exception.name$&& ex) : UserException(std::move(ex))
 {
     $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
 }
 
 $exception.name$& $exception.name$::operator=(const $exception.name$ &ex)
 {
-	eProsima::RPCDDS::UserException::operator=(ex);
+	UserException::operator=(ex);
 	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
 	return *this;
 }
 
 $exception.name$& $exception.name$::operator=($exception.name$&& ex)
 {
-	eProsima::RPCDDS::UserException::operator=(std::move(ex));
+	operator=(std::move(ex));
 	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
 	return *this;
 }

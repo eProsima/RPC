@@ -15,6 +15,11 @@
 
 #include <string>
 
+namespace boost
+{
+    class mutex;
+}
+
 namespace eprosima
 {
     namespace rpcdds
@@ -132,6 +137,10 @@ namespace eprosima
                         Transport::ProcessFunc m_process_func;
 
                         int m_dataSize;
+
+                        boost::mutex *m_mutex;
+
+                        int m_started;
                 };
             } // namespace dds
         } // namespace transport

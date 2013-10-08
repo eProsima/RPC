@@ -13,14 +13,36 @@
  */
 
 #include "ServerExceptionProxy.h"
+#include "ServerExceptionDDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 #include "ServerExceptionRequestReplyPlugin.h"
 
 #include <iostream>
 
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
 int main(int argc, char **argv)
 {
-    ServerExceptionProxy *proxy = new ServerExceptionProxy("ServerExceptionService");
+    ServerExceptionProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    ServerExceptionProxy *proxy = NULL;
+    
+    // Creation of the proxy for interface "ServerException".
+    try
+    {
+        protocol = new ServerExceptionProtocol();
+        transport = new UDPProxyTransport("ServerExceptionService");
+        proxy = new ServerExceptionProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     try
     {
@@ -28,7 +50,7 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<sendException>: No exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::ServerInternalException &ex)
+    catch(ServerInternalException &ex)
     {
         if(strcmp(ex.what(), "Testing exception") != 0)
         {
@@ -36,7 +58,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<sendException>: " << ex.what() << std::endl;
         _exit(-1);
@@ -53,7 +75,7 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<sendExceptionTwo>: No exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::ServerInternalException &ex)
+    catch(ServerInternalException &ex)
     {
         if(strcmp(ex.what(), "Testing exception") != 0)
         {
@@ -61,7 +83,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<sendExceptionTwo>: " << ex.what() << std::endl;
         _exit(-1);
@@ -81,7 +103,7 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<sendExceptionThree>: No exception" << std::endl;
         _exit(-1);
     }
-    catch(eProsima::RPCDDS::ServerInternalException &ex)
+    catch(ServerInternalException &ex)
     {
         if(strcmp(ex.what(), "Testing exception") != 0)
         {
@@ -89,7 +111,7 @@ int main(int argc, char **argv)
             _exit(-1);
         }
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<sendExceptionThree>: " << ex.what() << std::endl;
         _exit(-1);
@@ -100,7 +122,9 @@ int main(int argc, char **argv)
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
-    delete(proxy);
+    delete proxy;
+    delete transport;
+    delete protocol;
 
 	_exit(0);
     return 0;
