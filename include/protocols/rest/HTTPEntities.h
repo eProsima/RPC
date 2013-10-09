@@ -18,7 +18,6 @@ namespace eprosima
 		class HTTPMethod
 		{
 		private:
-
 			std::string data_;
 
 		public:
@@ -32,6 +31,18 @@ namespace eprosima
 			inline std::string& get_data()
 			{
 				return data_;
+			}
+
+			inline Method getMethod()
+			{
+				if(data_.compare(0, 4, "POST") == 0)
+					return HTTP_POST;
+				if(data_.compare(0, 3, "PUT") == 0)
+					return HTTP_PUT;
+				if(data_.compare(0, 6, "DELETE") == 0)
+					return HTTP_DELETE;
+
+				return HTTP_GET; // Default
 			}
 
 			inline void set_data(const std::string &data)
@@ -206,12 +217,14 @@ namespace eprosima
 				return data_;
 			}
 
-			void set_data(std::string &data);
+			void set_data(std::string &&data);
 
+/*
 			inline void set_data(std::string &&data)
 			{
 				set_data(std::move(data));
 			}
+*/
 
 			void addParam(HTTPParam &param);
 			

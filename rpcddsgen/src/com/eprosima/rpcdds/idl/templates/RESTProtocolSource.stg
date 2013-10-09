@@ -43,11 +43,12 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
     return true;
 }
 
-int Prueba2Protocol::deserializeContentLength(char* buffer) {
+int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
 	char contentLength[16];
 	strcpy(contentLength, "Content-Length:");
 	char *p = strtok(buffer, "\r\n");
 	while(p) {
+		p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
 		if(memcmp(p, contentLength, 15) == 0) {
 			return atoi(p+15); // 15 = "Content-Length:"
 		}
@@ -101,7 +102,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, eprosima::rpcdds::transp
     }
 
     // TODO : Call the protocol
-    eprosima::rpcdds::protocol::rest::Prueba2Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::Prueba2Protocol&>( protocol );
+    eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
     char* responseBuffer = NULL;
 
     responseBuffer = restProtocol.proccessRequest(buffer_);
@@ -138,6 +139,7 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
 
     // HTTP Request deserialization
     HTTPMethod httpMethod;
+    eprosima::httpser::Method enumHttpMethod;
     string host = "$ctx.resourceHost$";
     string baseUri = "$ctx.resourceBaseUri$"; // We give the serializator our base uri
     string path = "";
@@ -150,6 +152,7 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     FastBuffer requestFastBuffer(httpRequest, 8192);
     HTTPSerializer* httpSerializer = new HTTPSerializer(requestFastBuffer);
     httpSerializer->deserialize(httpMethod);
+    enumHttpMethod = httpMethod.getMethod();
     httpSerializer->deserialize(httpUri);
     path = httpUri.getResourcePath();
     httpSerializer->deserialize(httpParams);
@@ -335,7 +338,7 @@ char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_
     
     $if(operation.parent.pathHasBrackets)$
     $first(operation.parameters).name$ $first(operation.parameters).name$;
-    deserializePath_$operation.name$(httpUri.get_data(), $first(operation.parameters).name$);
+    deserializePath_$operation.name$(httpUri.getResourcePath(), $first(operation.parameters).name$);
     $deserializeHTTPParams(params=rest(operation.parameters))$
     $else$
     $deserializeHTTPParams(params=operation.parameters)$
@@ -376,6 +379,7 @@ string code = stream.str();
 string status = "";
 HTTPResponseCode httpResponseCode(code, status);
 stream.str(std::string());
+stream.clear();
 httpResponseSerializer->serialize(httpResponseCode);
 if(responseData.size()>0) {
     stream << responseData.length();
@@ -387,6 +391,7 @@ if(responseData.size()>0) {
     HTTPData httpData(size, mediaType, responseData);
 	httpResponseSerializer->serialize(httpData);
     stream.str(std::string());
+    stream.clear();
 }
 
 >>
@@ -405,6 +410,7 @@ deserializePathSegment(param) ::= <<
             stream << actualPathSegment;
             stream $ctx.sersym$ $param.name$.$member.name$;
             stream.str(std::string());
+            stream.clear();
             break;
         }
     }
@@ -424,6 +430,7 @@ expandPathSegment(param) ::= <<
     stream << $param.name$.$member.name$;
     expandedPath += stream.str() + "/";
     stream.str(std::string());
+    stream.clear();
     }$
 >>
 
@@ -445,6 +452,7 @@ $if(!param.bodyParam)$
         stream << httpParam.getValue();
         stream $ctx.sersym$ $param.name$;
         stream.str(std::string());
+        stream.clear();
     }
 $endif$
 }$
@@ -467,6 +475,7 @@ paramName = "$param.name$";
 stream << $param.name$;
 paramValue = stream.str();
 stream.str(std::string());
+stream.clear();
 httpParam = HTTPParam(paramName, paramValue);
 httpParameters.addParam(httpParam);
 
@@ -497,6 +506,7 @@ if(data.size() > 0) {
         mediaType = "application/json";
     httpData = HTTPData(baseURI, size, mediaType, data);
     stream.str(std::string());
+    stream.clear();
     httpSerializer->serialize(httpData);
 }$endif$}$
 if(data.size() == 0) {

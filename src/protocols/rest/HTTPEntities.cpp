@@ -172,7 +172,7 @@ namespace eprosima
 		HTTPResponseCode::HTTPResponseCode() : data_(""){}
 
 		HTTPResponseCode::HTTPResponseCode(std::string &code, std::string &text)
-		{
+		{			
 			data_ = code+std::string(" ")+text+std::string("\r\n");
 		}
 
@@ -207,7 +207,7 @@ namespace eprosima
 			++size_;
 		}
 
-		void HTTPParameters::set_data(std::string &data) {
+		void HTTPParameters::set_data(std::string &&data) {
 			params_.clear();
 			size_ = 0;
 			data_ = "";

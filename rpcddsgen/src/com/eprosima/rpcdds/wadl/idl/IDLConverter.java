@@ -255,7 +255,7 @@ public class IDLConverter {
 	 * @returns IDL parameters, including inherited ones
 	 */
 	private String getIDLURLParams(Method method) {
-		ArrayList<Param> params;
+		ArrayList<Param> params = new ArrayList<Param>();
 
 		String embeddedParameters = "";
 		String queryParameters = "";
@@ -283,7 +283,9 @@ public class IDLConverter {
 
 		// Local parameters
 		String idlParameters = "";
-		params = method.getRequest().getParams();
+		params.clear();
+		if(method.getRequest() != null)
+			params = method.getRequest().getParams();
 		for (Param param : params) {
 			if (param.getStyle().equals("query")) {
 				String idlType = getIDLType(param.getType());

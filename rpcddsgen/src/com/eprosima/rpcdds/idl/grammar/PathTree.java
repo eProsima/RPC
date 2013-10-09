@@ -104,7 +104,7 @@ public class PathTree {
 			pathHasBrackets = iface.getPathHasBrackets();
 		}
 		
-		PathTreeMethod method = new PathTreeMethod(operation.getName(), node);		
+		PathTreeMethod method = new PathTreeMethod(operation.getName(), operation.getMethod(), node);		
 		List<Param> params;
 		if(pathHasBrackets) {
 			params = operation.getParameters().subList(1, operation.getParameters().size());
