@@ -43,18 +43,76 @@ if not %errorstatus%==0 goto :exit
 
 :: Find all directories.
 for /D %%D in ("*") do (
-   if exist exec_test.bat (
-      call exec_test.bat
+   if exist "%%D\exec_test.bat" (
    ) else (
-      :: i86 target
-      :: Set environtment
-      call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
-      call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
-      call :execTest i86Win32VS2010 Win32 %%D
-      :: Restore environtment
-      call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
-      call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
    )
+   set exec_test_bool=0
+   set exec_target_bool=0
+   if "%test_selected%"=="" set exec_test_bool=1
+   if "%test_selected%"=="%%D" set exec_test_bool=1
+   if !exec_test_bool!==1 (
+      :: Exec internal batch file
+      if exist "%%D\exec_test.bat" (
+	 :: i86 target
+         if %errorstatus%==0 (
+            if "%test_targets%"=="" set exec_target_bool=1
+            if "%test_targets%"=="i86" set exec_target_bool=1
+            if !exec_target_bool!==1 (
+                :: i86 target
+                :: Set environtment
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
+                call "%%D\exec_test.bat"
+                :: Restore environtment
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+            )
+         )
+	 ::x64 target
+         if %errorstatus%==0 (
+            if "%test_targets%"=="" set exec_target_bool=2
+            if "%test_targets%"=="x64" set exec_target_bool=2
+            if !exec_target_bool!==2 (
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
+                call "%%D\exec_test.bat"
+                :: Restore environtment
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+            )
+         )
+      ) else (
+	 :: i86 target
+         if %errorstatus%==0 (
+            if "%test_targets%"=="" set exec_target_bool=3
+            if "%test_targets%"=="i86" set exec_target_bool=3
+            if !exec_target_bool!==3 (
+                :: Set environtment
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
+                call :execTest i86Win32VS2010 Win32 %%D
+                :: Restore environtment
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+            )
+         )
+	 ::x64 target
+         if %errorstatus%==0 (
+            if "%test_targets%"=="" set exec_target_bool=4
+            if "%test_targets%"=="x64" set exec_target_bool=4
+            if !exec_target_bool!==4 (
+                :: Set environtment
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
+                call :execTest x64Win64VS2010 Win32 %%D
+                :: Restore environtment
+                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
+                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+            )
+         )
+      )
+   )
+
    :: Detect error in call.
    if not !errorstatus!==0 goto :exit
 )
