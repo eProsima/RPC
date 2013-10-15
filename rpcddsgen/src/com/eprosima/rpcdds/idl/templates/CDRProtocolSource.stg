@@ -374,7 +374,7 @@ $[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=par
 
 member_serialization(member) ::= <<
 $if(member.typecode.maxsize)$
-if(x.$member.name$().$sizeFunction.(member.typecode.striptypename)$ <= $member.typecode.maxsize$)
+if(x.$member.name$().$sizeFunction.(member.typecode.stType)$ <= $member.typecode.maxsize$)
     
 $endif$$basicCDRTypes.(member.typecode.stType)$serialize(x.$member.name$);
 $if(member.typecode.maxsize)$
@@ -422,4 +422,11 @@ primitiveCastingType ::= [
         "type_11":"(int64_t&)",
         "type_12":"(uint64_t&)",
         default: // not casting
+]
+
+sizeFunction ::= [
+        "type_e":"length()",
+        "type_d":"length()",
+        "type_15":"length()",
+        default: // not basic type.
 ]
