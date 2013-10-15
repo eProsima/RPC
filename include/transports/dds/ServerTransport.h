@@ -15,6 +15,7 @@
 
 #include <string>
 #include <map>
+#include <boost/bind.hpp>
 
 namespace eprosima
 {
@@ -56,13 +57,15 @@ namespace eprosima
                                 Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
                                 Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize);
 
-                        static void process(eprosima::rpcdds::transport::ServerTransport &transport, void *data);
+                        void process(ServerProcedureEndpoint *endpoint, void *data);
 
-                        virtual void run();
+                        void run();
 
-                        virtual void stop();
+                        void stop();
 
-                        void sendReply(void *data, Endpoint *endpoint);
+                        void sendReply(void *data, size_t dataLength, Endpoint *endpoint);
+
+                        int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
 
                     protected:
 

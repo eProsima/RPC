@@ -1,3 +1,11 @@
+/*************************************************************************
+ * Copyright (c) 2013 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
 #include "transports/TCPProxyTransport.h"
 
 #include <iostream>
@@ -5,10 +13,11 @@
 
 using namespace std;
 
-namespace eprosima {
-namespace rpcdds {
-namespace transport {
-TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress) {
+using namespace eprosima::rpcdds;
+using namespace ::transport;
+
+TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress)
+{
 	string host = "127.0.0.1";
 	string port = "80";
 	if (serverAddress.size() > 0) {
@@ -24,7 +33,6 @@ TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress) {
 	socket_ = new boost::asio::ip::tcp::socket(*io_service_);
 	serverAddress_ = host;
 	endpoint_iterator_ = resolver_->resolve(*query_);
-	memset(&buffer_, 0, 8192);
 }
 
 TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort) {
@@ -35,10 +43,10 @@ TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress, const std
 	socket_ = new boost::asio::ip::tcp::socket(*io_service_);
 	serverAddress_ = serverAddress;
 	endpoint_iterator_ = resolver_->resolve(*query_);
-	memset(&buffer_, 0, 8192);
 }
 
-bool TCPProxyTransport::connect() {
+bool TCPProxyTransport::connect()
+{
 	boost::system::error_code error = boost::asio::error::host_not_found;
 	while (error && endpoint_iterator_ != end_) {
 		socket_->close();
@@ -50,47 +58,58 @@ bool TCPProxyTransport::connect() {
 	return true;
 }
 
-bool TCPProxyTransport::send(const char* buffer) {
+bool TCPProxyTransport::send(const void* buffer, const size_t bufferSize)
+{
 	boost::system::error_code error = boost::system::error_code();
+    const char *buff = (const char*)buffer;
 
-	size_t size = strlen(buffer);
-	memcpy(buffer_, buffer, size);
-	size_t bytes_sent = 0;
-	bytes_sent = boost::asio::write(*socket_, boost::asio::buffer(buffer_, size),
-			boost::asio::transfer_all(), error);
-	if (bytes_sent == 0) {
-		std::cout << "Error sending data" << std::endl;
-		return false;
-	}
-	memset(&buffer_, 0, 8192);
-	return true;
+    if(buff != NULL)
+    {
+        size_t bytes_sent = 0;
+        bytes_sent = boost::asio::write(*socket_, boost::asio::buffer(buff, bufferSize),
+                boost::asio::transfer_all(), error);
+        if (bytes_sent != 0)
+        {
+            return true;
+        }
+        else
+            std::cout << "Error sending data" << std::endl;
+
+    }
+    else
+    {
+        // TODO print error.
+    }
+
+	return false;
 }
 
-char* TCPProxyTransport::receive() {
+size_t TCPProxyTransport::receive(char *buffer, const size_t bufferSize)
+{
 	boost::system::error_code error = boost::system::error_code();
-	memset(&buffer_, 0, 8192);
-	size_t actualPos = 0;
-	char* response = NULL;
-	while(true){
-		size_t len = socket_->read_some(
-			boost::asio::buffer(buffer_, 8192),
-			error
-		);
+    size_t numData;
 
-		response = (char*)realloc(response, actualPos+len);
-		memcpy(response + actualPos, buffer_, len);
+    // TODO Check timeout
+    while((numData = socket_->available(error)) == 0);
 
-		actualPos += len;
-			
-		if(error == boost::asio::error::eof){
+    if(numData <= bufferSize)
+    {
+        size_t bytes_read = boost::asio::read(*socket_, boost::asio::buffer(buffer, numData), error);
+
+        if(bytes_read > 0)
+            return bytes_read;
+
+        // TODO Ver que hacer con esto.
+		/*if(error == boost::asio::error::eof){
 			break;
 		}else if(error){
 			throw boost::system::system_error(error);
-		}
-	}
+		}*/
+    }
+    else
+    {
+        // TODO Send error o devolver algo.
+    }
 
-	return response;
+	return 0;
 }
-}// namespace transport
-}// namespace rpcdds
-} // namespace eprosima

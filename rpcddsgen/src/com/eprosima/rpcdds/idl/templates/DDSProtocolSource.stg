@@ -171,8 +171,8 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         }
         
         return true;
-    }$
-    $endif$
+        }$
+        $endif$
     }
     else
     {
@@ -251,10 +251,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         
     $else$
         retcode = (ReturnMessage)retInstance.header.rpcddsRetCode;
-        $operation.outputparam : {$extractDataHelper(param=it, dataname="retInstance", isReply="yes")$};separator="\n"$
-        $if(operation.rettypeparam)$
-        $extractDataHelper(param=operation.rettypeparam, dataname="retInstance", isReply="yes")$        
-        $endif$
+        $[operation.outputparam, operation.rettypeparam] : {$extractDataHelper(param=it, dataname="retInstance", isReply="yes")$};separator="\n"$
     
     $endif$
     }
@@ -314,21 +311,15 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     {
         if(_protocol._$operation.parent.name$_impl != NULL)
         {
-	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.name$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 	
 	        $if(!operation.oneway)$
 	        $if(operation.exceptions)$replyData.unio._d = 0;$endif$
 	        
 	        $if(operation.exceptions)$
-		    $operation.outputparam : {$createDataHelper(param=it, dataname="replyData.unio._u.st")$};separator="\n"$
-		    $if(operation.rettypeparam)$
-		    $createDataHelper(param=operation.rettypeparam, dataname="replyData.unio._u.st")$        
-		    $endif$
+		    $[operation.outputparam, operation.rettypeparam] : {$createDataHelper(param=it, dataname="replyData.unio._u.st")$};separator="\n"$
 		    $else$
-		    $operation.outputparam : {$createDataHelper(param=it, dataname="replyData")$};separator="\n"$
-		    $if(operation.rettypeparam)$
-		    $createDataHelper(param=operation.rettypeparam, dataname="replyData")$        
-		    $endif$
+		    $[operation.outputparam, operation.rettypeparam] : {$createDataHelper(param=it, dataname="replyData")$};separator="\n"$
 		    $endif$
 	        
 	        replyData.header.rpcddsRetCode = OPERATION_SUCCESSFUL;
@@ -366,8 +357,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     
     $reqrepRefFinalize(type=[operation.parent.scopedname, "_", operation.name], reqrep="Request", name="requestData")$
     
-    $varDel(variable=operation.rettypeparam)$
-    $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
 }
 $endif$
 
@@ -433,18 +423,4 @@ $param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer(
 $endif$
 $endif$
 $endif$
->>
-
-createExceptionUtil(operation, exception) ::= <<
-void $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData(const $exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &instance)
-{
-    $exception.members : { member |instance.$member.name$ = ex.$member.name$;}; separator="\n"$
-}
-
-void $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData($exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &data)
-{
-    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
-}
-
-
 >>

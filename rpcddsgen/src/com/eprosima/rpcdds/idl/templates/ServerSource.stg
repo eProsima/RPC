@@ -39,11 +39,12 @@ $interface.name$Server::$interface.name$Server(eprosima::rpcdds::strategy::Serve
     Server(strategy, transport, protocol), _impl(servant)
 {
    protocol.activateInterface("$interface.scopedname$");
-   protocol.link$interface.name$Impl(servant);
+   protocol.link$interface.formatedScopedname$Impl(servant);
 }
 
 $interface.name$Server::~$interface.name$Server()
-{   
+{
+    //TODO Unlink an deactivate.
 }
 
 $export_list$

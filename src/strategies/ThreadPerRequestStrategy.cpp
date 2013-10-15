@@ -22,21 +22,19 @@ namespace eprosima
             class ThreadPerRequestStrategyJob
             {
                 public:
-                    ThreadPerRequestStrategyJob(fExecFunction execFunction,
-                            eprosima::rpcdds::transport::ServerTransport &transport, void *data)
-                        : m_execFunction(execFunction), m_transport(transport), m_data(data)
+                    ThreadPerRequestStrategyJob(boost::function<void()> callback)
+                        : m_callback(callback)
                     {
                     }
 
                     void run()
                     {
-                        m_execFunction(m_transport, m_data);
+                        m_callback();
                     }
 
                 private:
-                    fExecFunction m_execFunction;
-                    eprosima::rpcdds::transport::ServerTransport &m_transport;
-                    void *m_data;
+                    
+                    boost::function<void()> m_callback;
             };
         } // namespace strategy
     } // namespace rpcdds
@@ -46,19 +44,9 @@ using namespace eprosima::rpcdds;
 using namespace ::strategy;
 using namespace ::transport;
 
-void ThreadPerRequestStrategy::schedule(fExecFunction execFunction,
-        ServerTransport &transport, void *data)
+void ThreadPerRequestStrategy::schedule(boost::function<void()> callback)
 {
-    const char* const METHOD_NAME = "schedule";
-
-    if(execFunction != NULL && data != NULL)
-    {
-        boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(execFunction, transport, data));
-        boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
-        thread.detach();
-    }
-    else
-    {
-        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-    }
+    boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(callback));
+    boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+    thread.detach();
 }

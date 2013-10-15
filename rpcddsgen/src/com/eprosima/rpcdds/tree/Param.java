@@ -43,6 +43,22 @@ public abstract class Param
     
     ////////// RESTful block //////////
     
+    /*
+     * @brief Get the annotation with the real name of the query parameter.
+     * Also substitute the spaces by %20.
+     */
+    public String getRealname()
+    {
+        String realname;
+        
+        if((realname = ((Operation)getParent()).getAnnotations().get(m_name)) != null)
+        {
+            return realname.replace(" ", "%20");
+        }
+        
+        return m_name;
+    }
+    
     public boolean getBodyParam ()
     {
     	String bodyParam = ((Operation)getParent()).getBody();   	

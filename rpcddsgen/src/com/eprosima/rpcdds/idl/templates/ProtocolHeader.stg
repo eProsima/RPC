@@ -30,9 +30,9 @@ namespace eprosima
                     
                     $if(ctx.server)$
                     $ctx.interfaces : { interface |
-                    void link$interface.name$Impl($interface.scopedname$ServerImpl &impl)
+                    void link$interface.formatedScopedname$Impl($interface.scopedname$ServerImpl &impl)
                     {
-                        _$interface.name$_impl = &impl;
+                        _$interface.formatedScopedname$_impl = &impl;
                     }
                     }; separator="\n"$
                     $endif$
@@ -41,13 +41,19 @@ namespace eprosima
                     
                 protected:
                 
-                    $ctx.filename$Protocol() : Protocol(){}
+                    $ctx.filename$Protocol() : Protocol()
+                    $if(ctx.server)$
+                    $ctx.interfaces : { interface |                      
+                    , _$interface.formatedScopedname$_impl(NULL)
+                    }; separator="\n"$
+                    $endif$
+                    {}
                     
                     virtual ~$ctx.filename$Protocol(){}
                 
                     $if(ctx.server)$
                 	$ctx.interfaces : { interface |                      
-                    $interface.scopedname$ServerImpl *_$interface.name$_impl;
+                    $interface.scopedname$ServerImpl *_$interface.formatedScopedname$_impl;
                     }; separator="\n"$
                     $endif$
                     

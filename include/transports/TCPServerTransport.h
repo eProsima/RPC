@@ -1,13 +1,26 @@
-#ifndef TCP_SERVER_TRANSPORT_SERVERTRANSPORT
-#define TCP_SERVER_TRANSPORT_SERVERTRANSPORT
+/*************************************************************************
+ * Copyright (c) 2013 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+#ifndef _TRANSPORTS_TCPSERVERTRANSPORT_H_
+#define _TRANSPORTS_TCPSERVERTRANSPORT_H_
 
 #include "transports/ServerTransport.h"
-#include "transports/connection.h"
 #include "rpcdds_dll.h"
 
 #include <boost/asio.hpp>
+#include <boost/function.hpp>
 #include <string>
 #include <iostream>
+
+namespace boost
+{
+    class thread;
+}
 
 namespace eprosima
 {
@@ -15,41 +28,43 @@ namespace eprosima
     {
         namespace transport
         {
+            class TCPEndpoint;
+
             class RPCDDS_DllAPI TCPServerTransport : public ServerTransport, private boost::noncopyable
             {
                 private:
-					void (*callback)(eprosima::rpcdds::protocol::Protocol&, ServerTransport&, void*);
-
                     boost::asio::io_service io_service_;
                     boost::asio::io_service::work work_;
                     boost::asio::ip::tcp::acceptor acceptor_;
                     boost::thread *thread_;
-                    //connection_ptr new_connection_;
 
                     void init(const std::string& address, const std::string& port);
 
                     void start_accept();
 
-                    void handle_accept(connection* con, const boost::system::error_code& e);
+                    void handle_accept(TCPEndpoint* con, const boost::system::error_code& e);
 
                     std::string get_ip_address(boost::asio::io_service& io_service, std::string hostname, std::string port);
 
                     
 
                 public:
+                    
+                    boost::function<void(TCPEndpoint*)> onBossProcess;
 
-					static void worker(ServerTransport &transport, void* connection);
+					void worker(TCPEndpoint* connection);
 
-                    TCPServerTransport(const char* to_connect);
+                    TCPServerTransport(const std::string &to_connect);
 
                     void run();
 
                     void stop();
 
                     const char* getType() const {return "RAW";}
+                    
+					void sendReply(void *data, size_t dataLength, Endpoint *connection);
 
-					void setCallback(void (*callback)(eprosima::rpcdds::protocol::Protocol&, ServerTransport&, void*)) {this->callback = callback; }
-					void sendReply(void *data, Endpoint *endpoint) { /* XXX TODO IMPLEMENTAR */ }
+                    int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
             };
 
         }
@@ -57,4 +72,4 @@ namespace eprosima
     }// namespace rpcdds
 } // namespace eprosima
 
-#endif //TCP_SERVER_TRANSPORT_SERVERTRANSPORT
+#endif // _TRANSPORTS_TCPSERVERTRANSPORT_H_

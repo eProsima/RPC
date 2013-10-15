@@ -247,6 +247,13 @@ public class Context
      */
     public void addInterface(String name, Interface interf)
     {
+        // REST block
+        String baseUri = getResourceBaseUri();
+        
+        if(baseUri != null)
+            interf.addAnnotation("RESOURCES_BASE_URI", baseUri);
+        // End REST block
+        
         Interface prev = m_interfaces.put(name, interf);
         
         // TODO: Excepción
@@ -434,19 +441,61 @@ public class Context
     
     ////////// RESTful block //////////
     
-    public String getResourceBaseUri() {
-    	return m_globalAnnotations.get("RESOURCES_BASE_URI");
+    public String getResourceCompleteBaseUri()
+    {
+        String baseUri = m_globalAnnotations.get("RESOURCES_BASE_URI");
+        
+        if(baseUri != null)
+        {
+            // Remove http://
+            int posInit = baseUri.indexOf("//");
+            
+            if(posInit == -1)
+                posInit = 0;
+            else
+                posInit += 2;
+            
+            return baseUri.substring(posInit);
+        }
+        
+        return baseUri;
+    }
+    
+    /*
+     * @brief This function return the base URI without the host.
+     * Also all spaces are converted to %20.
+     */
+    public String getResourceBaseUri()
+    {
+        String baseUri = getResourceCompleteBaseUri();
+        
+        if(baseUri != null)
+        {
+            // Remove host
+            int posEnd = baseUri.indexOf('/');
+            
+            if(posEnd == -1)
+                return "";
+            else
+                return baseUri.substring(posEnd).replace(" ", "%20");
+        }
+        
+        return null;
     }
     
     public String getResourceHost() {
     	String path =  m_globalAnnotations.get("RESOURCES_BASE_URI");
+    	
+    	// Remove http://
     	int posInit = path.indexOf("//");
     	if(posInit == -1)
     		posInit = 0;
     	else
     		posInit += 2;
     	
+    	// Remove path
     	int posEnd = path.indexOf('/', posInit);
+    	
     	if(posEnd == -1)
     		posEnd = path.length()-1;
     	

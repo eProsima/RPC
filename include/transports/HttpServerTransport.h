@@ -6,11 +6,12 @@
  *
  *************************************************************************/
 
-#ifndef _TRANSPORTS_PROXYTRANSPORT_H_
-#define _TRANSPORTS_PROXYTRANSPORT_H_
+#ifndef _TRANSPORTS_HTTPSERVERTRANSPORT_H_
+#define _TRANSPORTS_HTTPSERVERTRANSPORT_H_
 
 #include "rpcdds_dll.h"
-#include "transports/Transport.h"
+#include "transports/TCPServerTransport.h"
+#include "transports/HttpTransport.h"
 
 namespace eprosima
 {
@@ -18,42 +19,51 @@ namespace eprosima
     {
         namespace transport
         {
+            class TCPEndpoint;
+            class HttpMessage;
+
             /*!
              * @brief This interface is the base of all classes that implement a transport
              *        that could be used by a proxy.
              * @ingroup TRANSPORTMODULE
              */
-            class RPCDDS_DllAPI ProxyTransport : public Transport
+            class RPCDDS_DllAPI HttpServerTransport : public ServerTransport, public HttpTransport
             {
                 public:
 
                     //! \brief Default constructor.
-                    ProxyTransport(){}
+                    HttpServerTransport(const std::string &to_connect);
 
                     //! \brief Default destructor.
-                    virtual ~ProxyTransport(){}
+                    virtual ~HttpServerTransport();
 
                     /*!
                      * @brief This function returns the type of the transport.
                      *        This function has to be implemented by the child classes.
                      */
-                    virtual const char* getType() const = 0;
+                    virtual const char* getType() const {return "HTTP";}
 
-                    /*!
-                     * 2brief This function returns the behaviour of the transport.
-                     * @return The behaviour of the transport.
-                     */
-                    TransportBehaviour getBehaviour() const
-                    {
-                        return PROXY_BEHAVIOUR;
-                    }
+                    void run();
 
-                    virtual bool connect() = 0;
-                    virtual bool send(const void* buffer, const size_t bufferSize) = 0;
-                    virtual size_t receive(char *buffer, const size_t bufferSize) = 0;
+                    void stop();
+
+					void sendReply(void *data, size_t dataLength, Endpoint *connection);
+
+                    int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
+                    
+                    void bossProcess(TCPEndpoint* connection);
+
+                    void worker(TCPEndpoint* connection);
+
+                private:
+
+                    int readHeaders(HttpMessage &httpMessage);
+
+                    TCPServerTransport m_tcptransport;
             };
         }
         // namespace transport
     }// namespace rpcdds
 } // namespace eprosima
-#endif // _TRANSPORTS_PROXYTRANSPORT_H_
+
+#endif // _TRANSPORTS_HTTPSERVERTRANSPORT_H_

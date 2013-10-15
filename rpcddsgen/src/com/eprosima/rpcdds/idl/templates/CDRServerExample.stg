@@ -5,8 +5,8 @@ $fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source 
 
 #include "$ctx.filename$Server.h"
 #include "strategies/ThreadPoolStrategy.h"
-#include "$ctx.filename$RESTProtocol.h"
-#include "transports/HttpServerTransport.h"
+#include "$ctx.filename$CDRProtocol.h"
+#include "transports/TCPServerTransport.h"
 #include "exceptions/Exceptions.h"
 #include "utils/Utilities.h"
 #include "$ctx.filename$ServerImplExample.h"
@@ -14,17 +14,17 @@ $fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source 
 #include <iostream>
 
 using namespace eprosima::rpcdds;
-using namespace eprosima::rpcdds::exception;
-using namespace eprosima::rpcdds::strategy;
-using namespace eprosima::rpcdds::transport;
-using namespace eprosima::rpcdds::protocol::rest;
+using namespace ::exception;
+using namespace ::strategy;
+using namespace ::transport;
+using namespace ::protocol::cdr;
 
 int main(int argc, char **argv)
 {
     unsigned int threadPoolSize = 5;
     ThreadPoolStrategy *pool = NULL;
     $ctx.filename$Protocol *protocol = NULL;
-    HttpServerTransport *transport = NULL;
+    TCPServerTransport *transport = NULL;
     $ctx.firstInterface.scopedname$Server *server = NULL;
     $ctx.firstInterface.name$ServerImplExample servant;
     
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new $ctx.filename$Protocol();
-        transport = new HttpServerTransport("127.0.0.1:80");
+        transport = new TCPServerTransport("127.0.0.1:8080");
         server = new $ctx.firstInterface.scopedname$Server(*pool, *transport, *protocol, servant);
         server->serve();
     }

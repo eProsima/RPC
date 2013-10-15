@@ -8,125 +8,127 @@
 
 namespace eprosima
 {
+    namespace rpcdds
+    {
+        namespace protocol
+        {
+            namespace rest
+            {
+                class _FastBuffer_iterator
+                {
+                    public:
 
-	namespace httpser
-	{
+                        _FastBuffer_iterator() : m_buffer(NULL), m_currentPosition(NULL) {}
 
-		class _FastBuffer_iterator
-		{
-		public:
+                        explicit _FastBuffer_iterator(char *buffer, size_t index) : m_buffer(buffer), m_currentPosition(&m_buffer[index]){}
 
-			_FastBuffer_iterator() : m_buffer(NULL), m_currentPosition(NULL) {}
+                        inline void operator<<(const _FastBuffer_iterator &iterator)
+                        {
+                            ptrdiff_t diff = m_currentPosition - m_buffer;
+                            m_buffer = iterator.m_buffer;
+                            m_currentPosition = m_buffer + diff;
+                        }
 
-			explicit _FastBuffer_iterator(char *buffer, size_t index) : m_buffer(buffer), m_currentPosition(&m_buffer[index]){}
+                        inline void operator>>(const _FastBuffer_iterator &iterator)
+                        {
+                            ptrdiff_t diff = iterator.m_currentPosition - iterator.m_buffer;
+                            m_currentPosition = m_buffer + diff;
+                        }
 
-			inline void operator<<(const _FastBuffer_iterator &iterator)
-			{
-				ptrdiff_t diff = m_currentPosition - m_buffer;
-				m_buffer = iterator.m_buffer;
-				m_currentPosition = m_buffer + diff;
-			}
+                        template<typename _T>
+                            inline void operator<<(const _T &data)
+                            {
+                                *((_T*)m_currentPosition) = data;
+                            }
 
-			inline void operator>>(const _FastBuffer_iterator &iterator)
-			{
-				ptrdiff_t diff = iterator.m_currentPosition - iterator.m_buffer;
-				m_currentPosition = m_buffer + diff;
-			}
+                        template<typename _T>
+                            inline void operator>>(_T &data)
+                            {
+                                data = *((_T*)m_currentPosition);
+                            }
 
-			template<typename _T>
-			inline void operator<<(const _T &data)
-			{
-				*((_T*)m_currentPosition) = data;
-			}
+                        inline void memcopy(const void* src, const size_t size)
+                        {
+                            memcpy(m_currentPosition, src, size);
+                        }
 
-			template<typename _T>
-			inline void operator>>(_T &data)
-			{
-				data = *((_T*)m_currentPosition);
-			}
+                        inline void rmemcopy(void* dst, const size_t size)
+                        {
+                            memcpy(dst, m_currentPosition, size);
+                        }
 
-			inline void memcopy(const void* src, const size_t size)
-			{
-				memcpy(m_currentPosition, src, size);
-			}
+                        inline void operator+=(size_t numBytes)
+                        {
+                            m_currentPosition += numBytes;
+                        }
 
-			inline void rmemcopy(void* dst, const size_t size)
-			{
-				memcpy(dst, m_currentPosition, size);
-			}
+                        inline size_t operator-(const _FastBuffer_iterator &it) const
+                        {
+                            return m_currentPosition - it.m_currentPosition;
+                        }
 
-			inline void operator+=(size_t numBytes)
-			{
-				m_currentPosition += numBytes;
-			}
+                        inline _FastBuffer_iterator operator++()
+                        {
+                            ++m_currentPosition;
+                            return *this;
+                        }
 
-			inline size_t operator-(const _FastBuffer_iterator &it) const
-			{
-				return m_currentPosition - it.m_currentPosition;
-			}
+                        inline _FastBuffer_iterator operator++(int)
+                        {
+                            _FastBuffer_iterator tmp = *this;
+                            ++*this;
+                            return tmp;
+                        }
 
-			 inline _FastBuffer_iterator operator++()
-			{
-				++m_currentPosition;
-				return *this;
-			}
+                        inline char* operator&()
+                        {
+                            return m_currentPosition;
+                        }
 
-			inline _FastBuffer_iterator operator++(int)
-			{
-				_FastBuffer_iterator tmp = *this;
-				++*this;
-				return tmp;
-			}
+                    private:
 
-			inline char* operator&()
-			{
-				return m_currentPosition;
-			}
+                        char *m_buffer;
 
-		private:
+                        char *m_currentPosition;
+                };
 
-			char *m_buffer;
+                class FastBuffer
+                {
+                    public:
 
-			char *m_currentPosition;
-		};
+                        typedef _FastBuffer_iterator iterator;
 
-		class FastBuffer
-		{
-		public:
-			
-			typedef _FastBuffer_iterator iterator;
+                        FastBuffer();
 
-			FastBuffer();
+                        FastBuffer(char* const buffer, const size_t bufferSize);
 
-			FastBuffer(char* const buffer, const size_t bufferSize);
+                        inline char* getBuffer() const { return m_buffer;}
 
-			inline char* getBuffer() const { return m_buffer;}
+                        inline size_t getBufferSize() const { return m_bufferSize;}
 
-			inline size_t getBufferSize() const { return m_bufferSize;}
+                        inline iterator begin()
+                        {
+                            return (iterator(m_buffer, 0));
+                        }
 
-			inline iterator begin()
-			{
-				return (iterator(m_buffer, 0));
-			}
+                        inline iterator end()
+                        {
+                            return (iterator(m_buffer, m_bufferSize));
+                        }
 
-			inline iterator end()
-			{
-				return (iterator(m_buffer, m_bufferSize));
-			}
+                        bool resize(size_t minSizeInc);
 
-			bool resize(size_t minSizeInc);
+                    private:
 
-		private:
+                        char *m_buffer;
 
-			char *m_buffer;
+                        size_t m_bufferSize;
 
-			size_t m_bufferSize;
-
-			bool m_internalBuffer;
-		};
-
-	} //namespace httpser
-
+                        bool m_internalBuffer;
+                };
+            } //namespace rest
+        } //namespace protocol
+    } //namespace rpcdds
 } //namespace eProsima
 
 #endif //TCP_SERIALIZER_FASTBUFFER

@@ -119,7 +119,8 @@ public class Utils
         return returnedValue;
     }
     
-	public static String getFileExtension(String fileName) {
+	public static String getFileExtension(String fileName)
+	{
 		int lastDot = fileName.lastIndexOf(".");
 		
 		return fileName.substring(lastDot+1);

@@ -9,6 +9,8 @@ public class Solution
 		m_serverside = serverside;
 		m_clientside = clientside;
 		m_projects = new ArrayList<Project>();
+		m_libraries = new ArrayList<String>();
+		m_includes = new ArrayList<String>();
 	}
 	
 	public void addProject(Project project)
@@ -78,6 +80,26 @@ public class Solution
 		return m_cacheprojects;
 	}
 	
+	public void addLibrary(String library)
+	{
+	    m_libraries.add(library);
+	}
+	
+	public ArrayList<String> getLibraries()
+	{
+	    return m_libraries;
+	}
+	
+	public void addInclude(String include)
+	{
+	    m_includes.add(include);
+	}
+	
+	public ArrayList<String> getIncludes()
+	{
+	    return m_includes;
+	}
+	
 	public boolean getServerside()
 	{
 		return m_serverside;
@@ -90,6 +112,8 @@ public class Solution
 	
 	private ArrayList<Project> m_projects = null;
 	private ArrayList<Project> m_cacheprojects = null;
+	private ArrayList<String> m_libraries = null;
+	private ArrayList<String> m_includes = null;
 	boolean m_serverside = true;
 	boolean m_clientside = true;
 }

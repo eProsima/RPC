@@ -1,11 +1,11 @@
-group RESTClientExample;
+group ClientExample;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source file shows a simple example of how to create a proxy for an interface."])$
 
 #include "$ctx.filename$Proxy.h"
-#include "$ctx.filename$RESTProtocol.h"
-#include "transports/HttpProxyTransport.h"
+#include "$ctx.filename$DDSProtocol.h"
+#include "transports/dds/UDPProxyTransport.h"
 #include "exceptions/Exceptions.h"
 
 $ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
@@ -17,21 +17,21 @@ $endif$
 #include <iostream>
 
 using namespace eprosima::rpcdds;
-using namespace eprosima::rpcdds::exception;
-using namespace eprosima::rpcdds::transport;
-using namespace eprosima::rpcdds::protocol::rest;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
 
 int main(int argc, char **argv)
 {
     $ctx.filename$Protocol *protocol = NULL;
-    ProxyTransport *transport = NULL;
+    UDPProxyTransport *transport = NULL;
     $ctx.firstInterface.scopedname$Proxy *proxy = NULL;
     
     // Creation of the proxy for interface "$ctx.firstInterface.scopedname$".
     try
     {
         protocol = new $ctx.filename$Protocol();
-        transport = new HttpProxyTransport("127.0.0.1:80");
+        transport = new UDPProxyTransport("$ctx.filename$Service");
         proxy = new $ctx.firstInterface.scopedname$Proxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
@@ -77,9 +77,9 @@ int main(int argc, char **argv)
     $varDel(variable=ctx.firstInterface.firstOperation.rettypeparam)$
     $endif$
     
-    delete(proxy);
-    delete(transport);
-    delete(protocol);
+    delete proxy ;
+    delete transport ;
+    delete protocol ;
    
     return 0;
 }

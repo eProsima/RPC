@@ -8,16 +8,14 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header fil
 
 #include "$ctx.filename$Protocol.h"
 #include "utils/Messages.h"
-#include "protocols/rest/HTTPSerializer.h"
-#include "transports/TCPServerTransport.h"
-#include <string>
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
 
 $endif$
-using namespace std;
-using namespace eprosima::httpser;
+
+#include <string>
+
 namespace eprosima
 {
     namespace rpcdds
@@ -26,6 +24,9 @@ namespace eprosima
         {
             namespace rest
             {
+                // TODO Quitar
+                class RESTSerializer;
+            
                 class $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
                 {
                     public:
@@ -38,7 +39,7 @@ namespace eprosima
                         
                         bool activateInterface(const char* interfaceName);
                         
-                        static void worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection);
+                        static void worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
                         
                         $definitions; separator="\n"$
                         
@@ -81,14 +82,14 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-char* deserialize_$operation.parent.formatedScopedname$_$operation.name$(HTTPSerializer* httpSerializer);
+char* deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer* httpSerializer);
 
 $if(operation.parent.pathHasBrackets)$
-void deserializePath_$operation.name$(string actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$);
+void deserializePath_$operation.name$(const std::string &actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$);
 $endif$
 
 $if(operation.parent.pathHasBrackets)$
-string expandPath_$operation.name$(string path, $first(operation.parameters).name$ $first(operation.parameters).name$);
+std::string expandPath_$operation.name$(std::string &&path, $first(operation.parameters).name$ $first(operation.parameters).name$);
 $endif$
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 

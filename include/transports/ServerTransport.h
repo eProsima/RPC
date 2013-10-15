@@ -39,10 +39,12 @@ namespace eprosima
              */
             class RPCDDS_DllAPI ServerTransport : public Transport
             {
+                typedef void (*ServerTransport_Callback)(eprosima::rpcdds::protocol::Protocol&, void*, size_t, Endpoint*);
+
                 public:
 
                     //! \brief Default constructor.
-                    ServerTransport() : m_strategy(NULL)
+                    ServerTransport() : m_strategy(NULL), m_protocol(NULL), m_callback(NULL)
                     {}
 
                     //! \brief Default destructor.
@@ -72,6 +74,17 @@ namespace eprosima
                             return *m_strategy;
                         }
 
+                    inline
+                        ServerTransport_Callback getCallback() const
+                        {
+                            return m_callback;
+                        }
+
+                    void setCallback(ServerTransport_Callback callback)
+                    {
+                        m_callback = callback;
+                    }
+
                     /*!
                      * 2brief This function returns the behaviour of the transport.
                      * @return The behaviour of the transport.
@@ -89,13 +102,16 @@ namespace eprosima
 
                     virtual void run() = 0;
                     virtual void stop() = 0;
-                    virtual void sendReply(void *data, Endpoint *endpoint) = 0;
+                    virtual void sendReply(void *data, size_t dataLength, Endpoint *endpoint) = 0;
+                    virtual int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint) = 0; 
 
                 private:
 
                     eprosima::rpcdds::strategy::ServerStrategy *m_strategy;
 
                     eprosima::rpcdds::protocol::Protocol *m_protocol;
+
+                    ServerTransport_Callback m_callback;
             };
         }
         // namespace transport

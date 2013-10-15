@@ -3,18 +3,21 @@ group RESTProtocolSource;
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RESTProtocol.cxx"], description=["This source file contains the definition of the protocol used to create REST messages."])$
 
-#include <string>
 #include "$ctx.filename$RESTProtocol.h"
-#include "transports/Transport.h"
 #include "exceptions/Exceptions.h"
-#include "transports/TCPProxyTransport.h"
+#include "transports/ProxyTransport.h"
+#include "transports/ServerTransport.h"
+#include "transports/messages/HttpMessage.h"
+#include "protocols/rest/RESTSerializer.h"
+
+using namespace eprosima::rpcdds;
+using namespace ::protocol::rest;
+using namespace ::transport;
+using namespace eprosima::rpcdds::exception;
+
+#include <sstream>
 
 using namespace std;
-using namespace eprosima::httpser;
-using namespace eprosima::rpcdds;
-using namespace eprosima::rpcdds::protocol::rest;
-using namespace eprosima::rpcdds::transport;
-using namespace eprosima::rpcdds::exception;
 
 $ctx.filename$Protocol::$ctx.filename$Protocol() {}
 
@@ -22,14 +25,15 @@ $ctx.filename$Protocol::~$ctx.filename$Protocol() {}
 
 bool $ctx.filename$Protocol::setTransport(Transport &transport)
 {    
-    if(strcmp(transport.getType(), "RAW") != 0)
+    if(strcmp(transport.getType(), "HTTP") != 0)
     {
         throw IncompatibleException("protocol and transport are incompatibles");
     }
     
-    if(transport.getBehaviour() == SERVER_BEHAVIOUR) {
+    if(transport.getBehaviour() == SERVER_BEHAVIOUR)
+    {
         // If this is a server transport, we set its callback
-        eprosima::rpcdds::transport::TCPServerTransport &serverTransport = dynamic_cast<eprosima::rpcdds::transport::TCPServerTransport&>( transport );
+        eprosima::rpcdds::transport::ServerTransport &serverTransport = dynamic_cast<eprosima::rpcdds::transport::ServerTransport&>(transport);
         serverTransport.setCallback(&$ctx.filename$Protocol::worker);
     }
         
@@ -58,8 +62,9 @@ int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
 	return 0;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, eprosima::rpcdds::transport::ServerTransport &transport, void* connection) {
-    eprosima::rpcdds::transport::connection* conn = (eprosima::rpcdds::transport::connection*) (connection);
+void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
+{
+    /*eprosima::rpcdds::transport::connection* conn = (eprosima::rpcdds::transport::connection*) (connection);
     boost::system::error_code ec = boost::system::error_code();
     boost::asio::ip::tcp::socket &socket = *(conn->socket_);
     //boost::asio::socket_base::non_blocking_io make_non_blocking(true);
@@ -116,7 +121,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, eprosima::rpcdds::transp
 
     free(buffer_);
     if(responseBuffer)
-        free(responseBuffer);
+        free(responseBuffer);*/
 }
 
 $definitions; separator="\n"$
@@ -127,7 +132,7 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     char* http404Response = (char*)malloc(1024);
     memset(http404Response, 0, 1024);
     FastBuffer fastBuffer404(http404Response, 1024);
-    HTTPSerializer* http404Serializer = new HTTPSerializer(fastBuffer404);
+    RESTSerializer* http404Serializer = new RESTSerializer();
     string responseVersion = "HTTP/1.1";
     HTTPVersion httpResponseVersion = HTTPVersion::HTTPVersionResponse(responseVersion);
     http404Serializer->serialize(httpResponseVersion);
@@ -139,7 +144,7 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
 
     // HTTP Request deserialization
     HTTPMethod httpMethod;
-    eprosima::httpser::Method enumHttpMethod;
+    Method enumHttpMethod;
     string host = "$ctx.resourceHost$";
     string baseUri = "$ctx.resourceBaseUri$"; // We give the serializator our base uri
     string path = "";
@@ -150,7 +155,7 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     
 
     FastBuffer requestFastBuffer(httpRequest, 8192);
-    HTTPSerializer* httpSerializer = new HTTPSerializer(requestFastBuffer);
+    RESTSerializer* httpSerializer = new RESTSerializer();
     httpSerializer->deserialize(httpMethod);
     enumHttpMethod = httpMethod.getMethod();
     httpSerializer->deserialize(httpUri);
@@ -197,17 +202,18 @@ void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.nam
 
 operation(ctx, operation, param_list) ::= <<
 $if(operation.parent.pathHasBrackets)$
-string $ctx.filename$Protocol::expandPath_$operation.name$(string path, $first(operation.parameters).name$ $first(operation.parameters).name$)
+string $ctx.filename$Protocol::expandPath_$operation.name$(string &&path, $first(operation.parameters).name$ $first(operation.parameters).name$)
 {
+    RESTSerializer restSerializer;
     stringstream stream;
-    string expandedPath = "";
-    string pathSegment = "";
-    char *p = strtok(strdup(path.c_str()), "/");
+    string expandedPath;
+    
+    restSerializer.beginSerializeTemplateParameters(std::move(path));
 
     $expandPathSegment(param=first(operation.parameters))$
-
-    if(expandedPath.size() == 0)
-        expandedPath = path;
+    
+    restSerializer.endSerializeTemplateParameters(expandedPath);
+        
     return expandedPath;
 }
 
@@ -215,8 +221,9 @@ $endif$
 $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
      stringstream stream;
-     string mediaType;
+     RESTSerializer restSerializer;
      eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>( getTransport() );
+     $varDecl(variable=operation.rettypeparam)$
      // XXX TODO if NULL -> error
      
      // Resource Base URI = $ctx.resourceBaseUri$
@@ -224,26 +231,12 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      // Method = $operation.method$
      // Body Parameter = $operation.body$
 
-     // Serialize HTTP message
-     char* httpRequestBuffer = (char*)malloc(8192);
-     memset(httpRequestBuffer, 0, 8192);
-          
-     FastBuffer fastBuffer(httpRequestBuffer, 8192);
-     HTTPSerializer* httpSerializer = new HTTPSerializer(fastBuffer);
-
-     HTTPMethod method(HTTP_$operation.method$);
-     httpSerializer->serialize(method);
+     HttpMessage httpMessage;
      
-     string host = "$ctx.resourceHost$";
-     string baseURI = "$ctx.resourceBaseUri$";
-     string pathURI = "$operation.parent.path$";
-     $if(operation.parent.pathHasBrackets)$
-     pathURI = expandPath_$operation.name$(pathURI, $first(operation.parameters).name$);
-     $endif$
-     HTTPUri httpUri(pathURI);
-     httpUri.setHost(host);
-     httpUri.setBaseUri(baseURI);
-     httpSerializer->serialize(httpUri);
+     httpMessage.setMethod("$operation.method$");
+     //TODO Chequear host en el transport.
+     httpMessage.setHost("$ctx.resourceHost$");
+     std::string uri($if(operation.parent.pathHasBrackets)$expandPath_$operation.name$("$operation.parent.resourceUri$", $first(operation.parameters).name$)$else$"$operation.parent.resourceUri$"$endif$); 
      
      $if(operation.parent.pathHasBrackets)$
         $serializeHTTPParams(params=rest(operation.parameters))$
@@ -251,20 +244,27 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         $serializeHTTPParams(params=operation.parameters)$
      $endif$
      
+     httpMessage.setUri(uri);
+     
+     $serializeHTTPBodyParams(params=operation.parameters)$
+     
+     // HTTP connection
+     // TODO Check connection error.
+     proxyTransport.connect();
+     proxyTransport.send(&httpMessage, 0);
+     //char* httpResponseBuffer = proxyTransport.receive();
+     
+     /*
+     httpSerializer->serialize(httpMethod);
+     httpSerializer->serialize(httpUri);
      string stringVersionRequest = "HTTP/1.1";
      HTTPVersion versionRequest = HTTPVersion::HTTPVersionRequest(stringVersionRequest);
      httpSerializer->serialize(versionRequest);
      
-     $serializeHTTPBodyParams(params=operation.parameters)$
-
-    // HTTP connection
-    proxyTransport.connect();
-    proxyTransport.send(httpRequestBuffer);
-    char* httpResponseBuffer = proxyTransport.receive();
-
+     
     // Deserialize HTTP response
     FastBuffer fastBufferResponse(httpResponseBuffer, 8192);
-    HTTPSerializer* httpResponseSerializer = new HTTPSerializer(fastBufferResponse);
+    RESTSerializer* httpResponseSerializer = new RESTSerializer();
 
     HTTPVersion versionResponse;
     httpResponseSerializer->deserialize(versionResponse);
@@ -295,13 +295,15 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $endif$
     break;
     }$
-    }
+    }*/
               
-    return retType;
+    $if(operation.rettypeparam)$
+    return $operation.rettypeparam.name$;
+    $endif$
 }
 
 $if(operation.parent.pathHasBrackets)$
-void $ctx.filename$Protocol::deserializePath_$operation.name$(string actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$)
+void $ctx.filename$Protocol::deserializePath_$operation.name$(const string &actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$)
 {
     string templatePath = "$operation.parent.path$";
     stringstream stream;
@@ -316,7 +318,7 @@ void $ctx.filename$Protocol::deserializePath_$operation.name$(string actualPath,
 }
 $endif$
 
-char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(HTTPSerializer* httpSerializer) {
+char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer* httpSerializer) {
     string mediaType;
     stringstream stream;
     HTTPMethod httpMethod;
@@ -346,7 +348,7 @@ char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_
     
     $deserializeHTTPBodyParams(params=operation.parameters)$
     
-    $paramRetType(operation.rettype)$ $paramRetType(operation.rettype)$ = _$operation.parent.formatedScopedname$_impl->$operation.name$($implCallParams(params = operation.parameters)$);
+    $paramRetType(operation.rettype)$ $paramRetType(operation.rettype)$;// = _$operation.parent.formatedScopedname$_impl->$operation.name$($implCallParams(params = operation.parameters)$);
     
     char* httpResponse = (char*) malloc(8192);
     memset(httpResponse, 0, 8192);
@@ -361,7 +363,7 @@ $if(first(params))$ $if(first(params).parent.parent.pathHasBrackets)$ $first(ope
 
 serializeServerResponse(rettype) ::= <<
 FastBuffer responseFastBuffer(httpResponse, 8192); 
-HTTPSerializer* httpResponseSerializer = new HTTPSerializer(responseFastBuffer);
+RESTSerializer* httpResponseSerializer = new RESTSerializer();
 string stringVersionResponse = "HTTP/1.1";
 HTTPVersion versionResponse = HTTPVersion::HTTPVersionResponse(stringVersionResponse);
 httpResponseSerializer->serialize(versionResponse);
@@ -420,18 +422,11 @@ deserializePathSegment(param) ::= <<
 expandPathSegment(param) ::= <<
     $param.typecode.members : {member |
     // Expand $member.name$
-    while (p) {
-        pathSegment = p;
-        p = strtok(NULL, "/");
-        if(pathSegment.at(0) == '{' && pathSegment.at(pathSegment.size() - 1) == '}')
-            break;
-        expandedPath += pathSegment + "/";
-    }
     stream << $param.name$.$member.name$;
-    expandedPath += stream.str() + "/";
+    restSerializer.serializeTemplateParameter(stream.str());
     stream.str(std::string());
     stream.clear();
-    }$
+    };separator="\n"$ 
 >>
 
 deserializeHTTPParams(params) ::= <<
@@ -463,55 +458,41 @@ $endif$
 
 serializeHTTPParams(params) ::= <<
 $if(params)$
-HTTPParameters httpParameters;
-string paramName;
-string paramValue;
-HTTPParam httpParam;
+std::string paramValue;
 $endif$
-
 $params : {param |
 $if(!param.bodyParam)$
-paramName = "$param.name$";
 stream << $param.name$;
 paramValue = stream.str();
 stream.str(std::string());
 stream.clear();
-httpParam = HTTPParam(paramName, paramValue);
-httpParameters.addParam(httpParam);
+restSerializer.serializeQueryParameter(uri, "$param.realname$", paramValue);
+$endif$
+};separator="\n"$       
 
-$endif$
-}$       
-$if(params)$httpSerializer->serialize(httpParameters);
-$endif$
 >>
 
 serializeHTTPBodyParams(params) ::= <<
-HTTPData httpData(baseURI);
-string data = "";
-int discriminator = 0;
-$params : {param|$if(param.bodyParam)$// Serializing body parameter $param.name$
-discriminator = $param.name$._d;
-switch(discriminator) {
+$params : {param |
+$if(param.bodyParam)$// Serializing body parameter $param.name$
+switch($param.name$._d)
+{
 $param.typecode.members : {member | case $first(member.labels)$:
-    data = $param.name$._u.$member.name$;
+    httpMessage.setBodyData($param.name$._u.$member.name$);
     break;
-    }$
+};separator="\n"$
 }
-if(data.size() > 0) {
-	stream << data.size();
-    string size = stream.str();
-    if(discriminator == 1)
-        mediaType = "application/xml";
-    else if(discriminator == 2)
-        mediaType = "application/json";
-    httpData = HTTPData(baseURI, size, mediaType, data);
-    stream.str(std::string());
-    stream.clear();
-    httpSerializer->serialize(httpData);
-}$endif$}$
-if(data.size() == 0) {
-    httpSerializer->serialize(httpData);
+
+if(!httpMessage.getBodyData().empty())
+{
+    if($param.name$._d == 1)
+        httpMessage.setBodyContentType("application/xml");
+    else if($param.name$._d == 2)
+        httpMessage.setBodyContentType("application/json");
 }
+$endif$
+}$
+
 >>
 
 deserializeHTTPBodyParams(params) ::= <<

@@ -15,14 +15,13 @@ using namespace eprosima::rpcdds;
 using namespace ::strategy;
 using namespace ::transport;
 
-void SingleThreadStrategy::schedule(fExecFunction execFunction,
-        ServerTransport &transport, void *data)
+void SingleThreadStrategy::schedule(boost::function<void()> callback)
 {
     const char* const METHOD_NAME = "schedule";
 
-    if(execFunction != NULL && data != NULL)
+    if(!callback.empty())
     {
-        execFunction(transport, data);
+        callback();
     }
     else
     {

@@ -93,10 +93,11 @@ document returns [Application application = null]
     Doc doc = null;
   }
   :
-  (doc=<doc>{resource.add(doc);})*
-  (param=<param>{resource.add(param);})*
-  (method=<method>{method.setParentResource(resource); resource.add(method);})*
-  (resourceChild=<resource>{resourceChild.setParentResource(resource); resource.add(resourceChild);})*
+  ( doc=<doc>{resource.add(doc);}
+  | param=<param>{resource.add(param);}
+  | method=<method>{method.setParentResource(resource); resource.add(method);}
+  | resourceChild=<resource>{resourceChild.setParentResource(resource); resource.add(resourceChild);}
+  )*
   ;
   
 //TODO Request, response

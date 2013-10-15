@@ -16,12 +16,6 @@ using namespace ::transport::dds;
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerTransport";
 
-typedef struct encapsulation
-{
-    ServerProcedureEndpoint *endpoint;
-    void *data;
-} encapsulation;
-
 ServerTransport::ServerTransport(std::string &serviceName, int domainId) :
     m_serviceName(serviceName), ::transport::ServerTransport(),
     ::transport::dds::Transport(domainId)
@@ -74,15 +68,14 @@ const char* ServerTransport::getType() const
     return NULL;
 }
 
-void ServerTransport::process(eprosima::rpcdds::transport::ServerTransport &transport, void *data)
+void ServerTransport::process(ServerProcedureEndpoint *endpoint, void *data)
 {
     const char* const METHOD_NAME = "process";
-    encapsulation *encap = (encapsulation*)data;
 
-    if(encap != NULL)
+    if(data != NULL)
     {
-        encap->endpoint->getProcessFunc()(transport.getLinkedProtocol(), encap->data, encap->endpoint); 
-        free(encap);
+        endpoint->getProcessFunc()(getLinkedProtocol(), data, endpoint); 
+        free(data);
     }
     else
     {
@@ -90,7 +83,7 @@ void ServerTransport::process(eprosima::rpcdds::transport::ServerTransport &tran
     }
 }
 
-void ServerTransport::sendReply(void *data, Endpoint *endpoint)
+void ServerTransport::sendReply(void *data, size_t dataLength, ::transport::Endpoint *endpoint)
 {
     ServerProcedureEndpoint *procedure = dynamic_cast<ServerProcedureEndpoint*>(endpoint);
 
@@ -117,4 +110,10 @@ void ServerTransport::run()
 void ServerTransport::stop()
 {
     //TODO
+}
+
+int ServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, ::transport::Endpoint *endpoint)
+{
+    // EMPTY. Not used.
+    return -1;
 }

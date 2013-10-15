@@ -6,11 +6,12 @@
  *
  *************************************************************************/
 
-#ifndef _TRANSPORTS_PROXYTRANSPORT_H_
-#define _TRANSPORTS_PROXYTRANSPORT_H_
+#ifndef _TRANSPORTS_HTTPPROXYTRANSPORT_H_
+#define _TRANSPORTS_HTTPPROXYTRANSPORT_H_
 
 #include "rpcdds_dll.h"
-#include "transports/Transport.h"
+#include "transports/TCPProxyTransport.h"
+#include "transports/HttpTransport.h"
 
 namespace eprosima
 {
@@ -23,37 +24,32 @@ namespace eprosima
              *        that could be used by a proxy.
              * @ingroup TRANSPORTMODULE
              */
-            class RPCDDS_DllAPI ProxyTransport : public Transport
+            class RPCDDS_DllAPI HttpProxyTransport : public ProxyTransport, public HttpTransport
             {
                 public:
 
                     //! \brief Default constructor.
-                    ProxyTransport(){}
+                    HttpProxyTransport(const std::string &serverAddress);
 
                     //! \brief Default destructor.
-                    virtual ~ProxyTransport(){}
+                    virtual ~HttpProxyTransport();
 
                     /*!
                      * @brief This function returns the type of the transport.
                      *        This function has to be implemented by the child classes.
                      */
-                    virtual const char* getType() const = 0;
+                    virtual const char* getType() const {return "HTTP";}
 
-                    /*!
-                     * 2brief This function returns the behaviour of the transport.
-                     * @return The behaviour of the transport.
-                     */
-                    TransportBehaviour getBehaviour() const
-                    {
-                        return PROXY_BEHAVIOUR;
-                    }
+                    virtual bool connect();
+                    virtual bool send(const void* buffer, const size_t bufferSize);
+                    virtual size_t receive(char *buffer, const size_t bufferSize);
 
-                    virtual bool connect() = 0;
-                    virtual bool send(const void* buffer, const size_t bufferSize) = 0;
-                    virtual size_t receive(char *buffer, const size_t bufferSize) = 0;
+                private:
+
+                    TCPProxyTransport m_tcptransport;
             };
         }
         // namespace transport
     }// namespace rpcdds
 } // namespace eprosima
-#endif // _TRANSPORTS_PROXYTRANSPORT_H_
+#endif // _TRANSPORTS_HTTPPROXYTRANSPORT_H_

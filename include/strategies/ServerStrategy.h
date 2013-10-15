@@ -11,6 +11,7 @@
 
 #include "utils/Typedefs.h"
 #include "rpcdds_dll.h"
+#include <boost/function.hpp>
 
 namespace eprosima
 {
@@ -45,8 +46,7 @@ namespace eprosima
                      *
                      * \param data The request. Cannot be NULL.
                      */
-                    virtual void schedule(fExecFunction execFunction,
-                            eprosima::rpcdds::transport::ServerTransport &transport, void *data) = 0;
+                    virtual void schedule(boost::function<void()> callback) = 0;
             };
         } // namespace strategy
     } // namespace rpcdds

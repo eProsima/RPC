@@ -112,7 +112,7 @@ archMakeDefines() ::= <<
 >>
 
 inclMake() ::= <<
- -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds -I\$(RPCDDSHOME)/include
+ -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds
 >>
 
 inclVS() ::= <<

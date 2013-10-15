@@ -46,8 +46,7 @@ namespace eprosima
                      *
                      * \param data The request. Cannot be NULL.
                      */
-                    virtual void schedule(fExecFunction execFunction,
-                            eprosima::rpcdds::transport::ServerTransport &transport, void *data);
+                    void schedule(boost::function<void()> callback);
 
                 private:
 

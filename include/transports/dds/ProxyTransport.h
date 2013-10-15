@@ -81,9 +81,9 @@ namespace eprosima
                     private:
 
                         //TODO TEMPORAL
-                        bool connect(){return true;}
-                        bool send(const char* buffer){return true;}
-                        char* receive(){return NULL;}
+                        bool connect(){return false;}
+                        bool send(const void* buffer, const size_t bufferSize){return false;}
+                        size_t receive(char *buffer, const size_t bufferSize){return false;}
 
                         /*!
                          * @brief Map containing the proxy procedure endpoints that were created to communicate.

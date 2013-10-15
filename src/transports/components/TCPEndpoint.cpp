@@ -1,4 +1,5 @@
-#include "transports/connection.h"
+#include "transports/components/TCPEndpoint.h"
+
 #include <iostream>
 #include <vector>
 #include <boost/bind.hpp>
@@ -11,18 +12,18 @@ void function() {
 	std::cout << "Function execution" << std::endl;
 }
 
-connection::connection(void) /*: socket_(new boost::asio::ip::tcp::socket(io_service))*/
+TCPEndpoint::TCPEndpoint(void) /*: socket_(new boost::asio::ip::tcp::socket(io_service))*/
 {
 	this->socket_ = boost::shared_ptr<boost::asio::ip::tcp::socket>(
 			new boost::asio::ip::tcp::socket(io_service_));
 }
 
-void connection::handle_write(const boost::system::error_code& error,
+void TCPEndpoint::handle_write(const boost::system::error_code& error,
 		size_t bytec_transferred) {
 	//Do something
 }
 
-void connection::handle_read(const boost::system::error_code& error,
+void TCPEndpoint::handle_read(const boost::system::error_code& error,
 		std::size_t bytes_transferred) {
 	if (!error) {
 		std::cout << "Received " << bytes_transferred << " bytes, data: ";
@@ -32,13 +33,14 @@ void connection::handle_read(const boost::system::error_code& error,
 	}
 }
 
-boost::shared_ptr<boost::asio::ip::tcp::socket>& connection::socket() {
+boost::shared_ptr<boost::asio::ip::tcp::socket>& TCPEndpoint::socket() {
 	return socket_;
 }
 
-void connection::start() {
+void TCPEndpoint::start()
+{
 	boost::asio::async_read(*socket_, boost::asio::buffer(buffer_),
-			boost::bind(&connection::handle_read, shared_from_this(),
+			boost::bind(&TCPEndpoint::handle_read, shared_from_this(),
 					boost::asio::placeholders::error,
 					boost::asio::placeholders::bytes_transferred));
 }

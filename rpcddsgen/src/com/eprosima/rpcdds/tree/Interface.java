@@ -183,6 +183,11 @@ public class Interface extends ExportContainer implements Definition, Notebook
         m_annotations.putAll(annotations);
     }
     
+    public void addAnnotation(String key, String value)
+    {
+        m_annotations.put(key, value);
+    }
+    
     @Override
     public HashMap<String, String> getAnnotations()
     {
@@ -200,6 +205,38 @@ public class Interface extends ExportContainer implements Definition, Notebook
     		return true;
     	
     	return false;
+    }
+    
+    public String getResourceUri()
+    {
+        String uri = getAnnotations().get("RESOURCES_BASE_URI");
+        boolean backslace = false;
+        
+        if(uri != null)
+        {
+            if(!uri.isEmpty() && uri.charAt(uri.length() - 1) == '/')
+                backslace = true;
+            
+            String path = getPath();
+            
+            if(path != null)
+            {
+                if(backslace && !path.isEmpty() && path.charAt(0) == '/')
+                {
+                    uri += path.substring(1);
+                }
+                else
+                {
+                    uri += path;
+                }
+            }
+            else
+            {
+                // TODO Excepción!!!
+            }
+        }
+        
+        return uri;
     }
     
     /////// End of RESTful block //////

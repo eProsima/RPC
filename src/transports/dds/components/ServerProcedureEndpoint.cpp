@@ -18,13 +18,6 @@ using namespace ::transport::dds;
 
 const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerProcedureEndpoint";
 
-typedef struct encapsulation
-{
-    eprosima::rpcdds::transport::Endpoint *endpoint;
-    void *data;
-} encapsulation;
-
-
 ServerProcedureEndpoint::ServerProcedureEndpoint(ServerTransport &transport) : m_transport(transport),
     m_writerTopic(NULL), m_readerTopic(NULL), m_writer(NULL), m_reader(NULL), m_initialize_data(NULL),
     m_finalize_data(NULL), m_process_func(NULL), m_dataSize(0), m_mutex(NULL), m_started(0)
@@ -301,28 +294,24 @@ void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 {
     const char* const METHOD_NAME = "on_data_available";
 	DDS::SampleInfo info;
-    encapsulation *encap = (encapsulation*)calloc(1, sizeof(encapsulation) + m_dataSize);
-    encap->endpoint = this;
-    encap->data = &encap->data + 1;
-    m_initialize_data(encap->data);
+    void *data = calloc(1, m_dataSize);
+    m_initialize_data(data);
 
-	while(encap->data != NULL && DDS_DataReader_read_or_take_next_sample_untypedI(reader->get_c_datareaderI(),
-                encap->data, &info, BOOLEAN_TRUE) == DDS::RETCODE_OK)
+	while(data != NULL && DDS_DataReader_read_or_take_next_sample_untypedI(reader->get_c_datareaderI(),
+                data, &info, BOOLEAN_TRUE) == DDS::RETCODE_OK)
 	{
 		if(info.valid_data == BOOLEAN_TRUE)
 		{
-			m_transport.getStrategy().schedule(ServerTransport::process, m_transport, (void*)encap);
+			m_transport.getStrategy().schedule(boost::bind(&ServerTransport::process, &m_transport, this, data));
             
-            encap = (encapsulation*)calloc(1, sizeof(encapsulation) + m_dataSize);
-            encap->endpoint = this;
-			encap->data =  &encap->data + 1;
-            m_initialize_data(encap->data);
+            data = calloc(1, m_dataSize);
+            m_initialize_data(data);
 		}
 	}
 
-	if(encap->data != NULL)
+	if(data != NULL)
     {
-        m_finalize_data(encap->data);
-        free(encap);
+        m_finalize_data(data);
+        free(data);
 	}
 }

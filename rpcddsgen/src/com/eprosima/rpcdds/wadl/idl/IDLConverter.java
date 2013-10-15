@@ -270,10 +270,17 @@ public class IDLConverter {
 
 			String idlParams = "";
 			params = resource.getParameters();
-			for (Param param : params) {
+			for (Param param : params) 
+			{
 				if (param.getStyle().equals("query")) {
 					String idlType = getIDLType(param.getType());
-					idlParams += "in " + idlType + " " + param.getName() + ", ";
+					String compatibleName = getCompatibleName(param.getName());
+					// Erase spaces and store the real name in an annotation.
+					if(!compatibleName.equals(param.getName()))
+					{
+					    writeln("[" + compatibleName + "(\"" + param.getName() + "\")]");
+					}
+					idlParams += "in " + idlType + " " + compatibleName + ", ";
 				}
 			}
 			queryParameters = idlParams + queryParameters;

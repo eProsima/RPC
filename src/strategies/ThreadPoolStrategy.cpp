@@ -23,21 +23,19 @@ namespace eprosima
             class ThreadPoolStrategyJob
             {
                 public:
-                    ThreadPoolStrategyJob(fExecFunction execFunction,
-                            eprosima::rpcdds::transport::ServerTransport &transport, void *data)
-                        : m_execFunction(execFunction), m_transport(transport), m_data(data)
+                    ThreadPoolStrategyJob(boost::function<void()> callback)
+                        : m_callback(callback)
                     {
                     }
 
                     void run()
                     {
-                        m_execFunction(m_transport, m_data);
+                        m_callback();
                     }
 
                 private:
-                    fExecFunction m_execFunction;
-                    eprosima::rpcdds::transport::ServerTransport &m_transport;
-                    void *m_data;
+
+                    boost::function<void()> m_callback;
             };
 
             class ThreadPoolStrategyImpl
@@ -82,18 +80,8 @@ ThreadPoolStrategy::~ThreadPoolStrategy()
         delete m_impl;
 }
 
-void ThreadPoolStrategy::schedule(fExecFunction execFunction,
-        ServerTransport &transport, void *data)
+void ThreadPoolStrategy::schedule(boost::function<void()> callback)
 {
-    const char* const METHOD_NAME = "schedule";
-
-    if(execFunction != NULL && data != NULL)
-    {
-        boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(execFunction, transport, data));
-        boost::threadpool::schedule(*m_impl->getPool(), boost::bind(&ThreadPoolStrategyJob::run, job));
-    }
-    else
-    {
-        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-    }
+    boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(callback));
+    boost::threadpool::schedule(*m_impl->getPool(), boost::bind(&ThreadPoolStrategyJob::run, job));
 }

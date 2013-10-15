@@ -4,56 +4,49 @@
 
 #define BUFFER_START_LENGTH 200
 
-namespace eprosima
+using namespace eprosima::rpcdds;
+using namespace protocol::rest;
+
+FastBuffer::FastBuffer() : m_buffer(NULL),
+    m_bufferSize(0), m_internalBuffer(true){}
+
+    FastBuffer::FastBuffer(char* const buffer, const size_t bufferSize) : m_buffer(buffer),
+    m_bufferSize(bufferSize), m_internalBuffer(false){}
+
+bool FastBuffer::resize(size_t minSizeInc)
 {
+    size_t incBufferSize = BUFFER_START_LENGTH;
 
-	namespace httpser
-	{
-		
-		FastBuffer::FastBuffer() : m_buffer(NULL),
-			m_bufferSize(0), m_internalBuffer(true){}
+    if(m_internalBuffer)
+    {
+        if(minSizeInc > BUFFER_START_LENGTH)
+        {
+            incBufferSize = minSizeInc;
+        }
 
-		FastBuffer::FastBuffer(char* const buffer, const size_t bufferSize) : m_buffer(buffer),
-			m_bufferSize(bufferSize), m_internalBuffer(false){}
+        if(m_buffer == NULL)
+        {
+            m_bufferSize = incBufferSize;
 
-		bool FastBuffer::resize(size_t minSizeInc)
-		{
-			size_t incBufferSize = BUFFER_START_LENGTH;
+            m_buffer = (char*)malloc(m_bufferSize);
 
-			if(m_internalBuffer)
-			{
-				if(minSizeInc > BUFFER_START_LENGTH)
-				{
-					incBufferSize = minSizeInc;
-				}
+            if(m_buffer != NULL)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            m_bufferSize += incBufferSize;
 
-				if(m_buffer == NULL)
-				{
-					m_bufferSize = incBufferSize;
+            m_buffer = (char*)realloc(m_buffer, m_bufferSize);
 
-					m_buffer = (char*)malloc(m_bufferSize);
+            if(m_buffer != NULL)
+            {
+                return true;
+            }
+        }
+    }
 
-					if(m_buffer != NULL)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					m_bufferSize += incBufferSize;
-
-					m_buffer = (char*)realloc(m_buffer, m_bufferSize);
-
-					if(m_buffer != NULL)
-					{
-						return true;
-					}
-				}
-			}
-
-			return false;
-		}
-
-	} //namespace httpser
-    
-} //namespace eProsima
+    return false;
+}

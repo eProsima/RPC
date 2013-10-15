@@ -1,0 +1,425 @@
+group CDRProtocolSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "CDRProtocol.cxx"], description=["This source file contains the definition of the protocol used to create CDR messages."])$
+
+#include "$ctx.filename$CDRProtocol.h"
+#include "transports/ProxyTransport.h"
+#include "transports/ServerTransport.h"
+#include "exceptions/Exceptions.h"
+#include "utils/Messages.h"
+
+using namespace eprosima::rpcdds;
+using namespace ::protocol::cdr;
+using namespace ::transport;
+using namespace ::exception;
+
+$ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol(),
+    m_serializeBuffer(), m_serializeCdr(m_serializeBuffer)
+{
+}
+
+$ctx.filename$Protocol::~$ctx.filename$Protocol()
+{
+}
+
+bool $ctx.filename$Protocol::setTransport(Transport &transport)
+{
+    if(strcmp(transport.getType(), "RAW") == 0)
+    {
+    
+        if(transport.getBehaviour() == SERVER_BEHAVIOUR)
+        {
+            // If this is a server transport, we set its callback
+            eprosima::rpcdds::transport::ServerTransport &serverTransport = dynamic_cast<eprosima::rpcdds::transport::ServerTransport&>(transport);
+            serverTransport.setCallback(&$ctx.filename$Protocol::worker);
+        }
+        
+        Protocol::_setTransport(transport);
+        
+        return true;  
+    }
+    else
+    {
+        throw IncompatibleException("protocol and transport are incompatibles");
+    }
+    
+    return false;
+}
+
+bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
+{  
+    return true;
+}
+
+void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint) 
+{
+    $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
+    
+    if(data != NULL && endpoint != NULL)
+    {
+        if(((int32_t*)data)[0] == 0x46434452)
+        {
+            size_t cdrLength = ((int32_t*)data)[1];
+            
+            if(dataLength < cdrLength + 8)
+            {
+                // TODO Read more bytes.
+            }
+            
+            eProsima::FastBuffer cdrBuffer((char*)data, dataLength);
+            eProsima::FastCdr cdr(cdrBuffer);
+            
+            cdr.jump(8);
+            std::string interface_name, operation_name;
+            cdr.deserialize(interface_name);
+            cdr.deserialize(operation_name);
+            
+            $if(first(ctx.interfaces))$
+            if(interface_name.compare("$first(ctx.interfaces).scopedname$") == 0)
+            {
+                if(_protocol._$first(ctx.interfaces).formatedScopedname$_impl != NULL)
+                {
+                    $if(first(first(ctx.interfaces).operations))$
+                    if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
+                    {
+                        $operation_worker(operation=first(first(ctx.interfaces).operations))$
+                    }
+                    $rest(first(ctx.interfaces).operations) : {operation |
+                    else if(operation_name.compare("$operation.name$") == 0)
+                    {
+                        $operation_worker(operation=operation)$
+                    }
+                    }$
+                    $endif$
+                }
+                else
+                {
+                    // TODO Send system exception to client.
+                }
+            }
+            $rest(ctx.interfaces) : {interface |
+            else if(interface_name.compare("$interface.scopedname$") == 0)
+            {
+                if(_protocol._$interface.formatedScopedname$_impl != NULL)
+                {
+                    $if(first(interface.operations))$
+                    if(operation_name.compare("$first(interface.operations).name$") == 0)
+                    {
+                        $operation_worker(operation=first(interface.operations))$
+                    }
+                    $rest(interface.operations) : {operation |
+                    else if(operation_name.compare("$operation.name$") == 0)
+                    {
+                        $operation_worker(operation=operation)$
+                    }
+                    }$
+                    $endif$
+                }
+                else
+                {
+                    // TODO Send system exception to client.
+                }
+            }
+            }$
+            $endif$
+        }
+        else
+        {
+            // TODO Print error.
+        }
+    }
+    else
+    {
+        //TODO Print error.
+    }
+}
+
+$definitions; separator="\n"$
+
+>>
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$if(ctx.client)$
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+{
+    const char* const interface_name = "$operation.parent.scopedname$";
+    const char* const operation_name = "$operation.name$";
+    ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
+    $varDecl(variable=operation.rettypeparam)$
+    
+    eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>(getTransport());
+    
+    m_serializeCdr.jump(8);
+    m_serializeCdr.serialize(interface_name);
+    m_serializeCdr.serialize(operation_name);
+    $operation.inputparam : {param |
+    $if(basicCDRTypes.(param.typecode.stType))$
+    m_serializeCdr.serialize($primitiveCasting(param)$$param.name$);
+    $else$
+    serialize(m_serializeCdr, $param.name$);
+    $endif$
+    };separator="\n"$
+    
+    char *buffer = m_serializeBuffer.getBuffer();
+    ((int32_t*)buffer)[0] = 0x46434452;
+    ((int32_t*)buffer)[1] = m_serializeCdr.getSerializedDataLength() - 8;
+    
+    proxyTransport.connect();
+    
+    // TODO Check if there is a problem.
+    proxyTransport.send(buffer, m_serializeCdr.getSerializedDataLength());
+    
+    $if(!operation.oneway)$
+    // TODO Cambiar
+    char response[8192];
+    
+    size_t bytesReaded = proxyTransport.receive(response, 8192);
+    
+    if(bytesReaded > 0)
+    {
+        if(((int32_t*)response)[0] == 0x46434452)
+        {
+            size_t cdrLength = ((int32_t*)response)[1];
+            
+            if(bytesReaded < cdrLength + 8)
+            {
+                // TODO Read more bytes.
+            }
+            
+            eProsima::FastBuffer rcdrBuffer(response, 8192);
+            eProsima::FastCdr rcdr(rcdrBuffer);
+            
+            rcdr.jump(8);
+            std::string interface_name_r, operation_name_r;
+            rcdr.deserialize(interface_name_r);
+            rcdr.deserialize(operation_name_r);
+            
+            if(interface_name_r.compare(interface_name) == 0 &&
+                operation_name_r.compare(operation_name) == 0)
+            {
+                $[operation.outputparam, operation.rettypeparam] : {param |
+                $if(basicCDRTypes.(param.typecode.stType))$
+                rcdr.deserialize($primitiveCasting(param)$$param.name$);
+                $else$
+                deserialize(rcdr, $param.name$);
+                $endif$
+                };separator="\n"$
+            }
+            else
+            {
+                // TODO Return error
+            }
+        }
+        else
+        {
+            // TODO Return error.
+        }
+    }
+    else
+    {
+        // TODO print error.
+    }
+    $endif$
+    
+    $if(operation.rettypeparam)$
+    return $operation.rettypeparam.name$;
+    $endif$
+}
+$endif$
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<
+void eprosima::rpcdds::protocol::cdr::serialize(eProsima::FastCdr &cdr, const $struct.scopedname$ &x)
+{
+    $struct.members:{$member_serialization(it)$}; separator="\n"$
+}
+
+void eprosima::rpcdds::protocol::cdr::deserialize(eProsima::FastCdr &cdr, $struct.scopedname$ &x)
+{  
+    $struct.members:{$member_deserialization(it)$}; separator="\n"$
+}
+
+>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+/*************** Utils *****************/
+createDataHelper(param, dataname, isRequest) ::= <<
+$if(param.typecode.array)$
+$memberComplexExtract(member=param, dataname=dataname)$
+$else$
+$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;
+$endif$
+>>
+
+extractDataHelper(param, dataname, isReply) ::= <<
+$if(isReply)$
+$if(param.input)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.string)$
+if($param.name$ != NULL)
+    free($param.name$);
+$endif$
+$else$
+$varComplexDel(variable=param)$
+$endif$
+$endif$
+$if(param.typecode.array)$
+$memberComplexCopy(member=param, dataname=dataname)$
+$else$
+$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$endif$
+$else$
+$if(param.output)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.string)$
+$param.name$ = strdup($dataname$.$param.name$);
+$else$
+$param.name$ = $dataname$.$param.name$;
+$endif$
+$else$
+$memberComplexCopy(member=param, dataname=dataname)$
+$endif$
+$else$
+$if(param.typecode.array)$
+$memberComplexCopy(member=param, dataname=dataname)$
+$else$
+$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$endif$
+$endif$
+$endif$
+>>
+
+operation_worker(operation) ::= <<
+$operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
+$varDecl(variable=operation.rettypeparam, create="yes")$
+
+$operation.inoutputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+
+$operation.inputparam : {param |
+$if(basicCDRTypes.(param.typecode.stType))$
+cdr.deserialize($primitiveCasting(param)$$param.name$);
+$else$
+deserialize(cdr, $param.name$);
+$endif$
+};separator="\n"$
+
+try
+{
+    $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+    
+    $if(!operation.oneway)$
+    eProsima::FastBuffer scdrBuffer;
+    eProsima::FastCdr scdr(scdrBuffer);
+    scdr.jump(8);
+    scdr.serialize("$operation.parent.scopedname$");
+    scdr.serialize("$operation.name$");
+    
+    $[operation.outputparam, operation.rettypeparam] : {param |
+    $if(basicCDRTypes.(param.typecode.stType))$
+    scdr.serialize($primitiveCasting(param)$$param.name$);
+    $else$
+    serialize(scdr, $param.name$);
+    $endif$
+    };separator="\n"$
+    
+    char *buffer = scdrBuffer.getBuffer();
+    ((int32_t*)buffer)[0] = 0x46434452;
+    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+
+    dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
+    $endif$
+}
+$operation.exceptions : { exception |
+catch(const $exception.scopedname$ &ex)
+{
+}
+}; separator="\n"$
+catch(const ServerInternalException &ex)
+{
+}
+
+$[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
+
+>>
+
+member_serialization(member) ::= <<
+$if(member.typecode.maxsize)$
+if(x.$member.name$().$sizeFunction.(member.typecode.striptypename)$ <= $member.typecode.maxsize$)
+    
+$endif$$basicCDRTypes.(member.typecode.stType)$serialize(x.$member.name$);
+$if(member.typecode.maxsize)$
+else
+    throw eProsima::BadParamException(std::string("The maximum length was exceeded"));
+$endif$
+>>
+
+member_deserialization(member) ::= <<
+$basicCDRTypes.(member.typecode.stType)$deserialize($castingTypes.(member.typecode.stType)$x.$member.name$);
+>>
+
+primitiveCasting(param) ::= <<
+$primitiveCastingType.(param.typecode.stType)$
+>>
+
+basicCDRTypes ::= [
+        "type_5":"cdr.",
+        "type_6":"cdr.",
+        "type_13":"cdr.",
+        "type_1":"cdr.",
+        "type_2":"cdr.",
+        "type_11":"cdr.",
+        "type_3":"cdr.",
+        "type_4":"cdr.",
+        "type_12":"cdr.",
+        "type_8":"cdr.",
+        "type_14":"cdr.",
+        "type_7":"cdr.",
+        "type_9":"cdr.",
+        "type_f":"cdr.",
+        "type_e":"cdr.",
+        "type_d":"cdr.",
+        "type_15":"cdr.",
+        "type_c":"cdr.",
+        default: // not basic type.
+]
+
+castingTypes ::= [
+        "type_c":"(uint32_t&)",
+        default: // not casting
+]
+
+primitiveCastingType ::= [
+        "type_11":"(int64_t&)",
+        "type_12":"(uint64_t&)",
+        default: // not casting
+]
