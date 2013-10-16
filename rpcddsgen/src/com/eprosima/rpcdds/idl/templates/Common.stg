@@ -71,7 +71,7 @@ $endif$
 varDel(variable) ::= <<
 $if(variable)$
 $if(variable.typecode.primitiveInArguments)$
-$if(variable.typecode.string)$
+$if(variable.typecode.isType_d)$
 $varStringDel(name=variable.name)$
 $endif$
 $else$

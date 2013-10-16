@@ -90,7 +90,7 @@ enum_type(ctx, enum) ::= <<>>
 
 copy(member, dataname) ::= <<
 $if(member.typecode.primitiveInArguments)$
-$if(member.typecode.string)$
+$if(member.typecode.isType_d)$
 if($member.name$ != NULL)
     free($member.name$);
 $member.name$ = strdup($dataname$.$member.name$);

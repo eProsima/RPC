@@ -11,6 +11,9 @@ public class EnumTypeCode extends MemberedTypeCode
         super(TypeCode.KIND_ENUM, scope, name);
     }
     
+ // In RPCDDS is considered primitive
+    public boolean isIsType_c(){return true;}
+    
     public void addMember(EnumMember member)
     {
         addMember((Member)member);
@@ -41,12 +44,6 @@ public class EnumTypeCode extends MemberedTypeCode
         }
         
         return "";
-    }
-    
-    // In RPCDDS is considered primitive
-    public boolean isEnum()
-    {
-        return true;
     }
     
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)

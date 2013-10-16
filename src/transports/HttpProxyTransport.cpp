@@ -57,8 +57,10 @@ bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
             }
             else
             {
-                if(HttpTransport::write("\r\n") &&
-                        m_tcptransport.send(getWriteBuffer(), getWriteBufferUsage()));
+                if(HttpTransport::write("\r\n"))
+                {
+                    return m_tcptransport.send(getWriteBuffer(), getWriteBufferUsage());
+                }
             }
 
         }

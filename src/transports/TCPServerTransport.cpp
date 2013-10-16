@@ -160,6 +160,8 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
                 // TODO check ec == boost::asio::error::eof.
                 // TODO print error.
             }
+
+            free(buffer);
         }
         else
         {
@@ -210,7 +212,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
             std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
             if(_dataToRead == 0)
-                _dataToRead = connection->socket_->available(ec);
+                while((_dataToRead = connection->socket_->available(ec)) == 0);
 
             std::cout << "Datos para leer = " << _dataToRead << std::endl;
 

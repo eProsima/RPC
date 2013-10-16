@@ -77,9 +77,18 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
     }
 }
 
+int HttpServerTransport::readMethod(HttpMessage &httpMessage)
+{
+    
+}
+
 // 1 Faltan datos en el buffer. Leer mas.
 int HttpServerTransport::readHeaders(HttpMessage &httpMessage)
 {
+    if(httpMessage.getMethod().empty())
+    {
+        readMethod(httpMessage);
+    }
     if(getReadBufferUsage() > 0)
     {
         printf("%s\n", getReadBuffer());

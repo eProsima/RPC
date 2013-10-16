@@ -37,7 +37,7 @@ void $exception.name$Utils::setTypeData(const $exception.name$ &ex, $exception.n
 
 void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.name$_t &data)
 {
-    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
+    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;}; separator="\n"$
 }
 
 >>
@@ -141,10 +141,10 @@ enum_type(ctx, enum) ::= <<>>
  * Extra string templates. Utils.
  */
 createDataHelper(param, dataname, isRequest) ::= <<
-$if(param.typecode.array)$
+$if(param.typecode.isType_f)$
 $memberComplexExtract(member=param, dataname=dataname)$
 $else$
-$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.string)$$charConstCasting()$$endif$$endif$$param.name$;
+$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charConstCasting()$$endif$$endif$$param.name$;
 $endif$
 >>
 
@@ -152,7 +152,7 @@ extractDataHelper(param, dataname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$
 $if(param.typecode.primitiveInArguments)$
-$if(param.typecode.string)$
+$if(param.typecode.isType_d)$
 if($param.name$ != NULL)
     free($param.name$);
 $endif$
@@ -160,15 +160,15 @@ $else$
 $varComplexDel(variable=param)$
 $endif$
 $endif$
-$if(param.typecode.array)$
+$if(param.typecode.isType_f)$
 $memberComplexCopy(member=param, dataname=dataname)$
 $else$
-$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
 $else$
 $if(param.output)$
 $if(param.typecode.primitiveInArguments)$
-$if(param.typecode.string)$
+$if(param.typecode.isType_d)$
 $param.name$ = strdup($dataname$.$param.name$);
 $else$
 $param.name$ = $dataname$.$param.name$;
@@ -177,10 +177,10 @@ $else$
 $memberComplexCopy(member=param, dataname=dataname)$
 $endif$
 $else$
-$if(param.typecode.array)$
+$if(param.typecode.isType_f)$
 $memberComplexCopy(member=param, dataname=dataname)$
 $else$
-$param.name$ = $dataname$.$param.name$$if(param.typecode.string)$$stringPointer()$$endif$;
+$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
 $endif$
 $endif$
@@ -194,7 +194,7 @@ void $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData
 
 void $operation.parent.name$_$operation.name$_$exception.name$Utils::extractTypeData($exception.scopedname$ &ex, $operation.parent.name$_$operation.name$_$exception.name$_t &data)
 {
-    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.string)$$stringPointer()$$endif$;}; separator="\n"$
+    $exception.members : { member |ex.$member.name$ = data.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;}; separator="\n"$
 }
 
 

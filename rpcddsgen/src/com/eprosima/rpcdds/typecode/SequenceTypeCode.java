@@ -13,6 +13,9 @@ public class SequenceTypeCode extends ContainerTypeCode
     }
     
     @Override
+    public boolean isIsType_e(){return true;}
+    
+    @Override
     public String getTypename()
     {
         StringTemplate st = getTypenameFromStringTemplate();

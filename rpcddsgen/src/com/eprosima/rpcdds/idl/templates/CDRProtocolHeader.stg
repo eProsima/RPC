@@ -54,8 +54,8 @@ namespace eprosima
                         
                     private:
                     
-                        eProsima::FastBuffer m_serializeBuffer;
-                        eProsima::FastCdr m_serializeCdr;
+                        eProsima::FastBuffer serializeBuffer;
+                        eProsima::FastCdr scdr;
                 };
             } // namespace dds
         } // namespace protocol

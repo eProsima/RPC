@@ -91,28 +91,10 @@ public abstract class TypeCode
         return false;
     }
     
-    // By default a typecode is not string. Function used in stringtemplates
-    public boolean isString()
-    {
-        return false;
-    }
-    
-    // By default a typecode is not enum. Function used in stringtemplates
-    public boolean isEnum()
-    {
-        return false;
-    }
-    
-    // By default a typecode is not array. Function used in stringtemplates
-    public boolean isArray()
-    {
-        return false;
-    }
-    
     // Used in stringtemplate for parameters
     public boolean isPrimitiveInArguments()
     {
-        return isPrimitive() || isEnum() || isString();
+        return isPrimitive() || isIsType_c() || isIsType_d();
     }
     
     // By default there is not initial value. Function used in stringtemplates.
@@ -135,6 +117,14 @@ public abstract class TypeCode
     public abstract Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned);
     
     public abstract int getMaxSerializedSizeWithoutAlignment(int currentSize);
+    
+    /*** Functions to know the type in string templates ***/
+ // By default a typecode is not string. Function used in stringtemplates 
+    public boolean isIsType_d(){return false;}
+    public boolean isIsType_c(){return false;}
+    public boolean isIsType_f(){return false;}
+    public boolean isIsType_e(){return false;}
+    /*** End of functions to know the type in string templates ***/
     
     private int m_kind = KIND_NULL;
 }

@@ -47,24 +47,6 @@ public class AliasTypeCode extends ContainerTypeCode
     }
     
     @Override
-    public boolean isString()
-    {
-        return getContentTypeCode().isString();
-    }
-    
-    @Override
-    public boolean isEnum()
-    {
-        return getContentTypeCode().isEnum();
-    }
-    
-    @Override
-    public boolean isArray()
-    {
-    	return getContentTypeCode().isArray();
-    }
-    
-    @Override
     public String getInitialValue()
     {   
         return getContentTypeCode().getInitialValue();
@@ -81,6 +63,31 @@ public class AliasTypeCode extends ContainerTypeCode
     	// TODO
         return 0;
     }
+    
+    /*** Functions to know the type in string templates ***/
+    @Override
+    public boolean isIsType_d()
+    {
+        return getContentTypeCode().isIsType_d();
+    }
+    
+    @Override
+    public boolean isIsType_c()
+    {
+        return getContentTypeCode().isIsType_c();
+    }
+    
+    @Override
+    public boolean isIsType_f()
+    {
+        return getContentTypeCode().isIsType_f();
+    }
+    
+    public boolean isIsType_e()
+    {
+        return getContentTypeCode().isIsType_e();
+    }
+    /*** End of functions to know the type in string templates ***/
     
     private String m_name = null;
     

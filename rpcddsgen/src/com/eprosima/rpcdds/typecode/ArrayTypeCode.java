@@ -17,6 +17,9 @@ public class ArrayTypeCode extends ContainerTypeCode
     }
     
     @Override
+    public boolean isIsType_f(){return true;}
+    
+    @Override
     public String getTypename()
     {
         StringTemplate first = null, second = null, fin = null;
@@ -52,12 +55,6 @@ public class ArrayTypeCode extends ContainerTypeCode
     public String getStTypename()
     {
         return "Error";
-    }
-    
-    @Override
-    public boolean isArray()
-    {
-        return true;
     }
     
     public void addDimension(String dimension)

@@ -15,6 +15,9 @@ public class StringTypeCode extends TypeCode
     }
     
     @Override
+    public boolean isIsType_d(){return true;}
+    
+    @Override
     public String getTypename()
     {
         return getTypenameFromStringTemplate().toString();
@@ -72,12 +75,6 @@ public class StringTypeCode extends TypeCode
         {
             return currentSize + 4 + Integer.parseInt(m_maxsize);
         }
-    }
-    
-    @Override
-    public boolean isString()
-    {
-        return true;
     }
     
     private String m_maxsize = null;
