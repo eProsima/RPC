@@ -37,20 +37,6 @@ namespace eprosima
                     inline
                         void resetWriteBuffer(){m_writeBufferUse = 0;}
 
-                    inline
-                        char* getReadBuffer() const {return m_readBuffer;}
-
-                    inline
-                        size_t getReadBufferUsage() const {return m_readBufferUse;}
-
-                    inline
-                        void increaseReadBufferUsage(size_t numData) {m_readBufferUse += numData;}
-
-                    inline
-                        size_t getReadBufferLength() const {return m_readBufferLength;}
-
-                    int resizeReadBuffer(size_t minSize);
-
                     bool write(const std::string &str);
 
                     bool write(const uint64_t uint64);
@@ -64,12 +50,6 @@ namespace eprosima
                     size_t m_writeBufferLength;
 
                     size_t m_writeBufferUse;
-
-                    char *m_readBuffer;
-
-                    size_t m_readBufferLength;
-
-                    size_t m_readBufferUse;
             };
         } // namespace transport
     } // namespace rpcdds

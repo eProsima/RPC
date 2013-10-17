@@ -237,6 +237,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
                 else
                 {
                     dataToRead = bytes_read;
+                    printf("%s\n", buffer);
                     return 0;
                 }
             }

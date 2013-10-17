@@ -57,7 +57,13 @@ namespace eprosima
 
                 private:
 
-                    int readHeaders(HttpMessage &httpMessage);
+                    int readMethod(TCPEndpoint *connection, HttpMessage &httpMessage);
+
+                    int readUri(TCPEndpoint *connection, HttpMessage &httpMessage);
+
+                    int readVersion(TCPEndpoint *connection);
+
+                    int readHeaders(TCPEndpoint *connection, HttpMessage &httpMessage);
 
                     TCPServerTransport m_tcptransport;
             };

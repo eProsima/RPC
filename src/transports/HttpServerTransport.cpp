@@ -55,45 +55,142 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
 {
     HttpMessage httpMessage;
     int retCode = 0;
-    
-    //TODO Pensar en poner un time out que se sincronice con el del transporte TCP or solamente es necesario el del transporte TCP.
-    while(retCode == 0 && (retCode = readHeaders(httpMessage)) == 1)
+
+    // Initialize buffers.
+    if(connection->initializeBuffers())
     {
-        size_t dataToRead = 0;
-
-        // TODO change: first use read in tcp (using 0 in dataToRead, but if the buffer was resized, then use read_some pasing >0 in dataToRead
-        // Podria haber un bucle si mientras intenta ser un buffer grande alguien le satura a llamadas.
-        while((retCode = m_tcptransport.receive(&getReadBuffer()[getReadBufferUsage()], getReadBufferLength() - getReadBufferUsage(), dataToRead, connection)) > 0)
+        //TODO Pensar en poner un time out que se sincronice con el del transporte TCP or solamente es necesario el del transporte TCP.
+        while(retCode == 0 && (retCode = readHeaders(connection, httpMessage)) == 1)
         {
-            retCode = resizeReadBuffer(retCode);
-        }
+            size_t dataToRead = 0;
 
-        // Retcode will never be -2 from receive because we said to read 0 bytes.
-        if(retCode == 0)
-        {
-            increaseReadBufferUsage(dataToRead);
-        }
+            // TODO change: first use read in tcp (using 0 in dataToRead, but if the buffer was resized, then use read_some pasing >0 in dataToRead
+            // Podria haber un bucle si mientras intenta ser un buffer grande alguien le satura a llamadas.
+            while((retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
+                            connection->getReadBufferLength() - connection->getReadBufferFillUse(), dataToRead, connection)) > 0)
+            {
+                retCode = connection->resizeReadBuffer(retCode);
+            }
 
+            // Retcode will never be -2 from receive because we said to read 0 bytes.
+            if(retCode == 0)
+            {
+                connection->increaseReadBufferFillUse(dataToRead);
+            }
+
+        }
     }
-}
-
-int HttpServerTransport::readMethod(HttpMessage &httpMessage)
-{
-    
+    else
+    {
+        // TODO print error
+    }
 }
 
 // 1 Faltan datos en el buffer. Leer mas.
-int HttpServerTransport::readHeaders(HttpMessage &httpMessage)
+int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMessage)
 {
+    const char* const GET = "GET";
+    const char* const PUT = "PUT";
+    const char* const POST = "POST";
+    const char* const DELETE = "DELETE";
+    if(connection->getReadBufferLeaveSpace() >= 4)
+    {
+        if(memcmp(connection->getReadBufferCurrentPointer(), GET, 3) == 0)
+        {
+            httpMessage.setMethod(GET);
+            connection->increaseReadBufferCurrentPointer(4);
+            return 0;
+        }
+        else if(memcmp(connection->getReadBufferCurrentPointer(), PUT, 3) == 0)
+        {
+            httpMessage.setMethod(PUT);
+            connection->increaseReadBufferCurrentPointer(4);
+            return 0;
+        }
+        else if(connection->getReadBufferLeaveSpace() >= 5)
+        {
+            if(memcmp(connection->getReadBufferCurrentPointer(), POST, 4) == 0)
+            {
+                httpMessage.setMethod(POST);
+                connection->increaseReadBufferCurrentPointer(5);
+                return 0;
+            }
+            else if(connection->getReadBufferLeaveSpace() >= 6)
+            {
+                if(memcmp(connection->getReadBufferCurrentPointer(), DELETE, 6) == 0)
+                {
+                    httpMessage.setMethod(DELETE);
+                    connection->increaseReadBufferCurrentPointer(7);
+                    return 0;
+                }
+            }
+            else
+                return 1;
+        }
+        else
+            return 1;
+    }
+    else
+        return 1;
+
+    return -1;
+}
+
+// 1 Faltan datos en el buffer. Leer mas.
+int HttpServerTransport::readUri(TCPEndpoint *connection, HttpMessage &httpMessage)
+{
+    // Find \r.
+    char *ptr = (char*)memchr(connection->getReadBufferCurrentPointer(), ' ', connection->getReadBufferLeaveSpace());
+
+    if(ptr != NULL)
+    {
+            httpMessage.setUri(std::string(connection->getReadBufferCurrentPointer(), ptr - connection->getReadBufferCurrentPointer()));
+            connection->increaseReadBufferCurrentPointer(ptr + 1 - connection->getReadBufferCurrentPointer());
+            return 0;
+    }
+    else
+        return 1;
+
+    return -1;
+}
+
+int HttpServerTransport::readVersion(TCPEndpoint *connection)
+{
+    /*char *ptr = (char*)memchr(connection->getReadBufferCurrentPointer(), '\r', connection->getReadBufferLeaveSpace());
+
+    if(ptr != NULL)
+    {
+        if(
+            httpMessage.setUri(std::string(connection->getReadBufferCurrentPointer(), ptr - connection->getReadBufferCurrentPointer()));
+            connection->increaseReadBufferCurrentPointer(ptr + 1 - connection->getReadBufferCurrentPointer());
+            return 0;
+    }
+    else
+        return 1;*/
+    return -1;
+}
+
+// 1 Faltan datos en el buffer. Leer mas.
+int HttpServerTransport::readHeaders(TCPEndpoint *connection, HttpMessage &httpMessage)
+{
+    int retCode = 0;
+
+    // Read HTTP Method
     if(httpMessage.getMethod().empty())
     {
-        readMethod(httpMessage);
-    }
-    if(getReadBufferUsage() > 0)
-    {
-        printf("%s\n", getReadBuffer());
-        return 0;
+        if((retCode = readMethod(connection, httpMessage)) != 0)
+            return retCode;
     }
 
-    return 1;
+    // Read HTTP URI
+    if(httpMessage.getUri().empty())
+    {
+        if((retCode = readUri(connection, httpMessage)) != 0)
+            return retCode;
+    }
+
+    if((retCode = readVersion(connection)) != 0)
+        return retCode;
+
+    return retCode;
 }

@@ -20,15 +20,43 @@ namespace eprosima
             {
                 private:
 
-                    char buffer_[8192];
+                    char *m_readBuffer;
 
-                    void handle_write(const boost::system::error_code& error,
-                            std::size_t bytes_transferred);
+                    size_t m_readBufferLength;
 
-                    void handle_read(const boost::system::error_code& error,
-                            std::size_t bytes_transferred);
+                    size_t m_readBufferUse;
+
+                    size_t m_readBufferCurrentPointer;
 
                 public:
+                    TCPEndpoint(void);
+
+                    bool initializeBuffers();
+
+                    void finalizeBuffers();
+
+                    inline
+                        char* getReadBuffer() const {return m_readBuffer;}
+
+                    inline
+                        size_t getReadBufferFillUse() const {return m_readBufferUse;}
+
+                    inline
+                        void increaseReadBufferFillUse(size_t numData) {m_readBufferUse += numData;}
+
+                    inline
+                        size_t getReadBufferLength() const {return m_readBufferLength;}
+
+                    inline
+                        char* getReadBufferCurrentPointer() const {return &m_readBuffer[m_readBufferCurrentPointer];}
+
+                    inline
+                        void increaseReadBufferCurrentPointer(size_t move){m_readBufferCurrentPointer += move;}
+
+                    inline
+                        size_t getReadBufferLeaveSpace() const {return m_readBufferUse - m_readBufferCurrentPointer;}
+
+                    int resizeReadBuffer(size_t minSize);
 
                     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 
@@ -39,16 +67,9 @@ namespace eprosima
 
                     boost::shared_ptr<boost::thread> thread_;
 
-                    bool close;
-
                     typedef boost::shared_ptr<TCPEndpoint> pointer;
 
-                    TCPEndpoint(void);
-
                     boost::shared_ptr<boost::asio::ip::tcp::socket>& socket();
-
-                    void start();
-
             };
 
         }

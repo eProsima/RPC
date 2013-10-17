@@ -16,29 +16,21 @@ const size_t MAX_INT64_CHARS = 20;
 using namespace eprosima::rpcdds;
 using namespace transport;
 
-HttpTransport::HttpTransport() : m_writeBuffer(NULL), m_writeBufferLength(BUFFER_INITIAL_LENGTH), m_writeBufferUse(0),
-    m_readBuffer(NULL), m_readBufferLength(BUFFER_INITIAL_LENGTH), m_readBufferUse(0)
+HttpTransport::HttpTransport() : m_writeBuffer(NULL), m_writeBufferLength(BUFFER_INITIAL_LENGTH), m_writeBufferUse(0)
 {
     m_writeBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
 
     if(m_writeBuffer != NULL)
     {
-        m_readBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
-
-        if(m_readBuffer != NULL)
-            return;
-
-        free(m_writeBuffer);
+        return;
     }
-    // throw initialization exception.
+    // TODO throw initialization exception.
 }
 
 HttpTransport::~HttpTransport()
 {
     if(m_writeBuffer != NULL)
         free(m_writeBuffer);
-    if(m_readBuffer != NULL)
-        free(m_readBuffer);
 }
 
 bool HttpTransport::resizeWriteBuffer(size_t minSize)
@@ -90,32 +82,4 @@ bool HttpTransport::write(const uint64_t uint64)
     }
 
     return false;
-}
-
-// 0 OK
-// -1 Error.
-int HttpTransport::resizeReadBuffer(size_t minSize)
-{
-    if((m_readBufferUse + minSize) <= (2 * m_readBufferLength))
-    {
-        m_readBuffer = (char*)realloc(m_readBuffer, 2 * m_readBufferLength);
-
-        if(m_readBuffer != NULL)
-        {
-            m_readBufferLength *= 2;
-            return 0;
-        }
-    }
-    else
-    {
-        m_readBuffer = (char*)realloc(m_readBuffer, m_readBufferUse + minSize);
-
-        if(m_readBuffer != NULL)
-        {
-            m_readBufferLength = m_readBufferUse + minSize;
-            return 0;
-        }
-    }
-
-    return -1;
 }

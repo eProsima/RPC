@@ -7,40 +7,62 @@
 using namespace eprosima::rpcdds;
 using namespace ::transport;
 
-void function() {
-	//Do something
-	std::cout << "Function execution" << std::endl;
-}
+const size_t BUFFER_INITIAL_LENGTH = 1024;
 
-TCPEndpoint::TCPEndpoint(void) /*: socket_(new boost::asio::ip::tcp::socket(io_service))*/
+TCPEndpoint::TCPEndpoint(void) : m_readBuffer(NULL), m_readBufferLength(BUFFER_INITIAL_LENGTH),
+    m_readBufferUse(0), m_readBufferCurrentPointer(0)
 {
 	this->socket_ = boost::shared_ptr<boost::asio::ip::tcp::socket>(
 			new boost::asio::ip::tcp::socket(io_service_));
 }
 
-void TCPEndpoint::handle_write(const boost::system::error_code& error,
-		size_t bytec_transferred) {
-	//Do something
+bool TCPEndpoint::initializeBuffers()
+{
+    m_readBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
+
+    if(m_readBuffer != NULL)
+        return true;
+
+    return false;
 }
 
-void TCPEndpoint::handle_read(const boost::system::error_code& error,
-		std::size_t bytes_transferred) {
-	if (!error) {
-		std::cout << "Received " << bytes_transferred << " bytes, data: ";
-		std::cout.write(buffer_, bytes_transferred);
-		std::cout << std::endl;
-		function();
-	}
+void TCPEndpoint::finalizeBuffers()
+{
+    if(m_readBuffer != NULL)
+    {
+        free(m_readBuffer);
+        m_readBuffer = NULL;
+    }
+}
+
+// 0 OK
+// -1 Error.
+int TCPEndpoint::resizeReadBuffer(size_t minSize)
+{
+    if((m_readBufferUse + minSize) <= (2 * m_readBufferLength))
+    {
+        m_readBuffer = (char*)realloc(m_readBuffer, 2 * m_readBufferLength);
+
+        if(m_readBuffer != NULL)
+        {
+            m_readBufferLength *= 2;
+            return 0;
+        }
+    }
+    else
+    {
+        m_readBuffer = (char*)realloc(m_readBuffer, m_readBufferUse + minSize);
+
+        if(m_readBuffer != NULL)
+        {
+            m_readBufferLength = m_readBufferUse + minSize;
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 boost::shared_ptr<boost::asio::ip::tcp::socket>& TCPEndpoint::socket() {
 	return socket_;
-}
-
-void TCPEndpoint::start()
-{
-	boost::asio::async_read(*socket_, boost::asio::buffer(buffer_),
-			boost::bind(&TCPEndpoint::handle_read, shared_from_this(),
-					boost::asio::placeholders::error,
-					boost::asio::placeholders::bytes_transferred));
 }
