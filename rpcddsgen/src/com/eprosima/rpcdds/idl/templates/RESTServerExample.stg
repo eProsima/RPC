@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new $ctx.filename$Protocol();
-        transport = new HttpServerTransport("127.0.0.1:80");
+        transport = new HttpServerTransport("127.0.0.1:8080");
         server = new $ctx.firstInterface.scopedname$Server(*pool, *transport, *protocol, servant);
         server->serve();
     }

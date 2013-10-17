@@ -45,6 +45,12 @@ namespace eprosima
                         void increaseReadBufferFillUse(size_t numData) {m_readBufferUse += numData;}
 
                     inline
+                        size_t getReadBufferEmptySpace() const {return m_readBufferLength - m_readBufferUse;}  
+
+                    inline
+                        size_t getReadBufferLeaveSpace() const {return m_readBufferLength - m_readBufferCurrentPointer;}
+
+                    inline
                         size_t getReadBufferLength() const {return m_readBufferLength;}
 
                     inline
@@ -54,7 +60,7 @@ namespace eprosima
                         void increaseReadBufferCurrentPointer(size_t move){m_readBufferCurrentPointer += move;}
 
                     inline
-                        size_t getReadBufferLeaveSpace() const {return m_readBufferUse - m_readBufferCurrentPointer;}
+                        size_t getReadBufferLeaveUsedSpace() const {return m_readBufferUse - m_readBufferCurrentPointer;}
 
                     int resizeReadBuffer(size_t minSize);
 

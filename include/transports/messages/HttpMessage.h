@@ -21,6 +21,8 @@ namespace eprosima
             {
                 public:
 
+                    HttpMessage() : m_versionCompatible(false), m_body_content_length(0){}
+
                     void setMethod(const std::string &method){m_method = method;}
                     void setMethod(std::string &&method){m_method = std::move(method);}
                     const std::string& getMethod() const{return m_method;}
@@ -37,9 +39,15 @@ namespace eprosima
                     void setBodyContentType(std::string &&body_content_type){m_body_content_type = std::move(body_content_type);}
                     const std::string& getBodyContentType() const{return m_body_content_type;}
 
+                    void setBodyContentLength(const std::string &body_content_length){m_body_content_length = atoi(body_content_length.c_str());}
+                    size_t getBodyContentLength() const {return m_body_content_length;}
+
                     void setBodyData(const std::string &body_data){m_body_data = body_data;}
                     void setBodyData(std::string &&body_data){m_body_data = std::move(body_data);}
                     const std::string& getBodyData() const{return m_body_data;}
+
+                    void setVersionCompatible(bool b){m_versionCompatible = b;}
+                    bool getVersionCompatible() const{return m_versionCompatible;}
 
                 private:
 
@@ -48,7 +56,10 @@ namespace eprosima
                     std::string m_host;
                     std::string m_uri;
                     std::string m_body_data;
+                    size_t m_body_content_length;
                     std::string m_body_content_type;
+
+                    bool m_versionCompatible;
             };
         } // namespace transport
     } // namespace rpcdds

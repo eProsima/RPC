@@ -64,6 +64,7 @@ int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
 
 void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
 {
+    printf("BIEN\n");
     /*eprosima::rpcdds::transport::connection* conn = (eprosima::rpcdds::transport::connection*) (connection);
     boost::system::error_code ec = boost::system::error_code();
     boost::asio::ip::tcp::socket &socket = *(conn->socket_);

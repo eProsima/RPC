@@ -61,7 +61,9 @@ namespace eprosima
 
                     int readUri(TCPEndpoint *connection, HttpMessage &httpMessage);
 
-                    int readVersion(TCPEndpoint *connection);
+                    int readVersion(TCPEndpoint *connection, HttpMessage &httpMessage);
+
+                    int readHeaderLines(TCPEndpoint *connection, HttpMessage &httpMessage);
 
                     int readHeaders(TCPEndpoint *connection, HttpMessage &httpMessage);
 
