@@ -30,6 +30,8 @@ namespace eprosima
 
                         std::string m_templateParameterExpandURI;
 
+                        std::vector<std::string> m_tags;
+
                         // Serializer data
 
                         FastBuffer buffer_;
@@ -120,6 +122,8 @@ namespace eprosima
                         RESTSerializer& serializeTemplateParameter(const std::string &paramValue);
 
                         RESTSerializer& endSerializeTemplateParameters(std::string &uri);
+
+                        RESTSerializer& deserializeUri(const std::string &uri);
                 };
 
             } //namespace rest

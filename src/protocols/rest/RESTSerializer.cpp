@@ -361,6 +361,40 @@ RESTSerializer& RESTSerializer::endSerializeTemplateParameters(std::string &uri)
     return *this;
 }
 
+RESTSerializer&  RESTSerializer::deserializeUri(const std::string &uri)
+{
+    size_t fpos = 0, lpos = 0;
+
+    // Jump first / if exists.
+    if(uri.size() > 0 &&
+            uri.at(0) == '/')
+        fpos = 1;
+
+    while((fpos < uri.size()) && ((lpos = uri.find_first_of('/', fpos)) != std::string::npos))
+    {
+        m_tags.push_back(uri.substr(fpos, lpos - fpos));
+        fpos = lpos + 1;
+    }
+
+    // There is not the last /.
+    if(fpos < uri.size())
+    {
+        // Not find a ? for query parameters.
+        if((lpos = uri.find_first_of('?', fpos)) == std::string::npos)
+        {
+            // Get last tag.
+            m_tags.push_back(uri.substr(fpos));
+        }
+        else
+        {
+            // Get query parameters.
+        }
+    }
+
+    for(std::vector<std::string>::iterator it = m_tags.begin(); it != m_tags.end(); ++it)
+        printf("TAG = %s\n", (*it).c_str());
+}
+
 std::string RESTSerializer::substituteBadCharacters(const std::string &str)
 {
     std::string ret = "";

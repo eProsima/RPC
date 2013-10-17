@@ -340,6 +340,7 @@ deserialization(obj, prefix) ::= <<
 $if(obj.typecode.isType_e)$
 uint32_t $obj.name$SeqLength;
 dcdr.deserialize($obj.name$SeqLength);
+$prefix$$obj.name$.ensure_length($obj.name$SeqLength, $obj.name$SeqLength);
 dcdr.deserializeArray($prefix$$obj.name$.get_contiguous_buffer(), $obj.name$SeqLength);
 $else$
 $deserializeFunction.(obj.typecode.stType)$$primitiveCastingType.(obj.typecode.stType)$$prefix$$obj.name$);

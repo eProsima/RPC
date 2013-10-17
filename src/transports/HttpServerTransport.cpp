@@ -134,37 +134,38 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
 // 1 Faltan datos en el buffer. Leer mas.
 int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMessage)
 {
-    const char* const METHOD_GET = "GET";
-    const char* const METHOD_PUT = "PUT";
-    const char* const METHOD_POST = "POST";
-    const char* const METHOD_DELETE = "DELETE";
+    const char* const _METHOD_GET = "GET";
+    const char* const _METHOD_PUT = "PUT";
+    const char* const _METHOD_POST = "POST";
+    const char* const _METHOD_DELETE = "DELETE";
+
     if(connection->getReadBufferLeaveUsedSpace() >= 4)
     {
-        if(memcmp(connection->getReadBufferCurrentPointer(), METHOD_GET, 3) == 0)
+        if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_GET, 3) == 0)
         {
-            httpMessage.setMethod(METHOD_GET);
+            httpMessage.setMethod(HttpMessage::HTTP_METHOD_GET);
             connection->increaseReadBufferCurrentPointer(4);
             return 0;
         }
-        else if(memcmp(connection->getReadBufferCurrentPointer(), METHOD_PUT, 3) == 0)
+        else if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_PUT, 3) == 0)
         {
-            httpMessage.setMethod(METHOD_PUT);
+            httpMessage.setMethod(HttpMessage::HTTP_METHOD_PUT);
             connection->increaseReadBufferCurrentPointer(4);
             return 0;
         }
         else if(connection->getReadBufferLeaveUsedSpace() >= 5)
         {
-            if(memcmp(connection->getReadBufferCurrentPointer(), METHOD_POST, 4) == 0)
+            if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_POST, 4) == 0)
             {
-                httpMessage.setMethod(METHOD_POST);
+                httpMessage.setMethod(HttpMessage::HTTP_METHOD_POST);
                 connection->increaseReadBufferCurrentPointer(5);
                 return 0;
             }
             else if(connection->getReadBufferLeaveUsedSpace() >= 6)
             {
-                if(memcmp(connection->getReadBufferCurrentPointer(), METHOD_DELETE, 6) == 0)
+                if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_DELETE, 6) == 0)
                 {
-                    httpMessage.setMethod(METHOD_DELETE);
+                    httpMessage.setMethod(HttpMessage::HTTP_METHOD_DELETE);
                     connection->increaseReadBufferCurrentPointer(7);
                     return 0;
                 }
@@ -281,7 +282,7 @@ int HttpServerTransport::readHeaders(TCPEndpoint *connection, HttpMessage &httpM
     int retCode = 0;
 
     // Read HTTP Method
-    if(httpMessage.getMethod().empty())
+    if(httpMessage.getMethod() == HttpMessage::HTTP_METHOD_INVALID)
     {
         if((retCode = readMethod(connection, httpMessage)) != 0)
             return retCode;

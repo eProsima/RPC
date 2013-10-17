@@ -7,6 +7,7 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header fil
 #define _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
+#include "transports/messages/HttpMessage.h"
 #include "utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
@@ -44,7 +45,7 @@ namespace eprosima
                         $definitions; separator="\n"$
                         
                         // Server
-                        char* proccessRequest(char* httpRequest);
+                        char* processRequest(eprosima::rpcdds::transport::HttpMessage &httpMessage);
                         
                     private:
                     

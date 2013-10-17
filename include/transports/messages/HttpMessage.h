@@ -21,11 +21,23 @@ namespace eprosima
             {
                 public:
 
-                    HttpMessage() : m_versionCompatible(false), m_body_content_length(0){}
+                    typedef enum Methods
+                    {
+                        HTTP_METHOD_GET = 0,
+                        HTTP_METHOD_PUT,
+                        HTTP_METHOD_POST,
+                        HTTP_METHOD_DELETE,
+                        HTTP_METHOD_INVALID
+                    } Methods;
 
-                    void setMethod(const std::string &method){m_method = method;}
-                    void setMethod(std::string &&method){m_method = std::move(method);}
-                    const std::string& getMethod() const{return m_method;}
+                    HttpMessage() : m_method(HTTP_METHOD_INVALID), m_versionCompatible(false), m_body_content_length(0){}
+
+                    void setMethod(const Methods method){m_method = method;}
+                    Methods getMethod(){return m_method;}
+                    const std::string& getMethodStr() const
+                    {
+                        return m_methods[m_method];
+                    }
 
                     void setHost(const std::string &host){m_host = host;}
                     void setHost(std::string &&host){m_host = std::move(host);}
@@ -51,7 +63,13 @@ namespace eprosima
 
                 private:
 
-                    std::string m_method;
+                    Methods m_method;
+                    std::string m_methods[4] = {
+                        "GET",
+                        "PUT",
+                        "POST",
+                        "DELETE"
+                    };
                     // TODO Pensar si quitar el Host y que lo ponga el transporte con la configuración del usuario.
                     std::string m_host;
                     std::string m_uri;

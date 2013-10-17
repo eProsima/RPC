@@ -7,7 +7,6 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.cxx"], description=["This source f
 #include "exceptions/Exceptions.h"
 #include "transports/ProxyTransport.h"
 #include "transports/ServerTransport.h"
-#include "transports/messages/HttpMessage.h"
 #include "protocols/rest/RESTSerializer.h"
 
 using namespace eprosima::rpcdds;
@@ -64,54 +63,12 @@ int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
 
 void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
 {
-    printf("BIEN\n");
-    /*eprosima::rpcdds::transport::connection* conn = (eprosima::rpcdds::transport::connection*) (connection);
-    boost::system::error_code ec = boost::system::error_code();
-    boost::asio::ip::tcp::socket &socket = *(conn->socket_);
-    //boost::asio::socket_base::non_blocking_io make_non_blocking(true);
-    //socket.io_control(make_non_blocking);
-
-	std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
-
-    // TODO : El tama�o esta fijo est�ticamente. Habr� que investigarlo.
-    char* buffer_ = (char*)malloc(8192);
-    memset(buffer_, 0, 8192);
-
-    // TODO : Comprobar return.
-    size_t bytes_read = 0;
-    size_t total = 0;
-    while(true) {
-    	bytes_read = boost::asio::read(socket, boost::asio::buffer(buffer_ + total, 1), ec);
-    	total += bytes_read;
-
-        if(total >= 4) {
-        	// /r/n/r/n -> end of HTTP header
-        	if(buffer_[total-4] == '\r' &&
-        		buffer_[total-3] == '\n' &&
-        		buffer_[total-2] == '\r' &&
-        		buffer_[total-1] == '\n') {
-        		break;
-        	}
-        }
-		if(ec == boost::asio::error::eof || bytes_read == 0){
-			break;
-		}else if(ec){
-			throw boost::system::system_error(ec);
-		}
-    }
-
-    // If content-length -> read content-length
-    int contentLength = deserializeContentLength(buffer_);
-    if(contentLength > 0) {
-    	bytes_read = boost::asio::read(socket, boost::asio::buffer(buffer_ + total, contentLength), ec);
-    	total += bytes_read;
-    }
-
     // TODO : Call the protocol
     eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
-    char* responseBuffer = NULL;
+    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
 
-    responseBuffer = restProtocol.proccessRequest(buffer_);
+    restProtocol.processRequest(*httpMessage);
+    /*responseBuffer = restProtocol.proccessRequest(buffer_);
     size_t bytes_sent = boost::asio::write(socket, boost::asio::buffer(responseBuffer, strlen(responseBuffer)+1), boost::asio::transfer_all(), ec);
     if(bytes_sent == 0) {
         cout << "Error sending response." << endl;
@@ -128,8 +85,12 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
 $definitions; separator="\n"$
 
 // Server
-char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
-    // Not found error serialization
+char* $ctx.filename$Protocol::processRequest(HttpMessage &httpMessage)
+{
+    RESTSerializer restSerializer;
+    
+    restSerializer.deserializeUri(httpMessage.getUri());
+    /*// Not found error serialization
     char* http404Response = (char*)malloc(1024);
     memset(http404Response, 0, 1024);
     FastBuffer fastBuffer404(http404Response, 1024);
@@ -140,7 +101,7 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     string code = "404";
     string text = "Not found";
     HTTPResponseCode httpResponseCode(code, text);
-    http404Serializer->serialize(httpResponseCode);    
+    http404Serializer->serialize(httpResponseCode);
     //
 
     // HTTP Request deserialization
@@ -163,13 +124,16 @@ char* $ctx.filename$Protocol::proccessRequest(char* httpRequest) {
     path = httpUri.getResourcePath();
     httpSerializer->deserialize(httpParams);
     httpSerializer->reset();
-    //
+    // */
     
-    $ctx.deserializeCode$
     
-    return http404Response;
+    
+    return NULL;
+    //return http404Response;
 }
 >>
+
+//$ctx.deserializeCode$
 
 module(ctx, module, definition_list) ::= <<
 $definition_list$
@@ -234,7 +198,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 
      HttpMessage httpMessage;
      
-     httpMessage.setMethod("$operation.method$");
+     httpMessage.setMethod(HttpMessage::HTTP_METHOD_$operation.method$);
      //TODO Chequear host en el transport.
      httpMessage.setHost("$ctx.resourceHost$");
      std::string uri($if(operation.parent.pathHasBrackets)$expandPath_$operation.name$("$operation.parent.resourceUri$", $first(operation.parameters).name$)$else$"$operation.parent.resourceUri$"$endif$); 

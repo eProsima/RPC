@@ -32,7 +32,7 @@ bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
     if(httpMessage != NULL)
     {
         HttpTransport::resetWriteBuffer();
-        if(HttpTransport::write(httpMessage->getMethod()) &&
+        if(HttpTransport::write(httpMessage->getMethodStr()) &&
                     HttpTransport::write(" ") &&
                     HttpTransport::write(httpMessage->getUri()) &&
                     HttpTransport::write(" HTTP/1.1\r\nHost: ") &&
