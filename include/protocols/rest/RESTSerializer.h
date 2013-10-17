@@ -123,7 +123,7 @@ namespace eprosima
 
                         RESTSerializer& endSerializeTemplateParameters(std::string &uri);
 
-                        RESTSerializer& deserializeUri(const std::string &uri);
+                        RESTSerializer& deserializeUri(const std::string &uri, const std::string baseUri);
                 };
 
             } //namespace rest

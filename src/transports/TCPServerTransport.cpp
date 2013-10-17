@@ -172,6 +172,9 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
     {
         // TODO Print exception ec.
     }
+
+    // TODO Quitar dependiendo keep-alive.
+    connection->socket_->close();
 }
 
 void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *connection)

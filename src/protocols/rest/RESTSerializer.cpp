@@ -361,12 +361,20 @@ RESTSerializer& RESTSerializer::endSerializeTemplateParameters(std::string &uri)
     return *this;
 }
 
-RESTSerializer&  RESTSerializer::deserializeUri(const std::string &uri)
+RESTSerializer&  RESTSerializer::deserializeUri(const std::string &uri, const std::string baseUri)
 {
     size_t fpos = 0, lpos = 0;
 
+    if(uri.compare(0, baseUri.size(), baseUri) != 0)
+    {
+        // TODO Exception
+        printf("ERROR deserializando\n");
+    }
+
+    fpos = baseUri.size();
+
     // Jump first / if exists.
-    if(uri.size() > 0 &&
+    if(uri.size() > fpos &&
             uri.at(0) == '/')
         fpos = 1;
 
