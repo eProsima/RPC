@@ -114,7 +114,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                 if(retCode == 0)
                 {
                     httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
-                    connection->refillReadBuffer();
+                    connection->increaseReadBufferCurrentPointer(httpMessage.getBodyContentLength());
                 }
             }
             else if(httpMessage.getBodyContentLength() > 0)
@@ -127,6 +127,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
             if(retCode == 0)
             {
                 getCallback()(getLinkedProtocol(), &httpMessage, 0, connection);
+                connection->refillReadBuffer();
             }
         }
     }
