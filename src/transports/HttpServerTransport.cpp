@@ -38,6 +38,54 @@ void HttpServerTransport::stop()
 
 void HttpServerTransport::sendReply(void *data, size_t dataLength, Endpoint *connection)
 {
+    const HttpMessage *httpMessage = reinterpret_cast<const HttpMessage*>(data);
+
+    if(httpMessage != NULL)
+    {
+        HttpTransport::resetWriteBuffer();
+        if(HttpTransport::write(httpMessage->getMethodStr()) &&
+                    HttpTransport::write(" ") &&
+                    HttpTransport::write(httpMessage->getUri()) &&
+                    HttpTransport::write(" HTTP/1.1\r\nHost: ") &&
+                    HttpTransport::write(httpMessage->getHost()) &&
+                    HttpTransport::write("\r\nConnection: close\r\n"))
+        {
+            if(!httpMessage->getBodyData().empty())
+            {
+                if(HttpTransport::write("Content-Length: ") &&
+                        HttpTransport::write(httpMessage->getBodyData().size()) &&
+                        HttpTransport::write("\r\nContent-Type: ") &&
+                        HttpTransport::write(httpMessage->getBodyContentType()) &&
+                        HttpTransport::write("\r\n\r\n") &&
+                        HttpTransport::write(httpMessage->getBodyData()))
+                {
+                    return m_tcptransport.send(getWriteBuffer(), getWriteBufferUsage());
+                }
+                else
+                {
+                    // TODO error.
+                }
+            }
+            else
+            {
+                if(HttpTransport::write("\r\n"))
+                {
+                    return m_tcptransport.send(getWriteBuffer(), getWriteBufferUsage());
+                }
+            }
+
+        }
+        else
+        {
+            // TODO print error
+        }
+    }
+    else
+    {
+        // TODO Error
+    }
+
+    return false;
 }
 
 int HttpServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint)

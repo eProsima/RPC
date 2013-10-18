@@ -69,7 +69,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
 
     HttpMessage response = restProtocol.processRequest(*httpMessage);
     
-    dynamic_cast<ServerTransport&>(protocol.getTransport()).sendReply(&response, 0, endpoint);
+    dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
 }
 
 $definitions; separator="\n"$
