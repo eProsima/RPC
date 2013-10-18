@@ -48,7 +48,9 @@ TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress, const std
 TCPProxyTransport::~TCPProxyTransport()
 {
     if(socket_->is_open())
+    {
         socket_->close();
+    }
 }
 
 bool TCPProxyTransport::connect()

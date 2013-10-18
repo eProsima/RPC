@@ -122,12 +122,16 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                 }
 
                 // Retcode will never be -2 from receive because we said to read 0 bytes.
-                if(retCode == 0)
+                if(retCode == 0 || retCode == -2)
                 {
                     connection->increaseReadBufferFillUse(dataToRead);
                 }
 
             }
+
+            // If connection close, try read headers.
+            if(retCode == -2)
+                retCode = readHeaders(connection, httpMessage);
 
             // If process headers was successful.
             if(retCode == 0)
@@ -142,10 +146,11 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                                 (retCode = connection->resizeReadBuffer(httpMessage.getBodyContentLength() - connection->getReadBufferLeaveSpace())) == 0)
                         {
                             // TODO Timeout
+                            size_t dataToRead = 0;
                             do
                             {
                                 // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
-                                size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
+                                dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
 
                                 retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
                                         dataToRead, dataToRead, connection);
@@ -155,7 +160,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                                     connection->increaseReadBufferFillUse(dataToRead);
                                 }
                             }
-                            while(retCode == -2);
+                            while(dataToRead < (httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace()));
                         }
                     }
 

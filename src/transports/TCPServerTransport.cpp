@@ -207,8 +207,7 @@ void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *conn
 
 // 0 OK
 // -1 ERROR
-// -2 Readed but not all
-// -3 Connection close
+// -2 Connection close
 // >0 bytes needed in the buffer to read.
 int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint)
 {
@@ -223,49 +222,34 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
         {
             std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
-            if(_dataToRead == 0)
-            {
-                while(!ec && (_dataToRead = connection->socket_->available(ec)) == 0);
+            // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
 
-                if(ec == boost::asio::error::eof)
-                { 
-                    std::cout << "Connection closed by proxy" << std::endl;
-                    return -3;
-                }
+            // Check the space in the buffer.
+            if(bufferLength < _dataToRead)
+            {
+                dataToRead = 0;
+                return _dataToRead - bufferLength;
             }
 
-            std::cout << "Datos para leer = " << _dataToRead << std::endl;
-
-            // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
+            // TODO check ec.
+            size_t bytes_read = 0;
+            
 
             if(_dataToRead > 0)
             {
-                // Check the space in the buffer.
-                if(bufferLength < _dataToRead)
-                {
-                    dataToRead = 0;
-                    return _dataToRead - bufferLength;
-                }
-
-                // TODO check ec.
-                size_t bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, _dataToRead), ec);
-
-                if(dataToRead > 0 && _dataToRead != bytes_read)
-                {
-                    dataToRead = bytes_read;
-                    return -2;
-                }
-                else
-                {
-                    dataToRead = bytes_read;
-                    printf("%s\n", buffer);
-                    return 0;
-                }
+                bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, _dataToRead), ec);
             }
             else
             {
-                // TODO Print exception ec.
+                bytes_read = connection->socket_->read_some(boost::asio::buffer(buffer, bufferLength), ec);
             }
+
+            dataToRead = bytes_read;
+
+            if(ec != boost::asio::error::eof)
+                return 0;
+            else
+                return -2;
         }
         else
         {
