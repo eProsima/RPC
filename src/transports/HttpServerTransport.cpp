@@ -121,7 +121,6 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     retCode = connection->resizeReadBuffer(retCode);
                 }
 
-                // Retcode will never be -2 from receive because we said to read 0 bytes.
                 if(retCode == 0 || retCode == -2)
                 {
                     connection->increaseReadBufferFillUse(dataToRead);
@@ -160,7 +159,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                                     connection->increaseReadBufferFillUse(dataToRead);
                                 }
                             }
-                            while(dataToRead < (httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace()));
+                            while((retCode == 0) && (dataToRead < (httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace())));
                         }
                     }
 

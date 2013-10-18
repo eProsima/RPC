@@ -222,8 +222,6 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
         {
             std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
-            // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-
             // Check the space in the buffer.
             if(bufferLength < _dataToRead)
             {
@@ -237,6 +235,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
 
             if(_dataToRead > 0)
             {
+                // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
                 bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, _dataToRead), ec);
             }
             else
