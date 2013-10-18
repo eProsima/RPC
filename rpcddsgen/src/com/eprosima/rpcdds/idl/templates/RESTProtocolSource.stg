@@ -146,6 +146,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      RESTSerializer restSerializer;
      eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>( getTransport() );
      $varDecl(variable=operation.rettypeparam)$
+     $varComplexInitialize(variable=operation.rettypeparam)$
      // XXX TODO if NULL -> error
      
      // Resource Base URI = $ctx.resourceBaseUri$
@@ -178,9 +179,6 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      size_t dump;
      proxyTransport.receive(&httpResponse, 0, dump);
      
-     $paramRetType(operation.rettype)$ retType;
-     $paramRetType(operation.rettype)$_initialize(&retType);
-     
      int discriminator = 0;
 
      if(httpResponse.getBodyContentType().find("xml") != string::npos)
@@ -192,14 +190,14 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         discriminator = 2;
      }
     
-     retType._d = discriminator;
+     $operation.rettypeparam.name$._d = discriminator;
      
      switch(discriminator)
      {
      $operation.rettype.members : {member | case $first(member.labels)$:
-     retType._u.$member.name$.$first(member.typecode.members).name$ = httpResponse.getResponseCode();
+     $operation.rettypeparam.name$._u.$member.name$.$first(member.typecode.members).name$ = httpResponse.getResponseCode();
      $if(rest(member.typecode.members))$
-     retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(httpResponse.getBodyData().c_str());
+     $operation.rettypeparam.name$._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(httpResponse.getBodyData().c_str());
      $endif$
      break;
      }$

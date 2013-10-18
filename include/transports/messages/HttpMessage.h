@@ -89,8 +89,8 @@ namespace eprosima
 
                 private:
 
-                    Methods m_method;
                     std::string m_methods[4];
+                    Methods m_method;
                     // TODO Pensar si quitar el Host y que lo ponga el transporte con la configuración del usuario.
                     std::string m_host;
                     std::string m_uri;

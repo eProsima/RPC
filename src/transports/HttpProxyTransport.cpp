@@ -377,6 +377,7 @@ int HttpProxyTransport::readHeaderLines(HttpMessage &httpMessage)
                 }
 
                 increaseReadBufferCurrentPointer(ptr + 2 - getReadBufferCurrentPointer());
+                return 0;
             }
         }
         else
@@ -402,8 +403,12 @@ int HttpProxyTransport::readResponseStatus(HttpMessage &httpMessage)
             if(length > 0)
             {
                 httpMessage.setResponseStatus(std::string(getReadBufferCurrentPointer(), length));
-                increaseReadBufferCurrentPointer(length + 2);
+                httpMessage.setContainsResponseStatus(true);
+                increaseReadBufferCurrentPointer(length);
             }
+
+            increaseReadBufferCurrentPointer(2);
+            return 0;
         }
         else
         {

@@ -322,6 +322,7 @@ int HttpServerTransport::readHeaderLines(TCPEndpoint *connection, HttpMessage &h
                 }
 
                 connection->increaseReadBufferCurrentPointer(ptr + 2 - connection->getReadBufferCurrentPointer());
+                return 0;
             }
         }
         else
