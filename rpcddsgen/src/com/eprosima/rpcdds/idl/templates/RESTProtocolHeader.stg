@@ -83,10 +83,10 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-char* deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer* httpSerializer);
+char* deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
 
 $if(operation.parent.pathHasBrackets)$
-void deserializePath_$operation.name$(const std::string &actualPath, $first(operation.parameters).name$& $first(operation.parameters).name$);
+void deserializePath_$operation.name$(RESTSerializer &restSerializer, $first(operation.parameters).name$& $first(operation.parameters).name$);
 $endif$
 
 $if(operation.parent.pathHasBrackets)$

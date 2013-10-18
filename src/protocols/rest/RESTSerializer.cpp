@@ -375,12 +375,12 @@ RESTSerializer&  RESTSerializer::deserializeUri(const std::string &uri, const st
 
     // Jump first / if exists.
     if(uri.size() > fpos &&
-            uri.at(0) == '/')
-        fpos = 1;
+            uri.at(fpos) == '/')
+        ++fpos;
 
     while((fpos < uri.size()) && ((lpos = uri.find_first_of('/', fpos)) != std::string::npos))
     {
-        m_tags.push_back(uri.substr(fpos, lpos - fpos));
+        m_tags.push_back(restoreBadCharacters(uri.substr(fpos, lpos - fpos)));
         fpos = lpos + 1;
     }
 
@@ -391,16 +391,53 @@ RESTSerializer&  RESTSerializer::deserializeUri(const std::string &uri, const st
         if((lpos = uri.find_first_of('?', fpos)) == std::string::npos)
         {
             // Get last tag.
-            m_tags.push_back(uri.substr(fpos));
+            m_tags.push_back(restoreBadCharacters(uri.substr(fpos)));
         }
         else
         {
+            // If there is a last tag, get it.
+            if(fpos != lpos)
+            {
+                m_tags.push_back(restoreBadCharacters(uri.substr(fpos, lpos - fpos)));
+                fpos = lpos + 1;
+            }
+
             // Get query parameters.
+            while((fpos < uri.size()) && ((lpos = uri.find_first_of('&', fpos)) != std::string::npos))
+            {
+                // Find '='
+                size_t equal = uri.find_first_of('=', fpos);
+
+                if(equal != std::string::npos && equal < lpos)
+                {
+                    m_queryParameters.insert(std::pair<std::string, std::string>(uri.substr(fpos, equal - fpos), restoreBadCharacters(uri.substr(equal + 1, lpos - equal - 1))));
+                }
+                else
+                {
+                    // TODO Exception
+                    printf("Error deserializando\n");
+                }
+
+                fpos = lpos + 1;
+            }
+            
+            // There is a last query parameter.
+            if(fpos < uri.size())
+            {
+                size_t equal = uri.find_first_of('=', fpos);
+
+                if(equal != std::string::npos)
+                {
+                    m_queryParameters.insert(std::pair<std::string, std::string>(uri.substr(fpos, equal - fpos), restoreBadCharacters(uri.substr(equal + 1))));
+                }
+                else
+                {
+                    // TODO Exception
+                    printf("Error deserializando\n");
+                }
+            }
         }
     }
-
-    for(std::vector<std::string>::iterator it = m_tags.begin(); it != m_tags.end(); ++it)
-        printf("TAG = %s\n", (*it).c_str());
 }
 
 std::string RESTSerializer::substituteBadCharacters(const std::string &str)
@@ -421,4 +458,31 @@ std::string RESTSerializer::substituteBadCharacters(const std::string &str)
     ret += str.substr(fpos);
 
     return ret;
+}
+
+std::string RESTSerializer::restoreBadCharacters(const std::string &str)
+{
+    std::string ret = "";
+    size_t fpos = 0, lpos = 0;
+
+    if(str.size() > 2)
+    {
+        while((lpos = str.find("%20", fpos)) != std::string::npos)
+        {
+            ret += str.substr(fpos, lpos - fpos) + " ";
+            fpos = lpos + 3;
+        }
+
+        // Not found any space.
+        if(fpos == 0 && lpos == std::string::npos)
+        {
+            return str;
+        }
+
+        ret += str.substr(fpos);
+
+        return ret;
+    }
+
+    return str;
 }

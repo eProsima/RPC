@@ -19,12 +19,14 @@ public class PathTree {
 	
 	private ArrayList<PathTreeMethod> methods;
 	private String interfaceName;
+	
+	private int level = 0;
 		
 	public PathTree() {
 		this(null, "");
 	}
 	
-	public PathTree(PathTree parent, String tag) {
+	private PathTree(PathTree parent, String tag) {
 		this.parent = parent;
 		this.tag = tag;
 		children = new ArrayList<PathTree>();
@@ -39,6 +41,9 @@ public class PathTree {
 		numericVariable = false;
 		booleanVariable = false;
 		charVariable = false;
+		
+		if(parent != null)
+		    level = parent.level + 1;
 	}
 	
 	public PathTree getParent() { return parent; }
@@ -207,73 +212,47 @@ public class PathTree {
 	}
 	
 	public String getIterationCode() {		
-		
 		String code = "// BEGIN ITERATION " + tag + "\n";
 		if(tag.length() == 0) {
-			code += "string tag;\n";
-			code += "string rest;\n";
-			code += "string aux;\n";
-			code += "size_t pos;\n";
-			code += "char* p;\n";
+			code += "string tag;\n"; // TODO Quitar
+			code += "char *p = NULL;\n";
 		}
-				
-		code += "pos = path.find(\"/\");\n" +
-		"tag = path.substr(0, pos);\n" +
-		"rest = \"\";\n" +
-		"if(pos != string::npos) {\n" +	
-		"\trest = path.substr(pos+1, path.size());\n" +
-		"}\n";
 		
-		code += "if(tag.size() == 0) {\n";
+		code += "if(!restSerializer.existsTagLevel(" + level + ")) {\n";
 		if(hasOperations()) {
 			for(PathTreeMethod method: methods) {
 				code += method.getIterationCode();
 			}
 		} else {
-			code += "return http404Response; // ERROR NO OPERATIONS\n";
+			code += "return NULL; // TODO Send 404 ERROR NO OPERATIONS\n";
 		}
 		code += "}\n";
-				
+		
 		for(PathTree child: children) {
 			if(!child.isVariableNode()) {
-				code += "aux = path;\n";
-				code += "path = rest;\n";
-				code += "if(tag.compare(\""+ child.getTag() +"\") == 0) {\n";
+				code += "if(restSerializer.getTag(" + level + ").compare(\""+ child.getTag() +"\") == 0) {\n";
 				code += child.getIterationCode();
 				code += "}\n";
-				code += "path = aux;\n";
 			}
 		}
 		
 		for(PathTree child: children) {
 			if(child.isVariableNode()) {
 				if(child.isNumeric()) {
-					code += "strtol(strdup(tag.c_str()), &p, 10);\n";
+					code += "strtol(strdup(restSerializer.getTag(" + level + ").c_str()), &p, 10);\n";
 					code += "if(!*p) {\n";
-					code += "aux = path;\n";
-					code += "path = rest;\n";
 					code += child.getIterationCode();
-					code += "path = aux;\n";
 					code += "}\n";
 				} else if(child.isBoolean()) {
-					code += "if(tag.compare(\"true\") == 0 || tag.compare(\"false\") == 0) {\n";
-					code += "aux = path;\n";
-					code += "path = rest;\n";
+					code += "if(restSerializer.getTag(" + level + ").compare(\"true\") == 0 || restSerializer.getTag(" + level + ").compare(\"false\") == 0) {\n";
 					code += child.getIterationCode();
-					code += "path = aux;\n";
 					code += "}\n";
 				} else if(child.isChar()) {
-					code += "if(tag.size() == 1) {\n";
-					code += "aux = path;\n";
-					code += "path = rest;\n";
+					code += "if(restSerializer.getTag(" + level + ").size() == 1) {\n";
 					code += child.getIterationCode();
-					code += "path = aux;\n";
 					code += "}\n";
 				} else {
-					code += "aux = path;\n";
-					code += "path = rest;\n";
 					code += child.getIterationCode();
-					code += "path = aux;\n";
 				}
 			}
 		}
@@ -289,5 +268,4 @@ public class PathTree {
 	public String getInterfaceName() {
 		return interfaceName;
 	}
-
 }

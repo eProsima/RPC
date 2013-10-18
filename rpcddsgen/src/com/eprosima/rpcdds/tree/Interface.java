@@ -239,6 +239,40 @@ public class Interface extends ExportContainer implements Definition, Notebook
         return uri;
     }
     
+    public ArrayList<Integer> getTemplateParameterPositions()
+    {
+        ArrayList<Integer> ret = new ArrayList<Integer>();
+        int fpos = -1, numTag = 0;
+        
+        String uri = getPath();
+        
+        if(uri.length() > 2)
+        {
+            if(uri.charAt(0) == '/')
+                ++fpos;
+            
+            int lpos = fpos;
+            
+            do
+            {
+                if(uri.length() > lpos + 1)
+                {
+                    if(uri.charAt(lpos + 1) == '{')
+                        ret.add(numTag);
+                    
+                    fpos = lpos + 1;
+                }
+                else
+                    break;
+                
+                ++numTag;
+            }
+            while((lpos = uri.indexOf('/', fpos)) != -1);
+        }
+        
+        return ret;
+    }
+    
     /////// End of RESTful block //////
 
     private String m_name = null;

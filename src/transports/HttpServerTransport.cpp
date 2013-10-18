@@ -109,6 +109,12 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                         while(retCode == -2);
                     }
                 }
+
+                // Get Body
+                if(retCode == 0)
+                {
+                    httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
+                }
             }
             else if(httpMessage.getBodyContentLength() > 0)
             {

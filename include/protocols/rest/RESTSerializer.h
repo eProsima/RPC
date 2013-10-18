@@ -4,8 +4,8 @@
 #include <iostream>
 #include <stdint.h>
 #include <string>
-#include <array>
 #include <vector>
+#include <map>
 
 #include "protocols/rest/FastBuffer.h"
 #include "protocols/rest/HTTPEntities.h"
@@ -31,6 +31,8 @@ namespace eprosima
                         std::string m_templateParameterExpandURI;
 
                         std::vector<std::string> m_tags;
+
+                        std::map<std::string, std::string> m_queryParameters;
 
                         // Serializer data
 
@@ -65,6 +67,8 @@ namespace eprosima
                         inline void makeAlign(size_t align){m_currentPosition_ += align;}
 
                         std::string substituteBadCharacters(const std::string &str);
+
+                        std::string restoreBadCharacters(const std::string &str);
 
                     public:
 
@@ -124,6 +128,24 @@ namespace eprosima
                         RESTSerializer& endSerializeTemplateParameters(std::string &uri);
 
                         RESTSerializer& deserializeUri(const std::string &uri, const std::string baseUri);
+                        
+                        inline
+                            bool existsTagLevel(const int level) const
+                            {
+                                return level < m_tags.size();
+                            }
+
+                        inline
+                            std::string getTag(const int level)
+                            {
+                                return m_tags[level];
+                        }
+
+                        inline
+                            bool existsQueryParameter(const std::string &name) { return m_queryParameters.find(name) != m_queryParameters.end();}
+
+                        inline
+                            std::string getQueryParameter(const std::string &name) {return m_queryParameters.at(name);}
                 };
 
             } //namespace rest

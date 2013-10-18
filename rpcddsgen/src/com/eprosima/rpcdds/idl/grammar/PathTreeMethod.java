@@ -24,14 +24,14 @@ public class PathTreeMethod {
 	}
 	
 	public String getEnumHTTPMethod() {
-		String enumHTTPMethod = "HTTP_GET";
+		String enumHTTPMethod = "HttpMessage::HTTP_METHOD_GET";
 		
 		if(httpMethod.equals("POST")) {
-			enumHTTPMethod = "HTTP_POST";
+			enumHTTPMethod = "HttpMessage::HTTP_METHOD_POST";
 		} else if(httpMethod.equals("PUT")) {
-			enumHTTPMethod = "HTTP_PUT";
+			enumHTTPMethod = "HttpMessage::HTTP_METHOD_PUT";
 		} else if(httpMethod.equals("DELETE")) {
-			enumHTTPMethod = "HTTP_DELETE";
+			enumHTTPMethod = "HttpMessage::HTTP_METHOD_DELETE";
 		}
 		
 		return enumHTTPMethod;
@@ -46,21 +46,21 @@ public class PathTreeMethod {
 		
 		String code = "";
 		
-		code += "if(enumHttpMethod == "+getEnumHTTPMethod()+") {\n";
+		code += "if(httpMessage.getMethod() == "+getEnumHTTPMethod()+") {\n";
 
 		if (queryParameters.size() > 0) {
 			code += "if(";
 			for(String parameter: queryParameters) {
-				code += "httpParams.containsParam(\"" + parameter + "\")&&";
+				code += "restSerializer.existsQueryParameter(\"" + parameter + "\")&&";
 			}		
 			code = code.substring(0, code.length() - 2);
 			code += ") {\n";
 			
-			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(httpSerializer); // MATCHING\n";
+			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(restSerializer, httpMessage); // MATCHING\n";
 			
 			code += "}\n";
 		} else {
-			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(httpSerializer); // MATCHING\n";
+			code += "return deserialize_"+parentNode.getInterfaceName()+"_"+name+"(restSerializer, httpMessage); // MATCHING\n";
 		}
 		
 		code += "}\n";

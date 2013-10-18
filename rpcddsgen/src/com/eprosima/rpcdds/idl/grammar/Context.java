@@ -502,7 +502,7 @@ public class Context
     	return path.substring(posInit, posEnd);    	
     }
     
-    public String getDeserializeCode() {    	
+    public String getDeserializeCode() {  
     	PathTree pathTree = new PathTree();
     	for(Interface iface: getInterfaces()) {
     		String path = iface.getPath();
