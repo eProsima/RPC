@@ -235,6 +235,8 @@ $endif$
 
 HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, HttpMessage &httpMessage)
 {
+    std::stringstream stream;
+    
     $if(operation.parent.pathHasBrackets)$
     $first(operation.parameters).name$ $first(operation.parameters).name$;
     deserializePath_$operation.name$(restSerializer, $first(operation.parameters).name$);

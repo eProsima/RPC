@@ -144,46 +144,45 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
         size_t numData = 0;
         while(!ec && (numData = connection->socket_->available(ec)) == 0);
 
-        if(ec == boost::asio::error::eof)
+        if(ec != boost::asio::error::eof)
         { 
-            std::cout << "Connection closed by proxy" << std::endl;
-            return;
-        }
+            std::cout << "Datos para leer = " << numData << std::endl;
 
-        std::cout << "Datos para leer = " << numData << std::endl;
+            // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
 
-        // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-
-        if(numData > 0)
-        {
-            char *buffer = (char*)calloc(numData, 1);
-
-            if(buffer != NULL)
+            if(numData > 0)
             {
-                size_t bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, numData), ec);
+                char *buffer = (char*)calloc(numData, 1);
 
-                if(numData == bytes_read)
+                if(buffer != NULL)
                 {
-                    getCallback()(getLinkedProtocol(), buffer, numData, connection);
+                    size_t bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, numData), ec);
+
+                    if(numData == bytes_read)
+                    {
+                        getCallback()(getLinkedProtocol(), buffer, numData, connection);
+                    }
+                    else
+                    {
+                        // TODO check ec == boost::asio::error::eof.
+                        // TODO print error.
+                    }
+
+                    free(buffer);
                 }
                 else
                 {
-                    // TODO check ec == boost::asio::error::eof.
-                    // TODO print error.
+                    // TODO print exception NULL.
                 }
-
-                free(buffer);
             }
             else
             {
-                // TODO print exception NULL.
+                // TODO Print exception ec.
             }
         }
-        else
-        {
-            // TODO Print exception ec.
-        }
-    } while(connection->socket_->is_open();
+    } while(ec != boost::asio::error::eof);
+
+    std::cout << "Connection closed by proxy" << std::endl;
 }
 
 void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *connection)
