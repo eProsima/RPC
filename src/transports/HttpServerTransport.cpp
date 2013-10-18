@@ -38,7 +38,7 @@ void HttpServerTransport::stop()
 
 void HttpServerTransport::sendReply(void *data, size_t dataLength, Endpoint *connection)
 {
-    const HttpMessage *httpMessage = reinterpret_cast<const HttpMessage*>(data);
+    /*const HttpMessage *httpMessage = reinterpret_cast<const HttpMessage*>(data);
 
     if(httpMessage != NULL)
     {
@@ -83,9 +83,7 @@ void HttpServerTransport::sendReply(void *data, size_t dataLength, Endpoint *con
     else
     {
         // TODO Error
-    }
-
-    return false;
+    }*/
 }
 
 int HttpServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint)
