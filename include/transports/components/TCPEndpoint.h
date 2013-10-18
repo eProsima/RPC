@@ -64,6 +64,8 @@ namespace eprosima
 
                     int resizeReadBuffer(size_t minSize);
 
+                    void refillReadBuffer();
+
                     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 
                     boost::asio::io_service io_service_;

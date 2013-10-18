@@ -138,7 +138,9 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
 
     std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
-    size_t numData = connection->socket_->available(ec);
+    // TODO TIME OUT
+    size_t numData = 0;
+    while((numData = connection->socket_->available(ec)) == 0);
     std::cout << "Datos para leer = " << numData << std::endl;
 
     // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.

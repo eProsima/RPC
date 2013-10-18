@@ -114,6 +114,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                 if(retCode == 0)
                 {
                     httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
+                    connection->refillReadBuffer();
                 }
             }
             else if(httpMessage.getBodyContentLength() > 0)

@@ -63,6 +63,8 @@ int TCPEndpoint::resizeReadBuffer(size_t minSize)
     return -1;
 }
 
+void refillReadBuffer();
+
 boost::shared_ptr<boost::asio::ip::tcp::socket>& TCPEndpoint::socket() {
 	return socket_;
 }
