@@ -1,4 +1,5 @@
 #include "transports/components/TCPEndpoint.h"
+#include "eProsima_cpp/eProsimaMacros.h"
 
 #include <iostream>
 #include <vector>
@@ -9,7 +10,7 @@ using namespace ::transport;
 
 const size_t BUFFER_INITIAL_LENGTH = 1024;
 
-TCPEndpoint::TCPEndpoint(void) : m_readBuffer(NULL), m_readBufferLength(BUFFER_INITIAL_LENGTH),
+TCPEndpoint::TCPEndpoint(void) : m_readBuffer(NULL), m_readBufferLength(0),
     m_readBufferUse(0), m_readBufferCurrentPointer(0), m_writeBuffer(NULL), m_writeBufferLength(0),
     m_writeBufferUse(0)
 {
@@ -27,6 +28,8 @@ bool TCPEndpoint::initializeBuffers()
 
         if(m_writeBuffer != NULL)
         {
+            m_readBufferLength = BUFFER_INITIAL_LENGTH;
+            m_writeBufferLength = BUFFER_INITIAL_LENGTH;
             return true;
         }
 
@@ -126,7 +129,7 @@ bool TCPEndpoint::write(int32_t num)
 {
     char aux[23];
 
-    snprintf(aux, 23, "%d", num);
+    SNPRINTF(aux, 23, "%d", num);
 
     if((strlen(aux) + m_writeBufferUse <= m_writeBufferLength) || resizeWriteBuffer(strlen(aux)))
     {

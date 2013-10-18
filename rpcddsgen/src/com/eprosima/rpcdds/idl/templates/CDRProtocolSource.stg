@@ -191,7 +191,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     // TODO Cambiar
     char response[8192];
     
-    size_t bytesReaded = proxyTransport.receive(response, 8192);
+    size_t bytesReaded = proxyTransport.receive(response, 8192, 0);
     
     if(bytesReaded > 0)
     {

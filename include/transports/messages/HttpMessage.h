@@ -30,20 +30,23 @@ namespace eprosima
                         HTTP_METHOD_INVALID
                     } Methods;
 
-                    HttpMessage() : m_method(HTTP_METHOD_INVALID), m_body_content_length(0),
-                    m_responseCode(0), m_versionCompatible(false){}
+                    HttpMessage() : m_methods({ "GET", "PUT", "POST", "DELETE" }),
+                        m_method(HTTP_METHOD_INVALID), m_body_content_length(0),
+                        m_responseCode(0), m_versionCompatible(false), m_containsResponseStatus(false){}
 
-                    HttpMessage(const HttpMessage &httpMessage) : m_method(httpMessage.m_method),
-                    m_host(httpMessage.m_host), m_uri(httpMessage.m_uri),
-                    m_body_data(httpMessage.m_body_data), m_body_content_length(httpMessage.m_body_content_length),
-                    m_body_content_type(httpMessage.m_body_content_type), m_responseCode(httpMessage.m_responseCode),
-                    m_responseStatus(httpMessage.m_responseStatus), m_versionCompatible(httpMessage.m_versionCompatible){}
+                    HttpMessage(const HttpMessage &httpMessage) : m_methods({ "GET", "PUT", "POST", "DELETE" }),
+                        m_method(httpMessage.m_method), m_host(httpMessage.m_host), m_uri(httpMessage.m_uri),
+                        m_body_data(httpMessage.m_body_data), m_body_content_length(httpMessage.m_body_content_length),
+                        m_body_content_type(httpMessage.m_body_content_type), m_responseCode(httpMessage.m_responseCode),
+                        m_responseStatus(httpMessage.m_responseStatus), m_versionCompatible(httpMessage.m_versionCompatible),
+                        m_containsResponseStatus(httpMessage.m_containsResponseStatus){}
 
-                    HttpMessage(HttpMessage &&httpMessage) : m_method(httpMessage.m_method),
-                    m_host(std::move(httpMessage.m_host)), m_uri(std::move(httpMessage.m_uri)),
-                    m_body_data(std::move(httpMessage.m_body_data)), m_body_content_length(httpMessage.m_body_content_length),
-                    m_body_content_type(std::move(httpMessage.m_body_content_type)), m_responseCode(httpMessage.m_responseCode),
-                    m_responseStatus(std::move(httpMessage.m_responseStatus)), m_versionCompatible(httpMessage.m_versionCompatible){}
+                    HttpMessage(HttpMessage &&httpMessage) : m_methods({ "GET", "PUT", "POST", "DELETE" }),
+                        m_method(httpMessage.m_method), m_host(std::move(httpMessage.m_host)), m_uri(std::move(httpMessage.m_uri)),
+                        m_body_data(std::move(httpMessage.m_body_data)), m_body_content_length(httpMessage.m_body_content_length),
+                        m_body_content_type(std::move(httpMessage.m_body_content_type)), m_responseCode(httpMessage.m_responseCode),
+                        m_responseStatus(std::move(httpMessage.m_responseStatus)), m_versionCompatible(httpMessage.m_versionCompatible),
+                        m_containsResponseStatus(httpMessage.m_containsResponseStatus){}
 
                     void setMethod(const Methods method){m_method = method;}
                     Methods getMethod(){return m_method;}
@@ -81,15 +84,13 @@ namespace eprosima
                     void setVersionCompatible(bool b){m_versionCompatible = b;}
                     bool getVersionCompatible() const{return m_versionCompatible;}
 
+                    void setContainsResponseStatus(bool b){m_containsResponseStatus = b;}
+                    bool getContainsResponseStatus(){return m_containsResponseStatus;}
+
                 private:
 
                     Methods m_method;
-                    std::string m_methods[4] = {
-                        "GET",
-                        "PUT",
-                        "POST",
-                        "DELETE"
-                    };
+                    std::string m_methods[4];
                     // TODO Pensar si quitar el Host y que lo ponga el transporte con la configuración del usuario.
                     std::string m_host;
                     std::string m_uri;
@@ -99,6 +100,7 @@ namespace eprosima
                     int32_t m_responseCode;
                     std::string m_responseStatus;
                     bool m_versionCompatible;
+                    bool m_containsResponseStatus;
             };
         } // namespace transport
     } // namespace rpcdds

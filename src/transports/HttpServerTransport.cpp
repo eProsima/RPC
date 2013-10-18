@@ -306,12 +306,12 @@ int HttpServerTransport::readHeaderLines(TCPEndpoint *connection, HttpMessage &h
                     httpMessage.setHost(std::string(&connection->getReadBufferCurrentPointer()[6], length - 6));
                     connection->increaseReadBufferCurrentPointer(length);
                 }
-                if((length >= 16) && (memcmp(connection->getReadBufferCurrentPointer(), "Content-Length: ", 16) == 0))
+                else if((length >= 16) && (memcmp(connection->getReadBufferCurrentPointer(), "Content-Length: ", 16) == 0))
                 {
                     httpMessage.setBodyContentLength(std::string(&connection->getReadBufferCurrentPointer()[16], length - 16));
                     connection->increaseReadBufferCurrentPointer(length);
                 }
-                if((length >= 14) && (memcmp(connection->getReadBufferCurrentPointer(), "Content-Type: ", 14) == 0))
+                else if((length >= 14) && (memcmp(connection->getReadBufferCurrentPointer(), "Content-Type: ", 14) == 0))
                 {
                     httpMessage.setBodyContentType(std::string(&connection->getReadBufferCurrentPointer()[14], length - 14));
                     connection->increaseReadBufferCurrentPointer(length);

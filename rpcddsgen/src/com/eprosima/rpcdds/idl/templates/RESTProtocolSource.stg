@@ -175,7 +175,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      proxyTransport.connect();
      proxyTransport.send(&httpMessage, 0);
      HttpMessage httpResponse;
-     proxyTransport.receive(&httpResponse, 0);
+     size_t dump;
+     proxyTransport.receive(&httpResponse, 0, dump);
      
      $paramRetType(operation.rettype)$ retType;
      $paramRetType(operation.rettype)$_initialize(&retType);

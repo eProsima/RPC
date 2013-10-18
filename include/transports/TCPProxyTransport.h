@@ -33,13 +33,15 @@ namespace eprosima
 
                     TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort);
 
+                    virtual ~TCPProxyTransport();
+
                     virtual const char* getType() const {return "RAW";}
 
                     bool connect();
 
                     bool send(const void* buffer, const size_t bufferSize);
 
-                    size_t receive(void* buffer, const size_t bufferSize);
+                    size_t receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
             };
         }// namespace transport
     }// namespace rpcdds

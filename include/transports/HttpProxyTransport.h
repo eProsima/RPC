@@ -18,6 +18,7 @@ namespace eprosima
     {
         namespace transport
         {
+            class HttpMessage;
             /*!
              * @brief This interface is the base of all classes that implement a transport
              *        that could be used by a proxy.
@@ -41,7 +42,7 @@ namespace eprosima
 
                     virtual bool connect();
                     virtual bool send(const void* buffer, const size_t bufferSize);
-                    virtual size_t receive(void *buffer, const size_t bufferSize);
+                    virtual size_t receive(void *buffer, const size_t bufferSize, size_t &dataToRead);
 
                 private:
 
@@ -53,6 +54,38 @@ namespace eprosima
                     bool write(const uint64_t uint64);
 
                     bool resizeWriteBuffer(size_t minSize);
+
+                    inline
+                        size_t getReadBufferEmptySpace() const {return m_readBufferLength - m_readBufferUse;}  
+
+                    int resizeReadBuffer(size_t minSize);
+
+                    inline
+                        void increaseReadBufferFillUse(size_t numData) {m_readBufferUse += numData;}
+
+                    inline
+                        size_t getReadBufferLeaveUsedSpace() const {return m_readBufferUse - m_readBufferCurrentPointer;}
+
+                    inline
+                        size_t getReadBufferLeaveSpace() const {return m_readBufferLength - m_readBufferCurrentPointer;}
+
+                    inline
+                        char* getReadBufferCurrentPointer() const {return &m_readBuffer[m_readBufferCurrentPointer];}
+
+                    inline
+                        void increaseReadBufferCurrentPointer(size_t move){m_readBufferCurrentPointer += move;}
+
+                    void refillReadBuffer();
+
+                    int readHeaders(HttpMessage &httpMessage);
+
+                    int readVersion(HttpMessage &httpMessage);
+
+                    int readResponseCode(HttpMessage &httpMessage);
+
+                    int readHeaderLines(HttpMessage &httpMessage);
+
+                    int readResponseStatus(HttpMessage &httpMessage);
 
                     TCPProxyTransport m_tcptransport;
 
