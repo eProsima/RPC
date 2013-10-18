@@ -30,7 +30,20 @@ namespace eprosima
                         HTTP_METHOD_INVALID
                     } Methods;
 
-                    HttpMessage() : m_method(HTTP_METHOD_INVALID), m_versionCompatible(false), m_body_content_length(0){}
+                    HttpMessage() : m_method(HTTP_METHOD_INVALID), m_body_content_length(0),
+                    m_responseCode(0), m_versionCompatible(false){}
+
+                    HttpMessage(const HttpMessage &httpMessage) : m_method(httpMessage.m_method),
+                    m_host(httpMessage.m_host), m_uri(httpMessage.m_uri),
+                    m_body_data(httpMessage.m_body_data), m_body_content_length(httpMessage.m_body_content_length),
+                    m_body_content_type(httpMessage.m_body_content_type), m_responseCode(httpMessage.m_responseCode),
+                    m_responseStatus(httpMessage.m_responseStatus), m_versionCompatible(httpMessage.m_versionCompatible){}
+
+                    HttpMessage(HttpMessage &&httpMessage) : m_method(httpMessage.m_method),
+                    m_host(std::move(httpMessage.m_host)), m_uri(std::move(httpMessage.m_uri)),
+                    m_body_data(std::move(httpMessage.m_body_data)), m_body_content_length(httpMessage.m_body_content_length),
+                    m_body_content_type(std::move(httpMessage.m_body_content_type)), m_responseCode(httpMessage.m_responseCode),
+                    m_responseStatus(std::move(httpMessage.m_responseStatus)), m_versionCompatible(httpMessage.m_versionCompatible){}
 
                     void setMethod(const Methods method){m_method = method;}
                     Methods getMethod(){return m_method;}
@@ -58,6 +71,13 @@ namespace eprosima
                     void setBodyData(std::string &&body_data){m_body_data = std::move(body_data);}
                     const std::string& getBodyData() const{return m_body_data;}
 
+                    void setResponseCode(int32_t responseCode) {m_responseCode = responseCode;}
+                    int32_t getResponseCode() const {return m_responseCode;}
+
+                    void setResponseStatus(const std::string &responseStatus){m_responseStatus = responseStatus;}
+                    void setResponseStatus(std::string &&responseStatus){m_responseStatus = std::move(responseStatus);}
+                    const std::string& getResponseStatus() const{return m_responseStatus;}
+
                     void setVersionCompatible(bool b){m_versionCompatible = b;}
                     bool getVersionCompatible() const{return m_versionCompatible;}
 
@@ -76,7 +96,8 @@ namespace eprosima
                     std::string m_body_data;
                     size_t m_body_content_length;
                     std::string m_body_content_type;
-
+                    int32_t m_responseCode;
+                    std::string m_responseStatus;
                     bool m_versionCompatible;
             };
         } // namespace transport

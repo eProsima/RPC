@@ -45,7 +45,7 @@ namespace eprosima
                         $definitions; separator="\n"$
                         
                         // Server
-                        char* processRequest(eprosima::rpcdds::transport::HttpMessage &httpMessage);
+                        eprosima::rpcdds::transport::HttpMessage processRequest(eprosima::rpcdds::transport::HttpMessage &httpMessage);
                         
                     private:
                     
@@ -83,7 +83,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-char* deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
+eprosima::rpcdds::transport::HttpMessage deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
 
 $if(operation.parent.pathHasBrackets)$
 void deserializePath_$operation.name$(RESTSerializer &restSerializer, $first(operation.parameters).name$& $first(operation.parameters).name$);

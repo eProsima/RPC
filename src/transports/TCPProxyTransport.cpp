@@ -47,14 +47,20 @@ TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress, const std
 
 bool TCPProxyTransport::connect()
 {
-	boost::system::error_code error = boost::asio::error::host_not_found;
-	while (error && endpoint_iterator_ != end_) {
-		socket_->close();
-		socket_->connect(*endpoint_iterator_++, error);
-	}
-	if (error) {
-		throw eprosima::rpcdds::exception::ServerNotFoundException("ERROR<TCPProxyTransport::connect>: "+error.message());
-	}
+    if(!socket_->is_open())
+    {
+        boost::system::error_code error = boost::asio::error::host_not_found;
+
+        if(endpoint_iterator_ != end_)
+        {
+            socket_->connect(*endpoint_iterator_, error);
+        }
+
+        if (error)
+        {
+            throw eprosima::rpcdds::exception::ServerNotFoundException("ERROR<TCPProxyTransport::connect>: "+error.message());
+        }
+    }
 	return true;
 }
 

@@ -67,7 +67,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
     eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
     HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
 
-    restProtocol.processRequest(*httpMessage);
+    HttpResponse response = restProtocol.processRequest(*httpMessage);
     /*responseBuffer = restProtocol.proccessRequest(buffer_);
     size_t bytes_sent = boost::asio::write(socket, boost::asio::buffer(responseBuffer, strlen(responseBuffer)+1), boost::asio::transfer_all(), ec);
     if(bytes_sent == 0) {
@@ -85,51 +85,20 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
 $definitions; separator="\n"$
 
 // Server
-char* $ctx.filename$Protocol::processRequest(HttpMessage &httpMessage)
+HttpMessage $ctx.filename$Protocol::processRequest(HttpMessage &httpMessage)
 {
     RESTSerializer restSerializer;
     
     restSerializer.deserializeUri(httpMessage.getUri(), "$ctx.resourceBaseUri$");
-    /*// Not found error serialization
-    char* http404Response = (char*)malloc(1024);
-    memset(http404Response, 0, 1024);
-    FastBuffer fastBuffer404(http404Response, 1024);
-    RESTSerializer* http404Serializer = new RESTSerializer();
-    string responseVersion = "HTTP/1.1";
-    HTTPVersion httpResponseVersion = HTTPVersion::HTTPVersionResponse(responseVersion);
-    http404Serializer->serialize(httpResponseVersion);
-    string code = "404";
-    string text = "Not found";
-    HTTPResponseCode httpResponseCode(code, text);
-    http404Serializer->serialize(httpResponseCode);
-    //
-
-    // HTTP Request deserialization
-    HTTPMethod httpMethod;
-    Method enumHttpMethod;
-    string host = "$ctx.resourceHost$";
-    string baseUri = "$ctx.resourceBaseUri$"; // We give the serializator our base uri
-    string path = "";
-    HTTPUri httpUri = HTTPUri();
-    httpUri.setHost(host);
-    httpUri.setBaseUri(baseUri);
-    HTTPParameters httpParams;   
     
-
-    FastBuffer requestFastBuffer(httpRequest, 8192);
-    RESTSerializer* httpSerializer = new RESTSerializer();
-    httpSerializer->deserialize(httpMethod);
-    enumHttpMethod = httpMethod.getMethod();
-    httpSerializer->deserialize(httpUri);
-    path = httpUri.getResourcePath();
-    httpSerializer->deserialize(httpParams);
-    httpSerializer->reset();
-    // */
+    // TODO Siempre se crea aunque no haya un error. Cambiar
+    HttpMessage http404Response;
+    http404Response.setResponseCode(404);
+    http404Response.setResponseStatus("Resource not found");
     
     $ctx.deserializeCode$
     
-    return NULL;
-    //return http404Response;
+    return http404Response;
 }
 >>
 
@@ -274,7 +243,7 @@ void $ctx.filename$Protocol::deserializePath_$operation.name$(RESTSerializer &re
 }
 $endif$
 
-char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, HttpMessage &httpMessage)
+HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, HttpMessage &httpMessage)
 {
     $if(operation.parent.pathHasBrackets)$
     $first(operation.parameters).name$ $first(operation.parameters).name$;
@@ -292,12 +261,7 @@ char* $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_
     HttpMessage httpResponse;
     $serializeServerResponse(rettype=operation.rettype)$
     
-    /*char* httpResponse = (char*) malloc(8192);
-    memset(httpResponse, 0, 8192);
-    $serializeServerResponse(rettype=operation.rettype)$    
-    return httpResponse;*/
-    
-    return NULL;
+    return httpResponse;
 }
 >>
 
@@ -306,38 +270,21 @@ $if(first(params))$ $if(first(params).parent.parent.pathHasBrackets)$ $first(par
 >>
 
 serializeServerResponse(rettype) ::= <<
-FastBuffer responseFastBuffer(httpResponse, 8192); 
-RESTSerializer* httpResponseSerializer = new RESTSerializer();
-string stringVersionResponse = "HTTP/1.1";
-HTTPVersion versionResponse = HTTPVersion::HTTPVersionResponse(stringVersionResponse);
-httpResponseSerializer->serialize(versionResponse);
-
-int httpResponseStatus = 0;
-string responseData = "";
-switch($rettype.name$._d) {
-$rettype.members : {member |    case $first(member.labels)$:
-    httpResponseStatus = $rettype.name$._u.$member.name$.status;
-$first(rest(member.typecode.members)) : {member2 |      responseData = $rettype.name$._u.$member.name$.$member2.name$; }$
+switch($rettype.name$._d)
+{
+$rettype.members : {member |case $first(member.labels)$:
+    httpResponse.setResponseCode($rettype.name$._u.$member.name$.status);
+$first(rest(member.typecode.members)) : {member2 |httpResponse.setBodyData($rettype.name$._u.$member.name$.$member2.name$); }$
     break;
-}$}
-stream << httpResponseStatus;
-string code = stream.str();
-string status = "";
-HTTPResponseCode httpResponseCode(code, status);
-stream.str(std::string());
-stream.clear();
-httpResponseSerializer->serialize(httpResponseCode);
-if(responseData.size()>0) {
-    stream << responseData.length();
-    string size = stream.str();
+}$
+}
+
+if(httpResponse.getBodyData().size() > 0)
+{
     if($rettype.name$._d == 1)
-        mediaType = "application/xml";
+        httpResponse.setBodyContentType("application/xml");
     else if($rettype.name$._d == 2)
-        mediaType = "application/json";
-    HTTPData httpData(size, mediaType, responseData);
-	httpResponseSerializer->serialize(httpData);
-    stream.str(std::string());
-    stream.clear();
+        httpResponse.setBodyContentType("application/json");
 }
 
 >>
