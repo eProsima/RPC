@@ -224,7 +224,7 @@ public class PathTree {
 				code += method.getIterationCode();
 			}
 		} else {
-			code += "return NULL; // TODO Send 404 ERROR NO OPERATIONS\n";
+			code += "return http404Response; // ERROR NO OPERATIONS\n";
 		}
 		code += "}\n";
 		

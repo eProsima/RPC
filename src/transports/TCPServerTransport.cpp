@@ -140,14 +140,21 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
 
     // TODO TIME OUT
     size_t numData = 0;
-    while((numData = connection->socket_->available(ec)) == 0);
+    while(!ec && (numData = connection->socket_->available(ec)) == 0);
+
+    if(ec == boost::asio::error::eof)
+    { 
+        std::cout << "Connection closed by proxy" << std::endl;
+        return;
+    }
+
     std::cout << "Datos para leer = " << numData << std::endl;
 
     // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
 
     if(numData > 0)
     {
-        char *buffer = (char*)calloc(connection->socket_->available(), 1);
+        char *buffer = (char*)calloc(numData, 1);
 
         if(buffer != NULL)
         {
@@ -217,7 +224,15 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
             std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
             if(_dataToRead == 0)
-                while((_dataToRead = connection->socket_->available(ec)) == 0);
+            {
+                while(!ec && (_dataToRead = connection->socket_->available(ec)) == 0);
+
+                if(ec == boost::asio::error::eof)
+                { 
+                    std::cout << "Connection closed by proxy" << std::endl;
+                    return -1;
+                }
+            }
 
             std::cout << "Datos para leer = " << _dataToRead << std::endl;
 

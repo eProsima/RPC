@@ -67,19 +67,9 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
     eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
     HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
 
-    HttpResponse response = restProtocol.processRequest(*httpMessage);
-    /*responseBuffer = restProtocol.proccessRequest(buffer_);
-    size_t bytes_sent = boost::asio::write(socket, boost::asio::buffer(responseBuffer, strlen(responseBuffer)+1), boost::asio::transfer_all(), ec);
-    if(bytes_sent == 0) {
-        cout << "Error sending response." << endl;
-    }
-
-    // XXX close?
-    conn->socket_.get()->close(ec);
-
-    free(buffer_);
-    if(responseBuffer)
-        free(responseBuffer);*/
+    HttpMessage response = restProtocol.processRequest(*httpMessage);
+    
+    dynamic_cast<ServerTransport&>(protocol.getTransport()).sendReply(&response, 0, endpoint);
 }
 
 $definitions; separator="\n"$

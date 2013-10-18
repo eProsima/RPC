@@ -96,7 +96,13 @@ size_t TCPProxyTransport::receive(char *buffer, const size_t bufferSize)
     size_t numData;
 
     // TODO Check timeout
-    while((numData = socket_->available(error)) == 0);
+    while(!error && (numData = socket_->available(error)) == 0);
+
+    if(error == boost::asio::error::eof)
+    { 
+        std::cout << "Connection closed by server" << std::endl;
+        return 0;
+    }
 
     if(numData <= bufferSize)
     {
