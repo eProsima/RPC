@@ -10,7 +10,8 @@ using namespace ::transport;
 const size_t BUFFER_INITIAL_LENGTH = 1024;
 
 TCPEndpoint::TCPEndpoint(void) : m_readBuffer(NULL), m_readBufferLength(BUFFER_INITIAL_LENGTH),
-    m_readBufferUse(0), m_readBufferCurrentPointer(0)
+    m_readBufferUse(0), m_readBufferCurrentPointer(0), m_writeBuffer(NULL), m_writeBufferLength(0),
+    m_writeBufferUse(0)
 {
 	this->socket_ = boost::shared_ptr<boost::asio::ip::tcp::socket>(
 			new boost::asio::ip::tcp::socket(io_service_));
@@ -136,6 +137,11 @@ bool TCPEndpoint::write(int32_t num)
     }
 
     return false;
+}
+
+bool TCPEndpoint::isOpen()
+{
+    return socket_->is_open();
 }
 
 boost::shared_ptr<boost::asio::ip::tcp::socket>& TCPEndpoint::socket() {

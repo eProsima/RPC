@@ -106,77 +106,80 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
     // Initialize buffers.
     if(connection->initializeBuffers())
     {
-        //TODO Pensar en poner un time out que se sincronice con el del transporte TCP or solamente es necesario el del transporte TCP.
-        while(retCode == 0 && (retCode = readHeaders(connection, httpMessage)) == 1)
+        do
         {
-            size_t dataToRead = 0;
-
-            // TODO change: first use read in tcp (using 0 in dataToRead, but if the buffer was resized, then use read_some pasing >0 in dataToRead
-            // Podria haber un bucle si mientras intenta ser un buffer grande alguien le satura a llamadas.
-            while((retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
-                            connection->getReadBufferEmptySpace(), dataToRead, connection)) > 0)
+            //TODO Pensar en poner un time out que se sincronice con el del transporte TCP or solamente es necesario el del transporte TCP.
+            while(retCode == 0 && (retCode = readHeaders(connection, httpMessage)) == 1)
             {
-                retCode = connection->resizeReadBuffer(retCode);
-            }
+                size_t dataToRead = 0;
 
-            // Retcode will never be -2 from receive because we said to read 0 bytes.
-            if(retCode == 0)
-            {
-                connection->increaseReadBufferFillUse(dataToRead);
-            }
-
-        }
-
-        // If process headers was successful.
-        if(retCode == 0)
-        {
-            // Get body.
-            if(httpMessage.getBodyContentLength() > 0 && !httpMessage.getBodyContentType().empty())
-            {
-                if(connection->getReadBufferLeaveUsedSpace() < httpMessage.getBodyContentLength())
+                // TODO change: first use read in tcp (using 0 in dataToRead, but if the buffer was resized, then use read_some pasing >0 in dataToRead
+                // Podria haber un bucle si mientras intenta ser un buffer grande alguien le satura a llamadas.
+                while((retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
+                                connection->getReadBufferEmptySpace(), dataToRead, connection)) > 0)
                 {
-                    // Check space in buffer to read.
-                    if(connection->getReadBufferLeaveSpace() >= httpMessage.getBodyContentLength() ||
-                            (retCode = connection->resizeReadBuffer(httpMessage.getBodyContentLength() - connection->getReadBufferLeaveSpace())) == 0)
-                    {
-                        // TODO Timeout
-                        do
-                        {
-                            // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
-                            size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
-
-                            retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
-                                    dataToRead, dataToRead, connection);
-
-                            if(retCode == -2 || retCode == 0)
-                            {
-                                connection->increaseReadBufferFillUse(dataToRead);
-                            }
-                        }
-                        while(retCode == -2);
-                    }
+                    retCode = connection->resizeReadBuffer(retCode);
                 }
 
-                // Get Body
+                // Retcode will never be -2 from receive because we said to read 0 bytes.
                 if(retCode == 0)
                 {
-                    httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
-                    connection->increaseReadBufferCurrentPointer(httpMessage.getBodyContentLength());
+                    connection->increaseReadBufferFillUse(dataToRead);
                 }
-            }
-            else if(httpMessage.getBodyContentLength() > 0)
-            {
-                // TODO Process Error. Jump message. Print error.
-                retCode = -1;
+
             }
 
-            // Send to protocol
+            // If process headers was successful.
             if(retCode == 0)
             {
-                getCallback()(getLinkedProtocol(), &httpMessage, 0, connection);
-                connection->refillReadBuffer();
+                // Get body.
+                if(httpMessage.getBodyContentLength() > 0 && !httpMessage.getBodyContentType().empty())
+                {
+                    if(connection->getReadBufferLeaveUsedSpace() < httpMessage.getBodyContentLength())
+                    {
+                        // Check space in buffer to read.
+                        if(connection->getReadBufferLeaveSpace() >= httpMessage.getBodyContentLength() ||
+                                (retCode = connection->resizeReadBuffer(httpMessage.getBodyContentLength() - connection->getReadBufferLeaveSpace())) == 0)
+                        {
+                            // TODO Timeout
+                            do
+                            {
+                                // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
+                                size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
+
+                                retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
+                                        dataToRead, dataToRead, connection);
+
+                                if(retCode == -2 || retCode == 0)
+                                {
+                                    connection->increaseReadBufferFillUse(dataToRead);
+                                }
+                            }
+                            while(retCode == -2);
+                        }
+                    }
+
+                    // Get Body
+                    if(retCode == 0)
+                    {
+                        httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
+                        connection->increaseReadBufferCurrentPointer(httpMessage.getBodyContentLength());
+                    }
+                }
+                else if(httpMessage.getBodyContentLength() > 0)
+                {
+                    // TODO Process Error. Jump message. Print error.
+                    retCode = -1;
+                }
+
+                // Send to protocol
+                if(retCode == 0)
+                {
+                    getCallback()(getLinkedProtocol(), &httpMessage, 0, connection);
+                    connection->refillReadBuffer();
+                }
             }
-        }
+        } while(retCode == 0); // TODO Keep alive.
     }
     else
     {

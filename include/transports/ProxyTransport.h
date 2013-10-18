@@ -50,7 +50,7 @@ namespace eprosima
 
                     virtual bool connect() = 0;
                     virtual bool send(const void* buffer, const size_t bufferSize) = 0;
-                    virtual size_t receive(char *buffer, const size_t bufferSize) = 0;
+                    virtual size_t receive(void *buffer, const size_t bufferSize) = 0;
             };
         }
         // namespace transport

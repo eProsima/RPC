@@ -60,7 +60,6 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/transports/components/TCPEndpoint.cpp \
 		     $(BASEDIR)/src/transports/TCPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/TCPServerTransport.cpp \
-		     $(BASEDIR)/src/transports/HttpTransport.cpp \
 		     $(BASEDIR)/src/transports/HttpProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/HttpServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/Transport.cpp \

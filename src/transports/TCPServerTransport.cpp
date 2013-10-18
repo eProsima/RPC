@@ -208,6 +208,7 @@ void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *conn
 // 0 OK
 // -1 ERROR
 // -2 Readed but not all
+// -3 Connection close
 // >0 bytes needed in the buffer to read.
 int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint)
 {
@@ -229,7 +230,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
                 if(ec == boost::asio::error::eof)
                 { 
                     std::cout << "Connection closed by proxy" << std::endl;
-                    return -1;
+                    return -3;
                 }
             }
 
@@ -246,6 +247,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
                     return _dataToRead - bufferLength;
                 }
 
+                // TODO check ec.
                 size_t bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, _dataToRead), ec);
 
                 if(dataToRead > 0 && _dataToRead != bytes_read)

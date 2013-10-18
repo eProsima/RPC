@@ -11,7 +11,6 @@
 
 #include "rpcdds_dll.h"
 #include "transports/TCPServerTransport.h"
-#include "transports/HttpTransport.h"
 
 namespace eprosima
 {
@@ -27,7 +26,7 @@ namespace eprosima
              *        that could be used by a proxy.
              * @ingroup TRANSPORTMODULE
              */
-            class RPCDDS_DllAPI HttpServerTransport : public ServerTransport, public HttpTransport
+            class RPCDDS_DllAPI HttpServerTransport : public ServerTransport
             {
                 public:
 

@@ -89,6 +89,8 @@ namespace eprosima
                     bool write(const std::string &str);
 
                     bool write(int32_t num);
+                    
+                    bool isOpen();
 
                     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 

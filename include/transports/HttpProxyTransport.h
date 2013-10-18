@@ -11,7 +11,6 @@
 
 #include "rpcdds_dll.h"
 #include "transports/TCPProxyTransport.h"
-#include "transports/HttpTransport.h"
 
 namespace eprosima
 {
@@ -24,7 +23,7 @@ namespace eprosima
              *        that could be used by a proxy.
              * @ingroup TRANSPORTMODULE
              */
-            class RPCDDS_DllAPI HttpProxyTransport : public ProxyTransport, public HttpTransport
+            class RPCDDS_DllAPI HttpProxyTransport : public ProxyTransport
             {
                 public:
 
@@ -42,11 +41,34 @@ namespace eprosima
 
                     virtual bool connect();
                     virtual bool send(const void* buffer, const size_t bufferSize);
-                    virtual size_t receive(char *buffer, const size_t bufferSize);
+                    virtual size_t receive(void *buffer, const size_t bufferSize);
 
                 private:
 
+                    inline
+                        void resetWriteBuffer(){m_writeBufferUse = 0;}
+
+                    bool write(const std::string &str);
+
+                    bool write(const uint64_t uint64);
+
+                    bool resizeWriteBuffer(size_t minSize);
+
                     TCPProxyTransport m_tcptransport;
+
+                    char *m_writeBuffer;
+
+                    size_t m_writeBufferLength;
+
+                    size_t m_writeBufferUse;
+
+                    char *m_readBuffer;
+
+                    size_t m_readBufferLength;
+
+                    size_t m_readBufferUse;
+
+                    size_t m_readBufferCurrentPointer;
             };
         }
         // namespace transport

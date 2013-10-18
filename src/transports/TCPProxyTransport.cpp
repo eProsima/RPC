@@ -90,7 +90,7 @@ bool TCPProxyTransport::send(const void* buffer, const size_t bufferSize)
 	return false;
 }
 
-size_t TCPProxyTransport::receive(char *buffer, const size_t bufferSize)
+size_t TCPProxyTransport::receive(void *buffer, const size_t bufferSize)
 {
 	boost::system::error_code error = boost::system::error_code();
     size_t numData;

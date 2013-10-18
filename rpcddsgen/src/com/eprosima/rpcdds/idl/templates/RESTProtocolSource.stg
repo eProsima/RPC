@@ -174,54 +174,37 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      // TODO Check connection error.
      proxyTransport.connect();
      proxyTransport.send(&httpMessage, 0);
-     //char* httpResponseBuffer = proxyTransport.receive();
+     HttpMessage httpResponse;
+     proxyTransport.receive(&httpResponse, 0);
      
-     /*
-     httpSerializer->serialize(httpMethod);
-     httpSerializer->serialize(httpUri);
-     string stringVersionRequest = "HTTP/1.1";
-     HTTPVersion versionRequest = HTTPVersion::HTTPVersionRequest(stringVersionRequest);
-     httpSerializer->serialize(versionRequest);
+     $paramRetType(operation.rettype)$ retType;
+     $paramRetType(operation.rettype)$_initialize(&retType);
      
-     
-    // Deserialize HTTP response
-    FastBuffer fastBufferResponse(httpResponseBuffer, 8192);
-    RESTSerializer* httpResponseSerializer = new RESTSerializer();
+     int discriminator = 0;
 
-    HTTPVersion versionResponse;
-    httpResponseSerializer->deserialize(versionResponse);
-    HTTPResponseCode httpResponseCode;
-    httpResponseSerializer->deserialize(httpResponseCode);
-
-    httpResponseSerializer->deserialize(httpData);
-    data = httpData.getData();
-    
-    $paramRetType(operation.rettype)$ retType;
-    $paramRetType(operation.rettype)$_initialize(&retType);
-    
-    discriminator = 0;
-    mediaType = httpData.getMediaType();
-    if(mediaType.find("xml") != string::npos) {
+     if(httpResponse.getBodyContentType().find("xml") != string::npos)
+     {
         discriminator = 1;
-    } 
-    if(mediaType.find("json") != string::npos) {
+     } 
+     else if(httpResponse.getBodyContentType().find("json") != string::npos)
+     {
         discriminator = 2;
-    }
+     }
     
-    retType._d = discriminator;
-    switch(discriminator) {
-    $operation.rettype.members : {member | case $first(member.labels)$:
-    retType._u.$member.name$.$first(member.typecode.members).name$ = httpResponseCode.getStatusCode();
-    $if(rest(member.typecode.members))$
-    retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(data.c_str());
-    $endif$
-    break;
-    }$
-    }*/
+     retType._d = discriminator;
+     
+     switch(discriminator)
+     {
+     $operation.rettype.members : {member | case $first(member.labels)$:
+     retType._u.$member.name$.$first(member.typecode.members).name$ = httpResponse.getResponseCode();
+     $if(rest(member.typecode.members))$
+     retType._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(httpResponse.getBodyData().c_str());
+     $endif$
+     break;
+     }$
+     }
               
-    $if(operation.rettypeparam)$
-    return $operation.rettypeparam.name$;
-    $endif$
+     return $operation.rettypeparam.name$;
 }
 
 $if(operation.parent.pathHasBrackets)$
