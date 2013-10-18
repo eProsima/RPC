@@ -28,6 +28,12 @@ namespace eprosima
 
                     size_t m_readBufferCurrentPointer;
 
+                    char *m_writeBuffer;
+
+                    size_t m_writeBufferLength;
+
+                    size_t m_writeBufferUse;
+
                 public:
                     TCPEndpoint(void);
 
@@ -65,6 +71,24 @@ namespace eprosima
                     int resizeReadBuffer(size_t minSize);
 
                     void refillReadBuffer();
+
+                    inline
+                        char* getWriteBuffer() {return m_writeBuffer;}
+
+                    inline
+                        size_t getWriteBufferUsage() const {return m_writeBufferUse;}
+
+                    inline
+                        size_t getWriteBufferLength() const {return m_writeBufferLength;}
+
+                    bool resizeWriteBuffer(size_t minSize);
+
+                    inline
+                        void resetWriteBuffer(){m_writeBufferUse = 0;}
+
+                    bool write(const std::string &str);
+
+                    bool write(int32_t num);
 
                     boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 

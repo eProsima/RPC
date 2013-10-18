@@ -21,7 +21,16 @@ bool TCPEndpoint::initializeBuffers()
     m_readBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
 
     if(m_readBuffer != NULL)
-        return true;
+    {
+        m_writeBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
+
+        if(m_writeBuffer != NULL)
+        {
+            return true;
+        }
+
+        free(m_readBuffer);
+    }
 
     return false;
 }
@@ -71,6 +80,62 @@ void TCPEndpoint::refillReadBuffer()
         m_readBufferUse = getReadBufferLeaveUsedSpace();
         m_readBufferCurrentPointer = 0;
     }
+}
+
+bool TCPEndpoint::resizeWriteBuffer(size_t minSize)
+{
+    if((m_writeBufferUse + minSize) <= (2 * m_writeBufferLength))
+    {
+        m_writeBuffer = (char*)realloc(m_writeBuffer, 2 * m_writeBufferLength);
+
+        if(m_writeBuffer != NULL)
+        {
+            m_writeBufferLength *= 2;
+            return true;
+        }
+    }
+    else
+    {
+        m_writeBuffer = (char*)realloc(m_writeBuffer, m_writeBufferUse + minSize);
+
+        if(m_writeBuffer != NULL)
+        {
+            m_writeBufferLength = m_writeBufferUse + minSize;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool TCPEndpoint::write(const std::string &str)
+{
+    if((str.size() + m_writeBufferUse <= m_writeBufferLength) || resizeWriteBuffer(str.size()))
+    {
+        memcpy(&m_writeBuffer[m_writeBufferUse], str.c_str(), str.size());
+        m_writeBufferUse += str.size();
+        printf("Buffer = %s\n", m_writeBuffer);
+        return true;
+    }
+
+    return false;
+}
+
+bool TCPEndpoint::write(int32_t num)
+{
+    char aux[23];
+
+    snprintf(aux, 23, "%d", num);
+
+    if((strlen(aux) + m_writeBufferUse <= m_writeBufferLength) || resizeWriteBuffer(strlen(aux)))
+    {
+        memcpy(&m_writeBuffer[m_writeBufferUse], aux, strlen(aux));
+        m_writeBufferUse += strlen(aux);
+        printf("Buffer = %s\n", m_writeBuffer);
+        return true;
+    }
+
+    return false;
 }
 
 boost::shared_ptr<boost::asio::ip::tcp::socket>& TCPEndpoint::socket() {
