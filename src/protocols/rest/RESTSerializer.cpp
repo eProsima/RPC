@@ -438,6 +438,8 @@ RESTSerializer&  RESTSerializer::deserializeUri(const std::string &uri, const st
             }
         }
     }
+
+	return *this;
 }
 
 std::string RESTSerializer::substituteBadCharacters(const std::string &str)
