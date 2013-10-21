@@ -10,6 +10,7 @@
 #include "transports/components/TCPEndpoint.h"
 #include "strategies/ServerStrategy.h"
 #include "transports/messages/HttpMessage.h"
+#include "utils/Utilities.h"
 
 #include <boost/bind.hpp>
 
@@ -127,6 +128,10 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     connection->increaseReadBufferFillUse(dataToRead);
                 }
 
+                // If there is not any data, sleep 100 milliseconds.
+                // TODO Mirar si boost tiene espera pasiva como eselect de linux.
+                if(dataToRead == 0)
+                    sleep(10);
             }
 
             // If connection close, try read headers.
@@ -155,7 +160,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                                 retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
                                         dataToRead, dataToRead, connection);
 
-                                if(retCode == -2 || retCode == 0)
+                                if((retCode == -2 || retCode == 0) && dataToRead > 0)
                                 {
                                     connection->increaseReadBufferFillUse(dataToRead);
                                 }
@@ -327,7 +332,6 @@ int HttpServerTransport::readHeaderLines(TCPEndpoint *connection, HttpMessage &h
                 }
 
                 connection->increaseReadBufferCurrentPointer(ptr + 2 - connection->getReadBufferCurrentPointer());
-                return 0;
             }
         }
         else

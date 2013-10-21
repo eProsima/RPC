@@ -100,8 +100,7 @@ bool TCPProxyTransport::send(const void* buffer, const size_t bufferSize)
 
 // 0 OK
 // -1 ERROR
-// -2 Readed but not all
-// -3 Connection close
+// -2 Connection close
 // >0 bytes needed in the buffer to read.
 size_t TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
 {
@@ -110,49 +109,35 @@ size_t TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t 
 
     if(buffer != NULL && bufferSize > 0)
     {
-        if(_dataToRead == 0)
+        // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
+        
+        // Check the space in the buffer.
+        if(bufferSize < _dataToRead)
         {
-            while(!ec && (_dataToRead = socket_->available(ec)) == 0);
-
-            if(ec == boost::asio::error::eof)
-            { 
-                std::cout << "Connection closed by proxy" << std::endl;
-                return -3;
-            }
+            dataToRead = 0;
+            return _dataToRead - bufferSize;
         }
 
-        std::cout << "Datos para leer = " << _dataToRead << std::endl;
+        // TODO check ec.
+        size_t bytes_read = 0;
 
-        // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
 
         if(_dataToRead > 0)
         {
-            // Check the space in the buffer.
-            if(bufferSize < _dataToRead)
-            {
-                dataToRead = 0;
-                return _dataToRead - bufferSize;
-            }
-
-            // TODO check ec.
-            size_t bytes_read = boost::asio::read(*socket_, boost::asio::buffer(buffer, _dataToRead), ec);
-
-            if(dataToRead > 0 && _dataToRead != bytes_read)
-            {
-                dataToRead = bytes_read;
-                return -2;
-            }
-            else
-            {
-                dataToRead = bytes_read;
-                printf("%s\n", (char*)buffer);
-                return 0;
-            }
+            // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
+            bytes_read = boost::asio::read(*socket_, boost::asio::buffer(buffer, _dataToRead), ec);
         }
         else
         {
-            // TODO Print exception ec.
+            bytes_read = socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
         }
+
+        dataToRead = bytes_read;
+
+        if(ec != boost::asio::error::eof)
+            return 0;
+        else
+            return -2;
     }
 
     return -1;

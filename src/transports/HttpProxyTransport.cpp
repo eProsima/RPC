@@ -57,11 +57,11 @@ bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
     {
         resetWriteBuffer();
         if(write(httpMessage->getMethodStr()) &&
-                    write(" ") &&
-                    write(httpMessage->getUri()) &&
-                    write(" HTTP/1.1\r\nHost: ") &&
-                    write(httpMessage->getHost()) &&
-                    write("\r\nConnection: close\r\n"))
+                write(" ") &&
+                write(httpMessage->getUri()) &&
+                write(" HTTP/1.1\r\nHost: ") &&
+                write(httpMessage->getHost()) &&
+                write("\r\nConnection: close\r\n"))
         {
             if(!httpMessage->getBodyData().empty())
             {
@@ -121,63 +121,71 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
             }
 
             // Retcode will never be -2 from receive because we said to read 0 bytes.
-            if(retCode == 0)
+            if((retCode == 0 || retCode == -2) && dataToRead > 0)
             {
                 increaseReadBufferFillUse(dataToRead);
             }
 
+            // If there is not any data, sleep 100 milliseconds.
+            // TODO Mirar si boost tiene espera pasiva como eselect de linux.
+            if(dataToRead == 0)
+                sleep(10);
         }
 
-            // If process headers was successful.
-            if(retCode == 0)
+        // If connection close, try read headers.
+        if(retCode == -2)
+            retCode = readHeaders(*httpMessage);
+
+        // If process headers was successful.
+        if(retCode == 0)
+        {
+            // Get body.
+            if(httpMessage->getBodyContentLength() > 0 && !httpMessage->getBodyContentType().empty())
             {
-                // Get body.
-                if(httpMessage->getBodyContentLength() > 0 && !httpMessage->getBodyContentType().empty())
+                if(getReadBufferLeaveUsedSpace() < httpMessage->getBodyContentLength())
                 {
-                    if(getReadBufferLeaveUsedSpace() < httpMessage->getBodyContentLength())
+                    // Check space in buffer to read.
+                    if(getReadBufferLeaveSpace() >= httpMessage->getBodyContentLength() ||
+                            (retCode = resizeReadBuffer(httpMessage->getBodyContentLength() - getReadBufferLeaveSpace())) == 0)
                     {
-                        // Check space in buffer to read.
-                        if(getReadBufferLeaveSpace() >= httpMessage->getBodyContentLength() ||
-                                (retCode = resizeReadBuffer(httpMessage->getBodyContentLength() - getReadBufferLeaveSpace())) == 0)
+                        // TODO Timeout
+                        do
                         {
-                            // TODO Timeout
-                            do
+                            // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
+                            size_t dataToRead = httpMessage->getBodyContentLength() - getReadBufferLeaveUsedSpace();
+
+                            retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
+                                    dataToRead, dataToRead);
+
+                            if((retCode == -2 || retCode == 0) && dataToRead > 0)
                             {
-                                // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
-                                size_t dataToRead = httpMessage->getBodyContentLength() - getReadBufferLeaveUsedSpace();
-
-                                retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
-                                        dataToRead, dataToRead);
-
-                                if(retCode == -2 || retCode == 0)
-                                {
-                                    increaseReadBufferFillUse(dataToRead);
-                                }
+                                increaseReadBufferFillUse(dataToRead);
                             }
-                            while(retCode == -2);
                         }
-                    }
-
-                    // Get Body
-                    if(retCode == 0)
-                    {
-                        httpMessage->setBodyData(std::string(m_readBufferCurrentPointer, httpMessage->getBodyContentLength()));
-                        increaseReadBufferCurrentPointer(httpMessage->getBodyContentLength());
+                        while((retCode == 0) && (dataToRead < (httpMessage->getBodyContentLength() - getReadBufferLeaveUsedSpace())));
                     }
                 }
-                else if(httpMessage->getBodyContentLength() > 0)
-                {
-                    // TODO Process Error. Jump message. Print error.
-                    retCode = -1;
-                }
 
-                // Send to protocol
+                // Get Body
                 if(retCode == 0)
                 {
-                    refillReadBuffer();
-                    return 1;
+                    httpMessage->setBodyData(std::string(&m_readBuffer[m_readBufferCurrentPointer], httpMessage->getBodyContentLength()));
+                    increaseReadBufferCurrentPointer(httpMessage->getBodyContentLength());
                 }
             }
+            else if(httpMessage->getBodyContentLength() > 0)
+            {
+                // TODO Process Error. Jump message. Print error.
+                retCode = -1;
+            }
+
+            // Send to protocol
+            if(retCode == 0)
+            {
+                refillReadBuffer();
+                return 1;
+            }
+        }
     }
     else
     {
@@ -271,9 +279,10 @@ void HttpProxyTransport::refillReadBuffer()
     if(getReadBufferLeaveUsedSpace() > 0)
     {
         memmove(m_readBuffer, &m_readBuffer[m_readBufferCurrentPointer], getReadBufferLeaveUsedSpace());
-        m_readBufferUse = getReadBufferLeaveUsedSpace();
-        m_readBufferCurrentPointer = 0;
     }
+
+    m_readBufferUse = getReadBufferLeaveUsedSpace();
+    m_readBufferCurrentPointer = 0;
 }
 
 // 1 Faltan datos en el buffer. Leer mas.
@@ -377,7 +386,6 @@ int HttpProxyTransport::readHeaderLines(HttpMessage &httpMessage)
                 }
 
                 increaseReadBufferCurrentPointer(ptr + 2 - getReadBufferCurrentPointer());
-                return 0;
             }
         }
         else
