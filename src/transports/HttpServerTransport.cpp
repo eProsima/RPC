@@ -100,7 +100,6 @@ void HttpServerTransport::bossProcess(TCPEndpoint* connection)
 
 void HttpServerTransport::worker(TCPEndpoint* connection)
 {
-    HttpMessage httpMessage;
     int retCode = 0;
 
     // Initialize buffers.
@@ -108,6 +107,8 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
     {
         do
         {
+            HttpMessage httpMessage;
+
             //TODO Pensar en poner un time out que se sincronice con el del transporte TCP or solamente es necesario el del transporte TCP.
             while(retCode == 0 && (retCode = readHeaders(connection, httpMessage)) == 1)
             {
@@ -121,7 +122,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     retCode = connection->resizeReadBuffer(retCode);
                 }
 
-                if(retCode == 0 || retCode == -2)
+                if((retCode == 0 || retCode == -2) && dataToRead > 0)
                 {
                     connection->increaseReadBufferFillUse(dataToRead);
                 }
