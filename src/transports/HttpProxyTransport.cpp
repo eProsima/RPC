@@ -227,7 +227,6 @@ bool HttpProxyTransport::write(const std::string &str)
     {
         memcpy(&m_writeBuffer[m_writeBufferUse], str.c_str(), str.size());
         m_writeBufferUse += str.size();
-        printf("Buffer = %s\n", m_writeBuffer);
         return true;
     }
 
@@ -239,7 +238,6 @@ bool HttpProxyTransport::write(const uint64_t uint64)
     if((MAX_INT64_CHARS + m_writeBufferUse <= m_writeBufferLength) || resizeWriteBuffer(MAX_INT64_CHARS))
     {
         m_writeBufferUse += sprintf(&m_writeBuffer[m_writeBufferUse], "%lu", uint64);
-        printf("Buffer = %s\n", m_writeBuffer);
         return true;
     }
 
@@ -250,7 +248,7 @@ bool HttpProxyTransport::write(const uint64_t uint64)
 // -1 Error.
 int HttpProxyTransport::resizeReadBuffer(size_t minSize)
 {
-    if((m_readBufferUse + minSize) <= (2 * m_readBufferLength))
+    if((m_readBufferLength + minSize) <= (2 * m_readBufferLength))
     {
         m_readBuffer = (char*)realloc(m_readBuffer, 2 * m_readBufferLength);
 
@@ -262,11 +260,11 @@ int HttpProxyTransport::resizeReadBuffer(size_t minSize)
     }
     else
     {
-        m_readBuffer = (char*)realloc(m_readBuffer, m_readBufferUse + minSize);
+        m_readBuffer = (char*)realloc(m_readBuffer, m_readBufferLength + minSize);
 
         if(m_readBuffer != NULL)
         {
-            m_readBufferLength = m_readBufferUse + minSize;
+            m_readBufferLength = m_readBufferLength + minSize;
             return 0;
         }
     }

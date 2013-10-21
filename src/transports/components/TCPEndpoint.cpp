@@ -52,7 +52,7 @@ void TCPEndpoint::finalizeBuffers()
 // -1 Error.
 int TCPEndpoint::resizeReadBuffer(size_t minSize)
 {
-    if((m_readBufferUse + minSize) <= (2 * m_readBufferLength))
+    if((m_readBufferLength + minSize) <= (2 * m_readBufferLength))
     {
         m_readBuffer = (char*)realloc(m_readBuffer, 2 * m_readBufferLength);
 
@@ -64,11 +64,11 @@ int TCPEndpoint::resizeReadBuffer(size_t minSize)
     }
     else
     {
-        m_readBuffer = (char*)realloc(m_readBuffer, m_readBufferUse + minSize);
+        m_readBuffer = (char*)realloc(m_readBuffer, m_readBufferLength + minSize);
 
         if(m_readBuffer != NULL)
         {
-            m_readBufferLength = m_readBufferUse + minSize;
+            m_readBufferLength = m_readBufferLength + minSize;
             return 0;
         }
     }
