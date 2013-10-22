@@ -17,6 +17,8 @@ $endif$
 
 #include <string>
 
+using namespace std;
+
 namespace eprosima
 {
     namespace rpcdds
@@ -50,6 +52,8 @@ namespace eprosima
                     private:
                     
                     	static int deserializeContentLength(char* buffer);
+                    	
+                    	static bool isNumeric(string&& myString);
                     
                 };
             } // namespace rest

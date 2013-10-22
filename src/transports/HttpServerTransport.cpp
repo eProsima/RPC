@@ -123,6 +123,9 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     retCode = connection->resizeReadBuffer(retCode);
                 }
 
+//printf("LEIDOS %d datos ret %d\n", dataToRead, retCode);
+//printf("Buffer %s\n", connection->getReadBuffer());
+
                 if((retCode == 0 || retCode == -2) && dataToRead > 0)
                 {
                     connection->increaseReadBufferFillUse(dataToRead);
@@ -189,7 +192,10 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     connection->refillReadBuffer();
                 }
             }
+//printf("VUELTA %d\n", retCode);
         } while(retCode == 0); // TODO Keep alive.
+
+//printf("CERRADA CONEXIÖN %d\n", retCode);
     }
     else
     {
@@ -206,6 +212,8 @@ int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMe
     const char* const _METHOD_PUT = "PUT";
     const char* const _METHOD_POST = "POST";
     const char* const _METHOD_DELETE = "DELETE";
+
+//printf("getReadBufferLeaveUsedSpace() == %u\n", connection->getReadBufferLeaveUsedSpace());
 
     if(connection->getReadBufferLeaveUsedSpace() >= 4)
     {
@@ -353,7 +361,10 @@ int HttpServerTransport::readHeaders(TCPEndpoint *connection, HttpMessage &httpM
     if(httpMessage.getMethod() == HttpMessage::HTTP_METHOD_INVALID)
     {
         if((retCode = readMethod(connection, httpMessage)) != 0)
+ {
+//printf("MIERDA %d\n", retCode);
             return retCode;
+}
     }
 
     // Read HTTP URI

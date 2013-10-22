@@ -215,7 +215,6 @@ public class PathTree {
 		String code = "// BEGIN ITERATION " + tag + "\n";
 		if(tag.length() == 0) {
 			code += "string tag;\n"; // TODO Quitar
-			code += "char *p = NULL;\n";
 		}
 		
 		code += "if(!restSerializer.existsTagLevel(" + level + ")) {\n";
@@ -239,8 +238,9 @@ public class PathTree {
 		for(PathTree child: children) {
 			if(child.isVariableNode()) {
 				if(child.isNumeric()) {
-					code += "strtol(strdup(restSerializer.getTag(" + level + ").c_str()), &p, 10);\n";
-					code += "if(!*p) {\n";
+					//code += "strtol(strdup(restSerializer.getTag(" + level + ").c_str()), &p, 10);\n";
+					//code += "if(!*p) {\n";
+					code += "if(isNumeric(restSerializer.getTag(" + level + "))) {\n";
 					code += child.getIterationCode();
 					code += "}\n";
 				} else if(child.isBoolean()) {

@@ -146,7 +146,6 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
 
         if(ec != boost::asio::error::eof)
         { 
-            std::cout << "Datos para leer = " << numData << std::endl;
 
             // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
 

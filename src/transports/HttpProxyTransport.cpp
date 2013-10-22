@@ -368,18 +368,24 @@ int HttpProxyTransport::readHeaderLines(HttpMessage &httpMessage)
             {
                 ptrdiff_t length = ptr - getReadBufferCurrentPointer();
 
+//printf("Processing : %s\n", getReadBufferCurrentPointer());
+
                 if((length >= 16) && (memcmp(getReadBufferCurrentPointer(), "Content-Length: ", 16) == 0))
                 {
+//printf("OK Content length\n");
                     httpMessage.setBodyContentLength(std::string(&getReadBufferCurrentPointer()[16], length - 16));
                     increaseReadBufferCurrentPointer(length);
                 }
                 else if((length >= 14) && (memcmp(getReadBufferCurrentPointer(), "Content-Type: ", 14) == 0))
                 {
+
                     httpMessage.setBodyContentType(std::string(&getReadBufferCurrentPointer()[14], length - 14));
                     increaseReadBufferCurrentPointer(length);
+//printf("OK Content type %s\n", httpMessage.getBodyContentType().c_str()); 
                 }
                 else
                 {
+//printf("MIERDA\n");
                     // TODO warning not supported
                 }
 

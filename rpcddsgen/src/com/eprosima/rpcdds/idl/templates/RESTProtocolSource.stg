@@ -22,6 +22,14 @@ $ctx.filename$Protocol::$ctx.filename$Protocol() {}
 
 $ctx.filename$Protocol::~$ctx.filename$Protocol() {}
 
+bool $ctx.filename$Protocol::isNumeric(string&& myString) {
+	stringstream ss(myString);
+	float f;
+	ss $ctx.sersym$ noskipws $ctx.sersym$ f;
+
+	return ss.eof() && !ss.fail();
+}
+
 bool $ctx.filename$Protocol::setTransport(Transport &transport)
 {    
     if(strcmp(transport.getType(), "HTTP") != 0)
@@ -221,6 +229,7 @@ HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.formatedScoped
     
     $if(operation.parent.pathHasBrackets)$
     $first(operation.parameters).name$ $first(operation.parameters).name$;
+    $first(operation.parameters).name$_initialize(&$first(operation.parameters).name$); 
     deserializePath_$operation.name$(restSerializer, $first(operation.parameters).name$);
     $deserializeHTTPParams(params=rest(operation.parameters))$
     $else$

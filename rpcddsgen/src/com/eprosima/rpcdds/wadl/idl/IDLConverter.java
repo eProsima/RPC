@@ -53,8 +53,8 @@ public class IDLConverter {
 		// TODO XXX MOAR TYPES
 		typesMap = new HashMap<String, String>();
 
-		typesMap.put("xsd:byte", "char");
 		typesMap.put("xsd:string", "string");
+		typesMap.put("xsd:byte", "char");
 		typesMap.put("xsd:unsignedByte", "octet");
 		typesMap.put("xsd:short", "short");
 		typesMap.put("xsd:unsignedShort", "unsigned short");
@@ -64,7 +64,7 @@ public class IDLConverter {
 		typesMap.put("xsd:unsignedLong", "unsigned long long");
 		typesMap.put("xsd:float", "float");
 		typesMap.put("xsd:double", "double");
-		typesMap.put("xsd:boolean", "bool");		
+		typesMap.put("xsd:boolean", "boolean");		
 		typesMap.put("", "string"); // default
 	}
 

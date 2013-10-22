@@ -119,7 +119,6 @@ bool TCPEndpoint::write(const std::string &str)
     {
         memcpy(&m_writeBuffer[m_writeBufferUse], str.c_str(), str.size());
         m_writeBufferUse += str.size();
-        printf("Buffer = %s\n", m_writeBuffer);
         return true;
     }
 
@@ -136,7 +135,6 @@ bool TCPEndpoint::write(int32_t num)
     {
         memcpy(&m_writeBuffer[m_writeBufferUse], aux, strlen(aux));
         m_writeBufferUse += strlen(aux);
-        printf("Buffer = %s\n", m_writeBuffer);
         return true;
     }
 
