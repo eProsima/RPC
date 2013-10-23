@@ -56,6 +56,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
 void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint) 
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
+    size_t moreDataToRead = 0;
     
     if(data != NULL && endpoint != NULL)
     {
@@ -65,7 +66,18 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
             
             if(dataLength < cdrLength + 8)
             {
-                // TODO Read more bytes.
+                data = realloc(data, cdrLength + 8);
+                
+                moreDataToRead = cdrLength + 8 - dataLength;
+                ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
+                int retCode = serverTransport.receive((char*)data, cdrLength + 8, moreDataToRead, endpoint);
+                
+                if((retCode != 0 && retCode != -2) || (dataLength + moreDataToRead != cdrLength + 8))
+                {
+                    // TODO error
+                    printf("ERROR No se pudo leer todo\n");
+                    return;
+                }
             }
             
             eProsima::FastBuffer dcdrBuffer((char*)data, dataLength);
@@ -189,50 +201,53 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     
     $if(!operation.oneway)$
     // TODO Cambiar
-    size_t responseBufferSize = 8192, dataToRead = 0;
+    size_t responseBufferSize = 8192, dataToRead = 0, moreDataToRead = 0;
     char *response = (char*)calloc(responseBufferSize, sizeof(char));
     int retCode = proxyTransport.receive(response, responseBufferSize, dataToRead);
     
-    if((retCode == 0 || retCode == -2) && dataToRead > 0)
+    if((retCode == 0 || retCode == -2) && dataToRead > 7)
     {
         if(((int32_t*)response)[0] == 0x46434452)
         {
             size_t cdrLength = ((int32_t*)response)[1];
             
             if(dataToRead < cdrLength + 8)
-            {
-                size_t moreDataToRead = cdrLength + 8 - dataToRead;
-                
-                while((retCode = proxyTransport.receive(response, responseBufferSize, moreDataToRead)) > 0)
+            {                
+                if(responseBufferSize < cdrLength + 8)
                 {
-                    response = (char*)realloc(response, responseBufferSize + retCode);
-                    responseBufferSize += retCode;
+                    response = (char*)realloc(response, cdrLength + 8);
+                    responseBufferSize = cdrLength + 8;
                 }
                 
-                if((retCode != 0 || retCode != -2) || ((retCode == 0 || retCode == -2) && (moreDataToRead < cdrLength + 8 - dataToRead)))
-                {
-                    // TODO Error
-                }
+                moreDataToRead = cdrLength + 8 - dataToRead;
+                retCode = proxyTransport.receive(response, responseBufferSize, moreDataToRead);
             }
             
-            eProsima::FastBuffer dcdrBuffer(response, responseBufferSize);
-            eProsima::FastCdr dcdr(dcdrBuffer);
-            
-            dcdr.jump(8);
-            std::string interface_name_r, operation_name_r;
-            dcdr.deserialize(interface_name_r);
-            dcdr.deserialize(operation_name_r);
-            
-            if(interface_name_r.compare(interface_name) == 0 &&
-                operation_name_r.compare(operation_name) == 0)
+            if(retCode == 0 || (retCode == -2 && (dataToRead + moreDataToRead == cdrLength + 8)))
             {
-                $[operation.outputparam, operation.rettypeparam] : {param |
-                $deserialization(obj=param)$
-                };separator="\n"$
+                eProsima::FastBuffer dcdrBuffer(response, responseBufferSize);
+                eProsima::FastCdr dcdr(dcdrBuffer);
+                
+                dcdr.jump(8);
+                std::string interface_name_r, operation_name_r;
+                dcdr.deserialize(interface_name_r);
+                dcdr.deserialize(operation_name_r);
+                
+                if(interface_name_r.compare(interface_name) == 0 &&
+                    operation_name_r.compare(operation_name) == 0)
+                {
+                    $[operation.outputparam, operation.rettypeparam] : {param |
+                    $deserialization(obj=param)$
+                    };separator="\n"$
+                }
+                else
+                {
+                    // TODO Return error
+                }
             }
             else
             {
-                // TODO Return error
+                // TODO error
             }
         }
         else

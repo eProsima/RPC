@@ -168,10 +168,14 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
                 }
 
                 // Get Body
-                if(retCode == 0)
+                if((retCode == 0 || retCode == -2) && getReadBufferLeaveUsedSpace() >= httpMessage->getBodyContentLength())
                 {
                     httpMessage->setBodyData(std::string(&m_readBuffer[m_readBufferCurrentPointer], httpMessage->getBodyContentLength()));
                     increaseReadBufferCurrentPointer(httpMessage->getBodyContentLength());
+                }
+                else
+                {
+                    // TODO Error.
                 }
             }
             else if(httpMessage->getBodyContentLength() > 0)

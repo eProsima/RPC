@@ -173,10 +173,14 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     }
 
                     // Get Body
-                    if(retCode == 0)
+                    if((retCode == 0 || retCode == -2) && connection->getReadBufferLeaveUsedSpace() >= httpMessage.getBodyContentLength())
                     {
                         httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
                         connection->increaseReadBufferCurrentPointer(httpMessage.getBodyContentLength());
+                    }
+                    else
+                    {
+                        // TODO Error.
                     }
                 }
                 else if(httpMessage.getBodyContentLength() > 0)
