@@ -90,9 +90,7 @@ int main(int argc, char **argv)
                         es.seq[j] = j;
 
                     boost::chrono::system_clock::time_point call_start = boost::chrono::system_clock::now();
-printf("Begin call %d\n", i);
                     ret = proxy->duplicate(es);
-printf("End call %d\n", i);
                     duplicate_call_seconds[i] = boost::chrono::system_clock::now() - call_start;
                     es.valor3 = NULL;
                     Estructura_finalize(&es);

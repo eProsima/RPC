@@ -189,22 +189,33 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     
     $if(!operation.oneway)$
     // TODO Cambiar
-    char response[8192];
+    size_t responseBufferSize = 8192, dataToRead = 0;
+    char *response = (char*)calloc(responseBufferSize, sizeof(char));
+    int retCode = proxyTransport.receive(response, responseBufferSize, dataToRead);
     
-    size_t bytesReaded = proxyTransport.receive(response, 8192, 0);
-    
-    if(bytesReaded > 0)
+    if((retCode == 0 || retCode == -2) && dataToRead > 0)
     {
         if(((int32_t*)response)[0] == 0x46434452)
         {
             size_t cdrLength = ((int32_t*)response)[1];
             
-            if(bytesReaded < cdrLength + 8)
+            if(dataToRead < cdrLength + 8)
             {
-                // TODO Read more bytes.
+                size_t moreDataToRead = cdrLength + 8 - dataToRead;
+                
+                while((retCode = proxyTransport.receive(response, responseBufferSize, moreDataToRead)) > 0)
+                {
+                    response = (char*)realloc(response, responseBufferSize + retCode);
+                    responseBufferSize += retCode;
+                }
+                
+                if((retCode != 0 || retCode != -2) || ((retCode == 0 || retCode == -2) && (moreDataToRead < cdrLength + 8 - dataToRead)))
+                {
+                    // TODO Error
+                }
             }
             
-            eProsima::FastBuffer dcdrBuffer(response, 8192);
+            eProsima::FastBuffer dcdrBuffer(response, responseBufferSize);
             eProsima::FastCdr dcdr(dcdrBuffer);
             
             dcdr.jump(8);

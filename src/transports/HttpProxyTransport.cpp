@@ -112,6 +112,7 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
         {
             size_t dataToRead = 0;
 
+            // TODO Es necesario el while si se pasa dataToRead a 0?
             // TODO change: first use read in tcp (using 0 in dataToRead, but if the buffer was resized, then use read_some pasing >0 in dataToRead
             // Podria haber un bucle si mientras intenta ser un buffer grande alguien le satura a llamadas.
             while((retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],

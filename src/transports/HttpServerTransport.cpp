@@ -19,7 +19,7 @@ using namespace transport;
 
 HttpServerTransport::HttpServerTransport(const std::string &to_connect) : m_tcptransport(to_connect)
 {
-    m_tcptransport.onBossProcess = boost::bind(&HttpServerTransport::worker, this, _1);
+    m_tcptransport.onBossProcess = boost::bind(&HttpServerTransport::bossProcess, this, _1);
 }
 
 HttpServerTransport::~HttpServerTransport()
@@ -195,7 +195,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
 //printf("VUELTA %d\n", retCode);
         } while(retCode == 0); // TODO Keep alive.
 
-//printf("CERRADA CONEXIÖN %d\n", retCode);
+printf("CERRADA CONEXIÖN %d\n", retCode);
     }
     else
     {

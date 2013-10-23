@@ -204,6 +204,7 @@ void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *conn
     }
 }
 
+// dataToRead == 0 -> es bloqueante
 // 0 OK
 // -1 ERROR
 // -2 Connection close
