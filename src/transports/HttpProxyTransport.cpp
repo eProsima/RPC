@@ -101,7 +101,7 @@ bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
     return false;
 }
 
-size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
+int HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
 {
     if(buffer != NULL)
     {
@@ -109,37 +109,41 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
         int retCode = 0;
 
         //TODO Pensar en poner un time out que se sincronice con el del transporte TCP or solamente es necesario el del transporte TCP.
-        while(retCode == 0 && (retCode = readHeaders(*httpMessage)) == 1)
+        while(retCode == 0 && (retCode = readHeaders(*httpMessage)) == -1)
         {
             size_t dataToRead = 0;
 
-            // TODO Es necesario el while si se pasa dataToRead a 0?
-            // TODO change: first use read in tcp (using 0 in dataToRead, but if the buffer was resized, then use read_some pasing >0 in dataToRead
-            // Podria haber un bucle si mientras intenta ser un buffer grande alguien le satura a llamadas.
-            while((retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
-                            getReadBufferEmptySpace(), dataToRead)) > 0)
+            // if there are less than 100 bytes. Increase buffer.
+            if(getReadBufferEmptySpace() < 100)
             {
-                retCode = resizeReadBuffer(retCode);
+                retCode = resizeReadBuffer(100);
+
+                if(retCode != 0)
+                {
+                    // TODO Error resizing buffer..
+                    return -1;
+                }
             }
 
-            // Retcode will never be -2 from receive because we said to read 0 bytes.
-            if((retCode == 0 || retCode == -2) && dataToRead > 0)
-            {
-                increaseReadBufferFillUse(dataToRead);
-            }
+            // Read TCP buffer.
+            retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
+                            getReadBufferEmptySpace(), dataToRead);
 
-            // If there is not any data, sleep 100 milliseconds.
-            // TODO Mirar si boost tiene espera pasiva como eselect de linux.
-            if(dataToRead == 0)
-                sleep(10);
+            if(retCode >= 0)
+            {
+                if(dataToRead > 0)
+                    increaseReadBufferFillUse(dataToRead);
+                else
+                    sleep(10);
+            }
         }
 
         // If connection close, try read headers.
-        if(retCode == -2)
+        if(retCode == 1)
             retCode = readHeaders(*httpMessage);
 
         // If process headers was successful.
-        if(retCode == 0)
+        if(retCode >= 0)
         {
             // Get body.
             if(httpMessage->getBodyContentLength() > 0 && !httpMessage->getBodyContentType().empty())
@@ -157,7 +161,7 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
                         retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
                                 dataToRead, dataToRead);
 
-                        if((retCode == -2 || retCode == 0) && dataToRead > 0)
+                        if(retCode >= 0)
                         {
                             increaseReadBufferFillUse(dataToRead);
                         }
@@ -165,7 +169,7 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
                 }
 
                 // Get Body
-                if((retCode == 0 || retCode == -2) && getReadBufferLeaveUsedSpace() >= httpMessage->getBodyContentLength())
+                if(retCode >= 0 && getReadBufferLeaveUsedSpace() >= httpMessage->getBodyContentLength())
                 {
                     httpMessage->setBodyData(std::string(&m_readBuffer[m_readBufferCurrentPointer], httpMessage->getBodyContentLength()));
                     increaseReadBufferCurrentPointer(httpMessage->getBodyContentLength());
@@ -182,7 +186,7 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
             }
 
             // Send to protocol
-            if(retCode == 0)
+            if(retCode >= 0)
             {
                 refillReadBuffer();
                 return 1;
@@ -194,7 +198,7 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
         // TODO print error.
     }
 
-    return 0;
+    return -1;
 }
 
 bool HttpProxyTransport::resizeWriteBuffer(size_t minSize)
@@ -285,10 +289,12 @@ void HttpProxyTransport::refillReadBuffer()
     m_readBufferCurrentPointer = 0;
 }
 
-// 1 Faltan datos en el buffer. Leer mas.
+// 0 OK
+// -1 Error Faltan datos en el buffer. Leer mas.
+// -2 Other error
 int HttpProxyTransport::readHeaders(HttpMessage &httpMessage)
 {
-    int retCode = 0;
+    int retCode = -2;
 
     // Read Version.
     if(!httpMessage.getVersionCompatible())
@@ -327,9 +333,9 @@ int HttpProxyTransport::readVersion(HttpMessage &httpMessage)
         }
     }
     else
-        return 1;
+        return -1;
 
-    return -1;
+    return -2;
 }
 
 int HttpProxyTransport::readResponseCode(HttpMessage &httpMessage)
@@ -347,9 +353,9 @@ int HttpProxyTransport::readResponseCode(HttpMessage &httpMessage)
         }
     }
     else
-        return 1;
+        return -1;
 
-    return -1;
+    return -2;
 }
 
 int HttpProxyTransport::readHeaderLines(HttpMessage &httpMessage)
@@ -397,11 +403,11 @@ int HttpProxyTransport::readHeaderLines(HttpMessage &httpMessage)
         else
         {
             // TODO print error. mal formed.
-            return -1;
+            return -2;
         }
     }
 
-    return 1;
+    return -1;
 }
 
 int HttpProxyTransport::readResponseStatus(HttpMessage &httpMessage)
@@ -427,9 +433,9 @@ int HttpProxyTransport::readResponseStatus(HttpMessage &httpMessage)
         else
         {
             // TODO print error. mal formed.
-            return -1;
+            return -2;
         }
     }
 
-    return 1;
+    return -1;
 }

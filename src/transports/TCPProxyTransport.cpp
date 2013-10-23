@@ -102,7 +102,7 @@ bool TCPProxyTransport::send(const void* buffer, const size_t bufferSize)
 // 0 OK
 // 1 Connection close
 // -1 ERROR
-size_t TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
+int TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
 {
     boost::system::error_code ec = boost::system::error_code();
 

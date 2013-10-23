@@ -40,9 +40,9 @@ namespace eprosima
                      */
                     virtual const char* getType() const {return "HTTP";}
 
-                    virtual bool connect();
-                    virtual bool send(const void* buffer, const size_t bufferSize);
-                    virtual size_t receive(void *buffer, const size_t bufferSize, size_t &dataToRead);
+                    bool connect();
+                    bool send(const void* buffer, const size_t bufferSize);
+                    int receive(void *buffer, const size_t bufferSize, size_t &dataToRead);
 
                 private:
 

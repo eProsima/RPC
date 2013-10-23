@@ -41,7 +41,7 @@ namespace eprosima
 
                     bool send(const void* buffer, const size_t bufferSize);
 
-                    size_t receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
+                    int receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
             };
         }// namespace transport
     }// namespace rpcdds
