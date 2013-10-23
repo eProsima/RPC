@@ -56,31 +56,42 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
 void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint) 
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
-    size_t moreDataToRead = 0;
+    size_t bufferUse = dataLength;
     
     if(data != NULL && endpoint != NULL)
     {
         if(((int32_t*)data)[0] == 0x46434452)
         {
-            size_t cdrLength = ((int32_t*)data)[1];
+            size_t cdrLength = ((int32_t*)data)[1] + 8;
             
-            if(dataLength < cdrLength + 8)
+            if(bufferUse < cdrLength)
             {
-                data = realloc(data, cdrLength + 8);
+                data = realloc(data, cdrLength);
                 
-                moreDataToRead = cdrLength + 8 - dataLength;
+                size_t dataToRead = cdrLength - bufferUse;
                 ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
-                int retCode = serverTransport.receive((char*)data, cdrLength + 8, moreDataToRead, endpoint);
+                int retCode = serverTransport.receive((char*)data, cdrLength, dataToRead, endpoint);
                 
-                if((retCode != 0 && retCode != -2) || (dataLength + moreDataToRead != cdrLength + 8))
+                if(retCode >= 0)
+                {
+                    bufferUse += dataToRead;
+                    
+                    if(bufferUse < cdrLength)
+                    {
+                        // TODO error
+                        printf("ERROR No se ha leido todos los datos necesarios\n");
+                        return;
+                    }
+                }
+                else
                 {
                     // TODO error
-                    printf("ERROR No se pudo leer todo\n");
+                    printf("ERROR Fallo leyendo\n");
                     return;
                 }
             }
             
-            eProsima::FastBuffer dcdrBuffer((char*)data, dataLength);
+            eProsima::FastBuffer dcdrBuffer((char*)data, bufferUse);
             eProsima::FastCdr dcdr(dcdrBuffer);
             
             dcdr.jump(8);
@@ -201,31 +212,33 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     
     $if(!operation.oneway)$
     // TODO Cambiar
-    size_t responseBufferSize = 8192, dataToRead = 0, moreDataToRead = 0;
+    size_t responseBufferSize = 8192, responseBufferUse = 0;
     char *response = (char*)calloc(responseBufferSize, sizeof(char));
-    int retCode = proxyTransport.receive(response, responseBufferSize, dataToRead);
+    int retCode = proxyTransport.receive(response, responseBufferSize, responseBufferUse);
     
-    if((retCode == 0 || retCode == -2) && dataToRead > 7)
+    if(retCode >= 0 && responseBufferUse >= 8)
     {
         if(((int32_t*)response)[0] == 0x46434452)
         {
-            size_t cdrLength = ((int32_t*)response)[1];
+            size_t cdrLength = ((int32_t*)response)[1] + 8;
             
-            if(dataToRead < cdrLength + 8)
-            {                
-                if(responseBufferSize < cdrLength + 8)
+            if(responseBufferUse < cdrLength)
+            {   
+                // A buffer more big is needed.             
+                if(responseBufferSize < cdrLength)
                 {
-                    response = (char*)realloc(response, cdrLength + 8);
-                    responseBufferSize = cdrLength + 8;
+                    response = (char*)realloc(response, cdrLength);
+                    responseBufferSize = cdrLength;
                 }
                 
-                moreDataToRead = cdrLength + 8 - dataToRead;
-                retCode = proxyTransport.receive(response, responseBufferSize, moreDataToRead);
+                size_t dataToRead = cdrLength - responseBufferUse;
+                retCode = proxyTransport.receive(response, responseBufferSize, dataToRead);
+                responseBufferUse += dataToRead;
             }
             
-            if(retCode == 0 || (retCode == -2 && (dataToRead + moreDataToRead == cdrLength + 8)))
+            if(retCode > 0 && responseBufferUse >= cdrLength)
             {
-                eProsima::FastBuffer dcdrBuffer(response, responseBufferSize);
+                eProsima::FastBuffer dcdrBuffer(response, responseBufferUse);
                 eProsima::FastCdr dcdr(dcdrBuffer);
                 
                 dcdr.jump(8);
@@ -259,6 +272,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     {
         // TODO print error.
     }
+    
+    free(response);
     $endif$
     
     $if(operation.rettypeparam)$

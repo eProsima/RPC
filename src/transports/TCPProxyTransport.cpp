@@ -98,46 +98,40 @@ bool TCPProxyTransport::send(const void* buffer, const size_t bufferSize)
 	return false;
 }
 
+// dataToRead == 0 -> es bloqueante
 // 0 OK
+// 1 Connection close
 // -1 ERROR
-// -2 Connection close
-// >0 bytes needed in the buffer to read.
 size_t TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
 {
     boost::system::error_code ec = boost::system::error_code();
-    size_t _dataToRead = dataToRead;
 
     if(buffer != NULL && bufferSize > 0)
     {
         // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
         
         // Check the space in the buffer.
-        if(bufferSize < _dataToRead)
+        if(bufferSize < dataToRead)
         {
             dataToRead = 0;
-            return _dataToRead - bufferSize;
+            return -1;
         }
 
         // TODO check ec.
-        size_t bytes_read = 0;
-
-
-        if(_dataToRead > 0)
+        if(dataToRead > 0)
         {
             // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-            bytes_read = boost::asio::read(*socket_, boost::asio::buffer(buffer, _dataToRead), ec);
+            dataToRead = boost::asio::read(*socket_, boost::asio::buffer(buffer, dataToRead), ec);
         }
         else
         {
-            bytes_read = socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
+            dataToRead = socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
         }
-
-        dataToRead = bytes_read;
 
         if(ec != boost::asio::error::eof)
             return 0;
         else
-            return -2;
+            return 1;
     }
 
     return -1;

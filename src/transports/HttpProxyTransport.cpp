@@ -100,6 +100,7 @@ bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
 
     return false;
 }
+
 size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
 {
     if(buffer != NULL)
@@ -150,20 +151,16 @@ size_t HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t
                             (retCode = resizeReadBuffer(httpMessage->getBodyContentLength() - getReadBufferLeaveSpace())) == 0)
                     {
                         // TODO Timeout
-                        do
+                        // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
+                        size_t dataToRead = httpMessage->getBodyContentLength() - getReadBufferLeaveUsedSpace();
+
+                        retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
+                                dataToRead, dataToRead);
+
+                        if((retCode == -2 || retCode == 0) && dataToRead > 0)
                         {
-                            // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
-                            size_t dataToRead = httpMessage->getBodyContentLength() - getReadBufferLeaveUsedSpace();
-
-                            retCode = m_tcptransport.receive(&m_readBuffer[m_readBufferUse],
-                                    dataToRead, dataToRead);
-
-                            if((retCode == -2 || retCode == 0) && dataToRead > 0)
-                            {
-                                increaseReadBufferFillUse(dataToRead);
-                            }
+                            increaseReadBufferFillUse(dataToRead);
                         }
-                        while((retCode == 0) && (dataToRead < (httpMessage->getBodyContentLength() - getReadBufferLeaveUsedSpace())));
                     }
                 }
 

@@ -206,13 +206,11 @@ void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *conn
 
 // dataToRead == 0 -> es bloqueante
 // 0 OK
+// 1 Connection close
 // -1 ERROR
-// -2 Connection close
-// >0 bytes needed in the buffer to read.
 int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint)
 {
     boost::system::error_code ec = boost::system::error_code();
-    size_t _dataToRead = dataToRead;
 
     if(buffer != NULL && bufferLength > 0 && endpoint != NULL)
     {
@@ -220,35 +218,29 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
 
         if(connection != NULL)
         {
-            std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
-
             // Check the space in the buffer.
-            if(bufferLength < _dataToRead)
+            if(bufferLength < dataToRead)
             {
                 dataToRead = 0;
-                return _dataToRead - bufferLength;
+                return -1;
             }
 
             // TODO check ec.
-            size_t bytes_read = 0;
-            
 
-            if(_dataToRead > 0)
+            if(dataToRead > 0)
             {
                 // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-                bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, _dataToRead), ec);
+                dataToRead = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, dataToRead), ec);
             }
             else
             {
-                bytes_read = connection->socket_->read_some(boost::asio::buffer(buffer, bufferLength), ec);
+                dataToRead = connection->socket_->read_some(boost::asio::buffer(buffer, bufferLength), ec);
             }
-
-            dataToRead = bytes_read;
 
             if(ec != boost::asio::error::eof)
                 return 0;
             else
-                return -2;
+                return 1;
         }
         else
         {
