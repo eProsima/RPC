@@ -41,7 +41,7 @@ namespace eprosima
                         
                         bool activateInterface(const char* interfaceName);
                         
-                        static void worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
+                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
                         
                         $ctx.interfaces : { interface |
                         $interface.operations : { operation |

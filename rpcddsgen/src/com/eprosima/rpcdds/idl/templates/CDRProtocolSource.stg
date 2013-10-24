@@ -53,16 +53,16 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
     return true;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint) 
+void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint) 
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     size_t bufferUse = dataLength;
     
-    if(data != NULL && endpoint != NULL)
+    if(dataLength > 0 && endpoint != NULL)
     {
-        if(((int32_t*)data)[0] == 0x46434452)
+        if(((int32_t*&)data)[0] == 0x46434452)
         {
-            size_t cdrLength = ((int32_t*)data)[1] + 8;
+            size_t cdrLength = ((int32_t*&)data)[1] + 8;
             
             if(bufferUse < cdrLength)
             {
@@ -70,7 +70,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataL
                 
                 size_t dataToRead = cdrLength - bufferUse;
                 ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
-                int retCode = serverTransport.receive((char*)data, cdrLength, dataToRead, endpoint);
+                int retCode = serverTransport.receive(&((char*&)data)[bufferUse], cdrLength, dataToRead, endpoint);
                 
                 if(retCode >= 0)
                 {
@@ -232,7 +232,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
                 }
                 
                 size_t dataToRead = cdrLength - responseBufferUse;
-                retCode = proxyTransport.receive(response, responseBufferSize, dataToRead);
+                retCode = proxyTransport.receive(&response[responseBufferUse], responseBufferSize, dataToRead);
                 responseBufferUse += dataToRead;
             }
             

@@ -151,7 +151,7 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
 
             if(numData > 0)
             {
-                char *buffer = (char*)calloc(numData, 1);
+                void *buffer = calloc(numData, sizeof(char));
 
                 if(buffer != NULL)
                 {

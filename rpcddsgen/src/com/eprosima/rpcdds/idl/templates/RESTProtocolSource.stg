@@ -69,7 +69,7 @@ int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
 	return 0;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
+void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );

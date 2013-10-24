@@ -156,31 +156,22 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                                 (retCode = connection->resizeReadBuffer(httpMessage.getBodyContentLength() - connection->getReadBufferLeaveSpace())) == 0)
                         {
                             // TODO Timeout
-                            
-                                // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
-                                size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
 
-                                retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
-                                        dataToRead, dataToRead, connection);
+                            // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
+                            size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
 
-                                if(retCode >= 0)
-                                {
-                                    connection->increaseReadBufferFillUse(dataToRead);
+                            retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
+                                    dataToRead, dataToRead, connection);
 
-                                    if(connection->getReadBufferLeaveUsedSpace() < httpMessage.getBodyContentLength())
-                                    {
-                                        // TODO error.
-                                        retCode = -1;
-                                        // TODO continue?
-                                    }
-                                }
-
-                            while((retCode == 0) && (dataToRead < (httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace())));
+                            if(retCode >= 0)
+                            {
+                                connection->increaseReadBufferFillUse(dataToRead);
+                            }
                         }
                     }
 
                     // Get Body
-                    if((retCode == 0 || retCode == -2) && connection->getReadBufferLeaveUsedSpace() >= httpMessage.getBodyContentLength())
+                    if(retCode >= 0 && connection->getReadBufferLeaveUsedSpace() >= httpMessage.getBodyContentLength())
                     {
                         httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
                         connection->increaseReadBufferCurrentPointer(httpMessage.getBodyContentLength());
@@ -200,7 +191,8 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                 // Send to protocol
                 if(retCode >= 0)
                 {
-                    getCallback()(getLinkedProtocol(), &httpMessage, 0, connection);
+                    void *auxPtr = &httpMessage;
+                    getCallback()(getLinkedProtocol(), auxPtr, 0, connection);
                     connection->refillReadBuffer();
                 }
             }

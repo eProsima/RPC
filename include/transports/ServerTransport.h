@@ -39,7 +39,7 @@ namespace eprosima
              */
             class RPCDDS_DllAPI ServerTransport : public Transport
             {
-                typedef void (*ServerTransport_Callback)(eprosima::rpcdds::protocol::Protocol&, void*, size_t, Endpoint*);
+                typedef void (*ServerTransport_Callback)(eprosima::rpcdds::protocol::Protocol&, void*&, size_t, Endpoint*);
 
                 public:
 
