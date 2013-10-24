@@ -121,7 +121,7 @@ inclVS() ::= <<
 
 libsMake(example, version) ::= <<
  -L\$(NDDSHOME)/lib/$example$ -L\$(RPCDDSHOME)/lib/$example$ \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds-$version$
+       -lrpcdds-$version$ -lnddsc -lnddscore -lnddscpp
 >>
 
 libsVS(example) ::= <<
