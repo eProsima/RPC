@@ -199,7 +199,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
             //printf("VUELTA %d\n", retCode);
         } while(retCode == 0); // TODO Keep alive.
 
-        printf("CERRADA CONEXIÖN %d\n", retCode);
+        //printf("CERRADA CONEXIÖN %d\n", retCode);
     }
     else
     {
