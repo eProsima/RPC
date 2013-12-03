@@ -396,7 +396,12 @@ public class Context
      * @param value Value of the annotation.
      */
     public void addTmpAnnotation(String id, String value)
-    {
+    {    	
+    	if(id.equals("RESOURCES_BASE_URI")) {
+    		addGlobalAnnotation(id, value);
+    		return;
+    	}
+    	
     	String oldValue = m_tmpAnnotations.put(id, value);
     	
     	// TODO Lanzar una excepción.

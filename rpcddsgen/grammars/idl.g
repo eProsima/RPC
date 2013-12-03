@@ -64,6 +64,8 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 	    |   home_dcl SEMI!
 	    |   global_annotation
 	    |   annotation
+        |   annotation_type
+        |   annotation_application
 	    )
 	;
 
@@ -203,7 +205,8 @@ export returns [Pair<Export, TemplateGroup> etg = null]
 	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}}  // Operation
 	    |   type_id_dcl SEMI!
 	    |   type_prefix_dcl SEMI!
-	    |   annotation
+        |   annotation
+        |   annotation_application
 	    )
 	;
 
@@ -551,7 +554,7 @@ type_dcl returns [Pair<TypeDeclaration, TemplateGroup> returnPair = null]
 	|   (union_type) => ttg=union_type
 	|   ttg=enum_type
 	|   "native"^ simple_declarator
-	|   constr_forward_decl
+    |   constr_forward_decl
 	)
 	{
 	    if(ttg!=null)
@@ -743,6 +746,36 @@ any_type
 object_type
 	:   "Object"
 	;
+	
+annotation_type returns [TypeCode returnTypeCode = null]
+{
+    String name = null;
+    AnnotationTypeCode annotationTP = null;
+}
+    :   AT
+        "Annotation"
+        "local"
+        "interface"^
+        name=identifier
+        {
+           annotationTP = new AnnotationTypeCode(ctx.getScope(), name);
+        }
+        LCURLY! annotation_member_list[annotationTP] RCURLY!
+        {
+           // Add anotation typecode to the map with all typecodes.
+           ctx.addTypeCode(annotationTP.getScopedname(), annotationTP);
+           // Return the returned data.
+           returnTypeCode = annotationTP;
+        }
+    ;
+    
+annotation_member_list [AnnotationTypeCode annotationTP]
+{
+    Vector<Pair<String, TypeCode>> declvector = null;
+}
+    :   (attr_dcl SEMI!)*
+    ;
+    
 
 struct_type returns [Pair<TypeCode, TemplateGroup> returnPair = null]
 {
@@ -1457,7 +1490,18 @@ annotation
         {
             ctx.addTmpAnnotation(id, value);
         }
-    ;    
+    ;  
+    
+annotation_application
+    {
+        String id = null, value = null;
+    }
+    :
+        AT id=identifier LPAREN! value=literal RPAREN!
+        {
+            ctx.addTmpAnnotation(id, value);
+        }
+    ;   
 
 /* literals */
 integer_literal returns [String literal = LT(1).getText()]
@@ -1940,4 +1984,9 @@ options {
 							{_begin++;$setType(IDENT);}
 	;
 
-
+AT
+options {
+  paraphrase = "@";
+}
+    :   '@'
+    ;

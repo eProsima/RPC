@@ -112,6 +112,14 @@ public class IDLConverter {
 
 		writer.println(getTabs() + line);
 	}
+	
+	private void writeAnnotation(String name) {
+		writeln("@Annotation");
+		writeln("local interface " + name + " {");
+		writeln("\tattribute string value;");
+		writeln("}");
+		writeln();
+	}
 
 	/*
 	 * !
@@ -133,6 +141,21 @@ public class IDLConverter {
 		}
 	}
 
+	private String getFileNameWithoutExtension(String originalName) {
+		
+		int lastSlash = originalName.lastIndexOf("\\");
+		if (lastSlash != -1) {
+			originalName = originalName.substring(lastSlash + 1, originalName.length() - lastSlash);
+		}
+		
+		int lastDot = originalName.lastIndexOf(".");
+		if (lastDot != -1) {
+			return originalName.substring(0, lastDot);
+		} else {
+			return originalName;
+		}
+	}
+	
 	/*
 	 * !
 	 * 
@@ -598,7 +621,8 @@ public class IDLConverter {
 
 		toIDLRequestUnion(method);
 
-		writeln("[METHOD(\"" + method.getName() + "\")]");
+		//writeln("[METHOD(\"" + method.getName() + "\")]");
+		writeln("@METHOD(\"" + method.getName() + "\")");
 		toIDLBodyRequestAnnotation(method);
 
 		writeln(getResponseType(method) + " " + getMethodId(method) + "("
@@ -648,7 +672,8 @@ public class IDLConverter {
 				|| method.getRequest().getRepresentations().size() == 0)
 			return;
 
-		writeln("[BODY(\"" + getRequestType(method) + "\")]");
+		//writeln("[BODY(\"" + getRequestType(method) + "\")]");
+		writeln("@BODY(\"" + getRequestType(method) + "\")");
 	}
 
 	/*!
@@ -716,7 +741,8 @@ public class IDLConverter {
 
 		String completePath = resource.getCompletePath();
 		if (completePath.length() > 0) {
-			writeln("[PATH(\"" + completePath + "\")]");
+			//writeln("[PATH(\"" + completePath + "\")]");
+			writeln("@PATH(\"" + completePath + "\")");
 		}
 
 		writeln("interface "
@@ -750,14 +776,54 @@ public class IDLConverter {
 		if (resources == null || writer == null)
 			return;
 
+		/*
 		if (resources.getBase().length() > 0) {
 			writeln("[[RESOURCES_BASE_URI(\"" + resources.getBase() + "\")]]");
 			writeln();
 		}
+		*/
 
 		for (Resource resource : resources.getResources()) {
 			toIDL(resource);
 		}
+	}
+		
+	private void toIDLMainModule() throws IDLConverterException {
+		if (writer == null)
+			return;
+		
+		writeAnnotation("RESOURCES_BASE_URI");
+		
+		//
+		toIDL(application.getGrammar());
+		if (application.getTargetNamespace().length() > 0) {
+			writeln("module "
+					+ getCompatibleName(application.getTargetNamespace()));
+		} else {
+			// XXX TODO UN SOLO RESOURCES, NO UN ARRAY
+			if(application.getResources().size() > 0) {
+				Resources resources = application.getResources().get(0);
+				writeln("@RESOURCES_BASE_URI(\"" + resources.getBase() + "\")");
+			}
+			
+			writeln("module "
+					+ getFileNameWithoutExtension(destinationFile));
+		}
+		writeln("{");
+		++numTabs;
+		
+		writeAnnotation("PATH");
+		writeAnnotation("METHOD");
+		writeAnnotation("BODY");
+
+		for (Resources resources : application.getResources()) {
+			toIDL(resources);
+		}
+
+		--numTabs;
+		writeln("};");
+		writeln();
+		//
 	}
 
 	/*
@@ -777,25 +843,7 @@ public class IDLConverter {
 			throw new IDLConverterException(e.getMessage());
 		}
 
-		//
-		toIDL(application.getGrammar());
-		if (application.getTargetNamespace().length() > 0) {
-			writeln("module "
-					+ getCompatibleName(application.getTargetNamespace()));
-			writeln("{");
-			++numTabs;
-		}
-
-		for (Resources resources : application.getResources()) {
-			toIDL(resources);
-		}
-
-		if (application.getTargetNamespace().length() > 0) {
-			--numTabs;
-			writeln("};");
-			writeln();
-		}
-		//
+		toIDLMainModule();
 
 		if (writer != null)
 			writer.close();

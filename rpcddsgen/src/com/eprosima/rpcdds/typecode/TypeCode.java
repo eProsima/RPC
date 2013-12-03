@@ -33,6 +33,7 @@ public abstract class TypeCode
     public static final int KIND_WSTRING = 0x00000015;
     public static final int KIND_VALUE = 0x00000016;
     public static final int KIND_SPARSE = 0x00000017;
+    public static final int KIND_ANNOTATION = 0x00000018;
     
     protected static StringTemplateGroup m_typesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
     protected static StringTemplateGroup m_stringtemplatetypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
