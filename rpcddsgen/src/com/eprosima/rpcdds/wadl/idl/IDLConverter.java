@@ -1,5 +1,6 @@
 package com.eprosima.rpcdds.wadl.idl;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -143,7 +144,7 @@ public class IDLConverter {
 
 	private String getFileNameWithoutExtension(String originalName) {
 		
-		int lastSlash = originalName.lastIndexOf("\\");
+		int lastSlash = originalName.lastIndexOf(File.separator);
 		if (lastSlash != -1) {
 			originalName = originalName.substring(lastSlash + 1, originalName.length() - lastSlash);
 		}
@@ -460,7 +461,7 @@ public class IDLConverter {
 	
 	private void toIDLStruct(ArrayList<Response> responses, String responseType) throws IDLConverterException {
 		
-		boolean hasEmptyReturnType = false;
+		boolean hasEmptyReturnType = true; // Siempre dejamos la opción del return type vacío
 		boolean hasXMLMediaType = false;
 		boolean hasJSONMediaType = false;
 		for (Response response : responses) {			
@@ -556,7 +557,7 @@ public class IDLConverter {
 		writeln("{");
 		++numTabs;
 
-		boolean hasEmptyReturnType = false;
+		boolean hasEmptyReturnType = true; // Siempre dejamos la opción del return type vacío
 		boolean hasXMLMediaType = false;
 		boolean hasJSONMediaType = false;
 		for (Response response : responses) {			
