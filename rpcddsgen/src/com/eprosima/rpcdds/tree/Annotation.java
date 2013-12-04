@@ -1,4 +1,6 @@
-package com.eprosima.rpcdds.typecode;
+package com.eprosima.rpcdds.tree;
+
+import com.eprosima.rpcdds.typecode.*;
 
 import com.eprosima.rpcdds.util.Pair;
 
@@ -6,11 +8,11 @@ import java.util.List;
 
 import org.antlr.stringtemplate.StringTemplate;
 
-public class AnnotationTypeCode extends MemberedTypeCode
+public class Annotation extends MemberedTypeCode
 {
-    public AnnotationTypeCode(String scope, String name)
+    public Annotation(String scope, String name)
     {
-        super(TypeCode.KIND_ANNOTATION, scope, name);
+        super(TypeCode.KIND_NULL, scope, name);
     }
     
     @Override
@@ -29,6 +31,7 @@ public class AnnotationTypeCode extends MemberedTypeCode
         return st.toString();
     }
     
+    /// Copy from StructTypeCode. Not necessary.
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         List<Member> members = getMembers();
@@ -68,4 +71,5 @@ public class AnnotationTypeCode extends MemberedTypeCode
     {
         return Integer.toString(getMaxSerializedSizeWithoutAlignment(0));
     }
+    /// End copy.
 }

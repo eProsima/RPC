@@ -12,6 +12,7 @@ public class DefinitionContainer
     public void add(Definition def)
     {
         m_definitions.add(def);
+        def.setParent(this);
     }
     
     public ArrayList<Definition> getDefinitions()

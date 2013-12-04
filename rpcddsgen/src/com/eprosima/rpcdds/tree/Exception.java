@@ -42,6 +42,12 @@ public class Exception extends ScopedObject implements Export, Definition
     }
 	
 	@Override
+    public boolean isModule()
+    {
+        return false;
+    }
+	
+	@Override
 	public boolean isInterface()
     {
     	return false;

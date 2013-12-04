@@ -26,6 +26,12 @@ public class TypeDeclaration implements Definition, Export
     }
     
     @Override
+    public boolean isModule()
+    {
+        return false;
+    }
+    
+    @Override
     public boolean isOperation()
     {
         return false;

@@ -62,8 +62,6 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 	    |   (("abstract" | "custom")? "eventtype") => event SEMI!
 	    |   component SEMI!
 	    |   home_dcl SEMI!
-	    |   global_annotation
-	    |   annotation
         |   annotation_type
         |   annotation_application
 	    )
@@ -87,13 +85,16 @@ module returns [Pair<Module, TemplateGroup> returnPair = null]
 	     {
 	       // Create the Module object.
 	       moduleObject = new Module(name);
-	       
+	       // Set temporarily annotations.
+           ctx.setTmpAnnotations(moduleObject);
+           
 	       if(ctx.isInScopedFile() || ctx.isScopeLimitToAll())
            {
                moduleTemplates = tmanager.createTemplateGroup("module");
 	           // Set the module object to the TemplateGroup of the module.
 	           moduleTemplates.setAttribute("module", moduleObject);
 	           moduleTemplates.setAttribute("ctx", ctx);
+	           ctx.setCurrentModule(moduleObject);
 	       }
 	       // Update to a new namespace.
 	       ctx.setScope(old_scope + name + "::");
@@ -205,7 +206,6 @@ export returns [Pair<Export, TemplateGroup> etg = null]
 	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}}  // Operation
 	    |   type_id_dcl SEMI!
 	    |   type_prefix_dcl SEMI!
-        |   annotation
         |   annotation_application
 	    )
 	;
@@ -747,10 +747,10 @@ object_type
 	:   "Object"
 	;
 	
-annotation_type returns [TypeCode returnTypeCode = null]
+annotation_type
 {
     String name = null;
-    AnnotationTypeCode annotationTP = null;
+    Annotation annotation = null;
 }
     :   AT
         "Annotation"
@@ -758,22 +758,26 @@ annotation_type returns [TypeCode returnTypeCode = null]
         "interface"^
         name=identifier
         {
-           annotationTP = new AnnotationTypeCode(ctx.getScope(), name);
+           annotation = new Annotation(ctx.getScope(), name);
         }
-        LCURLY! annotation_member_list[annotationTP] RCURLY!
+        LCURLY! annotation_member_list[annotation] RCURLY!
         {
            // Add anotation typecode to the map with all typecodes.
-           ctx.addTypeCode(annotationTP.getScopedname(), annotationTP);
-           // Return the returned data.
-           returnTypeCode = annotationTP;
+           ctx.addAnnotation(annotation.getScopedname(), annotation);
         }
     ;
     
-annotation_member_list [AnnotationTypeCode annotationTP]
+annotation_member_list [Annotation annotation]
 {
     Vector<Pair<String, TypeCode>> declvector = null;
 }
-    :   (attr_dcl SEMI!)*
+    :   (
+            declvector=attr_dcl SEMI!
+            {
+                for(int count = 0; count < declvector.size(); ++count)
+                   annotation.addMember(new Member(declvector.get(count).second(), declvector.get(count).first()));
+            }
+        )+
     ;
     
 
@@ -827,6 +831,7 @@ member returns [Vector<Pair<String, TypeCode>> newVector = new Vector<Pair<Strin
 		           {
 		               // Array declaration
 		               declvector.get(count).second().setContentTypeCode(typecode);
+		               newVector.add(new Pair<String, TypeCode>(declvector.get(count).first(), declvector.get(count).second()));
 		               
 		           }
 		           else
@@ -1046,9 +1051,9 @@ fixed_array_size returns [String literal = null]
 	:   LBRACK! literal=positive_int_const RBRACK!
 	;
 
-attr_dcl
+attr_dcl returns [Vector<Pair<String, TypeCode>> declvector = null]
 	:   readonly_attr_spec
-	|   attr_spec
+	|   declvector=attr_spec
 	;
 
 except_dcl returns [Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> returnPair = null]
@@ -1291,14 +1296,36 @@ readonly_attr_declarator
 	    )
 	;
 
-attr_spec
-	:   "attribute"^ param_type_spec attr_declarator
+attr_spec returns [Vector<Pair<String, TypeCode>> newVector = new Vector<Pair<String, TypeCode>>()]
+{
+    TypeCode typecode = null;
+    Vector<Pair<String, ContainerTypeCode>> declvector = null;
+}
+	:   "attribute"^ typecode=param_type_spec declvector=attr_declarator
+    	{
+    	   if(typecode != null)
+           {
+               for(int count = 0; count < declvector.size(); ++count)
+               {
+                   // attr_declarator always is a simple declarator. Not a complex (array):
+                   // Simple declaration
+                   newVector.add(new Pair<String, TypeCode>(declvector.get(count).first(), typecode));
+               }
+           }
+           else
+           {
+               throw new RuntimeException("In function 'attr_spec': null pointer.");
+           }
+    	}
 	;
 
-attr_declarator
-	:   simple_declarator
+attr_declarator returns [Vector<Pair<String, ContainerTypeCode>> declvector = new Vector<Pair<String, ContainerTypeCode>>()]
+{
+    Pair<String, ContainerTypeCode> pair = null;
+}
+	:   pair=simple_declarator{declvector.add(pair);}
 	    ( ("getraises" | "setraises") => attr_raises_expr
-	    | (COMMA! simple_declarator)*
+	    | (COMMA! pair=simple_declarator{declvector.add(pair);})*
 	    )
 	;
 
@@ -1467,30 +1494,7 @@ event_elem_dcl
 
 // event_forward_dcl
 // 	:
-// 	;
-
-/* Annotations introduces to support RESTful in RPCDDS */
-global_annotation
-    {
-        String id = null, value = null;
-    }
-    :
-        LBRACK! LBRACK! id=identifier LPAREN! value=literal RPAREN! RBRACK! RBRACK!
-        {
-            ctx.addGlobalAnnotation(id, value);
-        }
-    ;
-    
-annotation
-    {
-        String id = null, value = null;
-    }
-    :
-        LBRACK! id=identifier LPAREN! value=literal RPAREN! RBRACK!
-        {
-            ctx.addTmpAnnotation(id, value);
-        }
-    ;  
+// 	; 
     
 annotation_application
     {
@@ -1499,7 +1503,16 @@ annotation_application
     :
         AT id=identifier LPAREN! value=literal RPAREN!
         {
-            ctx.addTmpAnnotation(id, value);
+            // Check if the annotation was defined and has only one member.
+            if(ctx.getAnnotation(id) != null)
+            {
+               if(ctx.getAnnotation(id).getMembers().size() == 1)
+                   ctx.addTmpAnnotation(id, value);
+               else
+                   throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The annotation " + id + " has defined more than one attribute.");
+            }
+            else
+                throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The annotation " + id + " cannot be found.");
         }
     ;   
 

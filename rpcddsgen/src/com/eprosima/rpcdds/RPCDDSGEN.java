@@ -15,6 +15,22 @@
  */
 package com.eprosima.rpcdds;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Vector;
+
+import org.antlr.stringtemplate.StringTemplate;
+import org.antlr.stringtemplate.StringTemplateGroup;
+import org.antlr.stringtemplate.language.DefaultTemplateLexer;
+
 import com.eprosima.rpcdds.exceptions.BadArgumentException;
 import com.eprosima.rpcdds.exceptions.ParseException;
 import com.eprosima.rpcdds.idl.grammar.Context;
@@ -25,9 +41,9 @@ import com.eprosima.rpcdds.solution.Solution;
 import com.eprosima.rpcdds.templates.TemplateGroup;
 import com.eprosima.rpcdds.templates.TemplateManager;
 import com.eprosima.rpcdds.tree.Interface;
+import com.eprosima.rpcdds.util.GUIDGenerator;
 import com.eprosima.rpcdds.util.Utils;
 import com.eprosima.rpcdds.util.VSConfiguration;
-import com.eprosima.rpcdds.util.GUIDGenerator;
 import com.eprosima.rpcdds.wadl.grammar.WADLParser;
 import com.eprosima.rpcdds.wadl.idl.IDLConverter;
 import com.eprosima.rpcdds.wadl.idl.IDLConverterException;
@@ -35,15 +51,6 @@ import com.eprosima.rpcdds.wadl.tree.Application;
 import com.javadude.antxr.RecognitionException;
 import com.javadude.antxr.TokenStreamException;
 import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Vector;
-
-import org.antlr.stringtemplate.StringTemplate;
-import org.antlr.stringtemplate.StringTemplateGroup;
-import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
 
 

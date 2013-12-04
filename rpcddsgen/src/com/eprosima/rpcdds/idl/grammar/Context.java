@@ -7,6 +7,8 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import com.eprosima.rpcdds.tree.Module;
+import com.eprosima.rpcdds.tree.Annotation;
 import com.eprosima.rpcdds.tree.Definition;
 import com.eprosima.rpcdds.tree.Interface;
 import com.eprosima.rpcdds.tree.Notebook;
@@ -29,11 +31,11 @@ public class Context
         m_types = new HashMap<String, TypeCode>();
         m_dependencies = new HashSet<String>();
         m_definitions = new ArrayList<Definition>();
+        m_annotations = new HashMap<String, Annotation>();
         m_includedependency = new HashSet<String>();
         m_directIncludeDependencies = new ArrayList<String>();
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
         m_interfaces = new HashMap<String, Interface>();
-        m_globalAnnotations = new HashMap<String, String>();
         m_tmpAnnotations = new HashMap<String, String>();
         // The scope file has to be initialized because could occur the preprocessor
         // is not called (using -ppDisable).
@@ -246,14 +248,7 @@ public class Context
      * This function is used in the parser.
      */
     public void addInterface(String name, Interface interf)
-    {
-        // REST block
-        String baseUri = getResourceBaseUri();
-        
-        if(baseUri != null)
-            interf.addAnnotation("RESOURCES_BASE_URI", baseUri);
-        // End REST block
-        
+    { 
         Interface prev = m_interfaces.put(name, interf);
         
         // TODO: Excepción
@@ -279,6 +274,32 @@ public class Context
     }
     
     /*!
+     * @brief This function adds an annotation to the context.
+     */
+    public void addAnnotation(String name, Annotation annotation)
+    {
+        Annotation prev = m_annotations.put(name, annotation);
+        
+        // TODO: Exception.
+        if(prev != null)
+            System.out.println("Warning: Redefined annotation " + name);
+    }
+    
+    public Annotation getAnnotation(String name)
+    {
+        int lastIndex = -1;
+        Annotation returnedValue = m_annotations.get(name);
+
+        // Probar si no tiene scope, con el scope actual.
+        if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
+        {
+            returnedValue = m_annotations.get(m_scope + name);
+        }
+
+        return returnedValue;
+    }
+    
+    /*!
      * @brief This function is used to know if a project has to generate the Types.
      */
     public boolean isProjectNeedTypes()
@@ -289,6 +310,22 @@ public class Context
     		return true;
     	
     	return false;
+    }
+    
+    /*!
+     * @brief This function sets the current module that is been processed.
+     */
+    public void setCurrentModule(Module module)
+    {
+        m_currentmodule = module;
+    }
+    
+    /*!
+     * @brief This function gets the current module that is been processed.
+     */
+    public Module getCurrentModule()
+    {
+        return m_currentmodule;
     }
     
     /*!
@@ -367,41 +404,13 @@ public class Context
     }
     
     /*!
-     * @brief This function stores a global annotation in the context
-     * @param id Identifier of the annotation.
-     * @param value Value of the annotation.
-     */
-    public void addGlobalAnnotation(String id, String value)
-    {
-    	String oldValue = m_globalAnnotations.put(id, value);
-    	
-    	// TODO Lanzar una excepción.
-    	if(oldValue != null)
-    		System.out.println("Global annotation " + id + " was redefined");
-    }
-    
-    /*!
-     * @brief This function returns all global annotations.
-     * @return Map with all global annotations.
-     */
-    public HashMap<String, String>getGlobalAnnotations()
-    {
-        return m_globalAnnotations;
-    }
-    
-    /*!
      * @brief This function add a temporarily annotation.
      * This annotation will be linked with a future object.
      * @param id Identifier of the annotation.
      * @param value Value of the annotation.
      */
     public void addTmpAnnotation(String id, String value)
-    {    	
-    	if(id.equals("RESOURCES_BASE_URI")) {
-    		addGlobalAnnotation(id, value);
-    		return;
-    	}
-    	
+    {    		
     	String oldValue = m_tmpAnnotations.put(id, value);
     	
     	// TODO Lanzar una excepción.
@@ -445,67 +454,6 @@ public class Context
     }
     
     ////////// RESTful block //////////
-    
-    public String getResourceCompleteBaseUri()
-    {
-        String baseUri = m_globalAnnotations.get("RESOURCES_BASE_URI");
-        
-        if(baseUri != null)
-        {
-            // Remove http://
-            int posInit = baseUri.indexOf("//");
-            
-            if(posInit == -1)
-                posInit = 0;
-            else
-                posInit += 2;
-            
-            return baseUri.substring(posInit);
-        }
-        
-        return baseUri;
-    }
-    
-    /*
-     * @brief This function return the base URI without the host.
-     * Also all spaces are converted to %20.
-     */
-    public String getResourceBaseUri()
-    {
-        String baseUri = getResourceCompleteBaseUri();
-        
-        if(baseUri != null)
-        {
-            // Remove host
-            int posEnd = baseUri.indexOf('/');
-            
-            if(posEnd == -1)
-                return "";
-            else
-                return baseUri.substring(posEnd).replace(" ", "%20");
-        }
-        
-        return null;
-    }
-    
-    public String getResourceHost() {
-    	String path =  m_globalAnnotations.get("RESOURCES_BASE_URI");
-    	
-    	// Remove http://
-    	int posInit = path.indexOf("//");
-    	if(posInit == -1)
-    		posInit = 0;
-    	else
-    		posInit += 2;
-    	
-    	// Remove path
-    	int posEnd = path.indexOf('/', posInit);
-    	
-    	if(posEnd == -1)
-    		posEnd = path.length()-1;
-    	
-    	return path.substring(posInit, posEnd);    	
-    }
     
     public String getDeserializeCode() {  
     	PathTree pathTree = new PathTree();
@@ -553,8 +501,6 @@ public class Context
     private HashSet<String> m_includedependency = null;
     //! Set that contains the direct include dependencies in the IDL file. Used to regenerate the IDL in a supported form.
     private ArrayList<String> m_directIncludeDependencies = null;
-    //! Map that contains all global annotations in the IDL file.
-    private HashMap<String, String> m_globalAnnotations = null;
     //! Map that contains temporarily the annotations before to be linked with an element.
     private HashMap<String, String> m_tmpAnnotations = null;
     private boolean m_scopeLimitToAll = false;
@@ -567,6 +513,10 @@ public class Context
     private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
     //! Map that contains all interfaces that were found processing the IDL file (after preprocessing):
     private HashMap<String, Interface> m_interfaces = null;
+  //! Map that contains all annotations that where found processing the IDL file.
+    private HashMap<String, Annotation> m_annotations = null;
+    //! Current Module that is been processing.
+    private Module m_currentmodule = null;
     //! Cache the first interface.
     private Interface m_firstinterface = null;
     //! Cache the first exception.

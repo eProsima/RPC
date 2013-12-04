@@ -63,6 +63,12 @@ public class Interface extends ExportContainer implements Definition, Notebook
     }
     
     @Override
+    public boolean isModule()
+    {
+        return false;
+    }
+    
+    @Override
     public boolean isInterface()
     {
     	return true;
@@ -183,6 +189,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
         m_annotations.putAll(annotations);
     }
     
+    @Override
     public void addAnnotation(String key, String value)
     {
         m_annotations.put(key, value);
@@ -200,43 +207,26 @@ public class Interface extends ExportContainer implements Definition, Notebook
     	return getAnnotations().get("PATH");
     }
     
+    public String getPathWithoutFirstBackslace()
+    {
+        String path = getPath();
+        
+        if(path != null)
+        {
+            if(!path.isEmpty() && path.charAt(0) ==  '/')
+                path = path.substring(1);
+            
+            return path;
+        }
+        
+        return null;
+    }
+    
     public boolean getPathHasBrackets() {
     	if(getPath().contains("{") && getPath().contains("}"))
     		return true;
     	
     	return false;
-    }
-    
-    public String getResourceUri()
-    {
-        String uri = getAnnotations().get("RESOURCES_BASE_URI");
-        boolean backslace = false;
-        
-        if(uri != null)
-        {
-            if(!uri.isEmpty() && uri.charAt(uri.length() - 1) == '/')
-                backslace = true;
-            
-            String path = getPath();
-            
-            if(path != null)
-            {
-                if(backslace && !path.isEmpty() && path.charAt(0) == '/')
-                {
-                    uri += path.substring(1);
-                }
-                else
-                {
-                    uri += path;
-                }
-            }
-            else
-            {
-                // TODO Excepción!!!
-            }
-        }
-        
-        return uri;
     }
     
     public ArrayList<Integer> getTemplateParameterPositions()

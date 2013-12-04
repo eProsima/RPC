@@ -15,4 +15,6 @@ public interface Notebook
      * @return Map with the linked annotations.
      */
     public HashMap<String, String> getAnnotations();
+    
+    public void addAnnotation(String key, String value);
 }

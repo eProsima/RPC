@@ -1,12 +1,14 @@
 package com.eprosima.rpcdds.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Module extends DefinitionContainer implements Definition
+public class Module extends DefinitionContainer implements Definition, Notebook
 {   
     public Module(String name)
     {
         m_name = name;
+        m_annotations = new HashMap<String, String>();
     }
     
     public String getName()
@@ -89,6 +91,12 @@ public class Module extends DefinitionContainer implements Definition
     }
     
     @Override
+    public boolean isModule()
+    {
+        return true;
+    }
+    
+    @Override
     public boolean isInterface()
     {
     	return false;
@@ -105,7 +113,113 @@ public class Module extends DefinitionContainer implements Definition
     {
         return false;
     }
+    
+    @Override
+    public void addAnnotations(HashMap<String, String> annotations)
+    {
+        m_annotations.putAll(annotations);
+    }
+    
+    @Override
+    public void addAnnotation(String key, String value)
+    {
+        m_annotations.put(key, value);
+    }
+    
+    @Override
+    public HashMap<String, String> getAnnotations()
+    {
+        return m_annotations;
+    }
+    
+    ////////// RESTful block //////////
+    
+    public String getResourceCompleteBaseUri()
+    {
+        String baseUri = m_annotations.get("RESOURCES_BASE_URI");
+        
+        if(baseUri != null)
+        {
+            // Remove http://
+            int posInit = baseUri.indexOf("//");
+            
+            if(posInit == -1)
+                posInit = 0;
+            else
+                posInit += 2;
+            
+            return baseUri.substring(posInit);
+        }
+        
+        return baseUri;
+    }
+    
+    /*
+     * @brief This function return the base URI without the host.
+     * Also all spaces are converted to %20.
+     */
+    public String getResourceBaseUri()
+    {
+        String baseUri = getResourceCompleteBaseUri();
+        
+        if(baseUri != null)
+        {
+            // Remove host
+            int posEnd = baseUri.indexOf('/');
+            
+            if(posEnd == -1)
+                return "";
+            else
+                return baseUri.substring(posEnd).replace(" ", "%20");
+        }
+        
+        return null;
+    }
+    
+    /*
+     * @brief This function return the base URI without the host.
+     * Also all spaces are converted to %20.
+     */
+    public String getResourceBaseUriWithoutLastBackslace()
+    {
+        String baseUri = getResourceBaseUri();
+        
+        if(baseUri != null)
+        {
+            if(!baseUri.isEmpty() && baseUri.charAt(baseUri.length() - 1) == '/')
+            {
+                baseUri = baseUri.substring(0, baseUri.length() - 2);
+            }
+
+            return baseUri;
+        }
+        
+        return null;
+    }
+    
+    public String getResourceHost() {
+        String path =  m_annotations.get("RESOURCES_BASE_URI");
+        
+        // Remove http://
+        int posInit = path.indexOf("//");
+        if(posInit == -1)
+            posInit = 0;
+        else
+            posInit += 2;
+        
+        // Remove path
+        int posEnd = path.indexOf('/', posInit);
+        
+        if(posEnd == -1)
+            posEnd = path.length()-1;
+        
+        return path.substring(posInit, posEnd);     
+    }
+    
+    ////////// End RESTful block //////////
 
     private String m_name = null;
     private Object m_parent = null;
+  //! Map that stores the annotations of the interface.
+    HashMap<String, String> m_annotations = null;
 }

@@ -16,6 +16,8 @@ public interface Definition
      */
     public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile);
     
+    public boolean isModule();
+    
     public boolean isInterface();
     
     public boolean isException();
