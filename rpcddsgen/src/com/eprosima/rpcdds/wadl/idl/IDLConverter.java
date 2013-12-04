@@ -146,7 +146,7 @@ public class IDLConverter {
 		
 		int lastSlash = originalName.lastIndexOf(File.separator);
 		if (lastSlash != -1) {
-			originalName = originalName.substring(lastSlash + 1, originalName.length() - lastSlash);
+			originalName = originalName.substring(lastSlash + 1);
 		}
 		
 		int lastDot = originalName.lastIndexOf(".");
