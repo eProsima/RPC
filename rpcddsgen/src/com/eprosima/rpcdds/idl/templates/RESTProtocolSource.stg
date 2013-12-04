@@ -18,16 +18,21 @@ using namespace eprosima::rpcdds::exception;
 
 using namespace std;
 
+$definitions; separator="\n"$
+
+>>
+
+module(ctx, module, definition_list) ::= <<
 $ctx.filename$Protocol::$ctx.filename$Protocol() {}
 
 $ctx.filename$Protocol::~$ctx.filename$Protocol() {}
 
 bool $ctx.filename$Protocol::isNumeric(string&& myString) {
-	stringstream ss(myString);
-	float f;
-	ss $ctx.sersym$ noskipws $ctx.sersym$ f;
+    stringstream ss(myString);
+    float f;
+    ss $ctx.sersym$ noskipws $ctx.sersym$ f;
 
-	return ss.eof() && !ss.fail();
+    return ss.eof() && !ss.fail();
 }
 
 bool $ctx.filename$Protocol::setTransport(Transport &transport)
@@ -55,18 +60,18 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
 }
 
 int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
-	char contentLength[16];
-	strcpy(contentLength, "Content-Length:");
-	char *p = strtok(buffer, "\r\n");
-	while(p) {
-		p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
-		if(memcmp(p, contentLength, 15) == 0) {
-			return atoi(p+15); // 15 = "Content-Length:"
-		}
-		p = strtok(NULL, "\r\n");
-	}
+    char contentLength[16];
+    strcpy(contentLength, "Content-Length:");
+    char *p = strtok(buffer, "\r\n");
+    while(p) {
+        p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
+        if(memcmp(p, contentLength, 15) == 0) {
+            return atoi(p+15); // 15 = "Content-Length:"
+        }
+        p = strtok(NULL, "\r\n");
+    }
 
-	return 0;
+    return 0;
 }
 
 void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
@@ -80,14 +85,12 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
 }
 
-$definitions; separator="\n"$
-
 // Server
 HttpMessage $ctx.filename$Protocol::processRequest(HttpMessage &httpMessage)
 {
     RESTSerializer restSerializer;
     
-    restSerializer.deserializeUri(httpMessage.getUri(), "$ctx.resourceBaseUri$");
+    restSerializer.deserializeUri(httpMessage.getUri(), "$module.resourceBaseUri$");
     
     // TODO Siempre se crea aunque no haya un error. Cambiar
     HttpMessage http404Response;
@@ -98,9 +101,7 @@ HttpMessage $ctx.filename$Protocol::processRequest(HttpMessage &httpMessage)
     
     return http404Response;
 }
->>
 
-module(ctx, module, definition_list) ::= <<
 $definition_list$
 
 >>
@@ -157,7 +158,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      $varComplexInitialize(variable=operation.rettypeparam)$
      // XXX TODO if NULL -> error
      
-     // Resource Base URI = $ctx.resourceBaseUri$
+     // Resource Base URI = $if(ctx.currentModule)$$ctx.currentModule.resourceBaseUri$$endif$
      // Path = $operation.parent.path$
      // Method = $operation.method$
      // Body Parameter = $operation.body$
@@ -166,8 +167,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      
      httpMessage.setMethod(HttpMessage::HTTP_METHOD_$operation.method$);
      //TODO Chequear host en el transport.
-     httpMessage.setHost("$ctx.resourceHost$");
-     std::string uri($if(operation.parent.pathHasBrackets)$expandPath_$operation.name$("$operation.parent.resourceUri$", $first(operation.parameters).name$)$else$"$operation.parent.resourceUri$"$endif$); 
+     httpMessage.setHost("$if(ctx.currentModule)$$ctx.currentModule.resourceHost$$endif$");
+     std::string uri($if(operation.parent.pathHasBrackets)$expandPath_$operation.name$("$if(ctx.currentModule)$$ctx.currentModule.resourceBaseUriWithoutLastBackslace$$endif$/$operation.parent.pathWithoutFirstBackslace$", $first(operation.parameters).name$)$else$"$operation.parent.resourceUri$"$endif$); 
      
      $if(operation.parent.pathHasBrackets)$
         $serializeHTTPParams(params=rest(operation.parameters))$
