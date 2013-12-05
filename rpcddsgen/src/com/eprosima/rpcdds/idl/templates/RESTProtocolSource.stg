@@ -133,7 +133,7 @@ void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.nam
 
 operation(ctx, operation, param_list) ::= <<
 $if(operation.parent.pathHasBrackets)$
-string $ctx.filename$Protocol::expandPath_$operation.name$(string &&path, $first(operation.parameters).name$ $first(operation.parameters).name$)
+string $ctx.filename$Protocol::expandPath_$operation.name$(string &&path, $paramRetType(typecode=first(operation.parameters).typecode)$ $first(operation.parameters).name$)
 {
     RESTSerializer restSerializer;
     stringstream stream;
@@ -188,6 +188,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      size_t dump;
      proxyTransport.receive(&httpResponse, 0, dump);
      
+     $if(operation.rettype)$
+     
      int discriminator = 0;
 
      if(httpResponse.getBodyContentType().find("xml") != string::npos)
@@ -211,12 +213,14 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      break;
      }$
      }
+     
+     $endif$
               
      return $operation.rettypeparam.name$;
 }
 
 $if(operation.parent.pathHasBrackets)$
-void $ctx.filename$Protocol::deserializePath_$operation.name$(RESTSerializer &restSerializer, $first(operation.parameters).name$& $first(operation.parameters).name$)
+void $ctx.filename$Protocol::deserializePath_$operation.name$(RESTSerializer &restSerializer, $paramDeclsByRef(params=first(operation.parameters))$)
 {
     stringstream stream;
     
@@ -224,12 +228,12 @@ void $ctx.filename$Protocol::deserializePath_$operation.name$(RESTSerializer &re
 }
 $endif$
 
-HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, HttpMessage &httpMessage)
+HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.name$_$operation.name$(RESTSerializer &restSerializer, HttpMessage &httpMessage)
 {
     std::stringstream stream;
     
     $if(operation.parent.pathHasBrackets)$
-    $first(operation.parameters).name$ $first(operation.parameters).name$;
+    $paramRetType(typecode=first(operation.parameters).typecode)$ $first(operation.parameters).name$;
     $first(operation.parameters).name$_initialize(&$first(operation.parameters).name$); 
     deserializePath_$operation.name$(restSerializer, $first(operation.parameters).name$);
     $deserializeHTTPParams(params=rest(operation.parameters))$
@@ -240,7 +244,7 @@ HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.formatedScoped
     $deserializeHTTPBodyParams(params=operation.parameters)$
     
     // TODO Check implementation.
-    $paramRetType(operation.rettype)$ $paramRetType(operation.rettype)$ = _$operation.parent.formatedScopedname$_impl->$operation.name$($implCallParams(params = operation.parameters)$);
+    $if(operation.rettype)$$paramRetType(operation.rettype)$ $operation.rettype.name$ = $endif$_$operation.parent.formatedScopedname$_impl->$operation.name$($implCallParams(params = operation.parameters)$);
     
     HttpMessage httpResponse;
     $serializeServerResponse(rettype=operation.rettype)$
@@ -254,6 +258,7 @@ $if(first(params))$ $if(first(params).parent.parent.pathHasBrackets)$ $first(par
 >>
 
 serializeServerResponse(rettype) ::= <<
+$if(operation.rettype)$
 switch($rettype.name$._d)
 {
 $rettype.members : {member |case $first(member.labels)$:
@@ -270,7 +275,7 @@ if(httpResponse.getBodyData().size() > 0)
     else if($rettype.name$._d == 2)
         httpResponse.setBodyContentType("application/json");
 }
-
+$endif$
 >>
 
 deserializePathSegment(param) ::= <<
@@ -357,13 +362,20 @@ deserializeHTTPBodyParams(params) ::= <<
 $params : {param |
 $if(param.bodyParam)$
 // Deserializing body parameter $param.name$
-$param.name$ $param.name$;
+$paramRetType(typecode=param.typecode)$ $param.name$;
 std::string mediaType = httpMessage.getBodyContentType();
 int discriminator = 0;
 if(mediaType.find("xml") != string::npos)
     discriminator = 1;
-if(mediaType.find("json") != string::npos)
+else if(mediaType.find("json") != string::npos)
     discriminator = 2;
+else {
+	// Debería haber Body Param y no está, o está en un formato no admitido. Error 400.
+	HttpMessage http400Response;
+	http400Response.setResponseCode(400);
+	http400Response.setResponseStatus("Bad request");
+	return http400Response;
+}
     
 $param.name$._d = discriminator;
 switch(discriminator) {

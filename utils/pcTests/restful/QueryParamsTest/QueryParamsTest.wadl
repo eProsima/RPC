@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02">
+
+	<resources base="http://example.com/">
+		<resource path="queryParams">
+			<method name="GET" id="getString">
+				<request>
+					<param name="stringP" type="xsd:string" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getByte">
+				<request>
+					<param name="byteP" type="xsd:byte" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getUnsignedByte">
+				<request>
+					<param name="unsignedByteP" type="xsd:unsignedByte" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getShort">
+				<request>
+					<param name="shortP" type="xsd:short" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getUnsignedShort">
+				<request>
+					<param name="unsignedShortP" type="xsd:unsignedShort" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getInt">
+				<request>
+					<param name="intP" type="xsd:int" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getUnsignedInt">
+				<request>
+					<param name="unsignedIntP" type="xsd:unsignedInt" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getLong">
+				<request>
+					<param name="longP" type="xsd:long" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getUnsignedLong">
+				<request>
+					<param name="getUnsignedLongP" type="xsd:unsignedLong" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getFloat">
+				<request>
+					<param name="floatP" type="xsd:float" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getDouble">
+				<request>
+					<param name="doubleP" type="xsd:double" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+			<method name="GET" id="getBoolean">
+				<request>
+					<param name="booleanP" type="xsd:boolean" style="query" />
+				</request>
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+		</resource>
+	</resources>
+	
+	<representation id="resultSet" mediaType="application/xml"
+		element="Response" />
+</application>
+

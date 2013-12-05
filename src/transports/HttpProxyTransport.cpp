@@ -15,10 +15,28 @@ const size_t MAX_INT64_CHARS = 20;
 using namespace eprosima::rpcdds;
 using namespace ::transport;
 
-HttpProxyTransport::HttpProxyTransport(const std::string &serverAddress) : m_tcptransport(serverAddress),
+HttpProxyTransport::HttpProxyTransport(const std::string &serverAddress) : m_tcptransport(),
     m_writeBuffer(NULL), m_writeBufferLength(0), m_writeBufferUse(0), m_readBuffer(NULL), m_readBufferLength(0),
     m_readBufferUse(0), m_readBufferCurrentPointer(0)
 {
+	// Check protocol
+	std::string address = serverAddress;
+
+	size_t index;
+	index = address.find("://");
+	if(index != std::string::npos) {
+		std::string protocol = serverAddress.substr(0, index);
+		if(protocol.compare("http")==0) {
+			address += ":80";
+		} else if(protocol.compare("https")==0) {
+			address += ":443";
+		} else {
+			throw std::invalid_argument("Unkown HTTP protocol: " + protocol);
+		}
+		address = address.substr(index + 3, address.size());		
+	}
+	m_tcptransport = TCPProxyTransport(address);
+
     m_writeBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
 
     if(m_writeBuffer != NULL)

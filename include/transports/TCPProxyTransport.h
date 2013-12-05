@@ -29,6 +29,8 @@ namespace eprosima
 
                 public:
 
+			TCPProxyTransport() {}
+
                     TCPProxyTransport(const std::string &serverAddress);
 
                     TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort);

@@ -87,14 +87,14 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-eprosima::rpcdds::transport::HttpMessage deserialize_$operation.parent.formatedScopedname$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
+eprosima::rpcdds::transport::HttpMessage deserialize_$operation.parent.name$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
 
 $if(operation.parent.pathHasBrackets)$
-void deserializePath_$operation.name$(RESTSerializer &restSerializer, $first(operation.parameters).name$& $first(operation.parameters).name$);
+void deserializePath_$operation.name$(RESTSerializer &restSerializer, $paramDeclsByRef(params=first(operation.parameters))$);
 $endif$
 
 $if(operation.parent.pathHasBrackets)$
-std::string expandPath_$operation.name$(std::string &&path, $first(operation.parameters).name$ $first(operation.parameters).name$);
+std::string expandPath_$operation.name$(std::string &&path, $paramRetType(typecode=first(operation.parameters).typecode)$ $first(operation.parameters).name$);
 $endif$
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
