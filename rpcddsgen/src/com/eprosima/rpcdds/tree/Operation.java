@@ -188,6 +188,12 @@ public class Operation implements Export, Notebook
     }
     
     @Override
+    public void addAnnotation(String key, String value)
+    {
+        m_annotations.put(key, value);
+    }
+    
+    @Override
     public HashMap<String, String> getAnnotations()
     {
         return m_annotations;
