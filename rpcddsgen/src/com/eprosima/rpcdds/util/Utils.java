@@ -44,6 +44,29 @@ public class Utils
         return returnedValue;
     }
     
+    public static String getFileNameOnly(String fileName)
+    {
+        int index = -1;
+        String auxString = fileName, returnedValue = null;
+        
+        index = fileName.lastIndexOf(File.separator);
+        
+        if(index == -1)
+            index = fileName.lastIndexOf('/');
+        
+        if(index != -1)
+            auxString = fileName.substring(index + 1);
+        
+        // Remove extension
+        index = auxString.lastIndexOf('.');
+        if(index != -1)
+        	auxString = auxString.substring(0, index);
+        	
+       	returnedValue = auxString;
+        
+        return returnedValue;
+    }
+    
     public static String getIDLFileOnly(String idlFileURL)
     {
         int index = -1;

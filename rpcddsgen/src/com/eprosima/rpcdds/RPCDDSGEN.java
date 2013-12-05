@@ -1533,7 +1533,7 @@ public class RPCDDSGEN
             returnedValue = true;
             for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
             {
-                idlFilename = Utils.getIDLFileNameOnly(m_idlFiles.get(count));
+                idlFilename = Utils.getFileNameOnly(m_idlFiles.get(count));
                 guid = GUIDGenerator.genGUID(idlFilename);
                 
                 solution.setAttribute("projects.{name, guid, dependsOn, example}", idlFilename + "Client", guid, null, m_exampleOption);
@@ -1581,7 +1581,7 @@ public class RPCDDSGEN
                 for(int index = 0; index < m_vsconfigurations.length; index++){
                     solution.setAttribute("configurations", m_vsconfigurations[index]);
                 }
-                
+                                
                 returnedValue = Utils.writeFile(m_outputDir + idlFilename +"-" + m_exampleOption + ".sln", solution, m_replace);
             }
         }
