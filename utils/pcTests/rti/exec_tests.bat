@@ -7,9 +7,9 @@ setlocal EnableDelayedExpansion
 
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
-set test_selected=""
+set test_selected=
 :: @default, all targets are used (i86 and x64)
-set test_targets=""
+set test_targets=
 
 :: Get number of arguments
 set argC=0
@@ -43,9 +43,6 @@ if not %errorstatus%==0 goto :exit
 
 :: Find all directories.
 for /D %%D in ("*") do (
-   if exist "%%D\exec_test.bat" (
-   ) else (
-   )
    set exec_test_bool=0
    set exec_target_bool=0
    if "%test_selected%"=="" set exec_test_bool=1
