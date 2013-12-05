@@ -8,6 +8,7 @@
 
 #include "transports/HttpProxyTransport.h"
 #include "transports/messages/HttpMessage.h"
+#include "utils/Utilities.h"
 
 const size_t BUFFER_INITIAL_LENGTH = 1024;
 const size_t MAX_INT64_CHARS = 20;
