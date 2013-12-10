@@ -8,10 +8,12 @@
 
 #include "transports/dds/components/ServerProcedureEndpoint.h"
 #include "strategies/ServerStrategy.h"
+#include "strategies/ServerStrategyImpl.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
+#include <boost/bind.hpp>
 
 using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
@@ -302,7 +304,7 @@ void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 	{
 		if(info.valid_data == BOOLEAN_TRUE)
 		{
-			m_transport.getStrategy().schedule(boost::bind(&ServerTransport::process, &m_transport, this, data));
+			m_transport.getStrategy().getImpl()->schedule(boost::bind(&ServerTransport::process, &m_transport, this, data));
             
             data = calloc(1, m_dataSize);
             m_initialize_data(data);

@@ -497,6 +497,7 @@
     <ClInclude Include="..\..\include\rpcdds_version.h" />
     <ClInclude Include="..\..\include\server\Server.h" />
     <ClInclude Include="..\..\include\strategies\ServerStrategy.h" />
+    <ClInclude Include="..\..\include\strategies\ServerStrategyImpl.h" />
     <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h" />
     <ClInclude Include="..\..\include\strategies\ThreadPerRequestStrategy.h" />
     <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h" />

@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "strategies/ThreadPoolStrategy.h"
+#include "strategies/ServerStrategyImpl.h"
 #include "transports/ServerTransport.h"
 
 #include "boost/config/user.hpp"
@@ -38,7 +39,7 @@ namespace eprosima
                     boost::function<void()> m_callback;
             };
 
-            class ThreadPoolStrategyImpl
+            class ThreadPoolStrategyImpl : public ServerStrategyImpl
             {
                 public:
 
@@ -56,6 +57,12 @@ namespace eprosima
                     {
                         return m_pool;
                     }
+					
+					void schedule(boost::function<void()> callback)
+					{
+						boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(callback));
+						boost::threadpool::schedule(*m_pool, boost::bind(&ThreadPoolStrategyJob::run, job));
+					}
 
                 private:
 
@@ -80,8 +87,7 @@ ThreadPoolStrategy::~ThreadPoolStrategy()
         delete m_impl;
 }
 
-void ThreadPoolStrategy::schedule(boost::function<void()> callback)
+ServerStrategyImpl* ThreadPoolStrategy::getImpl()
 {
-    boost::shared_ptr<ThreadPoolStrategyJob> job(new ThreadPoolStrategyJob(callback));
-    boost::threadpool::schedule(*m_impl->getPool(), boost::bind(&ThreadPoolStrategyJob::run, job));
+	return m_impl;
 }

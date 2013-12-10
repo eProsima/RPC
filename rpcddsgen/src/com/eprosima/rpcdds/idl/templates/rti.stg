@@ -125,187 +125,19 @@ libsMake(example, version) ::= <<
 >>
 
 libsVS(example) ::= <<
-\$(NDDSHOME)\lib\\$example$;\$(RPCDDSHOME)\lib\\$example$;
->>
-
-sourceVS(interface) ::= <<
-    <ClCompile Include="$interface$RequestReply.cxx" />
-    <ClCompile Include="$interface$.cxx" />
-    <ClCompile Include="$interface$RequestReplyPlugin.cxx" />
-    <ClCompile Include="$interface$Plugin.cxx" />
-    <ClCompile Include="$interface$RequestReplySupport.cxx" />
-    <ClCompile Include="$interface$Support.cxx" />
-    <ClCompile Include="$interface$RequestReplyUtils.cxx" />
-    <ClCompile Include="MessageHeader.cxx" />
-    <ClCompile Include="MessageHeaderPlugin.cxx" />
-    <ClCompile Include="MessageHeaderSupport.cxx" />
->>
-
-sourceFilesVS(interface, client) ::= <<
-    <ClCompile Include="$interface$RequestReply.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="$interface$.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="$interface$RequestReplyPlugin.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="$interface$Plugin.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="$interface$RequestReplySupport.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="$interface$Support.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="$interface$RequestReplyUtils.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="MessageHeader.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="MessageHeaderPlugin.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
-    <ClCompile Include="MessageHeaderSupport.cxx">
-        $if(client)$
-        <Filter>Source Files\client</Filter>
-        $else$
-        <Filter>Source Files\server</Filter>
-        $endif$
-    </ClCompile>
->>
-
-sourceIVS(interface) ::= <<
-    <ClInclude Include="$interface$RequestReply.h" />
-    <ClInclude Include="$interface$.h" />
-    <ClInclude Include="$interface$RequestReplyPlugin.h" />
-    <ClInclude Include="$interface$Plugin.h" />
-    <ClInclude Include="$interface$RequestReplySupport.h" />
-    <ClInclude Include="$interface$Support.h" />
-    <ClInclude Include="$interface$RequestReplyUtils.h" />
-    <ClInclude Include="MessageHeader.h" />
-    <ClInclude Include="MessageHeaderPlugin.h" />
-    <ClInclude Include="MessageHeaderSupport.h" />
->>
-
-sourceFilesIVS(interface, client) ::= <<
-    <ClInclude Include="$interface$RequestReply.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$RequestReplyPlugin.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$Plugin.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$RequestReplySupport.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$Support.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="$interface$RequestReplyUtils.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="MessageHeader.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="MessageHeaderPlugin.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
-    <ClInclude Include="MessageHeaderSupport.h">
-        $if(client)$
-        <Filter>Header Files\client</Filter>
-        $else$
-        <Filter>Header Files\server</Filter>
-        $endif$
-    </ClInclude>
+\$(NDDSHOME)\lib\\$example$;\$(RPCDDSHOME)\lib\\$example$
 >>
  
 preprocessorDefs(conf) ::= <<
-WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$;%(PreprocessorDefinitions)
+WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;$if(conf.dll)$NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;$endif$$if(conf.debug)$_DEBUG$else$NDEBUG$endif$
+>>
+
+preprocessorTypesLibDefs(conf) ::= <<
+$if(conf.dll)$NDDS_USER_DLL_EXPORT;$endif$
 >>
 
 dependencies(conf) ::= <<
-nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; rpcdds$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
+nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
 stringPointerConst() ::= <<

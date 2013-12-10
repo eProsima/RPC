@@ -1,15 +1,15 @@
 group VS2010;
 
-solution(projects, configurations) ::= <<
+solution(solution, example, configurations) ::= <<
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-$projects : {$projectRef(it)$};separator="\n"$
+$solution.projects : {$projectReferences(solution=solution, project=it, example=example)$};separator="\n"$
 Global
 $\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
 $configurations:{conf |$\t$$\t$$conf.name$|$conf.platform$ = $conf.name$|$conf.platform$};separator="\n"$
 $\t$EndGlobalSection
 $\t$GlobalSection(ProjectConfigurationPlatforms) = postSolution
-$projects:{$projectConfigurationPlatforms(guid=it.guid, configurations=configurations)$};separator="\n"$
+$solution.projects : {$projectConfigurationPlatforms(solution=solution, project=it, configurations=configurations)$};separator="\n"$
 $\t$EndGlobalSection
 $\t$GlobalSection(SolutionProperties) = preSolution
 $\t$$\t$HideSolutionNode = FALSE
@@ -18,7 +18,7 @@ EndGlobal
 
 >>
 
-projectClient(name, guid, example, arch, configurations, client) ::= <<
+project(project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -28,9 +28,9 @@ projectClient(name, guid, example, arch, configurations, client) ::= <<
     </ProjectConfiguration>};separator="\n"$
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>$name$Client</ProjectName>
-    <ProjectGuid>{$guid$}</ProjectGuid>
-    <RootNamespace>$name$Client</RootNamespace>
+    <ProjectName>$project.name$</ProjectName>
+    <ProjectGuid>{$project.guid$}</ProjectGuid>
+    <RootNamespace>$project.name$</RootNamespace>
   </PropertyGroup>
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'" Label="Configuration">
@@ -56,7 +56,7 @@ projectClient(name, guid, example, arch, configurations, client) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -64,10 +64,10 @@ projectClient(name, guid, example, arch, configurations, client) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -78,16 +78,10 @@ projectClient(name, guid, example, arch, configurations, client) ::= <<
     $endif$
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
-    $sourceVS(interface=name)$
-    <ClCompile Include="$name$Proxy.cxx" />
-    <ClCompile Include="$name$ClientRPCSupport.cxx" />
-    <ClCompile Include="$name$AsyncSupport.cxx" />
+    $project.commonSrcFiles : {srcfile |<ClCompile Include="$srcfile$" />}; separator="\n"$
   </ItemGroup>
   <ItemGroup>
-    $sourceIVS(interface=name)$
-    <ClInclude Include="$name$Proxy.h" />
-    <ClInclude Include="$name$ClientRPCSupport.h" />
-    <ClInclude Include="$name$AsyncSupport.h" />
+    $project.commonIncludeFiles : {incfile |<ClInclude Include="$incfile$" />}; separator="\n"$
   </ItemGroup>
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -95,7 +89,37 @@ projectClient(name, guid, example, arch, configurations, client) ::= <<
 </Project>
 >>
 
-projectServer(name, guid, example, arch, configurations, client) ::= <<
+projectFiles(project) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    $project.commonSrcFiles : {srcfile |
+    <ClCompile Include="$srcfile$">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    }; separator="\n"$
+  </ItemGroup>
+  <ItemGroup>
+    $project.commonIncludeFiles : {incfile |
+    <ClInclude Include="$incfile$">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    }; separator="\n"$
+  </ItemGroup>
+</Project>
+>>
+
+projectClient(project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -105,9 +129,9 @@ projectServer(name, guid, example, arch, configurations, client) ::= <<
     </ProjectConfiguration>};separator="\n"$
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>$name$Server</ProjectName>
-    <ProjectGuid>{$guid$}</ProjectGuid>
-    <RootNamespace>$name$Server</RootNamespace>
+    <ProjectName>$project.name$Client</ProjectName>
+    <ProjectGuid>{$project.clientGuid$}</ProjectGuid>
+    <RootNamespace>$project.name$Client</RootNamespace>
   </PropertyGroup>
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'" Label="Configuration">
@@ -133,17 +157,18 @@ projectServer(name, guid, example, arch, configurations, client) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      $bigObjOption()$
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -154,16 +179,10 @@ projectServer(name, guid, example, arch, configurations, client) ::= <<
     $endif$
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
-   $sourceVS(interface=name)$
-    <ClCompile Include="$name$Server.cxx" />
-    <ClCompile Include="$name$ServerImpl.cxx" />
-    <ClCompile Include="$name$ServerRPCSupport.cxx" />
+    $project.clientSrcFiles : {srcfile |<ClCompile Include="$srcfile$" />}; separator="\n"$
   </ItemGroup>
   <ItemGroup>
-    $sourceIVS(interface=name)$
-    <ClInclude Include="$name$Server.h" />
-    <ClInclude Include="$name$ServerImpl.h" />
-    <ClInclude Include="$name$ServerRPCSupport.h" />
+    $project.clientIncludeFiles : {incfile |<ClInclude Include="$incfile$" />}; separator="\n"$
   </ItemGroup>
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -171,7 +190,7 @@ projectServer(name, guid, example, arch, configurations, client) ::= <<
 </Project>
 >>
 
-projectFilesClient(name) ::= <<
+projectFilesClient(project) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
@@ -185,25 +204,83 @@ projectFilesClient(name) ::= <<
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$name$.cpp">
+    $project.clientSrcFiles : {srcfile |
+    <ClCompile Include="$srcfile$">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$name$Ser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    }; separator="\n"$
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$name$.h">
+    $project.clientIncludeFiles : {incfile |
+    <ClInclude Include="$incfile$">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$name$Ser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    }; separator="\n"$
   </ItemGroup>
 </Project>
 >>
 
-projectFilesServer(name) ::= <<
+projectClientExample(project, example, configurations) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    $configurations:{<ProjectConfiguration Include="$it.name$|$it.platform$">
+      <Configuration>$it.name$</Configuration>
+      <Platform>$it.platform$</Platform>
+    </ProjectConfiguration>};separator="\n"$
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>$project.name$ClientExample</ProjectName>
+    <ProjectGuid>{$project.clientExampleGuid$}</ProjectGuid>
+    <RootNamespace>$project.name$ClientExample</RootNamespace>
+  </PropertyGroup>
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>};separator="\n"$
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  $configurations:{<ImportGroup Label="PropertySheets" Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <Import Project="\$(UserRootDir)\Microsoft.Cpp.\$(Platform).user.props" Condition="exists('\$(UserRootDir)\Microsoft.Cpp.\$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>};separator="\n"$
+  <PropertyGroup Label="UserMacros" />
+  $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <OutDir>.\bin\\$example$\</OutDir>
+    <TargetName>\$(ProjectName)</TargetName>
+  </PropertyGroup>};separator="\n"$
+  $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
+      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      $bigObjOption()$
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;$project.name$Client$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>};separator="\n"$
+  <ItemGroup>
+    <ClCompile Include="$project.name$ClientExample.cxx" />
+  </ItemGroup>
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
+>>
+
+projectFilesClientExample(project) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
@@ -217,18 +294,201 @@ projectFilesServer(name) ::= <<
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$name$.cpp">
+    <ClCompile Include="$project.name$ClientExample.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$name$Ser.cpp">
+  </ItemGroup>
+</Project>
+>>
+
+projectServer(project, example, configurations) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    $configurations:{<ProjectConfiguration Include="$it.name$|$it.platform$">
+      <Configuration>$it.name$</Configuration>
+      <Platform>$it.platform$</Platform>
+    </ProjectConfiguration>};separator="\n"$
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>$project.name$Server</ProjectName>
+    <ProjectGuid>{$project.serverGuid$}</ProjectGuid>
+    <RootNamespace>$project.name$Server</RootNamespace>
+  </PropertyGroup>
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'" Label="Configuration">
+    <ConfigurationType>$if(it.dll)$DynamicLibrary$else$StaticLibrary$endif$</ConfigurationType>
+    <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>};separator="\n"$
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  $configurations:{<ImportGroup Label="PropertySheets" Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <Import Project="\$(UserRootDir)\Microsoft.Cpp.\$(Platform).user.props" Condition="exists('\$(UserRootDir)\Microsoft.Cpp.\$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>};separator="\n"$
+  <PropertyGroup Label="UserMacros" />
+  $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <OutDir>.\lib\\$example$\</OutDir>
+    <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
+  </PropertyGroup>};separator="\n"$
+  $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
+      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      $bigObjOption()$
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      $if(it.dll)$
+      <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
+      $endif$   
+    </Link>
+    $if(!it.dll)$
+    <Lib>
+      <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
+    </Lib>
+    $endif$
+  </ItemDefinitionGroup>};separator="\n"$
+  <ItemGroup>
+    $project.serverSrcFiles : {srcfile |<ClCompile Include="$srcfile$" />}; separator="\n"$
+  </ItemGroup>
+  <ItemGroup>
+    $project.serverIncludeFiles : {incfile |<ClInclude Include="$incfile$" />}; separator="\n"$
+  </ItemGroup>
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
+>>
+
+projectFilesServer(project) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    $project.serverSrcFiles : {srcfile |
+    <ClCompile Include="$srcfile$">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    }; separator="\n"$
+  </ItemGroup>
+  <ItemGroup>
+    $project.serverIncludeFiles : {incfile |
+    <ClInclude Include="$incfile$">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    }; separator="\n"$
+  </ItemGroup>
+</Project>
+>>
+
+projectServerExample(project, example, configurations) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    $configurations:{<ProjectConfiguration Include="$it.name$|$it.platform$">
+      <Configuration>$it.name$</Configuration>
+      <Platform>$it.platform$</Platform>
+    </ProjectConfiguration>};separator="\n"$
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>$project.name$ServerExample</ProjectName>
+    <ProjectGuid>{$project.serverExampleGuid$}</ProjectGuid>
+    <RootNamespace>$project.name$ServerExample</RootNamespace>
+  </PropertyGroup>
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>};separator="\n"$
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  $configurations:{<ImportGroup Label="PropertySheets" Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <Import Project="\$(UserRootDir)\Microsoft.Cpp.\$(Platform).user.props" Condition="exists('\$(UserRootDir)\Microsoft.Cpp.\$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>};separator="\n"$
+  <PropertyGroup Label="UserMacros" />
+  $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <OutDir>.\bin\\$example$\</OutDir>
+    <TargetName>\$(ProjectName)</TargetName>
+  </PropertyGroup>};separator="\n"$
+  $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
+      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      $bigObjOption()$
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;$project.name$Server$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>};separator="\n"$
+  <ItemGroup>
+    <ClCompile Include="$project.name$ServerExample.cxx" />
+    <ClCompile Include="$project.name$ServerImplExample.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$project.name$ServerImplExample.h" />
+  </ItemGroup>
+  <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
+>>
+
+projectFilesServerExample(project) ::= <<
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$project.name$ServerExample.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$project.name$ServerImplExample.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$name$.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$name$Ser.h">
+    <ClInclude Include="$project.name$ServerImplExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -251,15 +511,41 @@ projectFilesServer(name) ::= <<
  *
  * Uses:
  */ 
-projectRef(project) ::= <<
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.name$-$project.example$.vcxproj", "{$project.guid$}"
-$if(project.dependsOn)$
+projectReferences(solution, project, example) ::= <<
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.name$-$example$.vcxproj", "{$project.guid$}"
+$if(project.dependenciesGuids)$
 $\t$ProjectSection(ProjectDependencies) = postProject
-$\t$$\t${$project.dependsOn$} = {$project.dependsOn$}
+$project.dependenciesGuids : {$\t$$\t${$it$} = {$it$}}; separator="\n"$
 $\t$EndProjectSection
 $endif$
-
 EndProject
+$if(!project.unique)$
+$if(solution.clientside)$
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$Client", "$project.name$Client-$example$.vcxproj", "{$project.clientGuid$}"
+$\t$ProjectSection(ProjectDependencies) = postProject
+$\t$$\t${$project.guid$} = {$project.guid$}
+$\t$EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$ClientExample", "$project.name$ClientExample-$example$.vcxproj", "{$project.clientExampleGuid$}"
+$\t$ProjectSection(ProjectDependencies) = postProject
+$\t$$\t${$project.clientGuid$} = {$project.clientGuid$}
+$\t$EndProjectSection
+EndProject
+$endif$
+
+$if(solution.serverside)$
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$Server", "$project.name$Server-$example$.vcxproj", "{$project.serverGuid$}"
+$\t$ProjectSection(ProjectDependencies) = postProject
+$\t$$\t${$project.guid$} = {$project.guid$}
+$\t$EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$ServerExample", "$project.name$ServerExample-$example$.vcxproj", "{$project.serverExampleGuid$}"
+$\t$ProjectSection(ProjectDependencies) = postProject
+$\t$$\t${$project.serverGuid$} = {$project.serverGuid$}
+$\t$EndProjectSection
+EndProject
+$endif$
+$endif$
 >>
 
 /**
@@ -274,8 +560,8 @@ EndProject
  * Uses:
  *   postSolution - local
  */ 
-projectConfigurationPlatforms(guid, configurations) ::= <<
-$configurations:{conf | $postSolution(guid = guid, conf = conf)$};separator="\n"$
+projectConfigurationPlatforms(solution, project, configurations) ::= <<
+$configurations:{conf | $postSolution(solution=solution, project=project, conf=conf)$};separator="\n"$
 >>
 
 
@@ -291,9 +577,24 @@ $configurations:{conf | $postSolution(guid = guid, conf = conf)$};separator="\n"
  *
  * Uses:
  */ 
-postSolution(guid, conf) ::= <<
-$\t$$\t${$guid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
-$\t$$\t${$guid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
+postSolution(solution, project, conf) ::= <<
+$\t$$\t${$project.guid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
+$\t$$\t${$project.guid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
+$if(!project.unique)$
+$if(solution.clientside)$
+$\t$$\t${$project.clientGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
+$\t$$\t${$project.clientGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
+$\t$$\t${$project.clientExampleGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
+$\t$$\t${$project.clientExampleGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
+$endif$
+
+$if(solution.serverside)$
+$\t$$\t${$project.serverGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
+$\t$$\t${$project.serverGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
+$\t$$\t${$project.serverExampleGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
+$\t$$\t${$project.serverExampleGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
+$endif$
+$endif$
 >>
 
 /**

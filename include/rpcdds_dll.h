@@ -42,6 +42,13 @@
 #define RPCDDS_DllAPI
 #endif // _WIN32
 
+// enabling user dynamic linking
+#if defined(_WIN32) && defined(RPCDDS_USER_DLL_EXPORT)
+  #define RPCDDSUSERDllExport __declspec(dllexport)
+#else
+  #define RPCDDSUSERDllExport
+#endif
+
 // Auto linking.
 
 #if !defined(RPCDDS_SOURCE) && !defined(EPROSIMA_ALL_NO_LIB) \

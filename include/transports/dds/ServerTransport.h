@@ -15,7 +15,6 @@
 
 #include <string>
 #include <map>
-#include <boost/bind.hpp>
 
 namespace eprosima
 {

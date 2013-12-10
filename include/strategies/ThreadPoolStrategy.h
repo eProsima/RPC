@@ -41,12 +41,7 @@ namespace eprosima
                     /// \brief Default destructor.
                     ~ThreadPoolStrategy();
 
-                    /**
-                     * \brief This function schedules a incoming request in a free thread of the thread pool.
-                     *
-                     * \param data The request. Cannot be NULL.
-                     */
-                    void schedule(boost::function<void()> callback);
+                    ServerStrategyImpl* getImpl();
 
                 private:
 

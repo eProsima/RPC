@@ -6,38 +6,48 @@
  *
  *************************************************************************/
 
-#ifndef _SERVER_SERVERSTRATEGY_H_
-#define _SERVER_SERVERSTRATEGY_H_
+#ifndef _SERVER_SERVERSTRATEGYIMPL_H_
+#define _SERVER_SERVERSTRATEGYIMPL_H_
 
-#include "rpcdds_dll.h"
+#include <boost/function.hpp>
 
 namespace eprosima
 {
     namespace rpcdds
     {
+        namespace transport
+        {
+            class ServerTransport;
+            class Endpoint;
+        }
+
         namespace strategy
         {
-			class ServerStrategyImpl;
-
             /**
              * @brief This class is the base of all classes that implement a server strategy
              *        that could be used by the server.
              * @ingroup SERVERMODULE
              */
-            class RPCDDS_DllAPI ServerStrategy
+            class ServerStrategyImpl
             {
                 public:
 
                     /// \brief Default constructor.
-                    ServerStrategy(){}
+                    ServerStrategyImpl(){}
 
                     /// \brief Default destructor.
-                    virtual ~ServerStrategy(){}
+                    virtual ~ServerStrategyImpl(){}
 
-                    virtual ServerStrategyImpl* getImpl() = 0;
+                    /**
+                     * \brief This function schedules a incoming request.
+                     *        This function has to be implemented by the derived classes.
+                     *
+                     * \param data The request. Cannot be NULL.
+                     */
+                    virtual void schedule(boost::function<void()> callback) = 0;
             };
         } // namespace strategy
     } // namespace rpcdds
 } // namespace eprosima
 
-#endif // _SERVER_SERVERSTRATEGY_H_
+#endif // _SERVER_SERVERSTRATEGYIMPL_H_

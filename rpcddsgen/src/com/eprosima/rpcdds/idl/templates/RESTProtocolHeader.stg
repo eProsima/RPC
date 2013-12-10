@@ -30,7 +30,7 @@ namespace eprosima
                 // TODO Quitar
                 class RESTSerializer;
             
-                class $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
+                class RPCDDSUSERDllExport $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
                 {
                     public:
                     

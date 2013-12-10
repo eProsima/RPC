@@ -18,6 +18,8 @@ namespace eprosima
     {
         namespace strategy
         {
+			class SingleThreadStrategyImpl;
+
             /**
              * @brief This class implements the sigle thread strategy.
              *        The server uses the reception thread of RTI DDS to execute the request.
@@ -28,17 +30,16 @@ namespace eprosima
                 public:
 
                     /// \brief Default constructor.
-                    SingleThreadStrategy(){};
+                    SingleThreadStrategy();
 
                     /// \brief Default destructor.
-                    virtual ~SingleThreadStrategy(){};
+                    virtual ~SingleThreadStrategy();
 
-                    /**
-                     * \brief This function execute directly the request.
-                     *
-                     * \param data The request. Cannot be NULL.
-                     */
-                    void schedule(boost::function<void()> callback);
+					ServerStrategyImpl* getImpl();
+
+			    private:
+
+					SingleThreadStrategyImpl *m_impl;
             };
         } // namespace strategy
     } // namespace rpcdds

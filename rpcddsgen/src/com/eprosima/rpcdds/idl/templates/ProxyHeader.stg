@@ -49,7 +49,7 @@ $interface.exports : {export | $if(export.operation)$$classAsyncHeader(operation
 /*!
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  */
-class $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
+class RPCDDSUSERDllExport $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
 {
     public:
    

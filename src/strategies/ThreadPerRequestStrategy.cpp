@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "strategies/ThreadPerRequestStrategy.h"
+#include "strategies/ServerStrategyImpl.h"
 #include "transports/ServerTransport.h"
 
 #include "boost/thread.hpp"
@@ -36,6 +37,29 @@ namespace eprosima
                     
                     boost::function<void()> m_callback;
             };
+
+			class ThreadPerRequestStrategyImpl : public ServerStrategyImpl
+            {
+                public:
+
+                    /// \brief Default constructor.
+                    ThreadPerRequestStrategyImpl(){};
+
+                    /// \brief Default destructor.
+                    virtual ~ThreadPerRequestStrategyImpl(){};
+
+                    /**
+                     * \brief This function creates a new thread that will process the request.
+                     *
+                     * \param data The request. Cannot be NULL.
+                     */
+                    void schedule(boost::function<void()> callback)
+					{
+						boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(callback));
+						boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
+						thread.detach();
+					}
+            };
         } // namespace strategy
     } // namespace rpcdds
 } // namespace eprosima
@@ -44,9 +68,18 @@ using namespace eprosima::rpcdds;
 using namespace ::strategy;
 using namespace ::transport;
 
-void ThreadPerRequestStrategy::schedule(boost::function<void()> callback)
+ThreadPerRequestStrategy::ThreadPerRequestStrategy() : m_impl(NULL)
 {
-    boost::shared_ptr<ThreadPerRequestStrategyJob> job(new ThreadPerRequestStrategyJob(callback));
-    boost::thread thread(boost::bind(&ThreadPerRequestStrategyJob::run, job));
-    thread.detach();
+    m_impl = new ThreadPerRequestStrategyImpl();
+}
+
+ThreadPerRequestStrategy::~ThreadPerRequestStrategy()
+{
+    if(m_impl != NULL)
+        delete m_impl;
+}
+
+ServerStrategyImpl* ThreadPerRequestStrategy::getImpl()
+{
+	return m_impl;
 }

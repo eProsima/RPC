@@ -18,7 +18,7 @@ namespace eprosima
     {
         namespace strategy
         {
-            class ThreadPerRequestStrategyJob;
+			class ThreadPerRequestStrategyImpl;
 
             /**
              * @brief This class implements the thread per request strategy.
@@ -30,17 +30,16 @@ namespace eprosima
                 public:
 
                     /// \brief Default constructor.
-                    ThreadPerRequestStrategy(){};
+                    ThreadPerRequestStrategy();
 
                     /// \brief Default destructor.
-                    virtual ~ThreadPerRequestStrategy(){};
+                    virtual ~ThreadPerRequestStrategy();
 
-                    /**
-                     * \brief This function creates a new thread that will process the request.
-                     *
-                     * \param data The request. Cannot be NULL.
-                     */
-                    void schedule(boost::function<void()> callback);
+                    ServerStrategyImpl* getImpl();
+
+			    private:
+
+					ThreadPerRequestStrategyImpl *m_impl;
             };
         } // namespace strategy
     } // namespace rpcdds

@@ -7,24 +7,59 @@
  *************************************************************************/
 
 #include "strategies/SingleThreadStrategy.h"
+#include "strategies/ServerStrategyImpl.h"
 #include "transports/ServerTransport.h"
 
 static const char* const CLASS_NAME = "SingleThreadStrategy";
+
+namespace eprosima
+{
+    namespace rpcdds
+    {
+        namespace strategy
+        {
+			class SingleThreadStrategyImpl : public ServerStrategyImpl
+			{
+				public:
+
+					SingleThreadStrategyImpl(){};
+
+					virtual ~SingleThreadStrategyImpl(){};
+
+					void schedule(boost::function<void()> callback)
+					{
+						const char* const METHOD_NAME = "schedule";
+
+						if(!callback.empty())
+						{
+							callback();
+						}
+						else
+						{
+							printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+						}
+					}
+			};
+         } // namespace strategy
+    } // namespace rpcdds
+} //namespace eprosima
 
 using namespace eprosima::rpcdds;
 using namespace ::strategy;
 using namespace ::transport;
 
-void SingleThreadStrategy::schedule(boost::function<void()> callback)
+SingleThreadStrategy::SingleThreadStrategy() : m_impl(NULL)
 {
-    const char* const METHOD_NAME = "schedule";
+    m_impl = new SingleThreadStrategyImpl();
+}
 
-    if(!callback.empty())
-    {
-        callback();
-    }
-    else
-    {
-        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-    }
+SingleThreadStrategy::~SingleThreadStrategy()
+{
+    if(m_impl != NULL)
+        delete m_impl;
+}
+
+ServerStrategyImpl* SingleThreadStrategy::getImpl()
+{
+	return m_impl;
 }

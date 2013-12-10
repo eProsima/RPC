@@ -20,7 +20,7 @@ namespace eprosima
     {
         namespace protocol
         {
-            class $ctx.filename$Protocol : public Protocol
+            class RPCDDSUSERDllExport $ctx.filename$Protocol : public Protocol
             {
                 public:
                 

@@ -3,6 +3,7 @@ package com.eprosima.rpcdds.solution;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import com.eprosima.rpcdds.util.GUIDGenerator;
 import com.eprosima.rpcdds.util.Utils;
 
 public class Project
@@ -115,6 +116,61 @@ public class Project
 		return array;
 	}
 	
+	/*!
+	 * @brief Used in string templates.
+	 */
+	public String getGuid()
+	{
+		return GUIDGenerator.genGUID(m_file);
+	}
+	
+	/*!
+	 * @brief Used in string templates.
+	 */
+	public String getClientGuid()
+	{
+		return GUIDGenerator.genGUID(m_file + "Client");
+	}
+	
+	/*!
+	 * @brief Used in string templates.
+	 */
+	public String getClientExampleGuid()
+	{
+		return GUIDGenerator.genGUID(m_file + "ClientExample");
+	}
+	
+	/*!
+	 * @brief Used in string templates.
+	 */
+	public String getServerGuid()
+	{
+		return GUIDGenerator.genGUID(m_file + "Server");
+	}
+	
+	/*!
+	 * @brief Used in string templates.
+	 */
+	public String getServerExampleGuid()
+	{
+		return GUIDGenerator.genGUID(m_file + "ServerExample");
+	}
+	
+	/*!
+	 * @brief Used in string templates.
+	 */
+	public ArrayList getDependenciesGuids()
+	{
+		ArrayList array = new ArrayList(m_dependencies);
+		
+		for(int count = 0; count < array.size(); ++count)
+		{
+			array.set(count, GUIDGenerator.genGUID(array.get(count).toString()));
+		}
+		
+		return array;
+	}
+	
 	public ArrayList getFullDependencies()
 	{
 		return new ArrayList(m_dependencies);
@@ -130,4 +186,5 @@ public class Project
 	private ArrayList m_serversrcfiles = null;
 	private ArrayList m_serverincludefiles = null;
 	private HashSet m_dependencies = null;
+	String m_guid = null;
 }

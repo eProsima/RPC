@@ -8,6 +8,7 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 
+#include "rpcdds_dll.h"
 #include "transports/dds/ServerTransport.h"
 #include "transports/components/Endpoint.h"
 #include "utils/dds/Middleware.h"
@@ -32,7 +33,7 @@ namespace eprosima
                  * @brief This class represents a remote endpoint used by a proxy.
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
                  */
-                class ServerProcedureEndpoint : public Endpoint, public DDS::DataReaderListener
+                class RPCDDS_DllAPI ServerProcedureEndpoint : public Endpoint, public DDS::DataReaderListener
                 {
                     public:
 

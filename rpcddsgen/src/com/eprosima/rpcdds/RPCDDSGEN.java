@@ -1476,7 +1476,7 @@ public class RPCDDSGEN
                 
                 if(m_exampleOption.startsWith("i86"))
                 {
-                    returnedValue = genVS2010(null);
+                    returnedValue = genVS2010(solution, null);
                 }
                 else if(m_exampleOption.startsWith("x64"))
                 {
@@ -1485,7 +1485,7 @@ public class RPCDDSGEN
                         m_vsconfigurations[index].setPlatform("x64");
                     }
                     
-                    returnedValue = genVS2010("64");
+                    returnedValue = genVS2010(solution, "64");
                 }
                 else
                     returnedValue = false;
@@ -1511,11 +1511,11 @@ public class RPCDDSGEN
         return returnedValue;
     }
     
-    private boolean genVS2010(String arch)
+    private boolean genVS2010(Solution solution, String arch)
     {
         final String METHOD_NAME = "genVS2010";
         boolean returnedValue = false;
-        String idlFilename = null, guid = null;
+        String guid = null;
         
         // first load main language template
         // TODO Change depending RTI or OpenDDS.
@@ -1524,65 +1524,122 @@ public class RPCDDSGEN
 
         if(vsTemplates != null)
         {
-            StringTemplate solution = vsTemplates.getInstanceOf("solution");
-            StringTemplate projectClient = vsTemplates.getInstanceOf("projectClient");;
-            StringTemplate projectFilesClient = vsTemplates.getInstanceOf("projectFilesClient");
-            StringTemplate projectServer = vsTemplates.getInstanceOf("projectServer");;
-            StringTemplate projectFilesServer = vsTemplates.getInstanceOf("projectFilesServer");
+            StringTemplate tsolution = vsTemplates.getInstanceOf("solution");
+            StringTemplate tproject = vsTemplates.getInstanceOf("project");
+            StringTemplate tprojectFiles = vsTemplates.getInstanceOf("projectFiles");
+            StringTemplate tprojectClient = vsTemplates.getInstanceOf("projectClient");
+            StringTemplate tprojectFilesClient = vsTemplates.getInstanceOf("projectFilesClient");
+            StringTemplate tprojectClientExample = vsTemplates.getInstanceOf("projectClientExample");
+            StringTemplate tprojectFilesClientExample = vsTemplates.getInstanceOf("projectFilesClientExample");
+            StringTemplate tprojectServer = vsTemplates.getInstanceOf("projectServer");
+            StringTemplate tprojectFilesServer = vsTemplates.getInstanceOf("projectFilesServer");
+            StringTemplate tprojectServerExample = vsTemplates.getInstanceOf("projectServerExample");
+            StringTemplate tprojectFilesServerExample = vsTemplates.getInstanceOf("projectFilesServerExample");
             
             returnedValue = true;
-            for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
+            for(int count = 0; returnedValue && (count < solution.getProjects().size()); ++count)
             {
-                idlFilename = Utils.getFileNameOnly(m_idlFiles.get(count));
-                guid = GUIDGenerator.genGUID(idlFilename);
+                Project project = (Project)solution.getProjects().get(count);
                 
-                solution.setAttribute("projects.{name, guid, dependsOn, example}", idlFilename + "Client", guid, null, m_exampleOption);
-                solution.setAttribute("projects.{name, guid, dependsOn, example}", idlFilename + "Server", guid, null, m_exampleOption);
+                tproject.setAttribute("project", project);
+                tproject.setAttribute("example", m_exampleOption);
+                 
+                tprojectFiles.setAttribute("project", project);
                 
-                projectClient.setAttribute("guid", guid);
-                projectClient.setAttribute("name", idlFilename);
-                projectClient.setAttribute("example", m_exampleOption);
-                projectClient.setAttribute("arch", arch);
-                projectFilesClient.setAttribute("name", idlFilename);
+                tprojectClient.setAttribute("project", project);
+                tprojectClient.setAttribute("example", m_exampleOption);
                 
-                projectServer.setAttribute("guid", guid);
-                projectServer.setAttribute("name", idlFilename);
-                projectServer.setAttribute("example", m_exampleOption);
-                projectServer.setAttribute("arch", arch);
-                projectFilesServer.setAttribute("name", idlFilename);
+                tprojectFilesClient.setAttribute("project", project);
+                
+                tprojectClientExample.setAttribute("project", project);
+                tprojectClientExample.setAttribute("example", m_exampleOption);
+                
+                tprojectFilesClientExample.setAttribute("project", project);
+                
+                tprojectServer.setAttribute("project", project);
+                tprojectServer.setAttribute("example", m_exampleOption);
+                
+                tprojectFilesServer.setAttribute("project", project);
+                
+                tprojectServerExample.setAttribute("project", project);
+                tprojectServerExample.setAttribute("example", m_exampleOption);
+                
+                tprojectFilesServerExample.setAttribute("project", project);
                 
                 // project configurations   
-                for(int index = 0; index < m_vsconfigurations.length; index++){
-                    projectClient.setAttribute("configurations", m_vsconfigurations[index]);
-                    projectServer.setAttribute("configurations", m_vsconfigurations[index]);
+                for(int index = 0; index < m_vsconfigurations.length; index++)
+                {
+                	tproject.setAttribute("configurations", m_vsconfigurations[index]);
+                	tprojectClient.setAttribute("configurations", m_vsconfigurations[index]);
+                	tprojectClientExample.setAttribute("configurations", m_vsconfigurations[index]);
+                	tprojectServer.setAttribute("configurations", m_vsconfigurations[index]);
+                	tprojectServerExample.setAttribute("configurations", m_vsconfigurations[index]);
                 }
                 
-                if(returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Client-" + m_exampleOption + ".vcxproj", projectClient, m_replace))
+                if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "-" + m_exampleOption + ".vcxproj", tproject, m_replace))
                 {
-                    if(returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Client-" + m_exampleOption + ".vcxproj.filters", projectFilesClient, m_replace))
+                	if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "-" + m_exampleOption + ".vcxproj.filters", tprojectFiles, m_replace))
                     {
-                        if(returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Server-" + m_exampleOption + ".vcxproj", projectServer, m_replace))
-                        {
-                            returnedValue = Utils.writeFile(m_outputDir + idlFilename +"Server-" + m_exampleOption + ".vcxproj.filters", projectFilesServer, m_replace);
-                        }
+                		if(!project.getUnique())
+                		{
+                			if(solution.getClientside())
+                			{
+                				if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "Client-" + m_exampleOption + ".vcxproj", tprojectClient, m_replace))
+                                {
+                					if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "Client-" + m_exampleOption + ".vcxproj.filters", tprojectFilesClient, m_replace))
+                					{
+                						if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "ClientExample-" + m_exampleOption + ".vcxproj", tprojectClientExample, m_replace))
+                                        {
+                        					returnedValue = Utils.writeFile(m_outputDir + project.getName() + "ClientExample-" + m_exampleOption + ".vcxproj.filters", tprojectFilesClientExample, m_replace);
+                                        }
+                					}
+
+                                }
+                			}
+                			
+                			if(returnedValue && solution.getServerside())
+                			{
+                				if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "Server-" + m_exampleOption + ".vcxproj", tprojectServer, m_replace))
+                                {
+                					if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "Server-" + m_exampleOption + ".vcxproj.filters", tprojectFilesServer, m_replace))
+                					{
+                						if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "ServerExample-" + m_exampleOption + ".vcxproj", tprojectServerExample, m_replace))
+                                        {
+                        					returnedValue = Utils.writeFile(m_outputDir + project.getName() + "ServerExample-" + m_exampleOption + ".vcxproj.filters", tprojectFilesServerExample, m_replace);
+                                        }
+                					}
+
+                                }
+                			}
+                		}
                     }
                 }
                 
-                projectClient.reset();
-                projectFilesClient.reset();
-                projectServer.reset();
-                projectFilesServer.reset();
+                
+                tproject.reset();
+                tprojectFiles.reset();
+                tprojectClient.reset();
+                tprojectFilesClient.reset();
+                tprojectClientExample.reset();
+                tprojectFilesClientExample.reset();
+                tprojectServer.reset();
+                tprojectFilesServer.reset();
+                tprojectServerExample.reset();
+                tprojectFilesServerExample.reset();
             }
             
             // TODO Nombre del la solucion
             if(returnedValue)
             {
+                tsolution.setAttribute("solution", solution);
+                tsolution.setAttribute("example", m_exampleOption);
+                
                 // project configurations   
                 for(int index = 0; index < m_vsconfigurations.length; index++){
-                    solution.setAttribute("configurations", m_vsconfigurations[index]);
+                    tsolution.setAttribute("configurations", m_vsconfigurations[index]);
                 }
                                 
-                returnedValue = Utils.writeFile(m_outputDir + idlFilename +"-" + m_exampleOption + ".sln", solution, m_replace);
+                returnedValue = Utils.writeFile(m_outputDir + "rpcsolution-" + m_exampleOption + ".sln", tsolution, m_replace);
             }
         }
         else
@@ -1715,10 +1772,8 @@ public class RPCDDSGEN
             System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
             System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
         }
-        else
-        {
-            System.out.println("\t\t-t <temp dir>: Use the specific directory as temporary directory.");
-        }
+
+        System.out.println("\t\t-t <temp dir>: Use the specific directory as temporary directory.");
         System.out.println("\tand the files can be WADL files or IDL files.");
     }
     

@@ -9,6 +9,7 @@
 #include "transports/TCPServerTransport.h"
 #include "transports/components/TCPEndpoint.h"
 #include "strategies/ServerStrategy.h"
+#include "strategies/ServerStrategyImpl.h"
 
 #include <iostream>
 #include <boost/thread.hpp>
@@ -123,7 +124,7 @@ void TCPServerTransport::handle_accept(TCPEndpoint* connection, const boost::sys
     // Else
     else
     {
-        getStrategy().schedule(boost::bind(&TCPServerTransport::worker, this, connection));
+        getStrategy().getImpl()->schedule(boost::bind(&TCPServerTransport::worker, this, connection));
     }
 
     start_accept();

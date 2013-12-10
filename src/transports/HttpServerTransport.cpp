@@ -9,6 +9,7 @@
 #include "transports/HttpServerTransport.h"
 #include "transports/components/TCPEndpoint.h"
 #include "strategies/ServerStrategy.h"
+#include "strategies/ServerStrategyImpl.h"
 #include "transports/messages/HttpMessage.h"
 #include "utils/Utilities.h"
 
@@ -96,7 +97,7 @@ int HttpServerTransport::receive(char *buffer, size_t bufferLength, size_t &data
 
 void HttpServerTransport::bossProcess(TCPEndpoint* connection)
 {
-    getStrategy().schedule(boost::bind(&HttpServerTransport::worker, this, connection));
+    getStrategy().getImpl()->schedule(boost::bind(&HttpServerTransport::worker, this, connection));
 }
 
 void HttpServerTransport::worker(TCPEndpoint* connection)

@@ -44,7 +44,7 @@ interface(ctx, interface, export_list) ::= <<
 /**
  * \brief This class implements a specific server for the defined interface $interface.name$ by user.
  */
-class $interface.name$Server : public eprosima::rpcdds::server::Server
+class RPCDDSUSERDllExport $interface.name$Server : public eprosima::rpcdds::server::Server
 {
     public:
 
