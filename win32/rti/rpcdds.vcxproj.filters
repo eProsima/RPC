@@ -195,6 +195,9 @@
     <ClCompile Include="..\..\src\utils\rest\PathTree.cpp">
       <Filter>Archivos de código fuente\utils\rest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\protocols\rest\FastBuffer.cpp">
+      <Filter>Archivos de código fuente\protocols\rest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\server\Server.h">
@@ -340,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\utils\rest\PathTree.h">
       <Filter>Archivos de encabezado\utils\rest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\protocols\rest\FastBuffer.h">
+      <Filter>Archivos de encabezado\protocols\rest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
