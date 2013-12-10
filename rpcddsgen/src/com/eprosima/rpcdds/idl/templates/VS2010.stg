@@ -64,7 +64,7 @@ project(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -165,7 +165,7 @@ projectClient(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -266,7 +266,7 @@ projectClientExample(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;$project.name$Client$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -347,7 +347,7 @@ projectServer(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -448,7 +448,7 @@ projectServerExample(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$dep$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib}; separator=";"$;$project.name$$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;$project.name$Server$if(!it.dll)$z$endif$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>

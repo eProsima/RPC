@@ -309,7 +309,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     
     try
     {
-        if(_protocol._$operation.parent.name$_impl != NULL)
+        if(_protocol._$operation.parent.formatedScopedname$_impl != NULL)
         {
 	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 	

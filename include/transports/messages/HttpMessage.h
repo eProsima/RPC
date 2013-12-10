@@ -10,6 +10,7 @@
 #define _TRANSPORTS_MESSAGES_HTTPMESSAGE_H_
 
 #include <string>
+#include <stdint.h>
 
 namespace eprosima
 {
