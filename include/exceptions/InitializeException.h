@@ -28,14 +28,14 @@ namespace eprosima
                     /**
                      * \brief Default constructor.
                      *
-                     * \param message A error message. This message is copied.
+                     * \param message An error message. This message is copied.
                      */
                     InitializeException(const std::string &message);
 
                     /**
                      * \brief Default constructor.
                      *
-                     * \param message A error message. This message is moved.
+                     * \param message An error message. This message is moved.
                      */
                     InitializeException(std::string&& message);
 

@@ -58,14 +58,14 @@ namespace eprosima
                     /**
                      * \brief Default constructor.
                      *
-                     * \param message A error message. This message is copied.
+                     * \param message An error message. This message is copied.
                      */
                     SystemException(const std::string &message);
 
                     /**
                      * \brief Default constructor.
                      *
-                     * \param message A error message. This message is moved.
+                     * \param message An error message. This message is moved.
                      */
                     SystemException(std::string&& message);
 
@@ -86,7 +86,7 @@ namespace eprosima
                     /**
                      * \brief Constructor.
                      *
-                     * \param message A error message. This message is copied.
+                     * \param message An error message. This message is copied.
                      * \param minor The number that will be associated with the system exception.
                      */
                     SystemException(const std::string &message, int32_t minor);
@@ -94,7 +94,7 @@ namespace eprosima
                     /**
                      * \brief Constructor.
                      *
-                     * \param message A error message. This message is moved.
+                     * \param message An error message. This message is moved.
                      * \param minor The number that will be associated with the system exception.
                      */
                     SystemException(std::string&& message, int32_t minor);

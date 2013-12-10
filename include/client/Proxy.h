@@ -61,11 +61,11 @@ namespace eprosima
                 protected:
 
                     /*!
-                     * @brief A constructor. The associated domain participant is created.
+                     * @brief Proxy constructor.
                      *
-                     * @param transport The transport that will be use the server's proxy. This class doesn't delete this object in its destructor.
-                     * @param protocol The protocol used to send the information over the transport. This class doesn't delete this object in its destructor.
-                     * @exception InitializeException This exception is thrown when the initialization was wrong.
+                     * @param transport The transport that will be used by the server's proxy. This class doesn't delete this object in its destructor.
+                     * @param protocol The protocol used to send information over the transport. This class doesn't delete this object in its destructor.
+                     * @exception InitializeException This exception is thrown when the initialization is wrong.
                      */
                     Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
                             eprosima::rpcdds::protocol::Protocol &protocol);
@@ -73,12 +73,22 @@ namespace eprosima
                     //! @brief The default destructor.
                     virtual ~Proxy();
                     
+					/*!
+					 * @brief Method to get the protocol
+					 * 
+					 * @return The protocol used to send information over the transport
+					 */
                     inline
                         eprosima::rpcdds::protocol::Protocol& getProtocol() const
                         {
                             return m_protocol;
                         }
-
+						
+					/*!
+					 * @brief Method to get the transport
+					 * 
+					 * @return The transport used used by the proxy
+					 */
                     inline
                         eprosima::rpcdds::transport::ProxyTransport& getTransport() const
                         {

@@ -452,7 +452,6 @@
     <ClCompile Include="..\..\src\exceptions\ServerTimeoutException.cpp" />
     <ClCompile Include="..\..\src\exceptions\SystemException.cpp" />
     <ClCompile Include="..\..\src\exceptions\UserException.cpp" />
-    <ClCompile Include="..\..\src\protocols\rest\FastBuffer.cpp" />
     <ClCompile Include="..\..\src\protocols\rest\HTTPEntities.cpp" />
     <ClCompile Include="..\..\src\protocols\rest\RESTSerializer.cpp" />
     <ClCompile Include="..\..\src\server\Server.cpp" />
@@ -490,7 +489,6 @@
     <ClInclude Include="..\..\include\exceptions\SystemException.h" />
     <ClInclude Include="..\..\include\exceptions\UserException.h" />
     <ClInclude Include="..\..\include\protocols\Protocol.h" />
-    <ClInclude Include="..\..\include\protocols\rest\FastBuffer.h" />
     <ClInclude Include="..\..\include\protocols\rest\HTTPEntities.h" />
     <ClInclude Include="..\..\include\protocols\rest\RESTSerializer.h" />
     <ClInclude Include="..\..\include\rpcdds_dll.h" />
