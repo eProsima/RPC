@@ -27,7 +27,7 @@ Valores EnumYStringTestServerImplExample::getEnum(/*in*/ Valores v1, /*inout*/ V
     return returnedValue;
 } 
 
-char* EnumYStringTestServerImplExample::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
+char* EnumYStringTestServerImplExample::getString(/*in*/ const char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
 {
     char* returnedValue;
 
@@ -44,7 +44,7 @@ char* EnumYStringTestServerImplExample::getString(/*in*/ char* s1, /*inout*/ cha
     return returnedValue;
 } 
 
-char* EnumYStringTestServerImplExample::getStringBounded(/*in*/ char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3) 
+char* EnumYStringTestServerImplExample::getStringBounded(/*in*/ const char* sb1, /*inout*/ char*& sb2, /*out*/ char*& sb3) 
 {
     char* returnedValue;
 
