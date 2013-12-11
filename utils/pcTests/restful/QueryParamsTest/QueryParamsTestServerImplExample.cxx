@@ -14,13 +14,13 @@
 
 #include "QueryParamsTestServerImplExample.h"
 
-#include "boost/lexical_cast.hpp"
-
 #include <iostream>
+#include <sstream>
 
 using namespace std;   
 using namespace QueryParamsTest;
 
+template <typename T> string tostr(const T& t) { ostringstream os; os<<t; return os.str(); }
 
 GetStringResponse queryParamsResourceServerImplExample::getString(/*in*/ const char* stringP)
 {
@@ -85,7 +85,7 @@ GetShortResponse queryParamsResourceServerImplExample::getShort(/*in*/ DDS_Short
 	cout << "getShort: " << shortP << endl;
 
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(shortP);
+	response += tostr(shortP);
 	response += "</Response>";
 
 	getShort_ret._d = 1;
@@ -104,7 +104,7 @@ GetUnsignedShortResponse queryParamsResourceServerImplExample::getUnsignedShort(
 
 	cout << "getUnsignedShort: " << unsignedShortP << endl;
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(unsignedShortP);
+	response += tostr(unsignedShortP);
 	response += "</Response>";
 
 	getUnsignedShort_ret._d = 1;
@@ -124,7 +124,7 @@ GetIntResponse queryParamsResourceServerImplExample::getInt(/*in*/ DDS_Long intP
 	cout << "getInt: " << intP << endl;
 
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(intP);
+	response += tostr(intP);
 	response += "</Response>";
 
 	getInt_ret._d = 1;
@@ -143,7 +143,7 @@ GetUnsignedIntResponse queryParamsResourceServerImplExample::getUnsignedInt(/*in
 
 	cout << "getUnsignedInt: " << unsignedIntP << endl;
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(unsignedIntP);
+	response += tostr(unsignedIntP);
 	response += "</Response>";
 
 	getUnsignedInt_ret._d = 1;
@@ -163,7 +163,7 @@ GetLongResponse queryParamsResourceServerImplExample::getLong(/*in*/ DDS_LongLon
 	cout << "getLong: " << longP << endl;
 
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(longP);
+	response += tostr(longP);
 	response += "</Response>";
 
 	getLong_ret._d = 1;
@@ -182,7 +182,7 @@ GetUnsignedLongResponse queryParamsResourceServerImplExample::getUnsignedLong(/*
 
 	cout << "getUnsignedLong: " << unsignedLongP << endl;
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(unsignedLongP);
+	response += tostr(unsignedLongP);
 	response += "</Response>";
 
 	getUnsignedLong_ret._d = 1;
@@ -202,7 +202,7 @@ GetFloatResponse queryParamsResourceServerImplExample::getFloat(/*in*/ DDS_Float
 	cout << "getFloat: " << floatP << endl;
 
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(floatP);
+	response += tostr(floatP);
 	response += "</Response>";
 
 	getFloat_ret._d = 1;
@@ -222,7 +222,7 @@ GetDoubleResponse queryParamsResourceServerImplExample::getDouble(/*in*/ DDS_Dou
 	cout << "getDouble: " << doubleP << endl;
 
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(doubleP);
+	response += tostr(doubleP);
 	response += "</Response>";
 
 	getDouble_ret._d = 1;

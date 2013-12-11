@@ -14,12 +14,13 @@
 
 #include "EmbeddedParamsTestServerImplExample.h"
 
-#include "boost/lexical_cast.hpp"
-
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 using namespace EmbeddedParamsTest;
+
+template <typename T> string tostr(const T& t) { ostringstream os; os<<t; return os.str(); }
 
 Get123Response first_second_thirdResourceServerImplExample::get123(/*in*/ const first_second_third& first_second_third)
 {
@@ -29,9 +30,11 @@ Get123Response first_second_thirdResourceServerImplExample::get123(/*in*/ const 
 
 	cout << "get123" << endl;
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(first_second_third.first_) + ", ";
-	response += boost::lexical_cast<string>(first_second_third.second_) + ", ";
-	response += boost::lexical_cast<string>(first_second_third.third_);
+	response += tostr(first_second_third.first_);
+	response += ", ";
+	response += tostr(first_second_third.second_);
+	response += ", ";
+	response += tostr(first_second_third.third_);
 	response += "</Response>";
 
 	get123_ret._d = 1;
@@ -52,9 +55,12 @@ Get1234Response urlFixedSegment_fourthResourceServerImplExample::get1234(/*in*/ 
 
 	cout << "get1234" << endl;
 	string response = "<Response>";
-	response += boost::lexical_cast<string>(urlFixedSegment_fourth.first_) + ", ";
-	response += boost::lexical_cast<string>(urlFixedSegment_fourth.second_) + ", ";
-	response += boost::lexical_cast<string>(urlFixedSegment_fourth.third_) + ", ";
+	response += tostr(urlFixedSegment_fourth.first_);
+	response += ", ";
+	response += tostr(urlFixedSegment_fourth.second_);
+	response += ", ";
+	response += tostr(urlFixedSegment_fourth.third_);
+	response += ", ";
 	if(urlFixedSegment_fourth.fourth_)
 		response += "true";
 	else
