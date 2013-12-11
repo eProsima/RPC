@@ -34,17 +34,24 @@ namespace eprosima
                     /**
                      * \brief Default constructor.
                      *
-                     * \param threadCount Number of thread that will manage by the thread pool. Default value: 5.
+                     * \param threadCount Number of threads the thread pool will manage. Default value: 5.
                      */
                     ThreadPoolStrategy(unsigned int threadCount = RPCDDS_MIN_THREADS_DEFAULT);
 
                     /// \brief Default destructor.
                     ~ThreadPoolStrategy();
-
+					
+					/*!
+					 * @brief Gets the implementation of the strategy using Boost library
+					 * @return Implementation of the strategy
+					 */
                     ServerStrategyImpl* getImpl();
 
                 private:
 
+					/*!
+					 * @brief Implementation of the strategy using Boost library
+					 */
                     ThreadPoolStrategyImpl *m_impl;
             };
         } // namespace strategy

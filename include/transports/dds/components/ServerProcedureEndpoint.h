@@ -49,14 +49,30 @@ namespace eprosima
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Initialize_data initialize_data, Transport::Finalize_data finalize_data,
                                 Transport::ProcessFunc, int dataSize);
-
+						
+						/*!
+                         * @brief This method creates the DDS entities needed to run this DDS Endpoint.
+                         * @param serviceName Name of the service
+                         */
                         int start(std::string &serviceName);
 
+						/*!
+                         * @brief This method deletes the DDS entities needed to run this DDS Endpoint.
+                         * @param serviceName
+                         */
                         void stop();
 
+						/*!
+                         * @brief Gets the callback used to processes a request
+						 * @return Function callback used to processes a request
+                         */
                         inline
                             Transport::ProcessFunc getProcessFunc(){return m_process_func;}
 
+						/*!
+                         * @brief
+                         * @param serviceName
+                         */
                         int sendReply(void *data);
 
                         /// @brief DDS callback.

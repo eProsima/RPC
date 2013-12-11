@@ -47,7 +47,7 @@ project(project, example, configurations) ::= <<
   </ImportGroup>};separator="\n"$
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
-    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
     <OutDir>.\lib\\$example$\</OutDir>
     <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
   </PropertyGroup>};separator="\n"$
@@ -148,7 +148,7 @@ projectClient(project, example, configurations) ::= <<
   </ImportGroup>};separator="\n"$
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
-    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
     <OutDir>.\lib\\$example$\</OutDir>
     <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
   </PropertyGroup>};separator="\n"$
@@ -249,7 +249,7 @@ projectClientExample(project, example, configurations) ::= <<
   </ImportGroup>};separator="\n"$
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
-    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
     <OutDir>.\bin\\$example$\</OutDir>
     <TargetName>\$(ProjectName)</TargetName>
   </PropertyGroup>};separator="\n"$
@@ -330,7 +330,7 @@ projectServer(project, example, configurations) ::= <<
   </ImportGroup>};separator="\n"$
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
-    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
     <OutDir>.\lib\\$example$\</OutDir>
     <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
   </PropertyGroup>};separator="\n"$
@@ -431,7 +431,7 @@ projectServerExample(project, example, configurations) ::= <<
   </ImportGroup>};separator="\n"$
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
-    <IntDir>\$(Platform)\\\$(Configuration)\</IntDir>
+    <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
     <OutDir>.\bin\\$example$\</OutDir>
     <TargetName>\$(ProjectName)</TargetName>
   </PropertyGroup>};separator="\n"$

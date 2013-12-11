@@ -168,7 +168,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
      httpMessage.setMethod(HttpMessage::HTTP_METHOD_$operation.method$);
      //TODO Chequear host en el transport.
      httpMessage.setHost("$if(ctx.currentModule)$$ctx.currentModule.resourceHost$$endif$");
-     std::string uri($if(operation.parent.pathHasBrackets)$expandPath_$operation.name$("$if(ctx.currentModule)$$ctx.currentModule.resourceBaseUriWithoutLastBackslace$$endif$/$operation.parent.pathWithoutFirstBackslace$", $first(operation.parameters).name$)$else$"$if(ctx.currentModule)$$ctx.currentModule.resourceBaseUriWithoutLastBackslace$$endif$/$operation.parent.pathWithoutFirstBackslace$"$endif$); 
+     std::string uri($if(operation.parent.pathHasBrackets)$expandPath_$operation.name$(std::string("$if(ctx.currentModule)$$ctx.currentModule.resourceBaseUriWithoutLastBackslace$$endif$/$operation.parent.pathWithoutFirstBackslace$"), $first(operation.parameters).name$)$else$"$if(ctx.currentModule)$$ctx.currentModule.resourceBaseUriWithoutLastBackslace$$endif$/$operation.parent.pathWithoutFirstBackslace$"$endif$); 
      
      $if(operation.parent.pathHasBrackets)$
         $serializeHTTPParams(params=rest(operation.parameters))$

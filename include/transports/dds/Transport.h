@@ -28,7 +28,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class is the base of all classes that implement a transport
-                 * using DDS. This transport could be used by the proxy or the server.
+                 * using DDS. This transport could be used by both proxies and servers.
                  * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI Transport
@@ -46,20 +46,35 @@ namespace eprosima
                          */
                         virtual ~Transport();
 
+		                /*!
+						 * @brief Initializes all the DDS elements: creates the topic, the participant, the publisher and the subscriber.
+						 */
                         void initialize();
 
+		                /*!
+						 * @brief Gets the domain participant
+						 * @return DDS domain participant
+						 */
                         inline
                             DDS::DomainParticipant* getParticipant() const
                             {
                                 return m_participant;
                             }
 
+		                /*!
+						 * @brief Gets the publisher
+						 * @return DDS publisher
+						 */
                         inline
                             DDS::Publisher* getPublisher() const
                             {
                                 return m_publisher;
                             }
 
+		                /*!
+						 * @brief Gets the subscriber
+						 * @return DDS subscriber
+						 */
                         inline
                             DDS::Subscriber* getSubscriber() const
                             {
@@ -70,10 +85,10 @@ namespace eprosima
                          * @brief This function creates a new procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
                          *
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
+                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL.
                          * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL:
-                         * @return 0 value is returned if the function works successfully. In other case -1 is returned.
+                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL.
+                         * @return 0 if the function works. -1 in other case.
                          */
                         virtual eprosima::rpcdds::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
@@ -82,6 +97,12 @@ namespace eprosima
 
                     protected:
 
+						/*!
+                         * @brief This abstract function sets the QoS of DDS to use a specific transport.
+                         *
+                         * @param participantQos Reference to the DDS domain participant QoS.
+                         * @param participant The domain participant that will be set to use a specific transport.
+                         */
                         virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
 
                         /*!

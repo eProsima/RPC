@@ -39,10 +39,10 @@ namespace eprosima
                     virtual ~ServerStrategyImpl(){}
 
                     /**
-                     * \brief This function schedules a incoming request.
+                     * \brief This function schedules an incoming request.
                      *        This function has to be implemented by the derived classes.
                      *
-                     * \param data The request. Cannot be NULL.
+                     * \param callback The Server's method to invoke when a request arrives
                      */
                     virtual void schedule(boost::function<void()> callback) = 0;
             };

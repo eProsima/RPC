@@ -126,7 +126,7 @@ echo "EXECUTING %3 for %1"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with RPCDDS script
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -ppDisable -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcdds_rti_pcTests.bat -ppDisable -protocol rest -d output -example %1 "%3\%3.wadl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -137,74 +137,80 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration
 :: Clean the visual solution
-msbuild "output\%3-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 :: Build the visual solution
-msbuild "output\%3-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
+copy output\lib\%1\%3.dll output\bin\%1\%3.dll
+copy output\lib\%1\%3Server.dll output\bin\%1\%3Server.dll
+copy output\lib\%1\%3Client.dll output\bin\%1\%3Client.dll
 :: Execute the server in other cmd.exe
-start output\objs\%1\%3Server.exe
+start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds
 call :wait 5
 :: Execute the client in this cmd.exe
-"output\objs\%1\%3Client.exe"
+"output\bin\%1\%3ClientExample.exe"
 set errorstatus=%ERRORLEVEL%
 :: Kill server
-TaskKill /IM "%3Server.exe"
+TaskKill /IM "%3ServerExample.exe"
 if not %errorstatus%==0 goto :EOF
-
 :: Debug DLL Configuration
 :: Clean the visual solution
-msbuild "output\%3-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 :: Build the visual solution
-msbuild "output\%3-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
+copy output\lib\%1\%3d.dll output\bin\%1\%3d.dll
+copy output\lib\%1\%3Serverd.dll output\bin\%1\%3Serverd.dll
+copy output\lib\%1\%3Clientd.dll output\bin\%1\%3Clientd.dll
 :: Execute the server in other cmd.exe
-start output\objs\%1\%3Server.exe
+start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds
 call :wait 5
 :: Execute the client in this cmd.exe
-"output\objs\%1\%3Client.exe"
+"output\bin\%1\%3ClientExample.exe"
 set errorstatus=%ERRORLEVEL%
 :: Kill server
-TaskKill /IM "%3Server.exe"
+TaskKill /IM "%3ServerExample.exe"
 if not %errorstatus%==0 goto :EOF
 
 :: Release Configuration
 :: Clean the visual solution
-msbuild "output\%3-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 :: Build the visual solution
-msbuild "output\%3-%1.sln" /t:Build /p:Configuration="Release" /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
+
 :: Execute the server in other cmd.exe
-start output\objs\%1\%3Server.exe
+start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds
 call :wait 5
 :: Execute the client in this cmd.exe
-"output\objs\%1\%3Client.exe"
+"output\bin\%1\%3ClientExample.exe"
 set errorstatus=%ERRORLEVEL%
 :: Kill server
-TaskKill /IM "%3Server.exe"
+TaskKill /IM "%3ServerExample.exe"
 if not %errorstatus%==0 goto :EOF
 
 :: Debug Configuration
 :: Clean the visual solution
-msbuild "output\%3-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 :: Build the visual solution
-msbuild "output\%3-%1.sln" /t:Build /p:Configuration="Debug" /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 :: Execute the server in other cmd.exe
-start output\objs\%1\%3Server.exe
+start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds
 call :wait 5
 :: Execute the client in this cmd.exe
-"output\objs\%1\%3Client.exe"
+"output\bin\%1\%3ClientExample.exe"
 set errorstatus=%ERRORLEVEL%
 :: Kill server
-TaskKill /IM "%3Server.exe"
+TaskKill /IM "%3ServerExample.exe"
 if not %errorstatus%==0 goto :EOF
 
 goto :EOF

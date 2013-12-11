@@ -18,10 +18,16 @@ namespace eprosima
     {
         namespace transport
         {
+			/*!
+			 * @brief This class represents an HTTP message.
+			 */
             class HttpMessage
             {
                 public:
 
+					/*!
+					 * @brief This enumerator represents the supported HTTP methods.
+					 */
                     typedef enum Methods
                     {
                         HTTP_METHOD_GET = 0,
@@ -31,6 +37,9 @@ namespace eprosima
                         HTTP_METHOD_INVALID
                     } Methods;
 
+					/*!
+					 * @brief Default constructor
+					 */
                     HttpMessage() : m_method(HTTP_METHOD_INVALID), m_body_content_length(0),
                         m_responseCode(0), m_versionCompatible(false), m_containsResponseStatus(false)
                         {

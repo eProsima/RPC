@@ -22,7 +22,7 @@ namespace eprosima
 
             /**
              * @brief This class implements the thread per request strategy.
-             *        The server creates a new thread per new incoming request.
+             *        The server creates a new thread for every new incoming request.
              * @ingroup STRATEGIESMODULE 
              */
             class RPCDDS_DllAPI ThreadPerRequestStrategy : public ServerStrategy
@@ -34,11 +34,18 @@ namespace eprosima
 
                     /// \brief Default destructor.
                     virtual ~ThreadPerRequestStrategy();
-
+					
+					/*!
+					 * @brief Gets the implementation of the strategy using Boost library
+					 * @return Implementation of the strategy
+					 */
                     ServerStrategyImpl* getImpl();
 
 			    private:
 
+					/*!
+					 * @brief Implementation of the strategy using Boost library
+					 */
 					ThreadPerRequestStrategyImpl *m_impl;
             };
         } // namespace strategy

@@ -22,7 +22,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class implements transport using DDS over UDPv4.
-                 * This transport only could be used by a server.
+                 * This transport can only be used by a server.
                  * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI UDPServerTransport : public ServerTransport

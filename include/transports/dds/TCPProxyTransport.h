@@ -22,7 +22,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class implements a transport using DDS over TCPv4.
-                 * This transport only could be used by a server's proxy.
+                 * This transport can only be used by a server's proxy.
                  * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI TCPProxyTransport : public ProxyTransport
@@ -32,8 +32,8 @@ namespace eprosima
                         /*!
                          * @brief Default constructor for the proxies.
                          *
-                         * @param to_connect Public address and port where the server could be found by the proxy. By example: "218.18.3.133:7600"
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param to_connect Public address and port where the server can be found by the proxy. By example: "218.18.3.133:7600"
+                         * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
                         TCPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 

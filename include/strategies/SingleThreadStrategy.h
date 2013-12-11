@@ -22,7 +22,7 @@ namespace eprosima
 
             /**
              * @brief This class implements the sigle thread strategy.
-             *        The server uses the reception thread of RTI DDS to execute the request.
+             *        The server uses a reception thread to execute all the requests.
              * @ingroup STRATEGIESMODULE 
              */
             class RPCDDS_DllAPI SingleThreadStrategy : public ServerStrategy
@@ -34,11 +34,18 @@ namespace eprosima
 
                     /// \brief Default destructor.
                     virtual ~SingleThreadStrategy();
-
+					
+					/*!
+					 * @brief Gets the implementation of the strategy using Boost library
+					 * @return Implementation of the strategy
+					 */
 					ServerStrategyImpl* getImpl();
 
 			    private:
 
+					/*!
+					 * @brief Implementation of the strategy using Boost library
+					 */
 					SingleThreadStrategyImpl *m_impl;
             };
         } // namespace strategy

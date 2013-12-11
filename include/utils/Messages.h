@@ -14,8 +14,8 @@ namespace eprosima
 	namespace rpcdds
 	{
 		/**
-		 * \brief This enumeration type defines the success of an operation or
-		 *        the posible errors that occur in the operation.
+		 * \brief This enumeration type defines the success of an operation and
+		 *        the possible errors that can occur during the operation.
 		 */
 		typedef enum ReturnMessage
 		{

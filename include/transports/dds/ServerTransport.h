@@ -26,6 +26,11 @@ namespace eprosima
             {
                 class ServerProcedureEndpoint;
 
+				/*!
+                 * @brief This class is the base of all classes that implement a transport
+                 * using DDS. This transport can be used by the servers.
+                 * @ingroup TRANSPORTMODULE
+                 */
                 class RPCDDS_DllAPI ServerTransport : public eprosima::rpcdds::transport::ServerTransport, public Transport
                 {
                     public:
@@ -45,29 +50,57 @@ namespace eprosima
                          * @brief This function creates a new proxy procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
                          *
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
+                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL.
                          * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL:
+                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL.
                          * @param copy_data Pointer to the function used to copy data when it is received.
-                         * @return 0 value is returned if the function works successfully. In other case -1 is returned.
+                         * @return 0 if the function successfully works. -1 in other case
                          */
                         eprosima::rpcdds::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
                                 Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize);
 
+								
+						/*!
+						 * @brief This method is invoked once for each incoming request.
+						 *
+						 * @param data The request data
+						 * @param endpoint The request endpoint
+						 */
                         void process(ServerProcedureEndpoint *endpoint, void *data);
 
+						/*!
+						 * @brief This method starts all the DDS Datawriters and Datareaders.
+						 */
                         void run();
 
+						/*!
+						 * @brief This function does not apply to DDS transport.
+						 */
                         void stop();
 
+						/*!
+						 * @brief This function is used to send a reply to a proxy
+						 * @param data Data to send
+						 * @param dataLength Length of the data to send
+						 * @param endpoint Endpoint meant to send the data
+						 */
                         void sendReply(void *data, size_t dataLength, Endpoint *endpoint);
 
+						/*!
+						 * @brief This function does not apply to DDS transport.
+						 */
                         int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
 
                     protected:
 
+						/*!
+                         * @brief This abstract function sets the QoS of DDS to use a specific transport.
+                         *
+                         * @param participantQos Reference to the DDS domain participant QoS.
+                         * @param participant The domain participant that will be set to use a specific transport.
+                         */
                         virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
 
                         /*!

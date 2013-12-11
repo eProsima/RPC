@@ -29,7 +29,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class represents a remote endpoint used by a proxy.
-                 * Also this class encapsulate the DDS datawriter and the DDS datareader.
+                 * It also encapsulates the DDS datawriter and the DDS datareader.
                  */
                 class RPCDDS_DllAPI ProxyProcedureEndpoint : public Endpoint
                 {
@@ -46,32 +46,31 @@ namespace eprosima
 
                         /*!
                          * @brief This function initializes the proxy procedure endpoint.
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
+						 *
+                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL.
                          * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. Cannot be NULL:
+                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. Cannot be NULL.
                          * @param copy_data Pointer to the function used to copy data when it is received.
-                         * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
+                         * @return 0 if the initialization works. -1 in other case.
                          */
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Copy_data copy_data, int dataSize);
 
                         /*!
                          * @brief This function finalizes the proxy procedure endpoint.
-                         * All entities and object created by this procedure endpoint are deleted.
+                         * All entities and objects created by this procedure endpoint are deleted.
                          */
                         void finalize();
 
                         /*!
                          * @brief This function sends a synchronous RPC call.
-                         * Usually this function sends the  request to the server and waits the reply.
+                         * It sends the request to the server and waits for the reply.
                          * Wait mechanism is implemented with a DDS WaitSet.
                          *
                          * @param request Pointer to the allocated request. Cannot be NULL.
-                         * @param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
+                         * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
                          *        The pointer can be NULL and this means that the RPC call is oneway.
-                         * @param remoteServiceName The remote service name that will be called.
-                         * @param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
-                         * @throw eProsima::RPCDDS::ServerTimeoutException
+                         * @throw eprosima::rpcdds::exception::ServerTimeoutException
                          */
                         eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 

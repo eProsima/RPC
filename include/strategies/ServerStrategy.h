@@ -34,6 +34,10 @@ namespace eprosima
                     /// \brief Default destructor.
                     virtual ~ServerStrategy(){}
 
+					/*!
+					 * @brief Gets the implementation of the strategy using Boost library
+					 * @return Implementation of the strategy
+					 */
                     virtual ServerStrategyImpl* getImpl() = 0;
             };
         } // namespace strategy

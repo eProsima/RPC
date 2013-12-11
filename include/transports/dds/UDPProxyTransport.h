@@ -22,7 +22,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class implements a transport using DDS over UDPv4.
-                 * This transport only could be used by a server's proxy.
+                 * This transport only can be used by a server's proxy.
                  * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI UDPProxyTransport : public ProxyTransport
@@ -31,15 +31,15 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor for server's proxies.
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
                         UDPProxyTransport(std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         /*!
                          * @brief Constructor for server's proxies.
                          *
-                         * @param to_connect IP address where the server could be found by the proxy. By example: "192.168.1.3"
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param to_connect IP address where the server could be found by the proxy. For example: "192.168.1.3"
+                         * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
                         UDPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 

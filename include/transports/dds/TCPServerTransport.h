@@ -22,7 +22,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class implements a transport using DDS over TCPv4.
-                 * This transport only could be used by a server.
+                 * This transport can only be used by a server.
                  * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI TCPServerTransport : public ServerTransport
@@ -33,10 +33,10 @@ namespace eprosima
                          * @brief Default constructor for servers.
                          *
                          * @param public_address Public address and port of the server. The server should be accesible in this address.
-                         *        The user has to configure its router for this purpose. By example: "218.18.3.133:7600"
-                         * @param server_bind_port Port used by the server in its machine. This port will be use in the router for port forwarding
+                         *        The user has to configure its router for this purpose. For example: "218.18.3.133:7600"
+                         * @param server_bind_port Port used by the server in its machine. This port will be used in the router for port forwarding
                          *        between the public port and this port.
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
                         TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId);
 
