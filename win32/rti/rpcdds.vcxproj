@@ -519,6 +519,7 @@
     <ClInclude Include="..\..\include\transports\ServerTransport.h" />
     <ClInclude Include="..\..\include\transports\TCPProxyTransport.h" />
     <ClInclude Include="..\..\include\transports\TCPServerTransport.h" />
+    <ClInclude Include="..\..\include\transports\TCPServerTransportImpl.h" />
     <ClInclude Include="..\..\include\transports\Transport.h" />
     <ClInclude Include="..\..\include\utils\dds\Middleware.h" />
     <ClInclude Include="..\..\include\utils\GenericClientRPC.h" />

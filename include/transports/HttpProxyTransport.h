@@ -12,6 +12,8 @@
 #include "rpcdds_dll.h"
 #include "transports/TCPProxyTransport.h"
 
+#include <stdint.h>
+
 namespace eprosima
 {
     namespace rpcdds

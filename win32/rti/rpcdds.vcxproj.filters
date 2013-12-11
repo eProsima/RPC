@@ -350,6 +350,9 @@
     <ClInclude Include="..\..\include\strategies\ServerStrategyImpl.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\transports\TCPServerTransportImpl.h">
+      <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\rpcdds.rc">
