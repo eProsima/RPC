@@ -7,24 +7,53 @@
  *************************************************************************/
 
 #include "transports/TCPServerTransport.h"
+#include "transports/TCPServerTransportImpl.h"
 #include "transports/components/TCPEndpoint.h"
 #include "strategies/ServerStrategy.h"
 #include "strategies/ServerStrategyImpl.h"
 
 #include <iostream>
-#include <boost/thread.hpp>
 #include <string.h>
+#include <boost/thread.hpp>
+#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
+
+namespace eprosima { namespace rpcdds { namespace transport {
+    class TCPServerTransportBoost
+    {
+        public:
+
+            TCPServerTransportBoost() : io_service_(NULL),
+            work_(NULL), acceptor_(NULL)
+            {
+                io_service_ = new boost::asio::io_service();
+                work_ = new boost::asio::io_service::work(*io_service_);
+                acceptor_ = new boost::asio::ip::tcp::acceptor(*io_service_);
+            }
+
+            ~TCPServerTransportBoost()
+            {
+                delete acceptor_;
+                delete work_;
+                delete io_service_;
+            }
+
+            boost::asio::io_service *io_service_;
+            boost::asio::io_service::work *work_;
+            boost::asio::ip::tcp::acceptor *acceptor_;
+    };
+}}}
 
 using namespace eprosima::rpcdds;
 using namespace ::transport;
 
 void TCPServerTransport::init(const std::string& address,
-        const std::string& port) {
+        const std::string& port)
+{
 
-    std::string finalAddress = get_ip_address(io_service_, address, port);
+    std::string finalAddress = get_ip_address(*m_boostInfo->io_service_, address, port);
     if (finalAddress.empty()) {
         std::cerr << "Could not resolve address " << address << std::endl;
     }
@@ -37,13 +66,14 @@ void TCPServerTransport::init(const std::string& address,
     boost::asio::ip::tcp::endpoint endpoint(
             boost::asio::ip::address::from_string(finalAddress),
             atoi(port.c_str()));
-    try {
-        acceptor_.open(endpoint.protocol());
-        acceptor_.set_option(
-                boost::asio::ip::tcp::acceptor::reuse_address(true));
-        acceptor_.bind(endpoint);
-        acceptor_.listen();
-    } catch (boost::system::system_error e) {
+    try
+    {
+        m_boostInfo->acceptor_->open(endpoint.protocol());
+        m_boostInfo->acceptor_->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
+        m_boostInfo->acceptor_->bind(endpoint);
+        m_boostInfo->acceptor_->listen();
+    } catch (boost::system::system_error e)
+    {
         std::cerr << "Error binding to " << endpoint.address().to_string()
             << ":" << endpoint.port() << ": " << e.what() << std::endl;
         creationFailed = true;
@@ -51,19 +81,29 @@ void TCPServerTransport::init(const std::string& address,
 
     //Successful bind
 #if defined(TEST)
-    std::cout << "Successfuly binded to " << acceptor_.local_endpoint().address().to_string() << ":";
-    std::cout << acceptor_.local_endpoint().port() << std::endl;
+    std::cout << "Successfuly binded to " << m_boostInfo->acceptor_->local_endpoint().address().to_string() << ":";
+    std::cout << m_boostInfo->acceptor_->local_endpoint().port() << std::endl;
 #endif
     start_accept();
 }
 
-TCPServerTransport::TCPServerTransport(const std::string &to_connect) : work_(io_service_),
-    acceptor_(io_service_), thread_(NULL)
+TCPServerTransport::TCPServerTransport(const std::string &to_connect) : m_boostInfo(NULL),
+    thread_(NULL)
 {
     size_t index = to_connect.find(':', 1);
     std::string address = to_connect.substr(0, index);
     std::string port = to_connect.substr(index + 1, to_connect.size());
+    m_boostInfo = new TCPServerTransportBoost();
+    onBossProcess = new BossProcess();
     init(address, port);
+}
+
+TCPServerTransport::~TCPServerTransport()
+{
+    if(m_boostInfo != NULL)
+        delete m_boostInfo;
+    if(onBossProcess != NULL)
+        delete onBossProcess;
 }
 
 std::string TCPServerTransport::get_ip_address(
@@ -89,21 +129,21 @@ std::string TCPServerTransport::get_ip_address(
 void TCPServerTransport::start_accept()
 {
     TCPEndpoint* new_endpoint = new TCPEndpoint();
-    new_endpoint->master_io_service_ = &io_service_;
+    new_endpoint->master_io_service_ = m_boostInfo->io_service_;
     std::cout << "Begin accept" << std::endl;
-    acceptor_.async_accept(*new_endpoint->socket_,
+    m_boostInfo->acceptor_->async_accept(*new_endpoint->socket_,
             boost::bind(&TCPServerTransport::handle_accept, this, new_endpoint,
                 boost::asio::placeholders::error));
 }
 
 void TCPServerTransport::run()
 {
-    thread_ = new boost::thread(boost::bind(&boost::asio::io_service::run, &io_service_));
+    thread_ = new boost::thread(boost::bind(&boost::asio::io_service::run, m_boostInfo->io_service_));
 }
 
 void TCPServerTransport::stop()
 {
-    io_service_.stop();
+    m_boostInfo->io_service_->stop();
 }
 
 void TCPServerTransport::handle_accept(TCPEndpoint* connection, const boost::system::error_code& e)
@@ -117,9 +157,9 @@ void TCPServerTransport::handle_accept(TCPEndpoint* connection, const boost::sys
 #endif
 
     // If this transport is subordinated.
-    if(!onBossProcess.empty())
+    if(!onBossProcess->function.empty())
     {
-        onBossProcess(connection);
+        onBossProcess->function(connection);
     }
     // Else
     else

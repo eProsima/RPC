@@ -12,14 +12,22 @@
 #include "transports/ServerTransport.h"
 #include "rpcdds_dll.h"
 
-#include <boost/asio.hpp>
-#include <boost/function.hpp>
 #include <string>
 #include <iostream>
 
 namespace boost
 {
     class thread;
+
+    namespace asio
+    {
+        class io_service;
+    }
+
+    namespace system
+    {
+        class error_code;
+    }
 }
 
 namespace eprosima
@@ -28,33 +36,35 @@ namespace eprosima
     {
         namespace transport
         {
+            class TCPServerTransportBoost;
+            class BossProcess;
             class TCPEndpoint;
 
-            class RPCDDS_DllAPI TCPServerTransport : public ServerTransport, private boost::noncopyable
+            class RPCDDS_DllAPI TCPServerTransport : public ServerTransport
             {
                 private:
-                    boost::asio::io_service io_service_;
-                    boost::asio::io_service::work work_;
-                    boost::asio::ip::tcp::acceptor acceptor_;
+                    TCPServerTransportBoost *m_boostInfo;
                     boost::thread *thread_;
 
                     void init(const std::string& address, const std::string& port);
 
                     void start_accept();
 
-                    void handle_accept(TCPEndpoint* con, const boost::system::error_code& e);
+                    void handle_accept(TCPEndpoint* con, const boost::system::error_code &e);
 
-                    std::string get_ip_address(boost::asio::io_service& io_service, std::string hostname, std::string port);
+                    std::string get_ip_address(boost::asio::io_service &io_service, std::string hostname, std::string port);
 
                     
 
                 public:
                     
-                    boost::function<void(TCPEndpoint*)> onBossProcess;
+                    BossProcess *onBossProcess;
 
 					void worker(TCPEndpoint* connection);
 
                     TCPServerTransport(const std::string &to_connect);
+
+                    virtual ~TCPServerTransport();
 
                     void run();
 
@@ -67,8 +77,7 @@ namespace eprosima
                     int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
             };
 
-        }
-        // namespace transport
+        } // namespace transport
     }// namespace rpcdds
 } // namespace eprosima
 

@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "transports/HttpServerTransport.h"
+#include "transports/TCPServerTransportImpl.h"
 #include "transports/components/TCPEndpoint.h"
 #include "strategies/ServerStrategy.h"
 #include "strategies/ServerStrategyImpl.h"
@@ -20,7 +21,7 @@ using namespace transport;
 
 HttpServerTransport::HttpServerTransport(const std::string &to_connect) : m_tcptransport(to_connect)
 {
-    m_tcptransport.onBossProcess = boost::bind(&HttpServerTransport::bossProcess, this, _1);
+    m_tcptransport.onBossProcess->function = boost::bind(&HttpServerTransport::bossProcess, this, _1);
 }
 
 HttpServerTransport::~HttpServerTransport()

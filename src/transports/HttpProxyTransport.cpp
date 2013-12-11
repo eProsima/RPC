@@ -10,15 +10,15 @@
 #include "transports/messages/HttpMessage.h"
 #include "utils/Utilities.h"
 
+#include <stdexcept>
+
 const size_t BUFFER_INITIAL_LENGTH = 1024;
 const size_t MAX_INT64_CHARS = 20;
 
 using namespace eprosima::rpcdds;
 using namespace ::transport;
 
-HttpProxyTransport::HttpProxyTransport(const std::string &serverAddress) : m_tcptransport(),
-    m_writeBuffer(NULL), m_writeBufferLength(0), m_writeBufferUse(0), m_readBuffer(NULL), m_readBufferLength(0),
-    m_readBufferUse(0), m_readBufferCurrentPointer(0)
+std::string getAddress(const std::string &serverAddress)
 {
 	// Check protocol
 	std::string address = serverAddress;
@@ -32,12 +32,18 @@ HttpProxyTransport::HttpProxyTransport(const std::string &serverAddress) : m_tcp
 		} else if(protocol.compare("https")==0) {
 			address += ":443";
 		} else {
-			throw std::invalid_argument("Unkown HTTP protocol: " + protocol);
+			throw std::invalid_argument("Unknown HTTP protocol: " + protocol);
 		}
 		address = address.substr(index + 3, address.size());		
 	}
-	m_tcptransport = TCPProxyTransport(address);
 
+    return address;
+}
+
+HttpProxyTransport::HttpProxyTransport(const std::string &serverAddress) : m_tcptransport(getAddress(serverAddress)),
+    m_writeBuffer(NULL), m_writeBufferLength(0), m_writeBufferUse(0), m_readBuffer(NULL), m_readBufferLength(0),
+    m_readBufferUse(0), m_readBufferCurrentPointer(0)
+{
     m_writeBuffer = (char*)calloc(BUFFER_INITIAL_LENGTH, sizeof(char));
 
     if(m_writeBuffer != NULL)

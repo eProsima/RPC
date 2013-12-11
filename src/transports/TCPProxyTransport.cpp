@@ -7,16 +7,48 @@
  *************************************************************************/
 
 #include "transports/TCPProxyTransport.h"
-
-#include <iostream>
 #include "exceptions/ServerNotFoundException.h"
 
+#include "boost/asio.hpp"
+#include "boost/array.hpp"
+#include <iostream>
+
 using namespace std;
+
+namespace eprosima { namespace rpcdds { namespace transport {
+    class TCPProxyTransportBoost
+    {
+        public:
+
+            TCPProxyTransportBoost() : io_service_(NULL), socket_(NULL),
+            resolver_(NULL)
+            {
+                io_service_ = new boost::asio::io_service();
+                socket_ = new boost::asio::ip::tcp::socket(*io_service_);
+                resolver_ = new boost::asio::ip::tcp::resolver(*io_service_);
+            }
+
+            ~TCPProxyTransportBoost()
+            {
+                if(resolver_ != NULL)
+                    delete resolver_;
+                if(socket_ != NULL)
+                    delete socket_;
+                if(io_service_)
+                    delete io_service_;
+            }
+
+            boost::asio::io_service *io_service_;
+            boost::asio::ip::tcp::socket *socket_;
+            boost::asio::ip::tcp::resolver *resolver_;
+            boost::asio::ip::tcp::resolver::iterator endpoint_iterator_;
+    };
+}}}
 
 using namespace eprosima::rpcdds;
 using namespace ::transport;
 
-TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress)
+TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress) : m_boostInfo(NULL)
 {
 	string host = "127.0.0.1";
 	string port = "80";
@@ -26,42 +58,44 @@ TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress)
 		if(index != string::npos)
 			port = serverAddress.substr(index + 1, serverAddress.size());
 	}
-	io_service_ = new boost::asio::io_service();
-	resolver_ = new boost::asio::ip::tcp::resolver(*io_service_);
-	query_ = new boost::asio::ip::tcp::resolver::query(
-			boost::asio::ip::tcp::v4(), host, port);
-	socket_ = new boost::asio::ip::tcp::socket(*io_service_);
+    m_boostInfo = new TCPProxyTransportBoost();
+	boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), host, port);
+    m_boostInfo->endpoint_iterator_ = m_boostInfo->resolver_->resolve(query);
 	serverAddress_ = host;
-	endpoint_iterator_ = resolver_->resolve(*query_);
 }
 
-TCPProxyTransport::TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort) {
-	io_service_ = new boost::asio::io_service();
-	resolver_ = new boost::asio::ip::tcp::resolver(*io_service_);
-	query_ = new boost::asio::ip::tcp::resolver::query(
-			boost::asio::ip::tcp::v4(), serverAddress, serverPort);
-	socket_ = new boost::asio::ip::tcp::socket(*io_service_);
+TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress, const std::string &serverPort) :
+    m_boostInfo(NULL)
+{
+    m_boostInfo = new TCPProxyTransportBoost();
+	boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), serverAddress, serverPort);
+	m_boostInfo->endpoint_iterator_ = m_boostInfo->resolver_->resolve(query);
 	serverAddress_ = serverAddress;
-	endpoint_iterator_ = resolver_->resolve(*query_);
 }
 
 TCPProxyTransport::~TCPProxyTransport()
 {
-    if(socket_->is_open())
+    if(m_boostInfo != NULL)
     {
-        socket_->close();
+        if(m_boostInfo->socket_->is_open())
+        {
+            m_boostInfo->socket_->close();
+        }
+
+        delete m_boostInfo;
     }
 }
 
 bool TCPProxyTransport::connect()
 {
-    if(!socket_->is_open())
+    if(!m_boostInfo->socket_->is_open())
     {
         boost::system::error_code error = boost::asio::error::host_not_found;
+        boost::asio::ip::tcp::resolver::iterator end_;
 
-        if(endpoint_iterator_ != end_)
+        if(m_boostInfo->endpoint_iterator_ != end_)
         {
-            socket_->connect(*endpoint_iterator_, error);
+            m_boostInfo->socket_->connect(*m_boostInfo->endpoint_iterator_, error);
         }
 
         if (error)
@@ -80,7 +114,7 @@ bool TCPProxyTransport::send(const void* buffer, const size_t bufferSize)
     if(buff != NULL)
     {
         size_t bytes_sent = 0;
-        bytes_sent = boost::asio::write(*socket_, boost::asio::buffer(buff, bufferSize),
+        bytes_sent = boost::asio::write(*m_boostInfo->socket_, boost::asio::buffer(buff, bufferSize),
                 boost::asio::transfer_all(), error);
         if (bytes_sent != 0)
         {
@@ -121,11 +155,11 @@ int TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &da
         if(dataToRead > 0)
         {
             // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-            dataToRead = boost::asio::read(*socket_, boost::asio::buffer(buffer, dataToRead), ec);
+            dataToRead = boost::asio::read(*m_boostInfo->socket_, boost::asio::buffer(buffer, dataToRead), ec);
         }
         else
         {
-            dataToRead = socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
+            dataToRead = m_boostInfo->socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
         }
 
         if(ec != boost::asio::error::eof)
