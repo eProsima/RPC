@@ -50,43 +50,67 @@ namespace eprosima
                     //! \brief Default destructor.
                     virtual ~ServerTransport(){}
 
+					/*!
+					 * @brief Sets the threading strategy
+					 * @param strategy Threading strategy
+					 */
                     inline
                         void setStrategy(eprosima::rpcdds::strategy::ServerStrategy &strategy)
                         {
                             m_strategy = &strategy;
                         }
 
+					/*!
+					 * @brief Sets the communication protocol 
+					 * @param protocol Communication protocol 
+					 */
                     inline
                         void linkProtocol(eprosima::rpcdds::protocol::Protocol &protocol)
                         {
                             m_protocol = &protocol;
                         }
 
+					/*!
+					 * @brief Gets the communication protocol 
+					 * @return Communication protocol 
+					 */
                     inline
                         eprosima::rpcdds::protocol::Protocol& getLinkedProtocol()
                         {
                             return *m_protocol;
                         }
 
+					/*!
+					 * @brief Gets the threading strategy
+					 * @return Threading strategy
+					 */
                     inline
                         eprosima::rpcdds::strategy::ServerStrategy& getStrategy() const
                         {
                             return *m_strategy;
                         }
 
+					/*!
+					 * @brief Gets the callback that will proccess the requests
+					 * @return Callback that will proccess the requests
+					 */
                     inline
                         ServerTransport_Callback getCallback() const
                         {
                             return m_callback;
                         }
 
+					/*!
+					 * @brief Gets the callback that will proccess the requests
+					 * @param callback Callback that will proccess the requests
+					 */
                     void setCallback(ServerTransport_Callback callback)
                     {
                         m_callback = callback;
                     }
 
                     /*!
-                     * 2brief This function returns the behaviour of the transport.
+                     * @brief This function returns the behaviour of the transport.
                      * @return The behaviour of the transport.
                      */
                     TransportBehaviour getBehaviour() const
@@ -100,9 +124,30 @@ namespace eprosima
                      */
                     virtual const char* getType() const = 0;
 
+					/*!
+					 * @brief This method runs the TCP server needed for the HTTP connections
+					 */
                     virtual void run() = 0;
+
+					/*!
+					 * @brief This method stops the TCP server needed for the HTTP connections
+					 */
                     virtual void stop() = 0;
+
+					/*!
+					 * @brief This function is used to send a reply to a proxy
+					 * @param data Response to send
+					 * @param dataLength Length of the data to send
+					 * @param endpoint Endpoint to send the data to
+					 */
                     virtual void sendReply(void *data, size_t dataLength, Endpoint *endpoint) = 0;
+
+					/*!
+					 * @brief This function is used to send a reply to a proxy
+					 * @param data Response to send
+					 * @param dataLength Length of the data to send
+					 * @param endpoint Endpoint to send the data to
+					 */
                     virtual int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint) = 0; 
 
                 private:

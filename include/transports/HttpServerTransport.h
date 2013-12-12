@@ -30,7 +30,10 @@ namespace eprosima
             {
                 public:
 
-                    //! \brief Default constructor.
+					/*!
+					 * @brief default constructor
+					 * @param to_connect Listening IP interface
+					 */
                     HttpServerTransport(const std::string &to_connect);
 
                     //! \brief Default destructor.
@@ -38,20 +41,44 @@ namespace eprosima
 
                     /*!
                      * @brief This function returns the type of the transport.
-                     *        This function has to be implemented by the child classes.
                      */
                     virtual const char* getType() const {return "HTTP";}
 
+					/*!
+					 * @brief This method runs the TCP server needed for the HTTP connections
+					 */
                     void run();
 
+					/*!
+					 * @brief This method stops the TCP server needed for the HTTP connections
+					 */
                     void stop();
 
+					/*!
+					 * @brief This function is used to send a reply to a proxy
+					 * @param data HTTP response to send
+					 * @param dataLength Length of the data to send
+					 * @param endpoint Endpoint to send the data to
+					 */
 					void sendReply(void *data, size_t dataLength, Endpoint *connection);
 
+					/*!
+					 * @brief This function does not apply to HTTP transport.
+					 */
                     int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
                     
+					/*!
+					 * @brief This callback method is invoked when a request arrives.
+					 * It makes the thread strategy schedule the incoming request.
+					 * @param connection Incoming endpoint
+					 */
                     void bossProcess(TCPEndpoint* connection);
 
+					/*!
+					 * @brief This callback method is invoked by the thread strategy when a request arrives.
+					 * It gets the request from the TCP endpoint.
+					 * @param connection Incoming endpoint
+					 */
                     void worker(TCPEndpoint* connection);
 
                 private:

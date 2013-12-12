@@ -78,12 +78,12 @@ int TCPEndpoint::resizeReadBuffer(size_t minSize)
 
 void TCPEndpoint::refillReadBuffer()
 {
-    if(getReadBufferLeaveUsedSpace() > 0)
+    if(getReadBufferLeftUsedSpace() > 0)
     {
-        memmove(m_readBuffer, &m_readBuffer[m_readBufferCurrentPointer], getReadBufferLeaveUsedSpace());
+        memmove(m_readBuffer, &m_readBuffer[m_readBufferCurrentPointer], getReadBufferLeftUsedSpace());
     }
 
-    m_readBufferUse = getReadBufferLeaveUsedSpace();
+    m_readBufferUse = getReadBufferLeftUsedSpace();
     m_readBufferCurrentPointer = 0;
 }
 

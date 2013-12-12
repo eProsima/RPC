@@ -15,12 +15,21 @@ namespace eprosima
     {
         namespace transport
         {
+			/*!
+			* @brief This class represents an endpoint
+			*/
             class Endpoint
             {
                 protected:
 
+					/*!
+					 * @brief Default constructor
+					 */
                     Endpoint(){};
 
+					/*!
+					 * @brief Default destructor
+					 */
                     virtual ~Endpoint(){};
             };
         } // namespace eprosima

@@ -20,6 +20,9 @@ namespace eprosima
             class BossProcess
             {
                 public:
+					/*!
+					 * @brief Callback meant to receive a proxy request and invoke the threading strategy to schedule it
+					 */
                     boost::function<void(TCPEndpoint*)> function;
             };
         } // namespace transport

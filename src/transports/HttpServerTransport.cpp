@@ -151,16 +151,16 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                 // Get body.
                 if(httpMessage.getBodyContentLength() > 0 && !httpMessage.getBodyContentType().empty())
                 {
-                    if(connection->getReadBufferLeaveUsedSpace() < httpMessage.getBodyContentLength())
+                    if(connection->getReadBufferLeftUsedSpace() < httpMessage.getBodyContentLength())
                     {
                         // Check space in buffer to read.
-                        if(connection->getReadBufferLeaveSpace() >= httpMessage.getBodyContentLength() ||
-                                (retCode = connection->resizeReadBuffer(httpMessage.getBodyContentLength() - connection->getReadBufferLeaveSpace())) == 0)
+                        if(connection->getReadBufferLeftSpace() >= httpMessage.getBodyContentLength() ||
+                                (retCode = connection->resizeReadBuffer(httpMessage.getBodyContentLength() - connection->getReadBufferLeftSpace())) == 0)
                         {
                             // TODO Timeout
 
                             // Read the rest of data that it is needed (content length - the data that was readed an was not processed).
-                            size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeaveUsedSpace();
+                            size_t dataToRead = httpMessage.getBodyContentLength() - connection->getReadBufferLeftUsedSpace();
 
                             retCode = m_tcptransport.receive(&connection->getReadBuffer()[connection->getReadBufferFillUse()],
                                     dataToRead, dataToRead, connection);
@@ -173,7 +173,7 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                     }
 
                     // Get Body
-                    if(retCode >= 0 && connection->getReadBufferLeaveUsedSpace() >= httpMessage.getBodyContentLength())
+                    if(retCode >= 0 && connection->getReadBufferLeftUsedSpace() >= httpMessage.getBodyContentLength())
                     {
                         httpMessage.setBodyData(std::string(connection->getReadBufferCurrentPointer(), httpMessage.getBodyContentLength()));
                         connection->increaseReadBufferCurrentPointer(httpMessage.getBodyContentLength());
@@ -219,9 +219,9 @@ int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMe
     const char* const _METHOD_POST = "POST";
     const char* const _METHOD_DELETE = "DELETE";
 
-    //printf("getReadBufferLeaveUsedSpace() == %u\n", connection->getReadBufferLeaveUsedSpace());
+    //printf("getReadBufferLeftUsedSpace() == %u\n", connection->getReadBufferLeftUsedSpace());
 
-    if(connection->getReadBufferLeaveUsedSpace() >= 4)
+    if(connection->getReadBufferLeftUsedSpace() >= 4)
     {
         if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_GET, 3) == 0)
         {
@@ -235,7 +235,7 @@ int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMe
             connection->increaseReadBufferCurrentPointer(4);
             return 0;
         }
-        else if(connection->getReadBufferLeaveUsedSpace() >= 5)
+        else if(connection->getReadBufferLeftUsedSpace() >= 5)
         {
             if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_POST, 4) == 0)
             {
@@ -243,7 +243,7 @@ int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMe
                 connection->increaseReadBufferCurrentPointer(5);
                 return 0;
             }
-            else if(connection->getReadBufferLeaveUsedSpace() >= 6)
+            else if(connection->getReadBufferLeftUsedSpace() >= 6)
             {
                 if(memcmp(connection->getReadBufferCurrentPointer(), _METHOD_DELETE, 6) == 0)
                 {
@@ -268,7 +268,7 @@ int HttpServerTransport::readMethod(TCPEndpoint *connection, HttpMessage &httpMe
 int HttpServerTransport::readUri(TCPEndpoint *connection, HttpMessage &httpMessage)
 {
     // Find \r.
-    char *ptr = (char*)memchr(connection->getReadBufferCurrentPointer(), ' ', connection->getReadBufferLeaveUsedSpace());
+    char *ptr = (char*)memchr(connection->getReadBufferCurrentPointer(), ' ', connection->getReadBufferLeftUsedSpace());
 
     if(ptr != NULL)
     {
@@ -279,7 +279,7 @@ int HttpServerTransport::readUri(TCPEndpoint *connection, HttpMessage &httpMessa
     else
     {
         // Check the line is not incorrect.
-        if(memchr(connection->getReadBufferCurrentPointer(), '\r', connection->getReadBufferLeaveUsedSpace()) == NULL)
+        if(memchr(connection->getReadBufferCurrentPointer(), '\r', connection->getReadBufferLeftUsedSpace()) == NULL)
             return -1;
         else
         {
@@ -292,7 +292,7 @@ int HttpServerTransport::readUri(TCPEndpoint *connection, HttpMessage &httpMessa
 
 int HttpServerTransport::readVersion(TCPEndpoint *connection, HttpMessage &httpMessage)
 {
-    if(connection->getReadBufferLeaveUsedSpace() >=  10)
+    if(connection->getReadBufferLeftUsedSpace() >=  10)
     {
         if(memcmp(connection->getReadBufferCurrentPointer(), "HTTP/1.1\r\n", 10) == 0)
         {
@@ -311,7 +311,7 @@ int HttpServerTransport::readHeaderLines(TCPEndpoint *connection, HttpMessage &h
 {
     char *ptr = NULL;
 
-    while((ptr = (char*)memchr(connection->getReadBufferCurrentPointer(), '\r', connection->getReadBufferLeaveUsedSpace())) != NULL)
+    while((ptr = (char*)memchr(connection->getReadBufferCurrentPointer(), '\r', connection->getReadBufferLeftUsedSpace())) != NULL)
     {
         if(ptr[1] == '\n')
         {

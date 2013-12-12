@@ -22,28 +22,48 @@ namespace eprosima
         {
             class HttpMessage;
             /*!
-             * @brief This interface is the base of all classes that implement a transport
-             *        that could be used by a proxy.
+             * @brief This interface is the base of all proxy classes that implement an HTTP transport.
              * @ingroup TRANSPORTMODULE
              */
             class RPCDDS_DllAPI HttpProxyTransport : public ProxyTransport
             {
                 public:
 
-                    //! \brief Default constructor.
+                    /*! 
+					 * @brief Default constructor.
+					 * @param serverAddress Server IP address or URL
+					 */
                     HttpProxyTransport(const std::string &serverAddress);
 
                     //! \brief Default destructor.
                     virtual ~HttpProxyTransport();
 
                     /*!
-                     * @brief This function returns the type of the transport.
-                     *        This function has to be implemented by the child classes.
+                     * @brief This function returns the type of the transport. In this case, it is HTTP.
                      */
                     virtual const char* getType() const {return "HTTP";}
 
+					/*!
+					 * @brief Starts an HTTP connection with an HTTP server.
+					 * @return true it the operation is successful, false otherwise.
+					 */
                     bool connect();
+
+					/*!
+					 * @brief Sends an HTTP request to the server
+					 * @param buffer Buffer containing the HTTP message
+					 * @param bufferSize This parameter is not used in this class
+					 * @return true it the operation is successful, false otherwise.
+					 */
                     bool send(const void* buffer, const size_t bufferSize);
+
+					/*!
+					 * @brief Receives an HTTP response from the server
+					 * @param buffer Buffer that will contain the HTTP message
+					 * @param bufferSize This parameter is not used in this class
+					 * @param dataToRead Number of bytes received
+					 * @return -1 if the operation fails
+					 */
                     int receive(void *buffer, const size_t bufferSize, size_t &dataToRead);
 
                 private:

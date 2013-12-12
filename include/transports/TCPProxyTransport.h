@@ -24,18 +24,48 @@ namespace eprosima
 
                 public:
 
+                    /*! 
+					 * @brief Default constructor.
+					 * @param serverAddress Server address
+					 */
                     TCPProxyTransport(const std::string &serverAddress);
 
+                    /*! 
+					 * @brief Default constructor.
+					 * @param serverAddress Server address
+					 * @param serverAddress Server port
+					 */
                     TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort);
 
+                    //! \brief Default destructor.
                     virtual ~TCPProxyTransport();
 
+                    /*!
+                     * @brief This function returns the type of the transport. In this case, it is RAW data.
+                     */
                     virtual const char* getType() const {return "RAW";}
 
+					/*!
+					 * @brief Starts a TCP connection with a TCP server.
+					 * @return true it the operation is successful, false otherwise.
+					 */
                     bool connect();
 
+					/*!
+					 * @brief Sends an TCP message to the server
+					 * @param buffer Buffer containing the TCP message
+					 * @param bufferSize Size of the buffer
+					 * @return true it the operation is successful, false otherwise.
+					 */
                     bool send(const void* buffer, const size_t bufferSize);
 
+					/*!
+					 * @brief Receives a TCP message from the server
+					 * @param buffer Buffer that will contain the TCP message
+					 * @param bufferSize Size of the buffer
+					 * @param dataToRead Number of bytes received
+					 * @return -1 if the operation fails
+					 */
                     int receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
             };
         }// namespace transport

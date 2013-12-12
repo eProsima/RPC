@@ -40,7 +40,7 @@ namespace eprosima
                     virtual const char* getType() const = 0;
 
                     /*!
-                     * 2brief This function returns the behaviour of the transport.
+                     * @brief This function returns the behaviour of the transport.
                      * @return The behaviour of the transport.
                      */
                     TransportBehaviour getBehaviour() const
@@ -48,8 +48,27 @@ namespace eprosima
                         return PROXY_BEHAVIOUR;
                     }
 
+					/*!
+					 * @brief Abstract method. It must start a connection with the server.
+					 * @return true it the operation is successful, false otherwise.
+					 */
                     virtual bool connect() = 0;
+
+					/*!
+					 * @brief Abstract method. It must send a request to the server.
+					 * @param buffer Buffer containing the request
+					 * @param bufferSize Buffer size
+					 * @return true it the operation is successful, false otherwise.
+					 */
                     virtual bool send(const void* buffer, const size_t bufferSize) = 0;
+
+					/*!
+					 * @brief Abstract method. It must receive a reply from the server.
+					 * @param buffer Buffer that will contain the HTTP message
+					 * @param bufferSize Size of the buffer
+					 * @param dataToRead Number of bytes received
+					 * @return -1 if the operation fails
+					 */
                     virtual int receive(void *buffer, const size_t bufferSize, size_t &dataToRead) = 0;
             };
         }
