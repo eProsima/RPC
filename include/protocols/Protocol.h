@@ -24,7 +24,7 @@ namespace eprosima
         namespace protocol
         {
 			/*!
-			 * @brief This abstract class represents the protocol used by the RPCs. It serializes and deserializes the information and uses a Transport to send and receive it.
+			 * @brief This abstract class represents the protocol used by the RPCs. It serializes and deserializes the information and uses a Transport to send it and receive it.
 			 */
             class RPCDDS_DllAPI Protocol
             {
@@ -32,32 +32,32 @@ namespace eprosima
 
 					/*!
 					 * @brief This method sets a Transport object, used for the communications.
-					 * @param transport Transport to use for the communications
+					 * @param transport Transport to use for the communications.
 					 */
                     virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport) = 0;
 
                 protected:
 
 					/*!
-					 * @brief Default constructor
+					 * @brief Default constructor.
 					 */
                     Protocol() : m_transport(NULL){}
 
 					/*!
-					 * @brief Default destructor
+					 * @brief Default destructor.
 					 */
                     virtual ~Protocol(){}
 
 					/*!
 					 * @brief This method returns the Transport object, used for the communications.
-					 * @return Transport used for the communications
+					 * @return Transport used for the communications.
 					 */
                     inline
                         eprosima::rpcdds::transport::Transport& getTransport() const {return *m_transport;}
 
 					/*!
 					 * @brief This method sets a Transport object, used for the communications.
-					 * @param transport Transport to use for the communications
+					 * @param transport Transport to use for the communication.
 					 */
                     inline
                         void _setTransport(eprosima::rpcdds::transport::Transport &transport){m_transport = &transport;}
@@ -65,7 +65,7 @@ namespace eprosima
                 private:
 
 					/*!
-					 * @brief Transport object, used for the communications.
+					 * @brief Transport object, used for the communication.
 					 */
                     eprosima::rpcdds::transport::Transport *m_transport;
             };

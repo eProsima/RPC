@@ -23,7 +23,7 @@ namespace eprosima
 
 					    /*!
 						 * @brief Default constructor.
-						 * The iterator points any position.
+						 * The iterator points to any position.
 						 */
                         _FastBuffer_iterator() : m_buffer(NULL), m_currentPosition(NULL) {}
 
@@ -31,7 +31,7 @@ namespace eprosima
 						 * @brief Constructor.
 						 * The iterator points to the indicated position.
 						 * @param buffer Pointer to the raw buffer.
-						 * @param index Position of the raw buffer where the iterator will point.
+						 * @param index Position of the raw buffer where the iterator will be pointing.
 						 */
                         explicit _FastBuffer_iterator(char *buffer, size_t index) : m_buffer(buffer), m_currentPosition(&m_buffer[index]){}
 
@@ -62,7 +62,7 @@ namespace eprosima
 				        /*!
 						 * @brief This operator copies a data in the raw buffer.
 						 * The copy uses the size of the data type.
-						 * @param data Data to be copied. Cannot be NULL.
+						 * @param data Data to be copied. It cannot be NULL.
 						 */
                         template<typename _T>
                             inline void operator<<(const _T &data)
@@ -103,7 +103,7 @@ namespace eprosima
 
 				        /*!
 						 * @brief This function increments the position where the iterator points.
-						 * @param numBytes Number of bytes the iterator moves the position.
+						 * @param numBytes Number of bytes that the iterator moves the current position.
 						 */
                         inline void operator+=(size_t numBytes)
                         {
@@ -160,9 +160,9 @@ namespace eprosima
                 };
 
 				/*!
-				 * @brief This class represents a stream of bytes that contains (or will contain)
+				 * @brief This class represents a byte stream that contains (or will contain)
 				 * serialized data. This class is used by the serializers to serialize
-				 * or deserialize using their representation.
+				 * or deserialize using their own representation.
 				 * @ingroup FASTCDRAPIREFERENCE
 				 */
                 class FastBuffer
@@ -174,7 +174,7 @@ namespace eprosima
 				        /*!
 						 * @brief This constructor creates an internal stream and assigns it to the eprosima::FastBuffer object.
 						 * The user can obtain this internal stream using the function eprosima::FastBuffer::getBuffer(). Be careful because this internal stream
-						 * is deleted in the destruction of the eprosima::FastBuffer object.
+						 * is deleted when destroying the eprosima::FastBuffer object.
 						 */
                         FastBuffer();
 
@@ -194,13 +194,13 @@ namespace eprosima
                         inline char* getBuffer() const { return m_buffer;}
 
 				        /*!
-						 * @brief This function returns the size of the allocated memory of the stream that the eprosima::FastBuffer uses to serialize data.
+						 * @brief This function returns the allocated memory size of the stream that the eprosima::FastBuffer uses to serialize data.
 						 * @return The size of the allocated memory of the stream used by the eprosima::FastBuffer to serialize data.
 						 */
                         inline size_t getBufferSize() const { return m_bufferSize;}
 
 				        /*!
-						 * @brief This function returns a iterator that points to the begining of the stream.
+						 * @brief This function returns a iterator which points to the begining of the stream.
 						 * @return The new iterator.
 						 */
                         inline iterator begin()
@@ -209,7 +209,7 @@ namespace eprosima
                         }
 
 				        /*!
-						 * @brief This function returns a iterator that points to the end of the stream.
+						 * @brief This function returns a iterator which points to the end of the stream.
 						 * @return The new iterator.
 						 */
                         inline iterator end()
@@ -219,7 +219,7 @@ namespace eprosima
 
 				        /*!
 						 * @brief This function resizes the raw buffer. It will call the user's defined function for this purpose.
-						 * @param minSizeInc The minimun growth expected of the current raw buffer.
+						 * @param minSizeInc The minimun expected growth of the current raw buffer.
 						 * @return True if the operation works. False if it does not.
 						 */
                         bool resize(size_t minSizeInc);

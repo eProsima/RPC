@@ -57,7 +57,7 @@ namespace eprosima
                         }
 
 						/*!
-						 * @brief Gets a enumeration representation of the HTTP method
+						 * @brief Gets an enumeration representation of the HTTP method
 						 * @return The enumeration representation of the HTTP method
 						 */
                         inline Method getMethod()
