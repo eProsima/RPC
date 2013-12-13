@@ -44,9 +44,10 @@ namespace eprosima
                      */
                     void minor(const int32_t &minor);
 
-                    /// \brief This function throws the object as exception.
+                    /// \brief This function throws the object as an exception.
                     virtual void raise() const = 0;
-                    /**
+                    
+					/**
                      * \brief This function returns the error message.
                      *
                      * \return The error message.

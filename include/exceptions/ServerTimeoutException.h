@@ -70,7 +70,7 @@ namespace eprosima
                     /// \brief Default constructor
                     virtual ~ServerTimeoutException() throw();
 
-                    /// \brief This function throws the object as exception.
+                    /// \brief This function throws the object as an exception.
                     virtual void raise() const;
             };
         } // namespace exception
