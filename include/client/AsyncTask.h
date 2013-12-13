@@ -43,13 +43,13 @@ namespace eprosima
 
                     /**
                      * \brief This function executes the callback functions when a reply is received or an exception was transmitted.
-                     *        This function should be implemented by generated asynchronous tasks.
+                     *        This function should be implemented by the generated asynchronous tasks.
                      */
                     virtual void execute() = 0;
 
                     /**
-                     * \brief This function executes the callback function when an exception occurs in the client side.
-                     *        This function should be implemented by generated asynchronous tasks.
+                     * \brief This function executes the callback function when an exception occurs on the client's side.
+                     *        This function should be implemented by the generated asynchronous tasks.
                      *
                      * \param ex The exception that is sent to the user.
                      */
@@ -63,7 +63,7 @@ namespace eprosima
                     ClientRPC* getRPC();
 
                     /**
-                     * \brief This function is called when the DDS WaitSet was waked up by the query condition of this asynchronous task.
+                     * \brief This function is called when the DDS WaitSet was wake up by the query condition of this asynchronous task.
                      *        This funtion takes the reply.
                      *
                      * \param query Query condition associated with this asynchronous task.
@@ -71,16 +71,16 @@ namespace eprosima
                     void execute(DDS::QueryCondition *query);
 
                     /**
-                     * \brief This function set the remote procedure associated with this asynchronous task.
+                     * \brief This function sets the remote procedure associated with this asynchronous task.
                      *
-                     * \param clientRPC Pointer to the remote procedure call. Cannot be NULL.
+                     * \param clientRPC Pointer to the remote procedure call. It cannot be NULL.
                      */
                     void setClientRPC(ClientRPC *clientRPC);
 
                 protected:
 
                     /**
-                     * \brief Returns the allocated memory that will be used when reply will be taken.
+                     * \brief Returns the allocated memory that will be used when the reply is taken.
                      *
                      * \return Pointer to the allocated memory.
                      */

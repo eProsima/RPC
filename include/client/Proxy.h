@@ -47,7 +47,7 @@ namespace eprosima
                      * @param query The DDS query condition that is used to take the request. Cannot be NULL.
                      * @param task The asynchronos task created and associated with a request. Cannot be NULL.
                      * @param timeout The timeout used for this request.
-                     * @return 0 value is returned if function works successfully. In other case -1 is returned.
+                     * @return A 0 value is returned if function works successfully. In any other case, -1 is returned.
                      */
                     //int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
 
@@ -65,7 +65,7 @@ namespace eprosima
                      *
                      * @param transport The transport that will be used by the server's proxy. This class doesn't delete this object in its destructor.
                      * @param protocol The protocol used to send information over the transport. This class doesn't delete this object in its destructor.
-                     * @exception InitializeException This exception is thrown when the initialization is wrong.
+                     * @exception InitializeException This exception is thrown when the initialization went wrong.
                      */
                     Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
                             eprosima::rpcdds::protocol::Protocol &protocol);
@@ -74,7 +74,7 @@ namespace eprosima
                     virtual ~Proxy();
                     
 					/*!
-					 * @brief Method to get the protocol
+					 * @brief Method to obtain the protocol
 					 * 
 					 * @return The protocol used to send information over the transport
 					 */
@@ -100,10 +100,10 @@ namespace eprosima
                     //! @brief Thread object that manages asynchronous repliess from servers.
                     //AsyncThread *m_asyncThread;
 
-                    //! @brief Pointer to the transport which this server's proxy uses.
+                    //! @brief Pointer to the transport that this server proxy uses.
                     eprosima::rpcdds::transport::ProxyTransport &m_transport;
 
-                    //! @brief Pointer to the protocol which this server's proxy uses.
+                    //! @brief Pointer to the protocol that this server proxy uses.
                     eprosima::rpcdds::protocol::Protocol &m_protocol;
             };
         } // namespace proxy

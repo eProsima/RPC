@@ -56,8 +56,8 @@ namespace eprosima
 				 *
 				 * \param request Pointer to the allocated request. Cannot be NULL.
 				 * \param reply Pointer to the allocated reply. This memory will be filled with the incomming data.
-				 *        The pointer can be NULL and this means that the RPC call is oneway.
-				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
+				 *        The pointer can be NULL and this means that the a oneway RPC call.
+				 * \param timeout The timeout used to wait for the server's reply. The value must be in milliseconds.
 				 * \throw eProsima::RPCDDS::ServerTimeoutException
 				 */
 				ReturnMessage execute(void *request, void* reply, long timeout);
@@ -68,7 +68,7 @@ namespace eprosima
 				 *
 				 * \param request Pointer to the allocated request. Cannot be NULL.
 				 * \param task The asynchronous task that will be schedule to wait the reply. Cannot be NULL.
-				 * \param timeout The timeout used to wait the reply from server. The value should be in milliseconds.
+				 * \param timeout The timeout used to wait the reply from server. The value must be in milliseconds.
 				 * \return The return message.
 				 */
 				ReturnMessage executeAsync(void *request, AsyncTask *task, long timeout);
@@ -138,15 +138,15 @@ namespace eprosima
 				/**
 				 * \brief This function enables the DDS entities.
 				 *
-				 * \return 0 value is returned if all entities was enabled succesfully. -1 in other case.
+				 * \return 0 value is returned if all entities were enabled succesfully. -1 in other case.
 				 */
 				int enableEntities();
 
 				/**
-				 * \brief This functio checks that the server was discovery.
+				 * \brief This function checks that the server was discovered.
 				 *
 				 * \param DDS WaitSet used to make the comprobation.
-				 * \param timeout Timeout used to the comprobation. Its value is in milliseconds.
+				 * \param timeout Timeout used to do the checking. This value must be in milliseconds.
 				 * \return RPCDDS return message.
 				 */
                 ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
@@ -160,12 +160,12 @@ namespace eprosima
 				/*!
 				 * @brief This function returns a free query condition from the pool.
 			     *
-				 * @return This function return a free query condition. If all query condition are in use, then NULL pointer is returned.
+				 * @return This function returns a free query condition. If all query condition are in use, then NULL pointer is returned.
 				 */
 				DDS::QueryCondition* getFreeQueryFromPool();
 
 				/*!
-				 * @brief This function returns a used query condition to its freedom.
+				 * @brief This function returns a used query condition.
 			     */
 				void returnUsedQueryToPool(DDS::QueryCondition *query);
 
@@ -219,15 +219,15 @@ namespace eprosima
 				/// \brief The next sequence number for a request.
 				unsigned int m_numSec;
 
-				/// \brief The identifier used as client.
+				/// \brief The identifier used as a client.
 				unsigned int m_clientId[4];
 
-				/// \brief Mutex used to ensure that sequence number and query pool is safe-thread.
+				/// \brief Mutex used to ensure that the sequence number and the query pool are safe-thread.
 				boost::mutex *m_mutex;
 
-				/// \brief Pool of DDSQueryConditions that are used by remote procedure calls. It's length is 10.
+				/// \brief Pool of DDSQueryConditions that are used by remote procedure calls. Its length is 10.
 				DDS::QueryCondition **m_queryPool;
-				/// \brief First position of queries that are in use.
+				/// \brief First position of the queries that are in use.
 				int m_queriesInUseLimiter;
 		};
 

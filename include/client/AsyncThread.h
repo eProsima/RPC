@@ -40,7 +40,7 @@ namespace eprosima
                     /**
                      * \brief This function initializes all internal objects.
                      *
-                     * \return 0 value is returned if all objects was created succesfully. In other case -1 value is returned.
+                     * \return 0 value is returned if all the objects was created succesfully. In other case -1 value is returned.
                      */
                     int init();
 
@@ -58,9 +58,9 @@ namespace eprosima
                     int addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
 
                     /**
-                     * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
+                     * @brief This function deletes all the asynchronous tasks associated with the RPC endpoint.
                      *
-                     * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
+                     * @param rpc Pointer to the RPC endpoint. It cannot be NULL.
                      */
                     void deleteAssociatedAsyncTasks(ClientRPC *rpc);
 
@@ -69,7 +69,7 @@ namespace eprosima
                     /// \brief This function is executed by the new created thread.
                     void run();
 
-                    /// \brief The separated thread that executes the functionality of this object..
+                    /// \brief The separated thread that executes the functionality of this object.
                     boost::thread m_thread;
 
                     /// \brief Vector with all asynchronous tasks.
@@ -80,12 +80,16 @@ namespace eprosima
                     /// \brief Variable condition.
                     boost::condition_variable m_cond_wake_up;
 
+					/// \brief Variable used to wake up a WaitSet.
                     DDS::GuardCondition *m_guardWaitSet;
 
+					/// \brief Object that waits for incoming data publications on a Topic.
                     DDS::WaitSet *m_waitSet;
 
+					/// \brief Timeout for not being waiting an undefined amount of time.
                     DDS::Duration_t m_timeout;
 
+					/// \brief Boolean variable used to exit from the Thread.
                     bool m_exit;
             };
         } // namespace proxy
