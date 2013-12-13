@@ -1,0 +1,89 @@
+CPP= g++
+CPPFLAGS = -c -Wall -fpic -m64 -std=c++0x
+LN= g++
+AR=ar
+LDFLAGS= -m64
+SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
+DEFINES=  -DRTI_LINUX -DRTI_UNIX
+
+INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include 
+
+LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+       -lnddsc -lnddscore -lnddscpp -lrpcdds-0.2.0 -lboost_system-mt $(SYSLIBS)
+
+DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
+
+all: $(DIRECTORIES) HelloWorld  HelloWorldClient HelloWorldClientExample HelloWorldServer HelloWorldServerExample
+
+
+HelloWorld_TARGET= lib/x64Linux2.6gcc4.4.5/libHelloWorld.so
+HelloWorld_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libHelloWorld.a
+HelloWorld_CLIENT_TARGET= lib/x64Linux2.6gcc4.4.5/libHelloWorldClient.so
+HelloWorld_CLIENT_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libHelloWorldClient.a
+HelloWorld_CLIENT_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/HelloWorldClientExample
+HelloWorld_SERVER_TARGET= lib/x64Linux2.6gcc4.4.5/libHelloWorldServer.so
+HelloWorld_SERVER_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libHelloWorldServer.a
+HelloWorld_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/HelloWorldServerExample
+HelloWorld_COMMON_SRC_CXXFILES = HelloWorld.cxx \
+	HelloWorldPlugin.cxx \
+	HelloWorldSupport.cxx \
+	HelloWorldRESTProtocol.cxx
+
+HelloWorld_COMMON_SRC_CPPFILES=
+
+HelloWorld_CLIENTSOURCES = HelloWorldProxy.cxx
+HelloWorld_SERVERSOURCES = HelloWorldServer.cxx
+HelloWorld_COMMONOBJS    = $(HelloWorld_COMMON_SRC_CXXFILES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o) $(HelloWorld_COMMON_SRC_CPPFILES:%.cpp=output/x64Linux2.6gcc4.4.5/%.o)
+HelloWorld_CLIENTOBJS    = $(HelloWorld_CLIENTSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
+HelloWorld_SERVEROBJS    = $(HelloWorld_SERVERSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
+OBJS+= $(HelloWorld_COMMONOBJS) $(HelloWorld_CLIENTOBJS) $(HelloWorld_SERVEROBJS)
+
+$(HelloWorld_TARGET): $(HelloWorld_COMMONOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(HelloWorld_TARGET) $(HelloWorld_COMMONOBJS) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 
+
+$(HelloWorld_TARGET_Z): $(HelloWorld_COMMONOBJS)
+	$(AR) -cru $(HelloWorld_TARGET_Z) $(HelloWorld_COMMONOBJS)
+$(HelloWorld_CLIENT_TARGET): $(HelloWorld_CLIENTOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(HelloWorld_CLIENT_TARGET) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lHelloWorld $(HelloWorld_CLIENTOBJS)
+
+$(HelloWorld_CLIENT_TARGET_Z): $(HelloWorld_CLIENTOBJS)
+	$(AR) -cru $(HelloWorld_CLIENT_TARGET_Z) $(HelloWorld_CLIENTOBJS)
+	
+$(HelloWorld_SERVER_TARGET): $(HelloWorld_SERVEROBJS)
+	$(LN) $(LDFLAGS) -shared -o $(HelloWorld_SERVER_TARGET) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lHelloWorld $(HelloWorld_SERVEROBJS)
+
+$(HelloWorld_SERVER_TARGET_Z): $(HelloWorld_COMMONOBJS) $(HelloWorld_SERVEROBJS)
+	$(AR) -cru $(HelloWorld_SERVER_TARGET_Z) $(HelloWorld_SERVEROBJS)
+HelloWorldClient : $(HelloWorld_CLIENT_TARGET) $(HelloWorld_CLIENT_TARGET_Z)
+	
+HelloWorldServer : $(HelloWorld_SERVER_TARGET) $(HelloWorld_SERVER_TARGET_Z)
+	
+$(HelloWorld_CLIENT_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/HelloWorldClientExample.o lib/x64Linux2.6gcc4.4.5/libHelloWorldClient.a lib/x64Linux2.6gcc4.4.5/libHelloWorld.a 
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/HelloWorldClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lHelloWorldClient -lHelloWorld  -Wl,-Bdynamic $(LIBS)
+	
+$(HelloWorld_SERVER_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/HelloWorldServerExample.o output/x64Linux2.6gcc4.4.5/HelloWorldServerImplExample.o lib/x64Linux2.6gcc4.4.5/libHelloWorldServer.a lib/x64Linux2.6gcc4.4.5/libHelloWorld.a 
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/HelloWorldServerImplExample.o output/x64Linux2.6gcc4.4.5/HelloWorldServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lHelloWorldServer -lHelloWorld  -Wl,-Bdynamic $(LIBS)
+	
+HelloWorldClientExample : $(HelloWorld_CLIENT_EXAMPLE_TARGET)
+	
+HelloWorldServerExample : $(HelloWorld_SERVER_EXAMPLE_TARGET)
+HelloWorld: $(HelloWorld_TARGET) $(HelloWorld_TARGET_Z) HelloWorldClient HelloWorldClientExample HelloWorldServer HelloWorldServerExample
+
+
+output/x64Linux2.6gcc4.4.5/%.o:%.cxx
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+output/x64Linux2.6gcc4.4.5/%.o:%.cpp
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+.PHONY: HelloWorld  HelloWorldClient HelloWorldClientExample HelloWorldServer HelloWorldServerExample
+
+clean:
+	@rm -f $(OBJS)
+
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

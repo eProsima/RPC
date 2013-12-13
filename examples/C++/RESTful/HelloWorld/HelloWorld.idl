@@ -1,0 +1,22 @@
+[[RESOURCES_BASE_URI("http://example.com/resources/")]]
+
+[PATH("HelloWorld")]
+interface HelloWorldResource
+{
+	struct XMLHelloResponse
+	{
+		long status;
+		string xmlRepresentation;
+	};
+
+	union HelloResponse switch(long)
+	{
+		case 1:
+			XMLHelloResponse xmlHelloResponse;
+	};
+
+	[METHOD("GET")]
+	HelloResponse hello(in string name);
+
+};
+

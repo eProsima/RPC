@@ -1,0 +1,34 @@
+[[RESOURCES_BASE_URI("http://example.com/resources/")]]
+
+[PATH("account/{accountNumber}")]
+interface account_accountNumberResource
+{
+	struct account_accountNumber
+	{
+		long accountNumber_;
+	};
+
+	struct XMLGetAccountDetailsResponse
+	{
+		long status;
+		string xmlRepresentation;
+	};
+
+	union GetAccountDetailsResponse switch(long)
+	{
+		case 1:
+			XMLGetAccountDetailsResponse xmlGetAccountDetailsResponse;
+	};
+
+	union GetAccountDetailsRequest switch(long)
+	{
+		case 1:
+			string xmlRepresentation;
+	};
+
+	[METHOD("POST")]
+	[BODY("GetAccountDetailsRequest")]
+	GetAccountDetailsResponse getAccountDetails(in account_accountNumber account_accountNumber, in string user, in GetAccountDetailsRequest GetAccountDetailsRequest);
+
+};
+
