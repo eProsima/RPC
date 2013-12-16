@@ -1,8 +1,0 @@
-/*!
- * @brief IDL interface that has generated the API example.
- * @ingroup FOOEXAMPLE
- */
-interface FooInterface
-{
-	void FooProcedure();
-};
