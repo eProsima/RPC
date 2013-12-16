@@ -39,7 +39,7 @@ namespace eprosima
         namespace server
         {
             /**
-             * @brief This class implements the common functionalities that the servers have.
+             * @brief This class implements the common functionalities that any server has.
              * @ingroup SERVERMODULE
              */
             class RPCDDS_DllAPI Server
@@ -61,9 +61,9 @@ namespace eprosima
 					/*!
 					 * @brief This callback is invoked by the ServerStrategy. It processes a request.
 					 *
-					 * @param server The invoked server
-					 * @param data The request data
-					 * @param endpoint The request endpoint
+					 * @param server The invoked server.
+					 * @param data The request data.
+					 * @param endpoint The request endpoint.
 					 */
                     static void process(Server &server, void *data, eprosima::rpcdds::transport::Endpoint &endpoint);
 
@@ -74,8 +74,8 @@ namespace eprosima
                      *
                      * \param serviceName The service's name that proxies will use to connect with the server.
                      * \param strategy The strategy used by the server to execute new requests.
-                     *         This class doesn't delete this object in its destructor. Cannot be NULL.
-                     * \param transport The transport that will be use the server. This class doesn't delete this object in its destructor.
+                     *         This class doesn't delete this object in its destructor. It cannot be NULL.
+                     * \param transport The transport that will use the server. This class doesn't delete this object in its destructor.
                      *        If the pointer is NULL, then a default UDPTransport will be used.
                      * \param domainId The domain id's value that the server proxy will set in the domain participant.
                      * \exception InitializeException This exception is thrown when the initialization was wrong.
@@ -88,13 +88,13 @@ namespace eprosima
 
                 private:
 
-					/// \brief Pointer to the thread strategy this server uses
+					/// \brief Pointer to the thread strategy this server uses.
                     eprosima::rpcdds::strategy::ServerStrategy &m_strategy;
 
                     /// \brief Pointer to the transport which this server's proxy uses.
                     eprosima::rpcdds::transport::ServerTransport &m_transport;
 
-					/// \brief Pointer to the protocol this server uses
+					/// \brief Pointer to the protocol this server uses.
                     eprosima::rpcdds::protocol::Protocol &m_protocol;
             };
         } // namespace server

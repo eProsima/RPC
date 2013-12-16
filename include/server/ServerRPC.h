@@ -24,7 +24,7 @@ namespace eprosima
 		class ThreadPoolManager;
 
 		/**
-		 * @brief This class implements a remote procedure call in server side.
+		 * @brief This class implements a remote procedure call in server's side.
          * @ingroup SERVERMODULE
 		 */
 		class RPCDDS_DllAPI ServerRPC : public DDS::DataReaderListener
@@ -34,10 +34,10 @@ namespace eprosima
 				/**
 				 * \brief The default constructor.
 				 *
-				 * \param rpcName The name of this remote procedure. Cannot be NULL.
-				 * \param requestTypeName The type name of the request topic that the RPC object manages. Cannot be NULL.
-				 * \param replyTypeName The type name of the reply topic that te RPC object manages. Cannot be NULL:
-				 * \param execFunction Funtion that will be called when a new request is received. Cannot be NULL.
+				 * \param rpcName The name of this remote procedure. It cannot be NULL.
+				 * \param requestTypeName The type name of the request topic that the RPC object manages. It cannot be NULL.
+				 * \param replyTypeName The type name of the reply topic that te RPC object manages. It cannot be NULL:
+				 * \param execFunction Funtion that will be called when a new request is received. It cannot be NULL.
 				 */
 				ServerRPC(const char *rpcName, Server* server, const char *requestTypeName,
 					const char *replyTypeName, fExecFunction execFunction);
@@ -77,27 +77,27 @@ namespace eprosima
 				DDS::DataReader* getRequestDatareader() const;
 
 				/**
-				 * @brief This funcion returns the DDS datawriter that sends the replies to clients.
+				 * @brief This funcion returns the DDS datawriter that sends the replies to the clients.
 				 *
 				 * @return Pointer to the DDS datawriter.
 				 */
 				DDS::DataWriter* getReplyDatawriter() const;
 
 				/**
-				 * @brief This function is called when a reply wants to be sent.
+				 * @brief This function is called when a reply must be sent.
 				 *        This function has to be implemented by the derived class.
 				 *
-				 * @param request Pointer to the associated request that was received from the client. Cannot be NULL.
-				 * @param reply Pointer to the reply that will be sent to the client. Cannot be NULL.
-				 * @return 0 value is returned if the reply could be sent. In other case -1 is returned.
+				 * @param request Pointer to the associated request that was received from the client. It cannot be NULL.
+				 * @param reply Pointer to the reply that will be sent to the client. It cannot be NULL.
+				 * @return 0 value is returned if the reply was sent successfully. In other case -1 is returned.
 				 */
 				virtual int sendReply(void* request, void *reply) = 0;
 
 				/**
 				 * @brief This function deletes a request that was received from a client.
-				 *        This function has to be implemented by the derived class because that class knows the type of the request.
+				 *        This function has to be implemented by the derived class because that class is the one that knows the type of the request.
 				 *
-				 * @param request Pointer to the request. Cannot be NULL.
+				 * @param request Pointer to the request. It cannot be NULL.
 				 */
 				virtual void deleteRequestData(void *request) = 0;
 
@@ -146,14 +146,14 @@ namespace eprosima
 		    private:
 					
 				/**
-				 * \brief This function creates the DDS entities of the server.
+				 * \brief This function creates the server's DDS entities.
 				 *
 				 * \return 0 value is returned when all entities was created succesfully. In other case, -1 value is returned.
 				 */
 				int createEntities();
 
 				/**
-				 * \brief This function enables all DDS entities of the server.
+				 * \brief This function enables all the server's DDS entities.
 				 *
 				 * \return 0 value is returned when all entities was enabled succesfully. In other case, -1 value is returned.
 				 */
@@ -175,7 +175,7 @@ namespace eprosima
 				 */
 				Server *m_server;
 				/**
-				 * \brief The subscriber used to communicate with the client. Client -> Server
+				 * \brief The subscriber used to communicate with the client. Client -> Server.
 				 */
 				DDS::Subscriber *m_requestSubscriber;
 
@@ -185,7 +185,7 @@ namespace eprosima
 				DDS::Publisher *m_replyPublisher;
 
 				/**
-				 * \brief The topic used to communicate with the server. Client -> Server
+				 * \brief The topic used to communicate with the server. Client -> Server.
 				 */
 				DDS::Topic *m_requestTopic;
 
@@ -195,17 +195,17 @@ namespace eprosima
 				DDS::ContentFilteredTopic *m_requestFilter;
 
 				/**
-				 * \brief The topic used to communicate with the server. Server -> Client
+				 * \brief The topic used to communicate with the server. Server -> Client.
 				 */
 				DDS::Topic *m_replyTopic;
 
 				/**
-				 * \brief The data reader used to communicate with the client. Client -> Server
+				 * \brief The data reader used to communicate with the client. Client -> Server.
 				 */
 				DDS::DataReader *m_requestDataReader;
         
 				/**
-				 * \brief The data writer used to communicate with the client. Server -> Client
+				 * \brief The data writer used to communicate with the client. Server -> Client.
 				 */
 				DDS::DataWriter *m_replyDataWriter;
 
