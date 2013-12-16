@@ -1696,7 +1696,7 @@ public class RPCDDSGEN
         {
         	if(m_osOption.equals("Win32"))
         	{
-        		ppPath = "cc1";
+        		ppPath = "cl.exe";
         	}
         	else if(m_osOption.equals("Linux"))
         	{
