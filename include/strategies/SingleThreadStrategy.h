@@ -36,7 +36,7 @@ namespace eprosima
                     virtual ~SingleThreadStrategy();
 					
 					/*!
-					 * @brief Gets the implementation of the strategy using Boost library
+					 * @brief Gets the implementation of the strategy using Boost library.
 					 * @return Implementation of the strategy
 					 */
 					ServerStrategyImpl* getImpl();

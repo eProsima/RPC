@@ -42,15 +42,15 @@ namespace eprosima
                     ~ThreadPoolStrategy();
 					
 					/*!
-					 * @brief Gets the implementation of the strategy using Boost library
-					 * @return Implementation of the strategy
+					 * @brief Gets the implementation of the strategy using Boost library.
+					 * @return Implementation of the strategy.
 					 */
                     ServerStrategyImpl* getImpl();
 
                 private:
 
 					/*!
-					 * @brief Implementation of the strategy using Boost library
+					 * @brief Implementation of the strategy using Boost library.
 					 */
                     ThreadPoolStrategyImpl *m_impl;
             };

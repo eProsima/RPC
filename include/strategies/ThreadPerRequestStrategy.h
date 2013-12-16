@@ -36,15 +36,15 @@ namespace eprosima
                     virtual ~ThreadPerRequestStrategy();
 					
 					/*!
-					 * @brief Gets the implementation of the strategy using Boost library
-					 * @return Implementation of the strategy
+					 * @brief Gets the implementation of the strategy using Boost library.
+					 * @return Strategy implementation.
 					 */
                     ServerStrategyImpl* getImpl();
 
 			    private:
 
 					/*!
-					 * @brief Implementation of the strategy using Boost library
+					 * @brief Strategy implementation using Boost library
 					 */
 					ThreadPerRequestStrategyImpl *m_impl;
             };

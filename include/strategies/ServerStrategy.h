@@ -20,7 +20,7 @@ namespace eprosima
 			class ServerStrategyImpl;
 
             /**
-             * @brief This class is the base of all classes that implement a server strategy
+             * @brief This class is the base of all classes that implement a server strategy.
              *        that could be used by the server.
              * @ingroup SERVERMODULE
              */
@@ -35,8 +35,8 @@ namespace eprosima
                     virtual ~ServerStrategy(){}
 
 					/*!
-					 * @brief Gets the implementation of the strategy using Boost library
-					 * @return Implementation of the strategy
+					 * @brief Gets the implementation of the strategy using Boost library.
+					 * @return Implementation of the strategy.
 					 */
                     virtual ServerStrategyImpl* getImpl() = 0;
             };

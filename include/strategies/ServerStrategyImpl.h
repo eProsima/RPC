@@ -24,7 +24,7 @@ namespace eprosima
         namespace strategy
         {
             /**
-             * @brief This class is the base of all classes that implement a server strategy
+             * @brief This class is the base of all classes that implement a server strategy.
              *        that could be used by the server.
              * @ingroup SERVERMODULE
              */
@@ -42,7 +42,7 @@ namespace eprosima
                      * \brief This function schedules an incoming request.
                      *        This function has to be implemented by the derived classes.
                      *
-                     * \param callback The Server's method to invoke when a request arrives
+                     * \param callback The Server's method to invoke when a request arrives.
                      */
                     virtual void schedule(boost::function<void()> callback) = 0;
             };
