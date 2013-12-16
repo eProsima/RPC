@@ -38,7 +38,7 @@ namespace eprosima
                     } Methods;
 
 					/*!
-					 * @brief Default constructor
+					 * @brief Default constructor.
 					 */
                     HttpMessage() : m_method(HTTP_METHOD_INVALID), m_body_content_length(0),
                         m_responseCode(0), m_versionCompatible(false), m_containsResponseStatus(false)
