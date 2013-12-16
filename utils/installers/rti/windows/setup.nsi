@@ -67,12 +67,12 @@ var /GLOBAL RICHI_FINISH_MESSAGE
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile setup.exe
+OutFile eProsima_RPC-${VERSION}.exe
 InstallDir $PROGRAMFILES\rpcdds
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 0.1.0.0
+VIProductVersion ${VERSION}.0
 VIAddVersionKey ProductName RPCDDS
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
@@ -90,7 +90,7 @@ Section -post SEC0006
     # Copy documentation.
     SetOutPath $INSTDIR\doc\html
     SetOverwrite on
-    File /r ..\..\..\..\doc\html\*
+    #File /r ..\..\..\..\doc\html\*
     
     # Copy documentation.
     SetOutPath $INSTDIR\doc\pdf
