@@ -89,7 +89,7 @@ namespace eprosima
                         ~RESTSerializer();
 						
 						/*!
-						 * @brief This function resets the current position in the buffer to the beginning. 
+						 * @brief This function resets the buffer's current position to the beginning. 
 						 */
                         void reset();
 
@@ -113,161 +113,161 @@ namespace eprosima
 						
 						/*!
 						 * @brief This function serializes an HTTP method
-						 * @param method reference to the method to serialize
+						 * @param method reference to the method that will do the serialization.
 						 * @return Reference to the RESTSerializer object
 						 */
                         RESTSerializer& serialize(HTTPMethod &method);
 						
 						/*!
 						 * @brief This function deserializes an HTTP method
-						 * @param method The variable that will store the character read from the buffer.
+						 * @param method Variable that will store the character read from the buffer.
 						 * @return Reference to the RESTSerializer object
 						 */
                         RESTSerializer& deserialize(HTTPMethod &method);
 						
 						/*!
-						 * @brief This function serializes an HTTP URI
-						 * @param uri reference to the URI to serialize
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes an HTTP URI.
+						 * @param uri Reference to the URI to be serialized.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serialize(HTTPUri &uri);
 						
 						/*!
-						 * @brief This function deserializes an HTTP URI
-						 * @param uri The variable that will store the character read from the buffer.
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP URI.
+						 * @param uri Variable that will store the URI read from the buffer.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPUri &uri);
 						
 						/*!
 						 * @brief This function serializes an HTTP Version
-						 * @param version reference to the version to serialize
+						 * @param version Reference to the HTTPVersion to serialize
 						 * @return Reference to the RESTSerializer object
 						 */
                         RESTSerializer& serialize(HTTPVersion &version);
 						
 						/*!
-						 * @brief This function deserializes an HTTP Version
-						 * @param version The variable that will store the character read from the buffer.
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP Version.
+						 * @param version Variable that will store the HTTPVersion read from the buffer.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPVersion &version);
 						
 						/*!
-						 * @brief This function serializes an HTTP Body
-						 * @param data reference to the body to serialize
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes an HTTP Body.
+						 * @param data Reference to the HTTPData to serialize.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serialize(HTTPData &data);
 						
 						/*!
-						 * @brief This function deserializes an HTTP Body
-						 * @param data The variable that will store the character read from the buffer.
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP Body.
+						 * @param data Variable that will store the HTTPData read from the buffer.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPData &data);
 						
 						/*!
-						 * @brief This function serializes an HTTP Response code
-						 * @param responseCode reference to the response code to serialize
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes an HTTP Response code.
+						 * @param responseCode Reference to the response code (HTTPResponseCode) to serialize.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serialize(HTTPResponseCode &responseCode);
 						
 						/*!
-						 * @brief This function deserializes an HTTP Response code
-						 * @param responseCode The variable that will store the character read from the buffer.
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP Response code.
+						 * @param responseCode The variable that will store the response code (HTTPResponseCode) read from the buffer.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPResponseCode &responseCode);
 						
 						/*!
 						 * @brief This function serializes an HTTP Parameter
-						 * @param param reference to the parameter to serialize
+						 * @param param Reference to the parameter to serialize
 						 * @return Reference to the RESTSerializer object
 						 */
                         RESTSerializer& serialize(HTTPParam &param);
 						
 						/*!
-						 * @brief This function deserializes an HTTP Parameter
-						 * @param param The variable that will store the character read from the buffer.
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP Parameter.
+						 * @param param The variable that will store the HTTPParam read from the buffer.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPParam &param);
 						
 						/*!
-						 * @brief This function serializes a set of HTTP Parameters
-						 * @param params reference to the set of parameters to serialize
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes a set of HTTP Parameters.
+						 * @param params Reference to the parameter set to serialize.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serialize(HTTPParameters &params);
 						
 						/*!
-						 * @brief This function deserializes a set of HTTP Parameters
-						 * @param params The variable that will store the character read from the buffer.
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP Parameters set.
+						 * @param params The variable that will store the HTTPParameters object read from the buffer.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPParameters &params);
 						
 						/*!
-						 * @brief This function serializes a set of HTTP Parameters
-						 * @param reference to the set of parameters to serialize
-						 * @param numElements number of parameters to serialize
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes a set of HTTP Parameters.
+						 * @param reference to the set of parameters to serialize.
+						 * @param numElements number of parameters to serialize.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serialize(HTTPParameters &params, size_t numElements);
 						
 						/*!
-						 * @brief This function deserializes a set of HTTP Parameters
+						 * @brief This function deserializes a set of HTTP Parameters.
 						 * @param params The variable that will store the character read from the buffer.
-						 * @param numElements nomber of parameters to deserialize
-						 * @return Reference to the RESTSerializer object
+						 * @param numElements Nomber of parameters to deserialize.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserialize(HTTPParameters &params, size_t numElements);
 						
 						/*!
-						 * @brief This function serializes an HTTP query parameter
-						 * @param uri HTTP URI with all the serialized parameters
-						 * @param paramName Parameter name
-						 * @param paramValue Parameter value
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes an HTTP query parameter.
+						 * @param uri HTTP URI with all the serialized parameters.
+						 * @param paramName Parameter name.
+						 * @param paramValue Parameter value.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serializeQueryParameter(std::string &uri, const std::string &paramName,
                                 const std::string &paramValue);
 						
 						/*!
-						 * @brief This function initializes the proccess to serialize the template parameters inside the URI
-						 * @param uri URI to serialize the template parameters in
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function initializes the proccess to serialize the template parameters inside the URI.
+						 * @param uri URI to serialize the template parameters in.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& beginSerializeTemplateParameters(std::string &&uri);
 						
 						/*!
-						 * @brief This function serializes an HTTP template parameter in the URI
-						 * @param paramValue reference to the parameter value to serialize
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function serializes an HTTP template parameter in the URI.
+						 * @param paramValue Reference to the parameter value to serialize.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& serializeTemplateParameter(const std::string &paramValue);
 						
 						/*!
-						 * @brief This function end the proccess to serialize the template parameters inside the URI
-						 * @param uri The variable that will store the expanded URI with the template parameters
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function end the proccess to serialize the template parameters inside the URI.
+						 * @param uri Variable that will store the expanded URI with the template parameters.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& endSerializeTemplateParameters(std::string &uri);
 						
 						/*!
-						 * @brief This function deserializes an HTTP URI
-						 * @param uri The variable that will store the character read from the buffer.
-						 * @param baseUri Base URI for the RESTful application
-						 * @return Reference to the RESTSerializer object
+						 * @brief This function deserializes an HTTP URI.
+						 * @param uri Variable that will store the character read from the buffer.
+						 * @param baseUri Base URI for the RESTful application.
+						 * @return Reference to the RESTSerializer object.
 						 */
                         RESTSerializer& deserializeUri(const std::string &uri, const std::string baseUri);
                         
 						/*!
-						 * @brief Checks the existence of a path segment in a certain level in the URI
-						 * @param level Level of the path segment
-						 * @return true if it exists, false if it does not
+						 * @brief Checks the existence of a path segment in a certain level in the URI.
+						 * @param level Level of the path segment.
+						 * @return true if it exists, false if it does not.
 						 */
                         inline
                             bool existsTagLevel(const int level) const
@@ -276,9 +276,9 @@ namespace eprosima
                             }
 
 						/*!
-						 * @brief Gets the path segment for a given level in the URI
-						 * @param level Level of the path segment
-						 * @return The tag for the given level
+						 * @brief Gets the path segment for a given level in the URI.
+						 * @param level Level of the path segment.
+						 * @return The tag for the given level.
 						 */
                         inline
                             std::string getTag(const int level)
@@ -287,18 +287,18 @@ namespace eprosima
                         }
 
 						/*!
-						 * @brief Checks the presence of a certain HTTP query parameter
-						 * @param name HTTP query parameter name
-						 * @return true if it exists, false if it does not
+						 * @brief Checks the presence of a certain HTTP query parameter.
+						 * @param name HTTP query parameter name.
+						 * @return true if it exists, false if it does not.
 						 */
                         inline
                             bool existsQueryParameter(const std::string &name) { return m_queryParameters.find(name) != m_queryParameters.end();}
 
 							
 						/*!
-						 * @brief Gets the value of a certain HTTP query parameter
-						 * @param name HTTP query parameter name
-						 * @return HTTP query parameter value
+						 * @brief Gets the value of a certain HTTP query parameter.
+						 * @param name HTTP query parameter name.
+						 * @return HTTP query parameter value.
 						 */
                         inline
                             std::string getQueryParameter(const std::string &name) {return m_queryParameters.at(name);}

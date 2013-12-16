@@ -50,7 +50,7 @@ namespace eprosima
 
 				        /*!
 						 * @brief This operator changes the position where the iterator points.
-						 * This operator takes the index of the source iterator, but the iterator continues using its raw buffer.
+						 * This operator takes the index of the source iterator, but the iterator continues using its own raw buffer.
 						 * @param The source iterator. The iterator will use the source's iterator index to point to its own raw buffer.
 						 */
                         inline void operator>>(const _FastBuffer_iterator &iterator)
@@ -60,7 +60,7 @@ namespace eprosima
                         }
 
 				        /*!
-						 * @brief This operator copies a data in the raw buffer.
+						 * @brief This operator copies data in the raw buffer.
 						 * The copy uses the size of the data type.
 						 * @param data Data to be copied. It cannot be NULL.
 						 */
@@ -94,7 +94,7 @@ namespace eprosima
 				        /*!
 						 * @brief This function copies from the raw buffer to a external buffer.
 						 * @param dst The destination buffer.
-						 * @param size The size of bytes to be copied.
+						 * @param size The size in bytes to be copied.
 						 */
                         inline void rmemcopy(void* dst, const size_t size)
                         {
@@ -113,7 +113,7 @@ namespace eprosima
 				        /*!
 						 * @brief This operator returns the subtraction of the current interator's position and the source iterator's position.
 						 * @iterator Source iterator whose position is subtracted to the current iterator's position.
-						 * @return The result of subtract the current iterator's position and the source iterator's position.
+						 * @return The result of subtracting the current iterator's position and the source iterator's position.
 						 */
                         inline size_t operator-(const _FastBuffer_iterator &it) const
                         {
@@ -131,7 +131,7 @@ namespace eprosima
                         }
 
 				        /*!
-						 * @brief This function increments the iterator in one the position.
+						 * @brief This function increments the iterator in one position.
 						 * @return The current iterator.
 						 */
                         inline _FastBuffer_iterator operator++(int)
@@ -179,28 +179,28 @@ namespace eprosima
                         FastBuffer();
 
 				        /*!
-						 * @brief This constructor assigns the user's stream of bytes to the eprosima::FastBuffer object.
+						 * @brief This constructor assigns the user's byte stream to the eprosima::FastBuffer object.
 						 * The user's stream will be used to serialize.
 						 *
 						 * @param buffer The user's buffer that will be used. This buffer is not deallocated in the object's destruction. Cannot be NULL.
-						 * @param bufferSize The length of user's buffer.
+						 * @param bufferSize The length of the user's buffer.
 						 */
                         FastBuffer(char* const buffer, const size_t bufferSize);
 
 				        /*!
-						 * @brief This function returns the stream that the eprosima::FastBuffer uses to serialize data.
-						 * @return The stream used by eprosima::FastBuffer to serialize data.
+						 * @brief This function returns the stream that the eprosima::FastBuffer object uses to serialize data.
+						 * @return The stream used by the eprosima::FastBuffer object to serialize data.
 						 */
                         inline char* getBuffer() const { return m_buffer;}
 
 				        /*!
-						 * @brief This function returns the allocated memory size of the stream that the eprosima::FastBuffer uses to serialize data.
-						 * @return The size of the allocated memory of the stream used by the eprosima::FastBuffer to serialize data.
+						 * @brief This function returns the allocated memory size of the stream that the eprosima::FastBuffer object to serialize data.
+						 * @return The size of the allocated memory of the stream used by the eprosima::FastBuffer object to serialize data.
 						 */
                         inline size_t getBufferSize() const { return m_bufferSize;}
 
 				        /*!
-						 * @brief This function returns a iterator which points to the begining of the stream.
+						 * @brief This function returns an iterator which points to the begining of the stream.
 						 * @return The new iterator.
 						 */
                         inline iterator begin()
@@ -209,7 +209,7 @@ namespace eprosima
                         }
 
 				        /*!
-						 * @brief This function returns a iterator which points to the end of the stream.
+						 * @brief This function returns an iterator which points to the end of the stream.
 						 * @return The new iterator.
 						 */
                         inline iterator end()
@@ -226,13 +226,13 @@ namespace eprosima
 
                     private:
 
-						//! @brief Pointer to the stream of bytes that contains the serialized data.
+						//! @brief Pointer to the byte stream that contains the serialized data.
 						char *m_buffer;
 
 						//! @brief The total size of the user's buffer.
 						size_t m_bufferSize;
 
-						//! @brief This variable indicates if the managed buffer is internal or is from the user.
+						//! @brief This variable indicates if the managed buffer is internal or if it is from the user's side.
 						bool m_internalBuffer;
                 };
             } //namespace rest
