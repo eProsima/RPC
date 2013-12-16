@@ -448,7 +448,7 @@ int HttpProxyTransport::readResponseStatus(HttpMessage &httpMessage)
             if(length > 0)
             {
                 httpMessage.setResponseStatus(std::string(getReadBufferCurrentPointer(), length));
-                httpMessage.setContainsResponseStatus(true);
+                //httpMessage.setContainsResponseStatus(true);
                 increaseReadBufferCurrentPointer(length);
             }
 
