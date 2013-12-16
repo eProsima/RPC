@@ -84,7 +84,7 @@ copy %LIB_BOOST_PATH%\lib\x64\libboost_thread-vc100-mt-gd-1_53.lib lib\x64Win64V
 set RPCDDSHOME_OLD=%RPCDDSHOME%
 set RPCDDSHOME=%CD%
 cd utils/pcTests/restful
-call exec_tests.bat %package_targets%
+:: call exec_tests.bat %package_targets%
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd ../..
@@ -93,7 +93,7 @@ set RPCDDSHOME=%RPCDDSHOME_OLD%
 :: Create PDFS from documentation.
 cd "doc"
 :: Installation manual
-soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\InstallationManual.docx,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\Installation Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 :: User manual

@@ -67,7 +67,7 @@ var /GLOBAL RICHI_FINISH_MESSAGE
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile eProsima_RPC-${VERSION}.exe
+OutFile eProsima_RPC_${VERSION}.exe
 InstallDir $PROGRAMFILES\rpcdds
 CRCCheck on
 XPStyle on
