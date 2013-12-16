@@ -33,8 +33,8 @@ namespace eprosima
                          * @brief Default constructor for servers.
                          *
                          * @param public_address Public address and port of the server. The server should be accesible in this address.
-                         *        The user has to configure its router for this purpose. For example: "218.18.3.133:7600"
-                         * @param server_bind_port Port used by the server in its machine. This port will be used in the router for port forwarding
+                         *        The user has to configure his router for this purpose. For example: "218.18.3.133:7600"
+                         * @param server_bind_port Port used by the server in his machine. This port will be used in the router for port forwarding
                          *        between the public port and this port.
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
@@ -45,7 +45,7 @@ namespace eprosima
                         virtual ~TCPServerTransport();
 
                         /*!
-                         * @brief This function sets the QoS of DDS to use the TCPv4 transport.
+                         * @brief This function sets the QoS to use the TCPv4 transport.
                          *
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use TCPv4 transport.
@@ -56,7 +56,7 @@ namespace eprosima
 
                         //! @brief The public address and port of the server. This attribute is only used by the server.
                         char *m_public_address;
-                        /// @brief The local port that the server use to make connections. This attribute is only used by the server.
+                        /// @brief The local port that the server uses to make its connections. This attribute is only used by the server.
                         char *m_server_bind_port;
                 };
             } // namepsace dds

@@ -16,19 +16,19 @@ namespace eprosima
         namespace transport
         {
 			/*!
-			* @brief This class represents an endpoint
+			* @brief This class represents an endpoint.
 			*/
             class Endpoint
             {
                 protected:
 
 					/*!
-					 * @brief Default constructor
+					 * @brief Default constructor.
 					 */
                     Endpoint(){};
 
 					/*!
-					 * @brief Default destructor
+					 * @brief Default destructor.
 					 */
                     virtual ~Endpoint(){};
             };

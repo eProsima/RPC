@@ -31,8 +31,8 @@ namespace eprosima
                 public:
 
 					/*!
-					 * @brief default constructor
-					 * @param to_connect Listening IP interface
+					 * @brief Default constructor.
+					 * @param to_connect Listening IP interface.
 					 */
                     HttpServerTransport(const std::string &to_connect);
 
@@ -45,32 +45,32 @@ namespace eprosima
                     virtual const char* getType() const {return "HTTP";}
 
 					/*!
-					 * @brief This method runs the TCP server needed for the HTTP connections
+					 * @brief This method runs the TCP server needed for the HTTP connections.
 					 */
                     void run();
 
 					/*!
-					 * @brief This method stops the TCP server needed for the HTTP connections
+					 * @brief This method stops the TCP server needed for the HTTP connections.
 					 */
                     void stop();
 
 					/*!
-					 * @brief This function is used to send a reply to a proxy
-					 * @param data HTTP response to send
-					 * @param dataLength Length of the data to send
-					 * @param endpoint Endpoint to send the data to
+					 * @brief This function is used to send a reply to a proxy.
+					 * @param data HTTP response to send.
+					 * @param dataLength Length of the data to send.
+					 * @param endpoint Target endpoint to send the data to.
 					 */
 					void sendReply(void *data, size_t dataLength, Endpoint *connection);
 
 					/*!
-					 * @brief This function does not apply to HTTP transport.
+					 * @brief This function does not apply to HTTP transport..
 					 */
                     int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
                     
 					/*!
 					 * @brief This callback method is invoked when a request arrives.
 					 * It makes the thread strategy schedule the incoming request.
-					 * @param connection Incoming endpoint
+					 * @param connection Incoming endpoint.
 					 */
                     void bossProcess(TCPEndpoint* connection);
 

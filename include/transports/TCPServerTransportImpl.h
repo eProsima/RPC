@@ -21,7 +21,7 @@ namespace eprosima
             {
                 public:
 					/*!
-					 * @brief Callback meant to receive a proxy request and invoke the threading strategy to schedule it
+					 * @brief Callback designed to receive a proxy request and schedule it invoking the concrete threading strategy.
 					 */
                     boost::function<void(TCPEndpoint*)> function;
             };

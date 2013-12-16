@@ -22,7 +22,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class implements a transport using DDS over TCPv4.
-                 * This transport can only be used by a server's proxy.
+                 * This transport can only be used by a server proxy.
                  * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI TCPProxyTransport : public ProxyTransport
@@ -41,7 +41,7 @@ namespace eprosima
                         virtual ~TCPProxyTransport();
 
                         /*!
-                         * @brief This function sets the QoS of DDS to use the TCPv4 transport.
+                         * @brief This function sets the DDS' QoS to use the TCPv4 transport.
                          *
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use TCPv4 transport.
@@ -50,7 +50,7 @@ namespace eprosima
 
                     private:
 
-                        //! @brief The public address and port where the client could find the server. This attribute is only used by the proxy.
+                        //! @brief The public address and port where the client can find the server. This attribute is only used by the proxy.
                         char *m_to_connect;
                 };
             } // namepsace dds

@@ -34,7 +34,7 @@ namespace eprosima
         {
             /*!
              * @brief This interface is the base of all classes that implement a transport
-             *        that could be used by a server.
+             *        that can be used by the server.
              * @ingroup TRANSPORTMODULE
              */
             class RPCDDS_DllAPI ServerTransport : public Transport
@@ -51,8 +51,8 @@ namespace eprosima
                     virtual ~ServerTransport(){}
 
 					/*!
-					 * @brief Sets the threading strategy
-					 * @param strategy Threading strategy
+					 * @brief Sets the threading strategy.
+					 * @param strategy Threading strategy.
 					 */
                     inline
                         void setStrategy(eprosima::rpcdds::strategy::ServerStrategy &strategy)
@@ -61,8 +61,8 @@ namespace eprosima
                         }
 
 					/*!
-					 * @brief Sets the communication protocol 
-					 * @param protocol Communication protocol 
+					 * @brief Sets the communication protocol.
+					 * @param protocol Communication protocol.
 					 */
                     inline
                         void linkProtocol(eprosima::rpcdds::protocol::Protocol &protocol)
@@ -71,8 +71,8 @@ namespace eprosima
                         }
 
 					/*!
-					 * @brief Gets the communication protocol 
-					 * @return Communication protocol 
+					 * @brief Gets the communication protocol.
+					 * @return Communication protocol.
 					 */
                     inline
                         eprosima::rpcdds::protocol::Protocol& getLinkedProtocol()
@@ -81,8 +81,8 @@ namespace eprosima
                         }
 
 					/*!
-					 * @brief Gets the threading strategy
-					 * @return Threading strategy
+					 * @brief Gets the threading strategy.
+					 * @return Threading strategy.
 					 */
                     inline
                         eprosima::rpcdds::strategy::ServerStrategy& getStrategy() const
@@ -91,8 +91,8 @@ namespace eprosima
                         }
 
 					/*!
-					 * @brief Gets the callback that will proccess the requests
-					 * @return Callback that will proccess the requests
+					 * @brief Gets the callback that will proccess the requests.
+					 * @return Callback that will proccess the requests.
 					 */
                     inline
                         ServerTransport_Callback getCallback() const
@@ -101,8 +101,8 @@ namespace eprosima
                         }
 
 					/*!
-					 * @brief Gets the callback that will proccess the requests
-					 * @param callback Callback that will proccess the requests
+					 * @brief Gets the callback that will proccess the requests.
+					 * @param Callback Callback that will proccess the requests.
 					 */
                     void setCallback(ServerTransport_Callback callback)
                     {
@@ -125,28 +125,28 @@ namespace eprosima
                     virtual const char* getType() const = 0;
 
 					/*!
-					 * @brief This method runs the TCP server needed for the HTTP connections
+					 * @brief This method runs the TCP server needed for the HTTP connections.
 					 */
                     virtual void run() = 0;
 
 					/*!
-					 * @brief This method stops the TCP server needed for the HTTP connections
+					 * @brief This method stops the TCP server needed for the HTTP connections.
 					 */
                     virtual void stop() = 0;
 
 					/*!
-					 * @brief This function is used to send a reply to a proxy
-					 * @param data Response to send
-					 * @param dataLength Length of the data to send
-					 * @param endpoint Endpoint to send the data to
+					 * @brief This function is used to send a reply to a proxy.
+					 * @param data Response to send.
+					 * @param dataLength Length of the data to send.
+					 * @param endpoint Targeg entpoint to send the data to.
 					 */
                     virtual void sendReply(void *data, size_t dataLength, Endpoint *endpoint) = 0;
 
 					/*!
-					 * @brief This function is used to send a reply to a proxy
-					 * @param data Response to send
-					 * @param dataLength Length of the data to send
-					 * @param endpoint Endpoint to send the data to
+					 * @brief This function is used to send a reply to a proxy.
+					 * @param data Response to send.
+					 * @param dataLength Length of the data to send.
+					 * @param endpoint Target endpoint to send the data to.
 					 */
                     virtual int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint) = 0; 
 

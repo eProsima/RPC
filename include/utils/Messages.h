@@ -19,11 +19,11 @@ namespace eprosima
 		 */
 		typedef enum ReturnMessage
 		{
-			/// \brief An error occurs in the server's proxy side.
+			/// \brief An error occurs on the server's proxy side.
 			CLIENT_INTERNAL_ERROR = -2,
-			/// \brief Timeout while the client is waiting the server's reply.
+			/// \brief Timeout while the client is waiting the server reply.
 			SERVER_TIMEOUT,
-			/// \brief An error occurs in the server side.
+			/// \brief An error occurs on the server side.
 			SERVER_INTERNAL_ERROR,
 			/// \brief Operation was succesful.
 			OPERATION_SUCCESSFUL,

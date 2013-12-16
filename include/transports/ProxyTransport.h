@@ -20,7 +20,7 @@ namespace eprosima
         {
             /*!
              * @brief This interface is the base of all classes that implement a transport
-             *        that could be used by a proxy.
+             *        that can be used by the proxy.
              * @ingroup TRANSPORTMODULE
              */
             class RPCDDS_DllAPI ProxyTransport : public Transport
@@ -50,7 +50,7 @@ namespace eprosima
 
 					/*!
 					 * @brief Abstract method. It must start a connection with the server.
-					 * @return true it the operation is successful, false otherwise.
+					 * @return true if the operation is successful, false otherwise.
 					 */
                     virtual bool connect() = 0;
 
@@ -58,16 +58,16 @@ namespace eprosima
 					 * @brief Abstract method. It must send a request to the server.
 					 * @param buffer Buffer containing the request
 					 * @param bufferSize Buffer size
-					 * @return true it the operation is successful, false otherwise.
+					 * @return true if the operation is successful, false otherwise.
 					 */
                     virtual bool send(const void* buffer, const size_t bufferSize) = 0;
 
 					/*!
 					 * @brief Abstract method. It must receive a reply from the server.
-					 * @param buffer Buffer that will contain the HTTP message
-					 * @param bufferSize Size of the buffer
-					 * @param dataToRead Number of bytes received
-					 * @return -1 if the operation fails
+					 * @param buffer Buffer that will contain the HTTP message.
+					 * @param bufferSize Size of the buffer.
+					 * @param dataToRead Number of bytes received.
+					 * @return -1 if the operation fails.
 					 */
                     virtual int receive(void *buffer, const size_t bufferSize, size_t &dataToRead) = 0;
             };

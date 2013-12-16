@@ -31,7 +31,7 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor for servers.
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
                         UDPServerTransport(std::string serviceName, int domainId = 0);
 
@@ -39,7 +39,7 @@ namespace eprosima
                         virtual ~UDPServerTransport();
 
                         /*!
-                         * @brief This function sets the QoS of DDS to use the UDPv4 transport.
+                         * @brief This function sets the DDS' QoS to use the UDPv4 transport.
                          *
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport.

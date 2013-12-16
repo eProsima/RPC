@@ -50,11 +50,11 @@ namespace eprosima
                          * @brief This function creates a new proxy procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
                          *
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL.
-                         * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL.
-                         * @param copy_data Pointer to the function used to copy data when it is received.
-                         * @return 0 if the function successfully works. -1 in other case
+                         * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
+                         * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
+                         * @param copy_data Pointer to the function used to copy the data when it is received.
+                         * @return 0 if the function successfully works, -1 in other case
                          */
                         eprosima::rpcdds::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
@@ -65,8 +65,8 @@ namespace eprosima
 						/*!
 						 * @brief This method is invoked once for each incoming request.
 						 *
-						 * @param data The request data
-						 * @param endpoint The request endpoint
+						 * @param data The request data.
+						 * @param endpoint The request endpoint.
 						 */
                         void process(ServerProcedureEndpoint *endpoint, void *data);
 
@@ -81,10 +81,10 @@ namespace eprosima
                         void stop();
 
 						/*!
-						 * @brief This function is used to send a reply to a proxy
-						 * @param data Data to send
-						 * @param dataLength Length of the data to send
-						 * @param endpoint Endpoint meant to send the data
+						 * @brief This function is used to send a reply to a proxy.
+						 * @param data Data to send.
+						 * @param dataLength Length of the data to send.
+						 * @param endpoint Endpoint meant to send the data.
 						 */
                         void sendReply(void *data, size_t dataLength, Endpoint *endpoint);
 
@@ -105,15 +105,15 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor.
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
                         ServerTransport(std::string &serviceName, int domainId = 0);
 
                     private:
 
                         /*!
-                         * @brief Map containing the proxy procedure endpoints that were created to communicate.
-                         * The key of the map is the pointer where the name is allocated instead the name.
+                         * @brief Map containing the proxy's procedure endpoints that were created to communicate.
+                         * The map key is the pointer where the name is allocated, not the name itself.
                          * Then always the same string in memory has to be used and not a copy.
                          */
                         std::map<const char*, ServerProcedureEndpoint*> m_procedureEndpoints;

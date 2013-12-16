@@ -37,7 +37,7 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor.
-                         * @param Transport that is creating the proxy procedure endpoint. Cannot be NULL.
+                         * @param Transport that is creating the proxy procedure endpoint. It cannot be NULL.
                          */
                         ProxyProcedureEndpoint(ProxyTransport &transport);
 
@@ -47,10 +47,10 @@ namespace eprosima
                         /*!
                          * @brief This function initializes the proxy procedure endpoint.
 						 *
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL.
-                         * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. Cannot be NULL.
-                         * @param copy_data Pointer to the function used to copy data when it is received.
+                         * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
+                         * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+                         * @param copy_data Pointer to the function used to copy the data when it is received.
                          * @return 0 if the initialization works. -1 in other case.
                          */
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
@@ -65,12 +65,12 @@ namespace eprosima
                         /*!
                          * @brief This function sends a synchronous RPC call.
                          * It sends the request to the server and waits for the reply.
-                         * Wait mechanism is implemented with a DDS WaitSet.
+                         * The wait mechanism is implemented with a DDS WaitSet.
                          *
-                         * @param request Pointer to the allocated request. Cannot be NULL.
+                         * @param request Pointer to the allocated request. It cannot be NULL.
                          * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
                          *        The pointer can be NULL and this means that the RPC call is oneway.
-                         * @throw eprosima::rpcdds::exception::ServerTimeoutException
+                         * @throw eprosima::rpcdds::exception::ServerTimeoutException.
                          */
                         eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 
@@ -78,9 +78,9 @@ namespace eprosima
 
                         /*!
                          * @brief This function creates the DDS entities.
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL:
-                         * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. Cannot be NULL:
+                         * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
+                         * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
                          * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
                         int createEntities(const char *name, const char *writertypename, const char *readertypename);
@@ -93,10 +93,10 @@ namespace eprosima
                         int enableEntities();
 
                         /*!
-                         * @brief This functio checks that the server was discovery.
+                         * @brief This function checks if the server was discovered.
                          *
-                         * @param DDS WaitSet used to make the comprobation.
-                         * @param timeout Timeout used to the comprobation. Its value is in milliseconds.
+                         * @param DDS WaitSet used to make do the checking.
+                         * @param timeout Timeout used to do the checking. Its value is in milliseconds.
                          * @return RPCDDS return message.
                          */
                         ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
@@ -110,7 +110,7 @@ namespace eprosima
                         /*!
                          * @brief This function returns a free query condition from the pool.
                          *
-                         * @return This function return a free query condition. If all query condition are in use, then NULL pointer is returned.
+                         * @return This function returns a free query condition. If all the query condition are in use, then a NULL pointer is returned.
                          */
                         DDS::QueryCondition* getFreeQueryFromPool();
 
@@ -120,7 +120,7 @@ namespace eprosima
                         void returnUsedQueryToPool(DDS::QueryCondition *query);
 
                         /*!
-                         * @brief This function take a sample from the datareader.
+                         * @brief This function takes a sample from the datareader.
                          */
                         eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 

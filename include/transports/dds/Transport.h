@@ -52,8 +52,8 @@ namespace eprosima
                         void initialize();
 
 		                /*!
-						 * @brief Gets the domain participant
-						 * @return DDS domain participant
+						 * @brief Gets the domain participant.
+						 * @return DDS domain participant.
 						 */
                         inline
                             DDS::DomainParticipant* getParticipant() const
@@ -62,8 +62,8 @@ namespace eprosima
                             }
 
 		                /*!
-						 * @brief Gets the publisher
-						 * @return DDS publisher
+						 * @brief Gets the publisher.
+						 * @return DDS publisher.
 						 */
                         inline
                             DDS::Publisher* getPublisher() const
@@ -72,8 +72,8 @@ namespace eprosima
                             }
 
 		                /*!
-						 * @brief Gets the subscriber
-						 * @return DDS subscriber
+						 * @brief Gets the subscriber.
+						 * @return DDS subscriber.
 						 */
                         inline
                             DDS::Subscriber* getSubscriber() const
@@ -85,10 +85,10 @@ namespace eprosima
                          * @brief This function creates a new procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
                          *
-                         * @param name The name associated with this proxy procedure endpoint. Cannot be NULL.
-                         * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. Cannot be NULL.
-                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. Cannot be NULL.
-                         * @return 0 if the function works. -1 in other case.
+                         * @param name The name associated with this proxy procedure endpoint.It cannot be NULL.
+                         * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
+                         * @return 0 if the function ends successfully, -1 otherwise.
                          */
                         virtual eprosima::rpcdds::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
@@ -98,7 +98,7 @@ namespace eprosima
                     protected:
 
 						/*!
-                         * @brief This abstract function sets the QoS of DDS to use a specific transport.
+                         * @brief This abstract function sets the QoS to use a specific transport.
                          *
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use a specific transport.
@@ -107,7 +107,7 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor.
-                         * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
+                         * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
                         Transport(int domainId = 0);
 
@@ -117,8 +117,8 @@ namespace eprosima
                         int m_domainId;
 
                         /*!
-                         * @brief A DDS transport uses a DDS::DomainParticipant entity to create DDS entities.
-                         * This participant has to be created in the transport creation.
+                         * @brief A DDS transport that uses a DDS::DomainParticipant entity to create DDS entities.
+                         * This participant has to be created during the transport creation.
                          * This pointer should never be NULL.
                          */
                         DDS::DomainParticipant *m_participant;

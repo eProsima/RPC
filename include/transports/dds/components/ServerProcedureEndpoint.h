@@ -39,7 +39,7 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor.
-                         * @param Transport that is creating the proxy procedure endpoint. Cannot be NULL.
+                         * @param Transport that creates the proxy procedure endpoint. It cannot be NULL.
                          */
                         ServerProcedureEndpoint(ServerTransport &transport);
 
@@ -52,26 +52,26 @@ namespace eprosima
 						
 						/*!
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.
-                         * @param serviceName Name of the service
+                         * @param serviceName Name of the service.
                          */
                         int start(std::string &serviceName);
 
 						/*!
                          * @brief This method deletes the DDS entities needed to run this DDS Endpoint.
-                         * @param serviceName
+                         * @param serviceName Name of the service.
                          */
                         void stop();
 
 						/*!
-                         * @brief Gets the callback used to processes a request
-						 * @return Function callback used to processes a request
+                         * @brief Gets the callback used to processes a request.
+						 * @return Function callback used to processes a request.
                          */
                         inline
                             Transport::ProcessFunc getProcessFunc(){return m_process_func;}
 
 						/*!
-                         * @brief
-                         * @param serviceName
+                         * @brief Sends the reply.
+                         * @param serviceName Name of the service.
                          */
                         int sendReply(void *data);
 
@@ -112,19 +112,19 @@ namespace eprosima
 
                         /*!
                          * @brief This function creates the DDS entities.
-                         * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
+                         * @return A 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
                         int createEntities(std::string &serviceName);
 
                         /*!
                          * @brief This function enables the DDS entities.
                          *
-                         * @return 0 value is returned if all entities was enabled successfully. -1 in other case.
+                         * @return A 0 value is returned if all entities were enabled successfully. -1 in other case.
                          */
                         int enableEntities();
 
 
-                        //! @brief Transport that created the proxy procedure endpoint.
+                        //! @brief Transport that has created the proxy procedure endpoint.
                         ServerTransport &m_transport;
 
                         const char *m_name;

@@ -31,7 +31,7 @@ namespace eprosima
 
                     /*! 
 					 * @brief Default constructor.
-					 * @param serverAddress Server IP address or URL
+					 * @param serverAddress Server IP address or URL.
 					 */
                     HttpProxyTransport(const std::string &serverAddress);
 
@@ -45,24 +45,24 @@ namespace eprosima
 
 					/*!
 					 * @brief Starts an HTTP connection with an HTTP server.
-					 * @return true it the operation is successful, false otherwise.
+					 * @return true if the operation is successful, false otherwise.
 					 */
                     bool connect();
 
 					/*!
-					 * @brief Sends an HTTP request to the server
-					 * @param buffer Buffer containing the HTTP message
-					 * @param bufferSize This parameter is not used in this class
-					 * @return true it the operation is successful, false otherwise.
+					 * @brief Sends an HTTP request to the server.
+					 * @param buffer Buffer containing the HTTP message.
+					 * @param bufferSize This parameter is not used in this class.
+					 * @return true if the operation is successful, false otherwise.
 					 */
                     bool send(const void* buffer, const size_t bufferSize);
 
 					/*!
-					 * @brief Receives an HTTP response from the server
-					 * @param buffer Buffer that will contain the HTTP message
-					 * @param bufferSize This parameter is not used in this class
-					 * @param dataToRead Number of bytes received
-					 * @return -1 if the operation fails
+					 * @brief Receives an HTTP response from the server.
+					 * @param buffer Buffer that will contain the HTTP message.
+					 * @param bufferSize This parameter is not used in this class.
+					 * @param dataToRead Number of bytes received.
+					 * @return -1 if the operation fails.
 					 */
                     int receive(void *buffer, const size_t bufferSize, size_t &dataToRead);
 
