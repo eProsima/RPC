@@ -26,20 +26,37 @@ namespace eprosima
     {
         namespace protocol
         {
+            /*!
+             * @brief Protocol base class for the specific application
+			 * @ingroup FOODDSEXAMPLE
+             */
             class RPCDDSUSERDllExport FooInterfaceProtocol : public Protocol
             {
                 public:
                 
+                   /*!
+                    * @brief This method sets the transport for the communications. It has to be implemented by the children classes.
+                    * @param transport Transport to use.
+                    * @return True if the assignment is successful, false otherwise
+                    */
                     virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport) = 0;
                     
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
+                                       /*!
+                                        * @brief This method links a specific servant with the protocol.
+                                        * @param impl Servant implementation.
+                                        */
                                         void linkFooInterfaceImpl(FooInterfaceServerImpl &impl)
                                         {
                                             _FooInterface_impl = &impl;
                                         }
                                         
                              
+                    /*!
+                     * @brief This method implements the proxy part of the protocol for the operation FooProcedure
+                     *        It has to be implemented by the child classes.
+                     */
                     virtual void FooInterface_FooProcedure() = 0;
 
                     

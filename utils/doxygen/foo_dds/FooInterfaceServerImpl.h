@@ -20,6 +20,7 @@
 
 /**
  * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+ * @ingroup FOODDSEXAMPLE
  */
 class FooInterfaceServerImpl
 {
@@ -31,6 +32,7 @@ class FooInterfaceServerImpl
         /// \brief The default destructor.
         virtual ~FooInterfaceServerImpl(){}
 
+        /// \brief Skeleton of the operation FooProcedure
         virtual void FooProcedure() = 0;
 ;
 };

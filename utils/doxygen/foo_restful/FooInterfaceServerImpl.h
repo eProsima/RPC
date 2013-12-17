@@ -22,6 +22,7 @@ namespace FooInterface
 {
     /**
      * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+	 * @ingroup FOORESTEXAMPLE
      */
     class FooResourceServerImpl
     {
@@ -34,6 +35,7 @@ namespace FooInterface
             virtual ~FooResourceServerImpl(){}
 
 
+            /// \brief Skeleton of the operation FooProcedure
             virtual void FooProcedure() = 0;
     ;
     };

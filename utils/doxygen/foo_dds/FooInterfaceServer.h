@@ -31,6 +31,7 @@ namespace eprosima
 
 /**
  * \brief This class implements a specific server for the defined interface FooInterface by user.
+ * @ingroup FOODDSEXAMPLE
  */
 class RPCDDSUSERDllExport FooInterfaceServer : public eprosima::rpcdds::server::Server
 {
@@ -39,13 +40,13 @@ class RPCDDSUSERDllExport FooInterfaceServer : public eprosima::rpcdds::server::
         /**
          * \brief This constructor sets the transport that will be used by the server.
          *
-         * \param serviceName The service's name that proxies will use to connect with the server.
          * \param strategy Strategy used by server to work with new requests.
          *        This class doesn't delete this object in its destructor. Cannot be NULL.
-         * \param transport The network transport that server has to use.
-         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
-         * \param servant Servant that server will use to invoke user's functions.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0.
+         * \param transport The network transport that the server has to use.
+         *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
+         * \param protocol Generated protocol that the server has to use.
+         *        This class has the information to process requests and build responses for this application environment. 
+         * \param servant Servant that the server will use to invoke user's functions.
          * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
         FooInterfaceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,

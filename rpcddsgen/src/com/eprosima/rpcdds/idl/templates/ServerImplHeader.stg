@@ -55,6 +55,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+/// \brief Skeleton of the operation $operation.name$
 virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
 
 >>

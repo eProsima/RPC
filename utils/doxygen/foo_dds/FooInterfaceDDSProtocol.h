@@ -35,19 +35,41 @@ namespace eprosima
         {
             namespace dds
             {
+                /*!
+                 * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
+                 *  It uses DDS.
+				 * @ingroup FOODDSEXAMPLE
+                 */
                 class RPCDDSUSERDllExport  FooInterfaceProtocol : public eprosima::rpcdds::protocol::FooInterfaceProtocol
                 {
                     public:
                     
+                       /*!
+                        * @brief Default constructor
+                        */
                         FooInterfaceProtocol();
                         
+                       /*!
+                        * @brief Default destructor
+                        */
                         virtual ~FooInterfaceProtocol();
                     
+                       /*!
+                        * @brief This method sets the transport for the communications.
+                        * @param transport Transport to use
+                        * @return True if the assignment is successful, false otherwise
+                        */
                         virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
                         bool activateInterface(const char* interfaceName);
                         
+                        /*!
+                         * @brief This method implements the proxy part of the protocol for the operation FooProcedure
+                         */
                         void FooInterface_FooProcedure();
+                        /*!
+                         * @brief This method implements the server part of the protocol for the operation FooProcedure
+                         */
                         static void FooInterface_FooProcedure_serve(eprosima::rpcdds::protocol::Protocol &protocol,
                             void *data , eprosima::rpcdds::transport::Endpoint *endpoint);
 

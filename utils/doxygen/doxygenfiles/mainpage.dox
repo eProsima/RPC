@@ -39,7 +39,7 @@
 
  /*!
  * @defgroup RPCDDSAPIREFERENCE RPCDDS API Reference
- * @brief RPCDDS internal API groped in modules.
+ * @brief RPCDDS internal API grouped in modules.
  */
 
  /*!
@@ -47,7 +47,7 @@
  * @ingroup RPCDDSAPIREFERENCE
  * @brief This group contains related API to create a client application.
  * This API is used by the tool \e rpcddsgen to generate custom code based in a defined interface.
- * That interface and its remote procedure have to be defined in IDL language.
+ * That interface and its remote procedures have to be defined in IDL or WADL.
  */
 
  /*!
@@ -55,7 +55,7 @@
  * @ingroup RPCDDSAPIREFERENCE
  * @brief This group contains related API to create a server application.
  * Except the custom server's strategies, this API is used by the tool \e rpcddsgen to generate custom code based in a defined interface.
- * That interface and its remote procedure have to be defined in IDL language.
+ * That interface and its remote procedure have to be defined in IDL or WADL.
  */
 
  /*!
@@ -79,6 +79,11 @@
  */
 
  /*!
- * @defgroup FOOEXAMPLE Generated API example
- * @brief This group contains the generated API by the tool \e rpcddsgen \e for an example of interface named FooInterface.
+ * @defgroup FOODDSEXAMPLE Generated API example for DDS
+ * @brief This group contains the generated API by the tool \e rpcddsgen \e for a DDS example of an interface named FooInterface.
+ */
+ 
+  /*!
+ * @defgroup FOORESTEXAMPLE Generated API example for RESTful
+ * @brief This group contains the generated API by the tool \e rpcddsgen \e for a RESTful example of a resource named FooInterface.
  */

@@ -35,6 +35,7 @@ namespace eprosima
 /*!
  * @brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
+ * @ingroup FOODDSEXAMPLE
  */
 class FooInterface_FooProcedureCallbackHandler
 {
@@ -64,13 +65,10 @@ class RPCDDSUSERDllExport FooInterfaceProxy : public eprosima::rpcdds::proxy::Pr
         /*!
          * @brief This constructor sets the transport that will be used by the server's proxy.
          *
-         * @param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it.
          * @param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
          * @param protocol The protocol used to send the information over the transport.
          *        This protocol's object is not deleted by this class in its destructor. Cannot be NULL.
-         * @param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eprosima::rpcdds::exception::ServerTimeoutException is thrown.
          * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
         FooInterfaceProxy(eprosima::rpcdds::transport::ProxyTransport &transport,
@@ -79,10 +77,12 @@ class RPCDDSUSERDllExport FooInterfaceProxy : public eprosima::rpcdds::proxy::Pr
         //! @brief The default destructor.
         virtual ~FooInterfaceProxy();
         
+        //! @brief Proxy method for the operation FooProcedure
         void FooProcedure();
 
         
-        //void FooProcedure_async(FooInterface_FooProcedureCallbackHandler &obj);
+        ////! @brief Proxy asynchronous method for the operation FooProcedure
+        void FooProcedure_async(FooInterface_FooProcedureCallbackHandler &obj);
 
 };
 

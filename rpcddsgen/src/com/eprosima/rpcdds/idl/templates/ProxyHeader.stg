@@ -56,13 +56,10 @@ class RPCDDSUSERDllExport $interface.name$Proxy : public eprosima::rpcdds::proxy
         /*!
          * @brief This constructor sets the transport that will be used by the server's proxy.
          *
-         * @param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it.
          * @param transport The network transport that server's proxy has to use.
          *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
          * @param protocol The protocol used to send the information over the transport.
          *        This protocol's object is not deleted by this class in its destructor. Cannot be NULL.
-         * @param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eprosima::rpcdds::exception::ServerTimeoutException is thrown.
          * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
         $interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
@@ -85,6 +82,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+//! @brief Proxy method for the operation $operation.name$
 $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
 >>
@@ -135,6 +133,7 @@ $endif$
 
 functionAsyncHeader(operation) ::= <<
 $if(!operation.oneway)$
+//! @brief Proxy asynchronous method for the operation $operation.name$
 void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
 
 $endif$
