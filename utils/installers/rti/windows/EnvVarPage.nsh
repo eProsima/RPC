@@ -37,20 +37,20 @@ Function VariablesEntornoPage
     ${NSD_CreateLabel} 0 0 100% 20u "Check the environment variables you want to set and uncheck the environment variables you don't want to set. Click Next to continue."
     Pop $Label
 
-    ${NSD_CreateCheckbox} 10 20u 100% 12u "Set the RPCDDSHOME environment variable."
+    ${NSD_CreateCheckbox} 10 20u 100% 12u "Set the RPCHOME environment variable."
     Pop $CheckboxRPCDDSHOME
     ${If} $CheckboxRPCDDSHOME_State == ${BST_CHECKED}
         ${NSD_Check} $CheckboxRPCDDSHOME
     ${EndIf}
         
-    ${NSD_CreateCheckbox} 10 32u 100% 12u "&Add to the PATH environment variable the location of RPCDDS scripts"
+    ${NSD_CreateCheckbox} 10 32u 100% 12u "&Add to the PATH environment variable the location of RPC scripts"
     Pop $CheckboxScripts
     ${If} $CheckboxScripts_State == ${BST_CHECKED}
         ${NSD_Check} $CheckboxScripts
     ${EndIf}
     
     ${If} ${RunningX64}
-        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of RPCDDS target libraries for platform x64"
+        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of RPC target$\r$\nlibraries for platform x64"
         Pop $CheckboxX64  
         ${If} ${SectionIsSelected} ${SEC_LIB_x64}
             ${If} $CheckboxX64_State == ${BST_CHECKED}
@@ -63,10 +63,10 @@ Function VariablesEntornoPage
         ### Fijamos los callbacks para cuando se haga click en los CheckBoxes
     ${NSD_OnClick} $CheckboxX64 ClickX64  
     
-        ${NSD_CreateCheckbox} 10 66u 100% 24u "&Add to the PATH environment variable the location of RPCDDS target libraries for platform i86"
+        ${NSD_CreateCheckbox} 10 66u 100% 24u "&Add to the PATH environment variable the location of RPC target$\r$\nlibraries for platform i86"
         Pop $CheckboxI86
     ${Else}
-        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of RPCDDS target libraries for platform i86"
+        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of RPC target$\r$\nlibraries for platform i86"
         Pop $CheckboxI86
     ${EndIf}
 

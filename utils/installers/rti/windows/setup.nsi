@@ -34,6 +34,9 @@ SectionGroup "Libraries" SECGRP0000
         SetOverwrite on
         File /r ..\..\..\..\lib\x64Win64VS2010\*
         WriteRegStr HKLM "${REGKEY}\Components" "x64 libraries" 1
+		# Copy visual studio redistributable for x64
+        SetOutPath $TEMP
+        File "redistributables\vcredist_x64.exe"
     SectionEnd
 
     Section "i86 libraries" SEC_LIB_i86
@@ -41,18 +44,25 @@ SectionGroup "Libraries" SECGRP0000
         SetOverwrite on
         File /r ..\..\..\..\lib\i86Win32VS2010\*
         WriteRegStr HKLM "${REGKEY}\Components" "i86 libraries" 1
+		# Copy visual studio redistributable for i86
+        SetOutPath $TEMP
+        File "redistributables\vcredist_x86.exe"
     SectionEnd
 SectionGroupEnd
 
 !include EnvVarPage.nsh
+!include InstallRedistributables.nsh
 
 # Variables
 Var StartMenuGroup
 
+# Reserved Files
+ReserveFile "${NSISDIR}\Plugins\newadvsplash.dll"
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE ..\..\..\..\doc\licencias\RPC_LICENSE.txt
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuGroup
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE ComponentsPageLeave
 !insertmacro MUI_PAGE_COMPONENTS
 Page custom VariablesEntornoPage
 !insertmacro MUI_PAGE_DIRECTORY
@@ -149,8 +159,8 @@ Section -post SEC0006
     
     ### Actualizamos las variables de entorno que se hayan marcado
     ${If} $CheckboxRPCDDSHOME_State == ${BST_CHECKED}
-       ${EnvVarUpdate} $0 "RPCDDSHOME" "P" "HKLM" "$INSTDIR"
-       WriteRegStr HKLM "${REGKEY}\Components" "RPCDDSHOME" 1
+       ${EnvVarUpdate} $0 "RPCHOME" "P" "HKLM" "$INSTDIR"
+       WriteRegStr HKLM "${REGKEY}\Components" "RPCHOME" 1
     ${EndIf}
     ${If} $CheckboxScripts_State == ${BST_CHECKED}
        ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\scripts"
@@ -168,6 +178,9 @@ Section -post SEC0006
              WriteRegStr HKLM "${REGKEY}\Components" "i86 libraries location" 1
         ${EndIf}
     ${EndIf}
+	
+	# Comprobamos si tiene instalado los redistributables de Visual Studio
+    Call InstallRedistributables
 SectionEnd
 
 # Macro for selecting uninstaller sections
@@ -183,6 +196,7 @@ done${UNSECTION_ID}:
     Pop $R0
 !macroend
 
+# Uninstaller sections
 Section /o "-un.i86 libraries" UNSEC_LIB_i86
     RmDir /r /REBOOTOK $INSTDIR\lib\i86Win32VS2010
     DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries"
@@ -218,9 +232,9 @@ Section -un.post UNSEC0006
     DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries location"
     DeleteRegValue HKLM "${REGKEY}\Components" "x64 libraries location"
     DeleteRegValue HKLM "${REGKEY}\Components" "Script location"
-    DeleteRegValue HKLM "${REGKEY}\Components" "RPCDDSHOME"
+    DeleteRegValue HKLM "${REGKEY}\Components" "RPCHOME"
     
-    ${un.EnvVarUpdate} $0 "RPCDDSHOME" "R" "HKLM" "$INSTDIR"
+    ${un.EnvVarUpdate} $0 "RPCHOME" "R" "HKLM" "$INSTDIR"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\scripts"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\x64Win64VS2010"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\i86Win32VS2010"
@@ -228,14 +242,33 @@ SectionEnd
 
 # Installer functions
 Function .onInit
+	# La variable PROGRAMFILES depende de si estamos en x64 o i86
+    ${If} ${RunningX64}
+       StrCpy '$INSTDIR' '$PROGRAMFILES64\eProsima\RPC'
+    ${else}
+       StrCpy '$INSTDIR' '$PROGRAMFILES\eProsima\RPC'
+    ${EndIf}
     ReadEnvStr $0 NDDSHOME
     StrCmp $0 "" 0 +3
-    StrCpy $RICHI_FINISH_MESSAGE "RPC has been installed on your computer.$\n$\nNote: NDDSHOME environment variable is not set in your system. RPC uses this environment variable to find the RTI DDS middleware. See the User Manual document.$\n$\nClick Finish to close this wizard."
+    StrCpy $RICHI_FINISH_MESSAGE "eProsima RPC has been installed on your computer.$\n$\nNote: NDDSHOME environment variable is not set in your system. eProsima RPC uses this environment variable to find the RTI DDS middleware. See the User Manual document.$\n$\nClick Finish to close this wizard."
     goto +3
-    strcpy $INSTDIR $0\rpcdds
-    Strcpy $RICHI_FINISH_MESSAGE "RPC has been installed on your computer.$\n$\nClick Finish to close this wizard."
+    strcpy $INSTDIR $0\rpc
+    Strcpy $RICHI_FINISH_MESSAGE "eProsima RPC has been installed on your computer.$\n$\nClick Finish to close this wizard."
     InitPluginsDir
+	Push $R1
+    File /oname=$PLUGINSDIR\spltmp.jpg "$%EPROSIMADIR%\logo\eProsimaLogoAndNameFinal_wBorder_460.jpg"
+    newadvsplash::show 1000 600 400 -1 "$PLUGINSDIR\spltmp.jpg"
+    Pop $R1
+    Pop $R1
     #StrCpy $1 ${SEC0004}
+FunctionEnd
+
+Function ComponentsPageLeave
+  ${Unless} ${SectionIsSelected} ${SEC_LIB_x64}
+  ${AndUnless} ${SectionIsSelected} ${SEC_LIB_i86}
+    MessageBox MB_OK|MB_ICONINFORMATION `Please select at least one library component.`
+    Abort
+  ${EndUnless}
 FunctionEnd
 
 # Uninstaller functions
@@ -249,7 +282,7 @@ FunctionEnd
 
 # Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-!insertmacro MUI_DESCRIPTION_TEXT ${SECGRP0000} "RPCDDS libraries."
+!insertmacro MUI_DESCRIPTION_TEXT ${SECGRP0000} "eProsima RPC libraries."
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_x64} "Libraries for x64 platform."
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_i86} "Libraries for i86 platform."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
