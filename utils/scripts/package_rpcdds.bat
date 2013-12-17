@@ -152,7 +152,7 @@ cd utils\installers\rti\windows
 makensis.exe /DVERSION="%VERSION%" setup.nsi
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-cd "..\..\.."
+cd "..\..\..\.."
 
 rd /S /Q "utils\doxygen\output"
 

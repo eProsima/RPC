@@ -230,10 +230,10 @@ SectionEnd
 Function .onInit
     ReadEnvStr $0 NDDSHOME
     StrCmp $0 "" 0 +3
-    StrCpy $RICHI_FINISH_MESSAGE "RPCDDS has been installed on your computer.$\n$\nNote: NDDSHOME environment variable is not set in your system. RPCDDS uses this environment variable to find the RTI DDS middleware. See the User Manual document.$\n$\nClick Finish to close this wizard."
+    StrCpy $RICHI_FINISH_MESSAGE "RPC has been installed on your computer.$\n$\nNote: NDDSHOME environment variable is not set in your system. RPC uses this environment variable to find the RTI DDS middleware. See the User Manual document.$\n$\nClick Finish to close this wizard."
     goto +3
     strcpy $INSTDIR $0\rpcdds
-    Strcpy $RICHI_FINISH_MESSAGE "RPCDDS has been installed on your computer.$\n$\nClick Finish to close this wizard."
+    Strcpy $RICHI_FINISH_MESSAGE "RPC has been installed on your computer.$\n$\nClick Finish to close this wizard."
     InitPluginsDir
     #StrCpy $1 ${SEC0004}
 FunctionEnd
