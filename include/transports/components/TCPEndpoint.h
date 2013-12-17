@@ -17,6 +17,7 @@ namespace eprosima
         {
 			/*!
 			* @brief This class represents a TCP endpoint.
+            * @ingroup TRANSPORTMODULE
 			*/
             class TCPEndpoint : public boost::enable_shared_from_this<TCPEndpoint>, public Endpoint,
             private boost::noncopyable

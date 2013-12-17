@@ -77,6 +77,12 @@
  * @ingroup RPCAPIREFERENCE
  * @brief Network transports that RPCDDS library offers. These transports define how a connection is established between a proxy and a server.
  */
+ 
+  /*!
+ * @defgroup PROTOCOLMODULE Protocols
+ * @ingroup RPCDDSAPIREFERENCE
+ * @brief Protocols used by the RPCs. They define how to serialize and deserialize the information and use a Transport to send it and receive it.
+ */
 
  /*!
  * @defgroup FOODDSEXAMPLE Generated API example for DDS

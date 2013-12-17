@@ -17,6 +17,7 @@ namespace eprosima
         {
 			/*!
 			* @brief This class represents an endpoint.
+            * @ingroup TRANSPORTMODULE
 			*/
             class Endpoint
             {

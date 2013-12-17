@@ -20,6 +20,7 @@ namespace eprosima
         {
 			/*!
 			 * @brief This class represents an HTTP message.
+			 * @ingroup TRANSPORTMODULE
 			 */
             class HttpMessage
             {

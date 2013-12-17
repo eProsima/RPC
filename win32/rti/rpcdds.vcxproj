@@ -474,7 +474,6 @@
     <ClCompile Include="..\..\src\transports\TCPProxyTransport.cpp" />
     <ClCompile Include="..\..\src\transports\TCPServerTransport.cpp" />
     <ClCompile Include="..\..\src\utils\dds\Middleware.cpp" />
-    <ClCompile Include="..\..\src\utils\rest\PathTree.cpp" />
     <ClCompile Include="..\..\src\utils\Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -525,7 +524,6 @@
     <ClInclude Include="..\..\include\utils\GenericClientRPC.h" />
     <ClInclude Include="..\..\include\utils\GenericServerRPC.h" />
     <ClInclude Include="..\..\include\utils\Messages.h" />
-    <ClInclude Include="..\..\include\utils\rest\PathTree.h" />
     <ClInclude Include="..\..\include\utils\Typedefs.h" />
     <ClInclude Include="..\..\include\utils\Utilities.h" />
     <ClInclude Include="..\..\include\utils\Version.h" />

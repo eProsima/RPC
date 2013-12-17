@@ -25,6 +25,7 @@ namespace eprosima
         {
 			/*!
 			 * @brief This abstract class represents the protocol used by the RPCs. It serializes and deserializes the information and uses a Transport to send it and receive it.
+			 * @ingroup PROTOCOLMODULE
 			 */
             class RPCDDS_DllAPI Protocol
             {

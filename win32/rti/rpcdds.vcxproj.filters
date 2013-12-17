@@ -67,9 +67,6 @@
     <Filter Include="Archivos de código fuente\utils\dds">
       <UniqueIdentifier>{9d723b8c-1d2c-4264-b41d-62028e1ca34e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\utils\rest">
-      <UniqueIdentifier>{406b8e2d-99bb-4d46-b410-e9a33469e603}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\protocols">
       <UniqueIdentifier>{058e5ed6-ae56-4019-a770-b4b913e0e45d}</UniqueIdentifier>
     </Filter>
@@ -90,9 +87,6 @@
     </Filter>
     <Filter Include="Archivos de encabezado\utils\dds">
       <UniqueIdentifier>{6ae4ab66-2a5b-4da7-b292-c1a0059bcd95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\utils\rest">
-      <UniqueIdentifier>{fb63e787-0eef-4355-8949-f6b214c23d51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +185,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\utils\dds\Middleware.cpp">
       <Filter>Archivos de código fuente\utils\dds</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\utils\rest\PathTree.cpp">
-      <Filter>Archivos de código fuente\utils\rest</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\protocols\rest\FastBuffer.cpp">
       <Filter>Archivos de código fuente\protocols\rest</Filter>
@@ -340,9 +331,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\utils\dds\Middleware.h">
       <Filter>Archivos de encabezado\utils\dds</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\utils\rest\PathTree.h">
-      <Filter>Archivos de encabezado\utils\rest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\protocols\rest\FastBuffer.h">
       <Filter>Archivos de encabezado\protocols\rest</Filter>

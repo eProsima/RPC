@@ -30,6 +30,7 @@ namespace eprosima
                 /*!
                  * @brief This class represents a remote endpoint used by a proxy.
                  * It also encapsulates the DDS datawriter and the DDS datareader.
+				 * @ingroup TRANSPORTMODULE
                  */
                 class RPCDDS_DllAPI ProxyProcedureEndpoint : public Endpoint
                 {

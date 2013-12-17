@@ -18,6 +18,7 @@ namespace eprosima
 
 			    /*!
 				 * @brief This enumerator represents the supported HTTP methods
+				 * @ingroup PROTOCOLMODULE
 				 */
                 enum Method {HTTP_GET, HTTP_PUT, HTTP_POST, HTTP_DELETE};
 

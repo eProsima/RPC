@@ -22,6 +22,7 @@ namespace eprosima
             {
 			    /*!
 				 * @brief This class serializes REST data to get an HTTP message suitable for HTTP communications
+				 * @ingroup PROTOCOLMODULE
 				 */
                 class RPCDDS_DllAPI RESTSerializer
                 {

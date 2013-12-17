@@ -20,6 +20,7 @@ namespace eprosima
             /*!
              * @brief This enumeration specifies the behaviour
              * of the transport.
+			 * @ingroup TRANSPORTMODULE
              */
             typedef enum TransportBehaviour
             {

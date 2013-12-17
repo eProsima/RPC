@@ -16,6 +16,7 @@ namespace eprosima
             {
 			    /*!
 				 * @brief This class implements the iterator used to go through a FastBuffer.
+				 * @ingroup PROTOCOLMODULE
 				 */
                 class _FastBuffer_iterator
                 {

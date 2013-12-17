@@ -15,6 +15,10 @@ namespace eprosima
         {
             class TCPProxyTransportBoost;
 
+			/*!
+             * @brief This class represents a TCP transport. It must be used by TCP clients.
+             * @ingroup TRANSPORTMODULE
+			 */
             class RPCDDS_DllAPI TCPProxyTransport:
                 public eprosima::rpcdds::transport::ProxyTransport
             {

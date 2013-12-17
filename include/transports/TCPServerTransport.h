@@ -40,6 +40,10 @@ namespace eprosima
             class BossProcess;
             class TCPEndpoint;
 
+			/*!
+             * @brief This class represents a TCP transport. It must be used by TCP servers.
+             * @ingroup TRANSPORTMODULE
+			 */
             class RPCDDS_DllAPI TCPServerTransport : public ServerTransport
             {
                 private:
