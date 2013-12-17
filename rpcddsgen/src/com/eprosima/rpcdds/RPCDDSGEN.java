@@ -548,7 +548,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_clientcode, m_servercode);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -723,7 +723,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_clientcode, m_servercode);
+            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode);
             
             // Create template manager
             TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -909,7 +909,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_clientcode, m_servercode);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");

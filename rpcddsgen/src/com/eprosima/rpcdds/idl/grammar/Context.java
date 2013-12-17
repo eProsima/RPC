@@ -21,25 +21,75 @@ import com.eprosima.rpcdds.util.Utils;
 
 public class Context
 {
-    public Context(String filename, String file, boolean clientcode, boolean servercode)
+    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode)
     {
+        // Detect OS
+        m_os = System.getProperty("os.name");
+        m_userdir = System.getProperty("user.dir");
+        
         m_filename = filename;
+        m_directoryFile = Utils.getIDLFileDirectoryOnly(file);
+        
         m_file = file;
+        // Remove absolute directory where the application was executed
+        m_file = m_file.replaceFirst("^" + m_userdir, "");
+        // Remove relative directory if is equal that where the processed IDL is.
+        m_file = m_file.replaceFirst("^" + m_directoryFile, "");
+        
         m_clientcode = clientcode;
         m_servercode = servercode;
-        m_directoryFile = Utils.getIDLFileDirectoryOnly(file);
         m_types = new HashMap<String, TypeCode>();
         m_dependencies = new HashSet<String>();
         m_definitions = new ArrayList<Definition>();
         m_annotations = new HashMap<String, Annotation>();
         m_includedependency = new HashSet<String>();
-        m_directIncludeDependencies = new ArrayList<String>();
+        m_directIncludeDependencies = new HashSet<String>();
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
         m_interfaces = new HashMap<String, Interface>();
         m_tmpAnnotations = new HashMap<String, String>();
+        
+        m_includePaths = new ArrayList<String>();
+        
+        for(int i = 0; i < includePaths.size(); ++i)
+        {
+            String include = (String)includePaths.get(i);
+            include = include.replaceFirst("^-I", "");
+            include = include.replaceFirst("^" + m_userdir + java.io.File.separator, "");
+            include = include.replaceFirst("^" + m_directoryFile, "");
+            // Add last separator.
+            if(include.charAt(include.length() - 1) != java.io.File.separatorChar)
+                include += java.io.File.separator;
+            m_includePaths.add(include);
+        }
+        
+        // Reorder include paths;
+        int pointer = 0;
+        while(pointer < m_includePaths.size())
+        {
+            int count = pointer + 1;
+            
+            while(count < m_includePaths.size())
+            {
+                if(m_includePaths.get(count).startsWith(m_includePaths.get(pointer)))
+                {
+                    String first = m_includePaths.get(pointer);
+                    String second = m_includePaths.get(count);
+                    m_includePaths.set(pointer, second);
+                    m_includePaths.set(count, first);
+                    break;
+                }
+                ++count;
+            }
+            
+            if(count == m_includePaths.size())
+                ++pointer;
+        }
+        
+        System.out.println("includepaths: " + m_includePaths);
+        
         // The scope file has to be initialized because could occur the preprocessor
         // is not called (using -ppDisable).
-        m_scopeFile = file;
+        m_scopeFile = m_file;
     }
 
     public void setFilename(String filename)
@@ -71,7 +121,8 @@ public class Context
     public void processPreprocessorLine(String line, int nline)
     { 	
     	// If there is a line referring to the content of an included file.
-    	if(line.charAt(0) == ' ')
+    	if((m_os.equals("Linux") && line.charAt(0) == ' ') ||
+    	        (m_os.equals("Windows") && line.startsWith("line")))
     	{
     	    /* The received preprocessor line has the following form:
              * ' numline filename flags'
@@ -90,56 +141,83 @@ public class Context
     	    
     	    // Read flags.
     	    boolean systemFile = false, enteringFile = false, exitingFile = false;
-    	    try
+    	    
+    	    if(m_os.equals("Linux"))
     	    {
-    	        while(true)
-    	        {
-    	            Integer flag = scanner.nextInt();
-
-    	            if(flag == 1)
-    	                enteringFile = true;
-    	            else if(flag == 2)
-    	                exitingFile = true;
-    	            else if(flag == 3)
-    	                systemFile = true;
-    	        }
-    	    }
-    	    catch(NoSuchElementException ex)
-    	    {
-    	        // The line finishes.
+        	    try
+        	    {
+        	        while(true)
+        	        {
+        	            Integer flag = scanner.nextInt();
+    
+        	            if(flag == 1)
+        	                enteringFile = true;
+        	            else if(flag == 2)
+        	                exitingFile = true;
+        	            else if(flag == 3)
+        	                systemFile = true;
+        	        }
+        	    }
+        	    catch(NoSuchElementException ex)
+        	    {
+        	        // The line finishes.
+        	    }
     	    }
     	    
     	    // Only not system files are processed.
     	    if(!systemFile)
     	    {
+    	        // Remove "
 	            String file = filename.substring(1, filename.length() - 1);
+	            // Remove absolute directory where the application was executed
+	            file = file.replaceFirst("^" + m_userdir + java.io.File.separator, "");
+	            // Remove relative ./ directory.
+	            file = file.replaceFirst("^." + java.io.File.separator, "");
+	            String depfile = file;
+	            // Remove relative directory if is equal that where the processed IDL is.
+	            file = file.replaceFirst("^" + m_directoryFile, "");
+	            // Remove relative directory if is equal to a include path.
+	            for(int i = 0; i < m_includePaths.size(); ++i)
+	            {
+	                String auxfile = file.replaceFirst("^" + m_includePaths.get(i), "");
+	                
+	                if(!auxfile.equals(file))
+	                {
+	                    file = auxfile;
+	                    break;
+	                }
+	            }
+	            // Remove possible separator
+	            file = file.replaceFirst("^" + java.io.File.separator, "");           
 	            
 	            //if it is a idl file.
 	            if(file.substring(file.length() - 4, file.length()).equals(".idl"))
 	            {
-	                // Remove the '.'
-	                if(file.charAt(0) == '.')
-	                    m_scopeFile = file.substring(2, file.length());
-	                else
-	                    m_scopeFile = file;
+	                m_scopeFile = file;
+	                
+	                System.out.println("m_filename: " + m_filename);
+	                System.out.println("m_file: " + m_file);
+	                System.out.println("m_scopeFile: " + m_scopeFile);
+	                System.out.println("m_directIncludeDependencies: " + m_directIncludeDependencies);
 	                
 	                // Add to dependency if there is different IDL file than the processed.
 	                if(!m_scopeFile.equals(m_file))
 	                {
-	                    m_dependencies.add(m_scopeFile);
+	                    m_dependencies.add(depfile);
+	                    
+	                    // See if it is a direct dependency.
+	                    if(m_lastDirectDependency != null &&
+	                            m_lastDirectDependency.equals(m_file))
+	                        m_directIncludeDependencies.add(m_scopeFile);
 	                }
+
+	                // Update last direct dependency
+	                m_lastDirectDependency = m_scopeFile;
 	                
 	                //Update the current line.
 	                m_currentincludeline = nline - (numline - 1);
     	        }
     	    }
-    	}
-    	// If there is a direct include file, then insert in direct include dependency array.
-    	else if(line.substring(0, 7).equals("include"))
-    	{
-    	    int index = line.indexOf('"');
-    	    String file = line.substring(index + 1, line.indexOf('"', index + 1));
-    	    m_directIncludeDependencies.add(file);
     	}
     }
     
@@ -400,7 +478,7 @@ public class Context
      */
     public ArrayList<String> getDirectIncludeDependencies()
     {
-        return m_directIncludeDependencies;
+        return new ArrayList<String>(m_directIncludeDependencies);
     }
     
     /*!
@@ -499,8 +577,10 @@ public class Context
     private HashSet<String> m_dependencies = null;
     //! Set that contains the include dependencies that force to include our type generated file (right now only with exceptions).
     private HashSet<String> m_includedependency = null;
+    private ArrayList<String> m_includePaths = null;
     //! Set that contains the direct include dependencies in the IDL file. Used to regenerate the IDL in a supported form.
-    private ArrayList<String> m_directIncludeDependencies = null;
+    private HashSet<String> m_directIncludeDependencies = null;
+    private String m_lastDirectDependency = null;
     //! Map that contains temporarily the annotations before to be linked with an element.
     private HashMap<String, String> m_tmpAnnotations = null;
     private boolean m_scopeLimitToAll = false;
@@ -524,6 +604,9 @@ public class Context
     
     private int m_currentincludeline = 0;
     
+    // OS
+    String m_os = null;
+    String m_userdir = null;
     // Stores if the user will generate the client source.
     private boolean m_clientcode = true;
     // Stores if the user will generate the server source.
