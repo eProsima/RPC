@@ -80,7 +80,7 @@
  
   /*!
  * @defgroup PROTOCOLMODULE Protocols
- * @ingroup RPCDDSAPIREFERENCE
+ * @ingroup RPCAPIREFERENCE
  * @brief Protocols used by the RPCs. They define how to serialize and deserialize the information and use a Transport to send it and receive it.
  */
 
