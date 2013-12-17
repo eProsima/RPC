@@ -126,7 +126,7 @@ echo "EXECUTING %3 for %1"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with RPCDDS script
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -ppDisable -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcdds_rti_pcTests.bat -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -223,7 +223,7 @@ goto :EOF
 :: Function exit ::
 :exit
 :: Remove output directory
-rd /S /Q output
+::rd /S /Q output
 
 :: Remove symbolic link from EPROSIMADIR
 if exist ..\..\..\include\eProsima_cpp rmdir /Q ..\..\..\include\eProsima_cpp

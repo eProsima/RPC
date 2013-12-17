@@ -1,5 +1,6 @@
 package com.eprosima.rpcdds.idl.grammar;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,14 +28,18 @@ public class Context
         m_os = System.getProperty("os.name");
         m_userdir = System.getProperty("user.dir");
         
+        System.out.println("m_userdir = " + m_userdir);
+        
         m_filename = filename;
         m_directoryFile = Utils.getIDLFileDirectoryOnly(file);
         
         m_file = file;
         // Remove absolute directory where the application was executed
-        m_file = m_file.replaceFirst("^" + m_userdir, "");
+        if(m_file.startsWith(m_userdir + File.separator))
+        	m_file = m_file.substring(m_userdir.length() + 1);
         // Remove relative directory if is equal that where the processed IDL is.
-        m_file = m_file.replaceFirst("^" + m_directoryFile, "");
+        if(m_file.startsWith(m_directoryFile))
+        	m_file = m_file.substring(m_directoryFile.length());
         
         m_clientcode = clientcode;
         m_servercode = servercode;
@@ -53,9 +58,12 @@ public class Context
         for(int i = 0; i < includePaths.size(); ++i)
         {
             String include = (String)includePaths.get(i);
-            include = include.replaceFirst("^-I", "");
-            include = include.replaceFirst("^" + m_userdir + java.io.File.separator, "");
-            include = include.replaceFirst("^" + m_directoryFile, "");
+            if(m_file.startsWith(includeFlag))
+            	m_file = m_file.substring(includeFlag.length());
+            if(m_file.startsWith(m_userdir + File.separator))
+            	m_file = m_file.substring(m_userdir.length() + 1);
+            if(m_file.startsWith(m_directoryFile))
+            	m_file = m_file.substring(m_directoryFile.length());
             // Add last separator.
             if(include.charAt(include.length() - 1) != java.io.File.separatorChar)
                 include += java.io.File.separator;
@@ -121,8 +129,7 @@ public class Context
     public void processPreprocessorLine(String line, int nline)
     { 	
     	// If there is a line referring to the content of an included file.
-    	if((m_os.equals("Linux") && line.charAt(0) == ' ') ||
-    	        (m_os.equals("Windows") && line.startsWith("line")))
+    	if(line.charAt(0) == ' ')
     	{
     	    /* The received preprocessor line has the following form:
              * ' numline filename flags'
@@ -170,25 +177,28 @@ public class Context
     	        // Remove "
 	            String file = filename.substring(1, filename.length() - 1);
 	            // Remove absolute directory where the application was executed
-	            file = file.replaceFirst("^" + m_userdir + java.io.File.separator, "");
+	            if(file.startsWith(m_userdir + File.separator))
+	            	file = file.substring(m_userdir.length() + 1);
+	            
 	            // Remove relative ./ directory.
-	            file = file.replaceFirst("^." + java.io.File.separator, "");
+	            if(file.startsWith(currentDirS))
+	            	file = file.substring(currentDirS.length());
 	            String depfile = file;
 	            // Remove relative directory if is equal that where the processed IDL is.
-	            file = file.replaceFirst("^" + m_directoryFile, "");
+	            if(file.startsWith(m_directoryFile))
+	            	file = file.substring(m_directoryFile.length());
 	            // Remove relative directory if is equal to a include path.
 	            for(int i = 0; i < m_includePaths.size(); ++i)
 	            {
-	                String auxfile = file.replaceFirst("^" + m_includePaths.get(i), "");
-	                
-	                if(!auxfile.equals(file))
-	                {
-	                    file = auxfile;
+	            	if(file.startsWith(m_includePaths.get(i)))
+	            	{
+	            		file = file.substring(m_includePaths.get(i).length());
 	                    break;
 	                }
 	            }
-	            // Remove possible separator
-	            file = file.replaceFirst("^" + java.io.File.separator, "");           
+	            // Remove possible separator    
+	            if(file.startsWith(java.io.File.separator))
+	            	file = file.substring(1);
 	            
 	            //if it is a idl file.
 	            if(file.substring(file.length() - 4, file.length()).equals(".idl"))
@@ -459,7 +469,8 @@ public class Context
     	// Remove .idl extension.
         String dep = dependency.substring(0, dependency.length() - 4);
         // Remove directory if it is the same than main IDL file.
-        dep = dep.replaceFirst("^" + m_directoryFile, "");
+        if(dep.startsWith(m_directoryFile))
+        	dep = dep.substring(m_directoryFile.length());
     	m_includedependency.add(dep);
     }
     
@@ -611,5 +622,8 @@ public class Context
     private boolean m_clientcode = true;
     // Stores if the user will generate the server source.
     private boolean m_servercode = true;
+    
+    final String includeFlag = "-I";
+    final String currentDirS = "." + File.separator;
    
 }

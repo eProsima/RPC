@@ -19,10 +19,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Vector;
@@ -61,7 +63,7 @@ public class RPCDDSGEN
     private static String m_middleware = "rti";
     
     // TODO Quitar los sistemas operativos. Cutre.
-    private String m_osOption = "Win32";
+    private String m_osOption = null;
     private boolean m_servercode = true;
     private boolean m_clientcode = true;
     private String m_exampleOption = null;
@@ -99,6 +101,10 @@ public class RPCDDSGEN
         int count = 0;
         String arg;
         
+        // Detect OS system
+        // Detect OS
+        m_osOption = System.getProperty("os.name");
+        
         m_idlFiles = new Vector<String>();
         
         // Load available protocols
@@ -115,21 +121,6 @@ public class RPCDDSGEN
             if(!arg.startsWith("-"))
             {
                 m_idlFiles.add(arg);
-            }
-            else if(arg.equals("-os"))
-            {
-                if(count < args.length)
-                {
-                    m_osOption = args[count++];
-
-                    if(!m_osOption.equals("Win32") &&
-                            !m_osOption.equals("Linux"))
-                    {
-                        throw new BadArgumentException("Unknown OS " + m_osOption);
-                    }
-                }
-                else
-                    throw new BadArgumentException("No operating system after -os argument");
             }
             else if(arg.equals("-example"))
             {
@@ -946,7 +937,7 @@ public class RPCDDSGEN
 	        // Create main template for all templates.
 	        TemplateGroup maintemplates = tmanager.createTemplateGroup("main");
 	        maintemplates.setAttribute("ctx", ctx);
-	        
+        	
 	        try
 	        {
 	            InputStream input = new FileInputStream(idlParseFileName);
@@ -967,6 +958,7 @@ public class RPCDDSGEN
 	        catch(Exception ex)
 	        {
 	            System.out.println("ERROR<Exception>: " + ex.getMessage());
+	            ex.printStackTrace();
 	        }
 	        
 	        if(returnedValue)
@@ -1104,7 +1096,7 @@ public class RPCDDSGEN
         {
             envPath = "PATH=" + envPath;
             
-            if(m_osOption.equals("Linux") && (envLD = System.getenv("LD_LIBRARY_PATH")) != null)
+            if(m_osOption.contains("Linux") && (envLD = System.getenv("LD_LIBRARY_PATH")) != null)
             {
                 envLD = "LD_LIBRARY_PATH=" + envLD;
             }
@@ -1174,7 +1166,7 @@ public class RPCDDSGEN
         // Set the temporary folder.
         if(m_tempDir == null)
         {
-        	if(m_osOption.equals("Win32"))
+        	if(m_osOption.contains("Windows"))
         	{
         		String tempPath = System.getenv("TEMP");
         		
@@ -1183,7 +1175,7 @@ public class RPCDDSGEN
         		
         		m_tempDir = tempPath;
         	}
-        	else if(m_osOption.equals("Linux"))
+        	else if(m_osOption.contains("Linux"))
         	{
         		m_tempDir = "/tmp/";
         	}
@@ -1203,9 +1195,9 @@ public class RPCDDSGEN
             // Directory $NDDSHOME/scripts/rtiddsgen.bat
             m_command = dds_root + File.separator + "scripts" + File.separator;
             
-            if(m_osOption.equals("Win32"))
+            if(m_osOption.contains("Windows"))
             	m_command += "rtiddsgen.bat";
-            else if(m_osOption.equals("Linux"))
+            else if(m_osOption.contains("Linux"))
             	m_command += "rtiddsgen";
             
             // Add that creates file in the current directory.
@@ -1251,12 +1243,12 @@ public class RPCDDSGEN
         }
         else if(m_middleware.equals("opendds"))
         {       
-            if(m_osOption.equals("Win32"))
+            if(m_osOption.contains("Windows"))
             {
                 m_command = "opendds_idl.exe";
                 m_extra_command = "tao_idl.exe";
             }
-            else if(m_osOption.equals("Linux"))
+            else if(m_osOption.contains("Linux"))
             {
                 m_command = "opendds_idl";
                 m_extra_command = "tao_idl";
@@ -1355,11 +1347,13 @@ public class RPCDDSGEN
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
              Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
-             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
-             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null);
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null);
              auxerrorOutput.start();
              auxnormalOutput.start();
              int auxexitVal = auxddsgen.waitFor();
+             auxerrorOutput.join();
+             auxnormalOutput.join();
 
              if(auxexitVal != 0)
              {
@@ -1369,8 +1363,13 @@ public class RPCDDSGEN
         
         finalCommandLine = new ArrayList();
         finalCommandLine.add(m_command);
+        
+        if(m_middleware.equals("rti"))
+        	finalCommandLine.add("-ppDisable");
+        
         if(disableGenerateTypeSupport && m_middleware.equals("opendds"))
         	finalCommandLine.add("-SI");
+
         //if(!setWorkingDirectory)
         //{
         	finalCommandLine.addAll(idlLineCommand);
@@ -1391,11 +1390,13 @@ public class RPCDDSGEN
         	ddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
         //else
         //	ddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables, new File(m_outputDir));
-        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", m_middleware.equals("rti"));
-        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", m_middleware.equals("rti"));
+        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", m_middleware.equals("rti"), null);
+        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", m_middleware.equals("rti"), null);
         errorOutput.start();
         normalOutput.start();
         int exitVal = ddsgen.waitFor();
+        errorOutput.join();
+        normalOutput.join();
 
         if(exitVal != 0)
         {
@@ -1416,7 +1417,7 @@ public class RPCDDSGEN
 	            
 	    		if(lastBarraOccurrency == -1)
 	    		{
-	    			if(m_osOption.equals("Win32"))
+	    			if(m_osOption.equals("Windows"))
 	    			{
 	    				lastBarraOccurrency = file.lastIndexOf('\\');
 	    			}
@@ -1443,11 +1444,13 @@ public class RPCDDSGEN
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
              Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
-             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false);
-             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false);
+             ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null);
+             ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null);
              auxerrorOutput.start();
              auxnormalOutput.start();
              int auxexitVal = auxddsgen.waitFor();
+             auxerrorOutput.join();
+             auxnormalOutput.join();
 
              if(auxexitVal != 0)
              {
@@ -1684,21 +1687,35 @@ public class RPCDDSGEN
         String[] lineCommandArray = null;
         String outputfile = Utils.getIDLFileOnly(idlFilename) + ".cc";
         int exitVal = -1;
+        OutputStream of = null;
         
         // Use temp directory.
         if(m_tempDir != null)
         	outputfile = m_tempDir + outputfile;
+        
+        if(m_osOption.contains("Windows"))
+        {
+        	try
+            {
+            	of = new FileOutputStream(outputfile);
+            }
+            catch(FileNotFoundException ex)
+            {
+            	System.out.println("ERROR<callPreprocessor>: Cannot open file " + outputfile);
+            	return null;
+            }
+        }
         
         // Set the preprocessor path
         String ppPath = m_ppPath;
         
         if(ppPath == null)
         {
-        	if(m_osOption.equals("Win32"))
+        	if(m_osOption.contains("Windows"))
         	{
         		ppPath = "cl.exe";
         	}
-        	else if(m_osOption.equals("Linux"))
+        	else if(m_osOption.contains("Linux"))
         	{
         		ppPath = "cpp";
         	}
@@ -1707,20 +1724,29 @@ public class RPCDDSGEN
         // Add command
         lineCommand.add(ppPath);
         
-        // TODO Funciona en windows=
-        // Added to include the #include in the preprocessor output.
-        lineCommand.add("-dI");
-        
         // Add the include paths given as parameters.
         for(int i = 0; i < m_includePaths.size(); ++i)
         {
-        	lineCommand.add(m_includePaths.get(i));
+        	if(m_osOption.contains("Windows"))
+        		lineCommand.add(((String)m_includePaths.get(i)).replaceFirst("^-I", "/I"));
+        	else if(m_osOption.contains("Linux"))
+        		lineCommand.add(m_includePaths.get(i));
+        }
+        
+        if(m_osOption.contains("Windows"))
+        {
+        	lineCommand.add("/E");
+        	lineCommand.add("/C");
         }
         
         // Add input file.
         lineCommand.add(idlFilename);
-        // Add output file.
-        lineCommand.add(outputfile);
+        
+        if(m_osOption.contains("Linux"))
+        {
+        	// Add output file.
+        	lineCommand.add(outputfile);
+        }
         
         lineCommandArray = new String[lineCommand.size()];
         lineCommandArray = (String[])lineCommand.toArray(lineCommandArray);
@@ -1728,16 +1754,30 @@ public class RPCDDSGEN
         try
         {
 	        Process preprocessor = Runtime.getRuntime().exec(lineCommandArray);
-	        ProcessOutput errorOutput = new ProcessOutput(preprocessor.getErrorStream(), "ERROR", false);
-	        ProcessOutput normalOutput = new ProcessOutput(preprocessor.getInputStream(), "OUTPUT", false);
+	        ProcessOutput errorOutput = new ProcessOutput(preprocessor.getErrorStream(), "ERROR", false, null);
+	        ProcessOutput normalOutput = new ProcessOutput(preprocessor.getInputStream(), "OUTPUT", false, of);
 	        errorOutput.start();
 	        normalOutput.start();
 	        exitVal = preprocessor.waitFor();
+	        errorOutput.join();
+	        normalOutput.join();
         }
         catch(Exception ex)
         {
         	System.out.println("Cannot execute the preprocessor. Reason: " + ex.getMessage());
         	return null;
+        }
+        
+        if(of != null)
+        {
+        	try
+        	{
+        		of.close();
+        	}
+        	catch(IOException ex)
+        	{
+        		System.out.println("ERROR<callPreprocessor>: Cannot close file " + outputfile);
+        	}
         }
 
         if(exitVal != 0)
@@ -1800,16 +1840,19 @@ public class RPCDDSGEN
 
 class ProcessOutput extends Thread
 {
-    InputStream is;
+    InputStream is = null;
+    OutputStream of = null;
     String type;
     boolean m_check_failures;
     boolean m_found_error = false;
+    final String clLine = "#line";
 
-    ProcessOutput(InputStream is, String type, boolean check_failures)
+    ProcessOutput(InputStream is, String type, boolean check_failures, OutputStream of)
     {
         this.is = is;
         this.type = type;
         m_check_failures = check_failures;
+        this.of = of;
     }
 
     public void run()
@@ -1821,7 +1864,25 @@ class ProcessOutput extends Thread
             String line=null;
             while ( (line = br.readLine()) != null)
             {
-                System.out.println(line);
+            	if(of == null)
+            		System.out.println(line);
+            	else
+            	{
+            		// Sustituir los \\ que pone cl.exe por \
+            		System.out.println("Line: " + line);
+            		if(line.startsWith(clLine))
+            		{
+            			line = "#" + line.substring(clLine.length());
+	            		int count = 0;
+	            		while((count = line.indexOf("\\\\")) != -1)
+	            		{
+	            			line = line.substring(0, count -1) + "\\" + line.substring(count + 2);
+	            		}
+            		}
+            		System.out.println("Line2: " + line);
+            		of.write(line.getBytes());
+            		of.write('\n');
+            	}
                 
                 if(m_check_failures)
                 {
