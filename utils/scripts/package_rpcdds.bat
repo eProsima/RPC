@@ -37,7 +37,7 @@ if not %errorstatus%==0 goto :exit
 rmdir /S /Q lib\i86Win32VS2010
 rmdir /S /Q lib\x64Win64VS2010
 cd "utils\scripts"
-call build_rpcdds.bat
+:: call build_rpcdds.bat
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd "..\..\"
@@ -52,7 +52,7 @@ if not %errorstatus%==0 goto :exit
 :: Compile RPCDDS for target.
 cd rpcddsgen
 rmdir /S /Q build
-call ant jar
+:: call ant jar
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd ".."
@@ -87,48 +87,61 @@ cd utils/pcTests/restful
 :: call exec_tests.bat %package_targets%
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-cd ../..
+cd "../../.."
 set RPCDDSHOME=%RPCDDSHOME_OLD%
 
 :: Create PDFS from documentation.
 cd "doc"
 :: Installation manual
-soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\Installation Manual.odt,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - Installation Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 :: User manual
-soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPCDDS - Restful support - User Manual.odt,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - REST - User Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - DDS - User Manual.odt,%VERSION%)"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+:: Copy pfd files into pdf dir
+xcopy /Y "RPC - Installation Manual.pdf" "pdf\RPC - Installation Manual.pdf"
+del "RPC - Installation Manual.pdf"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+xcopy /Y "RPC - REST - User Manual.pdf" "pdf\RPC - REST - User Manual.pdf"
+del "RPC - REST - User Manual.pdf"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+xcopy /Y "RPC - DDS - User Manual.pdf" "pdf\RPC - DDS - User Manual.pdf"
+del "RPC - DDS - User Manual.pdf"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
 cd ".."
-
 :: Create README
-soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%\README.txt,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%\README.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-:: Create doxygen information. TODO
-:: Generate the examples
-:: CDR example
-call scripts\rpcddsgen.bat -replace -ser cdr -d utils\doxygen\examples\cdr utils\doxygen\examples\cdr\FooCdr.idl
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-:: Fast CDR example
-call scripts\fastbuffers.bat -replace -ser fastcdr -d utils\doxygen\examples\fastcdr utils\doxygen\examples\fastcdr\FooFastCdr.idl
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
+cd "utils/doxygen"
+
 :: Export version
 set VERSION_DOX=%VERSION%
 mkdir output
 mkdir output\doxygen
-doxygen utils\doxygen\doxyfile
+
+doxygen doxyfile
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd output\doxygen\latex
 call make.bat
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-cd ..\..\..
+ren refman.pdf "RPC - API C++ Manual.pdf"
+cd "..\..\..\..\.."
 
 :: Create installers.
 cd utils\installers\rti\windows
@@ -138,6 +151,8 @@ makensis.exe /DVERSION="%VERSION%" setup.nsi
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd "..\..\.."
+
+rd /S /Q "utils\doxygen\output"
 
 rmdir /S /Q output
 

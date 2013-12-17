@@ -51,7 +51,7 @@ Var StartMenuGroup
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE ..\..\..\..\doc\licencias\RPCDDS_LICENSE.txt
+!insertmacro MUI_PAGE_LICENSE ..\..\..\..\doc\licencias\RPC_LICENSE.txt
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuGroup
 !insertmacro MUI_PAGE_COMPONENTS
 Page custom VariablesEntornoPage
@@ -90,12 +90,13 @@ Section -post SEC0006
     # Copy documentation.
     SetOutPath $INSTDIR\doc\html
     SetOverwrite on
-    #File /r ..\..\..\..\doc\html\*
+    File /r ..\..\..\doxygen\output\doxygen\html\*
     
     # Copy documentation.
     SetOutPath $INSTDIR\doc\pdf
     SetOverwrite on
     File /r ..\..\..\..\doc\pdf\*
+    File /r "..\..\..\doxygen\output\doxygen\latex\RPC - API C++ Manual.pdf"
     
     # Copy examples.
     SetOutPath $INSTDIR\examples
