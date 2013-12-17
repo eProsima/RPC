@@ -142,9 +142,7 @@ msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
-copy output\lib\%1\%3.dll output\bin\%1\%3.dll
-copy output\lib\%1\%3Server.dll output\bin\%1\%3Server.dll
-copy output\lib\%1\%3Client.dll output\bin\%1\%3Client.dll
+copy output\lib\%1\*.dll output\bin\%1\
 :: Execute the server in other cmd.exe
 start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds
@@ -163,9 +161,7 @@ msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
-copy output\lib\%1\%3.dll output\bin\%1\%3.dll
-copy output\lib\%1\%3Server.dll output\bin\%1\%3Server.dll
-copy output\lib\%1\%3Client.dll output\bin\%1\%3Client.dll
+copy output\lib\%1\*.dll output\bin\%1\
 :: Execute the server in other cmd.exe
 start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds

@@ -126,7 +126,7 @@ echo "EXECUTING %3 for %1"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with RPCDDS script
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -ppDisable -protocol rest -d output -example %1 "%3\%3.wadl"
+call ..\..\..\scripts\rpcdds_rti_pcTests.bat -protocol rest -d output -example %1 "%3\%3.wadl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -142,9 +142,7 @@ msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
-copy output\lib\%1\%3.dll output\bin\%1\%3.dll
-copy output\lib\%1\%3Server.dll output\bin\%1\%3Server.dll
-copy output\lib\%1\%3Client.dll output\bin\%1\%3Client.dll
+copy output\lib\%1\*.dll output\bin\%1\
 :: Execute the server in other cmd.exe
 start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds
@@ -162,9 +160,7 @@ msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
-copy output\lib\%1\%3d.dll output\bin\%1\%3d.dll
-copy output\lib\%1\%3Serverd.dll output\bin\%1\%3Serverd.dll
-copy output\lib\%1\%3Clientd.dll output\bin\%1\%3Clientd.dll
+copy output\lib\%1\*.dll output\bin\%1\
 :: Execute the server in other cmd.exe
 start output\bin\%1\%3ServerExample.exe
 :: Wait 5 seconds

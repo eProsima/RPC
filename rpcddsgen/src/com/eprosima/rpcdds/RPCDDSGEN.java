@@ -1869,17 +1869,16 @@ class ProcessOutput extends Thread
             	else
             	{
             		// Sustituir los \\ que pone cl.exe por \
-            		System.out.println("Line: " + line);
             		if(line.startsWith(clLine))
             		{
             			line = "#" + line.substring(clLine.length());
 	            		int count = 0;
 	            		while((count = line.indexOf("\\\\")) != -1)
 	            		{
-	            			line = line.substring(0, count -1) + "\\" + line.substring(count + 2);
+	            			line = line.substring(0, count) + "\\" + line.substring(count + 2);
 	            		}
             		}
-            		System.out.println("Line2: " + line);
+
             		of.write(line.getBytes());
             		of.write('\n');
             	}

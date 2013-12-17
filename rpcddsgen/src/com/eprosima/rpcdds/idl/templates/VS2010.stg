@@ -3,7 +3,7 @@ group VS2010;
 solution(solution, example, configurations) ::= <<
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-$solution.projects : {$projectReferences(solution=solution, project=it, example=example)$};separator="\n"$
+$solution.projects : {$projectReferences(solution=solution, project=it, example=example)$$if(!it.unique)$$projectReferencesExtra(solution=solution, project=it, example=example)$$endif$};separator="\n"$
 Global
 $\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
 $configurations:{conf |$\t$$\t$$conf.name$|$conf.platform$ = $conf.name$|$conf.platform$};separator="\n"$
@@ -266,7 +266,7 @@ projectClientExample(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -448,7 +448,7 @@ projectServerExample(project, example, configurations) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -516,11 +516,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$", "$project.
 $if(project.dependenciesGuids)$
 $\t$ProjectSection(ProjectDependencies) = postProject
 $project.dependenciesGuids : {$\t$$\t${$it$} = {$it$}}; separator="\n"$
-$\t$EndProjectSection
+$\t$EndProjectSection$\n$
 $endif$
 EndProject
-$if(!project.unique)$
+>>
+
+projectReferencesExtra(solution, project, example) ::= <<
 $if(solution.clientside)$
+
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$Client", "$project.name$Client-$example$.vcxproj", "{$project.clientGuid$}"
 $\t$ProjectSection(ProjectDependencies) = postProject
 $\t$$\t${$project.guid$} = {$project.guid$}
@@ -532,8 +535,8 @@ $\t$$\t${$project.clientGuid$} = {$project.clientGuid$}
 $\t$EndProjectSection
 EndProject
 $endif$
-
 $if(solution.serverside)$
+
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "$project.name$Server", "$project.name$Server-$example$.vcxproj", "{$project.serverGuid$}"
 $\t$ProjectSection(ProjectDependencies) = postProject
 $\t$$\t${$project.guid$} = {$project.guid$}
@@ -544,7 +547,6 @@ $\t$ProjectSection(ProjectDependencies) = postProject
 $\t$$\t${$project.serverGuid$} = {$project.serverGuid$}
 $\t$EndProjectSection
 EndProject
-$endif$
 $endif$
 >>
 
@@ -561,7 +563,7 @@ $endif$
  *   postSolution - local
  */ 
 projectConfigurationPlatforms(solution, project, configurations) ::= <<
-$configurations:{conf | $postSolution(solution=solution, project=project, conf=conf)$};separator="\n"$
+$configurations:{conf | $postSolution(solution=solution, project=project, conf=conf)$$if(!project.unique)$$postSolutionExtra(solution=solution, project=project, conf=conf)$$endif$};separator="\n"$
 >>
 
 
@@ -580,20 +582,22 @@ $configurations:{conf | $postSolution(solution=solution, project=project, conf=c
 postSolution(solution, project, conf) ::= <<
 $\t$$\t${$project.guid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
 $\t$$\t${$project.guid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
-$if(!project.unique)$
+>>
+
+postSolutionExtra(solution, project, conf) ::= <<
 $if(solution.clientside)$
+
 $\t$$\t${$project.clientGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
 $\t$$\t${$project.clientGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
 $\t$$\t${$project.clientExampleGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
 $\t$$\t${$project.clientExampleGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
 $endif$
-
 $if(solution.serverside)$
+
 $\t$$\t${$project.serverGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
 $\t$$\t${$project.serverGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
 $\t$$\t${$project.serverExampleGuid$}.$conf.name$|$conf.platform$.ActiveCfg = $conf.name$|$conf.platform$
 $\t$$\t${$project.serverExampleGuid$}.$conf.name$|$conf.platform$.Build.0 = $conf.name$|$conf.platform$
-$endif$
 $endif$
 >>
 

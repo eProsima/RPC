@@ -28,8 +28,6 @@ public class Context
         m_os = System.getProperty("os.name");
         m_userdir = System.getProperty("user.dir");
         
-        System.out.println("m_userdir = " + m_userdir);
-        
         m_filename = filename;
         m_directoryFile = Utils.getIDLFileDirectoryOnly(file);
         
@@ -92,8 +90,6 @@ public class Context
             if(count == m_includePaths.size())
                 ++pointer;
         }
-        
-        System.out.println("includepaths: " + m_includePaths);
         
         // The scope file has to be initialized because could occur the preprocessor
         // is not called (using -ppDisable).
@@ -205,12 +201,7 @@ public class Context
 	            {
 	                m_scopeFile = file;
 	                
-	                System.out.println("m_filename: " + m_filename);
-	                System.out.println("m_file: " + m_file);
-	                System.out.println("m_scopeFile: " + m_scopeFile);
-	                System.out.println("m_directIncludeDependencies: " + m_directIncludeDependencies);
-	                
-	                // Add to dependency if there is different IDL file than the processed.
+	                // Add to dependency if there is different IDL file than the processed
 	                if(!m_scopeFile.equals(m_file))
 	                {
 	                    m_dependencies.add(depfile);
