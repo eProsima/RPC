@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorld_1436885654_h
-#define HelloWorld_1436885654_h
+#ifndef HelloWorld_1436885919_h
+#define HelloWorld_1436885919_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -23,6 +23,76 @@
     #endif
 #else
     #include "ndds_standalone_type.h"
+#endif
+
+
+namespace HelloWorld{
+
+        
+extern const char *EmptyHelloResponseTYPENAME;
+        
+
+
+#ifdef __cplusplus
+    struct EmptyHelloResponseSeq;
+
+#endif
+
+            
+    
+class EmptyHelloResponse                                        
+{
+public:            
+#ifdef __cplusplus
+    typedef struct EmptyHelloResponseSeq Seq;
+
+#endif
+    
+    DDS_Long  status;
+
+            
+};                        
+    
+                            
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* EmptyHelloResponse_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(EmptyHelloResponseSeq, EmptyHelloResponse);
+        
+NDDSUSERDllExport
+RTIBool EmptyHelloResponse_initialize(
+        EmptyHelloResponse* self);
+        
+NDDSUSERDllExport
+RTIBool EmptyHelloResponse_initialize_ex(
+        EmptyHelloResponse* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+void EmptyHelloResponse_finalize(
+        EmptyHelloResponse* self);
+                        
+NDDSUSERDllExport
+void EmptyHelloResponse_finalize_ex(
+        EmptyHelloResponse* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+RTIBool EmptyHelloResponse_copy(
+        EmptyHelloResponse* dst,
+        const EmptyHelloResponse* src);
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
 #endif
 
 
@@ -117,7 +187,9 @@ typedef struct HelloResponse {
     struct HelloResponse_u
 
     {
-    XMLHelloResponse  xmlHelloResponse;
+    HelloWorld::EmptyHelloResponse  emptyHelloResponse;
+
+    HelloWorld::XMLHelloResponse  xmlHelloResponse;
 
 
     } _u;
@@ -170,5 +242,7 @@ DDS_UnsignedLong HelloResponse_getDefaultDiscriminator();
 #endif
 
 
+} /* namespace HelloWorld */
 
-#endif /* HelloWorld_1436885654_h */
+
+#endif /* HelloWorld_1436885919_h */

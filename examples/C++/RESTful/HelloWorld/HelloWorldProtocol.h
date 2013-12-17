@@ -26,37 +26,55 @@ namespace eprosima
     {
         namespace protocol
         {
-            class HelloWorldProtocol : public Protocol
+            /*!
+             * @brief Protocol base class for the specific application
+             */
+            class RPCDDSUSERDllExport HelloWorldProtocol : public Protocol
             {
                 public:
                 
+                   /*!
+                    * @brief This method sets the transport for the communications. It has to be implemented by the children classes.
+                    * @param transport Transport to use.
+                    * @return True if the assignment is successful, false otherwise
+                    */
                     virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport) = 0;
                     
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
-                                        void linkHelloWorldResourceImpl(HelloWorldResourceServerImpl &impl)
+                                       /*!
+                                        * @brief This method links a specific servant with the protocol.
+                                        * @param impl Servant implementation.
+                                        */
+                                        void linkHelloWorld_HelloWorldResourceImpl(HelloWorld::HelloWorldResourceServerImpl &impl)
                                         {
-                                            _HelloWorldResource_impl = &impl;
+                                            _HelloWorld_HelloWorldResource_impl = &impl;
                                         }
                                         
                              
 
 
-                    virtual HelloResponse HelloWorldResource_hello(/*in*/ const char* name) = 0;
+
+                    /*!
+                     * @brief This method implements the proxy part of the protocol for the operation hello
+                     *        It has to be implemented by the child classes.
+                     */
+                    virtual HelloWorld::HelloResponse HelloWorld_HelloWorldResource_hello(/*in*/ const char* name) = 0;
+
 
                     
                 protected:
                 
                     HelloWorldProtocol() : Protocol()
                                          
-                                        , _HelloWorldResource_impl(NULL)
+                                        , _HelloWorld_HelloWorldResource_impl(NULL)
                                         
                     {}
                     
                     virtual ~HelloWorldProtocol(){}
                 
                 	                     
-                	                    HelloWorldResourceServerImpl *_HelloWorldResource_impl;
+                	                    HelloWorld::HelloWorldResourceServerImpl *_HelloWorld_HelloWorldResource_impl;
                 	                    
                     
             };

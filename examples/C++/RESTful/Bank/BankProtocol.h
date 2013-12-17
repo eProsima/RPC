@@ -26,17 +26,29 @@ namespace eprosima
     {
         namespace protocol
         {
-            class BankProtocol : public Protocol
+            /*!
+             * @brief Protocol base class for the specific application
+             */
+            class RPCDDSUSERDllExport BankProtocol : public Protocol
             {
                 public:
                 
+                   /*!
+                    * @brief This method sets the transport for the communications. It has to be implemented by the children classes.
+                    * @param transport Transport to use.
+                    * @return True if the assignment is successful, false otherwise
+                    */
                     virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport) = 0;
                     
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
-                                        void linkaccount_accountNumberResourceImpl(account_accountNumberResourceServerImpl &impl)
+                                       /*!
+                                        * @brief This method links a specific servant with the protocol.
+                                        * @param impl Servant implementation.
+                                        */
+                                        void linkBank_account_accountNumberResourceImpl(Bank::account_accountNumberResourceServerImpl &impl)
                                         {
-                                            _account_accountNumberResource_impl = &impl;
+                                            _Bank_account_accountNumberResource_impl = &impl;
                                         }
                                         
                              
@@ -44,21 +56,27 @@ namespace eprosima
 
 
 
-                    virtual GetAccountDetailsResponse account_accountNumberResource_getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest) = 0;
+
+                    /*!
+                     * @brief This method implements the proxy part of the protocol for the operation getAccountDetails
+                     *        It has to be implemented by the child classes.
+                     */
+                    virtual Bank::GetAccountDetailsResponse Bank_account_accountNumberResource_getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest) = 0;
+
 
                     
                 protected:
                 
                     BankProtocol() : Protocol()
                                          
-                                        , _account_accountNumberResource_impl(NULL)
+                                        , _Bank_account_accountNumberResource_impl(NULL)
                                         
                     {}
                     
                     virtual ~BankProtocol(){}
                 
                 	                     
-                	                    account_accountNumberResourceServerImpl *_account_accountNumberResource_impl;
+                	                    Bank::account_accountNumberResourceServerImpl *_Bank_account_accountNumberResource_impl;
                 	                    
                     
             };

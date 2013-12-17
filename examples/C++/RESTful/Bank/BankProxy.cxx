@@ -17,24 +17,29 @@
 #include "BankProtocol.h"
 //#include "BankAsyncSupport.h"
 
-account_accountNumberResourceProxy::account_accountNumberResourceProxy(eprosima::rpcdds::transport::ProxyTransport &transport,
-    eprosima::rpcdds::protocol::BankProtocol &protocol) : Proxy(transport, protocol)
+namespace Bank
 {
-    protocol.activateInterface("account_accountNumberResource");
-}
+    account_accountNumberResourceProxy::account_accountNumberResourceProxy(eprosima::rpcdds::transport::ProxyTransport &transport,
+        eprosima::rpcdds::protocol::BankProtocol &protocol) : Proxy(transport, protocol)
+    {
+        protocol.activateInterface("Bank::account_accountNumberResource");
+    }
 
-account_accountNumberResourceProxy::~account_accountNumberResourceProxy()
-{
-}
+    account_accountNumberResourceProxy::~account_accountNumberResourceProxy()
+    {
+    }
 
 
 
 
 
-GetAccountDetailsResponse account_accountNumberResourceProxy::getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest)
-{
-    GetAccountDetailsResponse getAccountDetails_ret =
-    dynamic_cast<eprosima::rpcdds::protocol::BankProtocol&>(getProtocol()).account_accountNumberResource_getAccountDetails(account_accountNumber, user, GetAccountDetailsRequest);
-    return getAccountDetails_ret;
-}
 
+    Bank::GetAccountDetailsResponse account_accountNumberResourceProxy::getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest)
+    {
+        Bank::GetAccountDetailsResponse getAccountDetails_ret =
+        dynamic_cast<eprosima::rpcdds::protocol::BankProtocol&>(getProtocol()).Bank_account_accountNumberResource_getAccountDetails(account_accountNumber, user, GetAccountDetailsRequest);
+        return getAccountDetails_ret;
+    }
+
+
+};

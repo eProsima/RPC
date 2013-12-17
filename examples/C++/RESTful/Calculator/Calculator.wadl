@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://wadl.dev.java.net/2009/02">
+
+	<resources base="http://example.com/calculator/">
+		<resource path="add">
+			<param name="a" type="xsd:int" style="query" required="true" />
+			<param name="b" type="xsd:int" style="query" required="true" />
+			<method name="GET" id="add">
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+		</resource>
+		
+		<resource path="substract">
+			<param name="a" type="xsd:int" style="query" required="true" />
+			<param name="b" type="xsd:int" style="query" required="true" />
+			<method name="GET" id="substract">
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+		</resource>
+		
+		<resource path="multiply">
+			<param name="a" type="xsd:int" style="query" required="true" />
+			<param name="b" type="xsd:int" style="query" required="true" />
+			<method name="GET" id="multiply">
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+			</method>
+		</resource>
+		
+		<resource path="divide">
+			<param name="a" type="xsd:int" style="query" required="true" />
+			<param name="b" type="xsd:int" style="query" required="true" />
+			<method name="GET" id="divide">
+				<response status="200">
+					<representation href="#resultSet" />
+				</response>
+				<response status="400">
+					<representation href="#error" />
+				</response>
+			</method>
+		</resource>
+	</resources>
+
+	<representation id="resultSet" mediaType="application/xml"
+		element="Result" />
+	<representation id="error" mediaType="application/xml"
+		element="Error" />
+</application>
+

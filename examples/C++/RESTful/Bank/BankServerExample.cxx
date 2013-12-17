@@ -34,16 +34,16 @@ int main(int argc, char **argv)
     ThreadPoolStrategy *pool = NULL;
     BankProtocol *protocol = NULL;
     HttpServerTransport *transport = NULL;
-    account_accountNumberResourceServer *server = NULL;
+    Bank::account_accountNumberResourceServer *server = NULL;
     account_accountNumberResourceServerImplExample servant;
     
-    // Create and initialize the server for interface "account_accountNumberResource".
+    // Create and initialize the server for interface "Bank::account_accountNumberResource".
     try
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new BankProtocol();
         transport = new HttpServerTransport("127.0.0.1:8080");
-        server = new account_accountNumberResourceServer(*pool, *transport, *protocol, servant);
+        server = new Bank::account_accountNumberResourceServer(*pool, *transport, *protocol, servant);
         server->serve();
     }
     catch(InitializeException &ex)
@@ -66,6 +66,7 @@ int main(int argc, char **argv)
     
     return 0;
 }
+
 
 
 

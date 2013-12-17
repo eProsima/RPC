@@ -28,14 +28,14 @@ int main(int argc, char **argv)
 {
     BankProtocol *protocol = NULL;
     ProxyTransport *transport = NULL;
-    account_accountNumberResourceProxy *proxy = NULL;
+    Bank::account_accountNumberResourceProxy *proxy = NULL;
     
-    // Creation of the proxy for interface "account_accountNumberResource".
+    // Creation of the proxy for interface "Bank::account_accountNumberResource".
     try
     {
         protocol = new BankProtocol();
         transport = new HttpProxyTransport("127.0.0.1:8080");
-        proxy = new account_accountNumberResourceProxy(*transport, *protocol);
+        proxy = new Bank::account_accountNumberResourceProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
     {
@@ -44,31 +44,39 @@ int main(int argc, char **argv)
     }
     
     // Create and initialize parameters.
-    account_accountNumber account_accountNumber;
+    Bank::account_accountNumber account_accountNumber;
     char*  user = NULL;
-    GetAccountDetailsRequest GetAccountDetailsRequest;
-    account_accountNumber_initialize(&account_accountNumber);
-    GetAccountDetailsRequest_initialize(&GetAccountDetailsRequest);
+    Bank::GetAccountDetailsRequest GetAccountDetailsRequest;
+    Bank::account_accountNumber_initialize(&account_accountNumber);
+    Bank::GetAccountDetailsRequest_initialize(&GetAccountDetailsRequest);
+
+	account_accountNumber.accountNumber_ = 12345;
+	user = strdup("User");
+	GetAccountDetailsRequest._d = 1;
+	GetAccountDetailsRequest._u.xmlRepresentation = strdup("<Password>passwd1234</Password>");
 
     // Create and initialize return value.
-    GetAccountDetailsResponse getAccountDetails_ret;
-    GetAccountDetailsResponse_initialize(&getAccountDetails_ret);
+    Bank::GetAccountDetailsResponse getAccountDetails_ret;
+    Bank::GetAccountDetailsResponse_initialize(&getAccountDetails_ret);
 
     // Call to remote procedure "getAccountDetails".
     try
     {
         getAccountDetails_ret = proxy->getAccountDetails(account_accountNumber, user, GetAccountDetailsRequest);
+		if(getAccountDetails_ret._d == 1) {
+			std::cout << getAccountDetails_ret._u.xmlGetAccountDetailsResponse.xmlRepresentation << endl;
+		}
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
     }
     
-    account_accountNumber_finalize(&account_accountNumber);
+    Bank::account_accountNumber_finalize(&account_accountNumber);
     if(user != NULL) free(user);
-    GetAccountDetailsRequest_finalize(&GetAccountDetailsRequest);
+    Bank::GetAccountDetailsRequest_finalize(&GetAccountDetailsRequest);
 
-    GetAccountDetailsResponse_finalize(&getAccountDetails_ret);
+    Bank::GetAccountDetailsResponse_finalize(&getAccountDetails_ret);
     
     delete(proxy);
     delete(transport);
@@ -76,6 +84,7 @@ int main(int argc, char **argv)
    
     return 0;
 }
+
 
 
 

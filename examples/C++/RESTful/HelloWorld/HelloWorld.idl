@@ -1,22 +1,52 @@
-[[RESOURCES_BASE_URI("http://example.com/resources/")]]
+@Annotation
+local interface RESOURCES_BASE_URI {
+	attribute string value;
+}
 
-[PATH("HelloWorld")]
-interface HelloWorldResource
+@RESOURCES_BASE_URI("http://example.com/resources/")
+module HelloWorld
 {
-	struct XMLHelloResponse
-	{
-		long status;
-		string xmlRepresentation;
-	};
+	@Annotation
+	local interface PATH {
+		attribute string value;
+	}
 
-	union HelloResponse switch(long)
-	{
-		case 1:
-			XMLHelloResponse xmlHelloResponse;
-	};
+	@Annotation
+	local interface METHOD {
+		attribute string value;
+	}
 
-	[METHOD("GET")]
-	HelloResponse hello(in string name);
+	@Annotation
+	local interface BODY {
+		attribute string value;
+	}
+
+	@PATH("HelloWorld")
+	interface HelloWorldResource
+	{
+		struct EmptyHelloResponse
+		{
+			long status;
+		};
+
+		struct XMLHelloResponse
+		{
+			long status;
+			string xmlRepresentation;
+		};
+
+		union HelloResponse switch(long)
+		{
+			case 0:
+				EmptyHelloResponse emptyHelloResponse;
+			case 1:
+				XMLHelloResponse xmlHelloResponse;
+		};
+
+		@METHOD("GET")
+		HelloResponse hello(in string name);
+
+	};
 
 };
 

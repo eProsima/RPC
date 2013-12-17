@@ -1,0 +1,133 @@
+@Annotation
+local interface RESOURCES_BASE_URI {
+	attribute string value;
+}
+
+@RESOURCES_BASE_URI("http://example.com/calculator/")
+module Calculator
+{
+	@Annotation
+	local interface PATH {
+		attribute string value;
+	}
+
+	@Annotation
+	local interface METHOD {
+		attribute string value;
+	}
+
+	@Annotation
+	local interface BODY {
+		attribute string value;
+	}
+
+	@PATH("add")
+	interface addResource
+	{
+		struct EmptyAddResponse
+		{
+			long status;
+		};
+
+		struct XMLAddResponse
+		{
+			long status;
+			string xmlRepresentation;
+		};
+
+		union AddResponse switch(long)
+		{
+			case 0:
+				EmptyAddResponse emptyAddResponse;
+			case 1:
+				XMLAddResponse xmlAddResponse;
+		};
+
+		@METHOD("GET")
+		AddResponse add(in long a, in long b);
+
+	};
+
+	@PATH("substract")
+	interface substractResource
+	{
+		struct EmptySubstractResponse
+		{
+			long status;
+		};
+
+		struct XMLSubstractResponse
+		{
+			long status;
+			string xmlRepresentation;
+		};
+
+		union SubstractResponse switch(long)
+		{
+			case 0:
+				EmptySubstractResponse emptySubstractResponse;
+			case 1:
+				XMLSubstractResponse xmlSubstractResponse;
+		};
+
+		@METHOD("GET")
+		SubstractResponse substract(in long a, in long b);
+
+	};
+
+	@PATH("multiply")
+	interface multiplyResource
+	{
+		struct EmptyMultiplyResponse
+		{
+			long status;
+		};
+
+		struct XMLMultiplyResponse
+		{
+			long status;
+			string xmlRepresentation;
+		};
+
+		union MultiplyResponse switch(long)
+		{
+			case 0:
+				EmptyMultiplyResponse emptyMultiplyResponse;
+			case 1:
+				XMLMultiplyResponse xmlMultiplyResponse;
+		};
+
+		@METHOD("GET")
+		MultiplyResponse multiply(in long a, in long b);
+
+	};
+
+	@PATH("divide")
+	interface divideResource
+	{
+		struct EmptyDivideResponse
+		{
+			long status;
+		};
+
+		struct XMLDivideResponse
+		{
+			long status;
+			string xmlRepresentation;
+		};
+
+		union DivideResponse switch(long)
+		{
+			case 0:
+				EmptyDivideResponse emptyDivideResponse;
+			case 1:
+				XMLDivideResponse xmlDivideResponse;
+		};
+
+		@METHOD("GET")
+		DivideResponse divide(in long a, in long b);
+
+	};
+
+};
+

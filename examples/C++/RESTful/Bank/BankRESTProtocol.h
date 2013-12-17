@@ -20,6 +20,8 @@
 #include "utils/Messages.h"
 #include <string>
 
+using namespace std;
+
 namespace eprosima
 {
     namespace rpcdds
@@ -31,28 +33,69 @@ namespace eprosima
                 // TODO Quitar
                 class RESTSerializer;
             
-                class BankProtocol : public eprosima::rpcdds::protocol::BankProtocol
+                /*!
+                 * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
+                 *  It uses a RESTful protocol.
+                 */
+                class RPCDDSUSERDllExport BankProtocol : public eprosima::rpcdds::protocol::BankProtocol
                 {
                     public:
                     
+                       /*!
+                        * @brief Default constructor
+                        */
                         BankProtocol();
                         
+                       /*!
+                        * @brief Default destructor
+                        */
                         virtual ~BankProtocol();
                         
+                       /*!
+                        * @brief This method sets the transport for the communications.
+                        *        It must be an HTTP transport.
+                        * @param transport Transport to use
+                        * @return True if the assignment is successful, false otherwise
+                        */
                         bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
+                       /*!
+                        * @brief This method does not apply to this class
+                        */
                         bool activateInterface(const char* interfaceName);
                         
-                        static void worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
+                       /*!
+                        * @brief This callback receives the requests and calls the specific protocol to process them
+                        * @param protocol Protocol that must process the request
+                        * @param data Received data
+                        * @param dataLength received data length
+                        * @param endpoint Proxy endpoint where the request came from
+                        */
+                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
                         
 
 
 
 
+
+                        /*!
+                         * @brief This method implements the server part of the protocol for the operation getAccountDetails
+                         */
                         eprosima::rpcdds::transport::HttpMessage deserialize_account_accountNumberResource_getAccountDetails(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
 
-                        void deserializePath_getAccountDetails(RESTSerializer &restSerializer, account_accountNumber& account_accountNumber);
-                        std::string expandPath_getAccountDetails(std::string &&path, account_accountNumber account_accountNumber);GetAccountDetailsResponse account_accountNumberResource_getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest);
+                        /*!
+                         * @brief This method deserializes the path and fills an structure that will contain every embedded parameter in the path
+                         */
+                        void deserializePath_getAccountDetails(RESTSerializer &restSerializer, /*in*/ Bank::account_accountNumber& account_accountNumber);
+                        /*!
+                         * @brief This method fills the path with the content of a structure containing every embedded parameter
+                         */
+                        std::string expandPath_getAccountDetails(std::string &&path, Bank::account_accountNumber account_accountNumber);/*!
+                         * @brief This method implements the proxy part of the protocol for the operation getAccountDetails
+                         */
+                        Bank::GetAccountDetailsResponse Bank_account_accountNumberResource_getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest);
+
+
 
 
                         
@@ -62,6 +105,8 @@ namespace eprosima
                     private:
                     
                     	static int deserializeContentLength(char* buffer);
+                    	
+                    	static bool isNumeric(string&& myString);
                     
                 };
             } // namespace rest

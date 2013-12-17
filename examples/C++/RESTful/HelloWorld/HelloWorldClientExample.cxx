@@ -28,14 +28,14 @@ int main(int argc, char **argv)
 {
     HelloWorldProtocol *protocol = NULL;
     ProxyTransport *transport = NULL;
-    HelloWorldResourceProxy *proxy = NULL;
+    HelloWorld::HelloWorldResourceProxy *proxy = NULL;
     
-    // Creation of the proxy for interface "HelloWorldResource".
+    // Creation of the proxy for interface "HelloWorld::HelloWorldResource".
     try
     {
         protocol = new HelloWorldProtocol();
         transport = new HttpProxyTransport("127.0.0.1:8080");
-        proxy = new HelloWorldResourceProxy(*transport, *protocol);
+        proxy = new HelloWorld::HelloWorldResourceProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
     {
@@ -47,8 +47,8 @@ int main(int argc, char **argv)
     char*  name = strdup("Richard");
 
     // Create and initialize return value.
-    HelloResponse hello_ret;
-    HelloResponse_initialize(&hello_ret);
+    HelloWorld::HelloResponse hello_ret;
+    HelloWorld::HelloResponse_initialize(&hello_ret);
 
     // Call to remote procedure "hello".
     try
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
     
     if(name != NULL) free(name);
 
-    HelloResponse_finalize(&hello_ret);
+    HelloWorld::HelloResponse_finalize(&hello_ret);
     
     delete(proxy);
     delete(transport);
@@ -73,6 +73,7 @@ int main(int argc, char **argv)
    
     return 0;
 }
+
 
 
 

@@ -13,15 +13,27 @@
  */
 
 #include "BankServerImplExample.h"
+#include <iostream>
+
+using namespace std;
 
 
-
-
-GetAccountDetailsResponse account_accountNumberResourceServerImplExample::getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest)
+Bank::GetAccountDetailsResponse account_accountNumberResourceServerImplExample::getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest)
 {
-    GetAccountDetailsResponse getAccountDetails_ret;
-    GetAccountDetailsResponse_initialize(&getAccountDetails_ret);
-   
+    Bank::GetAccountDetailsResponse getAccountDetails_ret;
+    Bank::GetAccountDetailsResponse_initialize(&getAccountDetails_ret);
+
+	cout << "Account number (embedded parameter): " << account_accountNumber.accountNumber_ << endl;
+	cout << "User (query parameter): " << user << endl;
+	if(GetAccountDetailsRequest._d == 1) {
+		cout << "Password (XML body parameter): " << GetAccountDetailsRequest._u.xmlRepresentation << endl;
+	}
+
+	getAccountDetails_ret._d = 1;
+	getAccountDetails_ret._u.xmlGetAccountDetailsResponse.status = 200;
+	getAccountDetails_ret._u.xmlGetAccountDetailsResponse.xmlRepresentation = strdup("<AccountDetails> ... </AccountDetails>");
+
     return getAccountDetails_ret;
 } 
+
 

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef Bank_1795593638_h
-#define Bank_1795593638_h
+#ifndef Bank_1795593968_h
+#define Bank_1795593968_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -25,6 +25,8 @@
     #include "ndds_standalone_type.h"
 #endif
 
+
+namespace Bank{
 
         
 extern const char *account_accountNumberTYPENAME;
@@ -85,6 +87,74 @@ NDDSUSERDllExport
 RTIBool account_accountNumber_copy(
         account_accountNumber* dst,
         const account_accountNumber* src);
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+        
+extern const char *EmptyGetAccountDetailsResponseTYPENAME;
+        
+
+
+#ifdef __cplusplus
+    struct EmptyGetAccountDetailsResponseSeq;
+
+#endif
+
+            
+    
+class EmptyGetAccountDetailsResponse                                        
+{
+public:            
+#ifdef __cplusplus
+    typedef struct EmptyGetAccountDetailsResponseSeq Seq;
+
+#endif
+    
+    DDS_Long  status;
+
+            
+};                        
+    
+                            
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* EmptyGetAccountDetailsResponse_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(EmptyGetAccountDetailsResponseSeq, EmptyGetAccountDetailsResponse);
+        
+NDDSUSERDllExport
+RTIBool EmptyGetAccountDetailsResponse_initialize(
+        EmptyGetAccountDetailsResponse* self);
+        
+NDDSUSERDllExport
+RTIBool EmptyGetAccountDetailsResponse_initialize_ex(
+        EmptyGetAccountDetailsResponse* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+void EmptyGetAccountDetailsResponse_finalize(
+        EmptyGetAccountDetailsResponse* self);
+                        
+NDDSUSERDllExport
+void EmptyGetAccountDetailsResponse_finalize_ex(
+        EmptyGetAccountDetailsResponse* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+RTIBool EmptyGetAccountDetailsResponse_copy(
+        EmptyGetAccountDetailsResponse* dst,
+        const EmptyGetAccountDetailsResponse* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -185,7 +255,9 @@ typedef struct GetAccountDetailsResponse {
     struct GetAccountDetailsResponse_u
 
     {
-    XMLGetAccountDetailsResponse  xmlGetAccountDetailsResponse;
+    Bank::EmptyGetAccountDetailsResponse  emptyGetAccountDetailsResponse;
+
+    Bank::XMLGetAccountDetailsResponse  xmlGetAccountDetailsResponse;
 
 
     } _u;
@@ -312,5 +384,7 @@ DDS_UnsignedLong GetAccountDetailsRequest_getDefaultDiscriminator();
 #endif
 
 
+} /* namespace Bank */
 
-#endif /* Bank_1795593638_h */
+
+#endif /* Bank_1795593968_h */

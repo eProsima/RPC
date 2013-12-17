@@ -34,16 +34,16 @@ int main(int argc, char **argv)
     ThreadPoolStrategy *pool = NULL;
     HelloWorldProtocol *protocol = NULL;
     HttpServerTransport *transport = NULL;
-    HelloWorldResourceServer *server = NULL;
+    HelloWorld::HelloWorldResourceServer *server = NULL;
     HelloWorldResourceServerImplExample servant;
     
-    // Create and initialize the server for interface "HelloWorldResource".
+    // Create and initialize the server for interface "HelloWorld::HelloWorldResource".
     try
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new HelloWorldProtocol();
         transport = new HttpServerTransport("127.0.0.1:8080");
-        server = new HelloWorldResourceServer(*pool, *transport, *protocol, servant);
+        server = new HelloWorld::HelloWorldResourceServer(*pool, *transport, *protocol, servant);
         server->serve();
     }
     catch(InitializeException &ex)
@@ -66,6 +66,7 @@ int main(int argc, char **argv)
     
     return 0;
 }
+
 
 
 

@@ -18,23 +18,29 @@
 #include "utils/Messages.h"
 #include "HelloWorld.h"
 
-/**
- * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
- */
-class HelloWorldResourceServerImpl
+namespace HelloWorld
 {
-    public:
+    /**
+     * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+     */
+    class HelloWorldResourceServerImpl
+    {
+        public:
 
-        /// \brief The default constructor.
-        HelloWorldResourceServerImpl(){}
+            /// \brief The default constructor.
+            HelloWorldResourceServerImpl(){}
 
-        /// \brief The default destructor.
-        virtual ~HelloWorldResourceServerImpl(){}
+            /// \brief The default destructor.
+            virtual ~HelloWorldResourceServerImpl(){}
 
 
 
-        virtual HelloResponse hello(/*in*/ const char* name) = 0;
-;
+
+            /// \brief Skeleton of the operation hello
+            virtual HelloWorld::HelloResponse hello(/*in*/ const char* name) = 0;
+    ;
+    };
+
 };
 
 

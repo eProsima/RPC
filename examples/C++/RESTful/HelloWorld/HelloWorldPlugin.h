@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldPlugin_1436885654_h
-#define HelloWorldPlugin_1436885654_h
+#ifndef HelloWorldPlugin_1436885919_h
+#define HelloWorldPlugin_1436885919_h
 
 #include "HelloWorld.h"
 
@@ -31,7 +31,181 @@ struct RTICdrStream;
 #endif
 
 
-#define XMLHelloResponse_LAST_MEMBER_ID 0
+namespace HelloWorld{
+
+#define HelloWorld_EmptyHelloResponse_LAST_MEMBER_ID 0
+
+#define EmptyHelloResponsePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EmptyHelloResponsePlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EmptyHelloResponsePlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EmptyHelloResponsePlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+ 
+
+#define EmptyHelloResponsePlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EmptyHelloResponsePlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern EmptyHelloResponse*
+EmptyHelloResponsePluginSupport_create_data_ex(RTIBool allocate_pointers);
+
+NDDSUSERDllExport extern EmptyHelloResponse*
+EmptyHelloResponsePluginSupport_create_data(void);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePluginSupport_copy_data(
+    EmptyHelloResponse *out,
+    const EmptyHelloResponse *in);
+
+NDDSUSERDllExport extern void 
+EmptyHelloResponsePluginSupport_destroy_data_ex(
+    EmptyHelloResponse *sample,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EmptyHelloResponsePluginSupport_destroy_data(
+    EmptyHelloResponse *sample);
+
+NDDSUSERDllExport extern void 
+EmptyHelloResponsePluginSupport_print_data(
+    const EmptyHelloResponse *sample,
+    const char *desc,
+    unsigned int indent);
+
+
+
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyHelloResponse *out,
+    const EmptyHelloResponse *in);
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const EmptyHelloResponse *sample,
+    struct RTICdrStream *stream, 
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyHelloResponse *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyHelloResponse **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+
+
+
+NDDSUSERDllExport extern RTIBool
+EmptyHelloResponsePlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream, 
+    RTIBool skip_encapsulation,  
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int 
+EmptyHelloResponsePlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int 
+EmptyHelloResponsePlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+EmptyHelloResponsePlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const EmptyHelloResponse * sample);
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginKeyKind 
+EmptyHelloResponsePlugin_get_key_kind(void);
+
+NDDSUSERDllExport extern unsigned int 
+EmptyHelloResponsePlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const EmptyHelloResponse *sample,
+    struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyHelloResponse * sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+EmptyHelloResponsePlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyHelloResponse ** sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+
+NDDSUSERDllExport extern RTIBool
+EmptyHelloResponsePlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyHelloResponse *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos);
+
+
+#define HelloWorld_XMLHelloResponse_LAST_MEMBER_ID 0
 
 #define XMLHelloResponsePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define XMLHelloResponsePlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -203,7 +377,7 @@ XMLHelloResponsePlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define HelloResponse_LAST_MEMBER_ID 0
+#define HelloWorld_HelloResponse_LAST_MEMBER_ID 0
 
 #define HelloResponsePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define HelloResponsePlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -375,6 +549,8 @@ HelloResponsePlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
+} /* namespace HelloWorld */
+
         
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -383,4 +559,4 @@ HelloResponsePlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* HelloWorldPlugin_1436885654_h */
+#endif /* HelloWorldPlugin_1436885919_h */

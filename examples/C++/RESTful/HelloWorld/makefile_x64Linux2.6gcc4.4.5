@@ -9,7 +9,7 @@ DEFINES=  -DRTI_LINUX -DRTI_UNIX
 INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include 
 
 LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds-0.2.0 -lboost_system-mt $(SYSLIBS)
+       -lrpcdds-0.2.0 -lnddsc -lnddscore -lnddscpp -lboost_system-mt $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 

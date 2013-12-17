@@ -189,11 +189,10 @@ public class Module extends DefinitionContainer implements Definition, Notebook
             if(!baseUri.isEmpty() && baseUri.charAt(baseUri.length() - 1) == '/')
             {
                 if(baseUri.length() > 1)
-                    baseUri = baseUri.substring(0, baseUri.length() - 2);
+                    baseUri = baseUri.substring(0, baseUri.length() - 1);
                 else
                     baseUri = "";
             }
-
             return baseUri;
         }
         

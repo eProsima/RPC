@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BankSupport_1795593638_h
-#define BankSupport_1795593638_h
+#ifndef BankSupport_1795593968_h
+#define BankSupport_1795593968_h
 
 /* Uses */
 #include "Bank.h"
@@ -27,5 +27,9 @@
 #endif
 
 
+namespace Bank{
 
-#endif  /* BankSupport_1795593638_h */
+} /* namespace Bank */
+
+
+#endif  /* BankSupport_1795593968_h */

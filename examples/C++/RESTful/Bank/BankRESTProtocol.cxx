@@ -31,6 +31,14 @@ BankProtocol::BankProtocol() {}
 
 BankProtocol::~BankProtocol() {}
 
+bool BankProtocol::isNumeric(string&& myString) {
+    stringstream ss(myString);
+    float f;
+    ss >> noskipws >> f;
+
+    return ss.eof() && !ss.fail();
+}
+
 bool BankProtocol::setTransport(Transport &transport)
 {    
     if(strcmp(transport.getType(), "HTTP") != 0)
@@ -56,21 +64,21 @@ bool BankProtocol::activateInterface(const char* interfaceName)
 }
 
 int BankProtocol::deserializeContentLength(char* buffer) {
-	char contentLength[16];
-	strcpy(contentLength, "Content-Length:");
-	char *p = strtok(buffer, "\r\n");
-	while(p) {
-		p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
-		if(memcmp(p, contentLength, 15) == 0) {
-			return atoi(p+15); // 15 = "Content-Length:"
-		}
-		p = strtok(NULL, "\r\n");
-	}
+    char contentLength[16];
+    strcpy(contentLength, "Content-Length:");
+    char *p = strtok(buffer, "\r\n");
+    while(p) {
+        p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
+        if(memcmp(p, contentLength, 15) == 0) {
+            return atoi(p+15); // 15 = "Content-Length:"
+        }
+        p = strtok(NULL, "\r\n");
+    }
 
-	return 0;
+    return 0;
 }
 
-void BankProtocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
+void BankProtocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpcdds::protocol::rest::BankProtocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::BankProtocol&>( protocol );
@@ -81,11 +89,52 @@ void BankProtocol::worker(Protocol& protocol, void *data, size_t dataLength, epr
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
 }
 
+// Server
+HttpMessage BankProtocol::processRequest(HttpMessage &httpMessage)
+{
+    RESTSerializer restSerializer;
+    
+    restSerializer.deserializeUri(httpMessage.getUri(), "/resources/");
+    
+    // TODO Siempre se crea aunque no haya un error. Cambiar
+    HttpMessage http404Response;
+    http404Response.setResponseCode(404);
+    http404Response.setResponseStatus("Resource not found");
+    
+    // BEGIN ITERATION 
+    string tag;
+    if(!restSerializer.existsTagLevel(0)) {
+    return http404Response; // ERROR NO OPERATIONS
+    }
+    if(restSerializer.getTag(0).compare("account") == 0) {
+    // BEGIN ITERATION account
+    if(!restSerializer.existsTagLevel(1)) {
+    return http404Response; // ERROR NO OPERATIONS
+    }
+    // BEGIN ITERATION {accountNumber}
+    if(!restSerializer.existsTagLevel(2)) {
+    if(httpMessage.getMethod() == HttpMessage::HTTP_METHOD_POST) {
+    if(restSerializer.existsQueryParameter("user")) {
+    return deserialize_account_accountNumberResource_getAccountDetails(restSerializer, httpMessage); // MATCHING
+    }
+    }
+    }
+    // END ITERATION {accountNumber}
+    // END ITERATION account
+    }
+    // ERROR NO MATCH FOUND
+    // END ITERATION 
+
+    
+    return http404Response;
+}
 
 
 
 
-string BankProtocol::expandPath_getAccountDetails(string &&path, account_accountNumber account_accountNumber)
+
+
+string BankProtocol::expandPath_getAccountDetails(string &&path, Bank::account_accountNumber account_accountNumber)
 {
     RESTSerializer restSerializer;
     stringstream stream;
@@ -105,13 +154,13 @@ string BankProtocol::expandPath_getAccountDetails(string &&path, account_account
         
     return expandedPath;
 }
-GetAccountDetailsResponse BankProtocol::account_accountNumberResource_getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest)
+Bank::GetAccountDetailsResponse BankProtocol::Bank_account_accountNumberResource_getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest)
 {
      stringstream stream;
      RESTSerializer restSerializer;
      eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>( getTransport() );
-     GetAccountDetailsResponse getAccountDetails_ret;
-     GetAccountDetailsResponse_initialize(&getAccountDetails_ret);
+     Bank::GetAccountDetailsResponse getAccountDetails_ret;
+     Bank::GetAccountDetailsResponse_initialize(&getAccountDetails_ret);
      // XXX TODO if NULL -> error
      
      // Resource Base URI = /resources/
@@ -124,7 +173,7 @@ GetAccountDetailsResponse BankProtocol::account_accountNumberResource_getAccount
      httpMessage.setMethod(HttpMessage::HTTP_METHOD_POST);
      //TODO Chequear host en el transport.
      httpMessage.setHost("example.com");
-     std::string uri(expandPath_getAccountDetails("/resources/account/{accountNumber}", account_accountNumber)); 
+     std::string uri(expandPath_getAccountDetails(std::string("/resources/account/{accountNumber}"), account_accountNumber)); 
      
         std::string paramValue;
         stream << user;
@@ -167,6 +216,7 @@ GetAccountDetailsResponse BankProtocol::account_accountNumberResource_getAccount
      size_t dump;
      proxyTransport.receive(&httpResponse, 0, dump);
      
+     
      int discriminator = 0;
 
      if(httpResponse.getBodyContentType().find("xml") != string::npos)
@@ -182,17 +232,21 @@ GetAccountDetailsResponse BankProtocol::account_accountNumberResource_getAccount
      
      switch(discriminator)
      {
-     case 1:
+     case 0:
+          getAccountDetails_ret._u.emptyGetAccountDetailsResponse.status = httpResponse.getResponseCode();
+          break;
+          case 1:
           getAccountDetails_ret._u.xmlGetAccountDetailsResponse.status = httpResponse.getResponseCode();
           getAccountDetails_ret._u.xmlGetAccountDetailsResponse.xmlRepresentation = strdup(httpResponse.getBodyData().c_str());
           break;
           
      }
+     
               
      return getAccountDetails_ret;
 }
 
-void BankProtocol::deserializePath_getAccountDetails(RESTSerializer &restSerializer, account_accountNumber& account_accountNumber)
+void BankProtocol::deserializePath_getAccountDetails(RESTSerializer &restSerializer, /*in*/ Bank::account_accountNumber& account_accountNumber)
 {
     stringstream stream;
     
@@ -209,7 +263,8 @@ HttpMessage BankProtocol::deserialize_account_accountNumberResource_getAccountDe
 {
     std::stringstream stream;
     
-    account_accountNumber account_accountNumber;
+    Bank::account_accountNumber account_accountNumber;
+    account_accountNumber_initialize(&account_accountNumber); 
     deserializePath_getAccountDetails(restSerializer, account_accountNumber);
 
     // Deserialize user
@@ -224,13 +279,20 @@ HttpMessage BankProtocol::deserialize_account_accountNumberResource_getAccountDe
 
 
     // Deserializing body parameter GetAccountDetailsRequest
-    GetAccountDetailsRequest GetAccountDetailsRequest;
+    Bank::GetAccountDetailsRequest GetAccountDetailsRequest;
     std::string mediaType = httpMessage.getBodyContentType();
     int discriminator = 0;
     if(mediaType.find("xml") != string::npos)
         discriminator = 1;
-    if(mediaType.find("json") != string::npos)
+    else if(mediaType.find("json") != string::npos)
         discriminator = 2;
+    else {
+    	// Debería haber Body Param y no está, o está en un formato no admitido. Error 400.
+    	HttpMessage http400Response;
+    	http400Response.setResponseCode(400);
+    	http400Response.setResponseStatus("Bad request");
+    	return http400Response;
+    }
         
     GetAccountDetailsRequest._d = discriminator;
     switch(discriminator) {
@@ -242,11 +304,14 @@ HttpMessage BankProtocol::deserialize_account_accountNumberResource_getAccountDe
     }
     
     // TODO Check implementation.
-    GetAccountDetailsResponse GetAccountDetailsResponse = _account_accountNumberResource_impl->getAccountDetails(  account_accountNumber , user.c_str() , GetAccountDetailsRequest   );
+    Bank::GetAccountDetailsResponse GetAccountDetailsResponse = _Bank_account_accountNumberResource_impl->getAccountDetails(  account_accountNumber , user.c_str() , GetAccountDetailsRequest   );
     
     HttpMessage httpResponse;
     switch(GetAccountDetailsResponse._d)
     {
+    case 0:
+        httpResponse.setResponseCode(GetAccountDetailsResponse._u.emptyGetAccountDetailsResponse.status);
+        break;
     case 1:
         httpResponse.setResponseCode(GetAccountDetailsResponse._u.xmlGetAccountDetailsResponse.status);
     httpResponse.setBodyData(GetAccountDetailsResponse._u.xmlGetAccountDetailsResponse.xmlRepresentation); 
@@ -261,51 +326,7 @@ HttpMessage BankProtocol::deserialize_account_accountNumberResource_getAccountDe
         else if(GetAccountDetailsResponse._d == 2)
             httpResponse.setBodyContentType("application/json");
     }
-
     
     return httpResponse;
 }
 
-// Server
-HttpMessage BankProtocol::processRequest(HttpMessage &httpMessage)
-{
-    RESTSerializer restSerializer;
-    
-    restSerializer.deserializeUri(httpMessage.getUri(), "/resources/");
-    
-    // TODO Siempre se crea aunque no haya un error. Cambiar
-    HttpMessage http404Response;
-    http404Response.setResponseCode(404);
-    http404Response.setResponseStatus("Resource not found");
-    
-    // BEGIN ITERATION 
-    string tag;
-    char *p = NULL;
-    if(!restSerializer.existsTagLevel(0)) {
-    return http404Response; // ERROR NO OPERATIONS
-    }
-    if(restSerializer.getTag(0).compare("account") == 0) {
-    // BEGIN ITERATION account
-    if(!restSerializer.existsTagLevel(1)) {
-    return http404Response; // ERROR NO OPERATIONS
-    }
-    strtol(strdup(restSerializer.getTag(1).c_str()), &p, 10);
-    if(!*p) {
-    // BEGIN ITERATION {accountNumber}
-    if(!restSerializer.existsTagLevel(2)) {
-    if(httpMessage.getMethod() == HttpMessage::HTTP_METHOD_POST) {
-    if(restSerializer.existsQueryParameter("user")) {
-    return deserialize_account_accountNumberResource_getAccountDetails(restSerializer, httpMessage); // MATCHING
-    }
-    }
-    }
-    // END ITERATION {accountNumber}
-    }
-    // END ITERATION account
-    }
-    // ERROR NO MATCH FOUND
-    // END ITERATION 
-
-    
-    return http404Response;
-}

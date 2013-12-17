@@ -18,57 +18,62 @@
 #include "BankProtocol.h"
 #include "exceptions/ServerInternalException.h"
 
-account_accountNumberResourceServer::account_accountNumberResourceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
-            eprosima::rpcdds::protocol::BankProtocol &protocol, account_accountNumberResourceServerImpl &servant) :
-    Server(strategy, transport, protocol), _impl(servant)
+namespace Bank
 {
-   protocol.activateInterface("account_accountNumberResource");
-   protocol.linkaccount_accountNumberResourceImpl(servant);
-}
-
-account_accountNumberResourceServer::~account_accountNumberResourceServer()
-{
-    //TODO Unlink an deactivate.
-}
-
-
-
-
-
-/*void account_accountNumberResourceServer::getAccountDetails(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
-{ 
-    account_accountNumberResourceServer *srv = dynamic_cast<account_accountNumberResourceServer*>(server);
-    account_accountNumber account_accountNumber;
-    char*  user = NULL;
-    GetAccountDetailsRequest GetAccountDetailsRequest;
-    GetAccountDetailsResponse getAccountDetails_ret;
-    memset(&getAccountDetails_ret, 0, sizeof(GetAccountDetailsResponse));   
-    account_accountNumberResource_getAccountDetailsReply replyData;
-    
-
-    account_accountNumberResource_getAccountDetailsRequestUtils::extractTypeData(*(account_accountNumberResource_getAccountDetailsRequest*)requestData, account_accountNumber, user, GetAccountDetailsRequest);
-
-    try
+    account_accountNumberResourceServer::account_accountNumberResourceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
+                eprosima::rpcdds::protocol::BankProtocol &protocol, account_accountNumberResourceServerImpl &servant) :
+        Server(strategy, transport, protocol), _impl(servant)
     {
-        getAccountDetails_ret = srv->_impl.getAccountDetails(account_accountNumber, user, GetAccountDetailsRequest);
-
-        account_accountNumberResource_getAccountDetailsReplyUtils::setTypeData(replyData, getAccountDetails_ret);
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = (char*)"";
-
-        service->sendReply(requestData, &replyData);
+       protocol.activateInterface("Bank::account_accountNumberResource");
+       protocol.linkBank_account_accountNumberResourceImpl(servant);
     }
-    catch(const eProsima::RPCDDS::ServerInternalException &ex)
+
+    account_accountNumberResourceServer::~account_accountNumberResourceServer()
     {
-        memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
-        replyData.header.rpcddsRetMsg = (char*)ex.what();
+        //TODO Unlink an deactivate.
+    }
+
+
+
+
+
+
+    /*void account_accountNumberResourceServer::getAccountDetails(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
+    { 
+        account_accountNumberResourceServer *srv = dynamic_cast<account_accountNumberResourceServer*>(server);
+        Bank::account_accountNumber account_accountNumber;
+        char*  user = NULL;
+        Bank::GetAccountDetailsRequest GetAccountDetailsRequest;
+        Bank::GetAccountDetailsResponse getAccountDetails_ret;
+        memset(&getAccountDetails_ret, 0, sizeof(Bank::GetAccountDetailsResponse));   
+        account_accountNumberResource_getAccountDetailsReply replyData;
         
-        service->sendReply(requestData, &replyData);
-    }
-    
-    account_accountNumberResource_getAccountDetailsRequestTypeSupport::delete_data((account_accountNumberResource_getAccountDetailsRequest*)requestData);
-    
-    GetAccountDetailsResponse_finalize(&getAccountDetails_ret);
-}*/
 
+        account_accountNumberResource_getAccountDetailsRequestUtils::extractTypeData(*(account_accountNumberResource_getAccountDetailsRequest*)requestData, account_accountNumber, user, GetAccountDetailsRequest);
+
+        try
+        {
+            getAccountDetails_ret = srv->_impl.getAccountDetails(account_accountNumber, user, GetAccountDetailsRequest);
+
+            account_accountNumberResource_getAccountDetailsReplyUtils::setTypeData(replyData, getAccountDetails_ret);
+            replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+            replyData.header.rpcddsRetMsg = (char*)"";
+
+            service->sendReply(requestData, &replyData);
+        }
+        catch(const eProsima::RPCDDS::ServerInternalException &ex)
+        {
+            memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
+            replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+            replyData.header.rpcddsRetMsg = (char*)ex.what();
+            
+            service->sendReply(requestData, &replyData);
+        }
+        
+        account_accountNumberResource_getAccountDetailsRequestTypeSupport::delete_data((account_accountNumberResource_getAccountDetailsRequest*)requestData);
+        
+        Bank::GetAccountDetailsResponse_finalize(&getAccountDetails_ret);
+    }*/
+
+
+};

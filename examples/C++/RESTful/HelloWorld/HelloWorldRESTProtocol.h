@@ -20,6 +20,8 @@
 #include "utils/Messages.h"
 #include <string>
 
+using namespace std;
+
 namespace eprosima
 {
     namespace rpcdds
@@ -31,25 +33,60 @@ namespace eprosima
                 // TODO Quitar
                 class RESTSerializer;
             
-                class HelloWorldProtocol : public eprosima::rpcdds::protocol::HelloWorldProtocol
+                /*!
+                 * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
+                 *  It uses a RESTful protocol.
+                 */
+                class RPCDDSUSERDllExport HelloWorldProtocol : public eprosima::rpcdds::protocol::HelloWorldProtocol
                 {
                     public:
                     
+                       /*!
+                        * @brief Default constructor
+                        */
                         HelloWorldProtocol();
                         
+                       /*!
+                        * @brief Default destructor
+                        */
                         virtual ~HelloWorldProtocol();
                         
+                       /*!
+                        * @brief This method sets the transport for the communications.
+                        *        It must be an HTTP transport.
+                        * @param transport Transport to use
+                        * @return True if the assignment is successful, false otherwise
+                        */
                         bool setTransport(eprosima::rpcdds::transport::Transport &transport);
                         
+                       /*!
+                        * @brief This method does not apply to this class
+                        */
                         bool activateInterface(const char* interfaceName);
                         
-                        static void worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
+                       /*!
+                        * @brief This callback receives the requests and calls the specific protocol to process them
+                        * @param protocol Protocol that must process the request
+                        * @param data Received data
+                        * @param dataLength received data length
+                        * @param endpoint Proxy endpoint where the request came from
+                        */
+                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
                         
 
 
+
+                        /*!
+                         * @brief This method implements the server part of the protocol for the operation hello
+                         */
                         eprosima::rpcdds::transport::HttpMessage deserialize_HelloWorldResource_hello(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
 
-                        HelloResponse HelloWorldResource_hello(/*in*/ const char* name);
+                        /*!
+                         * @brief This method implements the proxy part of the protocol for the operation hello
+                         */
+                        HelloWorld::HelloResponse HelloWorld_HelloWorldResource_hello(/*in*/ const char* name);
+
+
 
 
                         
@@ -59,6 +96,8 @@ namespace eprosima
                     private:
                     
                     	static int deserializeContentLength(char* buffer);
+                    	
+                    	static bool isNumeric(string&& myString);
                     
                 };
             } // namespace rest

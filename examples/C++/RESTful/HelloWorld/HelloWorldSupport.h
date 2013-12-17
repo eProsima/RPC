@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef HelloWorldSupport_1436885654_h
-#define HelloWorldSupport_1436885654_h
+#ifndef HelloWorldSupport_1436885919_h
+#define HelloWorldSupport_1436885919_h
 
 /* Uses */
 #include "HelloWorld.h"
@@ -27,5 +27,9 @@
 #endif
 
 
+namespace HelloWorld{
 
-#endif  /* HelloWorldSupport_1436885654_h */
+} /* namespace HelloWorld */
+
+
+#endif  /* HelloWorldSupport_1436885919_h */

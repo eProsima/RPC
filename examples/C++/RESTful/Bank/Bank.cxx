@@ -38,8 +38,10 @@
 
 #include "Bank.h"
 
+
+namespace Bank{
 /* ========================================================================= */
-const char *account_accountNumberTYPENAME = "account_accountNumber";
+const char *account_accountNumberTYPENAME = "Bank::account_accountNumber";
 
 DDS_TypeCode* account_accountNumber_get_typecode()
 {
@@ -72,7 +74,7 @@ DDS_TypeCode* account_accountNumber_get_typecode()
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"account_accountNumber", /* Name */
+        (char *)"Bank::account_accountNumber", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
@@ -97,7 +99,7 @@ DDS_TypeCode* account_accountNumber_get_typecode()
 
 RTIBool account_accountNumber_initialize(
     account_accountNumber* sample) {
-  return ::account_accountNumber_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Bank::account_accountNumber_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool account_accountNumber_initialize_ex(
@@ -120,7 +122,7 @@ RTIBool account_accountNumber_initialize_ex(
 void account_accountNumber_finalize(
     account_accountNumber* sample)
 {
-    ::account_accountNumber_finalize_ex(sample,RTI_TRUE);
+    ::Bank::account_accountNumber_finalize_ex(sample,RTI_TRUE);
 }
         
 void account_accountNumber_finalize_ex(
@@ -158,9 +160,9 @@ RTIBool account_accountNumber_copy(
  */
 #define T account_accountNumber
 #define TSeq account_accountNumberSeq
-#define T_initialize_ex ::account_accountNumber_initialize_ex
-#define T_finalize_ex   ::account_accountNumber_finalize_ex
-#define T_copy       ::account_accountNumber_copy
+#define T_initialize_ex ::Bank::account_accountNumber_initialize_ex
+#define T_finalize_ex   ::Bank::account_accountNumber_finalize_ex
+#define T_copy       ::Bank::account_accountNumber_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -181,7 +183,149 @@ RTIBool account_accountNumber_copy(
 #undef T
 
 /* ========================================================================= */
-const char *XMLGetAccountDetailsResponseTYPENAME = "XMLGetAccountDetailsResponse";
+const char *EmptyGetAccountDetailsResponseTYPENAME = "Bank::EmptyGetAccountDetailsResponse";
+
+DDS_TypeCode* EmptyGetAccountDetailsResponse_get_typecode()
+{
+    static RTIBool is_initialized = RTI_FALSE;
+
+
+    static DDS_TypeCode_Member EmptyGetAccountDetailsResponse_g_tc_members[1]=
+    {
+        {
+            (char *)"status",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        }
+    };
+
+    static DDS_TypeCode EmptyGetAccountDetailsResponse_g_tc =
+    {{
+        DDS_TK_STRUCT,/* Kind */
+        DDS_BOOLEAN_FALSE, /* Ignored */
+        -1,/* Ignored */
+        (char *)"Bank::EmptyGetAccountDetailsResponse", /* Name */
+        NULL, /* Ignored */
+        0, /* Ignored */
+        0, /* Ignored */
+        NULL, /* Ignored */
+        1, /* Number of members */
+        EmptyGetAccountDetailsResponse_g_tc_members, /* Members */
+        DDS_VM_NONE /* Ignored */
+    }}; /* Type code for EmptyGetAccountDetailsResponse*/
+
+    if (is_initialized) {
+        return &EmptyGetAccountDetailsResponse_g_tc;
+    }
+
+
+    EmptyGetAccountDetailsResponse_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+
+    is_initialized = RTI_TRUE;
+
+    return &EmptyGetAccountDetailsResponse_g_tc;
+}
+
+
+RTIBool EmptyGetAccountDetailsResponse_initialize(
+    EmptyGetAccountDetailsResponse* sample) {
+  return ::Bank::EmptyGetAccountDetailsResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+}
+        
+RTIBool EmptyGetAccountDetailsResponse_initialize_ex(
+    EmptyGetAccountDetailsResponse* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+{
+        
+    
+    if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
+
+    if (!RTICdrType_initLong(&sample->status)) {
+        return RTI_FALSE;
+    }                
+            
+
+
+    return RTI_TRUE;
+}
+
+void EmptyGetAccountDetailsResponse_finalize(
+    EmptyGetAccountDetailsResponse* sample)
+{
+    ::Bank::EmptyGetAccountDetailsResponse_finalize_ex(sample,RTI_TRUE);
+}
+        
+void EmptyGetAccountDetailsResponse_finalize_ex(
+    EmptyGetAccountDetailsResponse* sample,RTIBool deletePointers)
+{        
+    if (sample) { } /* To avoid warnings */
+    if (deletePointers) {} /* To avoid warnings */
+
+
+
+}
+
+RTIBool EmptyGetAccountDetailsResponse_copy(
+    EmptyGetAccountDetailsResponse* dst,
+    const EmptyGetAccountDetailsResponse* src)
+{        
+
+    if (!RTICdrType_copyLong(
+        &dst->status, &src->status)) {
+        return RTI_FALSE;
+    }
+            
+
+
+    return RTI_TRUE;
+}
+
+
+/**
+ * <<IMPLEMENTATION>>
+ *
+ * Defines:  TSeq, T
+ *
+ * Configure and implement 'EmptyGetAccountDetailsResponse' sequence class.
+ */
+#define T EmptyGetAccountDetailsResponse
+#define TSeq EmptyGetAccountDetailsResponseSeq
+#define T_initialize_ex ::Bank::EmptyGetAccountDetailsResponse_initialize_ex
+#define T_finalize_ex   ::Bank::EmptyGetAccountDetailsResponse_finalize_ex
+#define T_copy       ::Bank::EmptyGetAccountDetailsResponse_copy
+
+#ifndef NDDS_STANDALONE_TYPE
+#include "dds_c/generic/dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp/generic/dds_cpp_sequence_TSeq.gen"
+#endif
+#else
+#include "dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp_sequence_TSeq.gen"
+#endif
+#endif
+
+#undef T_copy
+#undef T_finalize_ex
+#undef T_initialize_ex
+#undef TSeq
+#undef T
+
+/* ========================================================================= */
+const char *XMLGetAccountDetailsResponseTYPENAME = "Bank::XMLGetAccountDetailsResponse";
 
 DDS_TypeCode* XMLGetAccountDetailsResponse_get_typecode()
 {
@@ -232,7 +376,7 @@ DDS_TypeCode* XMLGetAccountDetailsResponse_get_typecode()
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"XMLGetAccountDetailsResponse", /* Name */
+        (char *)"Bank::XMLGetAccountDetailsResponse", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
@@ -258,7 +402,7 @@ DDS_TypeCode* XMLGetAccountDetailsResponse_get_typecode()
 
 RTIBool XMLGetAccountDetailsResponse_initialize(
     XMLGetAccountDetailsResponse* sample) {
-  return ::XMLGetAccountDetailsResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Bank::XMLGetAccountDetailsResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool XMLGetAccountDetailsResponse_initialize_ex(
@@ -293,7 +437,7 @@ RTIBool XMLGetAccountDetailsResponse_initialize_ex(
 void XMLGetAccountDetailsResponse_finalize(
     XMLGetAccountDetailsResponse* sample)
 {
-    ::XMLGetAccountDetailsResponse_finalize_ex(sample,RTI_TRUE);
+    ::Bank::XMLGetAccountDetailsResponse_finalize_ex(sample,RTI_TRUE);
 }
         
 void XMLGetAccountDetailsResponse_finalize_ex(
@@ -340,9 +484,9 @@ RTIBool XMLGetAccountDetailsResponse_copy(
  */
 #define T XMLGetAccountDetailsResponse
 #define TSeq XMLGetAccountDetailsResponseSeq
-#define T_initialize_ex ::XMLGetAccountDetailsResponse_initialize_ex
-#define T_finalize_ex   ::XMLGetAccountDetailsResponse_finalize_ex
-#define T_copy       ::XMLGetAccountDetailsResponse_copy
+#define T_initialize_ex ::Bank::XMLGetAccountDetailsResponse_initialize_ex
+#define T_finalize_ex   ::Bank::XMLGetAccountDetailsResponse_finalize_ex
+#define T_copy       ::Bank::XMLGetAccountDetailsResponse_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -363,15 +507,32 @@ RTIBool XMLGetAccountDetailsResponse_copy(
 #undef T
 
 /* ========================================================================= */
-const char *GetAccountDetailsResponseTYPENAME = "GetAccountDetailsResponse";
+const char *GetAccountDetailsResponseTYPENAME = "Bank::GetAccountDetailsResponse";
 
 DDS_TypeCode* GetAccountDetailsResponse_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member GetAccountDetailsResponse_g_tc_members[1]=
+    static DDS_TypeCode_Member GetAccountDetailsResponse_g_tc_members[2]=
     {
+        {
+            (char *)"emptyGetAccountDetailsResponse",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            1, /* Number of labels */
+            0, /* First label */
+            NULL, /* Labels (it is NULL when there is only one label)*/
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
         {
             (char *)"xmlGetAccountDetailsResponse",/* Member name */
             {
@@ -396,12 +557,12 @@ DDS_TypeCode* GetAccountDetailsResponse_get_typecode()
         DDS_TK_UNION,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Default index */
-        (char *)"GetAccountDetailsResponse", /* Name */
+        (char *)"Bank::GetAccountDetailsResponse", /* Name */
         NULL, /* Discriminator type code is assigned later */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        1, /* Number of members */
+        2, /* Number of members */
         GetAccountDetailsResponse_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
     }}; /* Type code for GetAccountDetailsResponse*/
@@ -411,7 +572,8 @@ DDS_TypeCode* GetAccountDetailsResponse_get_typecode()
     }
 
 
-    GetAccountDetailsResponse_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)XMLGetAccountDetailsResponse_get_typecode();
+    GetAccountDetailsResponse_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Bank::EmptyGetAccountDetailsResponse_get_typecode();
+    GetAccountDetailsResponse_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Bank::XMLGetAccountDetailsResponse_get_typecode();
 
     GetAccountDetailsResponse_g_tc._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long; /* Discriminator type code */
 
@@ -423,7 +585,9 @@ DDS_TypeCode* GetAccountDetailsResponse_get_typecode()
 DDS_UnsignedLong GetAccountDetailsResponse_getDefaultDiscriminator()
 {
 
-    DDS_UnsignedLong tmp = 1;
+    DDS_UnsignedLong tmp = 0;
+    
+    if (tmp > 0) tmp = 0;
     
     if (tmp > 1) tmp = 1;
     
@@ -434,7 +598,7 @@ DDS_UnsignedLong GetAccountDetailsResponse_getDefaultDiscriminator()
 
 RTIBool GetAccountDetailsResponse_initialize(
     GetAccountDetailsResponse* sample) {
-  return ::GetAccountDetailsResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Bank::GetAccountDetailsResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool GetAccountDetailsResponse_initialize_ex(
@@ -447,7 +611,12 @@ RTIBool GetAccountDetailsResponse_initialize_ex(
 
     sample->_d = GetAccountDetailsResponse_getDefaultDiscriminator();
 
-    if (!XMLGetAccountDetailsResponse_initialize_ex(&sample->_u.xmlGetAccountDetailsResponse,allocatePointers,allocateMemory)) {
+    if (!Bank::EmptyGetAccountDetailsResponse_initialize_ex(&sample->_u.emptyGetAccountDetailsResponse,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!Bank::XMLGetAccountDetailsResponse_initialize_ex(&sample->_u.xmlGetAccountDetailsResponse,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
@@ -459,7 +628,7 @@ RTIBool GetAccountDetailsResponse_initialize_ex(
 void GetAccountDetailsResponse_finalize(
     GetAccountDetailsResponse* sample)
 {
-    ::GetAccountDetailsResponse_finalize_ex(sample,RTI_TRUE);
+    ::Bank::GetAccountDetailsResponse_finalize_ex(sample,RTI_TRUE);
 }
         
 void GetAccountDetailsResponse_finalize_ex(
@@ -469,7 +638,10 @@ void GetAccountDetailsResponse_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
-    XMLGetAccountDetailsResponse_finalize_ex(&sample->_u.xmlGetAccountDetailsResponse,deletePointers);
+    Bank::EmptyGetAccountDetailsResponse_finalize_ex(&sample->_u.emptyGetAccountDetailsResponse,deletePointers);
+            
+
+    Bank::XMLGetAccountDetailsResponse_finalize_ex(&sample->_u.xmlGetAccountDetailsResponse,deletePointers);
             
 
 }
@@ -486,10 +658,20 @@ RTIBool GetAccountDetailsResponse_copy(
             
 
     switch(src->_d) {
-          case 1:
+          case 0:
         {                                    
         
-    if (!XMLGetAccountDetailsResponse_copy(
+    if (!Bank::EmptyGetAccountDetailsResponse_copy(
+        &dst->_u.emptyGetAccountDetailsResponse, &src->_u.emptyGetAccountDetailsResponse)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!Bank::XMLGetAccountDetailsResponse_copy(
         &dst->_u.xmlGetAccountDetailsResponse, &src->_u.xmlGetAccountDetailsResponse)) {
         return RTI_FALSE;
     }
@@ -513,9 +695,9 @@ RTIBool GetAccountDetailsResponse_copy(
  */
 #define T GetAccountDetailsResponse
 #define TSeq GetAccountDetailsResponseSeq
-#define T_initialize_ex ::GetAccountDetailsResponse_initialize_ex
-#define T_finalize_ex   ::GetAccountDetailsResponse_finalize_ex
-#define T_copy       ::GetAccountDetailsResponse_copy
+#define T_initialize_ex ::Bank::GetAccountDetailsResponse_initialize_ex
+#define T_finalize_ex   ::Bank::GetAccountDetailsResponse_finalize_ex
+#define T_copy       ::Bank::GetAccountDetailsResponse_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -536,7 +718,7 @@ RTIBool GetAccountDetailsResponse_copy(
 #undef T
 
 /* ========================================================================= */
-const char *GetAccountDetailsRequestTYPENAME = "GetAccountDetailsRequest";
+const char *GetAccountDetailsRequestTYPENAME = "Bank::GetAccountDetailsRequest";
 
 DDS_TypeCode* GetAccountDetailsRequest_get_typecode()
 {
@@ -570,7 +752,7 @@ DDS_TypeCode* GetAccountDetailsRequest_get_typecode()
         DDS_TK_UNION,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Default index */
-        (char *)"GetAccountDetailsRequest", /* Name */
+        (char *)"Bank::GetAccountDetailsRequest", /* Name */
         NULL, /* Discriminator type code is assigned later */
         0, /* Ignored */
         0, /* Ignored */
@@ -608,7 +790,7 @@ DDS_UnsignedLong GetAccountDetailsRequest_getDefaultDiscriminator()
 
 RTIBool GetAccountDetailsRequest_initialize(
     GetAccountDetailsRequest* sample) {
-  return ::GetAccountDetailsRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Bank::GetAccountDetailsRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool GetAccountDetailsRequest_initialize_ex(
@@ -640,7 +822,7 @@ RTIBool GetAccountDetailsRequest_initialize_ex(
 void GetAccountDetailsRequest_finalize(
     GetAccountDetailsRequest* sample)
 {
-    ::GetAccountDetailsRequest_finalize_ex(sample,RTI_TRUE);
+    ::Bank::GetAccountDetailsRequest_finalize_ex(sample,RTI_TRUE);
 }
         
 void GetAccountDetailsRequest_finalize_ex(
@@ -694,9 +876,9 @@ RTIBool GetAccountDetailsRequest_copy(
  */
 #define T GetAccountDetailsRequest
 #define TSeq GetAccountDetailsRequestSeq
-#define T_initialize_ex ::GetAccountDetailsRequest_initialize_ex
-#define T_finalize_ex   ::GetAccountDetailsRequest_finalize_ex
-#define T_copy       ::GetAccountDetailsRequest_copy
+#define T_initialize_ex ::Bank::GetAccountDetailsRequest_initialize_ex
+#define T_finalize_ex   ::Bank::GetAccountDetailsRequest_finalize_ex
+#define T_copy       ::Bank::GetAccountDetailsRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -716,3 +898,5 @@ RTIBool GetAccountDetailsRequest_copy(
 #undef TSeq
 #undef T
 
+
+} /* namespace Bank */

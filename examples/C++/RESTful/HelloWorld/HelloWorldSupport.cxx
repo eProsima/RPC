@@ -19,3 +19,7 @@
     #endif        
 #endif        
 
+
+namespace HelloWorld{
+
+} /* namespace HelloWorld */

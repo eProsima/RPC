@@ -31,6 +31,14 @@ HelloWorldProtocol::HelloWorldProtocol() {}
 
 HelloWorldProtocol::~HelloWorldProtocol() {}
 
+bool HelloWorldProtocol::isNumeric(string&& myString) {
+    stringstream ss(myString);
+    float f;
+    ss >> noskipws >> f;
+
+    return ss.eof() && !ss.fail();
+}
+
 bool HelloWorldProtocol::setTransport(Transport &transport)
 {    
     if(strcmp(transport.getType(), "HTTP") != 0)
@@ -56,21 +64,21 @@ bool HelloWorldProtocol::activateInterface(const char* interfaceName)
 }
 
 int HelloWorldProtocol::deserializeContentLength(char* buffer) {
-	char contentLength[16];
-	strcpy(contentLength, "Content-Length:");
-	char *p = strtok(buffer, "\r\n");
-	while(p) {
-		p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
-		if(memcmp(p, contentLength, 15) == 0) {
-			return atoi(p+15); // 15 = "Content-Length:"
-		}
-		p = strtok(NULL, "\r\n");
-	}
+    char contentLength[16];
+    strcpy(contentLength, "Content-Length:");
+    char *p = strtok(buffer, "\r\n");
+    while(p) {
+        p[strlen(p)] = '\r'; // strtok puts a '\0', we don't want it
+        if(memcmp(p, contentLength, 15) == 0) {
+            return atoi(p+15); // 15 = "Content-Length:"
+        }
+        p = strtok(NULL, "\r\n");
+    }
 
-	return 0;
+    return 0;
 }
 
-void HelloWorldProtocol::worker(Protocol& protocol, void *data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
+void HelloWorldProtocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpcdds::protocol::rest::HelloWorldProtocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::HelloWorldProtocol&>( protocol );
@@ -81,15 +89,51 @@ void HelloWorldProtocol::worker(Protocol& protocol, void *data, size_t dataLengt
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
 }
 
+// Server
+HttpMessage HelloWorldProtocol::processRequest(HttpMessage &httpMessage)
+{
+    RESTSerializer restSerializer;
+    
+    restSerializer.deserializeUri(httpMessage.getUri(), "/resources/");
+    
+    // TODO Siempre se crea aunque no haya un error. Cambiar
+    HttpMessage http404Response;
+    http404Response.setResponseCode(404);
+    http404Response.setResponseStatus("Resource not found");
+    
+    // BEGIN ITERATION 
+    string tag;
+    if(!restSerializer.existsTagLevel(0)) {
+    return http404Response; // ERROR NO OPERATIONS
+    }
+    if(restSerializer.getTag(0).compare("HelloWorld") == 0) {
+    // BEGIN ITERATION HelloWorld
+    if(!restSerializer.existsTagLevel(1)) {
+    if(httpMessage.getMethod() == HttpMessage::HTTP_METHOD_GET) {
+    if(restSerializer.existsQueryParameter("name")) {
+    return deserialize_HelloWorldResource_hello(restSerializer, httpMessage); // MATCHING
+    }
+    }
+    }
+    // END ITERATION HelloWorld
+    }
+    // ERROR NO MATCH FOUND
+    // END ITERATION 
+
+    
+    return http404Response;
+}
 
 
-HelloResponse HelloWorldProtocol::HelloWorldResource_hello(/*in*/ const char* name)
+
+
+HelloWorld::HelloResponse HelloWorldProtocol::HelloWorld_HelloWorldResource_hello(/*in*/ const char* name)
 {
      stringstream stream;
      RESTSerializer restSerializer;
      eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>( getTransport() );
-     HelloResponse hello_ret;
-     HelloResponse_initialize(&hello_ret);
+     HelloWorld::HelloResponse hello_ret;
+     HelloWorld::HelloResponse_initialize(&hello_ret);
      // XXX TODO if NULL -> error
      
      // Resource Base URI = /resources/
@@ -126,6 +170,7 @@ HelloResponse HelloWorldProtocol::HelloWorldResource_hello(/*in*/ const char* na
      size_t dump;
      proxyTransport.receive(&httpResponse, 0, dump);
      
+     
      int discriminator = 0;
 
      if(httpResponse.getBodyContentType().find("xml") != string::npos)
@@ -141,12 +186,16 @@ HelloResponse HelloWorldProtocol::HelloWorldResource_hello(/*in*/ const char* na
      
      switch(discriminator)
      {
-     case 1:
+     case 0:
+          hello_ret._u.emptyHelloResponse.status = httpResponse.getResponseCode();
+          break;
+          case 1:
           hello_ret._u.xmlHelloResponse.status = httpResponse.getResponseCode();
           hello_ret._u.xmlHelloResponse.xmlRepresentation = strdup(httpResponse.getBodyData().c_str());
           break;
           
      }
+     
               
      return hello_ret;
 }
@@ -164,11 +213,14 @@ HttpMessage HelloWorldProtocol::deserialize_HelloWorldResource_hello(RESTSeriali
 
     
     // TODO Check implementation.
-    HelloResponse HelloResponse = _HelloWorldResource_impl->hello(  name.c_str()  );
+    HelloWorld::HelloResponse HelloResponse = _HelloWorld_HelloWorldResource_impl->hello(  name.c_str()  );
     
     HttpMessage httpResponse;
     switch(HelloResponse._d)
     {
+    case 0:
+        httpResponse.setResponseCode(HelloResponse._u.emptyHelloResponse.status);
+        break;
     case 1:
         httpResponse.setResponseCode(HelloResponse._u.xmlHelloResponse.status);
     httpResponse.setBodyData(HelloResponse._u.xmlHelloResponse.xmlRepresentation); 
@@ -183,43 +235,7 @@ HttpMessage HelloWorldProtocol::deserialize_HelloWorldResource_hello(RESTSeriali
         else if(HelloResponse._d == 2)
             httpResponse.setBodyContentType("application/json");
     }
-
     
     return httpResponse;
 }
 
-// Server
-HttpMessage HelloWorldProtocol::processRequest(HttpMessage &httpMessage)
-{
-    RESTSerializer restSerializer;
-    
-    restSerializer.deserializeUri(httpMessage.getUri(), "/resources/");
-    
-    // TODO Siempre se crea aunque no haya un error. Cambiar
-    HttpMessage http404Response;
-    http404Response.setResponseCode(404);
-    http404Response.setResponseStatus("Resource not found");
-    
-    // BEGIN ITERATION 
-    string tag;
-    char *p = NULL;
-    if(!restSerializer.existsTagLevel(0)) {
-    return http404Response; // ERROR NO OPERATIONS
-    }
-    if(restSerializer.getTag(0).compare("HelloWorld") == 0) {
-    // BEGIN ITERATION HelloWorld
-    if(!restSerializer.existsTagLevel(1)) {
-    if(httpMessage.getMethod() == HttpMessage::HTTP_METHOD_GET) {
-    if(restSerializer.existsQueryParameter("name")) {
-    return deserialize_HelloWorldResource_hello(restSerializer, httpMessage); // MATCHING
-    }
-    }
-    }
-    // END ITERATION HelloWorld
-    }
-    // ERROR NO MATCH FOUND
-    // END ITERATION 
-
-    
-    return http404Response;
-}

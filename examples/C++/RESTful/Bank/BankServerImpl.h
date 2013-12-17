@@ -18,25 +18,31 @@
 #include "utils/Messages.h"
 #include "Bank.h"
 
-/**
- * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
- */
-class account_accountNumberResourceServerImpl
+namespace Bank
 {
-    public:
+    /**
+     * \brief This class is the skeleton of the servant and its remote procedures has to be implemented.
+     */
+    class account_accountNumberResourceServerImpl
+    {
+        public:
 
-        /// \brief The default constructor.
-        account_accountNumberResourceServerImpl(){}
+            /// \brief The default constructor.
+            account_accountNumberResourceServerImpl(){}
 
-        /// \brief The default destructor.
-        virtual ~account_accountNumberResourceServerImpl(){}
-
-
+            /// \brief The default destructor.
+            virtual ~account_accountNumberResourceServerImpl(){}
 
 
 
-        virtual GetAccountDetailsResponse getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest) = 0;
-;
+
+
+
+            /// \brief Skeleton of the operation getAccountDetails
+            virtual Bank::GetAccountDetailsResponse getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest) = 0;
+    ;
+    };
+
 };
 
 

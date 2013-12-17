@@ -20,7 +20,7 @@
 /**
  * \brief This class is an example of a servant and it implements the remote procedures of the servant.
  */
-class HelloWorldResourceServerImplExample : public HelloWorldResourceServerImpl
+class HelloWorldResourceServerImplExample : public HelloWorld::HelloWorldResourceServerImpl
 {
     public:
 
@@ -32,9 +32,12 @@ class HelloWorldResourceServerImplExample : public HelloWorldResourceServerImpl
 
 
 
-        HelloResponse hello(/*in*/ const char* name);
+
+        //! @brief Implementation of the remote procedure hello
+        HelloWorld::HelloResponse hello(/*in*/ const char* name);
 ;
 };
+
 
 
 #endif // _HelloWorldSERVER_IMPL_EXAMPLE_H_

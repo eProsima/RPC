@@ -57,6 +57,8 @@
 #include "BankPlugin.h"
 
 
+namespace Bank{
+
 /* --------------------------------------------------------------------------------------
  *  Type account_accountNumber
  * -------------------------------------------------------------------------------------- */
@@ -73,7 +75,7 @@ account_accountNumberPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, account_accountNumber);
 
     if(sample != NULL) {
-        if (!::account_accountNumber_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Bank::account_accountNumber_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -85,7 +87,7 @@ account_accountNumberPluginSupport_create_data_ex(RTIBool allocate_pointers){
 account_accountNumber *
 account_accountNumberPluginSupport_create_data(void)
 {
-    return ::account_accountNumberPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Bank::account_accountNumberPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -93,7 +95,7 @@ void
 account_accountNumberPluginSupport_destroy_data_ex(
     account_accountNumber *sample,RTIBool deallocate_pointers) {
 
-    ::account_accountNumber_finalize_ex(sample,deallocate_pointers);
+    ::Bank::account_accountNumber_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -103,7 +105,7 @@ void
 account_accountNumberPluginSupport_destroy_data(
     account_accountNumber *sample) {
 
-    ::account_accountNumberPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Bank::account_accountNumberPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -113,7 +115,7 @@ account_accountNumberPluginSupport_copy_data(
     account_accountNumber *dst,
     const account_accountNumber *src)
 {
-    return ::account_accountNumber_copy(dst,src);
+    return ::Bank::account_accountNumber_copy(dst,src);
 }
 
 
@@ -156,7 +158,7 @@ account_accountNumberPlugin_copy_sample(
     const account_accountNumber *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::account_accountNumberPluginSupport_copy_data(dst,src);
+    return ::Bank::account_accountNumberPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -248,7 +250,7 @@ account_accountNumberPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ::account_accountNumber_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Bank::account_accountNumber_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!RTICdrStream_deserializeLong(
         stream, &sample->accountNumber_)) {
@@ -287,7 +289,7 @@ account_accountNumberPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return ::account_accountNumberPlugin_deserialize_sample( 
+    return ::Bank::account_accountNumberPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -527,7 +529,7 @@ account_accountNumberPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::account_accountNumberPlugin_serialize(
+        if (!::Bank::account_accountNumberPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -576,7 +578,7 @@ RTIBool account_accountNumberPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::account_accountNumberPlugin_deserialize_sample(
+        if (!::Bank::account_accountNumberPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -606,7 +608,7 @@ RTIBool account_accountNumberPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return ::account_accountNumberPlugin_deserialize_key_sample(
+    return ::Bank::account_accountNumberPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -644,7 +646,7 @@ account_accountNumberPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::account_accountNumberPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Bank::account_accountNumberPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -682,7 +684,662 @@ account_accountNumberPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::account_accountNumberPlugin_deserialize_sample(
+        if (!::Bank::account_accountNumberPlugin_deserialize_sample(
+            endpoint_data, sample, stream, RTI_FALSE, 
+            RTI_TRUE, endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+
+    }
+
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+
+
+/* ------------------------------------------------------------------------
+ * Plug-in Installation Methods
+ * ------------------------------------------------------------------------ */
+
+/* --------------------------------------------------------------------------------------
+ *  Type EmptyGetAccountDetailsResponse
+ * -------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+EmptyGetAccountDetailsResponse *
+EmptyGetAccountDetailsResponsePluginSupport_create_data_ex(RTIBool allocate_pointers){
+    EmptyGetAccountDetailsResponse *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, EmptyGetAccountDetailsResponse);
+
+    if(sample != NULL) {
+        if (!::Bank::EmptyGetAccountDetailsResponse_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+EmptyGetAccountDetailsResponse *
+EmptyGetAccountDetailsResponsePluginSupport_create_data(void)
+{
+    return ::Bank::EmptyGetAccountDetailsResponsePluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+EmptyGetAccountDetailsResponsePluginSupport_destroy_data_ex(
+    EmptyGetAccountDetailsResponse *sample,RTIBool deallocate_pointers) {
+
+    ::Bank::EmptyGetAccountDetailsResponse_finalize_ex(sample,deallocate_pointers);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+EmptyGetAccountDetailsResponsePluginSupport_destroy_data(
+    EmptyGetAccountDetailsResponse *sample) {
+
+    ::Bank::EmptyGetAccountDetailsResponsePluginSupport_destroy_data_ex(sample,RTI_TRUE);
+
+}
+
+
+RTIBool 
+EmptyGetAccountDetailsResponsePluginSupport_copy_data(
+    EmptyGetAccountDetailsResponse *dst,
+    const EmptyGetAccountDetailsResponse *src)
+{
+    return ::Bank::EmptyGetAccountDetailsResponse_copy(dst,src);
+}
+
+
+void 
+EmptyGetAccountDetailsResponsePluginSupport_print_data(
+    const EmptyGetAccountDetailsResponse *sample,
+    const char *desc,
+    unsigned int indent_level)
+{
+
+
+    RTICdrType_printIndent(indent_level);
+
+    if (desc != NULL) {
+      RTILog_debug("%s:\n", desc);
+    } else {
+      RTILog_debug("\n");
+    }
+
+    if (sample == NULL) {
+      RTILog_debug("NULL\n");
+      return;
+    }
+
+
+    RTICdrType_printLong(
+        &sample->status, "status", indent_level + 1);
+            
+
+
+}
+
+ 
+
+
+RTIBool 
+EmptyGetAccountDetailsResponsePlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *dst,
+    const EmptyGetAccountDetailsResponse *src)
+{
+    if (endpoint_data) {} /* To avoid warnings */
+    return ::Bank::EmptyGetAccountDetailsResponsePluginSupport_copy_data(dst,src);
+}
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+unsigned int 
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+
+RTIBool 
+EmptyGetAccountDetailsResponsePlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const EmptyGetAccountDetailsResponse *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+    RTIBool retval = RTI_TRUE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+
+    if(serialize_sample) {
+    
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->status)) {
+        return RTI_FALSE;
+    }
+            
+
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+  return retval;
+}
+
+
+RTIBool 
+EmptyGetAccountDetailsResponsePlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+    
+    
+    if(deserialize_sample) {
+        ::Bank::EmptyGetAccountDetailsResponse_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->status)) {
+        goto fin;
+    }
+
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+ 
+ 
+
+RTIBool 
+EmptyGetAccountDetailsResponsePlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse **sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+
+    if (drop_sample) {} /* To avoid warnings */
+
+    return ::Bank::EmptyGetAccountDetailsResponsePlugin_deserialize_sample( 
+        endpoint_data, (sample != NULL)?*sample:NULL,
+        stream, deserialize_encapsulation, deserialize_sample, 
+        endpoint_plugin_qos);
+ 
+}
+
+
+
+
+RTIBool EmptyGetAccountDetailsResponsePlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream,   
+    RTIBool skip_encapsulation,
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(skip_encapsulation) {
+        if (!RTICdrStream_skipEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (skip_sample) {
+
+    if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+        return RTI_FALSE;   
+    }
+
+    if(skip_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+unsigned int 
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+unsigned int 
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+/* Returns the size of the sample in its serialized form (in bytes).
+ * It can also be an estimation in excess of the real buffer needed 
+ * during a call to the serialize() function.
+ * The value reported does not have to include the space for the
+ * encapsulation flags.
+ */
+unsigned int
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const EmptyGetAccountDetailsResponse * sample) 
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (sample) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+
+PRESTypePluginKeyKind 
+EmptyGetAccountDetailsResponsePlugin_get_key_kind(void)
+{
+
+    return PRES_TYPEPLUGIN_NO_KEY;
+     
+}
+
+
+RTIBool 
+EmptyGetAccountDetailsResponsePlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const EmptyGetAccountDetailsResponse *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+    
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if(serialize_key) {
+
+        if (!::Bank::EmptyGetAccountDetailsResponsePlugin_serialize(
+                endpoint_data,
+                sample,
+                stream,
+                RTI_FALSE, encapsulation_id,
+                RTI_TRUE,
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+RTIBool EmptyGetAccountDetailsResponsePlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;  
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Bank::EmptyGetAccountDetailsResponsePlugin_deserialize_sample(
+                endpoint_data, sample, stream,
+                RTI_FALSE, RTI_TRUE, 
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+ 
+RTIBool EmptyGetAccountDetailsResponsePlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    if (drop_sample) {} /* To avoid warnings */
+    return ::Bank::EmptyGetAccountDetailsResponsePlugin_deserialize_key_sample(
+        endpoint_data, (sample != NULL)?*sample:NULL, stream,
+        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+}
+
+
+
+unsigned int
+EmptyGetAccountDetailsResponsePlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int encapsulation_size = current_alignment;
+
+
+    unsigned int initial_alignment = current_alignment;
+
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+        
+
+    current_alignment += ::Bank::EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
+    
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+RTIBool 
+EmptyGetAccountDetailsResponsePlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Bank::EmptyGetAccountDetailsResponsePlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -728,7 +1385,7 @@ XMLGetAccountDetailsResponsePluginSupport_create_data_ex(RTIBool allocate_pointe
         &sample, XMLGetAccountDetailsResponse);
 
     if(sample != NULL) {
-        if (!::XMLGetAccountDetailsResponse_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Bank::XMLGetAccountDetailsResponse_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -740,7 +1397,7 @@ XMLGetAccountDetailsResponsePluginSupport_create_data_ex(RTIBool allocate_pointe
 XMLGetAccountDetailsResponse *
 XMLGetAccountDetailsResponsePluginSupport_create_data(void)
 {
-    return ::XMLGetAccountDetailsResponsePluginSupport_create_data_ex(RTI_TRUE);
+    return ::Bank::XMLGetAccountDetailsResponsePluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -748,7 +1405,7 @@ void
 XMLGetAccountDetailsResponsePluginSupport_destroy_data_ex(
     XMLGetAccountDetailsResponse *sample,RTIBool deallocate_pointers) {
 
-    ::XMLGetAccountDetailsResponse_finalize_ex(sample,deallocate_pointers);
+    ::Bank::XMLGetAccountDetailsResponse_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -758,7 +1415,7 @@ void
 XMLGetAccountDetailsResponsePluginSupport_destroy_data(
     XMLGetAccountDetailsResponse *sample) {
 
-    ::XMLGetAccountDetailsResponsePluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Bank::XMLGetAccountDetailsResponsePluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -768,7 +1425,7 @@ XMLGetAccountDetailsResponsePluginSupport_copy_data(
     XMLGetAccountDetailsResponse *dst,
     const XMLGetAccountDetailsResponse *src)
 {
-    return ::XMLGetAccountDetailsResponse_copy(dst,src);
+    return ::Bank::XMLGetAccountDetailsResponse_copy(dst,src);
 }
 
 
@@ -820,7 +1477,7 @@ XMLGetAccountDetailsResponsePlugin_copy_sample(
     const XMLGetAccountDetailsResponse *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::XMLGetAccountDetailsResponsePluginSupport_copy_data(dst,src);
+    return ::Bank::XMLGetAccountDetailsResponsePluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -918,7 +1575,7 @@ XMLGetAccountDetailsResponsePlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ::XMLGetAccountDetailsResponse_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Bank::XMLGetAccountDetailsResponse_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!RTICdrStream_deserializeLong(
         stream, &sample->status)) {
@@ -963,7 +1620,7 @@ XMLGetAccountDetailsResponsePlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return ::XMLGetAccountDetailsResponsePlugin_deserialize_sample( 
+    return ::Bank::XMLGetAccountDetailsResponsePlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1220,7 +1877,7 @@ XMLGetAccountDetailsResponsePlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::XMLGetAccountDetailsResponsePlugin_serialize(
+        if (!::Bank::XMLGetAccountDetailsResponsePlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -1269,7 +1926,7 @@ RTIBool XMLGetAccountDetailsResponsePlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::XMLGetAccountDetailsResponsePlugin_deserialize_sample(
+        if (!::Bank::XMLGetAccountDetailsResponsePlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -1299,7 +1956,7 @@ RTIBool XMLGetAccountDetailsResponsePlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return ::XMLGetAccountDetailsResponsePlugin_deserialize_key_sample(
+    return ::Bank::XMLGetAccountDetailsResponsePlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -1337,7 +1994,7 @@ XMLGetAccountDetailsResponsePlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::XMLGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+    current_alignment += ::Bank::XMLGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -1375,7 +2032,7 @@ XMLGetAccountDetailsResponsePlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::XMLGetAccountDetailsResponsePlugin_deserialize_sample(
+        if (!::Bank::XMLGetAccountDetailsResponsePlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -1421,7 +2078,7 @@ GetAccountDetailsResponsePluginSupport_create_data_ex(RTIBool allocate_pointers)
         &sample, GetAccountDetailsResponse);
 
     if(sample != NULL) {
-        if (!::GetAccountDetailsResponse_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Bank::GetAccountDetailsResponse_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -1433,7 +2090,7 @@ GetAccountDetailsResponsePluginSupport_create_data_ex(RTIBool allocate_pointers)
 GetAccountDetailsResponse *
 GetAccountDetailsResponsePluginSupport_create_data(void)
 {
-    return ::GetAccountDetailsResponsePluginSupport_create_data_ex(RTI_TRUE);
+    return ::Bank::GetAccountDetailsResponsePluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -1441,7 +2098,7 @@ void
 GetAccountDetailsResponsePluginSupport_destroy_data_ex(
     GetAccountDetailsResponse *sample,RTIBool deallocate_pointers) {
 
-    ::GetAccountDetailsResponse_finalize_ex(sample,deallocate_pointers);
+    ::Bank::GetAccountDetailsResponse_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -1451,7 +2108,7 @@ void
 GetAccountDetailsResponsePluginSupport_destroy_data(
     GetAccountDetailsResponse *sample) {
 
-    ::GetAccountDetailsResponsePluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Bank::GetAccountDetailsResponsePluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -1461,7 +2118,7 @@ GetAccountDetailsResponsePluginSupport_copy_data(
     GetAccountDetailsResponse *dst,
     const GetAccountDetailsResponse *src)
 {
-    return ::GetAccountDetailsResponse_copy(dst,src);
+    return ::Bank::GetAccountDetailsResponse_copy(dst,src);
 }
 
 
@@ -1492,10 +2149,18 @@ GetAccountDetailsResponsePluginSupport_print_data(
             
 
     switch(sample->_d) {
-          case 1:
+          case 0:
         {                                    
         
-    XMLGetAccountDetailsResponsePluginSupport_print_data(
+    Bank::EmptyGetAccountDetailsResponsePluginSupport_print_data(
+        &sample->_u.emptyGetAccountDetailsResponse, "_u.emptyGetAccountDetailsResponse", indent_level + 1);
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    Bank::XMLGetAccountDetailsResponsePluginSupport_print_data(
         &sample->_u.xmlGetAccountDetailsResponse, "_u.xmlGetAccountDetailsResponse", indent_level + 1);
             
 
@@ -1516,7 +2181,7 @@ GetAccountDetailsResponsePlugin_copy_sample(
     const GetAccountDetailsResponse *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::GetAccountDetailsResponsePluginSupport_copy_data(dst,src);
+    return ::Bank::GetAccountDetailsResponsePluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1568,10 +2233,25 @@ GetAccountDetailsResponsePlugin_serialize(
             
 
     switch(sample->_d) {
-          case 1:
+          case 0:
         {                                    
         
-    if (!XMLGetAccountDetailsResponsePlugin_serialize(
+    if (!Bank::EmptyGetAccountDetailsResponsePlugin_serialize(
+            endpoint_data,
+            &sample->_u.emptyGetAccountDetailsResponse, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!Bank::XMLGetAccountDetailsResponsePlugin_serialize(
             endpoint_data,
             &sample->_u.xmlGetAccountDetailsResponse, 
             stream, 
@@ -1632,10 +2312,24 @@ GetAccountDetailsResponsePlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          case 1:
+          case 0:
         {                                    
         
-    if (!XMLGetAccountDetailsResponsePlugin_deserialize_sample(
+    if (!Bank::EmptyGetAccountDetailsResponsePlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.emptyGetAccountDetailsResponse,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!Bank::XMLGetAccountDetailsResponsePlugin_deserialize_sample(
             endpoint_data,
             &sample->_u.xmlGetAccountDetailsResponse,
             stream, 
@@ -1675,7 +2369,7 @@ GetAccountDetailsResponsePlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return ::GetAccountDetailsResponsePlugin_deserialize_sample( 
+    return ::Bank::GetAccountDetailsResponsePlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1717,10 +2411,23 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          case 1:
+          case 0:
         {                                    
         
-    if (!XMLGetAccountDetailsResponsePlugin_skip(
+    if (!Bank::EmptyGetAccountDetailsResponsePlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!Bank::XMLGetAccountDetailsResponsePlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -1781,7 +2488,11 @@ GetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( XMLGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( Bank::EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( Bank::XMLGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -1828,7 +2539,11 @@ GetAccountDetailsResponsePlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( XMLGetAccountDetailsResponsePlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( Bank::EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( Bank::XMLGetAccountDetailsResponsePlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -1882,10 +2597,19 @@ GetAccountDetailsResponsePlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          case 1:
+          case 0:
         {                                    
         
-    current_alignment += XMLGetAccountDetailsResponsePlugin_get_serialized_sample_size(
+    current_alignment += Bank::EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.emptyGetAccountDetailsResponse);
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    current_alignment += Bank::XMLGetAccountDetailsResponsePlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->_u.xmlGetAccountDetailsResponse);
             
@@ -1950,7 +2674,7 @@ GetAccountDetailsResponsePlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::GetAccountDetailsResponsePlugin_serialize(
+        if (!::Bank::GetAccountDetailsResponsePlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -1999,7 +2723,7 @@ RTIBool GetAccountDetailsResponsePlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::GetAccountDetailsResponsePlugin_deserialize_sample(
+        if (!::Bank::GetAccountDetailsResponsePlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -2029,7 +2753,7 @@ RTIBool GetAccountDetailsResponsePlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return ::GetAccountDetailsResponsePlugin_deserialize_key_sample(
+    return ::Bank::GetAccountDetailsResponsePlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -2067,7 +2791,7 @@ GetAccountDetailsResponsePlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::GetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+    current_alignment += ::Bank::GetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -2101,7 +2825,7 @@ GetAccountDetailsResponsePlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::GetAccountDetailsResponsePlugin_deserialize_sample(
+        if (!::Bank::GetAccountDetailsResponsePlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -2141,7 +2865,7 @@ GetAccountDetailsRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, GetAccountDetailsRequest);
 
     if(sample != NULL) {
-        if (!::GetAccountDetailsRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Bank::GetAccountDetailsRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -2153,7 +2877,7 @@ GetAccountDetailsRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 GetAccountDetailsRequest *
 GetAccountDetailsRequestPluginSupport_create_data(void)
 {
-    return ::GetAccountDetailsRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Bank::GetAccountDetailsRequestPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -2161,7 +2885,7 @@ void
 GetAccountDetailsRequestPluginSupport_destroy_data_ex(
     GetAccountDetailsRequest *sample,RTIBool deallocate_pointers) {
 
-    ::GetAccountDetailsRequest_finalize_ex(sample,deallocate_pointers);
+    ::Bank::GetAccountDetailsRequest_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -2171,7 +2895,7 @@ void
 GetAccountDetailsRequestPluginSupport_destroy_data(
     GetAccountDetailsRequest *sample) {
 
-    ::GetAccountDetailsRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Bank::GetAccountDetailsRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -2181,7 +2905,7 @@ GetAccountDetailsRequestPluginSupport_copy_data(
     GetAccountDetailsRequest *dst,
     const GetAccountDetailsRequest *src)
 {
-    return ::GetAccountDetailsRequest_copy(dst,src);
+    return ::Bank::GetAccountDetailsRequest_copy(dst,src);
 }
 
 
@@ -2241,7 +2965,7 @@ GetAccountDetailsRequestPlugin_copy_sample(
     const GetAccountDetailsRequest *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::GetAccountDetailsRequestPluginSupport_copy_data(dst,src);
+    return ::Bank::GetAccountDetailsRequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -2391,7 +3115,7 @@ GetAccountDetailsRequestPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return ::GetAccountDetailsRequestPlugin_deserialize_sample( 
+    return ::Bank::GetAccountDetailsRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -2661,7 +3385,7 @@ GetAccountDetailsRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::GetAccountDetailsRequestPlugin_serialize(
+        if (!::Bank::GetAccountDetailsRequestPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -2710,7 +3434,7 @@ RTIBool GetAccountDetailsRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::GetAccountDetailsRequestPlugin_deserialize_sample(
+        if (!::Bank::GetAccountDetailsRequestPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -2740,7 +3464,7 @@ RTIBool GetAccountDetailsRequestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return ::GetAccountDetailsRequestPlugin_deserialize_key_sample(
+    return ::Bank::GetAccountDetailsRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -2778,7 +3502,7 @@ GetAccountDetailsRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::GetAccountDetailsRequestPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Bank::GetAccountDetailsRequestPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -2812,7 +3536,7 @@ GetAccountDetailsRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::GetAccountDetailsRequestPlugin_deserialize_sample(
+        if (!::Bank::GetAccountDetailsRequestPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -2835,3 +3559,5 @@ GetAccountDetailsRequestPlugin_serialized_sample_to_key(
 /* ------------------------------------------------------------------------
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
+
+} /* namespace Bank */

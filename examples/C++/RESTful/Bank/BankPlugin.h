@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef BankPlugin_1795593638_h
-#define BankPlugin_1795593638_h
+#ifndef BankPlugin_1795593968_h
+#define BankPlugin_1795593968_h
 
 #include "Bank.h"
 
@@ -31,7 +31,9 @@ struct RTICdrStream;
 #endif
 
 
-#define account_accountNumber_LAST_MEMBER_ID 0
+namespace Bank{
+
+#define Bank_account_accountNumber_LAST_MEMBER_ID 0
 
 #define account_accountNumberPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define account_accountNumberPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -203,7 +205,179 @@ account_accountNumberPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define XMLGetAccountDetailsResponse_LAST_MEMBER_ID 0
+#define Bank_EmptyGetAccountDetailsResponse_LAST_MEMBER_ID 0
+
+#define EmptyGetAccountDetailsResponsePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+#define EmptyGetAccountDetailsResponsePlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define EmptyGetAccountDetailsResponsePlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define EmptyGetAccountDetailsResponsePlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+ 
+
+#define EmptyGetAccountDetailsResponsePlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define EmptyGetAccountDetailsResponsePlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern EmptyGetAccountDetailsResponse*
+EmptyGetAccountDetailsResponsePluginSupport_create_data_ex(RTIBool allocate_pointers);
+
+NDDSUSERDllExport extern EmptyGetAccountDetailsResponse*
+EmptyGetAccountDetailsResponsePluginSupport_create_data(void);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePluginSupport_copy_data(
+    EmptyGetAccountDetailsResponse *out,
+    const EmptyGetAccountDetailsResponse *in);
+
+NDDSUSERDllExport extern void 
+EmptyGetAccountDetailsResponsePluginSupport_destroy_data_ex(
+    EmptyGetAccountDetailsResponse *sample,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+EmptyGetAccountDetailsResponsePluginSupport_destroy_data(
+    EmptyGetAccountDetailsResponse *sample);
+
+NDDSUSERDllExport extern void 
+EmptyGetAccountDetailsResponsePluginSupport_print_data(
+    const EmptyGetAccountDetailsResponse *sample,
+    const char *desc,
+    unsigned int indent);
+
+
+
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *out,
+    const EmptyGetAccountDetailsResponse *in);
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const EmptyGetAccountDetailsResponse *sample,
+    struct RTICdrStream *stream, 
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+
+
+
+NDDSUSERDllExport extern RTIBool
+EmptyGetAccountDetailsResponsePlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream, 
+    RTIBool skip_encapsulation,  
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int 
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int 
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+EmptyGetAccountDetailsResponsePlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const EmptyGetAccountDetailsResponse * sample);
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginKeyKind 
+EmptyGetAccountDetailsResponsePlugin_get_key_kind(void);
+
+NDDSUSERDllExport extern unsigned int 
+EmptyGetAccountDetailsResponsePlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const EmptyGetAccountDetailsResponse *sample,
+    struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse * sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+EmptyGetAccountDetailsResponsePlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse ** sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+
+NDDSUSERDllExport extern RTIBool
+EmptyGetAccountDetailsResponsePlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    EmptyGetAccountDetailsResponse *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos);
+
+
+#define Bank_XMLGetAccountDetailsResponse_LAST_MEMBER_ID 0
 
 #define XMLGetAccountDetailsResponsePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define XMLGetAccountDetailsResponsePlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -375,7 +549,7 @@ XMLGetAccountDetailsResponsePlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define GetAccountDetailsResponse_LAST_MEMBER_ID 0
+#define Bank_GetAccountDetailsResponse_LAST_MEMBER_ID 0
 
 #define GetAccountDetailsResponsePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define GetAccountDetailsResponsePlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -547,7 +721,7 @@ GetAccountDetailsResponsePlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define GetAccountDetailsRequest_LAST_MEMBER_ID 0
+#define Bank_GetAccountDetailsRequest_LAST_MEMBER_ID 0
 
 #define GetAccountDetailsRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
 #define GetAccountDetailsRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
@@ -719,6 +893,8 @@ GetAccountDetailsRequestPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
+} /* namespace Bank */
+
         
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -727,4 +903,4 @@ GetAccountDetailsRequestPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* BankPlugin_1795593638_h */
+#endif /* BankPlugin_1795593968_h */

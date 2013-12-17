@@ -20,7 +20,7 @@
 /**
  * \brief This class is an example of a servant and it implements the remote procedures of the servant.
  */
-class account_accountNumberResourceServerImplExample : public account_accountNumberResourceServerImpl
+class account_accountNumberResourceServerImplExample : public Bank::account_accountNumberResourceServerImpl
 {
     public:
 
@@ -34,9 +34,12 @@ class account_accountNumberResourceServerImplExample : public account_accountNum
 
 
 
-        GetAccountDetailsResponse getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest);
+
+        //! @brief Implementation of the remote procedure getAccountDetails
+        Bank::GetAccountDetailsResponse getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest);
 ;
 };
+
 
 
 #endif // _BankSERVER_IMPL_EXAMPLE_H_

@@ -38,8 +38,152 @@
 
 #include "HelloWorld.h"
 
+
+namespace HelloWorld{
 /* ========================================================================= */
-const char *XMLHelloResponseTYPENAME = "XMLHelloResponse";
+const char *EmptyHelloResponseTYPENAME = "HelloWorld::EmptyHelloResponse";
+
+DDS_TypeCode* EmptyHelloResponse_get_typecode()
+{
+    static RTIBool is_initialized = RTI_FALSE;
+
+
+    static DDS_TypeCode_Member EmptyHelloResponse_g_tc_members[1]=
+    {
+        {
+            (char *)"status",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            0, /* Ignored */
+            0, /* Ignored */
+            NULL, /* Ignored */
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        }
+    };
+
+    static DDS_TypeCode EmptyHelloResponse_g_tc =
+    {{
+        DDS_TK_STRUCT,/* Kind */
+        DDS_BOOLEAN_FALSE, /* Ignored */
+        -1,/* Ignored */
+        (char *)"HelloWorld::EmptyHelloResponse", /* Name */
+        NULL, /* Ignored */
+        0, /* Ignored */
+        0, /* Ignored */
+        NULL, /* Ignored */
+        1, /* Number of members */
+        EmptyHelloResponse_g_tc_members, /* Members */
+        DDS_VM_NONE /* Ignored */
+    }}; /* Type code for EmptyHelloResponse*/
+
+    if (is_initialized) {
+        return &EmptyHelloResponse_g_tc;
+    }
+
+
+    EmptyHelloResponse_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
+
+    is_initialized = RTI_TRUE;
+
+    return &EmptyHelloResponse_g_tc;
+}
+
+
+RTIBool EmptyHelloResponse_initialize(
+    EmptyHelloResponse* sample) {
+  return ::HelloWorld::EmptyHelloResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+}
+        
+RTIBool EmptyHelloResponse_initialize_ex(
+    EmptyHelloResponse* sample,RTIBool allocatePointers,RTIBool allocateMemory)
+{
+        
+    
+    if (allocatePointers) {} /* To avoid warnings */
+    if (allocateMemory) {} /* To avoid warnings */
+
+    if (!RTICdrType_initLong(&sample->status)) {
+        return RTI_FALSE;
+    }                
+            
+
+
+    return RTI_TRUE;
+}
+
+void EmptyHelloResponse_finalize(
+    EmptyHelloResponse* sample)
+{
+    ::HelloWorld::EmptyHelloResponse_finalize_ex(sample,RTI_TRUE);
+}
+        
+void EmptyHelloResponse_finalize_ex(
+    EmptyHelloResponse* sample,RTIBool deletePointers)
+{        
+    if (sample) { } /* To avoid warnings */
+    if (deletePointers) {} /* To avoid warnings */
+
+
+
+}
+
+RTIBool EmptyHelloResponse_copy(
+    EmptyHelloResponse* dst,
+    const EmptyHelloResponse* src)
+{        
+
+    if (!RTICdrType_copyLong(
+        &dst->status, &src->status)) {
+        return RTI_FALSE;
+    }
+            
+
+
+    return RTI_TRUE;
+}
+
+
+/**
+ * <<IMPLEMENTATION>>
+ *
+ * Defines:  TSeq, T
+ *
+ * Configure and implement 'EmptyHelloResponse' sequence class.
+ */
+#define T EmptyHelloResponse
+#define TSeq EmptyHelloResponseSeq
+#define T_initialize_ex ::HelloWorld::EmptyHelloResponse_initialize_ex
+#define T_finalize_ex   ::HelloWorld::EmptyHelloResponse_finalize_ex
+#define T_copy       ::HelloWorld::EmptyHelloResponse_copy
+
+#ifndef NDDS_STANDALONE_TYPE
+#include "dds_c/generic/dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp/generic/dds_cpp_sequence_TSeq.gen"
+#endif
+#else
+#include "dds_c_sequence_TSeq.gen"
+#ifdef __cplusplus
+#include "dds_cpp_sequence_TSeq.gen"
+#endif
+#endif
+
+#undef T_copy
+#undef T_finalize_ex
+#undef T_initialize_ex
+#undef TSeq
+#undef T
+
+/* ========================================================================= */
+const char *XMLHelloResponseTYPENAME = "HelloWorld::XMLHelloResponse";
 
 DDS_TypeCode* XMLHelloResponse_get_typecode()
 {
@@ -90,7 +234,7 @@ DDS_TypeCode* XMLHelloResponse_get_typecode()
         DDS_TK_STRUCT,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
-        (char *)"XMLHelloResponse", /* Name */
+        (char *)"HelloWorld::XMLHelloResponse", /* Name */
         NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
@@ -116,7 +260,7 @@ DDS_TypeCode* XMLHelloResponse_get_typecode()
 
 RTIBool XMLHelloResponse_initialize(
     XMLHelloResponse* sample) {
-  return ::XMLHelloResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::HelloWorld::XMLHelloResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool XMLHelloResponse_initialize_ex(
@@ -151,7 +295,7 @@ RTIBool XMLHelloResponse_initialize_ex(
 void XMLHelloResponse_finalize(
     XMLHelloResponse* sample)
 {
-    ::XMLHelloResponse_finalize_ex(sample,RTI_TRUE);
+    ::HelloWorld::XMLHelloResponse_finalize_ex(sample,RTI_TRUE);
 }
         
 void XMLHelloResponse_finalize_ex(
@@ -198,9 +342,9 @@ RTIBool XMLHelloResponse_copy(
  */
 #define T XMLHelloResponse
 #define TSeq XMLHelloResponseSeq
-#define T_initialize_ex ::XMLHelloResponse_initialize_ex
-#define T_finalize_ex   ::XMLHelloResponse_finalize_ex
-#define T_copy       ::XMLHelloResponse_copy
+#define T_initialize_ex ::HelloWorld::XMLHelloResponse_initialize_ex
+#define T_finalize_ex   ::HelloWorld::XMLHelloResponse_finalize_ex
+#define T_copy       ::HelloWorld::XMLHelloResponse_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -221,15 +365,32 @@ RTIBool XMLHelloResponse_copy(
 #undef T
 
 /* ========================================================================= */
-const char *HelloResponseTYPENAME = "HelloResponse";
+const char *HelloResponseTYPENAME = "HelloWorld::HelloResponse";
 
 DDS_TypeCode* HelloResponse_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member HelloResponse_g_tc_members[1]=
+    static DDS_TypeCode_Member HelloResponse_g_tc_members[2]=
     {
+        {
+            (char *)"emptyHelloResponse",/* Member name */
+            {
+                0,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            1, /* Number of labels */
+            0, /* First label */
+            NULL, /* Labels (it is NULL when there is only one label)*/
+            DDS_BOOLEAN_FALSE, /* Is a key? */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            0,/* Ignored */
+            NULL/* Ignored */
+        },
         {
             (char *)"xmlHelloResponse",/* Member name */
             {
@@ -254,12 +415,12 @@ DDS_TypeCode* HelloResponse_get_typecode()
         DDS_TK_UNION,/* Kind */
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Default index */
-        (char *)"HelloResponse", /* Name */
+        (char *)"HelloWorld::HelloResponse", /* Name */
         NULL, /* Discriminator type code is assigned later */
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        1, /* Number of members */
+        2, /* Number of members */
         HelloResponse_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
     }}; /* Type code for HelloResponse*/
@@ -269,7 +430,8 @@ DDS_TypeCode* HelloResponse_get_typecode()
     }
 
 
-    HelloResponse_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)XMLHelloResponse_get_typecode();
+    HelloResponse_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)HelloWorld::EmptyHelloResponse_get_typecode();
+    HelloResponse_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)HelloWorld::XMLHelloResponse_get_typecode();
 
     HelloResponse_g_tc._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long; /* Discriminator type code */
 
@@ -281,7 +443,9 @@ DDS_TypeCode* HelloResponse_get_typecode()
 DDS_UnsignedLong HelloResponse_getDefaultDiscriminator()
 {
 
-    DDS_UnsignedLong tmp = 1;
+    DDS_UnsignedLong tmp = 0;
+    
+    if (tmp > 0) tmp = 0;
     
     if (tmp > 1) tmp = 1;
     
@@ -292,7 +456,7 @@ DDS_UnsignedLong HelloResponse_getDefaultDiscriminator()
 
 RTIBool HelloResponse_initialize(
     HelloResponse* sample) {
-  return ::HelloResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::HelloWorld::HelloResponse_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool HelloResponse_initialize_ex(
@@ -305,7 +469,12 @@ RTIBool HelloResponse_initialize_ex(
 
     sample->_d = HelloResponse_getDefaultDiscriminator();
 
-    if (!XMLHelloResponse_initialize_ex(&sample->_u.xmlHelloResponse,allocatePointers,allocateMemory)) {
+    if (!HelloWorld::EmptyHelloResponse_initialize_ex(&sample->_u.emptyHelloResponse,allocatePointers,allocateMemory)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!HelloWorld::XMLHelloResponse_initialize_ex(&sample->_u.xmlHelloResponse,allocatePointers,allocateMemory)) {
         return RTI_FALSE;
     }
             
@@ -317,7 +486,7 @@ RTIBool HelloResponse_initialize_ex(
 void HelloResponse_finalize(
     HelloResponse* sample)
 {
-    ::HelloResponse_finalize_ex(sample,RTI_TRUE);
+    ::HelloWorld::HelloResponse_finalize_ex(sample,RTI_TRUE);
 }
         
 void HelloResponse_finalize_ex(
@@ -327,7 +496,10 @@ void HelloResponse_finalize_ex(
     if (deletePointers) {} /* To avoid warnings */
 
 
-    XMLHelloResponse_finalize_ex(&sample->_u.xmlHelloResponse,deletePointers);
+    HelloWorld::EmptyHelloResponse_finalize_ex(&sample->_u.emptyHelloResponse,deletePointers);
+            
+
+    HelloWorld::XMLHelloResponse_finalize_ex(&sample->_u.xmlHelloResponse,deletePointers);
             
 
 }
@@ -344,10 +516,20 @@ RTIBool HelloResponse_copy(
             
 
     switch(src->_d) {
-          case 1:
+          case 0:
         {                                    
         
-    if (!XMLHelloResponse_copy(
+    if (!HelloWorld::EmptyHelloResponse_copy(
+        &dst->_u.emptyHelloResponse, &src->_u.emptyHelloResponse)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!HelloWorld::XMLHelloResponse_copy(
         &dst->_u.xmlHelloResponse, &src->_u.xmlHelloResponse)) {
         return RTI_FALSE;
     }
@@ -371,9 +553,9 @@ RTIBool HelloResponse_copy(
  */
 #define T HelloResponse
 #define TSeq HelloResponseSeq
-#define T_initialize_ex ::HelloResponse_initialize_ex
-#define T_finalize_ex   ::HelloResponse_finalize_ex
-#define T_copy       ::HelloResponse_copy
+#define T_initialize_ex ::HelloWorld::HelloResponse_initialize_ex
+#define T_finalize_ex   ::HelloWorld::HelloResponse_finalize_ex
+#define T_copy       ::HelloWorld::HelloResponse_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -393,3 +575,5 @@ RTIBool HelloResponse_copy(
 #undef TSeq
 #undef T
 
+
+} /* namespace HelloWorld */

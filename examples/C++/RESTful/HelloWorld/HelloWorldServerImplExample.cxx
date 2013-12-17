@@ -15,15 +15,17 @@
 #include "HelloWorldServerImplExample.h"
 
 
-HelloResponse HelloWorldResourceServerImplExample::hello(/*in*/ const char* name)
+
+HelloWorld::HelloResponse HelloWorldResourceServerImplExample::hello(/*in*/ const char* name)
 {
-    HelloResponse hello_ret;
-    HelloResponse_initialize(&hello_ret);
+    HelloWorld::HelloResponse hello_ret;
+    HelloWorld::HelloResponse_initialize(&hello_ret);
 	
     hello_ret._d = 1; // 1 -> XML representation
     hello_ret._u.xmlHelloResponse.status = 200; // HTTP OK
 	sprintf(hello_ret._u.xmlHelloResponse.xmlRepresentation, "<Response>Hello %s!</Response>", name);
-      
+   
     return hello_ret;
 } 
+
 

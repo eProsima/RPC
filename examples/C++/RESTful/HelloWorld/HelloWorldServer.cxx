@@ -18,53 +18,58 @@
 #include "HelloWorldProtocol.h"
 #include "exceptions/ServerInternalException.h"
 
-HelloWorldResourceServer::HelloWorldResourceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
-            eprosima::rpcdds::protocol::HelloWorldProtocol &protocol, HelloWorldResourceServerImpl &servant) :
-    Server(strategy, transport, protocol), _impl(servant)
+namespace HelloWorld
 {
-   protocol.activateInterface("HelloWorldResource");
-   protocol.linkHelloWorldResourceImpl(servant);
-}
-
-HelloWorldResourceServer::~HelloWorldResourceServer()
-{
-    //TODO Unlink an deactivate.
-}
-
-
-
-/*void HelloWorldResourceServer::hello(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
-{ 
-    HelloWorldResourceServer *srv = dynamic_cast<HelloWorldResourceServer*>(server);
-    char*  name = NULL;
-    HelloResponse hello_ret;
-    memset(&hello_ret, 0, sizeof(HelloResponse));   
-    HelloWorldResource_helloReply replyData;
-    
-
-    HelloWorldResource_helloRequestUtils::extractTypeData(*(HelloWorldResource_helloRequest*)requestData, name);
-
-    try
+    HelloWorldResourceServer::HelloWorldResourceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
+                eprosima::rpcdds::protocol::HelloWorldProtocol &protocol, HelloWorldResourceServerImpl &servant) :
+        Server(strategy, transport, protocol), _impl(servant)
     {
-        hello_ret = srv->_impl.hello(name);
-
-        HelloWorldResource_helloReplyUtils::setTypeData(replyData, hello_ret);
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = (char*)"";
-
-        service->sendReply(requestData, &replyData);
+       protocol.activateInterface("HelloWorld::HelloWorldResource");
+       protocol.linkHelloWorld_HelloWorldResourceImpl(servant);
     }
-    catch(const eProsima::RPCDDS::ServerInternalException &ex)
+
+    HelloWorldResourceServer::~HelloWorldResourceServer()
     {
-        memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
-        replyData.header.rpcddsRetMsg = (char*)ex.what();
+        //TODO Unlink an deactivate.
+    }
+
+
+
+
+    /*void HelloWorldResourceServer::hello(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
+    { 
+        HelloWorldResourceServer *srv = dynamic_cast<HelloWorldResourceServer*>(server);
+        char*  name = NULL;
+        HelloWorld::HelloResponse hello_ret;
+        memset(&hello_ret, 0, sizeof(HelloWorld::HelloResponse));   
+        HelloWorldResource_helloReply replyData;
         
-        service->sendReply(requestData, &replyData);
-    }
-    
-    HelloWorldResource_helloRequestTypeSupport::delete_data((HelloWorldResource_helloRequest*)requestData);
-    
-    HelloResponse_finalize(&hello_ret);
-}*/
 
+        HelloWorldResource_helloRequestUtils::extractTypeData(*(HelloWorldResource_helloRequest*)requestData, name);
+
+        try
+        {
+            hello_ret = srv->_impl.hello(name);
+
+            HelloWorldResource_helloReplyUtils::setTypeData(replyData, hello_ret);
+            replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
+            replyData.header.rpcddsRetMsg = (char*)"";
+
+            service->sendReply(requestData, &replyData);
+        }
+        catch(const eProsima::RPCDDS::ServerInternalException &ex)
+        {
+            memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
+            replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
+            replyData.header.rpcddsRetMsg = (char*)ex.what();
+            
+            service->sendReply(requestData, &replyData);
+        }
+        
+        HelloWorldResource_helloRequestTypeSupport::delete_data((HelloWorldResource_helloRequest*)requestData);
+        
+        HelloWorld::HelloResponse_finalize(&hello_ret);
+    }*/
+
+
+};

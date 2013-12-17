@@ -1,0 +1,89 @@
+CPP= g++
+CPPFLAGS = -c -Wall -fpic -m32 -std=c++0x
+LN= g++
+AR=ar
+LDFLAGS= -m32
+SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
+DEFINES=  -DRTI_LINUX -DRTI_UNIX
+
+INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include 
+
+LIBS =  -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 \
+       -lrpcdds-0.2.0 -lnddsc -lnddscore -lnddscpp -lboost_system-mt $(SYSLIBS)
+
+DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
+
+all: $(DIRECTORIES) Bank  BankClient BankClientExample BankServer BankServerExample
+
+
+Bank_TARGET= lib/i86Linux2.6gcc4.4.5/libBank.so
+Bank_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libBank.a
+Bank_CLIENT_TARGET= lib/i86Linux2.6gcc4.4.5/libBankClient.so
+Bank_CLIENT_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libBankClient.a
+Bank_CLIENT_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/BankClientExample
+Bank_SERVER_TARGET= lib/i86Linux2.6gcc4.4.5/libBankServer.so
+Bank_SERVER_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libBankServer.a
+Bank_SERVER_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/BankServerExample
+Bank_COMMON_SRC_CXXFILES = Bank.cxx \
+	BankPlugin.cxx \
+	BankSupport.cxx \
+	BankRESTProtocol.cxx
+
+Bank_COMMON_SRC_CPPFILES=
+
+Bank_CLIENTSOURCES = BankProxy.cxx
+Bank_SERVERSOURCES = BankServer.cxx
+Bank_COMMONOBJS    = $(Bank_COMMON_SRC_CXXFILES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o) $(Bank_COMMON_SRC_CPPFILES:%.cpp=output/i86Linux2.6gcc4.4.5/%.o)
+Bank_CLIENTOBJS    = $(Bank_CLIENTSOURCES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o)
+Bank_SERVEROBJS    = $(Bank_SERVERSOURCES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o)
+OBJS+= $(Bank_COMMONOBJS) $(Bank_CLIENTOBJS) $(Bank_SERVEROBJS)
+
+$(Bank_TARGET): $(Bank_COMMONOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Bank_TARGET) $(Bank_COMMONOBJS) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 
+
+$(Bank_TARGET_Z): $(Bank_COMMONOBJS)
+	$(AR) -cru $(Bank_TARGET_Z) $(Bank_COMMONOBJS)
+$(Bank_CLIENT_TARGET): $(Bank_CLIENTOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Bank_CLIENT_TARGET) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lBank $(Bank_CLIENTOBJS)
+
+$(Bank_CLIENT_TARGET_Z): $(Bank_CLIENTOBJS)
+	$(AR) -cru $(Bank_CLIENT_TARGET_Z) $(Bank_CLIENTOBJS)
+	
+$(Bank_SERVER_TARGET): $(Bank_SERVEROBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Bank_SERVER_TARGET) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lBank $(Bank_SERVEROBJS)
+
+$(Bank_SERVER_TARGET_Z): $(Bank_COMMONOBJS) $(Bank_SERVEROBJS)
+	$(AR) -cru $(Bank_SERVER_TARGET_Z) $(Bank_SERVEROBJS)
+BankClient : $(Bank_CLIENT_TARGET) $(Bank_CLIENT_TARGET_Z)
+	
+BankServer : $(Bank_SERVER_TARGET) $(Bank_SERVER_TARGET_Z)
+	
+$(Bank_CLIENT_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/BankClientExample.o lib/i86Linux2.6gcc4.4.5/libBankClient.a lib/i86Linux2.6gcc4.4.5/libBank.a 
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/BankClientExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lBankClient -lBank  -Wl,-Bdynamic $(LIBS)
+	
+$(Bank_SERVER_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/BankServerExample.o output/i86Linux2.6gcc4.4.5/BankServerImplExample.o lib/i86Linux2.6gcc4.4.5/libBankServer.a lib/i86Linux2.6gcc4.4.5/libBank.a 
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/BankServerImplExample.o output/i86Linux2.6gcc4.4.5/BankServerExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lBankServer -lBank  -Wl,-Bdynamic $(LIBS)
+	
+BankClientExample : $(Bank_CLIENT_EXAMPLE_TARGET)
+	
+BankServerExample : $(Bank_SERVER_EXAMPLE_TARGET)
+Bank: $(Bank_TARGET) $(Bank_TARGET_Z) BankClient BankClientExample BankServer BankServerExample
+
+
+output/i86Linux2.6gcc4.4.5/%.o:%.cxx
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+output/i86Linux2.6gcc4.4.5/%.o:%.cpp
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+.PHONY: Bank  BankClient BankClientExample BankServer BankServerExample
+
+clean:
+	@rm -f $(OBJS)
+
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

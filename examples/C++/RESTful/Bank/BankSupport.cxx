@@ -19,3 +19,7 @@
     #endif        
 #endif        
 
+
+namespace Bank{
+
+} /* namespace Bank */

@@ -1,34 +1,64 @@
-[[RESOURCES_BASE_URI("http://example.com/resources/")]]
+@Annotation
+local interface RESOURCES_BASE_URI {
+	attribute string value;
+}
 
-[PATH("account/{accountNumber}")]
-interface account_accountNumberResource
+@RESOURCES_BASE_URI("http://example.com/resources/")
+module Bank
 {
-	struct account_accountNumber
-	{
-		long accountNumber_;
-	};
+	@Annotation
+	local interface PATH {
+		attribute string value;
+	}
 
-	struct XMLGetAccountDetailsResponse
-	{
-		long status;
-		string xmlRepresentation;
-	};
+	@Annotation
+	local interface METHOD {
+		attribute string value;
+	}
 
-	union GetAccountDetailsResponse switch(long)
-	{
-		case 1:
-			XMLGetAccountDetailsResponse xmlGetAccountDetailsResponse;
-	};
+	@Annotation
+	local interface BODY {
+		attribute string value;
+	}
 
-	union GetAccountDetailsRequest switch(long)
+	@PATH("account/{accountNumber}")
+	interface account_accountNumberResource
 	{
-		case 1:
+		struct account_accountNumber
+		{
+			long accountNumber_;
+		};
+
+		struct EmptyGetAccountDetailsResponse
+		{
+			long status;
+		};
+
+		struct XMLGetAccountDetailsResponse
+		{
+			long status;
 			string xmlRepresentation;
-	};
+		};
 
-	[METHOD("POST")]
-	[BODY("GetAccountDetailsRequest")]
-	GetAccountDetailsResponse getAccountDetails(in account_accountNumber account_accountNumber, in string user, in GetAccountDetailsRequest GetAccountDetailsRequest);
+		union GetAccountDetailsResponse switch(long)
+		{
+			case 0:
+				EmptyGetAccountDetailsResponse emptyGetAccountDetailsResponse;
+			case 1:
+				XMLGetAccountDetailsResponse xmlGetAccountDetailsResponse;
+		};
+
+		union GetAccountDetailsRequest switch(long)
+		{
+			case 1:
+				string xmlRepresentation;
+		};
+
+		@METHOD("POST")
+		@BODY("GetAccountDetailsRequest")
+		GetAccountDetailsResponse getAccountDetails(in account_accountNumber account_accountNumber, in string user, in GetAccountDetailsRequest GetAccountDetailsRequest);
+
+	};
 
 };
 

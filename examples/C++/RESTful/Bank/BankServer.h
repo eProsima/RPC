@@ -29,41 +29,46 @@ namespace eprosima
     }
 }
 
-/**
- * \brief This class implements a specific server for the defined interface account_accountNumberResource by user.
- */
-class account_accountNumberResourceServer : public eprosima::rpcdds::server::Server
+namespace Bank
 {
-    public:
+    /**
+     * \brief This class implements a specific server for the defined interface account_accountNumberResource by user.
+     */
+    class RPCDDSUSERDllExport account_accountNumberResourceServer : public eprosima::rpcdds::server::Server
+    {
+        public:
 
-        /**
-         * \brief This constructor sets the transport that will be used by the server.
-         *
-         * \param serviceName The service's name that proxies will use to connect with the server.
-         * \param strategy Strategy used by server to work with new requests.
-         *        This class doesn't delete this object in its destructor. Cannot be NULL.
-         * \param transport The network transport that server has to use.
-         *        This transport's object is not deleted by this class in its destrcutor. Cannot be NULL.
-         * \param servant Servant that server will use to invoke user's functions.
-         * \param domainId The DDS domain that DDS will use to work. Default value: 0.
-         * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
-         */
-        account_accountNumberResourceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
-            eprosima::rpcdds::protocol::BankProtocol &protocol, account_accountNumberResourceServerImpl &servant);
+            /**
+             * \brief This constructor sets the transport that will be used by the server.
+             *
+             * \param strategy Strategy used by server to work with new requests.
+             *        This class doesn't delete this object in its destructor. Cannot be NULL.
+             * \param transport The network transport that the server has to use.
+             *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
+             * \param protocol Generated protocol that the server has to use.
+             *        This class has the information to process requests and build responses for this application environment. 
+             * \param servant Servant that the server will use to invoke user's functions.
+             * \exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
+             */
+            account_accountNumberResourceServer(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
+                eprosima::rpcdds::protocol::BankProtocol &protocol, account_accountNumberResourceServerImpl &servant);
 
-        /// \brief The default destructor.
-        virtual ~account_accountNumberResourceServer();
-
-
+            /// \brief The default destructor.
+            virtual ~account_accountNumberResourceServer();
 
 
 
 
-        
-     private:
-        
-        /// \brief Pointer to the server's servant implemented by the user.
-        account_accountNumberResourceServerImpl &_impl;
+
+
+
+            
+         private:
+            
+            /// \brief Pointer to the server's servant implemented by the user.
+            account_accountNumberResourceServerImpl &_impl;
+    };
+
 };
 
 

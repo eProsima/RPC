@@ -32,61 +32,65 @@ namespace eprosima
     }
 }
 
-/*!
- * @brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
- *        These callback has to be implemented in a derived class.
- */
-class account_accountNumberResource_getAccountDetailsCallbackHandler
+namespace Bank
 {
-    public:
-        /*!
-         * This function is called when is received the reply from the server.
-         */
-        virtual void getAccountDetails(/*out*/ const GetAccountDetailsResponse& getAccountDetails_ret) = 0;
-        
-        /*!
-         * @brief This function is called when an exception occurs.
-         *        This exception can be launched in the server's side or in the client's side.
-         *
-         * @param ex The exception that will be launched.
-         */
-        virtual void on_exception(const eprosima::rpcdds::exception::SystemException &ex) = 0;
-};
+    /*!
+     * @brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
+     *        These callback has to be implemented in a derived class.
+     */
+    class account_accountNumberResource_getAccountDetailsCallbackHandler
+    {
+        public:
+            /*!
+             * This function is called when is received the reply from the server.
+             */
+            virtual void getAccountDetails(/*out*/ const Bank::GetAccountDetailsResponse& getAccountDetails_ret) = 0;
+            
+            /*!
+             * @brief This function is called when an exception occurs.
+             *        This exception can be launched in the server's side or in the client's side.
+             *
+             * @param ex The exception that will be launched.
+             */
+            virtual void on_exception(const eprosima::rpcdds::exception::SystemException &ex) = 0;
+    };
 
 
-/*!
- * @brief This class implements a specific server's proxy for the defined interface account_accountNumberResource.
- */
-class account_accountNumberResourceProxy : public eprosima::rpcdds::proxy::Proxy
-{
-    public:
-   
-        /*!
-         * @brief This constructor sets the transport that will be used by the server's proxy.
-         *
-         * @param remoteServiceName The service's name that the remote server uses and the proxy will use to connect with it.
-         * @param transport The network transport that server's proxy has to use.
-         *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
-         * @param protocol The protocol used to send the information over the transport.
-         *        This protocol's object is not deleted by this class in its destructor. Cannot be NULL.
-         * @param timeout Timeout used in each call to remotely procedures.
-         *        If the call exceeds the time, a eprosima::rpcdds::exception::ServerTimeoutException is thrown.
-         * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
-         */
-        account_accountNumberResourceProxy(eprosima::rpcdds::transport::ProxyTransport &transport,
-            eprosima::rpcdds::protocol::BankProtocol &protocol);
+    /*!
+     * @brief This class implements a specific server's proxy for the defined interface account_accountNumberResource.
+     */
+    class RPCDDSUSERDllExport account_accountNumberResourceProxy : public eprosima::rpcdds::proxy::Proxy
+    {
+        public:
+       
+            /*!
+             * @brief This constructor sets the transport that will be used by the server's proxy.
+             *
+             * @param transport The network transport that server's proxy has to use.
+             *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
+             * @param protocol The protocol used to send the information over the transport.
+             *        This protocol's object is not deleted by this class in its destructor. Cannot be NULL.
+             * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
+             */
+            account_accountNumberResourceProxy(eprosima::rpcdds::transport::ProxyTransport &transport,
+                eprosima::rpcdds::protocol::BankProtocol &protocol);
 
-        //! @brief The default destructor.
-        virtual ~account_accountNumberResourceProxy();
-        
+            //! @brief The default destructor.
+            virtual ~account_accountNumberResourceProxy();
+            
 
 
 
 
-        GetAccountDetailsResponse getAccountDetails(/*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest);
 
-        
-        //void getAccountDetails_async(account_accountNumberResource_getAccountDetailsCallbackHandler &obj, /*in*/ const account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const GetAccountDetailsRequest& GetAccountDetailsRequest);
+            //! @brief Proxy method for the operation getAccountDetails
+            Bank::GetAccountDetailsResponse getAccountDetails(/*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest);
+
+            
+            ////! @brief Proxy asynchronous method for the operation getAccountDetails
+            void getAccountDetails_async(account_accountNumberResource_getAccountDetailsCallbackHandler &obj, /*in*/ const Bank::account_accountNumber& account_accountNumber, /*in*/ const char* user, /*in*/ const Bank::GetAccountDetailsRequest& GetAccountDetailsRequest);
+
+    };
 
 };
 
