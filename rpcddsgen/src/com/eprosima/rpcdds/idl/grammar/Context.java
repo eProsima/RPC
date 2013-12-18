@@ -35,7 +35,13 @@ public class Context
         m_file = file;
         // Remove absolute directory where the application was executed
         if(startsWith(m_file, m_userdir))
-        	m_file = m_file.substring(m_userdir.length() + 1);
+        {
+        	m_file = m_file.substring(m_userdir.length());
+        	
+        	// Remove possible separator    
+            if(startsWith(file, java.io.File.separator))
+                file = file.substring(1);
+        }
         // Remove relative directory if is equal that where the processed IDL is.
         if(startsWith(m_file, m_directoryFile))
         	m_file = m_file.substring(m_directoryFile.length());
@@ -60,7 +66,13 @@ public class Context
             if(startsWith(include, includeFlag))
             	include = include.substring(includeFlag.length());
             if(startsWith(include, m_userdir))
-            	include = include.substring(m_userdir.length() + 1);
+            {
+            	include = include.substring(m_userdir.length());
+            	
+            	// Remove possible separator    
+                if(startsWith(file, java.io.File.separator))
+                    file = file.substring(1);
+            }
             if(startsWith(include, m_directoryFile))
             	include = include.substring(m_directoryFile.length());
             // Add last separator.
@@ -104,7 +116,7 @@ public class Context
     		return st.toLowerCase().startsWith(prefix.toLowerCase());
     	}
     	
-    	return st.toLowerCase().startsWith(prefix);
+    	return st.startsWith(prefix);
     }
 
     public void setFilename(String filename)
@@ -156,7 +168,7 @@ public class Context
     	    // Read flags.
     	    boolean systemFile = false, enteringFile = false, exitingFile = false;
     	    
-    	    if(m_os.equals("Linux"))
+    	    if(m_os.contains("Linux"))
     	    {
         	    try
         	    {
@@ -183,9 +195,16 @@ public class Context
     	    {
     	        // Remove "
 	            String file = filename.substring(1, filename.length() - 1);
+	            
 	            // Remove absolute directory where the application was executed
 	            if(startsWith(file, m_userdir))
-	            	file = file.substring(m_userdir.length() + 1);          
+	            {
+	            	file = file.substring(m_userdir.length());
+	            	
+	            	// Remove possible separator    
+	                if(startsWith(file, java.io.File.separator))
+	                    file = file.substring(1);
+	            }
 	            // Remove relative ./ directory.
 	            if(startsWith(file, currentDirS))
 	            	file = file.substring(currentDirS.length());
@@ -194,11 +213,8 @@ public class Context
 	            if(startsWith(file, m_directoryFile))
 	            	file = file.substring(m_directoryFile.length());
 	            // Remove relative directory if is equal to a include path.
-	            System.out.println("file = " + file);
 	            for(int i = 0; i < m_includePaths.size(); ++i)
-	            {
-	            	System.out.println("m_includePaths = " + m_includePaths.get(i));
-		            
+	            {   
 	            	if(startsWith(file, m_includePaths.get(i)))
 	            	{
 	            		file = file.substring(m_includePaths.get(i).length());
