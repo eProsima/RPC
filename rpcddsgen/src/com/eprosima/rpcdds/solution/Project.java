@@ -21,6 +21,11 @@ public class Project
 		m_serverincludefiles = new ArrayList();
 	}
 	
+	public void setParent(Solution sol)
+	{
+		m_parent = sol;
+	}
+	
 	public String getName()
 	{
 		return m_name;
@@ -161,11 +166,17 @@ public class Project
 	 */
 	public ArrayList getDependenciesGuids()
 	{
-		ArrayList array = new ArrayList(m_dependencies);
+		ArrayList<String> deps = new ArrayList<String>(m_dependencies);
+		ArrayList<String> array = new ArrayList<String>();
 		
-		for(int count = 0; count < array.size(); ++count)
+		for(int count = 0; count < deps.size(); ++count)
 		{
-			array.set(count, GUIDGenerator.genGUID(array.get(count).toString()));
+			if(!m_parent.getOS().contains("Windows") ||
+					m_parent.existsProject(deps.get(count)))
+			{
+				System.out.println("Adding GUID of " + deps.get(count));
+				array.add(GUIDGenerator.genGUID(deps.get(count)));
+			}
 		}
 		
 		return array;
@@ -187,4 +198,5 @@ public class Project
 	private ArrayList m_serverincludefiles = null;
 	private HashSet m_dependencies = null;
 	String m_guid = null;
+	Solution m_parent = null;
 }

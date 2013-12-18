@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Vector;
 
 import org.antlr.stringtemplate.StringTemplate;
@@ -82,8 +83,7 @@ public class RPCDDSGEN
     private String m_command = null;
     private String m_extra_command = null;
     private ArrayList m_lineCommand = null;
-    private ArrayList m_lineCommandForWorkDirSet = null;
-    private String[] m_env_variables = null;	
+    private ArrayList m_lineCommandForWorkDirSet = null;	
     private String m_spTemplate = "main";
     // Location of the MessageHeader.idl file
     private String m_messageHeaderFileName = "MessageHeader.idl";
@@ -1088,78 +1088,47 @@ public class RPCDDSGEN
     public boolean ddsGenGlobalInit()
     {
         // Set environment variables.
-        String envPath = null, envLD = null, envRoot = null, dds_root = null, tao_root = null, rpcdds_root = null;
+        String dds_root = null, tao_root = null, rpcdds_root = null;
         
-        envPath = System.getenv("PATH");
-        
-        if(envPath != null)
+        if(m_middleware.equals("rti"))
         {
-            envPath = "PATH=" + envPath;
+            dds_root = System.getenv("NDDSHOME");
             
-            if(m_osOption.contains("Linux") && (envLD = System.getenv("LD_LIBRARY_PATH")) != null)
+            if(dds_root == null || dds_root.equals(""))
             {
-                envLD = "LD_LIBRARY_PATH=" + envLD;
+                System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
+                System.out.println("Note: NDDSHOME environment variable is not set in your system.");
+                System.out.println("      rpcddsgen uses this environment variable to find the RTI DDS middleware.");
+                System.out.println("      This environment variable is used by the generated solutions too.");
+                System.out.println("      See the User Manual document.");
+                return false;
             }
+        }
+        else if(m_middleware.equals("opendds"))
+        {
+            dds_root = System.getenv("DDS_ROOT");
             
-            if(m_middleware.equals("rti"))
+            if(dds_root == null || dds_root.equals(""))
             {
-                dds_root = System.getenv("NDDSHOME");
-                
-                if(dds_root == null || dds_root.equals(""))
-                {
-                    System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
-                    System.out.println("Note: NDDSHOME environment variable is not set in your system.");
-                    System.out.println("      rpcddsgen uses this environment variable to find the RTI DDS middleware.");
-                    System.out.println("      This environment variable is used by the generated solutions too.");
-                    System.out.println("      See the User Manual document.");
-                    return false;
-                }
-            }
-            else if(m_middleware.equals("opendds"))
-            {
-                dds_root = System.getenv("DDS_ROOT");
-                
-                if(dds_root != null && !dds_root.equals(""))
-                    envRoot = "DDS_ROOT=" + dds_root;
-                else
-                {
-                    System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
-                    System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
-                    System.out.println("      rpcddsgen uses this environment variable to find the OpenDDS middleware.");
-                    System.out.println("      This environment variable is used by the generated solutions too.");
-                    System.out.println("      See the User Manual document.");
-                    return false;
-                }
-                
-                tao_root = System.getenv("TAO_ROOT");
-            }
-            
-            rpcdds_root = System.getenv("RPCDDSHOME");
-            
-            if(rpcdds_root == null || rpcdds_root.equals(""))
-            {
-                System.out.println("ERROR: Cannot find the environment variable RPCDDSHOME.");
-                System.out.println("Note: RPCDDSHOME environment variable is not set in your system.");
-                System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
+                System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
+                System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
+                System.out.println("      rpcddsgen uses this environment variable to find the OpenDDS middleware.");
+                System.out.println("      This environment variable is used by the generated solutions too.");
                 System.out.println("      See the User Manual document.");
                 return false;
             }
             
-            // Create final structure that stores the environment variables.
-            m_env_variables = new String[1 + (envLD != null ? 1 : 0) +
-                                       (envRoot != null ? 1 : 0)];
-            int count = 0;
-            m_env_variables[count++] = envPath;
-            
-            if(envLD != null)
-                m_env_variables[count++] = envLD;
-            
-            if(envRoot != null)
-                m_env_variables[count++] = envRoot;
+            tao_root = System.getenv("TAO_ROOT");
         }
-        else
+        
+        rpcdds_root = System.getenv("RPCDDSHOME");
+        
+        if(rpcdds_root == null || rpcdds_root.equals(""))
         {
-            System.out.println("ERROR: Cannot find the environment variable PATH.");
+            System.out.println("ERROR: Cannot find the environment variable RPCDDSHOME.");
+            System.out.println("Note: RPCDDSHOME environment variable is not set in your system.");
+            System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
+            System.out.println("      See the User Manual document.");
             return false;
         }
         
@@ -1346,7 +1315,7 @@ public class RPCDDSGEN
              finalCommandArray = new String[finalCommandLine.size()];
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
-             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
+             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray);
              ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null);
              ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null);
              auxerrorOutput.start();
@@ -1363,9 +1332,6 @@ public class RPCDDSGEN
         
         finalCommandLine = new ArrayList();
         finalCommandLine.add(m_command);
-        
-        if(m_middleware.equals("rti"))
-        	finalCommandLine.add("-ppDisable");
         
         if(disableGenerateTypeSupport && m_middleware.equals("opendds"))
         	finalCommandLine.add("-SI");
@@ -1387,9 +1353,9 @@ public class RPCDDSGEN
         
         Process ddsgen;     
         //if(!setWorkingDirectory)
-        	ddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
+        	ddsgen = Runtime.getRuntime().exec(finalCommandArray);
         //else
-        //	ddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables, new File(m_outputDir));
+        //	ddsgen = Runtime.getRuntime().exec(finalCommandArray, null, new File(m_outputDir));
         ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", m_middleware.equals("rti"), null);
         ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", m_middleware.equals("rti"), null);
         errorOutput.start();
@@ -1443,7 +1409,7 @@ public class RPCDDSGEN
              finalCommandArray = new String[finalCommandLine.size()];
              finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
              
-             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray, m_env_variables);
+             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray);
              ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null);
              ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null);
              auxerrorOutput.start();

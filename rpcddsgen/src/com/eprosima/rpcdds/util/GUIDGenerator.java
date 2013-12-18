@@ -37,7 +37,7 @@ public class GUIDGenerator {
 		
 		digester.reset();
 		
-		byte digest[] = digester.digest(name.getBytes());
+		byte digest[] = digester.digest(name.toLowerCase().getBytes());
 		
 		assert(digest.length >= 16): "Digest too short";
 		

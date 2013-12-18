@@ -35,7 +35,7 @@ $exports; separator="\n"$
 >>
 
 exception(ctx, exception) ::= <<
-class $exception.name$ : public eprosima::rpcdds::exception::UserException
+class RPCDDSUSERDllExport $exception.name$ : public eprosima::rpcdds::exception::UserException
 {
 public:
     

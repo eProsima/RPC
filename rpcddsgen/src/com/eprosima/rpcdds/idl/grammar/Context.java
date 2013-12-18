@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -33,10 +34,10 @@ public class Context
         
         m_file = file;
         // Remove absolute directory where the application was executed
-        if(m_file.startsWith(m_userdir + File.separator))
+        if(startsWith(m_file, m_userdir))
         	m_file = m_file.substring(m_userdir.length() + 1);
         // Remove relative directory if is equal that where the processed IDL is.
-        if(m_file.startsWith(m_directoryFile))
+        if(startsWith(m_file, m_directoryFile))
         	m_file = m_file.substring(m_directoryFile.length());
         
         m_clientcode = clientcode;
@@ -56,12 +57,12 @@ public class Context
         for(int i = 0; i < includePaths.size(); ++i)
         {
             String include = (String)includePaths.get(i);
-            if(m_file.startsWith(includeFlag))
-            	m_file = m_file.substring(includeFlag.length());
-            if(m_file.startsWith(m_userdir + File.separator))
-            	m_file = m_file.substring(m_userdir.length() + 1);
-            if(m_file.startsWith(m_directoryFile))
-            	m_file = m_file.substring(m_directoryFile.length());
+            if(startsWith(include, includeFlag))
+            	include = include.substring(includeFlag.length());
+            if(startsWith(include, m_userdir))
+            	include = include.substring(m_userdir.length() + 1);
+            if(startsWith(include, m_directoryFile))
+            	include = include.substring(m_directoryFile.length());
             // Add last separator.
             if(include.charAt(include.length() - 1) != java.io.File.separatorChar)
                 include += java.io.File.separator;
@@ -76,7 +77,7 @@ public class Context
             
             while(count < m_includePaths.size())
             {
-                if(m_includePaths.get(count).startsWith(m_includePaths.get(pointer)))
+                if(startsWith(m_includePaths.get(count), m_includePaths.get(pointer)))
                 {
                     String first = m_includePaths.get(pointer);
                     String second = m_includePaths.get(count);
@@ -94,6 +95,16 @@ public class Context
         // The scope file has to be initialized because could occur the preprocessor
         // is not called (using -ppDisable).
         m_scopeFile = m_file;
+    }
+    
+    private boolean startsWith(String st, String prefix)
+    {
+    	if(m_os.contains("Windows"))
+    	{
+    		return st.toLowerCase().startsWith(prefix.toLowerCase());
+    	}
+    	
+    	return st.toLowerCase().startsWith(prefix);
     }
 
     public void setFilename(String filename)
@@ -173,27 +184,29 @@ public class Context
     	        // Remove "
 	            String file = filename.substring(1, filename.length() - 1);
 	            // Remove absolute directory where the application was executed
-	            if(file.startsWith(m_userdir + File.separator))
-	            	file = file.substring(m_userdir.length() + 1);
-	            
+	            if(startsWith(file, m_userdir))
+	            	file = file.substring(m_userdir.length() + 1);          
 	            // Remove relative ./ directory.
-	            if(file.startsWith(currentDirS))
+	            if(startsWith(file, currentDirS))
 	            	file = file.substring(currentDirS.length());
 	            String depfile = file;
 	            // Remove relative directory if is equal that where the processed IDL is.
-	            if(file.startsWith(m_directoryFile))
+	            if(startsWith(file, m_directoryFile))
 	            	file = file.substring(m_directoryFile.length());
 	            // Remove relative directory if is equal to a include path.
+	            System.out.println("file = " + file);
 	            for(int i = 0; i < m_includePaths.size(); ++i)
 	            {
-	            	if(file.startsWith(m_includePaths.get(i)))
+	            	System.out.println("m_includePaths = " + m_includePaths.get(i));
+		            
+	            	if(startsWith(file, m_includePaths.get(i)))
 	            	{
 	            		file = file.substring(m_includePaths.get(i).length());
 	                    break;
 	                }
 	            }
 	            // Remove possible separator    
-	            if(file.startsWith(java.io.File.separator))
+	            if(startsWith(file, java.io.File.separator))
 	            	file = file.substring(1);
 	            
 	            //if it is a idl file.
@@ -438,6 +451,28 @@ public class Context
      */
     public HashSet getDependencies()
     {
+    	if(m_os.contains("Windows"))
+    	{
+    		HashSet<String> set = new HashSet<String>();
+    		Iterator<String> it = m_dependencies.iterator();
+    		
+    		while(it.hasNext())
+    		{
+    			String dep = it.next();
+    			
+	            // In windows substitute \\ by /
+	            int count = 0;
+	    		while((count = dep.indexOf("/")) != -1)
+	    		{
+	    			dep = dep.substring(0, count) + "\\" + dep.substring(count + 1);
+	    		}
+	    		
+	    		set.add(dep);
+    		}
+    		
+    		return set;
+    	}
+    	
     	return m_dependencies;
     }
     
@@ -460,7 +495,7 @@ public class Context
     	// Remove .idl extension.
         String dep = dependency.substring(0, dependency.length() - 4);
         // Remove directory if it is the same than main IDL file.
-        if(dep.startsWith(m_directoryFile))
+        if(startsWith(dep, m_directoryFile))
         	dep = dep.substring(m_directoryFile.length());
     	m_includedependency.add(dep);
     }

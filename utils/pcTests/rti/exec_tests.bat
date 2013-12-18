@@ -59,7 +59,7 @@ for /D %%D in ("*") do (
                 :: Set environtment
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
-                call "%%D\exec_test.bat"
+                call "%%D\exec_test.bat" Win32
                 :: Restore environtment
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
@@ -72,7 +72,7 @@ for /D %%D in ("*") do (
             if !exec_target_bool!==2 (
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
-                call "%%D\exec_test.bat"
+                call "%%D\exec_test.bat" x64
                 :: Restore environtment
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget

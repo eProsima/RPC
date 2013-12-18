@@ -56,6 +56,6 @@ if "%JAVA_HOME%"=="" set JREHOME=%NDDSHOME%\jre\i86Win32
 if not "%JAVA_HOME%"=="" set JREHOME=%JAVA_HOME%
 
 
-"%JREHOME%\bin\java" -DPATH="%PATH%" -DNDDSHOME="%NDDSHOME%" -DRPCDDSHOME="%RPCDDSHOME%" -Djava.ext.dirs="%dir%\..\classes" com.eprosima.rpcdds.RPCDDSGEN %args% "-I%dir%/../idl"
+"%JREHOME%\bin\java" -Djava.ext.dirs="%dir%\..\classes" com.eprosima.rpcdds.RPCDDSGEN %args% "-I%dir%/../idl"
 
 

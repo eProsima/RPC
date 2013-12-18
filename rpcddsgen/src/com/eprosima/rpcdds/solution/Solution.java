@@ -11,11 +11,20 @@ public class Solution
 		m_projects = new ArrayList<Project>();
 		m_libraries = new ArrayList<String>();
 		m_includes = new ArrayList<String>();
+		
+		// Detect OS
+        m_os = System.getProperty("os.name");
 	}
 	
 	public void addProject(Project project)
 	{
+		project.setParent(this);
 		m_projects.add(project);
+	}
+	
+	public String getOS()
+	{
+		return m_os;
 	}
 	
 	/*!
@@ -42,7 +51,7 @@ public class Solution
 					
 					for(int acount = 0; !found && acount < m_cacheprojects.size(); ++acount)
 					{
-						if(deps.get(count).equals(m_cacheprojects.get(acount).getFile()))
+						if(compareNames((String)deps.get(count), m_cacheprojects.get(acount).getFile()))
 						{
 							found = true;
 						}
@@ -53,7 +62,7 @@ public class Solution
 						// Search in the rest of projects to process.
 						for(int rcount = 0; !found && rcount < tmpArray.size(); ++rcount)
 						{
-							if(deps.get(count).equals(tmpArray.get(rcount).getFile()))
+							if(compareNames((String)deps.get(count), tmpArray.get(rcount).getFile()))
 							{
 								found = true;
 							}
@@ -78,6 +87,31 @@ public class Solution
 		}
 		
 		return m_cacheprojects;
+	}
+	
+	public boolean existsProject(String name)
+	{
+		boolean ret = false;
+		for(int i = 0; i < m_projects.size(); ++i)
+		{
+			if(compareNames(m_projects.get(i).getFile(), name))
+			{
+				ret = true;
+				break;
+			}
+		}
+		
+		return ret;
+	}
+	
+	public boolean compareNames(String dep, String file)
+	{
+		if(m_os.contains("Windows"))
+		{
+			return dep.toLowerCase().equals(file.toLowerCase());
+		}
+		
+		return dep.equals(file);
 	}
 	
 	public void addLibrary(String library)
@@ -116,4 +150,7 @@ public class Solution
 	private ArrayList<String> m_includes = null;
 	boolean m_serverside = true;
 	boolean m_clientside = true;
+	
+	// OS
+    String m_os = null;
 }
