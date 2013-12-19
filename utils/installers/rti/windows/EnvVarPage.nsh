@@ -37,7 +37,7 @@ Function VariablesEntornoPage
     ${NSD_CreateLabel} 0 0 100% 20u "Check the environment variables you want to set and uncheck the environment variables you don't want to set. Click Next to continue."
     Pop $Label
 
-    ${NSD_CreateCheckbox} 10 20u 100% 12u "Set the RPCHOME environment variable."
+    ${NSD_CreateCheckbox} 10 20u 100% 12u "Set the RPCDDSHOME environment variable."
     Pop $CheckboxRPCDDSHOME
     ${If} $CheckboxRPCDDSHOME_State == ${BST_CHECKED}
         ${NSD_Check} $CheckboxRPCDDSHOME

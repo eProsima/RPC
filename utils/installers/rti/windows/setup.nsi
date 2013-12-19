@@ -159,8 +159,8 @@ Section -post SEC0006
     
     ### Actualizamos las variables de entorno que se hayan marcado
     ${If} $CheckboxRPCDDSHOME_State == ${BST_CHECKED}
-       ${EnvVarUpdate} $0 "RPCHOME" "P" "HKLM" "$INSTDIR"
-       WriteRegStr HKLM "${REGKEY}\Components" "RPCHOME" 1
+       ${EnvVarUpdate} $0 "RPCDDSHOME" "P" "HKLM" "$INSTDIR"
+       WriteRegStr HKLM "${REGKEY}\Components" "RPCDDSHOME" 1
     ${EndIf}
     ${If} $CheckboxScripts_State == ${BST_CHECKED}
        ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\scripts"
@@ -232,9 +232,9 @@ Section -un.post UNSEC0006
     DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries location"
     DeleteRegValue HKLM "${REGKEY}\Components" "x64 libraries location"
     DeleteRegValue HKLM "${REGKEY}\Components" "Script location"
-    DeleteRegValue HKLM "${REGKEY}\Components" "RPCHOME"
+    DeleteRegValue HKLM "${REGKEY}\Components" "RPCDDSHOME"
     
-    ${un.EnvVarUpdate} $0 "RPCHOME" "R" "HKLM" "$INSTDIR"
+    ${un.EnvVarUpdate} $0 "RPCDDSHOME" "R" "HKLM" "$INSTDIR"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\scripts"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\x64Win64VS2010"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\i86Win32VS2010"
