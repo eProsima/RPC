@@ -37,7 +37,7 @@ if %argC% geq 1 (
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
 
 :: Create symbolic link to EPROSIMADIR in this rpcdds folder.
-if not exist ..\..\..\include\eProsima_cpp mklink /J ..\..\..\include\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
+if not exist ..\..\..\include\rpcdds\eProsima_cpp mklink /J ..\..\..\include\rpcdds\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
@@ -222,7 +222,7 @@ goto :EOF
 ::rd /S /Q output
 
 :: Remove symbolic link from EPROSIMADIR
-if exist ..\..\..\include\eProsima_cpp rmdir /Q ..\..\..\include\eProsima_cpp
+if exist ..\..\..\include\rpcdds\eProsima_cpp rmdir /Q ..\..\..\include\rpcdds\eProsima_cpp
 
 :: Restore environment for RPCDDS
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTIversion

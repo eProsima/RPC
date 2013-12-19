@@ -15,7 +15,7 @@
 #ifndef _BankSERVER_IMPL_H_
 #define _BankSERVER_IMPL_H_
 
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 #include "Bank.h"
 
 namespace Bank

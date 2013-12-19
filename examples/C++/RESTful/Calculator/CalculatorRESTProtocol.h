@@ -16,8 +16,8 @@
 #define _Calculator_REST_PROTOCOL_H_
 
 #include "CalculatorProtocol.h"
-#include "transports/messages/HttpMessage.h"
-#include "utils/Messages.h"
+#include "rpcdds/transports/messages/HttpMessage.h"
+#include "rpcdds/utils/Messages.h"
 #include <string>
 
 using namespace std;

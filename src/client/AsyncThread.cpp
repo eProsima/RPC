@@ -6,11 +6,11 @@
  *
  *************************************************************************/
 
-#include "client/AsyncThread.h"
-#include "client/AsyncTask.h"
-#include "client/ClientRPC.h"
-#include "utils/Typedefs.h"
-#include "exceptions/ServerTimeoutException.h"
+#include "rpcdds/client/AsyncThread.h"
+#include "rpcdds/client/AsyncTask.h"
+#include "rpcdds/client/ClientRPC.h"
+#include "rpcdds/utils/Typedefs.h"
+#include "rpcdds/exceptions/ServerTimeoutException.h"
 
 #include <stdio.h>
 

@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include <exceptions/IncompatibleException.h>
+#include <rpcdds/exceptions/IncompatibleException.h>
 
 using namespace eprosima::rpcdds::exception;
 

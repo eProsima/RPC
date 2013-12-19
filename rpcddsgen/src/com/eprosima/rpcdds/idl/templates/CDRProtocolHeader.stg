@@ -7,7 +7,7 @@ $fileHeader(file=[ctx.filename, "CDRProtocol.h"], description=["This header file
 #define _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "protocols/cdr/cpp/FastCdr.h"
+#include "rpcdds/protocols/cdr/cpp/FastCdr.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"

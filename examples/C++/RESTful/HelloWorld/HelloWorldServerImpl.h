@@ -15,7 +15,7 @@
 #ifndef _HelloWorldSERVER_IMPL_H_
 #define _HelloWorldSERVER_IMPL_H_
 
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 #include "HelloWorld.h"
 
 namespace HelloWorld

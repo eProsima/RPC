@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "exceptions/Exception.h"
+#include "rpcdds/exceptions/Exception.h"
 
 using namespace eprosima::rpcdds::exception;
 

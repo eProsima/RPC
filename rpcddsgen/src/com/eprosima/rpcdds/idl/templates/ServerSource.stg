@@ -4,10 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
 
 #include "$ctx.filename$Server.h"
-#include "strategies/ServerStrategy.h"
-#include "transports/ServerTransport.h"
+#include "rpcdds/strategies/ServerStrategy.h"
+#include "rpcdds/transports/ServerTransport.h"
 #include "$ctx.filename$Protocol.h"
-#include "exceptions/ServerInternalException.h"
+#include "rpcdds/exceptions/ServerInternalException.h"
 
 $ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$

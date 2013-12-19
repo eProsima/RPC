@@ -6,7 +6,7 @@ $fileHeader(file=[ctx.filename, "RequestReplyUtils.h"], description=["This heade
 #ifndef _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 #define _$ctx.filename;format="toUpper"$_REQUEST_REPLY_UTILS_H_
 
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 $ReqRepSIncludes(filename=ctx.filename)$
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$

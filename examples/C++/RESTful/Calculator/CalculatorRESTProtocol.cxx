@@ -13,10 +13,10 @@
  */
 
 #include "CalculatorRESTProtocol.h"
-#include "exceptions/Exceptions.h"
-#include "transports/ProxyTransport.h"
-#include "transports/ServerTransport.h"
-#include "protocols/rest/RESTSerializer.h"
+#include "rpcdds/exceptions/Exceptions.h"
+#include "rpcdds/transports/ProxyTransport.h"
+#include "rpcdds/transports/ServerTransport.h"
+#include "rpcdds/protocols/rest/RESTSerializer.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol::rest;

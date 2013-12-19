@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "transports/dds/ProxyTransport.h"
-#include "transports/dds/components/ProxyProcedureEndpoint.h"
-#include "exceptions/InitializeException.h"
+#include "rpcdds/transports/dds/ProxyTransport.h"
+#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "rpcdds/exceptions/InitializeException.h"
 
 #include <string>
 

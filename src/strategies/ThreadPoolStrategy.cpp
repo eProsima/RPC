@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "strategies/ThreadPoolStrategy.h"
-#include "strategies/ServerStrategyImpl.h"
-#include "transports/ServerTransport.h"
+#include "rpcdds/strategies/ThreadPoolStrategy.h"
+#include "rpcdds/strategies/ServerStrategyImpl.h"
+#include "rpcdds/transports/ServerTransport.h"
 
 #include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"

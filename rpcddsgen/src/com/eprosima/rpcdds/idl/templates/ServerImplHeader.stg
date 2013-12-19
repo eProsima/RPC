@@ -6,7 +6,7 @@ $fileHeader(file=[ctx.filename, "ServerImpl.h"], description=["This header file 
 #ifndef _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
 #define _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
 
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 #include "$ctx.filename$.h"
 
 $definitions; separator="\n"$

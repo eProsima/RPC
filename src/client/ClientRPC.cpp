@@ -6,12 +6,12 @@
  *
  *************************************************************************/
 
-#include "client/ClientRPC.h"
-#include "client/Client.h"
-#include "client/AsyncTask.h"
-#include "utils/Typedefs.h"
+#include "rpcdds/client/ClientRPC.h"
+#include "rpcdds/client/Client.h"
+#include "rpcdds/client/AsyncTask.h"
+#include "rpcdds/utils/Typedefs.h"
 #include "eProsima_cpp/eProsimaMacros.h"
-#include "exceptions/InitializeException.h"
+#include "rpcdds/exceptions/InitializeException.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"

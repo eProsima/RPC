@@ -5,8 +5,8 @@ $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source 
 
 #include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$RESTProtocol.h"
-#include "transports/HttpProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/HttpProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 
 $ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$

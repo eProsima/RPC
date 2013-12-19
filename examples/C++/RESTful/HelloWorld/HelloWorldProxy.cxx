@@ -13,7 +13,7 @@
  */
 
 #include "HelloWorldProxy.h"
-#include "transports/ProxyTransport.h"
+#include "rpcdds/transports/ProxyTransport.h"
 #include "HelloWorldProtocol.h"
 //#include "HelloWorldAsyncSupport.h"
 

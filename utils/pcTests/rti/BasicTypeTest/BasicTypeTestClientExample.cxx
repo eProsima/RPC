@@ -14,8 +14,8 @@
 
 #include "BasicTypeTestProxy.h"
 #include "BasicTypeTestDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "BasicTypeTestRequestReplyPlugin.h"
 
 #include <iostream>

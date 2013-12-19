@@ -1,0 +1,79 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+#ifndef _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_
+#define _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_
+
+#include <rpcdds/exceptions/SystemException.h>
+
+namespace eprosima
+{
+    namespace rpcdds
+    {
+        namespace exception
+        {
+            /**
+             * @brief This class is thrown as an exception when the server is not found.
+             * @ingroup EXCEPTIONMODULE
+             */
+            class RPCDDS_DllAPI ServerNotFoundException : public SystemException
+            {
+                public:
+
+                    /**
+                     * \brief Default constructor.
+                     *
+                     * \param message An error message. This message is copied.
+                     */
+                    ServerNotFoundException(const std::string &message);
+
+                    /**
+                     * \brief Default constructor.
+                     *
+                     * \param message An error message. This message is moved.
+                     */
+                    ServerNotFoundException(std::string&& message);
+
+                    /**
+                     * \brief Default copy constructor.
+                     *
+                     * \param ex ServerNotFoundException that will be copied.
+                     */
+                    ServerNotFoundException(const ServerNotFoundException &ex);
+
+                    /**
+                     * \brief Default move constructor.
+                     *
+                     * \param ex ServerNotFoundException that will be moved.
+                     */
+                    ServerNotFoundException(ServerNotFoundException&& ex);
+
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex ServerNotFoundException that will be copied.
+                     */
+                    ServerNotFoundException& operator=(const ServerNotFoundException &ex);
+
+                    /**
+                     * \brief Assigment operation.
+                     *
+                     * \param ex ServerNotFoundException that will be moved.
+                     */
+                    ServerNotFoundException& operator=(ServerNotFoundException&& ex);
+
+                    /// \brief Default constructor
+                    virtual ~ServerNotFoundException() throw();
+
+                    /// \brief This function throws the object as an exception.
+                    virtual void raise() const;
+            };
+        } // namespace exception
+    } // namespace rpcdds
+} // namespace eprosima
+#endif // _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_

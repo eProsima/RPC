@@ -6,8 +6,8 @@
  *
  *************************************************************************/
 
-#include "transports/TCPProxyTransport.h"
-#include "exceptions/ServerNotFoundException.h"
+#include "rpcdds/transports/TCPProxyTransport.h"
+#include "rpcdds/exceptions/ServerNotFoundException.h"
 
 #include "boost/asio.hpp"
 #include "boost/array.hpp"

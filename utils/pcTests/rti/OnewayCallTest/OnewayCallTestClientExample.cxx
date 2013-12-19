@@ -14,8 +14,8 @@
 
 #include "OnewayCallTestProxy.h"
 #include "OnewayCallTestDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "OnewayCallTestRequestReplyPlugin.h"
 
 #include <iostream>

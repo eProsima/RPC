@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "utils/dds/Middleware.h"
+#include "rpcdds/utils/dds/Middleware.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"

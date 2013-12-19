@@ -15,7 +15,7 @@
 #ifndef _BankSERVER_H_
 #define _BankSERVER_H_
 
-#include "server/Server.h"
+#include "rpcdds/server/Server.h"
 #include "BankServerImpl.h"
 
 namespace eprosima

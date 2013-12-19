@@ -15,7 +15,7 @@
 #ifndef _HelloWorld_PROTOCOL_H_
 #define _HelloWorld_PROTOCOL_H_
 
-#include "protocols/Protocol.h"
+#include "rpcdds/protocols/Protocol.h"
 #include "HelloWorld.h"
 #include "HelloWorldServerImpl.h"
 #include "ndds_namespace_cpp.h"

@@ -14,8 +14,8 @@
 
 #include "MultithreadTestProxy.h"
 #include "MultithreadTestDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "MultithreadTestRequestReplyPlugin.h"
 
 #include "boost/config/user.hpp"

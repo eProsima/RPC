@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "transports/dds/TCPProxyTransport.h"
+#include "rpcdds/transports/dds/TCPProxyTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::TCPProxyTransport";

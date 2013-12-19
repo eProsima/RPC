@@ -133,6 +133,11 @@ Section -post SEC0006
     SetOutPath $INSTDIR\include
     SetOverwrite on
     File /r ..\..\..\..\include\*
+
+    # Copy eProsima header files.
+    SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp
+    File "$%EPROSIMADIR%\code\eProsima_cpp\eProsima_auto_link.h"
+    File "$%EPROSIMADIR%\code\eProsima_cpp\eProsimaMacros.h"
     
     # Copy licensies
     SetOutPath $INSTDIR

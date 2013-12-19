@@ -14,8 +14,8 @@
 
 #include "BodyParamTestProxy.h"
 #include "BodyParamTestRESTProtocol.h"
-#include "transports/HttpProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/HttpProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 
 #include <iostream>
 

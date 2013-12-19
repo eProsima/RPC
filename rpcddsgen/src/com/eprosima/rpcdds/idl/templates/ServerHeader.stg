@@ -6,7 +6,7 @@ $fileHeader(file=[ctx.filename, "Server.h"], description=["This header file cont
 #ifndef _$ctx.filename;format="toUpper"$SERVER_H_
 #define _$ctx.filename;format="toUpper"$SERVER_H_
 
-#include "server/Server.h"
+#include "rpcdds/server/Server.h"
 #include "$ctx.filename$ServerImpl.h"
 
 namespace eprosima

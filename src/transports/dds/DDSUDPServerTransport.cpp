@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "transports/dds/UDPServerTransport.h"
+#include "rpcdds/transports/dds/UDPServerTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #if defined(OPENDDS)

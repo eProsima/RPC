@@ -1,4 +1,4 @@
-#include "rpcdds_version.h"
+#include "rpcdds/rpcdds_version.h"
 // Microsoft Visual C++ generated resource script.
 //
 #ifdef APSTUDIO_INVOKED

@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "transports/HttpProxyTransport.h"
-#include "transports/messages/HttpMessage.h"
-#include "utils/Utilities.h"
+#include "rpcdds/transports/HttpProxyTransport.h"
+#include "rpcdds/transports/messages/HttpMessage.h"
+#include "rpcdds/utils/Utilities.h"
 
 #include <stdexcept>
 

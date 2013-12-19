@@ -15,7 +15,7 @@
 #ifndef _Bank_PROTOCOL_H_
 #define _Bank_PROTOCOL_H_
 
-#include "protocols/Protocol.h"
+#include "rpcdds/protocols/Protocol.h"
 #include "Bank.h"
 #include "BankServerImpl.h"
 #include "ndds_namespace_cpp.h"

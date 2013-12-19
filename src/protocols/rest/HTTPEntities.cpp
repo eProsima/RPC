@@ -1,4 +1,4 @@
-#include "protocols/rest/HTTPEntities.h"
+#include "rpcdds/protocols/rest/HTTPEntities.h"
 #include <sstream>
 
 using namespace eprosima::rpcdds;

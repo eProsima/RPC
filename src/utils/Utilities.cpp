@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "utils/Utilities.h"
+#include "rpcdds/utils/Utilities.h"
 
 #if defined(_WIN32)
 #include <Windows.h>

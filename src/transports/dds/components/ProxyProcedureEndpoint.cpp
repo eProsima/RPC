@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "transports/dds/components/ProxyProcedureEndpoint.h"
+#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "eProsima_cpp/eProsimaMacros.h"
-#include "utils/Typedefs.h"
+#include "rpcdds/utils/Typedefs.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"

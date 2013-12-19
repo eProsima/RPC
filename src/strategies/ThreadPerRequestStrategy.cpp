@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "strategies/ThreadPerRequestStrategy.h"
-#include "strategies/ServerStrategyImpl.h"
-#include "transports/ServerTransport.h"
+#include "rpcdds/strategies/ThreadPerRequestStrategy.h"
+#include "rpcdds/strategies/ServerStrategyImpl.h"
+#include "rpcdds/transports/ServerTransport.h"
 
 #include "boost/thread.hpp"
 

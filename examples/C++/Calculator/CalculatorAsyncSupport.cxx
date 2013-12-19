@@ -14,7 +14,7 @@
 
 #include "CalculatorProxy.h"
 #include "CalculatorAsyncSupport.h"
-#include "exceptions/ServerInternalException.h"
+#include "rpcdds/exceptions/ServerInternalException.h"
 #include "CalculatorRequestReplyPlugin.h"
 
 

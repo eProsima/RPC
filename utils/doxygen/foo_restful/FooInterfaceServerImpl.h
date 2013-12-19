@@ -15,7 +15,7 @@
 #ifndef _FooInterfaceSERVER_IMPL_H_
 #define _FooInterfaceSERVER_IMPL_H_
 
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 #include "FooInterface.h"
 
 namespace FooInterface

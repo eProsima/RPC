@@ -14,8 +14,8 @@
 
 #include "MultiInterfacesTestProxy.h"
 #include "MultiInterfacesTestDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "MultiInterfacesTestRequestReplyPlugin.h"
 
 #include <iostream>

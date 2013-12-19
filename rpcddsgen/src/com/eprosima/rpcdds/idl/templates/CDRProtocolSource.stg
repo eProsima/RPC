@@ -4,10 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "CDRProtocol.cxx"], description=["This source file contains the definition of the protocol used to create CDR messages."])$
 
 #include "$ctx.filename$CDRProtocol.h"
-#include "transports/ProxyTransport.h"
-#include "transports/ServerTransport.h"
-#include "exceptions/Exceptions.h"
-#include "utils/Messages.h"
+#include "rpcdds/transports/ProxyTransport.h"
+#include "rpcdds/transports/ServerTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
+#include "rpcdds/utils/Messages.h"
 #include "cpp/exceptions/BadParamException.h"
 
 using namespace eprosima::rpcdds;

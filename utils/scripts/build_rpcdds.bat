@@ -6,7 +6,7 @@
 set errorstatus=0
 
 :: Get the current vesion of RPCDDS
-call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONRPCDDS ..\..\include\rpcdds_version.h
+call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONRPCDDS ..\..\include\rpcdds\rpcdds_version.h
 if not %errorstatus%==0 goto :EOF
 
 :: Set environment for RPCDDS

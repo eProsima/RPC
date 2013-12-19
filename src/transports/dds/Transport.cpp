@@ -6,8 +6,8 @@
  *
  *************************************************************************/
 
-#include "transports/dds/Transport.h"
-#include "exceptions/InitializeException.h"
+#include "rpcdds/transports/dds/Transport.h"
+#include "rpcdds/exceptions/InitializeException.h"
 
 #include <string>
 

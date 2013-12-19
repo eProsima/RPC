@@ -15,7 +15,7 @@
 #ifndef _Calculator_PROTOCOL_H_
 #define _Calculator_PROTOCOL_H_
 
-#include "protocols/Protocol.h"
+#include "rpcdds/protocols/Protocol.h"
 #include "Calculator.h"
 #include "CalculatorServerImpl.h"
 #include "ndds_namespace_cpp.h"

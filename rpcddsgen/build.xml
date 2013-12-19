@@ -137,7 +137,7 @@
 			</fileset>
 		</copy>
 		<copy todir="${build.classes}">
-			<fileset dir="${basedir}${file.separator}../include">
+			<fileset dir="${basedir}${file.separator}../include/rpcdds">
 				<include name="rpcdds_version.h" />
 			</fileset>
 		</copy>

@@ -15,7 +15,7 @@
 #ifndef _HelloWorldSERVER_H_
 #define _HelloWorldSERVER_H_
 
-#include "server/Server.h"
+#include "rpcdds/server/Server.h"
 #include "HelloWorldServerImpl.h"
 
 namespace eprosima

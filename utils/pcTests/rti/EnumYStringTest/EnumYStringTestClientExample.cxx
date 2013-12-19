@@ -14,8 +14,8 @@
 
 #include "EnumYStringTestProxy.h"
 #include "EnumYStringTestDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "EnumYStringTestRequestReplyPlugin.h"
 
 #include <iostream>

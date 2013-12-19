@@ -4,18 +4,18 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
 
 #include "$ctx.filename$DDSProtocol.h"
-#include "transports/Transport.h"
+#include "rpcdds/transports/Transport.h"
 $if(ctx.client)$
-#include "transports/dds/ProxyTransport.h"
-#include "transports/dds/components/ProxyProcedureEndpoint.h"
+#include "rpcdds/transports/dds/ProxyTransport.h"
+#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
 
 $endif$
 $if(ctx.server)$
-#include "transports/dds/ServerTransport.h"
-#include "transports/dds/components/ServerProcedureEndpoint.h"
+#include "rpcdds/transports/dds/ServerTransport.h"
+#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
 
 $endif$
-#include "exceptions/Exceptions.h"
+#include "rpcdds/exceptions/Exceptions.h"
 $ReqRepSIncludes(filename=ctx.filename)$
 
 using namespace eprosima::rpcdds;

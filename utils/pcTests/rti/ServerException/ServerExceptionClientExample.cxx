@@ -14,8 +14,8 @@
 
 #include "ServerExceptionProxy.h"
 #include "ServerExceptionDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "ServerExceptionRequestReplyPlugin.h"
 
 #include <iostream>

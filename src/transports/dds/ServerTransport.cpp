@@ -6,10 +6,10 @@
  *
  *************************************************************************/
 
-#include "transports/dds/ServerTransport.h"
-#include "transports/dds/components/ServerProcedureEndpoint.h"
-#include "protocols/Protocol.h"
-#include "exceptions/InitializeException.h"
+#include "rpcdds/transports/dds/ServerTransport.h"
+#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
+#include "rpcdds/protocols/Protocol.h"
+#include "rpcdds/exceptions/InitializeException.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::transport::dds;

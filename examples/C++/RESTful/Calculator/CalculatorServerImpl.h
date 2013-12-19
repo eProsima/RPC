@@ -15,7 +15,7 @@
 #ifndef _CalculatorSERVER_IMPL_H_
 #define _CalculatorSERVER_IMPL_H_
 
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 #include "Calculator.h"
 
 namespace Calculator

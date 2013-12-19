@@ -67,8 +67,8 @@ fi
 . $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
 
 # Create symbolic link to EPROSIMADIR in the rpcdds folder.
-if [ ! -e "../../../include/eProsima_cpp" ]; then
-    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/eProsima_cpp
+if [ ! -e "../../../include/rpcdds/eProsima_cpp" ]; then
+    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/rpcdds/eProsima_cpp
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 fi
@@ -137,8 +137,8 @@ done
 rm -r output
 
 # Remove symbolic link
-if [ -e ../../../include/eProsima_cpp ]; then
-    rm ../../../include/eProsima_cpp
+if [ -e ../../../include/rpcdds/eProsima_cpp ]; then
+    rm ../../../include/rpcdds/eProsima_cpp
 fi
 
 # Restore environment for RPCDDS

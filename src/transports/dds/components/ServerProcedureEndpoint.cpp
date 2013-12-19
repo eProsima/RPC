@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "transports/dds/components/ServerProcedureEndpoint.h"
-#include "strategies/ServerStrategy.h"
-#include "strategies/ServerStrategyImpl.h"
+#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
+#include "rpcdds/strategies/ServerStrategy.h"
+#include "rpcdds/strategies/ServerStrategyImpl.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #include "boost/config/user.hpp"

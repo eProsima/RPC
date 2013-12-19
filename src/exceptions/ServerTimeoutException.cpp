@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include <exceptions/ServerTimeoutException.h>
+#include <rpcdds/exceptions/ServerTimeoutException.h>
 
 using namespace eprosima::rpcdds::exception;
 

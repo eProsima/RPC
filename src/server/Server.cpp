@@ -6,11 +6,11 @@
  *
  *************************************************************************/
 
-#include "server/Server.h"
-#include "exceptions/InitializeException.h"
-#include "strategies/ServerStrategy.h"
-#include "transports/ServerTransport.h"
-#include "protocols/Protocol.h"
+#include "rpcdds/server/Server.h"
+#include "rpcdds/exceptions/InitializeException.h"
+#include "rpcdds/strategies/ServerStrategy.h"
+#include "rpcdds/transports/ServerTransport.h"
+#include "rpcdds/protocols/Protocol.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"

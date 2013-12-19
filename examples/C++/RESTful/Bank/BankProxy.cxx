@@ -13,7 +13,7 @@
  */
 
 #include "BankProxy.h"
-#include "transports/ProxyTransport.h"
+#include "rpcdds/transports/ProxyTransport.h"
 #include "BankProtocol.h"
 //#include "BankAsyncSupport.h"
 

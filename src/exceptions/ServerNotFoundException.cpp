@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include <exceptions/ServerNotFoundException.h>
+#include <rpcdds/exceptions/ServerNotFoundException.h>
 
 using namespace eprosima::rpcdds::exception;
 

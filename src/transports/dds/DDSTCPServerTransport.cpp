@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "transports/dds/TCPServerTransport.h"
+#include "rpcdds/transports/dds/TCPServerTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::TCPServerTransport";

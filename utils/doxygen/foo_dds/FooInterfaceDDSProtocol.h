@@ -16,7 +16,7 @@
 #define _FooInterface_DDS_PROTOCOL_H_
 
 #include "FooInterfaceProtocol.h"
-#include "utils/Messages.h"
+#include "rpcdds/utils/Messages.h"
 namespace eprosima
 {
     namespace rpcdds

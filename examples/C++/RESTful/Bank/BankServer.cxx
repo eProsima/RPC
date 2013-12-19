@@ -13,10 +13,10 @@
  */
 
 #include "BankServer.h"
-#include "strategies/ServerStrategy.h"
-#include "transports/ServerTransport.h"
+#include "rpcdds/strategies/ServerStrategy.h"
+#include "rpcdds/transports/ServerTransport.h"
 #include "BankProtocol.h"
-#include "exceptions/ServerInternalException.h"
+#include "rpcdds/exceptions/ServerInternalException.h"
 
 namespace Bank
 {

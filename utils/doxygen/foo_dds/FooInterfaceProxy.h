@@ -15,10 +15,10 @@
 #ifndef _FooInterface_PROXY_H_
 #define _FooInterface_PROXY_H_
 
-#include "client/Proxy.h"
-#include "exceptions/SystemException.h"
-#include "exceptions/UserException.h"
-#include "utils/dds/Middleware.h"
+#include "rpcdds/client/Proxy.h"
+#include "rpcdds/exceptions/SystemException.h"
+#include "rpcdds/exceptions/UserException.h"
+#include "rpcdds/utils/dds/Middleware.h"
 #include "FooInterface.h"
 
 namespace eprosima

@@ -13,11 +13,11 @@
  */
 
 #include "BankServer.h"
-#include "strategies/ThreadPoolStrategy.h"
+#include "rpcdds/strategies/ThreadPoolStrategy.h"
 #include "BankRESTProtocol.h"
-#include "transports/HttpServerTransport.h"
-#include "exceptions/Exceptions.h"
-#include "utils/Utilities.h"
+#include "rpcdds/transports/HttpServerTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
+#include "rpcdds/utils/Utilities.h"
 #include "BankServerImplExample.h"
 
 #include <iostream>

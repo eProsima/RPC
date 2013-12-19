@@ -6,11 +6,11 @@
  *
  *************************************************************************/
 
-#include "client/Proxy.h"
-#include "exceptions/InitializeException.h"
-#include "transports/ProxyTransport.h"
-#include "protocols/Protocol.h"
-#include "client/AsyncThread.h"
+#include "rpcdds/client/Proxy.h"
+#include "rpcdds/exceptions/InitializeException.h"
+#include "rpcdds/transports/ProxyTransport.h"
+#include "rpcdds/protocols/Protocol.h"
+#include "rpcdds/client/AsyncThread.h"
 
 static const char* const CLASS_NAME ="eprosima::rpcdds::proxy::Proxy";
 

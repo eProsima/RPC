@@ -6,10 +6,10 @@
  *
  *************************************************************************/
 
-#include "client/AsyncTask.h"
-#include "client/ClientRPC.h"
-#include "exceptions/ClientInternalException.h"
-#include "exceptions/ServerTimeoutException.h"
+#include "rpcdds/client/AsyncTask.h"
+#include "rpcdds/client/ClientRPC.h"
+#include "rpcdds/exceptions/ClientInternalException.h"
+#include "rpcdds/exceptions/ServerTimeoutException.h"
 
 const char* const CLASS_NAME = "AsyncTask";
 

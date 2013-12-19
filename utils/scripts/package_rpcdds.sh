@@ -28,7 +28,7 @@ function setPlatform
 function package
 {
     # Get the current version of RPCDDS
-    . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP rpcddsversion include/rpcdds_version.h
+    . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP rpcddsversion include/rpcdds/rpcdds_version.h
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 

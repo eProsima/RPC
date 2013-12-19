@@ -15,7 +15,7 @@
 #ifndef _FooInterface_PROTOCOL_H_
 #define _FooInterface_PROTOCOL_H_
 
-#include "protocols/Protocol.h"
+#include "rpcdds/protocols/Protocol.h"
 #include "FooInterface.h"
 #include "FooInterfaceServerImpl.h"
 #include "ndds_namespace_cpp.h"

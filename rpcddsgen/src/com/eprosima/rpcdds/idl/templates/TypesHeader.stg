@@ -6,7 +6,7 @@ $fileHeader(file=[ctx.filename, "T.h"], description=["This header file contains 
 #ifndef _$ctx.filename;format="toUpper"$T_H_
 #define _$ctx.filename;format="toUpper"$T_H_
 
-#include "exceptions/UserException.h"
+#include "rpcdds/exceptions/UserException.h"
 #include "$ctx.filename$Support.h"
 
 $definitions; separator="\n"$

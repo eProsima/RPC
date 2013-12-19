@@ -13,11 +13,11 @@
  */
 
 #include "MultiInterfacesTestServer.h"
-#include "strategies/ThreadPoolStrategy.h"
+#include "rpcdds/strategies/ThreadPoolStrategy.h"
 #include "MultiInterfacesTestDDSProtocol.h"
-#include "transports/dds/UDPServerTransport.h"
-#include "exceptions/Exceptions.h"
-#include "utils/Utilities.h"
+#include "rpcdds/transports/dds/UDPServerTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
+#include "rpcdds/utils/Utilities.h"
 #include "MultiInterfacesTestServerImplExample.h"
 
 #include <iostream>

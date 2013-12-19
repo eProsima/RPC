@@ -45,7 +45,7 @@ if not %errorstatus%==0 goto :exit
 cd "..\..\"
 
 :: Get the current vesion of RPCDDS
-call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\rpcdds_version.h
+call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\rpcdds\rpcdds_version.h
 if not %errorstatus%==0 goto :exit
 
 :: Update and compile RPCDDS application.

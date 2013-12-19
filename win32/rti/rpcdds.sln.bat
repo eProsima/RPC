@@ -1,7 +1,7 @@
 :: This script execute Visual Studio getting first the version of the product.
 
 :: Get the current vesion of RPCDDS
-call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONCDR ..\..\include\rpcdds_version.h
+call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONCDR ..\..\include\rpcdds\rpcdds_version.h
 if not %errorstatus%==0 goto :EOF
 
 set VERSION=-%VERSIONCDR%

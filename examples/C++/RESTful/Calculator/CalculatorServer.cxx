@@ -13,10 +13,10 @@
  */
 
 #include "CalculatorServer.h"
-#include "strategies/ServerStrategy.h"
-#include "transports/ServerTransport.h"
+#include "rpcdds/strategies/ServerStrategy.h"
+#include "rpcdds/transports/ServerTransport.h"
 #include "CalculatorProtocol.h"
-#include "exceptions/ServerInternalException.h"
+#include "rpcdds/exceptions/ServerInternalException.h"
 
 namespace Calculator
 {

@@ -1,4 +1,4 @@
-#include "protocols/rest/RESTSerializer.h"
+#include "rpcdds/protocols/rest/RESTSerializer.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol::rest;

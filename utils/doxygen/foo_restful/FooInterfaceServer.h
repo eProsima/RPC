@@ -15,7 +15,7 @@
 #ifndef _FooInterfaceSERVER_H_
 #define _FooInterfaceSERVER_H_
 
-#include "server/Server.h"
+#include "rpcdds/server/Server.h"
 #include "FooInterfaceServerImpl.h"
 
 namespace eprosima

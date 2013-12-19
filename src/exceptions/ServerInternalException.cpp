@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include <exceptions/ServerInternalException.h>
+#include <rpcdds/exceptions/ServerInternalException.h>
 
 using namespace eprosima::rpcdds::exception;
 

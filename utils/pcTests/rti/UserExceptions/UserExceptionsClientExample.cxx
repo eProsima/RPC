@@ -14,8 +14,8 @@
 
 #include "UserExceptionsProxy.h"
 #include "UserExceptionsDDSProtocol.h"
-#include "transports/dds/UDPProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 #include "UserExceptionsRequestReplyPlugin.h"
 
 #include "UserExceptionsT.h"

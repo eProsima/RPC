@@ -13,7 +13,7 @@
  */
 
 #include "CalculatorProxy.h"
-#include "transports/ProxyTransport.h"
+#include "rpcdds/transports/ProxyTransport.h"
 #include "CalculatorProtocol.h"
 //#include "CalculatorAsyncSupport.h"
 

@@ -14,8 +14,8 @@
 
 #include "EmbeddedParamsTestProxy.h"
 #include "EmbeddedParamsTestRESTProtocol.h"
-#include "transports/HttpProxyTransport.h"
-#include "exceptions/Exceptions.h"
+#include "rpcdds/transports/HttpProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 
 #include <iostream>
 #include <string>

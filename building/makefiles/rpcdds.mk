@@ -3,7 +3,7 @@ RPCDDS_OUTDIR_DEBUG = $(RPCDDS_OUTDIR)/debug
 RPCDDS_OUTDIR_RELEASE = $(RPCDDS_OUTDIR)/release
 
 # Get product version.
-RPCDDS_VERSION=-$(shell $(EPROSIMADIR)/scripts/common_pack_functions.sh printVersionFromCPP include/rpcdds_version.h)
+RPCDDS_VERSION=-$(shell $(EPROSIMADIR)/scripts/common_pack_functions.sh printVersionFromCPP include/rpcdds/rpcdds_version.h)
 
 RPCDDS_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(RPCDDS_OUTDIR_DEBUG))
 RPCDDS_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(RPCDDS_OUTDIR_RELEASE))
