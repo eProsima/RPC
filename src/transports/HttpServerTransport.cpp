@@ -19,6 +19,8 @@
 using namespace eprosima::rpcdds;
 using namespace transport;
 
+const char* const CLASS_NAME = "HttpServerTransport";
+
 HttpServerTransport::HttpServerTransport(const std::string &to_connect) : m_tcptransport(to_connect)
 {
     m_tcptransport.onBossProcess->function = boost::bind(&HttpServerTransport::bossProcess, this, _1);
@@ -103,6 +105,7 @@ void HttpServerTransport::bossProcess(TCPEndpoint* connection)
 
 void HttpServerTransport::worker(TCPEndpoint* connection)
 {
+	const char* const METHOD_NAME ="worker";
     int retCode = 0;
 
     // Initialize buffers.
@@ -183,10 +186,11 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                         // TODO Error.
                     }
                 }
-                else if(httpMessage.getBodyContentLength() > 0 || !httpMessage.getBodyContentType().empty())
+                else if(httpMessage.getBodyContentLength() > 0 && httpMessage.getBodyContentType().empty())
                 {
                     // TODO Process Error. Jump message. Print error.
                     // TODO Intentar recuperar.
+					printf("ERROR<%s::%s>: Content-Length is greater than 0 but Content-Type was not specified\n", CLASS_NAME, METHOD_NAME);
                     retCode = -1;
                 }
 
