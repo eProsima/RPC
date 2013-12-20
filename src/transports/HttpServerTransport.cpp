@@ -72,7 +72,7 @@ void HttpServerTransport::sendReply(void *data, size_t dataLength, Endpoint *con
             }
             else
             {
-                if(conn->write("\r\n"))
+                if(conn->write("Content-Length: 0\r\n\r\n"))
                 {
                     return m_tcptransport.sendReply(conn->getWriteBuffer(), conn->getWriteBufferUsage(), connection);
                 }
