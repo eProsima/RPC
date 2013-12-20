@@ -743,7 +743,7 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = utils/doxygen/doxygenfiles/mainpage.dox \
+INPUT                  = utils/doxygen/doxygenfiles \
                          utils/doxygen/foo_restful \
                          utils/doxygen/foo_dds \
                          include
@@ -868,7 +868,7 @@ EXAMPLE_RECURSIVE      = NO
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH             = doxygenfiles
+IMAGE_PATH             = utils/doxygen/doxygenfiles
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
