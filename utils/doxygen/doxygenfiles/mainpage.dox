@@ -8,8 +8,6 @@
  * @image latex eProsimaLogo.png "" width=5cm
  * <br/><a href="http://www.eprosima.com">eProsima</a></center>
  *
- * <br/><center><a href="http://www.eprosima.com">eProsima</a></center>
- *
  * eProsima RPC is a service invocation framework that enables to build distributed applications with minimal effort
  * using the client/server paradigm. It makes transparent the remote procedure call to developer without the programmer
  * explicitly coding the details for this remote interaction and allows developers to focus his efforts on their application logic.

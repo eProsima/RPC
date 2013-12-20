@@ -358,11 +358,13 @@ public class RPCDDSGEN
         else if(m_protocol.equalsIgnoreCase("rest"))
         {
             solution.addLibrary("boost_system-mt");
+            solution.addLibrary("boost_thread-mt");
         }
         else if(m_protocol.equalsIgnoreCase("fastcdr"))
         {
             solution.addInclude("$(RPCDDSHOME)/include/protocols/cdr");
             solution.addLibrary("boost_system-mt");
+            solution.addLibrary("boost_thread-mt");
             solution.addLibrary("cdr");
         }
         

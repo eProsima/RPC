@@ -2,66 +2,13 @@
 
 dir="`dirname \"$0\"`"
 
-if [ x$JAVA_HOME = x ]; then
-	filename=$0
-	arch="trash"
-	os=`uname -s`
+java_exec=java
 
-	case $os in
-		Linux*)
-			cpu=`uname -p`
+java -version &>/dev/null
 
-			if test "unknown" = "$cpu";
-			then
-				cpu=`uname -m`
-			fi
-
-			if test "x86_64" = "$cpu"; then
-				if [ -d "${NDDSHOME}/jre/x64Linux" ]; then
-					arch="x64Linux"
-				else
-					# Try using jre shipped 32-bit linux host
-					arch="i86Linux"
-				fi
-			else
-				if test "unknown" = "$cpu"; then
-					# This may be Ubuntu, try uname -m
-					cpu=`uname -m`
-					if test "x86_64" = "$cpu"; then
-						if [ -d "${NDDSHOME}/jre/x64Linux" ]; then
-							arch="x64Linux"
-						else
-							# Try using jre shipped 32-bit linux host
-							arch="i86Linux"
-						fi
-					else
-						arch="i86Linux"
-					fi		
-				else
-					arch="i86Linux"
-				fi
-			fi
-			;;
-		*)
-			# If we don't recognize the OS, fall back to JREHOME. It may still work.
-			echo "Warning: OS $os may not be supported. Be sure JREHOME is set."
-			;;
-	esac
-
-	if [ x$NDDSJREHOME = x ]; then
-		if [ -d "${NDDSHOME}/jre/${arch}" ]; then
-			JREHOME="${NDDSHOME}/jre/${arch}"
-		else
-			if [ x$JREHOME = x ]; then
-				echo "$filename: JREHOME not set."
-				exit 1
-			fi
-		fi
-	else
-		JREHOME="${NDDSJREHOME}"
-	fi
-else
-	JREHOME="${JAVA_HOME}"
+if [ $? != 0 ]; then
+    [ -z "$JAVA_HOME" ] && { echo "Java binary cannot be found. Please, make sure its location is in the PATH environment variable or set JAVA_HOME environment variable."; exit 1; }
+    java_exec="${JAVA_HOME}/bin/java"
 fi
 
-exec "${JREHOME}/bin/java" -Djava.ext.dirs="$dir/../classes" com.eprosima.rpcdds.RPCDDSGEN "-I$dir/../idl" "$@"
+exec $java_exec -jar "$dir/../classes/rpcddsgen.jar" "-I$dir/../idl" "$@"
