@@ -36,10 +36,10 @@ svn update
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 :: Compile RPCDDS library.
-::rmdir /S /Q lib\i86Win32VS2010
-::rmdir /S /Q lib\x64Win64VS2010
+rmdir /S /Q lib\i86Win32VS2010
+rmdir /S /Q lib\x64Win64VS2010
 cd "utils\scripts"
-:: call build_rpcdds.bat
+call build_rpcdds.bat
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd "..\..\"
@@ -54,7 +54,7 @@ if not %errorstatus%==0 goto :exit
 :: Compile RPCDDS for target.
 cd rpcddsgen
 rmdir /S /Q build
-:: call ant jar
+call ant jar
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd ".."
@@ -71,6 +71,17 @@ copy %LIB_BOOST_PATH%\lib\i86\libboost_system-vc100-mt-gd-1_53.lib lib\i86Win32V
 copy %LIB_BOOST_PATH%\lib\i86\libboost_thread-vc100-mt-1_53.lib lib\i86Win32VS2010\
 copy %LIB_BOOST_PATH%\lib\i86\libboost_thread-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
 
+copy %LIB_BOOST_PATH%\lib\i86\boost_chrono-vc100-mt-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_chrono-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_date_time-vc100-mt-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_date_time-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_regex-vc100-mt-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_regex-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_system-vc100-mt-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_system-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_thread-vc100-mt-1_53.dll lib\i86Win32VS2010\
+copy %LIB_BOOST_PATH%\lib\i86\boost_thread-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+
 copy %LIB_BOOST_PATH%\lib\x64\libboost_chrono-vc100-mt-1_53.lib lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\libboost_chrono-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\libboost_date_time-vc100-mt-1_53.lib lib\x64Win64VS2010\
@@ -82,11 +93,22 @@ copy %LIB_BOOST_PATH%\lib\x64\libboost_system-vc100-mt-gd-1_53.lib lib\x64Win64V
 copy %LIB_BOOST_PATH%\lib\x64\libboost_thread-vc100-mt-1_53.lib lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\libboost_thread-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
 
+copy %LIB_BOOST_PATH%\lib\x64\boost_chrono-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_chrono-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_date_time-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_date_time-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_regex-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_regex-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_system-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_system-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+
 :: Execute RPCDDS tests
 set RPCDDSHOME_OLD=%RPCDDSHOME%
 set RPCDDSHOME=%CD%
 cd utils/pcTests/restful
-:: call exec_tests.bat %package_targets%
+call exec_tests.bat %package_targets%
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd "../../.."
@@ -106,44 +128,24 @@ soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC -
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-:: Copy pfd files into pdf dir
-xcopy /Y "RPC - Installation Manual.pdf" "pdf\RPC - Installation Manual.pdf"
-del "RPC - Installation Manual.pdf"
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-
-xcopy /Y "RPC - REST - User Manual.pdf" "pdf\RPC - REST - User Manual.pdf"
-del "RPC - REST - User Manual.pdf"
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-
-xcopy /Y "RPC - DDS - User Manual.pdf" "pdf\RPC - DDS - User Manual.pdf"
-del "RPC - DDS - User Manual.pdf"
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-
 cd ".."
 :: Create README
 soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%\README.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-cd "utils/doxygen"
-
 :: Export version
 set VERSION_DOX=%VERSION%
 mkdir output
 mkdir output\doxygen
-
-doxygen doxyfile
+doxygen utils\doxygen\doxyfile
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd output\doxygen\latex
 call make.bat
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-ren refman.pdf "RPC - API C++ Manual.pdf"
-cd "..\..\..\..\.."
+cd ..\..\..
 
 :: Create installers.
 cd utils\installers\rti\windows
