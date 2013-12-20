@@ -1441,7 +1441,7 @@ public class RPCDDSGEN
             // TODO For windows.
             if(m_exampleOption.substring(3, 6).equals("Win"))
             {
-                System.out.println("Genering VS2010 solution");
+                System.out.println("Generating VS2010 solution");
                 
                 if(m_exampleOption.startsWith("i86"))
                 {
