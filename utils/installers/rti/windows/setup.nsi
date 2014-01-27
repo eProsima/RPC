@@ -79,7 +79,7 @@ var /GLOBAL RICHI_FINISH_MESSAGE
 
 # Installer attributes
 OutFile eProsima_RPC_${VERSION}.exe
-InstallDir "$PROGRAMFILES\eProsima\rpc"
+InstallDir "$PROGRAMFILES\eProsima\RPC"
 CRCCheck on
 XPStyle on
 ShowInstDetails show

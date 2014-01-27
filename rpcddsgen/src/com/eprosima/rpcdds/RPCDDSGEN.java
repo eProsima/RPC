@@ -237,7 +237,7 @@ public class RPCDDSGEN
             else if(arg.startsWith("-I"))
             {
                 m_includePaths.add(arg);
-            }
+            }/*
             else if(arg.equals("--server"))
             {
                 m_servercode = false;
@@ -245,7 +245,7 @@ public class RPCDDSGEN
             else if(arg.equals("--client"))
             {
                 m_clientcode = false;
-            }           
+            }*/ 
             else
             {
                 throw new BadArgumentException("Unknown argument " + arg);
@@ -1762,18 +1762,18 @@ public class RPCDDSGEN
         System.out.println("rpcddsgen usage:");
         System.out.println("\trpcddsgen [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
-        System.out.println("\t\t-help: Show help");
-        System.out.println("\t\t-version: shows the current version of RPCDDS.");
-        System.out.println("\t\t--server: disable generation of source code for server.");
-        System.out.println("\t\t--client: disable generation of source code for client.");
-        System.out.println("\t\t-example <platform>: Generate solution for specific platform (example: x64Win64VS2010)");
-        System.out.println("\t\t\tPlatforms supported:");
+        System.out.println("\t\t-help: shows this help");
+        System.out.println("\t\t-version: shows the current version of eProsima RPC.");
+        //System.out.println("\t\t--server: disables the generation of source code for servers.");
+        //System.out.println("\t\t--client: disables the generation of source code for clients.");
+        System.out.println("\t\t-example <platform>: Generates a solution for a specific platform (example: x64Win64VS2010)");
+        System.out.println("\t\t\tSupported platforms:");
         for(int count = 0; count < m_platforms.size(); ++count)
             System.out.println("\t\t\t * " + m_platforms.get(count));
         System.out.println("");
         //        "   -language <C++>: Programming language (default: C++).\n" +
-        System.out.println("\t\t-replace: replace generated files.");
-        System.out.println("\t\t-d <path>: Output directory for generated files.");
+        System.out.println("\t\t-replace: replaces existing generated files.");
+        System.out.println("\t\t-d <path>: sets an output directory for generated files.");
         
         if(m_middleware.equals("rti"))
         {
@@ -1781,8 +1781,8 @@ public class RPCDDSGEN
             System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
         }
 
-        System.out.println("\t\t-t <temp dir>: Use the specific directory as temporary directory.");
-        System.out.println("\tand the files can be WADL files or IDL files.");
+        System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
+        System.out.println("\tand the files must be WADL files or IDL files.");
     }
     
     public static void main(String[] args) throws Exception

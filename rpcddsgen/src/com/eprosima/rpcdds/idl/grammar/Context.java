@@ -359,7 +359,7 @@ public class Context
     { 
         Interface prev = m_interfaces.put(name, interf);
         
-        // TODO: Excepción
+        // TODO: Excepcion
         if(prev != null)
             System.out.println("Warning: Redefined interface " + name);
     }
@@ -544,7 +544,7 @@ public class Context
     {    		
     	String oldValue = m_tmpAnnotations.put(id, value);
     	
-    	// TODO Lanzar una excepción.
+    	// TODO Lanzar una excepcion.
     	if(oldValue != null)
     		System.out.println("Annotation " + id + " was redefined");
     }
