@@ -31,7 +31,9 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor for server's proxies.
+						 * @param remoteServiceName Name of the service
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
+						 * @param timeout The time in milliseconds to wait for the reply.
                          */
                         UDPProxyTransport(std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 
@@ -39,7 +41,9 @@ namespace eprosima
                          * @brief Constructor for server's proxies.
                          *
                          * @param to_connect IP address where the server can be found by the proxy. For example: "192.168.1.3"
+						 * @param remoteServiceName Name of the service
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
+						 * @param timeout The time in milliseconds to wait for the reply.
                          */
                         UDPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
 
