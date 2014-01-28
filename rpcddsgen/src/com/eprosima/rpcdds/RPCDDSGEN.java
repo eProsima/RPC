@@ -354,9 +354,6 @@ public class RPCDDSGEN
 	        	project.addCommonSrcFile("MessageHeaderSupport.cxx");
 	        	project.setUnique(true);
 	        	solution.addProject(project);
-
-                // TODO Review
-                solution.addLibrary("boost_system");
             }
             catch(Exception ex)
             {

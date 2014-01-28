@@ -11,7 +11,6 @@
 #include "rpcdds/rpcdds_dll.h"
 #include "rpcdds/transports/dds/Transport.h"
 #include "rpcdds/transports/ProxyTransport.h"
-#include "rpcdds/transports/dds/AsyncThread.h"
 #include "rpcdds/utils/Messages.h"
 #include "rpcdds/utils/dds/Middleware.h"
 
@@ -28,6 +27,7 @@ namespace eprosima
             {
                 class ProxyProcedureEndpoint;
                 class DDSAsyncTask;
+                class AsyncThread;
 
                 /*!
                  * @brief This class is the base of all proxies that implement a transport
@@ -127,7 +127,7 @@ namespace eprosima
 
                         long m_timeout;
 
-                        AsyncThread m_asyncThread;
+                        AsyncThread *m_asyncThread;
                 };
             } // namespace dds
         } // namespace transport
