@@ -16,6 +16,7 @@
 #include "CalculatorDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
+#include "rpcdds/utils/Utilities.h"
 
 #include <iostream>
 
@@ -108,7 +109,7 @@ int main(int argc, char **argv)
 				}
 
 				// Wait 10 seconds to received the server's replies.
-				sleep(10000);
+				eprosima::rpcdds::sleep(10000);
 
                 delete proxy ;
                 delete transport ;
