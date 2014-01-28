@@ -32,10 +32,7 @@ function package
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
-    # Update and compile RPCDDS library. Also set platform if is necessary.
-    svn update
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
+    # Compile RPCDDS library. Also set platform if is necessary.
     # Compile RPCDDS library for i86.
     if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
         rm -rf output
@@ -68,33 +65,43 @@ function package
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
-    # Execute RPCDDS tests
+    # Execute DDS tests
     cd utils/pcTests/rti
-    ./exec_tests.sh $package_targets
+    #./exec_tests.sh $package_targets
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../..
 
-#    # Create PDFS from documentation.
-#    cd doc
-#    # Installation manual
-#    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/Installation Manual.odt,$fastbuffersversion)"
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
-#    # User manual
-#    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/User Manual.odt,$fastbuffersversion)"
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
-#    cd ..
-#
-#    # Create README
-#    soffice --headless "macro:///eProsima.documentation.changeVersionToHTML($PWD/README.odt,$fastbuffersversion)"
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
+    # Execute REST tests
+    cd utils/pcTests/restful
+    #./exec_tests.sh $package_targets
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ../../..
 
-#    # Create doxygen information.
-#    # Generate the examples
-#    # CDR example
+    # Create PDFS from documentation.
+    cd doc
+    # Installation manual
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - Installation Manual.odt,$rpcddsversion)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # User manual
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - REST - User Manual.odt,$rpcddsversion)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - DDS - User Manual.odt,$rpcddsversion)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ..
+
+    # Create README
+    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$rpcddsversion,./doc/,./)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+
+    # Create doxygen information.
+    # Generate the examples
+    # CDR example
 #    ./scripts/efastbuffers_local.sh -replace -ser cdr -o utils/doxygen/examples/cdr utils/doxygen/examples/cdr/FooCdr.idl
 #    errorstatus=$?
 #    if [ $errorstatus != 0 ]; then return; fi
@@ -102,23 +109,23 @@ function package
 #    ./scripts/efastbuffers_local.sh -replace -ser fastcdr -o utils/doxygen/examples/fastcdr utils/doxygen/examples/fastcdr/FooFastCdr.idl
 #    errorstatus=$?
 #    if [ $errorstatus != 0 ]; then return; fi
-#    #Export version
-#    export VERSION_DOX=$fastbuffersversion
-#    mkdir -p output
-#    mkdir -p output/doxygen
-#    doxygen utils/doxygen/doxyfile
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
-#    # Compile the latex document
-#    cd output/doxygen/latex
-#    make
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
-#    cd ../../../
+    #Export version
+    export VERSION_DOX=$rpcddsversion
+    mkdir -p output
+    mkdir -p output/doxygen
+    doxygen utils/doxygen/doxyfile
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # Compile the latex document
+    cd output/doxygen/latex
+    make
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ../../../
 
     # Create installers
     cd utils/installers/rti/linux
-    ./setup_linux.sh $rpcddsversion $package_targets
+    ./setup_linux.sh $rpcddsversion
     errorstatus=$?
     cd ../../..
     if [ $errorstatus != 0 ]; then return; fi
