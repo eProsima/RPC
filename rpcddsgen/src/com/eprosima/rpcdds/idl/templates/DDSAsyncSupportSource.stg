@@ -4,7 +4,6 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
 
 #include "$ctx.filename$DDSAsyncSupport.h"
-#include "$ctx.filename$Proxy.h"
 #include "rpcdds/exceptions/ServerInternalException.h"
 #include "rpcdds/utils/Messages.h"
 $ReqRepIncludes(filename=ctx.filename)$
