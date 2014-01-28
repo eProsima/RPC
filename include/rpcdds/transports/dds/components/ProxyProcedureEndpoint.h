@@ -27,6 +27,8 @@ namespace eprosima
         {
             namespace dds
             {
+                class DDSAsyncTask;
+
                 /*!
                  * @brief This class represents a remote endpoint used by a proxy.
                  * It also encapsulates the DDS datawriter and the DDS datareader.
@@ -75,6 +77,15 @@ namespace eprosima
                          */
                         eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
 
+                        eprosima::rpcdds::ReturnMessage send_async(void *request, DDSAsyncTask *task);
+
+                        void freeQuery(DDS::QueryCondition *query);
+
+                        /*!
+                         * @brief This function takes a sample from the datareader.
+                         */
+                        eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
+
                     private:
 
                         /*!
@@ -119,11 +130,6 @@ namespace eprosima
                          * @brief This function returns a used query condition to its freedom.
                          */
                         void returnUsedQueryToPool(DDS::QueryCondition *query);
-
-                        /*!
-                         * @brief This function takes a sample from the datareader.
-                         */
-                        eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 
                         //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
                         boost::mutex *m_mutex;

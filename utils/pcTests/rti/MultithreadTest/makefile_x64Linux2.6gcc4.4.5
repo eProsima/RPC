@@ -6,13 +6,10 @@ LDFLAGS= -m64
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-# Get product version.
-RPCDDS_VERSION=-$(shell $(EPROSIMADIR)/scripts/common_pack_functions.sh printVersionFromCPP ../../../../include/rpcdds_version.h)
-
 INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include
 
 LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds$(RPCDDS_VERSION) $(SYSLIBS)
+       -lnddsc -lnddscore -lnddscpp -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 
@@ -86,10 +83,10 @@ MultithreadTestClient : $(MultithreadTest_CLIENT_TARGET) $(MultithreadTest_CLIEN
 MultithreadTestServer : $(MultithreadTest_SERVER_TARGET) $(MultithreadTest_SERVER_TARGET_Z)
 	
 $(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestClient.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a lib/x64Linux2.6gcc4.4.5/libMessageHeader.a
-	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread-mt -lboost_system-mt
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
 	
 $(MultithreadTest_SERVER_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a lib/x64Linux2.6gcc4.4.5/libMessageHeader.a
-	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread-mt -lboost_system-mt
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
 	
 MultithreadTestClientExample : $(MultithreadTest_CLIENT_EXAMPLE_TARGET)
 	

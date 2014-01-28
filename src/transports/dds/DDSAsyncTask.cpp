@@ -1,37 +1,43 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of RPCDDS is licensed to you under the terms described in the
  * RPCDDS_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/client/AsyncTask.h"
-#include "rpcdds/client/ClientRPC.h"
+#include "rpcdds/transports/dds/DDSAsyncTask.h"
+#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "rpcdds/exceptions/ClientInternalException.h"
 #include "rpcdds/exceptions/ServerTimeoutException.h"
 
-const char* const CLASS_NAME = "AsyncTask";
-
 using namespace eprosima::rpcdds;
+using namespace ::transport::dds;
 using namespace ::exception;
 
-AsyncTask::AsyncTask(Proxy *proxy) :
-    m_proxy(proxy), m_proxyRPC(NULL)
+static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::DDSAsyncTask";
+
+DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::rpcdds::transport::AsyncTask()
 {
 }
 
-AsyncTask::~AsyncTask()
+void DDSAsyncTask::setProcedureEndpoint(ProxyProcedureEndpoint *pe)
 {
+    m_pe = pe;
 }
 
-void AsyncTask::execute(DDS::QueryCondition *query)
+ProxyProcedureEndpoint* DDSAsyncTask::getProcedureEndpoint()
+{
+    return m_pe;
+}
+
+void DDSAsyncTask::execute(DDS::QueryCondition *query)
 {
     const char* const METHOD_NAME = "execute";
 
     if(query != NULL)
     {
-        ReturnMessage retCode = m_clientRPC->takeReply(getReplyInstance(), query);
+        ReturnMessage retCode = m_pe->takeReply(getReplyInstance(), query);
 
         if(retCode == OPERATION_SUCCESSFUL)
         {
@@ -50,14 +56,4 @@ void AsyncTask::execute(DDS::QueryCondition *query)
     {
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
-}
-
-ClientRPC* AsyncTask::getRPC()
-{
-    return m_clientRPC;
-}
-
-void AsyncTask::setClientRPC(ClientRPC *clientRPC)
-{
-    m_clientRPC = clientRPC;
 }

@@ -29,6 +29,10 @@ ProxyTransport::ProxyTransport(std::string &remoteServiceName, int domainId, lon
     m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), ::transport::ProxyTransport(),
     ::transport::dds::Transport(domainId)
 {
+    const char* const METHOD_NAME = "ProxyTransport";
+    // TODO Send exception
+    if(m_asyncThread.init() != 0)
+        printf("ERROR<%s::%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
 }
 
 ProxyTransport::~ProxyTransport()
@@ -41,6 +45,8 @@ ProxyTransport::~ProxyTransport()
     }
 
     m_procedureEndpoints.erase(m_procedureEndpoints.begin(), m_procedureEndpoints.end());
+
+    m_asyncThread.exit();
 }
 
 const char* ProxyTransport::getType() const
@@ -87,26 +93,21 @@ long ProxyTransport::getTimeout()
     return NULL;
 }
 
-ReturnMessage ProxyTransport::send(void *request, void* reply)
+int ProxyTransport::addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout)
 {
-    const char* const METHOD_NAME = "send";
-    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-    encapsulation *encap = (encapsulation*)request;
-    std::map<const char*, ProxyProcedureEndpoint*>::iterator it;
+    return m_asyncThread.addTask(query, task, timeout);
+}
 
-    if(request != NULL && reply != NULL)
+void ProxyTransport::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
+{
+    const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
+
+    if(pe != NULL)
     {
-        it = m_procedureEndpoints.find(encap->name);
-
-        if(it != m_procedureEndpoints.end())
-        {
-            returnedValue = (*it).second->send(encap->data, reply);
-        }
+        m_asyncThread.deleteAssociatedAsyncTasks(pe);
     }
     else
     {
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
-
-    return returnedValue;
 }

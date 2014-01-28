@@ -11,6 +11,7 @@
 #include "rpcdds/rpcdds_dll.h"
 #include "rpcdds/transports/dds/Transport.h"
 #include "rpcdds/transports/ProxyTransport.h"
+#include "rpcdds/transports/dds/AsyncThread.h"
 #include "rpcdds/utils/Messages.h"
 #include "rpcdds/utils/dds/Middleware.h"
 
@@ -26,6 +27,7 @@ namespace eprosima
             namespace dds
             {
                 class ProxyProcedureEndpoint;
+                class DDSAsyncTask;
 
                 /*!
                  * @brief This class is the base of all proxies that implement a transport
@@ -74,17 +76,22 @@ namespace eprosima
                                 Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
                                 Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize);
 
-						/*!
-                         * @brief This function sends a synchronous RPC call.
-                         * It sends the request to the server and waits for the reply.
-                         * The wait mechanism is implemented with a DDS WaitSet.
+                        /*!
+                         * @brief This function adds a asynchronous task to the asynchronous thread.
                          *
-                         * @param request Pointer to the allocated request. It cannot be NULL.
-                         * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
-                         *        The pointer can be NULL and this means that the RPC call is oneway.
-                         * @throw eprosima::rpcdds::exception::ServerTimeoutException.
+                         * @param query The DDS query condition that is used to take the request. Cannot be NULL.
+                         * @param task The asynchronos task created and associated with a request. Cannot be NULL.
+                         * @param timeout The timeout used for this request.
+                         * @return A 0 value is returned if function works successfully. In any other case, -1 is returned.
                          */
-                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
+                        int addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout);
+
+                        /**
+                         * @brief This function deletes all the asynchronous tasks associated with the ProxyProcedureEndpoint endpoint.
+                         *
+                         * @param pe Pointer to the ProxyProcedureEndpoint. It cannot be NULL.
+                         */
+                        void deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe);
 
                     protected:
 
@@ -119,6 +126,8 @@ namespace eprosima
                         std::string m_remoteServiceName;
 
                         long m_timeout;
+
+                        AsyncThread m_asyncThread;
                 };
             } // namespace dds
         } // namespace transport

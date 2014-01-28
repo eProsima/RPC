@@ -1,22 +1,23 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of RPCDDS is licensed to you under the terms described in the
  * RPCDDS_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/client/AsyncThread.h"
-#include "rpcdds/client/AsyncTask.h"
-#include "rpcdds/client/ClientRPC.h"
+#include "rpcdds/transports/dds/AsyncThread.h"
+#include "rpcdds/transports/dds/DDSAsyncTask.h"
+#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "rpcdds/utils/Typedefs.h"
 #include "rpcdds/exceptions/ServerTimeoutException.h"
 
 #include <stdio.h>
 
-static const char* const CLASS_NAME = "eProsima::RPCDDS::AsyncThread";
+static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::AsyncThread";
 
 using namespace eprosima::rpcdds;
+using namespace ::transport::dds;
 using namespace ::exception;
 
 bool asyncListSort(AsyncListPair i, AsyncListPair j)
@@ -147,7 +148,7 @@ void AsyncThread::run()
                         {
                             it->second.second->execute(it->second.first);
                             m_waitSet->detach_condition(it->second.first);
-                            it->second.second->getRPC()->freeQuery(it->second.first);
+                            it->second.second->getProcedureEndpoint()->freeQuery(it->second.first);
                             delete it->second.second;
                             m_vector.erase(it);
                         }
@@ -166,7 +167,7 @@ void AsyncThread::run()
                     {
                         it->second.second->on_exception(ServerTimeoutException("Asynchronous task exceed the time to wait the server's reply"));
                         m_waitSet->detach_condition(it->second.first);
-                        it->second.second->getRPC()->freeQuery(it->second.first);
+                        it->second.second->getProcedureEndpoint()->freeQuery(it->second.first);
                         delete it->second.second;
                         it = m_vector.erase(it);
                     }
@@ -212,7 +213,7 @@ void AsyncThread::run()
     return;
 }
 
-int AsyncThread::addTask(DDS::QueryCondition *query, AsyncTask *task, long timeout)
+int AsyncThread::addTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout)
 {
     const char* const METHOD_NAME = "addTask";
     int returnedValue = -1;
@@ -253,11 +254,11 @@ int AsyncThread::addTask(DDS::QueryCondition *query, AsyncTask *task, long timeo
     return returnedValue;
 }
 
-void AsyncThread::deleteAssociatedAsyncTasks(ClientRPC *rpc)
+void AsyncThread::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
 {
     const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
 
-    if(rpc != NULL)
+    if(pe != NULL)
     {
         boost::unique_lock<boost::mutex> lock(*m_mutex);
 
@@ -270,10 +271,10 @@ void AsyncThread::deleteAssociatedAsyncTasks(ClientRPC *rpc)
 
         while(it != m_vector.end())
         {
-            if(it->second.second->getRPC() == rpc)
+            if(it->second.second->getProcedureEndpoint() == pe)
             {
                 m_waitSet->detach_condition(it->second.first);
-                it->second.second->getRPC()->freeQuery(it->second.first);
+                it->second.second->getProcedureEndpoint()->freeQuery(it->second.first);
                 delete it->second.second;
                 it = m_vector.erase(it);
             }

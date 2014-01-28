@@ -28,3 +28,7 @@ rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLParser.java
 rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLParser.smap
 rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLTokenTypes.java
 rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLTokenTypes.txt
+rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParser.java
+rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParser.smap
+rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParserTokenTypes.java
+rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParserTokenTypes.txt

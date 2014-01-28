@@ -6,13 +6,10 @@ LDFLAGS= -m32
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-# Get product version.
-RPCDDS_VERSION=-$(shell $(EPROSIMADIR)/scripts/common_pack_functions.sh printVersionFromCPP ../../../../include/rpcdds_version.h)
-
 INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include
 
 LIBS =  -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds$(RPCDDS_VERSION) $(SYSLIBS)
+       -lnddsc -lnddscore -lnddscpp -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 
@@ -86,10 +83,10 @@ MultithreadTestClient : $(MultithreadTest_CLIENT_TARGET) $(MultithreadTest_CLIEN
 MultithreadTestServer : $(MultithreadTest_SERVER_TARGET) $(MultithreadTest_SERVER_TARGET_Z)
 	
 $(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o
-	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread-mt -lboost_system-mt
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
 	
 $(MultithreadTest_SERVER_EXAMPLE_TARGET): output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o output/i86Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o  lib/i86Linux2.6gcc4.4.5/libMultithreadTestServer.a lib/i86Linux2.6gcc4.4.5/libMultithreadTest.a lib/i86Linux2.6gcc4.4.5/libMessageHeader.a
-	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o  output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread-mt -lboost_system-mt
+	$(LN) $(LDFLAGS) -o $@ output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o  output/i86Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/i86Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
 	
 MultithreadTestClientExample : $(MultithreadTest_CLIENT_EXAMPLE_TARGET)
 	

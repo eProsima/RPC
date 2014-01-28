@@ -7,6 +7,7 @@ $fileHeader(file=[ctx.filename, "Protocol.h"], description=["This header file co
 #define _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 
 #include "rpcdds/protocols/Protocol.h"
+#include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$.h"
 $if(ctx.server)$
 #include "$ctx.filename$ServerImpl.h"
@@ -104,6 +105,13 @@ $if(ctx.client)$
  *        It has to be implemented by the child classes.
  */
 virtual $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
+$endif$
+
+$if(ctx.dds)$
+$if(!operation.oneway)$
+virtual void $operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$) = 0;
+
+$endif$
 $endif$
 
 >>

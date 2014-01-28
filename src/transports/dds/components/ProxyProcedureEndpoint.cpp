@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "rpcdds/transports/dds/DDSAsyncTask.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 #include "rpcdds/utils/Typedefs.h"
 
@@ -30,6 +31,9 @@ ProxyProcedureEndpoint::ProxyProcedureEndpoint(ProxyTransport &transport) : m_mu
 
 ProxyProcedureEndpoint::~ProxyProcedureEndpoint()
 {
+    // Remove asynchronous tasks.
+    m_transport.deleteAssociatedAsyncTasks(this);
+
     finalize();
 }
 
@@ -363,6 +367,22 @@ void ProxyProcedureEndpoint::returnUsedQueryToPool(DDS::QueryCondition *query)
     }
 }
 
+void ProxyProcedureEndpoint::freeQuery(DDS::QueryCondition *query)
+{
+    const char* const METHOD_NAME = "freeQuery";
+
+    if(query != NULL)
+    {
+        m_mutex->lock();
+        returnUsedQueryToPool(query);
+        m_mutex->unlock();
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
+    }
+}
+
 ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 {
     const char* const METHOD_NAME = "send";
@@ -482,6 +502,114 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 
             // Its not a oneway function.
             if(m_reader != NULL)
+            {
+                m_mutex->lock();
+                returnUsedQueryToPool(query);
+                m_mutex->unlock();
+            }
+        }
+        else
+        {
+            printf("ERROR <%s::%s>: Cannot get a free query condition\n", CLASS_NAME, METHOD_NAME);
+        }
+
+        // Set the remoteServiceName to NULL.
+        *auxPointerToRemoteServiceName = NULL;
+    }
+    else
+    {
+        printf("ERROR<%s::%s>: Bad parameter(data)\n", CLASS_NAME, METHOD_NAME);
+    }
+
+    return returnedValue;
+}
+
+ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *task)
+{
+    const char* const METHOD_NAME = "send_async";
+    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
+    DDS::WaitSet *waitSet = NULL;
+    DDS::ReturnCode_t retCode;
+    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
+    unsigned int numSec = 0;
+    char value[50];
+    void *auxPointerToRequest = request;
+    char **auxPointerToRemoteServiceName = NULL;
+    DDS::QueryCondition *query = NULL;
+
+    if(request != NULL)
+    {
+        *(unsigned int*)auxPointerToRequest = m_proxyId[0];
+        ((unsigned int*)auxPointerToRequest)[1] = m_proxyId[1];
+        ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
+        ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
+        auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+        *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+        auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+        auxPointerToRequest = (char**)auxPointerToRequest + 1;
+
+        m_mutex->lock();
+        /* Thread safe num_Sec handling */
+        *(unsigned int*)auxPointerToRequest = m_numSec;
+        numSec = m_numSec;
+        m_numSec++;
+
+        // Take a free query condition.
+        query = getFreeQueryFromPool();
+        m_mutex->unlock();
+
+        if(query != NULL)
+        {
+            waitSet = new DDS::WaitSet();
+
+            if(waitSet != NULL)
+            {
+                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OPERATION_SUCCESSFUL)
+                {
+                    DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
+
+                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS::RETCODE_OK)
+                    {
+                        DDS::StringSeq stringSeq(1);
+
+                        stringSeq.length(1);
+                        SNPRINTF(value, 50, "%u", numSec);
+                        stringSeq[0] = strdup(value);
+                        retCode = query->set_query_parameters(stringSeq);
+
+                        if(retCode == DDS::RETCODE_OK)
+                        {
+                            task->setProcedureEndpoint(this);
+                            if(m_transport.addAsyncTask(query, task, m_transport.getTimeout()) == 0)
+                                returnedValue = OPERATION_SUCCESSFUL;
+                            else
+                                printf("ERROR <%s::%s>: Cannot add asynchronous task\n", CLASS_NAME, METHOD_NAME);
+                        }
+                        else
+                        {
+                            printf("ERROR <%s::%s>: Cannot set the sequence number to the query condition\n", CLASS_NAME, METHOD_NAME);
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
+                else
+                {
+                    printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+                    returnedValue = NO_SERVER;
+                }
+
+                delete waitSet;
+            }
+            else
+            {
+                printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
+            }
+
+            // If something was wrong.
+            if(returnedValue != OPERATION_SUCCESSFUL)
             {
                 m_mutex->lock();
                 returnUsedQueryToPool(query);

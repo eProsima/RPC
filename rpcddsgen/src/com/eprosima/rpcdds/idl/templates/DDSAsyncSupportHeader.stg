@@ -3,14 +3,16 @@ group AsyncSupportHeader;
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
 
-#ifndef _$ctx.filename;format="toUpper"$_ASYNC_SUPPORT_H_
-#define _$ctx.filename;format="toUpper"$_ASYNC_SUPPORT_H_
+#ifndef _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+#define _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 
-#include "client/AsyncTask.h"
+#include "rpcdds/transports/dds/DDSAsyncTask.h"
+#include "rpcdds/exceptions/UserException.h"
+$ReqRepSIncludes(filename=ctx.filename)$
 
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename;format="toUpper"$_ASYNC_SUPPORT_H_
+#endif // _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 >>
 
 module(ctx, module, definition_list) ::= <<
@@ -36,11 +38,13 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+class $operation.parent.name$_$operation.name$CallbackHandler;
+
 $if(!operation.oneway)$
 /**
  * \brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
  */
-class $operation.parent.name$_$operation.name$Task : public eProsima::RPCDDS::AsyncTask
+class $operation.parent.name$_$operation.name$Task : public eprosima::rpcdds::transport::dds::DDSAsyncTask
 {
     public:
 
@@ -51,17 +55,17 @@ class $operation.parent.name$_$operation.name$Task : public eProsima::RPCDDS::As
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
-        $operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj,
-           eProsima::RPCDDS::Client *client);
+        $operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj);
 
         /// \brief The default destructor.
         virtual ~$operation.parent.name$_$operation.name$Task();
         
         virtual void execute();
         
-        virtual void on_exception(const eProsima::RPCDDS::SystemException &ex);        
+        virtual void on_exception(const eprosima::rpcdds::exception::SystemException &ex);        
+
         $if(operation.exceptions)$
-        virtual void on_exception(const eProsima::RPCDDS::UserException &ex);
+        virtual void on_exception(const eprosima::rpcdds::exception::UserException &ex);
         $endif$
         
         /**
@@ -70,14 +74,14 @@ class $operation.parent.name$_$operation.name$Task : public eProsima::RPCDDS::As
          * \return The object that implements the callbacks.
          */
         $operation.parent.name$_$operation.name$CallbackHandler& getObject();
-        
-        void* getReplyInstance();
+
+        virtual void* getReplyInstance();
         
         private:
         
-           $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
-           
-           $operation.parent.name$_$operation.name$Reply m_reply;
+        $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
+
+        $operation.parent.name$_$operation.name$Reply m_reply;
 };
 
 $endif$
