@@ -9,6 +9,7 @@
 #ifndef _TRANSPORTS_DDS_DDSASYNCTASK_H_
 #define _TRANSPORTS_DDS_DDSASYNCTASK_H_
 
+#include "rpcdds/rpcdds_dll.h"
 #include "rpcdds/transports/AsyncTask.h"
 #include "rpcdds/utils/dds/Middleware.h"
 #include "rpcdds/exceptions/SystemException.h"
@@ -27,7 +28,7 @@ namespace eprosima
                  * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
                  * @ingroup TRANSPORTMODULE
                  */
-                class DDSAsyncTask : public eprosima::rpcdds::transport::AsyncTask
+                class RPCDDS_DllAPI DDSAsyncTask : public eprosima::rpcdds::transport::AsyncTask
                 {
                     public:
 
