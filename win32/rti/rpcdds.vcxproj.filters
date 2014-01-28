@@ -138,6 +138,9 @@
     <ClCompile Include="..\..\src\transports\TCPServerTransport.cpp">
       <Filter>Archivos de código fuente\transports</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\AsyncTask.cpp">
+      <Filter>Archivos de código fuente\transports</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\client\Proxy.cpp">
       <Filter>Archivos de código fuente\client</Filter>
     </ClCompile>
@@ -152,6 +155,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\protocols\rest\RESTSerializer.cpp">
       <Filter>Archivos de código fuente\protocols\rest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\DDSAsyncTask.cpp">
+      <Filter>Archivos de código fuente\transports\dds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\AsyncThread.cpp">
+      <Filter>Archivos de código fuente\transports\dds</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\DDSTCPProxyTransport.cpp">
       <Filter>Archivos de código fuente\transports\dds</Filter>
@@ -293,6 +302,9 @@
     <ClInclude Include="..\..\include\transports\TCPServerTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\transports\AsyncTask.h">
+      <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\transports\components\Endpoint.h">
       <Filter>Archivos de encabezado\transports\components</Filter>
     </ClInclude>
@@ -318,6 +330,12 @@
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\transports\dds\UDPServerTransport.h">
+      <Filter>Archivos de encabezado\transports\dds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\transports\dds\DDSAsyncTask.h">
+      <Filter>Archivos de encabezado\transports\dds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\transports\dds\AsyncThread.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\transports\dds\components\ProxyProcedureEndpoint.h">
