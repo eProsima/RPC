@@ -9,7 +9,9 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 #include "rpcdds/client/Proxy.h"
 #include "rpcdds/utils/dds/Middleware.h"
 #include "$ctx.filename$.h"
+$if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"
+$endif$
 
 namespace eprosima
 {

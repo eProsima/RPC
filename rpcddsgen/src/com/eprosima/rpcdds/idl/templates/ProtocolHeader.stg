@@ -7,10 +7,14 @@ $fileHeader(file=[ctx.filename, "Protocol.h"], description=["This header file co
 #define _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 
 #include "rpcdds/protocols/Protocol.h"
-#include "$ctx.filename$AsyncCallbackHandlers.h"
 #include "$ctx.filename$.h"
+$if(ctx.dds)$
+#include "$ctx.filename$AsyncCallbackHandlers.h"
+
+$endif$
 $if(ctx.server)$
 #include "$ctx.filename$ServerImpl.h"
+
 $endif$
 
 $ddsIncludes()$
