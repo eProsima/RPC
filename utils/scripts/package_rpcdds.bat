@@ -30,11 +30,6 @@ cd "..\.."
 
 rd /S /Q "utils\doxygen\output"
 
-:: Update and compile RPCDDS library.
-:: Update RPCDDS library.
-svn update
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
 :: Compile RPCDDS library.
 rmdir /S /Q lib\i86Win32VS2010
 rmdir /S /Q lib\x64Win64VS2010
