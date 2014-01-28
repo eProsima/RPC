@@ -102,7 +102,7 @@ int main(int argc, char **argv)
 				{
 					proxy->subtraction_async(subHandler, value1, value2);
 				}
-				catch(eProsima::RPCDDS::Exception &ex)
+				catch(SystemException &ex)
 				{
 					std::cout << ex.what() << std::endl;
 				}

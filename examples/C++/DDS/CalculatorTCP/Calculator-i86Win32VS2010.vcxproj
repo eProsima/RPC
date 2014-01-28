@@ -19,9 +19,9 @@
         </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>CalculatorServer</ProjectName>
-    <ProjectGuid>{BDFA2836-82F1-21E2-7AAE-34A8DF260123}</ProjectGuid>
-    <RootNamespace>CalculatorServer</RootNamespace>
+    <ProjectName>Calculator</ProjectName>
+    <ProjectGuid>{047D5FBF-EB3E-B2D2-8C4E-83BF32FC1914}</ProjectGuid>
+    <RootNamespace>Calculator</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'" Label="Configuration">
@@ -89,14 +89,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
         <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;NDDS_USER_DLL_EXPORT;;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscppd.lib; nddscd.lib; nddscored.lib;MessageHeaderd.lib;Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscppd.lib; nddscd.lib; nddscored.lib;MessageHeaderd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(RPCDDSHOME)\lib\i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -107,14 +107,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
         <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;NDDS_USER_DLL_EXPORT;;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscpp.lib; nddsc.lib; nddscore.lib;MessageHeader.lib;Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscpp.lib; nddsc.lib; nddscore.lib;MessageHeader.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(RPCDDSHOME)\lib\i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -125,14 +125,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
         <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscppzd.lib; nddsczd.lib; nddscorezd.lib;libMessageHeaderd.lib;libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscppzd.lib; nddsczd.lib; nddscorezd.lib;libMessageHeaderd.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -144,14 +144,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
         <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscppz.lib; nddscz.lib; nddscorez.lib;libMessageHeader.lib;libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscppz.lib; nddscz.lib; nddscorez.lib;libMessageHeader.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -159,11 +159,26 @@
       </Lib>
     </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CalculatorServer.cxx" />
+    <ClCompile Include="Calculator.cxx" />
+    <ClCompile Include="CalculatorPlugin.cxx" />
+    <ClCompile Include="CalculatorSupport.cxx" />
+    <ClCompile Include="CalculatorDDSProtocol.cxx" />
+    <ClCompile Include="CalculatorDDSAsyncSupport.cxx" />
+    <ClCompile Include="CalculatorRequestReply.cxx" />
+    <ClCompile Include="CalculatorRequestReplyPlugin.cxx" />
+    <ClCompile Include="CalculatorRequestReplySupport.cxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CalculatorServer.h" />
-    <ClInclude Include="CalculatorServerImpl.h" />
+    <ClInclude Include="Calculator.h" />
+    <ClInclude Include="CalculatorPlugin.h" />
+    <ClInclude Include="CalculatorSupport.h" />
+    <ClInclude Include="CalculatorProtocol.h" />
+    <ClInclude Include="CalculatorDDSProtocol.h" />
+    <ClInclude Include="CalculatorAsyncCallbackHandlers.h" />
+    <ClInclude Include="CalculatorDDSAsyncSupport.h" />
+    <ClInclude Include="CalculatorRequestReply.h" />
+    <ClInclude Include="CalculatorRequestReplyPlugin.h" />
+    <ClInclude Include="CalculatorRequestReplySupport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

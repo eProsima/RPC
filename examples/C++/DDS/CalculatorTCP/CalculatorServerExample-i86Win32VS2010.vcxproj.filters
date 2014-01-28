@@ -11,15 +11,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-        <ClCompile Include="CalculatorProxy.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
+    <ClCompile Include="CalculatorServerExample.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculatorServerImplExample.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-        <ClInclude Include="CalculatorProxy.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
+    <ClInclude Include="CalculatorServerImplExample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

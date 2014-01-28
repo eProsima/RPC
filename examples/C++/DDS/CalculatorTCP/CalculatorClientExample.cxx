@@ -14,7 +14,7 @@
 
 #include "CalculatorProxy.h"
 #include "CalculatorDDSProtocol.h"
-#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/transports/dds/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
 
 #include <iostream>
@@ -36,14 +36,14 @@ int main(int argc, char **argv)
 			if(sscanf(argv[2], "%d", &value2) == 1)
             {
                 CalculatorProtocol *protocol = NULL;
-                UDPProxyTransport *transport = NULL;
+                TCPProxyTransport *transport = NULL;
                 CalculatorProxy *proxy = NULL;
 
                 // Creation of the proxy for interface "Calculator".
                 try
                 {
                     protocol = new CalculatorProtocol();
-                    transport = new UDPProxyTransport("CalculatorService");
+                    transport = new TCPProxyTransport("80.32.132.11:7600", "CalculatorService");
                     proxy = new CalculatorProxy(*transport, *protocol);
                 }
                 catch(InitializeException &ex)
@@ -84,8 +84,8 @@ int main(int argc, char **argv)
                 delete proxy ;
                 delete transport ;
                 delete protocol ;
-			}
-			else
+            }
+            else
 			{
 				std::cout << "Bad parameter (second value)" << std::endl;
 			}

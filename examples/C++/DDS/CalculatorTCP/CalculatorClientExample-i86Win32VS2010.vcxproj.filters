@@ -11,15 +11,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-        <ClCompile Include="CalculatorProxy.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-  </ItemGroup>
-  <ItemGroup>
-        <ClInclude Include="CalculatorProxy.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
+    <ClCompile Include="CalculatorClientExample.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
