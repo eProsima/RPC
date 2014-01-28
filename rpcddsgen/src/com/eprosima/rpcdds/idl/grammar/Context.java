@@ -44,7 +44,7 @@ public class Context
                 file = file.substring(1);
         }
         // Remove relative directory if is equal that where the processed IDL is.
-        if(startsWith(m_file, m_directoryFile))
+        if(m_directoryFile != null && startsWith(m_file, m_directoryFile))
         	m_file = m_file.substring(m_directoryFile.length());
         
         m_clientcode = clientcode;
@@ -74,7 +74,7 @@ public class Context
                 if(startsWith(file, java.io.File.separator))
                     file = file.substring(1);
             }
-            if(startsWith(include, m_directoryFile))
+            if(m_directoryFile != null && startsWith(include, m_directoryFile))
             	include = include.substring(m_directoryFile.length());
             // Add last separator.
             if(include.charAt(include.length() - 1) != java.io.File.separatorChar)
@@ -214,7 +214,7 @@ public class Context
 	            	file = file.substring(currentDirS.length());
 	            String depfile = file;
 	            // Remove relative directory if is equal that where the processed IDL is.
-	            if(startsWith(file, m_directoryFile))
+	            if(m_directoryFile != null && startsWith(file, m_directoryFile))
 	            	file = file.substring(m_directoryFile.length());
 	            // Remove relative directory if is equal to a include path.
 	            for(int i = 0; i < m_includePaths.size(); ++i)
@@ -515,7 +515,7 @@ public class Context
     	// Remove .idl extension.
         String dep = dependency.substring(0, dependency.length() - 4);
         // Remove directory if it is the same than main IDL file.
-        if(startsWith(dep, m_directoryFile))
+        if(m_directoryFile != null && startsWith(dep, m_directoryFile))
         	dep = dep.substring(m_directoryFile.length());
     	m_includedependency.add(dep);
     }

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorPlugin_1695586974_h
-#define CalculatorPlugin_1695586974_h
+#ifndef CalculatorPlugin_1695586847_h
+#define CalculatorPlugin_1695586847_h
 
 #include "Calculator.h"
 
@@ -31,14 +31,6 @@ struct RTICdrStream;
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifdef __cplusplus
-}
-#endif
-
         
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -47,4 +39,4 @@ extern "C" {
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* CalculatorPlugin_1695586974_h */
+#endif /* CalculatorPlugin_1695586847_h */

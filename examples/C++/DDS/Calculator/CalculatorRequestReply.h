@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReply_540430929_h
-#define CalculatorRequestReply_540430929_h
+#ifndef CalculatorRequestReply_540430896_h
+#define CalculatorRequestReply_540430896_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -32,17 +32,9 @@
 #include "Calculator.h"
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *Calculator_additionRequestTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -124,17 +116,9 @@ RTIBool Calculator_additionRequest_copy(
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *Calculator_additionReplyTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -214,17 +198,9 @@ RTIBool Calculator_additionReply_copy(
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *Calculator_subtractionRequestTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -306,17 +282,9 @@ RTIBool Calculator_subtractionRequest_copy(
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *Calculator_subtractionReplyTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -397,4 +365,4 @@ RTIBool Calculator_subtractionReply_copy(
 
 
 
-#endif /* CalculatorRequestReply_540430929_h */
+#endif /* CalculatorRequestReply_540430896_h */

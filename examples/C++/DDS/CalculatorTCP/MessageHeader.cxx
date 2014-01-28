@@ -151,7 +151,7 @@ DDS_TypeCode* Identification_get_typecode()
 
 RTIBool Identification_initialize(
     Identification* sample) {
-  return Identification_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Identification_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Identification_initialize_ex(
@@ -189,7 +189,7 @@ RTIBool Identification_initialize_ex(
 void Identification_finalize(
     Identification* sample)
 {
-    Identification_finalize_ex(sample,RTI_TRUE);
+    ::Identification_finalize_ex(sample,RTI_TRUE);
 }
         
 void Identification_finalize_ex(
@@ -248,9 +248,9 @@ RTIBool Identification_copy(
  */
 #define T Identification
 #define TSeq IdentificationSeq
-#define T_initialize_ex Identification_initialize_ex
-#define T_finalize_ex   Identification_finalize_ex
-#define T_copy       Identification_copy
+#define T_initialize_ex ::Identification_initialize_ex
+#define T_finalize_ex   ::Identification_finalize_ex
+#define T_copy       ::Identification_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -366,7 +366,7 @@ DDS_TypeCode* RequestHeader_get_typecode()
 
 RTIBool RequestHeader_initialize(
     RequestHeader* sample) {
-  return RequestHeader_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::RequestHeader_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool RequestHeader_initialize_ex(
@@ -406,7 +406,7 @@ RTIBool RequestHeader_initialize_ex(
 void RequestHeader_finalize(
     RequestHeader* sample)
 {
-    RequestHeader_finalize_ex(sample,RTI_TRUE);
+    ::RequestHeader_finalize_ex(sample,RTI_TRUE);
 }
         
 void RequestHeader_finalize_ex(
@@ -462,9 +462,9 @@ RTIBool RequestHeader_copy(
  */
 #define T RequestHeader
 #define TSeq RequestHeaderSeq
-#define T_initialize_ex RequestHeader_initialize_ex
-#define T_finalize_ex   RequestHeader_finalize_ex
-#define T_copy       RequestHeader_copy
+#define T_initialize_ex ::RequestHeader_initialize_ex
+#define T_finalize_ex   ::RequestHeader_finalize_ex
+#define T_copy       ::RequestHeader_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -598,7 +598,7 @@ DDS_TypeCode* ReplyHeader_get_typecode()
 
 RTIBool ReplyHeader_initialize(
     ReplyHeader* sample) {
-  return ReplyHeader_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::ReplyHeader_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool ReplyHeader_initialize_ex(
@@ -643,7 +643,7 @@ RTIBool ReplyHeader_initialize_ex(
 void ReplyHeader_finalize(
     ReplyHeader* sample)
 {
-    ReplyHeader_finalize_ex(sample,RTI_TRUE);
+    ::ReplyHeader_finalize_ex(sample,RTI_TRUE);
 }
         
 void ReplyHeader_finalize_ex(
@@ -706,9 +706,9 @@ RTIBool ReplyHeader_copy(
  */
 #define T ReplyHeader
 #define TSeq ReplyHeaderSeq
-#define T_initialize_ex ReplyHeader_initialize_ex
-#define T_finalize_ex   ReplyHeader_finalize_ex
-#define T_copy       ReplyHeader_copy
+#define T_initialize_ex ::ReplyHeader_initialize_ex
+#define T_finalize_ex   ::ReplyHeader_finalize_ex
+#define T_copy       ::ReplyHeader_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

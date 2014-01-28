@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderPlugin_953112512_h
-#define MessageHeaderPlugin_953112512_h
+#ifndef MessageHeaderPlugin_953112507_h
+#define MessageHeaderPlugin_953112507_h
 
 #include "MessageHeader.h"
 
@@ -30,10 +30,6 @@ struct RTICdrStream;
 #define NDDSUSERDllExport __declspec(dllexport)
 #endif
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define Identification_LAST_MEMBER_ID 0
 
@@ -551,10 +547,6 @@ ReplyHeaderPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#ifdef __cplusplus
-}
-#endif
-
         
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -563,4 +555,4 @@ ReplyHeaderPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* MessageHeaderPlugin_953112512_h */
+#endif /* MessageHeaderPlugin_953112507_h */

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef Calculator_1695586974_h
-#define Calculator_1695586974_h
+#ifndef Calculator_1695586847_h
+#define Calculator_1695586847_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -27,4 +27,4 @@
 
 
 
-#endif /* Calculator_1695586974_h */
+#endif /* Calculator_1695586847_h */

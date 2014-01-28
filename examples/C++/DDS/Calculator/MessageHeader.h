@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeader_953112512_h
-#define MessageHeader_953112512_h
+#ifndef MessageHeader_953112507_h
+#define MessageHeader_953112507_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -26,17 +26,9 @@
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *IdentificationTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -108,17 +100,9 @@ RTIBool Identification_copy(
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *RequestHeaderTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -188,17 +172,9 @@ RTIBool RequestHeader_copy(
 #endif
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
         
 extern const char *ReplyHeaderTYPENAME;
         
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #ifdef __cplusplus
@@ -271,4 +247,4 @@ RTIBool ReplyHeader_copy(
 
 
 
-#endif /* MessageHeader_953112512_h */
+#endif /* MessageHeader_953112507_h */
