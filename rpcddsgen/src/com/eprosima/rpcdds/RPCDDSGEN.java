@@ -930,6 +930,7 @@ public class RPCDDSGEN
 	        // Load template to generate example to use Proxies.
 	        tmanager.addGroup("DDSClientExample");
 	        // Load template to generate proxy async support files.
+	        tmanager.addGroup("AsyncCallbackHandlers");
 	        tmanager.addGroup("DDSAsyncSupportHeader");
 	        tmanager.addGroup("DDSAsyncSupportSource");
 	        // Load template to generate Server for topics.
@@ -1022,21 +1023,25 @@ public class RPCDDSGEN
 		            
 		            if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
 		            {	
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace))
                         {
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
                             {
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
                                 {
-                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
                                     {
-                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+                                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                        {
+                                            returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
 
-                                        project.addCommonIncludeFile(onlyFileName + "Protocol.h");
-                                        project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
-                                        project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
-                                        project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
-                                        project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
+                                            project.addCommonIncludeFile(onlyFileName + "Protocol.h");
+                                            project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
+                                            project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
+                                            project.addCommonIncludeFile(onlyFileName + "AsyncCallbackHandlers.h");
+                                            project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
+                                            project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
+                                        }
                                     }
                                 }
                             }
