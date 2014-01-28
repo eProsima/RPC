@@ -133,7 +133,7 @@ DDS_TypeCode* Calculator_additionRequest_get_typecode()
 
 RTIBool Calculator_additionRequest_initialize(
     Calculator_additionRequest* sample) {
-  return Calculator_additionRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Calculator_additionRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Calculator_additionRequest_initialize_ex(
@@ -166,7 +166,7 @@ RTIBool Calculator_additionRequest_initialize_ex(
 void Calculator_additionRequest_finalize(
     Calculator_additionRequest* sample)
 {
-    Calculator_additionRequest_finalize_ex(sample,RTI_TRUE);
+    ::Calculator_additionRequest_finalize_ex(sample,RTI_TRUE);
 }
         
 void Calculator_additionRequest_finalize_ex(
@@ -220,9 +220,9 @@ RTIBool Calculator_additionRequest_copy(
  */
 #define T Calculator_additionRequest
 #define TSeq Calculator_additionRequestSeq
-#define T_initialize_ex Calculator_additionRequest_initialize_ex
-#define T_finalize_ex   Calculator_additionRequest_finalize_ex
-#define T_copy       Calculator_additionRequest_copy
+#define T_initialize_ex ::Calculator_additionRequest_initialize_ex
+#define T_finalize_ex   ::Calculator_additionRequest_finalize_ex
+#define T_copy       ::Calculator_additionRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -319,7 +319,7 @@ DDS_TypeCode* Calculator_additionReply_get_typecode()
 
 RTIBool Calculator_additionReply_initialize(
     Calculator_additionReply* sample) {
-  return Calculator_additionReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Calculator_additionReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Calculator_additionReply_initialize_ex(
@@ -347,7 +347,7 @@ RTIBool Calculator_additionReply_initialize_ex(
 void Calculator_additionReply_finalize(
     Calculator_additionReply* sample)
 {
-    Calculator_additionReply_finalize_ex(sample,RTI_TRUE);
+    ::Calculator_additionReply_finalize_ex(sample,RTI_TRUE);
 }
         
 void Calculator_additionReply_finalize_ex(
@@ -394,9 +394,9 @@ RTIBool Calculator_additionReply_copy(
  */
 #define T Calculator_additionReply
 #define TSeq Calculator_additionReplySeq
-#define T_initialize_ex Calculator_additionReply_initialize_ex
-#define T_finalize_ex   Calculator_additionReply_finalize_ex
-#define T_copy       Calculator_additionReply_copy
+#define T_initialize_ex ::Calculator_additionReply_initialize_ex
+#define T_finalize_ex   ::Calculator_additionReply_finalize_ex
+#define T_copy       ::Calculator_additionReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -511,7 +511,7 @@ DDS_TypeCode* Calculator_subtractionRequest_get_typecode()
 
 RTIBool Calculator_subtractionRequest_initialize(
     Calculator_subtractionRequest* sample) {
-  return Calculator_subtractionRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Calculator_subtractionRequest_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Calculator_subtractionRequest_initialize_ex(
@@ -544,7 +544,7 @@ RTIBool Calculator_subtractionRequest_initialize_ex(
 void Calculator_subtractionRequest_finalize(
     Calculator_subtractionRequest* sample)
 {
-    Calculator_subtractionRequest_finalize_ex(sample,RTI_TRUE);
+    ::Calculator_subtractionRequest_finalize_ex(sample,RTI_TRUE);
 }
         
 void Calculator_subtractionRequest_finalize_ex(
@@ -598,9 +598,9 @@ RTIBool Calculator_subtractionRequest_copy(
  */
 #define T Calculator_subtractionRequest
 #define TSeq Calculator_subtractionRequestSeq
-#define T_initialize_ex Calculator_subtractionRequest_initialize_ex
-#define T_finalize_ex   Calculator_subtractionRequest_finalize_ex
-#define T_copy       Calculator_subtractionRequest_copy
+#define T_initialize_ex ::Calculator_subtractionRequest_initialize_ex
+#define T_finalize_ex   ::Calculator_subtractionRequest_finalize_ex
+#define T_copy       ::Calculator_subtractionRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"
@@ -697,7 +697,7 @@ DDS_TypeCode* Calculator_subtractionReply_get_typecode()
 
 RTIBool Calculator_subtractionReply_initialize(
     Calculator_subtractionReply* sample) {
-  return Calculator_subtractionReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+  return ::Calculator_subtractionReply_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
         
 RTIBool Calculator_subtractionReply_initialize_ex(
@@ -725,7 +725,7 @@ RTIBool Calculator_subtractionReply_initialize_ex(
 void Calculator_subtractionReply_finalize(
     Calculator_subtractionReply* sample)
 {
-    Calculator_subtractionReply_finalize_ex(sample,RTI_TRUE);
+    ::Calculator_subtractionReply_finalize_ex(sample,RTI_TRUE);
 }
         
 void Calculator_subtractionReply_finalize_ex(
@@ -772,9 +772,9 @@ RTIBool Calculator_subtractionReply_copy(
  */
 #define T Calculator_subtractionReply
 #define TSeq Calculator_subtractionReplySeq
-#define T_initialize_ex Calculator_subtractionReply_initialize_ex
-#define T_finalize_ex   Calculator_subtractionReply_finalize_ex
-#define T_copy       Calculator_subtractionReply_copy
+#define T_initialize_ex ::Calculator_subtractionReply_initialize_ex
+#define T_finalize_ex   ::Calculator_subtractionReply_finalize_ex
+#define T_copy       ::Calculator_subtractionReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

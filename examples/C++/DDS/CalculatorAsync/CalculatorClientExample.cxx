@@ -24,6 +24,36 @@ using namespace ::exception;
 using namespace ::transport::dds;
 using namespace ::protocol::dds;
 
+class Calculator_additionHandler : public Calculator_additionCallbackHandler
+{
+    public:
+
+        void addition(/*out*/ DDS_Long addition_ret)
+		{
+			std::cout << "Addition result: " << addition_ret << std::endl;
+		}
+        
+        void on_exception(const eprosima::rpcdds::exception::SystemException &ex)
+		{
+			std::cout << "Exception: " << ex.what() << std::endl;
+		}
+};
+
+class Calculator_subtractionHandler : public Calculator_subtractionCallbackHandler
+{
+    public:
+
+        void subtraction(/*out*/ DDS_Long subtraction_ret)
+		{
+			std::cout << "Subtraction result: " << subtraction_ret << std::endl;
+		}
+        
+        void on_exception(const eprosima::rpcdds::exception::SystemException &ex)
+		{
+			std::cout << "Exception: " << ex.what() << std::endl;
+		}
+};
+
 int main(int argc, char **argv)
 {
 	if(argc == 3)
@@ -35,6 +65,8 @@ int main(int argc, char **argv)
 		{
 			if(sscanf(argv[2], "%d", &value2) == 1)
             {
+                Calculator_additionHandler addHandler;
+                Calculator_subtractionHandler subHandler;
                 CalculatorProtocol *protocol = NULL;
                 UDPProxyTransport *transport = NULL;
                 CalculatorProxy *proxy = NULL;
@@ -59,32 +91,29 @@ int main(int argc, char **argv)
                 // Call to remote procedure "addition".
                 try
                 {
-                    addition_ret = proxy->addition(value1, value2);
-					std::cout << "Addition result: " << addition_ret << std::endl;
+					proxy->addition_async(addHandler, value1, value2);
                 }
                 catch(SystemException &ex)
                 {
                     std::cout << ex.what() << std::endl;
                 }
 
-				// Create and initialize return value.
-				DDS_Long  subtraction_ret = 0;
-
-				// Call to remote procedure "subtraction".
 				try
 				{
-					subtraction_ret = proxy->subtraction(value1, value2);
-					std::cout << "Subtraction result: " << subtraction_ret << std::endl;
+					proxy->subtraction_async(subHandler, value1, value2);
 				}
 				catch(eProsima::RPCDDS::Exception &ex)
 				{
 					std::cout << ex.what() << std::endl;
 				}
 
+				// Wait 10 seconds to received the server's replies.
+				sleep(10000);
+
                 delete proxy ;
                 delete transport ;
                 delete protocol ;
-			}
+            }
 			else
 			{
 				std::cout << "Bad parameter (second value)" << std::endl;

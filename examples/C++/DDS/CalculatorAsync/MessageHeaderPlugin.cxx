@@ -73,7 +73,7 @@ IdentificationPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, Identification);
 
     if(sample != NULL) {
-        if (!Identification_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Identification_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -85,7 +85,7 @@ IdentificationPluginSupport_create_data_ex(RTIBool allocate_pointers){
 Identification *
 IdentificationPluginSupport_create_data(void)
 {
-    return IdentificationPluginSupport_create_data_ex(RTI_TRUE);
+    return ::IdentificationPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -93,7 +93,7 @@ void
 IdentificationPluginSupport_destroy_data_ex(
     Identification *sample,RTIBool deallocate_pointers) {
 
-    Identification_finalize_ex(sample,deallocate_pointers);
+    ::Identification_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -103,7 +103,7 @@ void
 IdentificationPluginSupport_destroy_data(
     Identification *sample) {
 
-    IdentificationPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::IdentificationPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -113,7 +113,7 @@ IdentificationPluginSupport_copy_data(
     Identification *dst,
     const Identification *src)
 {
-    return Identification_copy(dst,src);
+    return ::Identification_copy(dst,src);
 }
 
 
@@ -168,7 +168,7 @@ IdentificationPlugin_copy_sample(
     const Identification *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return IdentificationPluginSupport_copy_data(dst,src);
+    return ::IdentificationPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -278,7 +278,7 @@ IdentificationPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        Identification_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Identification_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!RTICdrStream_deserializeUnsignedLong(
         stream, &sample->value_1)) {
@@ -332,7 +332,7 @@ IdentificationPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return IdentificationPlugin_deserialize_sample( 
+    return ::IdentificationPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -623,7 +623,7 @@ IdentificationPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!IdentificationPlugin_serialize(
+        if (!::IdentificationPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -672,7 +672,7 @@ RTIBool IdentificationPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!IdentificationPlugin_deserialize_sample(
+        if (!::IdentificationPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -702,7 +702,7 @@ RTIBool IdentificationPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return IdentificationPlugin_deserialize_key_sample(
+    return ::IdentificationPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -740,7 +740,7 @@ IdentificationPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += IdentificationPlugin_get_serialized_sample_max_size(
+    current_alignment += ::IdentificationPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -778,7 +778,7 @@ IdentificationPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!IdentificationPlugin_deserialize_sample(
+        if (!::IdentificationPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -824,7 +824,7 @@ RequestHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, RequestHeader);
 
     if(sample != NULL) {
-        if (!RequestHeader_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::RequestHeader_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -836,7 +836,7 @@ RequestHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers){
 RequestHeader *
 RequestHeaderPluginSupport_create_data(void)
 {
-    return RequestHeaderPluginSupport_create_data_ex(RTI_TRUE);
+    return ::RequestHeaderPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -844,7 +844,7 @@ void
 RequestHeaderPluginSupport_destroy_data_ex(
     RequestHeader *sample,RTIBool deallocate_pointers) {
 
-    RequestHeader_finalize_ex(sample,deallocate_pointers);
+    ::RequestHeader_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -854,7 +854,7 @@ void
 RequestHeaderPluginSupport_destroy_data(
     RequestHeader *sample) {
 
-    RequestHeaderPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::RequestHeaderPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -864,7 +864,7 @@ RequestHeaderPluginSupport_copy_data(
     RequestHeader *dst,
     const RequestHeader *src)
 {
-    return RequestHeader_copy(dst,src);
+    return ::RequestHeader_copy(dst,src);
 }
 
 
@@ -920,7 +920,7 @@ RequestHeaderPlugin_copy_sample(
     const RequestHeader *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return RequestHeaderPluginSupport_copy_data(dst,src);
+    return ::RequestHeaderPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1029,7 +1029,7 @@ RequestHeaderPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        RequestHeader_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::RequestHeader_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!IdentificationPlugin_deserialize_sample(
             endpoint_data,
@@ -1084,7 +1084,7 @@ RequestHeaderPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return RequestHeaderPlugin_deserialize_sample( 
+    return ::RequestHeaderPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1363,7 +1363,7 @@ RequestHeaderPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!RequestHeaderPlugin_serialize(
+        if (!::RequestHeaderPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -1412,7 +1412,7 @@ RTIBool RequestHeaderPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!RequestHeaderPlugin_deserialize_sample(
+        if (!::RequestHeaderPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -1442,7 +1442,7 @@ RTIBool RequestHeaderPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return RequestHeaderPlugin_deserialize_key_sample(
+    return ::RequestHeaderPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -1480,7 +1480,7 @@ RequestHeaderPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += RequestHeaderPlugin_get_serialized_sample_max_size(
+    current_alignment += ::RequestHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -1518,7 +1518,7 @@ RequestHeaderPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!RequestHeaderPlugin_deserialize_sample(
+        if (!::RequestHeaderPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -1564,7 +1564,7 @@ ReplyHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers){
         &sample, ReplyHeader);
 
     if(sample != NULL) {
-        if (!ReplyHeader_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::ReplyHeader_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -1576,7 +1576,7 @@ ReplyHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers){
 ReplyHeader *
 ReplyHeaderPluginSupport_create_data(void)
 {
-    return ReplyHeaderPluginSupport_create_data_ex(RTI_TRUE);
+    return ::ReplyHeaderPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
@@ -1584,7 +1584,7 @@ void
 ReplyHeaderPluginSupport_destroy_data_ex(
     ReplyHeader *sample,RTIBool deallocate_pointers) {
 
-    ReplyHeader_finalize_ex(sample,deallocate_pointers);
+    ::ReplyHeader_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
@@ -1594,7 +1594,7 @@ void
 ReplyHeaderPluginSupport_destroy_data(
     ReplyHeader *sample) {
 
-    ReplyHeaderPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::ReplyHeaderPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
@@ -1604,7 +1604,7 @@ ReplyHeaderPluginSupport_copy_data(
     ReplyHeader *dst,
     const ReplyHeader *src)
 {
-    return ReplyHeader_copy(dst,src);
+    return ::ReplyHeader_copy(dst,src);
 }
 
 
@@ -1664,7 +1664,7 @@ ReplyHeaderPlugin_copy_sample(
     const ReplyHeader *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ReplyHeaderPluginSupport_copy_data(dst,src);
+    return ::ReplyHeaderPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -1779,7 +1779,7 @@ ReplyHeaderPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ReplyHeader_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::ReplyHeader_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!IdentificationPlugin_deserialize_sample(
             endpoint_data,
@@ -1839,7 +1839,7 @@ ReplyHeaderPlugin_deserialize(
 
     if (drop_sample) {} /* To avoid warnings */
 
-    return ReplyHeaderPlugin_deserialize_sample( 
+    return ::ReplyHeaderPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -2135,7 +2135,7 @@ ReplyHeaderPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!ReplyHeaderPlugin_serialize(
+        if (!::ReplyHeaderPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -2184,7 +2184,7 @@ RTIBool ReplyHeaderPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!ReplyHeaderPlugin_deserialize_sample(
+        if (!::ReplyHeaderPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -2214,7 +2214,7 @@ RTIBool ReplyHeaderPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     if (drop_sample) {} /* To avoid warnings */
-    return ReplyHeaderPlugin_deserialize_key_sample(
+    return ::ReplyHeaderPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
@@ -2252,7 +2252,7 @@ ReplyHeaderPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ReplyHeaderPlugin_get_serialized_sample_max_size(
+    current_alignment += ::ReplyHeaderPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -2290,7 +2290,7 @@ ReplyHeaderPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!ReplyHeaderPlugin_deserialize_sample(
+        if (!::ReplyHeaderPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
