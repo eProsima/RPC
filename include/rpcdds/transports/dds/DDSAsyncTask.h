@@ -32,8 +32,14 @@ namespace eprosima
                 {
                     public:
 
+						/*!
+						 * @brief default constructor
+						 */
                         DDSAsyncTask();
-
+						
+						/*!
+						 * @brief default destructor
+						 */
                         virtual ~DDSAsyncTask(){}
 
                         /**
@@ -44,8 +50,16 @@ namespace eprosima
                          */
                         void execute(DDS::QueryCondition *query);
 
+						/*!
+						 * @brief Sets the procedure endpoint
+						 * @param pe Procedure endpoint with the DDS datawriter and datareader
+						 */
                         void setProcedureEndpoint(ProxyProcedureEndpoint *pe);
 
+						/*!
+						 * @brief Gets the procedure endpoint
+						 * @return Procedure endpoint with the DDS datawriter and datareader
+						 */
                         ProxyProcedureEndpoint* getProcedureEndpoint();
 
                         /**

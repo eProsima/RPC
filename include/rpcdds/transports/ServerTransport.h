@@ -144,9 +144,10 @@ namespace eprosima
 
 					/*!
 					 * @brief This function is used to send a reply to a proxy.
-					 * @param data Response to send.
-					 * @param dataLength Length of the data to send.
-					 * @param endpoint Target endpoint to send the data to.
+					 * @param buffer Buffer to allocate the received data
+					 * @param bufferLength Size of the buffer
+					 * @param dataToRead Size of the data to read
+					 * @param endpoint Endpoint to receive the data from
 					 */
                     virtual int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint) = 0; 
 

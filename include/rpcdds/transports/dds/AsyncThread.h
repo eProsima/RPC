@@ -43,7 +43,7 @@ namespace eprosima
                         /**
                          * \brief This function initializes all internal objects.
                          *
-                         * \return 0 value is returned if all the objects was created succesfully. In other case -1 value is returned.
+                         * \return 0 value is returned if all the objects was succesfully created. -1 in other case
                          */
                         int init();
 
@@ -55,8 +55,8 @@ namespace eprosima
                          *
                          * \param query Associated DDS::QueryCondition to the asynchronous task. Cannot be NULL.
                          * \param task The new asynchronous task. Cannot be NULL.
-                         * \param timeout The time in milliseconds that will be waiting to the reply.
-                         * \return 0 value is returned if function works succesfully. In other case, -1 value is returned.
+                         * \param timeout The time in milliseconds to wait for the reply.
+                         * \return 0 if the function succesfully works. -1 in other case
                          */
                         int addTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout);
 

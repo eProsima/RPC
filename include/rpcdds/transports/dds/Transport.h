@@ -85,9 +85,15 @@ namespace eprosima
                          * @brief This function creates a new procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
                          *
-                         * @param name The name associated with this proxy procedure endpoint.It cannot be NULL.
+                         * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
                          * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
+						 * @param initialize_data Pointer to the function to initialize DataReader received data
+                         * @param copy_data Pointer to the function used to copy the data when it is received.
+						 * @param finalize_data Pointer to the function to finalize DataReader received data
+						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
+						 * @param dataSize Size of the DataReader data structure
+						 *
                          * @return 0 if the function ends successfully, -1 otherwise.
                          */
                         virtual eprosima::rpcdds::transport::Endpoint*
