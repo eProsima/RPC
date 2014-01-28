@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReplyPlugin_540430929_h
-#define CalculatorRequestReplyPlugin_540430929_h
+#ifndef CalculatorRequestReplyPlugin_540430896_h
+#define CalculatorRequestReplyPlugin_540430896_h
 
 #include "CalculatorRequestReply.h"
 
@@ -30,10 +30,6 @@ struct RTICdrStream;
 #define NDDSUSERDllExport __declspec(dllexport)
 #endif
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "MessageHeaderPlugin.h"
 
@@ -865,10 +861,6 @@ Calculator_subtractionReplyPlugin_new(void);
 NDDSUSERDllExport extern void
 Calculator_subtractionReplyPlugin_delete(struct PRESTypePlugin *);
 
-#ifdef __cplusplus
-}
-#endif
-
         
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -877,4 +869,4 @@ Calculator_subtractionReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* CalculatorRequestReplyPlugin_540430929_h */
+#endif /* CalculatorRequestReplyPlugin_540430896_h */

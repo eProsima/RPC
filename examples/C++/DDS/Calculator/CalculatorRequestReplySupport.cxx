@@ -51,7 +51,7 @@
 
 /* Defines */
 #define TDataWriter Calculator_additionRequestDataWriter
-#define TData       Calculator_additionRequest
+#define TData       ::Calculator_additionRequest
 
 
 #ifdef __cplusplus
@@ -82,7 +82,7 @@
 /* Defines */
 #define TDataReader Calculator_additionRequestDataReader
 #define TDataSeq    Calculator_additionRequestSeq
-#define TData       Calculator_additionRequest
+#define TData       ::Calculator_additionRequest
 
 
 #ifdef __cplusplus
@@ -111,12 +111,12 @@
 
 /* Requires */
 #define TTYPENAME    Calculator_additionRequestTYPENAME
-#define TPlugin_new  Calculator_additionRequestPlugin_new
-#define TPlugin_delete  Calculator_additionRequestPlugin_delete
+#define TPlugin_new  ::Calculator_additionRequestPlugin_new
+#define TPlugin_delete  ::Calculator_additionRequestPlugin_delete
 
 /* Defines */
 #define TTypeSupport Calculator_additionRequestTypeSupport
-#define TData        Calculator_additionRequest
+#define TData        ::Calculator_additionRequest
 #define TDataReader  Calculator_additionRequestDataReader
 #define TDataWriter  Calculator_additionRequestDataWriter
 #ifdef __cplusplus
@@ -172,7 +172,7 @@
 
 /* Defines */
 #define TDataWriter Calculator_additionReplyDataWriter
-#define TData       Calculator_additionReply
+#define TData       ::Calculator_additionReply
 
 
 #ifdef __cplusplus
@@ -203,7 +203,7 @@
 /* Defines */
 #define TDataReader Calculator_additionReplyDataReader
 #define TDataSeq    Calculator_additionReplySeq
-#define TData       Calculator_additionReply
+#define TData       ::Calculator_additionReply
 
 
 #ifdef __cplusplus
@@ -232,12 +232,12 @@
 
 /* Requires */
 #define TTYPENAME    Calculator_additionReplyTYPENAME
-#define TPlugin_new  Calculator_additionReplyPlugin_new
-#define TPlugin_delete  Calculator_additionReplyPlugin_delete
+#define TPlugin_new  ::Calculator_additionReplyPlugin_new
+#define TPlugin_delete  ::Calculator_additionReplyPlugin_delete
 
 /* Defines */
 #define TTypeSupport Calculator_additionReplyTypeSupport
-#define TData        Calculator_additionReply
+#define TData        ::Calculator_additionReply
 #define TDataReader  Calculator_additionReplyDataReader
 #define TDataWriter  Calculator_additionReplyDataWriter
 #ifdef __cplusplus
@@ -293,7 +293,7 @@
 
 /* Defines */
 #define TDataWriter Calculator_subtractionRequestDataWriter
-#define TData       Calculator_subtractionRequest
+#define TData       ::Calculator_subtractionRequest
 
 
 #ifdef __cplusplus
@@ -324,7 +324,7 @@
 /* Defines */
 #define TDataReader Calculator_subtractionRequestDataReader
 #define TDataSeq    Calculator_subtractionRequestSeq
-#define TData       Calculator_subtractionRequest
+#define TData       ::Calculator_subtractionRequest
 
 
 #ifdef __cplusplus
@@ -353,12 +353,12 @@
 
 /* Requires */
 #define TTYPENAME    Calculator_subtractionRequestTYPENAME
-#define TPlugin_new  Calculator_subtractionRequestPlugin_new
-#define TPlugin_delete  Calculator_subtractionRequestPlugin_delete
+#define TPlugin_new  ::Calculator_subtractionRequestPlugin_new
+#define TPlugin_delete  ::Calculator_subtractionRequestPlugin_delete
 
 /* Defines */
 #define TTypeSupport Calculator_subtractionRequestTypeSupport
-#define TData        Calculator_subtractionRequest
+#define TData        ::Calculator_subtractionRequest
 #define TDataReader  Calculator_subtractionRequestDataReader
 #define TDataWriter  Calculator_subtractionRequestDataWriter
 #ifdef __cplusplus
@@ -414,7 +414,7 @@
 
 /* Defines */
 #define TDataWriter Calculator_subtractionReplyDataWriter
-#define TData       Calculator_subtractionReply
+#define TData       ::Calculator_subtractionReply
 
 
 #ifdef __cplusplus
@@ -445,7 +445,7 @@
 /* Defines */
 #define TDataReader Calculator_subtractionReplyDataReader
 #define TDataSeq    Calculator_subtractionReplySeq
-#define TData       Calculator_subtractionReply
+#define TData       ::Calculator_subtractionReply
 
 
 #ifdef __cplusplus
@@ -474,12 +474,12 @@
 
 /* Requires */
 #define TTYPENAME    Calculator_subtractionReplyTYPENAME
-#define TPlugin_new  Calculator_subtractionReplyPlugin_new
-#define TPlugin_delete  Calculator_subtractionReplyPlugin_delete
+#define TPlugin_new  ::Calculator_subtractionReplyPlugin_new
+#define TPlugin_delete  ::Calculator_subtractionReplyPlugin_delete
 
 /* Defines */
 #define TTypeSupport Calculator_subtractionReplyTypeSupport
-#define TData        Calculator_subtractionReply
+#define TData        ::Calculator_subtractionReply
 #define TDataReader  Calculator_subtractionReplyDataReader
 #define TDataWriter  Calculator_subtractionReplyDataWriter
 #ifdef __cplusplus

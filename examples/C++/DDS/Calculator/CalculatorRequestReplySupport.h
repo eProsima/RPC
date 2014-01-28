@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReplySupport_540430929_h
-#define CalculatorRequestReplySupport_540430929_h
+#ifndef CalculatorRequestReplySupport_540430896_h
+#define CalculatorRequestReplySupport_540430896_h
 
 /* Uses */
 #include "CalculatorRequestReply.h"
@@ -48,9 +48,9 @@
   /* If we're building on Windows, explicitly import the superclasses of
    * the types declared below.
    */        
-  class __declspec(dllimport) DDSTypeSupport;
-  class __declspec(dllimport) DDSDataWriter;
-  class __declspec(dllimport) DDSDataReader;
+  class __declspec(dllimport) ::DDSTypeSupport;
+  class __declspec(dllimport) ::DDSDataWriter;
+  class __declspec(dllimport) ::DDSDataReader;
 #endif
 
 #endif
@@ -100,9 +100,9 @@ DDS_DATAREADER_C(Calculator_additionRequestDataReader, Calculator_additionReques
   /* If we're building on Windows, explicitly import the superclasses of
    * the types declared below.
    */        
-  class __declspec(dllimport) DDSTypeSupport;
-  class __declspec(dllimport) DDSDataWriter;
-  class __declspec(dllimport) DDSDataReader;
+  class __declspec(dllimport) ::DDSTypeSupport;
+  class __declspec(dllimport) ::DDSDataWriter;
+  class __declspec(dllimport) ::DDSDataReader;
 #endif
 
 #endif
@@ -152,9 +152,9 @@ DDS_DATAREADER_C(Calculator_additionReplyDataReader, Calculator_additionReplySeq
   /* If we're building on Windows, explicitly import the superclasses of
    * the types declared below.
    */        
-  class __declspec(dllimport) DDSTypeSupport;
-  class __declspec(dllimport) DDSDataWriter;
-  class __declspec(dllimport) DDSDataReader;
+  class __declspec(dllimport) ::DDSTypeSupport;
+  class __declspec(dllimport) ::DDSDataWriter;
+  class __declspec(dllimport) ::DDSDataReader;
 #endif
 
 #endif
@@ -204,9 +204,9 @@ DDS_DATAREADER_C(Calculator_subtractionRequestDataReader, Calculator_subtraction
   /* If we're building on Windows, explicitly import the superclasses of
    * the types declared below.
    */        
-  class __declspec(dllimport) DDSTypeSupport;
-  class __declspec(dllimport) DDSDataWriter;
-  class __declspec(dllimport) DDSDataReader;
+  class __declspec(dllimport) ::DDSTypeSupport;
+  class __declspec(dllimport) ::DDSDataWriter;
+  class __declspec(dllimport) ::DDSDataReader;
 #endif
 
 #endif
@@ -236,4 +236,4 @@ DDS_DATAREADER_C(Calculator_subtractionReplyDataReader, Calculator_subtractionRe
 
 
 
-#endif  /* CalculatorRequestReplySupport_540430929_h */
+#endif  /* CalculatorRequestReplySupport_540430896_h */
