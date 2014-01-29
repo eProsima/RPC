@@ -40,8 +40,9 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $if(!operation.oneway)$
-/**
- * \brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
+/*!
+ * @brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
+ * @ingroup $ctx.trimfilename$
  */
 class $operation.parent.name$_$operation.name$Task : public eprosima::rpcdds::transport::dds::DDSAsyncTask
 {

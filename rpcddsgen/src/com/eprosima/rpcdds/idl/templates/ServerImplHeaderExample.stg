@@ -26,8 +26,9 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-/**
- * \brief This class is an example of a servant and it implements the remote procedures of the servant.
+/*!
+ * @brief This class is an example of a servant and it implements the remote procedures of the servant.
+ * @ingroup $ctx.trimfilename$
  */
 class $interface.name$ServerImplExample : public $interface.scopedname$ServerImpl
 {

@@ -101,14 +101,14 @@ function package
 
     # Create doxygen information.
     # Generate the examples
-    # CDR example
-#    ./scripts/efastbuffers_local.sh -replace -ser cdr -o utils/doxygen/examples/cdr utils/doxygen/examples/cdr/FooCdr.idl
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
-#    # Fast CDR example
-#    ./scripts/efastbuffers_local.sh -replace -ser fastcdr -o utils/doxygen/examples/fastcdr utils/doxygen/examples/fastcdr/FooFastCdr.idl
-#    errorstatus=$?
-#    if [ $errorstatus != 0 ]; then return; fi
+    # DDS example
+    ./scripts/rpcdds_rti_pcTests.sh -replace -protocol dds -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # REST example
+    ./scripts/rpcdds_rti_pcTests.sh -replace -protocol rest -d utils/doxygen/examples/restful utils/doxygen/examples/restful/FooREST.wadl
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
     #Export version
     export VERSION_DOX=$rpcddsversion
     mkdir -p output

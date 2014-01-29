@@ -35,6 +35,10 @@ $exports; separator="\n"$
 >>
 
 exception(ctx, exception) ::= <<
+/*!
+ * @brief This class implementes the user exception $exception.scopedname$
+ * @ingroup $ctx.trimfilename$
+ */
 class RPCDDSUSERDllExport $exception.name$ : public eprosima::rpcdds::exception::UserException
 {
 public:

@@ -33,6 +33,7 @@ namespace eprosima
                 /*!
                  * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
                  *  It uses a RESTful protocol.
+		 * @ingroup $ctx.trimfilename$
                  */
                 class RPCDDSUSERDllExport $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
                 {

@@ -29,6 +29,10 @@ namespace eprosima
             {
                 $definitions; separator="\n"$
                 
+                /*!
+                 * @brief
+                 * @ingroup $ctx.trimfilename$
+                 */
                 class $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
                 {
                     public:

@@ -45,8 +45,9 @@ exception(ctx, exception) ::= <<>>
 operation(ctx, operation, param_list) ::= <<
 $if(!operation.oneway)$
 /*!
- * @brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
+ * @brief This abstract class defines the callbacks that eProsima RPC will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
+ * @ingroup $ctx.trimfilename$
  */
 class $operation.parent.name$_$operation.name$CallbackHandler
 {

@@ -32,8 +32,9 @@ $exports; separator="\n"$
 >>
 
 exception(ctx, exception) ::= <<
-/**
- * Structure that encapsulates the exception $exception.scopedname$.
+/*!
+ * @brief Structure that encapsulates the exception $exception.scopedname$.
+ * @ingroup $ctx.trimfilename$
  */
 struct $exception.name$_t{
    $exception.members:{member | $member.typecode.typename$ $member.name$;}; separator="\n"$
@@ -44,8 +45,9 @@ operation(ctx, operation, param_list) ::= <<
 $operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionStruct(operation=operation, exception=exception)$$endif$}; separator="\n"$
 
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
-/**
- * Topic used to receive/send requests for the procedure $operation.name$.
+/*!
+ * @brief Topic used to receive/send requests for the procedure $operation.name$.
+ * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$Request{
     RequestHeader header;
@@ -55,6 +57,10 @@ struct $operation.parent.name$_$operation.name$Request{
 $if(!operation.oneway)$
 $if(operation.exceptions)$
 $if([operation.outputparam, operation.rettype])$
+/*!
+ * @brief This structure encapsulates the output parameters.
+ * @ingroup $ctx.trimfilename$
+ */
 struct  $operation.parent.name$_$operation.name$Reply_st
 {
    $operation.outputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
@@ -62,6 +68,10 @@ struct  $operation.parent.name$_$operation.name$Reply_st
 }; $nolevelIDLdefine()$
 $endif$
 
+/*!
+ * @brief This union is used to encapsulate output parameters and user exceptions.
+ * @ingroup $ctx.trimfilename$
+ */
 union $operation.parent.name$_$operation.name$Reply_union switch (long)
 {
 $if([operation.outputparam, operation.rettype])$
@@ -82,8 +92,9 @@ $endif$
 
 $endif$
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
-/**
- * Topic used to receive/send replies for the procedure $operation.name$.
+/*!
+ * @brief Topic used to receive/send replies for the procedure $operation.name$.
+ * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$Reply{
     ReplyHeader header;
@@ -115,8 +126,9 @@ enum_type(ctx, enum) ::= <<>>
 // Utils
 
 createExceptionStruct(operation, exception) ::= <<
-/**
- * Structure that encapsulates the exception $exception.scopedname$.
+/*!
+ * @brief Structure that encapsulates the exception $exception.scopedname$.
+ * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$_$exception.name$_t{
    $exception.members:{member | $member.typecode.typename$ $member.name$;}; separator="\n"$

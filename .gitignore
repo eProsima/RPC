@@ -20,8 +20,12 @@ lib/
 tags
 cscope.out
 
-#Project files
+#### Project files ####
+
+# Generated Java classes
 rpcddsgen/build/
+
+# Generated Java source
 rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLLexer.java
 rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLLexer.smap
 rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLParser.java
@@ -32,3 +36,10 @@ rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParser.java
 rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParser.smap
 rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParserTokenTypes.java
 rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParserTokenTypes.txt
+
+# Foo examples
+utils/doxygen/examples/dds/*.h
+utils/doxygen/examples/dds/*.cxx
+utils/doxygen/examples/restful/*.h
+utils/doxygen/examples/restful/*.cxx
+utils/doxygen/examples/restful/*.idl

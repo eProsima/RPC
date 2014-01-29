@@ -148,4 +148,10 @@ public class Utils
 		
 		return fileName.substring(lastDot+1);
 	}
+
+    public static String stringTrimAll(String str)
+    {
+    	String trimstr = str.replaceAll("\\s+", "").toUpperCase();
+    	return trimstr;
+    }
 }

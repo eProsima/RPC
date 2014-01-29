@@ -47,6 +47,7 @@ $definitions; separator="\n"$
 interface(ctx, interface, export_list) ::= <<
 /*!
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
+ * @ingroup $ctx.trimfilename$
  */
 class RPCDDSUSERDllExport $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
 {

@@ -744,9 +744,9 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = utils/doxygen/doxygenfiles \
-                         utils/doxygen/foo_restful \
-                         utils/doxygen/foo_dds \
-                         include
+                         include \
+                         utils/doxygen/examples/dds \
+                         utils/doxygen/examples/restful
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

@@ -41,8 +41,9 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-/**
- * \brief This class implements a specific server for the defined interface $interface.name$ by user.
+/*!
+ * @brief This class implements a specific server for the defined interface $interface.name$ by user.
+ * @ingroup $ctx.trimfilename$
  */
 class RPCDDSUSERDllExport $interface.name$Server : public eprosima::rpcdds::server::Server
 {

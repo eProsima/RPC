@@ -133,6 +133,11 @@ public class Context
         return m_filename;
     }
 
+    public String getTrimfilename()
+    {
+        return Utils.stringTrimAll(m_filename);
+    }
+
     public void setScope(String scope)
     {
         m_scope = scope;

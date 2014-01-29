@@ -1,0 +1,7 @@
+module FooDDS
+{
+    interface Foo
+    {
+        void FooProcedure();
+    };
+};
