@@ -99,7 +99,17 @@ copy %LIB_BOOST_PATH%\lib\x64\boost_system-vc100-mt-gd-1_53.dll lib\x64Win64VS20
 copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
 
-:: Execute RPCDDS tests
+:: Execute DDS tests
+set RPCDDSHOME_OLD=%RPCDDSHOME%
+set RPCDDSHOME=%CD%
+cd utils/pcTests/rti
+call exec_tests.bat %package_targets%
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+cd "../../.."
+set RPCDDSHOME=%RPCDDSHOME_OLD%
+
+:: Execute REST tests
 set RPCDDSHOME_OLD=%RPCDDSHOME%
 set RPCDDSHOME=%CD%
 cd utils/pcTests/restful
@@ -129,6 +139,16 @@ soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
+:: Create doxygen information.
+:: Generate the examples
+:: DDS example
+call scripts\rpcdds_rti_pcTests.bat -replace -protocol dds -d utils\doxygen\examples\dds utils\doxygen\examples\dds\FooDDS.idl
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: REST example
+call scripts\rpcdds_rti_pcTests.bat -replace -protocol rest -d utils\doxygen\examples\restful utils\doxygen\examples\restful\FooREST.wadl
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 :: Export version
 set VERSION_DOX=%VERSION%
 mkdir output
