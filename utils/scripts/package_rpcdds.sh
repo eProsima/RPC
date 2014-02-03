@@ -67,14 +67,14 @@ function package
 
     # Execute DDS tests
     cd utils/pcTests/rti
-    #./exec_tests.sh $package_targets
+    ./exec_tests.sh $package_targets
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../..
 
     # Execute REST tests
     cd utils/pcTests/restful
-    #./exec_tests.sh $package_targets
+    ./exec_tests.sh $package_targets
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../..
