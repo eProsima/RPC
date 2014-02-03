@@ -10,7 +10,6 @@
 #include "rpcdds/exceptions/InitializeException.h"
 #include "rpcdds/transports/ProxyTransport.h"
 #include "rpcdds/protocols/Protocol.h"
-#include "rpcdds/client/AsyncThread.h"
 
 static const char* const CLASS_NAME ="eprosima::rpcdds::proxy::Proxy";
 
@@ -28,21 +27,7 @@ Proxy::Proxy(ProxyTransport &transport, Protocol &protocol) :
 
     if(protocol.setTransport(transport))
     {
-        // Create asynchronous tasks thread
-        //m_asyncThread = new AsyncThread();
-
-        //if(m_asyncThread != NULL)
-        {
-            //if(m_asyncThread->init() == 0)
-                return;
-            //else
-            {
-                errorMessage = "Cannot initialize the asynchronous thread";
-            //    delete m_asyncThread;
-            }
-        }
-        //else
-        //    errorMessage = "create asynchronous thread";
+        return;
     }
     else
         errorMessage = "Cannot bind protocol with the transport";
@@ -53,45 +38,4 @@ Proxy::Proxy(ProxyTransport &transport, Protocol &protocol) :
 
 Proxy::~Proxy()
 {
-    // TODO
-    /*if(m_asyncThread != NULL)
-    {
-        m_asyncThread->exit();
-        delete m_asyncThread;
-    }*/
 }
-
-// TODO
-/*
-   int Proxy::addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout)
-   {
-   const char* const METHOD_NAME = "addAsyncTask";
-   int returnedValue = -1;
-
-   if(query != NULL && task != NULL)
-   {
-   returnedValue = m_asyncThread->addTask(query, task, timeout);
-   }
-   else
-   {
-   printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-   }
-
-   return returnedValue;
-   }*/
-
-//TODO
-/*
-   void Proxy::deleteAssociatedAsyncTasks(ClientRPC *rpc)
-   {
-   const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
-
-   if(rpc != NULL)
-   {
-   m_asyncThread->deleteAssociatedAsyncTasks(rpc);
-   }
-   else
-   {
-   printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-   }
-   }*/

@@ -27,6 +27,8 @@ namespace eprosima
         {
             namespace dds
             {
+                class DDSAsyncTask;
+
                 /*!
                  * @brief This class represents a remote endpoint used by a proxy.
                  * It also encapsulates the DDS datawriter and the DDS datareader.
@@ -71,9 +73,34 @@ namespace eprosima
                          * @param request Pointer to the allocated request. It cannot be NULL.
                          * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
                          *        The pointer can be NULL and this means that the RPC call is oneway.
+						 * @return Operation status
                          * @throw eprosima::rpcdds::exception::ServerTimeoutException.
                          */
                         eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
+
+						/*!
+						 * @brief This function sends an asynchronous RPC call.
+                         * It sends the request to the server and does not wait for the reply.
+						 * Instead, the corresponding callback inside the DDSAsyncTask object
+						 * will be invoked when the response arrives.
+						 *
+						 * @param request Pointer to the allocated request. It cannot be NULL.
+						 * @param task Object containing information of the asynchronous task.
+						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
+						 */
+                        eprosima::rpcdds::ReturnMessage send_async(void *request, DDSAsyncTask *task);
+
+						/*!
+						 * @brief Frees a DDS query condition. 
+						 *
+						 * @param query Query condition to free.
+						 */
+                        void freeQuery(DDS::QueryCondition *query);
+
+                        /*!
+                         * @brief This function takes a sample from the datareader.
+                         */
+                        eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 
                     private:
 
@@ -119,11 +146,6 @@ namespace eprosima
                          * @brief This function returns a used query condition to its freedom.
                          */
                         void returnUsedQueryToPool(DDS::QueryCondition *query);
-
-                        /*!
-                         * @brief This function takes a sample from the datareader.
-                         */
-                        eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 
                         //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
                         boost::mutex *m_mutex;

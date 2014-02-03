@@ -8,8 +8,8 @@ RPCDDS_VERSION=-$(shell $(EPROSIMADIR)/scripts/common_pack_functions.sh printVer
 RPCDDS_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(RPCDDS_OUTDIR_DEBUG))
 RPCDDS_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(RPCDDS_OUTDIR_RELEASE))
 
-RPCDDS_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_system-mt -lboost_thread-mt
-RPCDDS_LIBS= $(LIBS) -lboost_system-mt -lboost_thread-mt
+RPCDDS_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_system -lboost_thread
+RPCDDS_LIBS= $(LIBS) -lboost_system -lboost_thread
 
 RPCDDS_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x
 RPCDDS_CFLAGS= $(CFLAGS) -std=c++0x
@@ -62,6 +62,7 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/transports/TCPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/HttpProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/HttpServerTransport.cpp \
+		     $(BASEDIR)/src/transports/AsyncTask.cpp \
 		     $(BASEDIR)/src/transports/dds/Transport.cpp \
 		     $(BASEDIR)/src/transports/dds/ProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/ServerTransport.cpp \
@@ -69,6 +70,8 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSUDPServerTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSTCPProxyTransport.cpp \
 		     $(BASEDIR)/src/transports/dds/DDSTCPServerTransport.cpp \
+		     $(BASEDIR)/src/transports/dds/DDSAsyncTask.cpp \
+		     $(BASEDIR)/src/transports/dds/AsyncThread.cpp \
 		     $(BASEDIR)/src/transports/dds/components/ProxyProcedureEndpoint.cpp \
 		     $(BASEDIR)/src/transports/dds/components/ServerProcedureEndpoint.cpp \
 		     $(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
@@ -84,10 +87,6 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/exceptions/SystemException.cpp \
 		     $(BASEDIR)/src/exceptions/UserException.cpp \
 		     $(SPECIFIC_SRC_CPPFILES)
-
-		     #$(BASEDIR)/src/client/AsyncTask.cpp \
-		     #$(BASEDIR)/src/client/AsyncThread.cpp \
-		     #$(BASEDIR)/src/client/ClientRPC.cpp \
 
 # Project sources are copied to the current directory
 RPCDDS_SRCS= $(RPCDDS_SRC_CFILES) $(RPCDDS_SRC_CPPFILES)

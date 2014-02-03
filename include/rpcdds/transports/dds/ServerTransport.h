@@ -53,7 +53,11 @@ namespace eprosima
                          * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
                          * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
+						 * @param initialize_data Pointer to the function to initialize DataReader received data
                          * @param copy_data Pointer to the function used to copy the data when it is received.
+						 * @param finalize_data Pointer to the function to finalize DataReader received data
+						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
+						 * @param dataSize Size of the DataReader data structure
                          * @return 0 if the function successfully works, -1 in other case
                          */
                         eprosima::rpcdds::transport::Endpoint*

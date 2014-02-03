@@ -8,6 +8,7 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source fi
 $if(ctx.client)$
 #include "rpcdds/transports/dds/ProxyTransport.h"
 #include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "$ctx.filename$DDSAsyncSupport.h"
 
 $endif$
 $if(ctx.server)$
@@ -208,7 +209,7 @@ operation(ctx, operation, param_list) ::= <<
 $if(ctx.client)$
 $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
-    ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $varDecl(variable=operation.rettypeparam)$
     $operation.parent.scopedname$_$operation.name$Request instance;
     $if(!operation.oneway)$
@@ -282,6 +283,32 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     return $operation.rettypeparam.name$;
     $endif$
 }
+$endif$
+
+$if(!operation.oneway)$
+void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    $operation.parent.scopedname$_$operation.name$Request instance;
+    $operation.parent.scopedname$_$operation.name$Task *task = new $operation.parent.scopedname$_$operation.name$Task(obj);
+    
+    $operation.inputparam : {$createDataHelper(param=it, dataname="instance", isRequest="yes")$};separator="\n"$
+
+    retcode = $operation.parent.formatedScopedname$_$operation.name$_pe->send_async(&instance, task);
+    
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case NO_SERVER:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        default:
+            break;
+    }
+}
+
 $endif$
 
 $if(ctx.server)$
@@ -379,6 +406,7 @@ enum_type(ctx, enum) ::= <<>>
 /*!
  * Extra string templates. Utils.
  */
+// CAREFUL: There is a copy in DDSAsyncSupportSource.stg
 createDataHelper(param, dataname, isRequest) ::= <<
 $if(param.typecode.isType_f)$
 $memberComplexExtract(member=param, dataname=dataname)$
@@ -387,6 +415,7 @@ $dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasti
 $endif$
 >>
 
+// CAREFUL: There is a copy in DDSAsyncSupportSource.stg
 extractDataHelper(param, dataname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$

@@ -47,6 +47,17 @@ namespace eprosima
                         //! @brief Default destructor.
                         virtual ~ServerProcedureEndpoint();
 
+						/*!
+						 * @brief Initializes the endpoint.
+						 *
+						 * @param name The name associated with this procedure endpoint. It cannot be NULL.
+						 * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
+						 * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
+						 * @param initialize_data Pointer to the function to initialize DataReader received data
+						 * @param finalize_data Pointer to the function to finalize DataReader received data
+						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
+						 * @param dataSize Size of the DataReader data structure
+						 */
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Initialize_data initialize_data, Transport::Finalize_data finalize_data,
                                 Transport::ProcessFunc, int dataSize);

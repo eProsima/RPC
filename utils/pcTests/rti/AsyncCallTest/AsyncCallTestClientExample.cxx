@@ -13,10 +13,16 @@
  */
 
 #include "AsyncCallTestProxy.h"
-#include "exceptions/Exceptions.h"
-#include "AsyncCallTestRequestReplyPlugin.h"
+#include "AsyncCallTestDDSProtocol.h"
+#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "rpcdds/exceptions/Exceptions.h"
 
 #include <iostream>
+
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
 
 class GetLongHandler : public AsyncCallTest_getLongCallbackHandler
 {
@@ -38,7 +44,7 @@ class GetLongHandler : public AsyncCallTest_getLongCallbackHandler
             m_state = 1;
         }
 
-        void on_exception(const eProsima::RPCDDS::SystemException &ex)
+        void on_exception(const SystemException &ex)
         {
             std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
@@ -73,7 +79,7 @@ class GetBooleanHandler : public AsyncCallTest_getBooleanCallbackHandler
             m_state = 1;
         }
 
-        void on_exception(const eProsima::RPCDDS::SystemException &ex)
+        void on_exception(const SystemException &ex)
         {
             std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
@@ -95,7 +101,7 @@ class GetStringHandler : public AsyncCallTest_getStringCallbackHandler
 
         GetStringHandler() : m_state(0){}
 
-        void getString(/*inout*/ char* s2, /*out*/ char* s3, /*out*/ char* getString_ret)
+        void getString(/*inout*/ const char* s2, /*out*/ const char* s3, /*out*/ const char* getString_ret)
         {
             if(strcmp(s3, "PRUEBA2") != 0 ||
                     strcmp(getString_ret, "PRUEBA") != 0 ||
@@ -109,7 +115,7 @@ class GetStringHandler : public AsyncCallTest_getStringCallbackHandler
             m_state = 1;
         }
    
-        void on_exception(const eProsima::RPCDDS::SystemException &ex)
+        void on_exception(const SystemException &ex)
         {
             std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
@@ -143,7 +149,7 @@ class DuplicateHandler : public AsyncCallTest_duplicateCallbackHandler
             m_state = 1;
         }
    
-        void on_exception(const eProsima::RPCDDS::SystemException &ex)
+        void on_exception(const SystemException &ex)
         {
             std::cout << "TEST FAILED<on_exception>: " << ex.what() << std::endl;
             m_state = 2;
@@ -161,7 +167,21 @@ class DuplicateHandler : public AsyncCallTest_duplicateCallbackHandler
 
 int main(int argc, char **argv)
 {
-    AsyncCallTestProxy *proxy = new AsyncCallTestProxy("AsyncCallTestService");
+    AsyncCallTestProtocol *protocol = NULL;
+    UDPProxyTransport *transport = NULL;
+    AsyncCallTestProxy *proxy = NULL;
+
+    try
+    {
+        protocol = new AsyncCallTestProtocol();
+        transport = new UDPProxyTransport("AsyncCallTestService");
+        proxy = new AsyncCallTestProxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
 
     DDS_Long  lo1 = 1;       
     DDS_Long  lo2 = 2;       
@@ -183,7 +203,7 @@ int main(int argc, char **argv)
         if(getLong_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getLong_async>: " << ex.what() << std::endl;
         _exit(-1);
@@ -209,7 +229,7 @@ int main(int argc, char **argv)
         if(getBoolean_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getBoolean_async>: " << ex.what() << std::endl;
         _exit(-1);
@@ -235,7 +255,7 @@ int main(int argc, char **argv)
         if(getString_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<getString_async>: " << ex.what() << std::endl;
         _exit(-1);
@@ -268,7 +288,7 @@ int main(int argc, char **argv)
         if(duplicate_handler.getState() == 2)
             _exit(-1);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<duplicate_async>: " << ex.what() << std::endl;
         _exit(-1);
@@ -301,7 +321,7 @@ int main(int argc, char **argv)
 		proxy->getString_async(cgetString_handler, cs1, cs2);
 		proxy->duplicate_async(cduplicate_handler, cev);
     }
-    catch(eProsima::RPCDDS::SystemException &ex)
+    catch(SystemException &ex)
     {
         std::cout << "TEST FAILED<closing>: " << ex.what() << std::endl;
         _exit(-1);

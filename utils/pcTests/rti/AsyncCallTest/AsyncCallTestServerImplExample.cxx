@@ -29,7 +29,7 @@ DDS_Boolean AsyncCallTestServerImplExample::getBoolean(/*in*/ DDS_Boolean bo1, /
     return getBoolean_ret;
 } 
  
-char* AsyncCallTestServerImplExample::getString(/*in*/ char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
+char* AsyncCallTestServerImplExample::getString(/*in*/ const char* s1, /*inout*/ char*& s2, /*out*/ char*& s3) 
 {
     char*  getString_ret = NULL;    
 

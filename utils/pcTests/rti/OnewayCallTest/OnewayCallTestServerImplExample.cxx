@@ -39,7 +39,7 @@ DDS_Boolean OnewayCallTestServerImplExample::getBoolean()
     return b;
 } 
  
-void OnewayCallTestServerImplExample::setString(/*in*/ char* s1) 
+void OnewayCallTestServerImplExample::setString(/*in*/ const char* s1) 
 {
     s = strdup(s1);
 } 

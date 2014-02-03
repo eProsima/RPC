@@ -30,34 +30,12 @@ namespace eprosima
 
         namespace proxy
         {
-            //class AsyncThread;
-            //class AsyncTask;
-
             /*!
              * @brief This class implements the common functionalities that all server's proxies have.
              * @ingroup PROXYMODULE
              */
             class RPCDDS_DllAPI Proxy
             {
-                public:
-
-                    /*!
-                     * @brief This function adds a asynchronous task to the asynchronous thread.
-                     *
-                     * @param query The DDS query condition that is used to take the request. Cannot be NULL.
-                     * @param task The asynchronos task created and associated with a request. Cannot be NULL.
-                     * @param timeout The timeout used for this request.
-                     * @return A 0 value is returned if function works successfully. In any other case, -1 is returned.
-                     */
-                    //int addAsyncTask(DDS::QueryCondition *query, AsyncTask *task, long timeout);
-
-                    /*!
-                     * @brief This function deletes all asynchronous tasks associated with the RPC endpoint.
-                     *
-                     * @param rpc Pointer to the RPC endpoint. Cannot be NULL.
-                     */
-                    //void deleteAssociatedAsyncTasks(ClientRPC *rpc);
-
                 protected:
 
                     /*!
@@ -96,9 +74,6 @@ namespace eprosima
                         }
 
                 private:
-
-                    //! @brief Thread object that manages asynchronous repliess from servers.
-                    //AsyncThread *m_asyncThread;
 
                     //! @brief Pointer to the transport that this server proxy uses.
                     eprosima::rpcdds::transport::ProxyTransport &m_transport;

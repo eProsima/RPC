@@ -1,0 +1,196 @@
+group AsyncSupportSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
+
+#include "$ctx.filename$DDSAsyncSupport.h"
+#include "rpcdds/exceptions/ServerInternalException.h"
+#include "rpcdds/utils/Messages.h"
+$ReqRepIncludes(filename=ctx.filename)$
+
+$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
+$if(ctx.projectNeedTypes)$
+#include "$ctx.filename$T.h"
+
+$endif$
+
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+
+$definitions; separator="\n"$
+>>
+
+module(ctx, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$if(!operation.oneway)$
+$operation.parent.name$_$operation.name$Task::$operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj) :
+    DDSAsyncTask(), m_obj(obj)
+{
+    $varComplexInitializeT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="m_reply")$
+}
+
+$operation.parent.name$_$operation.name$Task::~$operation.parent.name$_$operation.name$Task()
+{
+    $varComplexDelT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="m_reply")$
+}
+
+$operation.parent.name$_$operation.name$CallbackHandler& $operation.parent.name$_$operation.name$Task::getObject()
+{
+    return m_obj;
+}
+
+void* $operation.parent.name$_$operation.name$Task::getReplyInstance()
+{
+    return &m_reply;
+}
+
+void $operation.parent.name$_$operation.name$Task::execute()
+{  
+    $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam)$
+    ReturnMessage retcode = OPERATION_SUCCESSFUL;
+    
+    $if(operation.exceptions)$
+    switch (m_reply.unio._d)
+    {
+        case 0:
+            retcode = (ReturnMessage)m_reply.header.rpcddsRetCode;
+            $operation.outputparam : {$extractDataHelper(param=it, dataname="m_reply.unio._u.st", isReply="yes")$};separator="\n"$
+            $if(operation.rettypeparam)$
+            $extractDataHelper(param=operation.rettypeparam, dataname="m_reply.unio._u.st", isReply="yes")$        
+            $endif$
+            if(retcode == OPERATION_SUCCESSFUL)
+		    {
+		        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+		    }
+		    else
+		    {
+		        if(retcode == SERVER_INTERNAL_ERROR)
+		            getObject().on_exception(ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointerConst()$));
+		    }
+            break;
+        $operation.exceptions : { exception |
+        case $i$:
+            {
+            $exception.scopedname$ ex;
+            // TODO No permite arrays
+            $exception.members : { member |ex.$member.name$ = m_reply.unio._u.$exception.name$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;}; separator="\n"$
+
+            getObject().on_exception(ex);
+            }
+        }; separator="\n"$
+    }
+    $else$
+    retcode = (ReturnMessage)m_reply.header.rpcddsRetCode;
+    $[operation.outputparam, operation.rettypeparam] : {$extractDataHelper(param=it, dataname="m_reply", isReply="yes")$};separator="\n"$
+        
+    if(retcode == OPERATION_SUCCESSFUL)
+    {
+        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+    }
+    else
+    {
+        if(retcode == SERVER_INTERNAL_ERROR)
+            getObject().on_exception(ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointerConst()$));
+    }
+    $endif$
+}
+
+void $operation.parent.name$_$operation.name$Task::on_exception(const SystemException &ex)
+{
+    getObject().on_exception(ex);
+}
+
+$if(operation.exceptions)$
+void $operation.parent.name$_$operation.name$Task::on_exception(const UserException &ex)
+{
+    getObject().on_exception(ex);
+}
+$endif$
+
+$endif$
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+/*!
+ * Extra string templates. Utils.
+ */
+// CAREFUL: There is a copy in DDSProtocolSource.stg
+createDataHelper(param, dataname, isRequest) ::= <<
+$if(param.typecode.isType_f)$
+$memberComplexExtract(member=param, dataname=dataname)$
+$else$
+$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasting()$$endif$$endif$$param.name$;
+$endif$
+>>
+
+// CAREFUL: There is a copy in DDSProtocolSource.stg
+extractDataHelper(param, dataname, isReply) ::= <<
+$if(isReply)$
+$if(param.input)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.isType_d)$
+if($param.name$ != NULL)
+    free($param.name$);
+$endif$
+$else$
+$varComplexDel(variable=param)$
+$endif$
+$endif$
+$if(param.typecode.isType_f)$
+$memberComplexCopy(member=param, dataname=dataname)$
+$else$
+$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
+$endif$
+$else$
+$if(param.output)$
+$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.isType_d)$
+$param.name$ = strdup($dataname$.$param.name$);
+$else$
+$param.name$ = $dataname$.$param.name$;
+$endif$
+$else$
+$memberComplexCopy(member=param, dataname=dataname)$
+$endif$
+$else$
+$if(param.typecode.isType_f)$
+$memberComplexCopy(member=param, dataname=dataname)$
+$else$
+$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
+$endif$
+$endif$
+$endif$
+>>

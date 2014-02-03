@@ -7,10 +7,11 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
 
 #include "rpcdds/client/Proxy.h"
-#include "rpcdds/exceptions/SystemException.h"
-#include "rpcdds/exceptions/UserException.h"
 #include "rpcdds/utils/dds/Middleware.h"
 #include "$ctx.filename$.h"
+$if(ctx.dds)$
+#include "$ctx.filename$AsyncCallbackHandlers.h"
+$endif$
 
 namespace eprosima
 {
@@ -44,8 +45,6 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-$interface.exports : {export | $if(export.operation)$$classAsyncHeader(operation=export)$$endif$}$
-
 /*!
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  */
@@ -69,8 +68,6 @@ class RPCDDSUSERDllExport $interface.name$Proxy : public eprosima::rpcdds::proxy
         virtual ~$interface.name$Proxy();
         
         $export_list$
-        
-        $interface.exports : {export | $if(export.operation)$//$functionAsyncHeader(operation=export)$$endif$}$
 };
 
 >>
@@ -85,6 +82,13 @@ operation(ctx, operation, param_list) ::= <<
 //! @brief Proxy method for the operation $operation.name$
 $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
+$if(ctx.dds)$
+$if(!operation.oneway)$
+//! @brief Proxy asynchronous method for the operation $operation.name$
+void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
+
+$endif$
+$endif$
 >>
 
 param_list(parameters) ::= <<>>
@@ -98,43 +102,3 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
-
-/*!
- * Extra string templates.
- */
-classAsyncHeader(operation) ::= <<
-$if(!operation.oneway)$
-/*!
- * @brief This abstract class defines the callbacks that RPCDDS will call in an asynchronous call.
- *        These callback has to be implemented in a derived class.
- */
-class $operation.parent.name$_$operation.name$CallbackHandler
-{
-    public:
-        /*!
-         * This function is called when is received the reply from the server.
-         */
-        virtual void $operation.name$($paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam])$) = 0;
-        
-        /*!
-         * @brief This function is called when an exception occurs.
-         *        This exception can be launched in the server's side or in the client's side.
-         *
-         * @param ex The exception that will be launched.
-         */
-        virtual void on_exception(const eprosima::rpcdds::exception::SystemException &ex) = 0;
-        $if(operation.exceptions)$
-        virtual void on_exception(const eprosima::rpcdds::exception::UserException &ex) = 0;
-        $endif$
-};
-
-$endif$
->>
-
-functionAsyncHeader(operation) ::= <<
-$if(!operation.oneway)$
-//! @brief Proxy asynchronous method for the operation $operation.name$
-void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
-
-$endif$
->>

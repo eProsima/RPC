@@ -71,6 +71,8 @@ public class RPCDDSGEN
     private String m_languageOption = "C++";
     private boolean m_ppDisable = false;
     private boolean m_replace = false;
+    //! Add information to use fastrpcgen internally. 
+    private boolean m_local = false;
     private String m_ppPath = null;
     private String m_protocol = "dds"; // Default protocol -> DDS
     
@@ -224,6 +226,10 @@ public class RPCDDSGEN
                 printHelp();
                 System.exit(0);
             }
+            else if(arg.equals("-local"))
+            {
+                m_local = true;
+            }
             // Get include directories
             else if(arg.equals("-I"))
             {
@@ -237,7 +243,7 @@ public class RPCDDSGEN
             else if(arg.startsWith("-I"))
             {
                 m_includePaths.add(arg);
-            }
+            }/*
             else if(arg.equals("--server"))
             {
                 m_servercode = false;
@@ -245,7 +251,7 @@ public class RPCDDSGEN
             else if(arg.equals("--client"))
             {
                 m_clientcode = false;
-            }           
+            }*/ 
             else
             {
                 throw new BadArgumentException("Unknown argument " + arg);
@@ -357,14 +363,14 @@ public class RPCDDSGEN
         }
         else if(m_protocol.equalsIgnoreCase("rest"))
         {
-            solution.addLibrary("boost_system-mt");
-            solution.addLibrary("boost_thread-mt");
+            solution.addLibrary("boost_system");
+            solution.addLibrary("boost_thread");
         }
         else if(m_protocol.equalsIgnoreCase("fastcdr"))
         {
             solution.addInclude("$(RPCDDSHOME)/include/protocols/cdr");
-            solution.addLibrary("boost_system-mt");
-            solution.addLibrary("boost_thread-mt");
+            solution.addLibrary("boost_system");
+            solution.addLibrary("boost_thread");
             solution.addLibrary("cdr");
         }
         
@@ -541,7 +547,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, "rest");
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -716,7 +722,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode);
+            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, "cdr");
             
             // Create template manager
             TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -902,7 +908,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, "dds");
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -924,8 +930,9 @@ public class RPCDDSGEN
 	        // Load template to generate example to use Proxies.
 	        tmanager.addGroup("DDSClientExample");
 	        // Load template to generate proxy async support files.
-	        //tmanager.addGroup("AsyncSupportHeader");
-	        //tmanager.addGroup("AsyncSupportSource");
+	        tmanager.addGroup("AsyncCallbackHandlers");
+	        tmanager.addGroup("DDSAsyncSupportHeader");
+	        tmanager.addGroup("DDSAsyncSupportSource");
 	        // Load template to generate Server for topics.
 	        tmanager.addGroup("ServerHeader");
 	        tmanager.addGroup("ServerSource");
@@ -1016,16 +1023,28 @@ public class RPCDDSGEN
 		            
 		            if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
 		            {	
-		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace))
                         {
-    		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
-    		                {
-    		                    returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
-    		                    
-    		                    project.addCommonIncludeFile(onlyFileName + "Protocol.h");
-    		                    project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
-    		                    project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
-    		                }
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
+                            {
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
+                                {
+                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                                    {
+                                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                        {
+                                            returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+
+                                            project.addCommonIncludeFile(onlyFileName + "Protocol.h");
+                                            project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
+                                            project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
+                                            project.addCommonIncludeFile(onlyFileName + "AsyncCallbackHandlers.h");
+                                            project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
+                                            project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
+                                        }
+                                    }
+                                }
+                            }
                         }
 		            }
 		        }
@@ -1037,19 +1056,11 @@ public class RPCDDSGEN
 		            {
 		                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.cxx", maintemplates.getTemplate("ProxySource"), m_replace))
 		                {
-                            //if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.h", maintemplates.getTemplate("AsyncSupportHeader"), m_replace))
-                            {
-                                //if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncSupport.cxx", maintemplates.getTemplate("AsyncSupportSource"), m_replace))
-                                {
-                                	project.addClientIncludeFile(onlyFileName + "Proxy.h");
-                                	project.addClientSrcFile(onlyFileName + "Proxy.cxx");;
-                                	//project.addClientIncludeFile(onlyFileName + "AsyncSupport.h");
-                                	//project.addClientSrcFile(onlyFileName + "AsyncSupport.cxx");
-                                	
-                                    if(m_exampleOption != null)
-                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientExample.cxx", maintemplates.getTemplate("DDSClientExample"), m_replace);
-                                }
-                            }
+                            project.addClientIncludeFile(onlyFileName + "Proxy.h");
+                            project.addClientSrcFile(onlyFileName + "Proxy.cxx");;
+
+                            if(m_exampleOption != null)
+                                returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "ClientExample.cxx", maintemplates.getTemplate("DDSClientExample"), m_replace);
 		                }
 		            }
 		        }
@@ -1638,6 +1649,7 @@ public class RPCDDSGEN
             makecxx.setAttribute("example", m_exampleOption);
     		makecxx.setAttribute("arch", arch);
     		makecxx.setAttribute("version", getVersion());
+            makecxx.setAttribute("local", m_local);
             
             returnedValue = Utils.writeFile(m_outputDir + "makefile_" + m_exampleOption, makecxx, m_replace);
     	}
@@ -1762,18 +1774,18 @@ public class RPCDDSGEN
         System.out.println("rpcddsgen usage:");
         System.out.println("\trpcddsgen [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
-        System.out.println("\t\t-help: Show help");
-        System.out.println("\t\t-version: shows the current version of RPCDDS.");
-        System.out.println("\t\t--server: disable generation of source code for server.");
-        System.out.println("\t\t--client: disable generation of source code for client.");
-        System.out.println("\t\t-example <platform>: Generate solution for specific platform (example: x64Win64VS2010)");
-        System.out.println("\t\t\tPlatforms supported:");
+        System.out.println("\t\t-help: shows this help");
+        System.out.println("\t\t-version: shows the current version of eProsima RPC.");
+        //System.out.println("\t\t--server: disables the generation of source code for servers.");
+        //System.out.println("\t\t--client: disables the generation of source code for clients.");
+        System.out.println("\t\t-example <platform>: Generates a solution for a specific platform (example: x64Win64VS2010)");
+        System.out.println("\t\t\tSupported platforms:");
         for(int count = 0; count < m_platforms.size(); ++count)
             System.out.println("\t\t\t * " + m_platforms.get(count));
         System.out.println("");
         //        "   -language <C++>: Programming language (default: C++).\n" +
-        System.out.println("\t\t-replace: replace generated files.");
-        System.out.println("\t\t-d <path>: Output directory for generated files.");
+        System.out.println("\t\t-replace: replaces existing generated files.");
+        System.out.println("\t\t-d <path>: sets an output directory for generated files.");
         
         if(m_middleware.equals("rti"))
         {
@@ -1781,8 +1793,8 @@ public class RPCDDSGEN
             System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
         }
 
-        System.out.println("\t\t-t <temp dir>: Use the specific directory as temporary directory.");
-        System.out.println("\tand the files can be WADL files or IDL files.");
+        System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
+        System.out.println("\tand the files must be WADL files or IDL files.");
     }
     
     public static void main(String[] args) throws Exception

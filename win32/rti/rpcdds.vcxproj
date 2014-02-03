@@ -462,6 +462,8 @@
     <ClCompile Include="..\..\src\transports\components\TCPEndpoint.cpp" />
     <ClCompile Include="..\..\src\transports\dds\components\ProxyProcedureEndpoint.cpp" />
     <ClCompile Include="..\..\src\transports\dds\components\ServerProcedureEndpoint.cpp" />
+    <ClCompile Include="..\..\src\transports\dds\DDSAsyncTask.cpp" />
+    <ClCompile Include="..\..\src\transports\dds\AsyncThread.cpp" />
     <ClCompile Include="..\..\src\transports\dds\DDSTCPProxyTransport.cpp" />
     <ClCompile Include="..\..\src\transports\dds\DDSTCPServerTransport.cpp" />
     <ClCompile Include="..\..\src\transports\dds\DDSUDPProxyTransport.cpp" />
@@ -469,6 +471,7 @@
     <ClCompile Include="..\..\src\transports\dds\ProxyTransport.cpp" />
     <ClCompile Include="..\..\src\transports\dds\ServerTransport.cpp" />
     <ClCompile Include="..\..\src\transports\dds\Transport.cpp" />
+    <ClCompile Include="..\..\src\transports\AsyncTask.cpp" />
     <ClCompile Include="..\..\src\transports\HttpProxyTransport.cpp" />
     <ClCompile Include="..\..\src\transports\HttpServerTransport.cpp" />
     <ClCompile Include="..\..\src\transports\TCPProxyTransport.cpp" />
@@ -511,6 +514,9 @@
     <ClInclude Include="..\..\include\transports\dds\Transport.h" />
     <ClInclude Include="..\..\include\transports\dds\UDPProxyTransport.h" />
     <ClInclude Include="..\..\include\transports\dds\UDPServerTransport.h" />
+    <ClInclude Include="..\..\include\transports\dds\DDSAsyncTask.h" />
+    <ClInclude Include="..\..\include\transports\dds\AsyncThread.h" />
+    <ClInclude Include="..\..\include\transports\AsyncTask.h" />
     <ClInclude Include="..\..\include\transports\HttpProxyTransport.h" />
     <ClInclude Include="..\..\include\transports\HttpServerTransport.h" />
     <ClInclude Include="..\..\include\transports\messages\HttpMessage.h" />

@@ -8,6 +8,7 @@
 
 #include "rpcdds/transports/dds/ProxyTransport.h"
 #include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "rpcdds/transports/dds/AsyncThread.h"
 #include "rpcdds/exceptions/InitializeException.h"
 
 #include <string>
@@ -26,9 +27,19 @@ typedef struct encapsulation
 } encapsulation;
 
 ProxyTransport::ProxyTransport(std::string &remoteServiceName, int domainId, long milliseconds) :
-    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), ::transport::ProxyTransport(),
-    ::transport::dds::Transport(domainId)
+    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), m_asyncThread(NULL),
+    ::transport::ProxyTransport(), ::transport::dds::Transport(domainId)
 {
+    const char* const METHOD_NAME = "ProxyTransport";
+
+    m_asyncThread = new AsyncThread();
+
+    if(m_asyncThread != NULL)
+    {
+    // TODO Send exception
+        if(m_asyncThread->init() != 0)
+            printf("ERROR<%s::%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
+    }
 }
 
 ProxyTransport::~ProxyTransport()
@@ -41,6 +52,9 @@ ProxyTransport::~ProxyTransport()
     }
 
     m_procedureEndpoints.erase(m_procedureEndpoints.begin(), m_procedureEndpoints.end());
+
+    m_asyncThread->exit();
+    delete m_asyncThread;
 }
 
 const char* ProxyTransport::getType() const
@@ -87,26 +101,21 @@ long ProxyTransport::getTimeout()
     return NULL;
 }
 
-ReturnMessage ProxyTransport::send(void *request, void* reply)
+int ProxyTransport::addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout)
 {
-    const char* const METHOD_NAME = "send";
-    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-    encapsulation *encap = (encapsulation*)request;
-    std::map<const char*, ProxyProcedureEndpoint*>::iterator it;
+    return m_asyncThread->addTask(query, task, timeout);
+}
 
-    if(request != NULL && reply != NULL)
+void ProxyTransport::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
+{
+    const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
+
+    if(pe != NULL)
     {
-        it = m_procedureEndpoints.find(encap->name);
-
-        if(it != m_procedureEndpoints.end())
-        {
-            returnedValue = (*it).second->send(encap->data, reply);
-        }
+        m_asyncThread->deleteAssociatedAsyncTasks(pe);
     }
     else
     {
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
-
-    return returnedValue;
 }

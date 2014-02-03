@@ -6,7 +6,6 @@ $fileHeader(file=[ctx.filename, "Proxy.cxx"], description=["This source file con
 #include "$ctx.filename$Proxy.h"
 #include "rpcdds/transports/ProxyTransport.h"
 #include "$ctx.filename$Protocol.h"
-//#include "$ctx.filename$AsyncSupport.h"
 
 $definitions; separator="\n"$
 >>
@@ -60,6 +59,16 @@ $paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$
     $endif$
 }
 
+$if(ctx.dds)$
+$if(!operation.oneway)$
+void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
+{
+    dynamic_cast<eprosima::rpcdds::protocol::$ctx.filename$Protocol&>(getProtocol()).$operation.parent.formatedScopedname$_$operation.name$_async(obj$extractParams(params=operation.inputparam, separatorInicial=", ")$);
+}
+
+$endif$
+$endif$
+
 >>
 
 param_list(parameters) ::= <<>>
@@ -73,33 +82,3 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
-
-/*!
- * Extra string templates.
- */
-functionAsyncImpl(operation) ::= <<
-$if(!operation.oneway)$
-void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
-{
-    eProsima::RPCDDS::ReturnMessage retcode = eProsima::RPCDDS::CLIENT_INTERNAL_ERROR;
-    $operation.parent.name$_$operation.name$Request instance;
-    $operation.parent.name$_$operation.name$Task *task = NULL;
-    $operation.parent.name$_$operation.name$RequestUtils::setTypeData(instance$extractParams(params=operation.inputparam, separatorInicial=", ")$);
-    task = new $operation.parent.name$_$operation.name$Task(obj, this);
-    retcode = $operation.name$_Service->executeAsync(&instance, task, getTimeout());
-    
-    switch (retcode)
-    {
-        case eProsima::RPCDDS::CLIENT_INTERNAL_ERROR:
-            throw eProsima::RPCDDS::ClientInternalException("Error in client side");
-            break;
-        case eProsima::RPCDDS::NO_SERVER:
-             throw eProsima::RPCDDS::ServerNotFoundException("Cannot connect to the server");
-             break;
-        default:
-            break;
-    }
-}
-
-$endif$
->>

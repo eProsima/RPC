@@ -23,7 +23,8 @@ import com.eprosima.rpcdds.util.Utils;
 
 public class Context
 {
-    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode)
+    // TODO Remove middleware parameter. It is temporal while cdr and rest don't have async functions.
+    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, String middleware)
     {
         // Detect OS
         m_os = System.getProperty("os.name");
@@ -43,7 +44,7 @@ public class Context
                 file = file.substring(1);
         }
         // Remove relative directory if is equal that where the processed IDL is.
-        if(startsWith(m_file, m_directoryFile))
+        if(m_directoryFile != null && startsWith(m_file, m_directoryFile))
         	m_file = m_file.substring(m_directoryFile.length());
         
         m_clientcode = clientcode;
@@ -73,7 +74,7 @@ public class Context
                 if(startsWith(file, java.io.File.separator))
                     file = file.substring(1);
             }
-            if(startsWith(include, m_directoryFile))
+            if(m_directoryFile != null && startsWith(include, m_directoryFile))
             	include = include.substring(m_directoryFile.length());
             // Add last separator.
             if(include.charAt(include.length() - 1) != java.io.File.separatorChar)
@@ -107,6 +108,9 @@ public class Context
         // The scope file has to be initialized because could occur the preprocessor
         // is not called (using -ppDisable).
         m_scopeFile = m_file;
+
+        // TODO Remove
+        m_middleware = middleware;
     }
     
     private boolean startsWith(String st, String prefix)
@@ -210,7 +214,7 @@ public class Context
 	            	file = file.substring(currentDirS.length());
 	            String depfile = file;
 	            // Remove relative directory if is equal that where the processed IDL is.
-	            if(startsWith(file, m_directoryFile))
+	            if(m_directoryFile != null && startsWith(file, m_directoryFile))
 	            	file = file.substring(m_directoryFile.length());
 	            // Remove relative directory if is equal to a include path.
 	            for(int i = 0; i < m_includePaths.size(); ++i)
@@ -359,7 +363,7 @@ public class Context
     { 
         Interface prev = m_interfaces.put(name, interf);
         
-        // TODO: Excepción
+        // TODO: Excepcion
         if(prev != null)
             System.out.println("Warning: Redefined interface " + name);
     }
@@ -511,7 +515,7 @@ public class Context
     	// Remove .idl extension.
         String dep = dependency.substring(0, dependency.length() - 4);
         // Remove directory if it is the same than main IDL file.
-        if(startsWith(dep, m_directoryFile))
+        if(m_directoryFile != null && startsWith(dep, m_directoryFile))
         	dep = dep.substring(m_directoryFile.length());
     	m_includedependency.add(dep);
     }
@@ -544,7 +548,7 @@ public class Context
     {    		
     	String oldValue = m_tmpAnnotations.put(id, value);
     	
-    	// TODO Lanzar una excepción.
+    	// TODO Lanzar una excepcion.
     	if(oldValue != null)
     		System.out.println("Annotation " + id + " was redefined");
     }
@@ -582,6 +586,15 @@ public class Context
     public boolean isServer()
     {
         return m_servercode;
+    }
+
+    // TODO Remove
+    public boolean isDds()
+    {
+        if(m_middleware != null && m_middleware.equals("dds"))
+            return true;
+
+        return false;
     }
     
     ////////// RESTful block //////////
@@ -667,5 +680,7 @@ public class Context
     
     final String includeFlag = "-I";
     final String currentDirS = "." + File.separator;
-   
+
+    // TODO Remove
+    private String m_middleware = null;
 }

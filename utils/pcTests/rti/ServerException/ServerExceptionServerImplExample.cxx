@@ -23,7 +23,7 @@ void ServerExceptionServerImplExample::sendException()
 	throw ServerInternalException("Testing exception");
 } 
 
-char* ServerExceptionServerImplExample::sendExceptionTwo(/*in*/ char* message, /*inout*/ char*& message2, /*out*/ char*& message3) 
+char* ServerExceptionServerImplExample::sendExceptionTwo(/*in*/ const char* message, /*inout*/ char*& message2, /*out*/ char*& message3) 
 {
     char*  sendExceptionTwo_ret = NULL;
 

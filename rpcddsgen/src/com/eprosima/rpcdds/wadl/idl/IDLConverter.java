@@ -461,7 +461,7 @@ public class IDLConverter {
 	
 	private void toIDLStruct(ArrayList<Response> responses, String responseType) throws IDLConverterException {
 		
-		boolean hasEmptyReturnType = true; // Siempre dejamos la opción del return type vacío
+		boolean hasEmptyReturnType = true; // Siempre dejamos la opcion del return type vacio
 		boolean hasXMLMediaType = false;
 		boolean hasJSONMediaType = false;
 		for (Response response : responses) {			
@@ -557,7 +557,7 @@ public class IDLConverter {
 		writeln("{");
 		++numTabs;
 
-		boolean hasEmptyReturnType = true; // Siempre dejamos la opción del return type vacío
+		boolean hasEmptyReturnType = true; // Siempre dejamos la opcion del return type vacio
 		boolean hasXMLMediaType = false;
 		boolean hasJSONMediaType = false;
 		for (Response response : responses) {			

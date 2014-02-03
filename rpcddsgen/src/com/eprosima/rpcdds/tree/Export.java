@@ -14,6 +14,6 @@ public interface Export
     
     public boolean isTypeDeclaration();
     
-    // TODO Capturar el error en la gramática y saltarlo.
+    // TODO Capturar el error en la gramatica y saltarlo.
     public boolean resolve(Context ctx);
 }
