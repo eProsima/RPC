@@ -12,6 +12,22 @@ public class AliasTypeCode extends ContainerTypeCode
         m_scope = scope;
         m_name = name;
     }
+
+    @Override
+    public TypeCode getContentTypeCode()
+    {
+        if(super.getContentTypeCode() instanceof ContainerTypeCode)
+        {
+            ContainerTypeCode ct = (ContainerTypeCode)super.getContentTypeCode();
+            return ct.getContentTypeCode();
+        }
+        return super.getContentTypeCode();
+    }
+
+    public TypeCode getTypedefContentTypeCode()
+    {
+        return super.getContentTypeCode();
+    }
     
     public String getScopedname()
     {
@@ -33,23 +49,29 @@ public class AliasTypeCode extends ContainerTypeCode
         st.setAttribute("name", getScopedname());
         return st.toString();
     }
+
+    @Override
+    public String getStType()
+    {
+        return super.getContentTypeCode().getStType();
+    }
     
     @Override
     public boolean isPrimitive()
     {
-        return getContentTypeCode().isPrimitive();
+        return super.getContentTypeCode().isPrimitive();
     }
     
     @Override
     public boolean isPrimitiveInArguments()
     {
-        return getContentTypeCode().isPrimitiveInArguments();
+        return super.getContentTypeCode().isPrimitiveInArguments();
     }
     
     @Override
     public String getInitialValue()
     {   
-        return getContentTypeCode().getInitialValue();
+        return super.getContentTypeCode().getInitialValue();
     }
     
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
@@ -68,24 +90,24 @@ public class AliasTypeCode extends ContainerTypeCode
     @Override
     public boolean isIsType_d()
     {
-        return getContentTypeCode().isIsType_d();
+        return super.getContentTypeCode().isIsType_d();
     }
     
     @Override
     public boolean isIsType_c()
     {
-        return getContentTypeCode().isIsType_c();
+        return super.getContentTypeCode().isIsType_c();
     }
     
     @Override
     public boolean isIsType_f()
     {
-        return getContentTypeCode().isIsType_f();
+        return super.getContentTypeCode().isIsType_f();
     }
     
     public boolean isIsType_e()
     {
-        return getContentTypeCode().isIsType_e();
+        return super.getContentTypeCode().isIsType_e();
     }
     /*** End of functions to know the type in string templates ***/
     

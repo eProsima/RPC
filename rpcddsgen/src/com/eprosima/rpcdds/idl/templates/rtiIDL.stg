@@ -40,7 +40,7 @@ param_list(parameters) ::= <<>>
 param(parameter) ::= <<>>
 
 type_declarator(ctx, typedefs) ::= <<
-$typedefs : {typedef | typedef $typedef.contentTypeCode.typename$ $typedef.typename$;}; separator="\n"$
+$typedefs : {typedef | typedef $typedef.typedefContentTypeCode.typename$ $typedef.typename$;}; separator="\n"$
 
 >>
 

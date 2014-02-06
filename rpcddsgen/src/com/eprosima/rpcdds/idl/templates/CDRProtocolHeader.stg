@@ -7,7 +7,7 @@ $fileHeader(file=[ctx.filename, "CDRProtocol.h"], description=["This header file
 #define _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "rpcdds/protocols/cdr/cpp/FastCdr.h"
+#include "fastcdr/FastCdr.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
@@ -54,8 +54,8 @@ namespace eprosima
                         
                     private:
                     
-                        eProsima::FastBuffer serializeBuffer;
-                        eProsima::FastCdr scdr;
+                        eprosima::FastBuffer serializeBuffer;
+                        eprosima::FastCdr scdr;
                 };
             } // namespace dds
         } // namespace protocol
@@ -98,7 +98,9 @@ struct_type(ctx, struct) ::= <<
 $membered_type(ctx=ctx, mtype=struct)$
 >>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, union) ::= <<
+$membered_type(ctx=ctx, mtype=union)$
+>>
 
 enum_type(ctx, enum) ::= <<>>
 
@@ -107,12 +109,12 @@ enum_type(ctx, enum) ::= <<>>
 membered_type(ctx, mtype) ::=<<
 /*!
  * @brief This function serialize a type $mtype.scopedname$.
- * @param x Reference to a  that will be serialized in the buffer.
+ * @param x Reference to the variable that will be serialized in the buffer.
  * @return Reference to the $ctx.filename$Ser object.
  * @exception NotEnoughMemoryException This exception is thrown trying to serialize in a position that exceed the internal memory size.
  * @exception BadParamException This exception is thrown trying to serialize in an invalid value.
  */
-void serialize(eProsima::FastCdr &cdr, const $mtype.scopedname$ &x);
+void serialize(eprosima::FastCdr &cdr, const $mtype.scopedname$ &x);
 
 /*!
  * @brief This function deserialize a type $mtype.scopedname$.
@@ -121,6 +123,6 @@ void serialize(eProsima::FastCdr &cdr, const $mtype.scopedname$ &x);
  * @exception NotEnoughMemoryException This exception is thrown trying to deserialize in a position that exceed the internal memory size.
  * @exception BadParamException This exception is thrown trying to deserialize in an invalid value.
  */
-void deserialize(eProsima::FastCdr &cdr, $mtype.scopedname$ &x);
+void deserialize(eprosima::FastCdr &cdr, $mtype.scopedname$ &x);
 
 >>
