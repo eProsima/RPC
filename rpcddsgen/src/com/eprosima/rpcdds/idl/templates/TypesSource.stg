@@ -40,12 +40,12 @@ $exception.name$::$exception.name$() : UserException()
 
 $exception.name$::$exception.name$(const $exception.name$ &ex) : UserException(ex)
 {
-    $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+    $exception.members : { member |$copy(member=member, dataname="ex", constructor="yes")$}; separator="\n"$
 }
 
 $exception.name$::$exception.name$($exception.name$&& ex) : UserException(std::move(ex))
 {
-    $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+    $exception.members : { member |$move(member=member, dataname="ex", constructor="yes")$}; separator="\n"$
 }
 
 $exception.name$& $exception.name$::operator=(const $exception.name$ &ex)
@@ -58,7 +58,7 @@ $exception.name$& $exception.name$::operator=(const $exception.name$ &ex)
 $exception.name$& $exception.name$::operator=($exception.name$&& ex)
 {
 	operator=(std::move(ex));
-	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+	$exception.members : { member |$move(member=member, dataname="ex")$}; separator="\n"$
 	return *this;
 }
 
@@ -88,16 +88,36 @@ union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
 
-copy(member, dataname) ::= <<
+copy(member, dataname, constructor) ::= <<
 $if(member.typecode.primitiveInArguments)$
 $if(member.typecode.isType_d)$
+$if(!constructor)$
 if($member.name$ != NULL)
     free($member.name$);
+$endif$
 $member.name$ = strdup($dataname$.$member.name$);
 $else$
 $member.name$ = $dataname$.$member.name$;
 $endif$
 $else$
-$memberComplexCopy(...)$
+$memberComplexInitCopy(...)$
+$endif$
+>>
+
+move(member, dataname, constructor) ::= <<
+$if(member.typecode.primitiveInArguments)$
+$if(member.typecode.isType_d)$
+$if(!constructor)$
+if($member.name$ != NULL)
+    free($member.name$);
+$endif$
+$member.name$ = $dataname$.$member.name$;
+$dataname$.$member.name$ = NULL;
+$else$
+$member.name$ = $dataname$.$member.name$;
+$endif$
+$else$
+// TODO Memory leak. igualar y poner la otra todo a cero.
+$memberComplexInitCopy(...)$
 $endif$
 >>

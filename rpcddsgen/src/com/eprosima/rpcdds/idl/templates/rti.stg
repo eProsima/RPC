@@ -22,6 +22,13 @@ memset(&$member.name$, 0, sizeof($member.typecode.stTypename$));
 $endif$
 >>
 
+memberComplexInitCopy(member, dataname) ::= <<
+$if(member)$
+$member.typecode.stTypename$_initialize(&$member.name$);
+$member.typecode.stTypename$_copy(&$member.name$, &$dataname$.$member.name$);
+$endif$
+>>
+
 memberComplexCopy(member, dataname) ::= <<
 $if(member)$
 $member.typecode.stTypename$_copy(&$member.name$, &$dataname$.$member.name$);
