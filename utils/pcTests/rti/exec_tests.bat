@@ -219,7 +219,7 @@ goto :EOF
 :: Function exit ::
 :exit
 :: Remove output directory
-::rd /S /Q output
+rd /S /Q output
 
 :: Remove symbolic link from EPROSIMADIR
 if exist ..\..\..\include\rpcdds\eProsima_cpp rmdir /Q ..\..\..\include\rpcdds\eProsima_cpp
