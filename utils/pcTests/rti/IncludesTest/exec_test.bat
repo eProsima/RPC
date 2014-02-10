@@ -13,10 +13,10 @@ mkdir output
 :: Generates the Util idl file with RPCDDS script
 mkdir output\util
 :: Generates the rest of files with RPCDDS script
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -d output\util -example %NDDSTARGET% "IncludesTest\util\Util.idl"
+call ..\..\..\scripts\rpcdds_rti_pcTests.bat -d output\util -example %NDDSTARGET% -protocol dds "IncludesTest\util\Util.idl"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -d output -example %NDDSTARGET% -IIncludesTest -IIncludesTest\hide "IncludesTest\IncludesTest.idl" "IncludesTest\SameDirectory.idl" "IncludesTest\Level2.idl" "IncludesTest\hide\Hide.idl"
+call ..\..\..\scripts\rpcdds_rti_pcTests.bat -d output -example %NDDSTARGET% -protocol dds -IIncludesTest -IIncludesTest\hide "IncludesTest\IncludesTest.idl" "IncludesTest\SameDirectory.idl" "IncludesTest\Level2.idl" "IncludesTest\hide\Hide.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory

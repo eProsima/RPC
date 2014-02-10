@@ -368,10 +368,10 @@ public class RPCDDSGEN
         }
         else if(m_protocol.equalsIgnoreCase("fastcdr"))
         {
-            solution.addInclude("$(RPCDDSHOME)/include/protocols/cdr");
+            solution.addInclude("$(FASTRPCHOME)/include/protocols/cdr");
             solution.addLibrary("boost_system");
             solution.addLibrary("boost_thread");
-            solution.addLibrary("cdr");
+            solution.addLibrary("fastcdr");
         }
         
         for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
@@ -1134,12 +1134,12 @@ public class RPCDDSGEN
             tao_root = System.getenv("TAO_ROOT");
         }
         
-        rpcdds_root = System.getenv("RPCDDSHOME");
+        rpcdds_root = System.getenv("FASTRPCHOME");
         
         if(rpcdds_root == null || rpcdds_root.equals(""))
         {
-            System.out.println("ERROR: Cannot find the environment variable RPCDDSHOME.");
-            System.out.println("Note: RPCDDSHOME environment variable is not set in your system.");
+            System.out.println("ERROR: Cannot find the environment variable FASTRPCHOME.");
+            System.out.println("Note: FASTRPCHOME environment variable is not set in your system.");
             System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
             System.out.println("      See the User Manual document.");
             return false;

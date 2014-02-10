@@ -8,7 +8,7 @@ $fileHeader(file=[ctx.filename, "CDRProtocol.cxx"], description=["This source fi
 #include "rpcdds/transports/ServerTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
 #include "rpcdds/utils/Messages.h"
-#include "cpp/exceptions/BadParamException.h"
+#include "fastcdr/exceptions/BadParamException.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol::cdr;
@@ -56,102 +56,119 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
 void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint) 
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
-    size_t bufferUse = dataLength;
+    size_t bufferUse = dataLength, cdrLength = 0;
     
     if(dataLength > 0 && endpoint != NULL)
     {
-        if(((int32_t*&)data)[0] == 0x46434452)
+        do
         {
-            size_t cdrLength = ((int32_t*&)data)[1] + 8;
-            
-            if(bufferUse < cdrLength)
+            if(((int32_t*&)data)[0] == 0x46434452)
             {
-                data = realloc(data, cdrLength);
-                
-                size_t dataToRead = cdrLength - bufferUse;
-                ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
-                int retCode = serverTransport.receive(&((char*&)data)[bufferUse], cdrLength, dataToRead, endpoint);
-                
-                if(retCode >= 0)
+                cdrLength = ((int32_t*&)data)[1] + 8;
+
+                if(bufferUse < cdrLength)
                 {
-                    bufferUse += dataToRead;
-                    
-                    if(bufferUse < cdrLength)
+                    data = realloc(data, cdrLength);
+
+                    size_t dataToRead = cdrLength - bufferUse;
+                    ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
+                    int retCode = serverTransport.receive(&((char*&)data)[bufferUse], cdrLength, dataToRead, endpoint);
+
+                    if(retCode >= 0)
+                    {
+                        bufferUse += dataToRead;
+
+                        if(bufferUse < cdrLength)
+                        {
+                            // TODO error
+                            printf("ERROR No se ha leido todos los datos necesarios\n");
+                            return;
+                        }
+                    }
+                    else
                     {
                         // TODO error
-                        printf("ERROR No se ha leido todos los datos necesarios\n");
+                        printf("ERROR Fallo leyendo\n");
                         return;
                     }
                 }
-                else
+
+                eprosima::FastBuffer dcdrBuffer((char*)data, bufferUse);
+                eprosima::FastCdr dcdr(dcdrBuffer);
+
+                dcdr.jump(8);
+                int32_t code = -2;
+                dcdr.deserialize(code);
+
+                if(code == 0)
                 {
-                    // TODO error
-                    printf("ERROR Fallo leyendo\n");
-                    return;
-                }
-            }
-            
-            eProsima::FastBuffer dcdrBuffer((char*)data, bufferUse);
-            eProsima::FastCdr dcdr(dcdrBuffer);
-            
-            dcdr.jump(8);
-            std::string interface_name, operation_name;
-            dcdr.deserialize(interface_name);
-            dcdr.deserialize(operation_name);
-            
-            $if(first(ctx.interfaces))$
-            if(interface_name.compare("$first(ctx.interfaces).scopedname$") == 0)
-            {
-                if(_protocol._$first(ctx.interfaces).formatedScopedname$_impl != NULL)
-                {
-                    $if(first(first(ctx.interfaces).operations))$
-                    if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
-                    {
-                        $operation_worker(operation=first(first(ctx.interfaces).operations))$
-                    }
-                    $rest(first(ctx.interfaces).operations) : {operation |
-                    else if(operation_name.compare("$operation.name$") == 0)
-                    {
-                        $operation_worker(operation=operation)$
-                    }
+                    std::string interface_name, operation_name;
+                    dcdr.deserialize(interface_name);
+                    dcdr.deserialize(operation_name);
+
+                    $if(first(ctx.interfaces))$
+                        if(interface_name.compare("$first(ctx.interfaces).scopedname$") == 0)
+                        {
+                            if(_protocol._$first(ctx.interfaces).formatedScopedname$_impl != NULL)
+                            {
+                                $if(first(first(ctx.interfaces).operations))$
+                                    if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
+                                    {
+                                        $operation_worker(operation=first(first(ctx.interfaces).operations))$
+                                    }
+                                $rest(first(ctx.interfaces).operations) : {operation |
+                                    else if(operation_name.compare("$operation.name$") == 0)
+                                    {
+                                        $operation_worker(operation=operation)$
+                                    }
+                                }$
+                                $endif$
+                            }
+                            else
+                            {
+                                // TODO Send system exception to client.
+                            }
+                        }
+                    $rest(ctx.interfaces) : {interface |
+                        else if(interface_name.compare("$interface.scopedname$") == 0)
+                        {
+                            if(_protocol._$interface.formatedScopedname$_impl != NULL)
+                            {
+                                $if(first(interface.operations))$
+                                    if(operation_name.compare("$first(interface.operations).name$") == 0)
+                                    {
+                                        $operation_worker(operation=first(interface.operations))$
+                                    }
+                                $rest(interface.operations) : {operation |
+                                    else if(operation_name.compare("$operation.name$") == 0)
+                                    {
+                                        $operation_worker(operation=operation)$
+                                    }
+                                }$
+                                $endif$
+                            }
+                            else
+                            {
+                                // TODO Send system exception to client.
+                            }
+                        }
                     }$
                     $endif$
                 }
                 else
                 {
-                    // TODO Send system exception to client.
+                    printf("ERROR: CDR message is not a request\n");
                 }
+
+                bufferUse -= cdrLength;
             }
-            $rest(ctx.interfaces) : {interface |
-            else if(interface_name.compare("$interface.scopedname$") == 0)
+            else
             {
-                if(_protocol._$interface.formatedScopedname$_impl != NULL)
-                {
-                    $if(first(interface.operations))$
-                    if(operation_name.compare("$first(interface.operations).name$") == 0)
-                    {
-                        $operation_worker(operation=first(interface.operations))$
-                    }
-                    $rest(interface.operations) : {operation |
-                    else if(operation_name.compare("$operation.name$") == 0)
-                    {
-                        $operation_worker(operation=operation)$
-                    }
-                    }$
-                    $endif$
-                }
-                else
-                {
-                    // TODO Send system exception to client.
-                }
+                // TODO Print error.
+                break;
             }
-            }$
-            $endif$
         }
-        else
-        {
-            // TODO Print error.
-        }
+        while((bufferUse > 0) & (memmove(data, data + cdrLength, bufferUse) != NULL));
     }
     else
     {
@@ -180,7 +197,18 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, exception) ::= <<
+void eprosima::rpcdds::protocol::cdr::serialize(eprosima::FastCdr &scdr, const $exception.scopedname$ &x)
+{
+    $exception.members:{$member_serialization(it)$}; separator="\n"$
+}
+
+void eprosima::rpcdds::protocol::cdr::deserialize(eprosima::FastCdr &dcdr, $exception.scopedname$ &x)
+{  
+    $exception.members:{$member_deserialization(it)$}; separator="\n"$
+}
+
+>>
 
 operation(ctx, operation, param_list) ::= <<
 $if(ctx.client)$
@@ -189,11 +217,13 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     const char* const interface_name = "$operation.parent.scopedname$";
     const char* const operation_name = "$operation.name$";
     ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
-    $varDecl(variable=operation.rettypeparam)$
+    // TODO In DDS the initialization is not necessary. But in CDR it is, for example a union with a char* (string) needs to be initialized to NULL.
+    $varDecl(variable=operation.rettypeparam, create="yes")$
     
     eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>(getTransport());
     
     scdr.jump(8);
+    scdr.serialize((int32_t)0);
     scdr.serialize(interface_name);
     scdr.serialize(operation_name);
     $operation.inputparam : {param |
@@ -204,77 +234,135 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     ((int32_t*)buffer)[0] = 0x46434452;
     ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
     
-    proxyTransport.connect();
-    
-    // TODO Check if there is a problem.
-    proxyTransport.send(buffer, scdr.getSerializedDataLength());
-    scdr.reset();
-    
-    $if(!operation.oneway)$
-    // TODO Cambiar
-    size_t responseBufferSize = 8192, responseBufferUse = 0;
-    char *response = (char*)calloc(responseBufferSize, sizeof(char));
-    int retCode = proxyTransport.receive(response, responseBufferSize, responseBufferUse);
-    
-    if(retCode >= 0 && responseBufferUse >= 8)
+    if(proxyTransport.connect())
     {
-        if(((int32_t*)response)[0] == 0x46434452)
+        // TODO Check if there is a problem.
+        if(proxyTransport.send(buffer, scdr.getSerializedDataLength()))
         {
-            size_t cdrLength = ((int32_t*)response)[1] + 8;
+            scdr.reset();
             
-            if(responseBufferUse < cdrLength)
-            {   
-                // A buffer more big is needed.             
-                if(responseBufferSize < cdrLength)
-                {
-                    response = (char*)realloc(response, cdrLength);
-                    responseBufferSize = cdrLength;
-                }
-                
-                size_t dataToRead = cdrLength - responseBufferUse;
-                retCode = proxyTransport.receive(&response[responseBufferUse], responseBufferSize, dataToRead);
-                responseBufferUse += dataToRead;
-            }
+            $if(!operation.oneway)$
+            // TODO Cambiar
+            size_t responseBufferSize = 8192, responseBufferUse = 0;
+            char *response = (char*)calloc(responseBufferSize, sizeof(char));
+            int retCode = proxyTransport.receive(response, responseBufferSize, responseBufferUse);
             
-            if(retCode > 0 && responseBufferUse >= cdrLength)
+            if(retCode >= 0 && responseBufferUse >= 8)
             {
-                eProsima::FastBuffer dcdrBuffer(response, responseBufferUse);
-                eProsima::FastCdr dcdr(dcdrBuffer);
-                
-                dcdr.jump(8);
-                std::string interface_name_r, operation_name_r;
-                dcdr.deserialize(interface_name_r);
-                dcdr.deserialize(operation_name_r);
-                
-                if(interface_name_r.compare(interface_name) == 0 &&
-                    operation_name_r.compare(operation_name) == 0)
+                if(((int32_t*)response)[0] == 0x46434452)
                 {
-                    $[operation.outputparam, operation.rettypeparam] : {param |
-                    $deserialization(obj=param)$
-                    };separator="\n"$
+                    size_t cdrLength = ((int32_t*)response)[1] + 8;
+                    
+                    if(responseBufferUse < cdrLength)
+                    {   
+                        // A buffer more big is needed.             
+                        if(responseBufferSize < cdrLength)
+                        {
+                            response = (char*)realloc(response, cdrLength);
+                            responseBufferSize = cdrLength;
+                        }
+                        
+                        size_t dataToRead = cdrLength - responseBufferUse;
+                        retCode = proxyTransport.receive(&response[responseBufferUse], responseBufferSize, dataToRead);
+                        responseBufferUse += dataToRead;
+                    }
+                    
+                    if(retCode >= 0 && responseBufferUse >= cdrLength)
+                    {
+                        eprosima::FastBuffer dcdrBuffer(response, responseBufferUse);
+                        eprosima::FastCdr dcdr(dcdrBuffer);
+                        
+                        dcdr.jump(8);
+                        int32_t code = -2;
+                        dcdr.deserialize(code);
+
+                        if(code == 1)
+                        {
+                            std::string interface_name_r, operation_name_r;
+                            dcdr.deserialize(interface_name_r);
+                            dcdr.deserialize(operation_name_r);
+                            
+                            if(interface_name_r.compare(interface_name) == 0 &&
+                                operation_name_r.compare(operation_name) == 0)
+                            {
+                                $if(operation.exceptions)$
+                                int32_t excode = -1;
+                                dcdr.deserialize(excode);
+                                switch(excode)
+                                {
+                                    case 0:
+                                        $[operation.outputparam, operation.rettypeparam] : {param |
+                                            $deserialization(obj=param)$
+                                        };separator="\n"$
+                                    $operation.exceptions : { exception |
+                                    case $i$:
+                                    {
+                                        $exception.scopedname$ ex;
+                                        // TODO No permite arrays.
+                                        deserialize(dcdr, ex);
+
+                                        ex.raise();
+                                    }
+                                    }; separator="\n"$
+                                    default:
+                                        throw ClientInternalException("Error extracting information from server");
+                                }
+                                $else$
+                                $[operation.outputparam, operation.rettypeparam] : {param |
+                                $deserialization(obj=param)$
+                                };separator="\n"$
+                                $endif$
+                            }
+                            else
+                            {
+                                // TODO Return error
+                                printf("ERROR: Bad reply, reply to other operation\n");
+                            }
+                        }
+                        else if(code == -1)
+                        {
+                            std::string errormsg;
+                            dcdr.deserialize(errormsg);
+                            free(response);
+                            throw ServerInternalException(errormsg);
+                        }
+                        else
+                        {
+                            printf("ERROR: CDR message is not a reply or error message\n");
+                        }
+                    }
+                    else
+                    {
+                        // TODO error
+                        printf("Error receiving the whole cdr message\n");
+                    }
                 }
                 else
                 {
-                    // TODO Return error
+                    // TODO Return error.
+                    printf("ERROR: not received a cdr message\n");
                 }
             }
             else
             {
-                // TODO error
+                // TODO print error.
+                printf("Error receiving the cdr message\n");
             }
+            
+            free(response);
+            $endif$
         }
         else
         {
-            // TODO Return error.
+            scdr.reset();
+            throw ClientInternalException("Error in client side");
         }
     }
     else
     {
-        // TODO print error.
+        scdr.reset();
+        throw ServerNotFoundException("Cannot connect to the server");
     }
-    
-    free(response);
-    $endif$
     
     $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
@@ -291,19 +379,39 @@ param(parameter) ::= <<>>
 type_declarator(ctx, typedefs) ::= <<>>
 
 struct_type(ctx, struct) ::= <<
-void eprosima::rpcdds::protocol::cdr::serialize(eProsima::FastCdr &scdr, const $struct.scopedname$ &x)
+void eprosima::rpcdds::protocol::cdr::serialize(eprosima::FastCdr &scdr, const $struct.scopedname$ &x)
 {
     $struct.members:{$member_serialization(it)$}; separator="\n"$
 }
 
-void eprosima::rpcdds::protocol::cdr::deserialize(eProsima::FastCdr &dcdr, $struct.scopedname$ &x)
+void eprosima::rpcdds::protocol::cdr::deserialize(eprosima::FastCdr &dcdr, $struct.scopedname$ &x)
 {  
     $struct.members:{$member_deserialization(it)$}; separator="\n"$
 }
 
 >>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, union) ::= <<
+void eprosima::rpcdds::protocol::cdr::serialize(eprosima::FastCdr &scdr, const $union.scopedname$ &x)
+{ 
+    scdr.serialize(x._d);
+    
+    switch(x._d)
+    {
+        $union.members:{$unionmember_case_selection_se(it)$}; separator="\n"$
+    }
+}
+
+void eprosima::rpcdds::protocol::cdr::deserialize(eprosima::FastCdr &dcdr, $union.scopedname$ &x)
+{
+    dcdr.deserialize(x._d);
+
+    switch(x._d)
+    {
+        $union.members:{$unionmember_case_selection_de(it)$}; separator="\n"$
+    }
+}
+>>
 
 enum_type(ctx, enum) ::= <<>>
 
@@ -312,7 +420,7 @@ operation_worker(operation) ::= <<
 $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
 $varDecl(variable=operation.rettypeparam, create="yes")$
 
-$operation.inoutputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+$operation.inputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
 
 $operation.inputparam : {param |
 $deserialization(obj=param)$
@@ -323,9 +431,10 @@ try
     $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
     
     $if(!operation.oneway)$
-    eProsima::FastBuffer scdrBuffer;
-    eProsima::FastCdr scdr(scdrBuffer);
+    eprosima::FastBuffer scdrBuffer;
+    eprosima::FastCdr scdr(scdrBuffer);
     scdr.jump(8);
+    scdr.serialize((int32_t)1);
     scdr.serialize("$operation.parent.scopedname$");
     scdr.serialize("$operation.name$");
     
@@ -343,13 +452,40 @@ try
 $operation.exceptions : { exception |
 catch(const $exception.scopedname$ &ex)
 {
+    eprosima::FastBuffer scdrBuffer;
+    eprosima::FastCdr scdr(scdrBuffer);
+    scdr.jump(8);
+    scdr.serialize((int32_t)1);
+    scdr.serialize("$operation.parent.scopedname$");
+    scdr.serialize("$operation.name$");
+    scdr.serialize($i$);
+    serialize(scdr, ex);
+    
+    char *buffer = scdrBuffer.getBuffer();
+    ((int32_t*)buffer)[0] = 0x46434452;
+    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+
+    dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
 }
 }; separator="\n"$
 catch(const ServerInternalException &ex)
 {
+    $if(!operation.oneway)$
+    eprosima::FastBuffer scdrBuffer;
+    eprosima::FastCdr scdr(scdrBuffer);
+    scdr.jump(8);
+    scdr.serialize((int32_t)-1);
+    scdr.serialize(ex.what());
+
+    char *buffer = scdrBuffer.getBuffer();
+    ((int32_t*)buffer)[0] = 0x46434452;
+    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+
+    dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
+    $endif$
 }
 
-$[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
+$[operation.parameters, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
 
 >>
 
@@ -361,19 +497,54 @@ member_deserialization(member) ::= <<
 $deserialization(obj=member, prefix="x.")$
 >>
 
+unionmember_case_selection_se(member) ::= <<
+$member.labels:{case $it$:}; separator="\n"$
+$if(member.default)$
+default:$\n$
+$endif$
+$serialization(obj=it, prefix="x._u.")$
+break;
+>>
+
+unionmember_case_selection_de(member) ::= <<
+$member.labels:{case $it$:}; separator="\n"$
+$if(member.default)$
+default:$\n$
+$endif$
+$deserialization(obj=it, prefix="x._u.")$
+break;
+>>
+
+// TODO String type in RTI is char*, then we have to change the sizeFunction with strlen.
 serialization(obj, prefix) ::= <<
 $if(obj.typecode.maxsize)$
+$if(obj.typecode.isType_d)$
+if(strlen($prefix$$obj.name$) <= $obj.typecode.maxsize$)
+
+$else$
 if($prefix$$obj.name$.$sizeFunction.(obj.typecode.stType)$ <= $obj.typecode.maxsize$)
     
 $endif$
+$endif$
 $if(obj.typecode.isType_e)$
+$if(obj.typecode.contentTypeCode.primitive)$
 scdr.serializeSequence($prefix$$obj.name$.get_contiguous_buffer(), $prefix$$obj.name$.length());
+$else$
+scdr.serialize((uint32_t)$prefix$$obj.name$.length());
+$if(obj.typecode.contentTypeCode.isType_d)$
+for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
+   scdr.serialize($prefix$$obj.name$.get_at(count));
+$else$
+for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
+   serialize(scdr, $prefix$$obj.name$.get_at(count));
+$endif$
+$endif$
 $else$
 $serializeFunction.(obj.typecode.stType)$$primitiveCastingType.(obj.typecode.stType)$$prefix$$obj.name$);
 $endif$
 $if(obj.typecode.maxsize)$
 else
-    throw eProsima::BadParamException(std::string("The maximum length was exceeded"));
+    throw eprosima::BadParamException(std::string("The maximum length was exceeded"));
 $endif$
 >>
 
@@ -382,7 +553,17 @@ $if(obj.typecode.isType_e)$
 uint32_t $obj.name$SeqLength;
 dcdr.deserialize($obj.name$SeqLength);
 $prefix$$obj.name$.ensure_length($obj.name$SeqLength, $obj.name$SeqLength);
+$if(obj.typecode.contentTypeCode.primitive)$
 dcdr.deserializeArray($prefix$$obj.name$.get_contiguous_buffer(), $obj.name$SeqLength);
+$else$
+$if(obj.typecode.contentTypeCode.isType_d)$
+for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
+   dcdr.deserialize($prefix$$obj.name$[count]);
+$else$
+for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
+   deserialize(dcdr, $prefix$$obj.name$[count]);
+$endif$
+$endif$
 $else$
 $deserializeFunction.(obj.typecode.stType)$$primitiveCastingType.(obj.typecode.stType)$$prefix$$obj.name$);
 $endif$
