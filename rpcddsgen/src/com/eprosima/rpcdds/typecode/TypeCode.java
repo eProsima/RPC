@@ -35,6 +35,7 @@ public abstract class TypeCode
     public static final int KIND_SPARSE = 0x00000017;
     
     protected static StringTemplateGroup m_typesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
+    // TODO Quitar.
     protected static StringTemplateGroup m_stringtemplatetypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
     
     public TypeCode(int kind)

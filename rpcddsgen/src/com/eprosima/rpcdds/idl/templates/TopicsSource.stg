@@ -1,0 +1,136 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+group TopicsSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file contains the implementation of topics generated using operations in the IDL file."])$
+
+#include "$ctx.filename$Topics.h"
+
+$definitions; separator="\n"$
+
+>>
+
+// TODO name -> module
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request(bool initialize)
+: m_initialized(initialize)$parameters_default_init(operation.inputparam)$
+{
+    if(m_initialized)
+    {
+        $operation.inputparam : { param |$if(!param.typecode.primitive)$m_$param.name$ = new $param.typecode.typename$();$endif$}; separator="\n"$
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Request::~$operation.parent.name$_$operation.name$Request()
+{
+    if(m_initialized)
+    {
+        $operation.inputparam : { param |$if(!param.typecode.primitive)$if(m_$param.name$ != NULL) delete m_$param.name$;$endif$}; separator="\n"$
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request(const $operation.parent.name$_$operation.name$Request &x)
+: m_initialized(false)$parameters_copy_pointer(operation.inputparam)$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x)
+: m_initialized(x.m_initialized)$parameters_copy_pointer(operation.inputparam)$
+{
+    if(x.m_initialized)
+    {
+        $operation.inputparam : { param |$if(!param.typecode.primitive)$x.m_$param.name$ = NULL;$endif$}; separator="\n"$
+
+        x.m_initialized = false;
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(bool initialize)
+: m_initialized(initialize)$parameters_default_init(operation.outputparam)$
+{
+    if(m_initialized)
+    {
+        $operation.outputparam : { param |$if(!param.typecode.primitive)$m_$param.name$ = new $param.typecode.typename$();$endif$}; separator="\n"$
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::~$operation.parent.name$_$operation.name$Reply()
+{
+    if(m_initialized)
+    {
+        $operation.outputparam : { param |$if(!param.typecode.primitive)$if(m_$param.name$ != NULL) delete m_$param.name$;$endif$}; separator="\n"$
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x)
+: m_initialized(false)$parameters_copy_pointer(operation.outputparam)$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x)
+: m_initialized(x.m_initialized)$parameters_copy_pointer(operation.outputparam)$
+{
+    if(x.m_initialized)
+    {
+        $operation.outputparam : { param |$if(!param.typecode.primitive)$x.m_$param.name$ = NULL;$endif$}; separator="\n"$
+
+        x.m_initialized = false;
+    }
+}
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+/***** Utils *****/
+
+parameters_default_init(parameters) ::= <<
+$if(parameters)$, $parameters:{ param |$parameter_default_init(param)$}; separator=", "$$endif$
+>>
+
+parameter_default_init(param) ::= <<
+$if(param.typecode.primitive)$
+m_$param.name$($basicTypeInitialValues.(param.typecode.stType)$)
+$else$
+m_$param.name$(NULL)
+$endif$
+>>
+
+parameters_copy_pointer(parameters) ::= <<
+$if(parameters)$, $parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
+>>

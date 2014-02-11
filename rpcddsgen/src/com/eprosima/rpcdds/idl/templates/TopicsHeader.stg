@@ -1,0 +1,238 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of RPCDDS is licensed to you under the terms described in the
+ * RPCDDS_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+group TopicsHeader;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_TOPICS_H_
+#define _$ctx.filename;format="toUpper"$_TOPICS_H_
+
+#include "$ctx.filename$.h"
+
+#if defined(_WIN32)
+#if defined(USER_CPP_DLL_EXPORT)
+#define user_cpp_DllExport __declspec( dllexport )
+#else
+#define user_cpp_DllExport
+#endif
+#else
+#define user_cpp_DllExport
+#endif
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$_TOPICS_H_
+>>
+
+// TODO name -> module
+module(ctx, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+}
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+/*!
+ * @brief This class represents the structure $operation.parent.name$_$operation.name$Request that can be used to send/receive requests
+ * for the operation $operation.parent.name$::$operation.name$.
+ * 
+ * @ingroup $ctx.trimfilename$
+ */
+class user_cpp_DllExport $operation.parent.name$_$operation.name$Request
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     * @param initialize True value initializes all pointers using "new" operator. In the other case,
+     * all pointers will be NULL.
+     */
+    $operation.parent.name$_$operation.name$Request(bool initialize = false);
+    
+    /*!
+     * @brief Default destructor.
+     */
+    ~$operation.parent.name$_$operation.name$Request();
+    
+    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+     * @brief Copy constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Request(const $operation.parent.name$_$operation.name$Request &x);
+    
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x);
+    
+    $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
+
+private:
+
+    bool m_initialized;
+
+    $operation.inputparam:{$private_parameters_declaration(it)$}; separator="\n"$
+};
+
+/*!
+ * @brief This class represents the structure $operation.parent.name$_$operation.name$Reply that can be used to send/receive replies
+ * for the operation $operation.parent.name$::$operation.name$.
+ * 
+ * @ingroup $ctx.trimfilename$
+ */
+class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     * @param initialize True value initializes all pointers using "new" operator. In the other case,
+     * all pointers will be NULL.
+     */
+    $operation.parent.name$_$operation.name$Reply(bool initialize = false);
+    
+    /*!
+     * @brief Default destructor.
+     */
+    ~$operation.parent.name$_$operation.name$Reply();
+    
+    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+     * @brief Copy constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x);
+    
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x);
+    
+    $operation.outputparam:{$public_parameters_declaration(it)$}; separator="\n"$
+
+private:
+
+    bool m_initialized;
+
+    $operation.outputparam:{$private_parameters_declaration(it)$}; separator="\n"$
+};
+
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+type_declarator(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
+/***** Utils *****/
+
+public_parameters_declaration(param) ::= <<
+$if(param.typecode.primitive)$
+/*! TODO
+ * @brief This function sets a value in member $param.name$
+ * @param _$param.name$ New value for member $param.name$
+ */
+inline void $param.name$($param.typecode.typename$ _$param.name$)
+{
+    m_$param.name$ = _$param.name$;
+}
+
+/*! TODO
+ * @brief This function returns the value of member $param.name$
+ * @return Value of member $param.name$
+ */
+inline $param.typecode.typename$ $param.name$() const
+{
+    return m_$param.name$;
+}
+
+/*! TODO
+ * @brief This function returns a reference to member $param.name$
+ * @return Reference to member $param.name$
+ */
+inline $param.typecode.typename$& $param.name$()
+{
+    return m_$param.name$;
+}
+$else$
+/*! TODO
+ * @brief This function copies the value in member $param.name$
+ * @param _$param.name$ New value to be copied in member $param.name$
+ */
+inline void $param.name$(const $param.typecode.typename$ &_$param.name$)
+{
+    if(m_initialize)
+        *m_$param.name$ = _$param.name$;
+    else
+        m_$param.name$ = &_$param.name$;
+}
+
+/*! TODO
+ * @brief This function moves the value in member $param.name$
+ * @param _$param.name$ New value to be moved in member $param.name$
+ */
+inline void $param.name$($param.typecode.typename$ &&_$param.name$)
+{
+    if(m_initialize)
+        *m_$param.name$ = std::move(_$param.name$);
+    else
+        m_$param.name$ = &_$param.name$;
+}
+
+/*! TODO
+ * @brief This function returns a constant reference to member $param.name$
+ * @return Constant reference to member $param.name$
+ */
+inline const $param.typecode.typename$& $param.name$() const
+{
+    return *m_$param.name$;
+}
+
+/*! TODO
+ * @brief This function returns a reference to member $param.name$
+ * @return Reference to member $param.name$
+ */
+inline $param.typecode.typename$& $param.name$()
+{
+    return *m_$param.name$;
+}
+$endif$
+>>
+
+private_parameters_declaration(param) ::= <<
+$if(param.typecode.primitive)$
+$param.typecode.typename$ m_$param.name$;
+$else$
+$param.typecode.typename$ *m_$param.name$;
+$endif$
+>>

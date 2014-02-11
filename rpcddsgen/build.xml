@@ -133,8 +133,11 @@
 			<fileset dir="${src.dir}" includes="**/*.stg" />
 		</copy>
         <!--> Copy common stringtemplates with Fast Buffers.<-->
-		<copy todir="${build.classes}${file.separator}com${file.separator}eprosima${file.separator}rpcdds${file.separator}idl${file.separator}templates">
+        <!--> TODO Quitar el overwrite<-->
+        <copy todir="${build.classes}${file.separator}com${file.separator}eprosima${file.separator}rpcdds${file.separator}idl${file.separator}templates"
+            overwrite="yes">
             <fileset dir="${basedir}${file.separator}..${file.separator}..${file.separator}FastBuffers${file.separator}src${file.separator}com${file.separator}eprosima${file.separator}fastbuffers${file.separator}templates">
+				<include name="Types.stg" />
 				<include name="TypesHeader.stg" />
 			</fileset>
 		</copy>

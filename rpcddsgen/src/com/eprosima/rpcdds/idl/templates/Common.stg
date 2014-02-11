@@ -83,3 +83,22 @@ $endif$
 extractParams(params, separatorInicial) ::= <<
 $if(params)$$separatorInicial$$endif$$params : {param | $param.name$};separator=", "$
 >>
+
+/**** NEW OUR_TYPES ****/
+
+basicTypeInitialValues ::= [
+        "type_5":"0.0",
+        "type_6":"0.0",
+        "type_13":"0.0",
+        "type_1":"0",
+        "type_2":"0",
+        "type_11":"0",
+        "type_3":"0",
+        "type_4":"0",
+        "type_12":"0",
+        "type_8":"0",
+        "type_14":"0",
+        "type_7":"false",
+        "type_9":"0",
+        default: // not basic type.
+]

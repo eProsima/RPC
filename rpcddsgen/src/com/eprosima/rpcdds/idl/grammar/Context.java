@@ -602,16 +602,6 @@ public class Context
         return false;
     }
 
-    public boolean isIsGenerateOperationTypes()
-    {
-        if(m_protocol != null && (m_protocol.equals("dds") || m_protocol.equals("cdr")))
-        {
-            return true;
-        }
-
-        return false;
-    }
-    
     ////////// RESTful block //////////
     
     public String getDeserializeCode() {  
