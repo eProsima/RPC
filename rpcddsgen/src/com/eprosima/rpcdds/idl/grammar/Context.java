@@ -24,7 +24,7 @@ import com.eprosima.rpcdds.util.Utils;
 public class Context
 {
     // TODO Remove middleware parameter. It is temporal while cdr and rest don't have async functions.
-    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, String middleware)
+    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, String protocol)
     {
         // Detect OS
         m_os = System.getProperty("os.name");
@@ -110,7 +110,7 @@ public class Context
         m_scopeFile = m_file;
 
         // TODO Remove
-        m_middleware = middleware;
+        m_protocol = protocol;
     }
     
     private boolean startsWith(String st, String prefix)
@@ -596,8 +596,18 @@ public class Context
     // TODO Remove
     public boolean isDds()
     {
-        if(m_middleware != null && m_middleware.equals("dds"))
+        if(m_protocol != null && m_protocol.equals("dds"))
             return true;
+
+        return false;
+    }
+
+    public boolean isIsGenerateOperationTypes()
+    {
+        if(m_protocol != null && (m_protocol.equals("dds") || m_protocol.equals("cdr")))
+        {
+            return true;
+        }
 
         return false;
     }
@@ -687,5 +697,5 @@ public class Context
     final String currentDirS = "." + File.separator;
 
     // TODO Remove
-    private String m_middleware = null;
+    private String m_protocol = null;
 }

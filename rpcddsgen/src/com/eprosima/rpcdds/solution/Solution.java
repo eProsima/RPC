@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Solution
 {
-	public Solution(boolean serverside, boolean clientside)
+	public Solution(String protocol, boolean serverside, boolean clientside)
 	{
+        m_protocol = protocol;
 		m_serverside = serverside;
 		m_clientside = clientside;
 		m_projects = new ArrayList<Project>();
@@ -143,13 +144,19 @@ public class Solution
 	{
 		return m_clientside;
 	}
+
+    public boolean isIsFastcdr()
+    {
+        return m_protocol.equals("fastcdr");
+    }
 	
 	private ArrayList<Project> m_projects = null;
 	private ArrayList<Project> m_cacheprojects = null;
 	private ArrayList<String> m_libraries = null;
 	private ArrayList<String> m_includes = null;
-	boolean m_serverside = true;
-	boolean m_clientside = true;
+	private boolean m_serverside = true;
+	private boolean m_clientside = true;
+    private String  m_protocol = null;
 	
 	// OS
     String m_os = null;

@@ -128,16 +128,25 @@
 		<javac source="1.6" target="1.6" srcdir="${src.java}" destdir="${build.classes}">
 			<classpath refid="build.classpath" />
 		</javac>
+        <!--> Copy stringtemplates of fastrpc.<-->
 		<copy todir="${build.classes}">
 			<fileset dir="${src.dir}" includes="**/*.stg" />
 		</copy>
+        <!--> Copy common stringtemplates with Fast Buffers.<-->
+		<copy todir="${build.classes}${file.separator}com${file.separator}eprosima${file.separator}rpcdds${file.separator}idl${file.separator}templates">
+            <fileset dir="${basedir}${file.separator}..${file.separator}..${file.separator}FastBuffers${file.separator}src${file.separator}com${file.separator}eprosima${file.separator}fastbuffers${file.separator}templates">
+				<include name="TypesHeader.stg" />
+			</fileset>
+		</copy>
+        <!--> Copy platform file.<-->
 		<copy todir="${build.classes}">
-			<fileset dir="${basedir}${file.separator}../src">
+			<fileset dir="${basedir}${file.separator}..${file.separator}src">
 				<include name="platforms" />
 			</fileset>
 		</copy>
+        <!--> Copy version file.<-->
 		<copy todir="${build.classes}">
-			<fileset dir="${basedir}${file.separator}../include/rpcdds">
+			<fileset dir="${basedir}${file.separator}..${file.separator}include${file.separator}rpcdds">
 				<include name="rpcdds_version.h" />
 			</fileset>
 		</copy>

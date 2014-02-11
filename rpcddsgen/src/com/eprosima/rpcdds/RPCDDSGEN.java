@@ -332,14 +332,15 @@ public class RPCDDSGEN
     	}
     	
         boolean returnedValue = ddsGenGlobalInit();
-        Solution solution = new Solution(m_servercode, m_clientcode);
+        Solution solution = new Solution(m_protocol, m_servercode, m_clientcode);
         
         if(m_protocol.equalsIgnoreCase("dds"))
         {
             try
             {
         		// First step is to parse the file MessageHeader.idl
-        		ddsGen(m_messageHeaderFileLocation, m_lineCommand, m_lineCommandForWorkDirSet, true, false);
+                // TODO Remove
+        		//ddsGen(m_messageHeaderFileLocation, m_lineCommand, m_lineCommandForWorkDirSet, true, false);
         	       	
 	        	// Create a project for MessageHeader.idl
 	        	Project project = new Project("MessageHeader", m_messageHeaderFileLocation, new HashSet());
@@ -455,7 +456,8 @@ public class RPCDDSGEN
         
         ArrayList idlLineCommand = new ArrayList(), idlLineCommandForWorkDirSet = new ArrayList();
         
-        if(ddsGenInit(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet))
+        // TODO Remove
+        //if(ddsGenInit(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet))
         {
             try
             {
@@ -468,8 +470,9 @@ public class RPCDDSGEN
 	                    
 	                	// Parse the user IDL file that was generated using external tool.
 	                    // Note:The file are put in project info inside parseIDL function.
-	                    ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-	                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+                        // TODO Remove
+	                    //ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+	                            //true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
 	                }
 	                	
 	            	return project;
@@ -484,8 +487,9 @@ public class RPCDDSGEN
                         
                         // Parse the user IDL file that was generated using external tool.
                         // Note:The file are put in project info inside parseIDL function.
-                        ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-                                true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+                        // TODO Remove
+                        //ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                                //true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
                     }
             	    
             	    return project;
@@ -498,10 +502,12 @@ public class RPCDDSGEN
                     
                 	// Parse the user IDL file that was generated using external tool.
                     // Note:The file are put in project info inside parseIDL function.
-                    ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-                            true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+                    // TODO Remove
+                    //ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                            //true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
                     
-                	if(!project.getUnique())
+                            // TODO Remove
+                	/*if(!project.getUnique())
                 	{
                 		// Parse the requestreply IDL file that was generated using external tool.
                 		ddsGen(m_tempDir + onlyFileName + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
@@ -515,7 +521,7 @@ public class RPCDDSGEN
         	        	project.addCommonSrcFile(onlyFileName + "RequestReplyPlugin.cxx");
         	        	project.addCommonIncludeFile(onlyFileName + "RequestReplySupport.h");
         	        	project.addCommonSrcFile(onlyFileName + "RequestReplySupport.cxx");
-                	}
+                	}*/
                     returnedValue = true;
                 }
             }
@@ -547,7 +553,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, "rest");
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -722,7 +728,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, "cdr");
+            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol);
             
             // Create template manager
             TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -908,7 +914,7 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, "dds");
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
@@ -1004,7 +1010,8 @@ public class RPCDDSGEN
 	        	// Generate the supported IDL to RTI.
 	        	returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true);
 		        
-	        	if(returnedValue && needsTypes)
+                // TODO Review needsTypes
+	        	if(returnedValue)// && needsTypes)
 	        	{
 			        // Zone used to write all files using the generated string templates.
 		        	if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.h", maintemplates.getTemplate("TypesHeader"), m_replace))
@@ -1263,6 +1270,7 @@ public class RPCDDSGEN
         return true;
     }
     
+    /* TODO
     public boolean ddsGenInit(String idlFilename, ArrayList idlLineCommand, ArrayList idlLineCommandForWorkDirSet)
     {    
         // Fill the arrays with global command line.
@@ -1303,6 +1311,7 @@ public class RPCDDSGEN
     	
     	return true;
     }
+
     // Need to use envp to pass a Path environment variable pointing to $NDDSHOME/scripts
     // if $NDDSHOME contains spaces the exec(String) or exec(String[])methods DO NOT WORK in Windows
     // even using the well known solution of using double quotes
@@ -1353,14 +1362,14 @@ public class RPCDDSGEN
         //{
         	finalCommandLine.addAll(idlLineCommand);
         	finalCommandLine.add(file);
-        /*}
-        else
-        {
-        	finalCommandLine.addAll(idlLineCommandForWorkDirSet);
-        	// TODO Revisar funcionamiento con OpenDDS
-        	//finalCommandLine.add(file.substring(externalDir.length() + 1));
-        	finalCommandLine.add(Utils.getIDLFileOnly(file));
-        }*/
+        //}
+        //else
+        //{
+        //	finalCommandLine.addAll(idlLineCommandForWorkDirSet);
+        //	// TODO Revisar funcionamiento con OpenDDS
+        //	//finalCommandLine.add(file.substring(externalDir.length() + 1));
+        //	finalCommandLine.add(Utils.getIDLFileOnly(file));
+        //}
         finalCommandArray = new String[finalCommandLine.size()];
         finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
         
@@ -1441,6 +1450,7 @@ public class RPCDDSGEN
         //The best way to do this is checking for output files existence and modification times (if -replace)
         //ddsGenRunCheck(file);	
     }
+    */
     
     private boolean genSolution(Solution solution)
     {
