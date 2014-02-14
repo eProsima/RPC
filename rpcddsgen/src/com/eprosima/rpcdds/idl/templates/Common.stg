@@ -18,7 +18,7 @@ fileHeader(file, description) ::= <<
 
 paramRetType(typecode) ::= <<
 $if(typecode)$
-$typecode.stTypename$
+$typecode.typename$
 $else$
 void
 $endif$
@@ -26,14 +26,14 @@ $endif$
 
 paramTypeByValue(typecode) ::= <<
 $if(typecode.primitiveInArguments)$
-$if(typecode.isType_d)$const $endif$$typecode.stTypename$
+$if(typecode.isType_d)$const $endif$$typecode.typename$
 $else$
-const $typecode.stTypename$&
+const $typecode.typename$&
 $endif$
 >>
 
 paramTypeByRef(typecode) ::= <<
-$typecode.stTypename$&
+$typecode.typename$&
 >>
 
 paramDeclsByValue(params, separatorInicial) ::= <<
@@ -61,7 +61,7 @@ $endif$
 varDecl(variable, create) ::= <<
 $if(variable)$
 $if(variable.typecode.primitiveInArguments)$
-$variable.typecode.stTypename$  $variable.name$ $variable.typecode.initialValue$;
+$variable.typecode.typename$  $variable.name$ $variable.typecode.initialValue$;
 $else$
 $varComplexDecl(...)$
 $endif$
@@ -85,6 +85,22 @@ $if(params)$$separatorInicial$$endif$$params : {param | $param.name$};separator=
 >>
 
 /**** NEW OUR_TYPES ****/
+
+// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
+max_serialized_size(param, var) ::= <<
+$if(param.typecode.primitive)$
+$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
+$else$
+$endif$
+>>
+
+// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
+serialized_size(param, var) ::= <<
+$if(param.typecode.primitive)$
+$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
+$else$
+$endif$
+>>
 
 basicTypeInitialValues ::= [
         "type_5":"0.0",

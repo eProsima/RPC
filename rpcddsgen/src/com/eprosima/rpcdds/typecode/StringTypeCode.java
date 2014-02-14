@@ -24,12 +24,6 @@ public class StringTypeCode extends TypeCode
     }
     
     @Override
-    public String getStTypename()
-    {
-        return getSTTypenameFromStringTemplate().toString();
-    }
-    
-    @Override
     public String getInitialValue()
     {   
         return "= NULL";

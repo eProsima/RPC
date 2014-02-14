@@ -13,11 +13,16 @@ $fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file co
 
 #include "$ctx.filename$Topics.h"
 
+#include "fastcdr/Cdr.h"
+
+$if(ctx.dds)$
+#include "ndds/ndds_cpp.h"
+$endif$
+
 $definitions; separator="\n"$
 
 >>
 
-// TODO name -> module
 module(ctx, module, definition_list) ::= <<
 $definition_list$
 >>
@@ -70,6 +75,40 @@ $operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$
     }
 }
 
+$operation.parent.scopedname$_$operation.name$Request& $operation.parent.scopedname$_$operation.name$Request::operator=(const $operation.parent.scopedname$_$operation.name$Request &x)
+{
+    if(m_initialized)
+    {
+        $operation.inputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    }
+    else
+    {
+        printf("ERROR: copying in a not initialize object\n");
+    }
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Request::getMaxSerializedSize(size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    $operation.inputparam : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(bool initialize)
 : m_initialized(initialize)$parameters_default_init(operation.outputparam)$
 {
@@ -103,6 +142,40 @@ $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$op
     }
 }
 
+$operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopedname$_$operation.name$Reply::operator=(const $operation.parent.scopedname$_$operation.name$Reply &x)
+{
+    if(m_initialized)
+    {
+        $operation.outputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    }
+    else
+    {
+        printf("ERROR: copying in a not initialize object\n");
+    }
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxSerializedSize(size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    $operation.outputparam : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
 >>
 
 param_list(parameters) ::= <<>>
@@ -133,4 +206,12 @@ $endif$
 
 parameters_copy_pointer(parameters) ::= <<
 $if(parameters)$, $parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
+>>
+
+parameters_copy_assigment(param) ::= <<
+$if(param.typecode.primitive)$
+m_$param.name$ = x.m_$param.name$;
+$else$
+*m_$param.name$ = *x.m_$param.name$;
+$endif$
 >>

@@ -47,7 +47,7 @@ namespace eprosima
                         //! @brief Default destructor.
                         virtual ~ServerProcedureEndpoint();
 
-						/*!
+						/*! TODO Actualizar
 						 * @brief Initializes the endpoint.
 						 *
 						 * @param name The name associated with this procedure endpoint. It cannot be NULL.
@@ -59,7 +59,7 @@ namespace eprosima
 						 * @param dataSize Size of the DataReader data structure
 						 */
                         int initialize(const char *name, const char *writertypename, const char *readertypename,
-                                Transport::Initialize_data initialize_data, Transport::Finalize_data finalize_data,
+                                Transport::Create_data create_data, Transport::Destroy_data destroy_data,
                                 Transport::ProcessFunc, int dataSize);
 						
 						/*!
@@ -159,9 +159,9 @@ namespace eprosima
                         //! @brief The data reader used to receive.
                         DDS::DataReader *m_reader;
 
-                        Transport::Initialize_data m_initialize_data;
+                        Transport::Create_data m_create_data;
 
-                        Transport::Finalize_data m_finalize_data;
+                        Transport::Destroy_data m_destroy_data;
 
                         Transport::ProcessFunc m_process_func;
 

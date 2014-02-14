@@ -9,7 +9,7 @@ $fileHeader(file=[ctx.filename, "AsyncSupport.h"], description=["This header fil
 #include "rpcdds/transports/dds/DDSAsyncTask.h"
 #include "rpcdds/exceptions/UserException.h"
 #include "$ctx.filename$AsyncCallbackHandlers.h"
-$ReqRepSIncludes(filename=ctx.filename)$
+#include "$ctx.filename$Topics.h"
 
 $definitions; separator="\n"$
 

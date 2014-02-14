@@ -23,15 +23,6 @@ public class SequenceTypeCode extends ContainerTypeCode
         st.setAttribute("maxsize", m_maxsize);
         return st.toString();
     }
-    
-    @Override
-    public String getStTypename()
-    {
-        StringTemplate st = getSTTypenameFromStringTemplate();
-        st.setAttribute("type", getContentTypeCode().getTypename());
-        st.setAttribute("maxsize", m_maxsize);
-        return st.toString();
-    }
 
     public String getMaxsize()
     {

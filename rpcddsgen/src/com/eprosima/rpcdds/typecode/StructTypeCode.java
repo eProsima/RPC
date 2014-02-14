@@ -22,14 +22,6 @@ public class StructTypeCode extends MemberedTypeCode
         return st.toString();
     }
     
-    @Override
-    public String getStTypename()
-    {
-        StringTemplate st = getSTTypenameFromStringTemplate();
-        st.setAttribute("name", getScopedname());
-        return st.toString();
-    }
-    
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         List<Member> members = getMembers();

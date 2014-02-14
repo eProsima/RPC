@@ -18,32 +18,32 @@ group main;
 
 memberComplexInit(member) ::= <<
 $if(member)$
-memset(&$member.name$, 0, sizeof($member.typecode.stTypename$));
+memset(&$member.name$, 0, sizeof($member.typecode.typename$));
 $endif$
 >>
 
 memberComplexInitCopy(member, dataname) ::= <<
 $if(member)$
-$member.typecode.stTypename$_initialize(&$member.name$);
-$member.typecode.stTypename$_copy(&$member.name$, &$dataname$.$member.name$);
+$member.typecode.typename$_initialize(&$member.name$);
+$member.typecode.typename$_copy(&$member.name$, &$dataname$.$member.name$);
 $endif$
 >>
 
 memberComplexCopy(member, dataname) ::= <<
 $if(member)$
-$member.typecode.stTypename$_copy(&$member.name$, &$dataname$.$member.name$);
+$member.typecode.typename$_copy(&$member.name$, &$dataname$.$member.name$);
 $endif$
 >>
 
 memberComplexExtract(member, dataname) ::= <<
 $if(member)$
-$member.typecode.stTypename$_copy(&$dataname$.$member.name$, &$member.name$);
+$member.typecode.typename$_copy(&$dataname$.$member.name$, &$member.name$);
 $endif$
 >>
 
 varComplexDecl(variable, create) ::= <<
 $if(variable)$
-$variable.typecode.stTypename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.stTypename$));$endif$
+$variable.typecode.typename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.typename$));$endif$
 $endif$
 >>
 
@@ -53,13 +53,13 @@ $typeName$_initialize(&$name$);
 
 varComplexInitialize(variable) ::= <<
 $if(variable)$
-$variable.typecode.stTypename$_initialize(&$variable.name$);
+$variable.typecode.typename$_initialize(&$variable.name$);
 $endif$
 >>
 
 varComplexDelT(typeName, name) ::= <<$typeName$_finalize(&$name$);>>
 
-varComplexDel(variable) ::= <<$variable.typecode.stTypename$_finalize(&$variable.name$);>>
+varComplexDel(variable) ::= <<$variable.typecode.typename$_finalize(&$variable.name$);>>
 
 varStringDel(name) ::=<<
 if($name$ != NULL) free($name$);
@@ -165,3 +165,28 @@ bigObjOption() ::= <<
 unsetReply() ::= <<
 memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
 >>
+
+/***** NEW OUR_TYPES *****/
+//TODO EL resto de tipos
+ddsTypeCodeDefs(param) ::= <<
+$if(param.typecode.primitive)$
+&$basicDDSTypeCodeDefs.(param.typecode.stType)$;
+$endif$
+>>
+
+basicDDSTypeCodeDefs ::= [
+        "type_5":"DDS_g_tc_float",
+        "type_6":"DDS_g_tc_double",
+        "type_13":"DDS_g_tc_longdouble",
+        "type_1":"DDS_g_tc_short",
+        "type_2":"DDS_g_tc_long",
+        "type_11":"DDS_g_tc_longlong",
+        "type_3":"DDS_g_tc_ushort",
+        "type_4":"DDS_g_tc_ulong",
+        "type_12":"DDS_g_tc_ulonglong",
+        "type_8":"DDS_g_tc_char",
+        "type_14":"DDS_g_tc_wchar",
+        "type_7":"DDS_g_tc_boolean",
+        "type_9":"DDS_g_tc_octet",
+        default: // not basic type.
+]

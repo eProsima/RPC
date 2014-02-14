@@ -28,14 +28,6 @@ public class EnumTypeCode extends MemberedTypeCode
     }
     
     @Override
-    public String getStTypename()
-    {
-        StringTemplate st = getSTTypenameFromStringTemplate();
-        st.setAttribute("name", getScopedname());
-        return st.toString();
-    }
-    
-    @Override
     public String getInitialValue()
     {   
         if(getMembers().size() > 0)

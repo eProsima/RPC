@@ -18,12 +18,6 @@ public class PrimitiveTypeCode extends TypeCode
     }
     
     @Override
-    public String getStTypename()
-    {
-        return getSTTypenameFromStringTemplate().toString();
-    }
-    
-    @Override
     public boolean isPrimitive()
     {
         return true;
@@ -58,7 +52,8 @@ public class PrimitiveTypeCode extends TypeCode
         return currentSize + getSize();
     }
     
-    protected int getSize()
+    @Override
+    public int getSize()
     {
         switch(getKind())
         {

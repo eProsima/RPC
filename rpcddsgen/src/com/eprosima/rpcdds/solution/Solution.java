@@ -147,7 +147,7 @@ public class Solution
 
     public boolean isIsFastcdr()
     {
-        return m_protocol.equals("fastcdr");
+        return (m_protocol != null && (m_protocol.equals("dds") || m_protocol.equals("fastcdr")));
     }
 	
 	private ArrayList<Project> m_projects = null;

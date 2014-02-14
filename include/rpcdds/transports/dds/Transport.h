@@ -35,9 +35,9 @@ namespace eprosima
                 {
                     public:
 
-                        typedef void (*Initialize_data)(void *data);
+                        typedef void* (*Create_data)(void);
                         typedef void (*Copy_data)(void *src, void *dst);
-                        typedef void (*Finalize_data)(void *data);
+                        typedef void (*Destroy_data)(void *data);
                         typedef void (*ProcessFunc)(eprosima::rpcdds::protocol::Protocol&, void*,
                                 eprosima::rpcdds::transport::Endpoint*);
 
@@ -81,7 +81,7 @@ namespace eprosima
                                 return m_subscriber;
                             }
 
-                        /*!
+                        /*! TODO Actualizar
                          * @brief This function creates a new procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
                          *
@@ -98,7 +98,7 @@ namespace eprosima
                          */
                         virtual eprosima::rpcdds::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-                                Initialize_data initialize_data, Copy_data copy_data, Finalize_data finalize_data,
+                                Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
                                 ProcessFunc processFunc, int dataSize) = 0;
 
                     protected:

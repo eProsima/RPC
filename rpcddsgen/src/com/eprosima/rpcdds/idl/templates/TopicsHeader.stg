@@ -16,6 +16,12 @@ $fileHeader(file=[ctx.filename, "Topics.h"], description=["This header file cont
 
 #include "$ctx.filename$.h"
 
+#include <cstddef>
+
+$if(ctx.dds)$
+class DDSDomainParticipant;
+$endif$
+
 #if defined(_WIN32)
 #if defined(USER_CPP_DLL_EXPORT)
 #define user_cpp_DllExport __declspec( dllexport )
@@ -31,7 +37,6 @@ $definitions; separator="\n"$
 #endif // _$ctx.filename;format="toUpper"$_TOPICS_H_
 >>
 
-// TODO name -> module
 module(ctx, module, definition_list) ::= <<
 namespace $module.name$
 {
@@ -87,8 +92,20 @@ public:
      * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
      */
     $operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x);
+
+    /*! TODO
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Request& operator=(const $operation.parent.name$_$operation.name$Request &x);
     
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
+
+    /*! TODO */
+    static size_t getMaxSerializedSize(size_t current_alignment = 0);
+
+    /*! TODO */
+    size_t getSerializedSize(size_t current_alignment = 0) const;
 
 private:
 
@@ -130,8 +147,20 @@ public:
      * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
      */
     $operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x);
+
+    /*! TODO
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply& operator=(const $operation.parent.name$_$operation.name$Reply &x);
     
     $operation.outputparam:{$public_parameters_declaration(it)$}; separator="\n"$
+
+    /*! TODO */
+    static size_t getMaxSerializedSize(size_t current_alignment = 0);
+
+    /*! TODO */
+    size_t getSerializedSize(size_t current_alignment = 0) const;
 
 private:
 

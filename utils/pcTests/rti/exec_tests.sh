@@ -21,6 +21,8 @@ function execTest
     ../../../scripts/rpcdds_rti_pcTests.sh -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
+    # TODO Temporary set of LIBFASTCDR
+    export LIBFASTCDR=../../../../../fastcdr/lib/$EPROSIMA_TARGET
     # Compile client and server example application
     make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?
@@ -33,6 +35,8 @@ function execTest
     make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
+    # TODO Unset temporary LIBFASTCDR
+    export LIBFASTCDR=
     # Execute the server in background
     output/bin/$NDDSTARGET/$1ServerExample &
     # Wait 5 seconds
@@ -73,6 +77,13 @@ if [ ! -e "../../../include/rpcdds/eProsima_cpp" ]; then
     if [ $errorstatus != 0 ]; then return; fi
 fi
 
+# Create symbolic link to EPROSIMADIR in the fastcdr folder.
+if [ ! -e "../../../../fastcdr/include/fastcdr/eProsima_cpp" ]; then
+    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../../fastcdr/include/fastcdr/eProsima_cpp
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+fi
+
 # Create output directory 
 if [ ! -d "output" ]; then
     mkdir output
@@ -85,10 +96,12 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
                     . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTarget i86
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET:../../../../fastcdr/lib/$EPROSIMA_TARGET
                     $dir/exec_test.sh
                     errorstatus=$?
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTarget
                     . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
@@ -96,10 +109,12 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
                     . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTarget x64
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET:../../../../fastcdr/lib/$EPROSIMA_TARGET
                     $dir/exec_test.sh
                     errorstatus=$?
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTarget
                     . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
@@ -108,9 +123,11 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
                     . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTarget i86
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET:../../../../fastcdr/lib/$EPROSIMA_TARGET
                     execTest $dir
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTarget
                     . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
@@ -118,9 +135,11 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
                     . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTarget x64
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                     execTest $dir
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTarget
                     . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
@@ -134,9 +153,12 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
-rm -r output
+#rm -r output
 
 # Remove symbolic link
+if [ -e ../../../../fastcdr/include/fastcdr/eProsima_cpp ]; then
+    rm ../../../../fastcdr/include/fastcdr/eProsima_cpp
+fi
 if [ -e ../../../include/rpcdds/eProsima_cpp ]; then
     rm ../../../include/rpcdds/eProsima_cpp
 fi

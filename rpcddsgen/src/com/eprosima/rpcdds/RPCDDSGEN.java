@@ -925,6 +925,8 @@ public class RPCDDSGEN
 	        // Load template to generate topics for operations.
 	        tmanager.addGroup("TopicsHeader");
 	        tmanager.addGroup("TopicsSource");
+	        tmanager.addGroup("TopicsPluginHeader");
+	        tmanager.addGroup("TopicsPluginSource");
 	        // Load template to generate the DDS protocol.
 	        tmanager.addGroup("ProtocolHeader");
 	        tmanager.addGroup("DDSProtocolHeader");
@@ -1018,26 +1020,34 @@ public class RPCDDSGEN
                     {	
                         if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("TopicsSource"), m_replace))
                         {	
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace))
-                            {
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
-                                {
-                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader"), m_replace))
+                            {	
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource"), m_replace))
+                                {	
+                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace))
                                     {
-                                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
                                         {
-                                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
                                             {
-                                                returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+                                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                                                {
+                                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                                    {
+                                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
 
-                                                project.addCommonIncludeFile(onlyFileName + "Topics.h");
-                                                project.addCommonSrcFile(onlyFileName + "Topics.cxx");
-                                                project.addCommonIncludeFile(onlyFileName + "Protocol.h");
-                                                project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
-                                                project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
-                                                project.addCommonIncludeFile(onlyFileName + "AsyncCallbackHandlers.h");
-                                                project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
-                                                project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
+                                                        project.addCommonIncludeFile(onlyFileName + "Topics.h");
+                                                        project.addCommonSrcFile(onlyFileName + "Topics.cxx");
+                                                        project.addCommonIncludeFile(onlyFileName + "TopicsPlugin.h");
+                                                        project.addCommonSrcFile(onlyFileName + "TopicsPlugin.cxx");
+                                                        project.addCommonIncludeFile(onlyFileName + "Protocol.h");
+                                                        project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
+                                                        project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
+                                                        project.addCommonIncludeFile(onlyFileName + "AsyncCallbackHandlers.h");
+                                                        project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
+                                                        project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
+                                                    }
+                                                }
                                             }
                                         }
                                     }

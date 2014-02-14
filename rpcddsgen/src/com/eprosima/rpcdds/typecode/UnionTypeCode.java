@@ -28,14 +28,6 @@ public class UnionTypeCode extends MemberedTypeCode
         return st.toString();
     }
     
-    @Override
-    public String getStTypename()
-    {
-        StringTemplate st = getSTTypenameFromStringTemplate();
-        st.setAttribute("name", getScopedname());
-        return st.toString();
-    }
-    
     public void setDefaultindex(int index)
     {
         if(m_defaultindex != -1)

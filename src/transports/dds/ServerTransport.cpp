@@ -40,15 +40,15 @@ const char* ServerTransport::getType() const
 }
 
 ::transport::Endpoint* ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-        Transport::Initialize_data initialize_data, Transport::Copy_data copy_data,
-        Transport::Finalize_data finalize_data, Transport::ProcessFunc processFunc, int dataSize)
+        Transport::Create_data create_data, Transport::Copy_data copy_data,
+        Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     ServerProcedureEndpoint *pe = new ServerProcedureEndpoint(*this);
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, initialize_data, finalize_data, processFunc, dataSize) == 0)
+        if(pe->initialize(name, writertypename, readertypename, create_data, destroy_data, processFunc, dataSize) == 0)
         {
             std::pair<std::map<const char*, ServerProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ServerProcedureEndpoint*>(name, pe));
 

@@ -23,14 +23,6 @@ public class Annotation extends MemberedTypeCode
         return st.toString();
     }
     
-    @Override
-    public String getStTypename()
-    {
-        StringTemplate st = getSTTypenameFromStringTemplate();
-        st.setAttribute("name", getScopedname());
-        return st.toString();
-    }
-    
     /// Copy from StructTypeCode. Not necessary.
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {

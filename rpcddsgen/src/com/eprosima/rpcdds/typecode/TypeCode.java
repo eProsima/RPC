@@ -35,8 +35,8 @@ public abstract class TypeCode
     public static final int KIND_SPARSE = 0x00000017;
     
     protected static StringTemplateGroup m_typesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
-    // TODO Quitar.
-    protected static StringTemplateGroup m_stringtemplatetypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
+    // TODO Eliminar rtiTypes.stg
+    //protected static StringTemplateGroup m_stringtemplatetypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
     
     public TypeCode(int kind)
     {
@@ -54,21 +54,9 @@ public abstract class TypeCode
      */
     public abstract String getTypename();
     
-    /*|
-     * @brief This function returns a typename with scope that is obtained using the m_stringtemplatetypesgr string template.
-     * @return The typename.
-     */
-    public abstract String getStTypename();
-   
-    
     protected StringTemplate getTypenameFromStringTemplate()
     {
         return m_typesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
-    }
-    
-    protected StringTemplate getSTTypenameFromStringTemplate()
-    {
-        return m_stringtemplatetypesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
     }
     
     // Function used in stringtemplates
@@ -110,6 +98,10 @@ public abstract class TypeCode
         return null;
     }
     
+    /*!
+     * @brief This function returns the size of the datatype. By default is 0
+     * @return The size of the datatype.
+     */
     protected int getSize()
     {
         return 0;

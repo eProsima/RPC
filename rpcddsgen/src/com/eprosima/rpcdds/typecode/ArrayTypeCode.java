@@ -52,11 +52,6 @@ public class ArrayTypeCode extends ContainerTypeCode
         return fin.toString();
     }
     
-    public String getStTypename()
-    {
-        return "Error";
-    }
-    
     public void addDimension(String dimension)
     {
         m_dimensions.add(dimension);
