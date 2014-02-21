@@ -10,8 +10,11 @@ public class EnumTypeCode extends MemberedTypeCode
     {
         super(TypeCode.KIND_ENUM, scope, name);
     }
+
+    @Override
+    public boolean isPrimitive() {return true;}
     
- // In RPCDDS is considered primitive
+    @Override
     public boolean isIsType_c(){return true;}
     
     public void addMember(EnumMember member)

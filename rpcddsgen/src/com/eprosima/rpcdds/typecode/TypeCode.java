@@ -75,6 +75,7 @@ public abstract class TypeCode
     }
     
     // By default a typecode is not primitive. Function used in stringtemplates
+    // TODO Cambiar a isIsPrimitive
     public boolean isPrimitive()
     {
         return false;

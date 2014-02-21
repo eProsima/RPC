@@ -4,15 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source file shows a simple example of how to create a proxy for an interface."])$
 
 #include "$ctx.filename$Proxy.h"
+#include "$ctx.filename$.h"
 #include "$ctx.filename$DDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-
-$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
-$if(ctx.projectNeedTypes)$
-#include "$ctx.filename$T.h"
-
-$endif$
 
 #include <iostream>
 

@@ -54,6 +54,8 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/server/Server.cpp \
 		     $(BASEDIR)/src/utils/Utilities.cpp \
 		     $(BASEDIR)/src/utils/dds/Middleware.cpp \
+		     $(BASEDIR)/src/protocols/dds/MessageHeader.cpp \
+		     $(BASEDIR)/src/protocols/dds/MessageHeaderPlugin.cpp \
 		     $(BASEDIR)/src/protocols/rest/FastBuffer.cpp \
 		     $(BASEDIR)/src/protocols/rest/HTTPEntities.cpp \
 		     $(BASEDIR)/src/protocols/rest/RESTSerializer.cpp \

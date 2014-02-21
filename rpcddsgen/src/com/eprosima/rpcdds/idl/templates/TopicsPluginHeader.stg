@@ -46,277 +46,234 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 // Request operations 
+class $operation.parent.name$_$operation.name$RequestPlugin
+{
+    public:
 
-const char* $operation.parent.name$_$operation.name$RequestPlugin_get_typename();
+        static const char* get_typename();
+        
+        static $operation.parent.name$_$operation.name$Request* create_data(void);
+        
+        static void destroy_data($operation.parent.name$_$operation.name$Request *sample);
+        
+        static void copy_data($operation.parent.name$_$operation.name$Request *dst,
+            const $operation.parent.name$_$operation.name$Request *src);
+        
+        static unsigned int get_serialized_sample_max_size(
+            PRESTypePluginEndpointData endpoint_data,
+            RTIBool include_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            unsigned int current_alignment);
+        
+        static unsigned int get_serialized_sample_size(
+            PRESTypePluginEndpointData endpoint_data,
+            RTIBool include_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            unsigned int current_alignment,
+            const $operation.parent.name$_$operation.name$Request * sample);
+        
+        static unsigned int get_serialized_sample_min_size(
+            PRESTypePluginEndpointData endpoint_data,
+            RTIBool include_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            unsigned int current_alignment);
+        
+        static PRESTypePluginParticipantData on_participant_attached(
+            void *registration_data, 
+            const struct PRESTypePluginParticipantInfo *participant_info,
+            RTIBool top_level_registration, 
+            void *container_plugin_context,
+            RTICdrTypeCode *typeCode);
+        
+        static void on_participant_detached(
+            PRESTypePluginParticipantData participant_data);
+        
+        static PRESTypePluginEndpointData on_endpoint_attached(
+            PRESTypePluginParticipantData participant_data,
+            const struct PRESTypePluginEndpointInfo *endpoint_info,
+            RTIBool top_level_registration, 
+            void *container_plugin_context);
+        
+        static void on_endpoint_detached(
+            PRESTypePluginEndpointData endpoint_data);
+        
+        static RTIBool copy_sample(
+            PRESTypePluginEndpointData endpoint_data,
+            $operation.parent.name$_$operation.name$Request *dst,
+            const $operation.parent.name$_$operation.name$Request *src);
+        
+        static $operation.parent.name$_$operation.name$Request* create_sample(
+            PRESTypePluginEndpointData endpointData);
+        
+        static void destroy_sample(PRESTypePluginEndpointData endpointData,
+            $operation.parent.name$_$operation.name$Request *sample);
+        
+        static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
+            const $operation.parent.name$_$operation.name$Request *sample, 
+            struct RTICdrStream *stream,    
+            RTIBool serialize_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            RTIBool serialize_sample, 
+            void *endpoint_plugin_qos);
+        
+        static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
+            $operation.parent.name$_$operation.name$Request **sample,
+            RTIBool * drop_sample,
+            struct RTICdrStream *stream,   
+            RTIBool deserialize_encapsulation,
+            RTIBool deserialize_sample, 
+            void *endpoint_plugin_qos);
+        
+        static void* get_sample(PRESTypePluginEndpointData endpointData,
+            void **handle /* out */);
+        
+        static void return_sample(PRESTypePluginEndpointData endpointData,
+            $operation.parent.name$_$operation.name$Request *sample, void *handle);
+        
+        static PRESTypePluginKeyKind get_key_kind(void);
+        
+        static RTIBool get_buffer(PRESTypePluginEndpointData endpointData,
+            struct REDABuffer *buffer,
+            RTIEncapsulationId encapsulationId, 
+            const void * user_data);
+        
+        static void return_buffer(PRESTypePluginEndpointData endpointData,
+           struct REDABuffer *buffer,
+           RTIEncapsulationId encapsulationId);
+        
+        static DDS_TypeCode* get_typecode();
+        
+        static struct PRESTypePlugin *new_plugin(void);
+        
+        static void delete_plugin(struct PRESTypePlugin *plugin);
+        
+        // TODO cambiar a isDDS.
+        $if(ctx.dds)$
+        /*! TODO Mover al transporte */
+        static bool register_type(DDSDomainParticipant *participant, const char *type_name);
+        
+        // TODO unregister_type.
+        $endif$
 
-$operation.parent.name$_$operation.name$Request*
-$operation.parent.name$_$operation.name$RequestPluginSupport_create_data(void);
+    private:
 
-void 
-$operation.parent.name$_$operation.name$RequestPluginSupport_destroy_data(
-    $operation.parent.name$_$operation.name$Request *sample);
+        $operation.parent.name$_$operation.name$RequestPlugin(){}
 
-void 
-$operation.parent.name$_$operation.name$RequestPluginSupport_copy_data(
-    $operation.parent.name$_$operation.name$Request *dst,
-    const $operation.parent.name$_$operation.name$Request *src);
-
-unsigned int 
-$operation.parent.name$_$operation.name$RequestPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
-unsigned int
-$operation.parent.name$_$operation.name$RequestPlugin_get_serialized_sample_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment,
-    const $operation.parent.name$_$operation.name$Request * sample);
-
-unsigned int 
-$operation.parent.name$_$operation.name$RequestPlugin_get_serialized_sample_min_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
-PRESTypePluginParticipantData 
-$operation.parent.name$_$operation.name$RequestPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-void 
-$operation.parent.name$_$operation.name$RequestPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-
-PRESTypePluginEndpointData 
-$operation.parent.name$_$operation.name$RequestPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-void 
-$operation.parent.name$_$operation.name$RequestPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
-
-RTIBool 
-$operation.parent.name$_$operation.name$RequestPlugin_copy_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.name$_$operation.name$Request *dst,
-    const $operation.parent.name$_$operation.name$Request *src);
-
-$operation.parent.name$_$operation.name$Request*
-$operation.parent.name$_$operation.name$RequestPlugin_create_sample(
-    PRESTypePluginEndpointData endpointData);
-
-void
-$operation.parent.name$_$operation.name$RequestPlugin_destroy_sample(
-    PRESTypePluginEndpointData endpointData,
-    $operation.parent.name$_$operation.name$Request *sample);
-
-RTIBool 
-$operation.parent.name$_$operation.name$RequestPlugin_serialize(
-    PRESTypePluginEndpointData endpoint_data,
-    const $operation.parent.name$_$operation.name$Request *sample, 
-    struct RTICdrStream *stream,    
-    RTIBool serialize_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_sample, 
-    void *endpoint_plugin_qos);
-
-RTIBool 
-$operation.parent.name$_$operation.name$RequestPlugin_deserialize(
-    PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.name$_$operation.name$Request **sample,
-    RTIBool * drop_sample,
-    struct RTICdrStream *stream,   
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos);
-
-void *
-$operation.parent.name$_$operation.name$RequestPlugin_get_sample(
-    PRESTypePluginEndpointData endpointData,
-    void **handle /* out */);
-
-void
-$operation.parent.name$_$operation.name$RequestPlugin_return_sample(
-    PRESTypePluginEndpointData endpointData,
-    $operation.parent.name$_$operation.name$Request *sample, void *handle);
-
-PRESTypePluginKeyKind 
-$operation.parent.name$_$operation.name$RequestPlugin_get_key_kind(void);
-
-RTIBool
-$operation.parent.name$_$operation.name$RequestPlugin_get_buffer(
-    PRESTypePluginEndpointData endpointData,
-    struct REDABuffer *buffer,
-    RTIEncapsulationId encapsulationId, 
-    const void * user_data);
-
-void
-$operation.parent.name$_$operation.name$RequestPlugin_return_buffer(
-   PRESTypePluginEndpointData endpointData,
-   struct REDABuffer *buffer,
-   RTIEncapsulationId encapsulationId);
-
-DDS_TypeCode* $operation.parent.name$_$operation.name$RequestPlugin_get_typecode();
-
-struct PRESTypePlugin *$operation.parent.name$_$operation.name$RequestPlugin_new(void);
-
-void
-$operation.parent.name$_$operation.name$RequestPlugin_delete(struct PRESTypePlugin *plugin);
-
-// TODO cambiar a isDDS.
-$if(ctx.dds)$
-/*! TODO Mover al transporte */
-bool $operation.parent.name$_$operation.name$RequestPlugin_register_type(DDSDomainParticipant *participant, const char *type_name);
-
-// TODO unregister_type.
-$endif$
+        static const char *m_typename;
+};
 
 // Reply operations 
-const char* $operation.parent.name$_$operation.name$ReplyPlugin_get_typename();
+class $operation.parent.name$_$operation.name$ReplyPlugin
+{
+    public:
 
-$operation.parent.name$_$operation.name$Reply*
-$operation.parent.name$_$operation.name$ReplyPluginSupport_create_data(void);
+        static const char* get_typename();
+        
+        static $operation.parent.name$_$operation.name$Reply* create_data(void);
+        
+        static void destroy_data($operation.parent.name$_$operation.name$Reply *sample);
+        
+        static void copy_data($operation.parent.name$_$operation.name$Reply *dst,
+            const $operation.parent.name$_$operation.name$Reply *src);
+        
+        static unsigned int get_serialized_sample_max_size(
+            PRESTypePluginEndpointData endpoint_data,
+            RTIBool include_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            unsigned int current_alignment);
+        
+        static unsigned int get_serialized_sample_size(
+            PRESTypePluginEndpointData endpoint_data,
+            RTIBool include_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            unsigned int current_alignment,
+            const $operation.parent.name$_$operation.name$Reply * sample);
+        
+        static unsigned int get_serialized_sample_min_size(
+            PRESTypePluginEndpointData endpoint_data,
+            RTIBool include_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            unsigned int current_alignment);
+        
+        static PRESTypePluginParticipantData on_participant_attached(
+            void *registration_data, 
+            const struct PRESTypePluginParticipantInfo *participant_info,
+            RTIBool top_level_registration, 
+            void *container_plugin_context,
+            RTICdrTypeCode *typeCode);
+        
+        static void on_participant_detached(PRESTypePluginParticipantData participant_data);
+        
+        static PRESTypePluginEndpointData on_endpoint_attached(
+            PRESTypePluginParticipantData participant_data,
+            const struct PRESTypePluginEndpointInfo *endpoint_info,
+            RTIBool top_level_registration, 
+            void *container_plugin_context);
+        
+        static void on_endpoint_detached(PRESTypePluginEndpointData endpoint_data);
+        
+        static RTIBool copy_sample(PRESTypePluginEndpointData endpoint_data,
+            $operation.parent.name$_$operation.name$Reply *dst,
+            const $operation.parent.name$_$operation.name$Reply *src);
+        
+        static $operation.parent.name$_$operation.name$Reply* create_sample(PRESTypePluginEndpointData endpointData);
+        
+        static void destroy_sample(PRESTypePluginEndpointData endpointData,
+            $operation.parent.name$_$operation.name$Reply *sample);
+        
+        static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
+            const $operation.parent.name$_$operation.name$Reply *sample, 
+            struct RTICdrStream *stream,    
+            RTIBool serialize_encapsulation,
+            RTIEncapsulationId encapsulation_id,
+            RTIBool serialize_sample, 
+            void *endpoint_plugin_qos);
+        
+        static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
+            $operation.parent.name$_$operation.name$Reply **sample,
+            RTIBool * drop_sample,
+            struct RTICdrStream *stream,   
+            RTIBool deserialize_encapsulation,
+            RTIBool deserialize_sample, 
+            void *endpoint_plugin_qos);
+        
+        static void* get_sample(PRESTypePluginEndpointData endpointData,
+            void **handle /* out */);
+        
+        static void return_sample(PRESTypePluginEndpointData endpointData,
+            $operation.parent.name$_$operation.name$Reply *sample, void *handle);
+        
+        static PRESTypePluginKeyKind get_key_kind(void);
+        
+        static RTIBool get_buffer(PRESTypePluginEndpointData endpointData,
+            struct REDABuffer *buffer,
+            RTIEncapsulationId encapsulationId, 
+            const void * user_data);
+        
+        static void return_buffer(PRESTypePluginEndpointData endpointData,
+           struct REDABuffer *buffer,
+           RTIEncapsulationId encapsulationId);
+        
+        static DDS_TypeCode* get_typecode();
+        
+        static struct PRESTypePlugin* new_plugin(void);
+        
+        static void delete_plugin(struct PRESTypePlugin *plugin);
+        
+        // TODO cambiar a isDDS.
+        $if(ctx.dds)$
+        /*! TODO Mover al transporte */
+        static bool register_type(DDSDomainParticipant *participant, const char *type_name);
+        
+        // TODO unregister_type.
+        $endif$
 
-void 
-$operation.parent.name$_$operation.name$ReplyPluginSupport_destroy_data(
-    $operation.parent.name$_$operation.name$Reply *sample);
+    private:
 
-void 
-$operation.parent.name$_$operation.name$ReplyPluginSupport_copy_data(
-    $operation.parent.name$_$operation.name$Reply *dst,
-    const $operation.parent.name$_$operation.name$Reply *src);
+        $operation.parent.name$_$operation.name$ReplyPlugin(){}
 
-unsigned int 
-$operation.parent.name$_$operation.name$ReplyPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
-unsigned int
-$operation.parent.name$_$operation.name$ReplyPlugin_get_serialized_sample_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment,
-    const $operation.parent.name$_$operation.name$Reply * sample);
-
-unsigned int 
-$operation.parent.name$_$operation.name$ReplyPlugin_get_serialized_sample_min_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
-PRESTypePluginParticipantData 
-$operation.parent.name$_$operation.name$ReplyPlugin_on_participant_attached(
-    void *registration_data, 
-    const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context,
-    RTICdrTypeCode *typeCode);
-
-void 
-$operation.parent.name$_$operation.name$ReplyPlugin_on_participant_detached(
-    PRESTypePluginParticipantData participant_data);
-
-PRESTypePluginEndpointData 
-$operation.parent.name$_$operation.name$ReplyPlugin_on_endpoint_attached(
-    PRESTypePluginParticipantData participant_data,
-    const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
-    void *container_plugin_context);
-
-void 
-$operation.parent.name$_$operation.name$ReplyPlugin_on_endpoint_detached(
-    PRESTypePluginEndpointData endpoint_data);
-
-RTIBool 
-$operation.parent.name$_$operation.name$ReplyPlugin_copy_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.name$_$operation.name$Reply *dst,
-    const $operation.parent.name$_$operation.name$Reply *src);
-
-$operation.parent.name$_$operation.name$Reply*
-$operation.parent.name$_$operation.name$ReplyPlugin_create_sample(
-    PRESTypePluginEndpointData endpointData);
-
-void
-$operation.parent.name$_$operation.name$ReplyPlugin_destroy_sample(
-    PRESTypePluginEndpointData endpointData,
-    $operation.parent.name$_$operation.name$Reply *sample);
-
-RTIBool 
-$operation.parent.name$_$operation.name$ReplyPlugin_serialize(
-    PRESTypePluginEndpointData endpoint_data,
-    const $operation.parent.name$_$operation.name$Reply *sample, 
-    struct RTICdrStream *stream,    
-    RTIBool serialize_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_sample, 
-    void *endpoint_plugin_qos);
-
-RTIBool 
-$operation.parent.name$_$operation.name$ReplyPlugin_deserialize(
-    PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.name$_$operation.name$Reply **sample,
-    RTIBool * drop_sample,
-    struct RTICdrStream *stream,   
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos);
-
-void *
-$operation.parent.name$_$operation.name$ReplyPlugin_get_sample(
-    PRESTypePluginEndpointData endpointData,
-    void **handle /* out */);
-
-void
-$operation.parent.name$_$operation.name$ReplyPlugin_return_sample(
-    PRESTypePluginEndpointData endpointData,
-    $operation.parent.name$_$operation.name$Reply *sample, void *handle);
-
-PRESTypePluginKeyKind 
-$operation.parent.name$_$operation.name$ReplyPlugin_get_key_kind(void);
-
-RTIBool
-$operation.parent.name$_$operation.name$ReplyPlugin_get_buffer(
-    PRESTypePluginEndpointData endpointData,
-    struct REDABuffer *buffer,
-    RTIEncapsulationId encapsulationId, 
-    const void * user_data);
-
-void
-$operation.parent.name$_$operation.name$ReplyPlugin_return_buffer(
-   PRESTypePluginEndpointData endpointData,
-   struct REDABuffer *buffer,
-   RTIEncapsulationId encapsulationId);
-
-DDS_TypeCode* $operation.parent.name$_$operation.name$ReplyPlugin_get_typecode();
-
-struct PRESTypePlugin *$operation.parent.name$_$operation.name$ReplyPlugin_new(void);
-
-void
-$operation.parent.name$_$operation.name$ReplyPlugin_delete(struct PRESTypePlugin *plugin);
-
-// TODO cambiar a isDDS.
-$if(ctx.dds)$
-/*! TODO Mover al transporte */
-bool $operation.parent.name$_$operation.name$ReplyPlugin_register_type(DDSDomainParticipant *participant, const char *type_name);
-
-// TODO unregister_type.
-$endif$
+        static const char *m_typename;
+};
 
 >>
 

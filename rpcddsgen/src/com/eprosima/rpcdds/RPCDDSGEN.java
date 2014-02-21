@@ -88,6 +88,7 @@ public class RPCDDSGEN
     private ArrayList m_lineCommandForWorkDirSet = null;	
     private String m_spTemplate = "main";
     // Location of the MessageHeader.idl file
+    // TODO Quitar
     private String m_messageHeaderFileName = "MessageHeader.idl";
     private String m_messageHeaderFileLocation = null;
     private String m_requestreplyIDLLocation = null;
@@ -983,12 +984,6 @@ public class RPCDDSGEN
 		        Interface ifc = ctx.getFirstInterface();
 		        // Check if the project needs to generate Types.
 		        boolean needsTypes = ctx.isProjectNeedTypes();
-		        
-		        if(ifc != null)
-		        {
-		        	// If there are interfaces, the project dependes in MessageHeader.idl project.
-		        	ctx.addDependency(m_messageHeaderFileLocation);
-		        }
 	        	
 	        	// Create information of project for solution.
 	        	project = new Project(onlyFileName, idlFilename, ctx.getDependencies());

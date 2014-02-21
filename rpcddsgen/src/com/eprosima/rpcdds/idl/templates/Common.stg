@@ -58,6 +58,7 @@ $endif$
 $endif$
 >>
 
+// TODO Se necesita?
 varDecl(variable, create) ::= <<
 $if(variable)$
 $if(variable.typecode.primitiveInArguments)$

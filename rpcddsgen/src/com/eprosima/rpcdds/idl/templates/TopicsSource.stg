@@ -110,11 +110,11 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(bool initialize)
-: m_initialized(initialize)$parameters_default_init(operation.outputparam)$
+: m_initialized(initialize)$parameters_default_init([operation.outputparam, operation.rettypeparam])$
 {
     if(m_initialized)
     {
-        $operation.outputparam : { param |$if(!param.typecode.primitive)$m_$param.name$ = new $param.typecode.typename$();$endif$}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$if(!param.typecode.primitive)$m_$param.name$ = new $param.typecode.typename$();$endif$}; separator="\n"$
     }
 }
 
@@ -122,21 +122,21 @@ $operation.parent.scopedname$_$operation.name$Reply::~$operation.parent.name$_$o
 {
     if(m_initialized)
     {
-        $operation.outputparam : { param |$if(!param.typecode.primitive)$if(m_$param.name$ != NULL) delete m_$param.name$;$endif$}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$if(!param.typecode.primitive)$if(m_$param.name$ != NULL) delete m_$param.name$;$endif$}; separator="\n"$
     }
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x)
-: m_initialized(false)$parameters_copy_pointer(operation.outputparam)$
+: m_initialized(false)$parameters_copy_pointer([operation.outputparam, operation.rettypeparam])$
 {
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x)
-: m_initialized(x.m_initialized)$parameters_copy_pointer(operation.outputparam)$
+: m_initialized(x.m_initialized)$parameters_copy_pointer([operation.outputparam, operation.rettypeparam])$
 {
     if(x.m_initialized)
     {
-        $operation.outputparam : { param |$if(!param.typecode.primitive)$x.m_$param.name$ = NULL;$endif$}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$if(!param.typecode.primitive)$x.m_$param.name$ = NULL;$endif$}; separator="\n"$
 
         x.m_initialized = false;
     }
@@ -146,7 +146,7 @@ $operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopednam
 {
     if(m_initialized)
     {
-        $operation.outputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
     }
     else
     {
@@ -161,7 +161,7 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxSerializedSize
     size_t current_align = current_alignment;
     // TODO Header
 
-    $operation.outputparam : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
 
     return current_align;
 }

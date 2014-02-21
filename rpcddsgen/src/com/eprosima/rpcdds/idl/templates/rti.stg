@@ -47,6 +47,7 @@ $variable.typecode.typename$ $variable.name$;$if(create)$$\n$memset(&$variable.n
 $endif$
 >>
 
+// TODO ¿Se necesita?
 varComplexInitializeT(typeName, name) ::= <<
 $typeName$_initialize(&$name$);
 >>
