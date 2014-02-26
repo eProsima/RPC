@@ -13,6 +13,9 @@ public class StringTypeCode extends TypeCode
         super(kind);
         m_maxsize = maxsize;
     }
+
+    @Override
+    public boolean isPrimitive() {return true;}
     
     @Override
     public boolean isIsType_d(){return true;}
@@ -26,7 +29,7 @@ public class StringTypeCode extends TypeCode
     @Override
     public String getInitialValue()
     {   
-        return "= NULL";
+        return "\"\"";
     }
     
     public String getMaxsize()

@@ -76,17 +76,17 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         if(strcmp(interfaceName, "$first(ctx.interfaces).scopedname$") == 0)
         {
             $first(ctx.interfaces).operations : { operation |
-            requesttypeName = $operation.parent.scopedname$_$operation.name$RequestPlugin::get_typename();
+            requesttypeName = $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typename();
     
-            if(!$operation.parent.scopedname$_$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
+            if(!$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
             {
                 return false;
             }
             
             $if(!operation.oneway)$
-            replytypeName = $operation.parent.scopedname$_$operation.name$ReplyPlugin::get_typename();
+            replytypeName = $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typename();
     
-            if(!$operation.parent.scopedname$_$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
+            if(!$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
             {
                 return false;
             }
@@ -98,9 +98,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $first(ctx.interfaces).formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
                 requesttypeName,
                 $if(!operation.oneway)$replytypeName,
-                (::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$ReplyPlugin::create_data,
-                (::transport::dds::Transport::Copy_data)$first(ctx.interfaces).scopedname$_$operation.name$ReplyPlugin::copy_data,
-                (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$ReplyPlugin::destroy_data,
+                (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::create_data,
+                (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::copy_data,
+                (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::destroy_data,
                 NULL,
                 sizeof($first(ctx.interfaces).scopedname$_$operation.name$Reply)
                 $else$NULL, NULL, NULL, NULL, NULL, 0$endif$));
@@ -112,9 +112,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $first(ctx.interfaces).formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
                     $if(operation.oneway)$NULL$else$replytypeName$endif$,
                     requesttypeName,
-                    (::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$RequestPlugin::create_data,
-                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$RequestPlugin::copy_data,
-                    (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$RequestPlugin::destroy_data,
+                    (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::create_data,
+                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::copy_data,
+                    (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::destroy_data,
                     $ctx.filename$Protocol::$first(ctx.interfaces).formatedScopedname$_$operation.name$_serve,
                     sizeof($first(ctx.interfaces).scopedname$_$operation.name$Request)));
             }
@@ -125,17 +125,17 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         else if(strcmp(interfaceName, "$interface.scopedname$") == 0)
         {
             $interface.operations : { operation |
-            requesttypeName = $operation.parent.scopedname$_$operation.name$RequestPlugin::get_typename();
+            requesttypeName = $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typename();
     
-            if(!$operation.parent.scopedname$_$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
+            if(!$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
             {
                 return false;
             }
             
             $if(!operation.oneway)$
-            replytypeName = $operation.parent.scopedname$_$operation.name$ReplyPlugin::get_typename();
+            replytypeName = $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typename();
     
-            if(!$operation.parent.scopedname$_$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
+            if(!$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
             {
                 return false;
             }
@@ -147,9 +147,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                 requesttypeName,
                 $if(!operation.oneway)$replytypeName,
-                (::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$ReplyPlugin::create_data,
-                (::transport::dds::Transport::Copy_data)$first(ctx.interfaces).scopedname$_$operation.name$ReplyPlugin::copy_data,
-                (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$ReplyPlugin::destroy_data,
+                (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::create_data,
+                (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::copy_data,
+                (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::destroy_data,
                 NULL,
                 sizeof($interface.scopedname$_$operation.name$Reply)
                 $else$NULL, NULL, NULL, NULL, 0$endif$));
@@ -161,9 +161,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $interface.formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                     $if(operation.oneway)$NULL$else$replytypeName$endif$,
                     requesttypeName,
-                    (::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$RequestPlugin::create_data,
-                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$RequestPlugin::copy_data,
-                    (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$RequestPlugin::destroy_data,
+                    (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::create_data,
+                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::copy_data,
+                    (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::destroy_data,
                     $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve,
                     sizeof($interface.scopedname$_$operation.name$Request)));
             }
@@ -210,9 +210,7 @@ $if(ctx.client)$
 $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    $if(operation.rettypeparam)$
-    $operation.rettypeparam.typecode.typename$  $operation.rettypeparam.name$ $operation.rettypeparam.typecode.initialValue$;
-    $endif$
+    $varDecl(variable=operation.rettypeparam)$
     $operation.parent.scopedname$_$operation.name$Request instance;
     $if(!operation.oneway)$
     $operation.parent.scopedname$_$operation.name$Reply retInstance;
@@ -323,8 +321,8 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     $operation.parent.scopedname$_$operation.name$Request &requestData = *($operation.parent.scopedname$_$operation.name$Request*)data;
-    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
-    $varDecl(variable=operation.rettypeparam, create="yes")$   
+    $operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam)$   
     $if(!operation.oneway)$
     $operation.parent.scopedname$_$operation.name$Reply replyData;
     replyData._header().clientId().value_1() = requestData._header().clientId().value_1();
@@ -338,10 +336,9 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     $if(param.typecode.primitive)$
     $param.name$ = requestData.$param.name$();
     $else$
-    $param.name$ = std::move(requestData.$param.name$();
+    $param.name$ = std::move(requestData.$param.name$());
     $endif$
     };separator="\n"$
-    
     
     
     try
@@ -426,11 +423,12 @@ $dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasti
 $endif$
 >>
 
+// TODO Se necesita?
 // CAREFUL: There is a copy in DDSAsyncSupportSource.stg
 extractDataHelper(param, dataname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$
-$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.primitive)$
 $if(param.typecode.isType_d)$
 if($param.name$ != NULL)
     free($param.name$);
@@ -446,7 +444,7 @@ $param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointe
 $endif$
 $else$
 $if(param.output)$
-$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.primitive)$
 $if(param.typecode.isType_d)$
 $param.name$ = strdup($dataname$.$param.name$);
 $else$

@@ -22,7 +22,10 @@ public class Exception extends ScopedObject implements Export, Definition
     
     public String getScopedname()
     {
-        return m_scope + m_name;
+        if(m_scope.isEmpty())
+            return m_name;
+
+        return m_scope + "::" + m_name;
     }
     
 	@Override

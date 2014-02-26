@@ -35,7 +35,16 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$export_list$
+class $interface.name$Plugin
+{
+    public:
+
+        $export_list$
+
+    private:
+
+        $interface.name$Plugin(){}
+};
 >>
 
 export_list(exports) ::= <<
@@ -46,7 +55,21 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 // Request operations 
-class $operation.parent.name$_$operation.name$RequestPlugin
+class $operation.name$RequestDataReader : public DDSDataReader
+{
+    public:
+
+        $operation.name$RequestDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
+};
+
+class $operation.name$RequestDataWriter : public DDSDataWriter
+{
+    public:
+
+        $operation.name$RequestDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
+};
+
+class $operation.name$RequestPlugin : public DDSTypeSupport
 {
     public:
 
@@ -102,12 +125,6 @@ class $operation.parent.name$_$operation.name$RequestPlugin
             $operation.parent.name$_$operation.name$Request *dst,
             const $operation.parent.name$_$operation.name$Request *src);
         
-        static $operation.parent.name$_$operation.name$Request* create_sample(
-            PRESTypePluginEndpointData endpointData);
-        
-        static void destroy_sample(PRESTypePluginEndpointData endpointData,
-            $operation.parent.name$_$operation.name$Request *sample);
-        
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
             const $operation.parent.name$_$operation.name$Request *sample, 
             struct RTICdrStream *stream,    
@@ -124,22 +141,7 @@ class $operation.parent.name$_$operation.name$RequestPlugin
             RTIBool deserialize_sample, 
             void *endpoint_plugin_qos);
         
-        static void* get_sample(PRESTypePluginEndpointData endpointData,
-            void **handle /* out */);
-        
-        static void return_sample(PRESTypePluginEndpointData endpointData,
-            $operation.parent.name$_$operation.name$Request *sample, void *handle);
-        
         static PRESTypePluginKeyKind get_key_kind(void);
-        
-        static RTIBool get_buffer(PRESTypePluginEndpointData endpointData,
-            struct REDABuffer *buffer,
-            RTIEncapsulationId encapsulationId, 
-            const void * user_data);
-        
-        static void return_buffer(PRESTypePluginEndpointData endpointData,
-           struct REDABuffer *buffer,
-           RTIEncapsulationId encapsulationId);
         
         static DDS_TypeCode* get_typecode();
         
@@ -155,15 +157,35 @@ class $operation.parent.name$_$operation.name$RequestPlugin
         // TODO unregister_type.
         $endif$
 
-    private:
+        DDSDataReader* create_datareaderI(DDSDataReader* dataReader);
 
-        $operation.parent.name$_$operation.name$RequestPlugin(){}
+        DDS_ReturnCode_t destroy_datareaderI(DDSDataReader* dataReader);
+
+        DDSDataWriter* create_datawriterI(DDSDataWriter* dataWriter);
+
+        DDS_ReturnCode_t destroy_datawriterI(DDSDataWriter* dataWriter);
+
+    private:
 
         static const char *m_typename;
 };
 
 // Reply operations 
-class $operation.parent.name$_$operation.name$ReplyPlugin
+class $operation.name$ReplyDataReader : public DDSDataReader
+{
+    public:
+
+        $operation.name$ReplyDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
+};
+
+class $operation.name$ReplyDataWriter : public DDSDataWriter
+{
+    public:
+
+        $operation.name$ReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
+};
+
+class $operation.name$ReplyPlugin : public DDSTypeSupport
 {
     public:
 
@@ -216,11 +238,6 @@ class $operation.parent.name$_$operation.name$ReplyPlugin
             $operation.parent.name$_$operation.name$Reply *dst,
             const $operation.parent.name$_$operation.name$Reply *src);
         
-        static $operation.parent.name$_$operation.name$Reply* create_sample(PRESTypePluginEndpointData endpointData);
-        
-        static void destroy_sample(PRESTypePluginEndpointData endpointData,
-            $operation.parent.name$_$operation.name$Reply *sample);
-        
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
             const $operation.parent.name$_$operation.name$Reply *sample, 
             struct RTICdrStream *stream,    
@@ -237,22 +254,7 @@ class $operation.parent.name$_$operation.name$ReplyPlugin
             RTIBool deserialize_sample, 
             void *endpoint_plugin_qos);
         
-        static void* get_sample(PRESTypePluginEndpointData endpointData,
-            void **handle /* out */);
-        
-        static void return_sample(PRESTypePluginEndpointData endpointData,
-            $operation.parent.name$_$operation.name$Reply *sample, void *handle);
-        
         static PRESTypePluginKeyKind get_key_kind(void);
-        
-        static RTIBool get_buffer(PRESTypePluginEndpointData endpointData,
-            struct REDABuffer *buffer,
-            RTIEncapsulationId encapsulationId, 
-            const void * user_data);
-        
-        static void return_buffer(PRESTypePluginEndpointData endpointData,
-           struct REDABuffer *buffer,
-           RTIEncapsulationId encapsulationId);
         
         static DDS_TypeCode* get_typecode();
         
@@ -268,9 +270,15 @@ class $operation.parent.name$_$operation.name$ReplyPlugin
         // TODO unregister_type.
         $endif$
 
-    private:
+        DDSDataReader* create_datareaderI(DDSDataReader* dataReader);
 
-        $operation.parent.name$_$operation.name$ReplyPlugin(){}
+        DDS_ReturnCode_t destroy_datareaderI(DDSDataReader* dataReader);
+
+        DDSDataWriter* create_datawriterI(DDSDataWriter* dataWriter);
+
+        DDS_ReturnCode_t destroy_datawriterI(DDSDataWriter* dataWriter);
+
+    private:
 
         static const char *m_typename;
 };
@@ -283,7 +291,15 @@ param(parameter) ::= <<>>
 
 type_declarator(ctx, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, struct) ::= <<
+class $struct.name$Plugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+        
+};
+>>
 
 union_type(ctx, union) ::= <<>>
 

@@ -42,58 +42,46 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-$operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request(bool initialize)
-: m_initialized(initialize)$parameters_default_init(operation.inputparam)$
+$operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request()
+$parameters_default_init(operation.inputparam)$
 {
-    if(m_initialized)
-    {
-        $operation.inputparam : { param |$if(!param.typecode.primitive)$m_$param.name$ = new $param.typecode.typename$();$endif$}; separator="\n"$
-    }
 }
 
 $operation.parent.scopedname$_$operation.name$Request::~$operation.parent.name$_$operation.name$Request()
 {
-    if(m_initialized)
-    {
-        $operation.inputparam : { param |$if(!param.typecode.primitive)$if(m_$param.name$ != NULL) delete m_$param.name$;$endif$}; separator="\n"$
-    }
 }
 
 $operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request(const $operation.parent.name$_$operation.name$Request &x)
-: m_initialized(false)$parameters_copy_pointer(operation.inputparam)$
+: m__header(x.m__header)$parameters_copy_init(operation.inputparam)$
 {
 }
 
 $operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x)
-: m_initialized(x.m_initialized)$parameters_copy_pointer(operation.inputparam)$
+: m__header(std::move(x.m__header))$parameters_move_init(operation.inputparam)$
 {
-    if(x.m_initialized)
-    {
-        $operation.inputparam : { param |$if(!param.typecode.primitive)$x.m_$param.name$ = NULL;$endif$}; separator="\n"$
-
-        x.m_initialized = false;
-    }
 }
 
 $operation.parent.scopedname$_$operation.name$Request& $operation.parent.scopedname$_$operation.name$Request::operator=(const $operation.parent.scopedname$_$operation.name$Request &x)
 {
-    if(m_initialized)
-    {
-        $operation.inputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
-    }
-    else
-    {
-        printf("ERROR: copying in a not initialize object\n");
-    }
+    m__header = x.m__header;
+    $operation.inputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
     
     return *this;
 }
 
-size_t $operation.parent.scopedname$_$operation.name$Request::getMaxSerializedSize(size_t current_alignment)
+$operation.parent.scopedname$_$operation.name$Request& $operation.parent.scopedname$_$operation.name$Request::operator=($operation.parent.scopedname$_$operation.name$Request &&x)
+{
+    m__header = std::move(x.m__header);
+    $operation.inputparam :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Request::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    // TODO Header
-
+    current_align +=  eprosima::rpcdds::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
+            
     $operation.inputparam : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
 
     return current_align;
@@ -109,58 +97,46 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(
     return current_align;
 }
 
-$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(bool initialize)
-: m_initialized(initialize)$parameters_default_init([operation.outputparam, operation.rettypeparam])$
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply()
+$parameters_default_init([operation.outputparam, operation.rettypeparam])$
 {
-    if(m_initialized)
-    {
-        $[operation.outputparam, operation.rettypeparam] : { param |$if(!param.typecode.primitive)$m_$param.name$ = new $param.typecode.typename$();$endif$}; separator="\n"$
-    }
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::~$operation.parent.name$_$operation.name$Reply()
 {
-    if(m_initialized)
-    {
-        $[operation.outputparam, operation.rettypeparam] : { param |$if(!param.typecode.primitive)$if(m_$param.name$ != NULL) delete m_$param.name$;$endif$}; separator="\n"$
-    }
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x)
-: m_initialized(false)$parameters_copy_pointer([operation.outputparam, operation.rettypeparam])$
+: m__header(x.m__header)$parameters_copy_init([operation.outputparam, operation.rettypeparam])$
 {
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x)
-: m_initialized(x.m_initialized)$parameters_copy_pointer([operation.outputparam, operation.rettypeparam])$
+: m__header(std::move(x.m__header))$parameters_move_init([operation.outputparam, operation.rettypeparam])$
 {
-    if(x.m_initialized)
-    {
-        $[operation.outputparam, operation.rettypeparam] : { param |$if(!param.typecode.primitive)$x.m_$param.name$ = NULL;$endif$}; separator="\n"$
-
-        x.m_initialized = false;
-    }
 }
 
 $operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopedname$_$operation.name$Reply::operator=(const $operation.parent.scopedname$_$operation.name$Reply &x)
 {
-    if(m_initialized)
-    {
-        $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
-    }
-    else
-    {
-        printf("ERROR: copying in a not initialize object\n");
-    }
+    m__header = x.m__header;
+    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
     
     return *this;
 }
 
-size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxSerializedSize(size_t current_alignment)
+$operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopedname$_$operation.name$Reply::operator=($operation.parent.scopedname$_$operation.name$Reply &&x)
+{
+    m__header = std::move(x.m__header);
+    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    // TODO Header
-
+    current_align +=  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
+            
     $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
 
     return current_align;
@@ -193,25 +169,43 @@ enum_type(ctx, enum) ::= <<>>
 /***** Utils *****/
 
 parameters_default_init(parameters) ::= <<
-$if(parameters)$, $parameters:{ param |$parameter_default_init(param)$}; separator=", "$$endif$
+$if(parameters)$: $parameters:{ param |$parameter_default_init(param)$}; separator=", "$$endif$
 >>
 
+// TODO Juntar con TypesSource.stg y TypesHeaders.stg de FastBuffers.
 parameter_default_init(param) ::= <<
 $if(param.typecode.primitive)$
-m_$param.name$($basicTypeInitialValues.(param.typecode.stType)$)
+m_$param.name$($param.typecode.initialValue$)
 $else$
-m_$param.name$(NULL)
+m_$param.name$()
 $endif$
 >>
 
-parameters_copy_pointer(parameters) ::= <<
+parameters_copy_init(parameters) ::= <<
 $if(parameters)$, $parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
 >>
 
+parameters_move_init(parameters) ::= <<
+$if(parameters)$, $parameters:{ param |m_$param.name$(std::move(x.m_$param.name$))}; separator=", "$$endif$
+>>
+
 parameters_copy_assigment(param) ::= <<
-$if(param.typecode.primitive)$
 m_$param.name$ = x.m_$param.name$;
+>>
+
+parameters_move_assigment(param) ::= <<
+m_$param.name$ = x.m_$param.name$;
+>>
+
+// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
+max_serialized_size(param, var) ::= <<
+$if(param.typecode.primitive)$
+$if(param.typecode.isType_d)$
+$var$ += $param.typecode.maxsize$;
 $else$
-*m_$param.name$ = *x.m_$param.name$;
+$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
+$endif$
+$else$
+$var$ += $param.typecode.scopedname$::getMaxCdrSerializedSize($var$);
 $endif$
 >>

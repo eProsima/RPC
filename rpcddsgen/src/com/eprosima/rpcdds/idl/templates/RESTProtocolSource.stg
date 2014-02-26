@@ -416,7 +416,7 @@ $endif$
 extractDataHelper(param, dataname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$
-$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.primitive)$
 $if(param.typecode.isType_d)$
 if($param.name$ != NULL)
     free($param.name$);
@@ -432,7 +432,7 @@ $param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointe
 $endif$
 $else$
 $if(param.output)$
-$if(param.typecode.primitiveInArguments)$
+$if(param.typecode.primitive)$
 $if(param.typecode.isType_d)$
 $param.name$ = strdup($dataname$.$param.name$);
 $else$

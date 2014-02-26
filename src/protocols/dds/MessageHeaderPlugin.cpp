@@ -1,10 +1,13 @@
 #include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
 
+#include "ndds/ndds_cpp.h"
+
+using namespace eprosima::rpcdds;
+using namespace ::protocol::dds;
+
 DDS_TypeCode* IdentificationPlugin::get_typecode()
 {
     static bool is_initialized = false;
-
-    static DDS_TypeCode RequestHeader_g_tc_remoteServiceName_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
     static DDS_TypeCode_Member Identification_g_tc_members[4]
     {
@@ -108,7 +111,6 @@ DDS_TypeCode* IdentificationPlugin::get_typecode()
     return &Identification_g_tc;
     
 }
-
 
 DDS_TypeCode* RequestHeaderPlugin::get_typecode()
 {
@@ -301,7 +303,7 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
         ReplyHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::IdentificationPlugin::get_typecode();
         ReplyHeader_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
         ReplyHeader_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
-        ReplyHeader_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ReplyHeader_g_tc_rpcddsRetMsg_string;
+        ReplyHeader_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ReplyHeader_g_tc_retMsg_string;
         
         is_initialized = true;
     }

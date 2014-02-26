@@ -47,6 +47,7 @@ RPCDDS_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/$(RPCDDS_TARGET_Z_FILE)
 
 RPCDDS_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
+		    -I$(BASEDIR)/../fastcdr/include \
 		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 

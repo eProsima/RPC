@@ -61,11 +61,11 @@ operation(ctx, operation, param_list) ::= <<
 /*void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
 { 
     $operation.parent.name$Server *srv = dynamic_cast<$operation.parent.name$Server*>(server);
-    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
-    $varDecl(variable=operation.rettypeparam, create="yes")$   
+    $operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam)$   
     $if(!operation.oneway)$$operation.parent.name$_$operation.name$Reply replyData;$endif$
     
-    $operation.inoutputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+    $operation.inoutputparam : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
 
     $operation.parent.name$_$operation.name$RequestUtils::extractTypeData(*($operation.parent.name$_$operation.name$Request*)requestData$extractParams(params=operation.inputparam, separatorInicial=", ")$);
 

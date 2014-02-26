@@ -43,12 +43,12 @@ int main(int argc, char **argv)
     $if(ctx.firstInterface.firstOperation.parameters)$
     // Create and initialize parameters.
     $ctx.firstInterface.firstOperation.parameters : {param | $varDecl(variable=param)$};separator="\n"$
-    $ctx.firstInterface.firstOperation.parameters : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+    $ctx.firstInterface.firstOperation.parameters : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
     $endif$
     $if(ctx.firstInterface.firstOperation.rettypeparam)$
     // Create and initialize return value.
     $varDecl(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $if(!ctx.firstInterface.firstOperation.rettypeparam.typecode.primitiveInArguments)$
+    $if(!ctx.firstInterface.firstOperation.rettypeparam.typecode.primitive)$
     $varComplexInitialize(variable=ctx.firstInterface.firstOperation.rettypeparam)$
     $endif$
     $endif$

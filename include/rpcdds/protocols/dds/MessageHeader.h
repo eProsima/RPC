@@ -7,6 +7,8 @@
 
 namespace eprosima
 {
+    class Cdr;
+
     namespace rpcdds
     {
         namespace protocol
@@ -90,6 +92,12 @@ namespace eprosima
                             return m_value_4;
                         }
 
+                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+
+                        void serialize(eprosima::Cdr &cdr) const;
+
+                        void deserialize(eprosima::Cdr &cdr);
+
                     private:
 
                         uint32_t m_value_1;
@@ -169,6 +177,12 @@ namespace eprosima
                         {
                             return m_requestSequenceNumber;
                         }
+
+                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+
+                        void serialize(eprosima::Cdr &cdr) const;
+
+                        void deserialize(eprosima::Cdr &cdr);
 
                     private:
 
@@ -266,6 +280,12 @@ namespace eprosima
                         {
                             return m_retMsg;
                         }
+
+                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+
+                        void serialize(eprosima::Cdr &cdr) const;
+
+                        void deserialize(eprosima::Cdr &cdr);
 
                     private:
 

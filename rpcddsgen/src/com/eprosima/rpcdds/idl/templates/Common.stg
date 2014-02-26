@@ -25,8 +25,12 @@ $endif$
 >>
 
 paramTypeByValue(typecode) ::= <<
-$if(typecode.primitiveInArguments)$
-$if(typecode.isType_d)$const $endif$$typecode.typename$
+$if(typecode.primitive)$
+$if(typecode.isType_d)$
+const $typecode.typename$&
+$else$
+$typecode.typename$
+$endif$
 $else$
 const $typecode.typename$&
 $endif$
@@ -50,28 +54,28 @@ $if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(
 
 memberInit(member) ::= <<
 $if(member)$
-$if(member.typecode.primitiveInArguments)$
-$member.name$ $member.typecode.initialValue$;
+$if(member.typecode.primitive)$
+$member.name$ = $member.typecode.initialValue$;
 $else$
 $memberComplexInit(...)$
 $endif$
 $endif$
 >>
 
-// TODO Se necesita?
-varDecl(variable, create) ::= <<
+varDecl(variable) ::= <<
 $if(variable)$
-$if(variable.typecode.primitiveInArguments)$
-$variable.typecode.typename$  $variable.name$ $variable.typecode.initialValue$;
+$if(variable.typecode.primitive)$
+$variable.typecode.typename$  $variable.name$ = $variable.typecode.initialValue$;
 $else$
-$varComplexDecl(...)$
+$variable.typecode.typename$  $variable.name$;
 $endif$
 $endif$
 >>
 
+// TODO Se necesita?
 varDel(variable) ::= <<
 $if(variable)$
-$if(variable.typecode.primitiveInArguments)$
+$if(variable.typecode.primitive)$
 $if(variable.typecode.isType_d)$
 $varStringDel(name=variable.name)$
 $endif$
@@ -86,14 +90,6 @@ $if(params)$$separatorInicial$$endif$$params : {param | $param.name$};separator=
 >>
 
 /**** NEW OUR_TYPES ****/
-
-// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
-max_serialized_size(param, var) ::= <<
-$if(param.typecode.primitive)$
-$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
-$else$
-$endif$
->>
 
 // TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
 serialized_size(param, var) ::= <<

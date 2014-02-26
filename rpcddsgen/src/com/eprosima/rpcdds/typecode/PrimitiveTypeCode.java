@@ -26,8 +26,25 @@ public class PrimitiveTypeCode extends TypeCode
     @Override
     public String getInitialValue()
     {   
-    	if(getKind() != KIND_LONGDOUBLE)
-    		return "= 0";
+        switch(getKind())
+        {
+            case KIND_LONGDOUBLE:
+            case KIND_DOUBLE:
+            case KIND_FLOAT:
+                return "0.0";
+            case KIND_LONGLONG:
+            case KIND_ULONGLONG:
+            case KIND_LONG:
+            case KIND_ULONG:
+            case KIND_WCHAR:
+            case KIND_SHORT:
+            case KIND_USHORT:
+            case KIND_CHAR:
+            case KIND_OCTET:
+                return "0";         
+            case KIND_BOOLEAN:
+                return "false";               
+        }
     	
     	return "";
     }

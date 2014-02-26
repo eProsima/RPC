@@ -81,12 +81,6 @@ public abstract class TypeCode
         return false;
     }
     
-    // Used in stringtemplate for parameters
-    public boolean isPrimitiveInArguments()
-    {
-        return isPrimitive() || isIsType_c() || isIsType_d();
-    }
-    
     // By default there is not initial value. Function used in stringtemplates.
     public String getInitialValue()
     {

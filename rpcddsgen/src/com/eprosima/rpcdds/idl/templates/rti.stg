@@ -172,6 +172,8 @@ memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - size
 ddsTypeCodeDefs(param) ::= <<
 $if(param.typecode.primitive)$
 &$basicDDSTypeCodeDefs.(param.typecode.stType)$;
+$else$
+$if(param.typecode.hasScope)$$param.typecode.scope$Plugin::$endif$$param.typecode.name$Plugin::get_typecode();
 $endif$
 >>
 

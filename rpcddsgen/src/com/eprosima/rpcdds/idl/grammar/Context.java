@@ -325,7 +325,10 @@ public class Context
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
-            returnedValue = m_types.get(m_scope + name);
+            if(m_scope.isEmpty())
+                returnedValue = m_types.get(name);
+            else
+                returnedValue = m_types.get(m_scope + "::" + name);
         }
 
         return returnedValue;
@@ -354,7 +357,10 @@ public class Context
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
-            returnedValue = m_exceptions.get(m_scope + name);
+            if(m_scope.isEmpty())
+                returnedValue = m_exceptions.get(name);
+            else
+                returnedValue = m_exceptions.get(m_scope + "::" + name);
         }
 
         return returnedValue;
@@ -410,7 +416,10 @@ public class Context
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
-            returnedValue = m_annotations.get(m_scope + name);
+            if(m_scope.isEmpty())
+                returnedValue = m_annotations.get(name);
+            else
+                returnedValue = m_annotations.get(m_scope + "::" + name);
         }
 
         return returnedValue;

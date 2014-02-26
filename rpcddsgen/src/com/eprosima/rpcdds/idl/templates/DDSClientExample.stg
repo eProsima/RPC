@@ -35,18 +35,10 @@ int main(int argc, char **argv)
         return -1;
     }
     
-    $if(ctx.firstInterface.firstOperation.parameters)$
     // Create and initialize parameters.
     $ctx.firstInterface.firstOperation.parameters : {param | $varDecl(variable=param)$};separator="\n"$
-    $ctx.firstInterface.firstOperation.parameters : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
-    $endif$
-    $if(ctx.firstInterface.firstOperation.rettypeparam)$
     // Create and initialize return value.
     $varDecl(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $if(!ctx.firstInterface.firstOperation.rettypeparam.typecode.primitiveInArguments)$
-    $varComplexInitialize(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $endif$
-    $endif$
 
     // Call to remote procedure "$ctx.firstInterface.firstOperation.name$".
     try
@@ -63,14 +55,6 @@ int main(int argc, char **argv)
     {
         std::cout << ex.what() << std::endl;
     }
-    $if(ctx.firstInterface.firstOperation.parameters)$
-    
-    $ctx.firstInterface.firstOperation.parameters : {param | $varDel(variable=param)$}; separator="\n"$
-    $endif$
-    $if(ctx.firstInterface.firstOperation.rettypeparam)$
-
-    $varDel(variable=ctx.firstInterface.firstOperation.rettypeparam)$
-    $endif$
     
     delete proxy ;
     delete transport ;

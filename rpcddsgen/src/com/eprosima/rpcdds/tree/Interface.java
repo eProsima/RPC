@@ -19,7 +19,15 @@ public class Interface extends ExportContainer implements Definition, Notebook
     
     public String getScopedname()
     {
-        return m_scope + m_name;
+        if(m_scope.isEmpty())
+            return m_name;
+
+        return m_scope + "::" + m_name;
+    }
+
+    public String getScope()
+    {
+        return m_scope;
     }
     
     /*
@@ -28,7 +36,12 @@ public class Interface extends ExportContainer implements Definition, Notebook
      */
     public String getFormatedScopedname()
     {
-        String ret = m_scope + m_name;
+        String ret = null;
+        
+        if(m_scope.isEmpty())
+            ret = m_name;
+        else
+            ret = m_scope + "::" + m_name;
         
         return ret.replaceAll("::", "_");
     }

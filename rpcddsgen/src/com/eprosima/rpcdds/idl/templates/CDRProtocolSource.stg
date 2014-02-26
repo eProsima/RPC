@@ -218,7 +218,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     const char* const operation_name = "$operation.name$";
     ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
     // TODO In DDS the initialization is not necessary. But in CDR it is, for example a union with a char* (string) needs to be initialized to NULL.
-    $varDecl(variable=operation.rettypeparam, create="yes")$
+    $varDecl(variable=operation.rettypeparam)$
     
     eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>(getTransport());
     
@@ -417,10 +417,10 @@ enum_type(ctx, enum) ::= <<>>
 
 /*************** Utils *****************/
 operation_worker(operation) ::= <<
-$operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
-$varDecl(variable=operation.rettypeparam, create="yes")$
+$operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
+$varDecl(variable=operation.rettypeparam)$
 
-$operation.inputparam : {param | $if(!param.typecode.primitiveInArguments)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+$operation.inputparam : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
 
 $operation.inputparam : {param |
 $deserialization(obj=param)$

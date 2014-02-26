@@ -31,7 +31,10 @@ public class AliasTypeCode extends ContainerTypeCode
     
     public String getScopedname()
     {
-        return m_scope + m_name;
+        if(m_scope.isEmpty())
+            return m_name;
+
+        return m_scope + "::" + m_name;
     }
 
     @Override
@@ -52,12 +55,6 @@ public class AliasTypeCode extends ContainerTypeCode
     public boolean isPrimitive()
     {
         return super.getContentTypeCode().isPrimitive();
-    }
-    
-    @Override
-    public boolean isPrimitiveInArguments()
-    {
-        return super.getContentTypeCode().isPrimitiveInArguments();
     }
     
     @Override

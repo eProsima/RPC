@@ -363,6 +363,8 @@ public class RPCDDSGEN
             	System.out.println("Cannot generate MessageHeader.idl");
             	return false;
             }
+
+            solution.addLibrary("fastcdr");
         }
         else if(m_protocol.equalsIgnoreCase("rest"))
         {

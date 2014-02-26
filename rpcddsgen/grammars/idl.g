@@ -97,7 +97,10 @@ module returns [Pair<Module, TemplateGroup> returnPair = null]
 	           ctx.setCurrentModule(moduleObject);
 	       }
 	       // Update to a new namespace.
-	       ctx.setScope(old_scope + name + "::");
+           if(old_scope.isEmpty())
+	           ctx.setScope(name);
+           else
+	           ctx.setScope(old_scope + "::" + name);
 	     }
 	     // Each definition is stored in the Module and each TemplateGroup is set as attribute in the TemplateGroup of the module.
 	     LCURLY! tg=d:definition_list[moduleObject]{if(moduleTemplates!=null && tg!=null)moduleTemplates.setAttribute("definition_list", tg);} RCURLY!
@@ -142,7 +145,7 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
         Interface interfaceObject = null;
         TemplateGroup interfaceTemplates = null;
         TemplateGroup tg = null;
-        String name = null;
+        String name = null, old_scope = ctx.getScope();
     }
 	:   (( "abstract" | "local" )?
  	    "interface"^
@@ -160,10 +163,18 @@ interface_dcl returns [Pair<Interface, TemplateGroup> returnPair = null]
                interfaceTemplates.setAttribute("interface", interfaceObject);
                ctx.addInterface(interfaceObject.getScopedname(), interfaceObject);
            }
+
+	       // Update to a new namespace.
+           if(old_scope.isEmpty())
+	           ctx.setScope(name);
+           else
+	           ctx.setScope(old_scope + "::" + name);
         }
 	    ( interface_inheritance_spec )?	   
 	    LCURLY tg=interface_body[interfaceObject]{if(interfaceTemplates!=null && tg!=null)interfaceTemplates.setAttribute("export_list", tg);} RCURLY)
 	    {
+	       // Set the old namespace.
+	       ctx.setScope(old_scope);
            // Create the returned data.
            returnPair = new Pair<Interface, TemplateGroup>(interfaceObject, interfaceTemplates);
         }

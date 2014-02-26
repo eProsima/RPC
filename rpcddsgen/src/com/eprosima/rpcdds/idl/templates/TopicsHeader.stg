@@ -75,7 +75,7 @@ public:
      * @param initialize True value initializes all pointers using "new" operator. In the other case,
      * all pointers will be NULL.
      */
-    $operation.parent.name$_$operation.name$Request(bool initialize = false);
+    $operation.parent.name$_$operation.name$Request();
     
     /*!
      * @brief Default destructor.
@@ -100,6 +100,12 @@ public:
      */
     $operation.parent.name$_$operation.name$Request& operator=(const $operation.parent.name$_$operation.name$Request &x);
 
+    /*! TODO
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Request& operator=($operation.parent.name$_$operation.name$Request &&x);
+
     inline void _header(const eprosima::rpcdds::protocol::dds::RequestHeader &__header)
     {
         m__header = __header;
@@ -123,18 +129,16 @@ public:
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
 
     /*! TODO */
-    static size_t getMaxSerializedSize(size_t current_alignment = 0);
+    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*! TODO */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
 private:
 
-    bool m_initialized;
-
     eprosima::rpcdds::protocol::dds::RequestHeader m__header;
 
-    $operation.inputparam:{$private_parameters_declaration(it)$}; separator="\n"$
+    $operation.inputparam:{ param |$param.typecode.typename$ m_$param.name$;}; separator="\n"$
 };
 
 /*!
@@ -152,7 +156,7 @@ public:
      * @param initialize True value initializes all pointers using "new" operator. In the other case,
      * all pointers will be NULL.
      */
-    $operation.parent.name$_$operation.name$Reply(bool initialize = false);
+    $operation.parent.name$_$operation.name$Reply();
     
     /*!
      * @brief Default destructor.
@@ -177,6 +181,12 @@ public:
      */
     $operation.parent.name$_$operation.name$Reply& operator=(const $operation.parent.name$_$operation.name$Reply &x);
 
+    /*! TODO
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply& operator=($operation.parent.name$_$operation.name$Reply &&x);
+
     inline void _header(const eprosima::rpcdds::protocol::dds::ReplyHeader &__header)
     {
         m__header = __header;
@@ -200,18 +210,16 @@ public:
     $[operation.outputparam, operation.rettypeparam]:{$public_parameters_declaration(it)$}; separator="\n"$
 
     /*! TODO */
-    static size_t getMaxSerializedSize(size_t current_alignment = 0);
+    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*! TODO */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
 private:
 
-    bool m_initialized;
-
     eprosima::rpcdds::protocol::dds::ReplyHeader m__header;
 
-    $[operation.outputparam, operation.rettypeparam]:{$private_parameters_declaration(it)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.typename$ m_$param.name$;}; separator="\n"$
 };
 
 >>
@@ -265,10 +273,7 @@ $else$
  */
 inline void $param.name$(const $param.typecode.typename$ &_$param.name$)
 {
-    if(m_initialize)
-        *m_$param.name$ = _$param.name$;
-    else
-        m_$param.name$ = &_$param.name$;
+    m_$param.name$ = _$param.name$;
 }
 
 /*! TODO
@@ -277,10 +282,7 @@ inline void $param.name$(const $param.typecode.typename$ &_$param.name$)
  */
 inline void $param.name$($param.typecode.typename$ &&_$param.name$)
 {
-    if(m_initialize)
-        *m_$param.name$ = std::move(_$param.name$);
-    else
-        m_$param.name$ = &_$param.name$;
+    m_$param.name$ = std::move(_$param.name$);
 }
 
 /*! TODO
@@ -289,7 +291,7 @@ inline void $param.name$($param.typecode.typename$ &&_$param.name$)
  */
 inline const $param.typecode.typename$& $param.name$() const
 {
-    return *m_$param.name$;
+    return m_$param.name$;
 }
 
 /*! TODO
@@ -298,15 +300,7 @@ inline const $param.typecode.typename$& $param.name$() const
  */
 inline $param.typecode.typename$& $param.name$()
 {
-    return *m_$param.name$;
+    return m_$param.name$;
 }
-$endif$
->>
-
-private_parameters_declaration(param) ::= <<
-$if(param.typecode.primitive)$
-$param.typecode.typename$ m_$param.name$;
-$else$
-$param.typecode.typename$ *m_$param.name$;
 $endif$
 >>

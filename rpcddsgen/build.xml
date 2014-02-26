@@ -139,6 +139,7 @@
             <fileset dir="${basedir}${file.separator}..${file.separator}..${file.separator}FastBuffers${file.separator}src${file.separator}com${file.separator}eprosima${file.separator}fastbuffers${file.separator}templates">
 				<include name="Types.stg" />
 				<include name="TypesHeader.stg" />
+				<include name="TypesSource.stg" />
 			</fileset>
 		</copy>
         <!--> Copy platform file.<-->

@@ -20,7 +20,20 @@ public abstract class MemberedTypeCode extends TypeCode
     
     public String getScopedname()
     {
-        return m_scope + m_name;
+        if(m_scope.isEmpty())
+            return m_name;
+
+        return m_scope + "::" + m_name;
+    }
+
+    public String getScope()
+    {
+        return m_scope;
+    }
+
+    public boolean getHasScope()
+    {
+        return !m_scope.isEmpty();
     }
     
     public List<Member> getMembers()

@@ -40,7 +40,7 @@ $paramRetType(operation.rettype)$ $operation.parent.name$ServerImplExample::$ope
 {
     $if(operation.rettypeparam)$
     $varDecl(variable=operation.rettypeparam)$
-    $if(!operation.rettypeparam.typecode.primitiveInArguments)$
+    $if(!operation.rettypeparam.typecode.primitive)$
     $varComplexInitialize(variable=operation.rettypeparam)$
     $endif$
    
