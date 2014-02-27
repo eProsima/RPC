@@ -38,12 +38,9 @@ exception(ctx, exception) ::= <<>>
 operation(ctx, operation, param_list) ::= <<
 $paramRetType(operation.rettype)$ $operation.parent.name$ServerImplExample::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
 {
-    $if(operation.rettypeparam)$
     $varDecl(variable=operation.rettypeparam)$
-    $if(!operation.rettypeparam.typecode.primitive)$
-    $varComplexInitialize(variable=operation.rettypeparam)$
-    $endif$
    
+    $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
     $endif$
 } 

@@ -1104,6 +1104,57 @@ param(parameter) ::= <<>>
 type_declarator(ctx, typedefs) ::= <<>>
 
 struct_type(ctx, struct) ::= <<
+DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plugin::get_typecode()
+{
+    static bool is_initialized = false;
+
+    $struct.members : { member |$if(member.typecode.isType_d)$static DDS_TypeCode $member.name$_string = DDS_INITIALIZE_STRING_TYPECODE($member.typecode.maxsize$);$endif$}; separator="\n"$
+
+    static DDS_TypeCode_Member $struct.name$Request_g_tc_members[$length(struct.members)$]
+    {
+        $struct.members : { member |
+        {
+            (char *)"$member.name$",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            0,
+            0,
+            NULL,
+            DDS_BOOLEAN_FALSE,
+            DDS_PRIVATE_MEMBER,
+            0,
+            NULL
+        }}; separator=",\n"$
+    };
+
+    static DDS_TypeCode $struct.name$Request_g_tc =
+    {{
+         DDS_TK_STRUCT,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$struct.name$",
+         NULL,
+         0,
+         0,
+         NULL,
+         $length(struct.members)$,
+         $struct.name$Request_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    if(!is_initialized)
+    {
+        $struct.members : { member |$struct.name$Request_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(member)$;}; separator="\n"$
+        is_initialized = true;
+    }
+
+    return &$struct.name$Request_g_tc;
+}
 >>
 
 union_type(ctx, union) ::= <<>>

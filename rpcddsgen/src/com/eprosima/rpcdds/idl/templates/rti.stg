@@ -169,11 +169,15 @@ memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - size
 
 /***** NEW OUR_TYPES *****/
 //TODO EL resto de tipos
-ddsTypeCodeDefs(param) ::= <<
-$if(param.typecode.primitive)$
-&$basicDDSTypeCodeDefs.(param.typecode.stType)$;
+ddsTypeCodeDefs(object) ::= <<
+$if(object.typecode.primitive)$
+$if(object.typecode.isType_d)$
+&$object.name$_string
 $else$
-$if(param.typecode.hasScope)$$param.typecode.scope$Plugin::$endif$$param.typecode.name$Plugin::get_typecode();
+&$basicDDSTypeCodeDefs.(object.typecode.stType)$
+$endif$
+$else$
+$if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
 $endif$
 >>
 

@@ -13,6 +13,7 @@
  */
 
 #include "BasicTypeTestServerImplExample.h"
+
 uint8_t BasicTypeTestServerImplExample::getOctet(/*in*/ uint8_t oc1, /*inout*/ uint8_t& oc2, /*out*/ uint8_t& oc3) 
 {
     uint8_t returnedValue;

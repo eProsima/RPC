@@ -1004,7 +1004,7 @@ public class RPCDDSGEN
 	            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".cxx", maintemplates.getTemplate("TypesSource"), m_replace))
 		                {
 	            			project.addCommonIncludeFile(onlyFileName + ".h");
-	        	        	//project.addCommonSrcFile(onlyFileName + ".cxx");
+	        	        	project.addCommonSrcFile(onlyFileName + ".cxx");
 		                }
 	                }
 	        	}
