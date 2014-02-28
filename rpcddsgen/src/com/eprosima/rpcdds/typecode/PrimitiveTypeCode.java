@@ -12,9 +12,15 @@ public class PrimitiveTypeCode extends TypeCode
     }
 
     @Override
-    public String getTypename()
+    public String getCppTypename()
     {
-        return getTypenameFromStringTemplate().toString();
+        return getCppTypenameFromStringTemplate().toString();
+    }
+    
+    @Override
+    public String getIdlTypename()
+    {
+        return getIdlTypenameFromStringTemplate().toString();
     }
     
     @Override

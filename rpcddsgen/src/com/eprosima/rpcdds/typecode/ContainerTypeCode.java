@@ -8,7 +8,10 @@ public abstract class ContainerTypeCode extends TypeCode
     }
     
     @Override
-    public abstract String getTypename();
+    public abstract String getCppTypename();
+    
+    @Override
+    public abstract String getIdlTypename();
     
     public TypeCode getContentTypeCode()
     {

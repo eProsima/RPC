@@ -34,9 +34,8 @@ public abstract class TypeCode
     public static final int KIND_VALUE = 0x00000016;
     public static final int KIND_SPARSE = 0x00000017;
     
-    protected static StringTemplateGroup m_typesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
-    // TODO Eliminar rtiTypes.stg
-    //protected static StringTemplateGroup m_stringtemplatetypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
+    public static StringTemplateGroup idltypesgr = null;
+    public static StringTemplateGroup cpptypesgr = null;
     
     public TypeCode(int kind)
     {
@@ -49,20 +48,25 @@ public abstract class TypeCode
     }
     
     /*|
-     * @brief This function returns the typename with the scope that is obtained using the m_typesgr string template.
+     * @brief This function returns the typename with the scope that is obtained using the cpptypesgr string template.
      * @return The IDL typename.
      */
-    public abstract String getTypename();
+    public abstract String getCppTypename();
     
-    protected StringTemplate getTypenameFromStringTemplate()
+    protected StringTemplate getCppTypenameFromStringTemplate()
     {
-        return m_typesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
+        return cpptypesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
     }
-    
-    // Function used in stringtemplates
-    public String getStriptypename()
+
+    /*|
+     * @brief This function returns a typename with scope that is obtained using the m_stringtemplatetypesgr string template.
+     * @return The typename.
+     */
+    public abstract String getIdlTypename();
+   
+    protected StringTemplate getIdlTypenameFromStringTemplate()
     {
-        return TemplateUtil.stripType(getTypename());
+        return idltypesgr.getInstanceOf("type_" + Integer.toHexString(m_kind));
     }
     
     /*!

@@ -13,10 +13,9 @@
  */
 
 #include "BasicTypeTestServerImplExample.h"
-
-uint8_t BasicTypeTestServerImplExample::getOctet(/*in*/ uint8_t oc1, /*inout*/ uint8_t& oc2, /*out*/ uint8_t& oc3) 
+DDS_Octet BasicTypeTestServerImplExample::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3) 
 {
-    uint8_t returnedValue;
+    DDS_Octet returnedValue;
         
     oc3 = oc2;
     returnedValue = oc1;
@@ -25,9 +24,9 @@ uint8_t BasicTypeTestServerImplExample::getOctet(/*in*/ uint8_t oc1, /*inout*/ u
     return returnedValue;
 } 
  
-char BasicTypeTestServerImplExample::getChar(/*in*/ char ch1, /*inout*/ char& ch2, /*out*/ char& ch3) 
+DDS_Char BasicTypeTestServerImplExample::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3) 
 {
-    char returnedValue;
+    DDS_Char returnedValue;
         
     ch3 = ch2;
     returnedValue = ch1;
@@ -36,9 +35,9 @@ char BasicTypeTestServerImplExample::getChar(/*in*/ char ch1, /*inout*/ char& ch
     return returnedValue;
 } 
  
-wchar_t BasicTypeTestServerImplExample::getWChar(/*in*/ wchar_t wch1, /*inout*/ wchar_t& wch2, /*out*/ wchar_t& wch3) 
+DDS_Wchar BasicTypeTestServerImplExample::getWChar(/*in*/ DDS_Wchar wch1, /*inout*/ DDS_Wchar& wch2, /*out*/ DDS_Wchar& wch3) 
 {
-    wchar_t returnedValue;
+    DDS_Wchar returnedValue;
         
     wch3 = wch2;
     returnedValue = wch1;
@@ -47,9 +46,9 @@ wchar_t BasicTypeTestServerImplExample::getWChar(/*in*/ wchar_t wch1, /*inout*/ 
     return returnedValue;
 } 
  
-int16_t BasicTypeTestServerImplExample::getShort(/*in*/ int16_t sh1, /*inout*/ int16_t& sh2, /*out*/ int16_t& sh3) 
+DDS_Short BasicTypeTestServerImplExample::getShort(/*in*/ DDS_Short sh1, /*inout*/ DDS_Short& sh2, /*out*/ DDS_Short& sh3) 
 {
-    int16_t returnedValue;
+    DDS_Short returnedValue;
         
     sh3 = sh2;
     returnedValue = sh1;
@@ -58,9 +57,9 @@ int16_t BasicTypeTestServerImplExample::getShort(/*in*/ int16_t sh1, /*inout*/ i
     return returnedValue;
 } 
  
-uint16_t BasicTypeTestServerImplExample::getUShort(/*in*/ uint16_t ush1, /*inout*/ uint16_t& ush2, /*out*/ uint16_t& ush3) 
+DDS_UnsignedShort BasicTypeTestServerImplExample::getUShort(/*in*/ DDS_UnsignedShort ush1, /*inout*/ DDS_UnsignedShort& ush2, /*out*/ DDS_UnsignedShort& ush3) 
 {
-    uint16_t returnedValue;
+    DDS_UnsignedShort returnedValue;
         
     ush3 = ush2;
     returnedValue = ush1;
@@ -69,9 +68,9 @@ uint16_t BasicTypeTestServerImplExample::getUShort(/*in*/ uint16_t ush1, /*inout
     return returnedValue;
 } 
  
-int32_t BasicTypeTestServerImplExample::getLong(/*in*/ int32_t lo1, /*inout*/ int32_t& lo2, /*out*/ int32_t& lo3) 
+DDS_Long BasicTypeTestServerImplExample::getLong(/*in*/ DDS_Long lo1, /*inout*/ DDS_Long& lo2, /*out*/ DDS_Long& lo3) 
 {
-    int32_t returnedValue;
+    DDS_Long returnedValue;
         
     lo3 = lo2;
     returnedValue = lo1;
@@ -80,9 +79,9 @@ int32_t BasicTypeTestServerImplExample::getLong(/*in*/ int32_t lo1, /*inout*/ in
     return returnedValue;
 } 
  
-uint32_t BasicTypeTestServerImplExample::getULong(/*in*/ uint32_t ulo1, /*inout*/ uint32_t& ulo2, /*out*/ uint32_t& ulo3) 
+DDS_UnsignedLong BasicTypeTestServerImplExample::getULong(/*in*/ DDS_UnsignedLong ulo1, /*inout*/ DDS_UnsignedLong& ulo2, /*out*/ DDS_UnsignedLong& ulo3) 
 {
-    uint32_t returnedValue;
+    DDS_UnsignedLong returnedValue;
         
     ulo3 = ulo2;
     returnedValue = ulo1;
@@ -91,9 +90,9 @@ uint32_t BasicTypeTestServerImplExample::getULong(/*in*/ uint32_t ulo1, /*inout*
     return returnedValue;
 } 
  
-int64_t BasicTypeTestServerImplExample::getLLong(/*in*/ int64_t llo1, /*inout*/ int64_t& llo2, /*out*/ int64_t& llo3) 
+DDS_LongLong BasicTypeTestServerImplExample::getLLong(/*in*/ DDS_LongLong llo1, /*inout*/ DDS_LongLong& llo2, /*out*/ DDS_LongLong& llo3) 
 {
-    int64_t returnedValue;
+    DDS_LongLong returnedValue;
         
     llo3 = llo2;
     returnedValue = llo1;
@@ -102,9 +101,9 @@ int64_t BasicTypeTestServerImplExample::getLLong(/*in*/ int64_t llo1, /*inout*/ 
     return returnedValue;
 } 
  
-uint64_t BasicTypeTestServerImplExample::getULLong(/*in*/ uint64_t ullo1, /*inout*/ uint64_t& ullo2, /*out*/ uint64_t& ullo3) 
+DDS_UnsignedLongLong BasicTypeTestServerImplExample::getULLong(/*in*/ DDS_UnsignedLongLong ullo1, /*inout*/ DDS_UnsignedLongLong& ullo2, /*out*/ DDS_UnsignedLongLong& ullo3) 
 {
-    uint64_t returnedValue;
+    DDS_UnsignedLongLong returnedValue;
         
     ullo3 = ullo2;
     returnedValue = ullo1;
@@ -113,9 +112,9 @@ uint64_t BasicTypeTestServerImplExample::getULLong(/*in*/ uint64_t ullo1, /*inou
     return returnedValue;
 } 
  
-float BasicTypeTestServerImplExample::getFloat(/*in*/ float fl1, /*inout*/ float& fl2, /*out*/ float& fl3) 
+DDS_Float BasicTypeTestServerImplExample::getFloat(/*in*/ DDS_Float fl1, /*inout*/ DDS_Float& fl2, /*out*/ DDS_Float& fl3) 
 {
-    float returnedValue;
+    DDS_Float returnedValue;
         
     fl3 = fl2;
     returnedValue = fl1;
@@ -124,9 +123,9 @@ float BasicTypeTestServerImplExample::getFloat(/*in*/ float fl1, /*inout*/ float
     return returnedValue;
 } 
  
-double BasicTypeTestServerImplExample::getDouble(/*in*/ double do1, /*inout*/ double& do2, /*out*/ double& do3) 
+DDS_Double BasicTypeTestServerImplExample::getDouble(/*in*/ DDS_Double do1, /*inout*/ DDS_Double& do2, /*out*/ DDS_Double& do3) 
 {
-    double returnedValue;
+    DDS_Double returnedValue;
         
     do3 = do2;
     returnedValue = do1;
@@ -135,9 +134,9 @@ double BasicTypeTestServerImplExample::getDouble(/*in*/ double do1, /*inout*/ do
     return returnedValue;
 } 
  
-bool BasicTypeTestServerImplExample::getBoolean(/*in*/ bool bo1, /*inout*/ bool& bo2, /*out*/ bool& bo3) 
+DDS_Boolean BasicTypeTestServerImplExample::getBoolean(/*in*/ DDS_Boolean bo1, /*inout*/ DDS_Boolean& bo2, /*out*/ DDS_Boolean& bo3) 
 {
-    bool returnedValue;
+    DDS_Boolean returnedValue;
         
     bo3 = bo2;
     returnedValue = bo1;

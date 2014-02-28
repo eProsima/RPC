@@ -37,7 +37,7 @@ exception(ctx, exception) ::= <<
  * @ingroup $ctx.trimfilename$
  */
 struct $exception.name$_t{
-   $exception.members:{member | $member.typecode.typename$ $member.name$;}; separator="\n"$
+   $exception.members:{member | $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
 }; $nolevelIDLdefine()$
 >>
 
@@ -51,7 +51,7 @@ $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
  */
 struct $operation.parent.name$_$operation.name$Request{
     RequestHeader header;
-    $operation.inputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
+    $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
 }; $levelIDLdefine()$
 
 $if(!operation.oneway)$
@@ -63,8 +63,8 @@ $if([operation.outputparam, operation.rettype])$
  */
 struct  $operation.parent.name$_$operation.name$Reply_st
 {
-   $operation.outputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
-   $if(operation.rettype)$$operation.rettype.typename$ $operation.name$_ret;$endif$
+   $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+   $if(operation.rettype)$$operation.rettype.idlTypename$ $operation.name$_ret;$endif$
 }; $nolevelIDLdefine()$
 $endif$
 
@@ -102,8 +102,8 @@ $if(operation.exceptions)$
     $operation.parent.name$_$operation.name$Reply_union unio;
     
 $else$
-    $operation.outputparam : {$it.typecode.typename$ $it.name$;};separator="\n"$
-    $if(operation.rettype)$$operation.rettype.typename$ $operation.name$_ret;$endif$
+    $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+    $if(operation.rettype)$$operation.rettype.idlTypename$ $operation.name$_ret;$endif$
     
 $endif$
 }; $levelIDLdefine()$
@@ -131,7 +131,7 @@ createExceptionStruct(operation, exception) ::= <<
  * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$_$exception.name$_t{
-   $exception.members:{member | $member.typecode.typename$ $member.name$;}; separator="\n"$
+   $exception.members:{member | $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
 }; $nolevelIDLdefine()$
 
 >>

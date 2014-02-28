@@ -16,11 +16,18 @@ public class Annotation extends MemberedTypeCode
     }
     
     @Override
-    public String getTypename()
+    public String getCppTypename()
     {
-        StringTemplate st = getTypenameFromStringTemplate();
+        StringTemplate st = getCppTypenameFromStringTemplate();
         st.setAttribute("name", getScopedname());
         return st.toString();
+    }
+
+    @Override
+    public String getIdlTypename()
+    {
+        // TODO Launch error like arraytypecode.
+        return "Error";
     }
     
     /// Copy from StructTypeCode. Not necessary.

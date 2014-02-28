@@ -18,26 +18,14 @@ fileHeader(file, description) ::= <<
 
 paramRetType(typecode) ::= <<
 $if(typecode)$
-$typecode.typename$
+$typecode.cppTypename$
 $else$
 void
 $endif$
 >>
 
-paramTypeByValue(typecode) ::= <<
-$if(typecode.primitive)$
-$if(typecode.isType_d)$
-const $typecode.typename$&
-$else$
-$typecode.typename$
-$endif$
-$else$
-const $typecode.typename$&
-$endif$
->>
-
 paramTypeByRef(typecode) ::= <<
-$typecode.typename$&
+$typecode.cppTypename$&
 >>
 
 paramDeclsByValue(params, separatorInicial) ::= <<
@@ -62,56 +50,8 @@ $endif$
 $endif$
 >>
 
-varDecl(variable) ::= <<
-$if(variable)$
-$if(variable.typecode.primitive)$
-$variable.typecode.typename$  $variable.name$ = $variable.typecode.initialValue$;
-$else$
-$variable.typecode.typename$  $variable.name$;
-$endif$
-$endif$
->>
-
-// TODO Se necesita?
-varDel(variable) ::= <<
-$if(variable)$
-$if(variable.typecode.primitive)$
-$if(variable.typecode.isType_d)$
-$varStringDel(name=variable.name)$
-$endif$
-$else$
-$varComplexDel(...)$
-$endif$
-$endif$
->>
-
 extractParams(params, separatorInicial) ::= <<
 $if(params)$$separatorInicial$$endif$$params : {param | $param.name$};separator=", "$
 >>
 
 /**** NEW OUR_TYPES ****/
-
-// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
-serialized_size(param, var) ::= <<
-$if(param.typecode.primitive)$
-$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
-$else$
-$endif$
->>
-
-basicTypeInitialValues ::= [
-        "type_5":"0.0",
-        "type_6":"0.0",
-        "type_13":"0.0",
-        "type_1":"0",
-        "type_2":"0",
-        "type_11":"0",
-        "type_3":"0",
-        "type_4":"0",
-        "type_12":"0",
-        "type_8":"0",
-        "type_14":"0",
-        "type_7":"false",
-        "type_9":"0",
-        default: // not basic type.
-]

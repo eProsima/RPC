@@ -1161,5 +1161,33 @@ union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
 
-/**** NEW OUR_TYPES ****/
+/**** Utils ****/
+//TODO EL resto de tipos
+ddsTypeCodeDefs(object) ::= <<
+$if(object.typecode.primitive)$
+$if(object.typecode.isType_d)$
+&$object.name$_string
+$else$
+&$basicDDSTypeCodeDefs.(object.typecode.stType)$
+$endif$
+$else$
+$if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
+$endif$
+>>
 
+basicDDSTypeCodeDefs ::= [
+        "type_5":"DDS_g_tc_float",
+        "type_6":"DDS_g_tc_double",
+        "type_13":"DDS_g_tc_longdouble",
+        "type_1":"DDS_g_tc_short",
+        "type_2":"DDS_g_tc_long",
+        "type_11":"DDS_g_tc_longlong",
+        "type_3":"DDS_g_tc_ushort",
+        "type_4":"DDS_g_tc_ulong",
+        "type_12":"DDS_g_tc_ulonglong",
+        "type_8":"DDS_g_tc_char",
+        "type_14":"DDS_g_tc_wchar",
+        "type_7":"DDS_g_tc_boolean",
+        "type_9":"DDS_g_tc_octet",
+        default: // not basic type.
+]

@@ -1,0 +1,45 @@
+group eprosima;
+
+paramTypeByValue(typecode) ::= <<
+$if(typecode.primitive)$
+$if(typecode.isType_d)$
+const $typecode.cppTypename$&
+$else$
+$typecode.cppTypename$
+$endif$
+$else$
+const $typecode.cppTypename$&
+$endif$
+>>
+
+varDecl(variable, create) ::= <<
+$if(variable)$
+$if(variable.typecode.primitive)$
+$variable.typecode.cppTypename$  $variable.name$ = $variable.typecode.initialValue$;
+$else$
+$variable.typecode.cppTypename$  $variable.name$;
+$endif$
+$endif$
+>>
+
+varDel(variable) ::= <<>>
+
+getTypenameOperation(operation, suffix, varname) ::= <<
+$varname$ = $operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::get_typename();
+>>
+
+// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
+serialized_size(param, var) ::= <<
+$if(param.typecode.primitive)$
+$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
+$else$
+$endif$
+>>
+
+/** NEEDED BY RTI TYPES **/
+charCasting() ::= <<>>
+
+unsetReply() ::= <<>>
+
+
+reqrepDestruction(type, reqrep, name, void) ::= <<>>

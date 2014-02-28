@@ -15,10 +15,6 @@ $fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file co
 
 #include "fastcdr/Cdr.h"
 
-$if(ctx.dds)$
-#include "ndds/ndds_cpp.h"
-$endif$
-
 $definitions; separator="\n"$
 
 >>

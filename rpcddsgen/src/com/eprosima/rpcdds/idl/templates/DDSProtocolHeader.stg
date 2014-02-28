@@ -8,9 +8,11 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file
 
 #include "$ctx.filename$Protocol.h"
 #include "rpcdds/utils/Messages.h"
-$ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
-$if(ctx.projectNeedTypes)$
-#include "$ctx.filename$T.h"
+$ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
+
+$if(ctx.rtiTypes)$
+$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
+#include "$ctx.filename$Exceptions.h"
 
 $endif$
 

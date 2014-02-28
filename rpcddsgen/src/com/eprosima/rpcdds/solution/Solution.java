@@ -1,10 +1,11 @@
 package com.eprosima.rpcdds.solution;
 
+import com.eprosima.rpcdds.RPCDDSGEN;
 import java.util.ArrayList;
 
 public class Solution
 {
-	public Solution(String protocol, boolean serverside, boolean clientside)
+	public Solution(RPCDDSGEN.PROTOCOL protocol, boolean serverside, boolean clientside)
 	{
         m_protocol = protocol;
 		m_serverside = serverside;
@@ -147,7 +148,7 @@ public class Solution
 
     public boolean isIsFastcdr()
     {
-        return (m_protocol != null && (m_protocol.equals("dds") || m_protocol.equals("fastcdr")));
+        return (m_protocol == RPCDDSGEN.PROTOCOL.DDS || m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR);
     }
 	
 	private ArrayList<Project> m_projects = null;
@@ -156,7 +157,7 @@ public class Solution
 	private ArrayList<String> m_includes = null;
 	private boolean m_serverside = true;
 	private boolean m_clientside = true;
-    private String  m_protocol = null;
+    private RPCDDSGEN.PROTOCOL m_protocol = null;
 	
 	// OS
     String m_os = null;

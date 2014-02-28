@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import com.eprosima.rpcdds.RPCDDSGEN;
 import com.eprosima.rpcdds.tree.Module;
 import com.eprosima.rpcdds.tree.Annotation;
 import com.eprosima.rpcdds.tree.Definition;
@@ -24,7 +25,7 @@ import com.eprosima.rpcdds.util.Utils;
 public class Context
 {
     // TODO Remove middleware parameter. It is temporal while cdr and rest don't have async functions.
-    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, String protocol)
+    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, RPCDDSGEN.PROTOCOL protocol, RPCDDSGEN.DDS_TYPES ddstypes)
     {
         // Detect OS
         m_os = System.getProperty("os.name");
@@ -111,6 +112,7 @@ public class Context
 
         // TODO Remove
         m_protocol = protocol;
+        m_ddstypes = ddstypes;
     }
     
     private boolean startsWith(String st, String prefix)
@@ -426,19 +428,6 @@ public class Context
     }
     
     /*!
-     * @brief This function is used to know if a project has to generate the Types.
-     */
-    public boolean isProjectNeedTypes()
-    {
-    	com.eprosima.rpcdds.tree.Exception ex = null;;
-    	
-    	if((ex = getFirstException()) != null)
-    		return true;
-    	
-    	return false;
-    }
-    
-    /*!
      * @brief This function sets the current module that is been processed.
      */
     public void setCurrentModule(Module module)
@@ -605,10 +594,15 @@ public class Context
     // TODO Remove
     public boolean isDds()
     {
-        if(m_protocol != null && m_protocol.equals("dds"))
+        if(m_protocol == RPCDDSGEN.PROTOCOL.DDS)
             return true;
 
         return false;
+    }
+
+    public boolean isRtiTypes()
+    {
+        return m_ddstypes == RPCDDSGEN.DDS_TYPES.RTI;
     }
 
     ////////// RESTful block //////////
@@ -630,7 +624,7 @@ public class Context
     			if(getTypeCode(structName) instanceof StructTypeCode) {
     				StructTypeCode struct = (StructTypeCode)getTypeCode(structName);
     				for(Member member: struct.getMembers()) {
-    					String type = member.getTypecode().getTypename();
+    					String type = member.getTypecode().getCppTypename();
     					String name = "{" + member.getName().substring(0, member.getName().length() - 1) + "}";
     					pos = path.indexOf(name);
     					String variablePath = path.substring(0, pos + name.length());   
@@ -696,5 +690,6 @@ public class Context
     final String currentDirS = "." + File.separator;
 
     // TODO Remove
-    private String m_protocol = null;
+    private RPCDDSGEN.PROTOCOL m_protocol = null;
+    private RPCDDSGEN.DDS_TYPES m_ddstypes = RPCDDSGEN.DDS_TYPES.EPROSIMA;
 }

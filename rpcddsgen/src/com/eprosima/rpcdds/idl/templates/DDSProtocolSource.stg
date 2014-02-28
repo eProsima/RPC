@@ -17,7 +17,11 @@ $if(ctx.server)$
 
 $endif$
 #include "rpcdds/exceptions/Exceptions.h"
+$if(!ctx.rtiTypes)$
 #include "$ctx.filename$TopicsPlugin.h"
+$else$
+$ReqRepSIncludes(filename=ctx.filename)$
+$endif$
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol::dds;
@@ -76,7 +80,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         if(strcmp(interfaceName, "$first(ctx.interfaces).scopedname$") == 0)
         {
             $first(ctx.interfaces).operations : { operation |
-            requesttypeName = $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typename();
+            $getTypenameOperation(operation=operation, suffix="Request", varname="requesttypeName")$
     
             if(!$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
             {
@@ -84,7 +88,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             }
             
             $if(!operation.oneway)$
-            replytypeName = $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typename();
+            $getTypenameOperation(operation=operation, suffix="Reply", varname="replytypeName")$
     
             if(!$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
             {
@@ -275,7 +279,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
             throw ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException(retInstance._header().retMsg()$stringPointerConst()$); // TODO Quitar stringPointerConst
+            throw ServerInternalException(retInstance._header().retMsg());
             break;
         $endif$
         default:

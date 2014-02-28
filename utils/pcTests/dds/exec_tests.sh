@@ -18,7 +18,7 @@ function execTest
     # Info about test
     echo "EXECUTING $1 for $NDDSTARGET"
     # Generates the file with RPCDDS script
-    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -types rti -d output -example $NDDSTARGET "$1/$1.idl"
+    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # TODO Temporary set of LIBFASTCDR

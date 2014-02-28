@@ -20,15 +20,15 @@ public class ArrayTypeCode extends ContainerTypeCode
     public boolean isIsType_f(){return true;}
     
     @Override
-    public String getTypename()
+    public String getCppTypename()
     {
         StringTemplate first = null, second = null, fin = null;
         String prevf = null, prevs = null;
         
         for(int count = 0; count < m_dimensions.size(); ++count)
         {     
-            first = m_typesgr.getInstanceOf("type_" + Integer.toHexString(TypeCode.KIND_ARRAY) + "_first");
-            second = m_typesgr.getInstanceOf("type_" + Integer.toHexString(TypeCode.KIND_ARRAY) + "_second");
+            first = cpptypesgr.getInstanceOf("type_" + Integer.toHexString(TypeCode.KIND_ARRAY) + "_first");
+            second = cpptypesgr.getInstanceOf("type_" + Integer.toHexString(TypeCode.KIND_ARRAY) + "_second");
             second.setAttribute("size", m_dimensions.get(count));
             
             if(prevf != null)
@@ -44,14 +44,18 @@ public class ArrayTypeCode extends ContainerTypeCode
             prevs = second.toString();
         }
         
-        fin = getTypenameFromStringTemplate();
+        fin = getCppTypenameFromStringTemplate();
         fin.setAttribute("firs", prevf);
         fin.setAttribute("secon", prevs);
-        fin.setAttribute("type", getContentTypeCode().getTypename());
+        fin.setAttribute("type", getContentTypeCode().getCppTypename());
         
         return fin.toString();
     }
     
+    public String getIdlTypename()
+    {
+        return "Error";
+    }
     public void addDimension(String dimension)
     {
         m_dimensions.add(dimension);

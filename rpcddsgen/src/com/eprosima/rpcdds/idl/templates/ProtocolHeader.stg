@@ -17,8 +17,6 @@ $if(ctx.server)$
 
 $endif$
 
-$ddsIncludes()$
-
 namespace eprosima
 {
     namespace rpcdds

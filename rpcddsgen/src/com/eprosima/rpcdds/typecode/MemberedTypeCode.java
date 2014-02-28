@@ -48,7 +48,10 @@ public abstract class MemberedTypeCode extends TypeCode
     }
     
     @Override
-    public abstract String getTypename();
+    public abstract String getCppTypename();
+    
+    @Override
+    public abstract String getIdlTypename();
     
     private String m_name = null;
     

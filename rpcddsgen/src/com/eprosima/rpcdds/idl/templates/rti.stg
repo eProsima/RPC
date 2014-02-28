@@ -18,32 +18,32 @@ group main;
 
 memberComplexInit(member) ::= <<
 $if(member)$
-memset(&$member.name$, 0, sizeof($member.typecode.typename$));
+memset(&$member.name$, 0, sizeof($member.typecode.cppTypename$));
 $endif$
 >>
 
 memberComplexInitCopy(member, dataname) ::= <<
 $if(member)$
-$member.typecode.typename$_initialize(&$member.name$);
-$member.typecode.typename$_copy(&$member.name$, &$dataname$.$member.name$);
+$member.typecode.cppTypename$_initialize(&$member.name$);
+$member.typecode.cppTypename$_copy(&$member.name$, &$dataname$.$member.name$);
 $endif$
 >>
 
 memberComplexCopy(member, dataname) ::= <<
 $if(member)$
-$member.typecode.typename$_copy(&$member.name$, &$dataname$.$member.name$);
+$member.typecode.cppTypename$_copy(&$member.name$, &$dataname$.$member.name$);
 $endif$
 >>
 
 memberComplexExtract(member, dataname) ::= <<
 $if(member)$
-$member.typecode.typename$_copy(&$dataname$.$member.name$, &$member.name$);
+$member.typecode.cppTypename$_copy(&$dataname$.$member.name$, &$member.name$);
 $endif$
 >>
 
 varComplexDecl(variable, create) ::= <<
 $if(variable)$
-$variable.typecode.typename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.typename$));$endif$
+$variable.typecode.cppTypename$ $variable.name$;$if(create)$$\n$memset(&$variable.name$, 0, sizeof($variable.typecode.cppTypename$));$endif$
 $endif$
 >>
 
@@ -54,13 +54,13 @@ $typeName$_initialize(&$name$);
 
 varComplexInitialize(variable) ::= <<
 $if(variable)$
-$variable.typecode.typename$_initialize(&$variable.name$);
+$variable.typecode.cppTypename$_initialize(&$variable.name$);
 $endif$
 >>
 
 varComplexDelT(typeName, name) ::= <<$typeName$_finalize(&$name$);>>
 
-varComplexDel(variable) ::= <<$variable.typecode.typename$_finalize(&$variable.name$);>>
+varComplexDel(variable) ::= <<$variable.typecode.cppTypename$_finalize(&$variable.name$);>>
 
 varStringDel(name) ::=<<
 if($name$ != NULL) free($name$);
@@ -94,12 +94,12 @@ reqrepRefFinalize(type, reqrep, name) ::= <<
 $type$$reqrep$_finalize(&$name$);
 >>
 
-getTypename(typename, name) ::= <<
-$name$ = $typename$TypeSupport::get_type_name();
+getTypenameOperation(operation, suffix, varname) ::= <<
+$varname$ = $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
 >>
 
-registerTypename(typename, name) ::= <<
-$typename$TypeSupport::register_type(m_ddsTransport->getParticipant(), $name$)
+registerTypename(cppTypename, name) ::= <<
+$cppTypename$TypeSupport::register_type(m_ddsTransport->getParticipant(), $name$)
 >>
 
 preReqIDLDefines(name) ::= <<
@@ -148,9 +148,6 @@ dependencies(conf) ::= <<
 nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
-stringPointerConst() ::= <<
->>
-
 stringPointer() ::= <<>>
 
 charCasting() ::= <<
@@ -168,32 +165,37 @@ memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - size
 >>
 
 /***** NEW OUR_TYPES *****/
-//TODO EL resto de tipos
-ddsTypeCodeDefs(object) ::= <<
-$if(object.typecode.primitive)$
-$if(object.typecode.isType_d)$
-&$object.name$_string
+
+paramTypeByValue(typecode) ::= <<
+$if(typecode.primitive)$
+$if(typecode.isType_d)$
+$typecode.cppTypename$
 $else$
-&$basicDDSTypeCodeDefs.(object.typecode.stType)$
+const $typecode.cppTypename$
 $endif$
 $else$
-$if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
+const $typecode.cppTypename$&
 $endif$
 >>
 
-basicDDSTypeCodeDefs ::= [
-        "type_5":"DDS_g_tc_float",
-        "type_6":"DDS_g_tc_double",
-        "type_13":"DDS_g_tc_longdouble",
-        "type_1":"DDS_g_tc_short",
-        "type_2":"DDS_g_tc_long",
-        "type_11":"DDS_g_tc_longlong",
-        "type_3":"DDS_g_tc_ushort",
-        "type_4":"DDS_g_tc_ulong",
-        "type_12":"DDS_g_tc_ulonglong",
-        "type_8":"DDS_g_tc_char",
-        "type_14":"DDS_g_tc_wchar",
-        "type_7":"DDS_g_tc_boolean",
-        "type_9":"DDS_g_tc_octet",
-        default: // not basic type.
-]
+varDecl(variable, create) ::= <<
+$if(variable)$
+$if(variable.typecode.primitive)$
+$variable.typecode.cppTypename$  $variable.name$ = $variable.typecode.initialValue$;
+$else$
+$varComplexDecl(...)$
+$endif$
+$endif$
+>>
+
+varDel(variable) ::= <<
+$if(variable)$
+$if(variable.typecode.primitive)$
+$if(variable.typecode.isType_d)$
+$varStringDel(name=variable.name)$
+$endif$
+$else$
+$varComplexDel(...)$
+$endif$
+$endif$
+>>

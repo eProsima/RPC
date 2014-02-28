@@ -19,10 +19,6 @@ $fileHeader(file=[ctx.filename, "Topics.h"], description=["This header file cont
 
 #include <cstddef>
 
-$if(ctx.dds)$
-class DDSDomainParticipant;
-$endif$
-
 #if defined(_WIN32)
 #if defined(USER_CPP_DLL_EXPORT)
 #define user_cpp_DllExport __declspec( dllexport )
@@ -138,7 +134,7 @@ private:
 
     eprosima::rpcdds::protocol::dds::RequestHeader m__header;
 
-    $operation.inputparam:{ param |$param.typecode.typename$ m_$param.name$;}; separator="\n"$
+    $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
 };
 
 /*!
@@ -219,7 +215,7 @@ private:
 
     eprosima::rpcdds::protocol::dds::ReplyHeader m__header;
 
-    $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.typename$ m_$param.name$;}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
 };
 
 >>
@@ -244,7 +240,7 @@ $if(param.typecode.primitive)$
  * @brief This function sets a value in member $param.name$
  * @param _$param.name$ New value for member $param.name$
  */
-inline void $param.name$($param.typecode.typename$ _$param.name$)
+inline void $param.name$($param.typecode.cppTypename$ _$param.name$)
 {
     m_$param.name$ = _$param.name$;
 }
@@ -253,7 +249,7 @@ inline void $param.name$($param.typecode.typename$ _$param.name$)
  * @brief This function returns the value of member $param.name$
  * @return Value of member $param.name$
  */
-inline $param.typecode.typename$ $param.name$() const
+inline $param.typecode.cppTypename$ $param.name$() const
 {
     return m_$param.name$;
 }
@@ -262,7 +258,7 @@ inline $param.typecode.typename$ $param.name$() const
  * @brief This function returns a reference to member $param.name$
  * @return Reference to member $param.name$
  */
-inline $param.typecode.typename$& $param.name$()
+inline $param.typecode.cppTypename$& $param.name$()
 {
     return m_$param.name$;
 }
@@ -271,7 +267,7 @@ $else$
  * @brief This function copies the value in member $param.name$
  * @param _$param.name$ New value to be copied in member $param.name$
  */
-inline void $param.name$(const $param.typecode.typename$ &_$param.name$)
+inline void $param.name$(const $param.typecode.cppTypename$ &_$param.name$)
 {
     m_$param.name$ = _$param.name$;
 }
@@ -280,7 +276,7 @@ inline void $param.name$(const $param.typecode.typename$ &_$param.name$)
  * @brief This function moves the value in member $param.name$
  * @param _$param.name$ New value to be moved in member $param.name$
  */
-inline void $param.name$($param.typecode.typename$ &&_$param.name$)
+inline void $param.name$($param.typecode.cppTypename$ &&_$param.name$)
 {
     m_$param.name$ = std::move(_$param.name$);
 }
@@ -289,7 +285,7 @@ inline void $param.name$($param.typecode.typename$ &&_$param.name$)
  * @brief This function returns a constant reference to member $param.name$
  * @return Constant reference to member $param.name$
  */
-inline const $param.typecode.typename$& $param.name$() const
+inline const $param.typecode.cppTypename$& $param.name$() const
 {
     return m_$param.name$;
 }
@@ -298,7 +294,7 @@ inline const $param.typecode.typename$& $param.name$() const
  * @brief This function returns a reference to member $param.name$
  * @return Reference to member $param.name$
  */
-inline $param.typecode.typename$& $param.name$()
+inline $param.typecode.cppTypename$& $param.name$()
 {
     return m_$param.name$;
 }

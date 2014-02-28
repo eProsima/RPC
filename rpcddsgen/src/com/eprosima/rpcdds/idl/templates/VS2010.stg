@@ -3,7 +3,7 @@ group VS2010;
 solution(solution, example, configurations) ::= <<
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-$solution.projects : {$projectReferences(solution=solution, project=it, example=example)$$if(!it.unique)$$projectReferencesExtra(solution=solution, project=it, example=example)$$endif$};separator="\n"$
+$solution.projects : {$projectReferences(solution=solution, project=it, example=example)$$if(it.containsInterfaces)$$projectReferencesExtra(solution=solution, project=it, example=example)$$endif$};separator="\n"$
 Global
 $\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
 $configurations:{conf |$\t$$\t$$conf.name$|$conf.platform$ = $conf.name$|$conf.platform$};separator="\n"$
@@ -563,7 +563,7 @@ $endif$
  *   postSolution - local
  */ 
 projectConfigurationPlatforms(solution, project, configurations) ::= <<
-$configurations:{conf | $postSolution(solution=solution, project=project, conf=conf)$$if(!project.unique)$$postSolutionExtra(solution=solution, project=project, conf=conf)$$endif$};separator="\n"$
+$configurations:{conf | $postSolution(solution=solution, project=project, conf=conf)$$if(project.containsInterfaces)$$postSolutionExtra(solution=solution, project=project, conf=conf)$$endif$};separator="\n"$
 >>
 
 

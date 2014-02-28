@@ -9,9 +9,10 @@ $fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file co
 #include "$ctx.filename$Protocol.h"
 #include "rpcdds/exceptions/ServerInternalException.h"
 
-$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
-$if(ctx.projectNeedTypes)$
-#include "$ctx.filename$T.h"
+$if(ctx.rtiTypes)$
+$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
+
+#include "$ctx.filename$Exceptions.h"
 
 $endif$
 
@@ -61,8 +62,8 @@ operation(ctx, operation, param_list) ::= <<
 /*void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
 { 
     $operation.parent.name$Server *srv = dynamic_cast<$operation.parent.name$Server*>(server);
-    $operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
-    $varDecl(variable=operation.rettypeparam)$   
+    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam, create="yes")$   
     $if(!operation.oneway)$$operation.parent.name$_$operation.name$Reply replyData;$endif$
     
     $operation.inoutputparam : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$

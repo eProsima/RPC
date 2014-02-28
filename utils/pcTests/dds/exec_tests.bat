@@ -126,7 +126,7 @@ echo "EXECUTING %3 for %1"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with RPCDDS script
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -protocol dds -types rti -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcdds_rti_pcTests.bat -protocol dds -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory

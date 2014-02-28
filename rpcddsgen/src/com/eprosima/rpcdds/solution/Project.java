@@ -96,14 +96,14 @@ public class Project
 		return m_serverincludefiles;
 	}
 	
-	public boolean getUnique()
+	public boolean getContainsInterfaces()
 	{
-		return m_unique;
+		return m_containsInterfaces;
 	}
 	
-	public void setUnique(boolean unique)
+	public void setContainsInterfaces(boolean containsInterfaces)
 	{
-		m_unique = unique;
+		m_containsInterfaces = containsInterfaces;
 	}
 	
 	/*!
@@ -189,7 +189,7 @@ public class Project
 	
 	private String m_name = null;
 	private String m_file = null;
-	private boolean m_unique = false;
+	private boolean m_containsInterfaces = false;
 	private ArrayList m_commonsrcfiles = null;
 	private ArrayList m_commonincludefiles = null;
 	private ArrayList m_clientsrcfiles = null;

@@ -1,17 +1,17 @@
-group TypesHeader;
+group RTIExceptionsHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "T.h"], description=["This header file contains the declaration of common types in ", ctx.filename, ".idl"])$
+$fileHeader(file=[ctx.filename, "Exceptions.h"], description=["TODO This header file contains the declaration of common types in ", ctx.filename, ".idl"])$
 
-#ifndef _$ctx.filename;format="toUpper"$T_H_
-#define _$ctx.filename;format="toUpper"$T_H_
+#ifndef _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
+#define _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
 
 #include "rpcdds/exceptions/UserException.h"
 #include "$ctx.filename$Support.h"
 
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename;format="toUpper"$T_H_
+#endif // _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
 >>
 
 module(ctx, module, definition_list) ::= <<

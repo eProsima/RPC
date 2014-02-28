@@ -15,12 +15,12 @@ LIBS = $if(local)$$if(solution.isFastcdr)$-L\$(LIBFASTCDR) $endif$-L\$(FASTRPCHO
 
 DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir bin.dir bin/$example$.dir
 
-all: \$(DIRECTORIES) $solution.projects:{$it.name$ $if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
+all: \$(DIRECTORIES) $solution.projects:{$it.name$ $if(it.containsInterfaces)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
 
 $solution.projects:{
 $it.name$_TARGET= lib/$example$/lib$it.name$.so
 $it.name$_TARGET_Z= lib/$example$/lib$it.name$.a
-$if(!it.unique)$
+$if(it.containsInterfaces)$
 $if(solution.clientside)$
 $it.name$_CLIENT_TARGET= lib/$example$/lib$it.name$Client.so
 $it.name$_CLIENT_TARGET_Z= lib/$example$/lib$it.name$Client.a
@@ -38,7 +38,7 @@ $it.name$_COMMON_SRC_CXXFILES = $it.commonSrcFiles : {srcfile | $srcfile$}; sepa
 
 $it.name$_COMMON_SRC_CPPFILES=
 
-$if(!it.unique)$
+$if(it.containsInterfaces)$
 $if(solution.clientside)$
 $it.name$_CLIENTSOURCES = $it.clientSrcFiles : {srcfile | $srcfile$}; separator=" \\\n\t"$
 $endif$
@@ -49,7 +49,7 @@ $endif$
 $endif$
 
 $it.name$_COMMONOBJS    = \$($it.name$_COMMON_SRC_CXXFILES:%.cxx=output/$example$/%.o) \$($it.name$_COMMON_SRC_CPPFILES:%.cpp=output/$example$/%.o)
-$if(!it.unique)$
+$if(it.containsInterfaces)$
 $if(solution.clientside)$
 $it.name$_CLIENTOBJS    = \$($it.name$_CLIENTSOURCES:%.cxx=output/$example$/%.o)
 $endif$
@@ -59,14 +59,14 @@ $it.name$_SERVEROBJS    = \$($it.name$_SERVERSOURCES:%.cxx=output/$example$/%.o)
 $endif$
 $endif$
 
-OBJS+= \$($it.name$_COMMONOBJS)$if(!it.unique)$$if(solution.clientside)$ \$($it.name$_CLIENTOBJS)$endif$$if(solution.serverside)$ \$($it.name$_SERVEROBJS)$endif$$endif$
+OBJS+= \$($it.name$_COMMONOBJS)$if(it.containsInterfaces)$$if(solution.clientside)$ \$($it.name$_CLIENTOBJS)$endif$$if(solution.serverside)$ \$($it.name$_SERVEROBJS)$endif$$endif$
 
 \$($it.name$_TARGET): \$($it.name$_COMMONOBJS)
 	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_TARGET) \$($it.name$_COMMONOBJS) \$(LIBS) -Llib/$example$ $it.dependencies : {dep | -l$dep$}; separator=" "$
 
 \$($it.name$_TARGET_Z): \$($it.name$_COMMONOBJS)
 	\$(AR) -cru \$($it.name$_TARGET_Z) \$($it.name$_COMMONOBJS)
-$if(!it.unique)$
+$if(it.containsInterfaces)$
 $if(solution.clientside)$
 \$($it.name$_CLIENT_TARGET): \$($it.name$_CLIENTOBJS)
 	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_CLIENT_TARGET) \$(LIBS) -Llib/$example$ -l$it.name$ \$($it.name$_CLIENTOBJS)
@@ -110,7 +110,7 @@ $it.name$ServerExample : \$($it.name$_SERVER_EXAMPLE_TARGET)
 $endif$
 $endif$
 
-$it.name$: \$($it.name$_TARGET) \$($it.name$_TARGET_Z)$if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$
+$it.name$: \$($it.name$_TARGET) \$($it.name$_TARGET_Z)$if(it.containsInterfaces)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$
 }; separator="\n"$
 
 output/$example$/%.o:%.cxx
@@ -119,7 +119,7 @@ output/$example$/%.o:%.cxx
 output/$example$/%.o:%.cpp
 	\$(CPP) \$(CPPFLAGS) \$(INCLUDES) \$(DEFINES) -c \$< -o \$@
 
-.PHONY: $solution.projects:{$it.name$ $if(!it.unique)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
+.PHONY: $solution.projects:{$it.name$ $if(it.containsInterfaces)$$if(solution.clientside)$ $it.name$Client $it.name$ClientExample$endif$$if(solution.serverside)$ $it.name$Server $it.name$ServerExample$endif$$endif$}; separator=" \\\n\t"$
 
 clean:
 	@rm -f \$(OBJS)

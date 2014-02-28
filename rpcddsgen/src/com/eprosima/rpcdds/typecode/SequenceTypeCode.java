@@ -16,10 +16,19 @@ public class SequenceTypeCode extends ContainerTypeCode
     public boolean isIsType_e(){return true;}
     
     @Override
-    public String getTypename()
+    public String getCppTypename()
     {
-        StringTemplate st = getTypenameFromStringTemplate();
-        st.setAttribute("type", getContentTypeCode().getTypename());
+        StringTemplate st = getCppTypenameFromStringTemplate();
+        st.setAttribute("type", getContentTypeCode().getCppTypename());
+        st.setAttribute("maxsize", m_maxsize);
+        return st.toString();
+    }
+    
+    @Override
+    public String getIdlTypename()
+    {
+        StringTemplate st = getIdlTypenameFromStringTemplate();
+        st.setAttribute("type", getContentTypeCode().getIdlTypename());
         st.setAttribute("maxsize", m_maxsize);
         return st.toString();
     }

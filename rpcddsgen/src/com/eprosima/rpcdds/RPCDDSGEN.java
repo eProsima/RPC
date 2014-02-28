@@ -31,11 +31,15 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.antlr.stringtemplate.StringTemplate;
+import org.antlr.stringtemplate.StringTemplateErrorListener;
 import org.antlr.stringtemplate.StringTemplateGroup;
+import org.antlr.stringtemplate.StringTemplateGroupLoader;
+import org.antlr.stringtemplate.CommonGroupLoader;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
 import com.eprosima.rpcdds.exceptions.BadArgumentException;
 import com.eprosima.rpcdds.exceptions.ParseException;
+import com.eprosima.rpcdds.typecode.TypeCode;
 import com.eprosima.rpcdds.idl.grammar.Context;
 import com.eprosima.rpcdds.idl.grammar.IDLLexer;
 import com.eprosima.rpcdds.idl.grammar.IDLParser;
@@ -60,6 +64,20 @@ import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
 // TO_DO: string constants...
 public class RPCDDSGEN
 {
+    class TemplateErrorListener implements StringTemplateErrorListener
+    {  
+        public void error(String arg0, Throwable arg1)
+        {
+            System.out.println(arg0);
+            arg1.printStackTrace();
+        }
+    
+        public void warning(String arg0)
+        {
+            System.out.println(arg0);   
+        }   
+    }
+    
     private static ArrayList<String> m_platforms = null;
     private static String m_middleware = "rti";
     
@@ -74,7 +92,24 @@ public class RPCDDSGEN
     //! Add information to use fastrpcgen internally. 
     private boolean m_local = false;
     private String m_ppPath = null;
-    private String m_protocol = "dds"; // Default protocol -> DDS
+
+    // Use to know the protocol
+    public enum PROTOCOL
+    {
+        DDS,
+        REST,
+        FASTCDR
+    };
+
+    private PROTOCOL m_protocol = PROTOCOL.DDS; // Default protocol -> DDS
+
+    // Used to know who types generate in DDS case.
+    public enum DDS_TYPES
+    {
+        EPROSIMA,
+        RTI
+    };
+    private DDS_TYPES m_types = DDS_TYPES.EPROSIMA; // Default our types
     
     private final String m_defaultOutputDir = "." + File.separator;
     private String m_outputDir = m_defaultOutputDir;
@@ -88,7 +123,6 @@ public class RPCDDSGEN
     private ArrayList m_lineCommandForWorkDirSet = null;	
     private String m_spTemplate = "main";
     // Location of the MessageHeader.idl file
-    // TODO Quitar
     private String m_messageHeaderFileName = "MessageHeader.idl";
     private String m_messageHeaderFileLocation = null;
     private String m_requestreplyIDLLocation = null;
@@ -110,13 +144,6 @@ public class RPCDDSGEN
         
         m_idlFiles = new Vector<String>();
         
-        // Load available protocols
-        ArrayList<String> availableProtocols = new ArrayList<String>();
-        availableProtocols.add("dds");
-        availableProtocols.add("rest");
-        availableProtocols.add("fastcdr");
-        //
-
         while(count < args.length)
         {
             arg = args[count++];
@@ -199,23 +226,39 @@ public class RPCDDSGEN
             {
                 if(count < args.length)
                 {
-                    m_protocol = args[count++];
-                    
-                    boolean available = false;
-                    
-                    for(String protocol: availableProtocols)
+                    String protocol = args[count++];
+
+                    if(protocol.equalsIgnoreCase("dds"))
                     {
-                    	if(m_protocol.equalsIgnoreCase(protocol))
-                    	{
-                    		available = true;
-                    		break;
-                    	}
+                        m_protocol = PROTOCOL.DDS;
                     }
-                    if(!available)
-                        throw new BadArgumentException("Unknown protocol " + m_protocol);
+                    else if(protocol.equalsIgnoreCase("rest"))
+                    {
+                        m_protocol = PROTOCOL.REST;
+                    }
+                    else if(protocol.equalsIgnoreCase("fastcdr"))
+                    {
+                        m_protocol = PROTOCOL.FASTCDR;
+                    }
+                    else
+                        throw new BadArgumentException("Unknown protocol " + protocol);
                 }
                 else
                     throw new BadArgumentException("No protocol after -protocol argument");
+            }
+            else if(arg.equalsIgnoreCase("-types"))
+            {
+                if(count < args.length)
+                {
+                    String types = args[count++];
+
+                    if(types.equalsIgnoreCase("rti"))
+                        m_types = DDS_TYPES.RTI;
+                    else
+                        throw new BadArgumentException("Unknown value " + types + " for -types option");
+                }
+                else
+                    throw new BadArgumentException("Any value after -types argument");
             }
             else if(arg.equals("-version"))
             {
@@ -332,68 +375,101 @@ public class RPCDDSGEN
     		}
     	}
     	
-        boolean returnedValue = ddsGenGlobalInit();
-        Solution solution = new Solution(m_protocol, m_servercode, m_clientcode);
-        
-        if(m_protocol.equalsIgnoreCase("dds"))
+        boolean returnedValue = globalInit();
+
+        if(returnedValue)
         {
-            try
+            // Create new solution.
+            Solution solution = new Solution(m_protocol, m_servercode, m_clientcode);
+
+            // Load string templates
+            System.out.println("Loading Templates...");     
+            StringTemplateGroupLoader loader = new CommonGroupLoader("com/eprosima/rpcdds/idl/templates", new TemplateErrorListener());
+            StringTemplateGroup.registerGroupLoader(loader);
+
+            // Load IDL types for stringtemplates
+            TypeCode.idltypesgr = StringTemplateGroup.loadGroup("idlTypes", DefaultTemplateLexer.class, null);
+
+            if(m_protocol == PROTOCOL.DDS)
             {
-        		// First step is to parse the file MessageHeader.idl
-                // TODO Remove
-        		//ddsGen(m_messageHeaderFileLocation, m_lineCommand, m_lineCommandForWorkDirSet, true, false);
-        	       	
-                // TODO Temporalmente comentado
-	        	// Create a project for MessageHeader.idl
-	        	//Project project = new Project("MessageHeader", m_messageHeaderFileLocation, new HashSet());
-	        	
-	        	// Set files generated by rtiddsgen
-	        	// TODO Set the opendds files.
-	        	//project.addCommonIncludeFile("MessageHeader.h");
-	        	//project.addCommonSrcFile("MessageHeader.cxx");
-	        	//project.addCommonIncludeFile("MessageHeaderPlugin.h");
-	        	//project.addCommonSrcFile("MessageHeaderPlugin.cxx");
-	        	//project.addCommonIncludeFile("MessageHeaderSupport.h");
-	        	//project.addCommonSrcFile("MessageHeaderSupport.cxx");
-	        	//project.setUnique(true);
-	        	//solution.addProject(project);
+                // RTI types needs to generate the MessageHeader.idl file.
+                if(m_types == DDS_TYPES.RTI)
+                {
+                    try
+                    {
+                        // First step is to parse the file MessageHeader.idl
+                        ddsGen(m_messageHeaderFileLocation, m_lineCommand, m_lineCommandForWorkDirSet, true, false);
+
+                        // Create a project for MessageHeader.idl
+                        Project project = new Project("MessageHeader", m_messageHeaderFileLocation, new HashSet());
+
+                        // Set files generated by rtiddsgen
+                        // TODO Set the opendds files.
+                        project.addCommonIncludeFile("MessageHeader.h");
+                        project.addCommonSrcFile("MessageHeader.cxx");
+                        project.addCommonIncludeFile("MessageHeaderPlugin.h");
+                        project.addCommonSrcFile("MessageHeaderPlugin.cxx");
+                        project.addCommonIncludeFile("MessageHeaderSupport.h");
+                        project.addCommonSrcFile("MessageHeaderSupport.cxx");
+                        solution.addProject(project);
+
+                        // Load CPP types for stringtemplates.
+                        TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
+                        TemplateManager.middlgr = StringTemplateGroup.loadGroup("rti", DefaultTemplateLexer.class, null);
+                    }
+                    catch(Exception ex)
+                    {
+                        System.out.println("Cannot generate MessageHeader.idl");
+                        return false;
+                    }
+                }
+                // Our types need to add fastcdr library as dependency.
+                else
+                {
+                    // Load CPP types for stringtemplates.
+                    TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
+                    TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
+
+                    solution.addLibrary("fastcdr");
+                }
             }
-            catch(Exception ex)
+            else if(m_protocol == PROTOCOL.REST)
             {
-            	System.out.println("Cannot generate MessageHeader.idl");
-            	return false;
+                // Load CPP types for stringtemplates.
+                TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
+                TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
+
+                solution.addLibrary("boost_system");
+                solution.addLibrary("boost_thread");
+            }
+            else if(m_protocol == PROTOCOL.FASTCDR)
+            {
+                // Load CPP types for stringtemplates.
+                TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
+                TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
+
+                solution.addInclude("$(FASTRPCHOME)/include/protocols/cdr");
+                solution.addLibrary("boost_system");
+                solution.addLibrary("boost_thread");
+                solution.addLibrary("fastcdr");
             }
 
-            solution.addLibrary("fastcdr");
-        }
-        else if(m_protocol.equalsIgnoreCase("rest"))
-        {
-            solution.addLibrary("boost_system");
-            solution.addLibrary("boost_thread");
-        }
-        else if(m_protocol.equalsIgnoreCase("fastcdr"))
-        {
-            solution.addInclude("$(FASTRPCHOME)/include/protocols/cdr");
-            solution.addLibrary("boost_system");
-            solution.addLibrary("boost_thread");
-            solution.addLibrary("fastcdr");
-        }
-        
-        for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
-        {
-        	Project project = process(m_idlFiles.get(count));
-        	
-        	if(project != null)
-        		solution.addProject(project);
-        	else
-        		returnedValue = false;
-        }
-        
-        // Gen solution.
-        if(returnedValue && m_exampleOption != null)
-        {
-            if((returnedValue = genSolution(solution)) == false)
-                System.out.println("ERROR: While the solution was being generated");
+            for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
+            {
+                Project project = process(m_idlFiles.get(count));
+
+                if(project != null)
+                    solution.addProject(project);
+                else
+                    returnedValue = false;
+            }
+
+            // Gen solution.
+            if(returnedValue && m_exampleOption != null)
+            {
+                if((returnedValue = genSolution(solution)) == false)
+                    System.out.println("ERROR: While the solution was being generated");
+            }
         }
         
         return returnedValue;
@@ -443,7 +519,6 @@ public class RPCDDSGEN
         
     private Project process(String idlFilename)
     {
-        boolean returnedValue = false;
         Project project = null;
         System.out.println("Processing the file " + idlFilename + " ...");
         
@@ -456,89 +531,80 @@ public class RPCDDSGEN
             System.out.println("ERROR: Cannot generate the files");
             return null;
 		}
-        //
         
-        ArrayList idlLineCommand = new ArrayList(), idlLineCommandForWorkDirSet = new ArrayList();
-        
-        // TODO Remove
-        //if(ddsGenInit(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet))
+        try
         {
-            try
+            // If the selected protocol was REST, then the IDL file is parsed using REST and return.
+            if(m_protocol == PROTOCOL.REST) 
             {
-            	// If the selected protocol was REST, then the IDL file is parsed using REST and return.
-            	if(m_protocol.equalsIgnoreCase("rest")) 
-            	{
-	                if((project = parseIDLtoREST(idlFilename)) != null)
-	                {
-	                    String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
-	                    
-	                	// Parse the user IDL file that was generated using external tool.
-	                    // Note:The file are put in project info inside parseIDL function.
-                        // TODO Remove
-	                    //ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-	                            //true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
-	                }
-	                	
-	            	return project;
-            	}
-            	
-            	// If the selected protocol was CDR, then the IDL file is parsed using CDR and return.
-            	if(m_protocol.equalsIgnoreCase("fastcdr"))
-            	{
-            	    if((project = parseIDLtoCDR(idlFilename)) != null)
-                    {
-                        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
-                        
-                        // Parse the user IDL file that was generated using external tool.
-                        // Note:The file are put in project info inside parseIDL function.
-                        // TODO Remove
-                        //ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-                                //true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
-                    }
-            	    
-            	    return project;
-            	}
-            	
+                return parseIDLtoREST(idlFilename);
+            }
+            // If the selected protocol was CDR, then the IDL file is parsed using CDR and return.
+            else if(m_protocol == PROTOCOL.FASTCDR)
+            {
+                return parseIDLtoCDR(idlFilename);
+            }
+            else if(m_protocol == PROTOCOL.DDS)
+            {
+                // Arrays used in rti types, to execute rtiddsgen.
+                ArrayList idlLineCommand = new ArrayList(), idlLineCommandForWorkDirSet = new ArrayList();
+        
+                // In case of rti types, prepare the execution or rtiddsgen.
+                if(m_types == DDS_TYPES.RTI && !ddsGenInit(idlFilename, idlLineCommand, idlLineCommandForWorkDirSet))
+                    return null;
+
                 // Parsing and generating code with templates.
                 if((project = parseIDLtoDDS(idlFilename)) != null)
                 {
-                    String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
-                    
-                	// Parse the user IDL file that was generated using external tool.
-                    // Note:The file are put in project info inside parseIDL function.
-                    // TODO Remove
-                    //ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
-                            //true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
-                    
-                            // TODO Remove
-                	/*if(!project.getUnique())
-                	{
-                		// Parse the requestreply IDL file that was generated using external tool.
-                		ddsGen(m_tempDir + onlyFileName + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
-                            false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
-                		
-                		// Add RTI file to the project info.
-                		// TODO Do for Opendds.
-                		project.addCommonIncludeFile(onlyFileName + "RequestReply.h");
-        	        	project.addCommonSrcFile(onlyFileName + "RequestReply.cxx");
-        	        	project.addCommonIncludeFile(onlyFileName + "RequestReplyPlugin.h");
-        	        	project.addCommonSrcFile(onlyFileName + "RequestReplyPlugin.cxx");
-        	        	project.addCommonIncludeFile(onlyFileName + "RequestReplySupport.h");
-        	        	project.addCommonSrcFile(onlyFileName + "RequestReplySupport.cxx");
-                	}*/
-                    returnedValue = true;
+                    // In case of rti types, execute rtiddsgen on IDLFilename.idl and IDLFilenameRequestReply.idl
+                    if(m_types == DDS_TYPES.RTI)
+                    {
+                        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+
+                        // Parse the user IDL file that was generated using external tool.
+                        // Note:The file are put in project info inside parseIDL function.
+                        ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                                true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+
+                        // Set files generated by rtiddsgen
+                        // TODO Set the opendds files.
+                        project.addCommonIncludeFile(onlyFileName + ".h");
+                        project.addCommonSrcFile(onlyFileName + ".cxx");
+                        project.addCommonIncludeFile(onlyFileName + "Plugin.h");
+                        project.addCommonSrcFile(onlyFileName + "Plugin.cxx");
+                        project.addCommonIncludeFile(onlyFileName + "Support.h");
+                        project.addCommonSrcFile(onlyFileName + "Support.cxx");
+
+                        if(project.getContainsInterfaces())
+                        {
+                            // Parse the requestreply IDL file that was generated using external tool.
+                            ddsGen(m_tempDir + onlyFileName + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
+                                    false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
+
+                            // Add RTI file to the project info.
+                            // TODO Do for Opendds.
+                            project.addCommonIncludeFile(onlyFileName + "RequestReply.h");
+                            project.addCommonSrcFile(onlyFileName + "RequestReply.cxx");
+                            project.addCommonIncludeFile(onlyFileName + "RequestReplyPlugin.h");
+                            project.addCommonSrcFile(onlyFileName + "RequestReplyPlugin.cxx");
+                            project.addCommonIncludeFile(onlyFileName + "RequestReplySupport.h");
+                            project.addCommonSrcFile(onlyFileName + "RequestReplySupport.cxx");
+                        }
+                    }
+
+                    return project;
                 }
             }
-            catch(Exception ioe)
-            {
-                if(!ioe.getMessage().equals(""))
-                    System.out.println(ioe.getMessage());
-                System.out.println("ERROR: Cannot generate the files");
-                //ioe.printStackTrace();
-            }
+        }
+        catch(Exception ioe)
+        {
+            if(!ioe.getMessage().equals(""))
+                System.out.println(ioe.getMessage());
+            System.out.println("ERROR: Cannot generate the files");
+            //ioe.printStackTrace();
         }
         
-        return returnedValue ? project : null;
+        return null;
     }
     
     private Project parseIDLtoREST(String idlFilename) {
@@ -557,10 +623,10 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
 	        
 	        // Create template manager
-	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
+	        TemplateManager tmanager = new TemplateManager();
 	       
 	        // Load template to generate the supported IDL to RTI.
 	        tmanager.addGroup("rtiIDL");
@@ -616,15 +682,13 @@ public class RPCDDSGEN
 	        {
 	        	// Check there were interfaces in the processed IDL file.
 		        Interface ifc = ctx.getFirstInterface();
-		        // Check if the project needs to generate Types.
-		        boolean needsTypes = ctx.isProjectNeedTypes();
 	        	
 	        	// Create information of project for solution.
 	        	project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
 	        	
-	        	if(ifc == null)
+	        	if(ifc != null)
 			    {   // Set project as only one library.
-			        project.setUnique(true);
+			        project.setContainsInterfaces(true);
 			    }
 	        	
 	        	// Set files generated by rtiddsgen
@@ -732,10 +796,10 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol);
+            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
             
             // Create template manager
-            TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
+            TemplateManager tmanager = new TemplateManager();
             // TODO OpenDDS not
             // Load template to generate the supported IDL to RTI.
             tmanager.addGroup("rtiIDL");
@@ -791,15 +855,13 @@ public class RPCDDSGEN
             {
                 // Check there were interfaces in the processed IDL file.
                 Interface ifc = ctx.getFirstInterface();
-                // Check if the project needs to generate Types.
-                boolean needsTypes = ctx.isProjectNeedTypes();
                 
                 // Create information of project for solution.
                 project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
                 
-                if(ifc == null)
+                if(ifc != null)
                 {   // Set project as only one library.
-                    project.setUnique(true);
+                    project.setContainsInterfaces(true);
                 }
                 
                 // Set files generated by rtiddsgen
@@ -815,7 +877,7 @@ public class RPCDDSGEN
                 // Generate the supported IDL to RTI.
                 returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true);
                 
-                if(returnedValue && needsTypes)
+                if(returnedValue) // TODO && needsTypes))
                 {
                     // Zone used to write all files using the generated string templates.
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "T.h", maintemplates.getTemplate("TypesHeader"), m_replace))
@@ -918,18 +980,33 @@ public class RPCDDSGEN
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
 	        
 	        // Create template manager
-	        TemplateManager tmanager = new TemplateManager("com/eprosima/rpcdds/idl/templates");
-	        // Load template to generate source for common types.
-	        tmanager.addGroup("TypesHeader");
-	        tmanager.addGroup("TypesSource");
-	        // Load template to generate topics for operations.
-	        tmanager.addGroup("TopicsHeader");
-	        tmanager.addGroup("TopicsSource");
-	        tmanager.addGroup("TopicsPluginHeader");
-	        tmanager.addGroup("TopicsPluginSource");
+	        TemplateManager tmanager = new TemplateManager();
+            // Load templates depending on dds types.
+            if(m_types == DDS_TYPES.EPROSIMA)
+            {
+                // Load template to generate source for common types.
+                tmanager.addGroup("TypesHeader");
+                tmanager.addGroup("TypesSource");
+                // Load template to generate topics for operations.
+                tmanager.addGroup("TopicsHeader");
+                tmanager.addGroup("TopicsSource");
+                tmanager.addGroup("TopicsPluginHeader");
+                tmanager.addGroup("TopicsPluginSource");
+            }
+            else if(m_types == DDS_TYPES.RTI)
+            {
+                // TODO OpenDDS not
+                // Load template to generate the supported IDL to RTI.
+                tmanager.addGroup("rtiIDL");
+                // Load template to generate IDL for topics.
+                tmanager.addGroup("TopicsIDL");
+                // Load template to generate source exception types.
+                tmanager.addGroup("RTIExceptionsHeader");
+                tmanager.addGroup("RTIExceptionsSource");
+            }
 	        // Load template to generate the DDS protocol.
 	        tmanager.addGroup("ProtocolHeader");
 	        tmanager.addGroup("DDSProtocolHeader");
@@ -984,21 +1061,26 @@ public class RPCDDSGEN
 	        {
 	        	// Check there were interfaces in the processed IDL file.
 		        Interface ifc = ctx.getFirstInterface();
-		        // Check if the project needs to generate Types.
-		        boolean needsTypes = ctx.isProjectNeedTypes();
-	        	
+	        	// Using rti types the MessageHeader.idl dependency has to be included in the context.
+                if(m_types == DDS_TYPES.RTI && ifc != null)
+                {
+		        	// If there are interfaces, the project dependes in MessageHeader.idl project.
+		        	ctx.addDependency(m_messageHeaderFileLocation);
+                }
+                    
 	        	// Create information of project for solution.
 	        	project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
 	        	
-	        	if(ifc == null)
+	        	if(ifc != null)
 			    {   // Set project as only one library.
-			        project.setUnique(true);
+			        project.setContainsInterfaces(true);
 			    }
+
+                // Zone used to write all files using the generated string templates.
 	        	
-                // TODO Review needsTypes
-	        	if(returnedValue)// && needsTypes)
-	        	{
-			        // Zone used to write all files using the generated string templates.
+                // Generate file using our types.
+	        	if(m_types == DDS_TYPES.EPROSIMA)
+                {
 		        	if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".h", maintemplates.getTemplate("TypesHeader"), m_replace))
 	                {
 	            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".cxx", maintemplates.getTemplate("TypesSource"), m_replace))
@@ -1007,52 +1089,73 @@ public class RPCDDSGEN
 	        	        	project.addCommonSrcFile(onlyFileName + ".cxx");
 		                }
 	                }
+                }
+                else if(m_types == DDS_TYPES.RTI)
+	        	{
+                    // Generate the supported IDL to RTI.
+                    if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true))
+                    {
+                        // Zone used to write all files using the generated string templates.
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.h", maintemplates.getTemplate("RTIExceptionsHeader"), m_replace))
+                        {
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.cxx", maintemplates.getTemplate("RTIExceptionsSource"), m_replace))
+                            {
+                                project.addCommonIncludeFile(onlyFileName + "Exceptions.h");
+                                project.addCommonSrcFile(onlyFileName + "Exceptions.cxx");
+                            }
+                        }
+                    }
 	        	}
 		        
 		        if(returnedValue && ifc != null)
-		        {
-		            System.out.println("Generating Utils Code...");
-		            
-		            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.h", maintemplates.getTemplate("TopicsHeader"), m_replace))
-                    {	
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("TopicsSource"), m_replace))
-                        {	
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader"), m_replace))
-                            {	
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource"), m_replace))
-                                {	
-                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace))
-                                    {
-                                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
-                                        {
-                                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
-                                            {
-                                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
-                                                {
-                                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
-                                                    {
-                                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+                {
+                    System.out.println("Generating Utils Code...");
 
-                                                        project.addCommonIncludeFile(onlyFileName + "Topics.h");
-                                                        project.addCommonSrcFile(onlyFileName + "Topics.cxx");
-                                                        project.addCommonIncludeFile(onlyFileName + "TopicsPlugin.h");
-                                                        project.addCommonSrcFile(onlyFileName + "TopicsPlugin.cxx");
-                                                        project.addCommonIncludeFile(onlyFileName + "Protocol.h");
-                                                        project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
-                                                        project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
-                                                        project.addCommonIncludeFile(onlyFileName + "AsyncCallbackHandlers.h");
-                                                        project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
-                                                        project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
-                                                    }
-                                                }
-                                            }
-                                        }
+                    // Generate file using our types.
+                    if(m_types == DDS_TYPES.EPROSIMA)
+                    {
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.h", maintemplates.getTemplate("TopicsHeader"), m_replace))
+                        {	
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("TopicsSource"), m_replace))
+                            {	
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader"), m_replace))
+                                {	
+                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource"), m_replace))
+                                    {	
+                                        project.addCommonIncludeFile(onlyFileName + "Topics.h");
+                                        project.addCommonSrcFile(onlyFileName + "Topics.cxx");
+                                        project.addCommonIncludeFile(onlyFileName + "TopicsPlugin.h");
+                                        project.addCommonSrcFile(onlyFileName + "TopicsPlugin.cxx");
                                     }
                                 }
                             }
                         }
                     }
-		        }
+
+                    if(returnedValue && (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace)))
+                    {
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
+                        {
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
+                            {
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
+                                {
+                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                    {
+                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+
+                                        project.addCommonIncludeFile(onlyFileName + "Protocol.h");
+                                        project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
+                                        project.addCommonSrcFile(onlyFileName + "DDSProtocol.cxx");
+                                        project.addCommonIncludeFile(onlyFileName + "AsyncCallbackHandlers.h");
+                                        project.addCommonIncludeFile(onlyFileName + "DDSAsyncSupport.h");
+                                        project.addCommonSrcFile(onlyFileName + "DDSAsyncSupport.cxx");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 		        
 		        if(returnedValue && ifc != null && m_clientcode)
 		        {
@@ -1103,7 +1206,7 @@ public class RPCDDSGEN
         return returnedValue ? project : null;
     }
     
-    public boolean ddsGenGlobalInit()
+    public boolean globalInit()
     {
         // Set environment variables.
         String dds_root = null, tao_root = null, rpcdds_root = null;
@@ -1268,7 +1371,6 @@ public class RPCDDSGEN
         return true;
     }
     
-    /* TODO
     public boolean ddsGenInit(String idlFilename, ArrayList idlLineCommand, ArrayList idlLineCommandForWorkDirSet)
     {    
         // Fill the arrays with global command line.
@@ -1448,7 +1550,6 @@ public class RPCDDSGEN
         //The best way to do this is checking for output files existence and modification times (if -replace)
         //ddsGenRunCheck(file);	
     }
-    */
     
     private boolean genSolution(Solution solution)
     {
@@ -1570,7 +1671,7 @@ public class RPCDDSGEN
                 {
                 	if(returnedValue = Utils.writeFile(m_outputDir + project.getName() + "-" + m_exampleOption + ".vcxproj.filters", tprojectFiles, m_replace))
                     {
-                		if(!project.getUnique())
+                		if(project.getContainsInterfaces())
                 		{
                 			if(solution.getClientside())
                 			{
