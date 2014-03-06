@@ -72,7 +72,8 @@ long ProxyTransport::getTimeout()
     return m_timeout;
 }
 
-::transport::Endpoint* ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+::transport::Endpoint* ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename,
+        const char *readertypename, bool eprosima_types,
         Transport::Create_data create_data, Transport::Copy_data copy_data,
         Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -81,7 +82,7 @@ long ProxyTransport::getTimeout()
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, copy_data, dataSize) == 0)
+        if(pe->initialize(name, writertypename, readertypename, eprosima_types, copy_data, dataSize) == 0)
         {
             std::pair<std::map<const char*, ProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ProxyProcedureEndpoint*>(name, pe));
 

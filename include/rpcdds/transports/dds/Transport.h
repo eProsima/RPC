@@ -95,11 +95,13 @@ namespace eprosima
 						 * @param dataSize Size of the DataReader data structure
 						 *
                          * @return 0 if the function ends successfully, -1 otherwise.
+                         * TODO
                          */
                         virtual eprosima::rpcdds::transport::Endpoint*
-                            createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-                                Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
-                                ProcessFunc processFunc, int dataSize) = 0;
+                            createProcedureEndpoint(const char *name, const char *writertypename,
+                                    const char *readertypename, bool eprosima_types,
+                                    Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
+                                    ProcessFunc processFunc, int dataSize) = 0;
 
                     protected:
 

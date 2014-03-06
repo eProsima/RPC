@@ -55,8 +55,10 @@ namespace eprosima
                          * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
                          * @param copy_data Pointer to the function used to copy the data when it is received.
                          * @return 0 if the initialization works. -1 in other case.
+                         * TODO
                          */
-                        int initialize(const char *name, const char *writertypename, const char *readertypename,
+                        int initialize(const char *name, const char *writertypename,
+                                const char *readertypename, bool eprosima_types,
                                 Transport::Copy_data copy_data, int dataSize);
 
                         /*!
@@ -167,6 +169,9 @@ namespace eprosima
 
                         //! @brief The data reader used to receive.
                         DDS::DataReader *m_reader;
+
+                        // TODO
+                        bool m_eprosima_types;
 
                         //! @brief Pointer to the function used to copy data when it is received.
                         Transport::Copy_data m_copy_data;

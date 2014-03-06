@@ -35,6 +35,7 @@ $member.typecode.cppTypename$_copy(&$member.name$, &$dataname$.$member.name$);
 $endif$
 >>
 
+// TODO Es necesario?
 memberComplexExtract(member, dataname) ::= <<
 $if(member)$
 $member.typecode.cppTypename$_copy(&$dataname$.$member.name$, &$member.name$);
@@ -98,9 +99,97 @@ getTypenameOperation(operation, suffix, varname) ::= <<
 $varname$ = $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
 >>
 
-registerTypename(cppTypename, name) ::= <<
-$cppTypename$TypeSupport::register_type(m_ddsTransport->getParticipant(), $name$)
+registerTypenameOperationAndCheck(operation, suffix, varname) ::= <<
+$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
 >>
+
+createDataCallback(operation, suffix) ::= <<
+(::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::initialize_data
+>>
+
+copyDataCallback(operation, suffix) ::= <<
+(::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::copy_data
+>>
+
+destroyDataCallback(operation, suffix) ::= <<
+(::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::finalize_data
+>>
+
+getHeaderRetCode(varname) ::= <<
+$varname$._header.retCode
+>>
+
+getHeaderRetMsg(varname) ::= <<
+$varname$._header.retMsg
+>>
+
+addParamToTopic(param, varname, isRequest) ::= <<
+$if(param)$
+$if(param.typecode.isType_f)$
+$param.typecode.cppTypename$_copy(&$varname$.$param.name$, &$param.name$);
+$else$
+$varname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasting()$$endif$$endif$$param.name$;
+$endif$
+$endif$
+>>
+
+extractParamFromTopic(param, varname, isReply) ::= <<
+$if(isReply)$
+$if(param.input)$
+$if(param.typecode.primitive)$
+$if(param.typecode.isType_d)$
+if($param.name$ != NULL)
+    free($param.name$);
+$endif$
+$else$
+$varComplexDel(variable=param)$
+$endif$
+$endif$
+$if(param.typecode.isType_f)$
+$param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
+$else$
+$param.name$ = $varname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
+$endif$
+$else$
+$if(param.output)$
+$if(param.typecode.primitive)$
+$if(param.typecode.isType_d)$
+$param.name$ = strdup($varname$.$param.name$);
+$else$
+$param.name$ = $varname$.$param.name$;
+$endif$
+$else$
+$param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
+$endif$
+$else$
+$if(param.typecode.isType_f)$
+$param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
+$else$
+$param.name$ = $varname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
+$endif$
+$endif$
+$endif$
+>>
+
+copyHeaderInfo(reqvarname, repvarname) ::= <<
+$repvarname$._header.clientId.value_1 = $reqvarname$._header.clientId.value_1;
+$repvarname$._header.clientId.value_2 = $reqvarname$._header.clientId.value_2;
+$repvarname$._header.clientId.value_3 = $reqvarname$._header.clientId.value_3;
+$repvarname$._header.clientId.value_4 = $reqvarname$._header.clientId.value_4;
+$repvarname$._header.requestSequenceNumber = $reqvarname$._header.requestSequenceNumber;
+>>
+
+setHeaderSuccess(varname) ::= <<
+$varname$._header.retCode = OPERATION_SUCCESSFUL;
+$varname$._header.retMsg = $charCasting()$"";
+>>
+
+setHeaderServerInternalException(varname) ::= <<
+$varname$._header.retCode = SERVER_INTERNAL_ERROR;
+$varname$._header.retMsg = $charCasting()$ex.what();
+>>
+
+eprosimaTypesBool() ::= <<false>>
 
 preReqIDLDefines(name) ::= <<
 >>
@@ -161,7 +250,7 @@ bigObjOption() ::= <<
 >>
 
 unsetReply() ::= <<
-memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
+memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - sizeof(replyData._header));
 >>
 
 /***** NEW OUR_TYPES *****/

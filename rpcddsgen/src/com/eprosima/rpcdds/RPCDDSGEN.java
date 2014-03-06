@@ -380,7 +380,7 @@ public class RPCDDSGEN
         if(returnedValue)
         {
             // Create new solution.
-            Solution solution = new Solution(m_protocol, m_servercode, m_clientcode);
+            Solution solution = new Solution(m_protocol, m_types, m_servercode, m_clientcode);
 
             // Load string templates
             System.out.println("Loading Templates...");     
@@ -1077,6 +1077,8 @@ public class RPCDDSGEN
 			    }
 
                 // Zone used to write all files using the generated string templates.
+                
+                System.out.println("Generating Common Code...");
 	        	
                 // Generate file using our types.
 	        	if(m_types == DDS_TYPES.EPROSIMA)
@@ -1095,13 +1097,16 @@ public class RPCDDSGEN
                     // Generate the supported IDL to RTI.
                     if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true))
                     {
-                        // Zone used to write all files using the generated string templates.
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.h", maintemplates.getTemplate("RTIExceptionsHeader"), m_replace))
-                        {
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.cxx", maintemplates.getTemplate("RTIExceptionsSource"), m_replace))
+                        if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
+                        {	
+                            // Zone used to write all files using the generated string templates.
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.h", maintemplates.getTemplate("RTIExceptionsHeader"), m_replace))
                             {
-                                project.addCommonIncludeFile(onlyFileName + "Exceptions.h");
-                                project.addCommonSrcFile(onlyFileName + "Exceptions.cxx");
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.cxx", maintemplates.getTemplate("RTIExceptionsSource"), m_replace))
+                                {
+                                    project.addCommonIncludeFile(onlyFileName + "Exceptions.h");
+                                    project.addCommonSrcFile(onlyFileName + "Exceptions.cxx");
+                                }
                             }
                         }
                     }
@@ -1109,8 +1114,6 @@ public class RPCDDSGEN
 		        
 		        if(returnedValue && ifc != null)
                 {
-                    System.out.println("Generating Utils Code...");
-
                     // Generate file using our types.
                     if(m_types == DDS_TYPES.EPROSIMA)
                     {

@@ -39,7 +39,8 @@ const char* ServerTransport::getType() const
     return "DDS";
 }
 
-::transport::Endpoint* ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
+::transport::Endpoint* ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename,
+        const char *readertypename, bool eprosima_types,
         Transport::Create_data create_data, Transport::Copy_data copy_data,
         Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
 {

@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 public class Solution
 {
-	public Solution(RPCDDSGEN.PROTOCOL protocol, boolean serverside, boolean clientside)
+	public Solution(RPCDDSGEN.PROTOCOL protocol, RPCDDSGEN.DDS_TYPES types, boolean serverside, boolean clientside)
 	{
         m_protocol = protocol;
+        m_types = types;
 		m_serverside = serverside;
 		m_clientside = clientside;
 		m_projects = new ArrayList<Project>();
@@ -146,9 +147,9 @@ public class Solution
 		return m_clientside;
 	}
 
-    public boolean isIsFastcdr()
+    public boolean getNeedsFastcdr()
     {
-        return (m_protocol == RPCDDSGEN.PROTOCOL.DDS || m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR);
+        return ((m_protocol == RPCDDSGEN.PROTOCOL.DDS && m_types == RPCDDSGEN.DDS_TYPES.EPROSIMA) || m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR);
     }
 	
 	private ArrayList<Project> m_projects = null;
@@ -157,7 +158,8 @@ public class Solution
 	private ArrayList<String> m_includes = null;
 	private boolean m_serverside = true;
 	private boolean m_clientside = true;
-    private RPCDDSGEN.PROTOCOL m_protocol = null;
+    private RPCDDSGEN.PROTOCOL m_protocol;
+    private RPCDDSGEN.DDS_TYPES m_types;
 	
 	// OS
     String m_os = null;

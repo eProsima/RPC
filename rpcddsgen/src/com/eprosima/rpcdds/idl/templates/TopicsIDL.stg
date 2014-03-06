@@ -50,7 +50,7 @@ $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
  * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$Request{
-    RequestHeader header;
+    RequestHeader _header;
     $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
 }; $levelIDLdefine()$
 
@@ -97,7 +97,7 @@ $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
  * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$Reply{
-    ReplyHeader header;
+    ReplyHeader _header;
 $if(operation.exceptions)$
     $operation.parent.name$_$operation.name$Reply_union unio;
     

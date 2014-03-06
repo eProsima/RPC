@@ -6,8 +6,13 @@ $fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source f
 #include "$ctx.filename$DDSAsyncSupport.h"
 #include "rpcdds/exceptions/ServerInternalException.h"
 #include "rpcdds/utils/Messages.h"
+$if(ctx.rtiTypes)$
+$ReqRepIncludes(filename=ctx.filename)$
 
-$ctx.includeDependencies : { include |#include "$include$T.h"}; separator="\n"$
+$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
+#include "$ctx.filename$Exceptions.h"
+$endif$
+
 
 using namespace eprosima::rpcdds;
 using namespace ::exception;
@@ -42,10 +47,12 @@ $if(!operation.oneway)$
 $operation.parent.name$_$operation.name$Task::$operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj) :
     DDSAsyncTask(), m_obj(obj)
 {
+    $varComplexInitializeT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="m_reply")$
 }
 
 $operation.parent.name$_$operation.name$Task::~$operation.parent.name$_$operation.name$Task()
 {
+    $varComplexDelT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="m_reply")$
 }
 
 $operation.parent.name$_$operation.name$CallbackHandler& $operation.parent.name$_$operation.name$Task::getObject()
@@ -95,14 +102,8 @@ void $operation.parent.name$_$operation.name$Task::execute()
         }; separator="\n"$
     }
     $else$
-    retcode = (ReturnMessage)m_reply._header().retCode();
-    $[operation.outputparam, operation.rettypeparam] : { param |
-    $if(param.typecode.primitive)$
-    $param.name$ = m_reply.$param.name$();
-    $else$ 
-    $param.name$ = std::move(m_reply.$param.name$()); //TODO Probar que esto funciona.
-    $endif$ 
-    };separator="\n"$
+    retcode = (ReturnMessage)$getHeaderRetCode(varname="m_reply")$;
+    $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname="m_reply", isReply="yes")$};separator="\n"$
         
     if(retcode == OPERATION_SUCCESSFUL)
     {
@@ -111,7 +112,7 @@ void $operation.parent.name$_$operation.name$Task::execute()
     else
     {
         if(retcode == SERVER_INTERNAL_ERROR)
-            getObject().on_exception(ServerInternalException(m_reply._header().retMsg()));
+            getObject().on_exception(ServerInternalException($getHeaderRetMsg(varname="m_reply")$));
     }
     $endif$
 }

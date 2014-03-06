@@ -9,9 +9,9 @@ LDFLAGS= -m$arch$
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES= $archMakeDefines()$
 
-INCLUDES= -I.$if(local)$$if(solution.isFastcdr)$ -I\$(FASTCDR)/include$endif$ -I\$(FASTRPCHOME)/include$endif$ $inclMake()$ $solution.includes : {include | -I$include$};separator=" "$
+INCLUDES= -I.$if(local)$$if(solution.needsFastcdr)$ -I\$(FASTCDR)/include$endif$ -I\$(FASTRPCHOME)/include$endif$ $inclMake()$ $solution.includes : {include | -I$include$};separator=" "$
 
-LIBS = $if(local)$$if(solution.isFastcdr)$-L\$(LIBFASTCDR) $endif$-L\$(FASTRPCHOME)/lib/$example$$endif$ -lrpcdds $libsMake(example=example, version=version)$ $solution.libraries : {library |-l$library$};separator=" "$ \$(SYSLIBS)
+LIBS = $if(local)$$if(solution.needsFastcdr)$-L\$(LIBFASTCDR) $endif$-L\$(FASTRPCHOME)/lib/$example$$endif$ -lrpcdds $libsMake(example=example, version=version)$ $solution.libraries : {library |-l$library$};separator=" "$ \$(SYSLIBS)
 
 DIRECTORIES= output.dir output/$example$.dir lib.dir lib/$example$.dir bin.dir bin/$example$.dir
 

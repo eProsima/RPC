@@ -24,7 +24,7 @@ using namespace eprosima::rpcdds;
 using namespace ::transport::dds;
 
 ProxyProcedureEndpoint::ProxyProcedureEndpoint(ProxyTransport &transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
-    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL),
+    m_readerTopic(NULL), m_filter(NULL), m_writer(NULL), m_reader(NULL), m_eprosima_types(true),
     m_copy_data(NULL), m_dataSize(0), m_queryPool(NULL), m_queriesInUseLimiter(QUERY_POOL_LENGTH),
     m_numSec(0)
 {
@@ -38,7 +38,8 @@ ProxyProcedureEndpoint::~ProxyProcedureEndpoint()
     finalize();
 }
 
-int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
+int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypename,
+        const char *readertypename, bool eprosima_types,
         Transport::Copy_data copy_data, int dataSize)
 {
     const char* const METHOD_NAME = "initialize";
@@ -53,6 +54,7 @@ int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypen
                 // Initialize query pool if it's not a oneway function.
                 if(m_reader == NULL || initQueryPool() == 0)
                 {
+                    m_eprosima_types = eprosima_types;
                     m_copy_data = copy_data;
                     m_dataSize = dataSize;
                     return 0;
@@ -393,20 +395,41 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
     boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
+    void *auxPointerToRequest = NULL;
+    char **auxPointerToRemoteServiceName = NULL;
+    eprosima::rpcdds::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
-        eprosima::rpcdds::protocol::dds::RequestHeader *requestHeader = reinterpret_cast<eprosima::rpcdds::protocol::dds::RequestHeader*>(request);
-        requestHeader->clientId().value_1(m_proxyId[0]);
-        requestHeader->clientId().value_2(m_proxyId[1]);
-        requestHeader->clientId().value_3(m_proxyId[2]);
-        requestHeader->clientId().value_4(m_proxyId[3]);
-        requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
+        if(m_eprosima_types)
+        {
+            requestHeader = reinterpret_cast<eprosima::rpcdds::protocol::dds::RequestHeader*>(request);
+            requestHeader->clientId().value_1(m_proxyId[0]);
+            requestHeader->clientId().value_2(m_proxyId[1]);
+            requestHeader->clientId().value_3(m_proxyId[2]);
+            requestHeader->clientId().value_4(m_proxyId[3]);
+            requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
+        }
+        else
+        {
+            auxPointerToRequest = request;
+            *(unsigned int*)auxPointerToRequest = m_proxyId[0];
+            ((unsigned int*)auxPointerToRequest)[1] = m_proxyId[1];
+            ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
+            ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
+            auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+            auxPointerToRequest = (char**)auxPointerToRequest + 1;
+        }
 
         m_mutex->lock();
         /* Thread safe num_Sec handling */
-        requestHeader->requestSequenceNumber(m_numSec);
+        if(m_eprosima_types)
+            requestHeader->requestSequenceNumber(m_numSec);
+        else
+            *(unsigned int*)auxPointerToRequest = m_numSec;
         numSec = m_numSec;
         m_numSec++;
 
@@ -509,6 +532,12 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
         {
             printf("ERROR <%s::%s>: Cannot get a free query condition\n", CLASS_NAME, METHOD_NAME);
         }
+
+        if(!m_eprosima_types)
+        {
+            // Set the remoteServiceName to NULL.
+            *auxPointerToRemoteServiceName = NULL;
+        }
     }
     else
     {
@@ -527,20 +556,41 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
+    void *auxPointerToRequest = NULL;
+    char **auxPointerToRemoteServiceName = NULL;
+    eprosima::rpcdds::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
-        eprosima::rpcdds::protocol::dds::RequestHeader *requestHeader = reinterpret_cast<eprosima::rpcdds::protocol::dds::RequestHeader*>(request);
-        requestHeader->clientId().value_1(m_proxyId[0]);
-        requestHeader->clientId().value_2(m_proxyId[1]);
-        requestHeader->clientId().value_3(m_proxyId[2]);
-        requestHeader->clientId().value_4(m_proxyId[3]);
-        requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
+        if(m_eprosima_types)
+        {
+            requestHeader = reinterpret_cast<eprosima::rpcdds::protocol::dds::RequestHeader*>(request);
+            requestHeader->clientId().value_1(m_proxyId[0]);
+            requestHeader->clientId().value_2(m_proxyId[1]);
+            requestHeader->clientId().value_3(m_proxyId[2]);
+            requestHeader->clientId().value_4(m_proxyId[3]);
+            requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
+        }
+        else
+        {
+            auxPointerToRequest = request;
+            *(unsigned int*)auxPointerToRequest = m_proxyId[0];
+            ((unsigned int*)auxPointerToRequest)[1] = m_proxyId[1];
+            ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
+            ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
+            auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+            auxPointerToRequest = (char**)auxPointerToRequest + 1;
+        }
 
         m_mutex->lock();
         /* Thread safe num_Sec handling */
-        requestHeader->requestSequenceNumber(m_numSec);
+        if(m_eprosima_types)
+            requestHeader->requestSequenceNumber(m_numSec);
+        else
+            *(unsigned int*)auxPointerToRequest = m_numSec;
         numSec = m_numSec;
         m_numSec++;
 
@@ -609,6 +659,12 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
         else
         {
             printf("ERROR <%s::%s>: Cannot get a free query condition\n", CLASS_NAME, METHOD_NAME);
+        }
+
+        if(!m_eprosima_types)
+        {
+            // Set the remoteServiceName to NULL.
+            *auxPointerToRemoteServiceName = NULL;
         }
     }
     else

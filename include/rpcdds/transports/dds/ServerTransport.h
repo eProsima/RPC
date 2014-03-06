@@ -59,12 +59,13 @@ namespace eprosima
 						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
 						 * @param dataSize Size of the DataReader data structure
                          * @return 0 if the function successfully works, -1 in other case
+                         * TODO
                          */
                         eprosima::rpcdds::transport::Endpoint*
-                            createProcedureEndpoint(const char *name, const char *writertypename, const char *readertypename,
-                                Transport::Create_data create_data, Transport::Copy_data copy_data,
-                                Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize);
-
+                            createProcedureEndpoint(const char *name, const char *writertypename,
+                                    const char *readertypename, bool eprosima_types,
+                                    Transport::Create_data create_data, Transport::Copy_data copy_data,
+                                    Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize);
 								
 						/*!
 						 * @brief This method is invoked once for each incoming request.

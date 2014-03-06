@@ -82,7 +82,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $first(ctx.interfaces).operations : { operation |
             $getTypenameOperation(operation=operation, suffix="Request", varname="requesttypeName")$
     
-            if(!$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
+            if($registerTypenameOperationAndCheck(operation=operation, suffix="Request", varname="requesttypeName")$)
             {
                 return false;
             }
@@ -90,7 +90,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $if(!operation.oneway)$
             $getTypenameOperation(operation=operation, suffix="Reply", varname="replytypeName")$
     
-            if(!$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
+            if($registerTypenameOperationAndCheck(operation=operation, suffix="Reply", varname="replytypeName")$)
             {
                 return false;
             }
@@ -102,9 +102,10 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $first(ctx.interfaces).formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
                 requesttypeName,
                 $if(!operation.oneway)$replytypeName,
-                (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::create_data,
-                (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::copy_data,
-                (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::destroy_data,
+                $eprosimaTypesBool()$,
+                $createDataCallback(operation=operation, suffix="Reply")$,
+                $copyDataCallback(operation=operation, suffix="Reply")$,
+                $destroyDataCallback(operation=operation, suffix="Reply")$,
                 NULL,
                 sizeof($first(ctx.interfaces).scopedname$_$operation.name$Reply)
                 $else$NULL, NULL, NULL, NULL, NULL, 0$endif$));
@@ -116,9 +117,10 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $first(ctx.interfaces).formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
                     $if(operation.oneway)$NULL$else$replytypeName$endif$,
                     requesttypeName,
-                    (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::create_data,
-                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::copy_data,
-                    (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::destroy_data,
+		    $eprosimaTypesBool()$,
+                    $createDataCallback(operation=operation, suffix="Request")$,
+                    $copyDataCallback(operation=operation, suffix="Request")$,
+                    $destroyDataCallback(operation=operation, suffix="Request")$,
                     $ctx.filename$Protocol::$first(ctx.interfaces).formatedScopedname$_$operation.name$_serve,
                     sizeof($first(ctx.interfaces).scopedname$_$operation.name$Request)));
             }
@@ -129,17 +131,17 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         else if(strcmp(interfaceName, "$interface.scopedname$") == 0)
         {
             $interface.operations : { operation |
-            requesttypeName = $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typename();
+            $getTypenameOperation(operation=operation, suffix="Request", varname="requesttypeName")$
     
-            if(!$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
+            if($registerTypenameOperationAndCheck(operation=operation, suffix="Request", varname="requesttypeName")$)
             {
                 return false;
             }
             
             $if(!operation.oneway)$
-            replytypeName = $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typename();
+            $getTypenameOperation(operation=operation, suffix="Reply", varname="replytypeName")$
     
-            if(!$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
+            if($registerTypenameOperationAndCheck(operation=operation, suffix="Reply", varname="replytypeName")$)
             {
                 return false;
             }
@@ -150,10 +152,11 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             {
                 $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                 requesttypeName,
+                $eprosimaTypesBool()$,
                 $if(!operation.oneway)$replytypeName,
-                (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::create_data,
-                (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::copy_data,
-                (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::destroy_data,
+                $createDataCallback(operation=operation, suffix="Reply")$,
+                $copyDataCallback(operation=operation, suffix="Reply")$,
+                $destroyDataCallback(operation=operation, suffix="Reply")$,
                 NULL,
                 sizeof($interface.scopedname$_$operation.name$Reply)
                 $else$NULL, NULL, NULL, NULL, 0$endif$));
@@ -165,9 +168,10 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $interface.formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                     $if(operation.oneway)$NULL$else$replytypeName$endif$,
                     requesttypeName,
-                    (::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::create_data,
-                    (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::copy_data,
-                    (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::destroy_data,
+		    $eprosimaTypesBool()$,
+                    $createDataCallback(operation=operation, suffix="Request")$,
+                    $copyDataCallback(operation=operation, suffix="Request")$,
+                    $destroyDataCallback(operation=operation, suffix="Request")$,
                     $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve,
                     sizeof($interface.scopedname$_$operation.name$Request)));
             }
@@ -218,9 +222,11 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $operation.parent.scopedname$_$operation.name$Request instance;
     $if(!operation.oneway)$
     $operation.parent.scopedname$_$operation.name$Reply retInstance;
+
+    $varComplexInitializeT(typeName=[operation.parent.scopedname, "_", operation.name, "Reply"], name="retInstance")$
     $endif$
     
-    $operation.inputparam : { param |instance.$param.name$($param.name$);};separator="\n"$
+    $operation.inputparam : { param |$addParamToTopic(param=param, varname="instance", isRequest="yes")$};separator="\n"$
 
     retcode = $operation.parent.formatedScopedname$_$operation.name$_pe->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
     
@@ -232,7 +238,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         switch (retInstance.unio._d)
         {
             case 0:
-                retcode = (ReturnMessage)retInstance._header().retCode();
+                retcode = (ReturnMessage)$getHeaderRetCode(varname="retInstance")$;
                 $operation.outputparam : {$extractDataHelper(param=it, dataname="retInstance.unio._u.st", isReply="yes")$};separator="\n"$
                 $if(operation.rettypeparam)$
                 $extractDataHelper(param=operation.rettypeparam, dataname="retInstance.unio._u.st", isReply="yes")$        
@@ -253,14 +259,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         }
         
     $else$
-        retcode = (ReturnMessage)retInstance._header().retCode();
-        $[operation.outputparam, operation.rettypeparam] : { param |
-        $if(param.typecode.primitive)$
-        $param.name$ = retInstance.$param.name$();
-        $else$ 
-        $param.name$ = std::move(retInstance.$param.name$()); //TODO Probar que esto funciona.
-        $endif$ 
-        };separator="\n"$
+        retcode = (ReturnMessage)$getHeaderRetCode(varname="retInstance")$;
+        $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname="retInstance", isReply="yes")$};separator="\n"$
     
     $endif$
     }
@@ -279,7 +279,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
             throw ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException(retInstance._header().retMsg());
+            throw ServerInternalException($getHeaderRetMsg(varname="retInstance")$);
             break;
         $endif$
         default:
@@ -300,7 +300,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     $operation.parent.scopedname$_$operation.name$Request instance;
     $operation.parent.scopedname$_$operation.name$Task *task = new $operation.parent.scopedname$_$operation.name$Task(obj);
     
-    $operation.inputparam : { param |instance.$param.name$($param.name$);};separator="\n"$
+    $operation.inputparam : { param |$addParamToTopic(param=param, varname="instance", isRequest="yes")$};separator="\n"$
 
     retcode = $operation.parent.formatedScopedname$_$operation.name$_pe->send_async(&instance, task);
     
@@ -325,25 +325,16 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     $operation.parent.scopedname$_$operation.name$Request &requestData = *($operation.parent.scopedname$_$operation.name$Request*)data;
-    $operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
-    $varDecl(variable=operation.rettypeparam)$   
+    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam, create="yes")$   
     $if(!operation.oneway)$
     $operation.parent.scopedname$_$operation.name$Reply replyData;
-    replyData._header().clientId().value_1() = requestData._header().clientId().value_1();
-    replyData._header().clientId().value_2() = requestData._header().clientId().value_2();
-    replyData._header().clientId().value_3() = requestData._header().clientId().value_3();
-    replyData._header().clientId().value_4() = requestData._header().clientId().value_4();
-    replyData._header().requestSequenceNumber() = requestData._header().requestSequenceNumber();
+    $copyHeaderInfo(reqvarname="requestData", repvarname="replyData")$
     $endif$
-    
-    $operation.inputparam : {param |
-    $if(param.typecode.primitive)$
-    $param.name$ = requestData.$param.name$();
-    $else$
-    $param.name$ = std::move(requestData.$param.name$());
-    $endif$
-    };separator="\n"$
-    
+
+    $operation.inoutputparam : {param |$if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+
+    $operation.inputparam : {param | $extractParamFromTopic(param=param, varname="requestData")$};separator="\n"$
     
     try
     {
@@ -357,16 +348,10 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
 	        $if(operation.exceptions)$
 		$[operation.outputparam, operation.rettypeparam] : {$createDataHelper(param=it, dataname="replyData.unio._u.st")$};separator="\n"$
 		$else$
-		$[operation.outputparam, operation.rettypeparam] : { param |
-                $if(param.typecode.primitive)$
-                replyData.$param.name$($param.name$);
-                $else$
-                replyData.$param.name$(std::move($param.name$));
-                $endif$
-                };separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname="replyData")$};separator="\n"$
 		$endif$
 	        
-	        replyData._header().retCode(OPERATION_SUCCESSFUL);
+        $setHeaderSuccess(varname="replyData")$
 	
 	        _protocol.$operation.parent.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
 	        $endif$
@@ -390,12 +375,16 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     catch(const ServerInternalException &ex)
     {
         $if(!operation.oneway)$
-        replyData._header().retCode(SERVER_INTERNAL_ERROR);
-        replyData._header().retMsg(std::move(ex.what()));
+        $unsetReply()$
+        $setHeaderServerInternalException(varname="replyData")$
         
         _protocol.$operation.parent.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
         $endif$
     }
+    
+    $reqrepRefFinalize(type=[operation.parent.scopedname, "_", operation.name], reqrep="Request", name="requestData")$
+    
+    $[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
 }
 $endif$
 
@@ -413,56 +402,3 @@ union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
 
-
-/*!
- * Extra string templates. Utils.
- */
-// CAREFUL: There is a copy in DDSAsyncSupportSource.stg
-// TODO Es necesario?
-createDataHelper(param, dataname, isRequest) ::= <<
-$if(param.typecode.isType_f)$
-$memberComplexExtract(member=param, dataname=dataname)$
-$else$
-$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasting()$$endif$$endif$$param.name$;
-$endif$
->>
-
-// TODO Se necesita?
-// CAREFUL: There is a copy in DDSAsyncSupportSource.stg
-extractDataHelper(param, dataname, isReply) ::= <<
-$if(isReply)$
-$if(param.input)$
-$if(param.typecode.primitive)$
-$if(param.typecode.isType_d)$
-if($param.name$ != NULL)
-    free($param.name$);
-$endif$
-$else$
-$varComplexDel(variable=param)$
-$endif$
-$endif$
-$if(param.typecode.isType_f)$
-$memberComplexCopy(member=param, dataname=dataname)$
-$else$
-$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
-$endif$
-$else$
-$if(param.output)$
-$if(param.typecode.primitive)$
-$if(param.typecode.isType_d)$
-$param.name$ = strdup($dataname$.$param.name$);
-$else$
-$param.name$ = $dataname$.$param.name$;
-$endif$
-$else$
-$memberComplexCopy(member=param, dataname=dataname)$
-$endif$
-$else$
-$if(param.typecode.isType_f)$
-$memberComplexCopy(member=param, dataname=dataname)$
-$else$
-$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
-$endif$
-$endif$
-$endif$
->>

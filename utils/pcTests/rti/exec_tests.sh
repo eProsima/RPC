@@ -21,8 +21,6 @@ function execTest
     ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -types rti -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    # TODO Temporary set of LIBFASTCDR
-    export LIBFASTCDR=../../../../../fastcdr/lib/$EPROSIMA_TARGET
     # Compile client and server example application
     make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?
@@ -35,8 +33,6 @@ function execTest
     make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    # TODO Unset temporary LIBFASTCDR
-    export LIBFASTCDR=
     # Execute the server in background
     output/bin/$NDDSTARGET/$1ServerExample &
     # Wait 5 seconds
