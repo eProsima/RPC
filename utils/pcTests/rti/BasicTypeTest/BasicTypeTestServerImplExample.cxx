@@ -16,7 +16,6 @@
 DDS_Octet BasicTypeTestServerImplExample::getOctet(/*in*/ DDS_Octet oc1, /*inout*/ DDS_Octet& oc2, /*out*/ DDS_Octet& oc3) 
 {
     DDS_Octet returnedValue;
-    printf("YEAAAAH\n");
         
     oc3 = oc2;
     returnedValue = oc1;
@@ -28,7 +27,6 @@ DDS_Octet BasicTypeTestServerImplExample::getOctet(/*in*/ DDS_Octet oc1, /*inout
 DDS_Char BasicTypeTestServerImplExample::getChar(/*in*/ DDS_Char ch1, /*inout*/ DDS_Char& ch2, /*out*/ DDS_Char& ch3) 
 {
     DDS_Char returnedValue;
-    printf("YEAAAAH2\n");
         
     ch3 = ch2;
     returnedValue = ch1;

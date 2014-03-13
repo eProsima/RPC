@@ -104,7 +104,7 @@ $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::register_type
 >>
 
 createDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::initialize_data
+(::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::create_data
 >>
 
 copyDataCallback(operation, suffix) ::= <<
@@ -112,7 +112,7 @@ copyDataCallback(operation, suffix) ::= <<
 >>
 
 destroyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::finalize_data
+(::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::delete_data
 >>
 
 getHeaderRetCode(varname) ::= <<
@@ -258,9 +258,9 @@ memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - siz
 paramTypeByValue(typecode) ::= <<
 $if(typecode.primitive)$
 $if(typecode.isType_d)$
-$typecode.cppTypename$
-$else$
 const $typecode.cppTypename$
+$else$
+$typecode.cppTypename$
 $endif$
 $else$
 const $typecode.cppTypename$&

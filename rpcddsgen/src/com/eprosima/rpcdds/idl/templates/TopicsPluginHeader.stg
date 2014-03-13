@@ -303,5 +303,13 @@ class $struct.name$Plugin
 
 union_type(ctx, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, enum) ::= <<
+class $enum.name$Plugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+        
+};
+>>
 

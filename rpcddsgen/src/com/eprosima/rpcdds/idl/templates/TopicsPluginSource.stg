@@ -288,7 +288,7 @@ $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::serialize(
     {
         cdr << sample->_header();
 
-        $operation.inputparam : { param |cdr << sample->$param.name$();}; separator="\n"$
+        $operation.inputparam : { param |cdr << $serializeCasting(param.typecode)$sample->$param.name$();}; separator="\n"$
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -323,7 +323,7 @@ $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::deserialize(
     {
         cdr \>> _sample->_header();
 
-        $operation.inputparam : { param |cdr \>> _sample->$param.name$();}; separator="\n"$
+        $operation.inputparam : { param |cdr \>> $deserializeCasting(param.typecode)$_sample->$param.name$();}; separator="\n"$
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -342,6 +342,8 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
 {
     printf("=> $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typecode\n");
     static bool is_initialized = false;
+
+    $operation.inputparam : { param |$if(param.typecode.isType_d)$static DDS_TypeCode $param.name$_string = DDS_INITIALIZE_STRING_TYPECODE($param.typecode.maxsize$);$endif$}; separator="\n"$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Request_g_tc_members[1 + $length(operation.inputparam)$]
     {
@@ -816,7 +818,7 @@ $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::serialize(
     {
         cdr << sample->_header();
 
-        $[operation.outputparam, operation.rettypeparam] : { param |cdr << sample->$param.name$();}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |cdr << $serializeCasting(param.typecode)$sample->$param.name$();}; separator="\n"$
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -850,7 +852,7 @@ $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::deserialize(
     {
         cdr \>> _sample->_header();
 
-        $[operation.outputparam, operation.rettypeparam] : { param |cdr \>> _sample->$param.name$();}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |cdr \>> $deserializeCasting(param.typecode)$_sample->$param.name$();}; separator="\n"$
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -868,6 +870,8 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
 {
     printf("=> $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typecode\n");
     static bool is_initialized = false;
+
+    $[operation.outputparam, operation.rettypeparam] : { param |$if(param.typecode.isType_d)$static DDS_TypeCode $param.name$_string = DDS_INITIALIZE_STRING_TYPECODE($param.typecode.maxsize$);$endif$}; separator="\n"$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_g_tc_members[1 + $length([operation.outputparam, operation.rettypeparam])$]
     {
@@ -1110,7 +1114,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plu
 
     $struct.members : { member |$if(member.typecode.isType_d)$static DDS_TypeCode $member.name$_string = DDS_INITIALIZE_STRING_TYPECODE($member.typecode.maxsize$);$endif$}; separator="\n"$
 
-    static DDS_TypeCode_Member $struct.name$Request_g_tc_members[$length(struct.members)$]
+    static DDS_TypeCode_Member $struct.name$_g_tc_members[$length(struct.members)$]
     {
         $struct.members : { member |
         {
@@ -1132,7 +1136,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plu
         }}; separator=",\n"$
     };
 
-    static DDS_TypeCode $struct.name$Request_g_tc =
+    static DDS_TypeCode $struct.name$_g_tc =
     {{
          DDS_TK_STRUCT,
          DDS_BOOLEAN_FALSE,
@@ -1143,23 +1147,65 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plu
          0,
          NULL,
          $length(struct.members)$,
-         $struct.name$Request_g_tc_members,
+         $struct.name$_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        $struct.members : { member |$struct.name$Request_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(member)$;}; separator="\n"$
+        $struct.members : { member |$struct.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(member)$;}; separator="\n"$
         is_initialized = true;
     }
 
-    return &$struct.name$Request_g_tc;
+    return &$struct.name$_g_tc;
 }
 >>
 
 union_type(ctx, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, enum) ::= <<
+DDS_TypeCode* $if(enum.hasScope)$$enum.scope$Plugin::$endif$$enum.name$Plugin::get_typecode()
+{
+    static DDS_TypeCode_Member $enum.name$_g_tc_members[$length(enum.members)$]
+    {
+        $enum.members : { member |
+        {
+            (char *)"$member.name$",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            $member.name$,
+            0,
+            0,
+            NULL,
+            DDS_BOOLEAN_FALSE,
+            DDS_PRIVATE_MEMBER,
+            0,
+            NULL
+        }}; separator=",\n"$
+    };
+
+    static DDS_TypeCode $enum.name$_g_tc =
+    {{
+         DDS_TK_ENUM,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$enum.name$",
+         NULL,
+         0,
+         0,
+         NULL,
+         $length(enum.members)$,
+         $enum.name$_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    return &$enum.name$_g_tc;
+}
+>>
 
 /**** Utils ****/
 //TODO EL resto de tipos
@@ -1168,10 +1214,26 @@ $if(object.typecode.primitive)$
 $if(object.typecode.isType_d)$
 &$object.name$_string
 $else$
+$if(object.typecode.isType_c)$
+$if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
+$else$
 &$basicDDSTypeCodeDefs.(object.typecode.stType)$
+$endif$
 $endif$
 $else$
 $if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
+$endif$
+>>
+
+serializeCasting(typecode) ::= <<
+$if(typecode.isType_c)$
+(uint32_t)
+$endif$
+>>
+
+deserializeCasting(typecode) ::= <<
+$if(typecode.isType_c)$
+(uint32_t&)
 $endif$
 >>
 

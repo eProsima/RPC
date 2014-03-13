@@ -23,7 +23,13 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$export_list$
+$if(interface.thereAreTypeDeclarations)$
+module $interface.name$
+{
+    $export_list$
+};
+
+$endif$
 >>
 
 export_list(exports) ::= <<
@@ -40,22 +46,22 @@ param_list(parameters) ::= <<>>
 param(parameter) ::= <<>>
 
 type_declarator(ctx, typedefs) ::= <<
-$typedefs : {typedef | typedef $typedef.typedefContentTypeCode.typename$ $typedef.typename$;}; separator="\n"$
+$typedefs : {typedef | typedef $typedef.typedefContentTypeCode.idlTypename$ $typedef.idlTypename$;}; separator="\n"$
 
 >>
 
 struct_type(ctx, struct) ::= <<
 struct $struct.name$
 {
-$struct.members : { member |    $member.typecode.typename$ $member.name$;}; separator="\n"$
+$struct.members : { member |    $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
 }; //@top-level false
 
 >>
 
 union_type(ctx, union) ::= <<
-union $union.name$ switch ($union.discriminator.typename$)
+union $union.name$ switch ($union.discriminator.idlTypename$)
 {
-$union.members : { member | $if(member.default)$    default:$else$$member.labels : { label |    case $label$:}; separator="\n"$$endif$$\n$        $member.typecode.typename$ $member.name$;}; separator="\n"$
+$union.members : { member | $if(member.default)$    default:$else$$member.labels : { label |    case $label$:}; separator="\n"$$endif$$\n$        $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
 };  //@top-level false
 
 >>

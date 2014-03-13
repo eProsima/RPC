@@ -69,7 +69,8 @@ public class EnumTypeCode extends MemberedTypeCode
         return currentSize + getSize();
     }
     
-    protected int getSize()
+    @Override
+    public int getSize()
     {    
         return 4;
     }

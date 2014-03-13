@@ -94,8 +94,13 @@ $varname$._header().retMsg(std::move(ex.what()));
 // TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
 serialized_size(param, var) ::= <<
 $if(param.typecode.primitive)$
-$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
+$if(param.typecode.isType_d)$
+// TODO $var$ += $param.name$.length();
 $else$
+$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
+$endif$
+$else$
+// TODO
 $endif$
 >>
 

@@ -14,22 +14,29 @@
 
 #include "StructTestServerImplExample.h"
 
-Recepcion StructTestServerImplExample::duplicate(/*in*/ const Envio& ev)
+#include "ndds/ndds_namespace_cpp.h"
+ 
+Recepcion StructTestServerImplExample::duplicate(/*in*/ const Envio& ev) 
 {
     Recepcion duplicate_ret;
         
-	duplicate_ret.devolucion(ev.dato());
-	duplicate_ret.message(ev.message());
+	duplicate_ret.devolucion = ev.dato;
+	duplicate_ret.message = DDS::String_dup(ev.message);
    
     return duplicate_ret;
 } 
-
-Recepcion StructTestServerImplExample::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2)
+ 
+Recepcion StructTestServerImplExample::suma(/*in*/ const Envio& ev1, /*in*/ const Envio& ev2) 
 {
     Recepcion suma_ret;
         
-	suma_ret.devolucion(ev1.dato() + ev2.dato());
-    suma_ret.message(ev1.message() + ev2.message());
+	suma_ret.devolucion = ev1.dato + ev2.dato;
+	suma_ret.message = DDS::String_alloc(strlen(ev1.message) + strlen(ev2.message) + 1);
+#if defined(_WIN32)
+	_snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
+#elif defined(__linux)
+	snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
+#endif
    
     return suma_ret;
 } 
@@ -38,8 +45,8 @@ StructTest::InnerStruct StructTestServerImplExample::inner(/*in*/ const StructTe
 {
     StructTest::InnerStruct inner_ret;
 
-    inner_ret.count(inn.count());
-    inner_ret.message(inn.message());
+    inner_ret.count = inn.count;
+    inner_ret.message = DDS::String_dup(inn.message);
    
     return inner_ret;
 } 

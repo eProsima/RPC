@@ -284,16 +284,6 @@ public class Context
         return m_scope;
     }
 
-    public void setSersym(String sersym)
-    {
-        m_sersym = sersym;
-    }
-
-    public String getSersym()
-    {
-        return m_sersym;
-    }
-
     public void setTypelimitation(String lt)
     {
         m_typelimitation = lt;
@@ -644,7 +634,6 @@ public class Context
     private String m_directoryFile = "";
     private String m_scope = "";
     private String m_scopeFile = "";
-    private String m_sersym = ">>";
     private String m_typelimitation = null;
     
     //! Set that contains the library dependencies that were found because there was a line of the preprocessor.
