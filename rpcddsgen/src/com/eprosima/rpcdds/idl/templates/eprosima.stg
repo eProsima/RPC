@@ -92,6 +92,44 @@ $varname$._header().retMsg(std::move(ex.what()));
 >>
 
 // TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
+max_serialized_size(ctx, typecode, var) ::= <<
+$if(typecode.primitive)$
+$if(typecode.isType_d)$
+$var$ += $typecode.maxsize$;
+$else$
+$var$ += $typecode.size$ + eprosima::Cdr::alignment($var$, $typecode.size$);
+$endif$
+$else$
+$if(typecode.isType_e)$
+$var$ += 4 + eprosima::Cdr::alignment($var$, 4);
+$sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecode, var=var, loopvar=ctx.newLoopVarName)$
+$else$
+$var$ = $typecode.scopedname$::getMaxCdrSerializedSize($var$);
+$endif$
+$endif$
+>>
+
+sequence_max_serialized_size(ctx, typecodeSeq, var, loopvar) ::= <<
+$if(typecodeSeq.contentTypeCode.primitive)$
+$if(typecodeSeq.contentTypeCode.isType_d)$
+$var$ += $typecodeSeq.maxsize$ * $typecodeSeq.contentTypeCode.maxsize$;
+$else$
+$var$ += ($typecodeSeq.maxsize$ * $typecodeSeq.contentTypeCode.size$) + eprosima::Cdr::alignment($var$, $typecodeSeq.contentTypeCode.size$);
+$endif$
+$else$
+for(size_t $loopvar$ = 0; $loopvar$ < $typecodeSeq.maxsize$; ++$loopvar$)
+{
+$if(typecodeSeq.contentTypeCode.isType_e)$
+    $var$ += 4 + eprosima::Cdr::alignment($var$, 4);
+    $sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecodeSeq.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$else$
+    $var$ = $typecodeSeq.contentTypeCode.scopedname$::getMaxCdrSerializedSize($var$);
+$endif$
+}
+$endif$
+>>
+
+// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
 serialized_size(param, var) ::= <<
 $if(param.typecode.primitive)$
 $if(param.typecode.isType_d)$
@@ -104,7 +142,26 @@ $else$
 $endif$
 >>
 
+serializeCasting(typecode) ::= <<
+$if(typecode.isType_c)$
+(uint32_t)
+$endif$
+>>
+
+deserializeCasting(typecode) ::= <<
+$if(typecode.isType_c)$
+(uint32_t&)
+$endif$
+>>
+
 eprosimaTypesBool() ::= <<true>>
+
+sizeFunction ::= [
+        "type_e":"size()",
+        "type_d":"length()",
+        "type_15":"length()",
+        default: // not basic type.
+]
 
 /** NEEDED BY RTI TYPES **/
 charCasting() ::= <<>>

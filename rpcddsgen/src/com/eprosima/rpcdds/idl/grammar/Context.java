@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Stack;
 
 import com.eprosima.rpcdds.RPCDDSGEN;
 import com.eprosima.rpcdds.tree.Module;
@@ -59,6 +60,7 @@ public class Context
         m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
         m_interfaces = new HashMap<String, Interface>();
         m_tmpAnnotations = new HashMap<String, String>();
+        m_randomGenNames = new Stack<String>();
         
         m_includePaths = new ArrayList<String>();
         
@@ -595,6 +597,31 @@ public class Context
         return m_ddstypes == RPCDDSGEN.DDS_TYPES.RTI;
     }
 
+    // TODO Para stringtemplate TopicsPlugin de nuestros tipos DDS.
+    public String getNewRandomName()
+    {
+        String name = "type_" + ++m_randomGenName;
+        m_randomGenNames.push(name);
+        return name;
+    }
+
+    public String getNewLoopVarName()
+    {
+        m_loopVarName = 'a';
+        return Character.toString(m_loopVarName);
+    }
+
+    public String getNextLoopVarName()
+    {
+        return Character.toString(++m_loopVarName);
+    }
+
+    // TODO Para stringtemplate TopicsPlugin de nuestros tipos DDS.
+    public String getLastRandomName()
+    {
+        return m_randomGenNames.pop();
+    }
+
     ////////// RESTful block //////////
     
     public String getDeserializeCode() {  
@@ -666,6 +693,12 @@ public class Context
     private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
     
     private int m_currentincludeline = 0;
+
+    // TODO Lleva la cuenta de generación de nuevos nombres.
+    private int m_randomGenName = 0;
+    private Stack<String> m_randomGenNames = null;
+    // TODO Lleva la cuenta del nombre de variables para bucles anidados.
+    private char m_loopVarName = 'a';
     
     // OS
     String m_os = null;

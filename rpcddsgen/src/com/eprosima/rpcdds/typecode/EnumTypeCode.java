@@ -43,7 +43,7 @@ public class EnumTypeCode extends MemberedTypeCode
     {   
         if(getMembers().size() > 0)
         {
-            return getMembers().get(0).getName();
+            return (getScope() != null ? getScope() + "::" : "") + getMembers().get(0).getName();
         }
         
         return "";

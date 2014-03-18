@@ -47,12 +47,12 @@ int main(int argc, char **argv)
 	largo l1;
 	largo l2;
 	largo l3;
-	largo getSLong_ret;
+	largo getSeqLong_ret;
 
 	largo_initialize(&l1);
 	largo_initialize(&l2);
 	largo_initialize(&l3);
-	largo_initialize(&getSLong_ret);
+	largo_initialize(&getSeqLong_ret);
 
 	l1.ensure_length(2, 2);
 	l1.set_at(0, 1);
@@ -63,39 +63,39 @@ int main(int argc, char **argv)
 
 	try
 	{
-		getSLong_ret = proxy->getSLong(l1, l2, l3);
+		getSeqLong_ret = proxy->getSeqLong(l1, l2, l3);
 
         if(l3.length() != 2 || l3.get_at(0) != 3 || l3.get_at(1) != 4 ||
-                getSLong_ret.length() != 2 || getSLong_ret.get_at(0) != 1 || getSLong_ret.get_at(1) != 2 ||
+                getSeqLong_ret.length() != 2 || getSeqLong_ret.get_at(0) != 1 || getSeqLong_ret.get_at(1) != 2 ||
                 l2.length() != 2 || l2.get_at(0) != 4 || l2.get_at(1) != 6 ||
                 l1.length() != 2 || l1.get_at(0) != 1 || l1.get_at(1) != 2)
         {
-            std::cout << "TEST FAILED<getSLong>: Wrong values " << std::endl;
+            std::cout << "TEST FAILED<getSeqLong>: Wrong values " << std::endl;
             _exit(-1);
         }
     }
     catch(SystemException &ex)
     {
-        std::cout << "TEST FAILED<getSLong>: " << ex.what() << std::endl;
+        std::cout << "TEST FAILED<getSeqLong>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
 	largo_finalize(&l1);    
 	largo_finalize(&l2);    
 	largo_finalize(&l3);    
-	largo_finalize(&getSLong_ret);    
+	largo_finalize(&getSeqLong_ret);    
 
 	cadena s1;
 	cadena s2;
 	cadena s3;
-	cadena getString_ret;
+	cadena getSeqString_ret;
 	char *cadena;
 	char *& ref = cadena;
 
 	cadena_initialize(&s1);    
 	cadena_initialize(&s2);    
 	cadena_initialize(&s3);    
-	cadena_initialize(&getString_ret);
+	cadena_initialize(&getSeqString_ret);
 
 	s1.ensure_length(2, 2);
 	cadena = DDS_String_dup("PRUEBA");
@@ -110,37 +110,37 @@ int main(int argc, char **argv)
 
     try
     {
-        getString_ret = proxy->getString(s1, s2, s3);
+        getSeqString_ret = proxy->getSeqString(s1, s2, s3);
 
         if(s3.length() != 2 || strcmp(s3.get_at(0), "PRUEBA3")  != 0 || strcmp(s3.get_at(1), "PRUEBA4")  != 0 ||
-                getString_ret.length() != 2 || strcmp(getString_ret.get_at(0), "PRUEBA")  != 0  || strcmp(getString_ret.get_at(1), "PRUEBA2")  != 0 ||
+                getSeqString_ret.length() != 2 || strcmp(getSeqString_ret.get_at(0), "PRUEBA")  != 0  || strcmp(getSeqString_ret.get_at(1), "PRUEBA2")  != 0 ||
                 s2.length() != 2 || strcmp(s2.get_at(0), "PRUEBA")  != 0  || strcmp(s2.get_at(1), "PRUEBA2")  != 0 ||
                 s1.length() != 2 || strcmp(s1.get_at(0), "PRUEBA")  != 0  || strcmp(s1.get_at(1), "PRUEBA2")  != 0)
         {
-            std::cout << "TEST FAILED<getString>: Wrong values" << std::endl;
+            std::cout << "TEST FAILED<getSeqString>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
     catch(SystemException &ex)
     {
-        std::cout << "TEST FAILED<getString>: " << ex.what() << std::endl;
+        std::cout << "TEST FAILED<getSeqString>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
 	cadena_finalize(&s1);    
 	cadena_finalize(&s2);    
 	cadena_finalize(&s3);    
-	cadena_finalize(&getString_ret);    
+	cadena_finalize(&getSeqString_ret);    
 
 	dattos sb1;       
 	dattos sb2;       
 	dattos sb3;    
-	dattos getStringBounded_ret;
+	dattos getSeqDatos_ret;
 
 	dattos_initialize(&sb1);
 	dattos_initialize(&sb2);
 	dattos_initialize(&sb3);
-	dattos_initialize(&getStringBounded_ret);
+	dattos_initialize(&getSeqDatos_ret);
 
 	Datos data;
 	sb1.ensure_length(2, 2);
@@ -163,20 +163,20 @@ int main(int argc, char **argv)
 
     try
     {
-        getStringBounded_ret = proxy->getStringBounded(sb1, sb2, sb3);
+        getSeqDatos_ret = proxy->getSeqDatos(sb1, sb2, sb3);
 
         if(sb3.length() != 2 || sb3.get_at(0).count != 3 || strcmp(sb3.get_at(0).message, "PRUEBA3")  != 0 || sb3.get_at(1).count != 4 || strcmp(sb3.get_at(1).message, "PRUEBA4")  != 0 ||
-                getStringBounded_ret.length() != 2 || getStringBounded_ret.get_at(0).count != 1 || strcmp(getStringBounded_ret.get_at(0).message, "PRUEBA")  != 0  || getStringBounded_ret.get_at(1).count != 2 || strcmp(getStringBounded_ret.get_at(1).message, "PRUEBA2")  != 0 ||
+                getSeqDatos_ret.length() != 2 || getSeqDatos_ret.get_at(0).count != 1 || strcmp(getSeqDatos_ret.get_at(0).message, "PRUEBA")  != 0  || getSeqDatos_ret.get_at(1).count != 2 || strcmp(getSeqDatos_ret.get_at(1).message, "PRUEBA2")  != 0 ||
                 sb2.length() != 2 || sb2.get_at(0).count != 1 || strcmp(sb2.get_at(0).message, "PRUEBA")  != 0  || sb2.get_at(1).count != 2 || strcmp(sb2.get_at(1).message, "PRUEBA2")  != 0 ||
                 sb1.length() != 2 || sb1.get_at(0).count != 1 || strcmp(sb1.get_at(0).message, "PRUEBA")  != 0  || sb1.get_at(1).count != 2 || strcmp(sb1.get_at(1).message, "PRUEBA2")  != 0)
         {
-            std::cout << "TEST FAILED<getStringBounded>: Wrong values" << std::endl;
+            std::cout << "TEST FAILED<getSeqDatos>: Wrong values" << std::endl;
             _exit(-1);
         }
     }
     catch(SystemException &ex)
     {
-        std::cout << "TEST FAILED<getStringBounded>: " << ex.what() << std::endl;
+        std::cout << "TEST FAILED<getSeqDatos>: " << ex.what() << std::endl;
         _exit(-1);
     }
 
@@ -184,7 +184,166 @@ int main(int argc, char **argv)
 	dattos_finalize(&sb1);    
 	dattos_finalize(&sb2);    
 	dattos_finalize(&sb3);    
-	dattos_finalize(&getStringBounded_ret);    
+	dattos_finalize(&getSeqDatos_ret);    
+
+    seqdat sd1;
+    seqdat sd2;
+    seqdat sd3;
+    seqdat getSeqDat_ret;
+
+    seqdat_initialize(&sd1);
+    seqdat_initialize(&sd2);
+    seqdat_initialize(&sd3);
+    seqdat_initialize(&getSeqDat_ret);
+
+    sd1.ensure_length(2, 2);
+    sd1[0].ensure_length(2, 2);
+    sd1[0][0].count = 1;
+    sd1[0][0].message = DDS_String_dup("PRUEBA1");
+    sd1[0][1].count = 2;
+    sd1[0][1].message = DDS_String_dup("PRUEBA2");
+    sd1[1].ensure_length(2, 2);
+    sd1[1][0].count = 3;
+    sd1[1][0].message = DDS_String_dup("PRUEBA3");
+    sd1[1][1].count = 4;
+    sd1[1][1].message = DDS_String_dup("PRUEBA4");
+    sd2.ensure_length(2, 2);
+    sd2[0].ensure_length(2, 2);
+    sd2[0][0].count = 5;
+    sd2[0][0].message = DDS_String_dup("PRUEBA5");
+    sd2[0][1].count = 6;
+    sd2[0][1].message = DDS_String_dup("PRUEBA6");
+    sd2[1].ensure_length(2, 2);
+    sd2[1][0].count = 7;
+    sd2[1][0].message = DDS_String_dup("PRUEBA7");
+    sd2[1][1].count = 8;
+    sd2[1][1].message = DDS_String_dup("PRUEBA8");
+
+    try
+    {
+        getSeqDat_ret = proxy->getSeqDat(sd1, sd2, sd3);
+
+        if(sd3.length() != 2 || sd3[0].length() != 2 || sd3[0][0].count != 5 || strcmp(sd3[0][0].message, "PRUEBA5") != 0 ||
+                sd3[0][1].count != 6 || strcmp(sd3[0][1].message, "PRUEBA6") != 0 ||
+                sd3[1].length() != 2 || sd3[1][0].count != 7 || strcmp(sd3[1][0].message, "PRUEBA7") != 0 ||
+                sd3[1][1].count != 8 || strcmp(sd3[1][1].message, "PRUEBA8") != 0 ||
+                getSeqDat_ret.length() != 2 || getSeqDat_ret[0].length() != 2 || getSeqDat_ret[0][0].count != 1 || strcmp(getSeqDat_ret[0][0].message, "PRUEBA1") != 0 ||
+                getSeqDat_ret[0][1].count != 2 || strcmp(getSeqDat_ret[0][1].message, "PRUEBA2") != 0 ||
+                getSeqDat_ret[1].length() != 2 || getSeqDat_ret[1][0].count != 3 || strcmp(getSeqDat_ret[1][0].message, "PRUEBA3") != 0 ||
+                getSeqDat_ret[1][1].count != 4 || strcmp(getSeqDat_ret[1][1].message, "PRUEBA4") != 0 ||
+                sd2.length() != 2 || sd2[0].length() != 2 || sd2[0][0].count != 1 || strcmp(sd2[0][0].message, "PRUEBA1") != 0 ||
+                sd2[0][1].count != 2 || strcmp(sd2[0][1].message, "PRUEBA2") != 0 ||
+                sd2[1].length() != 2 || sd2[1][0].count != 3 || strcmp(sd2[1][0].message, "PRUEBA3") != 0 ||
+                sd2[1][1].count != 4 || strcmp(sd2[1][1].message, "PRUEBA4") != 0 ||
+                sd1.length() != 2 || sd1[0].length() != 2 || sd1[0][0].count != 1 || strcmp(sd1[0][0].message, "PRUEBA1") != 0 ||
+                sd1[0][1].count != 2 || strcmp(sd1[0][1].message, "PRUEBA2") != 0 ||
+                sd1[1].length() != 2 || sd1[1][0].count != 3 || strcmp(sd1[1][0].message, "PRUEBA3") != 0 ||
+                sd1[1][1].count != 4 || strcmp(sd1[1][1].message, "PRUEBA4") != 0)
+        {
+            std::cout << "TEST FAILED<getSeqDat>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getSeqDat>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    seqdat_finalize(&sd1);
+    seqdat_finalize(&sd2);
+    seqdat_finalize(&sd3);
+    seqdat_finalize(&getSeqDat_ret);
+
+    SequenceTest::Sequences seq1;
+    SequenceTest::Sequences seq2;
+    SequenceTest::Sequences seq3;
+    SequenceTest::Sequences getSequences_ret;
+
+    Sequences_initialize(&seq1);
+    Sequences_initialize(&seq2);
+    Sequences_initialize(&seq3);
+    Sequences_initialize(&getSequences_ret);
+
+    seq1.strings.ensure_length(2, 2);
+    seq1.strings[0] = DDS_String_dup("PRUEBA1");
+    seq1.strings[1] = DDS_String_dup("PRUEBA2");
+    seq1.datos.ensure_length(2, 2);
+    seq1.datos[0].count = 1;
+    seq1.datos[0].message = DDS_String_dup("PRUEBA1");
+    seq1.datos[1].count = 2;
+    seq1.datos[1].message = DDS_String_dup("PRUEBA2");
+    seq1.seqdat.ensure_length(2, 2);
+    seq1.seqdat[0].ensure_length(2, 2);
+    seq1.seqdat[0][0].count = 1;
+    seq1.seqdat[0][0].message = DDS_String_dup("PRUEBA1");
+    seq1.seqdat[0][1].count = 2;
+    seq1.seqdat[0][1].message = DDS_String_dup("PRUEBA2");
+    seq1.seqdat[1].ensure_length(2, 2);
+    seq1.seqdat[1][0].count = 3;
+    seq1.seqdat[1][0].message = DDS_String_dup("PRUEBA3");
+    seq1.seqdat[1][1].count = 4;
+    seq1.seqdat[1][1].message = DDS_String_dup("PRUEBA4");
+    seq2.strings.ensure_length(2, 2);
+    seq2.strings[0] = DDS_String_dup("PRUEBA5");
+    seq2.strings[1] = DDS_String_dup("PRUEBA6");
+    seq2.datos.ensure_length(2, 2);
+    seq2.datos[0].count = 5;
+    seq2.datos[0].message = DDS_String_dup("PRUEBA5");
+    seq2.datos[1].count = 6;
+    seq2.datos[1].message = DDS_String_dup("PRUEBA6");
+    seq2.seqdat.ensure_length(2, 2);
+    seq2.seqdat[0].ensure_length(2, 2);
+    seq2.seqdat[0][0].count = 5;
+    seq2.seqdat[0][0].message = DDS_String_dup("PRUEBA5");
+    seq2.seqdat[0][1].count = 6;
+    seq2.seqdat[0][1].message = DDS_String_dup("PRUEBA6");
+    seq2.seqdat[1].ensure_length(2, 2);
+    seq2.seqdat[1][0].count = 7;
+    seq2.seqdat[1][0].message = DDS_String_dup("PRUEBA7");
+    seq2.seqdat[1][1].count = 8;
+    seq2.seqdat[1][1].message = DDS_String_dup("PRUEBA8");
+
+    try
+    {
+        getSequences_ret = proxy->getSequences(seq1, seq2, seq3);
+
+        if(seq3.strings.length() != 2 || strcmp(seq3.strings[0], "PRUEBA5") != 0 || strcmp(seq3.strings[1], "PRUEBA6") != 0 ||
+                seq3.datos.length() != 2 || seq3.datos[0].count != 5 || strcmp(seq3.datos[0].message, "PRUEBA5") != 0 ||
+                seq3.datos[1].count != 6 || strcmp(seq3.datos[1].message, "PRUEBA6") != 0 ||
+                seq3.seqdat.length() != 2 || seq3.seqdat[0].length() != 2 || seq3.seqdat[0][0].count != 5 || strcmp(seq3.seqdat[0][0].message, "PRUEBA5") != 0 ||
+                seq3.seqdat[0][1].count != 6 || strcmp(seq3.seqdat[0][1].message, "PRUEBA6") != 0 ||
+                seq3.seqdat[1].length() != 2 || seq3.seqdat[1][0].count != 7 || strcmp(seq3.seqdat[1][0].message, "PRUEBA7") != 0 ||
+                seq3.seqdat[1][1].count != 8 || strcmp(seq3.seqdat[1][1].message, "PRUEBA8") != 0 ||
+                getSequences_ret.strings.length() != 2 || strcmp(getSequences_ret.strings[0], "PRUEBA1") != 0 || strcmp(getSequences_ret.strings[1], "PRUEBA2") != 0 ||
+                getSequences_ret.datos.length() != 2 || getSequences_ret.datos[0].count != 1 || strcmp(getSequences_ret.datos[0].message, "PRUEBA1") != 0 ||
+                getSequences_ret.datos[1].count != 2 || strcmp(getSequences_ret.datos[1].message, "PRUEBA2") != 0 ||
+                getSequences_ret.seqdat.length() != 2 || getSequences_ret.seqdat[0].length() != 2 || getSequences_ret.seqdat[0][0].count != 1 || strcmp(getSequences_ret.seqdat[0][0].message, "PRUEBA1") != 0 ||
+                getSequences_ret.seqdat[0][1].count != 2 || strcmp(getSequences_ret.seqdat[0][1].message, "PRUEBA2") != 0 ||
+                getSequences_ret.seqdat[1].length() != 2 || getSequences_ret.seqdat[1][0].count != 3 || strcmp(getSequences_ret.seqdat[1][0].message, "PRUEBA3") != 0 ||
+                getSequences_ret.seqdat[1][1].count != 4 || strcmp(getSequences_ret.seqdat[1][1].message, "PRUEBA4") != 0 ||
+                seq1.strings.length() != 2 || strcmp(seq1.strings[0], "PRUEBA1") != 0 || strcmp(seq1.strings[1], "PRUEBA2") != 0 ||
+                seq1.datos.length() != 2 || seq1.datos[0].count != 1 || strcmp(seq1.datos[0].message, "PRUEBA1") != 0 ||
+                seq1.datos[1].count != 2 || strcmp(seq1.datos[1].message, "PRUEBA2") != 0 ||
+                seq1.seqdat.length() != 2 || seq1.seqdat[0].length() != 2 || seq1.seqdat[0][0].count != 1 || strcmp(seq1.seqdat[0][0].message, "PRUEBA1") != 0 ||
+                seq1.seqdat[0][1].count != 2 || strcmp(seq1.seqdat[0][1].message, "PRUEBA2") != 0 ||
+                seq1.seqdat[1].length() != 2 || seq1.seqdat[1][0].count != 3 || strcmp(seq1.seqdat[1][0].message, "PRUEBA3") != 0 ||
+                seq1.seqdat[1][1].count != 4 || strcmp(seq1.seqdat[1][1].message, "PRUEBA4") != 0)
+        {
+            std::cout << "TEST FAILED<getSequences>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getSequences>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    Sequences_finalize(&seq1);
+    Sequences_finalize(&seq2);
+    Sequences_finalize(&seq3);
+    Sequences_finalize(&getSequences_ret);
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

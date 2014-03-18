@@ -1,6 +1,7 @@
 package com.eprosima.rpcdds.templates;
 
 import com.eprosima.rpcdds.typecode.*;
+import com.eprosima.rpcdds.exceptions.ParseException;
 
 import java.util.List;
 
@@ -16,9 +17,10 @@ public class TemplateUtil
             return type;
     }
     
-    public static String getUnionDefaultLabel(TypeCode dist_type, List<Member> members)
+    public static String getUnionDefaultLabel(TypeCode dist_type, List<Member> members, String scopeFile, int line)
     {
         String returnedValue = null;
+        // TODO Faltan tipos: short, unsigneds...
         
         if(dist_type.getKind() == TypeCode.KIND_LONG)
             returnedValue = "-1000";
@@ -38,17 +40,52 @@ public class TemplateUtil
                 }
                 else
                 {
-                    // TODO Exception
-                    System.out.println("ERROR: Bad label to boolean type");
+                    throw new ParseException(scopeFile, line, "Bad label to boolean type.");
                 }    
             }
         }
+        else if(dist_type.getKind() == TypeCode.KIND_ENUM)
+        {
+            EnumTypeCode enume = (EnumTypeCode)dist_type;
+            returnedValue = enume.getInitialValue();
+        }
         else
         {
-            // TODO Exception
-            System.out.println("ERROR: Not supported type in discriminator");
+            throw new ParseException(scopeFile, line, "Not supported type discriminator.");
         }
         
         return returnedValue;
+    }
+
+    public static String checkUnionLabel(TypeCode dist_type, String label, String scopeFile, int line)
+    {
+        // TODO Faltan tipos: short, unsigneds...
+        
+        if(dist_type.getKind() == TypeCode.KIND_ENUM)
+        {
+            EnumTypeCode enume = (EnumTypeCode)dist_type;
+
+            if(enume.getScope() != null)
+            {
+                if(label.contains("::"))
+                {
+                    if(!label.startsWith(enume.getScope()))
+                    {
+                        throw new ParseException(scopeFile, line, "Cannot find the symbol " + label + "");
+                    }
+                }
+                else
+                {
+                    return enume.getScope() + "::" + label;
+                }
+            }
+            else
+            {
+                if(label.contains("::"))
+                    throw new ParseException(scopeFile, line, "Cannot find the symbol " + label + "");
+            }
+        }
+
+        return label;
     }
 }

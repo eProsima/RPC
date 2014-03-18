@@ -16,11 +16,12 @@ public class AliasTypeCode extends ContainerTypeCode
     @Override
     public TypeCode getContentTypeCode()
     {
-        if(super.getContentTypeCode() instanceof ContainerTypeCode)
+        if(super.getContentTypeCode() instanceof AliasTypeCode)
         {
-            ContainerTypeCode ct = (ContainerTypeCode)super.getContentTypeCode();
-            return ct.getContentTypeCode();
+            AliasTypeCode alias = (AliasTypeCode)super.getContentTypeCode();
+            return alias.getContentTypeCode();
         }
+
         return super.getContentTypeCode();
     }
 
@@ -28,7 +29,12 @@ public class AliasTypeCode extends ContainerTypeCode
     {
         return super.getContentTypeCode();
     }
-    
+
+    public String getName()
+    {
+        return m_name;
+    }
+
     public String getScopedname()
     {
         if(m_scope.isEmpty())
@@ -37,18 +43,28 @@ public class AliasTypeCode extends ContainerTypeCode
         return m_scope + "::" + m_name;
     }
 
+    public String getScope()
+    {
+        return m_scope;
+    }
+
+    public boolean getHasScope()
+    {
+        return !m_scope.isEmpty();
+    }
+
     @Override
     public String getCppTypename()
     {
-    	StringTemplate st = getCppTypenameFromStringTemplate();
+        StringTemplate st = getCppTypenameFromStringTemplate();
         st.setAttribute("name", getScopedname());
         return st.toString();
     }
-    
+
     @Override
     public String getIdlTypename()
     {
-    	StringTemplate st = getIdlTypenameFromStringTemplate();
+        StringTemplate st = getIdlTypenameFromStringTemplate();
         st.setAttribute("name", getScopedname());
         return st.toString();
     }
@@ -58,57 +74,74 @@ public class AliasTypeCode extends ContainerTypeCode
     {
         return super.getContentTypeCode().getStType();
     }
-    
+
     @Override
     public boolean isPrimitive()
     {
         return super.getContentTypeCode().isPrimitive();
     }
-    
+
     @Override
     public String getInitialValue()
     {   
         return super.getContentTypeCode().getInitialValue();
     }
-    
+
     public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         // TODO
-    	return null;
+        return null;
     }
-    
+
     public int getMaxSerializedSizeWithoutAlignment(int currentSize)
     {
-    	// TODO
+        // TODO
         return 0;
     }
-    
+
     /*** Functions to know the type in string templates ***/
     @Override
     public boolean isIsType_d()
     {
         return super.getContentTypeCode().isIsType_d();
     }
-    
+
     @Override
     public boolean isIsType_c()
     {
         return super.getContentTypeCode().isIsType_c();
     }
-    
+
     @Override
     public boolean isIsType_f()
     {
         return super.getContentTypeCode().isIsType_f();
     }
-    
+
     public boolean isIsType_e()
     {
         return super.getContentTypeCode().isIsType_e();
     }
+
+    public boolean isIsType_10()
+    {
+        return true;
+    }
     /*** End of functions to know the type in string templates ***/
-    
+
+    /*** Functions that alias has to export because some typecodes have them*/
+    public String getMaxsize()
+    {
+        return super.getContentTypeCode().getMaxsize();
+    }
+
+    public int getSize()
+    {
+        return super.getContentTypeCode().getSize();
+    }
+    /*** End of functions that alias has to export because some typecodes have them*/
+
     private String m_name = null;
-    
+
     private String m_scope = null;
 }

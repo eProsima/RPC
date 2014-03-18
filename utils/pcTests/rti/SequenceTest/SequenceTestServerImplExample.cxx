@@ -16,63 +16,63 @@
 
 #include "ndds_namespace_cpp.h"
  
-largo SequenceTestServerImplExample::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3) 
+largo SequenceTestServerImplExample::getSeqLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3) 
 {
-    largo getSLong_ret;
+    largo getSeqLong_ret;
 
 	largo_initialize(&l3);
-	largo_initialize(&getSLong_ret);
+	largo_initialize(&getSeqLong_ret);
         
 	l3.ensure_length(2, 2);
 	l3[0] = l2[0];
 	l3[1] = l2[1];
-	getSLong_ret.ensure_length(2, 2);
-	getSLong_ret[0] = l1[0];
-	getSLong_ret[1] = l1[1];
+	getSeqLong_ret.ensure_length(2, 2);
+	getSeqLong_ret[0] = l1[0];
+	getSeqLong_ret[1] = l1[1];
 	l2[0] = l1[0] + l2[0];
 	l2[1] = l1[1] + l2[1];
    
-    return getSLong_ret;
+    return getSeqLong_ret;
 } 
  
-cadena SequenceTestServerImplExample::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s2, /*out*/ cadena& s3) 
+cadena SequenceTestServerImplExample::getSeqString(/*in*/ const cadena& s1, /*inout*/ cadena& s2, /*out*/ cadena& s3) 
 {
-    cadena getString_ret;
+    cadena getSeqString_ret;
 
 	cadena_initialize(&s3);
-	cadena_initialize(&getString_ret);
+	cadena_initialize(&getSeqString_ret);
         
 	s3.ensure_length(2, 2);
 	s3[0] = DDS::String_dup(s2[0]);
 	s3[1] = DDS::String_dup(s2[1]);
-	getString_ret.ensure_length(2, 2);
-	getString_ret[0] = DDS::String_dup(s1[0]);
-	getString_ret[1] = DDS::String_dup(s1[1]);
+	getSeqString_ret.ensure_length(2, 2);
+	getSeqString_ret[0] = DDS::String_dup(s1[0]);
+	getSeqString_ret[1] = DDS::String_dup(s1[1]);
 	DDS::String_free(s2[0]);
 	DDS::String_free(s2[1]);
 	s2[0] = DDS::String_dup(s1[0]);
 	s2[1] = DDS::String_dup(s1[1]);
    
-    return getString_ret;
+    return getSeqString_ret;
 } 
  
-dattos SequenceTestServerImplExample::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3) 
+dattos SequenceTestServerImplExample::getSeqDatos(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3) 
 {
-    dattos getStringBounded_ret;
+    dattos getSeqDatos_ret;
 
 	dattos_initialize(&sb3);
-	dattos_initialize(&getStringBounded_ret);
+	dattos_initialize(&getSeqDatos_ret);
         
 	sb3.ensure_length(2, 2);
 	sb3[0].count = sb2[0].count;
 	sb3[0].message = DDS::String_dup(sb2[0].message);
 	sb3[1].count = sb2[1].count;
 	sb3[1].message = DDS::String_dup(sb2[1].message);
-	getStringBounded_ret.ensure_length(2, 2);
-	getStringBounded_ret[0].count = sb1[0].count;
-	getStringBounded_ret[0].message = DDS::String_dup(sb1[0].message);
-	getStringBounded_ret[1].count = sb1[1].count;
-	getStringBounded_ret[1].message = DDS::String_dup(sb1[1].message);
+	getSeqDatos_ret.ensure_length(2, 2);
+	getSeqDatos_ret[0].count = sb1[0].count;
+	getSeqDatos_ret[0].message = DDS::String_dup(sb1[0].message);
+	getSeqDatos_ret[1].count = sb1[1].count;
+	getSeqDatos_ret[1].message = DDS::String_dup(sb1[1].message);
 	sb2[0].count = sb1[0].count;
 	DDS::String_free(sb2[0].message);
 	sb2[0].message = DDS::String_dup(sb1[0].message);
@@ -80,5 +80,117 @@ dattos SequenceTestServerImplExample::getStringBounded(/*in*/ const dattos& sb1,
 	DDS::String_free(sb2[1].message);
 	sb2[1].message = DDS::String_dup(sb1[1].message);
    
-    return getStringBounded_ret;
+    return getSeqDatos_ret;
 } 
+
+seqdat SequenceTestServerImplExample::getSeqDat(/*in*/ const seqdat& sd1, /*inout*/ seqdat& sd2, /*out*/ seqdat& sd3)
+{
+    seqdat getSeqDat_ret;
+
+    seqdat_initialize(&sd3);
+    seqdat_initialize(&getSeqDat_ret);
+
+    sd3.ensure_length(2, 2);
+    sd3[0].ensure_length(2, 2);
+    sd3[0][0].count = sd2[0][0].count;
+    sd3[0][0].message = DDS::String_dup(sd2[0][0].message);
+    sd3[0][1].count = sd2[0][1].count;
+    sd3[0][1].message = DDS::String_dup(sd2[0][1].message);
+    sd3[1].ensure_length(2, 2);
+    sd3[1][0].count = sd2[1][0].count;
+    sd3[1][0].message = DDS::String_dup(sd2[1][0].message);
+    sd3[1][1].count = sd2[1][1].count;
+    sd3[1][1].message = DDS::String_dup(sd2[1][1].message);
+    getSeqDat_ret.ensure_length(2, 2);
+    getSeqDat_ret[0].ensure_length(2, 2);
+    getSeqDat_ret[0][0].count = sd1[0][0].count;
+    getSeqDat_ret[0][0].message = DDS::String_dup(sd1[0][0].message);
+    getSeqDat_ret[0][1].count = sd1[0][1].count;
+    getSeqDat_ret[0][1].message = DDS::String_dup(sd1[0][1].message);
+    getSeqDat_ret[1].ensure_length(2, 2);
+    getSeqDat_ret[1][0].count = sd1[1][0].count;
+    getSeqDat_ret[1][0].message = DDS::String_dup(sd1[1][0].message);
+    getSeqDat_ret[1][1].count = sd1[1][1].count;
+    getSeqDat_ret[1][1].message = DDS::String_dup(sd1[1][1].message);
+    sd2.ensure_length(2, 2);
+    sd2[0].ensure_length(2, 2);
+    sd2[0][0].count = sd1[0][0].count;
+    sd2[0][0].message = DDS::String_dup(sd1[0][0].message);
+    sd2[0][1].count = sd1[0][1].count;
+    sd2[0][1].message = DDS::String_dup(sd1[0][1].message);
+    sd2[1].ensure_length(2, 2);
+    sd2[1][0].count = sd1[1][0].count;
+    sd2[1][0].message = DDS::String_dup(sd1[1][0].message);
+    sd2[1][1].count = sd1[1][1].count;
+    sd2[1][1].message = DDS::String_dup(sd1[1][1].message);
+
+    return getSeqDat_ret;
+}
+
+SequenceTest::Sequences SequenceTestServerImplExample::getSequences(/*in*/ const SequenceTest::Sequences& seq1, /*inout*/ SequenceTest::Sequences& seq2, /*out*/ SequenceTest::Sequences& seq3)
+{
+    SequenceTest::Sequences getSequences_ret;
+
+    Sequences_initialize(&seq3);
+    Sequences_initialize(&getSequences_ret);
+
+    seq3.strings.ensure_length(2, 2);
+    seq3.strings[0] = DDS::String_dup(seq2.strings[0]);
+    seq3.strings[1] = DDS::String_dup(seq2.strings[1]);
+    seq3.datos.ensure_length(2, 2);
+    seq3.datos[0].count = seq2.datos[0].count;
+    seq3.datos[0].message = DDS::String_dup(seq2.datos[0].message);
+    seq3.datos[1].count = seq2.datos[1].count;
+    seq3.datos[1].message = DDS::String_dup(seq2.datos[1].message);
+    seq3.seqdat.ensure_length(2, 2);
+    seq3.seqdat[0].ensure_length(2, 2);
+    seq3.seqdat[0][0].count = seq2.seqdat[0][0].count;
+    seq3.seqdat[0][0].message = DDS_String_dup(seq2.seqdat[0][0].message);
+    seq3.seqdat[0][1].count = seq2.seqdat[0][1].count;
+    seq3.seqdat[0][1].message = DDS_String_dup(seq2.seqdat[0][1].message);
+    seq3.seqdat[1].ensure_length(2, 2);
+    seq3.seqdat[1][0].count = seq2.seqdat[1][0].count;
+    seq3.seqdat[1][0].message = DDS_String_dup(seq2.seqdat[1][0].message);
+    seq3.seqdat[1][1].count = seq2.seqdat[1][1].count;
+    seq3.seqdat[1][1].message = DDS_String_dup(seq2.seqdat[1][1].message);
+    getSequences_ret.strings.ensure_length(2, 2);
+    getSequences_ret.strings[0] = DDS::String_dup(seq1.strings[0]);
+    getSequences_ret.strings[1] = DDS::String_dup(seq1.strings[1]);
+    getSequences_ret.datos.ensure_length(2, 2);
+    getSequences_ret.datos[0].count = seq1.datos[0].count;
+    getSequences_ret.datos[0].message = DDS::String_dup(seq1.datos[0].message);
+    getSequences_ret.datos[1].count = seq1.datos[1].count;
+    getSequences_ret.datos[1].message = DDS::String_dup(seq1.datos[1].message);
+    getSequences_ret.seqdat.ensure_length(2, 2);
+    getSequences_ret.seqdat[0].ensure_length(2, 2);
+    getSequences_ret.seqdat[0][0].count = seq1.seqdat[0][0].count;
+    getSequences_ret.seqdat[0][0].message = DDS_String_dup(seq1.seqdat[0][0].message);
+    getSequences_ret.seqdat[0][1].count = seq1.seqdat[0][1].count;
+    getSequences_ret.seqdat[0][1].message = DDS_String_dup(seq1.seqdat[0][1].message);
+    getSequences_ret.seqdat[1].ensure_length(2, 2);
+    getSequences_ret.seqdat[1][0].count = seq1.seqdat[1][0].count;
+    getSequences_ret.seqdat[1][0].message = DDS_String_dup(seq1.seqdat[1][0].message);
+    getSequences_ret.seqdat[1][1].count = seq1.seqdat[1][1].count;
+    getSequences_ret.seqdat[1][1].message = DDS_String_dup(seq1.seqdat[1][1].message);
+    seq2.strings.ensure_length(2, 2);
+    seq2.strings[0] = DDS::String_dup(seq1.strings[0]);
+    seq2.strings[1] = DDS::String_dup(seq1.strings[1]);
+    seq2.datos.ensure_length(2, 2);
+    seq2.datos[0].count = seq1.datos[0].count;
+    seq2.datos[0].message = DDS::String_dup(seq1.datos[0].message);
+    seq2.datos[1].count = seq1.datos[1].count;
+    seq2.datos[1].message = DDS::String_dup(seq1.datos[1].message);
+    seq2.seqdat.ensure_length(2, 2);
+    seq2.seqdat[0].ensure_length(2, 2);
+    seq2.seqdat[0][0].count = seq1.seqdat[0][0].count;
+    seq2.seqdat[0][0].message = DDS_String_dup(seq1.seqdat[0][0].message);
+    seq2.seqdat[0][1].count = seq1.seqdat[0][1].count;
+    seq2.seqdat[0][1].message = DDS_String_dup(seq1.seqdat[0][1].message);
+    seq2.seqdat[1].ensure_length(2, 2);
+    seq2.seqdat[1][0].count = seq1.seqdat[1][0].count;
+    seq2.seqdat[1][0].message = DDS_String_dup(seq1.seqdat[1][0].message);
+    seq2.seqdat[1][1].count = seq1.seqdat[1][1].count;
+    seq2.seqdat[1][1].message = DDS_String_dup(seq1.seqdat[1][1].message);
+
+    return getSequences_ret;
+}

@@ -78,7 +78,7 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getMaxCdrSerialize
     size_t current_align = current_alignment;
     current_align +=  eprosima::rpcdds::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
             
-    $operation.inputparam : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
+    $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
 
     return current_align;
 }
@@ -133,7 +133,7 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxCdrSerializedS
     size_t current_align = current_alignment;
     current_align +=  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
             
-    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(param=param, var="current_align")$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
 
     return current_align;
 }
@@ -191,17 +191,4 @@ m_$param.name$ = x.m_$param.name$;
 
 parameters_move_assigment(param) ::= <<
 m_$param.name$ = x.m_$param.name$;
->>
-
-// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
-max_serialized_size(param, var) ::= <<
-$if(param.typecode.primitive)$
-$if(param.typecode.isType_d)$
-$var$ += $param.typecode.maxsize$;
-$else$
-$var$ += $param.typecode.size$ + eprosima::Cdr::alignment($var$, $param.typecode.size$);
-$endif$
-$else$
-$var$ += $param.typecode.scopedname$::getMaxCdrSerializedSize($var$);
-$endif$
 >>

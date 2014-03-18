@@ -15,6 +15,8 @@ $fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This hea
 #include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
 
 #include "fastcdr/Cdr.h"
+#include "fastcdr/exceptions/BadParamException.h"
+#include "fastcdr/exceptions/NotEnoughMemoryException.h"
 
 $definitions; separator="\n"$
 
@@ -106,7 +108,7 @@ $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_serializ
         current_alignment += encapsulation_size;
     } 
 
-    printf("Max ser size: %d\n", current_alignment - initial_alignment);
+    printf("Max ser size: %u\n", current_alignment - initial_alignment);
     return current_alignment - initial_alignment;
 }
 
@@ -286,9 +288,22 @@ $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::serialize(
 
     if(serialize_sample)
     {
-        cdr << sample->_header();
+        try
+        {
+            cdr << sample->_header();
 
-        $operation.inputparam : { param |cdr << $serializeCasting(param.typecode)$sample->$param.name$();}; separator="\n"$
+            $operation.inputparam : { param |$param_serialization(param=param)$}; separator="\n"$
+        }
+        catch(eprosima::BadParamException ex)
+        {
+            printf("ERROR<eprosima::BadParamException>: %s\n", ex.what());
+            return RTI_FALSE;
+        }
+        catch(eprosima::NotEnoughMemoryException ex)
+        {
+            printf("ERROR<eprosima::NotEnoughMemoryException>: %s\n", ex.what());
+            return RTI_FALSE;
+        }
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -323,7 +338,7 @@ $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::deserialize(
     {
         cdr \>> _sample->_header();
 
-        $operation.inputparam : { param |cdr \>> $deserializeCasting(param.typecode)$_sample->$param.name$();}; separator="\n"$
+        $operation.inputparam : { param |$param_deserialization(param=param)$}; separator="\n"$
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -343,7 +358,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
     printf("=> $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    $operation.inputparam : { param |$if(param.typecode.isType_d)$static DDS_TypeCode $param.name$_string = DDS_INITIALIZE_STRING_TYPECODE($param.typecode.maxsize$);$endif$}; separator="\n"$
+    $operation.inputparam : { param |$ddsTypeCodeDecls(name=param.name, typecode=param.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Request_g_tc_members[1 + $length(operation.inputparam)$]
     {
@@ -404,7 +419,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
     if(!is_initialized)
     {
         $operation.parent.name$_$operation.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::RequestHeaderPlugin::get_typecode();
-        $operation.inputparam : { param |$operation.parent.name$_$operation.name$Request_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(param)$;}; separator="\n"$
+        $operation.inputparam : { param |$operation.parent.name$_$operation.name$Request_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         is_initialized = true;
     }
 
@@ -638,7 +653,7 @@ $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_serialized
         current_alignment += encapsulation_size;
     } 
 
-    printf("Max ser size: %d\n", current_alignment - initial_alignment);
+    printf("Max ser size: %u\n", current_alignment - initial_alignment);
     return current_alignment - initial_alignment;
 }
 
@@ -816,9 +831,22 @@ $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::serialize(
 
     if(serialize_sample)
     {
-        cdr << sample->_header();
+        try
+        {
+            cdr << sample->_header();
 
-        $[operation.outputparam, operation.rettypeparam] : { param |cdr << $serializeCasting(param.typecode)$sample->$param.name$();}; separator="\n"$
+            $[operation.outputparam, operation.rettypeparam] : { param |$param_serialization(param=param)$}; separator="\n"$
+        }
+        catch(eprosima::BadParamException ex)
+        {
+            printf("ERROR<eprosima::BadParamException>: %s\n", ex.what());
+            return RTI_FALSE;
+        }
+        catch(eprosima::NotEnoughMemoryException ex)
+        {
+            printf("ERROR<eprosima::NotEnoughMemoryException>: %s\n", ex.what());
+            return RTI_FALSE;
+        }
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -852,7 +880,7 @@ $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::deserialize(
     {
         cdr \>> _sample->_header();
 
-        $[operation.outputparam, operation.rettypeparam] : { param |cdr \>> $deserializeCasting(param.typecode)$_sample->$param.name$();}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$param_deserialization(param=param)$}; separator="\n"$
     }
 
     stream->_currentPosition = cdr.getCurrentPosition();
@@ -871,7 +899,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
     printf("=> $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    $[operation.outputparam, operation.rettypeparam] : { param |$if(param.typecode.isType_d)$static DDS_TypeCode $param.name$_string = DDS_INITIALIZE_STRING_TYPECODE($param.typecode.maxsize$);$endif$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(name=param.name, typecode=param.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_g_tc_members[1 + $length([operation.outputparam, operation.rettypeparam])$]
     {
@@ -932,7 +960,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
     if(!is_initialized)
     {
         $operation.parent.name$_$operation.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::ReplyHeaderPlugin::get_typecode();
-        $[operation.outputparam, operation.rettypeparam] : { param |$operation.parent.name$_$operation.name$Reply_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(param)$;}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$operation.parent.name$_$operation.name$Reply_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         is_initialized = true;
     }
 
@@ -1105,14 +1133,44 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-type_declarator(ctx, typedefs) ::= <<>>
+type_declarator(ctx, typedefs) ::= <<
+DDS_TypeCode* $if(typedefs.hasScope)$$typedefs.scope$Plugin::$endif$$typedefs.name$Plugin::get_typecode()
+{
+    static bool is_initialized = false;
+
+    $ddsTypeCodeDeclsInAlias(ctx=ctx, alias=typedefs)$
+
+    static DDS_TypeCode $typedefs.name$_g_tc =
+    {{
+         DDS_TK_ALIAS,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$typedefs.name$",
+         NULL,
+         0,
+         0,
+         NULL,
+         0,
+         NULL,
+         DDS_VM_NONE
+    }};
+
+    if(!is_initialized)
+    {
+        $typedefs.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=typedefs.name, typecode=typedefs.contentTypeCode)$;
+        is_initialized = true;
+    }
+    
+    return &$typedefs.name$_g_tc;
+}
+>>
 
 struct_type(ctx, struct) ::= <<
 DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
 
-    $struct.members : { member |$if(member.typecode.isType_d)$static DDS_TypeCode $member.name$_string = DDS_INITIALIZE_STRING_TYPECODE($member.typecode.maxsize$);$endif$}; separator="\n"$
+    $struct.members : { member |$ddsTypeCodeDecls(name=member.name, typecode=member.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $struct.name$_g_tc_members[$length(struct.members)$]
     {
@@ -1153,7 +1211,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plu
     
     if(!is_initialized)
     {
-        $struct.members : { member |$struct.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(member)$;}; separator="\n"$
+        $struct.members : { member |$struct.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
         is_initialized = true;
     }
 
@@ -1161,7 +1219,64 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$Plugin::$endif$$struct.name$Plu
 }
 >>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, union) ::= <<
+DDS_TypeCode* $if(union.hasScope)$$union.scope$Plugin::$endif$$union.name$Plugin::get_typecode()
+{
+    static bool is_initialized = false;
+
+    $union.members : { member |$union_member_labels_decl(union=union, member=member)$}; separator="\n"$
+
+    $union.members : { member |$ddsTypeCodeDecls(name=member.name, typecode=member.typecode)$}; separator="\n"$
+
+    static DDS_TypeCode_Member $union.name$_g_tc_members[$length(union.members)$]
+    {
+        $union.members : { member |
+        {
+            (char *)"$member.name$",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            $length(member.labels)$,
+            $first(member.labels)$,
+            $union_member_labels_def(union=union, member=member)$,
+            DDS_BOOLEAN_FALSE,
+            DDS_PRIVATE_MEMBER,
+            0,
+            NULL
+        }}; separator=",\n"$
+    };
+
+    static DDS_TypeCode $union.name$_g_tc =
+    {{
+         DDS_TK_UNION,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$union.name$",
+         NULL,
+         0,
+         0,
+         NULL,
+         $length(union.members)$,
+         $union.name$_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    if(!is_initialized)
+    {
+        $union.members : { member |$union.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
+
+        $union.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(typecode=union.discriminator)$;
+
+        is_initialized = true;
+    }
+
+    return &$union.name$_g_tc;
+}
+>>
 
 enum_type(ctx, enum) ::= <<
 DDS_TypeCode* $if(enum.hasScope)$$enum.scope$Plugin::$endif$$enum.name$Plugin::get_typecode()
@@ -1177,7 +1292,7 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$Plugin::$endif$$enum.name$Plugin::g
                 -1,
                 NULL
             },
-            $member.name$,
+            $if(enum.hasScope)$$enum.scope$::$endif$$member.name$,
             0,
             0,
             NULL,
@@ -1208,32 +1323,77 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$Plugin::$endif$$enum.name$Plugin::g
 >>
 
 /**** Utils ****/
+
 //TODO EL resto de tipos
-ddsTypeCodeDefs(object) ::= <<
-$if(object.typecode.primitive)$
-$if(object.typecode.isType_d)$
-&$object.name$_string
-$else$
-$if(object.typecode.isType_c)$
-$if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
-$else$
-&$basicDDSTypeCodeDefs.(object.typecode.stType)$
+ddsTypeCodeDecls(name, typecode) ::= <<
+$if(!typecode.isType_10)$
+$if(typecode.isType_d)$
+static DDS_TypeCode $name$_g_tc_string = DDS_INITIALIZE_STRING_TYPECODE($typecode.maxsize$);
 $endif$
+$if(typecode.isType_e)$
+$ddsTypeCodeDecls(name=ctx.newRandomName, typecode=typecode.contentTypeCode)$
+static DDS_TypeCode $name$_g_tc_sequence = DDS_INITIALIZE_SEQUENCE_TYPECODE($typecode.maxsize$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=typecode.contentTypeCode)$);
 $endif$
-$else$
-$if(object.typecode.hasScope)$$object.typecode.scope$Plugin::$endif$$object.typecode.name$Plugin::get_typecode()
 $endif$
 >>
 
-serializeCasting(typecode) ::= <<
-$if(typecode.isType_c)$
-(uint32_t)
+ddsTypeCodeDeclsInAlias(ctx, alias) ::= <<
+$if(alias.isType_d)$
+static DDS_TypeCode $alias.name$_g_tc_string = DDS_INITIALIZE_STRING_TYPECODE($alias.maxsize$);
+$endif$
+$if(alias.isType_e)$
+$ddsTypeCodeDecls(name=ctx.newRandomName, typecode=alias.contentTypeCode)$
+static DDS_TypeCode $alias.name$_g_tc_sequence = DDS_INITIALIZE_SEQUENCE_TYPECODE($alias.maxsize$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=alias.contentTypeCode)$);
 $endif$
 >>
 
-deserializeCasting(typecode) ::= <<
-$if(typecode.isType_c)$
-(uint32_t&)
+//TODO EL resto de tipos
+ddsTypeCodeDefs(name, typecode) ::= <<
+$if(typecode.isType_10)$
+$if(typecode.hasScope)$$typecode.scope$Plugin::$endif$$typecode.name$Plugin::get_typecode()
+$elseif(typecode.primitive)$
+$if(typecode.isType_d)$
+&$name$_g_tc_string
+$elseif(typecode.isType_c)$
+$if(typecode.hasScope)$$typecode.scope$Plugin::$endif$$typecode.name$Plugin::get_typecode()
+$else$
+&$basicDDSTypeCodeDefs.(typecode.stType)$
+$endif$
+$else$
+$if(typecode.isType_e)$
+&$name$_g_tc_sequence
+$else$
+$if(typecode.hasScope)$$typecode.scope$Plugin::$endif$$typecode.name$Plugin::get_typecode()
+$endif$
+$endif$
+>>
+
+param_serialization(param) ::= <<
+$if(param.typecode.maxsize)$
+if(sample->$param.name$().$sizeFunction.(param.typecode.stType)$ <= $param.typecode.maxsize$)
+
+$endif$cdr << $serializeCasting(typecode=param.typecode)$sample->$param.name$();
+$if(param.typecode.maxsize)$
+else
+    throw eprosima::BadParamException(std::string("The maximum length was exceeded"));
+$endif$
+>>
+
+param_deserialization(param) ::= <<
+cdr \>> $deserializeCasting(typecode=param.typecode)$_sample->$param.name$();
+>>
+
+union_member_labels_decl(union, member) ::= <<
+$if(rest(member.labels))$
+static DDS_Long $union.name$_g_tc_$member.name$_labels[$length(member.labels)$] = {$member.labels : { label |(DDS_Long)$label$}; separator=", "$};
+$endif$
+>>
+
+union_member_labels_def(union, member) ::= <<
+$if(rest(member.labels))$
+$union.name$_g_tc_$member.name$_labels
+$else$
+NULL
 $endif$
 >>
 

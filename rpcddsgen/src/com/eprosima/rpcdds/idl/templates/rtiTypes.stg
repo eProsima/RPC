@@ -30,6 +30,7 @@ type_d() ::= <<char*>>
 
 type_15() ::= <<wchar_t*>>
 
+// TODO Mirar esto. No rti type.
 type_f_first(prev) ::= <<std::array<$prev$>>
 type_f_second(prev, size) ::= <<, $size$>$prev$>>
 type_f(firs, secon, type) ::= <<$firs$$type$$secon$>>
@@ -42,4 +43,5 @@ type_c(name) ::= <<$name$>>
 
 type_10(name) ::= <<$name$>>
 
+// TODO Mirar esto. No rti type.
 type_e(type, maxsize, empty) ::= <<std::vector<$type$>$empty$>>

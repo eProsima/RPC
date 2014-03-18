@@ -289,7 +289,15 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-type_declarator(ctx, typedefs) ::= <<>>
+type_declarator(ctx, typedefs) ::= <<
+class $typedefs.name$Plugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+        
+};
+>>
 
 struct_type(ctx, struct) ::= <<
 class $struct.name$Plugin
@@ -301,7 +309,15 @@ class $struct.name$Plugin
 };
 >>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, union) ::= <<
+class $union.name$Plugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+        
+};
+>>
 
 enum_type(ctx, enum) ::= <<
 class $enum.name$Plugin

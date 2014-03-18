@@ -862,6 +862,7 @@ member returns [Vector<Pair<String, TypeCode>> newVector = new Vector<Pair<Strin
 union_type returns [Pair<TypeCode, TemplateGroup> returnPair = null]
 {
     String name = null;
+    int line = 0;
     TypeCode dist_type = null;
     UnionTypeCode unionTP = null;
     TemplateGroup unionTemplates = tmanager.createTemplateGroup("union_type");
@@ -870,12 +871,14 @@ union_type returns [Pair<TypeCode, TemplateGroup> returnPair = null]
 	    name=identifier
 	    "switch"! LPAREN! dist_type=switch_type_spec RPAREN!
 	    {
+            // TODO Check supported types for discriminator: long, enumeration, etc...
 	       unionTP = new UnionTypeCode(ctx.getScope(), name, dist_type);
+           line = LT(0).getLine() - ctx.getCurrentIncludeLine();
 	    }
 	    LCURLY! switch_body[unionTP] RCURLY!
 	    {
 	       // Calculate default label.
-	       unionTP.setDefaultvalue(TemplateUtil.getUnionDefaultLabel(unionTP.getDiscriminator(), unionTP.getMembers()));
+	       unionTP.setDefaultvalue(TemplateUtil.getUnionDefaultLabel(unionTP.getDiscriminator(), unionTP.getMembers(), ctx.getScopeFile(), line));
 	       unionTemplates.setAttribute("ctx", ctx);
            unionTemplates.setAttribute("union", unionTP);
            
@@ -920,7 +923,7 @@ case_stmt [UnionTypeCode unionTP]
     UnionMember member = new UnionMember();
 }
 	:   // case_label_list
-	    ( "case"^ label=const_exp{member.addLabel(label);} COLON!
+	    ( "case"^ label=const_exp{member.addLabel(TemplateUtil.checkUnionLabel(unionTP.getDiscriminator(), label, ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine()));} COLON!
 	    | "default"^ {defaul = true;} COLON!
 	    )+
 	    element=element_spec SEMI!
