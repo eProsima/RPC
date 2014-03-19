@@ -171,6 +171,7 @@ class $operation.name$RequestPlugin : public DDSTypeSupport
 };
 
 // Reply operations 
+$if(!operation.oneway)$
 class $operation.name$ReplyDataReader : public DDSDataReader
 {
     public:
@@ -282,6 +283,7 @@ class $operation.name$ReplyPlugin : public DDSTypeSupport
 
         static const char *m_typename;
 };
+$endif$
 
 >>
 

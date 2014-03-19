@@ -548,7 +548,7 @@ bool $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::registe
         {
             if(typePlugin == NULL)
             {
-                typePlugin = new $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin();
+                typePlugin = new $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin();
             }
 
             typeDDSPlugin->_userBuffer = (PRESWord*)typePlugin;
@@ -585,8 +585,8 @@ DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$RequestPlu
     return DDS_RETCODE_OK;
 }
 
+$if(!operation.oneway)$
 // Reply operations
-
 const char *$operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::m_typename = "$operation.parent.scopedname$_$operation.name$Reply";
 
 const char* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::get_typename()
@@ -1126,6 +1126,7 @@ DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugi
     delete ($operation.parent.scopedname$Plugin::$operation.name$ReplyDataWriter*)dataWriter;
     return DDS_RETCODE_OK;
 }
+$endif$
 
 >>
 

@@ -137,6 +137,7 @@ private:
     $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
 };
 
+$if(!operation.oneway)$
 /*!
  * @brief This class represents the structure $operation.parent.name$_$operation.name$Reply that can be used to send/receive replies
  * for the operation $operation.parent.name$::$operation.name$.
@@ -217,6 +218,7 @@ private:
 
     $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
 };
+$endif$
 
 >>
 

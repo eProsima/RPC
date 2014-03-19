@@ -45,3 +45,9 @@ type_10(name) ::= <<$name$>>
 
 // TODO Mirar esto. No rti type.
 type_e(type, maxsize, empty) ::= <<std::vector<$type$>$empty$>>
+
+initialValues ::= [
+        "type_d":"NULL",
+        "type_15":"NULL",
+        default: // not basic type.
+]

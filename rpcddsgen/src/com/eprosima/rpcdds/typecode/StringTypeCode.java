@@ -35,7 +35,7 @@ public class StringTypeCode extends TypeCode
     @Override
     public String getInitialValue()
     {   
-        return "\"\"";
+        return getInitialValueFromStringTemplate();
     }
     
     public String getMaxsize()

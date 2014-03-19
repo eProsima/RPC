@@ -431,7 +431,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
         else
             *(unsigned int*)auxPointerToRequest = m_numSec;
         numSec = m_numSec;
-        m_numSec++;
+        ++m_numSec;
 
         // Take a free query condition.
         // Its not a oneway function.
@@ -592,7 +592,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
         else
             *(unsigned int*)auxPointerToRequest = m_numSec;
         numSec = m_numSec;
-        m_numSec++;
+        ++m_numSec;
 
         // Take a free query condition.
         query = getFreeQueryFromPool();

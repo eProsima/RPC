@@ -4,6 +4,8 @@ import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
+import java.util.Map;
+
 import com.eprosima.rpcdds.templates.TemplateUtil;
 import com.eprosima.rpcdds.util.Pair;
 
@@ -89,6 +91,12 @@ public abstract class TypeCode
     public String getInitialValue()
     {
         return "";
+    }
+
+    protected String getInitialValueFromStringTemplate()
+    {
+        Map initialValues = cpptypesgr.getMap("initialValues");
+        return initialValues.get(getStType()).toString();
     }
     
     // By default a typecode doesn't have a max size limit. Function used in stringtemplates

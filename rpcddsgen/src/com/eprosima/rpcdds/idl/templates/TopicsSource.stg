@@ -93,6 +93,7 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(
     return current_align;
 }
 
+$if(!operation.oneway)$
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply()
 $parameters_default_init([operation.outputparam, operation.rettypeparam])$
 {
@@ -147,6 +148,7 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(si
 
     return current_align;
 }
+$endif$
 
 >>
 

@@ -73,13 +73,6 @@ if [ ! -e "../../../include/rpcdds/eProsima_cpp" ]; then
     if [ $errorstatus != 0 ]; then return; fi
 fi
 
-# Create symbolic link to EPROSIMADIR in the fastcdr folder.
-if [ ! -e "../../../../fastcdr/include/fastcdr/eProsima_cpp" ]; then
-    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../../fastcdr/include/fastcdr/eProsima_cpp
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-fi
-
 # Create output directory 
 if [ ! -d "output" ]; then
     mkdir output
@@ -152,9 +145,6 @@ done
 #rm -r output
 
 # Remove symbolic link
-if [ -e ../../../../fastcdr/include/fastcdr/eProsima_cpp ]; then
-    rm ../../../../fastcdr/include/fastcdr/eProsima_cpp
-fi
 if [ -e ../../../include/rpcdds/eProsima_cpp ]; then
     rm ../../../include/rpcdds/eProsima_cpp
 fi
