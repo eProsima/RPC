@@ -11,7 +11,6 @@ module SameDirectoryNS
     exception SameDirectoryEx
     {
         string msg;
-	Level2NS::Level2 level;
     };
 
     interface SameDirectoryIfc

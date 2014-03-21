@@ -1,7 +1,7 @@
 group rtiIDL;
 
 main(ctx, definitions) ::= <<
-$ctx.directIncludeDependencies : {include | #include "$include$"}; separator="\n"$
+$ctx.directIncludeDependencies : {include | #include "$include$.idl"}; separator="\n"$
 
 $definitions; separator="\n"$
 

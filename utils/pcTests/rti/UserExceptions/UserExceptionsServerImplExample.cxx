@@ -59,3 +59,11 @@ DDS_Long IfcServerImplExample::sendExcepIntern(/*in*/ DDS_Long l1)
 
     return sendExcepIntern_ret;
 } 
+
+void IfcServerImplExample::sendOnlyExcep()
+{
+    Beta::Excep ex;
+    ex.count = 1;
+    ex.msg = strdup("sendOnlyExcep");
+    throw ex;
+} 

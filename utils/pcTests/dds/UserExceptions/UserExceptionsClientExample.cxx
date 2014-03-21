@@ -154,6 +154,32 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<sendExcepIntern>: System exception: " << ex.what() << std::endl;
         _exit(-1);
     }
+
+    // Call to remote procedure "sendOnlyExcep".
+    try
+    {
+        proxy->sendOnlyExcep();
+        std::cout << "TEST FAILED<sendOnlyExcep>: Not catch user exception" << std::endl;
+        _exit(-1);
+    }
+    catch(Beta::Excep &ex)
+    {
+        if((ex.count() != 1) || (ex.msg().compare("sendOnlyExcep") != 0))
+        {
+            std::cout << "TEST FAILED<sendOnlyExcep>: Bad data" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(UserException &ex)
+    {
+        std::cout << "TEST FAILED<sendOnlyExcep>: Different user exception" << std::endl;
+        _exit(-1);
+    }
+    catch(Exception &ex)
+    {
+        std::cout << "TEST FAILED<sendOnlyExcep>: System exception: " << ex.what() << std::endl;
+        _exit(-1);
+    }
     
 	printf("TEST SUCCESFULLY\n");
 

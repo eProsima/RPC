@@ -110,6 +110,7 @@ void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima
 
 $if(!operation.oneway)$
 $if(operation.exceptions)$
+$if([operation.outputparam, operation.rettype])$
 $operation.parent.scopedname$_$operation.name$Reply_st::$operation.parent.name$_$operation.name$Reply_st()
 $parameters_default_init([operation.outputparam, operation.rettypeparam])$
 {
@@ -172,6 +173,8 @@ void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosim
     $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param)$}; separator="\n"$
 }
 
+$endif$
+
 $operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.name$_$operation.name$Reply_union() : m__d(0)
 {
 }
@@ -186,9 +189,11 @@ $operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.nam
     
     switch(m__d)
     {
+        $if([operation.outputparam, operation.rettype])$
         case 0:
-           m_st = x.m_st;
-           break;
+            m_st = x.m_st;
+            break;
+        $endif$
 
         $operation.exceptions : { exception |
         case $i$:
@@ -197,7 +202,9 @@ $operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.nam
         }; separator="\n"$
 
         default:
+            $if([operation.outputparam, operation.rettype])$
             m_st = x.m_st;
+            $endif$
             break;
     }
 }
@@ -208,9 +215,11 @@ $operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.nam
     
     switch(m__d)
     {
+        $if([operation.outputparam, operation.rettype])$
         case 0:
-           m_st = std::move(x.m_st);
-           break;
+            m_st = std::move(x.m_st);
+            break;
+        $endif$
 
         $operation.exceptions : { exception |
         case $i$:
@@ -219,7 +228,9 @@ $operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.nam
         }; separator="\n"$
 
         default:
+            $if([operation.outputparam, operation.rettype])$
             m_st = std::move(x.m_st);
+            $endif$
             break;
     }
 }
@@ -230,9 +241,11 @@ $operation.parent.scopedname$_$operation.name$Reply_union& $operation.parent.sco
     
     switch(m__d)
     {
+        $if([operation.outputparam, operation.rettype])$
         case 0:
-           m_st = x.m_st;
-           break;
+            m_st = x.m_st;
+            break;
+        $endif$
 
         $operation.exceptions : { exception |
         case $i$:
@@ -241,8 +254,10 @@ $operation.parent.scopedname$_$operation.name$Reply_union& $operation.parent.sco
         }; separator="\n"$
 
         default:
-           m_st = x.m_st;
-         break;
+            $if([operation.outputparam, operation.rettype])$
+            m_st = x.m_st;
+            $endif$
+            break;
     }
     
     return *this;
@@ -254,9 +269,11 @@ $operation.parent.scopedname$_$operation.name$Reply_union& $operation.parent.sco
     
     switch(m__d)
     {
+        $if([operation.outputparam, operation.rettype])$
         case 0:
-           m_st = std::move(x.m_st);
-           break;
+            m_st = std::move(x.m_st);
+            break;
+        $endif$
 
         $operation.exceptions : { exception |
         case $i$:
@@ -265,7 +282,9 @@ $operation.parent.scopedname$_$operation.name$Reply_union& $operation.parent.sco
         }; separator="\n"$
 
         default:
+            $if([operation.outputparam, operation.rettype])$
             m_st = std::move(x.m_st);
+            $endif$
             break;
     }
     
@@ -292,6 +311,7 @@ int32_t& $operation.parent.scopedname$_$operation.name$Reply_union::_d()
     return m__d;
 }
 
+$if([operation.outputparam, operation.rettype])$
 void $operation.parent.scopedname$_$operation.name$Reply_union::st(const $operation.parent.scopedname$_$operation.name$Reply_st &_st)
 {
     m_st = _st;
@@ -320,6 +340,8 @@ $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scoped
     return m_st;
 }
 
+$endif$
+
 $operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[operation.parent.scopedname, "_", operation.name, "Reply_union"], exception=exception, label=i)$}; separator="\n"$
 
 size_t $operation.parent.scopedname$_$operation.name$Reply_union::getMaxCdrSerializedSize(size_t current_alignment)
@@ -330,12 +352,14 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_union::getMaxCdrSeria
 
     current_align += 4 + eprosima::Cdr::alignment(current_align, 4);
 
+    $if([operation.outputparam, operation.rettype])$
     reset_align = current_align;
 
     reset_align = $operation.parent.scopedname$_$operation.name$Reply_st::getMaxCdrSerializedSize(reset_align);
 
     if(union_max_size_serialized < reset_align)
         union_max_size_serialized = reset_align;
+    $endif$
 
     $operation.exceptions : { exception |
     reset_align = current_align;
@@ -356,9 +380,11 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosi
 
     switch(m__d)
     {
+        $if([operation.outputparam, operation.rettype])$
         case 0:
             cdr << m_st;
             break;
+        $endif$
 
         $operation.exceptions : { exception |
         case $i$:
@@ -367,7 +393,9 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosi
         }; separator="\n"$
 
         default:
+            $if([operation.outputparam, operation.rettype])$
             cdr << m_st;
+            $endif$
             break;
     }
 }
@@ -378,9 +406,11 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(epro
 
     switch(m__d)
     {
+        $if([operation.outputparam, operation.rettype])$
         case 0:
             cdr \>> m_st;
             break;
+        $endif$
 
         $operation.exceptions : { exception |
         case $i$:
@@ -389,7 +419,9 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(epro
         }; separator="\n"$
 
         default:
+            $if([operation.outputparam, operation.rettype])$
             cdr \>> m_st;
+            $endif$
             break;
     }
 }

@@ -14,6 +14,8 @@ $fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This hea
 #include "$ctx.filename$TopicsPlugin.h"
 #include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
 
+$ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"}; separator="\n"$
+
 #include "fastcdr/Cdr.h"
 #include "fastcdr/exceptions/BadParamException.h"
 #include "fastcdr/exceptions/NotEnoughMemoryException.h"

@@ -251,7 +251,7 @@ public class Context
 	                    // See if it is a direct dependency.
 	                    if(m_lastDirectDependency != null &&
 	                            m_lastDirectDependency.equals(m_file))
-	                        m_directIncludeDependencies.add(m_scopeFile);
+	                        m_directIncludeDependencies.add(m_scopeFile.substring(0, file.length() - 4));
 	                }
 
 	                // Update last direct dependency
@@ -551,7 +551,7 @@ public class Context
     /*!
      * @brief This function add a new include dependency to the project.
      * This dependency will be needed to include our generated file with the types that
-     * the DDS middleware doesn't generate (right now only exceptions).
+     * the RTI DDS middleware doesn't generate (right now only exceptions).
      * The include dependencies are added without the .idl extension.
      */
     public void addIncludeDependency(String dependency)
@@ -714,7 +714,7 @@ public class Context
     
     //! Set that contains the library dependencies that were found because there was a line of the preprocessor.
     private HashSet<String> m_dependencies = null;
-    //! Set that contains the include dependencies that force to include our type generated file (right now only with exceptions).
+    //! Set that contains the include dependencies that force to include our type generated file (right now only with exceptions in RTI DDS types).
     private HashSet<String> m_includedependency = null;
     private ArrayList<String> m_includePaths = null;
     //! Set that contains the direct include dependencies in the IDL file. Used to regenerate the IDL in a supported form.

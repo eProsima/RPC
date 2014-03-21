@@ -292,7 +292,7 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
+        4, /* Number of members */
         ReplyHeader_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
     }}; /* Type code for RequestHeader*/

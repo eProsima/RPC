@@ -44,10 +44,10 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    DDS_Octet  oc1 = 1;    
-    DDS_Octet  oc2 = 2;    
-    DDS_Octet  oc3 = 0;    
-    DDS_Octet  getOctetRetValue = 0;       
+    uint8_t  oc1 = 1;    
+    uint8_t  oc2 = 2;    
+    uint8_t  oc3 = 0;    
+    uint8_t  getOctetRetValue = 0;       
 
     try
     {
@@ -68,10 +68,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Char  ch1 = 1;       
-    DDS_Char  ch2 = 2;       
-    DDS_Char  ch3 = 0;    
-    DDS_Char  getCharRetValue = 0;       
+    char  ch1 = 1;       
+    char  ch2 = 2;       
+    char  ch3 = 0;    
+    char  getCharRetValue = 0;       
 
     try
     {
@@ -92,10 +92,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Wchar  wch1 = 1;       
-    DDS_Wchar  wch2 = 2;       
-    DDS_Wchar  wch3 = 0; 
-    DDS_Wchar  getWCharRetValue = 0;       
+    wchar_t  wch1 = 1;       
+    wchar_t  wch2 = 2;       
+    wchar_t  wch3 = 0; 
+    wchar_t  getWCharRetValue = 0;       
 
     try
     {
@@ -116,10 +116,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Short  sh1 = 1;       
-    DDS_Short  sh2 = 2;       
-    DDS_Short  sh3 = 0;    
-    DDS_Short  getShortRetValue = 0;       
+    int16_t  sh1 = 1;       
+    int16_t  sh2 = 2;       
+    int16_t  sh3 = 0;    
+    int16_t  getShortRetValue = 0;       
 
     try
     {
@@ -140,10 +140,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedShort  ush1 = 1;       
-    DDS_UnsignedShort  ush2 = 2;       
-    DDS_UnsignedShort  ush3 = 0;    
-    DDS_UnsignedShort  getUShortRetValue = 0;       
+    uint16_t  ush1 = 1;       
+    uint16_t  ush2 = 2;       
+    uint16_t  ush3 = 0;    
+    uint16_t  getUShortRetValue = 0;       
 
     try
     {
@@ -164,10 +164,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Long  lo1 = 1;       
-    DDS_Long  lo2 = 2;       
-    DDS_Long  lo3 = 0;    
-    DDS_Long  getLongRetValue = 0;       
+    int32_t  lo1 = 1;       
+    int32_t  lo2 = 2;       
+    int32_t  lo3 = 0;    
+    int32_t  getLongRetValue = 0;       
 
     try
     {
@@ -188,10 +188,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedLong  ulo1 = 1;       
-    DDS_UnsignedLong  ulo2 = 2;       
-    DDS_UnsignedLong  ulo3 = 0;    
-    DDS_UnsignedLong  getULongRetValue = 0;       
+    uint32_t  ulo1 = 1;       
+    uint32_t  ulo2 = 2;       
+    uint32_t  ulo3 = 0;    
+    uint32_t  getULongRetValue = 0;       
 
     try
     {
@@ -212,10 +212,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_LongLong  llo1 = 1;       
-    DDS_LongLong  llo2 = 2;       
-    DDS_LongLong  llo3 = 0;    
-    DDS_LongLong  getLLongRetValue = 0;       
+    int64_t  llo1 = 1;       
+    int64_t  llo2 = 2;       
+    int64_t  llo3 = 0;    
+    int64_t  getLLongRetValue = 0;       
 
     try
     {
@@ -236,10 +236,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedLongLong  ullo1 = 1;       
-    DDS_UnsignedLongLong  ullo2 = 2;       
-    DDS_UnsignedLongLong  ullo3 = 0;    
-    DDS_UnsignedLongLong  getULLongRetValue = 0;       
+    uint64_t  ullo1 = 1;       
+    uint64_t  ullo2 = 2;       
+    uint64_t  ullo3 = 0;    
+    uint64_t  getULLongRetValue = 0;       
 
     try
     {
@@ -260,10 +260,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Float  fl1 = 1.0;       
-    DDS_Float  fl2 = 2.0;       
-    DDS_Float  fl3 = 0;    
-    DDS_Float  getFloatRetValue = 0;       
+    float  fl1 = 1.0;       
+    float  fl2 = 2.0;       
+    float  fl3 = 0;    
+    float  getFloatRetValue = 0;       
 
     try
     {
@@ -284,10 +284,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Double  do1 = 1.0;       
-    DDS_Double  do2 = 2.0;       
-    DDS_Double  do3 = 0;    
-    DDS_Double  getDoubleRetValue = 0;       
+    double  do1 = 1.0;       
+    double  do2 = 2.0;       
+    double  do3 = 0;    
+    double  getDoubleRetValue = 0;       
 
     try
     {
@@ -308,19 +308,19 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Boolean  bo1 = RTI_TRUE;       
-    DDS_Boolean  bo2 = RTI_FALSE;       
-    DDS_Boolean  bo3 = RTI_FALSE;    
-    DDS_Boolean  getBooleanRetValue = RTI_FALSE;       
+    bool  bo1 = true;       
+    bool  bo2 = false;       
+    bool  bo3 = false;    
+    bool  getBooleanRetValue = false;       
 
     try
     {
         getBooleanRetValue = basicproxy->getBoolean(bo1, bo2, bo3);
 
-        if(bo3 != RTI_FALSE ||
-                getBooleanRetValue != RTI_TRUE ||
-                bo2 != RTI_TRUE ||
-                bo1 != RTI_TRUE)
+        if(bo3 != false ||
+                getBooleanRetValue != true ||
+                bo2 != true ||
+                bo1 != true)
         {
             std::cout << "TEST FAILED<getBoolean>: Wrong values" << std::endl;
             _exit(-1);
@@ -339,20 +339,17 @@ int main(int argc, char **argv)
     Struct::Envio ev;
     Struct::Recepcion duplicate_ret;
 
-    Struct::Envio_initialize(&ev);    
-    Struct::Recepcion_initialize(&duplicate_ret);    
-        
-    ev.dato = 10;
-    ev.message = DDS_String_dup("HOLA");
+    ev.dato(10);
+    ev.message("HOLA");
 
     try
     {
         duplicate_ret = structproxy->duplicate(ev);
 
-        if(duplicate_ret.devolucion != 10 ||
-                strcmp(duplicate_ret.message, "HOLA") != 0 ||
-                ev.dato != 10 ||
-                strcmp(ev.message, "HOLA") != 0)
+        if(duplicate_ret.devolucion() != 10 ||
+                duplicate_ret.message().compare("HOLA") != 0 ||
+                ev.dato() != 10 ||
+                ev.message().compare("HOLA") != 0)
         {
             std::cout << "TEST FAILED<duplicate>: Wrong values" << std::endl;
             _exit(-1);
@@ -364,32 +361,25 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    Struct::Envio_finalize(&ev);    
-    Struct::Recepcion_finalize(&duplicate_ret);    
-
     Struct::Envio ev1;    
     Struct::Envio ev2;       
     Struct::Recepcion suma_ret;
 
-    Struct::Envio_initialize(&ev1);    
-    Struct::Envio_initialize(&ev2);    
-    Struct::Recepcion_initialize(&suma_ret);  
-
-	ev1.dato = 10;
-	ev1.message = DDS_String_dup("HOLA");
-	ev2.dato = 20;
-	ev2.message = DDS_String_dup("ADIOS");
+	ev1.dato(10);
+	ev1.message("HOLA");
+	ev2.dato(20);
+	ev2.message("ADIOS");
 
     try
     {
         suma_ret = structproxy->suma(ev1, ev2);
 
-        if(suma_ret.devolucion != 30 ||
-                strcmp(suma_ret.message, "HOLAADIOS") != 0 ||
-                ev1.dato != 10 ||
-                strcmp(ev1.message, "HOLA") != 0 ||
-                ev2.dato != 20 ||
-                strcmp(ev2.message, "ADIOS") != 0)
+        if(suma_ret.devolucion() != 30 ||
+                suma_ret.message().compare("HOLAADIOS") != 0 ||
+                ev1.dato() != 10 ||
+                ev1.message().compare("HOLA") != 0 ||
+                ev2.dato() != 20 ||
+                ev2.message().compare("ADIOS") != 0)
         {
             std::cout << "TEST FAILED<suma>: Wrong values" << std::endl;
             _exit(-1);
@@ -400,10 +390,6 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<suma>: " << ex.what() << std::endl;
         _exit(-1);
     }
-
-    Struct::Envio_finalize(&ev1);    
-    Struct::Envio_finalize(&ev2);    
-    Struct::Recepcion_finalize(&suma_ret);    
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

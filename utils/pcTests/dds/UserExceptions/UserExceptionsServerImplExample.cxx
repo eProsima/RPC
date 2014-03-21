@@ -58,3 +58,11 @@ int32_t IfcServerImplExample::sendExcepIntern(/*in*/ int32_t l1)
 
     return sendExcepIntern_ret;
 } 
+
+void IfcServerImplExample::sendOnlyExcep()
+{
+    Beta::Excep ex;
+    ex.count(1);
+    ex.msg("sendOnlyExcep");
+    throw ex;
+}

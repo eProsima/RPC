@@ -1086,11 +1086,19 @@ public class RPCDDSGEN
 		        	if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".h", maintemplates.getTemplate("TypesHeader"), m_replace))
 	                {
 	            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".cxx", maintemplates.getTemplate("TypesSource"), m_replace))
-		                {
-	            			project.addCommonIncludeFile(onlyFileName + ".h");
-	        	        	project.addCommonSrcFile(onlyFileName + ".cxx");
-		                }
-	                }
+                        {
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader"), m_replace))
+                            {	
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource"), m_replace))
+                                {	
+                                    project.addCommonIncludeFile(onlyFileName + ".h");
+                                    project.addCommonSrcFile(onlyFileName + ".cxx");
+                                    project.addCommonIncludeFile(onlyFileName + "TopicsPlugin.h");
+                                    project.addCommonSrcFile(onlyFileName + "TopicsPlugin.cxx");
+                                }
+                            }
+                        }
+                    }
                 }
                 else if(m_types == DDS_TYPES.RTI)
 	        	{
@@ -1121,16 +1129,8 @@ public class RPCDDSGEN
                         {	
                             if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("TopicsSource"), m_replace))
                             {	
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader"), m_replace))
-                                {	
-                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource"), m_replace))
-                                    {	
-                                        project.addCommonIncludeFile(onlyFileName + "Topics.h");
-                                        project.addCommonSrcFile(onlyFileName + "Topics.cxx");
-                                        project.addCommonIncludeFile(onlyFileName + "TopicsPlugin.h");
-                                        project.addCommonSrcFile(onlyFileName + "TopicsPlugin.cxx");
-                                    }
-                                }
+                                project.addCommonIncludeFile(onlyFileName + "Topics.h");
+                                project.addCommonSrcFile(onlyFileName + "Topics.cxx");
                             }
                         }
                     }

@@ -152,8 +152,8 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             {
                 $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                 requesttypeName,
-                $eprosimaTypesBool()$,
                 $if(!operation.oneway)$replytypeName,
+                $eprosimaTypesBool()$,
                 $createDataCallback(operation=operation, suffix="Reply")$,
                 $copyDataCallback(operation=operation, suffix="Reply")$,
                 $destroyDataCallback(operation=operation, suffix="Reply")$,

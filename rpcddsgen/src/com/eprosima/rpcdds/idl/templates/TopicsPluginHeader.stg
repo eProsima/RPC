@@ -14,7 +14,9 @@ $fileHeader(file=[ctx.filename, "TopicsPlugin.h"], description=["TODO This heade
 #ifndef _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
 #define _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
 
+$if(ctx.firstInterface)$
 #include "$ctx.filename$Topics.h"
+$endif$
 
 #include "ndds/ndds_cpp.h"
 
