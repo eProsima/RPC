@@ -31,18 +31,9 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<
-/*!
- * @brief Structure that encapsulates the exception $exception.scopedname$.
- * @ingroup $ctx.trimfilename$
- */
-struct $exception.name$_t{
-   $exception.members:{member | $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
-}; $nolevelIDLdefine()$
->>
+exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-$operation.exceptions : { exception | $if(!exception.inScope)$$createExceptionStruct(operation=operation, exception=exception)$$endif$}; separator="\n"$
 
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /*!
@@ -80,13 +71,7 @@ $if([operation.outputparam, operation.rettype])$
 $endif$
    $operation.exceptions : { exception |
    case $i$:
-      $if(exception.inScope)$
-      $exception.scopedname$_t $exception.name$_ex;
-      
-      $else$
-      $operation.parent.name$_$operation.name$_$exception.name$_t $exception.name$_ex;
-      
-      $endif$
+      $exception.scopedname$_t $exception.formatedScopedname$_ex;
    }; separator="\n"$
 }; $nolevelIDLdefine()$
 
@@ -122,16 +107,3 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
-
-// Utils
-
-createExceptionStruct(operation, exception) ::= <<
-/*!
- * @brief Structure that encapsulates the exception $exception.scopedname$.
- * @ingroup $ctx.trimfilename$
- */
-struct $operation.parent.name$_$operation.name$_$exception.name$_t{
-   $exception.members:{member | $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
-}; $nolevelIDLdefine()$
-
->>
