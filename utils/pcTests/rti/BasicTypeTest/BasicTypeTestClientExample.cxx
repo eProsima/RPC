@@ -13,10 +13,10 @@
  */
 
 #include "BasicTypeTestProxy.h"
+#include "BasicTypeTest.h"
 #include "BasicTypeTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "BasicTypeTestRequestReplyPlugin.h"
 
 #include <iostream>
 

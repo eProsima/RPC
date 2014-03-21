@@ -13,10 +13,10 @@
  */
 
 #include "StructTestProxy.h"
+#include "StructTest.h"
 #include "StructTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "StructTestRequestReplyPlugin.h"
 
 #include <iostream>
 

@@ -13,10 +13,10 @@
  */
 
 #include "TypedefTestProxy.h"
+#include "TypedefTest.h"
 #include "TypedefTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "TypedefTestRequestReplyPlugin.h"
 
 #include <iostream>
 

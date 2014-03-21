@@ -13,48 +13,47 @@
  */
 
 #include "UserExceptionsServerImplExample.h"
-#include "UserExceptionsExceptions.h"
 
-void IfcServerImplExample::sendLevel1(/*in*/ DDS_Long l1, /*inout*/ DDS_Long& l2, /*out*/ DDS_Long& l3)
+void IfcServerImplExample::sendLevel1(/*in*/ int32_t l1, /*inout*/ int32_t& l2, /*out*/ int32_t& l3)
 {
     Level1 ex;
-    ex.count = l1;
-    ex.msg = strdup("sendLevel1");
+    ex.count(l1);
+    ex.msg("sendLevel1");
     throw ex;
 } 
 
-DDS_Long IfcServerImplExample::sendLevel2()
+int32_t IfcServerImplExample::sendLevel2()
 {
-    DDS_Long  sendLevel2_ret = 0;
+    int32_t  sendLevel2_ret = 0;
 
     Alfa::Level2 ex;
-    ex.count = 101;
-    ex.ana.count = 102;
-    ex.ana.comment = strdup("sendLevel2");
+    ex.count(101);
+    ex.ana().count(102);
+    ex.ana().comment("sendLevel2");
     throw ex;
 
     return sendLevel2_ret;
 } 
 
-DDS_Long IfcServerImplExample::sendExcep(/*in*/ DDS_Long l1)
+int32_t IfcServerImplExample::sendExcep(/*in*/ int32_t l1)
 {
-    DDS_Long  sendExcep_ret = 0;
+    int32_t  sendExcep_ret = 0;
 
     Beta::Excep ex;
-    ex.count = l1;
-    ex.msg = strdup("sendExcep");
+    ex.count(l1);
+    ex.msg("sendExcep");
     throw ex;
 
     return sendExcep_ret;
 } 
 
-DDS_Long IfcServerImplExample::sendExcepIntern(/*in*/ DDS_Long l1)
+int32_t IfcServerImplExample::sendExcepIntern(/*in*/ int32_t l1)
 {
-    DDS_Long  sendExcepIntern_ret = 0;
+    int32_t  sendExcepIntern_ret = 0;
 
     Beta::Ifc::ExcepIntern ex;
-    ex.count = l1;
-    ex.msg = strdup("sendExcepIntern");
+    ex.count(l1);
+    ex.msg("sendExcepIntern");
     throw ex;
 
     return sendExcepIntern_ret;

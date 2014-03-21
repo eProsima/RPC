@@ -14,6 +14,7 @@ $fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file co
 #include "$ctx.filename$Topics.h"
 
 #include "fastcdr/Cdr.h"
+#include "fastcdr/exceptions/BadParamException.h"
 
 $definitions; separator="\n"$
 
@@ -48,12 +49,12 @@ $operation.parent.scopedname$_$operation.name$Request::~$operation.parent.name$_
 }
 
 $operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request(const $operation.parent.name$_$operation.name$Request &x)
-: m__header(x.m__header)$parameters_copy_init(operation.inputparam)$
+: m__header(x.m__header)$parameters_copy_init(parameters=operation.inputparam, separator=", ")$
 {
 }
 
 $operation.parent.scopedname$_$operation.name$Request::$operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x)
-: m__header(std::move(x.m__header))$parameters_move_init(operation.inputparam)$
+: m__header(std::move(x.m__header))$parameters_move_init(parameters=operation.inputparam, separator=", ")$
 {
 }
 
@@ -76,7 +77,7 @@ $operation.parent.scopedname$_$operation.name$Request& $operation.parent.scopedn
 size_t $operation.parent.scopedname$_$operation.name$Request::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align +=  eprosima::rpcdds::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::rpcdds::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
             
     $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
 
@@ -93,7 +94,373 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(
     return current_align;
 }
 
+void $operation.parent.scopedname$_$operation.name$Request::serialize(eprosima::Cdr &cdr) const
+{
+    cdr << m__header;
+
+    $operation.inputparam : { param |$object_serialization(object=param)$}; separator="\n"$
+}
+
+void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima::Cdr &cdr)
+{
+    cdr \>> m__header;
+
+    $operation.inputparam : { param |$object_deserialization(object=param)$}; separator="\n"$
+}
+
 $if(!operation.oneway)$
+$if(operation.exceptions)$
+$operation.parent.scopedname$_$operation.name$Reply_st::$operation.parent.name$_$operation.name$Reply_st()
+$parameters_default_init([operation.outputparam, operation.rettypeparam])$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_st::~$operation.parent.name$_$operation.name$Reply_st()
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_st::$operation.parent.name$_$operation.name$Reply_st(const $operation.parent.name$_$operation.name$Reply_st &x)
+: $parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam])$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_st::$operation.parent.name$_$operation.name$Reply_st($operation.parent.name$_$operation.name$Reply_st &&x)
+: $parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam])$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_st::operator=(const $operation.parent.scopedname$_$operation.name$Reply_st &x)
+{
+    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    
+    return *this;
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_st::operator=($operation.parent.scopedname$_$operation.name$Reply_st &&x)
+{
+    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply_st::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+            
+    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply_st::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_st::serialize(eprosima::Cdr &cdr) const
+{
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param)$}; separator="\n"$
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosima::Cdr &cdr)
+{
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param)$}; separator="\n"$
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.name$_$operation.name$Reply_union() : m__d(0)
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_union::~$operation.parent.name$_$operation.name$Reply_union()
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.name$_$operation.name$Reply_union(const $operation.parent.name$_$operation.name$Reply_union &x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+        case 0:
+           m_st = x.m_st;
+           break;
+
+        $operation.exceptions : { exception |
+        case $i$:
+            m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+
+        default:
+            m_st = x.m_st;
+            break;
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_union::$operation.parent.name$_$operation.name$Reply_union($operation.parent.name$_$operation.name$Reply_union &&x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+        case 0:
+           m_st = std::move(x.m_st);
+           break;
+
+        $operation.exceptions : { exception |
+        case $i$:
+            m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
+            break;
+        }; separator="\n"$
+
+        default:
+            m_st = std::move(x.m_st);
+            break;
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_union& $operation.parent.scopedname$_$operation.name$Reply_union::operator=(const $operation.parent.name$_$operation.name$Reply_union &x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+        case 0:
+           m_st = x.m_st;
+           break;
+
+        $operation.exceptions : { exception |
+        case $i$:
+            m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+
+        default:
+           m_st = x.m_st;
+         break;
+    }
+    
+    return *this;
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_union& $operation.parent.scopedname$_$operation.name$Reply_union::operator=($operation.parent.name$_$operation.name$Reply_union &&x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+        case 0:
+           m_st = std::move(x.m_st);
+           break;
+
+        $operation.exceptions : { exception |
+        case $i$:
+            m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
+            break;
+        }; separator="\n"$
+
+        default:
+            m_st = std::move(x.m_st);
+            break;
+    }
+    
+    return *this;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_union::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+    
+    m__d = __d;
+}
+
+int32_t $operation.parent.scopedname$_$operation.name$Reply_union::_d() const
+{
+    return m__d;
+}
+
+int32_t& $operation.parent.scopedname$_$operation.name$Reply_union::_d()
+{
+    return m__d;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_union::st(const $operation.parent.scopedname$_$operation.name$Reply_st &_st)
+{
+    m_st = _st;
+    m__d = 0;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_union::st($operation.parent.scopedname$_$operation.name$Reply_st &&_st)
+{
+    m_st = std::move(_st);
+    m__d = 0;
+}
+
+const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_union::st() const
+{
+    if(m__d != 0)
+        throw eprosima::BadParamException("This member is not been selected");
+    
+    return m_st;
+}
+
+$operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_union::st()
+{
+    if(m__d != 0)
+        throw eprosima::BadParamException("This member is not been selected");
+    
+    return m_st;
+}
+
+$operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[operation.parent.scopedname, "_", operation.name, "Reply_union"], exception=exception, label=i)$}; separator="\n"$
+
+size_t $operation.parent.scopedname$_$operation.name$Reply_union::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+    size_t reset_align = 0;
+    size_t union_max_size_serialized = 0;
+
+    current_align += 4 + eprosima::Cdr::alignment(current_align, 4);
+
+    reset_align = current_align;
+
+    reset_align = $operation.parent.scopedname$_$operation.name$Reply_st::getMaxCdrSerializedSize(reset_align);
+
+    if(union_max_size_serialized < reset_align)
+        union_max_size_serialized = reset_align;
+
+    $operation.exceptions : { exception |
+    reset_align = current_align;
+
+    reset_align = $exception.scopedname$::getMaxCdrSerializedSize(reset_align);
+
+    if(union_max_size_serialized < reset_align)
+        union_max_size_serialized = reset_align;
+
+    }; separator="\n"$
+
+    return union_max_size_serialized;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosima::Cdr &cdr) const
+{
+    cdr << m__d;
+
+    switch(m__d)
+    {
+        case 0:
+            cdr << m_st;
+            break;
+
+        $operation.exceptions : { exception |
+        case $i$:
+            cdr << m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+
+        default:
+            cdr << m_st;
+            break;
+    }
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(eprosima::Cdr &cdr)
+{
+    cdr \>> m__d;
+
+    switch(m__d)
+    {
+        case 0:
+            cdr \>> m_st;
+            break;
+
+        $operation.exceptions : { exception |
+        case $i$:
+            cdr \>> m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+
+        default:
+            cdr \>> m_st;
+            break;
+    }
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply()
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::~$operation.parent.name$_$operation.name$Reply()
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x)
+: m__header(x.m__header), m_unio(x.m_unio)
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x)
+: m__header(std::move(x.m__header)), m_unio(std::move(x.m_unio))
+{
+}
+
+$operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopedname$_$operation.name$Reply::operator=(const $operation.parent.scopedname$_$operation.name$Reply &x)
+{
+    m__header = x.m__header;
+    m_unio = x.m_unio;
+    
+    return *this;
+}
+
+$operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopedname$_$operation.name$Reply::operator=($operation.parent.scopedname$_$operation.name$Reply &&x)
+{
+    m__header = std::move(x.m__header);
+    m_unio = std::move(x.m_unio);
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+    current_align =  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
+    current_align = $operation.parent.name$_$operation.name$Reply_union::getMaxCdrSerializedSize(current_align);
+            
+    return current_align;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &cdr) const
+{
+    cdr << m__header;
+    cdr << m_unio;
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &cdr)
+{
+    cdr \>> m__header;
+    cdr \>> m_unio;
+}
+
+
+$else$
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply()
 $parameters_default_init([operation.outputparam, operation.rettypeparam])$
 {
@@ -104,12 +471,12 @@ $operation.parent.scopedname$_$operation.name$Reply::~$operation.parent.name$_$o
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x)
-: m__header(x.m__header)$parameters_copy_init([operation.outputparam, operation.rettypeparam])$
+: m__header(x.m__header)$parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam], separator=", ")$
 {
 }
 
 $operation.parent.scopedname$_$operation.name$Reply::$operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x)
-: m__header(std::move(x.m__header))$parameters_move_init([operation.outputparam, operation.rettypeparam])$
+: m__header(std::move(x.m__header))$parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam], separator=", ")$
 {
 }
 
@@ -132,7 +499,7 @@ $operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopednam
 size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align +=  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
             
     $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
 
@@ -148,6 +515,22 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(si
 
     return current_align;
 }
+
+void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &cdr) const
+{
+    cdr << m__header;
+
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param)$}; separator="\n"$
+}
+
+void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &cdr)
+{
+    cdr \>> m__header;
+
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param)$}; separator="\n"$
+}
+
+$endif$
 $endif$
 
 >>
@@ -179,12 +562,12 @@ m_$param.name$()
 $endif$
 >>
 
-parameters_copy_init(parameters) ::= <<
-$if(parameters)$, $parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
+parameters_copy_init(parameters, separator) ::= <<
+$if(parameters)$$separator$$parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
 >>
 
-parameters_move_init(parameters) ::= <<
-$if(parameters)$, $parameters:{ param |m_$param.name$(std::move(x.m_$param.name$))}; separator=", "$$endif$
+parameters_move_init(parameters, separator) ::= <<
+$if(parameters)$$separator$$parameters:{ param |m_$param.name$(std::move(x.m_$param.name$))}; separator=", "$$endif$
 >>
 
 parameters_copy_assigment(param) ::= <<
@@ -193,4 +576,34 @@ m_$param.name$ = x.m_$param.name$;
 
 parameters_move_assigment(param) ::= <<
 m_$param.name$ = x.m_$param.name$;
+>>
+
+public_exception_union_member_declaration(class, exception, label) ::= <<
+void $class$::$exception.formatedScopedname$_ex(const $exception.scopedname$ &_$exception.formatedScopedname$_ex)
+{
+    m_$exception.formatedScopedname$_ex = _$exception.formatedScopedname$_ex;
+    m__d = $label$;
+}
+
+void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$exception.formatedScopedname$_ex)
+{
+    m_$exception.formatedScopedname$_ex = std::move(_$exception.formatedScopedname$_ex);
+    m__d = $label$;
+}
+
+const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
+{
+    if(m__d != $label$)
+        throw eprosima::BadParamException("This member is not been selected");
+    
+    return m_$exception.formatedScopedname$_ex;
+}
+
+$exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
+{
+    if(m__d != $label$)
+        throw eprosima::BadParamException("This member is not been selected");
+    
+    return m_$exception.formatedScopedname$_ex;
+}
 >>

@@ -18,8 +18,6 @@
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
 
-#include "UserExceptionsExceptions.h"
-
 #include <iostream>
 
 using namespace eprosima::rpcdds;
@@ -47,10 +45,10 @@ int main(int argc, char **argv)
     }
     
     // Create and initialize parameters.
-    DDS_Long  l1 = 10;
-    DDS_Long  l2 = 2;
-    DDS_Long  l3 = 120;
-    DDS_Long  ret = 0;
+    int32_t  l1 = 10;
+    int32_t  l2 = 2;
+    int32_t  l3 = 120;
+    int32_t  ret = 0;
 
 
     // Call to remote procedure "sendLevel1".
@@ -62,7 +60,7 @@ int main(int argc, char **argv)
     }
     catch(Level1 &ex)
     {
-        if((ex.count != l1) || (strcmp(ex.msg, "sendLevel1") != 0))
+        if((ex.count() != l1) || (ex.msg().compare("sendLevel1") != 0))
         {
             std::cout << "TEST FAILED<sendLevel1>: Bad data" << std::endl;
             _exit(-1);
@@ -88,7 +86,7 @@ int main(int argc, char **argv)
     }
     catch(Alfa::Level2 &ex)
     {
-        if((ex.count != 101) || (ex.ana.count != 102) || (strcmp(ex.ana.comment, "sendLevel2") != 0))
+        if((ex.count() != 101) || (ex.ana().count() != 102) || (ex.ana().comment().compare("sendLevel2") != 0))
         {
             std::cout << "TEST FAILED<sendLevel2>: Bad data" << std::endl;
             _exit(-1);
@@ -114,7 +112,7 @@ int main(int argc, char **argv)
     }
     catch(Beta::Excep &ex)
     {
-        if((ex.count != l1) || (strcmp(ex.msg, "sendExcep") != 0))
+        if((ex.count() != l1) || (ex.msg().compare("sendExcep") != 0))
         {
             std::cout << "TEST FAILED<sendExcep>: Bad data" << std::endl;
             _exit(-1);
@@ -140,7 +138,7 @@ int main(int argc, char **argv)
     }
     catch(Beta::Ifc::ExcepIntern &ex)
     {
-        if((ex.count != l1) || (strcmp(ex.msg, "sendExcepIntern") != 0))
+        if((ex.count() != l1) || (ex.msg().compare("sendExcepIntern") != 0))
         {
             std::cout << "TEST FAILED<sendExcepIntern>: Bad data" << std::endl;
             _exit(-1);

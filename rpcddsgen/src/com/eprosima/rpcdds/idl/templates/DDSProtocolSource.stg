@@ -235,21 +235,22 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     {
     
     $if(operation.exceptions)$
-        switch (retInstance.unio._d)
+        switch ($replyUnionDiscriminator(varname="retInstance")$)
         {
             case 0:
                 retcode = (ReturnMessage)$getHeaderRetCode(varname="retInstance")$;
-                $operation.outputparam : {$extractDataHelper(param=it, dataname="retInstance.unio._u.st", isReply="yes")$};separator="\n"$
-                $if(operation.rettypeparam)$
-                $extractDataHelper(param=operation.rettypeparam, dataname="retInstance.unio._u.st", isReply="yes")$        
-                $endif$
+		        $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyUnionData(varname="retInstance", dataname="st"), isReply="yes")$};separator="\n"$
                 break;
             $operation.exceptions : { exception |
             case $i$:
                 {
                 $exception.scopedname$ ex;
                 // TODO No permite arrays.
-                $exception.members : { member |ex.$member.name$ = retInstance.unio._u.$exception.name$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;}; separator="\n"$
+                $if(!ctx.rtiTypes)$
+                ex = retInstance.unio().$exception.formatedScopedname$_ex();
+                $else$
+                $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname="retInstance")$}; separator="\n"$
+                $endif$
                 
                 ex.raise();
                 }
@@ -343,15 +344,15 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
 	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 	
 	        $if(!operation.oneway)$
-	        $if(operation.exceptions)$replyData.unio._d = 0;$endif$
-	        
+	        $if(operation.exceptions)$$replyUnionDiscriminator(varname="replyData")$ = 0;$endif$
+	     
 	        $if(operation.exceptions)$
-		$[operation.outputparam, operation.rettypeparam] : {$createDataHelper(param=it, dataname="replyData.unio._u.st")$};separator="\n"$
-		$else$
-        $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname="replyData")$};separator="\n"$
-		$endif$
+            $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyUnionData(varname="replyData", dataname="st"))$};separator="\n"$
+	        $else$
+            $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname="replyData")$};separator="\n"$
+            $endif$
 	        
-        $setHeaderSuccess(varname="replyData")$
+            $setHeaderSuccess(varname="replyData")$
 	
 	        _protocol.$operation.parent.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
 	        $endif$
@@ -362,11 +363,15 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
     catch(const $exception.scopedname$ &ex)
     {
         $if(!operation.oneway)$
-        replyData.unio._d = $i$;
-        $exception.members : { member |replyData.unio._u.$exception.name$_ex.$member.name$ = ex.$member.name$;}; separator="\n"$
+        $replyUnionDiscriminator(varname="replyData")$ = $i$;
         
-        replyData.header.rpcddsRetCode = OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = $charCasting()$"";
+        $if(!ctx.rtiTypes)$
+        replyData.unio().$exception.formatedScopedname$_ex(std::move(ex));
+        $else$
+        $exception.members : { member |$addExceptionMemberToTopic(exception=exception, member=member, varname="replyData")$}; separator="\n"$
+        $endif$
+        
+        $setHeaderSuccess(varname="replyData")$
 
         _protocol.$operation.parent.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
         $endif$

@@ -130,6 +130,12 @@ public:
     /*! TODO */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
+    // TODO
+    void serialize(eprosima::Cdr &cdr) const;
+
+    // TODO
+    void deserialize(eprosima::Cdr &cdr);
+
 private:
 
     eprosima::rpcdds::protocol::dds::RequestHeader m__header;
@@ -138,6 +144,156 @@ private:
 };
 
 $if(!operation.oneway)$
+$if(operation.exceptions)$
+$if([operation.outputparam, operation.rettype])$
+class $operation.parent.name$_$operation.name$Reply_st
+{
+public:
+    /*!
+     * @brief Default constructor.
+     * @param initialize True value initializes all pointers using "new" operator. In the other case,
+     * all pointers will be NULL.
+     */
+    $operation.parent.name$_$operation.name$Reply_st();
+    
+    /*!
+     * @brief Default destructor.
+     */
+    ~$operation.parent.name$_$operation.name$Reply_st();
+    
+    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+     * @brief Copy constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_st(const $operation.parent.name$_$operation.name$Reply_st &x);
+    
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_st($operation.parent.name$_$operation.name$Reply_st &&x);
+
+    /*! TODO
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_st& operator=(const $operation.parent.name$_$operation.name$Reply_st &x);
+
+    /*! TODO
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_st& operator=($operation.parent.name$_$operation.name$Reply_st &&x);
+
+    $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
+
+    /*! TODO */
+    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    /*! TODO */
+    size_t getSerializedSize(size_t current_alignment = 0) const;
+
+    // TODO
+    void serialize(eprosima::Cdr &cdr) const;
+
+    // TODO
+    void deserialize(eprosima::Cdr &cdr);
+
+private:
+
+    $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
+};
+$endif$
+
+/*!
+ * @brief This class represents the union $operation.parent.name$_$operation.name$Reply_union defined by the user in the IDL file.
+ * @ingroup $ctx.trimfilename$
+ */
+class $operation.parent.name$_$operation.name$Reply_union
+{
+public:
+    // TODO  Doxygen
+
+    /*!
+     * @brief Default constructor.
+     */
+    $operation.parent.name$_$operation.name$Reply_union();
+    
+    /*!
+     * @brief Default destructor.
+     */
+    ~$operation.parent.name$_$operation.name$Reply_union();
+    
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_union(const $operation.parent.name$_$operation.name$Reply_union &x);
+    
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_union($operation.parent.name$_$operation.name$Reply_union &&x);
+    
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_union& operator=(const $operation.parent.name$_$operation.name$Reply_union &x);
+    
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     */
+    $operation.parent.name$_$operation.name$Reply_union& operator=($operation.parent.name$_$operation.name$Reply_union &&x);
+    
+    /*!
+     * @brief This function sets the discriminator value.
+     * @param __d New value for the discriminator.
+     * @exception eprosima::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     */
+    void _d(int32_t __d);
+    
+    /*!
+     * @brief This function returns the value of the discriminator.
+     * @return Value of the discriminator
+     */
+    int32_t _d() const;
+    
+    /*!
+     * @brief This function returns a reference to the discriminator.
+     * @return Reference to the discriminator.
+     */
+    int32_t& _d();
+
+    $if([operation.outputparam, operation.rettype])$
+    $public_exception_union_member_declaration(typename=[operation.parent.name, "_", operation.name, "Reply_st"], name="st")$
+    $endif$
+
+    $operation.exceptions : { exception |$public_exception_union_member_declaration(typename=exception.scopedname, name=[exception.formatedScopedname, "_ex"])$}; separator="\n"$
+    
+    // TODO
+    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    // TODO
+    void serialize(eprosima::Cdr &cdr) const;
+
+    // TODO
+    void deserialize(eprosima::Cdr &cdr);
+    
+private:
+    int32_t m__d;
+
+    $if([operation.outputparam, operation.rettype])$
+    $operation.parent.name$_$operation.name$Reply_st m_st;
+    $endif$
+
+    $operation.exceptions : { exception |$exception.scopedname$ m_$exception.formatedScopedname$_ex;}; separator="\n"$
+};
+
+$endif$
+
 /*!
  * @brief This class represents the structure $operation.parent.name$_$operation.name$Reply that can be used to send/receive replies
  * for the operation $operation.parent.name$::$operation.name$.
@@ -204,7 +360,11 @@ public:
         return m__header;
     }
     
+    $if(operation.exceptions)$
+    $public_exception_union_declaration(operation=operation)$
+    $else$
     $[operation.outputparam, operation.rettypeparam]:{$public_parameters_declaration(it)$}; separator="\n"$
+    $endif$
 
     /*! TODO */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
@@ -212,11 +372,21 @@ public:
     /*! TODO */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
+    // TODO
+    void serialize(eprosima::Cdr &cdr) const;
+
+    // TODO
+    void deserialize(eprosima::Cdr &cdr);
+
 private:
 
     eprosima::rpcdds::protocol::dds::ReplyHeader m__header;
 
+    $if(operation.exceptions)$
+    $operation.parent.name$_$operation.name$Reply_union m_unio;
+    $else$
     $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
+    $endif$
 };
 $endif$
 
@@ -301,4 +471,70 @@ inline $param.typecode.cppTypename$& $param.name$()
     return m_$param.name$;
 }
 $endif$
+>>
+
+public_exception_union_declaration(operation) ::= <<
+/*! TODO
+ * @brief This function copies the value in member unio
+ * @param _unio New value to be copied in member unio
+ */
+inline void unio(const $operation.parent.name$_$operation.name$Reply_union &_unio)
+{
+    m_unio = _unio;
+}
+
+/*! TODO
+ * @brief This function moves the value in member unio
+ * @param _unio New value to be moved in member unio
+ */
+inline void unio($operation.parent.name$_$operation.name$Reply_union &&_unio)
+{
+    m_unio = std::move(_unio);
+}
+
+/*! TODO
+ * @brief This function returns a constant reference to member unio
+ * @return Constant reference to member unio
+ */
+inline const $operation.parent.name$_$operation.name$Reply_union& unio() const
+{
+    return m_unio;
+}
+
+/*! TODO
+ * @brief This function returns a reference to member unio
+ * @return Reference to member unio
+ */
+inline $operation.parent.name$_$operation.name$Reply_union& unio()
+{
+    return m_unio;
+}
+>>
+
+public_exception_union_member_declaration(typename, name) ::= <<
+/*!
+ * @brief This function copies the value in member $name$
+ * @param _$name$ New value to be copied in member $name$
+ */
+void $name$(const $typename$ &_$name$);
+
+/*!
+ * @brief This function moves the value in member $name$
+ * @param _$name$ New value to be moved in member $name$
+ */
+void $name$($typename$ &&_$name$);
+
+/*!
+ * @brief This function returns a constant reference to member $name$
+ * @return Constant reference to member $name$
+ * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+ */
+const $typename$& $name$() const;
+
+/*!
+ * @brief This function returns a reference to member $name$
+ * @return Reference to member $name$
+ * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+ */
+$typename$& $name$();
 >>

@@ -8,6 +8,8 @@ public class TypeDeclaration implements Definition, Export
     public TypeDeclaration(TypeCode typecode)
     {
         m_typecode = typecode;
+        // Set as parent to the Typecode.
+        m_typecode.setParent(this);
     }
     
     public TypeCode getTypeCode()
@@ -26,19 +28,19 @@ public class TypeDeclaration implements Definition, Export
     }
     
     @Override
-    public boolean isModule()
+    public boolean isIsModule()
     {
         return false;
     }
     
     @Override
-    public boolean isOperation()
+    public boolean isIsOperation()
     {
         return false;
     }
     
     @Override
-    public boolean isException()
+    public boolean isIsException()
     {
         return false;
     }
@@ -56,13 +58,13 @@ public class TypeDeclaration implements Definition, Export
     }
     
     @Override
-    public boolean isInterface()
+    public boolean isIsInterface()
     {
     	return false;
     }
     
     @Override
-    public boolean isTypeDeclaration()
+    public boolean isIsTypeDeclaration()
     {
         return true;
     }

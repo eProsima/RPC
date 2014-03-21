@@ -319,10 +319,22 @@ public class Context
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
-            if(m_scope.isEmpty())
-                returnedValue = m_types.get(name);
-            else
-                returnedValue = m_types.get(m_scope + "::" + name);
+            String scope = m_scope;
+
+            while(returnedValue == null && !scope.isEmpty())
+            {
+                returnedValue = m_types.get(scope + "::" + name);
+                lastIndex = scope.lastIndexOf("::");
+
+                if(lastIndex != -1)
+                {
+                    scope = scope.substring(0, lastIndex);
+                }
+                else
+                {
+                    scope = "";
+                }
+            }
         }
 
         return returnedValue;
@@ -351,10 +363,22 @@ public class Context
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
-            if(m_scope.isEmpty())
-                returnedValue = m_exceptions.get(name);
-            else
-                returnedValue = m_exceptions.get(m_scope + "::" + name);
+            String scope = m_scope;
+
+            while(returnedValue == null && !scope.isEmpty())
+            {
+                returnedValue = m_exceptions.get(scope + "::" + name);
+                lastIndex = scope.lastIndexOf("::");
+
+                if(lastIndex != -1)
+                {
+                    scope = scope.substring(0, lastIndex);
+                }
+                else
+                {
+                    scope = "";
+                }
+            }
         }
 
         return returnedValue;
@@ -410,13 +434,38 @@ public class Context
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
         {
-            if(m_scope.isEmpty())
-                returnedValue = m_annotations.get(name);
-            else
-                returnedValue = m_annotations.get(m_scope + "::" + name);
+            String scope = m_scope;
+
+            while(returnedValue == null && !scope.isEmpty())
+            {
+                returnedValue = m_annotations.get(scope + "::" + name);
+                lastIndex = scope.lastIndexOf("::");
+
+                if(lastIndex != -1)
+                {
+                    scope = scope.substring(0, lastIndex);
+                }
+                else
+                {
+                    scope = "";
+                }
+            }
         }
 
         return returnedValue;
+    }
+    
+    /*!
+     * @brief This function is used to know if a project has to generate the Types.
+     */
+    public boolean isProjectNeedTypes()
+    {
+    	com.eprosima.rpcdds.tree.Exception ex = null;;
+    	
+    	if((ex = getFirstException()) != null)
+    		return true;
+    	
+    	return false;
     }
     
     /*!

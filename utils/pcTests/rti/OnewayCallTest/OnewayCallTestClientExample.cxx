@@ -13,10 +13,10 @@
  */
 
 #include "OnewayCallTestProxy.h"
+#include "OnewayCallTest.h"
 #include "OnewayCallTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "OnewayCallTestRequestReplyPlugin.h"
 
 #include <iostream>
 

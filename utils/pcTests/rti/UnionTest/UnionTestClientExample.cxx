@@ -13,10 +13,10 @@
  */
 
 #include "UnionTestProxy.h"
+#include "UnionTest.h"
 #include "UnionTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "UnionTestRequestReplyPlugin.h"
 
 #include <iostream>
 

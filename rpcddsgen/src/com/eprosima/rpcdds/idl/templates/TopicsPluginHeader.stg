@@ -51,7 +51,15 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, exception) ::= <<
+class $exception.name$Plugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+        
+};
+>>
 
 operation(ctx, operation, param_list) ::= <<
 // Request operations 
@@ -185,6 +193,22 @@ class $operation.name$ReplyDataWriter : public DDSDataWriter
 
         $operation.name$ReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
+
+$if(operation.exceptions)$
+class $operation.name$Reply_stPlugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+};
+
+class $operation.name$Reply_unionPlugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+};
+$endif$
 
 class $operation.name$ReplyPlugin : public DDSTypeSupport
 {

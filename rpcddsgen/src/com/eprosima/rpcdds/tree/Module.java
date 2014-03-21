@@ -61,29 +61,29 @@ public class Module extends DefinitionContainer implements Definition, Notebook
     	
 		for(int count = 0; !returnedValue && count < getDefinitions().size(); ++count)
         {
-            returnedValue = getDefinitions().get(count).isInterface() ||
-            		getDefinitions().get(count).isException();
+            returnedValue = getDefinitions().get(count).isIsInterface();
         }
     	
     	return returnedValue;
     }
     
     /*!
-     * @brief This function is used in stringtemplates to not generate module in some cases (Right now in generated user idl).
+     * @brief This function is used in stringtemplates to not generate module in some cases (Right now in generated RTI idl).
      */
-    public boolean isThereAreTypeDeclarations()
+    public boolean isThereAreDeclarations()
     {
         boolean returnedValue = false;
         
         for(int count = 0; !returnedValue && count < getDefinitions().size(); ++count)
         {
-            if(getDefinitions().get(count).isInterface())
+            if(getDefinitions().get(count).isIsInterface())
             {
-                returnedValue = ((Interface)getDefinitions().get(count)).isThereAreTypeDeclarations();
+                returnedValue = ((Interface)getDefinitions().get(count)).isThereAreDeclarations();
             }
             else
             {
-                returnedValue = getDefinitions().get(count).isTypeDeclaration();
+                returnedValue = getDefinitions().get(count).isIsTypeDeclaration() ||
+                    getDefinitions().get(count).isIsException();
             }
         }
         
@@ -91,25 +91,25 @@ public class Module extends DefinitionContainer implements Definition, Notebook
     }
     
     @Override
-    public boolean isModule()
+    public boolean isIsModule()
     {
         return true;
     }
     
     @Override
-    public boolean isInterface()
+    public boolean isIsInterface()
     {
     	return false;
     }
     
     @Override
-    public boolean isException()
+    public boolean isIsException()
     {
     	return false;
     }
     
     @Override
-    public boolean isTypeDeclaration()
+    public boolean isIsTypeDeclaration()
     {
         return false;
     }

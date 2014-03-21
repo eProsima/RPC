@@ -53,7 +53,7 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 }
 	:   (   tdtg=type_dcl SEMI! {if(tdtg!=null){dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}}  // Type Declaration
 	    |   const_dcl SEMI!
-	    |   etg=except_dcl SEMI! {if(etg!=null){dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second()); ctx.addException(etg.first().getScopedname(), etg.first());}} // Exception. It is added as global exception.
+	    |   etg=except_dcl SEMI! {if(etg!=null){dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second());}} // Exception.
 	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());}} // Interface
 	    |   mtg=module SEMI! {if(mtg!=null){dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());}} // Module
 	    |   (("abstract" | "custom")? "valuetype") => value SEMI!
@@ -1079,25 +1079,26 @@ except_dcl returns [Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> retu
 	:   "exception"^
 	    name=identifier
 	    {
-	       // Create the Exception object.
-           exceptionObject = new com.eprosima.rpcdds.tree.Exception(ctx.getScope(), name);
-           if(ctx.setScopedFileToObject(exceptionObject) || ctx.isScopeLimitToAll())
-           {
-               exTemplates = tmanager.createTemplateGroup("exception");
-               exTemplates.setAttribute("ctx", ctx);
-               // Set the the exception object to the TemplateGroup of the module.
-               exTemplates.setAttribute("exception", exceptionObject);
-           }
-           // Its a dependency.
-           else
-           {
-               ctx.addIncludeDependency(ctx.getScopeFile());
-           }
+            // Create the Exception object.
+            exceptionObject = new com.eprosima.rpcdds.tree.Exception(ctx.getScope(), name);
+            if(ctx.setScopedFileToObject(exceptionObject) || ctx.isScopeLimitToAll())
+            {
+                exTemplates = tmanager.createTemplateGroup("exception");
+                exTemplates.setAttribute("ctx", ctx);
+                // Set the the exception object to the TemplateGroup of the module.
+                exTemplates.setAttribute("exception", exceptionObject);
+            }
+            // Its a dependency.
+            else
+            {
+                ctx.addIncludeDependency(ctx.getScopeFile());
+            }
 	    }
 	    LCURLY! opt_member_list[exceptionObject] RCURLY!
 	    {
-           // Create the returned data.
-           returnPair = new Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup>(exceptionObject, exTemplates);
+            ctx.addException(exceptionObject.getScopedname(), exceptionObject);
+            // Create the returned data.
+            returnPair = new Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup>(exceptionObject, exTemplates);
         }
 	;
 

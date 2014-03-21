@@ -18,7 +18,7 @@ module(ctx, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$
-};
+}
 
 >>
 
@@ -27,7 +27,10 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$export_list$
+namespace $interface.name$
+{
+    $export_list$
+}
 >>
 
 export_list(exports) ::= <<
@@ -58,7 +61,7 @@ public:
 	virtual void raise() const;
 	
 	// Exception members
-	$exception.members : { member | $member.typecode.stTypename$ $member.name$; }; separator="\n"$
+	$exception.members : { member | $member.typecode.cppTypename$ $member.name$; }; separator="\n"$
 };
 
 >>

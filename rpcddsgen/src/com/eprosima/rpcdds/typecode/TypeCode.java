@@ -126,6 +126,19 @@ public abstract class TypeCode
     public boolean isIsType_e(){return false;}
     public boolean isIsType_10(){return false;}
     /*** End of functions to know the type in string templates ***/
+
+    public Object getParent()
+    {
+        return m_parent;
+    }
+
+    public void setParent(Object parent)
+    {
+        m_parent = parent;
+    }
     
     private int m_kind = KIND_NULL;
+
+    // Added parent object to typecode because was needed in DDS with our types (TopicsPlugin_gettypecode)
+    private Object m_parent = null;
 }

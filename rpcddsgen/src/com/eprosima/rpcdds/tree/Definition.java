@@ -16,11 +16,11 @@ public interface Definition
      */
     public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile);
     
-    public boolean isModule();
+    public boolean isIsModule();
     
-    public boolean isInterface();
+    public boolean isIsInterface();
     
-    public boolean isException();
+    public boolean isIsException();
     
-    public boolean isTypeDeclaration();
+    public boolean isIsTypeDeclaration();
 }

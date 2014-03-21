@@ -13,6 +13,7 @@
  */
 
 #include "AsyncCallTestProxy.h"
+#include "AsyncCallTest.h"
 #include "AsyncCallTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"

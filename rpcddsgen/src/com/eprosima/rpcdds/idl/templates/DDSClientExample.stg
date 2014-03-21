@@ -9,6 +9,12 @@ $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source 
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
 
+$if(ctx.rtiTypes)$
+$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
+#include "$ctx.filename$Exceptions.h"
+
+$endif$
+
 #include <iostream>
 
 using namespace eprosima::rpcdds;

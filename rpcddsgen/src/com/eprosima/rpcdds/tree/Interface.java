@@ -76,25 +76,25 @@ public class Interface extends ExportContainer implements Definition, Notebook
     }
     
     @Override
-    public boolean isModule()
+    public boolean isIsModule()
     {
         return false;
     }
     
     @Override
-    public boolean isInterface()
+    public boolean isIsInterface()
     {
     	return true;
     }
     
     @Override
-    public boolean isException()
+    public boolean isIsException()
     {
     	return false;
     }
     
     @Override
-    public boolean isTypeDeclaration()
+    public boolean isIsTypeDeclaration()
     {
         return false;
     }
@@ -106,7 +106,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
     {
     	for(int count = 0; m_firstexception == null && count < getExports().size(); ++count)
         {
-            if(getExports().get(count).isException())
+            if(getExports().get(count).isIsException())
             	m_firstexception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
         }
         return m_firstexception;
@@ -119,7 +119,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
     {
         for(int count = 0; m_firstoperation == null && count < getExports().size(); ++count)
         {
-            if(getExports().get(count).isOperation())
+            if(getExports().get(count).isIsOperation())
                 m_firstoperation = (Operation)getExports().get(count);
         }
         return m_firstoperation;
@@ -136,7 +136,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
         {
     		int lastIndex = -1;
     		
-    		if(getExports().get(count).isException())
+    		if(getExports().get(count).isIsException())
     		{
                 String tmpname = ((com.eprosima.rpcdds.tree.Exception)getExports().get(count)).getScopedname();
                 
@@ -171,7 +171,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
             
             for(int count = 0; count < getExports().size(); ++count)
             {
-                if(getExports().get(count).isOperation())
+                if(getExports().get(count).isIsOperation())
                 {
                     m_operations.add((Operation)getExports().get(count));
                 }
@@ -182,15 +182,15 @@ public class Interface extends ExportContainer implements Definition, Notebook
     }
     
     /*!
-     * @brief This function is used in stringtemplates to not generate module in some cases (Right now in generated user idl).
+     * @brief This function is used in stringtemplates to not generate module in some cases (Right now in generated RTI idl).
      */
-    public boolean isThereAreTypeDeclarations()
+    public boolean isThereAreDeclarations()
     {
         boolean returnedValue = false;
         
         for(int count = 0; !returnedValue && count < getExports().size(); ++count)
         {
-            returnedValue = getExports().get(count).isTypeDeclaration();
+            returnedValue = getExports().get(count).isIsTypeDeclaration() || getExports().get(count).isIsException();
         }
         
         return returnedValue;

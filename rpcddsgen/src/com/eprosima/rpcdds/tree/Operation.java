@@ -32,19 +32,19 @@ public class Operation implements Export, Notebook
         return m_parent;
     }
     
-    public boolean isOperation()
+    public boolean isIsOperation()
     {
         return true;
     }
     
     @Override
-    public boolean isException()
+    public boolean isIsException()
     {
         return false;
     }
     
     @Override
-    public boolean isTypeDeclaration()
+    public boolean isIsTypeDeclaration()
     {
         return false;
     }

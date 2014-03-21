@@ -27,6 +27,32 @@ public class Exception extends ScopedObject implements Export, Definition
 
         return m_scope + "::" + m_name;
     }
+
+    /*
+     * @brief This function returns the scoped name of the interface but
+     * changing "::" by "_".
+     */
+    public String getFormatedScopedname()
+    {
+        String ret = null;
+        
+        if(m_scope.isEmpty())
+            ret = m_name;
+        else
+            ret = m_scope + "::" + m_name;
+        
+        return ret.replaceAll("::", "_");
+    }
+
+    public String getScope()
+    {
+        return m_scope;
+    }
+
+    public boolean getHasScope()
+    {
+        return !m_scope.isEmpty();
+    }
     
 	@Override
     public Interface getFirstInterface(String idlFile)
@@ -45,19 +71,19 @@ public class Exception extends ScopedObject implements Export, Definition
     }
 	
 	@Override
-    public boolean isModule()
+    public boolean isIsModule()
     {
         return false;
     }
 	
 	@Override
-	public boolean isInterface()
+	public boolean isIsInterface()
     {
     	return false;
     }
 	
 	@Override
-    public boolean isTypeDeclaration()
+    public boolean isIsTypeDeclaration()
     {
         return false;
     }
@@ -73,13 +99,13 @@ public class Exception extends ScopedObject implements Export, Definition
     }
     
     @Override
-    public boolean isOperation()
+    public boolean isIsOperation()
     {
         return false;
     }
     
     @Override
-    public boolean isException()
+    public boolean isIsException()
     {
         return true;
     }

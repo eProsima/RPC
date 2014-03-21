@@ -115,14 +115,6 @@ destroyDataCallback(operation, suffix) ::= <<
 (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::delete_data
 >>
 
-getHeaderRetCode(varname) ::= <<
-$varname$._header.retCode
->>
-
-getHeaderRetMsg(varname) ::= <<
-$varname$._header.retMsg
->>
-
 addParamToTopic(param, varname, isRequest) ::= <<
 $if(param)$
 $if(param.typecode.isType_f)$
@@ -130,6 +122,11 @@ $param.typecode.cppTypename$_copy(&$varname$.$param.name$, &$param.name$);
 $else$
 $varname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasting()$$endif$$endif$$param.name$;
 $endif$
+$endif$
+>>
+
+addExceptionMemberToTopic(exception, member, varname) ::= <<
+$varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
 $endif$
 >>
 
@@ -171,25 +168,9 @@ $endif$
 $endif$
 >>
 
-copyHeaderInfo(reqvarname, repvarname) ::= <<
-$repvarname$._header.clientId.value_1 = $reqvarname$._header.clientId.value_1;
-$repvarname$._header.clientId.value_2 = $reqvarname$._header.clientId.value_2;
-$repvarname$._header.clientId.value_3 = $reqvarname$._header.clientId.value_3;
-$repvarname$._header.clientId.value_4 = $reqvarname$._header.clientId.value_4;
-$repvarname$._header.requestSequenceNumber = $reqvarname$._header.requestSequenceNumber;
+extractExceptionMemberFromTopic(exception, member, varname) ::= <<
+ex.$member.name$ = $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
 >>
-
-setHeaderSuccess(varname) ::= <<
-$varname$._header.retCode = OPERATION_SUCCESSFUL;
-$varname$._header.retMsg = $charCasting()$"";
->>
-
-setHeaderServerInternalException(varname) ::= <<
-$varname$._header.retCode = SERVER_INTERNAL_ERROR;
-$varname$._header.retMsg = $charCasting()$ex.what();
->>
-
-eprosimaTypesBool() ::= <<false>>
 
 preReqIDLDefines(name) ::= <<
 >>
@@ -237,7 +218,11 @@ dependencies(conf) ::= <<
 nddscpp$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddsc$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib; nddscore$if(conf.dll)$$else$z$endif$$if(conf.debug)$d$endif$.lib
 >>
 
+/*** Inherate from OpenDDS ***/
+
 stringPointer() ::= <<>>
+
+stringPointerConst() ::= <<>>
 
 charCasting() ::= <<
 (char*)
@@ -248,6 +233,8 @@ charConstCasting() ::= <<
 
 bigObjOption() ::= <<
 >>
+
+/*** END Inherate from OpenDDS ***/
 
 unsetReply() ::= <<
 memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - sizeof(replyData._header));
@@ -288,3 +275,49 @@ $varComplexDel(...)$
 $endif$
 $endif$
 >>
+
+member_default_init(member) ::= <<
+$if(member)$
+$if(member.typecode.primitive)$
+$member.name$ = $member.typecode.initialValue$;
+$else$
+$memberComplexInit(...)$
+$endif$
+$endif$
+>>
+
+copyHeaderInfo(reqvarname, repvarname) ::= <<
+$repvarname$._header.clientId.value_1 = $reqvarname$._header.clientId.value_1;
+$repvarname$._header.clientId.value_2 = $reqvarname$._header.clientId.value_2;
+$repvarname$._header.clientId.value_3 = $reqvarname$._header.clientId.value_3;
+$repvarname$._header.clientId.value_4 = $reqvarname$._header.clientId.value_4;
+$repvarname$._header.requestSequenceNumber = $reqvarname$._header.requestSequenceNumber;
+>>
+
+setHeaderSuccess(varname) ::= <<
+$varname$._header.retCode = OPERATION_SUCCESSFUL;
+$varname$._header.retMsg = $charCasting()$"";
+>>
+
+setHeaderServerInternalException(varname) ::= <<
+$varname$._header.retCode = SERVER_INTERNAL_ERROR;
+$varname$._header.retMsg = $charCasting()$ex.what();
+>>
+
+getHeaderRetCode(varname) ::= <<
+$varname$._header.retCode
+>>
+
+getHeaderRetMsg(varname) ::= <<
+$varname$._header.retMsg
+>>
+
+replyUnionDiscriminator(varname) ::= <<
+$varname$.unio._d
+>>
+
+replyUnionData(varname, dataname) ::= <<
+$varname$.unio._u.$dataname$
+>>
+
+eprosimaTypesBool() ::= <<false>>

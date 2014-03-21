@@ -13,10 +13,10 @@
  */
 
 #include "SequenceTestProxy.h"
+#include "SequenceTest.h"
 #include "SequenceTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "SequenceTestRequestReplyPlugin.h"
 
 #include <iostream>
 

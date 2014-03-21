@@ -8,7 +8,7 @@ $definitions; separator="\n"$
 >>
 
 module(ctx, module, definition_list) ::= <<
-$if(module.thereAreTypeDeclarations)$
+$if(module.thereAreDeclarations)$
 module $module.name$
 {
     $definition_list$
@@ -23,7 +23,7 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$if(interface.thereAreTypeDeclarations)$
+$if(interface.thereAreDeclarations)$
 module $interface.name$
 {
     $export_list$
@@ -37,7 +37,15 @@ $exports; separator="\n"$
 
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, exception) ::= <<
+/*!
+ * @brief Structure that encapsulates the exception $exception.scopedname$.
+ * @ingroup $ctx.trimfilename$
+ */
+struct $exception.name$_t{
+   $exception.members:{member | $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
+}; $nolevelIDLdefine()$
+>>
 
 operation(ctx, operation, param_list) ::= <<>>
 

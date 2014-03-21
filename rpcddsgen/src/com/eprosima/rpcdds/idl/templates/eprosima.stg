@@ -24,6 +24,12 @@ $endif$
 
 varDel(variable) ::= <<>>
 
+member_default_init(member) ::= <<
+$if(member.typecode.primitive)$
+m_$member.name$ = $member.typecode.initialValue$;
+$endif$
+>>
+
 getTypenameOperation(operation, suffix, varname) ::= <<
 $varname$ = $operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::get_typename();
 >>
@@ -44,14 +50,6 @@ destroyDataCallback(operation, suffix) ::= <<
 (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::destroy_data
 >>
 
-getHeaderRetCode(varname) ::= <<
-$varname$._header().retCode()
->>
-
-getHeaderRetMsg(varname) ::= <<
-$varname$._header().retMsg()
->>
-
 addParamToTopic(param, varname, isRequest) ::= <<
 $if(param)$
 $if(isRequest)$
@@ -66,12 +64,28 @@ $endif$
 $endif$
 >>
 
+addExceptionMemberToTopic(exception, member, varname) ::= <<
+$if(member.typecode.primitive)$
+$varname$.unio().$exception.formatedScopedname$_ex().$member.name$(ex.$member.name$());
+$else$
+$varname$.unio().$exception.formatedScopedname$_ex().$member.name$(std::move(ex.$member.name$()));
+$endif$
+>>
+
 extractParamFromTopic(param, varname, isReply) ::= <<
 $if(param.typecode.primitive)$
 $param.name$ = $varname$.$param.name$();
 $else$ 
 $param.name$ = std::move($varname$.$param.name$()); //TODO Probar que esto funciona.
 $endif$ 
+>>
+
+extractExceptionMemberFromTopic(exception, member, varname) ::= <<
+$if(member.typecode.primitive)$
+ex.$member.name$($varname$.unio().$exception.formatedScopedname$_ex().$member.name$());
+$else$
+ex.$member.name$(std::move($varname$.unio().$exception.formatedScopedname$_ex().$member.name$()));
+$endif$
 >>
 
 copyHeaderInfo(reqvarname, repvarname) ::= <<
@@ -89,6 +103,22 @@ $varname$._header().retCode(OPERATION_SUCCESSFUL);
 setHeaderServerInternalException(varname) ::= <<
 $varname$._header().retCode(SERVER_INTERNAL_ERROR);
 $varname$._header().retMsg(std::move(ex.what()));
+>>
+
+getHeaderRetCode(varname) ::= <<
+$varname$._header().retCode()
+>>
+
+getHeaderRetMsg(varname) ::= <<
+$varname$._header().retMsg()
+>>
+
+replyUnionDiscriminator(varname) ::= <<
+$varname$.unio()._d()
+>>
+
+replyUnionData(varname, dataname) ::= <<
+$varname$.unio().$dataname$()
 >>
 
 // TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
@@ -127,6 +157,21 @@ $else$
 $endif$
 }
 $endif$
+>>
+
+object_serialization(object) ::= <<
+$if(object.typecode.maxsize)$
+if(m_$object.name$.$sizeFunction.(object.typecode.stType)$ <= $object.typecode.maxsize$)
+
+$endif$cdr << $serializeCasting(typecode=object.typecode)$m_$object.name$;
+$if(object.typecode.maxsize)$
+else
+    throw eprosima::BadParamException(std::string("The maximum length was exceeded"));
+$endif$
+>>
+
+object_deserialization(object) ::= <<
+cdr \>> $deserializeCasting(typecode=object.typecode)$m_$object.name$;
 >>
 
 // TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.

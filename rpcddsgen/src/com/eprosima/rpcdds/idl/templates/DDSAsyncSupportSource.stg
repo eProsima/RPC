@@ -72,14 +72,11 @@ void $operation.parent.name$_$operation.name$Task::execute()
     ReturnMessage retcode = OPERATION_SUCCESSFUL;
     
     $if(operation.exceptions)$
-    switch (m_reply.unio._d)
+    switch ($replyUnionDiscriminator(varname="m_reply")$)
     {
         case 0:
-            retcode = (ReturnMessage)m_reply.header.rpcddsRetCode;
-            $operation.outputparam : {$extractDataHelper(param=it, dataname="m_reply.unio._u.st", isReply="yes")$};separator="\n"$
-            $if(operation.rettypeparam)$
-            $extractDataHelper(param=operation.rettypeparam, dataname="m_reply.unio._u.st", isReply="yes")$        
-            $endif$
+            retcode = (ReturnMessage)$getHeaderRetCode(varname="m_reply")$;
+            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyUnionData(varname="m_reply", dataname="st"), isReply="yes")$};separator="\n"$
             if(retcode == OPERATION_SUCCESSFUL)
 		    {
 		        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
@@ -87,7 +84,7 @@ void $operation.parent.name$_$operation.name$Task::execute()
 		    else
 		    {
 		        if(retcode == SERVER_INTERNAL_ERROR)
-		            getObject().on_exception(ServerInternalException(m_reply.header.rpcddsRetMsg$stringPointerConst()$));
+		            getObject().on_exception(ServerInternalException($getHeaderRetMsg(varname="m_reply")$));
 		    }
             break;
         $operation.exceptions : { exception |
@@ -95,7 +92,7 @@ void $operation.parent.name$_$operation.name$Task::execute()
             {
             $exception.scopedname$ ex;
             // TODO No permite arrays
-            $exception.members : { member |ex.$member.name$ = m_reply.unio._u.$exception.name$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;}; separator="\n"$
+            $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname="m_reply")$}; separator="\n"$
 
             getObject().on_exception(ex);
             }
@@ -143,54 +140,3 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
-
-/*!
- * Extra string templates. Utils.
- */
-// CAREFUL: There is a copy in DDSProtocolSource.stg
-createDataHelper(param, dataname, isRequest) ::= <<
-$if(param.typecode.isType_f)$
-$memberComplexExtract(member=param, dataname=dataname)$
-$else$
-$dataname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasting()$$endif$$endif$$param.name$;
-$endif$
->>
-
-// CAREFUL: There is a copy in DDSProtocolSource.stg
-extractDataHelper(param, dataname, isReply) ::= <<
-$if(isReply)$
-$if(param.input)$
-$if(param.typecode.primitive)$
-$if(param.typecode.isType_d)$
-if($param.name$ != NULL)
-    free($param.name$);
-$endif$
-$else$
-$varComplexDel(variable=param)$
-$endif$
-$endif$
-$if(param.typecode.isType_f)$
-$memberComplexCopy(member=param, dataname=dataname)$
-$else$
-$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
-$endif$
-$else$
-$if(param.output)$
-$if(param.typecode.primitive)$
-$if(param.typecode.isType_d)$
-$param.name$ = strdup($dataname$.$param.name$);
-$else$
-$param.name$ = $dataname$.$param.name$;
-$endif$
-$else$
-$memberComplexCopy(member=param, dataname=dataname)$
-$endif$
-$else$
-$if(param.typecode.isType_f)$
-$memberComplexCopy(member=param, dataname=dataname)$
-$else$
-$param.name$ = $dataname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
-$endif$
-$endif$
-$endif$
->>

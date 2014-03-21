@@ -8,11 +8,11 @@ public interface Export
     
     Object getParent();
     
-    public boolean isOperation();
+    public boolean isIsOperation();
     
-    public boolean isException();
+    public boolean isIsException();
     
-    public boolean isTypeDeclaration();
+    public boolean isIsTypeDeclaration();
     
     // TODO Capturar el error en la gramatica y saltarlo.
     public boolean resolve(Context ctx);

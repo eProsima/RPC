@@ -13,10 +13,10 @@
  */
 
 #include "EnumYStringTestProxy.h"
+#include "EnumYStringTest.h"
 #include "EnumYStringTestDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-#include "EnumYStringTestRequestReplyPlugin.h"
 
 #include <iostream>
 
