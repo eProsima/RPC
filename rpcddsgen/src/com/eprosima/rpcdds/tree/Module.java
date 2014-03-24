@@ -113,6 +113,12 @@ public class Module extends DefinitionContainer implements Definition, Notebook
     {
         return false;
     }
+
+    @Override
+    public boolean isIsConstDeclaration()
+    {
+        return false;
+    }
     
     @Override
     public void addAnnotations(HashMap<String, String> annotations)

@@ -6,34 +6,14 @@ LDFLAGS= -m64
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I. -I$(FASTRPCHOME)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
+INCLUDES= -I. -I$(FASTCDR)/include -I$(FASTRPCHOME)/include  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds 
 
-LIBS = -L$(FASTRPCHOME)/lib/x64Linux2.6gcc4.4.5 -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds $(SYSLIBS)
+LIBS = -L$(LIBFASTCDR) -L$(FASTRPCHOME)/lib/x64Linux2.6gcc4.4.5 -lrpcdds  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+       -lnddsc -lnddscore -lnddscpp -lfastcdr $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 
-all: $(DIRECTORIES) MessageHeader  \
-	MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
-
-
-MessageHeader_TARGET= lib/x64Linux2.6gcc4.4.5/libMessageHeader.so
-MessageHeader_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libMessageHeader.a
-MessageHeader_COMMON_SRC_CXXFILES = MessageHeader.cxx \
-	MessageHeaderPlugin.cxx \
-	MessageHeaderSupport.cxx
-
-MessageHeader_COMMON_SRC_CPPFILES=
-
-MessageHeader_COMMONOBJS    = $(MessageHeader_COMMON_SRC_CXXFILES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o) $(MessageHeader_COMMON_SRC_CPPFILES:%.cpp=output/x64Linux2.6gcc4.4.5/%.o)
-OBJS+= $(MessageHeader_COMMONOBJS)
-
-$(MessageHeader_TARGET): $(MessageHeader_COMMONOBJS)
-	$(LN) $(LDFLAGS) -shared -o $(MessageHeader_TARGET) $(MessageHeader_COMMONOBJS) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 
-
-$(MessageHeader_TARGET_Z): $(MessageHeader_COMMONOBJS)
-	$(AR) -cru $(MessageHeader_TARGET_Z) $(MessageHeader_COMMONOBJS)
-MessageHeader: $(MessageHeader_TARGET) $(MessageHeader_TARGET_Z)
+all: $(DIRECTORIES) MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
 
 
 MultithreadTest_TARGET= lib/x64Linux2.6gcc4.4.5/libMultithreadTest.so
@@ -45,17 +25,14 @@ MultithreadTest_SERVER_TARGET= lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.
 MultithreadTest_SERVER_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.a
 MultithreadTest_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/MultithreadTestServerExample
 MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTest.cxx \
-	MultithreadTestPlugin.cxx \
-	MultithreadTestSupport.cxx \
+	MultithreadTestTopicsPlugin.cxx \
+	MultithreadTestTopics.cxx \
 	MultithreadTestDDSProtocol.cxx \
-	MultithreadTestRequestReply.cxx \
-	MultithreadTestRequestReplyPlugin.cxx \
-	MultithreadTestRequestReplySupport.cxx
+	MultithreadTestDDSAsyncSupport.cxx
 
 MultithreadTest_COMMON_SRC_CPPFILES=
 
 MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx
-	#MultithreadTestAsyncSupport.cxx
 MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx
 MultithreadTest_COMMONOBJS    = $(MultithreadTest_COMMON_SRC_CXXFILES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o) $(MultithreadTest_COMMON_SRC_CPPFILES:%.cpp=output/x64Linux2.6gcc4.4.5/%.o)
 MultithreadTest_CLIENTOBJS    = $(MultithreadTest_CLIENTSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
@@ -63,7 +40,7 @@ MultithreadTest_SERVEROBJS    = $(MultithreadTest_SERVERSOURCES:%.cxx=output/x64
 OBJS+= $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS) $(MultithreadTest_SERVEROBJS)
 
 $(MultithreadTest_TARGET): $(MultithreadTest_COMMONOBJS)
-	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_TARGET) $(MultithreadTest_COMMONOBJS) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lMessageHeader
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_TARGET) $(MultithreadTest_COMMONOBJS) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 
 
 $(MultithreadTest_TARGET_Z): $(MultithreadTest_COMMONOBJS)
 	$(AR) -cru $(MultithreadTest_TARGET_Z) $(MultithreadTest_COMMONOBJS)
@@ -82,11 +59,11 @@ MultithreadTestClient : $(MultithreadTest_CLIENT_TARGET) $(MultithreadTest_CLIEN
 	
 MultithreadTestServer : $(MultithreadTest_SERVER_TARGET) $(MultithreadTest_SERVER_TARGET_Z)
 	
-$(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestClient.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a lib/x64Linux2.6gcc4.4.5/libMessageHeader.a
-	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
+$(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestClient.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
 	
-$(MultithreadTest_SERVER_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a lib/x64Linux2.6gcc4.4.5/libMessageHeader.a
-	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -lMessageHeader -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
+$(MultithreadTest_SERVER_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
 	
 MultithreadTestClientExample : $(MultithreadTest_CLIENT_EXAMPLE_TARGET)
 	
@@ -100,8 +77,8 @@ output/x64Linux2.6gcc4.4.5/%.o:%.cxx
 output/x64Linux2.6gcc4.4.5/%.o:%.cpp
 	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-.PHONY: MessageHeader  \
-	MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
+.PHONY: MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
+
 clean:
 	@rm -f $(OBJS)
 

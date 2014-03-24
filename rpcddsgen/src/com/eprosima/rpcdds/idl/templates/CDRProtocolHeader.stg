@@ -115,7 +115,9 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-type_declarator(ctx, typedefs) ::= <<>>
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
 
 struct_type(ctx, struct) ::= <<
 $membered_type(ctx=ctx, mtype=struct)$

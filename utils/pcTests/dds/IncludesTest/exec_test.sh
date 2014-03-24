@@ -17,13 +17,6 @@ errorstatus=$?
 if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 # TODO Temporary set of LIBFASTCDR
 export LIBFASTCDR=../../../../../../fastcdr/lib/$EPROSIMA_TARGET
-# Copy static files into output directory.
-cp IncludesTest/IncludesTestClientExample.cxx output
-errorstatus=$?
-if [ $errorstatus != 0 ]; then exit $errorstatus; fi
-cp IncludesTest/IncludesTestServerImplExample.cxx output
-errorstatus=$?
-if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 
 # Compile the Util idl file.
 make -C output/util -f makefile_$NDDSTARGET all
@@ -38,6 +31,16 @@ if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 # TODO Temporary set of LIBFASTCDR
 export LIBFASTCDR=../../../../../fastcdr/lib/$EPROSIMA_TARGET
 # Compile the rest of files.
+make -C output -f makefile_$NDDSTARGET all
+errorstatus=$?
+if [ $errorstatus != 0 ]; then exit $errorstatus; fi
+# Copy static files into output directory.
+cp IncludesTest/IncludesTestClientExample.cxx output
+errorstatus=$?
+if [ $errorstatus != 0 ]; then exit $errorstatus; fi
+cp IncludesTest/IncludesTestServerImplExample.cxx output
+errorstatus=$?
+if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 make -C output -f makefile_$NDDSTARGET all
 errorstatus=$?
 if [ $errorstatus != 0 ]; then exit $errorstatus; fi

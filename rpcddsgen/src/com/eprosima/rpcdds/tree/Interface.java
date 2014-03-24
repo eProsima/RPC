@@ -98,6 +98,12 @@ public class Interface extends ExportContainer implements Definition, Notebook
     {
         return false;
     }
+
+    @Override
+    public boolean isIsConstDeclaration()
+    {
+        return false;
+    }
     
     /*!
      * @brief This function returns the first exception of the interface.
@@ -190,7 +196,8 @@ public class Interface extends ExportContainer implements Definition, Notebook
         
         for(int count = 0; !returnedValue && count < getExports().size(); ++count)
         {
-            returnedValue = getExports().get(count).isIsTypeDeclaration() || getExports().get(count).isIsException();
+            returnedValue = getExports().get(count).isIsTypeDeclaration() ||
+                getExports().get(count).isIsConstDeclaration() || getExports().get(count).isIsException();
         }
         
         return returnedValue;

@@ -47,12 +47,13 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
 {
     // TODO Cambiar esto. No me gusta la forma.
     Pair<TypeDeclaration, TemplateGroup> tdtg = null;
+    Pair<ConstDeclaration, TemplateGroup> cdtg = null;
     Pair<Module, TemplateGroup> mtg = null;
     Pair<Interface, TemplateGroup> itg = null;
     Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> etg = null;
 }
 	:   (   tdtg=type_dcl SEMI! {if(tdtg!=null){dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}}  // Type Declaration
-	    |   const_dcl SEMI!
+	    |   cdtg=const_dcl SEMI! {if(cdtg!=null){dtg = new Pair<Definition, TemplateGroup>(cdtg.first(), cdtg.second());}} // Const Declaration
 	    |   etg=except_dcl SEMI! {if(etg!=null){dtg = new Pair<Definition, TemplateGroup>(etg.first(), etg.second());}} // Exception.
 	    |   (("abstract" | "local")? "interface") => itg=interf SEMI! {if(itg!=null){dtg = new Pair<Definition, TemplateGroup>(itg.first(), itg.second());}} // Interface
 	    |   mtg=module SEMI! {if(mtg!=null){dtg = new Pair<Definition, TemplateGroup>(mtg.first(), mtg.second());}} // Module
@@ -207,11 +208,12 @@ export returns [Pair<Export, TemplateGroup> etg = null]
     {
         // TODO Cambiar esto. No me gusta la forma.
         Pair<TypeDeclaration, TemplateGroup> tetg = null;
+        Pair<ConstDeclaration, TemplateGroup> cetg = null;
         Pair<Operation, TemplateGroup> oetg = null;
         Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> eetg = null;
     }
 	:   (   tetg=type_dcl SEMI! {if(tetg!=null){etg = new Pair<Export, TemplateGroup>(tetg.first(), tetg.second());}}  // Type Declaration
-	    |   const_dcl SEMI!
+	    |   cetg=const_dcl SEMI! {if(cetg!=null){etg = new Pair<Export, TemplateGroup>(cetg.first(), cetg.second());}} // Const Declaration
 	    |   eetg=except_dcl SEMI! {if(eetg!=null){etg = new Pair<Export, TemplateGroup>(eetg.first(), eetg.second());}}  // Exception
 	    |   attr_dcl SEMI!
 	    |   oetg=op_dcl SEMI! {if(oetg!=null){etg = new Pair<Export, TemplateGroup>(oetg.first(), oetg.second());}}  // Operation
@@ -249,6 +251,9 @@ scoped_name returns [String literal = ""]
 	;
 
 value
+{
+    System.out.println("WARNING (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): ValueType declarations are not supported. Ignoring...");
+}
 	:   ( value_dcl
 	    | value_abs_dcl
 	    | value_box_dcl
@@ -359,23 +364,53 @@ init_param_attribute
 	:   "in"
 	;
 
-const_dcl
-	:   "const"^ const_type identifier ASSIGN! const_exp
+const_dcl returns [Pair<ConstDeclaration, TemplateGroup> returnPair = null]
+{
+    ConstDeclaration constDecl = null;
+    TypeCode typecode = null;
+    String name = null, value = null;
+    TemplateGroup constTemplates = tmanager.createTemplateGroup("const_decl");
+}
+	:   "const"^ typecode=const_type name=identifier ASSIGN! value=const_exp
+    {
+	   if(typecode != null)
+	   {
+           constDecl = new ConstDeclaration(typecode, name, value);
+           constTemplates.setAttribute("ctx", ctx);
+           constTemplates.setAttribute("const", constDecl);
+	       
+	       returnPair = new Pair<ConstDeclaration, TemplateGroup>(constDecl, constTemplates);
+       }
+       else
+       {
+          throw new RuntimeException("ERROR (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): Cannot parse constant declaration");
+       }
+    }
 	;
 
-const_type
-	:   (integer_type) => integer_type
-	|   char_type
-	|   wide_char_type
-	|   boolean_type
-	|   floating_pt_type
-	|   string_type
-	|   wide_string_type
+// TODO Not supported fixed types: Show warning
+const_type returns [TypeCode typecode = null]
+{
+    String literal = null;
+}
+	:   (integer_type) => typecode=integer_type
+	|   typecode=char_type
+	|   typecode=wide_char_type
+	|   typecode=boolean_type
+	|   typecode=floating_pt_type
+	|   typecode=string_type
+	|   typecode=wide_string_type
 	|   fixed_pt_const_type
-	|   scoped_name
-	|   octet_type
+	|   literal=scoped_name
+	    {
+	       // Find typecode in the global map.
+	       typecode = ctx.getTypeCode(literal);
+	       
+	       if(typecode == null)
+	           throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The type " + literal + " cannot be found.");
+	    }
+	|   typecode=octet_type
 	;
-
 
 /*   EXPRESSIONS   */
 
@@ -550,7 +585,19 @@ boolean_literal returns [String lit = null]
 	;
 
 positive_int_const returns [String literal = null]
-	:    literal=const_exp
+	:  literal=const_exp
+       {
+           try
+           {
+               int value = Integer.parseInt(literal);
+
+               if(value < 0)
+                   throw new ParseException(ctx.getFilename(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The expression '" + literal + "' is not supported. You must use a positive integer.");
+           }
+           catch(NumberFormatException e)
+           {
+           }
+       }
 	;
 
 
@@ -578,11 +625,11 @@ type_declarator returns [Pair<TypeCode, TemplateGroup> returnPair = null]
     Vector<Pair<String, ContainerTypeCode>> declvector = null;
     TypeCode typecode = null;
     AliasTypeCode typedefTypecode = null;
-    TemplateGroup typedefTemplates = tmanager.createTemplateGroup("type_declarator");
+    TemplateGroup typedefTemplates = tmanager.createTemplateGroup("typedef_decl");
 }
 	:  typecode=type_spec declvector=declarators
 	{
-	   if(typecode!=null)
+	   if(typecode != null && declvector != null)
 	   {
 	       for(int count = 0; count < declvector.size(); ++count)
 	       {
@@ -600,17 +647,18 @@ type_declarator returns [Pair<TypeCode, TemplateGroup> returnPair = null]
 	               typedefTypecode.setContentTypeCode(typecode);
 	           }
 	           
-	           typedefTemplates.setAttribute("ctx", ctx);
 	           typedefTemplates.setAttribute("typedefs", typedefTypecode);
 	           // Add alias typecode to the map with all typecodes.
 	           ctx.addTypeCode(typedefTypecode.getScopedname(), typedefTypecode);
 	       }
+
+           typedefTemplates.setAttribute("ctx", ctx);
 	       
 	       returnPair = new Pair<TypeCode, TemplateGroup>(typecode, typedefTemplates);
        }
        else
        {
-          throw new RuntimeException("In function 'type_declarator': null pointer.");
+          throw new RuntimeException("ERROR (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): Cannot parse type declaration");
        }
 	}
 	;
@@ -632,7 +680,7 @@ simple_type_spec returns [TypeCode typecode = null]
 	       typecode = ctx.getTypeCode(literal);
 	       
 	       if(typecode == null)
-	           throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The type " + literal + " cannot be found.");
+	           throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The type " + literal + " cannot be found.");
 	    }
 	;
 
@@ -643,16 +691,16 @@ base_type_spec returns [TypeCode typecode = null]
 	|   typecode=wide_char_type		
 	|   typecode=boolean_type	
 	|   typecode=octet_type
-	|   any_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "Unsupported 'any' type."); }
-	|   object_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), ": Unsupported 'Object' type."); }
-	|   value_base_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "Unsupported 'ValueBase' type."); }
+	|   any_type {throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "Unsupported 'any' type."); }
+	|   object_type {throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, ": Unsupported 'Object' type."); }
+	|   value_base_type {throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "Unsupported 'ValueBase' type."); }
 	;
 
 template_type_spec returns [TypeCode typecode = null]
 	:   typecode=sequence_type
 	|   typecode=string_type
 	|   typecode=wide_string_type
-	|   fixed_pt_type {throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "Unsupported 'fixed' type."); }
+	|   fixed_pt_type {throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "Unsupported 'fixed' type."); }
 	;
 
 constr_type_spec
@@ -665,7 +713,21 @@ declarators returns [Vector<Pair<String, ContainerTypeCode>> declvector = new Ve
 {
     Pair<String, ContainerTypeCode> pair = null;
 }
-	:   pair=declarator{declvector.add(pair);} (COMMA! pair=declarator{declvector.add(pair);})*
+	:   pair=declarator
+        {
+            if(pair != null)
+                declvector.add(pair);
+            else
+                throw new ParseException(ctx.getScopeFile(), (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1), "Cannot parse type declarator");
+        }
+        (COMMA! pair=declarator
+        {
+            if(pair != null)
+                declvector.add(pair);
+            else
+                throw new ParseException(ctx.getScopeFile(), (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1), "Cannot parse type declarator");
+        }
+        )*
 	;
 
 declarator returns [Pair<String, ContainerTypeCode> pair = null]
@@ -873,7 +935,7 @@ union_type returns [Pair<TypeCode, TemplateGroup> returnPair = null]
 	    {
             // TODO Check supported types for discriminator: long, enumeration, etc...
 	       unionTP = new UnionTypeCode(ctx.getScope(), name, dist_type);
-           line = LT(0).getLine() - ctx.getCurrentIncludeLine();
+           line = LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1;
 	    }
 	    LCURLY! switch_body[unionTP] RCURLY!
 	    {
@@ -903,7 +965,7 @@ switch_type_spec returns [TypeCode typecode = null]
            typecode = ctx.getTypeCode(literal);
            
            if(typecode == null)
-               throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The type " + literal + " cannot be found.");
+               throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The type " + literal + " cannot be found.");
         }
 	;
 
@@ -923,7 +985,7 @@ case_stmt [UnionTypeCode unionTP]
     UnionMember member = new UnionMember();
 }
 	:   // case_label_list
-	    ( "case"^ label=const_exp{member.addLabel(TemplateUtil.checkUnionLabel(unionTP.getDiscriminator(), label, ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine()));} COLON!
+	    ( "case"^ label=const_exp{member.addLabel(TemplateUtil.checkUnionLabel(unionTP.getDiscriminator(), label, ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1));} COLON!
 	    | "default"^ {defaul = true;} COLON!
 	    )+
 	    element=element_spec SEMI!
@@ -1256,7 +1318,7 @@ param_type_spec returns [TypeCode typecode = null]
            typecode = ctx.getTypeCode(literal);
            
            if(typecode == null)
-               throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The type " + literal + " cannot be found.");
+               throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The type " + literal + " cannot be found.");
        }
 	;
 
@@ -1288,12 +1350,18 @@ imported_scope
 
 type_id_dcl
 	:   "typeid"^
+        {
+            System.out.println("WARNING (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): TypeID declarations are not supported. Ignoring...");
+        }
 	    scoped_name
 	    string_literal
 	;
 
 type_prefix_dcl
 	:   "typeprefix"^
+        {
+            System.out.println("WARNING (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): TypePrefix declarations are not supported. Ignoring...");
+        }
 	    scoped_name
 	    string_literal
 	;
@@ -1365,6 +1433,9 @@ exception_list
 
 component
 	:   "component"^
+        {
+            System.out.println("WARNING (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): Component declarations are not supported. Ignoring...");
+        }
 	    identifier
 	    (component_dcl)?
 	;
@@ -1424,6 +1495,9 @@ consumes_dcl
 	;
 
 home_dcl
+{
+    System.out.println("WARNING (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): Home declarations are not supported. Ignoring...");
+}
 	:   home_header home_body
 	;
 
@@ -1467,6 +1541,9 @@ finder_dcl
 	;
 
 event
+{
+    System.out.println("WARNING (File " + ctx.getFilename() + ", Line " + (LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : "1") + "): Event declarations are not supported. Ignoring...");
+}
 	:   ( event_abs
 	    | event_custom
 	    | event_dcl
@@ -1524,10 +1601,10 @@ annotation_application
                if(ctx.getAnnotation(id).getMembers().size() == 1)
                    ctx.addTmpAnnotation(id, value);
                else
-                   throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The annotation " + id + " has defined more than one attribute.");
+                   throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The annotation " + id + " has defined more than one attribute.");
             }
             else
-                throw new ParseException(ctx.getScopeFile(), LT(0).getLine() - ctx.getCurrentIncludeLine(), "The annotation " + id + " cannot be found.");
+                throw new ParseException(ctx.getScopeFile(), LT(0) != null ? LT(0).getLine() - ctx.getCurrentIncludeLine() : 1, "The annotation " + id + " cannot be found.");
         }
     ;   
 

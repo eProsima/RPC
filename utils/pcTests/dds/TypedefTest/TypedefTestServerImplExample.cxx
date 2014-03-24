@@ -43,6 +43,16 @@ DatosDef TypedefTestServerImplExample::getDatosDef(/*in*/ const DatosDef& d1, /*
    
     return getDatosDef_ret;
 } 
+
+DatosDef2 TypedefTestServerImplExample::getDatosDef2(/*in*/ const DatosDef2& d21, /*out*/ DatosDef2& d22) 
+{
+    DatosDef2 getDatosDef2_ret;
+        
+	getDatosDef2_ret = d21;
+	d22 = d21;
+   
+    return getDatosDef2_ret;
+} 
  
 DatosDefondo TypedefTestServerImplExample::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2) 
 {

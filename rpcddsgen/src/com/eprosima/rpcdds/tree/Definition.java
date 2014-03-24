@@ -23,4 +23,6 @@ public interface Definition
     public boolean isIsException();
     
     public boolean isIsTypeDeclaration();
+
+    public boolean isIsConstDeclaration();
 }

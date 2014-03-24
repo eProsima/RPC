@@ -13,22 +13,20 @@
  */
 
 #include "IncludesTestServerImplExample.h"
-#include "SameDirectoryExceptions.h"
-#include "util/UtilExceptions.h"
 
 IncludesTestNS::IncludesTest IncludesTestIfcServerImplExample::set(/*in*/ const SameDirectoryNS::SameDirectory& sd, /*inout*/ Level2NS::Level2& lvl, /*out*/ IncludesTestNS::IncludesTest& incl)
 {
     IncludesTestNS::IncludesTest set_ret;
 
-    incl.count = lvl.count;
-    incl.level.count = lvl.count;
-    incl.sd.count = lvl.count;
-    incl.sd.level.count = lvl.count;
-    lvl.count = sd.count;
-    set_ret.count = sd.count;
-    set_ret.level.count = sd.count;
-    set_ret.sd.count = sd.count;
-    set_ret.sd.level.count = sd.count;
+    incl.count(lvl.count());
+    incl.level().count(lvl.count());
+    incl.sd().count(lvl.count());
+    incl.sd().level().count(lvl.count());
+    lvl.count(sd.count());
+    set_ret.count(sd.count());
+    set_ret.level().count(sd.count());
+    set_ret.sd().count(sd.count());
+    set_ret.sd().level().count(sd.count());
 
     return set_ret;
 } 
@@ -37,21 +35,21 @@ UtilNS::Util IncludesTestIfcServerImplExample::get()
 {
     UtilNS::Util get_ret;
 
-    get_ret.count = 1010;
+    get_ret.count(1010);
 
     return get_ret;
 } 
 
 void IncludesTestIfcServerImplExample::hide(/*in*/ const HideNS::Hide& h, /*out*/ HideNS::Hide& ho)
 {
-    ho.count = h.count;
+    ho= h;
 } 
 
 ZetaNS::Zeta IncludesTestIfcServerImplExample::zeta(/*in*/ const ZetaNS::Zeta& z)
 {
     ZetaNS::Zeta zeta_ret;
 
-    zeta_ret.count = z.count;
+    zeta_ret = z;
 
     return zeta_ret;
 } 

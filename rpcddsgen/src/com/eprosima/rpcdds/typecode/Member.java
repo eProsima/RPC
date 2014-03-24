@@ -16,6 +16,10 @@ public class Member
     {
         return m_name;
     }
+
+    /*
+     * @brief This function is used with RTI DDS types because array names contains [].
+     */
     
     public TypeCode getTypecode()
     {

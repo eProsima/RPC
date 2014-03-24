@@ -58,12 +58,9 @@ void* executeThread(int threadNum)
         {
             Dato dato1;
             Dato dato2;
-            DDS_Long  test_ret = 0;       
+            int32_t test_ret = 0;       
 
-            Dato_initialize(&dato1);
-            Dato_initialize(&dato2);
-
-            dato1.count = count;
+            dato1.count(count);
 
             try
             {
@@ -84,9 +81,6 @@ void* executeThread(int threadNum)
 #endif
                 fwrite(fileLine, strlen(fileLine), 1, file);
             }
-
-            Dato_finalize(&dato1);
-            Dato_finalize(&dato2);
         }
 
         fclose(file);

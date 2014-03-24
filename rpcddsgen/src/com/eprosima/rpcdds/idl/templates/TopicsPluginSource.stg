@@ -14,8 +14,6 @@ $fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This hea
 #include "$ctx.filename$TopicsPlugin.h"
 #include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
 
-$ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"}; separator="\n"$
-
 #include "fastcdr/Cdr.h"
 #include "fastcdr/exceptions/BadParamException.h"
 #include "fastcdr/exceptions/NotEnoughMemoryException.h"
@@ -1339,19 +1337,22 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-type_declarator(ctx, typedefs) ::= <<
-DDS_TypeCode* $if(typedefs.hasScope)$$typedefs.scope$$if(typedefs.parent.parent)$$if(typedefs.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typedefs.name$Plugin::get_typecode()
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<
+$typedefs : { typedef |
+DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$if(typedef.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typedef.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
 
-    $ddsTypeCodeDeclsInAlias(ctx=ctx, alias=typedefs)$
+    $ddsTypeCodeDeclsInAlias(ctx=ctx, alias=typedef)$
 
-    static DDS_TypeCode $typedefs.name$_g_tc =
+    static DDS_TypeCode $typedef.name$_g_tc =
     {{
          DDS_TK_ALIAS,
          DDS_BOOLEAN_FALSE,
          -1,
-         (char*)"$typedefs.scopedname$",
+         (char*)"$typedef.scopedname$",
          NULL,
          0,
          0,
@@ -1363,12 +1364,13 @@ DDS_TypeCode* $if(typedefs.hasScope)$$typedefs.scope$$if(typedefs.parent.parent)
 
     if(!is_initialized)
     {
-        $typedefs.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=typedefs.name, typecode=typedefs.contentTypeCode)$;
+        $typedef.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=typedef.name, typecode=typedef.contentTypeCode)$;
         is_initialized = true;
     }
     
-    return &$typedefs.name$_g_tc;
+    return &$typedef.name$_g_tc;
 }
+}; separator="\n"$
 >>
 
 struct_type(ctx, struct) ::= <<

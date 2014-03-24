@@ -3,11 +3,13 @@ package com.eprosima.rpcdds.tree;
 import com.eprosima.rpcdds.idl.grammar.Context;
 import com.eprosima.rpcdds.typecode.TypeCode;
 
-public class TypeDeclaration implements Definition, Export
+public class ConstDeclaration implements Definition, Export
 {
-    public TypeDeclaration(TypeCode typecode)
+    public ConstDeclaration(TypeCode typecode, String name, String value)
     {
         m_typecode = typecode;
+        m_name = name;
+        m_value = value;
         // Set as parent to the Typecode.
         m_typecode.setParent(this);
     }
@@ -15,6 +17,16 @@ public class TypeDeclaration implements Definition, Export
     public TypeCode getTypeCode()
     {
         return m_typecode;
+    }
+
+    public String getValue()
+    {
+        return m_value;
+    }
+
+    public String getName()
+    {
+        return m_name;
     }
     
     public void setParent(Object obj)
@@ -66,13 +78,13 @@ public class TypeDeclaration implements Definition, Export
     @Override
     public boolean isIsTypeDeclaration()
     {
-        return true;
+        return false;
     }
     
     @Override
     public boolean isIsConstDeclaration()
     {
-        return false;
+        return true;
     }
     
     @Override
@@ -82,5 +94,7 @@ public class TypeDeclaration implements Definition, Export
     }
     
     private TypeCode m_typecode = null;
+    private String m_name = null;
+    private String m_value = null;
     private Object m_parent = null;
 }

@@ -1,3 +1,5 @@
+const long sequence_length = 2;
+
 struct Datos
 {
 	long count;
@@ -8,8 +10,8 @@ typedef sequence<long> largo;
 typedef sequence<string> cadena;
 typedef sequence<Datos> dattos;
 // NOT SUPPORTED
-//typedef sequence<sequence<long, 2>, 2> seqseq;
-typedef sequence<dattos, 2> seqdat;
+//typedef sequence<sequence<long, 2>, sequence_length> seqseq;
+typedef sequence<dattos, sequence_length> seqdat;
 
 interface SequenceTest
 {

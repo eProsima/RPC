@@ -87,6 +87,12 @@ public class Exception extends ScopedObject implements Export, Definition
     {
         return false;
     }
+
+	@Override
+    public boolean isIsConstDeclaration()
+    {
+        return false;
+    }
 	
 	public void setParent(Object obj)
     {

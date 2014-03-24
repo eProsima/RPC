@@ -120,6 +120,39 @@ int main(int argc, char **argv)
     DatosDef_finalize(&d2);    
     DatosDef_finalize(&getDatosDef_ret);    
 
+    DatosDef2 d21;      
+    DatosDef2 d22;    
+    DatosDef2 getDatosDef2_ret;       
+
+    DatosDef_initialize(&d21);
+    DatosDef_initialize(&d22);
+    DatosDef_initialize(&getDatosDef2_ret);
+
+    d21.count = 2;
+    d21.message = DDS::String_dup("PRUEBA2");;
+
+    try
+    {
+        getDatosDef2_ret = proxy->getDatosDef2(d21, d22);
+
+        if(d22.count != 2 || strcmp(d22.message, "PRUEBA2") != 0 ||
+                getDatosDef2_ret.count != 2 || strcmp(getDatosDef2_ret.message, "PRUEBA2") != 0 ||
+                d21.count != 2 || strcmp(d21.message, "PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getDatosDef2>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getDatosDef2>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    DatosDef_finalize(&d21);    
+    DatosDef_finalize(&d22);    
+    DatosDef_finalize(&getDatosDef2_ret);    
+
     DatosDefondo dd1;       
     DatosDefondo dd2;    
     DatosDefondo getDatosDefondo_ret;       

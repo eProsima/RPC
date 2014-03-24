@@ -44,8 +44,8 @@ int main(int argc, char **argv)
         return -1;
     }
     
-    DDS_Octet  oc1 = 1;    
-    DDS_Octet  oc2 = 2;    
+    DDS_Octet  oc1 = oc1_value;    
+    DDS_Octet  oc2 = BasicTypeTest::oc2_value;    
     DDS_Octet  oc3 = 0;    
     DDS_Octet  getOctetRetValue = 0;       
 
@@ -68,9 +68,9 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Char  ch1 = 1;       
-    DDS_Char  ch2 = 2;       
-    DDS_Char  ch3 = 0;    
+    DDS_Char  ch1 = ch1_value;
+    DDS_Char  ch2 = BasicTypeTest::ch2_value;
+    DDS_Char  ch3 = 0; 
     DDS_Char  getCharRetValue = 0;       
 
     try
@@ -92,8 +92,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Wchar  wch1 = 1;       
-    DDS_Wchar  wch2 = 2;       
+    DDS_Wchar  wch1 = wch1_value;       
+    DDS_Wchar  wch2 = BasicTypeTest::wch2_value;
     DDS_Wchar  wch3 = 0; 
     DDS_Wchar  getWCharRetValue = 0;       
 
@@ -116,8 +116,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Short  sh1 = 1;       
-    DDS_Short  sh2 = 2;       
+    DDS_Short  sh1 = sh1_value;
+    DDS_Short  sh2 = BasicTypeTest::sh2_value; 
     DDS_Short  sh3 = 0;    
     DDS_Short  getShortRetValue = 0;       
 
@@ -140,8 +140,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedShort  ush1 = 1;       
-    DDS_UnsignedShort  ush2 = 2;       
+    DDS_UnsignedShort  ush1 = ush1_value;
+    DDS_UnsignedShort  ush2 = BasicTypeTest::ush2_value;
     DDS_UnsignedShort  ush3 = 0;    
     DDS_UnsignedShort  getUShortRetValue = 0;       
 
@@ -164,8 +164,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Long  lo1 = 1;       
-    DDS_Long  lo2 = 2;       
+    DDS_Long  lo1 = lo1_value;
+    DDS_Long  lo2 = BasicTypeTest::lo2_value;
     DDS_Long  lo3 = 0;    
     DDS_Long  getLongRetValue = 0;       
 
@@ -188,8 +188,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedLong  ulo1 = 1;       
-    DDS_UnsignedLong  ulo2 = 2;       
+    DDS_UnsignedLong  ulo1 = ulo1_value;       
+    DDS_UnsignedLong  ulo2 = BasicTypeTest::ulo2_value; 
     DDS_UnsignedLong  ulo3 = 0;    
     DDS_UnsignedLong  getULongRetValue = 0;       
 
@@ -212,8 +212,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_LongLong  llo1 = 1;       
-    DDS_LongLong  llo2 = 2;       
+    DDS_LongLong  llo1 = llo1_value;
+    DDS_LongLong  llo2 = BasicTypeTest::llo2_value;
     DDS_LongLong  llo3 = 0;    
     DDS_LongLong  getLLongRetValue = 0;       
 
@@ -236,8 +236,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedLongLong  ullo1 = 1;       
-    DDS_UnsignedLongLong  ullo2 = 2;       
+    DDS_UnsignedLongLong  ullo1 = ullo1_value;
+    DDS_UnsignedLongLong  ullo2 = BasicTypeTest::ullo2_value;
     DDS_UnsignedLongLong  ullo3 = 0;    
     DDS_UnsignedLongLong  getULLongRetValue = 0;       
 
@@ -260,8 +260,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Float  fl1 = 1.0;       
-    DDS_Float  fl2 = 2.0;       
+    DDS_Float  fl1 = fl1_value;
+    DDS_Float  fl2 = BasicTypeTest::fl2_value; 
     DDS_Float  fl3 = 0;    
     DDS_Float  getFloatRetValue = 0;       
 
@@ -284,8 +284,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Double  do1 = 1.0;       
-    DDS_Double  do2 = 2.0;       
+    DDS_Double  do1 = do1_value;
+    DDS_Double  do2 = BasicTypeTest::do2_value; 
     DDS_Double  do3 = 0;    
     DDS_Double  getDoubleRetValue = 0;       
 
@@ -308,8 +308,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Boolean  bo1 = RTI_TRUE;       
-    DDS_Boolean  bo2 = RTI_FALSE;       
+    DDS_Boolean  bo1 = bo1_value;
+    DDS_Boolean  bo2 = BasicTypeTest::bo2_value;
     DDS_Boolean  bo3 = RTI_FALSE;    
     DDS_Boolean  getBooleanRetValue = RTI_FALSE;       
 

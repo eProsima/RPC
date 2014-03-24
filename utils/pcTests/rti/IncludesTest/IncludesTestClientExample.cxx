@@ -67,15 +67,15 @@ int main(int argc, char **argv)
     {
         set_ret = proxy->set(sd, lvl, incl);
 
-        if(!incl.count == 3 ||
-                !incl.level.count == 3 ||
-                !incl.sd.count == 3 ||
-                !incl.sd.level.count == 3 ||
-                !lvl.count == 100 ||
-                !set_ret.count == 100 ||
-                !set_ret.level.count == 100 ||
-                !set_ret.sd.count == 100 ||
-                !set_ret.sd.level.count == 100)
+        if(incl.count != 3 ||
+                incl.level.count != 3 ||
+                incl.sd.count != 3 ||
+                incl.sd.level.count != 3 ||
+                lvl.count != 100 ||
+                set_ret.count != 100 ||
+                set_ret.level.count != 100 ||
+                set_ret.sd.count != 100 ||
+                set_ret.sd.level.count != 100)
         {
             std::cout << "TEST FAILED<set>: Wrong values" << std::endl;
             _exit(-1);
@@ -162,6 +162,9 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         _exit(-1);
     }
+
+    ZetaNS::Zeta_finalize(&z);
+    ZetaNS::Zeta_finalize(&zeta_ret);
     
     delete proxy;
     delete transport;

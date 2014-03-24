@@ -53,8 +53,12 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-type_declarator(ctx, typedefs) ::= <<
-$typedefs : {typedef | typedef $typedef.typedefContentTypeCode.idlTypename$ $typedef.idlTypename$;}; separator="\n"$
+const_decl(ctx, const) ::= <<
+const $const.typeCode.idlTypename$ $const.name$ = $const.value$;
+>>
+
+typedef_decl(ctx, typedefs) ::= <<
+$typedefs : { typedef |typedef $typedef.typedefContentTypeCode.idlTypename$ $typedef.idlTypename$;}; separator="\n"$
 
 >>
 

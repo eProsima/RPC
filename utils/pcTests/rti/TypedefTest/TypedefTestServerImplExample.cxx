@@ -48,6 +48,18 @@ DatosDef TypedefTestServerImplExample::getDatosDef(/*in*/ const DatosDef& d1, /*
     return getDatosDef_ret;
 } 
  
+DatosDef2 TypedefTestServerImplExample::getDatosDef2(/*in*/ const DatosDef& d21, /*out*/ DatosDef& d22) 
+{
+    DatosDef getDatosDef2_ret;
+        
+	getDatosDef2_ret.count = d21.count;
+	d22.count = d21.count;
+	getDatosDef2_ret.message = DDS::String_dup(d21.message);
+	d22.message = DDS::String_dup(d21.message);
+   
+    return getDatosDef2_ret;
+} 
+ 
 DatosDefondo TypedefTestServerImplExample::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2) 
 {
     DatosDefondo getDatosDefondo_ret;

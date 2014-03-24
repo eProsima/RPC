@@ -44,8 +44,8 @@ int main(int argc, char **argv)
         return -1;
     }
     
-    uint8_t  oc1 = 1;    
-    uint8_t  oc2 = 2;    
+    uint8_t  oc1 = oc1_value;    
+    uint8_t  oc2 = BasicTypeTest::oc2_value;    
     uint8_t  oc3 = 0;    
     uint8_t  getOctetRetValue = 0;       
 
@@ -68,8 +68,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char  ch1 = 1;       
-    char  ch2 = 2;       
+    char  ch1 = ch1_value;       
+    char  ch2 = BasicTypeTest::ch2_value;       
     char  ch3 = 0;    
     char  getCharRetValue = 0;       
 
@@ -92,8 +92,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    wchar_t  wch1 = 1;       
-    wchar_t  wch2 = 2;       
+    wchar_t  wch1 = wch1_value;       
+    wchar_t  wch2 = BasicTypeTest::wch2_value;       
     wchar_t  wch3 = 0; 
     wchar_t  getWCharRetValue = 0;       
 
@@ -116,8 +116,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    int16_t  sh1 = 1;       
-    int16_t  sh2 = 2;       
+    int16_t  sh1 = sh1_value;       
+    int16_t  sh2 = BasicTypeTest::sh2_value;       
     int16_t  sh3 = 0;    
     int16_t  getShortRetValue = 0;       
 
@@ -140,8 +140,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    uint16_t  ush1 = 1;       
-    uint16_t  ush2 = 2;       
+    uint16_t  ush1 = ush1_value;       
+    uint16_t  ush2 = BasicTypeTest::ush2_value;       
     uint16_t  ush3 = 0;    
     uint16_t  getUShortRetValue = 0;       
 
@@ -164,8 +164,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    int32_t  lo1 = 1;       
-    int32_t  lo2 = 2;       
+    int32_t  lo1 = lo1_value;       
+    int32_t  lo2 = BasicTypeTest::lo2_value;       
     int32_t  lo3 = 0;    
     int32_t  getLongRetValue = 0;       
 
@@ -188,8 +188,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    uint32_t  ulo1 = 1;       
-    uint32_t  ulo2 = 2;       
+    uint32_t  ulo1 = ulo1_value;       
+    uint32_t  ulo2 = BasicTypeTest::ulo2_value;       
     uint32_t  ulo3 = 0;    
     uint32_t  getULongRetValue = 0;       
 
@@ -212,8 +212,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    int64_t  llo1 = 1;       
-    int64_t  llo2 = 2;       
+    int64_t  llo1 = llo1_value;       
+    int64_t  llo2 = BasicTypeTest::llo2_value;       
     int64_t  llo3 = 0;    
     int64_t  getLLongRetValue = 0;       
 
@@ -236,8 +236,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    uint64_t  ullo1 = 1;       
-    uint64_t  ullo2 = 2;       
+    uint64_t  ullo1 = ullo1_value;       
+    uint64_t  ullo2 = BasicTypeTest::ullo2_value;       
     uint64_t  ullo3 = 0;    
     uint64_t  getULLongRetValue = 0;       
 
@@ -260,8 +260,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    float  fl1 = 1.0;       
-    float  fl2 = 2.0;       
+    float  fl1 = fl1_value;       
+    float  fl2 = BasicTypeTest::fl2_value;       
     float  fl3 = 0;    
     float  getFloatRetValue = 0;       
 
@@ -284,8 +284,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    double  do1 = 1.0;       
-    double  do2 = 2.0;       
+    double  do1 = do1_value;       
+    double  do2 = BasicTypeTest::do2_value;       
     double  do3 = 0;    
     double  getDoubleRetValue = 0;       
 
@@ -308,19 +308,19 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    bool  bo1 = RTI_TRUE;       
-    bool  bo2 = RTI_FALSE;       
-    bool  bo3 = RTI_FALSE;    
-    bool  getBooleanRetValue = RTI_FALSE;       
+    bool  bo1 = bo1_value;       
+    bool  bo2 = BasicTypeTest::bo2_value;       
+    bool  bo3 = false;    
+    bool  getBooleanRetValue = false;       
 
     try
     {
         getBooleanRetValue = proxy->getBoolean(bo1, bo2, bo3);
 
-        if(bo3 != RTI_FALSE ||
-                getBooleanRetValue != RTI_TRUE ||
-                bo2 != RTI_TRUE ||
-                bo1 != RTI_TRUE)
+        if(bo3 != false ||
+                getBooleanRetValue != true ||
+                bo2 != true ||
+                bo1 != true)
         {
             std::cout << "TEST FAILED<getBoolean>: Wrong values" << std::endl;
             _exit(-1);

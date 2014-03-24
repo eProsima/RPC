@@ -48,6 +48,12 @@ public class Operation implements Export, Notebook
     {
         return false;
     }
+
+    @Override
+    public boolean isIsConstDeclaration()
+    {
+        return false;
+    }
     
     public void setOneway(boolean b)
     {

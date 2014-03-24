@@ -112,6 +112,31 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
+    DatosDef2 d21;      
+    DatosDef2 d22;    
+    DatosDef2 getDatosDef2_ret;       
+
+    d21.count(2);
+    d21.message("PRUEBA2");
+
+    try
+    {
+        getDatosDef2_ret = proxy->getDatosDef2(d21, d22);
+
+        if(d22.count() != 2 || d22.message().compare("PRUEBA2") != 0 ||
+                getDatosDef2_ret.count() != 2 || getDatosDef2_ret.message().compare("PRUEBA2") != 0 ||
+                d21.count() != 2 || d21.message().compare("PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getDatosDef>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getDatosDef>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
     DatosDefondo dd1;       
     DatosDefondo dd2;    
     DatosDefondo getDatosDefondo_ret;       

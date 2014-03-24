@@ -18,6 +18,8 @@ $if(ctx.firstInterface)$
 #include "$ctx.filename$Topics.h"
 $endif$
 
+$ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"}; separator="\n"$
+
 #include "ndds/ndds_cpp.h"
 
 $definitions; separator="\n"$
@@ -317,14 +319,18 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-type_declarator(ctx, typedefs) ::= <<
-class $typedefs.name$Plugin
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<
+$typedefs : { typedef |
+class $typedef.name$Plugin
 {
     public:
 
         static DDS_TypeCode* get_typecode();
         
 };
+}; separator="\n"$
 >>
 
 struct_type(ctx, struct) ::= <<

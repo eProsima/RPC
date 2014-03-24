@@ -1,5 +1,30 @@
+const octet oc1_value = 1;
+const char ch1_value = 1;
+const wchar wch1_value = 1;
+const short sh1_value = 1;
+const unsigned short ush1_value = 1;
+const long lo1_value = 1;
+const unsigned long ulo1_value = 1;
+const long long llo1_value = 1;
+const unsigned long long ullo1_value = 1;
+const float fl1_value = 1.0;
+const double do1_value = 1.0;
+const boolean bo1_value = TRUE;
+
 interface BasicTypeTest
 {
+    const octet oc2_value = 2;
+    const char ch2_value = 2;
+    const wchar wch2_value = 2;
+    const short sh2_value = 2;
+    const unsigned short ush2_value = 2;
+    const long lo2_value = 2;
+    const unsigned long ulo2_value = 2;
+    const long long llo2_value = 2;
+    const unsigned long long ullo2_value = 2;
+    const float fl2_value = 2.0;
+    const double do2_value = 2.0;
+    const boolean bo2_value = FALSE;
 
 	octet getOctet(in octet oc1, inout octet oc2, out octet oc3);
 	char getChar(in char ch1, inout char ch2, out char ch3);
