@@ -31,7 +31,7 @@ public class Annotation extends MemberedTypeCode
     }
     
     /// Copy from StructTypeCode. Not necessary.
-    public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
+    /*public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         List<Member> members = getMembers();
         int lcurrentSize = currentSize;
@@ -69,6 +69,6 @@ public class Annotation extends MemberedTypeCode
     public String getMaxSerializedSizeWithoutAlignment()
     {
         return Integer.toString(getMaxSerializedSizeWithoutAlignment(0));
-    }
+    }*/
     /// End copy.
 }

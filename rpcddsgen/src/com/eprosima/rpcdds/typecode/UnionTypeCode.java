@@ -82,7 +82,7 @@ public class UnionTypeCode extends MemberedTypeCode
         return returnList;
     }
     
-    public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
+    /*public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         List<Member> members = getMembers();
         int lcurrentSize = currentSize, lmaxSize = 0;
@@ -134,7 +134,7 @@ public class UnionTypeCode extends MemberedTypeCode
     public String getMaxSerializedSizeWithoutAlignment()
     {
         return Integer.toString(getMaxSerializedSizeWithoutAlignment(0));
-    }
+    }*/
     
     private TypeCode m_discriminatorTypeCode = null;
     
