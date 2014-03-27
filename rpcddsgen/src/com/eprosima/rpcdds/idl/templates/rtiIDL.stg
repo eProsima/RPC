@@ -43,7 +43,7 @@ exception(ctx, exception) ::= <<
  * @ingroup $ctx.trimfilename$
  */
 struct $exception.name$_t{
-   $exception.members:{member | $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
+   $exception.members:{member | $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
 }; $nolevelIDLdefine()$
 >>
 
@@ -58,14 +58,14 @@ const $const.typeCode.idlTypename$ $const.name$ = $const.value$;
 >>
 
 typedef_decl(ctx, typedefs) ::= <<
-$typedefs : { typedef |typedef $typedef.typedefContentTypeCode.idlTypename$ $typedef.idlTypename$;}; separator="\n"$
+$typedefs : { typedef |typedef $typedef.typedefContentTypeCode.idlTypename$ $typedef.idlTypename$$if(typedef.typedefContentTypeCode.isType_f)$$typedef.typedefContentTypeCode.arrayExtension$$endif$;}; separator="\n"$
 
 >>
 
 struct_type(ctx, struct) ::= <<
 struct $struct.name$
 {
-$struct.members : { member |    $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
+$struct.members : { member |    $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
 }; //@top-level false
 
 >>
@@ -73,7 +73,7 @@ $struct.members : { member |    $member.typecode.idlTypename$ $member.name$;}; s
 union_type(ctx, union) ::= <<
 union $union.name$ switch ($union.discriminator.idlTypename$)
 {
-$union.members : { member | $if(member.default)$    default:$else$$member.labels : { label |    case $label$:}; separator="\n"$$endif$$\n$        $member.typecode.idlTypename$ $member.name$;}; separator="\n"$
+$union.members : { member | $if(member.default)$    default:$else$$member.labels : { label |    case $label$:}; separator="\n"$$endif$$\n$        $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
 };  //@top-level false
 
 >>

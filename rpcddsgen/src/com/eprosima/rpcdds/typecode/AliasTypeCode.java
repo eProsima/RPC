@@ -135,7 +135,7 @@ public class AliasTypeCode extends ContainerTypeCode
         return super.getContentTypeCode().getMaxsize();
     }
 
-    public int getSize()
+    public String getSize()
     {
         return super.getContentTypeCode().getSize();
     }

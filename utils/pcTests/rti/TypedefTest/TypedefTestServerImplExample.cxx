@@ -39,12 +39,13 @@ larguisimo TypedefTestServerImplExample::getLarguisimo(/*in*/ larguisimo ll1, /*
 DatosDef TypedefTestServerImplExample::getDatosDef(/*in*/ const DatosDef& d1, /*out*/ DatosDef& d2) 
 {
     DatosDef getDatosDef_ret;
+
+    DatosDef_initialize(&getDatosDef_ret);
+    DatosDef_initialize(&d2);
+
+    DatosDef_copy(&getDatosDef_ret, &d1);
+    DatosDef_copy(&d2, &d1);
         
-	getDatosDef_ret.count = d1.count;
-	d2.count = d1.count;
-	getDatosDef_ret.message = DDS::String_dup(d1.message);
-	d2.message = DDS::String_dup(d1.message);
-   
     return getDatosDef_ret;
 } 
  
@@ -52,10 +53,11 @@ DatosDef2 TypedefTestServerImplExample::getDatosDef2(/*in*/ const DatosDef& d21,
 {
     DatosDef getDatosDef2_ret;
         
-	getDatosDef2_ret.count = d21.count;
-	d22.count = d21.count;
-	getDatosDef2_ret.message = DDS::String_dup(d21.message);
-	d22.message = DDS::String_dup(d21.message);
+    DatosDef2_initialize(&getDatosDef2_ret);
+    DatosDef2_initialize(&d22);
+
+    DatosDef2_copy(&getDatosDef2_ret, &d21);
+    DatosDef2_copy(&d22, &d21);
    
     return getDatosDef2_ret;
 } 
@@ -63,11 +65,12 @@ DatosDef2 TypedefTestServerImplExample::getDatosDef2(/*in*/ const DatosDef& d21,
 DatosDefondo TypedefTestServerImplExample::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2) 
 {
     DatosDefondo getDatosDefondo_ret;
-        
-	getDatosDefondo_ret.count = dd1.count;
-	dd2.count = dd1.count;
-	getDatosDefondo_ret.message = DDS::String_dup(dd1.message);
-	dd2.message = DDS::String_dup(dd1.message);
+
+    DatosDefondo_initialize(&getDatosDefondo_ret);
+    DatosDefondo_initialize(&dd2);
+
+    DatosDefondo_copy(&getDatosDefondo_ret, &dd1);
+    DatosDefondo_copy(&dd2, &dd1);
    
     return getDatosDefondo_ret;
 } 

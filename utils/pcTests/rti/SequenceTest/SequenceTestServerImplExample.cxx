@@ -23,12 +23,8 @@ largo SequenceTestServerImplExample::getSeqLong(/*in*/ const largo& l1, /*inout*
 	largo_initialize(&l3);
 	largo_initialize(&getSeqLong_ret);
         
-	l3.ensure_length(2, 2);
-	l3[0] = l2[0];
-	l3[1] = l2[1];
-	getSeqLong_ret.ensure_length(2, 2);
-	getSeqLong_ret[0] = l1[0];
-	getSeqLong_ret[1] = l1[1];
+	largo_copy(&l3, &l2);
+	largo_copy(&getSeqLong_ret, &l1);
 	l2[0] = l1[0] + l2[0];
 	l2[1] = l1[1] + l2[1];
    
@@ -42,16 +38,9 @@ cadena SequenceTestServerImplExample::getSeqString(/*in*/ const cadena& s1, /*in
 	cadena_initialize(&s3);
 	cadena_initialize(&getSeqString_ret);
         
-	s3.ensure_length(2, 2);
-	s3[0] = DDS::String_dup(s2[0]);
-	s3[1] = DDS::String_dup(s2[1]);
-	getSeqString_ret.ensure_length(2, 2);
-	getSeqString_ret[0] = DDS::String_dup(s1[0]);
-	getSeqString_ret[1] = DDS::String_dup(s1[1]);
-	DDS::String_free(s2[0]);
-	DDS::String_free(s2[1]);
-	s2[0] = DDS::String_dup(s1[0]);
-	s2[1] = DDS::String_dup(s1[1]);
+	cadena_copy(&s3, &s2);
+	cadena_copy(&getSeqString_ret, &s1);
+	cadena_copy(&s2, &s1);
    
     return getSeqString_ret;
 } 
@@ -63,22 +52,9 @@ dattos SequenceTestServerImplExample::getSeqDatos(/*in*/ const dattos& sb1, /*in
 	dattos_initialize(&sb3);
 	dattos_initialize(&getSeqDatos_ret);
         
-	sb3.ensure_length(2, 2);
-	sb3[0].count = sb2[0].count;
-	sb3[0].message = DDS::String_dup(sb2[0].message);
-	sb3[1].count = sb2[1].count;
-	sb3[1].message = DDS::String_dup(sb2[1].message);
-	getSeqDatos_ret.ensure_length(2, 2);
-	getSeqDatos_ret[0].count = sb1[0].count;
-	getSeqDatos_ret[0].message = DDS::String_dup(sb1[0].message);
-	getSeqDatos_ret[1].count = sb1[1].count;
-	getSeqDatos_ret[1].message = DDS::String_dup(sb1[1].message);
-	sb2[0].count = sb1[0].count;
-	DDS::String_free(sb2[0].message);
-	sb2[0].message = DDS::String_dup(sb1[0].message);
-	sb2[1].count = sb1[1].count;
-	DDS::String_free(sb2[1].message);
-	sb2[1].message = DDS::String_dup(sb1[1].message);
+	dattos_copy(&sb3, &sb2);
+	dattos_copy(&getSeqDatos_ret, &sb1);
+	dattos_copy(&sb2, &sb1);
    
     return getSeqDatos_ret;
 } 
@@ -90,39 +66,9 @@ seqdat SequenceTestServerImplExample::getSeqDat(/*in*/ const seqdat& sd1, /*inou
     seqdat_initialize(&sd3);
     seqdat_initialize(&getSeqDat_ret);
 
-    sd3.ensure_length(2, 2);
-    sd3[0].ensure_length(2, 2);
-    sd3[0][0].count = sd2[0][0].count;
-    sd3[0][0].message = DDS::String_dup(sd2[0][0].message);
-    sd3[0][1].count = sd2[0][1].count;
-    sd3[0][1].message = DDS::String_dup(sd2[0][1].message);
-    sd3[1].ensure_length(2, 2);
-    sd3[1][0].count = sd2[1][0].count;
-    sd3[1][0].message = DDS::String_dup(sd2[1][0].message);
-    sd3[1][1].count = sd2[1][1].count;
-    sd3[1][1].message = DDS::String_dup(sd2[1][1].message);
-    getSeqDat_ret.ensure_length(2, 2);
-    getSeqDat_ret[0].ensure_length(2, 2);
-    getSeqDat_ret[0][0].count = sd1[0][0].count;
-    getSeqDat_ret[0][0].message = DDS::String_dup(sd1[0][0].message);
-    getSeqDat_ret[0][1].count = sd1[0][1].count;
-    getSeqDat_ret[0][1].message = DDS::String_dup(sd1[0][1].message);
-    getSeqDat_ret[1].ensure_length(2, 2);
-    getSeqDat_ret[1][0].count = sd1[1][0].count;
-    getSeqDat_ret[1][0].message = DDS::String_dup(sd1[1][0].message);
-    getSeqDat_ret[1][1].count = sd1[1][1].count;
-    getSeqDat_ret[1][1].message = DDS::String_dup(sd1[1][1].message);
-    sd2.ensure_length(2, 2);
-    sd2[0].ensure_length(2, 2);
-    sd2[0][0].count = sd1[0][0].count;
-    sd2[0][0].message = DDS::String_dup(sd1[0][0].message);
-    sd2[0][1].count = sd1[0][1].count;
-    sd2[0][1].message = DDS::String_dup(sd1[0][1].message);
-    sd2[1].ensure_length(2, 2);
-    sd2[1][0].count = sd1[1][0].count;
-    sd2[1][0].message = DDS::String_dup(sd1[1][0].message);
-    sd2[1][1].count = sd1[1][1].count;
-    sd2[1][1].message = DDS::String_dup(sd1[1][1].message);
+    seqdat_copy(&sd3, &sd2);
+    seqdat_copy(&getSeqDat_ret, &sd1);
+    seqdat_copy(&sd2, &sd1);
 
     return getSeqDat_ret;
 }
@@ -134,63 +80,64 @@ SequenceTest::Sequences SequenceTestServerImplExample::getSequences(/*in*/ const
     Sequences_initialize(&seq3);
     Sequences_initialize(&getSequences_ret);
 
-    seq3.strings.ensure_length(2, 2);
-    seq3.strings[0] = DDS::String_dup(seq2.strings[0]);
-    seq3.strings[1] = DDS::String_dup(seq2.strings[1]);
-    seq3.datos.ensure_length(2, 2);
-    seq3.datos[0].count = seq2.datos[0].count;
-    seq3.datos[0].message = DDS::String_dup(seq2.datos[0].message);
-    seq3.datos[1].count = seq2.datos[1].count;
-    seq3.datos[1].message = DDS::String_dup(seq2.datos[1].message);
-    seq3.seqdat.ensure_length(2, 2);
-    seq3.seqdat[0].ensure_length(2, 2);
-    seq3.seqdat[0][0].count = seq2.seqdat[0][0].count;
-    seq3.seqdat[0][0].message = DDS_String_dup(seq2.seqdat[0][0].message);
-    seq3.seqdat[0][1].count = seq2.seqdat[0][1].count;
-    seq3.seqdat[0][1].message = DDS_String_dup(seq2.seqdat[0][1].message);
-    seq3.seqdat[1].ensure_length(2, 2);
-    seq3.seqdat[1][0].count = seq2.seqdat[1][0].count;
-    seq3.seqdat[1][0].message = DDS_String_dup(seq2.seqdat[1][0].message);
-    seq3.seqdat[1][1].count = seq2.seqdat[1][1].count;
-    seq3.seqdat[1][1].message = DDS_String_dup(seq2.seqdat[1][1].message);
-    getSequences_ret.strings.ensure_length(2, 2);
-    getSequences_ret.strings[0] = DDS::String_dup(seq1.strings[0]);
-    getSequences_ret.strings[1] = DDS::String_dup(seq1.strings[1]);
-    getSequences_ret.datos.ensure_length(2, 2);
-    getSequences_ret.datos[0].count = seq1.datos[0].count;
-    getSequences_ret.datos[0].message = DDS::String_dup(seq1.datos[0].message);
-    getSequences_ret.datos[1].count = seq1.datos[1].count;
-    getSequences_ret.datos[1].message = DDS::String_dup(seq1.datos[1].message);
-    getSequences_ret.seqdat.ensure_length(2, 2);
-    getSequences_ret.seqdat[0].ensure_length(2, 2);
-    getSequences_ret.seqdat[0][0].count = seq1.seqdat[0][0].count;
-    getSequences_ret.seqdat[0][0].message = DDS_String_dup(seq1.seqdat[0][0].message);
-    getSequences_ret.seqdat[0][1].count = seq1.seqdat[0][1].count;
-    getSequences_ret.seqdat[0][1].message = DDS_String_dup(seq1.seqdat[0][1].message);
-    getSequences_ret.seqdat[1].ensure_length(2, 2);
-    getSequences_ret.seqdat[1][0].count = seq1.seqdat[1][0].count;
-    getSequences_ret.seqdat[1][0].message = DDS_String_dup(seq1.seqdat[1][0].message);
-    getSequences_ret.seqdat[1][1].count = seq1.seqdat[1][1].count;
-    getSequences_ret.seqdat[1][1].message = DDS_String_dup(seq1.seqdat[1][1].message);
-    seq2.strings.ensure_length(2, 2);
-    seq2.strings[0] = DDS::String_dup(seq1.strings[0]);
-    seq2.strings[1] = DDS::String_dup(seq1.strings[1]);
-    seq2.datos.ensure_length(2, 2);
-    seq2.datos[0].count = seq1.datos[0].count;
-    seq2.datos[0].message = DDS::String_dup(seq1.datos[0].message);
-    seq2.datos[1].count = seq1.datos[1].count;
-    seq2.datos[1].message = DDS::String_dup(seq1.datos[1].message);
-    seq2.seqdat.ensure_length(2, 2);
-    seq2.seqdat[0].ensure_length(2, 2);
-    seq2.seqdat[0][0].count = seq1.seqdat[0][0].count;
-    seq2.seqdat[0][0].message = DDS_String_dup(seq1.seqdat[0][0].message);
-    seq2.seqdat[0][1].count = seq1.seqdat[0][1].count;
-    seq2.seqdat[0][1].message = DDS_String_dup(seq1.seqdat[0][1].message);
-    seq2.seqdat[1].ensure_length(2, 2);
-    seq2.seqdat[1][0].count = seq1.seqdat[1][0].count;
-    seq2.seqdat[1][0].message = DDS_String_dup(seq1.seqdat[1][0].message);
-    seq2.seqdat[1][1].count = seq1.seqdat[1][1].count;
-    seq2.seqdat[1][1].message = DDS_String_dup(seq1.seqdat[1][1].message);
+    Sequences_copy(&seq3, &seq2);
+    Sequences_copy(&getSequences_ret, &seq1);
+    Sequences_copy(&seq2, &seq1);
 
     return getSequences_ret;
+}
+
+void SequenceTestServerImplExample::getArrLong(/*in*/ const larray& lar1, /*inout*/ larray& lar2, /*out*/ larray& lar3)
+{
+    larray_copy(&lar3, &lar2);
+    larray_copy(&lar2, &lar1);
+}
+
+void SequenceTestServerImplExample::getArrString(/*in*/ const sarray& sar1, /*inout*/ sarray& sar2, /*out*/ sarray& sar3)
+{
+    sarray_initialize(&sar3);
+    sarray_copy(&sar3, &sar2);
+    sarray_copy(&sar2, &sar1);
+}
+
+void SequenceTestServerImplExample::getArrSString(/*in*/ const ssarray& ssar1, /*inout*/ ssarray& ssar2, /*out*/ ssarray& ssar3)
+{
+    ssarray_initialize(&ssar3);
+    ssarray_copy(&ssar3, &ssar2);
+    ssarray_copy(&ssar2, &ssar1);
+}
+
+void SequenceTestServerImplExample::getArrDatos(/*in*/ const darray& dar1, /*inout*/ darray& dar2, /*out*/ darray& dar3)
+{
+    darray_initialize(&dar3);
+    darray_copy(&dar3, &dar2);
+    darray_copy(&dar2, &dar1);
+}
+
+void SequenceTestServerImplExample::getArrDDatos(/*in*/ const ddarray& ddar1, /*inout*/ ddarray& ddar2, /*out*/ ddarray& ddar3)
+{
+    ddarray_initialize(&ddar3);
+    ddarray_copy(&ddar3, &ddar2);
+    ddarray_copy(&ddar2, &ddar1);
+}
+
+void SequenceTestServerImplExample::getArrCDatos(/*in*/ const cdarray& cdar1, /*inout*/ cdarray& cdar2, /*out*/ cdarray& cdar3)
+{
+    cdarray_initialize(&cdar3);
+    cdarray_copy(&cdar3, &cdar2);
+    cdarray_copy(&cdar2, &cdar1);
+}
+
+SequenceTest::Arrays SequenceTestServerImplExample::getArrays(/*in*/ const SequenceTest::Arrays& array1, /*inout*/ SequenceTest::Arrays& array2, /*out*/ SequenceTest::Arrays& array3)
+{
+    SequenceTest::Arrays getArrays_ret;
+
+    SequenceTest::Arrays_initialize(&getArrays_ret);
+    SequenceTest::Arrays_initialize(&array3);
+
+    SequenceTest::Arrays_copy(&array3, &array2);
+    SequenceTest::Arrays_copy(&getArrays_ret, &array1);
+    SequenceTest::Arrays_copy(&array2, &array1);
+
+    return getArrays_ret;
 }

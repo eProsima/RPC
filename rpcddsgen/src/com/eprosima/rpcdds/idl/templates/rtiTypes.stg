@@ -31,9 +31,9 @@ type_d() ::= <<char*>>
 type_15() ::= <<wchar_t*>>
 
 // TODO Mirar esto. No rti type.
-type_f_first(prev) ::= <<std::array<$prev$>>
-type_f_second(prev, size) ::= <<, $size$>$prev$>>
-type_f(firs, secon, type) ::= <<$firs$$type$$secon$>>
+type_f_first(prev) ::= <<>>
+type_f_second(prev, size) ::= <<>>
+type_f(firs, secon, type) ::= <<$type$>>
 
 type_a(name) ::= <<$name$>>
 

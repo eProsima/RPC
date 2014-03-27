@@ -106,17 +106,17 @@ public abstract class TypeCode
     }
     
     /*!
-     * @brief This function returns the size of the datatype. By default is 0
+     * @brief This function returns the size of the datatype. By default is null string.
      * @return The size of the datatype.
      */
-    protected int getSize()
+    protected String getSize()
     {
-        return 0;
+        return null;
     }
     
-    public abstract Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned);
+    //public abstract Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned);
     
-    public abstract int getMaxSerializedSizeWithoutAlignment(int currentSize);
+    //public abstract int getMaxSerializedSizeWithoutAlignment(int currentSize);
     
     /*** Functions to know the type in string templates ***/
  // By default a typecode is not string. Function used in stringtemplates 

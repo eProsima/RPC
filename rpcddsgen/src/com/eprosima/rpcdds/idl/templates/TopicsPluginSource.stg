@@ -43,7 +43,7 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
 {
     static bool is_initialized = false;
 
-    $exception.members : { member |$ddsTypeCodeDecls(name=member.name, typecode=member.typecode)$}; separator="\n"$
+    $exception.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $exception.name$_g_tc_members[$length(exception.members)$]
     {
@@ -406,7 +406,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
     printf("=> $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    $operation.inputparam : { param |$ddsTypeCodeDecls(name=param.name, typecode=param.typecode)$}; separator="\n"$
+    $operation.inputparam : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Request_g_tc_members[1 + $length(operation.inputparam)$]
     {
@@ -943,7 +943,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$Reply_stPlugi
 {
     static bool is_initialized = false;
 
-    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(name=param.name, typecode=param.typecode)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_st_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$]
     {
@@ -1075,7 +1075,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
     static bool is_initialized = false;
 
     $if(!operation.exceptions)$
-    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(name=param.name, typecode=param.typecode)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
     $endif$
 
     static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_g_tc_members[$if(operation.exceptions)$2$else$1 + $length([operation.outputparam, operation.rettypeparam])$$endif$]
@@ -1345,7 +1345,7 @@ DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$i
 {
     static bool is_initialized = false;
 
-    $ddsTypeCodeDeclsInAlias(ctx=ctx, alias=typedef)$
+    $ddsTypeCodeDecls(ctx=ctx, name=typedef.name, typecode=typedef.typedefContentTypeCode)$
 
     static DDS_TypeCode $typedef.name$_g_tc =
     {{
@@ -1364,7 +1364,7 @@ DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$i
 
     if(!is_initialized)
     {
-        $typedef.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=typedef.name, typecode=typedef.contentTypeCode)$;
+        $typedef.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=typedef.name, typecode=typedef.typedefContentTypeCode)$;
         is_initialized = true;
     }
     
@@ -1378,7 +1378,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
 {
     static bool is_initialized = false;
 
-    $struct.members : { member |$ddsTypeCodeDecls(name=member.name, typecode=member.typecode)$}; separator="\n"$
+    $struct.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $struct.name$_g_tc_members[$length(struct.members)$]
     {
@@ -1434,7 +1434,7 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
 
     $union.members : { member |$union_member_labels_decl(union=union, member=member)$}; separator="\n"$
 
-    $union.members : { member |$ddsTypeCodeDecls(name=member.name, typecode=member.typecode)$}; separator="\n"$
+    $union.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
 
     static DDS_TypeCode_Member $union.name$_g_tc_members[$length(union.members)$]
     {
@@ -1533,25 +1533,20 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.pa
 /**** Utils ****/
 
 //TODO EL resto de tipos
-ddsTypeCodeDecls(name, typecode) ::= <<
+ddsTypeCodeDecls(ctx, name, typecode) ::= <<
 $if(!typecode.isType_10)$
 $if(typecode.isType_d)$
 static DDS_TypeCode $name$_g_tc_string = DDS_INITIALIZE_STRING_TYPECODE($typecode.maxsize$);
-$endif$
-$if(typecode.isType_e)$
-$ddsTypeCodeDecls(name=ctx.newRandomName, typecode=typecode.contentTypeCode)$
+$elseif(typecode.isType_e)$
+$ddsTypeCodeDecls(ctx=ctx, name=ctx.newRandomName, typecode=typecode.contentTypeCode)$
 static DDS_TypeCode $name$_g_tc_sequence = DDS_INITIALIZE_SEQUENCE_TYPECODE($typecode.maxsize$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=typecode.contentTypeCode)$);
+$elseif(typecode.isType_f)$
+$if(rest(typecode.dimensions))$
+static DDS_UnsignedLong $name$_g_tc_dimensions[$length(typecode.dimensions)$] = {$typecode.dimensions : {$it$}; separator=", "$};
 $endif$
+$ddsTypeCodeDecls(ctx=ctx, name=ctx.newRandomName, typecode=typecode.contentTypeCode)$
+static DDS_TypeCode $name$_g_tc_array = DDS_INITIALIZE_ARRAY_TYPECODE($length(typecode.dimensions)$, $first(typecode.dimensions)$, $if(rest(typecode.dimensions))$$name$_g_tc_dimensions$else$NULL$endif$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=typecode.contentTypeCode)$);
 $endif$
->>
-
-ddsTypeCodeDeclsInAlias(ctx, alias) ::= <<
-$if(alias.isType_d)$
-static DDS_TypeCode $alias.name$_g_tc_string = DDS_INITIALIZE_STRING_TYPECODE($alias.maxsize$);
-$endif$
-$if(alias.isType_e)$
-$ddsTypeCodeDecls(name=ctx.newRandomName, typecode=alias.contentTypeCode)$
-static DDS_TypeCode $alias.name$_g_tc_sequence = DDS_INITIALIZE_SEQUENCE_TYPECODE($alias.maxsize$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=alias.contentTypeCode)$);
 $endif$
 >>
 
@@ -1570,6 +1565,8 @@ $endif$
 $else$
 $if(typecode.isType_e)$
 &$name$_g_tc_sequence
+$elseif(typecode.isType_f)$
+&$name$_g_tc_array
 $else$
 $if(typecode.hasScope)$$typecode.scope$$if(typecode.parent.parent)$$if(typecode.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typecode.name$Plugin::get_typecode()
 $endif$

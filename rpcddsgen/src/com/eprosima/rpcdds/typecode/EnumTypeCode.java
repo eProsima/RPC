@@ -49,7 +49,7 @@ public class EnumTypeCode extends MemberedTypeCode
         return "";
     }
     
-    public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
+    /*public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         int size = getSize();
         
@@ -67,12 +67,12 @@ public class EnumTypeCode extends MemberedTypeCode
     public int getMaxSerializedSizeWithoutAlignment(int currentSize)
     {
         return currentSize + getSize();
-    }
+    }*/
     
     @Override
-    public int getSize()
+    public String getSize()
     {    
-        return 4;
+        return "4";
     }
 
 }

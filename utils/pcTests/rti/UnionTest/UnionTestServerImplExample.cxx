@@ -21,29 +21,12 @@ Empleado UnionTestServerImplExample::getEmpleado(/*in*/ const Empleado& em1, /*i
     Empleado getEmpleado_ret;
 
 	Empleado_initialize(&getEmpleado_ret);
+	Empleado_initialize(&em3);
+
+    Empleado_copy(&em3, &em2);
+    Empleado_copy(&getEmpleado_ret, &em1);
+    Empleado_copy(&em2, &em1);
         
-	em3._d = em2._d;
-	if(em3._d == 1)
-		em3._u.id = em2._u.id;
-	else
-		em3._u.name = DDS::String_dup(em2._u.name);
-
-	getEmpleado_ret._d = em1._d;
-	if(getEmpleado_ret._d == 1)
-		getEmpleado_ret._u.id = em1._u.id;
-	else
-		getEmpleado_ret._u.name = DDS::String_dup(em1._u.name);
-
-	em2._d = em1._d;
-	if(em2._d == 1)
-		em2._u.id = em1._u.id;
-	else
-    {
-		DDS::String_free(em2._u.name);
-		em2._u.name = NULL;
-		em2._u.name = DDS::String_dup(em1._u.name);
-    }
-   
     return getEmpleado_ret;
 } 
 
@@ -52,37 +35,11 @@ UnionTest::Jefe UnionTestServerImplExample::getJefe(/*in*/ const UnionTest::Jefe
     UnionTest::Jefe getJefe_ret;
 
     UnionTest::Jefe_initialize(&getJefe_ret);
+    UnionTest::Jefe_initialize(&je3);
 
-    je3._d = je2._d;
-    if(je3._d == UnionTest::BUENO)
-        je3._u.id = je2._u.id;
-    else if(je3._d == UnionTest::MALO)
-        je3._u.name = DDS::String_dup(je2._u.name);
-    else if(je3._d == UnionTest::MALVADO ||
-            je3._d == UnionTest::SATAN)
-        je3._u.seq.copy(je2._u.seq);
-
-    getJefe_ret._d = je1._d;
-    if(getJefe_ret._d == UnionTest::BUENO)
-        getJefe_ret._u.id = je1._u.id;
-    else if(getJefe_ret._d == UnionTest::MALO)
-        getJefe_ret._u.name = DDS::String_dup(je1._u.name);
-    else if(getJefe_ret._d == UnionTest::MALVADO ||
-            getJefe_ret._d == UnionTest::SATAN)
-        getJefe_ret._u.seq.copy(je1._u.seq);
-
-    je2._d = je1._d;
-    if(je2._d == UnionTest::BUENO)
-        je2._u.id = je1._u.id;
-    else if(je2._d == UnionTest::MALO)
-    {
-		DDS::String_free(je2._u.name);
-		je2._u.name = NULL;
-        je2._u.name = DDS::String_dup(je1._u.name);
-    }
-    else if(je2._d == UnionTest::MALVADO ||
-            je2._d == UnionTest::SATAN)
-        je2._u.seq.copy(je1._u.seq);
+    UnionTest::Jefe_copy(&je3, &je2);
+    UnionTest::Jefe_copy(&getJefe_ret, &je1);
+    UnionTest::Jefe_copy(&je2, &je1);
 
     return getJefe_ret;
 }

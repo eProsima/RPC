@@ -94,3 +94,80 @@ SequenceTest::Sequences SequenceTestServerImplExample::getSequences(/*in*/ const
 
     return getSequences_ret;
 }
+
+larray SequenceTestServerImplExample::getArrLong(/*in*/ const larray& lar1, /*inout*/ larray& lar2, /*out*/ larray& lar3)
+{
+    larray getArrLong_ret;
+
+    lar3 = lar2;
+    getArrLong_ret = lar1;
+    lar2 = lar1;
+
+    return getArrLong_ret;
+}
+
+sarray SequenceTestServerImplExample::getArrString(/*in*/ const sarray& sar1, /*inout*/ sarray& sar2, /*out*/ sarray& sar3)
+{
+    sarray getArrString_ret;
+
+    sar3 = sar2;
+    getArrString_ret = sar1;
+    sar2 = sar1;
+
+    return getArrString_ret;
+}
+
+ssarray SequenceTestServerImplExample::getArrSString(/*in*/ const ssarray& ssar1, /*inout*/ ssarray& ssar2, /*out*/ ssarray& ssar3)
+{
+    ssarray getArrSString_ret;
+
+    ssar3 = ssar2;
+    getArrSString_ret = ssar1;
+    ssar2 = ssar1;
+
+    return getArrSString_ret;
+}
+
+darray SequenceTestServerImplExample::getArrDatos(/*in*/ const darray& dar1, /*inout*/ darray& dar2, /*out*/ darray& dar3)
+{
+    darray getArrDatos_ret;
+
+    dar3 = dar2;
+    getArrDatos_ret = dar1;
+    dar2 = dar1;
+
+    return getArrDatos_ret;
+}
+
+ddarray SequenceTestServerImplExample::getArrDDatos(/*in*/ const ddarray& ddar1, /*inout*/ ddarray& ddar2, /*out*/ ddarray& ddar3)
+{
+    ddarray getArrDDatos_ret;
+
+    ddar3 = ddar2;
+    getArrDDatos_ret = ddar1;
+    ddar2 = ddar1;
+
+    return getArrDDatos_ret;
+}
+
+cdarray SequenceTestServerImplExample::getArrCDatos(/*in*/ const cdarray& cdar1, /*inout*/ cdarray& cdar2, /*out*/ cdarray& cdar3)
+{
+    cdarray getArrCDatos_ret;
+
+    cdar3 = cdar2;
+    getArrCDatos_ret = cdar1;
+    cdar2 = cdar1;
+
+    return getArrCDatos_ret;
+}
+
+SequenceTest::Arrays SequenceTestServerImplExample::getArrays(/*in*/ const SequenceTest::Arrays& array1, /*inout*/ SequenceTest::Arrays& array2, /*out*/ SequenceTest::Arrays& array3)
+{
+    SequenceTest::Arrays getArrays_ret;
+
+    array3 = array2;
+    getArrays_ret = array1;
+    array2 = array1;
+
+    return getArrays_ret;
+}

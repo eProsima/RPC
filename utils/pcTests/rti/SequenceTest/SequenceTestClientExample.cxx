@@ -345,6 +345,447 @@ int main(int argc, char **argv)
     Sequences_finalize(&seq3);
     Sequences_finalize(&getSequences_ret);
 
+    larray lar1;
+    larray lar2;
+    larray lar3;
+
+    larray_initialize(&lar1);
+    larray_initialize(&lar2);
+
+    lar1[0] = 1;
+    lar1[1] = 2;
+    lar2[0] = 3;
+    lar2[1] = 4;
+
+    try
+    {
+        proxy->getArrLong(lar1, lar2, lar3);
+
+        if(lar3[0] != 3 || lar3[1] != 4  || lar2[0] != 1 || lar2[1] != 2 || lar1[0] != 1 || lar1[1] != 2)
+        {
+            std::cout << "TEST FAILED<getArrLong>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrLong>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    larray_finalize(&lar1);
+    larray_finalize(&lar2);
+    larray_finalize(&lar3);
+
+    sarray sar1;
+    sarray sar2;
+    sarray sar3;
+
+    sarray_initialize(&sar1);
+    sarray_initialize(&sar2);
+
+    sar1[0] = DDS::String_dup("PRUEBA1");
+    sar1[1] = DDS::String_dup("PRUEBA2");
+    sar2[0] = DDS::String_dup("PRUEBA3");
+    sar2[1] = DDS::String_dup("PRUEBA4");
+
+    try
+    {
+        proxy->getArrString(sar1, sar2, sar3);
+
+        if(strcmp(sar3[0], "PRUEBA3") != 0 || strcmp(sar3[1], "PRUEBA4") != 0 || strcmp(sar2[0], "PRUEBA1") != 0 ||
+                strcmp(sar2[1], "PRUEBA2") != 0 || strcmp(sar1[0], "PRUEBA1") != 0 || strcmp(sar1[1], "PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getArrString>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrString>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    sarray_finalize(&sar1);
+    sarray_finalize(&sar2);
+    sarray_finalize(&sar3);
+
+    ssarray ssar1;
+    ssarray ssar2;
+    ssarray ssar3;
+
+    ssarray_initialize(&ssar1);
+    ssarray_initialize(&ssar2);
+
+    ssar1[0][0] = DDS::String_dup("PRUEBA1");
+    ssar1[0][1] = DDS::String_dup("PRUEBA2");
+    ssar1[0][2] = DDS::String_dup("PRUEBA3");
+    ssar1[1][0] = DDS::String_dup("PRUEBA4");
+    ssar1[1][1] = DDS::String_dup("PRUEBA5");
+    ssar1[1][2] = DDS::String_dup("PRUEBA6");
+    ssar2[0][0] = DDS::String_dup("PRUEBA7");
+    ssar2[0][1] = DDS::String_dup("PRUEBA8");
+    ssar2[0][2] = DDS::String_dup("PRUEBA9");
+    ssar2[1][0] = DDS::String_dup("PRUEBA10");
+    ssar2[1][1] = DDS::String_dup("PRUEBA11");
+    ssar2[1][2] = DDS::String_dup("PRUEBA12");
+
+    try
+    {
+        proxy->getArrSString(ssar1, ssar2, ssar3);
+
+        if(strcmp(ssar3[0][0], "PRUEBA7") != 0 || strcmp(ssar3[0][1], "PRUEBA8") != 0 || strcmp(ssar3[0][2], "PRUEBA9") != 0 ||
+                strcmp(ssar3[1][0], "PRUEBA10") != 0 || strcmp(ssar3[1][1], "PRUEBA11") != 0 || strcmp(ssar3[1][2], "PRUEBA12") != 0 || 
+                strcmp(ssar2[0][0], "PRUEBA1") != 0 || strcmp(ssar2[0][1], "PRUEBA2") != 0 || strcmp(ssar2[0][2], "PRUEBA3") != 0 ||
+                strcmp(ssar2[1][0], "PRUEBA4") != 0 || strcmp(ssar2[1][1], "PRUEBA5") != 0 || strcmp(ssar2[1][2], "PRUEBA6") != 0 ||
+                strcmp(ssar1[0][0], "PRUEBA1") != 0 || strcmp(ssar1[0][1], "PRUEBA2") != 0 || strcmp(ssar1[0][2], "PRUEBA3") != 0 ||
+                strcmp(ssar1[1][0], "PRUEBA4") != 0 || strcmp(ssar1[1][1], "PRUEBA5") != 0 || strcmp(ssar1[1][2], "PRUEBA6") != 0)
+        {
+            std::cout << "TEST FAILED<getArrSString>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrSString>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    ssarray_finalize(&ssar1);
+    ssarray_finalize(&ssar2);
+    ssarray_finalize(&ssar3);
+
+    darray dar1;
+    darray dar2;
+    darray dar3;
+
+    darray_initialize(&dar1);
+    darray_initialize(&dar2);
+
+    dar1[0].count = 1;
+    dar1[0].message = DDS::String_dup("PRUEBA1");
+    dar1[1].count = 2;
+    dar1[1].message = DDS::String_dup("PRUEBA2");
+    dar2[0].count = 3;
+    dar2[0].message = DDS::String_dup("PRUEBA3");
+    dar2[1].count = 4;
+    dar2[1].message = DDS::String_dup("PRUEBA4");
+
+    try
+    {
+        proxy->getArrDatos(dar1, dar2, dar3);
+
+        if(dar3[0].count != 3 || strcmp(dar3[0].message, "PRUEBA3") != 0 || dar3[1].count != 4 || strcmp(dar3[1].message, "PRUEBA4")  != 0 ||
+                dar2[0].count != 1 || strcmp(dar2[0].message, "PRUEBA1") != 0 || dar2[1].count != 2 || strcmp(dar2[1].message, "PRUEBA2") != 0||
+                dar1[0].count != 1 || strcmp(dar1[0].message, "PRUEBA1") != 0 || dar1[1].count != 2 || strcmp(dar1[1].message, "PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getArrDatos>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrDatos>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    darray_finalize(&dar1);
+    darray_finalize(&dar2);
+    darray_finalize(&dar3);
+
+    ddarray ddar1;
+    ddarray ddar2;
+    ddarray ddar3;
+
+    ddarray_initialize(&ddar1);
+    ddarray_initialize(&ddar2);
+
+    ddar1[0][0].count = 1;
+    ddar1[0][0].message = DDS::String_dup("PRUEBA1");
+    ddar1[0][1].count = 2;
+    ddar1[0][1].message = DDS::String_dup("PRUEBA2");
+    ddar1[0][2].count = 3;
+    ddar1[0][2].message = DDS::String_dup("PRUEBA3");
+    ddar1[1][0].count = 4;
+    ddar1[1][0].message = DDS::String_dup("PRUEBA4");
+    ddar1[1][1].count = 5;
+    ddar1[1][1].message = DDS::String_dup("PRUEBA5");
+    ddar1[1][2].count = 6;
+    ddar1[1][2].message = DDS::String_dup("PRUEBA6");
+    ddar2[0][0].count = 7;
+    ddar2[0][0].message = DDS::String_dup("PRUEBA7");
+    ddar2[0][1].count = 8;
+    ddar2[0][1].message = DDS::String_dup("PRUEBA8");
+    ddar2[0][2].count = 9;
+    ddar2[0][2].message = DDS::String_dup("PRUEBA9");
+    ddar2[1][0].count = 10;
+    ddar2[1][0].message = DDS::String_dup("PRUEBA10");
+    ddar2[1][1].count = 11;
+    ddar2[1][1].message = DDS::String_dup("PRUEBA11");
+    ddar2[1][2].count = 12;
+    ddar2[1][2].message = DDS::String_dup("PRUEBA12");
+
+    try
+    {
+        proxy->getArrDDatos(ddar1, ddar2, ddar3);
+
+        if(ddar3[0][0].count != 7 || strcmp(ddar3[0][0].message, "PRUEBA7") != 0 || ddar3[0][1].count != 8 || strcmp(ddar3[0][1].message, "PRUEBA8") != 0 ||
+                ddar3[0][2].count != 9 || strcmp(ddar3[0][2].message, "PRUEBA9") != 0|| ddar3[1][0].count != 10 || strcmp(ddar3[1][0].message, "PRUEBA10") != 0 ||
+                ddar3[1][1].count != 11 || strcmp(ddar3[1][1].message, "PRUEBA11") != 0|| ddar3[1][2].count != 12 || strcmp(ddar3[1][2].message, "PRUEBA12") != 0 ||
+                ddar2[0][0].count != 1 || strcmp(ddar2[0][0].message, "PRUEBA1") != 0 || ddar2[0][1].count != 2 || strcmp(ddar2[0][1].message, "PRUEBA2") != 0||
+                ddar2[0][2].count != 3 || strcmp(ddar2[0][2].message, "PRUEBA3") != 0 || ddar2[1][0].count != 4 || strcmp(ddar2[1][0].message, "PRUEBA4") != 0||
+                ddar2[1][1].count != 5 || strcmp(ddar2[1][1].message, "PRUEBA5") != 0 || ddar2[1][2].count != 6 || strcmp(ddar2[1][2].message, "PRUEBA6") != 0||
+                ddar1[0][0].count != 1 || strcmp(ddar1[0][0].message, "PRUEBA1") != 0 || ddar1[0][1].count != 2 || strcmp(ddar1[0][1].message, "PRUEBA2") != 0||
+                ddar1[0][2].count != 3 || strcmp(ddar1[0][2].message, "PRUEBA3") != 0 || ddar1[1][0].count != 4 || strcmp(ddar1[1][0].message, "PRUEBA4") != 0||
+                ddar1[1][1].count != 5 || strcmp(ddar1[1][1].message, "PRUEBA5") != 0 || ddar1[1][2].count != 6 || strcmp(ddar1[1][2].message, "PRUEBA6") != 0)
+        {
+            std::cout << "TEST FAILED<getArrDDatos>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrDDatos>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    ddarray_finalize(&ddar1);
+    ddarray_finalize(&ddar2);
+    ddarray_finalize(&ddar3);
+
+    cdarray cdar1;
+    cdarray cdar2;
+    cdarray cdar3;
+
+    cdarray_initialize(&cdar1);
+    cdarray_initialize(&cdar2);
+
+    cdar1[0].count = 1;
+    cdar1[0].message = DDS::String_dup("PRUEBA1");
+    cdar1[1].count = 2;
+    cdar1[1].message = DDS::String_dup("PRUEBA2");
+    cdar2[0].count = 3;
+    cdar2[0].message = DDS::String_dup("PRUEBA3");
+    cdar2[1].count = 4;
+    cdar2[1].message = DDS::String_dup("PRUEBA4");
+
+    try
+    {
+        proxy->getArrCDatos(cdar1, cdar2, cdar3);
+
+        if(cdar3[0].count != 3 || strcmp(cdar3[0].message, "PRUEBA3") != 0 || cdar3[1].count != 4 || strcmp(cdar3[1].message, "PRUEBA4") != 0 ||
+                cdar2[0].count != 1 || strcmp(cdar2[0].message, "PRUEBA1") != 0 || cdar2[1].count != 2 || strcmp(cdar2[1].message, "PRUEBA2") != 0 ||
+                cdar1[0].count != 1 || strcmp(cdar1[0].message, "PRUEBA1") != 0 || cdar1[1].count != 2 || strcmp(cdar1[1].message, "PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getArrCDatos>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrCDatos>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    cdarray_finalize(&cdar1);
+    cdarray_finalize(&cdar2);
+    cdarray_finalize(&cdar3);
+
+    SequenceTest::Arrays array1;
+    SequenceTest::Arrays array2;
+    SequenceTest::Arrays array3;
+
+    SequenceTest::Arrays_initialize(&array1);
+    SequenceTest::Arrays_initialize(&array2);
+
+    array1.strings[0] = DDS::String_dup("PRUEBA1");
+    array1.strings[1] = DDS::String_dup("PRUEBA2");
+    array1.stringss[0][0] = DDS::String_dup("PRUEBA1");
+    array1.stringss[0][1] = DDS::String_dup("PRUEBA2");
+    array1.stringss[0][2] = DDS::String_dup("PRUEBA3");
+    array1.stringss[1][0] = DDS::String_dup("PRUEBA4");
+    array1.stringss[1][1] = DDS::String_dup("PRUEBA5");
+    array1.stringss[1][2] = DDS::String_dup("PRUEBA6");
+    array1.datos[0].count = 1;
+    array1.datos[0].message = DDS::String_dup("PRUEBA1");
+    array1.datos[1].count = 2;
+    array1.datos[1].message = DDS::String_dup("PRUEBA2");
+    array1.datoss[0][0].count = 1;
+    array1.datoss[0][0].message = DDS::String_dup("PRUEBA1");
+    array1.datoss[0][1].count = 2;
+    array1.datoss[0][1].message = DDS::String_dup("PRUEBA2");
+    array1.datoss[0][2].count = 3;
+    array1.datoss[0][2].message = DDS::String_dup("PRUEBA3");
+    array1.datoss[1][0].count = 4;
+    array1.datoss[1][0].message = DDS::String_dup("PRUEBA4");
+    array1.datoss[1][1].count = 5;
+    array1.datoss[1][1].message = DDS::String_dup("PRUEBA5");
+    array1.datoss[1][2].count = 6;
+    array1.datoss[1][2].message = DDS::String_dup("PRUEBA6");
+    array1.arradat[0][0][0].count = 1;
+    array1.arradat[0][0][0].message = DDS::String_dup("PRUEBA1");
+    array1.arradat[0][0][1].count = 2;
+    array1.arradat[0][0][1].message = DDS::String_dup("PRUEBA2");
+    array1.arradat[0][0][2].count = 3;
+    array1.arradat[0][0][2].message = DDS::String_dup("PRUEBA3");
+    array1.arradat[0][1][0].count = 4;
+    array1.arradat[0][1][0].message = DDS::String_dup("PRUEBA4");
+    array1.arradat[0][1][1].count = 5;
+    array1.arradat[0][1][1].message = DDS::String_dup("PRUEBA5");
+    array1.arradat[0][1][2].count = 6;
+    array1.arradat[0][1][2].message = DDS::String_dup("PRUEBA6");
+    array1.arradat[1][0][0].count = 7;
+    array1.arradat[1][0][0].message = DDS::String_dup("PRUEBA7");
+    array1.arradat[1][0][1].count = 8;
+    array1.arradat[1][0][1].message = DDS::String_dup("PRUEBA8");
+    array1.arradat[1][0][2].count = 9;
+    array1.arradat[1][0][2].message = DDS::String_dup("PRUEBA9");
+    array1.arradat[1][1][0].count = 10;
+    array1.arradat[1][1][0].message = DDS::String_dup("PRUEBA10");
+    array1.arradat[1][1][1].count = 11;
+    array1.arradat[1][1][1].message = DDS::String_dup("PRUEBA11");
+    array1.arradat[1][1][2].count = 12;
+    array1.arradat[1][1][2].message = DDS::String_dup("PRUEBA12");
+    array2.strings[0] = DDS::String_dup("PRUEBA13");
+    array2.strings[1] = DDS::String_dup("PRUEBA14");
+    array2.stringss[0][0] = DDS::String_dup("PRUEBA13");
+    array2.stringss[0][1] = DDS::String_dup("PRUEBA14");
+    array2.stringss[0][2] = DDS::String_dup("PRUEBA15");
+    array2.stringss[1][0] = DDS::String_dup("PRUEBA16");
+    array2.stringss[1][1] = DDS::String_dup("PRUEBA17");
+    array2.stringss[1][2] = DDS::String_dup("PRUEBA18");
+    array2.datos[0].count = 13;
+    array2.datos[0].message = DDS::String_dup("PRUEBA13");
+    array2.datos[1].count = 14;
+    array2.datos[1].message = DDS::String_dup("PRUEBA14");
+    array2.datoss[0][0].count = 13;
+    array2.datoss[0][0].message = DDS::String_dup("PRUEBA13");
+    array2.datoss[0][1].count = 14;
+    array2.datoss[0][1].message = DDS::String_dup("PRUEBA14");
+    array2.datoss[0][2].count = 15;
+    array2.datoss[0][2].message = DDS::String_dup("PRUEBA15");
+    array2.datoss[1][0].count = 16;
+    array2.datoss[1][0].message = DDS::String_dup("PRUEBA16");
+    array2.datoss[1][1].count = 17;
+    array2.datoss[1][1].message = DDS::String_dup("PRUEBA17");
+    array2.datoss[1][2].count = 18;
+    array2.datoss[1][2].message = DDS::String_dup("PRUEBA18");
+    array2.arradat[0][0][0].count = 13;
+    array2.arradat[0][0][0].message = DDS::String_dup("PRUEBA13");
+    array2.arradat[0][0][1].count = 14;
+    array2.arradat[0][0][1].message = DDS::String_dup("PRUEBA14");
+    array2.arradat[0][0][2].count = 15;
+    array2.arradat[0][0][2].message = DDS::String_dup("PRUEBA15");
+    array2.arradat[0][1][0].count = 16;
+    array2.arradat[0][1][0].message = DDS::String_dup("PRUEBA16");
+    array2.arradat[0][1][1].count = 17;
+    array2.arradat[0][1][1].message = DDS::String_dup("PRUEBA17");
+    array2.arradat[0][1][2].count = 18;
+    array2.arradat[0][1][2].message = DDS::String_dup("PRUEBA18");
+    array2.arradat[1][0][0].count = 19;
+    array2.arradat[1][0][0].message = DDS::String_dup("PRUEBA19");
+    array2.arradat[1][0][1].count = 20;
+    array2.arradat[1][0][1].message = DDS::String_dup("PRUEBA20");
+    array2.arradat[1][0][2].count = 21;
+    array2.arradat[1][0][2].message = DDS::String_dup("PRUEBA21");
+    array2.arradat[1][1][0].count = 22;
+    array2.arradat[1][1][0].message = DDS::String_dup("PRUEBA22");
+    array2.arradat[1][1][1].count = 23;
+    array2.arradat[1][1][1].message = DDS::String_dup("PRUEBA23");
+    array2.arradat[1][1][2].count = 24;
+    array2.arradat[1][1][2].message = DDS::String_dup("PRUEBA24");
+
+    try
+    {
+        proxy->getArrays(array1, array2, array3);
+
+        if(strcmp(array3.strings[0], "PRUEBA13") != 0 || strcmp(array3.strings[1], "PRUEBA14") != 0 ||
+                strcmp(array3.stringss[0][0], "PRUEBA13") != 0 || strcmp(array3.stringss[0][1], "PRUEBA14") != 0 ||
+                strcmp(array3.stringss[0][2], "PRUEBA15") != 0 || strcmp(array3.stringss[1][0], "PRUEBA16") != 0 ||
+                strcmp(array3.stringss[1][1], "PRUEBA17") != 0 || strcmp(array3.stringss[1][2], "PRUEBA18") != 0 ||
+                array3.datos[0].count != 13 || strcmp(array3.datos[0].message, "PRUEBA13") != 0 ||
+                array3.datos[1].count != 14 || strcmp(array3.datos[1].message, "PRUEBA14") != 0 ||
+                array3.datoss[0][0].count != 13 || strcmp(array3.datoss[0][0].message, "PRUEBA13") != 0 ||
+                array3.datoss[0][1].count != 14 || strcmp(array3.datoss[0][1].message, "PRUEBA14") != 0 ||
+                array3.datoss[0][2].count != 15 || strcmp(array3.datoss[0][2].message, "PRUEBA15") != 0 ||
+                array3.datoss[1][0].count != 16 || strcmp(array3.datoss[1][0].message, "PRUEBA16") != 0 ||
+                array3.datoss[1][1].count != 17 || strcmp(array3.datoss[1][1].message, "PRUEBA17") != 0 ||
+                array3.datoss[1][2].count != 18 || strcmp(array3.datoss[1][2].message, "PRUEBA18") != 0 ||
+                array3.arradat[0][0][0].count != 13 || strcmp(array3.arradat[0][0][0].message, "PRUEBA13") != 0 ||
+                array3.arradat[0][0][1].count != 14 || strcmp(array3.arradat[0][0][1].message, "PRUEBA14") != 0 ||
+                array3.arradat[0][0][2].count != 15 || strcmp(array3.arradat[0][0][2].message, "PRUEBA15") != 0 ||
+                array3.arradat[0][1][0].count != 16 || strcmp(array3.arradat[0][1][0].message, "PRUEBA16") != 0 ||
+                array3.arradat[0][1][1].count != 17 || strcmp(array3.arradat[0][1][1].message, "PRUEBA17") != 0 ||
+                array3.arradat[0][1][2].count != 18 || strcmp(array3.arradat[0][1][2].message, "PRUEBA18") != 0 ||
+                array3.arradat[1][0][0].count != 19 || strcmp(array3.arradat[1][0][0].message, "PRUEBA19") != 0 ||
+                array3.arradat[1][0][1].count != 20 || strcmp(array3.arradat[1][0][1].message, "PRUEBA20") != 0 ||
+                array3.arradat[1][0][2].count != 21 || strcmp(array3.arradat[1][0][2].message, "PRUEBA21") != 0 ||
+                array3.arradat[1][1][0].count != 22 || strcmp(array3.arradat[1][1][0].message, "PRUEBA22") != 0 ||
+                array3.arradat[1][1][1].count != 23 || strcmp(array3.arradat[1][1][1].message, "PRUEBA23") != 0 ||
+                array3.arradat[1][1][2].count != 24 || strcmp(array3.arradat[1][1][2].message, "PRUEBA24") != 0 ||
+                strcmp(array2.strings[0], "PRUEBA1") != 0 || strcmp(array2.strings[1], "PRUEBA2") != 0 ||
+                strcmp(array2.stringss[0][0], "PRUEBA1") != 0 || strcmp(array2.stringss[0][1], "PRUEBA2") != 0 ||
+                strcmp(array2.stringss[0][2], "PRUEBA3") != 0 || strcmp(array2.stringss[1][0], "PRUEBA4") != 0 ||
+                strcmp(array2.stringss[1][1], "PRUEBA5") != 0 || strcmp(array2.stringss[1][2], "PRUEBA6") != 0 ||
+                array2.datos[0].count != 1 || strcmp(array2.datos[0].message, "PRUEBA1") != 0 ||
+                array2.datos[1].count != 2 || strcmp(array2.datos[1].message, "PRUEBA2") != 0 ||
+                array2.datoss[0][0].count != 1 || strcmp(array2.datoss[0][0].message, "PRUEBA1") != 0 ||
+                array2.datoss[0][1].count != 2 || strcmp(array2.datoss[0][1].message, "PRUEBA2") != 0 ||
+                array2.datoss[0][2].count != 3 || strcmp(array2.datoss[0][2].message, "PRUEBA3") != 0 ||
+                array2.datoss[1][0].count != 4 || strcmp(array2.datoss[1][0].message, "PRUEBA4") != 0 ||
+                array2.datoss[1][1].count != 5 || strcmp(array2.datoss[1][1].message, "PRUEBA5") != 0 ||
+                array2.datoss[1][2].count != 6 || strcmp(array2.datoss[1][2].message, "PRUEBA6") != 0 ||
+                array2.arradat[0][0][0].count != 1 || strcmp(array2.arradat[0][0][0].message, "PRUEBA1") != 0 ||
+                array2.arradat[0][0][1].count != 2 || strcmp(array2.arradat[0][0][1].message, "PRUEBA2") != 0 ||
+                array2.arradat[0][0][2].count != 3 || strcmp(array2.arradat[0][0][2].message, "PRUEBA3") != 0 ||
+                array2.arradat[0][1][0].count != 4 || strcmp(array2.arradat[0][1][0].message, "PRUEBA4") != 0 ||
+                array2.arradat[0][1][1].count != 5 || strcmp(array2.arradat[0][1][1].message, "PRUEBA5") != 0 ||
+                array2.arradat[0][1][2].count != 6 || strcmp(array2.arradat[0][1][2].message, "PRUEBA6") != 0 ||
+                array2.arradat[1][0][0].count != 7 || strcmp(array2.arradat[1][0][0].message, "PRUEBA7") != 0 ||
+                array2.arradat[1][0][1].count != 8 || strcmp(array2.arradat[1][0][1].message, "PRUEBA8") != 0 ||
+                array2.arradat[1][0][2].count != 9 || strcmp(array2.arradat[1][0][2].message, "PRUEBA9") != 0 ||
+                array2.arradat[1][1][0].count != 10 || strcmp(array2.arradat[1][1][0].message, "PRUEBA10") != 0 ||
+                array2.arradat[1][1][1].count != 11 || strcmp(array2.arradat[1][1][1].message, "PRUEBA11") != 0 ||
+                array2.arradat[1][1][2].count != 12 || strcmp(array2.arradat[1][1][2].message, "PRUEBA12") != 0 ||
+                strcmp(array1.strings[0], "PRUEBA1") != 0 || strcmp(array1.strings[1], "PRUEBA2") != 0 ||
+                strcmp(array1.stringss[0][0], "PRUEBA1") != 0 || strcmp(array1.stringss[0][1], "PRUEBA2") != 0 ||
+                strcmp(array1.stringss[0][2], "PRUEBA3") != 0 || strcmp(array1.stringss[1][0], "PRUEBA4") != 0 ||
+                strcmp(array1.stringss[1][1], "PRUEBA5") != 0 || strcmp(array1.stringss[1][2], "PRUEBA6") != 0 ||
+                array1.datos[0].count != 1 || strcmp(array1.datos[0].message, "PRUEBA1") != 0 ||
+                array1.datos[1].count != 2 || strcmp(array1.datos[1].message, "PRUEBA2") != 0 ||
+                array1.datoss[0][0].count != 1 || strcmp(array1.datoss[0][0].message, "PRUEBA1") != 0 ||
+                array1.datoss[0][1].count != 2 || strcmp(array1.datoss[0][1].message, "PRUEBA2") != 0 ||
+                array1.datoss[0][2].count != 3 || strcmp(array1.datoss[0][2].message, "PRUEBA3") != 0 ||
+                array1.datoss[1][0].count != 4 || strcmp(array1.datoss[1][0].message, "PRUEBA4") != 0 ||
+                array1.datoss[1][1].count != 5 || strcmp(array1.datoss[1][1].message, "PRUEBA5") != 0 ||
+                array1.datoss[1][2].count != 6 || strcmp(array1.datoss[1][2].message, "PRUEBA6") != 0 ||
+                array1.arradat[0][0][0].count != 1 || strcmp(array1.arradat[0][0][0].message, "PRUEBA1") != 0 ||
+                array1.arradat[0][0][1].count != 2 || strcmp(array1.arradat[0][0][1].message, "PRUEBA2") != 0 ||
+                array1.arradat[0][0][2].count != 3 || strcmp(array1.arradat[0][0][2].message, "PRUEBA3") != 0 ||
+                array1.arradat[0][1][0].count != 4 || strcmp(array1.arradat[0][1][0].message, "PRUEBA4") != 0 ||
+                array1.arradat[0][1][1].count != 5 || strcmp(array1.arradat[0][1][1].message, "PRUEBA5") != 0 ||
+                array1.arradat[0][1][2].count != 6 || strcmp(array1.arradat[0][1][2].message, "PRUEBA6") != 0 ||
+                array1.arradat[1][0][0].count != 7 || strcmp(array1.arradat[1][0][0].message, "PRUEBA7") != 0 ||
+                array1.arradat[1][0][1].count != 8 || strcmp(array1.arradat[1][0][1].message, "PRUEBA8") != 0 ||
+                array1.arradat[1][0][2].count != 9 || strcmp(array1.arradat[1][0][2].message, "PRUEBA9") != 0 ||
+                array1.arradat[1][1][0].count != 10 || strcmp(array1.arradat[1][1][0].message, "PRUEBA10") != 0 ||
+                array1.arradat[1][1][1].count != 11 || strcmp(array1.arradat[1][1][1].message, "PRUEBA11") != 0 ||
+                array1.arradat[1][1][2].count != 12 || strcmp(array1.arradat[1][1][2].message, "PRUEBA12") != 0)
+        {
+            std::cout << "TEST FAILED<getArrays>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrays>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    SequenceTest::Arrays_finalize(&array1);
+    SequenceTest::Arrays_finalize(&array2);
+    SequenceTest::Arrays_finalize(&array3);
+
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
 	delete(proxy);

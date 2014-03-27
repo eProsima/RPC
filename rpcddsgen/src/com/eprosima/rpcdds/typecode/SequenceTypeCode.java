@@ -40,7 +40,7 @@ public class SequenceTypeCode extends ContainerTypeCode
         return m_maxsize;
     }
 
-    public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
+    /*public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         int lcontainTypeSize = getContentTypeCode().getSize();
         int lcontainTypeAlign = 0;
@@ -85,7 +85,7 @@ public class SequenceTypeCode extends ContainerTypeCode
         {
             return currentSize + 4 + (Integer.parseInt(m_maxsize) * lcontainTypeSize);
         }
-    }
+    }*/
 
     private String m_maxsize = null;
 }

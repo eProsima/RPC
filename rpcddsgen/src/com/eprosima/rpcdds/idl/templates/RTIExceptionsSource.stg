@@ -99,7 +99,11 @@ $else$
 $member.name$ = $dataname$.$member.name$;
 $endif$
 $else$
+$if(member.typecode.isType_f)$
+memcpy($member.name$, $dataname$.$member.name$, $member.typecode.size$ * sizeof($member.typecode.stTypename$));
+$else$
 $memberComplexInitCopy(...)$
+$endif$
 $endif$
 >>
 
@@ -116,7 +120,11 @@ $else$
 $member.name$ = $dataname$.$member.name$;
 $endif$
 $else$
+$if(member.typecode.isType_f)$
+memcpy($member.name$, $dataname$.$member.name$, $member.typecode.size$ * sizeof($member.typecode.stTypename$));
+$else$
 // TODO Memory leak. igualar y poner la otra todo a cero.
 $memberComplexInitCopy(...)$
+$endif$
 $endif$
 >>

@@ -61,7 +61,7 @@ public:
 	virtual void raise() const;
 	
 	// Exception members
-	$exception.members : { member | $member.typecode.cppTypename$ $member.name$; }; separator="\n"$
+	$exception.members : { member | $member.typecode.cppTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$; }; separator="\n"$
 };
 
 >>

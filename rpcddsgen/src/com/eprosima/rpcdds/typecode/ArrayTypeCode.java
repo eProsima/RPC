@@ -54,14 +54,53 @@ public class ArrayTypeCode extends ContainerTypeCode
     
     public String getIdlTypename()
     {
-        return "Error";
+        return getContentTypeCode().getIdlTypename();
     }
+
     public void addDimension(String dimension)
     {
         m_dimensions.add(dimension);
     }
+
+    public List<String> getDimensions()
+    {
+        return m_dimensions;
+    }
+
+    public String getSize()
+    {
+        String ret = "";
+
+        for(int count = 0; count < m_dimensions.size(); ++count)
+        {
+            if(ret.isEmpty())
+                ret += "(";
+            else
+                ret += " * ";
+
+            ret += m_dimensions.get(count);
+        }
+
+        if(!ret.isEmpty())
+            ret += ")";
+
+        return ret;
+    }
+
+    // TODO Used in stringtemplate for RTI DDS types.
+    public String getArrayExtension()
+    {
+        String ret = "";
+
+        for(int count = 0; count < m_dimensions.size(); ++count)
+        {
+            ret += "[" + m_dimensions.get(count) + "]";
+        }
+
+        return ret;
+    }
     
-    public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
+    /*public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         int lcontainTypeSize = getContentTypeCode().getSize();
         int lcontainTypeAlign = 0;
@@ -94,7 +133,7 @@ public class ArrayTypeCode extends ContainerTypeCode
         }
         
         return currentSize + (larraySize * lcontainTypeSize);
-    }
+    }*/
     
     private List<String> m_dimensions;
 }

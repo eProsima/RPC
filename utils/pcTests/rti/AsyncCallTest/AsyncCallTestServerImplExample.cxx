@@ -50,8 +50,8 @@ Structure AsyncCallTestServerImplExample::duplicate(/*in*/ const Structure& ev)
 {
     Structure duplicate_ret;
         
-	duplicate_ret.dato = ev.dato;
-	duplicate_ret.message = DDS::String_dup(ev.message);
+    Structure_initialize(&duplicate_ret);
+    Structure_copy(&duplicate_ret, &ev);
    
     return duplicate_ret;
 } 

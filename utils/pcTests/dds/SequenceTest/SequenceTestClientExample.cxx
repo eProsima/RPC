@@ -343,6 +343,443 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
+    larray lar1;
+    larray lar2;
+    larray lar3;
+    larray getArrLong_ret;
+
+    lar1[0] = 1;
+    lar1[1] = 2;
+    lar2[0] = 3;
+    lar2[1] = 4;
+
+    try
+    {
+        getArrLong_ret = proxy->getArrLong(lar1, lar2, lar3);
+
+        if(lar3[0] != 3 || lar3[1] != 4 || getArrLong_ret[0] != 1 || getArrLong_ret[1] != 2 ||
+                lar2[0] != 1 || lar2[1] != 2 || lar1[0] != 1 || lar1[1] != 2)
+        {
+            std::cout << "TEST FAILED<getArrLong>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrLong>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    sarray sar1;
+    sarray sar2;
+    sarray sar3;
+    sarray getArrString_ret;
+
+    sar1[0] = "PRUEBA1";
+    sar1[1] = "PRUEBA2";
+    sar2[0] = "PRUEBA3";
+    sar2[1] = "PRUEBA4";
+
+    try
+    {
+        getArrString_ret = proxy->getArrString(sar1, sar2, sar3);
+
+        if(sar3[0].compare("PRUEBA3") != 0 || sar3[1].compare("PRUEBA4") != 0 || getArrString_ret[0].compare("PRUEBA1") != 0 || getArrString_ret[1].compare("PRUEBA2") != 0 ||
+                sar2[0].compare("PRUEBA1") != 0 || sar2[1].compare("PRUEBA2") != 0 || sar1[0].compare("PRUEBA1") != 0 || sar1[1].compare("PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getArrString>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrString>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    ssarray ssar1;
+    ssarray ssar2;
+    ssarray ssar3;
+    ssarray getArrSString_ret;
+
+    ssar1[0][0] = "PRUEBA1";
+    ssar1[0][1] = "PRUEBA2";
+    ssar1[0][2] = "PRUEBA3";
+    ssar1[1][0] = "PRUEBA4";
+    ssar1[1][1] = "PRUEBA5";
+    ssar1[1][2] = "PRUEBA6";
+    ssar2[0][0] = "PRUEBA7";
+    ssar2[0][1] = "PRUEBA8";
+    ssar2[0][2] = "PRUEBA9";
+    ssar2[1][0] = "PRUEBA10";
+    ssar2[1][1] = "PRUEBA11";
+    ssar2[1][2] = "PRUEBA12";
+
+    try
+    {
+        getArrSString_ret = proxy->getArrSString(ssar1, ssar2, ssar3);
+
+        if(ssar3[0][0].compare("PRUEBA7") != 0 || ssar3[0][1].compare("PRUEBA8") != 0 || ssar3[0][2].compare("PRUEBA9") != 0 ||
+                ssar3[1][0].compare("PRUEBA10") != 0 || ssar3[1][1].compare("PRUEBA11") != 0 || ssar3[1][2].compare("PRUEBA12") != 0 || 
+                getArrSString_ret[0][0].compare("PRUEBA1") != 0 || getArrSString_ret[0][1].compare("PRUEBA2") != 0 ||
+                getArrSString_ret[0][2].compare("PRUEBA3") != 0 || getArrSString_ret[1][0].compare("PRUEBA4") != 0 ||
+                getArrSString_ret[1][1].compare("PRUEBA5") != 0 || getArrSString_ret[1][2].compare("PRUEBA6") != 0 ||
+                ssar2[0][0].compare("PRUEBA1") != 0 || ssar2[0][1].compare("PRUEBA2") != 0 || ssar2[0][2].compare("PRUEBA3") != 0 ||
+                ssar2[1][0].compare("PRUEBA4") != 0 || ssar2[1][1].compare("PRUEBA5") != 0 || ssar2[1][2].compare("PRUEBA6") != 0 ||
+                ssar1[0][0].compare("PRUEBA1") != 0 || ssar1[0][1].compare("PRUEBA2") != 0 || ssar1[0][2].compare("PRUEBA3") != 0 ||
+                ssar1[1][0].compare("PRUEBA4") != 0 || ssar1[1][1].compare("PRUEBA5") != 0 || ssar1[1][2].compare("PRUEBA6") != 0)
+        {
+            std::cout << "TEST FAILED<getArrSString>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrSString>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    darray dar1;
+    darray dar2;
+    darray dar3;
+    darray getArrDatos_ret;
+
+    dar1[0].count(1);
+    dar1[0].message("PRUEBA1");
+    dar1[1].count(2);
+    dar1[1].message("PRUEBA2");
+    dar2[0].count(3);
+    dar2[0].message("PRUEBA3");
+    dar2[1].count(4);
+    dar2[1].message("PRUEBA4");
+
+    try
+    {
+        getArrDatos_ret = proxy->getArrDatos(dar1, dar2, dar3);
+
+        if(dar3[0].count() != 3 || dar3[0].message().compare("PRUEBA3") != 0 || dar3[1].count() != 4 || dar3[1].message().compare("PRUEBA4") != 0 ||
+                getArrDatos_ret[0].count() != 1 || getArrDatos_ret[0].message().compare("PRUEBA1") != 0 ||
+                getArrDatos_ret[1].count() != 2 || getArrDatos_ret[1].message().compare("PRUEBA2") != 0 ||
+                dar2[0].count() != 1 || dar2[0].message().compare("PRUEBA1") != 0 || dar2[1].count() != 2 || dar2[1].message().compare("PRUEBA2") != 0 ||
+                dar1[0].count() != 1 || dar1[0].message().compare("PRUEBA1") != 0 || dar1[1].count() != 2 || dar1[1].message().compare("PRUEBA2")!= 0 )
+        {
+            std::cout << "TEST FAILED<getArrDatos>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrDatos>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    ddarray ddar1;
+    ddarray ddar2;
+    ddarray ddar3;
+    ddarray getArrDDatos_ret;
+
+    ddar1[0][0].count(1);
+    ddar1[0][0].message("PRUEBA1");
+    ddar1[0][1].count(2);
+    ddar1[0][1].message("PRUEBA2");
+    ddar1[0][2].count(3);
+    ddar1[0][2].message("PRUEBA3");
+    ddar1[1][0].count(4);
+    ddar1[1][0].message("PRUEBA4");
+    ddar1[1][1].count(5);
+    ddar1[1][1].message("PRUEBA5");
+    ddar1[1][2].count(6);
+    ddar1[1][2].message("PRUEBA6");
+    ddar2[0][0].count(7);
+    ddar2[0][0].message("PRUEBA7");
+    ddar2[0][1].count(8);
+    ddar2[0][1].message("PRUEBA8");
+    ddar2[0][2].count(9);
+    ddar2[0][2].message("PRUEBA9");
+    ddar2[1][0].count(10);
+    ddar2[1][0].message("PRUEBA10");
+    ddar2[1][1].count(11);
+    ddar2[1][1].message("PRUEBA11");
+    ddar2[1][2].count(12);
+    ddar2[1][2].message("PRUEBA12");
+
+    try
+    {
+        getArrDDatos_ret = proxy->getArrDDatos(ddar1, ddar2, ddar3);
+
+        if(ddar3[0][0].count() != 7 || ddar3[0][0].message().compare("PRUEBA7") != 0 || ddar3[0][1].count() != 8 || ddar3[0][1].message().compare("PRUEBA8") != 0 ||
+                ddar3[0][2].count() != 9 || ddar3[0][2].message().compare("PRUEBA9") != 0 || ddar3[1][0].count() != 10 || ddar3[1][0].message().compare("PRUEBA10") != 0 ||
+                ddar3[1][1].count() != 11 || ddar3[1][1].message().compare("PRUEBA11") != 0 || ddar3[1][2].count() != 12 || ddar3[1][2].message().compare("PRUEBA12") != 0 ||
+                getArrDDatos_ret[0][0].count() != 1 || getArrDDatos_ret[0][0].message().compare("PRUEBA1") != 0 ||
+                getArrDDatos_ret[0][1].count() != 2 || getArrDDatos_ret[0][1].message().compare("PRUEBA2") != 0 ||
+                getArrDDatos_ret[0][2].count() != 3 || getArrDDatos_ret[0][2].message().compare("PRUEBA3") != 0 ||
+                getArrDDatos_ret[1][0].count() != 4 || getArrDDatos_ret[1][0].message().compare("PRUEBA4") != 0 ||
+                getArrDDatos_ret[1][1].count() != 5 || getArrDDatos_ret[1][1].message().compare("PRUEBA5") != 0 ||
+                getArrDDatos_ret[1][2].count() != 6 || getArrDDatos_ret[1][2].message().compare("PRUEBA6") != 0 ||
+                ddar2[0][0].count() != 1 || ddar2[0][0].message().compare("PRUEBA1") != 0 || ddar2[0][1].count() != 2 || ddar2[0][1].message().compare("PRUEBA2") != 0 ||
+                ddar2[0][2].count() != 3 || ddar2[0][2].message().compare("PRUEBA3") != 0 || ddar2[1][0].count() != 4 || ddar2[1][0].message().compare("PRUEBA4") != 0 ||
+                ddar2[1][1].count() != 5 || ddar2[1][1].message().compare("PRUEBA5") != 0 || ddar2[1][2].count() != 6 || ddar2[1][2].message().compare("PRUEBA6") != 0 ||
+                ddar1[0][0].count() != 1 || ddar1[0][0].message().compare("PRUEBA1") != 0 || ddar1[0][1].count() != 2 || ddar1[0][1].message().compare("PRUEBA2") != 0 ||
+                ddar1[0][2].count() != 3 || ddar1[0][2].message().compare("PRUEBA3") != 0 || ddar1[1][0].count() != 4 || ddar1[1][0].message().compare("PRUEBA4") != 0 ||
+                ddar1[1][1].count() != 5 || ddar1[1][1].message().compare("PRUEBA5") != 0 || ddar1[1][2].count() != 6 || ddar1[1][2].message().compare("PRUEBA6") != 0 )
+        {
+            std::cout << "TEST FAILED<getArrDDatos>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrDDatos>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    cdarray cdar1;
+    cdarray cdar2;
+    cdarray cdar3;
+    cdarray getArrCDatos_ret;
+
+    cdar1[0].count(1);
+    cdar1[0].message("PRUEBA1");
+    cdar1[1].count(2);
+    cdar1[1].message("PRUEBA2");
+    cdar2[0].count(3);
+    cdar2[0].message("PRUEBA3");
+    cdar2[1].count(4);
+    cdar2[1].message("PRUEBA4");
+
+    try
+    {
+        getArrCDatos_ret = proxy->getArrCDatos(cdar1, cdar2, cdar3);
+
+        if(cdar3[0].count() != 3 || cdar3[0].message().compare("PRUEBA3") != 0 || cdar3[1].count() != 4 || cdar3[1].message().compare("PRUEBA4") != 0 ||
+                getArrCDatos_ret[0].count() != 1 || getArrCDatos_ret[0].message().compare("PRUEBA1") != 0 ||
+                getArrCDatos_ret[1].count() != 2 || getArrCDatos_ret[1].message().compare("PRUEBA2") != 0 ||
+                cdar2[0].count() != 1 || cdar2[0].message().compare("PRUEBA1") != 0 || cdar2[1].count() != 2 || cdar2[1].message().compare("PRUEBA2") != 0 ||
+                cdar1[0].count() != 1 || cdar1[0].message().compare("PRUEBA1") != 0 || cdar1[1].count() != 2 || cdar1[1].message().compare("PRUEBA2") != 0 )
+        {
+            std::cout << "TEST FAILED<getArrCDatos>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrCDatos>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
+    SequenceTest::Arrays array1;
+    SequenceTest::Arrays array2;
+    SequenceTest::Arrays array3;
+    SequenceTest::Arrays getArrays_ret;
+
+    array1.strings()[0] = "PRUEBA1";
+    array1.strings()[1] = "PRUEBA2";
+    array1.stringss()[0][0] = "PRUEBA1";
+    array1.stringss()[0][1] = "PRUEBA2";
+    array1.stringss()[0][2] = "PRUEBA3";
+    array1.stringss()[1][0] = "PRUEBA4";
+    array1.stringss()[1][1] = "PRUEBA5";
+    array1.stringss()[1][2] = "PRUEBA6";
+    array1.datos()[0].count(1);
+    array1.datos()[0].message("PRUEBA1");
+    array1.datos()[1].count(2);
+    array1.datos()[1].message("PRUEBA2");
+    array1.datoss()[0][0].count(1);
+    array1.datoss()[0][0].message("PRUEBA1");
+    array1.datoss()[0][1].count(2);
+    array1.datoss()[0][1].message("PRUEBA2");
+    array1.datoss()[0][2].count(3);
+    array1.datoss()[0][2].message("PRUEBA3");
+    array1.datoss()[1][0].count(4);
+    array1.datoss()[1][0].message("PRUEBA4");
+    array1.datoss()[1][1].count(5);
+    array1.datoss()[1][1].message("PRUEBA5");
+    array1.datoss()[1][2].count(6);
+    array1.datoss()[1][2].message("PRUEBA6");
+    array1.arradat()[0][0][0].count(1);
+    array1.arradat()[0][0][0].message("PRUEBA1");
+    array1.arradat()[0][0][1].count(2);
+    array1.arradat()[0][0][1].message("PRUEBA2");
+    array1.arradat()[0][0][2].count(3);
+    array1.arradat()[0][0][2].message("PRUEBA3");
+    array1.arradat()[0][1][0].count(4);
+    array1.arradat()[0][1][0].message("PRUEBA4");
+    array1.arradat()[0][1][1].count(5);
+    array1.arradat()[0][1][1].message("PRUEBA5");
+    array1.arradat()[0][1][2].count(6);
+    array1.arradat()[0][1][2].message("PRUEBA6");
+    array1.arradat()[1][0][0].count(7);
+    array1.arradat()[1][0][0].message("PRUEBA7");
+    array1.arradat()[1][0][1].count(8);
+    array1.arradat()[1][0][1].message("PRUEBA8");
+    array1.arradat()[1][0][2].count(9);
+    array1.arradat()[1][0][2].message("PRUEBA9");
+    array1.arradat()[1][1][0].count(10);
+    array1.arradat()[1][1][0].message("PRUEBA10");
+    array1.arradat()[1][1][1].count(11);
+    array1.arradat()[1][1][1].message("PRUEBA11");
+    array1.arradat()[1][1][2].count(12);
+    array1.arradat()[1][1][2].message("PRUEBA12");
+    array2.strings()[0] = "PRUEBA13";
+    array2.strings()[1] = "PRUEBA14";
+    array2.stringss()[0][0] = "PRUEBA13";
+    array2.stringss()[0][1] = "PRUEBA14";
+    array2.stringss()[0][2] = "PRUEBA15";
+    array2.stringss()[1][0] = "PRUEBA16";
+    array2.stringss()[1][1] = "PRUEBA17";
+    array2.stringss()[1][2] = "PRUEBA18";
+    array2.datos()[0].count(13);
+    array2.datos()[0].message("PRUEBA13");
+    array2.datos()[1].count(14);
+    array2.datos()[1].message("PRUEBA14");
+    array2.datoss()[0][0].count(13);
+    array2.datoss()[0][0].message("PRUEBA13");
+    array2.datoss()[0][1].count(14);
+    array2.datoss()[0][1].message("PRUEBA14");
+    array2.datoss()[0][2].count(15);
+    array2.datoss()[0][2].message("PRUEBA15");
+    array2.datoss()[1][0].count(16);
+    array2.datoss()[1][0].message("PRUEBA16");
+    array2.datoss()[1][1].count(17);
+    array2.datoss()[1][1].message("PRUEBA17");
+    array2.datoss()[1][2].count(18);
+    array2.datoss()[1][2].message("PRUEBA18");
+    array2.arradat()[0][0][0].count(13);
+    array2.arradat()[0][0][0].message("PRUEBA13");
+    array2.arradat()[0][0][1].count(14);
+    array2.arradat()[0][0][1].message("PRUEBA14");
+    array2.arradat()[0][0][2].count(15);
+    array2.arradat()[0][0][2].message("PRUEBA15");
+    array2.arradat()[0][1][0].count(16);
+    array2.arradat()[0][1][0].message("PRUEBA16");
+    array2.arradat()[0][1][1].count(17);
+    array2.arradat()[0][1][1].message("PRUEBA17");
+    array2.arradat()[0][1][2].count(18);
+    array2.arradat()[0][1][2].message("PRUEBA18");
+    array2.arradat()[1][0][0].count(19);
+    array2.arradat()[1][0][0].message("PRUEBA19");
+    array2.arradat()[1][0][1].count(20);
+    array2.arradat()[1][0][1].message("PRUEBA20");
+    array2.arradat()[1][0][2].count(21);
+    array2.arradat()[1][0][2].message("PRUEBA21");
+    array2.arradat()[1][1][0].count(22);
+    array2.arradat()[1][1][0].message("PRUEBA22");
+    array2.arradat()[1][1][1].count(23);
+    array2.arradat()[1][1][1].message("PRUEBA23");
+    array2.arradat()[1][1][2].count(24);
+    array2.arradat()[1][1][2].message("PRUEBA24");
+
+    try
+    {
+        getArrays_ret = proxy->getArrays(array1, array2, array3);
+
+        if(array3.strings()[0].compare("PRUEBA13") != 0 || array3.strings()[1].compare("PRUEBA14") != 0 ||
+                array3.stringss()[0][0].compare("PRUEBA13") != 0 || array3.stringss()[0][1].compare("PRUEBA14") != 0 ||
+                array3.stringss()[0][2].compare("PRUEBA15") != 0 || array3.stringss()[1][0].compare("PRUEBA16") != 0 ||
+                array3.stringss()[1][1].compare("PRUEBA17") != 0 || array3.stringss()[1][2].compare("PRUEBA18") != 0 ||
+                array3.datos()[0].count() != 13 || array3.datos()[0].message().compare("PRUEBA13") != 0 ||
+                array3.datos()[1].count() != 14 || array3.datos()[1].message().compare("PRUEBA14") != 0 ||
+                array3.datoss()[0][0].count() != 13 || array3.datoss()[0][0].message().compare("PRUEBA13") != 0 ||
+                array3.datoss()[0][1].count() != 14 || array3.datoss()[0][1].message().compare("PRUEBA14") != 0 ||
+                array3.datoss()[0][2].count() != 15 || array3.datoss()[0][2].message().compare("PRUEBA15") != 0 ||
+                array3.datoss()[1][0].count() != 16 || array3.datoss()[1][0].message().compare("PRUEBA16") != 0 ||
+                array3.datoss()[1][1].count() != 17 || array3.datoss()[1][1].message().compare("PRUEBA17") != 0 ||
+                array3.datoss()[1][2].count() != 18 || array3.datoss()[1][2].message().compare("PRUEBA18") != 0 ||
+                array3.arradat()[0][0][0].count() != 13 || array3.arradat()[0][0][0].message().compare("PRUEBA13") != 0 ||
+                array3.arradat()[0][0][1].count() != 14 || array3.arradat()[0][0][1].message().compare("PRUEBA14") != 0 ||
+                array3.arradat()[0][0][2].count() != 15 || array3.arradat()[0][0][2].message().compare("PRUEBA15") != 0 ||
+                array3.arradat()[0][1][0].count() != 16 || array3.arradat()[0][1][0].message().compare("PRUEBA16") != 0 ||
+                array3.arradat()[0][1][1].count() != 17 || array3.arradat()[0][1][1].message().compare("PRUEBA17") != 0 ||
+                array3.arradat()[0][1][2].count() != 18 || array3.arradat()[0][1][2].message().compare("PRUEBA18") != 0 ||
+                array3.arradat()[1][0][0].count() != 19 || array3.arradat()[1][0][0].message().compare("PRUEBA19") != 0 ||
+                array3.arradat()[1][0][1].count() != 20 || array3.arradat()[1][0][1].message().compare("PRUEBA20") != 0 ||
+                array3.arradat()[1][0][2].count() != 21 || array3.arradat()[1][0][2].message().compare("PRUEBA21") != 0 ||
+                array3.arradat()[1][1][0].count() != 22 || array3.arradat()[1][1][0].message().compare("PRUEBA22") != 0 ||
+                array3.arradat()[1][1][1].count() != 23 || array3.arradat()[1][1][1].message().compare("PRUEBA23") != 0 ||
+                array3.arradat()[1][1][2].count() != 24 || array3.arradat()[1][1][2].message().compare("PRUEBA24") != 0 ||
+                getArrays_ret.strings()[0].compare("PRUEBA1") != 0 || getArrays_ret.strings()[1].compare("PRUEBA2") != 0 ||
+                getArrays_ret.stringss()[0][0].compare("PRUEBA1") != 0 || getArrays_ret.stringss()[0][1].compare("PRUEBA2") != 0 ||
+                getArrays_ret.stringss()[0][2].compare("PRUEBA3") != 0 || getArrays_ret.stringss()[1][0].compare("PRUEBA4") != 0 ||
+                getArrays_ret.stringss()[1][1].compare("PRUEBA5") != 0 || getArrays_ret.stringss()[1][2].compare("PRUEBA6") != 0 ||
+                getArrays_ret.datos()[0].count() != 1 || getArrays_ret.datos()[0].message().compare("PRUEBA1") != 0 ||
+                getArrays_ret.datos()[1].count() != 2 || getArrays_ret.datos()[1].message().compare("PRUEBA2") != 0 ||
+                getArrays_ret.datoss()[0][0].count() != 1 || getArrays_ret.datoss()[0][0].message().compare("PRUEBA1") != 0 ||
+                getArrays_ret.datoss()[0][1].count() != 2 || getArrays_ret.datoss()[0][1].message().compare("PRUEBA2") != 0 ||
+                getArrays_ret.datoss()[0][2].count() != 3 || getArrays_ret.datoss()[0][2].message().compare("PRUEBA3") != 0 ||
+                getArrays_ret.datoss()[1][0].count() != 4 || getArrays_ret.datoss()[1][0].message().compare("PRUEBA4") != 0 ||
+                getArrays_ret.datoss()[1][1].count() != 5 || getArrays_ret.datoss()[1][1].message().compare("PRUEBA5") != 0 ||
+                getArrays_ret.datoss()[1][2].count() != 6 || getArrays_ret.datoss()[1][2].message().compare("PRUEBA6") != 0 ||
+                getArrays_ret.arradat()[0][0][0].count() != 1 || getArrays_ret.arradat()[0][0][0].message().compare("PRUEBA1") != 0 ||
+                getArrays_ret.arradat()[0][0][1].count() != 2 || getArrays_ret.arradat()[0][0][1].message().compare("PRUEBA2") != 0 ||
+                getArrays_ret.arradat()[0][0][2].count() != 3 || getArrays_ret.arradat()[0][0][2].message().compare("PRUEBA3") != 0 ||
+                getArrays_ret.arradat()[0][1][0].count() != 4 || getArrays_ret.arradat()[0][1][0].message().compare("PRUEBA4") != 0 ||
+                getArrays_ret.arradat()[0][1][1].count() != 5 || getArrays_ret.arradat()[0][1][1].message().compare("PRUEBA5") != 0 ||
+                getArrays_ret.arradat()[0][1][2].count() != 6 || getArrays_ret.arradat()[0][1][2].message().compare("PRUEBA6") != 0 ||
+                getArrays_ret.arradat()[1][0][0].count() != 7 || getArrays_ret.arradat()[1][0][0].message().compare("PRUEBA7") != 0 ||
+                getArrays_ret.arradat()[1][0][1].count() != 8 || getArrays_ret.arradat()[1][0][1].message().compare("PRUEBA8") != 0 ||
+                getArrays_ret.arradat()[1][0][2].count() != 9 || getArrays_ret.arradat()[1][0][2].message().compare("PRUEBA9") != 0 ||
+                getArrays_ret.arradat()[1][1][0].count() != 10 || getArrays_ret.arradat()[1][1][0].message().compare("PRUEBA10") != 0 ||
+                getArrays_ret.arradat()[1][1][1].count() != 11 || getArrays_ret.arradat()[1][1][1].message().compare("PRUEBA11") != 0 ||
+                getArrays_ret.arradat()[1][1][2].count() != 12 || getArrays_ret.arradat()[1][1][2].message().compare("PRUEBA12") != 0 ||
+                array2.strings()[0].compare("PRUEBA1") != 0 || array2.strings()[1].compare("PRUEBA2") != 0 ||
+                array2.stringss()[0][0].compare("PRUEBA1") != 0 || array2.stringss()[0][1].compare("PRUEBA2") != 0 ||
+                array2.stringss()[0][2].compare("PRUEBA3") != 0 || array2.stringss()[1][0].compare("PRUEBA4") != 0 ||
+                array2.stringss()[1][1].compare("PRUEBA5") != 0 || array2.stringss()[1][2].compare("PRUEBA6") != 0 ||
+                array2.datos()[0].count() != 1 || array2.datos()[0].message().compare("PRUEBA1") != 0 ||
+                array2.datos()[1].count() != 2 || array2.datos()[1].message().compare("PRUEBA2") != 0 ||
+                array2.datoss()[0][0].count() != 1 || array2.datoss()[0][0].message().compare("PRUEBA1") != 0 ||
+                array2.datoss()[0][1].count() != 2 || array2.datoss()[0][1].message().compare("PRUEBA2") != 0 ||
+                array2.datoss()[0][2].count() != 3 || array2.datoss()[0][2].message().compare("PRUEBA3") != 0 ||
+                array2.datoss()[1][0].count() != 4 || array2.datoss()[1][0].message().compare("PRUEBA4") != 0 ||
+                array2.datoss()[1][1].count() != 5 || array2.datoss()[1][1].message().compare("PRUEBA5") != 0 ||
+                array2.datoss()[1][2].count() != 6 || array2.datoss()[1][2].message().compare("PRUEBA6") != 0 ||
+                array2.arradat()[0][0][0].count() != 1 || array2.arradat()[0][0][0].message().compare("PRUEBA1") != 0 ||
+                array2.arradat()[0][0][1].count() != 2 || array2.arradat()[0][0][1].message().compare("PRUEBA2") != 0 ||
+                array2.arradat()[0][0][2].count() != 3 || array2.arradat()[0][0][2].message().compare("PRUEBA3") != 0 ||
+                array2.arradat()[0][1][0].count() != 4 || array2.arradat()[0][1][0].message().compare("PRUEBA4") != 0 ||
+                array2.arradat()[0][1][1].count() != 5 || array2.arradat()[0][1][1].message().compare("PRUEBA5") != 0 ||
+                array2.arradat()[0][1][2].count() != 6 || array2.arradat()[0][1][2].message().compare("PRUEBA6") != 0 ||
+                array2.arradat()[1][0][0].count() != 7 || array2.arradat()[1][0][0].message().compare("PRUEBA7") != 0 ||
+                array2.arradat()[1][0][1].count() != 8 || array2.arradat()[1][0][1].message().compare("PRUEBA8") != 0 ||
+                array2.arradat()[1][0][2].count() != 9 || array2.arradat()[1][0][2].message().compare("PRUEBA9") != 0 ||
+                array2.arradat()[1][1][0].count() != 10 || array2.arradat()[1][1][0].message().compare("PRUEBA10") != 0 ||
+                array2.arradat()[1][1][1].count() != 11 || array2.arradat()[1][1][1].message().compare("PRUEBA11") != 0 ||
+                array2.arradat()[1][1][2].count() != 12 || array2.arradat()[1][1][2].message().compare("PRUEBA12") != 0 ||
+                array1.strings()[0].compare("PRUEBA1") != 0 || array1.strings()[1].compare("PRUEBA2") != 0 ||
+                array1.stringss()[0][0].compare("PRUEBA1") != 0 || array1.stringss()[0][1].compare("PRUEBA2") != 0 ||
+                array1.stringss()[0][2].compare("PRUEBA3") != 0 || array1.stringss()[1][0].compare("PRUEBA4") != 0 ||
+                array1.stringss()[1][1].compare("PRUEBA5") != 0 || array1.stringss()[1][2].compare("PRUEBA6") != 0 ||
+                array1.datos()[0].count() != 1 || array1.datos()[0].message().compare("PRUEBA1") != 0 ||
+                array1.datos()[1].count() != 2 || array1.datos()[1].message().compare("PRUEBA2") != 0 ||
+                array1.datoss()[0][0].count() != 1 || array1.datoss()[0][0].message().compare("PRUEBA1") != 0 ||
+                array1.datoss()[0][1].count() != 2 || array1.datoss()[0][1].message().compare("PRUEBA2") != 0 ||
+                array1.datoss()[0][2].count() != 3 || array1.datoss()[0][2].message().compare("PRUEBA3") != 0 ||
+                array1.datoss()[1][0].count() != 4 || array1.datoss()[1][0].message().compare("PRUEBA4") != 0 ||
+                array1.datoss()[1][1].count() != 5 || array1.datoss()[1][1].message().compare("PRUEBA5") != 0 ||
+                array1.datoss()[1][2].count() != 6 || array1.datoss()[1][2].message().compare("PRUEBA6") != 0 ||
+                array1.arradat()[0][0][0].count() != 1 || array1.arradat()[0][0][0].message().compare("PRUEBA1") != 0 ||
+                array1.arradat()[0][0][1].count() != 2 || array1.arradat()[0][0][1].message().compare("PRUEBA2") != 0 ||
+                array1.arradat()[0][0][2].count() != 3 || array1.arradat()[0][0][2].message().compare("PRUEBA3") != 0 ||
+                array1.arradat()[0][1][0].count() != 4 || array1.arradat()[0][1][0].message().compare("PRUEBA4") != 0 ||
+                array1.arradat()[0][1][1].count() != 5 || array1.arradat()[0][1][1].message().compare("PRUEBA5") != 0 ||
+                array1.arradat()[0][1][2].count() != 6 || array1.arradat()[0][1][2].message().compare("PRUEBA6") != 0 ||
+                array1.arradat()[1][0][0].count() != 7 || array1.arradat()[1][0][0].message().compare("PRUEBA7") != 0 ||
+                array1.arradat()[1][0][1].count() != 8 || array1.arradat()[1][0][1].message().compare("PRUEBA8") != 0 ||
+                array1.arradat()[1][0][2].count() != 9 || array1.arradat()[1][0][2].message().compare("PRUEBA9") != 0 ||
+                array1.arradat()[1][1][0].count() != 10 || array1.arradat()[1][1][0].message().compare("PRUEBA10") != 0 ||
+                array1.arradat()[1][1][1].count() != 11 || array1.arradat()[1][1][1].message().compare("PRUEBA11") != 0 ||
+                array1.arradat()[1][1][2].count() != 12 || array1.arradat()[1][1][2].message().compare("PRUEBA12") != 0)
+        {
+            std::cout << "TEST FAILED<getArrays>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getArrays>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
+
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
     delete(proxy);

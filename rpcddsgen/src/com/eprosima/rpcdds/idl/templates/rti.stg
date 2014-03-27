@@ -118,7 +118,7 @@ destroyDataCallback(operation, suffix) ::= <<
 addParamToTopic(param, varname, isRequest) ::= <<
 $if(param)$
 $if(param.typecode.isType_f)$
-$param.typecode.cppTypename$_copy(&$varname$.$param.name$, &$param.name$);
+memcpy(&$varname$.$param.name$, &$param.name$, sizeof($param.typecode.cppTypename$));
 $else$
 $varname$.$param.name$ = $if(isRequest)$$if(param.typecode.isType_d)$$charCasting()$$endif$$endif$$param.name$;
 $endif$
@@ -126,7 +126,11 @@ $endif$
 >>
 
 addExceptionMemberToTopic(exception, member, varname) ::= <<
+$if(member.typecode.isType_f)$
+memcpy($varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
+$else$
 $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
+$endif$
 $endif$
 >>
 
@@ -143,7 +147,7 @@ $varComplexDel(variable=param)$
 $endif$
 $endif$
 $if(param.typecode.isType_f)$
-$param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
+memcpy(&$param.name$, &$varname$.$param.name$, sizeof($param.typecode.cppTypename$));
 $else$
 $param.name$ = $varname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
@@ -160,7 +164,7 @@ $param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
 $endif$
 $else$
 $if(param.typecode.isType_f)$
-$param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
+memcpy(&$param.name$, &$varname$.$param.name$, sizeof($param.typecode.cppTypename$));
 $else$
 $param.name$ = $varname$.$param.name$$if(param.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
@@ -169,7 +173,11 @@ $endif$
 >>
 
 extractExceptionMemberFromTopic(exception, member, varname) ::= <<
+$if(member.typecode.isType_f)$
+memcpy(ex.$member.name$, $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
+$else$
 ex.$member.name$ = $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
+$endif$
 >>
 
 preReqIDLDefines(name) ::= <<
@@ -271,7 +279,7 @@ $if(variable.typecode.isType_d)$
 $varStringDel(name=variable.name)$
 $endif$
 $else$
-$if(!variable.typecode.array)$
+$if(!variable.typecode.isType_f)$
 $varComplexDel(...)$
 $endif$
 $endif$

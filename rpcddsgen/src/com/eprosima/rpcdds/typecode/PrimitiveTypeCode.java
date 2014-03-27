@@ -55,7 +55,7 @@ public class PrimitiveTypeCode extends TypeCode
     	return "";
     }
     
-    public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
+    /*public Pair<Integer, Integer> getMaxSerializedSize(int currentSize, int lastDataAligned)
     {
         int size = getSize();
         
@@ -73,31 +73,31 @@ public class PrimitiveTypeCode extends TypeCode
     public int getMaxSerializedSizeWithoutAlignment(int currentSize)
     {
         return currentSize + getSize();
-    }
+    }*/
     
     @Override
-    public int getSize()
+    public String getSize()
     {
         switch(getKind())
         {
             case KIND_DOUBLE:
             case KIND_LONGLONG:
             case KIND_ULONGLONG:
-                return 8;
+                return "8";
             case KIND_LONG:
             case KIND_ULONG:
             case KIND_FLOAT:
             case KIND_WCHAR:
-                return 4;         
+                return "4";         
             case KIND_SHORT:
             case KIND_USHORT:
-                return 2;
+                return "2";
             case KIND_BOOLEAN:
             case KIND_CHAR:
             case KIND_OCTET:
-                return 1;               
+                return "1";               
         }
         
-        return 0;
+        return null;
     }
 }
