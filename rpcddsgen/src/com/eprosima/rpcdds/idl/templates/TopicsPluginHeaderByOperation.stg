@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-group TopicsPluginHeader;
+group TopicsPluginHeaderByOperation;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "TopicsPlugin.h"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$

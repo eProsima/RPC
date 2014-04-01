@@ -220,6 +220,28 @@ public class Interface extends ExportContainer implements Definition, Notebook
     {
         return m_annotations;
     }
+
+    // Funcion auxiliary for string template functions.
+    public int getOperationCardinal(Operation operation)
+    {
+        int retValue = -1, currentCount = 0;
+
+        for(int count = 0; count < getExports().size(); ++count)
+        {
+            if(getExports().get(count).isIsOperation())
+            {
+                ++currentCount;
+
+                if(getExports().get(count) == operation)
+                {
+                    retValue = currentCount;
+                    break;
+                }
+            }
+        }
+
+        return retValue;
+    }
     
     ////////// RESTful block //////////
     

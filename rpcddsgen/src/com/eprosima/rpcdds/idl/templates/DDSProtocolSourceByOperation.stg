@@ -1,4 +1,4 @@
-group DDSProtocolSource;
+group DDSProtocolSourceByOperation;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$

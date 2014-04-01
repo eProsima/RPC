@@ -1,0 +1,106 @@
+group AsyncSupportHeaderByOperation;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+#define _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+
+#include "rpcdds/transports/dds/DDSAsyncTask.h"
+#include "rpcdds/exceptions/UserException.h"
+#include "$ctx.filename$AsyncCallbackHandlers.h"
+$if(!ctx.rtiTypes)$
+#include "$ctx.filename$Topics.h"
+$else$
+$ReqRepSIncludes(filename=ctx.filename)$
+$endif$
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+>>
+
+module(ctx, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$if(!operation.oneway)$
+/*!
+ * @brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
+ * @ingroup $ctx.trimfilename$
+ */
+class $operation.parent.name$_$operation.name$Task : public eprosima::rpcdds::transport::dds::DDSAsyncTask
+{
+    public:
+
+        /**
+         * \brief The default constructor.
+         *
+         * \param obj Object that implements the callbacks that RPCDDS will call when
+         *            the reply will be received or and exception will be launched.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
+         */
+        $operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj);
+
+        /// \brief The default destructor.
+        virtual ~$operation.parent.name$_$operation.name$Task();
+        
+        virtual void execute();
+        
+        virtual void on_exception(const eprosima::rpcdds::exception::SystemException &ex);        
+
+        $if(operation.exceptions)$
+        virtual void on_exception(const eprosima::rpcdds::exception::UserException &ex);
+        $endif$
+        
+        /**
+         * \brief This function returns the object used by the task.
+         *
+         * \return The object that implements the callbacks.
+         */
+        $operation.parent.name$_$operation.name$CallbackHandler& getObject();
+
+        virtual void* getReplyInstance();
+        
+        private:
+        
+        $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
+
+        $operation.parent.name$_$operation.name$Reply m_reply;
+};
+
+$endif$
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

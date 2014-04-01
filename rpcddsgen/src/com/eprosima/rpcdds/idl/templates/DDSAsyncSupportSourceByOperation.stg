@@ -1,4 +1,4 @@
-group AsyncSupportSource;
+group AsyncSupportSourceByOperation;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$

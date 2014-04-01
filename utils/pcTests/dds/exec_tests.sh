@@ -16,9 +16,44 @@ function execTest
     # Clean output directory
     rm -rf output/*
     # Info about test
-    echo "EXECUTING $1 for $NDDSTARGET"
+    echo "EXECUTING $1 for $NDDSTARGET using operations as topics"
     # Generates the file with RPCDDS script
-    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -d output -example $NDDSTARGET "$1/$1.idl"
+    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -topicGeneration byOperation -d output -example $NDDSTARGET "$1/$1.idl"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # TODO Temporary set of LIBFASTCDR
+    export LIBFASTCDR=../../../../../fastcdr/lib/$EPROSIMA_TARGET
+    # Compile client and server example application
+    make -C output -f makefile_$NDDSTARGET all
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # Copy static test files into output directory
+    cp $1/* output/
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # Compile again client and server example application
+    make -C output -f makefile_$NDDSTARGET all
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # TODO Unset temporary LIBFASTCDR
+    export LIBFASTCDR=
+    # Execute the server in background
+    output/bin/$NDDSTARGET/$1ServerExample &
+    # Wait 5 seconds
+    sleep 5
+    # Execute the client
+    output/bin/$NDDSTARGET/$1ClientExample
+    errorstatus=$?
+    # Kill server
+    killall -9 $1ServerExample
+    if [ $errorstatus != 0 ]; then return; fi
+
+    # Clean output directory
+    rm -rf output/*
+    # Info about test
+    echo "EXECUTING $1 for $NDDSTARGET using interfaces as topics"
+    # Generates the file with RPCDDS script
+    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -topicGeneration byInterface -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # TODO Temporary set of LIBFASTCDR

@@ -99,20 +99,40 @@ getTypenameOperation(operation, suffix, varname) ::= <<
 $varname$ = $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
 >>
 
+getTypenameInterface(interface, suffix, varname) ::= <<
+$varname$ = $interface.scopedname$$suffix$TypeSupport::get_type_name();
+>>
+
 registerTypenameOperationAndCheck(operation, suffix, varname) ::= <<
 $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
+>>
+
+registerTypenameInterfaceAndCheck(interface, suffix, varname) ::= <<
+$interface.scopedname$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
 >>
 
 createDataCallback(operation, suffix) ::= <<
 (::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::create_data
 >>
 
+createDataCallbackInterface(interface, suffix) ::= <<
+(::transport::dds::Transport::Create_data)$interface.scopedname$$suffix$TypeSupport::create_data
+>>
+
 copyDataCallback(operation, suffix) ::= <<
 (::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::copy_data
 >>
 
+copyDataCallbackInterface(interface, suffix) ::= <<
+(::transport::dds::Transport::Copy_data)$interface.scopedname$$suffix$TypeSupport::copy_data
+>>
+
 destroyDataCallback(operation, suffix) ::= <<
 (::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::delete_data
+>>
+
+destroyDataCallbackInterface(interface, suffix) ::= <<
+(::transport::dds::Transport::Destroy_data)$interface.scopedname$$suffix$TypeSupport::delete_data
 >>
 
 addParamToTopic(param, varname, isRequest) ::= <<
@@ -177,6 +197,14 @@ $if(member.typecode.isType_f)$
 memcpy(ex.$member.name$, $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
 $else$
 ex.$member.name$ = $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
+$endif$
+>>
+
+extractExceptionMemberFromTopicByInterface(exception, member, varname) ::= <<
+$if(member.typecode.isType_f)$
+memcpy(ex.$member.name$, $varname$._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
+$else$
+ex.$member.name$ = $varname$._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
 >>
 
@@ -322,12 +350,28 @@ getHeaderRetMsg(varname) ::= <<
 $varname$._header.retMsg
 >>
 
+interfaceUnionDiscriminator(varname) ::= <<
+$varname$.unio._d
+>>
+
+interfaceUnionOperation(operation, varname) ::= <<
+$varname$.unio.$operation.name$
+>>
+
 replyUnionDiscriminator(varname) ::= <<
 $varname$.unio._d
 >>
 
+replyUnionDiscriminatorByInterface(operation, varname) ::= <<
+$varname$.unio._u.$operation.name$._d
+>>
+
 replyUnionData(varname, dataname) ::= <<
 $varname$.unio._u.$dataname$
+>>
+
+replyUnionDataByInterface(operation, varname, dataname) ::= <<
+$varname$.unio._u.$operation.name$.$dataname$
 >>
 
 eprosimaTypesBool() ::= <<false>>

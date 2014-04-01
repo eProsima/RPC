@@ -204,6 +204,20 @@ public class Operation implements Export, Notebook
     {
         return m_annotations;
     }
+
+    // Function used in string templates
+    public int getCardinal()
+    {
+        if(m_parent instanceof Interface)
+        {
+            Interface ifc = (Interface)m_parent;
+            return ifc.getOperationCardinal(this);
+        }
+        else
+        {
+            throw new RuntimeException("ERROR<Operation::getCardinal>: Parent is not an interface.");
+        }
+    }
     
     ////////// RESTful block //////////
     

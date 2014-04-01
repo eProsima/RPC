@@ -1,4 +1,4 @@
-group AsyncSupportHeader;
+group AsyncSupportHeaderByInterface;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
@@ -85,7 +85,7 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpcdds::tr
         
         $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
 
-        $operation.parent.name$_$operation.name$Reply m_reply;
+        $operation.parent.name$Reply m_reply;
 };
 
 $endif$

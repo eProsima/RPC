@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-group TopicsHeader;
+group TopicsHeaderByOperation;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$

@@ -1,0 +1,144 @@
+group AsyncSupportSourceByInterface;
+
+main(ctx, definitions) ::= <<
+$fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
+
+#include "$ctx.filename$DDSAsyncSupport.h"
+#include "rpcdds/exceptions/ServerInternalException.h"
+#include "rpcdds/utils/Messages.h"
+$if(ctx.rtiTypes)$
+$ReqRepIncludes(filename=ctx.filename)$
+
+$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
+#include "$ctx.filename$Exceptions.h"
+$endif$
+
+
+using namespace eprosima::rpcdds;
+using namespace ::exception;
+
+$definitions; separator="\n"$
+>>
+
+module(ctx, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$if(!operation.oneway)$
+$operation.parent.name$_$operation.name$Task::$operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj) :
+    DDSAsyncTask(), m_obj(obj)
+{
+    $varComplexInitializeT(typeName=[operation.parent.name, "Reply"], name="m_reply")$
+}
+
+$operation.parent.name$_$operation.name$Task::~$operation.parent.name$_$operation.name$Task()
+{
+    $varComplexDelT(typeName=[operation.parent.name, "Reply"], name="m_reply")$
+}
+
+$operation.parent.name$_$operation.name$CallbackHandler& $operation.parent.name$_$operation.name$Task::getObject()
+{
+    return m_obj;
+}
+
+void* $operation.parent.name$_$operation.name$Task::getReplyInstance()
+{
+    return &m_reply;
+}
+
+void $operation.parent.name$_$operation.name$Task::execute()
+{  
+    $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam)$
+    ReturnMessage retcode = OPERATION_SUCCESSFUL;
+    
+    $if(operation.exceptions)$
+    switch ($replyUnionDiscriminatorByInterface(operation=operation, varname="m_reply")$)
+    {
+        case 0:
+            retcode = (ReturnMessage)$getHeaderRetCode(varname="m_reply")$;
+            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyUnionDataByInterface(operation=operation, varname="m_reply", dataname="st"), isReply="yes")$};separator="\n"$
+            if(retcode == OPERATION_SUCCESSFUL)
+		    {
+		        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+		    }
+		    else
+		    {
+		        if(retcode == SERVER_INTERNAL_ERROR)
+		            getObject().on_exception(ServerInternalException($getHeaderRetMsg(varname="m_reply")$));
+		    }
+            break;
+        $operation.exceptions : { exception |
+        case $i$:
+            {
+            $exception.scopedname$ ex;
+            // TODO No permite arrays
+            $exception.members : { member |$extractExceptionMemberFromTopicByInterface(exception=exception, member=member, varname=interfaceUnionOperation(operation=operation, varname="m_reply"))$}; separator="\n"$
+
+            getObject().on_exception(ex);
+            }
+        }; separator="\n"$
+    }
+    $else$
+    retcode = (ReturnMessage)$getHeaderRetCode(varname="m_reply")$;
+    $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=interfaceUnionOperation(operation=operation, varname="m_reply"), isReply="yes")$};separator="\n"$
+        
+    if(retcode == OPERATION_SUCCESSFUL)
+    {
+        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+    }
+    else
+    {
+        if(retcode == SERVER_INTERNAL_ERROR)
+            getObject().on_exception(ServerInternalException($getHeaderRetMsg(varname="m_reply")$));
+    }
+    $endif$
+}
+
+void $operation.parent.name$_$operation.name$Task::on_exception(const SystemException &ex)
+{
+    getObject().on_exception(ex);
+}
+
+$if(operation.exceptions)$
+void $operation.parent.name$_$operation.name$Task::on_exception(const UserException &ex)
+{
+    getObject().on_exception(ex);
+}
+$endif$
+
+$endif$
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

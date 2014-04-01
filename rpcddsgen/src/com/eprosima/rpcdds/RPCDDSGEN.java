@@ -109,7 +109,17 @@ public class RPCDDSGEN
         EPROSIMA,
         RTI
     };
+
     private DDS_TYPES m_types = DDS_TYPES.EPROSIMA; // Default our types
+
+    // Used to know who DDS Topics generation mode will be used.
+    public enum DDS_TOPIC_MODE
+    {
+        BY_OPERATION,
+        BY_INTERFACE
+    }
+
+    private DDS_TOPIC_MODE m_mode = DDS_TOPIC_MODE.BY_OPERATION; // Default DDS topic creation mode.
     
     private final String m_defaultOutputDir = "." + File.separator;
     private String m_outputDir = m_defaultOutputDir;
@@ -132,6 +142,11 @@ public class RPCDDSGEN
         new VSConfiguration("Release DLL", "Win32", false, true),
         new VSConfiguration("Debug", "Win32", true, false),
         new VSConfiguration("Release", "Win32", false, false)};
+
+    // Options
+    private static final String TOPIC_GENERATION_OPTION = "-topicGeneration";
+    private static final String TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION = "byOperation";
+    private static final String TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE = "byInterface";
     
     public RPCDDSGEN(String[] args) throws BadArgumentException
     {
@@ -259,6 +274,22 @@ public class RPCDDSGEN
                 }
                 else
                     throw new BadArgumentException("Any value after -types argument");
+            }
+            else if(arg.equalsIgnoreCase(TOPIC_GENERATION_OPTION))
+            {
+                if(count < args.length)
+                {
+                    String mode = args[count++];
+
+                    if(mode.equalsIgnoreCase(TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION))
+                        m_mode = DDS_TOPIC_MODE.BY_OPERATION;
+                    else if(mode.equalsIgnoreCase(TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE))
+                        m_mode = DDS_TOPIC_MODE.BY_INTERFACE;
+                    else
+                        throw new BadArgumentException("Unknown value " + mode + " for " + TOPIC_GENERATION_OPTION + " option");
+                }
+                else
+                    throw new BadArgumentException("Any value after " + TOPIC_GENERATION_OPTION + " argument");
             }
             else if(arg.equals("-version"))
             {
@@ -991,10 +1022,10 @@ public class RPCDDSGEN
                 tmanager.addGroup("TypesHeader");
                 tmanager.addGroup("TypesSource");
                 // Load template to generate topics for operations.
-                tmanager.addGroup("TopicsHeader");
-                tmanager.addGroup("TopicsSource");
-                tmanager.addGroup("TopicsPluginHeader");
-                tmanager.addGroup("TopicsPluginSource");
+                tmanager.addGroup("TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+                tmanager.addGroup("TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+                tmanager.addGroup("TopicsPluginHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+                tmanager.addGroup("TopicsPluginSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
             }
             else if(m_types == DDS_TYPES.RTI)
             {
@@ -1009,8 +1040,8 @@ public class RPCDDSGEN
             }
 	        // Load template to generate the DDS protocol.
 	        tmanager.addGroup("ProtocolHeader");
-	        tmanager.addGroup("DDSProtocolHeader");
-	        tmanager.addGroup("DDSProtocolSource");
+	        tmanager.addGroup("DDSProtocolHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+	        tmanager.addGroup("DDSProtocolSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
 	        // Load template to generate Proxy for topics.
 	        tmanager.addGroup("ProxyHeader");
 	        tmanager.addGroup("ProxySource");
@@ -1018,8 +1049,8 @@ public class RPCDDSGEN
 	        tmanager.addGroup("DDSClientExample");
 	        // Load template to generate proxy async support files.
 	        tmanager.addGroup("AsyncCallbackHandlers");
-	        tmanager.addGroup("DDSAsyncSupportHeader");
-	        tmanager.addGroup("DDSAsyncSupportSource");
+	        tmanager.addGroup("DDSAsyncSupportHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+	        tmanager.addGroup("DDSAsyncSupportSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
 	        // Load template to generate Server for topics.
 	        tmanager.addGroup("ServerHeader");
 	        tmanager.addGroup("ServerSource");
@@ -1087,9 +1118,9 @@ public class RPCDDSGEN
 	                {
 	            		if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".cxx", maintemplates.getTemplate("TypesSource"), m_replace))
                         {
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate("TopicsPluginHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                             {	
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource"), m_replace))
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate("TopicsPluginSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                                 {	
                                     project.addCommonIncludeFile(onlyFileName + ".h");
                                     project.addCommonSrcFile(onlyFileName + ".cxx");
@@ -1125,9 +1156,9 @@ public class RPCDDSGEN
                     // Generate file using our types.
                     if(m_types == DDS_TYPES.EPROSIMA)
                     {
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.h", maintemplates.getTemplate("TopicsHeader"), m_replace))
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.h", maintemplates.getTemplate("TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                         {	
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("TopicsSource"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                             {	
                                 project.addCommonIncludeFile(onlyFileName + "Topics.h");
                                 project.addCommonSrcFile(onlyFileName + "Topics.cxx");
@@ -1137,15 +1168,15 @@ public class RPCDDSGEN
 
                     if(returnedValue && (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace)))
                     {
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader"), m_replace))
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                         {
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                             {
                                 if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
                                 {
-                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader"), m_replace))
+                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.h", maintemplates.getTemplate("DDSProtocolHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                                     {
-                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource"), m_replace);
+                                        returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSProtocol.cxx", maintemplates.getTemplate("DDSProtocolSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace);
 
                                         project.addCommonIncludeFile(onlyFileName + "Protocol.h");
                                         project.addCommonIncludeFile(onlyFileName + "DDSProtocol.h");
@@ -1881,6 +1912,7 @@ public class RPCDDSGEN
         return outputfile;
     }
 
+    // TODO Review: -types and -topicGeneration.
     public static void printHelp()
     {
         System.out.println("rpcddsgen usage:");

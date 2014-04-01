@@ -1,4 +1,4 @@
-group DDSProtocolHeader;
+group DDSProtocolHeaderByOperation;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
