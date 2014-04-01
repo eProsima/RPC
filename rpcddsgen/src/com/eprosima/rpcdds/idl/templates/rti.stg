@@ -154,6 +154,15 @@ $endif$
 $endif$
 >>
 
+addExceptionMemberToTopicByInterface(operation, exception, member, varname) ::= <<
+$if(member.typecode.isType_f)$
+memcpy($varname$.unio._u.$operation.name$._u.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
+$else$
+$varname$.unio._u.$operation.name$._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
+$endif$
+$endif$
+>>
+
 extractParamFromTopic(param, varname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$
@@ -355,7 +364,7 @@ $varname$.unio._d
 >>
 
 interfaceUnionOperation(operation, varname) ::= <<
-$varname$.unio.$operation.name$
+$varname$.unio._u.$operation.name$
 >>
 
 replyUnionDiscriminator(varname) ::= <<
@@ -371,7 +380,7 @@ $varname$.unio._u.$dataname$
 >>
 
 replyUnionDataByInterface(operation, varname, dataname) ::= <<
-$varname$.unio._u.$operation.name$.$dataname$
+$varname$.unio._u.$operation.name$._u.$dataname$
 >>
 
 eprosimaTypesBool() ::= <<false>>

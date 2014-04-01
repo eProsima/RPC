@@ -119,7 +119,7 @@ public class RPCDDSGEN
         BY_INTERFACE
     }
 
-    private DDS_TOPIC_MODE m_mode = DDS_TOPIC_MODE.BY_OPERATION; // Default DDS topic creation mode.
+    private DDS_TOPIC_MODE m_mode = DDS_TOPIC_MODE.BY_INTERFACE; // Default DDS topic creation mode.
     
     private final String m_defaultOutputDir = "." + File.separator;
     private String m_outputDir = m_defaultOutputDir;
@@ -1033,7 +1033,7 @@ public class RPCDDSGEN
                 // Load template to generate the supported IDL to RTI.
                 tmanager.addGroup("rtiIDL");
                 // Load template to generate IDL for topics.
-                tmanager.addGroup("TopicsIDL");
+                tmanager.addGroup("TopicsIDL" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
                 // Load template to generate source exception types.
                 tmanager.addGroup("RTIExceptionsHeader");
                 tmanager.addGroup("RTIExceptionsSource");
@@ -1136,7 +1136,7 @@ public class RPCDDSGEN
                     // Generate the supported IDL to RTI.
                     if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true))
                     {
-                        if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL"), true))
+                        if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), true))
                         {	
                             // Zone used to write all files using the generated string templates.
                             if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.h", maintemplates.getTemplate("RTIExceptionsHeader"), m_replace))

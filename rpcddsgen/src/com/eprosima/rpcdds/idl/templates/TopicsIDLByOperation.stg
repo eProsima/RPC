@@ -1,4 +1,4 @@
-group TopicsIDL;
+group TopicsIDLByOperation;
 
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RequestReply.idl"], description=["This IDL file contains the definition of the DDS messages for all defined interfaces by the user."])$
