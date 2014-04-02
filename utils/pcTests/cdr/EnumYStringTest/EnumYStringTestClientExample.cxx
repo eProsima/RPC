@@ -13,6 +13,7 @@
  */
 
 #include "EnumYStringTestProxy.h"
+#include "EnumYStringTest.h"
 #include "EnumYStringTestCDRProtocol.h"
 #include "rpcdds/transports/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -67,19 +68,19 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char*  s1  = DDS::String_dup("PRUEBA");       
-    char*  s2  = DDS::String_dup("PRUEBA2");       
-    char*  s3  = NULL;    
-    char*  getStringRetValue = NULL;       
+    std::string s1 = "PRUEBA";       
+    std::string s2 = "PRUEBA2";       
+    std::string s3;    
+    std::string getStringRetValue;       
 
     try
     {
         getStringRetValue = proxy->getString(s1, s2, s3);
 
-        if(strcmp(s3, "PRUEBA2") != 0 ||
-                strcmp(getStringRetValue, "PRUEBA") != 0 ||
-                strcmp(s2, "PRUEBAPRUEBA2") != 0 ||
-                strcmp(s1, "PRUEBA") != 0)
+        if(s3.compare("PRUEBA2") != 0 ||
+                getStringRetValue.compare("PRUEBA") != 0 ||
+                s2.compare("PRUEBAPRUEBA2") != 0 ||
+                s1.compare("PRUEBA") != 0)
         {
             std::cout << "TEST FAILED<getString>: Wrong values" << std::endl;
             _exit(-1);
@@ -91,24 +92,19 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(s1 != NULL) DDS::String_free(s1);    
-    if(s2 != NULL) DDS::String_free(s2);    
-    if(s3 != NULL) DDS::String_free(s3);    
-    if(getStringRetValue != NULL) DDS::String_free(getStringRetValue);    
-
-    char*  sb1  = DDS::String_dup("PRUEBA");       
-    char*  sb2  = DDS::String_dup("PRUEBA2");       
-    char*  sb3  = NULL;    
-    char*  getStringBoundedRetValue = NULL;       
+    std::string sb1 = "PRUEBA";       
+    std::string sb2 = "PRUEBA2";       
+    std::string sb3;    
+    std::string getStringBoundedRetValue;       
 
     try
     {
         getStringBoundedRetValue = proxy->getStringBounded(sb1, sb2, sb3);
 
-        if(strcmp(sb3, "PRUEBA2") != 0 ||
-                strcmp(getStringBoundedRetValue, "PRUEBA") != 0 ||
-                strcmp(sb2, "PRUEBAPRUEBA2") != 0 ||
-                strcmp(sb1, "PRUEBA") != 0)
+        if(sb3.compare("PRUEBA2") != 0 ||
+                getStringBoundedRetValue.compare("PRUEBA") != 0 ||
+                sb2.compare("PRUEBAPRUEBA2") != 0 ||
+                sb1.compare("PRUEBA") != 0)
         {
             std::cout << "TEST FAILED<getStringBounded>: Wrong values" << std::endl;
             _exit(-1);
@@ -119,11 +115,6 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<getStringBounded>: " << ex.what() << std::endl;
         _exit(-1);
     }
-
-    if(sb1 != NULL) DDS::String_free(sb1);    
-    if(sb2 != NULL) DDS::String_free(sb2);    
-    if(sb3 != NULL) DDS::String_free(sb3);    
-    if(getStringBoundedRetValue != NULL) DDS::String_free(getStringBoundedRetValue);
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

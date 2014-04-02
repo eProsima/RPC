@@ -173,7 +173,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
-#rm -r output
+rm -r output
 
 # Remove symbolic link
 if [ -e ../../../include/rpcdds/eProsima_cpp ]; then

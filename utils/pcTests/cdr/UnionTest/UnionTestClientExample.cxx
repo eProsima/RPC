@@ -13,6 +13,7 @@
  */
 
 #include "UnionTestProxy.h"
+#include "UnionTest.h"
 #include "UnionTestCDRProtocol.h"
 #include "rpcdds/transports/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -48,24 +49,17 @@ int main(int argc, char **argv)
     Empleado em3;
     Empleado getEmpleado_ret;
 
-    Empleado_initialize(&em1);    
-    Empleado_initialize(&em2);    
-    Empleado_initialize(&em3);    
-    Empleado_initialize(&getEmpleado_ret);    
-
-    em1._d = 1;
-    em1._u.id = 1;
-    em2._d = 2;
-    em2._u.name = DDS::String_dup("PRUEBA");
+    em1.id(1);
+    em2.name("PRUEBA");
 
     try
     {
         getEmpleado_ret = proxy->getEmpleado(em1, em2, em3);
 
-        if(em3._d != 2 || strcmp(em3._u.name, "PRUEBA") != 0 ||
-                getEmpleado_ret._d != 1 || getEmpleado_ret._u.id != 1 ||
-                em2._d != 1 || em2._u.id != 1 ||
-                em1._d != 1 || em1._u.id != 1)
+        if(em3._d() != 2 || em3.name().compare("PRUEBA") != 0 ||
+                getEmpleado_ret._d() != 1 || getEmpleado_ret.id() != 1 ||
+                em2._d() != 1 || em2.id() != 1 ||
+                em1._d() != 1 || em1.id() != 1)
         {
             std::cout << "TEST FAILED<getEmpleado>: Wrong values" << std::endl;
             _exit(-1);
@@ -77,10 +71,35 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    Empleado_finalize(&em1);    
-    Empleado_finalize(&em2);    
-    Empleado_finalize(&em3);    
-    Empleado_finalize(&getEmpleado_ret);    
+    UnionTest::Jefe je1;
+    UnionTest::Jefe je2;
+    UnionTest::Jefe je3;
+    UnionTest::Jefe getJefe_ret;
+
+    je1.name("PRUEBA");
+    je2._d() = UnionTest::SATAN;
+    je2.seq().push_back(1);
+    je2.seq().push_back(2);
+
+    try
+    {
+        getJefe_ret = proxy->getJefe(je1, je2, je3);
+
+        if(je3._d() != UnionTest::SATAN || je3.seq().size() != 2 ||
+                je3.seq()[0] != 1 || je3.seq()[1] != 2 ||
+                getJefe_ret._d() != UnionTest::MALO || getJefe_ret.name().compare("PRUEBA") != 0 ||
+                je2._d() != UnionTest::MALO || je2.name().compare("PRUEBA") != 0 ||
+                je1._d() != UnionTest::MALO || je1.name().compare("PRUEBA") != 0)
+        {
+            std::cout << "TEST FAILED<getJefe>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout <<  "TEST FAILED<getJefe>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

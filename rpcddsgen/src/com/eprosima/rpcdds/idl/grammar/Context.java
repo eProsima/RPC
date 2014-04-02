@@ -641,6 +641,23 @@ public class Context
         return false;
     }
 
+    public boolean isCdr()
+    {
+        if(m_protocol == RPCDDSGEN.PROTOCOL.DDS &&
+                m_ddstypes == RPCDDSGEN.DDS_TYPES.EPROSIMA)
+            return true;
+
+        return false;
+    }
+
+    public boolean isFastcdr()
+    {
+        if(m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR)
+            return true;
+
+        return false;
+    }
+
     public boolean isRtiTypes()
     {
         return m_ddstypes == RPCDDSGEN.DDS_TYPES.RTI;

@@ -93,8 +93,8 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
                     }
                 }
 
-                eprosima::FastBuffer dcdrBuffer((char*)data, bufferUse);
-                eprosima::FastCdr dcdr(dcdrBuffer);
+                eprosima::FastBuffer cdrBuffer((char*)data, bufferUse);
+                eprosima::FastCdr dcdr(cdrBuffer);
 
                 dcdr.jump(8);
                 int32_t code = -2;
@@ -197,18 +197,7 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<
-void eprosima::rpcdds::protocol::cdr::serialize(eprosima::FastCdr &scdr, const $exception.scopedname$ &x)
-{
-    $exception.members:{$member_serialization(it)$}; separator="\n"$
-}
-
-void eprosima::rpcdds::protocol::cdr::deserialize(eprosima::FastCdr &dcdr, $exception.scopedname$ &x)
-{  
-    $exception.members:{$member_deserialization(it)$}; separator="\n"$
-}
-
->>
+exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $if(ctx.client)$
@@ -216,7 +205,6 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 {
     const char* const interface_name = "$operation.parent.scopedname$";
     const char* const operation_name = "$operation.name$";
-    ReturnMessage retcode =CLIENT_INTERNAL_ERROR;
     // TODO In DDS the initialization is not necessary. But in CDR it is, for example a union with a char* (string) needs to be initialized to NULL.
     $varDecl(variable=operation.rettypeparam)$
     
@@ -227,7 +215,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     scdr.serialize(interface_name);
     scdr.serialize(operation_name);
     $operation.inputparam : {param |
-    $serialization(obj=param)$
+    $object_serialization(object=param)$
     };separator="\n"$
     
     char *buffer = serializeBuffer.getBuffer();
@@ -269,8 +257,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
                     
                     if(retCode >= 0 && responseBufferUse >= cdrLength)
                     {
-                        eprosima::FastBuffer dcdrBuffer(response, responseBufferUse);
-                        eprosima::FastCdr dcdr(dcdrBuffer);
+                        eprosima::FastBuffer cdrBuffer(response, responseBufferUse);
+                        eprosima::FastCdr dcdr(cdrBuffer);
                         
                         dcdr.jump(8);
                         int32_t code = -2;
@@ -291,25 +279,31 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
                                 switch(excode)
                                 {
                                     case 0:
+                                        {
                                         $[operation.outputparam, operation.rettypeparam] : {param |
-                                            $deserialization(obj=param)$
+                                        $object_deserialization(object=param)$
                                         };separator="\n"$
+                                        }
+
+                                        break;
                                     $operation.exceptions : { exception |
                                     case $i$:
-                                    {
+                                        {
                                         $exception.scopedname$ ex;
                                         // TODO No permite arrays.
-                                        deserialize(dcdr, ex);
+                                        dcdr \>> ex;
 
                                         ex.raise();
-                                    }
+                                        }
+
+                                        break;
                                     }; separator="\n"$
                                     default:
                                         throw ClientInternalException("Error extracting information from server");
                                 }
                                 $else$
                                 $[operation.outputparam, operation.rettypeparam] : {param |
-                                $deserialization(obj=param)$
+                                $object_deserialization(object=param)$
                                 };separator="\n"$
                                 $endif$
                             }
@@ -380,40 +374,9 @@ const_decl(ctx, const) ::= <<>>
 
 typedef_decl(ctx, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<
-void eprosima::rpcdds::protocol::cdr::serialize(eprosima::FastCdr &scdr, const $struct.scopedname$ &x)
-{
-    $struct.members:{$member_serialization(it)$}; separator="\n"$
-}
+struct_type(ctx, struct) ::= <<>>
 
-void eprosima::rpcdds::protocol::cdr::deserialize(eprosima::FastCdr &dcdr, $struct.scopedname$ &x)
-{  
-    $struct.members:{$member_deserialization(it)$}; separator="\n"$
-}
-
->>
-
-union_type(ctx, union) ::= <<
-void eprosima::rpcdds::protocol::cdr::serialize(eprosima::FastCdr &scdr, const $union.scopedname$ &x)
-{ 
-    scdr.serialize(x._d);
-    
-    switch(x._d)
-    {
-        $union.members:{$unionmember_case_selection_se(it)$}; separator="\n"$
-    }
-}
-
-void eprosima::rpcdds::protocol::cdr::deserialize(eprosima::FastCdr &dcdr, $union.scopedname$ &x)
-{
-    dcdr.deserialize(x._d);
-
-    switch(x._d)
-    {
-        $union.members:{$unionmember_case_selection_de(it)$}; separator="\n"$
-    }
-}
->>
+union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
 
@@ -425,7 +388,7 @@ $varDecl(variable=operation.rettypeparam)$
 $operation.inputparam : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
 
 $operation.inputparam : {param |
-$deserialization(obj=param)$
+$object_deserialization(object=param)$
 };separator="\n"$
 
 try
@@ -439,9 +402,13 @@ try
     scdr.serialize((int32_t)1);
     scdr.serialize("$operation.parent.scopedname$");
     scdr.serialize("$operation.name$");
+
+    $if(operation.exceptions)$
+    scdr.serialize((int32_t)0);
+    $endif$
     
     $[operation.outputparam, operation.rettypeparam] : {param |
-    $serialization(obj=param)$
+    $object_serialization(object=param)$
     };separator="\n"$
     
     char *buffer = scdrBuffer.getBuffer();
@@ -460,8 +427,8 @@ catch(const $exception.scopedname$ &ex)
     scdr.serialize((int32_t)1);
     scdr.serialize("$operation.parent.scopedname$");
     scdr.serialize("$operation.name$");
-    scdr.serialize($i$);
-    serialize(scdr, ex);
+    scdr.serialize((int32_t)$i$);
+    scdr << ex;
     
     char *buffer = scdrBuffer.getBuffer();
     ((int32_t*)buffer)[0] = 0x46434452;
@@ -490,145 +457,3 @@ catch(const ServerInternalException &ex)
 $[operation.parameters, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
 
 >>
-
-member_serialization(member) ::= <<
-$serialization(obj=member, prefix="x.")$
->>
-
-member_deserialization(member) ::= <<
-$deserialization(obj=member, prefix="x.")$
->>
-
-unionmember_case_selection_se(member) ::= <<
-$member.labels:{case $it$:}; separator="\n"$
-$if(member.default)$
-default:$\n$
-$endif$
-$serialization(obj=it, prefix="x._u.")$
-break;
->>
-
-unionmember_case_selection_de(member) ::= <<
-$member.labels:{case $it$:}; separator="\n"$
-$if(member.default)$
-default:$\n$
-$endif$
-$deserialization(obj=it, prefix="x._u.")$
-break;
->>
-
-// TODO String type in RTI is char*, then we have to change the sizeFunction with strlen.
-serialization(obj, prefix) ::= <<
-$if(obj.typecode.maxsize)$
-$if(obj.typecode.isType_d)$
-if(strlen($prefix$$obj.name$) <= $obj.typecode.maxsize$)
-
-$else$
-if($prefix$$obj.name$.$sizeFunction.(obj.typecode.stType)$ <= $obj.typecode.maxsize$)
-    
-$endif$
-$endif$
-$if(obj.typecode.isType_e)$
-$if(obj.typecode.contentTypeCode.primitive)$
-scdr.serializeSequence($prefix$$obj.name$.get_contiguous_buffer(), $prefix$$obj.name$.length());
-$else$
-scdr.serialize((uint32_t)$prefix$$obj.name$.length());
-$if(obj.typecode.contentTypeCode.isType_d)$
-for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
-   scdr.serialize($prefix$$obj.name$.get_at(count));
-$else$
-for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
-   serialize(scdr, $prefix$$obj.name$.get_at(count));
-$endif$
-$endif$
-$else$
-$serializeFunction.(obj.typecode.stType)$$primitiveCastingType.(obj.typecode.stType)$$prefix$$obj.name$);
-$endif$
-$if(obj.typecode.maxsize)$
-else
-    throw eprosima::BadParamException(std::string("The maximum length was exceeded"));
-$endif$
->>
-
-deserialization(obj, prefix) ::= <<
-$if(obj.typecode.isType_e)$
-uint32_t $obj.name$SeqLength;
-dcdr.deserialize($obj.name$SeqLength);
-$prefix$$obj.name$.ensure_length($obj.name$SeqLength, $obj.name$SeqLength);
-$if(obj.typecode.contentTypeCode.primitive)$
-dcdr.deserializeArray($prefix$$obj.name$.get_contiguous_buffer(), $obj.name$SeqLength);
-$else$
-$if(obj.typecode.contentTypeCode.isType_d)$
-for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
-   dcdr.deserialize($prefix$$obj.name$[count]);
-$else$
-for(int count = 0; count < $prefix$$obj.name$.length(); ++count)
-   deserialize(dcdr, $prefix$$obj.name$[count]);
-$endif$
-$endif$
-$else$
-$deserializeFunction.(obj.typecode.stType)$$primitiveCastingType.(obj.typecode.stType)$$prefix$$obj.name$);
-$endif$
->>
-
-primitiveCasting(param) ::= <<
-$primitiveCastingType.(param.typecode.stType)$
->>
-
-serializeFunction ::= [
-        "type_5":"scdr.serialize(",
-        "type_6":"scdr.serialize(",
-        "type_13":"scdr.serialize(",
-        "type_1":"scdr.serialize(",
-        "type_2":"scdr.serialize(",
-        "type_11":"scdr.serialize(",
-        "type_3":"scdr.serialize(",
-        "type_4":"scdr.serialize(",
-        "type_12":"scdr.serialize(",
-        "type_8":"scdr.serialize(",
-        "type_14":"scdr.serialize(",
-        "type_7":"scdr.serialize(",
-        "type_9":"scdr.serialize(",
-        "type_f":"scdr.serialize(",
-        "type_e":"scdr.serializeSequence(", // Not used because there is a condition to type_e
-        "type_d":"scdr.serialize(",
-        "type_15":"scdr.serialize(",
-        "type_c":"scdr.serialize(",
-        default: "serialize(scdr, " // not basic type.
-]
-
-deserializeFunction ::= [
-        "type_5":"dcdr.deserialize(",
-        "type_6":"dcdr.deserialize(",
-        "type_13":"dcdr.deserialize(",
-        "type_1":"dcdr.deserialize(",
-        "type_2":"dcdr.deserialize(",
-        "type_11":"dcdr.deserialize(",
-        "type_3":"dcdr.deserialize(",
-        "type_4":"dcdr.deserialize(",
-        "type_12":"dcdr.deserialize(",
-        "type_8":"dcdr.deserialize(",
-        "type_14":"dcdr.deserialize(",
-        "type_7":"dcdr.deserialize(",
-        "type_9":"dcdr.deserialize(",
-        "type_f":"dcdr.deserialize(",
-        "type_e":"dcdr.deserializeSequence(", // Not used because there is a condition to type_e
-        "type_d":"dcdr.deserialize(",
-        "type_15":"dcdr.deserialize(",
-        "type_c":"dcdr.deserialize(",
-        default: "deserialize(dcdr, " // not basic type.
-]
-
-primitiveCastingType ::= [
-        "type_11":"(int64_t&)", // Needed for RTI LongLong
-        "type_12":"(uint64_t&)", // Needed for RTI ULongLong
-        "type_c":"(uint32_t&)",
-        default: // not casting
-]
-
-sizeFunction ::= [
-        "type_e":"length()",
-        "type_d":"length()",
-        "type_15":"length()",
-        default: // not basic type.
-]

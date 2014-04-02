@@ -94,18 +94,18 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Request::serialize(eprosima::Cdr &cdr) const
+void $operation.parent.scopedname$_$operation.name$Request::serialize(eprosima::Cdr &scdr) const
 {
-    cdr << m__header;
+    scdr << m__header;
 
-    $operation.inputparam : { param |$object_serialization(object=param)$}; separator="\n"$
+    $operation.inputparam : { param |$object_serialization(object=param, preffix="m_")$}; separator="\n"$
 }
 
-void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima::Cdr &cdr)
+void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima::Cdr &dcdr)
 {
-    cdr \>> m__header;
+    dcdr \>> m__header;
 
-    $operation.inputparam : { param |$object_deserialization(object=param)$}; separator="\n"$
+    $operation.inputparam : { param |$object_deserialization(object=param, preffix="m_")$}; separator="\n"$
 }
 
 $if(!operation.oneway)$
@@ -163,14 +163,14 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_st::getSerializedSize
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_st::serialize(eprosima::Cdr &cdr) const
+void $operation.parent.scopedname$_$operation.name$Reply_st::serialize(eprosima::Cdr &scdr) const
 {
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param, preffix="m_")$}; separator="\n"$
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosima::Cdr &cdr)
+void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosima::Cdr &dcdr)
 {
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param, preffix="m_")$}; separator="\n"$
 }
 
 $endif$
@@ -374,53 +374,53 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_union::getMaxCdrSeria
     return union_max_size_serialized;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosima::Cdr &cdr) const
+void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosima::Cdr &scdr) const
 {
-    cdr << m__d;
+    scdr << m__d;
 
     switch(m__d)
     {
         $if([operation.outputparam, operation.rettype])$
         case 0:
-            cdr << m_st;
+            scdr << m_st;
             break;
         $endif$
 
         $operation.exceptions : { exception |
         case $i$:
-            cdr << m_$exception.formatedScopedname$_ex;
+            scdr << m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
 
         default:
             $if([operation.outputparam, operation.rettype])$
-            cdr << m_st;
+            scdr << m_st;
             $endif$
             break;
     }
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(eprosima::Cdr &cdr)
+void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(eprosima::Cdr &dcdr)
 {
-    cdr \>> m__d;
+    dcdr \>> m__d;
 
     switch(m__d)
     {
         $if([operation.outputparam, operation.rettype])$
         case 0:
-            cdr \>> m_st;
+            dcdr \>> m_st;
             break;
         $endif$
 
         $operation.exceptions : { exception |
         case $i$:
-            cdr \>> m_$exception.formatedScopedname$_ex;
+            dcdr \>> m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
 
         default:
             $if([operation.outputparam, operation.rettype])$
-            cdr \>> m_st;
+            dcdr \>> m_st;
             $endif$
             break;
     }
@@ -479,16 +479,16 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(si
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &cdr) const
+void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &scdr) const
 {
-    cdr << m__header;
-    cdr << m_unio;
+    scdr << m__header;
+    scdr << m_unio;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &cdr)
+void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &dcdr)
 {
-    cdr \>> m__header;
-    cdr \>> m_unio;
+    dcdr \>> m__header;
+    dcdr \>> m_unio;
 }
 
 
@@ -548,18 +548,18 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(si
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &cdr) const
+void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &scdr) const
 {
-    cdr << m__header;
+    scdr << m__header;
 
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param, preffix="m_")$}; separator="\n"$
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &cdr)
+void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &dcdr)
 {
-    cdr \>> m__header;
+    dcdr \>> m__header;
 
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param)$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param, preffix="m_")$}; separator="\n"$
 }
 
 $endif$

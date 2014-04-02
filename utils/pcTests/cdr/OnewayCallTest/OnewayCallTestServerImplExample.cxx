@@ -14,45 +14,44 @@
 
 #include "OnewayCallTestServerImplExample.h"
 
-static DDS_Long l = 0;
-static DDS_Boolean b = RTI_FALSE;
-static char *s = NULL;
+static int32_t l = 0;
+static bool b = false;
+static std::string s;
 static Structure st;
  
-void OnewayCallTestServerImplExample::setLong(/*in*/ DDS_Long lo1) 
+void OnewayCallTestServerImplExample::setLong(/*in*/ int32_t lo1) 
 {
 	l = lo1;
 } 
  
-DDS_Long OnewayCallTestServerImplExample::getLong() 
+int32_t OnewayCallTestServerImplExample::getLong() 
 {
     return l;
 } 
  
-void OnewayCallTestServerImplExample::setBoolean(/*in*/ DDS_Boolean bo1) 
+void OnewayCallTestServerImplExample::setBoolean(/*in*/ bool bo1) 
 {
     b = bo1;
 } 
  
-DDS_Boolean OnewayCallTestServerImplExample::getBoolean() 
+bool OnewayCallTestServerImplExample::getBoolean() 
 {
     return b;
 } 
  
-void OnewayCallTestServerImplExample::setString(/*in*/ const char* s1) 
+void OnewayCallTestServerImplExample::setString(/*in*/ const std::string& s1) 
 {
-    s = strdup(s1);
+    s = s1;
 } 
  
-char* OnewayCallTestServerImplExample::getString() 
+std::string OnewayCallTestServerImplExample::getString() 
 {
     return s;
 } 
  
 void OnewayCallTestServerImplExample::setStruct(/*in*/ const Structure& ev) 
 {
-    st.dato = ev.dato;
-    st.message = strdup(ev.message);
+    st = ev;
 } 
  
 Structure OnewayCallTestServerImplExample::getStruct() 

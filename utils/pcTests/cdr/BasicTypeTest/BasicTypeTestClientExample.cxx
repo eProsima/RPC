@@ -13,6 +13,7 @@
  */
 
 #include "BasicTypeTestProxy.h"
+#include "BasicTypeTest.h"
 #include "BasicTypeTestCDRProtocol.h"
 #include "rpcdds/transports/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -43,10 +44,10 @@ int main(int argc, char **argv)
         return -1;
     }
     
-    DDS_Octet  oc1 = 1;    
-    DDS_Octet  oc2 = 2;    
-    DDS_Octet  oc3 = 0;    
-    DDS_Octet  getOctetRetValue = 0;       
+    uint8_t  oc1 = oc1_value;    
+    uint8_t  oc2 = BasicTypeTest::oc2_value;    
+    uint8_t  oc3 = 0;    
+    uint8_t  getOctetRetValue = 0;       
 
     try
     {
@@ -67,10 +68,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Char  ch1 = 1;       
-    DDS_Char  ch2 = 2;       
-    DDS_Char  ch3 = 0;    
-    DDS_Char  getCharRetValue = 0;       
+    char  ch1 = ch1_value;       
+    char  ch2 = BasicTypeTest::ch2_value;       
+    char  ch3 = 0;    
+    char  getCharRetValue = 0;       
 
     try
     {
@@ -91,10 +92,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Wchar  wch1 = 1;       
-    DDS_Wchar  wch2 = 2;       
-    DDS_Wchar  wch3 = 0; 
-    DDS_Wchar  getWCharRetValue = 0;       
+    wchar_t  wch1 = wch1_value;       
+    wchar_t  wch2 = BasicTypeTest::wch2_value;       
+    wchar_t  wch3 = 0; 
+    wchar_t  getWCharRetValue = 0;       
 
     try
     {
@@ -115,10 +116,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Short  sh1 = 1;       
-    DDS_Short  sh2 = 2;       
-    DDS_Short  sh3 = 0;    
-    DDS_Short  getShortRetValue = 0;       
+    int16_t  sh1 = sh1_value;       
+    int16_t  sh2 = BasicTypeTest::sh2_value;       
+    int16_t  sh3 = 0;    
+    int16_t  getShortRetValue = 0;       
 
     try
     {
@@ -139,10 +140,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedShort  ush1 = 1;       
-    DDS_UnsignedShort  ush2 = 2;       
-    DDS_UnsignedShort  ush3 = 0;    
-    DDS_UnsignedShort  getUShortRetValue = 0;       
+    uint16_t  ush1 = ush1_value;       
+    uint16_t  ush2 = BasicTypeTest::ush2_value;       
+    uint16_t  ush3 = 0;    
+    uint16_t  getUShortRetValue = 0;       
 
     try
     {
@@ -163,10 +164,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Long  lo1 = 1;       
-    DDS_Long  lo2 = 2;       
-    DDS_Long  lo3 = 0;    
-    DDS_Long  getLongRetValue = 0;       
+    int32_t  lo1 = lo1_value;       
+    int32_t  lo2 = BasicTypeTest::lo2_value;       
+    int32_t  lo3 = 0;    
+    int32_t  getLongRetValue = 0;       
 
     try
     {
@@ -187,10 +188,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedLong  ulo1 = 1;       
-    DDS_UnsignedLong  ulo2 = 2;       
-    DDS_UnsignedLong  ulo3 = 0;    
-    DDS_UnsignedLong  getULongRetValue = 0;       
+    uint32_t  ulo1 = ulo1_value;       
+    uint32_t  ulo2 = BasicTypeTest::ulo2_value;       
+    uint32_t  ulo3 = 0;    
+    uint32_t  getULongRetValue = 0;       
 
     try
     {
@@ -211,10 +212,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_LongLong  llo1 = 1;       
-    DDS_LongLong  llo2 = 2;       
-    DDS_LongLong  llo3 = 0;    
-    DDS_LongLong  getLLongRetValue = 0;       
+    int64_t  llo1 = llo1_value;       
+    int64_t  llo2 = BasicTypeTest::llo2_value;       
+    int64_t  llo3 = 0;    
+    int64_t  getLLongRetValue = 0;       
 
     try
     {
@@ -235,10 +236,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_UnsignedLongLong  ullo1 = 1;       
-    DDS_UnsignedLongLong  ullo2 = 2;       
-    DDS_UnsignedLongLong  ullo3 = 0;    
-    DDS_UnsignedLongLong  getULLongRetValue = 0;       
+    uint64_t  ullo1 = ullo1_value;       
+    uint64_t  ullo2 = BasicTypeTest::ullo2_value;       
+    uint64_t  ullo3 = 0;    
+    uint64_t  getULLongRetValue = 0;       
 
     try
     {
@@ -259,10 +260,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Float  fl1 = 1.0;       
-    DDS_Float  fl2 = 2.0;       
-    DDS_Float  fl3 = 0;    
-    DDS_Float  getFloatRetValue = 0;       
+    float  fl1 = fl1_value;       
+    float  fl2 = BasicTypeTest::fl2_value;       
+    float  fl3 = 0;    
+    float  getFloatRetValue = 0;       
 
     try
     {
@@ -283,10 +284,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Double  do1 = 1.0;       
-    DDS_Double  do2 = 2.0;       
-    DDS_Double  do3 = 0;    
-    DDS_Double  getDoubleRetValue = 0;       
+    double  do1 = do1_value;       
+    double  do2 = BasicTypeTest::do2_value;       
+    double  do3 = 0;    
+    double  getDoubleRetValue = 0;       
 
     try
     {
@@ -307,19 +308,19 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Boolean  bo1 = RTI_TRUE;       
-    DDS_Boolean  bo2 = RTI_FALSE;       
-    DDS_Boolean  bo3 = RTI_FALSE;    
-    DDS_Boolean  getBooleanRetValue = RTI_FALSE;       
+    bool  bo1 = bo1_value;       
+    bool  bo2 = BasicTypeTest::bo2_value;       
+    bool  bo3 = false;    
+    bool  getBooleanRetValue = false;       
 
     try
     {
         getBooleanRetValue = proxy->getBoolean(bo1, bo2, bo3);
 
-        if(bo3 != RTI_FALSE ||
-                getBooleanRetValue != RTI_TRUE ||
-                bo2 != RTI_TRUE ||
-                bo1 != RTI_TRUE)
+        if(bo3 != false ||
+                getBooleanRetValue != true ||
+                bo2 != true ||
+                bo1 != true)
         {
             std::cout << "TEST FAILED<getBoolean>: Wrong values" << std::endl;
             _exit(-1);

@@ -266,22 +266,22 @@ $interface.scopedname$RequestPlugin::serialize(
 {
     printf("=> $interface.scopedname$RequestPlugin::serialize\n");
     eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr cdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
-    cdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
-    cdr.jump(stream->_currentPosition - stream->_buffer);
+    eprosima::Cdr scdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    scdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
+    scdr.jump(stream->_currentPosition - stream->_buffer);
 
     if(serialize_encapsulation)
     {
-        cdr.changeEndianness((eprosima::Cdr::Endianness)(encapsulation_id & 0x1));
-        cdr.serialize_encapsulation();
-        cdr.resetAlignment();
+        scdr.changeEndianness((eprosima::Cdr::Endianness)(encapsulation_id & 0x1));
+        scdr.serialize_encapsulation();
+        scdr.resetAlignment();
     }
 
     if(serialize_sample)
     {
         try
         {
-            cdr << *sample;
+            scdr << *sample;
         }
         catch(eprosima::BadParamException ex)
         {
@@ -295,7 +295,7 @@ $interface.scopedname$RequestPlugin::serialize(
         }
     }
 
-    stream->_currentPosition = cdr.getCurrentPosition();
+    stream->_currentPosition = scdr.getCurrentPosition();
 
     return RTI_TRUE;
 }
@@ -313,22 +313,22 @@ $interface.scopedname$RequestPlugin::deserialize(
     printf("=> $interface.scopedname$RequestPlugin::deserialize\n");
     $interface.scopedname$Request *_sample = *sample;
     eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr cdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
-    cdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
-    cdr.jump(stream->_currentPosition - stream->_buffer);
+    eprosima::Cdr dcdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    dcdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
+    dcdr.jump(stream->_currentPosition - stream->_buffer);
 
     if(deserialize_encapsulation)
     {
-        cdr.read_encapsulation();
-        cdr.resetAlignment();
+        dcdr.read_encapsulation();
+        dcdr.resetAlignment();
     }
 
     if(deserialize_sample)
     {
-        cdr \>> *_sample;
+        dcdr \>> *_sample;
     }
 
-    stream->_currentPosition = cdr.getCurrentPosition();
+    stream->_currentPosition = dcdr.getCurrentPosition();
 
     return RTI_TRUE;
 }
@@ -853,22 +853,22 @@ $interface.scopedname$ReplyPlugin::serialize(
 {
     printf("=> $interface.scopedname$ReplyPlugin::serialize\n");
     eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr cdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
-    cdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
-    cdr.jump(stream->_currentPosition - stream->_buffer);
+    eprosima::Cdr scdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    scdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
+    scdr.jump(stream->_currentPosition - stream->_buffer);
 
     if(serialize_encapsulation)
     {
-        cdr.changeEndianness((eprosima::Cdr::Endianness)(encapsulation_id & 0x1));
-        cdr.serialize_encapsulation();
-        cdr.resetAlignment();
+        scdr.changeEndianness((eprosima::Cdr::Endianness)(encapsulation_id & 0x1));
+        scdr.serialize_encapsulation();
+        scdr.resetAlignment();
     }
 
     if(serialize_sample)
     {
         try
         {
-            cdr << *sample;
+            scdr << *sample;
         }
         catch(eprosima::BadParamException ex)
         {
@@ -882,7 +882,7 @@ $interface.scopedname$ReplyPlugin::serialize(
         }
     }
 
-    stream->_currentPosition = cdr.getCurrentPosition();
+    stream->_currentPosition = scdr.getCurrentPosition();
     return RTI_TRUE;
 }
 
@@ -899,22 +899,22 @@ $interface.scopedname$ReplyPlugin::deserialize(
     printf("=> $interface.scopedname$ReplyPlugin::deserialize\n");
     $interface.scopedname$Reply *_sample = *sample;
     eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr cdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
-    cdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
-    cdr.jump(stream->_currentPosition - stream->_buffer);
+    eprosima::Cdr dcdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    dcdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
+    dcdr.jump(stream->_currentPosition - stream->_buffer);
 
     if(deserialize_encapsulation)
     {
-        cdr.read_encapsulation();
-        cdr.resetAlignment();
+        dcdr.read_encapsulation();
+        dcdr.resetAlignment();
     }
 
     if(deserialize_sample)
     {
-        cdr \>> *_sample;
+        dcdr \>> *_sample;
     }
 
-    stream->_currentPosition = cdr.getCurrentPosition();
+    stream->_currentPosition = dcdr.getCurrentPosition();
     return RTI_TRUE;
 }
 

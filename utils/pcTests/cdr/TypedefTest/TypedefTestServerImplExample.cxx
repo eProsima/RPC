@@ -14,8 +14,6 @@
  
 #include "TypedefTestServerImplExample.h"
 
-#include "ndds/ndds_namespace_cpp.h"
- 
 largo TypedefTestServerImplExample::getLargo(/*in*/ largo l1, /*out*/ largo& l2) 
 {
     largo  getLargo_ret = 0;    
@@ -40,41 +38,47 @@ DatosDef TypedefTestServerImplExample::getDatosDef(/*in*/ const DatosDef& d1, /*
 {
     DatosDef getDatosDef_ret;
         
-	getDatosDef_ret.count = d1.count;
-	d2.count = d1.count;
-	getDatosDef_ret.message = DDS::String_dup(d1.message);
-	d2.message = DDS::String_dup(d1.message);
+	getDatosDef_ret = d1;
+	d2 = d1;
    
     return getDatosDef_ret;
+} 
+
+DatosDef2 TypedefTestServerImplExample::getDatosDef2(/*in*/ const DatosDef2& d21, /*out*/ DatosDef2& d22) 
+{
+    DatosDef2 getDatosDef2_ret;
+        
+	getDatosDef2_ret = d21;
+	d22 = d21;
+   
+    return getDatosDef2_ret;
 } 
  
 DatosDefondo TypedefTestServerImplExample::getDatosDefondo(/*in*/ const DatosDefondo& dd1, /*out*/ DatosDefondo& dd2) 
 {
     DatosDefondo getDatosDefondo_ret;
         
-	getDatosDefondo_ret.count = dd1.count;
-	dd2.count = dd1.count;
-	getDatosDefondo_ret.message = DDS::String_dup(dd1.message);
-	dd2.message = DDS::String_dup(dd1.message);
+	getDatosDefondo_ret = dd1;
+	dd2 = dd1;
    
     return getDatosDefondo_ret;
 } 
  
-cadena TypedefTestServerImplExample::getCadena(/*in*/ cadena c1, /*out*/ cadena& c2) 
+cadena TypedefTestServerImplExample::getCadena(/*in*/ const cadena& c1, /*out*/ cadena& c2) 
 {
-    cadena  getCadena_ret = NULL;    
+    cadena  getCadena_ret;    
    
-	getCadena_ret = DDS::String_dup(c1);
-	c2 = DDS::String_dup(c1);
+	getCadena_ret = c1;
+	c2 = c1;
     return getCadena_ret;
 } 
  
-correa TypedefTestServerImplExample::getCorrea(/*in*/ correa cc1, /*out*/ correa& cc2) 
+correa TypedefTestServerImplExample::getCorrea(/*in*/ const correa& cc1, /*out*/ correa& cc2) 
 {
-    correa  getCorrea_ret = NULL;    
+    correa  getCorrea_ret;    
    
-	getCorrea_ret = DDS::String_dup(cc1);
-	cc2 = DDS::String_dup(cc1);
+	getCorrea_ret = cc1;
+	cc2 = cc1;
 
     return getCorrea_ret;
 } 

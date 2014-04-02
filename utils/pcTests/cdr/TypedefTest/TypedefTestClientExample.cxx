@@ -13,6 +13,7 @@
  */
 
 #include "TypedefTestProxy.h"
+#include "TypedefTest.h"
 #include "TypedefTestCDRProtocol.h"
 #include "rpcdds/transports/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -90,20 +91,16 @@ int main(int argc, char **argv)
     DatosDef d2;    
     DatosDef getDatosDef_ret;       
 
-    DatosDef_initialize(&d1);
-    DatosDef_initialize(&d2);
-    DatosDef_initialize(&getDatosDef_ret);
-
-    d1.count = 1;
-    d1.message = DDS::String_dup("PRUEBA");;
+    d1.count(1);
+    d1.message("PRUEBA");
 
     try
     {
         getDatosDef_ret = proxy->getDatosDef(d1, d2);
 
-        if(d2.count != 1 || strcmp(d2.message, "PRUEBA") != 0 ||
-                getDatosDef_ret.count != 1 || strcmp(getDatosDef_ret.message, "PRUEBA") != 0 ||
-                d1.count != 1 || strcmp(d1.message, "PRUEBA") != 0)
+        if(d2.count() != 1 || d2.message().compare("PRUEBA") != 0 ||
+                getDatosDef_ret.count() != 1 || getDatosDef_ret.message().compare("PRUEBA") != 0 ||
+                d1.count() != 1 || d1.message().compare("PRUEBA") != 0)
         {
             std::cout << "TEST FAILED<getDatosDef>: Wrong values" << std::endl;
             _exit(-1);
@@ -115,28 +112,45 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DatosDef_finalize(&d1);    
-    DatosDef_finalize(&d2);    
-    DatosDef_finalize(&getDatosDef_ret);    
+    DatosDef2 d21;      
+    DatosDef2 d22;    
+    DatosDef2 getDatosDef2_ret;       
+
+    d21.count(2);
+    d21.message("PRUEBA2");
+
+    try
+    {
+        getDatosDef2_ret = proxy->getDatosDef2(d21, d22);
+
+        if(d22.count() != 2 || d22.message().compare("PRUEBA2") != 0 ||
+                getDatosDef2_ret.count() != 2 || getDatosDef2_ret.message().compare("PRUEBA2") != 0 ||
+                d21.count() != 2 || d21.message().compare("PRUEBA2") != 0)
+        {
+            std::cout << "TEST FAILED<getDatosDef>: Wrong values" << std::endl;
+            _exit(-1);
+        }
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << "TEST FAILED<getDatosDef>: " << ex.what() << std::endl;
+        _exit(-1);
+    }
 
     DatosDefondo dd1;       
     DatosDefondo dd2;    
     DatosDefondo getDatosDefondo_ret;       
 
-    DatosDefondo_initialize(&dd1);
-    DatosDefondo_initialize(&dd2);
-    DatosDefondo_initialize(&getDatosDefondo_ret);
-
-    dd1.count = 1;
-    dd1.message = DDS::String_dup("PRUEBA");
+    dd1.count(1);
+    dd1.message("PRUEBA");
 
     try
     {
         getDatosDefondo_ret = proxy->getDatosDefondo(dd1, dd2);
 
-        if(dd2.count != 1 || strcmp(dd2.message, "PRUEBA") != 0 ||
-                getDatosDefondo_ret.count != 1 || strcmp(getDatosDefondo_ret.message, "PRUEBA") != 0 ||
-                dd1.count != 1 || strcmp(dd1.message, "PRUEBA") != 0)
+        if(dd2.count() != 1 || dd2.message().compare("PRUEBA") != 0 ||
+                getDatosDefondo_ret.count() != 1 || getDatosDefondo_ret.message().compare("PRUEBA") != 0 ||
+                dd1.count() != 1 || dd1.message().compare("PRUEBA") != 0)
         {
             std::cout << "TEST FAILED<getDatosDef>: Wrong values" << std::endl;
             _exit(-1);
@@ -148,21 +162,17 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DatosDefondo_finalize(&dd1);    
-    DatosDefondo_finalize(&dd2);    
-    DatosDefondo_finalize(&getDatosDefondo_ret);    
-
-    cadena  c1  = DDS::String_dup("PRUEBA");       
-    cadena  c2  = NULL;    
-    cadena  getCadena_ret  = NULL;       
+    cadena c1  = "PRUEBA";       
+    cadena c2;    
+    cadena getCadena_ret;       
 
     try
     {
         getCadena_ret = proxy->getCadena(c1, c2);
 
-        if(strcmp(c2, "PRUEBA") != 0 ||
-                strcmp(getCadena_ret, "PRUEBA") != 0 ||
-                strcmp(c1, "PRUEBA") != 0)
+        if(c2.compare("PRUEBA") != 0 ||
+                getCadena_ret.compare("PRUEBA") != 0 ||
+                c1.compare("PRUEBA") != 0)
         {
             std::cout << "TEST FAILED<getCadena>: Wrong values" << std::endl;
             _exit(-1);
@@ -174,21 +184,17 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(c1 != NULL) DDS::String_free(c1);    
-    if(c2 != NULL) DDS::String_free(c2);    
-    if(getCadena_ret != NULL) DDS::String_free(getCadena_ret);    
-
-    correa  cc1  = DDS::String_dup("PRUEBA");       
-    correa  cc2  = NULL;    
-    correa  getCorrea_ret  = NULL;       
+    correa cc1 = "PRUEBA";       
+    correa cc2;    
+    correa getCorrea_ret;       
 
     try
     {
         getCorrea_ret = proxy->getCorrea(cc1, cc2);
 
-        if(strcmp(cc2, "PRUEBA") != 0 ||
-                strcmp(getCorrea_ret, "PRUEBA") != 0 ||
-                strcmp(cc1, "PRUEBA") != 0)
+        if(cc2.compare("PRUEBA") != 0 ||
+                getCorrea_ret.compare("PRUEBA") != 0 ||
+                cc1.compare("PRUEBA") != 0)
         {
             std::cout << "TEST FAILED<getCadena>: Wrong values" << std::endl;
             _exit(-1);
@@ -199,10 +205,6 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<getCadena>: " << ex.what() << std::endl;
         _exit(-1);
     }
-
-    if(cc1 != NULL) DDS::String_free(cc1);    
-    if(cc2 != NULL) DDS::String_free(cc2);    
-    if(getCorrea_ret != NULL) DDS::String_free(getCorrea_ret); 
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

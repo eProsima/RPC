@@ -13,6 +13,7 @@
  */
 
 #include "OnewayCallTestProxy.h"
+#include "OnewayCallTest.h"
 #include "OnewayCallTestCDRProtocol.h"
 #include "rpcdds/transports/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    DDS_Long lo1 = 10;       
+    int32_t lo1 = 10;       
 
     try
     {
@@ -55,7 +56,7 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Long long_ret = 0;
+    int32_t long_ret = 0;
 
     try
     {
@@ -73,7 +74,7 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Boolean bo1 = RTI_TRUE;       
+    bool bo1 = true;       
 
     try
     {
@@ -85,13 +86,13 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    DDS_Boolean bo_ret = 0;
+    bool bo_ret = 0;
 
     try
     {
         bo_ret = proxy->getBoolean();
 
-        if(bo_ret != RTI_TRUE)
+        if(bo_ret != true)
         {
             std::cout << "TEST FAILED<getBoolean>: Wrong values" << std::endl;
             _exit(-1);
@@ -103,7 +104,7 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char *s1 = strdup("Ricardo");       
+    std::string s1 = "Ricardo";       
 
     try
     {
@@ -115,15 +116,13 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(s1 != NULL) free(s1);
-
-    char* s_ret = NULL;
+    std::string s_ret;
 
     try
     {
         s_ret = proxy->getString();
 
-        if(strcmp(s_ret, "Ricardo") != 0)
+        if(s_ret.compare("Ricardo") != 0)
         {
             std::cout << "TEST FAILED<getString>: Wrong values" << std::endl;
             _exit(-1);
@@ -135,12 +134,9 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(s_ret != NULL) free(s_ret);
-
     Structure st1;
-    Structure_initialize(&st1);
-    st1.dato = 10;
-    st1.message = strdup("Jaime");
+    st1.dato(10);
+    st1.message("Jaime");
 
     try
     {
@@ -152,17 +148,14 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    Structure_finalize(&st1);
-
     Structure st_ret;
-    Structure_initialize(&st_ret);
 
     try
     {
         st_ret = proxy->getStruct();
 
-        if(st_ret.dato != 10 ||
-                strcmp(st_ret.message, "Jaime") != 0)
+        if(st_ret.dato() != 10 ||
+                st_ret.message().compare("Jaime") != 0)
         {
             std::cout << "TEST FAILED<getStruct>: Wrong values" << std::endl;
             _exit(-1);
@@ -173,8 +166,6 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<getStruct>: " << ex.what() << std::endl;
         _exit(-1);
     }
-
-	Structure_finalize(&st_ret);
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

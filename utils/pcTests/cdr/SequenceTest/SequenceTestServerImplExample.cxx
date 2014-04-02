@@ -14,71 +14,160 @@
 
 #include "SequenceTestServerImplExample.h"
 
-#include "ndds_namespace_cpp.h"
- 
-largo SequenceTestServerImplExample::getSLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3) 
+largo SequenceTestServerImplExample::getSeqLong(/*in*/ const largo& l1, /*inout*/ largo& l2, /*out*/ largo& l3) 
 {
-    largo getSLong_ret;
+    largo getSeqLong_ret;
 
-	largo_initialize(&l3);
-	largo_initialize(&getSLong_ret);
-        
-	l3.ensure_length(2, 2);
-	l3[0] = l2[0];
-	l3[1] = l2[1];
-	getSLong_ret.ensure_length(2, 2);
-	getSLong_ret[0] = l1[0];
-	getSLong_ret[1] = l1[1];
+	l3.push_back(l2[0]);
+	l3.push_back(l2[1]);
+	getSeqLong_ret.push_back(l1[0]);
+	getSeqLong_ret.push_back(l1[1]);
 	l2[0] = l1[0] + l2[0];
 	l2[1] = l1[1] + l2[1];
    
-    return getSLong_ret;
+    return getSeqLong_ret;
 } 
  
-cadena SequenceTestServerImplExample::getString(/*in*/ const cadena& s1, /*inout*/ cadena& s2, /*out*/ cadena& s3) 
+cadena SequenceTestServerImplExample::getSeqString(/*in*/ const cadena& s1, /*inout*/ cadena& s2, /*out*/ cadena& s3) 
 {
-    cadena getString_ret;
+    cadena getSeqString_ret;
 
-	cadena_initialize(&s3);
-	cadena_initialize(&getString_ret);
-        
-	s3.ensure_length(2, 2);
-	s3[0] = DDS::String_dup(s2[0]);
-	s3[1] = DDS::String_dup(s2[1]);
-	getString_ret.ensure_length(2, 2);
-	getString_ret[0] = DDS::String_dup(s1[0]);
-	getString_ret[1] = DDS::String_dup(s1[1]);
-	DDS::String_free(s2[0]);
-	DDS::String_free(s2[1]);
-	s2[0] = DDS::String_dup(s1[0]);
-	s2[1] = DDS::String_dup(s1[1]);
+	s3.push_back(s2[0]);
+	s3.push_back(s2[1]);
+	getSeqString_ret.push_back(s1[0]);
+	getSeqString_ret.push_back(s1[1]);
+	s2[0] = s1[0];
+	s2[1] = s1[1];
    
-    return getString_ret;
+    return getSeqString_ret;
 } 
  
-dattos SequenceTestServerImplExample::getStringBounded(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3) 
+dattos SequenceTestServerImplExample::getSeqDatos(/*in*/ const dattos& sb1, /*inout*/ dattos& sb2, /*out*/ dattos& sb3) 
 {
-    dattos getStringBounded_ret;
+    dattos getSeqDatos_ret;
 
-	dattos_initialize(&sb3);
-	dattos_initialize(&getStringBounded_ret);
-        
-	sb3.ensure_length(2, 2);
-	sb3[0].count = sb2[0].count;
-	sb3[0].message = DDS::String_dup(sb2[0].message);
-	sb3[1].count = sb2[1].count;
-	sb3[1].message = DDS::String_dup(sb2[1].message);
-	getStringBounded_ret.ensure_length(2, 2);
-	getStringBounded_ret[0].count = sb1[0].count;
-	getStringBounded_ret[0].message = DDS::String_dup(sb1[0].message);
-	getStringBounded_ret[1].count = sb1[1].count;
-	getStringBounded_ret[1].message = DDS::String_dup(sb1[1].message);
-	sb2[0].count = sb1[0].count;
-	DDS::String_free(sb2[0].message);
-	sb2[0].message = DDS::String_dup(sb1[0].message);
-	sb2[1].count = sb1[1].count;
-	DDS::String_free(sb2[1].message);
-	sb2[1].message = DDS::String_dup(sb1[1].message);
+    sb3.push_back(sb2[0]);
+    sb3.push_back(sb2[1]);
+	getSeqDatos_ret.push_back(sb1[0]);
+	getSeqDatos_ret.push_back(sb1[1]);
+	sb2[0] = sb1[0];
+	sb2[1] = sb1[1];
    
-    return getStringBounded_ret;
+    return getSeqDatos_ret;
 } 
+
+seqseq SequenceTestServerImplExample::getSeqSeq(/*in*/ const seqseq& ss1, /*inout*/ seqseq& ss2, /*out*/ seqseq& ss3)
+{
+    seqseq getSeqSeq_ret;
+
+    ss3.push_back(ss2[0]);
+    ss3.push_back(ss2[1]);
+    getSeqSeq_ret.push_back(ss1[0]);
+    getSeqSeq_ret.push_back(ss1[1]);
+    ss2[0] = ss1[0];
+    ss2[1] = ss1[1];
+
+    return getSeqSeq_ret;
+}
+
+seqdat SequenceTestServerImplExample::getSeqDat(/*in*/ const seqdat& sd1, /*inout*/ seqdat& sd2, /*out*/ seqdat& sd3)
+{
+    seqdat getSeqDat_ret;
+    
+    sd3.push_back(sd2[0]);
+    sd3.push_back(sd2[1]);
+    getSeqDat_ret.push_back(sd1[0]);
+    getSeqDat_ret.push_back(sd1[1]);
+    sd2[0] = sd1[0];
+    sd2[1] = sd1[1];
+
+    return getSeqDat_ret;
+}
+
+SequenceTest::Sequences SequenceTestServerImplExample::getSequences(/*in*/ const SequenceTest::Sequences& seq1, /*inout*/ SequenceTest::Sequences& seq2, /*out*/ SequenceTest::Sequences& seq3)
+{
+    SequenceTest::Sequences getSequences_ret;
+
+    seq3 = seq2;
+    getSequences_ret = seq1;
+    seq2 = seq1;
+
+    return getSequences_ret;
+}
+
+larray SequenceTestServerImplExample::getArrLong(/*in*/ const larray& lar1, /*inout*/ larray& lar2, /*out*/ larray& lar3)
+{
+    larray getArrLong_ret;
+
+    lar3 = lar2;
+    getArrLong_ret = lar1;
+    lar2 = lar1;
+
+    return getArrLong_ret;
+}
+
+sarray SequenceTestServerImplExample::getArrString(/*in*/ const sarray& sar1, /*inout*/ sarray& sar2, /*out*/ sarray& sar3)
+{
+    sarray getArrString_ret;
+
+    sar3 = sar2;
+    getArrString_ret = sar1;
+    sar2 = sar1;
+
+    return getArrString_ret;
+}
+
+ssarray SequenceTestServerImplExample::getArrSString(/*in*/ const ssarray& ssar1, /*inout*/ ssarray& ssar2, /*out*/ ssarray& ssar3)
+{
+    ssarray getArrSString_ret;
+
+    ssar3 = ssar2;
+    getArrSString_ret = ssar1;
+    ssar2 = ssar1;
+
+    return getArrSString_ret;
+}
+
+darray SequenceTestServerImplExample::getArrDatos(/*in*/ const darray& dar1, /*inout*/ darray& dar2, /*out*/ darray& dar3)
+{
+    darray getArrDatos_ret;
+
+    dar3 = dar2;
+    getArrDatos_ret = dar1;
+    dar2 = dar1;
+
+    return getArrDatos_ret;
+}
+
+ddarray SequenceTestServerImplExample::getArrDDatos(/*in*/ const ddarray& ddar1, /*inout*/ ddarray& ddar2, /*out*/ ddarray& ddar3)
+{
+    ddarray getArrDDatos_ret;
+
+    ddar3 = ddar2;
+    getArrDDatos_ret = ddar1;
+    ddar2 = ddar1;
+
+    return getArrDDatos_ret;
+}
+
+cdarray SequenceTestServerImplExample::getArrCDatos(/*in*/ const cdarray& cdar1, /*inout*/ cdarray& cdar2, /*out*/ cdarray& cdar3)
+{
+    cdarray getArrCDatos_ret;
+
+    cdar3 = cdar2;
+    getArrCDatos_ret = cdar1;
+    cdar2 = cdar1;
+
+    return getArrCDatos_ret;
+}
+
+SequenceTest::Arrays SequenceTestServerImplExample::getArrays(/*in*/ const SequenceTest::Arrays& array1, /*inout*/ SequenceTest::Arrays& array2, /*out*/ SequenceTest::Arrays& array3)
+{
+    SequenceTest::Arrays getArrays_ret;
+
+    array3 = array2;
+    getArrays_ret = array1;
+    array2 = array1;
+
+    return getArrays_ret;
+}

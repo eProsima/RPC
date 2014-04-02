@@ -14,34 +14,24 @@
  
 #include "UnionTestServerImplExample.h"
 
-#include "ndds/ndds_namespace_cpp.h"
- 
 Empleado UnionTestServerImplExample::getEmpleado(/*in*/ const Empleado& em1, /*inout*/ Empleado& em2, /*out*/ Empleado& em3) 
 {
     Empleado getEmpleado_ret;
 
-	Empleado_initialize(&getEmpleado_ret);
-        
-	em3._d = em2._d;
-	if(em3._d == 1)
-		em3._u.id = em2._u.id;
-	else
-		em3._u.name = DDS::String_dup(em2._u.name);
-	getEmpleado_ret._d = em1._d;
-	if(getEmpleado_ret._d == 1)
-		getEmpleado_ret._u.id = em1._u.id;
-	else
-		getEmpleado_ret._u.name = DDS::String_dup(em1._u.name);
-	if(em2._d == 2)
-	{
-		DDS::String_free(em2._u.name);
-		em2._u.name = NULL;
-	}
-	em2._d = em1._d;
-	if(em2._d == 1)
-		em2._u.id = em1._u.id;
-	else
-		em2._u.name = DDS::String_dup(em1._u.name);
+	em3 = em2;
+	getEmpleado_ret = em1;
+	em2 = em1;
    
     return getEmpleado_ret;
 } 
+
+UnionTest::Jefe UnionTestServerImplExample::getJefe(/*in*/ const UnionTest::Jefe& je1, /*inout*/ UnionTest::Jefe& je2, /*out*/ UnionTest::Jefe& je3)
+{
+    UnionTest::Jefe getJefe_ret;
+
+    je3 = je2;
+    getJefe_ret = je1;
+    je2 = je1;
+
+    return getJefe_ret;
+}

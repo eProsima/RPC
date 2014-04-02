@@ -13,6 +13,7 @@
  */
 
 #include "ServerExceptionProxy.h"
+#include "ServerException.h"
 #include "ServerExceptionCDRProtocol.h"
 #include "rpcdds/transports/TCPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -63,10 +64,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char*  s1  = DDS::String_dup("PRUEBA");       
-    char*  s2  = DDS::String_dup("PRUEBA2");       
-    char*  s3  = NULL;    
-    char*  sendExceptionTwoRetValue = NULL;  
+    std::string  s1;       
+    std::string  s2;       
+    std::string  s3;   
+    std::string  sendExceptionTwoRetValue;  
 
     try
     {
@@ -93,9 +94,6 @@ int main(int argc, char **argv)
     Estructura es3;
     Estructura sendExceptionThreeRetValue;
 
-    Estructura_initialize(&es1);
-    Estructura_initialize(&es2);
-
     try
     {
         sendExceptionThreeRetValue = proxy->sendExceptionThree(es1, es2, es3);
@@ -115,9 +113,6 @@ int main(int argc, char **argv)
         std::cout << "TEST FAILED<sendExceptionThree>: " << ex.what() << std::endl;
         _exit(-1);
     }
-
-    Estructura_finalize(&es1);
-    Estructura_finalize(&es2);
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

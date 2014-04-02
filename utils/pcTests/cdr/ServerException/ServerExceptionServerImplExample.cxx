@@ -23,9 +23,9 @@ void ServerExceptionServerImplExample::sendException()
 	throw ServerInternalException("Testing exception");
 } 
 
-char* ServerExceptionServerImplExample::sendExceptionTwo(/*in*/ const char* message, /*inout*/ char*& message2, /*out*/ char*& message3) 
+std::string ServerExceptionServerImplExample::sendExceptionTwo(/*in*/ const std::string& message, /*inout*/ std::string& message2, /*out*/ std::string& message3) 
 {
-    char*  sendExceptionTwo_ret = NULL;
+    std::string sendExceptionTwo_ret;
 
     throw ServerInternalException("Testing exception");
 

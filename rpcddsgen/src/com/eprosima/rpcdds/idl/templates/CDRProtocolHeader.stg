@@ -8,11 +8,7 @@ $fileHeader(file=[ctx.filename, "CDRProtocol.h"], description=["This header file
 
 #include "$ctx.filename$Protocol.h"
 #include "fastcdr/FastCdr.h"
-$ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
-$if(ctx.projectNeedTypes)$
-#include "$ctx.filename$T.h"
-
-$endif$
+$ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 namespace eprosima
 {
