@@ -21,31 +21,34 @@ using namespace std;
 
 
 using namespace BodyParamTest;
+using namespace ::resourceResource;
 
 
 PostBodyParamResponse resourceResourceServerImplExample::postBodyParam(/*in*/ const PostBodyParamRequest& PostBodyParamRequest)
 {
     PostBodyParamResponse postBodyParam_ret;
-    PostBodyParamResponse_initialize(&postBodyParam_ret);
 
 	string response = "";
 
-	postBodyParam_ret._d = PostBodyParamRequest._d;
-	if(PostBodyParamRequest._d == 1) {
+	if(PostBodyParamRequest._d() == 1) {
 		response = "<Response>";
-		response += PostBodyParamRequest._u.xmlRepresentation;
+		response += PostBodyParamRequest.xmlRepresentation();
 		response += "</Response>";
 
-		postBodyParam_ret._u.xmlPostBodyParamResponse.status = 200;
-		postBodyParam_ret._u.xmlPostBodyParamResponse.xmlRepresentation = strdup(response.c_str());
+        postBodyParam_ret._d() = 1;
+		postBodyParam_ret.xmlPostBodyParamResponse().status() = 200;
+		postBodyParam_ret.xmlPostBodyParamResponse().xmlRepresentation(response);
 		cout << "XML response: " ;
-	} else {
+	}
+    else
+    {
 		response = "{RESPONSE:\"";
-		response += PostBodyParamRequest._u.jsonRepresentation;
+		response += PostBodyParamRequest.jsonRepresentation();
 		response += "\"}";
 		
-		postBodyParam_ret._u.jsonPostBodyParamResponse.status = 200;
-		postBodyParam_ret._u.jsonPostBodyParamResponse.jsonRepresentation = strdup(response.c_str());
+        postBodyParam_ret._d() = 2;
+		postBodyParam_ret.jsonPostBodyParamResponse().status() = 200;
+		postBodyParam_ret.jsonPostBodyParamResponse().jsonRepresentation(response);
 		cout << "JSON response: " ;
 	}
 

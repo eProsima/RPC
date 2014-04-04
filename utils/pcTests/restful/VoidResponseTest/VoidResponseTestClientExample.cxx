@@ -23,14 +23,16 @@ using namespace eprosima::rpcdds;
 using namespace eprosima::rpcdds::exception;
 using namespace eprosima::rpcdds::transport;
 using namespace eprosima::rpcdds::protocol::rest;
+
 using namespace VoidResponseTest;
+using namespace ::resourceResource;
 
 int main(int argc, char **argv)
 {
     VoidResponseTestProtocol *protocol = NULL;
     ProxyTransport *transport = NULL;
     resourceResourceProxy *proxy = NULL;
-    
+
     // Creation of the proxy for interface "resourceResource".
     try
     {
@@ -43,32 +45,29 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    
+
     // Create and initialize parameters.
     PostBodyParamRequest PostBodyParamRequest;
-    PostBodyParamRequest_initialize(&PostBodyParamRequest);
 
-	PostBodyParamRequest._d = 1;
-	PostBodyParamRequest._u.xmlRepresentation = strdup("<XMLPost>TEST</XMLPost>");
+    PostBodyParamRequest._d() = 1;
+    PostBodyParamRequest.xmlRepresentation("<XMLPost>TEST</XMLPost>");
 
     // Call to remote procedure "postBodyParam".
     try
     {
         proxy->postBodyParam(PostBodyParamRequest);
-	cout << "TEST PASSED" << endl;
+        cout << "TEST PASSED" << endl;
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    PostBodyParamRequest_finalize(&PostBodyParamRequest);
-    
+
     delete(proxy);
     delete(transport);
     delete(protocol);
-   
+
     return 0;
 }
 

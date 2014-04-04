@@ -13,6 +13,7 @@
  */
 
 #include "QueryParamsTestProxy.h"
+#include "QueryParamsTest.h"
 #include "QueryParamsTestRESTProtocol.h"
 #include "rpcdds/transports/HttpProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -26,13 +27,14 @@ using namespace eprosima::rpcdds::protocol::rest;
 
 using namespace std;
 using namespace QueryParamsTest;
+using namespace ::queryParamsResource;
 
 int main(int argc, char **argv)
 {
     QueryParamsTestProtocol *protocol = NULL;
     ProxyTransport *transport = NULL;
     queryParamsResourceProxy *proxy = NULL;
-    
+
     // Creation of the proxy for interface "queryParamsResource".
     try
     {
@@ -46,457 +48,467 @@ int main(int argc, char **argv)
         return -1;
     }
 
-	/*********** STRING ***********/
-    
+    /*********** STRING ***********/
+
     // Create and initialize parameters.
-    char*  stringP = strdup("sample_string");
+    string stringP = "sample_string";
 
     // Create and initialize return value.
     GetStringResponse getString_ret;
-    GetStringResponse_initialize(&getString_ret);
 
     // Call to remote procedure "getString".
     try
     {
-	cout << "getString" << endl;
+        cout << "getString" << endl;
         getString_ret = proxy->getString(stringP);
 
-	if(getString_ret._d == 1) {
-		if(getString_ret._u.xmlGetStringResponse.status == 200 &&
-			string(getString_ret._u.xmlGetStringResponse.xmlRepresentation).compare("<Response>sample_string</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getString_ret._d() == 1)
+        {
+            if(getString_ret.xmlGetStringResponse().status() == 200 &&
+                    getString_ret.xmlGetStringResponse().xmlRepresentation().compare("<Response>sample_string</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    if(stringP != NULL) free(stringP);
+    /******************************/
 
-    GetStringResponse_finalize(&getString_ret);
+    /*********** BYTE ***********/
 
-	/******************************/
-
-	/*********** BYTE ***********/
-    
     // Create and initialize parameters.
-    DDS_Char byteP = 'r';
+    char byteP = 'r';
 
     // Create and initialize return value.
     GetByteResponse getByte_ret;
-    GetByteResponse_initialize(&getByte_ret);
 
     // Call to remote procedure "getByte".
     try
     {
-	cout << "getByte" << endl;
+        cout << "getByte" << endl;
         getByte_ret = proxy->getByte(byteP);
 
-	if(getByte_ret._d == 1) {
-		if(getByte_ret._u.xmlGetByteResponse.status == 200 &&
-			string(getByte_ret._u.xmlGetByteResponse.xmlRepresentation).compare("<Response>r</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getByte_ret._d() == 1)
+        {
+            if(getByte_ret.xmlGetByteResponse().status() == 200 &&
+                    getByte_ret.xmlGetByteResponse().xmlRepresentation().compare("<Response>r</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetByteResponse_finalize(&getByte_ret);
+    /******************************/
 
-	/******************************/
+    /*********** UNSIGNED BYTE ***********/
 
-	/*********** UNSIGNED BYTE ***********/
-    
     // Create and initialize parameters.
-    DDS_Octet unsignedByteP = 's';
+    uint8_t unsignedByteP = 's';
 
     // Create and initialize return value.
     GetUnsignedByteResponse getUnsignedByte_ret;
-    GetUnsignedByteResponse_initialize(&getUnsignedByte_ret);
 
     // Call to remote procedure "getUnsignedByte".
     try
     {
-	cout << "getUnsignedByte" << endl;
+        cout << "getUnsignedByte" << endl;
         getUnsignedByte_ret = proxy->getUnsignedByte(unsignedByteP);
 
-	if(getUnsignedByte_ret._d == 1) {
-		if(getUnsignedByte_ret._u.xmlGetUnsignedByteResponse.status == 200 &&
-			string(getUnsignedByte_ret._u.xmlGetUnsignedByteResponse.xmlRepresentation).compare("<Response>s</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getUnsignedByte_ret._d() == 1)
+        {
+            if(getUnsignedByte_ret.xmlGetUnsignedByteResponse().status() == 200 &&
+                    getUnsignedByte_ret.xmlGetUnsignedByteResponse().xmlRepresentation().compare("<Response>s</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetUnsignedByteResponse_finalize(&getUnsignedByte_ret);
+    /******************************/
 
-	/******************************/
+    /*********** SHORT ***********/
 
-	/*********** SHORT ***********/
-    
     // Create and initialize parameters.
-    DDS_Short shortP = -13;
+    int16_t shortP = -13;
 
     // Create and initialize return value.
     GetShortResponse getShort_ret;
-    GetShortResponse_initialize(&getShort_ret);
 
     // Call to remote procedure "getShort".
     try
     {
-	cout << "getShort" << endl;
+        cout << "getShort" << endl;
         getShort_ret = proxy->getShort(shortP);
 
-	if(getShort_ret._d == 1) {
-		if(getShort_ret._u.xmlGetShortResponse.status == 200 &&
-			string(getShort_ret._u.xmlGetShortResponse.xmlRepresentation).compare("<Response>-13</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getShort_ret._d() == 1)
+        {
+            if(getShort_ret.xmlGetShortResponse().status() == 200 &&
+                    getShort_ret.xmlGetShortResponse().xmlRepresentation().compare("<Response>-13</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetShortResponse_finalize(&getShort_ret);
+    /******************************/
 
-	/******************************/
+    /*********** UNSIGNED SHORT ***********/
 
-	/*********** UNSIGNED SHORT ***********/
-    
     // Create and initialize parameters.
-    DDS_UnsignedShort unsignedShortP = 13;
+    uint16_t unsignedShortP = 13;
 
     // Create and initialize return value.
     GetUnsignedShortResponse getUnsignedShort_ret;
-    GetUnsignedShortResponse_initialize(&getUnsignedShort_ret);
 
     // Call to remote procedure "getUnsignedShort".
     try
     {
-	cout << "getUnsignedShort" << endl;
+        cout << "getUnsignedShort" << endl;
         getUnsignedShort_ret = proxy->getUnsignedShort(unsignedShortP);
 
-	if(getUnsignedShort_ret._d == 1) {
-		if(getUnsignedShort_ret._u.xmlGetUnsignedShortResponse.status == 200 &&
-			string(getUnsignedShort_ret._u.xmlGetUnsignedShortResponse.xmlRepresentation).compare("<Response>13</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getUnsignedShort_ret._d() == 1)
+        {
+            if(getUnsignedShort_ret.xmlGetUnsignedShortResponse().status() == 200 &&
+                    getUnsignedShort_ret.xmlGetUnsignedShortResponse().xmlRepresentation().compare("<Response>13</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetUnsignedShortResponse_finalize(&getUnsignedShort_ret);
+    /******************************/
 
-	/******************************/
+    /*********** INT ***********/
 
-	/*********** INT ***********/
-    
     // Create and initialize parameters.
-    DDS_Long intP = -14;
+    int32_t intP = -14;
 
     // Create and initialize return value.
     GetIntResponse getInt_ret;
-    GetIntResponse_initialize(&getInt_ret);
 
     // Call to remote procedure "getInt".
     try
     {
-	cout << "getInt" << endl;
+        cout << "getInt" << endl;
         getInt_ret = proxy->getInt(intP);
 
-	if(getInt_ret._d == 1) {
-		if(getInt_ret._u.xmlGetIntResponse.status == 200 &&
-			string(getInt_ret._u.xmlGetIntResponse.xmlRepresentation).compare("<Response>-14</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getInt_ret._d() == 1)
+        {
+            if(getInt_ret.xmlGetIntResponse().status() == 200 &&
+                    getInt_ret.xmlGetIntResponse().xmlRepresentation().compare("<Response>-14</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetIntResponse_finalize(&getInt_ret);
+    /******************************/
 
-	/******************************/
+    /*********** UNSIGNED INT ***********/
 
-	/*********** UNSIGNED INT ***********/
-    
     // Create and initialize parameters.
-    DDS_UnsignedLong unsignedIntP = 14;
+    uint32_t unsignedIntP = 14;
 
     // Create and initialize return value.
     GetUnsignedIntResponse getUnsignedInt_ret;
-    GetUnsignedIntResponse_initialize(&getUnsignedInt_ret);
 
     // Call to remote procedure "getUnsignedInt".
     try
     {
-	cout << "getUnsignedInt" << endl;
+        cout << "getUnsignedInt" << endl;
         getUnsignedInt_ret = proxy->getUnsignedInt(unsignedIntP);
 
-	if(getUnsignedInt_ret._d == 1) {
-		if(getUnsignedInt_ret._u.xmlGetUnsignedIntResponse.status == 200 &&
-			string(getUnsignedInt_ret._u.xmlGetUnsignedIntResponse.xmlRepresentation).compare("<Response>14</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getUnsignedInt_ret._d() == 1)
+        {
+            if(getUnsignedInt_ret.xmlGetUnsignedIntResponse().status() == 200 &&
+                    getUnsignedInt_ret.xmlGetUnsignedIntResponse().xmlRepresentation().compare("<Response>14</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetUnsignedIntResponse_finalize(&getUnsignedInt_ret);
-
-	/******************************/
+    /******************************/
 
 
-	/*********** LONG ***********/
-    
+    /*********** LONG ***********/
+
     // Create and initialize parameters.
-    DDS_LongLong longP = -15;
+    int64_t longP = -15;
 
     // Create and initialize return value.
     GetLongResponse getLong_ret;
-    GetLongResponse_initialize(&getLong_ret);
 
     // Call to remote procedure "getLong".
     try
     {
-	cout << "getLong" << endl;
+        cout << "getLong" << endl;
         getLong_ret = proxy->getLong(longP);
 
-	if(getLong_ret._d == 1) {
-		if(getLong_ret._u.xmlGetLongResponse.status == 200 &&
-			string(getLong_ret._u.xmlGetLongResponse.xmlRepresentation).compare("<Response>-15</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getLong_ret._d() == 1)
+        {
+            if(getLong_ret.xmlGetLongResponse().status() == 200 &&
+                    getLong_ret.xmlGetLongResponse().xmlRepresentation().compare("<Response>-15</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetLongResponse_finalize(&getLong_ret);
+    /******************************/
 
-	/******************************/
+    /*********** UNSIGNED LONG ***********/
 
-	/*********** UNSIGNED LONG ***********/
-    
     // Create and initialize parameters.
-    DDS_UnsignedLongLong unsignedLongP = 15;
+    uint64_t unsignedLongP = 15;
 
     // Create and initialize return value.
     GetUnsignedLongResponse getUnsignedLong_ret;
-    GetUnsignedLongResponse_initialize(&getUnsignedLong_ret);
 
     // Call to remote procedure "getUnsignedLong".
     try
     {
-	cout << "getUnsignedLong" << endl;
+        cout << "getUnsignedLong" << endl;
         getUnsignedLong_ret = proxy->getUnsignedLong(unsignedLongP);
 
-	if(getUnsignedInt_ret._d == 1) {
-		if(getUnsignedLong_ret._u.xmlGetUnsignedLongResponse.status == 200 &&
-			string(getUnsignedLong_ret._u.xmlGetUnsignedLongResponse.xmlRepresentation).compare("<Response>15</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getUnsignedInt_ret._d() == 1)
+        {
+            if(getUnsignedLong_ret.xmlGetUnsignedLongResponse().status() == 200 &&
+                    getUnsignedLong_ret.xmlGetUnsignedLongResponse().xmlRepresentation().compare("<Response>15</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetUnsignedLongResponse_finalize(&getUnsignedLong_ret);
+    /******************************/   
 
-	/******************************/   
+    /*********** FLOAT ***********/
 
-	/*********** FLOAT ***********/
-    
     // Create and initialize parameters.
-    DDS_Float floatP = -15.5;
+    float floatP = -15.5;
 
     // Create and initialize return value.
     GetFloatResponse getFloat_ret;
-    GetFloatResponse_initialize(&getFloat_ret);
 
     // Call to remote procedure "getFloat".
     try
     {
-	cout << "getFloat" << endl;
+        cout << "getFloat" << endl;
         getFloat_ret = proxy->getFloat(floatP);
 
-	if(getLong_ret._d == 1) {
-		if(getFloat_ret._u.xmlGetFloatResponse.status == 200 &&
-			string(getFloat_ret._u.xmlGetFloatResponse.xmlRepresentation).compare("<Response>-15.5</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getLong_ret._d() == 1)
+        {
+            if(getFloat_ret.xmlGetFloatResponse().status() == 200 &&
+                    getFloat_ret.xmlGetFloatResponse().xmlRepresentation().compare("<Response>-15.5</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetFloatResponse_finalize(&getFloat_ret);
+    /******************************/ 
 
-	/******************************/ 
+    /*********** DOUBLE ***********/
 
-	/*********** DOUBLE ***********/
-    
     // Create and initialize parameters.
-    DDS_Double doubleP = -16.5;
+    double doubleP = -16.5;
 
     // Create and initialize return value.
     GetDoubleResponse getDouble_ret;
-    GetDoubleResponse_initialize(&getDouble_ret);
 
     // Call to remote procedure "getDouble".
     try
     {
-	cout << "getDouble" << endl;
+        cout << "getDouble" << endl;
         getDouble_ret = proxy->getDouble(doubleP);
 
-	if(getDouble_ret._d == 1) {
-		if(getDouble_ret._u.xmlGetDoubleResponse.status == 200 &&
-			string(getDouble_ret._u.xmlGetDoubleResponse.xmlRepresentation).compare("<Response>-16.5</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getDouble_ret._d() == 1)
+        {
+            if(getDouble_ret.xmlGetDoubleResponse().status() == 200 &&
+                    getDouble_ret.xmlGetDoubleResponse().xmlRepresentation().compare("<Response>-16.5</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetDoubleResponse_finalize(&getDouble_ret);
+    /******************************/ 
 
-	/******************************/ 
+    /*********** BOOLEAN ***********/
 
-	/*********** BOOLEAN ***********/
-    
     // Create and initialize parameters.
-    DDS_Boolean booleanP = true;
+    bool booleanP = true;
 
     // Create and initialize return value.
     GetBooleanResponse getBoolean_ret;
-    GetBooleanResponse_initialize(&getBoolean_ret);
 
     // Call to remote procedure "getBoolean".
     try
     {
-	cout << "getBoolean" << endl;
+        cout << "getBoolean" << endl;
         getBoolean_ret = proxy->getBoolean(booleanP);
 
-	if(getBoolean_ret._d == 1) {
-		if(getBoolean_ret._u.xmlGetBooleanResponse.status == 200 &&
-			string(getBoolean_ret._u.xmlGetBooleanResponse.xmlRepresentation).compare("<Response>true</Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(getBoolean_ret._d() == 1)
+        {
+            if(getBoolean_ret.xmlGetBooleanResponse().status() == 200 &&
+                    getBoolean_ret.xmlGetBooleanResponse().xmlRepresentation().compare("<Response>true</Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    GetBooleanResponse_finalize(&getBoolean_ret);
-
-	/******************************/ 
+    /******************************/ 
 
     delete(proxy);
     delete(transport);
     delete(protocol);
-   
+
     return 0;
 }
 

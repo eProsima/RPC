@@ -18,14 +18,14 @@
 using namespace std;
 
 using namespace NonDeclaredEmptyBodyTest;
+using namespace ::resourceResource;
 
 PostBodyParamResponse resourceResourceServerImplExample::postBodyParam(/*in*/ const PostBodyParamRequest& PostBodyParamRequest)
 {
     PostBodyParamResponse postBodyParam_ret;
-    PostBodyParamResponse_initialize(&postBodyParam_ret);
 
-	postBodyParam_ret._d = 1;
-	postBodyParam_ret._u.xmlPostBodyParamResponse.status = 200;
+	postBodyParam_ret._d() = 1;
+	postBodyParam_ret.xmlPostBodyParamResponse().status(200);
    
     return postBodyParam_ret;
 } 

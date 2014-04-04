@@ -13,6 +13,7 @@
  */
 
 #include "BodyParamTestProxy.h"
+#include "BodyParamTest.h"
 #include "BodyParamTestRESTProtocol.h"
 #include "rpcdds/transports/HttpProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -25,13 +26,14 @@ using namespace eprosima::rpcdds::transport;
 using namespace eprosima::rpcdds::protocol::rest;
 
 using namespace BodyParamTest;
+using namespace ::resourceResource;
 
 int main(int argc, char **argv)
 {
     BodyParamTestProtocol *protocol = NULL;
     ProxyTransport *transport = NULL;
     resourceResourceProxy *proxy = NULL;
-    
+
     // Creation of the proxy for interface "resourceResource".
     try
     {
@@ -44,94 +46,84 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    
-// *****************************************************
+
+    // *****************************************************
     // Create and initialize parameters.
     PostBodyParamRequest PostBodyParamRequest;
-    PostBodyParamRequest_initialize(&PostBodyParamRequest);
 
-	PostBodyParamRequest._d = 1;
-	PostBodyParamRequest._u.xmlRepresentation = strdup("<XMLPost>TEST</XMLPost>");
+    PostBodyParamRequest.xmlRepresentation("<XMLPost>TEST</XMLPost>");
 
     // Create and initialize return value.
     PostBodyParamResponse postBodyParam_ret;
-    PostBodyParamResponse_initialize(&postBodyParam_ret);
 
     // Call to remote procedure "postBodyParam".
     try
     {
-	cout << "postBodyParam - XML" << endl;
+        cout << "postBodyParam - XML" << endl;
 
         postBodyParam_ret = proxy->postBodyParam(PostBodyParamRequest);
 
-	if(postBodyParam_ret._d == 1) {
-		if(postBodyParam_ret._u.xmlPostBodyParamResponse.status == 200 &&
-			string(postBodyParam_ret._u.xmlPostBodyParamResponse.xmlRepresentation).compare("<Response><XMLPost>TEST</XMLPost></Response>") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(postBodyParam_ret._d() == 1)
+        {
+            if(postBodyParam_ret.xmlPostBodyParamResponse().status() == 200 &&
+                    postBodyParam_ret.xmlPostBodyParamResponse().xmlRepresentation().compare("<Response><XMLPost>TEST</XMLPost></Response>") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            } else 
+            {
+                return 1;
+            }
+        } else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    PostBodyParamRequest_finalize(&PostBodyParamRequest);
+    // *****************************************************
 
-    PostBodyParamResponse_finalize(&postBodyParam_ret);
-// *****************************************************
-    
-    
-// *****************************************************
+
+    // *****************************************************
     // Create and initialize parameters.
-    PostBodyParamRequest_initialize(&PostBodyParamRequest);
 
-	PostBodyParamRequest._d = 2;
-	PostBodyParamRequest._u.jsonRepresentation = strdup("{TEST}");
-
-    // Create and initialize return value.
-    PostBodyParamResponse_initialize(&postBodyParam_ret);
+    PostBodyParamRequest.jsonRepresentation("{TEST}");
 
     // Call to remote procedure "postBodyParam".
     try
     {
-	cout << "postBodyParam - JSON" << endl;
+        cout << "postBodyParam - JSON" << endl;
 
         postBodyParam_ret = proxy->postBodyParam(PostBodyParamRequest);
 
-	if(postBodyParam_ret._d == 2) {
-		if(postBodyParam_ret._u.jsonPostBodyParamResponse.status == 200 &&
-			string(postBodyParam_ret._u.jsonPostBodyParamResponse.jsonRepresentation).compare("{RESPONSE:\"{TEST}\"}") == 0)
-		{
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(postBodyParam_ret._d() == 2)
+        {
+            if(postBodyParam_ret.jsonPostBodyParamResponse().status() == 200 &&
+                    postBodyParam_ret.jsonPostBodyParamResponse().jsonRepresentation().compare("{RESPONSE:\"{TEST}\"}") == 0)
+            {
+                cout << "\tTEST PASSED" << endl;
+            } else
+            {
+                return 1;
+            }
+        } else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    PostBodyParamRequest_finalize(&PostBodyParamRequest);
-
-    PostBodyParamResponse_finalize(&postBodyParam_ret);
-// *****************************************************
+    // *****************************************************
 
     delete(proxy);
     delete(transport);
     delete(protocol);
-   
+
     return 0;
 }
 

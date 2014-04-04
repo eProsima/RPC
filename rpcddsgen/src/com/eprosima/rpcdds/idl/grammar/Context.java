@@ -641,6 +641,16 @@ public class Context
         return false;
     }
 
+    public boolean isAnyCdr()
+    {
+        if((m_protocol == RPCDDSGEN.PROTOCOL.DDS &&
+                    m_ddstypes == RPCDDSGEN.DDS_TYPES.EPROSIMA) ||
+                m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR)
+            return true;
+
+        return false;
+    }
+
     public boolean isCdr()
     {
         if(m_protocol == RPCDDSGEN.PROTOCOL.DDS &&
@@ -661,6 +671,11 @@ public class Context
     public boolean isRtiTypes()
     {
         return m_ddstypes == RPCDDSGEN.DDS_TYPES.RTI;
+    }
+
+    public boolean isFastrpcProduct()
+    {
+        return true;
     }
 
     // TODO Para stringtemplate TopicsPlugin de nuestros tipos DDS.

@@ -13,6 +13,7 @@
  */
 
 #include "NonDeclaredEmptyBodyTestProxy.h"
+#include "NonDeclaredEmptyBodyTest.h"
 #include "NonDeclaredEmptyBodyTestRESTProtocol.h"
 #include "rpcdds/transports/HttpProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
@@ -25,13 +26,14 @@ using namespace eprosima::rpcdds::transport;
 using namespace eprosima::rpcdds::protocol::rest;
 
 using namespace NonDeclaredEmptyBodyTest;
+using namespace ::resourceResource;
 
 int main(int argc, char **argv)
 {
     NonDeclaredEmptyBodyTestProtocol *protocol = NULL;
     ProxyTransport *transport = NULL;
     resourceResourceProxy *proxy = NULL;
-    
+
     // Creation of the proxy for interface "resourceResource".
     try
     {
@@ -44,78 +46,81 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    
+
     // Create and initialize parameters.
     PostBodyParamRequest PostBodyParamRequest;
-    PostBodyParamRequest_initialize(&PostBodyParamRequest);
 
-	PostBodyParamRequest._d = 1;
+    PostBodyParamRequest._d() = 1;
 
     // Create and initialize return value.
     PostBodyParamResponse postBodyParam_ret;
-    PostBodyParamResponse_initialize(&postBodyParam_ret);
 
     // Call to remote procedure "postBodyParam".
     try
     {
-	cout << "Non expected empty request body. Response code must be 400." << endl;
+        cout << "Non expected empty request body. Response code must be 400." << endl;
 
         postBodyParam_ret = proxy->postBodyParam(PostBodyParamRequest);
 
-	if(postBodyParam_ret._d == 0) {
-		if(postBodyParam_ret._u.emptyPostBodyParamResponse.status == 400) {
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(postBodyParam_ret._d() == 0)
+        {
+            if(postBodyParam_ret.emptyPostBodyParamResponse().status() == 400)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
 
-	/***********************************************************/
+    /***********************************************************/
 
-	PostBodyParamRequest_initialize(&PostBodyParamRequest);
-	PostBodyParamRequest._d = 1;
-	PostBodyParamRequest._u.xmlRepresentation = strdup("<XMLPost>TEST</XMLPost>");
-	PostBodyParamResponse_initialize(&postBodyParam_ret);
+    PostBodyParamRequest.xmlRepresentation("<XMLPost>TEST</XMLPost>");
 
     // Call to remote procedure "postBodyParam".
     try
     {
-	cout << "Non expected empty response body. Response code must be 200, but with no data." << endl;
+        cout << "Non expected empty response body. Response code must be 200, but with no data." << endl;
 
         postBodyParam_ret = proxy->postBodyParam(PostBodyParamRequest);
 
-	if(postBodyParam_ret._d == 0) {
-		if(postBodyParam_ret._u.emptyPostBodyParamResponse.status == 200) {
-			cout << "\tTEST PASSED" << endl;
-		} else {
-			return 1;
-		}
-	} else {
-		return 1;
-	}
+        if(postBodyParam_ret._d() == 0)
+        {
+            if(postBodyParam_ret.emptyPostBodyParamResponse().status() == 200)
+            {
+                cout << "\tTEST PASSED" << endl;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
     catch(SystemException &ex)
     {
         std::cout << ex.what() << std::endl;
-	return 1;
+        return 1;
     }
-    
-    PostBodyParamRequest_finalize(&PostBodyParamRequest);
 
-    PostBodyParamResponse_finalize(&postBodyParam_ret);
-    
     delete(proxy);
     delete(transport);
     delete(protocol);
-   
+
     return 0;
 }
 

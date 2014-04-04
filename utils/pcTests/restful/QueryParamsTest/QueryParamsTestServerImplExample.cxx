@@ -19,68 +19,65 @@
 
 using namespace std;   
 using namespace QueryParamsTest;
+using namespace ::queryParamsResource;
 
 template <typename T> string tostr(const T& t) { ostringstream os; os<<t; return os.str(); }
 
-GetStringResponse queryParamsResourceServerImplExample::getString(/*in*/ const char* stringP)
+GetStringResponse queryParamsResourceServerImplExample::getString(/*in*/ const string& stringP)
 {
     GetStringResponse getString_ret;
-    GetStringResponse_initialize(&getString_ret);
 
 	cout << "getString: " << stringP << endl;
-	string response = "<Response>" + string(stringP) + "</Response>";
+	string response = "<Response>" + stringP + "</Response>";
 
-	getString_ret._d = 1;
-	getString_ret._u.xmlGetStringResponse.status = 200;
-	getString_ret._u.xmlGetStringResponse.xmlRepresentation = strdup(response.c_str());
+	getString_ret._d() = 1;
+	getString_ret.xmlGetStringResponse().status(200);
+	getString_ret.xmlGetStringResponse().xmlRepresentation(response);
    
     return getString_ret;
 } 
 
 
 
-GetByteResponse queryParamsResourceServerImplExample::getByte(/*in*/ DDS_Char byteP)
+GetByteResponse queryParamsResourceServerImplExample::getByte(/*in*/ char byteP)
 {
     GetByteResponse getByte_ret;
-    GetByteResponse_initialize(&getByte_ret);
 
 	cout << "getByte: " << byteP << endl;
 	string response = "<Response>";
 	response += byteP;
 	response += "</Response>";
 
-	getByte_ret._d = 1;
-	getByte_ret._u.xmlGetByteResponse.status = 200;
-	getByte_ret._u.xmlGetByteResponse.xmlRepresentation = strdup(response.c_str());
+	getByte_ret._d() = 1;
+	getByte_ret.xmlGetByteResponse().status() = 200;
+	getByte_ret.xmlGetByteResponse().xmlRepresentation(response);
    
     return getByte_ret;
 } 
 
 
 
-GetUnsignedByteResponse queryParamsResourceServerImplExample::getUnsignedByte(/*in*/ DDS_Octet unsignedByteP)
+GetUnsignedByteResponse queryParamsResourceServerImplExample::getUnsignedByte(/*in*/ uint8_t unsignedByteP)
 {
     GetUnsignedByteResponse getUnsignedByte_ret;
-    GetUnsignedByteResponse_initialize(&getUnsignedByte_ret);
 
 	cout << "getUnsignedByte: " << unsignedByteP << endl;
 	string response = "<Response>";
 	response += unsignedByteP;
 	response += "</Response>";
 
-	getUnsignedByte_ret._d = 1;
-	getUnsignedByte_ret._u.xmlGetUnsignedByteResponse.status = 200;
-	getUnsignedByte_ret._u.xmlGetUnsignedByteResponse.xmlRepresentation = strdup(response.c_str());
+	getUnsignedByte_ret._d() = 1;
+	getUnsignedByte_ret.xmlGetUnsignedByteResponse().status(200);
+	getUnsignedByte_ret.xmlGetUnsignedByteResponse().xmlRepresentation(response);
    
     return getUnsignedByte_ret;
 } 
 
 
 
-GetShortResponse queryParamsResourceServerImplExample::getShort(/*in*/ DDS_Short shortP)
+GetShortResponse queryParamsResourceServerImplExample::getShort(/*in*/ int16_t shortP)
 {
     GetShortResponse getShort_ret;
-    GetShortResponse_initialize(&getShort_ret);
 
 	cout << "getShort: " << shortP << endl;
 
@@ -88,38 +85,36 @@ GetShortResponse queryParamsResourceServerImplExample::getShort(/*in*/ DDS_Short
 	response += tostr(shortP);
 	response += "</Response>";
 
-	getShort_ret._d = 1;
-	getShort_ret._u.xmlGetShortResponse.status = 200;
-	getShort_ret._u.xmlGetShortResponse.xmlRepresentation = strdup(response.c_str());
+	getShort_ret._d() = 1;
+	getShort_ret.xmlGetShortResponse().status(200);
+	getShort_ret.xmlGetShortResponse().xmlRepresentation(response);
    
     return getShort_ret;
 } 
 
 
 
-GetUnsignedShortResponse queryParamsResourceServerImplExample::getUnsignedShort(/*in*/ DDS_UnsignedShort unsignedShortP)
+GetUnsignedShortResponse queryParamsResourceServerImplExample::getUnsignedShort(/*in*/ uint16_t unsignedShortP)
 {
     GetUnsignedShortResponse getUnsignedShort_ret;
-    GetUnsignedShortResponse_initialize(&getUnsignedShort_ret);
 
 	cout << "getUnsignedShort: " << unsignedShortP << endl;
 	string response = "<Response>";
 	response += tostr(unsignedShortP);
 	response += "</Response>";
 
-	getUnsignedShort_ret._d = 1;
-	getUnsignedShort_ret._u.xmlGetUnsignedShortResponse.status = 200;
-	getUnsignedShort_ret._u.xmlGetUnsignedShortResponse.xmlRepresentation = strdup(response.c_str());
+	getUnsignedShort_ret._d() = 1;
+	getUnsignedShort_ret.xmlGetUnsignedShortResponse().status(200);
+	getUnsignedShort_ret.xmlGetUnsignedShortResponse().xmlRepresentation(response);
    
     return getUnsignedShort_ret;
 } 
 
 
 
-GetIntResponse queryParamsResourceServerImplExample::getInt(/*in*/ DDS_Long intP)
+GetIntResponse queryParamsResourceServerImplExample::getInt(/*in*/ int32_t intP)
 {
     GetIntResponse getInt_ret;
-    GetIntResponse_initialize(&getInt_ret);
 
 	cout << "getInt: " << intP << endl;
 
@@ -127,38 +122,36 @@ GetIntResponse queryParamsResourceServerImplExample::getInt(/*in*/ DDS_Long intP
 	response += tostr(intP);
 	response += "</Response>";
 
-	getInt_ret._d = 1;
-	getInt_ret._u.xmlGetIntResponse.status = 200;
-	getInt_ret._u.xmlGetIntResponse.xmlRepresentation = strdup(response.c_str());
+	getInt_ret._d() = 1;
+	getInt_ret.xmlGetIntResponse().status(200);
+	getInt_ret.xmlGetIntResponse().xmlRepresentation(response);
    
     return getInt_ret;
 } 
 
 
 
-GetUnsignedIntResponse queryParamsResourceServerImplExample::getUnsignedInt(/*in*/ DDS_UnsignedLong unsignedIntP)
+GetUnsignedIntResponse queryParamsResourceServerImplExample::getUnsignedInt(/*in*/ uint32_t unsignedIntP)
 {
     GetUnsignedIntResponse getUnsignedInt_ret;
-    GetUnsignedIntResponse_initialize(&getUnsignedInt_ret);
 
 	cout << "getUnsignedInt: " << unsignedIntP << endl;
 	string response = "<Response>";
 	response += tostr(unsignedIntP);
 	response += "</Response>";
 
-	getUnsignedInt_ret._d = 1;
-	getUnsignedInt_ret._u.xmlGetUnsignedIntResponse.status = 200;
-	getUnsignedInt_ret._u.xmlGetUnsignedIntResponse.xmlRepresentation = strdup(response.c_str());
+	getUnsignedInt_ret._d() = 1;
+	getUnsignedInt_ret.xmlGetUnsignedIntResponse().status(200);
+	getUnsignedInt_ret.xmlGetUnsignedIntResponse().xmlRepresentation(response);
    
     return getUnsignedInt_ret;
 } 
 
 
 
-GetLongResponse queryParamsResourceServerImplExample::getLong(/*in*/ DDS_LongLong longP)
+GetLongResponse queryParamsResourceServerImplExample::getLong(/*in*/ int64_t longP)
 {
     GetLongResponse getLong_ret;
-    GetLongResponse_initialize(&getLong_ret);
 
 	cout << "getLong: " << longP << endl;
 
@@ -166,38 +159,36 @@ GetLongResponse queryParamsResourceServerImplExample::getLong(/*in*/ DDS_LongLon
 	response += tostr(longP);
 	response += "</Response>";
 
-	getLong_ret._d = 1;
-	getLong_ret._u.xmlGetLongResponse.status = 200;
-	getLong_ret._u.xmlGetLongResponse.xmlRepresentation = strdup(response.c_str());
+	getLong_ret._d() = 1;
+	getLong_ret.xmlGetLongResponse().status(200);
+	getLong_ret.xmlGetLongResponse().xmlRepresentation(response);
    
     return getLong_ret;
 } 
 
 
 
-GetUnsignedLongResponse queryParamsResourceServerImplExample::getUnsignedLong(/*in*/ DDS_UnsignedLongLong unsignedLongP)
+GetUnsignedLongResponse queryParamsResourceServerImplExample::getUnsignedLong(/*in*/ uint64_t unsignedLongP)
 {
     GetUnsignedLongResponse getUnsignedLong_ret;
-    GetUnsignedLongResponse_initialize(&getUnsignedLong_ret);
 
 	cout << "getUnsignedLong: " << unsignedLongP << endl;
 	string response = "<Response>";
 	response += tostr(unsignedLongP);
 	response += "</Response>";
 
-	getUnsignedLong_ret._d = 1;
-	getUnsignedLong_ret._u.xmlGetUnsignedLongResponse.status = 200;
-	getUnsignedLong_ret._u.xmlGetUnsignedLongResponse.xmlRepresentation = strdup(response.c_str());
+	getUnsignedLong_ret._d() = 1;
+	getUnsignedLong_ret.xmlGetUnsignedLongResponse().status(200);
+	getUnsignedLong_ret.xmlGetUnsignedLongResponse().xmlRepresentation(response);
    
     return getUnsignedLong_ret;
 } 
 
 
 
-GetFloatResponse queryParamsResourceServerImplExample::getFloat(/*in*/ DDS_Float floatP)
+GetFloatResponse queryParamsResourceServerImplExample::getFloat(/*in*/ float floatP)
 {
     GetFloatResponse getFloat_ret;
-    GetFloatResponse_initialize(&getFloat_ret);
 
 	cout << "getFloat: " << floatP << endl;
 
@@ -205,19 +196,18 @@ GetFloatResponse queryParamsResourceServerImplExample::getFloat(/*in*/ DDS_Float
 	response += tostr(floatP);
 	response += "</Response>";
 
-	getFloat_ret._d = 1;
-	getFloat_ret._u.xmlGetFloatResponse.status = 200;
-	getFloat_ret._u.xmlGetFloatResponse.xmlRepresentation = strdup(response.c_str());
+	getFloat_ret._d() = 1;
+	getFloat_ret.xmlGetFloatResponse().status(200);
+	getFloat_ret.xmlGetFloatResponse().xmlRepresentation(response);
    
     return getFloat_ret;
 } 
 
 
 
-GetDoubleResponse queryParamsResourceServerImplExample::getDouble(/*in*/ DDS_Double doubleP)
+GetDoubleResponse queryParamsResourceServerImplExample::getDouble(/*in*/ double doubleP)
 {
     GetDoubleResponse getDouble_ret;
-    GetDoubleResponse_initialize(&getDouble_ret);
 
 	cout << "getDouble: " << doubleP << endl;
 
@@ -225,19 +215,18 @@ GetDoubleResponse queryParamsResourceServerImplExample::getDouble(/*in*/ DDS_Dou
 	response += tostr(doubleP);
 	response += "</Response>";
 
-	getDouble_ret._d = 1;
-	getDouble_ret._u.xmlGetDoubleResponse.status = 200;
-	getDouble_ret._u.xmlGetDoubleResponse.xmlRepresentation = strdup(response.c_str());
+	getDouble_ret._d() = 1;
+	getDouble_ret.xmlGetDoubleResponse().status(200);
+	getDouble_ret.xmlGetDoubleResponse().xmlRepresentation(response);
    
     return getDouble_ret;
 } 
 
 
 
-GetBooleanResponse queryParamsResourceServerImplExample::getBoolean(/*in*/ DDS_Boolean booleanP)
+GetBooleanResponse queryParamsResourceServerImplExample::getBoolean(/*in*/ bool booleanP)
 {
     GetBooleanResponse getBoolean_ret;
-    GetBooleanResponse_initialize(&getBoolean_ret);
 
 	if(booleanP)
 		cout << "getBoolean: true" << endl;
@@ -252,9 +241,9 @@ GetBooleanResponse queryParamsResourceServerImplExample::getBoolean(/*in*/ DDS_B
 		response += "false";
 	response += "</Response>";
 
-	getBoolean_ret._d = 1;
-	getBoolean_ret._u.xmlGetBooleanResponse.status = 200;
-	getBoolean_ret._u.xmlGetBooleanResponse.xmlRepresentation = strdup(response.c_str());
+	getBoolean_ret._d() = 1;
+	getBoolean_ret.xmlGetBooleanResponse().status(200);
+	getBoolean_ret.xmlGetBooleanResponse().xmlRepresentation(response);
    
     return getBoolean_ret;
 } 

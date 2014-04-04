@@ -16,12 +16,13 @@
 #include <iostream>
 
 using namespace std;
-using namespace VoidResponseTest;
 
+using namespace VoidResponseTest;
+using namespace ::resourceResource;
 
 void resourceResourceServerImplExample::postBodyParam(/*in*/ const PostBodyParamRequest& PostBodyParamRequest)
 {
-	if (PostBodyParamRequest._d == 1)
-		cout << "Recibido: " << PostBodyParamRequest._u.xmlRepresentation << endl;
+	if (PostBodyParamRequest._d() == 1)
+		cout << "Recibido: " << PostBodyParamRequest.xmlRepresentation() << endl;
 } 
 

@@ -19,27 +19,29 @@
 
 using namespace std;
 using namespace EmbeddedParamsTest;
+using namespace ::first_second_thirdResource;
+using namespace ::urlFixedSegment_fourthResource;
 
 template <typename T> string tostr(const T& t) { ostringstream os; os<<t; return os.str(); }
 
 Get123Response first_second_thirdResourceServerImplExample::get123(/*in*/ const first_second_third& first_second_third)
 {
     Get123Response get123_ret;
-    Get123Response_initialize(&get123_ret);
-
 
 	cout << "get123" << endl;
 	string response = "<Response>";
-	response += tostr(first_second_third.first_);
+	response += tostr(first_second_third.first_());
 	response += ", ";
-	response += tostr(first_second_third.second_);
+	response += first_second_third.second_();
 	response += ", ";
-	response += tostr(first_second_third.third_);
+	response += tostr(first_second_third.third_());
 	response += "</Response>";
 
-	get123_ret._d = 1;
-	get123_ret._u.xmlGet123Response.status = 200;
-	get123_ret._u.xmlGet123Response.xmlRepresentation = strdup(response.c_str());
+	get123_ret._d() = 1;
+	get123_ret.xmlGet123Response().status(200);
+	get123_ret.xmlGet123Response().xmlRepresentation(response);
+
+    cout << response << endl;
    
     return get123_ret;
 } 
@@ -51,25 +53,25 @@ Get123Response first_second_thirdResourceServerImplExample::get123(/*in*/ const 
 Get1234Response urlFixedSegment_fourthResourceServerImplExample::get1234(/*in*/ const urlFixedSegment_fourth& urlFixedSegment_fourth)
 {
     Get1234Response get1234_ret;
-    Get1234Response_initialize(&get1234_ret);
 
 	cout << "get1234" << endl;
 	string response = "<Response>";
-	response += tostr(urlFixedSegment_fourth.first_);
+	response += tostr(urlFixedSegment_fourth.first_());
 	response += ", ";
-	response += tostr(urlFixedSegment_fourth.second_);
+	response += urlFixedSegment_fourth.second_();
 	response += ", ";
-	response += tostr(urlFixedSegment_fourth.third_);
+	response += tostr(urlFixedSegment_fourth.third_());
 	response += ", ";
-	if(urlFixedSegment_fourth.fourth_)
+
+	if(urlFixedSegment_fourth.fourth_())
 		response += "true";
 	else
 		response += "false";		
 	response += "</Response>";
 
-	get1234_ret._d = 1;
-	get1234_ret._u.xmlGet1234Response.status = 200;
-	get1234_ret._u.xmlGet1234Response.xmlRepresentation = strdup(response.c_str());
+	get1234_ret._d() = 1;
+	get1234_ret.xmlGet1234Response().status(200);
+	get1234_ret.xmlGet1234Response().xmlRepresentation(response.c_str());
    
     return get1234_ret;
 } 

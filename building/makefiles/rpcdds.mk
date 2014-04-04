@@ -90,6 +90,7 @@ RPCDDS_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
 		     $(BASEDIR)/src/exceptions/ServerTimeoutException.cpp \
 		     $(BASEDIR)/src/exceptions/SystemException.cpp \
 		     $(BASEDIR)/src/exceptions/UserException.cpp \
+		     $(BASEDIR)/src/exceptions/BadParamException.cpp \
 		     $(SPECIFIC_SRC_CPPFILES)
 
 # Project sources are copied to the current directory

@@ -30,7 +30,7 @@ $ctx.filename$Protocol::~$ctx.filename$Protocol() {}
 bool $ctx.filename$Protocol::isNumeric(string&& myString) {
     stringstream ss(myString);
     float f;
-    ss $ctx.sersym$ noskipws $ctx.sersym$ f;
+    ss \>> noskipws \>> f;
 
     return ss.eof() && !ss.fail();
 }
@@ -201,14 +201,13 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         discriminator = 2;
      }
     
-     $operation.rettypeparam.name$._d = discriminator;
-     
      switch(discriminator)
      {
      $operation.rettype.members : {member | case $first(member.labels)$:
-     $operation.rettypeparam.name$._u.$member.name$.$first(member.typecode.members).name$ = httpResponse.getResponseCode();
+     $operation.rettypeparam.name$._d() = discriminator;
+     $operation.rettypeparam.name$.$member.name$().$first(member.typecode.members).name$(httpResponse.getResponseCode());
      $if(rest(member.typecode.members))$
-     $operation.rettypeparam.name$._u.$member.name$.$first(rest(member.typecode.members)).name$ = strdup(httpResponse.getBodyData().c_str());
+     $operation.rettypeparam.name$.$member.name$().$first(rest(member.typecode.members)).name$(httpResponse.getBodyData());
      $endif$
      break;
      }$
@@ -234,7 +233,6 @@ HttpMessage $ctx.filename$Protocol::deserialize_$operation.parent.name$_$operati
     
     $if(operation.parent.pathHasBrackets)$
     $paramRetType(typecode=first(operation.parameters).typecode)$ $first(operation.parameters).name$;
-    $first(operation.parameters).name$_initialize(&$first(operation.parameters).name$); 
     deserializePath_$operation.name$(restSerializer, $first(operation.parameters).name$);
     $deserializeHTTPParams(params=rest(operation.parameters))$
     $else$
@@ -259,20 +257,20 @@ $if(first(params))$ $if(first(params).parent.parent.pathHasBrackets)$ $first(par
 
 serializeServerResponse(rettype) ::= <<
 $if(operation.rettype)$
-switch($rettype.name$._d)
+switch($rettype.name$._d())
 {
 $rettype.members : {member |case $first(member.labels)$:
-    httpResponse.setResponseCode($rettype.name$._u.$member.name$.status);
-$first(rest(member.typecode.members)) : {member2 |httpResponse.setBodyData($rettype.name$._u.$member.name$.$member2.name$); }$
+    httpResponse.setResponseCode($rettype.name$.$member.name$().status());
+$first(rest(member.typecode.members)) : {member2 |httpResponse.setBodyData($rettype.name$.$member.name$().$member2.name$()); }$
     break;
 }$
 }
 
 if(httpResponse.getBodyData().size() > 0)
 {
-    if($rettype.name$._d == 1)
+    if($rettype.name$._d() == 1)
         httpResponse.setBodyContentType("application/xml");
-    else if($rettype.name$._d == 2)
+    else if($rettype.name$._d() == 2)
         httpResponse.setBodyContentType("application/json");
 }
 $endif$
@@ -282,7 +280,7 @@ deserializePathSegment(param) ::= <<
     $param.typecode.members, param.parent.parent.templateParameterPositions : {member, pos | 
     // Deserialize $member.name$
     stream << restSerializer.getTag($pos$);
-    stream $ctx.sersym$ $param.name$.$member.name$;
+    stream \>> $param.name$.$member.name$();
     stream.str(std::string());
     stream.clear();
 
@@ -292,7 +290,7 @@ deserializePathSegment(param) ::= <<
 expandPathSegment(param) ::= <<
     $param.typecode.members : {member |
     // Expand $member.name$
-    stream << $param.name$.$member.name$;
+    stream << $param.name$.$member.name$();
     restSerializer.serializeTemplateParameter(stream.str());
     stream.str(std::string());
     stream.clear();
@@ -309,7 +307,7 @@ std::string $param.name$ = restSerializer.getQueryParameter("$param.name$");
 $else$
 $varDecl(variable=param)$
 stream << restSerializer.getQueryParameter("$param.name$");
-stream $ctx.sersym$ $param.name$;
+stream \>> $param.name$;
 stream.str(std::string());
 stream.clear();
 $endif$
@@ -338,19 +336,19 @@ $endif$
 serializeHTTPBodyParams(params) ::= <<
 $params : {param |
 $if(param.bodyParam)$// Serializing body parameter $param.name$
-switch($param.name$._d)
+switch($param.name$._d())
 {
 $param.typecode.members : {member | case $first(member.labels)$:
-    httpMessage.setBodyData($param.name$._u.$member.name$);
+    httpMessage.setBodyData($param.name$.$member.name$());
     break;
 };separator="\n"$
 }
 
 if(!httpMessage.getBodyData().empty())
 {
-    if($param.name$._d == 1)
+    if($param.name$._d() == 1)
         httpMessage.setBodyContentType("application/xml");
-    else if($param.name$._d == 2)
+    else if($param.name$._d() == 2)
         httpMessage.setBodyContentType("application/json");
 }
 $endif$
@@ -377,11 +375,10 @@ else {
 	return http400Response;
 }
     
-$param.name$._d = discriminator;
 switch(discriminator) {
 $param.typecode.members : {member |
 case $first(member.labels)$:
-$param.name$._u.$member.name$ = (char*)httpMessage.getBodyData().c_str();
+$param.name$.$member.name$(httpMessage.getBodyData());
 break;
 }; separator="\n"$
 }
