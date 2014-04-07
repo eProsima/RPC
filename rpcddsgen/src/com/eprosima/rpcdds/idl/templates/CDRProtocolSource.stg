@@ -8,7 +8,6 @@ $fileHeader(file=[ctx.filename, "CDRProtocol.cxx"], description=["This source fi
 #include "rpcdds/transports/ServerTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
 #include "rpcdds/utils/Messages.h"
-#include "fastcdr/exceptions/BadParamException.h"
 
 using namespace eprosima::rpcdds;
 using namespace ::protocol::cdr;
@@ -114,12 +113,12 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
                                 $if(first(first(ctx.interfaces).operations))$
                                     if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
                                     {
-                                        $operation_worker(operation=first(first(ctx.interfaces).operations))$
+                                        $operation_worker(ctx=ctx, operation=first(first(ctx.interfaces).operations))$
                                     }
                                 $rest(first(ctx.interfaces).operations) : {operation |
                                     else if(operation_name.compare("$operation.name$") == 0)
                                     {
-                                        $operation_worker(operation=operation)$
+                                        $operation_worker(ctx=ctx, operation=operation)$
                                     }
                                 }$
                                 $endif$
@@ -137,12 +136,12 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
                                 $if(first(interface.operations))$
                                     if(operation_name.compare("$first(interface.operations).name$") == 0)
                                     {
-                                        $operation_worker(operation=first(interface.operations))$
+                                        $operation_worker(ctx=ctx, operation=first(interface.operations))$
                                     }
                                 $rest(interface.operations) : {operation |
                                     else if(operation_name.compare("$operation.name$") == 0)
                                     {
-                                        $operation_worker(operation=operation)$
+                                        $operation_worker(ctx=ctx, operation=operation)$
                                     }
                                 }$
                                 $endif$
@@ -215,7 +214,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     scdr.serialize(interface_name);
     scdr.serialize(operation_name);
     $operation.inputparam : {param |
-    $object_serialization(object=param)$
+    $object_serialization(ctx=ctx, object=param)$
     };separator="\n"$
     
     char *buffer = serializeBuffer.getBuffer();
@@ -281,7 +280,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
                                     case 0:
                                         {
                                         $[operation.outputparam, operation.rettypeparam] : {param |
-                                        $object_deserialization(object=param)$
+                                        $object_deserialization(ctx=ctx, object=param)$
                                         };separator="\n"$
                                         }
 
@@ -303,7 +302,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
                                 }
                                 $else$
                                 $[operation.outputparam, operation.rettypeparam] : {param |
-                                $object_deserialization(object=param)$
+                                $object_deserialization(ctx=ctx, object=param)$
                                 };separator="\n"$
                                 $endif$
                             }
@@ -381,14 +380,14 @@ union_type(ctx, union) ::= <<>>
 enum_type(ctx, enum) ::= <<>>
 
 /*************** Utils *****************/
-operation_worker(operation) ::= <<
+operation_worker(ctx, operation) ::= <<
 $operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
 $varDecl(variable=operation.rettypeparam)$
 
 $operation.inputparam : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
 
 $operation.inputparam : {param |
-$object_deserialization(object=param)$
+$object_deserialization(ctx=ctx, object=param)$
 };separator="\n"$
 
 try
@@ -408,7 +407,7 @@ try
     $endif$
     
     $[operation.outputparam, operation.rettypeparam] : {param |
-    $object_serialization(object=param)$
+    $object_serialization(ctx=ctx, object=param)$
     };separator="\n"$
     
     char *buffer = scdrBuffer.getBuffer();

@@ -14,7 +14,7 @@ $fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file co
 #include "$ctx.filename$Topics.h"
 
 #include "fastcdr/Cdr.h"
-#include "fastcdr/exceptions/BadParamException.h"
+#include "rpcdds/exceptions/BadParamException.h"
 
 $definitions; separator="\n"$
 
@@ -98,14 +98,14 @@ void $operation.parent.scopedname$_$operation.name$Request::serialize(eprosima::
 {
     scdr << m__header;
 
-    $operation.inputparam : { param |$object_serialization(object=param, preffix="m_")$}; separator="\n"$
+    $operation.inputparam : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
 void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima::Cdr &dcdr)
 {
     dcdr \>> m__header;
 
-    $operation.inputparam : { param |$object_deserialization(object=param, preffix="m_")$}; separator="\n"$
+    $operation.inputparam : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
 $if(!operation.oneway)$
@@ -165,12 +165,12 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_st::getSerializedSize
 
 void $operation.parent.scopedname$_$operation.name$Reply_st::serialize(eprosima::Cdr &scdr) const
 {
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param, preffix="m_")$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
 void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosima::Cdr &dcdr)
 {
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param, preffix="m_")$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
 $endif$
@@ -295,7 +295,7 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::_d(int32_t __d)
 {
     if(m__d != __d)
     {
-        throw eprosima::BadParamException("Discriminator doesn't correspond with the selected union member");
+        throw eprosima::rpcdds::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
     }
     
     m__d = __d;
@@ -327,7 +327,7 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::st($operation.pa
 const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_union::st() const
 {
     if(m__d != 0)
-        throw eprosima::BadParamException("This member is not been selected");
+        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
     
     return m_st;
 }
@@ -335,7 +335,7 @@ const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.
 $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_union::st()
 {
     if(m__d != 0)
-        throw eprosima::BadParamException("This member is not been selected");
+        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
     
     return m_st;
 }
@@ -552,14 +552,14 @@ void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cd
 {
     scdr << m__header;
 
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(object=param, preffix="m_")$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
 void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &dcdr)
 {
     dcdr \>> m__header;
 
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(object=param, preffix="m_")$}; separator="\n"$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
 $endif$
@@ -628,7 +628,7 @@ void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$excep
 const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 {
     if(m__d != $label$)
-        throw eprosima::BadParamException("This member is not been selected");
+        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
 }
@@ -636,7 +636,7 @@ const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 $exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
 {
     if(m__d != $label$)
-        throw eprosima::BadParamException("This member is not been selected");
+        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
 }

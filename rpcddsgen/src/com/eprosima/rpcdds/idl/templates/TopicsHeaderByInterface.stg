@@ -94,7 +94,7 @@ public:
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
-     * @exception eprosima::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     * @exception eprosima::rpcdds::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     void _d(int32_t __d);
     
@@ -281,7 +281,7 @@ public:
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
-     * @exception eprosima::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     * @exception eprosima::rpcdds::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     void _d(int32_t __d);
     
@@ -607,7 +607,7 @@ public:
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
-     * @exception eprosima::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     * @exception eprosima::rpcdds::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     void _d(int32_t __d);
     
@@ -785,14 +785,14 @@ void $name$($typename$ &&_$name$);
 /*!
  * @brief This function returns a constant reference to member $name$
  * @return Constant reference to member $name$
- * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+ * @exception eprosima::rpcdds::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
  */
 const $typename$& $name$() const;
 
 /*!
  * @brief This function returns a reference to member $name$
  * @return Reference to member $name$
- * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+ * @exception eprosima::rpcdds::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
  */
 $typename$& $name$();
 >>

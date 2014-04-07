@@ -15,5 +15,6 @@
 #include "rpcdds/exceptions/ServerInternalException.h"
 #include "rpcdds/exceptions/ServerTimeoutException.h"
 #include "rpcdds/exceptions/ServerNotFoundException.h"
+#include "rpcdds/exceptions/BadParamException.h"
 
 #endif // _EXCEPTIONS_EXCEPTIONS_H_

@@ -229,18 +229,22 @@ $endif$
 $endif$
 >>
 
-object_serialization(object, preffix) ::= <<
+object_serialization(ctx, object, preffix) ::= <<
 $if(object.typecode.maxsize)$
 if($preffix$$object.name$.$sizeFunction.(object.typecode.stType)$ <= $object.typecode.maxsize$)
 
 $endif$scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
 $if(object.typecode.maxsize)$
 else
+$if(ctx.fastrpcProduct)$
+    throw eprosima::rpcdds::exception::BadParamException(std::string("The maximum length was exceeded"));
+$else$
     throw eprosima::BadParamException(std::string("The maximum length was exceeded"));
+$endif$
 $endif$
 >>
 
-object_deserialization(object, preffix) ::= <<
+object_deserialization(ctx, object, preffix) ::= <<
 dcdr \>> $deserializeCasting(typecode=object.typecode)$$preffix$$object.name$;
 >>
 
