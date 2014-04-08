@@ -21,7 +21,7 @@ namespace eprosima
         
         namespace protocol
         {
-            namespace cdr
+            namespace fastcdr
             {
                 $definitions; separator="\n"$
                 
@@ -54,8 +54,8 @@ namespace eprosima
                         
                     private:
                     
-                        eprosima::FastBuffer serializeBuffer;
-                        eprosima::FastCdr scdr;
+                        eprosima::fastcdr::FastBuffer serializeBuffer;
+                        eprosima::fastcdr::FastCdr scdr;
                 };
             } // namespace dds
         } // namespace protocol
@@ -87,21 +87,21 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<
 /*!
  * @brief This function serialize an exception $exception.scopedname$.
- * @param cdr FastCdr object used to serialize.
+ * @param cdr eprosima::fastcdr::FastCdr object used to serialize.
  * @param x Reference to the exception that will be serialized in the buffer.
  * @exception NotEnoughMemoryException This exception is thrown trying to serialize in a position that exceed the internal memory size.
  * @exception BadParamException This exception is thrown trying to serialize in an invalid value.
  */
-void serialize(eprosima::FastCdr &cdr, const $exception.scopedname$ &x);
+void serialize(eprosima::fastcdr::FastCdr &cdr, const $exception.scopedname$ &x);
 
 /*!
  * @brief This function deserialize an exception $exception.scopedname$.
- * @param cdr FastCdr object used to deserialize.
+ * @param cdr eprosima::fastcdr::FastCdr object used to deserialize.
  * @param x Reference to the variable that will store the exception $exception.scopedname$ read from the buffer.
  * @exception NotEnoughMemoryException This exception is thrown trying to deserialize in a position that exceed the internal memory size.
  * @exception BadParamException This exception is thrown trying to deserialize in an invalid value.
  */
-void deserialize(eprosima::FastCdr &cdr, $exception.scopedname$ &x);
+void deserialize(eprosima::fastcdr::FastCdr &cdr, $exception.scopedname$ &x);
 
 >>
 
@@ -130,20 +130,20 @@ enum_type(ctx, enum) ::= <<>>
 membered_type(ctx, mtype) ::=<<
 /*!
  * @brief This function serialize a type $mtype.scopedname$.
- * @param cdr FastCdr object used to serialize.
+ * @param cdr eprosima::fastcdr::FastCdr object used to serialize.
  * @param x Reference to the variable that will be serialized in the buffer.
  * @exception NotEnoughMemoryException This exception is thrown trying to serialize in a position that exceed the internal memory size.
  * @exception BadParamException This exception is thrown trying to serialize in an invalid value.
  */
-void serialize(eprosima::FastCdr &cdr, const $mtype.scopedname$ &x);
+void serialize(eprosima::fastcdr::FastCdr &cdr, const $mtype.scopedname$ &x);
 
 /*!
  * @brief This function deserialize a type $mtype.scopedname$.
- * @param cdr FastCdr object used to deserialize.
+ * @param cdr eprosima::fastcdr::FastCdr object used to deserialize.
  * @param x Reference to the variable that will store the $mtype.scopedname$ read from the buffer.
  * @exception NotEnoughMemoryException This exception is thrown trying to deserialize in a position that exceed the internal memory size.
  * @exception BadParamException This exception is thrown trying to deserialize in an invalid value.
  */
-void deserialize(eprosima::FastCdr &cdr, $mtype.scopedname$ &x);
+void deserialize(eprosima::fastcdr::FastCdr &cdr, $mtype.scopedname$ &x);
 
 >>

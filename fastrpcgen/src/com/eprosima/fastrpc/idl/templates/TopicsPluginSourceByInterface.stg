@@ -13,6 +13,7 @@ $fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This hea
 
 #include "$ctx.filename$TopicsPlugin.h"
 #include "fastrpc/protocols/dds/MessageHeaderPlugin.h"
+#include "fastrpc/exceptions/BadParamException.h"
 
 #include "fastcdr/Cdr.h"
 #include "fastcdr/exceptions/BadParamException.h"
@@ -265,14 +266,14 @@ $interface.scopedname$RequestPlugin::serialize(
     void *endpoint_plugin_qos)
 {
     printf("=> $interface.scopedname$RequestPlugin::serialize\n");
-    eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr scdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
+    eprosima::fastcdr::Cdr scdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     scdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
     scdr.jump(stream->_currentPosition - stream->_buffer);
 
     if(serialize_encapsulation)
     {
-        scdr.changeEndianness((eprosima::Cdr::Endianness)(encapsulation_id & 0x1));
+        scdr.changeEndianness((eprosima::fastcdr::Cdr::Endianness)(encapsulation_id & 0x1));
         scdr.serialize_encapsulation();
         scdr.resetAlignment();
     }
@@ -283,14 +284,19 @@ $interface.scopedname$RequestPlugin::serialize(
         {
             scdr << *sample;
         }
-        catch(eprosima::BadParamException ex)
+        catch(eprosima::fastrpc::exception::BadParamException ex)
         {
-            printf("ERROR<eprosima::BadParamException>: %s\n", ex.what());
+            printf("ERROR<eprosima::fastrpc::exception::BadParamException>: %s\n", ex.what());
             return RTI_FALSE;
         }
-        catch(eprosima::NotEnoughMemoryException ex)
+        catch(eprosima::fastcdr::exception::BadParamException ex)
         {
-            printf("ERROR<eprosima::NotEnoughMemoryException>: %s\n", ex.what());
+            printf("ERROR<eprosima::fastcdr::exception::BadParamException>: %s\n", ex.what());
+            return RTI_FALSE;
+        }
+        catch(eprosima::fastcdr::exception::NotEnoughMemoryException ex)
+        {
+            printf("ERROR<eprosima::fastcdr::exception::NotEnoughMemoryException>: %s\n", ex.what());
             return RTI_FALSE;
         }
     }
@@ -312,8 +318,8 @@ $interface.scopedname$RequestPlugin::deserialize(
 {
     printf("=> $interface.scopedname$RequestPlugin::deserialize\n");
     $interface.scopedname$Request *_sample = *sample;
-    eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr dcdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
+    eprosima::fastcdr::Cdr dcdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     dcdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
     dcdr.jump(stream->_currentPosition - stream->_buffer);
 
@@ -852,14 +858,14 @@ $interface.scopedname$ReplyPlugin::serialize(
     void *endpoint_plugin_qos)
 {
     printf("=> $interface.scopedname$ReplyPlugin::serialize\n");
-    eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr scdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
+    eprosima::fastcdr::Cdr scdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     scdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
     scdr.jump(stream->_currentPosition - stream->_buffer);
 
     if(serialize_encapsulation)
     {
-        scdr.changeEndianness((eprosima::Cdr::Endianness)(encapsulation_id & 0x1));
+        scdr.changeEndianness((eprosima::fastcdr::Cdr::Endianness)(encapsulation_id & 0x1));
         scdr.serialize_encapsulation();
         scdr.resetAlignment();
     }
@@ -870,14 +876,19 @@ $interface.scopedname$ReplyPlugin::serialize(
         {
             scdr << *sample;
         }
-        catch(eprosima::BadParamException ex)
+        catch(eprosima::fastrpc::exception::BadParamException ex)
         {
-            printf("ERROR<eprosima::BadParamException>: %s\n", ex.what());
+            printf("ERROR<eprosima::fastrpc::exception::BadParamException>: %s\n", ex.what());
             return RTI_FALSE;
         }
-        catch(eprosima::NotEnoughMemoryException ex)
+        catch(eprosima::fastcdr::exception::BadParamException ex)
         {
-            printf("ERROR<eprosima::NotEnoughMemoryException>: %s\n", ex.what());
+            printf("ERROR<eprosima::fastcdr::exception::BadParamException>: %s\n", ex.what());
+            return RTI_FALSE;
+        }
+        catch(eprosima::fastcdr::exception::NotEnoughMemoryException ex)
+        {
+            printf("ERROR<eprosima::fastcdr::exception::NotEnoughMemoryException>: %s\n", ex.what());
             return RTI_FALSE;
         }
     }
@@ -898,8 +909,8 @@ $interface.scopedname$ReplyPlugin::deserialize(
 {
     printf("=> $interface.scopedname$ReplyPlugin::deserialize\n");
     $interface.scopedname$Reply *_sample = *sample;
-    eprosima::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
-    eprosima::Cdr dcdr(buffer, (eprosima::Cdr::Endianness)stream->_endian, eprosima::Cdr::DDS_CDR);
+    eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
+    eprosima::fastcdr::Cdr dcdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     dcdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
     dcdr.jump(stream->_currentPosition - stream->_buffer);
 

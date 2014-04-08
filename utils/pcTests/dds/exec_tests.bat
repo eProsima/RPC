@@ -33,11 +33,11 @@ if %argC% geq 1 (
     )
 )
 
-:: Set environment for RPCDDS
+:: Set environment for FASTRPC
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
 
-:: Create symbolic link to EPROSIMADIR in this rpcdds folder.
-if not exist ..\..\..\include\rpcdds\eProsima_cpp mklink /J ..\..\..\include\rpcdds\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
+:: Create symbolic link to EPROSIMADIR in this fastrpc folder.
+if not exist ..\..\..\include\fastrpc\eProsima_cpp mklink /J ..\..\..\include\fastrpc\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
@@ -125,8 +125,8 @@ echo "EXECUTING %3 for %1"
 :: Clean output directory
 if exist output rd /S /Q output
 mkdir output
-:: Generates the file with RPCDDS script
-call ..\..\..\scripts\rpcdds_rti_pcTests.bat -protocol dds -d output -example %1 "%3\%3.idl"
+:: Generates the file with FASTRPC script
+call ..\..\..\scripts\fastrpc_rti_pcTests.bat -protocol dds -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -222,9 +222,9 @@ goto :EOF
 rd /S /Q output
 
 :: Remove symbolic link from EPROSIMADIR
-if exist ..\..\..\include\rpcdds\eProsima_cpp rmdir /Q ..\..\..\include\rpcdds\eProsima_cpp
+if exist ..\..\..\include\fastrpc\eProsima_cpp rmdir /Q ..\..\..\include\fastrpc\eProsima_cpp
 
-:: Restore environment for RPCDDS
+:: Restore environment for FASTRPC
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTIversion
 
 if %errorstatus%==0 (echo "TEST SUCCESFULLY") else (echo "TEST FAILED")

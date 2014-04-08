@@ -8,7 +8,7 @@ DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
 INCLUDES= -I. -I$(FASTCDR)/include -I$(FASTRPCHOME)/include  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds 
 
-LIBS = -L$(LIBFASTCDR) -L$(FASTRPCHOME)/lib/x64Linux2.6gcc4.4.5 -lrpcdds  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+LIBS = -L$(LIBFASTCDR) -L$(FASTRPCHOME)/lib/x64Linux2.6gcc4.4.5 -lfastrpc  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
        -lnddsc -lnddscore -lnddscpp -lfastcdr $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir

@@ -94,14 +94,14 @@ size_t $operation.parent.scopedname$_$operation.name$Request::getSerializedSize(
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Request::serialize(eprosima::Cdr &scdr) const
+void $operation.parent.scopedname$_$operation.name$Request::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__header;
 
     $operation.inputparam : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
-void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$Request::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m__header;
 
@@ -163,12 +163,12 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_st::getSerializedSize
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_st::serialize(eprosima::Cdr &scdr) const
+void $operation.parent.scopedname$_$operation.name$Reply_st::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosima::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$Reply_st::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
@@ -350,7 +350,7 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_union::getMaxCdrSeria
     size_t reset_align = 0;
     size_t union_max_size_serialized = 0;
 
-    current_align += 4 + eprosima::Cdr::alignment(current_align, 4);
+    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
 
     $if([operation.outputparam, operation.rettype])$
     reset_align = current_align;
@@ -374,7 +374,7 @@ size_t $operation.parent.scopedname$_$operation.name$Reply_union::getMaxCdrSeria
     return union_max_size_serialized;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosima::Cdr &scdr) const
+void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__d;
 
@@ -400,7 +400,7 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::serialize(eprosi
     }
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(eprosima::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$Reply_union::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m__d;
 
@@ -479,13 +479,13 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(si
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &scdr) const
+void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__header;
     scdr << m_unio;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m__header;
     dcdr \>> m_unio;
@@ -548,14 +548,14 @@ size_t $operation.parent.scopedname$_$operation.name$Reply::getSerializedSize(si
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::Cdr &scdr) const
+void $operation.parent.scopedname$_$operation.name$Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__header;
 
     $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
 }
 
-void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m__header;
 

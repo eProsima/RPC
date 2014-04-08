@@ -6,13 +6,13 @@ errorstatus=0
 rm -rf output/*
 # Info about test
 echo "EXECUTING IncludesTest"
-# Generates the Util idl file with RPCDDS script
+# Generates the Util idl file with FASTRPC script
 mkdir output/util
-../../../scripts/rpcdds_rti_pcTests.sh -d output/util -example $NDDSTARGET -protocol fastcdr "IncludesTest/util/Util.idl"
+../../../scripts/fastrpcgen.sh -local -d output/util -example $NDDSTARGET -protocol fastcdr "IncludesTest/util/Util.idl"
 errorstatus=$?
 if [ $errorstatus != 0 ]; then exit $errorstatus; fi
-# Generates the rest of files with RPCDDS script
-../../../scripts/rpcdds_rti_pcTests.sh -d output -example $NDDSTARGET -protocol fastcdr -IIncludesTest -IIncludesTest/hide "IncludesTest/IncludesTest.idl" "IncludesTest/SameDirectory.idl" "IncludesTest/Level2.idl" "IncludesTest/hide/Hide.idl"
+# Generates the rest of files with FASTRPC script
+../../../scripts/fastrpcgen.sh -local -d output -example $NDDSTARGET -protocol fastcdr -IIncludesTest -IIncludesTest/hide "IncludesTest/IncludesTest.idl" "IncludesTest/SameDirectory.idl" "IncludesTest/Level2.idl" "IncludesTest/hide/Hide.idl"
 errorstatus=$?
 if [ $errorstatus != 0 ]; then exit $errorstatus; fi
 # TODO Temporary set of LIBFASTCDR

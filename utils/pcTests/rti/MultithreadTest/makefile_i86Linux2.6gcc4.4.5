@@ -9,7 +9,7 @@ DEFINES=  -DRTI_LINUX -DRTI_UNIX
 INCLUDES= -I. -I$(FASTRPCHOME)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 
 LIBS = -L$(FASTRPCHOME)/lib/i86Linux2.6gcc4.4.5 -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lrpcdds $(SYSLIBS)
+       -lnddsc -lnddscore -lnddscpp -lfastrpc $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 

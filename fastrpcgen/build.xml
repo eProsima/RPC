@@ -22,7 +22,7 @@
 		<attribute name="base" />
 		<attribute name="grammar" />
 		<sequential>
-			<java classname="antlr.Tool" classpath="lib/antlr-2.7.7.jar">
+            <java classname="antlr.Tool" classpath="../classes/antlr-2.7.7.jar">
 				<arg value="-o" />
 				<arg value="@{base}" />
 				<arg value="@{grammar}" />
@@ -34,7 +34,7 @@
 		<attribute name="base" />
 		<attribute name="grammar" />
 		<sequential>
-			<java classname="com.javadude.antxr.Tool" classpath="lib/antxr.jar">
+            <java classname="com.javadude.antxr.Tool" classpath="../classes/antxr.jar">
 				<arg value="-o" />
 				<arg value="@{base}" />
 				<arg value="@{grammar}" />
@@ -64,7 +64,7 @@
 		<!-- Source related properties -->
 		<property name="src.dir" value="${basedir}${file.separator}src" />
 		<property name="src.java" value="${src.dir}" />
-		<property name="lib.dir" value="${basedir}${file.separator}lib${file.separator}" />
+        <property name="lib.dir" value="${basedir}${file.separator}..${file.separator}classes${file.separator}" />
 		<property name="grammar.dir" value="${basedir}${file.separator}grammars" />
 		<property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}" />
 		<property name="tmp.dir" value="./tmp" />

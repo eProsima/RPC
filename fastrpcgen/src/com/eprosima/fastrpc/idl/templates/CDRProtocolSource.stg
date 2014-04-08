@@ -10,7 +10,7 @@ $fileHeader(file=[ctx.filename, "CDRProtocol.cxx"], description=["This source fi
 #include "fastrpc/utils/Messages.h"
 
 using namespace eprosima::fastrpc;
-using namespace ::protocol::cdr;
+using namespace ::protocol::fastcdr;
 using namespace ::transport;
 using namespace ::exception;
 
@@ -92,8 +92,8 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
                     }
                 }
 
-                eprosima::FastBuffer cdrBuffer((char*)data, bufferUse);
-                eprosima::FastCdr dcdr(cdrBuffer);
+                eprosima::fastcdr::FastBuffer cdrBuffer((char*)data, bufferUse);
+                eprosima::fastcdr::FastCdr dcdr(cdrBuffer);
 
                 dcdr.jump(8);
                 int32_t code = -2;
@@ -256,8 +256,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
                     
                     if(retCode >= 0 && responseBufferUse >= cdrLength)
                     {
-                        eprosima::FastBuffer cdrBuffer(response, responseBufferUse);
-                        eprosima::FastCdr dcdr(cdrBuffer);
+                        eprosima::fastcdr::FastBuffer cdrBuffer(response, responseBufferUse);
+                        eprosima::fastcdr::FastCdr dcdr(cdrBuffer);
                         
                         dcdr.jump(8);
                         int32_t code = -2;
@@ -395,8 +395,8 @@ try
     $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
     
     $if(!operation.oneway)$
-    eprosima::FastBuffer scdrBuffer;
-    eprosima::FastCdr scdr(scdrBuffer);
+    eprosima::fastcdr::FastBuffer scdrBuffer;
+    eprosima::fastcdr::FastCdr scdr(scdrBuffer);
     scdr.jump(8);
     scdr.serialize((int32_t)1);
     scdr.serialize("$operation.parent.scopedname$");
@@ -420,8 +420,8 @@ try
 $operation.exceptions : { exception |
 catch(const $exception.scopedname$ &ex)
 {
-    eprosima::FastBuffer scdrBuffer;
-    eprosima::FastCdr scdr(scdrBuffer);
+    eprosima::fastcdr::FastBuffer scdrBuffer;
+    eprosima::fastcdr::FastCdr scdr(scdrBuffer);
     scdr.jump(8);
     scdr.serialize((int32_t)1);
     scdr.serialize("$operation.parent.scopedname$");
@@ -439,8 +439,8 @@ catch(const $exception.scopedname$ &ex)
 catch(const ServerInternalException &ex)
 {
     $if(!operation.oneway)$
-    eprosima::FastBuffer scdrBuffer;
-    eprosima::FastCdr scdr(scdrBuffer);
+    eprosima::fastcdr::FastBuffer scdrBuffer;
+    eprosima::fastcdr::FastCdr scdr(scdrBuffer);
     scdr.jump(8);
     scdr.serialize((int32_t)-1);
     scdr.serialize(ex.what());

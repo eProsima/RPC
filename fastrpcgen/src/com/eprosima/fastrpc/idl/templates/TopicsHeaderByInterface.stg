@@ -119,10 +119,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
     int32_t m__d;
@@ -223,10 +223,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -306,10 +306,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
     int32_t m__d;
@@ -410,10 +410,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -485,10 +485,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -545,10 +545,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -639,10 +639,10 @@ public:
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
     // TODO
-    void serialize(eprosima::Cdr &cdr) const;
+    void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     // TODO
-    void deserialize(eprosima::Cdr &cdr);
+    void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 

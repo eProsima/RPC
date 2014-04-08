@@ -17,7 +17,7 @@ using namespace eprosima::fastrpc;
 using namespace ::exception;
 using namespace ::strategy;
 using namespace ::transport;
-using namespace ::protocol::cdr;
+using namespace ::protocol::fastcdr;
 
 int main(int argc, char **argv)
 {

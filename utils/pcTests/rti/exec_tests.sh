@@ -17,8 +17,8 @@ function execTest
     rm -rf output/*
     # Info about test
     echo "EXECUTING $1 for $NDDSTARGET using operations as topics"
-    # Generates the file with RPCDDS script
-    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -types rti -topicGeneration byOperation -d output -example $NDDSTARGET "$1/$1.idl"
+    # Generates the file with FASTRPC script
+    ../../../scripts/fastrpcgen.sh -local -protocol dds -types rti -topicGeneration byOperation -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Compile client and server example application
@@ -48,8 +48,8 @@ function execTest
     rm -rf output/*
     # Info about test
     echo "EXECUTING $1 for $NDDSTARGET using interfaces as topics"
-    # Generates the file with RPCDDS script
-    ../../../scripts/rpcdds_rti_pcTests.sh -protocol dds -types rti -topicGeneration byInterface -d output -example $NDDSTARGET "$1/$1.idl"
+    # Generates the file with FASTRPC script
+    ../../../scripts/fastrpcgen.sh -local -protocol dds -types rti -topicGeneration byInterface -d output -example $NDDSTARGET "$1/$1.idl"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Compile client and server example application
@@ -97,9 +97,9 @@ fi
 # Set environment for RTPDDS
 . $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
 
-# Create symbolic link to EPROSIMADIR in the rpcdds folder.
-if [ ! -e "../../../include/rpcdds/eProsima_cpp" ]; then
-    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/rpcdds/eProsima_cpp
+# Create symbolic link to EPROSIMADIR in the fastrpc folder.
+if [ ! -e "../../../include/fastrpc/eProsima_cpp" ]; then
+    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/fastrpc/eProsima_cpp
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 fi
@@ -176,11 +176,11 @@ done
 rm -r output
 
 # Remove symbolic link
-if [ -e ../../../include/rpcdds/eProsima_cpp ]; then
-    rm ../../../include/rpcdds/eProsima_cpp
+if [ -e ../../../include/fastrpc/eProsima_cpp ]; then
+    rm ../../../include/fastrpc/eProsima_cpp
 fi
 
-# Restore environment for RPCDDS
+# Restore environment for FASTRPC
 . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then

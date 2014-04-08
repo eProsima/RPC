@@ -25,19 +25,20 @@ cscope.out
 #### Project files ####
 
 # Generated Java classes
-rpcddsgen/build/
+fastrpcgen/build/
+classes/fastrpcgen.jar
 
 # Generated Java source
-rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLLexer.java
-rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLLexer.smap
-rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLParser.java
-rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLParser.smap
-rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLTokenTypes.java
-rpcddsgen/src/com/eprosima/rpcdds/idl/grammar/IDLTokenTypes.txt
-rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParser.java
-rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParser.smap
-rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParserTokenTypes.java
-rpcddsgen/src/com/eprosima/rpcdds/wadl/grammar/WADLParserTokenTypes.txt
+fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLLexer.java
+fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLLexer.smap
+fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLParser.java
+fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLParser.smap
+fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLTokenTypes.java
+fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLTokenTypes.txt
+fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.java
+fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.smap
+fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.java
+fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.txt
 
 # Foo examples
 utils/doxygen/examples/dds/*.h
