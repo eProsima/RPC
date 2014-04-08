@@ -19,6 +19,8 @@ lib/
 # Tags info
 tags
 cscope.out
+# Compiled python objects
+*.pyc
 
 #### Project files ####
 

@@ -4,15 +4,15 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "RESTProtocol.cxx"], description=["This source file contains the definition of the protocol used to create REST messages."])$
 
 #include "$ctx.filename$RESTProtocol.h"
-#include "rpcdds/exceptions/Exceptions.h"
-#include "rpcdds/transports/ProxyTransport.h"
-#include "rpcdds/transports/ServerTransport.h"
-#include "rpcdds/protocols/rest/RESTSerializer.h"
+#include "fastrpc/exceptions/Exceptions.h"
+#include "fastrpc/transports/ProxyTransport.h"
+#include "fastrpc/transports/ServerTransport.h"
+#include "fastrpc/protocols/rest/RESTSerializer.h"
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::protocol::rest;
 using namespace ::transport;
-using namespace eprosima::rpcdds::exception;
+using namespace eprosima::fastrpc::exception;
 
 #include <sstream>
 
@@ -45,7 +45,7 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
     if(transport.getBehaviour() == SERVER_BEHAVIOUR)
     {
         // If this is a server transport, we set its callback
-        eprosima::rpcdds::transport::ServerTransport &serverTransport = dynamic_cast<eprosima::rpcdds::transport::ServerTransport&>(transport);
+        eprosima::fastrpc::transport::ServerTransport &serverTransport = dynamic_cast<eprosima::fastrpc::transport::ServerTransport&>(transport);
         serverTransport.setCallback(&$ctx.filename$Protocol::worker);
     }
         
@@ -74,10 +74,10 @@ int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
     return 0;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint)
+void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::fastrpc::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
-    eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpcdds::protocol::rest::$ctx.filename$Protocol&>( protocol );
+    eprosima::fastrpc::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::fastrpc::protocol::rest::$ctx.filename$Protocol&>( protocol );
     HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
 
     HttpMessage response = restProtocol.processRequest(*httpMessage);
@@ -153,7 +153,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 {
      stringstream stream;
      RESTSerializer restSerializer;
-     eprosima::rpcdds::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpcdds::transport::ProxyTransport&>( getTransport() );
+     eprosima::fastrpc::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::fastrpc::transport::ProxyTransport&>( getTransport() );
      $varDecl(variable=operation.rettypeparam)$
      $varComplexInitialize(variable=operation.rettypeparam)$
      // XXX TODO if NULL -> error

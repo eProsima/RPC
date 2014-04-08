@@ -1,7 +1,7 @@
 #ifndef TCP_SERIALIZER_HTTPSERIALIZER
 #define TCP_SERIALIZER_HTTPSERIALIZER
 
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/fastrpc_dll.h"
 
 #include <iostream>
 #include <stdint.h>
@@ -9,12 +9,12 @@
 #include <vector>
 #include <map>
 
-#include "rpcdds/protocols/rest/FastBuffer.h"
-#include "rpcdds/protocols/rest/HTTPEntities.h"
+#include "fastrpc/protocols/rest/FastBuffer.h"
+#include "fastrpc/protocols/rest/HTTPEntities.h"
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace protocol
         {
@@ -24,7 +24,7 @@ namespace eprosima
 				 * @brief This class serializes REST data to get an HTTP message suitable for HTTP communications
 				 * @ingroup PROTOCOLMODULE
 				 */
-                class RPCDDS_DllAPI RESTSerializer
+                class FASTRPC_DllAPI RESTSerializer
                 {
                     private:
 						// TODO Mirar con Ricardo
@@ -307,7 +307,7 @@ namespace eprosima
 
             } //namespace rest
         } //namespace protocol
-    } //namespace rpcdds
+    } //namespace fastrpc
 } //namespace eProsima
 
 #endif //TCP_SERIALIZER_HTTPSERIALIZER

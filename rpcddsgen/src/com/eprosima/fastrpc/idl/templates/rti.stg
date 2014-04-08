@@ -239,7 +239,7 @@ inclMake() ::= <<
 >>
 
 inclVS() ::= <<
-\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(RPCDDSHOME)\include;
+\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(FASTRPCHOME)\include;
 >>
 
 libsMake(example, version) ::= <<
@@ -248,7 +248,7 @@ libsMake(example, version) ::= <<
 >>
 
 libsVS(example) ::= <<
-\$(NDDSHOME)\lib\\$example$;\$(RPCDDSHOME)\lib\\$example$
+\$(NDDSHOME)\lib\\$example$;\$(FASTRPCHOME)\lib\\$example$
 >>
  
 preprocessorDefs(conf) ::= <<

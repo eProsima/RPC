@@ -1,10 +1,10 @@
-package com.eprosima.rpcdds.typecode;
+package com.eprosima.fastrpc.typecode;
 
 import java.util.List;
 
 import org.antlr.stringtemplate.StringTemplate;
 
-import com.eprosima.rpcdds.util.Pair;
+import com.eprosima.fastrpc.util.Pair;
 
 public class StringTypeCode extends TypeCode
 {

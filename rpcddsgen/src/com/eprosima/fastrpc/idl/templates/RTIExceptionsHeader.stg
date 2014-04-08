@@ -6,7 +6,7 @@ $fileHeader(file=[ctx.filename, "Exceptions.h"], description=["TODO This header 
 #ifndef _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
 #define _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
 
-#include "rpcdds/exceptions/UserException.h"
+#include "fastrpc/exceptions/UserException.h"
 #include "$ctx.filename$Support.h"
 
 $definitions; separator="\n"$
@@ -42,7 +42,7 @@ exception(ctx, exception) ::= <<
  * @brief This class implementes the user exception $exception.scopedname$
  * @ingroup $ctx.trimfilename$
  */
-class RPCDDSUSERDllExport $exception.name$ : public eprosima::rpcdds::exception::UserException
+class FASTRPCUSERDllExport $exception.name$ : public eprosima::fastrpc::exception::UserException
 {
 public:
     

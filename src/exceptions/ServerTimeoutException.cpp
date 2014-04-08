@@ -1,14 +1,14 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include <rpcdds/exceptions/ServerTimeoutException.h>
+#include <fastrpc/exceptions/ServerTimeoutException.h>
 
-using namespace eprosima::rpcdds::exception;
+using namespace eprosima::fastrpc::exception;
 
 ServerTimeoutException::ServerTimeoutException(const std::string &message) : SystemException(message, 5)
 {

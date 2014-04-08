@@ -1,11 +1,11 @@
-package com.eprosima.rpcdds.idl.grammar;
+package com.eprosima.fastrpc.idl.grammar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eprosima.rpcdds.tree.Interface;
-import com.eprosima.rpcdds.tree.Operation;
-import com.eprosima.rpcdds.tree.Param;
+import com.eprosima.fastrpc.tree.Interface;
+import com.eprosima.fastrpc.tree.Operation;
+import com.eprosima.fastrpc.tree.Param;
 
 public class PathTree {
 	private PathTree parent;

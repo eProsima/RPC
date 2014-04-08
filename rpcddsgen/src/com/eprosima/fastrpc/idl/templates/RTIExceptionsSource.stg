@@ -6,7 +6,7 @@ $fileHeader(file=[ctx.filename, "Exceptions.cxx"], description=["TODO This sourc
 #include "$ctx.filename$Exceptions.h"
 #include <string.h>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::exception;
 
 $definitions; separator="\n"$

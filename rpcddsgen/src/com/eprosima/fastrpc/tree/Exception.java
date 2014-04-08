@@ -1,10 +1,10 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eprosima.rpcdds.idl.grammar.Context;
-import com.eprosima.rpcdds.typecode.Member;
+import com.eprosima.fastrpc.idl.grammar.Context;
+import com.eprosima.fastrpc.typecode.Member;
 
 public class Exception extends ScopedObject implements Export, Definition
 {
@@ -61,7 +61,7 @@ public class Exception extends ScopedObject implements Export, Definition
     }
 	
 	@Override
-    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    public com.eprosima.fastrpc.tree.Exception getFirstException(String idlFile)
     {
     	
     	if(getScopeFile().equals(idlFile))

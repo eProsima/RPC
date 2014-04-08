@@ -1,11 +1,11 @@
-package com.eprosima.rpcdds.typecode;
+package com.eprosima.fastrpc.typecode;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import org.antlr.stringtemplate.StringTemplate;
 
-import com.eprosima.rpcdds.util.Pair;
+import com.eprosima.fastrpc.util.Pair;
 
 public class ArrayTypeCode extends ContainerTypeCode
 {

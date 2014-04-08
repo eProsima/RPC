@@ -1,19 +1,19 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _TRANSPORTS_TRANSPORT_H_
 #define _TRANSPORTS_TRANSPORT_H_
 
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/fastrpc_dll.h"
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -33,7 +33,7 @@ namespace eprosima
              *        that could be used by the proxy or the server.
              * @ingroup TRANSPORTMODULE
              */
-            class RPCDDS_DllAPI Transport
+            class FASTRPC_DllAPI Transport
             {
                 public:
 
@@ -56,6 +56,6 @@ namespace eprosima
                     virtual TransportBehaviour getBehaviour() const = 0;
             };
         } // namespace transport
-    } // namespace RPCDDS
+    } // namespace FASTRPC
 } // namespace eProsima
 #endif // _TRANSPORTS_TRANSPORT_H_

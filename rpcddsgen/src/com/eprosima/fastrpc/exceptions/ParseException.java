@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.exceptions;
+package com.eprosima.fastrpc.exceptions;
 
 public class ParseException extends RuntimeException
 {

@@ -1,19 +1,19 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 #ifndef _TRANSPORTS_DDS_TRANSPORT_H_
 #define _TRANSPORTS_DDS_TRANSPORT_H_
 
-#include "rpcdds/rpcdds_dll.h"
-#include "rpcdds/utils/dds/Middleware.h"
+#include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace protocol
         {
@@ -31,15 +31,15 @@ namespace eprosima
                  * using DDS. This transport could be used by both proxies and servers.
                  * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI Transport
+                class FASTRPC_DllAPI Transport
                 {
                     public:
 
                         typedef void* (*Create_data)(void);
                         typedef void (*Copy_data)(void *src, void *dst);
                         typedef void (*Destroy_data)(void *data);
-                        typedef void (*ProcessFunc)(eprosima::rpcdds::protocol::Protocol&, void*,
-                                eprosima::rpcdds::transport::Endpoint*);
+                        typedef void (*ProcessFunc)(eprosima::fastrpc::protocol::Protocol&, void*,
+                                eprosima::fastrpc::transport::Endpoint*);
 
                         /*!
                          * @brief Default destructor.
@@ -97,7 +97,7 @@ namespace eprosima
                          * @return 0 if the function ends successfully, -1 otherwise.
                          * TODO
                          */
-                        virtual eprosima::rpcdds::transport::Endpoint*
+                        virtual eprosima::fastrpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *readertypename, bool eprosima_types,
                                     Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
@@ -147,7 +147,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_DDS_TRANSPORT_H_

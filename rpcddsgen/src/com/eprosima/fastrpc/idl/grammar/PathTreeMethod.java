@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.idl.grammar;
+package com.eprosima.fastrpc.idl.grammar;
 
 import java.util.ArrayList;
 

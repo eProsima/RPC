@@ -1,22 +1,22 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/AsyncThread.h"
-#include "rpcdds/transports/dds/DDSAsyncTask.h"
-#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "rpcdds/utils/Typedefs.h"
-#include "rpcdds/exceptions/ServerTimeoutException.h"
+#include "fastrpc/transports/dds/AsyncThread.h"
+#include "fastrpc/transports/dds/DDSAsyncTask.h"
+#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "fastrpc/utils/Typedefs.h"
+#include "fastrpc/exceptions/ServerTimeoutException.h"
 
 #include <stdio.h>
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::AsyncThread";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::AsyncThread";
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport::dds;
 using namespace ::exception;
 

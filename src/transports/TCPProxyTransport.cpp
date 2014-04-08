@@ -1,13 +1,13 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/TCPProxyTransport.h"
-#include "rpcdds/exceptions/ServerNotFoundException.h"
+#include "fastrpc/transports/TCPProxyTransport.h"
+#include "fastrpc/exceptions/ServerNotFoundException.h"
 
 #include "boost/asio.hpp"
 #include "boost/array.hpp"
@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace eprosima { namespace rpcdds { namespace transport {
+namespace eprosima { namespace fastrpc { namespace transport {
     class TCPProxyTransportBoost
     {
         public:
@@ -45,7 +45,7 @@ namespace eprosima { namespace rpcdds { namespace transport {
     };
 }}}
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport;
 
 TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress) : m_boostInfo(NULL)
@@ -100,7 +100,7 @@ bool TCPProxyTransport::connect()
 
         if (error)
         {
-            throw eprosima::rpcdds::exception::ServerNotFoundException("ERROR<TCPProxyTransport::connect>: "+error.message());
+            throw eprosima::fastrpc::exception::ServerNotFoundException("ERROR<TCPProxyTransport::connect>: "+error.message());
         }
     }
 	return true;

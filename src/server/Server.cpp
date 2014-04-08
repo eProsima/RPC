@@ -1,23 +1,23 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/server/Server.h"
-#include "rpcdds/exceptions/InitializeException.h"
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/transports/ServerTransport.h"
-#include "rpcdds/protocols/Protocol.h"
+#include "fastrpc/server/Server.h"
+#include "fastrpc/exceptions/InitializeException.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/transports/ServerTransport.h"
+#include "fastrpc/protocols/Protocol.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static const char* const CLASS_NAME ="eprosima::rpcdds::server::Server";
+static const char* const CLASS_NAME ="eprosima::fastrpc::server::Server";
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::server;
 using namespace ::strategy;
 using namespace ::transport;

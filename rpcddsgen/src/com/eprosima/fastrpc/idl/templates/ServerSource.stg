@@ -4,10 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
 
 #include "$ctx.filename$Server.h"
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/transports/ServerTransport.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/transports/ServerTransport.h"
 #include "$ctx.filename$Protocol.h"
-#include "rpcdds/exceptions/ServerInternalException.h"
+#include "fastrpc/exceptions/ServerInternalException.h"
 
 $if(ctx.rtiTypes)$
 $ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
@@ -35,8 +35,8 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-$interface.name$Server::$interface.name$Server(eprosima::rpcdds::strategy::ServerStrategy &strategy, eprosima::rpcdds::transport::ServerTransport &transport,
-            eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
+$interface.name$Server::$interface.name$Server(eprosima::fastrpc::strategy::ServerStrategy &strategy, eprosima::fastrpc::transport::ServerTransport &transport,
+            eprosima::fastrpc::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
     Server(strategy, transport, protocol), _impl(servant)
 {
    protocol.activateInterface("$interface.scopedname$");
@@ -58,68 +58,7 @@ $exports; separator="\n"$
 
 exception(ctx, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-/*void $operation.parent.name$Server::$operation.name$(eProsima::RPCDDS::Server *server, void *requestData, eProsima::RPCDDS::ServerRPC *service)
-{ 
-    $operation.parent.name$Server *srv = dynamic_cast<$operation.parent.name$Server*>(server);
-    $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
-    $varDecl(variable=operation.rettypeparam, create="yes")$   
-    $if(!operation.oneway)$$operation.parent.name$_$operation.name$Reply replyData;$endif$
-    
-    $operation.inoutputparam : {param | $if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
-
-    $operation.parent.name$_$operation.name$RequestUtils::extractTypeData(*($operation.parent.name$_$operation.name$Request*)requestData$extractParams(params=operation.inputparam, separatorInicial=", ")$);
-
-    try
-    {
-        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$srv->_impl.$operation.name$($extractParams(params=operation.parameters)$);
-
-        $if(!operation.oneway)$
-        $if(operation.exceptions)$replyData.unio._d = 0;$endif$
-        $operation.parent.name$_$operation.name$ReplyUtils::setTypeData(replyData$extractParams(params=[operation.outputparam, operation.rettypeparam], separatorInicial=", ")$);
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = $charCasting()$"";
-
-        service->sendReply(requestData, &replyData);
-        $endif$
-    }
-    $operation.exceptions : { exception |
-    catch(const $exception.scopedname$ &ex)
-    {
-        $if(!operation.oneway)$
-        replyData.unio._d = $i$;
-        $if(exception.inScope)$
-        $exception.scopedname$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
-                
-        $else$
-        $operation.parent.name$_$operation.name$_$exception.name$Utils::setTypeData(ex, replyData.unio._u.$exception.name$_ex);
-                
-        $endif$
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::OPERATION_SUCCESSFUL;
-        replyData.header.rpcddsRetMsg = $charCasting()$"";
-
-        service->sendReply(requestData, &replyData);
-        $endif$
-    }
-    }; separator="\n"$
-    catch(const eProsima::RPCDDS::ServerInternalException &ex)
-    {
-        $if(!operation.oneway)$
-        $unsetReply()$
-        replyData.header.rpcddsRetCode = eProsima::RPCDDS::SERVER_INTERNAL_ERROR;
-        replyData.header.rpcddsRetMsg = $charCasting()$ex.what();
-        
-        service->sendReply(requestData, &replyData);
-        $endif$
-    }
-    
-    $reqrepDestruction(type=[operation.parent.name, "_", operation.name], reqrep="Request", name="requestData", void="void")$
-    
-    $varDel(variable=operation.rettypeparam)$
-    $operation.outputparam : {param | $varDel(variable=param)$}; separator="\n"$
-}*/
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

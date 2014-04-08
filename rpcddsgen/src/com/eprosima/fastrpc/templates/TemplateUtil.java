@@ -1,7 +1,7 @@
-package com.eprosima.rpcdds.templates;
+package com.eprosima.fastrpc.templates;
 
-import com.eprosima.rpcdds.typecode.*;
-import com.eprosima.rpcdds.exceptions.ParseException;
+import com.eprosima.fastrpc.typecode.*;
+import com.eprosima.fastrpc.exceptions.ParseException;
 
 import java.util.List;
 

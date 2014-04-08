@@ -1,29 +1,29 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _EXCEPTIONS_SYSTEMEXCEPTION_H_
 #define _EXCEPTIONS_SYSTEMEXCEPTION_H_
 
-#include "rpcdds/exceptions/Exception.h"
+#include "fastrpc/exceptions/Exception.h"
 
 #include <stdint.h>
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace exception
         {
             /**
-             * @brief This abstract class is used to create internal RPCDDS exceptions.
+             * @brief This abstract class is used to create internal FASTRPC exceptions.
              * @ingroup EXCEPTIONMODULE
              */
-            class RPCDDS_DllAPI SystemException : public Exception
+            class FASTRPC_DllAPI SystemException : public Exception
             {
                 public:
 
@@ -121,7 +121,7 @@ namespace eprosima
                     int32_t m_minor;
             };
         } // namespace exception
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _EXCEPTIONS_SYSTEMEXCEPTION_H_

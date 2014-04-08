@@ -4,20 +4,20 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
 
 #include "$ctx.filename$Server.h"
-#include "rpcdds/strategies/ThreadPoolStrategy.h"
+#include "fastrpc/strategies/ThreadPoolStrategy.h"
 #include "$ctx.filename$RESTProtocol.h"
-#include "rpcdds/transports/HttpServerTransport.h"
-#include "rpcdds/exceptions/Exceptions.h"
-#include "rpcdds/utils/Utilities.h"
+#include "fastrpc/transports/HttpServerTransport.h"
+#include "fastrpc/exceptions/Exceptions.h"
+#include "fastrpc/utils/Utilities.h"
 #include "$ctx.filename$ServerImplExample.h"
 
 #include <iostream>
 
-using namespace eprosima::rpcdds;
-using namespace eprosima::rpcdds::exception;
-using namespace eprosima::rpcdds::strategy;
-using namespace eprosima::rpcdds::transport;
-using namespace eprosima::rpcdds::protocol::rest;
+using namespace eprosima::fastrpc;
+using namespace eprosima::fastrpc::exception;
+using namespace eprosima::fastrpc::strategy;
+using namespace eprosima::fastrpc::transport;
+using namespace eprosima::fastrpc::protocol::rest;
 
 int main(int argc, char **argv)
 {
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        eprosima::rpcdds::sleep(10000);
+        eprosima::fastrpc::sleep(10000);
     }
     
     // Stop and delete the server.

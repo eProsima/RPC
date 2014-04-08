@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.util;
+package com.eprosima.fastrpc.util;
 
 import org.antlr.stringtemplate.StringTemplate;
 

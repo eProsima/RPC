@@ -1,10 +1,10 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.eprosima.rpcdds.idl.grammar.Context;
-import com.eprosima.rpcdds.typecode.TypeCode;
+import com.eprosima.fastrpc.idl.grammar.Context;
+import com.eprosima.fastrpc.typecode.TypeCode;
 
 public class Operation implements Export, Notebook
 {
@@ -12,7 +12,7 @@ public class Operation implements Export, Notebook
     {
         m_name = name;
         m_params = new ArrayList<Param>();
-        m_exceptions = new ArrayList<com.eprosima.rpcdds.tree.Exception>();
+        m_exceptions = new ArrayList<com.eprosima.fastrpc.tree.Exception>();
         m_unresolvedExceptions = new ArrayList<String>();
         m_annotations = new HashMap<String, String>();
     }
@@ -128,12 +128,12 @@ public class Operation implements Export, Notebook
         return m_rettypeparam;
     }
     
-    public void addException(com.eprosima.rpcdds.tree.Exception exception)
+    public void addException(com.eprosima.fastrpc.tree.Exception exception)
     {
     	m_exceptions.add(exception);
     }
     
-    public ArrayList<com.eprosima.rpcdds.tree.Exception> getExceptions()
+    public ArrayList<com.eprosima.fastrpc.tree.Exception> getExceptions()
     {
     	return m_exceptions;
     }
@@ -156,7 +156,7 @@ public class Operation implements Export, Notebook
     			
     			for(int count = 0; count < m_unresolvedExceptions.size(); ++count)
     			{
-    				com.eprosima.rpcdds.tree.Exception ex = ifc.getException(ctx.getScope(), m_unresolvedExceptions.get(count));
+    				com.eprosima.fastrpc.tree.Exception ex = ifc.getException(ctx.getScope(), m_unresolvedExceptions.get(count));
     				
     				if(ex != null)
     				{
@@ -235,7 +235,7 @@ public class Operation implements Export, Notebook
     private Object m_parent = null;
     private boolean m_isOneway = false;
     private ArrayList<Param> m_params;
-    private ArrayList<com.eprosima.rpcdds.tree.Exception> m_exceptions;
+    private ArrayList<com.eprosima.fastrpc.tree.Exception> m_exceptions;
     private ArrayList<String> m_unresolvedExceptions;
     private TypeCode m_rettype = null;
     private Param m_rettypeparam = null;

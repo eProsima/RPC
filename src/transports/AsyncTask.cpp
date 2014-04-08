@@ -1,14 +1,14 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/AsyncTask.h"
+#include "fastrpc/transports/AsyncTask.h"
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport;
 
 AsyncTask::AsyncTask() 

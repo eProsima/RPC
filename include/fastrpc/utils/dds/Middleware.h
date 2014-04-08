@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -43,7 +43,7 @@
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace util
         {
@@ -64,7 +64,7 @@ namespace eprosima
                 DDS::DomainParticipantFactory* getFactory(int domainId);
             } //namespace dds
         } // namespace util
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _UTILS_DDS_MIDDLEWARE_H_

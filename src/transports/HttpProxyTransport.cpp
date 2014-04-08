@@ -1,21 +1,21 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/HttpProxyTransport.h"
-#include "rpcdds/transports/messages/HttpMessage.h"
-#include "rpcdds/utils/Utilities.h"
+#include "fastrpc/transports/HttpProxyTransport.h"
+#include "fastrpc/transports/messages/HttpMessage.h"
+#include "fastrpc/utils/Utilities.h"
 
 #include <stdexcept>
 
 const size_t BUFFER_INITIAL_LENGTH = 1024;
 const size_t MAX_INT64_CHARS = 20;
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport;
 
 std::string getAddress(const std::string &serverAddress)

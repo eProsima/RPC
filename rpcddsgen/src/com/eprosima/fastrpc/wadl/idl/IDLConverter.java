@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.wadl.idl;
+package com.eprosima.fastrpc.wadl.idl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,16 +7,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.eprosima.rpcdds.util.Utils;
-import com.eprosima.rpcdds.wadl.tree.Application;
-import com.eprosima.rpcdds.wadl.tree.Grammar;
-import com.eprosima.rpcdds.wadl.tree.Include;
-import com.eprosima.rpcdds.wadl.tree.Method;
-import com.eprosima.rpcdds.wadl.tree.Param;
-import com.eprosima.rpcdds.wadl.tree.Representation;
-import com.eprosima.rpcdds.wadl.tree.Resource;
-import com.eprosima.rpcdds.wadl.tree.Resources;
-import com.eprosima.rpcdds.wadl.tree.Response;
+import com.eprosima.fastrpc.util.Utils;
+import com.eprosima.fastrpc.wadl.tree.Application;
+import com.eprosima.fastrpc.wadl.tree.Grammar;
+import com.eprosima.fastrpc.wadl.tree.Include;
+import com.eprosima.fastrpc.wadl.tree.Method;
+import com.eprosima.fastrpc.wadl.tree.Param;
+import com.eprosima.fastrpc.wadl.tree.Representation;
+import com.eprosima.fastrpc.wadl.tree.Resource;
+import com.eprosima.fastrpc.wadl.tree.Resources;
+import com.eprosima.fastrpc.wadl.tree.Response;
 
 public class IDLConverter {
 

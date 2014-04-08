@@ -1,23 +1,23 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/DDSAsyncTask.h"
-#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "rpcdds/exceptions/ClientInternalException.h"
-#include "rpcdds/exceptions/ServerTimeoutException.h"
+#include "fastrpc/transports/dds/DDSAsyncTask.h"
+#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "fastrpc/exceptions/ClientInternalException.h"
+#include "fastrpc/exceptions/ServerTimeoutException.h"
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport::dds;
 using namespace ::exception;
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::DDSAsyncTask";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::DDSAsyncTask";
 
-DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::rpcdds::transport::AsyncTask()
+DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::fastrpc::transport::AsyncTask()
 {
 }
 

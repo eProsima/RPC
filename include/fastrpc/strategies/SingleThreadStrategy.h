@@ -1,20 +1,20 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _STRATEGIES_SINGLETHREADSTRATEGY_H_
 #define _STRATEGIES_SINGLETHREADSTRATEGY_H_
 
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/fastrpc_dll.h"
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace strategy
         {
@@ -25,7 +25,7 @@ namespace eprosima
              *        The server uses a reception thread to execute all the requests.
              * @ingroup STRATEGIESMODULE 
              */
-            class RPCDDS_DllAPI SingleThreadStrategy : public ServerStrategy
+            class FASTRPC_DllAPI SingleThreadStrategy : public ServerStrategy
             {
                 public:
 
@@ -49,7 +49,7 @@ namespace eprosima
 					SingleThreadStrategyImpl *m_impl;
             };
         } // namespace strategy
-    } // namespace rpcdds
+    } // namespace fastrpc
 } //namespace eprosima
 
 #endif // _STRATEGIES_SINGLETHREADSTRATEGY_H_

@@ -1,21 +1,21 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _EXCEPTIONS_USEREXCEPTION_H_
 #define _EXCEPTIONS_USEREXCEPTION_H_
 
-#include "rpcdds/exceptions/Exception.h"
+#include "fastrpc/exceptions/Exception.h"
 
 #include <stdint.h>
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace exception
         {
@@ -23,7 +23,7 @@ namespace eprosima
              * @brief This abstract class is used to create user exceptions.
              * @ingroup EXCEPTIONMODULE
              */
-            class RPCDDS_DllAPI UserException : public Exception
+            class FASTRPC_DllAPI UserException : public Exception
             {
                 public:
 
@@ -69,7 +69,7 @@ namespace eprosima
                     UserException& operator=(UserException&& ex);
             };
         } // namespace exception
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _EXCEPTIONS_USEREXCEPTION_H_

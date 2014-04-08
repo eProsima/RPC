@@ -1,17 +1,17 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/TCPServerTransport.h"
+#include "fastrpc/transports/dds/TCPServerTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::TCPServerTransport";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::TCPServerTransport";
 
-using namespace eprosima::rpcdds::transport::dds;
+using namespace eprosima::fastrpc::transport::dds;
 
 TCPServerTransport::TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId) :
     m_public_address(NULL), m_server_bind_port(NULL), ServerTransport(serviceName, domainId)

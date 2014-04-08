@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -27,7 +27,7 @@ namespace eprosima
                     boost::function<void(TCPEndpoint*)> function;
             };
         } // namespace transport
-    }// namespace rpcdds
+    }// namespace fastrpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPSERVERTRANSPORTIMPL_H_

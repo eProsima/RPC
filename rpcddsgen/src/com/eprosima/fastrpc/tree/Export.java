@@ -1,6 +1,6 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
-import com.eprosima.rpcdds.idl.grammar.Context;
+import com.eprosima.fastrpc.idl.grammar.Context;
 
 public interface Export
 {

@@ -1,14 +1,14 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/strategies/ThreadPoolStrategy.h"
-#include "rpcdds/strategies/ServerStrategyImpl.h"
-#include "rpcdds/transports/ServerTransport.h"
+#include "fastrpc/strategies/ThreadPoolStrategy.h"
+#include "fastrpc/strategies/ServerStrategyImpl.h"
+#include "fastrpc/transports/ServerTransport.h"
 
 #include "boost/config/user.hpp"
 #include "boost/threadpool.hpp"
@@ -17,7 +17,7 @@ static const char* const CLASS_NAME = "ThreadPoolStrategy";
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace strategy
         {
@@ -69,10 +69,10 @@ namespace eprosima
                     boost::threadpool::pool *m_pool;
             };
         } // namespace strategy
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::strategy;
 using namespace ::transport;
 

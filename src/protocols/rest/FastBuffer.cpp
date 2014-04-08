@@ -1,10 +1,10 @@
-#include "rpcdds/protocols/rest/FastBuffer.h"
+#include "fastrpc/protocols/rest/FastBuffer.h"
 
 #include <malloc.h>
 
 #define BUFFER_START_LENGTH 200
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace protocol::rest;
 
 FastBuffer::FastBuffer() : m_buffer(NULL),

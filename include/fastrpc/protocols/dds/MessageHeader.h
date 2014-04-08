@@ -1,21 +1,24 @@
 #ifndef _PROTOCOLS_DDS_MESSAGEHEADER_H_
 #define _PROTOCOLS_DDS_MESSAGEHEADER_H_
 
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/fastrpc_dll.h"
 
 #include <string>
 
 namespace eprosima
 {
-    class Cdr;
+    namespace fastcdr
+    {
+        class Cdr;
+    }
 
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace protocol
         {
             namespace dds
             {
-                class RPCDDS_DllAPI Identification
+                class FASTRPC_DllAPI Identification
                 {
                     public:
 
@@ -94,9 +97,9 @@ namespace eprosima
 
                         static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
 
-                        void serialize(eprosima::Cdr &cdr) const;
+                        void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-                        void deserialize(eprosima::Cdr &cdr);
+                        void deserialize(eprosima::fastcdr::Cdr &cdr);
 
                     private:
 
@@ -106,7 +109,7 @@ namespace eprosima
                         uint32_t m_value_4;
                 };
 
-                class RPCDDS_DllAPI RequestHeader
+                class FASTRPC_DllAPI RequestHeader
                 {
                     public:
 
@@ -180,9 +183,9 @@ namespace eprosima
 
                         static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
 
-                        void serialize(eprosima::Cdr &cdr) const;
+                        void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-                        void deserialize(eprosima::Cdr &cdr);
+                        void deserialize(eprosima::fastcdr::Cdr &cdr);
 
                     private:
 
@@ -194,7 +197,7 @@ namespace eprosima
 
                 };
 
-                class RPCDDS_DllAPI ReplyHeader
+                class FASTRPC_DllAPI ReplyHeader
                 {
                     public:
 
@@ -283,9 +286,9 @@ namespace eprosima
 
                         static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
 
-                        void serialize(eprosima::Cdr &cdr) const;
+                        void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-                        void deserialize(eprosima::Cdr &cdr);
+                        void deserialize(eprosima::fastcdr::Cdr &cdr);
 
                     private:
 
@@ -299,7 +302,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace protocol
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _PROTOCOLS_DDS_MESSAGEHEADER_H_

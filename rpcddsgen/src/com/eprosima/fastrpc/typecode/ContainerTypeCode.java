@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.typecode;
+package com.eprosima.fastrpc.typecode;
 
 public abstract class ContainerTypeCode extends TypeCode
 {

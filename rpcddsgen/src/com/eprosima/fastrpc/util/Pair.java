@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.util;
+package com.eprosima.fastrpc.util;
 
 public class Pair<F, S>
 {

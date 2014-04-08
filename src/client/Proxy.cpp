@@ -1,19 +1,19 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/client/Proxy.h"
-#include "rpcdds/exceptions/InitializeException.h"
-#include "rpcdds/transports/ProxyTransport.h"
-#include "rpcdds/protocols/Protocol.h"
+#include "fastrpc/client/Proxy.h"
+#include "fastrpc/exceptions/InitializeException.h"
+#include "fastrpc/transports/ProxyTransport.h"
+#include "fastrpc/protocols/Protocol.h"
 
-static const char* const CLASS_NAME ="eprosima::rpcdds::proxy::Proxy";
+static const char* const CLASS_NAME ="eprosima::fastrpc::proxy::Proxy";
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::proxy;
 using namespace ::transport;
 using namespace ::protocol;

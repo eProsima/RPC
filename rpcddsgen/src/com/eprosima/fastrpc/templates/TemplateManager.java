@@ -1,6 +1,6 @@
-package com.eprosima.rpcdds.templates;
+package com.eprosima.fastrpc.templates;
 
-import com.eprosima.rpcdds.templates.TemplateGroup;
+import com.eprosima.fastrpc.templates.TemplateGroup;
 
 import java.util.Iterator;
 import java.util.Map;

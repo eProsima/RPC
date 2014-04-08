@@ -6,15 +6,15 @@ $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source 
 #include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$.h"
 #include "$ctx.filename$RESTProtocol.h"
-#include "rpcdds/transports/HttpProxyTransport.h"
-#include "rpcdds/exceptions/Exceptions.h"
+#include "fastrpc/transports/HttpProxyTransport.h"
+#include "fastrpc/exceptions/Exceptions.h"
 
 #include <iostream>
 
-using namespace eprosima::rpcdds;
-using namespace eprosima::rpcdds::exception;
-using namespace eprosima::rpcdds::transport;
-using namespace eprosima::rpcdds::protocol::rest;
+using namespace eprosima::fastrpc;
+using namespace eprosima::fastrpc::exception;
+using namespace eprosima::fastrpc::transport;
+using namespace eprosima::fastrpc::protocol::rest;
 
 int main(int argc, char **argv)
 {

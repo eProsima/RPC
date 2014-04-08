@@ -1,20 +1,20 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/utils/dds/Middleware.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"
 #endif
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::util::dds::Middleware";
+static const char* const CLASS_NAME = "eprosima::fastrpc::util::dds::Middleware";
 
-void eprosima::rpcdds::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
+void eprosima::fastrpc::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     DDS::DataWriterQos wQos;
@@ -59,7 +59,7 @@ void eprosima::rpcdds::util::dds::get_guid(unsigned int *id, DDS::DataWriter *da
 #endif
 }
 
-void eprosima::rpcdds::util::dds::set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
+void eprosima::fastrpc::util::dds::set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     datareader->get_qos(rQos);
@@ -76,7 +76,7 @@ void eprosima::rpcdds::util::dds::set_redundant_feature(DDS::DataReader *datarea
 #endif
 }
 
-void eprosima::rpcdds::util::dds::set_max_query_condition_filters(DDS::DataReaderQos &rQos)
+void eprosima::fastrpc::util::dds::set_max_query_condition_filters(DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     rQos.reader_resource_limits.max_query_condition_filters = 10;
@@ -86,7 +86,7 @@ void eprosima::rpcdds::util::dds::set_max_query_condition_filters(DDS::DataReade
 #endif
 }
 
-void eprosima::rpcdds::util::dds::set_datareader_protocol(DDS::DataReaderQos &rQos)
+void eprosima::fastrpc::util::dds::set_datareader_protocol(DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.sec = 0;
@@ -98,7 +98,7 @@ void eprosima::rpcdds::util::dds::set_datareader_protocol(DDS::DataReaderQos &rQ
 #endif
 }
 
-void eprosima::rpcdds::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQos)
+void eprosima::fastrpc::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     wQos.protocol.rtps_reliable_writer.low_watermark = 0;
@@ -113,7 +113,7 @@ void eprosima::rpcdds::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQ
 #endif
 }
 
-void eprosima::rpcdds::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
+void eprosima::fastrpc::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     pQos.receiver_pool.buffer_size = 65536;
@@ -128,7 +128,7 @@ void eprosima::rpcdds::util::dds::increase_buffers(DDS::DomainParticipantQos &pQ
 #endif
 }
 
-DDS::DomainParticipantFactory* eprosima::rpcdds::util::dds::getFactory(int domainId)
+DDS::DomainParticipantFactory* eprosima::fastrpc::util::dds::getFactory(int domainId)
 {
     const char* const METHOD_NAME = "getFactory";
 

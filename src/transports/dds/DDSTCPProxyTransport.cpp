@@ -1,17 +1,17 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/TCPProxyTransport.h"
+#include "fastrpc/transports/dds/TCPProxyTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::TCPProxyTransport";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::TCPProxyTransport";
 
-using namespace eprosima::rpcdds::transport::dds;
+using namespace eprosima::fastrpc::transport::dds;
 
 TCPProxyTransport::TCPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId, long milliseconds) :
     m_to_connect(NULL), ProxyTransport(remoteServiceName, domainId, milliseconds)

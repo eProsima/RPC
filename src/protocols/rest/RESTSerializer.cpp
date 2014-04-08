@@ -1,6 +1,6 @@
-#include "rpcdds/protocols/rest/RESTSerializer.h"
+#include "fastrpc/protocols/rest/RESTSerializer.h"
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::protocol::rest;
 
 RESTSerializer::RESTSerializer() : m_numQueryParameters(0), m_nextTemplateParameterPos(0)
@@ -318,7 +318,7 @@ RESTSerializer& RESTSerializer::serializeQueryParameter(std::string &uri, const 
     else
         uri += "&";
 
-    // Supposed that paramName was formatted by rpcddsgen application.
+    // Supposed that paramName was formatted by fastrpcgen application.
     uri += paramName + std::string("=") + substituteBadCharacters(paramValue);
 
     ++m_numQueryParameters;

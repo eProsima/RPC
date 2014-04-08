@@ -16,7 +16,7 @@
  * =====================================================================   *
 -->
 
-<project name="rpcddsgen" default="jar" basedir=".">
+<project name="fastrpcgen" default="jar" basedir=".">
 
 	<macrodef name="antlr">
 		<attribute name="base" />
@@ -120,9 +120,9 @@
 	<target name="compile" depends="init, prepare-sources" description="Compiles the sources. (Default)">
 		<!-- Echo compilation properties -->
 		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
-		<antlr base="${src.java}${file.separator}com/eprosima/rpcdds/idl/grammar" grammar="${grammar.dir}${file.separator}idl.g" />
+		<antlr base="${src.java}${file.separator}com/eprosima/fastrpc/idl/grammar" grammar="${grammar.dir}${file.separator}idl.g" />
 		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
-		<antxr base="${src.java}${file.separator}com/eprosima/rpcdds/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" />
+		<antxr base="${src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
 		<javac source="1.6" target="1.6" srcdir="${src.java}" destdir="${build.classes}">
@@ -134,7 +134,7 @@
 		</copy>
         <!--> Copy common stringtemplates with Fast Buffers.<-->
         <!--> TODO Quitar el overwrite<-->
-        <copy todir="${build.classes}${file.separator}com${file.separator}eprosima${file.separator}rpcdds${file.separator}idl${file.separator}templates"
+        <copy todir="${build.classes}${file.separator}com${file.separator}eprosima${file.separator}fastrpc${file.separator}idl${file.separator}templates"
             overwrite="yes">
             <fileset dir="${basedir}${file.separator}..${file.separator}..${file.separator}FastBuffers${file.separator}src${file.separator}com${file.separator}eprosima${file.separator}fastbuffers${file.separator}templates">
 				<include name="Types.stg" />
@@ -150,8 +150,8 @@
 		</copy>
         <!--> Copy version file.<-->
 		<copy todir="${build.classes}">
-			<fileset dir="${basedir}${file.separator}..${file.separator}include${file.separator}rpcdds">
-				<include name="rpcdds_version.h" />
+			<fileset dir="${basedir}${file.separator}..${file.separator}include${file.separator}fastrpc">
+				<include name="fastrpc_version.h" />
 			</fileset>
 		</copy>
 	</target>
@@ -169,21 +169,21 @@
 	<!-- install                                                             -->
 	<!-- =================================================================== -->
 	<target name="install" depends="init,compile,jar">
-		<mkdir dir="${env.NDDSHOME}/rpcdds" />
+		<mkdir dir="${env.NDDSHOME}/fastrpc" />
 
-		<copy todir="${env.NDDSHOME}/rpcdds/include" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${env.NDDSHOME}/fastrpc/include" overwrite="yes" preservelastmodified="yes">
 			<fileset dir="../include" excludes="**/.svn">
 				<include name="**/*.h" />
 				<include name="**/*.gen" />
 			</fileset>
 		</copy>
-		<copy todir="${env.NDDSHOME}/rpcdds/lib" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${env.NDDSHOME}/fastrpc/lib" overwrite="yes" preservelastmodified="yes">
 			<fileset dir="../lib" includes="**/*" excludes="**/.svn" />
 		</copy>
 		<copy todir="${env.NDDSHOME}/scripts" overwrite="yes" preservelastmodified="yes">
 			<fileset dir="../scripts" includes="*.bat" />
 		</copy>
-		<copy todir="${env.NDDSHOME}/rpcdds/classes" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${env.NDDSHOME}/fastrpc/classes" overwrite="yes" preservelastmodified="yes">
 			<fileset dir="${lib.dir}" includes="*.jar" />
 		</copy>
 	</target>
@@ -192,28 +192,28 @@
 	<!-- package                                                             -->
 	<!-- =================================================================== -->
 	<target name="package" depends="init,compile,jar">
-		<mkdir dir="${tmp.dir}/rpcdds" />
-		<delete file="../rpcdds.zip" />
+		<mkdir dir="${tmp.dir}/fastrpc" />
+		<delete file="../fastrpc.zip" />
 
-		<copy todir="${tmp.dir}/rpcdds" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${tmp.dir}/fastrpc" overwrite="yes" preservelastmodified="yes">
 			<fileset dir=".." excludes="**/.svn">
 				<include name="include/**/*.h" />
 				<include name="include/**/*.gen" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp.dir}/rpcdds" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${tmp.dir}/fastrpc" overwrite="yes" preservelastmodified="yes">
 			<fileset dir=".." includes="lib/**/*" excludes="**/.svn" />
 		</copy>
-		<copy todir="${tmp.dir}/rpcdds" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${tmp.dir}/fastrpc" overwrite="yes" preservelastmodified="yes">
 			<fileset dir=".." includes="doc/UserManual.doc" excludes="**/.svn" />
 		</copy>
 		<copy todir="${tmp.dir}" overwrite="yes" preservelastmodified="yes">
 			<fileset dir=".." includes="scripts/**/*" />
 		</copy>
-		<copy todir="${tmp.dir}/rpcdds/classes" overwrite="yes" preservelastmodified="yes">
+		<copy todir="${tmp.dir}/fastrpc/classes" overwrite="yes" preservelastmodified="yes">
 			<fileset dir="${lib.dir}" includes="*.jar" />
 		</copy>
-		<zip destfile="../rpcdds.zip" basedir="./tmp" compress="true">
+		<zip destfile="../fastrpc.zip" basedir="./tmp" compress="true">
 			<include name="**/*" />
 		</zip>
 		<delete dir="${tmp.dir}" />
@@ -230,7 +230,7 @@
 	<!-- launch tests                                         -->
 	<!-- =================================================================== -->
 	<target name="test" depends="jar">
-		<java fork="true" classpathref="run.classpath" dir="${test.dir}" classname="com.eprosima.rpcdds.idl.RPCDDSGEN">
+		<java fork="true" classpathref="run.classpath" dir="${test.dir}" classname="com.eprosima.fastrpc.idl.fastrpcgen">
 			<jvmarg value="-DNDDSHOME=${env.NDDSHOME}" />
 			<arg value="-ppDisable" />
 			<arg value="-replace" />

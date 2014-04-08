@@ -1,26 +1,26 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "rpcdds/transports/dds/DDSAsyncTask.h"
-#include "rpcdds/protocols/dds/MessageHeader.h"
+#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "fastrpc/transports/dds/DDSAsyncTask.h"
+#include "fastrpc/protocols/dds/MessageHeader.h"
 #include "eProsima_cpp/eProsimaMacros.h"
-#include "rpcdds/utils/Typedefs.h"
+#include "fastrpc/utils/Typedefs.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ProxyProcedureEndpoint";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ProxyProcedureEndpoint";
 
 #define QUERY_POOL_LENGTH 10
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport::dds;
 
 ProxyProcedureEndpoint::ProxyProcedureEndpoint(ProxyTransport &transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
@@ -397,14 +397,14 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
     char value[50];
     void *auxPointerToRequest = NULL;
     char **auxPointerToRemoteServiceName = NULL;
-    eprosima::rpcdds::protocol::dds::RequestHeader *requestHeader = NULL;
+    eprosima::fastrpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
         if(m_eprosima_types)
         {
-            requestHeader = reinterpret_cast<eprosima::rpcdds::protocol::dds::RequestHeader*>(request);
+            requestHeader = reinterpret_cast<eprosima::fastrpc::protocol::dds::RequestHeader*>(request);
             requestHeader->clientId().value_1(m_proxyId[0]);
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);
@@ -558,14 +558,14 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     char value[50];
     void *auxPointerToRequest = NULL;
     char **auxPointerToRemoteServiceName = NULL;
-    eprosima::rpcdds::protocol::dds::RequestHeader *requestHeader = NULL;
+    eprosima::fastrpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
         if(m_eprosima_types)
         {
-            requestHeader = reinterpret_cast<eprosima::rpcdds::protocol::dds::RequestHeader*>(request);
+            requestHeader = reinterpret_cast<eprosima::fastrpc::protocol::dds::RequestHeader*>(request);
             requestHeader->clientId().value_1(m_proxyId[0]);
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);

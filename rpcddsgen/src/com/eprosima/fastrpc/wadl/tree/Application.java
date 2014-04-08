@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.wadl.tree;
+package com.eprosima.fastrpc.wadl.tree;
 import java.util.ArrayList;
 
 public class Application

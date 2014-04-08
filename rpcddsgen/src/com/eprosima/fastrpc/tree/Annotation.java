@@ -1,8 +1,8 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
-import com.eprosima.rpcdds.typecode.*;
+import com.eprosima.fastrpc.typecode.*;
 
-import com.eprosima.rpcdds.util.Pair;
+import com.eprosima.fastrpc.util.Pair;
 
 import java.util.List;
 

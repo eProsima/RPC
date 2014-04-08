@@ -1,24 +1,24 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/strategies/ServerStrategyImpl.h"
+#include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/strategies/ServerStrategyImpl.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
 #include <boost/bind.hpp>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport::dds;
 
-const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerProcedureEndpoint";
+const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ServerProcedureEndpoint";
 
 ServerProcedureEndpoint::ServerProcedureEndpoint(ServerTransport &transport) : m_transport(transport),
     m_writerTopic(NULL), m_readerTopic(NULL), m_writer(NULL), m_reader(NULL), m_create_data(NULL),

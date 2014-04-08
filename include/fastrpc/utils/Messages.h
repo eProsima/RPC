@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -11,7 +11,7 @@
 
 namespace eprosima
 {
-	namespace rpcdds
+	namespace fastrpc
 	{
 		/**
 		 * \brief This enumeration type defines the success of an operation and
@@ -31,7 +31,7 @@ namespace eprosima
 			NO_SERVER
 		} ReturnMessage;
 
-	} // namespace rpcdds
+	} // namespace fastrpc
 } // namespace eprosima
 
 #endif // _UTILS_MESSAGES_H_

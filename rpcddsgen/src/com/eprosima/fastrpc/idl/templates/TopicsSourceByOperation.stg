@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -14,7 +14,7 @@ $fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file co
 #include "$ctx.filename$Topics.h"
 
 #include "fastcdr/Cdr.h"
-#include "rpcdds/exceptions/BadParamException.h"
+#include "fastrpc/exceptions/BadParamException.h"
 
 $definitions; separator="\n"$
 
@@ -77,7 +77,7 @@ $operation.parent.scopedname$_$operation.name$Request& $operation.parent.scopedn
 size_t $operation.parent.scopedname$_$operation.name$Request::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align =  eprosima::rpcdds::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::fastrpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
             
     $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
 
@@ -295,7 +295,7 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::_d(int32_t __d)
 {
     if(m__d != __d)
     {
-        throw eprosima::rpcdds::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+        throw eprosima::fastrpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
     }
     
     m__d = __d;
@@ -327,7 +327,7 @@ void $operation.parent.scopedname$_$operation.name$Reply_union::st($operation.pa
 const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_union::st() const
 {
     if(m__d != 0)
-        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
+        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
     
     return m_st;
 }
@@ -335,7 +335,7 @@ const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.
 $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply_union::st()
 {
     if(m__d != 0)
-        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
+        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
     
     return m_st;
 }
@@ -463,7 +463,7 @@ $operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopednam
 size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align =  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::fastrpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
     current_align = $operation.parent.name$_$operation.name$Reply_union::getMaxCdrSerializedSize(current_align);
             
     return current_align;
@@ -531,7 +531,7 @@ $operation.parent.scopedname$_$operation.name$Reply& $operation.parent.scopednam
 size_t $operation.parent.scopedname$_$operation.name$Reply::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align =  eprosima::rpcdds::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::fastrpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
             
     $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
 
@@ -628,7 +628,7 @@ void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$excep
 const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 {
     if(m__d != $label$)
-        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
+        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
 }
@@ -636,7 +636,7 @@ const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 $exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
 {
     if(m__d != $label$)
-        throw eprosima::rpcdds::exception::BadParamException("This member is not been selected");
+        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
 }

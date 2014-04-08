@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -12,7 +12,7 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
 #include "$ctx.filename$TopicsPlugin.h"
-#include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
+#include "fastrpc/protocols/dds/MessageHeaderPlugin.h"
 
 #include "fastcdr/Cdr.h"
 #include "fastcdr/exceptions/BadParamException.h"
@@ -454,7 +454,7 @@ DDS_TypeCode* $interface.scopedname$RequestPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        $interface.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::RequestHeaderPlugin::get_typecode();
+        $interface.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::RequestHeaderPlugin::get_typecode();
         $interface.name$Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.name$Request_unionPlugin::get_typecode();
         is_initialized = true;
     }
@@ -1039,7 +1039,7 @@ DDS_TypeCode* $interface.scopedname$ReplyPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        $interface.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::ReplyHeaderPlugin::get_typecode();
+        $interface.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
         $interface.name$Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Reply_unionPlugin::get_typecode();
 
         is_initialized = true;

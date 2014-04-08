@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
 public interface Definition
 {
@@ -14,7 +14,7 @@ public interface Definition
     /*!
      * This function is used to search the first exception.
      */
-    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile);
+    public com.eprosima.fastrpc.tree.Exception getFirstException(String idlFile);
     
     public boolean isIsModule();
     

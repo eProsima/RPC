@@ -4,26 +4,26 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "DDSProtocol.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
 
 #include "$ctx.filename$DDSProtocol.h"
-#include "rpcdds/transports/Transport.h"
+#include "fastrpc/transports/Transport.h"
 $if(ctx.client)$
-#include "rpcdds/transports/dds/ProxyTransport.h"
-#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "fastrpc/transports/dds/ProxyTransport.h"
+#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "$ctx.filename$DDSAsyncSupport.h"
 
 $endif$
 $if(ctx.server)$
-#include "rpcdds/transports/dds/ServerTransport.h"
-#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
+#include "fastrpc/transports/dds/ServerTransport.h"
+#include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
 
 $endif$
-#include "rpcdds/exceptions/Exceptions.h"
+#include "fastrpc/exceptions/Exceptions.h"
 $if(!ctx.rtiTypes)$
 #include "$ctx.filename$TopicsPlugin.h"
 $else$
 $ReqRepSIncludes(filename=ctx.filename)$
 $endif$
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::protocol::dds;
 using namespace ::transport;
 using namespace ::exception;
@@ -49,7 +49,7 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
 {
     if(strcmp(transport.getType(), "DDS") == 0)
     {
-        m_ddsTransport = dynamic_cast<eprosima::rpcdds::transport::dds::Transport*>(&transport);
+        m_ddsTransport = dynamic_cast<eprosima::fastrpc::transport::dds::Transport*>(&transport);
         
         m_ddsTransport->initialize();
         
@@ -197,8 +197,8 @@ interface(ctx, interface, export_list) ::= <<
 $export_list$
 
 $if(ctx.server)$
-void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
-    void *data , eprosima::rpcdds::transport::Endpoint *endpoint)
+void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::fastrpc::protocol::Protocol &protocol,
+    void *data , eprosima::fastrpc::transport::Endpoint *endpoint)
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     $interface.scopedname$Request &requestData = *($interface.scopedname$Request*)data;

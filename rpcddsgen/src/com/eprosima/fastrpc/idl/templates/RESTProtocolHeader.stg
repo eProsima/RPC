@@ -7,8 +7,8 @@ $fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header fil
 #define _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "rpcdds/transports/messages/HttpMessage.h"
-#include "rpcdds/utils/Messages.h"
+#include "fastrpc/transports/messages/HttpMessage.h"
+#include "fastrpc/utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
@@ -21,7 +21,7 @@ using namespace std;
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace protocol
         {
@@ -35,7 +35,7 @@ namespace eprosima
                  *  It uses a RESTful protocol.
 		 * @ingroup $ctx.trimfilename$
                  */
-                class RPCDDSUSERDllExport $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
+                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -55,7 +55,7 @@ namespace eprosima
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
-                        bool setTransport(eprosima::rpcdds::transport::Transport &transport);
+                        bool setTransport(eprosima::fastrpc::transport::Transport &transport);
                         
                        /*!
                         * @brief This method does not apply to this class
@@ -69,12 +69,12 @@ namespace eprosima
                         * @param dataLength received data length
                         * @param endpoint Proxy endpoint where the request came from
                         */
-                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpcdds::transport::Endpoint *endpoint);
+                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::fastrpc::transport::Endpoint *endpoint);
                         
                         $definitions; separator="\n"$
                         
                         // Server
-                        eprosima::rpcdds::transport::HttpMessage processRequest(eprosima::rpcdds::transport::HttpMessage &httpMessage);
+                        eprosima::fastrpc::transport::HttpMessage processRequest(eprosima::fastrpc::transport::HttpMessage &httpMessage);
                         
                     private:
                     
@@ -85,7 +85,7 @@ namespace eprosima
                 };
             } // namespace rest
         } // namespace protocol
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
@@ -117,7 +117,7 @@ operation(ctx, operation, param_list) ::= <<
 /*!
  * @brief This method implements the server part of the protocol for the operation $operation.name$
  */
-eprosima::rpcdds::transport::HttpMessage deserialize_$operation.parent.name$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpcdds::transport::HttpMessage &httpMessage);
+eprosima::fastrpc::transport::HttpMessage deserialize_$operation.parent.name$_$operation.name$(RESTSerializer &restSerializer, eprosima::fastrpc::transport::HttpMessage &httpMessage);
 
 $if(operation.parent.pathHasBrackets)$
 /*!

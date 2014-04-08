@@ -1,18 +1,18 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 #ifndef _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 
-#include "rpcdds/rpcdds_dll.h"
-#include "rpcdds/transports/dds/ProxyTransport.h"
-#include "rpcdds/transports/components/Endpoint.h"
-#include "rpcdds/utils/dds/Middleware.h"
-#include "rpcdds/utils/Messages.h"
+#include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/transports/dds/ProxyTransport.h"
+#include "fastrpc/transports/components/Endpoint.h"
+#include "fastrpc/utils/dds/Middleware.h"
+#include "fastrpc/utils/Messages.h"
 
 namespace boost
 {
@@ -21,7 +21,7 @@ namespace boost
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -34,7 +34,7 @@ namespace eprosima
                  * It also encapsulates the DDS datawriter and the DDS datareader.
 				 * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI ProxyProcedureEndpoint : public Endpoint
+                class FASTRPC_DllAPI ProxyProcedureEndpoint : public Endpoint
                 {
                     public:
 
@@ -76,9 +76,9 @@ namespace eprosima
                          * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
                          *        The pointer can be NULL and this means that the RPC call is oneway.
 						 * @return Operation status
-                         * @throw eprosima::rpcdds::exception::ServerTimeoutException.
+                         * @throw eprosima::fastrpc::exception::ServerTimeoutException.
                          */
-                        eprosima::rpcdds::ReturnMessage send(void *request, void* reply);
+                        eprosima::fastrpc::ReturnMessage send(void *request, void* reply);
 
 						/*!
 						 * @brief This function sends an asynchronous RPC call.
@@ -90,7 +90,7 @@ namespace eprosima
 						 * @param task Object containing information of the asynchronous task.
 						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
 						 */
-                        eprosima::rpcdds::ReturnMessage send_async(void *request, DDSAsyncTask *task);
+                        eprosima::fastrpc::ReturnMessage send_async(void *request, DDSAsyncTask *task);
 
 						/*!
 						 * @brief Frees a DDS query condition. 
@@ -102,7 +102,7 @@ namespace eprosima
                         /*!
                          * @brief This function takes a sample from the datareader.
                          */
-                        eprosima::rpcdds::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
+                        eprosima::fastrpc::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 
                     private:
 
@@ -127,7 +127,7 @@ namespace eprosima
                          *
                          * @param DDS WaitSet used to make do the checking.
                          * @param timeout Timeout used to do the checking. Its value is in milliseconds.
-                         * @return RPCDDS return message.
+                         * @return FASTRPC return message.
                          */
                         ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
 
@@ -192,6 +192,6 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 #endif // _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_

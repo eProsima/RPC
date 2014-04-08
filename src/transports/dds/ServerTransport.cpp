@@ -1,20 +1,20 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/ServerTransport.h"
-#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
-#include "rpcdds/protocols/Protocol.h"
-#include "rpcdds/exceptions/InitializeException.h"
+#include "fastrpc/transports/dds/ServerTransport.h"
+#include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
+#include "fastrpc/protocols/Protocol.h"
+#include "fastrpc/exceptions/InitializeException.h"
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport::dds;
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ServerTransport";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ServerTransport";
 
 ServerTransport::ServerTransport(std::string &serviceName, int domainId) :
     m_serviceName(serviceName), ::transport::ServerTransport(),

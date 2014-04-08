@@ -1,10 +1,10 @@
-package com.eprosima.rpcdds.solution;
+package com.eprosima.fastrpc.solution;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import com.eprosima.rpcdds.util.GUIDGenerator;
-import com.eprosima.rpcdds.util.Utils;
+import com.eprosima.fastrpc.util.GUIDGenerator;
+import com.eprosima.fastrpc.util.Utils;
 
 public class Project
 {

@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.wadl.tree;
+package com.eprosima.fastrpc.wadl.tree;
 
 public class Representation {
 

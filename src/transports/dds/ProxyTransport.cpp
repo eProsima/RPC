@@ -1,24 +1,24 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/ProxyTransport.h"
-#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "rpcdds/transports/dds/AsyncThread.h"
-#include "rpcdds/exceptions/InitializeException.h"
+#include "fastrpc/transports/dds/ProxyTransport.h"
+#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
+#include "fastrpc/transports/dds/AsyncThread.h"
+#include "fastrpc/exceptions/InitializeException.h"
 
 #include <string>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport::dds;
 using namespace ::util::dds;
 using namespace ::exception;
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::ProxyTransport";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ProxyTransport";
 
 typedef struct encapsulation
 {

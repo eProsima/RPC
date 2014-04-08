@@ -1,7 +1,7 @@
 header
 {
-    package com.eprosima.rpcdds.wadl.grammar;
-    import com.eprosima.rpcdds.wadl.tree.*;
+    package com.eprosima.fastrpc.wadl.grammar;
+    import com.eprosima.fastrpc.wadl.tree.*;
     import java.lang.StringBuilder;
     import java.util.Iterator;
     import com.javadude.antxr.scanner.Attribute;

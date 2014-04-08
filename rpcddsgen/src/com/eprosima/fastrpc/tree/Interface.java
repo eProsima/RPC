@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +66,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
     }
     
     @Override
-    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    public com.eprosima.fastrpc.tree.Exception getFirstException(String idlFile)
     {
     	
     	if(getScopeFile().equals(idlFile))
@@ -108,12 +108,12 @@ public class Interface extends ExportContainer implements Definition, Notebook
     /*!
      * @brief This function returns the first exception of the interface.
      */
-    public com.eprosima.rpcdds.tree.Exception getFirstException()
+    public com.eprosima.fastrpc.tree.Exception getFirstException()
     {
     	for(int count = 0; m_firstexception == null && count < getExports().size(); ++count)
         {
             if(getExports().get(count).isIsException())
-            	m_firstexception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
+            	m_firstexception = (com.eprosima.fastrpc.tree.Exception)getExports().get(count);
         }
         return m_firstexception;
     }
@@ -136,7 +136,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
      */
     public Exception getException(String currentScope, String ename)
     {
-    	com.eprosima.rpcdds.tree.Exception exception = null;
+    	com.eprosima.fastrpc.tree.Exception exception = null;
     	
     	for(int count = 0; exception == null && count < getExports().size(); ++count)
         {
@@ -144,11 +144,11 @@ public class Interface extends ExportContainer implements Definition, Notebook
     		
     		if(getExports().get(count).isIsException())
     		{
-                String tmpname = ((com.eprosima.rpcdds.tree.Exception)getExports().get(count)).getScopedname();
+                String tmpname = ((com.eprosima.fastrpc.tree.Exception)getExports().get(count)).getScopedname();
                 
                 if(tmpname.equals(ename))
                 {
-                	exception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
+                	exception = (com.eprosima.fastrpc.tree.Exception)getExports().get(count);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
                     if(exception == null && ((lastIndex = ename.lastIndexOf("::")) == -1) &&
                     		tmpname.equals(currentScope + ename))
                     {
-                    	exception = (com.eprosima.rpcdds.tree.Exception)getExports().get(count);
+                    	exception = (com.eprosima.fastrpc.tree.Exception)getExports().get(count);
                     }	
                 }
     		}
@@ -316,7 +316,7 @@ public class Interface extends ExportContainer implements Definition, Notebook
     //! Cache the first operation.
     private Operation m_firstoperation = null;
     //! Cache the first exception.
-    private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
+    private com.eprosima.fastrpc.tree.Exception m_firstexception = null;
     //! Map that stores the annotations of the interface.
     HashMap<String, String> m_annotations = null;
 }

@@ -1,6 +1,6 @@
-package com.eprosima.rpcdds.typecode;
+package com.eprosima.fastrpc.typecode;
 
-import com.eprosima.rpcdds.util.Pair;
+import com.eprosima.fastrpc.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

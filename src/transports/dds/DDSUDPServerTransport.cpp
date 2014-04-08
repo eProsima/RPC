@@ -1,12 +1,12 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/UDPServerTransport.h"
+#include "fastrpc/transports/dds/UDPServerTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #if defined(OPENDDS)
@@ -16,9 +16,9 @@
 #include "dds/DCPS/DomainParticipantImpl.h"
 #endif
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::UDPServerTransport";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::UDPServerTransport";
 
-using namespace eprosima::rpcdds::transport::dds;
+using namespace eprosima::fastrpc::transport::dds;
 
 UDPServerTransport::UDPServerTransport(std::string serviceName, int domainId) : ServerTransport(serviceName, domainId)
 {

@@ -4,8 +4,8 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
 
 #include "$ctx.filename$DDSAsyncSupport.h"
-#include "rpcdds/exceptions/ServerInternalException.h"
-#include "rpcdds/utils/Messages.h"
+#include "fastrpc/exceptions/ServerInternalException.h"
+#include "fastrpc/utils/Messages.h"
 $if(ctx.rtiTypes)$
 $ReqRepIncludes(filename=ctx.filename)$
 
@@ -14,7 +14,7 @@ $ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separat
 $endif$
 
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::exception;
 
 $definitions; separator="\n"$

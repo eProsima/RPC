@@ -1,4 +1,4 @@
-#include "rpcdds/rpcdds_version.h"
+#include "fastrpc/fastrpc_version.h"
 // Microsoft Visual C++ generated resource script.
 //
 #ifdef APSTUDIO_INVOKED
@@ -66,10 +66,10 @@ END
 #define VER_COMPANYNAME_STR "eProsima"
 #define VER_FILEDESCRIPTION_STR "RPC over DDS"
 #define VER_LEGALCOPYRIGHT_STR "Copyright 2013 (c)"
-#define VER_PRODUCTNAME_STR "RPCDDS"
+#define VER_PRODUCTNAME_STR "FASTRPC"
 
 #ifdef _WIN32
-#if defined(RPCDDS_SOURCE) && defined(RPCDDS_DYN_LINK)
+#if defined(FASTRPC_SOURCE) && defined(FASTRPC_DYN_LINK)
 
 #ifndef _DEBUG
 #define VER_DEBUG 0

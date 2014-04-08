@@ -6,8 +6,8 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 #ifndef _$ctx.filename;format="toUpper"$_PROXY_H_
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
 
-#include "rpcdds/client/Proxy.h"
-#include "rpcdds/utils/dds/Middleware.h"
+#include "fastrpc/client/Proxy.h"
+#include "fastrpc/utils/dds/Middleware.h"
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"
@@ -15,7 +15,7 @@ $endif$
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace protocol
         {
@@ -49,7 +49,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class RPCDDSUSERDllExport $interface.name$Proxy : public eprosima::rpcdds::proxy::Proxy
+class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::fastrpc::proxy::Proxy
 {
     public:
    
@@ -60,10 +60,10 @@ class RPCDDSUSERDllExport $interface.name$Proxy : public eprosima::rpcdds::proxy
          *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
          * @param protocol The protocol used to send the information over the transport.
          *        This protocol's object is not deleted by this class in its destructor. Cannot be NULL.
-         * @exception eprosima::rpcdds::exception::InitializeException This exception is thrown when the initialization was wrong.
+         * @exception eprosima::fastrpc::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
-        $interface.name$Proxy(eprosima::rpcdds::transport::ProxyTransport &transport,
-            eprosima::rpcdds::protocol::$ctx.filename$Protocol &protocol);
+        $interface.name$Proxy(eprosima::fastrpc::transport::ProxyTransport &transport,
+            eprosima::fastrpc::protocol::$ctx.filename$Protocol &protocol);
 
         //! @brief The default destructor.
         virtual ~$interface.name$Proxy();

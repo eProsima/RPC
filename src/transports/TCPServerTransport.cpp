@@ -1,16 +1,16 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/TCPServerTransport.h"
-#include "rpcdds/transports/TCPServerTransportImpl.h"
-#include "rpcdds/transports/components/TCPEndpoint.h"
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/strategies/ServerStrategyImpl.h"
+#include "fastrpc/transports/TCPServerTransport.h"
+#include "fastrpc/transports/TCPServerTransportImpl.h"
+#include "fastrpc/transports/components/TCPEndpoint.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/strategies/ServerStrategyImpl.h"
 
 #include <iostream>
 #include <string.h>
@@ -20,7 +20,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace eprosima { namespace rpcdds { namespace transport {
+namespace eprosima { namespace fastrpc { namespace transport {
     class TCPServerTransportBoost
     {
         public:
@@ -46,7 +46,7 @@ namespace eprosima { namespace rpcdds { namespace transport {
     };
 }}}
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport;
 
 void TCPServerTransport::init(const std::string& address,

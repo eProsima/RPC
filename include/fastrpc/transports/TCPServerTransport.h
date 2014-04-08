@@ -1,16 +1,16 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _TRANSPORTS_TCPSERVERTRANSPORT_H_
 #define _TRANSPORTS_TCPSERVERTRANSPORT_H_
 
-#include "rpcdds/transports/ServerTransport.h"
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/transports/ServerTransport.h"
+#include "fastrpc/fastrpc_dll.h"
 
 #include <string>
 #include <iostream>
@@ -32,7 +32,7 @@ namespace boost
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -44,7 +44,7 @@ namespace eprosima
              * @brief This class represents a TCP transport. It must be used by TCP servers.
              * @ingroup TRANSPORTMODULE
 			 */
-            class RPCDDS_DllAPI TCPServerTransport : public ServerTransport
+            class FASTRPC_DllAPI TCPServerTransport : public ServerTransport
             {
                 private:
                     TCPServerTransportBoost *m_boostInfo;
@@ -121,7 +121,7 @@ namespace eprosima
             };
 
         } // namespace transport
-    }// namespace rpcdds
+    }// namespace fastrpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPSERVERTRANSPORT_H_

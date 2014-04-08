@@ -1,7 +1,7 @@
-package com.eprosima.rpcdds.wadl.tree;
+package com.eprosima.fastrpc.wadl.tree;
 
-import com.eprosima.rpcdds.wadl.tree.Doc;
-import com.eprosima.rpcdds.wadl.util.TypeConverter;
+import com.eprosima.fastrpc.wadl.tree.Doc;
+import com.eprosima.fastrpc.wadl.util.TypeConverter;
 import com.javadude.antxr.RecognitionException;
 
 import java.util.ArrayList; 

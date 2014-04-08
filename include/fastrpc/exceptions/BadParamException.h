@@ -1,19 +1,19 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _EXCEPTIONS_BADPARAMEXCEPTION_H_
 #define _EXCEPTIONS_BADPARAMEXCEPTION_H_
 
-#include <rpcdds/exceptions/SystemException.h>
+#include <fastrpc/exceptions/SystemException.h>
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace exception
         {
@@ -21,7 +21,7 @@ namespace eprosima
              * @brief This class is thrown as an exception when there is an error initializating an object.
              * @ingroup EXCEPTIONMODULE
              */
-            class RPCDDS_DllAPI BadParamException : public SystemException
+            class FASTRPC_DllAPI BadParamException : public SystemException
             {
                 public:
 
@@ -74,7 +74,7 @@ namespace eprosima
                     virtual void raise() const;
             };
         } // namespace exception
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 #endif // _EXCEPTIONS_BADPARAMEXCEPTION_H_
 

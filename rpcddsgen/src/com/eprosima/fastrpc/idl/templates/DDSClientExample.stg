@@ -6,8 +6,8 @@ $fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source 
 #include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$.h"
 #include "$ctx.filename$DDSProtocol.h"
-#include "rpcdds/transports/dds/UDPProxyTransport.h"
-#include "rpcdds/exceptions/Exceptions.h"
+#include "fastrpc/transports/dds/UDPProxyTransport.h"
+#include "fastrpc/exceptions/Exceptions.h"
 
 $if(ctx.rtiTypes)$
 $ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
@@ -17,7 +17,7 @@ $endif$
 
 #include <iostream>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::exception;
 using namespace ::transport::dds;
 using namespace ::protocol::dds;

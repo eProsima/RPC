@@ -6,8 +6,8 @@ $fileHeader(file=[ctx.filename, "AsyncCallbackHandlers.h"], description=["This h
 #ifndef _$ctx.filename;format="toUpper"$_ASYNC_CALLBACK_HANDLERS_H_
 #define _$ctx.filename;format="toUpper"$_ASYNC_CALLBACK_HANDLERS_H_
 
-#include "rpcdds/exceptions/SystemException.h"
-#include "rpcdds/exceptions/UserException.h"
+#include "fastrpc/exceptions/SystemException.h"
+#include "fastrpc/exceptions/UserException.h"
 #include "$ctx.filename$.h"
 
 $definitions; separator="\n"$
@@ -63,9 +63,9 @@ class $operation.parent.name$_$operation.name$CallbackHandler
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::rpcdds::exception::SystemException &ex) = 0;
+        virtual void on_exception(const eprosima::fastrpc::exception::SystemException &ex) = 0;
         $if(operation.exceptions)$
-        virtual void on_exception(const eprosima::rpcdds::exception::UserException &ex) = 0;
+        virtual void on_exception(const eprosima::fastrpc::exception::UserException &ex) = 0;
         $endif$
 };
 

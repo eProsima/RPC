@@ -1,7 +1,7 @@
 #ifndef _TRANSPORTS_COMPONENTS_TCPENDPOINT_H_
 #define _TRANSPORTS_COMPONENTS_TCPENDPOINT_H_
 
-#include "rpcdds/transports/components/Endpoint.h"
+#include "fastrpc/transports/components/Endpoint.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 #include <boost/noncopyable.hpp>
@@ -11,7 +11,7 @@
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {

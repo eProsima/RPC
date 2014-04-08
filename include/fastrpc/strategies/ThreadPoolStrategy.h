@@ -1,22 +1,22 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _STRATEGIES_THREADPOOLSTRATEGY_H_
 #define _STRATEGIES_THREADPOOLSTRATEGY_H_
 
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/fastrpc_dll.h"
 
-#define RPCDDS_MIN_THREADS_DEFAULT 5
+#define FASTRPC_MIN_THREADS_DEFAULT 5
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace strategy
         {
@@ -27,7 +27,7 @@ namespace eprosima
              *        The server schedules the incoming requests in a free thread of the thread pool.
              * @ingroup STRATEGIESMODULE 
              */
-            class RPCDDS_DllAPI ThreadPoolStrategy : public ServerStrategy
+            class FASTRPC_DllAPI ThreadPoolStrategy : public ServerStrategy
             {
                 public:
 
@@ -36,7 +36,7 @@ namespace eprosima
                      *
                      * \param threadCount Number of threads the thread pool will manage. Default value: 5.
                      */
-                    ThreadPoolStrategy(unsigned int threadCount = RPCDDS_MIN_THREADS_DEFAULT);
+                    ThreadPoolStrategy(unsigned int threadCount = FASTRPC_MIN_THREADS_DEFAULT);
 
                     /// \brief Default destructor.
                     ~ThreadPoolStrategy();
@@ -55,7 +55,7 @@ namespace eprosima
                     ThreadPoolStrategyImpl *m_impl;
             };
         } // namespace strategy
-    } // namespace rpcdds
+    } // namespace fastrpc
 } //namespace eprosima
 
 #endif // _STRATEGIES_THREADPOOLSTRATEGY_H_

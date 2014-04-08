@@ -1,11 +1,11 @@
-package com.eprosima.rpcdds.solution;
+package com.eprosima.fastrpc.solution;
 
-import com.eprosima.rpcdds.RPCDDSGEN;
+import com.eprosima.fastrpc.fastrpcgen;
 import java.util.ArrayList;
 
 public class Solution
 {
-	public Solution(RPCDDSGEN.PROTOCOL protocol, RPCDDSGEN.DDS_TYPES types, boolean serverside, boolean clientside)
+	public Solution(fastrpcgen.PROTOCOL protocol, fastrpcgen.DDS_TYPES types, boolean serverside, boolean clientside)
 	{
         m_protocol = protocol;
         m_types = types;
@@ -149,7 +149,7 @@ public class Solution
 
     public boolean getNeedsFastcdr()
     {
-        return ((m_protocol == RPCDDSGEN.PROTOCOL.DDS && m_types == RPCDDSGEN.DDS_TYPES.EPROSIMA) || m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR);
+        return ((m_protocol == fastrpcgen.PROTOCOL.DDS && m_types == fastrpcgen.DDS_TYPES.EPROSIMA) || m_protocol == fastrpcgen.PROTOCOL.FASTCDR);
     }
 	
 	private ArrayList<Project> m_projects = null;
@@ -158,8 +158,8 @@ public class Solution
 	private ArrayList<String> m_includes = null;
 	private boolean m_serverside = true;
 	private boolean m_clientside = true;
-    private RPCDDSGEN.PROTOCOL m_protocol;
-    private RPCDDSGEN.DDS_TYPES m_types;
+    private fastrpcgen.PROTOCOL m_protocol;
+    private fastrpcgen.DDS_TYPES m_types;
 	
 	// OS
     String m_os = null;

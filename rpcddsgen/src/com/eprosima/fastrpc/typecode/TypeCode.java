@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.typecode;
+package com.eprosima.fastrpc.typecode;
 
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
@@ -6,8 +6,8 @@ import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
 import java.util.Map;
 
-import com.eprosima.rpcdds.templates.TemplateUtil;
-import com.eprosima.rpcdds.util.Pair;
+import com.eprosima.fastrpc.templates.TemplateUtil;
+import com.eprosima.fastrpc.util.Pair;
 
 public abstract class TypeCode
 {

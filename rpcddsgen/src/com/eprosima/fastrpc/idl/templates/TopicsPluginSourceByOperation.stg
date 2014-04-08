@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -12,7 +12,7 @@ main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
 #include "$ctx.filename$TopicsPlugin.h"
-#include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
+#include "fastrpc/protocols/dds/MessageHeaderPlugin.h"
 
 #include "fastcdr/Cdr.h"
 #include "fastcdr/exceptions/BadParamException.h"
@@ -466,7 +466,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
     
     if(!is_initialized)
     {
-        $operation.parent.name$_$operation.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::RequestHeaderPlugin::get_typecode();
+        $operation.parent.name$_$operation.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::RequestHeaderPlugin::get_typecode();
         $operation.inputparam : { param |$operation.parent.name$_$operation.name$Request_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         is_initialized = true;
     }
@@ -1157,7 +1157,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
     
     if(!is_initialized)
     {
-        $operation.parent.name$_$operation.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpcdds::protocol::dds::ReplyHeaderPlugin::get_typecode();
+        $operation.parent.name$_$operation.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
         $if(operation.exceptions)$
         $operation.parent.name$_$operation.name$Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$Reply_unionPlugin::get_typecode();
         $else$

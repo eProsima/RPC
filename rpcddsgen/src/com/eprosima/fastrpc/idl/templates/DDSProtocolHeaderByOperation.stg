@@ -7,7 +7,7 @@ $fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file
 #define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "rpcdds/utils/Messages.h"
+#include "fastrpc/utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 $if(ctx.rtiTypes)$
@@ -18,7 +18,7 @@ $endif$
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -43,7 +43,7 @@ namespace eprosima
                  *  It uses DDS.
 		 * @ingroup $ctx.trimfilename$
                  */
-                class RPCDDSUSERDllExport  $ctx.filename$Protocol : public eprosima::rpcdds::protocol::$ctx.filename$Protocol
+                class FASTRPCUSERDllExport  $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -62,7 +62,7 @@ namespace eprosima
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
-                        virtual bool setTransport(eprosima::rpcdds::transport::Transport &transport);
+                        virtual bool setTransport(eprosima::fastrpc::transport::Transport &transport);
                         
                         bool activateInterface(const char* interfaceName);
                         
@@ -70,18 +70,18 @@ namespace eprosima
                         
                     private:
                     
-                        eprosima::rpcdds::transport::dds::Transport *m_ddsTransport;
+                        eprosima::fastrpc::transport::dds::Transport *m_ddsTransport;
                     
                         $ctx.interfaces : { interface |
                         $interface.operations : { operation |
                         const char* const $interface.formatedScopedname$_$operation.name$_str;
                         
                         $if(ctx.client)$
-                        eprosima::rpcdds::transport::dds::ProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
+                        eprosima::fastrpc::transport::dds::ProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
                         $endif$
                         
                         $if(ctx.server)$
-                        eprosima::rpcdds::transport::dds::ServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
+                        eprosima::fastrpc::transport::dds::ServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
                         $endif$
                         
                         }; separator="\n"$
@@ -89,7 +89,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace protocol
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
@@ -133,8 +133,8 @@ $if(ctx.server)$
 /*!
  * @brief This method implements the server part of the protocol for the operation $operation.name$
  */
-static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpcdds::protocol::Protocol &protocol,
-    void *data , eprosima::rpcdds::transport::Endpoint *endpoint);
+static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::fastrpc::protocol::Protocol &protocol,
+    void *data , eprosima::fastrpc::transport::Endpoint *endpoint);
 $endif$
 
 >>

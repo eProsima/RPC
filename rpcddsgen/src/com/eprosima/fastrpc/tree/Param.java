@@ -1,6 +1,6 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
-import com.eprosima.rpcdds.typecode.TypeCode;
+import com.eprosima.fastrpc.typecode.TypeCode;
 
 public abstract class Param
 {

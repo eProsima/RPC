@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.idl.grammar;
+package com.eprosima.fastrpc.idl.grammar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,23 +10,23 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Stack;
 
-import com.eprosima.rpcdds.RPCDDSGEN;
-import com.eprosima.rpcdds.tree.Module;
-import com.eprosima.rpcdds.tree.Annotation;
-import com.eprosima.rpcdds.tree.Definition;
-import com.eprosima.rpcdds.tree.Interface;
-import com.eprosima.rpcdds.tree.Notebook;
-import com.eprosima.rpcdds.tree.Operation;
-import com.eprosima.rpcdds.tree.ScopedObject;
-import com.eprosima.rpcdds.typecode.Member;
-import com.eprosima.rpcdds.typecode.StructTypeCode;
-import com.eprosima.rpcdds.typecode.TypeCode;
-import com.eprosima.rpcdds.util.Utils;
+import com.eprosima.fastrpc.fastrpcgen;
+import com.eprosima.fastrpc.tree.Module;
+import com.eprosima.fastrpc.tree.Annotation;
+import com.eprosima.fastrpc.tree.Definition;
+import com.eprosima.fastrpc.tree.Interface;
+import com.eprosima.fastrpc.tree.Notebook;
+import com.eprosima.fastrpc.tree.Operation;
+import com.eprosima.fastrpc.tree.ScopedObject;
+import com.eprosima.fastrpc.typecode.Member;
+import com.eprosima.fastrpc.typecode.StructTypeCode;
+import com.eprosima.fastrpc.typecode.TypeCode;
+import com.eprosima.fastrpc.util.Utils;
 
 public class Context
 {
     // TODO Remove middleware parameter. It is temporal while cdr and rest don't have async functions.
-    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, RPCDDSGEN.PROTOCOL protocol, RPCDDSGEN.DDS_TYPES ddstypes)
+    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, fastrpcgen.PROTOCOL protocol, fastrpcgen.DDS_TYPES ddstypes)
     {
         // Detect OS
         m_os = System.getProperty("os.name");
@@ -57,7 +57,7 @@ public class Context
         m_annotations = new HashMap<String, Annotation>();
         m_includedependency = new HashSet<String>();
         m_directIncludeDependencies = new HashSet<String>();
-        m_exceptions = new HashMap<String, com.eprosima.rpcdds.tree.Exception>();
+        m_exceptions = new HashMap<String, com.eprosima.fastrpc.tree.Exception>();
         m_interfaces = new HashMap<String, Interface>();
         m_tmpAnnotations = new HashMap<String, String>();
         m_randomGenNames = new Stack<String>();
@@ -343,9 +343,9 @@ public class Context
     /*!
      * @brief This function adds a global exception to the context.
      */
-    public void addException(String name, com.eprosima.rpcdds.tree.Exception exception)
+    public void addException(String name, com.eprosima.fastrpc.tree.Exception exception)
     {
-    	com.eprosima.rpcdds.tree.Exception prev = m_exceptions.put(name, exception);
+    	com.eprosima.fastrpc.tree.Exception prev = m_exceptions.put(name, exception);
         
         // TODO: Exception.
         if(prev != null)
@@ -355,10 +355,10 @@ public class Context
     /*!
      * @brief This function tries to retrieve a global typecode.
      */
-    public com.eprosima.rpcdds.tree.Exception getException(String name)
+    public com.eprosima.fastrpc.tree.Exception getException(String name)
     {
         int lastIndex = -1;
-        com.eprosima.rpcdds.tree.Exception returnedValue = m_exceptions.get(name);
+        com.eprosima.fastrpc.tree.Exception returnedValue = m_exceptions.get(name);
 
         // Probar si no tiene scope, con el scope actual.
         if(returnedValue == null && ((lastIndex = name.lastIndexOf("::")) == -1))
@@ -460,7 +460,7 @@ public class Context
      */
     public boolean isProjectNeedTypes()
     {
-    	com.eprosima.rpcdds.tree.Exception ex = null;;
+    	com.eprosima.fastrpc.tree.Exception ex = null;;
     	
     	if((ex = getFirstException()) != null)
     		return true;
@@ -500,7 +500,7 @@ public class Context
     /*!
      * @brief This function is used in this project to get the first discovered exception.
      */
-    public com.eprosima.rpcdds.tree.Exception getFirstException()
+    public com.eprosima.fastrpc.tree.Exception getFirstException()
     {
     	for(int count = 0; m_firstexception == null && count < m_definitions.size(); ++count)
         {
@@ -635,7 +635,7 @@ public class Context
     // TODO Remove
     public boolean isDds()
     {
-        if(m_protocol == RPCDDSGEN.PROTOCOL.DDS)
+        if(m_protocol == fastrpcgen.PROTOCOL.DDS)
             return true;
 
         return false;
@@ -643,9 +643,9 @@ public class Context
 
     public boolean isAnyCdr()
     {
-        if((m_protocol == RPCDDSGEN.PROTOCOL.DDS &&
-                    m_ddstypes == RPCDDSGEN.DDS_TYPES.EPROSIMA) ||
-                m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR)
+        if((m_protocol == fastrpcgen.PROTOCOL.DDS &&
+                    m_ddstypes == fastrpcgen.DDS_TYPES.EPROSIMA) ||
+                m_protocol == fastrpcgen.PROTOCOL.FASTCDR)
             return true;
 
         return false;
@@ -653,8 +653,8 @@ public class Context
 
     public boolean isCdr()
     {
-        if(m_protocol == RPCDDSGEN.PROTOCOL.DDS &&
-                m_ddstypes == RPCDDSGEN.DDS_TYPES.EPROSIMA)
+        if(m_protocol == fastrpcgen.PROTOCOL.DDS &&
+                m_ddstypes == fastrpcgen.DDS_TYPES.EPROSIMA)
             return true;
 
         return false;
@@ -662,7 +662,7 @@ public class Context
 
     public boolean isFastcdr()
     {
-        if(m_protocol == RPCDDSGEN.PROTOCOL.FASTCDR)
+        if(m_protocol == fastrpcgen.PROTOCOL.FASTCDR)
             return true;
 
         return false;
@@ -670,7 +670,7 @@ public class Context
 
     public boolean isRtiTypes()
     {
-        return m_ddstypes == RPCDDSGEN.DDS_TYPES.RTI;
+        return m_ddstypes == fastrpcgen.DDS_TYPES.RTI;
     }
 
     public boolean isFastrpcProduct()
@@ -761,7 +761,7 @@ public class Context
     //! Map that contains all types that were found processing the IDL file (after preprocessing).
     private HashMap<String, TypeCode> m_types = null;
     //! Map that contains all global exceptions that were found processing the IDL file (after preprocessing).
-    private HashMap<String, com.eprosima.rpcdds.tree.Exception> m_exceptions = null;
+    private HashMap<String, com.eprosima.fastrpc.tree.Exception> m_exceptions = null;
     //! Map that contains all interfaces that were found processing the IDL file (after preprocessing):
     private HashMap<String, Interface> m_interfaces = null;
   //! Map that contains all annotations that where found processing the IDL file.
@@ -771,7 +771,7 @@ public class Context
     //! Cache the first interface.
     private Interface m_firstinterface = null;
     //! Cache the first exception.
-    private com.eprosima.rpcdds.tree.Exception m_firstexception = null;
+    private com.eprosima.fastrpc.tree.Exception m_firstexception = null;
     
     private int m_currentincludeline = 0;
 
@@ -793,6 +793,6 @@ public class Context
     final String currentDirS = "." + File.separator;
 
     // TODO Remove
-    private RPCDDSGEN.PROTOCOL m_protocol = null;
-    private RPCDDSGEN.DDS_TYPES m_ddstypes = RPCDDSGEN.DDS_TYPES.EPROSIMA;
+    private fastrpcgen.PROTOCOL m_protocol = null;
+    private fastrpcgen.DDS_TYPES m_ddstypes = fastrpcgen.DDS_TYPES.EPROSIMA;
 }

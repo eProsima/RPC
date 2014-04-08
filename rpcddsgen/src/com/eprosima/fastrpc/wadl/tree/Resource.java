@@ -1,8 +1,8 @@
-package com.eprosima.rpcdds.wadl.tree;
+package com.eprosima.fastrpc.wadl.tree;
 
-import com.eprosima.rpcdds.wadl.tree.Param;
-import com.eprosima.rpcdds.wadl.tree.Method;
-import com.eprosima.rpcdds.wadl.tree.Doc;
+import com.eprosima.fastrpc.wadl.tree.Param;
+import com.eprosima.fastrpc.wadl.tree.Method;
+import com.eprosima.fastrpc.wadl.tree.Doc;
 import java.util.ArrayList;
 
 public class Resource

@@ -1,23 +1,23 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _TRANSPORTS_SERVERTRANSPORT_H_
 #define _TRANSPORTS_SERVERTRANSPORT_H_
 
-#include "rpcdds/rpcdds_dll.h"
-#include "rpcdds/transports/Transport.h"
-#include "rpcdds/transports/components/Endpoint.h"
+#include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/transports/Transport.h"
+#include "fastrpc/transports/components/Endpoint.h"
 
 #include <stdio.h>
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace protocol
         {
@@ -37,9 +37,9 @@ namespace eprosima
              *        that can be used by the server.
              * @ingroup TRANSPORTMODULE
              */
-            class RPCDDS_DllAPI ServerTransport : public Transport
+            class FASTRPC_DllAPI ServerTransport : public Transport
             {
-                typedef void (*ServerTransport_Callback)(eprosima::rpcdds::protocol::Protocol&, void*&, size_t, Endpoint*);
+                typedef void (*ServerTransport_Callback)(eprosima::fastrpc::protocol::Protocol&, void*&, size_t, Endpoint*);
 
                 public:
 
@@ -55,7 +55,7 @@ namespace eprosima
 					 * @param strategy Threading strategy.
 					 */
                     inline
-                        void setStrategy(eprosima::rpcdds::strategy::ServerStrategy &strategy)
+                        void setStrategy(eprosima::fastrpc::strategy::ServerStrategy &strategy)
                         {
                             m_strategy = &strategy;
                         }
@@ -65,7 +65,7 @@ namespace eprosima
 					 * @param protocol Communication protocol.
 					 */
                     inline
-                        void linkProtocol(eprosima::rpcdds::protocol::Protocol &protocol)
+                        void linkProtocol(eprosima::fastrpc::protocol::Protocol &protocol)
                         {
                             m_protocol = &protocol;
                         }
@@ -75,7 +75,7 @@ namespace eprosima
 					 * @return Communication protocol.
 					 */
                     inline
-                        eprosima::rpcdds::protocol::Protocol& getLinkedProtocol()
+                        eprosima::fastrpc::protocol::Protocol& getLinkedProtocol()
                         {
                             return *m_protocol;
                         }
@@ -85,7 +85,7 @@ namespace eprosima
 					 * @return Threading strategy.
 					 */
                     inline
-                        eprosima::rpcdds::strategy::ServerStrategy& getStrategy() const
+                        eprosima::fastrpc::strategy::ServerStrategy& getStrategy() const
                         {
                             return *m_strategy;
                         }
@@ -153,14 +153,14 @@ namespace eprosima
 
                 private:
 
-                    eprosima::rpcdds::strategy::ServerStrategy *m_strategy;
+                    eprosima::fastrpc::strategy::ServerStrategy *m_strategy;
 
-                    eprosima::rpcdds::protocol::Protocol *m_protocol;
+                    eprosima::fastrpc::protocol::Protocol *m_protocol;
 
                     ServerTransport_Callback m_callback;
             };
         }
         // namespace transport
-    }// namespace rpcdds
+    }// namespace fastrpc
 } // namespace eprosima
 #endif // _TRANSPORTS_SERVERTRANSPORT_H_

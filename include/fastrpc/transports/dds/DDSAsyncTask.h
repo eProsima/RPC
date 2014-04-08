@@ -1,22 +1,22 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _TRANSPORTS_DDS_DDSASYNCTASK_H_
 #define _TRANSPORTS_DDS_DDSASYNCTASK_H_
 
-#include "rpcdds/rpcdds_dll.h"
-#include "rpcdds/transports/AsyncTask.h"
-#include "rpcdds/utils/dds/Middleware.h"
-#include "rpcdds/exceptions/SystemException.h"
+#include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/transports/AsyncTask.h"
+#include "fastrpc/utils/dds/Middleware.h"
+#include "fastrpc/exceptions/SystemException.h"
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -28,7 +28,7 @@ namespace eprosima
                  * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
                  * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI DDSAsyncTask : public eprosima::rpcdds::transport::AsyncTask
+                class FASTRPC_DllAPI DDSAsyncTask : public eprosima::fastrpc::transport::AsyncTask
                 {
                     public:
 
@@ -91,7 +91,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_DDS_DDSASYNCTASK_H_

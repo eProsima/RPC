@@ -1,22 +1,22 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/HttpServerTransport.h"
-#include "rpcdds/transports/TCPServerTransportImpl.h"
-#include "rpcdds/transports/components/TCPEndpoint.h"
-#include "rpcdds/strategies/ServerStrategy.h"
-#include "rpcdds/strategies/ServerStrategyImpl.h"
-#include "rpcdds/transports/messages/HttpMessage.h"
-#include "rpcdds/utils/Utilities.h"
+#include "fastrpc/transports/HttpServerTransport.h"
+#include "fastrpc/transports/TCPServerTransportImpl.h"
+#include "fastrpc/transports/components/TCPEndpoint.h"
+#include "fastrpc/strategies/ServerStrategy.h"
+#include "fastrpc/strategies/ServerStrategyImpl.h"
+#include "fastrpc/transports/messages/HttpMessage.h"
+#include "fastrpc/utils/Utilities.h"
 
 #include <boost/bind.hpp>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace transport;
 
 const char* const CLASS_NAME = "HttpServerTransport";

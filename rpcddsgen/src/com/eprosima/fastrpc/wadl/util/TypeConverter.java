@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.wadl.util;
+package com.eprosima.fastrpc.wadl.util;
 
 import com.javadude.antxr.RecognitionException;
 

@@ -13,7 +13,7 @@
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
-package com.eprosima.rpcdds;
+package com.eprosima.fastrpc;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,24 +37,24 @@ import org.antlr.stringtemplate.StringTemplateGroupLoader;
 import org.antlr.stringtemplate.CommonGroupLoader;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
-import com.eprosima.rpcdds.exceptions.BadArgumentException;
-import com.eprosima.rpcdds.exceptions.ParseException;
-import com.eprosima.rpcdds.typecode.TypeCode;
-import com.eprosima.rpcdds.idl.grammar.Context;
-import com.eprosima.rpcdds.idl.grammar.IDLLexer;
-import com.eprosima.rpcdds.idl.grammar.IDLParser;
-import com.eprosima.rpcdds.solution.Project;
-import com.eprosima.rpcdds.solution.Solution;
-import com.eprosima.rpcdds.templates.TemplateGroup;
-import com.eprosima.rpcdds.templates.TemplateManager;
-import com.eprosima.rpcdds.tree.Interface;
-import com.eprosima.rpcdds.util.GUIDGenerator;
-import com.eprosima.rpcdds.util.Utils;
-import com.eprosima.rpcdds.util.VSConfiguration;
-import com.eprosima.rpcdds.wadl.grammar.WADLParser;
-import com.eprosima.rpcdds.wadl.idl.IDLConverter;
-import com.eprosima.rpcdds.wadl.idl.IDLConverterException;
-import com.eprosima.rpcdds.wadl.tree.Application;
+import com.eprosima.fastrpc.exceptions.BadArgumentException;
+import com.eprosima.fastrpc.exceptions.ParseException;
+import com.eprosima.fastrpc.typecode.TypeCode;
+import com.eprosima.fastrpc.idl.grammar.Context;
+import com.eprosima.fastrpc.idl.grammar.IDLLexer;
+import com.eprosima.fastrpc.idl.grammar.IDLParser;
+import com.eprosima.fastrpc.solution.Project;
+import com.eprosima.fastrpc.solution.Solution;
+import com.eprosima.fastrpc.templates.TemplateGroup;
+import com.eprosima.fastrpc.templates.TemplateManager;
+import com.eprosima.fastrpc.tree.Interface;
+import com.eprosima.fastrpc.util.GUIDGenerator;
+import com.eprosima.fastrpc.util.Utils;
+import com.eprosima.fastrpc.util.VSConfiguration;
+import com.eprosima.fastrpc.wadl.grammar.WADLParser;
+import com.eprosima.fastrpc.wadl.idl.IDLConverter;
+import com.eprosima.fastrpc.wadl.idl.IDLConverterException;
+import com.eprosima.fastrpc.wadl.tree.Application;
 import com.javadude.antxr.RecognitionException;
 import com.javadude.antxr.TokenStreamException;
 import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
@@ -62,7 +62,7 @@ import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
 
 
 // TO_DO: string constants...
-public class RPCDDSGEN
+public class fastrpcgen
 {
     class TemplateErrorListener implements StringTemplateErrorListener
     {  
@@ -148,7 +148,7 @@ public class RPCDDSGEN
     private static final String TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION = "byOperation";
     private static final String TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE = "byInterface";
     
-    public RPCDDSGEN(String[] args) throws BadArgumentException
+    public fastrpcgen(String[] args) throws BadArgumentException
     {
         int count = 0;
         String arg;
@@ -343,17 +343,17 @@ public class RPCDDSGEN
     {
         boolean returnedValue = false;
         
-        RPCDDSGEN.m_platforms = new ArrayList<String>();
+        fastrpcgen.m_platforms = new ArrayList<String>();
         
         try
         {
-            InputStream input = RPCDDSGEN.class.getResourceAsStream("/platforms");
+            InputStream input = fastrpcgen.class.getResourceAsStream("/platforms");
             InputStreamReader ir = new InputStreamReader(input);
             BufferedReader reader = new BufferedReader(ir);
             String line = null;
             while((line = reader.readLine()) != null)
             {
-                RPCDDSGEN.m_platforms.add(line);
+                fastrpcgen.m_platforms.add(line);
             }
             
             returnedValue = true;
@@ -370,7 +370,7 @@ public class RPCDDSGEN
     {
     	try
         {
-	    	InputStream input = this.getClass().getResourceAsStream("/rpcdds_version.h");
+	    	InputStream input = this.getClass().getResourceAsStream("/fastrpc_version.h");
 	        byte[] b = new byte[input.available()];
 	        input.read(b);
 	        String text = new String(b);
@@ -389,7 +389,7 @@ public class RPCDDSGEN
     private void showVersion()
     {
         String version = getVersion();
-        System.out.println("rpcddsgen version " + version);
+        System.out.println("fastrpcgen version " + version);
     }
     
     public boolean execute()
@@ -415,7 +415,7 @@ public class RPCDDSGEN
 
             // Load string templates
             System.out.println("Loading Templates...");     
-            StringTemplateGroupLoader loader = new CommonGroupLoader("com/eprosima/rpcdds/idl/templates", new TemplateErrorListener());
+            StringTemplateGroupLoader loader = new CommonGroupLoader("com/eprosima/fastrpc/idl/templates", new TemplateErrorListener());
             StringTemplateGroup.registerGroupLoader(loader);
 
             // Load IDL types for stringtemplates
@@ -1221,7 +1221,7 @@ public class RPCDDSGEN
     public boolean globalInit()
     {
         // Set environment variables.
-        String dds_root = null, tao_root = null, rpcdds_root = null;
+        String dds_root = null, tao_root = null, fastrpc_root = null;
         
         if(m_middleware.equals("rti"))
         {
@@ -1231,7 +1231,7 @@ public class RPCDDSGEN
             {
                 System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
                 System.out.println("Note: NDDSHOME environment variable is not set in your system.");
-                System.out.println("      rpcddsgen uses this environment variable to find the RTI DDS middleware.");
+                System.out.println("      fastrpcgen uses this environment variable to find the RTI DDS middleware.");
                 System.out.println("      This environment variable is used by the generated solutions too.");
                 System.out.println("      See the User Manual document.");
                 return false;
@@ -1245,7 +1245,7 @@ public class RPCDDSGEN
             {
                 System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
                 System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
-                System.out.println("      rpcddsgen uses this environment variable to find the OpenDDS middleware.");
+                System.out.println("      fastrpcgen uses this environment variable to find the OpenDDS middleware.");
                 System.out.println("      This environment variable is used by the generated solutions too.");
                 System.out.println("      See the User Manual document.");
                 return false;
@@ -1254,13 +1254,13 @@ public class RPCDDSGEN
             tao_root = System.getenv("TAO_ROOT");
         }
         
-        rpcdds_root = System.getenv("FASTRPCHOME");
+        fastrpc_root = System.getenv("FASTRPCHOME");
         
-        if(rpcdds_root == null || rpcdds_root.equals(""))
+        if(fastrpc_root == null || fastrpc_root.equals(""))
         {
             System.out.println("ERROR: Cannot find the environment variable FASTRPCHOME.");
             System.out.println("Note: FASTRPCHOME environment variable is not set in your system.");
-            System.out.println("      rpcddsgen uses this environment variable to find its own resources.");
+            System.out.println("      fastrpcgen uses this environment variable to find its own resources.");
             System.out.println("      See the User Manual document.");
             return false;
         }
@@ -1378,7 +1378,7 @@ public class RPCDDSGEN
         }
         
         // Set the location of file MessageHeader.idl
-        m_messageHeaderFileLocation = rpcdds_root + File.separator + "idl" + File.separator + m_messageHeaderFileName;
+        m_messageHeaderFileLocation = fastrpc_root + File.separator + "idl" + File.separator + m_messageHeaderFileName;
         
         return true;
     }
@@ -1893,8 +1893,8 @@ public class RPCDDSGEN
     // TODO Review: -types and -topicGeneration.
     public static void printHelp()
     {
-        System.out.println("rpcddsgen usage:");
-        System.out.println("\trpcddsgen [options] <file> [<file> ...]");
+        System.out.println("fastrpcgen usage:");
+        System.out.println("\tfastrpcgen [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
         System.out.println("\t\t-help: shows this help");
         System.out.println("\t\t-version: shows the current version of eProsima RPC.");
@@ -1925,7 +1925,7 @@ public class RPCDDSGEN
         {
             try
             {
-                RPCDDSGEN main = new RPCDDSGEN(args);
+                fastrpcgen main = new fastrpcgen(args);
                 if(main.execute())
                 	System.exit(0);
             }

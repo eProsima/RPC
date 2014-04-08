@@ -1,12 +1,12 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
-#include "rpcdds/transports/dds/UDPProxyTransport.h"
+#include "fastrpc/transports/dds/UDPProxyTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #if defined(OPENDDS)
@@ -16,9 +16,9 @@
 #include "dds/DCPS/DomainParticipantImpl.h"
 #endif
 
-static const char* const CLASS_NAME = "eprosima::rpcdds::transport::dds::UDPProxyTransport";
+static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::UDPProxyTransport";
 
-using namespace eprosima::rpcdds::transport::dds;
+using namespace eprosima::fastrpc::transport::dds;
 
 UDPProxyTransport::UDPProxyTransport(std::string remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
     ProxyTransport(remoteServiceName, domainId, milliseconds)

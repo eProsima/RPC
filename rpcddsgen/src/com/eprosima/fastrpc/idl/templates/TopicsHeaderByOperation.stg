@@ -1,8 +1,8 @@
 /*************************************************************************
  * Copyright (c) 2012 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
@@ -15,7 +15,7 @@ $fileHeader(file=[ctx.filename, "Topics.h"], description=["This header file cont
 #define _$ctx.filename;format="toUpper"$_TOPICS_H_
 
 #include "$ctx.filename$.h"
-#include "rpcdds/protocols/dds/MessageHeader.h"
+#include "fastrpc/protocols/dds/MessageHeader.h"
 
 #include <cstddef>
 
@@ -102,22 +102,22 @@ public:
      */
     $operation.parent.name$_$operation.name$Request& operator=($operation.parent.name$_$operation.name$Request &&x);
 
-    inline void _header(const eprosima::rpcdds::protocol::dds::RequestHeader &__header)
+    inline void _header(const eprosima::fastrpc::protocol::dds::RequestHeader &__header)
     {
         m__header = __header;
     }
 
-    inline void _header(eprosima::rpcdds::protocol::dds::RequestHeader &&__header)
+    inline void _header(eprosima::fastrpc::protocol::dds::RequestHeader &&__header)
     {
         m__header = std::move(__header);
     }
 
-    inline const eprosima::rpcdds::protocol::dds::RequestHeader& _header() const
+    inline const eprosima::fastrpc::protocol::dds::RequestHeader& _header() const
     {
         return m__header;
     }
 
-    inline eprosima::rpcdds::protocol::dds::RequestHeader& _header()
+    inline eprosima::fastrpc::protocol::dds::RequestHeader& _header()
     {
         return m__header;
     }
@@ -138,7 +138,7 @@ public:
 
 private:
 
-    eprosima::rpcdds::protocol::dds::RequestHeader m__header;
+    eprosima::fastrpc::protocol::dds::RequestHeader m__header;
 
     $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
 };
@@ -340,22 +340,22 @@ public:
      */
     $operation.parent.name$_$operation.name$Reply& operator=($operation.parent.name$_$operation.name$Reply &&x);
 
-    inline void _header(const eprosima::rpcdds::protocol::dds::ReplyHeader &__header)
+    inline void _header(const eprosima::fastrpc::protocol::dds::ReplyHeader &__header)
     {
         m__header = __header;
     }
 
-    inline void _header(eprosima::rpcdds::protocol::dds::ReplyHeader &&__header)
+    inline void _header(eprosima::fastrpc::protocol::dds::ReplyHeader &&__header)
     {
         m__header = std::move(__header);
     }
 
-    inline const eprosima::rpcdds::protocol::dds::ReplyHeader& _header() const
+    inline const eprosima::fastrpc::protocol::dds::ReplyHeader& _header() const
     {
         return m__header;
     }
 
-    inline eprosima::rpcdds::protocol::dds::ReplyHeader& _header()
+    inline eprosima::fastrpc::protocol::dds::ReplyHeader& _header()
     {
         return m__header;
     }
@@ -380,7 +380,7 @@ public:
 
 private:
 
-    eprosima::rpcdds::protocol::dds::ReplyHeader m__header;
+    eprosima::fastrpc::protocol::dds::ReplyHeader m__header;
 
     $if(operation.exceptions)$
     $operation.parent.name$_$operation.name$Reply_union m_unio;

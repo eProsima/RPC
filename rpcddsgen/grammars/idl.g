@@ -1,14 +1,14 @@
 header {
-    package com.eprosima.rpcdds.idl.grammar;
+    package com.eprosima.fastrpc.idl.grammar;
     
-    import com.eprosima.rpcdds.idl.grammar.Context;
-    import com.eprosima.rpcdds.templates.TemplateManager;
-    import com.eprosima.rpcdds.templates.TemplateGroup;
-    import com.eprosima.rpcdds.templates.TemplateUtil;
-    import com.eprosima.rpcdds.typecode.*;
-    import com.eprosima.rpcdds.tree.*;
-    import com.eprosima.rpcdds.util.Pair;
-    import com.eprosima.rpcdds.exceptions.ParseException;
+    import com.eprosima.fastrpc.idl.grammar.Context;
+    import com.eprosima.fastrpc.templates.TemplateManager;
+    import com.eprosima.fastrpc.templates.TemplateGroup;
+    import com.eprosima.fastrpc.templates.TemplateUtil;
+    import com.eprosima.fastrpc.typecode.*;
+    import com.eprosima.fastrpc.tree.*;
+    import com.eprosima.fastrpc.util.Pair;
+    import com.eprosima.fastrpc.exceptions.ParseException;
    
     import java.util.Vector;
  }
@@ -50,7 +50,7 @@ definition returns [Pair<Definition, TemplateGroup> dtg = null]
     Pair<ConstDeclaration, TemplateGroup> cdtg = null;
     Pair<Module, TemplateGroup> mtg = null;
     Pair<Interface, TemplateGroup> itg = null;
-    Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> etg = null;
+    Pair<com.eprosima.fastrpc.tree.Exception, TemplateGroup> etg = null;
 }
 	:   (   tdtg=type_dcl SEMI! {if(tdtg!=null){dtg = new Pair<Definition, TemplateGroup>(tdtg.first(), tdtg.second());}}  // Type Declaration
 	    |   cdtg=const_dcl SEMI! {if(cdtg!=null){dtg = new Pair<Definition, TemplateGroup>(cdtg.first(), cdtg.second());}} // Const Declaration
@@ -210,7 +210,7 @@ export returns [Pair<Export, TemplateGroup> etg = null]
         Pair<TypeDeclaration, TemplateGroup> tetg = null;
         Pair<ConstDeclaration, TemplateGroup> cetg = null;
         Pair<Operation, TemplateGroup> oetg = null;
-        Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> eetg = null;
+        Pair<com.eprosima.fastrpc.tree.Exception, TemplateGroup> eetg = null;
     }
 	:   (   tetg=type_dcl SEMI! {if(tetg!=null){etg = new Pair<Export, TemplateGroup>(tetg.first(), tetg.second());}}  // Type Declaration
 	    |   cetg=const_dcl SEMI! {if(cetg!=null){etg = new Pair<Export, TemplateGroup>(cetg.first(), cetg.second());}} // Const Declaration
@@ -1132,17 +1132,17 @@ attr_dcl returns [Vector<Pair<String, TypeCode>> declvector = null]
 	|   declvector=attr_spec
 	;
 
-except_dcl returns [Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> returnPair = null]
+except_dcl returns [Pair<com.eprosima.fastrpc.tree.Exception, TemplateGroup> returnPair = null]
 {
     String name = null;
-    com.eprosima.rpcdds.tree.Exception exceptionObject = null;
+    com.eprosima.fastrpc.tree.Exception exceptionObject = null;
     TemplateGroup exTemplates = null;
 }
 	:   "exception"^
 	    name=identifier
 	    {
             // Create the Exception object.
-            exceptionObject = new com.eprosima.rpcdds.tree.Exception(ctx.getScope(), name);
+            exceptionObject = new com.eprosima.fastrpc.tree.Exception(ctx.getScope(), name);
             if(ctx.setScopedFileToObject(exceptionObject) || ctx.isScopeLimitToAll())
             {
                 exTemplates = tmanager.createTemplateGroup("exception");
@@ -1160,12 +1160,12 @@ except_dcl returns [Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup> retu
 	    {
             ctx.addException(exceptionObject.getScopedname(), exceptionObject);
             // Create the returned data.
-            returnPair = new Pair<com.eprosima.rpcdds.tree.Exception, TemplateGroup>(exceptionObject, exTemplates);
+            returnPair = new Pair<com.eprosima.fastrpc.tree.Exception, TemplateGroup>(exceptionObject, exTemplates);
         }
 	;
 
 
-opt_member_list [com.eprosima.rpcdds.tree.Exception exceptionObject]
+opt_member_list [com.eprosima.fastrpc.tree.Exception exceptionObject]
 {
     Vector<Pair<String, TypeCode>> declvector = null;
 }
@@ -1218,7 +1218,7 @@ op_dcl returns [Pair<Operation, TemplateGroup> returnPair = null]
 	          for(int count = 0; count < exceptions.size(); ++count)
 	          {
 	             String ename = exceptions.get(count);
-	             com.eprosima.rpcdds.tree.Exception exception = ctx.getException(ename);
+	             com.eprosima.fastrpc.tree.Exception exception = ctx.getException(ename);
 	             
 	             if(exception != null)
 	                operationObject.addException(exception);

@@ -1,7 +1,7 @@
-#include "rpcdds/protocols/rest/HTTPEntities.h"
+#include "fastrpc/protocols/rest/HTTPEntities.h"
 #include <sstream>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::protocol::rest;
 
 //METHOD

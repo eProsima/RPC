@@ -13,7 +13,7 @@
  * 1.0,29sep09,RodM Created                                                *
  * =====================================================================   *
  */
-package com.eprosima.rpcdds.util;
+package com.eprosima.fastrpc.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

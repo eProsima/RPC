@@ -1,7 +1,7 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
-import com.eprosima.rpcdds.idl.grammar.Context;
-import com.eprosima.rpcdds.typecode.TypeCode;
+import com.eprosima.fastrpc.idl.grammar.Context;
+import com.eprosima.fastrpc.typecode.TypeCode;
 
 public class ConstDeclaration implements Definition, Export
 {
@@ -64,7 +64,7 @@ public class ConstDeclaration implements Definition, Export
     }
     
     @Override
-    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    public com.eprosima.fastrpc.tree.Exception getFirstException(String idlFile)
     {
         return null;
     }

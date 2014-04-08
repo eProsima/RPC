@@ -1,11 +1,11 @@
-#include "rpcdds/transports/components/TCPEndpoint.h"
+#include "fastrpc/transports/components/TCPEndpoint.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
 #include <iostream>
 #include <vector>
 #include <boost/bind.hpp>
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::transport;
 
 const size_t BUFFER_INITIAL_LENGTH = 1024;

@@ -1,8 +1,8 @@
-#include "rpcdds/protocols/dds/MessageHeader.h"
+#include "fastrpc/protocols/dds/MessageHeader.h"
 
 #include "fastcdr/Cdr.h"
 
-using namespace eprosima::rpcdds;
+using namespace eprosima::fastrpc;
 using namespace ::protocol::dds;
 
 Identification::Identification() :
@@ -51,17 +51,17 @@ unsigned int Identification::getMaxCdrSerializedSize(unsigned int current_alignm
     unsigned int initial_alignment = current_alignment;
 
     // Optimization. First unsigned long has to be aligned. The rest is not necessary.
-    current_alignment += 16 + eprosima::Cdr::alignment(current_alignment, 4);
+    current_alignment += 16 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;
 }
 
-void Identification::serialize(eprosima::Cdr &cdr) const
+void Identification::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr << m_value_1 << m_value_2 << m_value_3 << m_value_4;
 }
 
-void Identification::deserialize(eprosima::Cdr &cdr)
+void Identification::deserialize(eprosima::fastcdr::Cdr &cdr)
 {
     cdr >> m_value_1 >> m_value_2 >> m_value_3 >> m_value_4;
 }
@@ -110,17 +110,17 @@ unsigned int RequestHeader::getMaxCdrSerializedSize(unsigned int current_alignme
 
     current_alignment += Identification::getMaxCdrSerializedSize(current_alignment);
     current_alignment += 255; // Max string length.
-    current_alignment += 4 + eprosima::Cdr::alignment(current_alignment, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;
 }
 
-void RequestHeader::serialize(eprosima::Cdr &cdr) const
+void RequestHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr << m_clientId << m_remoteServiceName << m_requestSequenceNumber;
 }
 
-void RequestHeader::deserialize(eprosima::Cdr &cdr)
+void RequestHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
 {
     cdr >> m_clientId >> m_remoteServiceName >> m_requestSequenceNumber;
 }
@@ -172,18 +172,18 @@ unsigned int ReplyHeader::getMaxCdrSerializedSize(unsigned int current_alignment
 
     current_alignment += Identification::getMaxCdrSerializedSize(current_alignment);
     // Optimization. First unsigned long has to be aligment but the other not.
-    current_alignment += 8 + eprosima::Cdr::alignment(current_alignment, 4);
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
     current_alignment += 255; // Max string length.
 
     return current_alignment - initial_alignment;
 }
 
-void ReplyHeader::serialize(eprosima::Cdr &cdr) const
+void ReplyHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr << m_clientId << m_requestSequenceNumber << m_retCode << m_retMsg;
 }
 
-void ReplyHeader::deserialize(eprosima::Cdr &cdr)
+void ReplyHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
 {
     cdr >> m_clientId >> m_requestSequenceNumber >> m_retCode >> m_retMsg;
 }

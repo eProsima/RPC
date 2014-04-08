@@ -1,25 +1,25 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 #ifndef _TRANSPORTS_DDS_PROXYTRANSPORT_H_
 #define _TRANSPORTS_DDS_PROXYTRANSPORT_H_
 
-#include "rpcdds/rpcdds_dll.h"
-#include "rpcdds/transports/dds/Transport.h"
-#include "rpcdds/transports/ProxyTransport.h"
-#include "rpcdds/utils/Messages.h"
-#include "rpcdds/utils/dds/Middleware.h"
+#include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/transports/dds/Transport.h"
+#include "fastrpc/transports/ProxyTransport.h"
+#include "fastrpc/utils/Messages.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #include <string>
 #include <map>
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -34,7 +34,7 @@ namespace eprosima
                  * using DDS.
                  * @ingroup TRANSPORTMODULE
                  */
-                class RPCDDS_DllAPI ProxyTransport : public eprosima::rpcdds::transport::ProxyTransport, public Transport
+                class FASTRPC_DllAPI ProxyTransport : public eprosima::fastrpc::transport::ProxyTransport, public Transport
                 {
                     public:
 
@@ -76,7 +76,7 @@ namespace eprosima
                          * @return 0 if the function works. -1 in other case.
                          * TODO
                          */
-                        eprosima::rpcdds::transport::Endpoint*
+                        eprosima::fastrpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *readertypename, bool eprosima_types,
                                     Transport::Create_data create_data, Transport::Copy_data copy_data,
@@ -137,7 +137,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_DDS_PROXYTRANSPORT_H_

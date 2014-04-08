@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +40,9 @@ public class Module extends DefinitionContainer implements Definition, Notebook
     }
     
     @Override
-    public com.eprosima.rpcdds.tree.Exception getFirstException(String idlFile)
+    public com.eprosima.fastrpc.tree.Exception getFirstException(String idlFile)
     {
-    	com.eprosima.rpcdds.tree.Exception returnedValue = null;
+    	com.eprosima.fastrpc.tree.Exception returnedValue = null;
         
         for(int count = 0; returnedValue == null && count < getDefinitions().size(); ++count)
         {

@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.templates;
+package com.eprosima.fastrpc.templates;
 
 import java.util.Iterator;
 import java.util.Map;

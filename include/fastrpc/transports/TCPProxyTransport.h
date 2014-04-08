@@ -1,15 +1,15 @@
 #ifndef _TRANSPORTS_TCPPROXYTRANSPORT_H_
 #define _TRANSPORTS_TCPPROXYTRANSPORT_H_
 
-#include "rpcdds/utils/dds/Middleware.h"
-#include "rpcdds/rpcdds_dll.h"
-#include "rpcdds/transports/ProxyTransport.h"
+#include "fastrpc/utils/dds/Middleware.h"
+#include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/transports/ProxyTransport.h"
 #include <string.h>
 #include <iostream>
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace transport
         {
@@ -19,8 +19,8 @@ namespace eprosima
              * @brief This class represents a TCP transport. It must be used by TCP clients.
              * @ingroup TRANSPORTMODULE
 			 */
-            class RPCDDS_DllAPI TCPProxyTransport:
-                public eprosima::rpcdds::transport::ProxyTransport
+            class FASTRPC_DllAPI TCPProxyTransport:
+                public eprosima::fastrpc::transport::ProxyTransport
             {
                 private:
                     std::string serverAddress_;
@@ -73,7 +73,7 @@ namespace eprosima
                     int receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
             };
         }// namespace transport
-    }// namespace rpcdds
+    }// namespace fastrpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPPROXYTRANSPORT_H_

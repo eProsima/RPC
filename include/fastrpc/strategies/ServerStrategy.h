@@ -1,19 +1,19 @@
 /*************************************************************************
  * Copyright (c) 2013 eProsima. All rights reserved.
  *
- * This copy of RPCDDS is licensed to you under the terms described in the
- * RPCDDS_LICENSE file included in this distribution.
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
 
 #ifndef _SERVER_SERVERSTRATEGY_H_
 #define _SERVER_SERVERSTRATEGY_H_
 
-#include "rpcdds/rpcdds_dll.h"
+#include "fastrpc/fastrpc_dll.h"
 
 namespace eprosima
 {
-    namespace rpcdds
+    namespace fastrpc
     {
         namespace strategy
         {
@@ -24,7 +24,7 @@ namespace eprosima
              *        that could be used by the server.
              * @ingroup SERVERMODULE
              */
-            class RPCDDS_DllAPI ServerStrategy
+            class FASTRPC_DllAPI ServerStrategy
             {
                 public:
 
@@ -41,7 +41,7 @@ namespace eprosima
                     virtual ServerStrategyImpl* getImpl() = 0;
             };
         } // namespace strategy
-    } // namespace rpcdds
+    } // namespace fastrpc
 } // namespace eprosima
 
 #endif // _SERVER_SERVERSTRATEGY_H_

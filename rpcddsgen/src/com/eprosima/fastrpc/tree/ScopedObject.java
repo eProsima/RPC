@@ -1,4 +1,4 @@
-package com.eprosima.rpcdds.tree;
+package com.eprosima.fastrpc.tree;
 
 public class ScopedObject
 {
