@@ -29,12 +29,6 @@ fastrpcgen/build/
 classes/fastrpcgen.jar
 
 # Generated Java source
-fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLLexer.java
-fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLLexer.smap
-fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLParser.java
-fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLParser.smap
-fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLTokenTypes.java
-fastrpcgen/src/com/eprosima/fastrpc/idl/grammar/IDLTokenTypes.txt
 fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.java
 fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.smap
 fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.java

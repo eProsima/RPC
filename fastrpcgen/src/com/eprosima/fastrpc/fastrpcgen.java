@@ -37,17 +37,23 @@ import org.antlr.stringtemplate.StringTemplateGroupLoader;
 import org.antlr.stringtemplate.CommonGroupLoader;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
+import com.javadude.antxr.RecognitionException;
+import com.javadude.antxr.TokenStreamException;
+import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
+
+import com.eprosima.idl.parser.grammar.IDLLexer;
+import com.eprosima.idl.parser.grammar.IDLParser;
+import com.eprosima.idl.parser.exception.ParseException;
+import com.eprosima.idl.parser.tree.Interface;
+import com.eprosima.idl.parser.typecode.TypeCode;
+import com.eprosima.idl.generator.manager.TemplateGroup;
+import com.eprosima.idl.generator.manager.TemplateManager;
+import com.eprosima.idl.util.Util;
+
 import com.eprosima.fastrpc.exceptions.BadArgumentException;
-import com.eprosima.fastrpc.exceptions.ParseException;
-import com.eprosima.fastrpc.typecode.TypeCode;
 import com.eprosima.fastrpc.idl.grammar.Context;
-import com.eprosima.fastrpc.idl.grammar.IDLLexer;
-import com.eprosima.fastrpc.idl.grammar.IDLParser;
 import com.eprosima.fastrpc.solution.Project;
 import com.eprosima.fastrpc.solution.Solution;
-import com.eprosima.fastrpc.templates.TemplateGroup;
-import com.eprosima.fastrpc.templates.TemplateManager;
-import com.eprosima.fastrpc.tree.Interface;
 import com.eprosima.fastrpc.util.GUIDGenerator;
 import com.eprosima.fastrpc.util.Utils;
 import com.eprosima.fastrpc.util.VSConfiguration;
@@ -55,9 +61,6 @@ import com.eprosima.fastrpc.wadl.grammar.WADLParser;
 import com.eprosima.fastrpc.wadl.idl.IDLConverter;
 import com.eprosima.fastrpc.wadl.idl.IDLConverterException;
 import com.eprosima.fastrpc.wadl.tree.Application;
-import com.javadude.antxr.RecognitionException;
-import com.javadude.antxr.TokenStreamException;
-import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
 
 
 
@@ -590,7 +593,7 @@ public class fastrpcgen
                     // In case of rti types, execute rtiddsgen on IDLFilename.idl and IDLFilenameRequestReply.idl
                     if(m_types == DDS_TYPES.RTI)
                     {
-                        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+                        String onlyFileName = Util.getIDLFileNameOnly(idlFilename);
 
                         // Parse the user IDL file that was generated using external tool.
                         // Note:The file are put in project info inside parseIDL function.
@@ -644,7 +647,7 @@ public class fastrpcgen
         String idlParseFileName = idlFilename;
         Project project = null;
     	
-        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+        String onlyFileName = Util.getIDLFileNameOnly(idlFilename);
         
         if(!m_ppDisable)
         {
@@ -814,7 +817,7 @@ public class fastrpcgen
         String idlParseFileName = idlFilename;
         Project project = null;
         
-        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+        String onlyFileName = Util.getIDLFileNameOnly(idlFilename);
         
         if(!m_ppDisable)
         {
@@ -979,7 +982,7 @@ public class fastrpcgen
         String idlParseFileName = idlFilename;
         Project project = null;
         
-        String onlyFileName = Utils.getIDLFileNameOnly(idlFilename);
+        String onlyFileName = Util.getIDLFileNameOnly(idlFilename);
         
         if(!m_ppDisable)
         {
@@ -1390,7 +1393,7 @@ public class fastrpcgen
         idlLineCommandForWorkDirSet.addAll(m_lineCommandForWorkDirSet);
         
         // Get only de IDL file directory.
-        String idlFileLocation = Utils.getIDLFileDirectoryOnly(idlFilename);
+        String idlFileLocation = Util.getIDLFileDirectoryOnly(idlFilename);
         
         if(idlFileLocation != null)
         {
@@ -1480,7 +1483,7 @@ public class fastrpcgen
         //	finalCommandLine.addAll(idlLineCommandForWorkDirSet);
         //	// TODO Revisar funcionamiento con OpenDDS
         //	//finalCommandLine.add(file.substring(externalDir.length() + 1));
-        //	finalCommandLine.add(Utils.getIDLFileOnly(file));
+        //	finalCommandLine.add(Util.getIDLFileOnly(file));
         //}
         finalCommandArray = new String[finalCommandLine.size()];
         finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
@@ -1786,7 +1789,7 @@ public class fastrpcgen
     	// Set line command.
         ArrayList lineCommand = new ArrayList();
         String[] lineCommandArray = null;
-        String outputfile = Utils.getIDLFileOnly(idlFilename) + ".cc";
+        String outputfile = Util.getIDLFileOnly(idlFilename) + ".cc";
         int exitVal = -1;
         OutputStream of = null;
         

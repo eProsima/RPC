@@ -62,10 +62,15 @@
 		<filter token="copyright" value="${copyright}" />
 
 		<!-- Source related properties -->
-		<property name="src.dir" value="${basedir}${file.separator}src" />
-		<property name="src.java" value="${src.dir}" />
+		<property name="fastrpc.dir" value="${basedir}" />
+		<property name="fastrpc.src.dir" value="${fastrpc.dir}${file.separator}src" />
+		<property name="fastrpc.src.java" value="${fastrpc.src.dir}" />
+		<property name="fastrpc.grammar.dir" value="${fastrpc.dir}${file.separator}grammars" />
+        <property name="idl.dir" value="${basedir}${file.separator}..${file.separator}..${file.separator}idl" />
+        <property name="idl.src.dir" value="${idl.dir}${file.separator}src" />
+		<property name="idl.src.java" value="${idl.src.dir}" />
+		<property name="idl.grammar.dir" value="${idl.dir}${file.separator}grammars" />
         <property name="lib.dir" value="${basedir}${file.separator}..${file.separator}classes${file.separator}" />
-		<property name="grammar.dir" value="${basedir}${file.separator}grammars" />
 		<property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}" />
 		<property name="tmp.dir" value="./tmp" />
 		<property name="src.excludes" value="" />
@@ -120,17 +125,17 @@
 	<target name="compile" depends="init, prepare-sources" description="Compiles the sources. (Default)">
 		<!-- Echo compilation properties -->
 		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
-		<antlr base="${src.java}${file.separator}com/eprosima/fastrpc/idl/grammar" grammar="${grammar.dir}${file.separator}idl.g" />
+        <antlr base="${idl.src.java}${file.separator}com/eprosima/idl/parser/grammar" grammar="${idl.grammar.dir}${file.separator}idl.g" />
 		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
-		<antxr base="${src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${grammar.dir}${file.separator}wadl.antxr" />
+		<antxr base="${fastrpc.src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${fastrpc.grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
-		<javac source="1.6" target="1.6" srcdir="${src.java}" destdir="${build.classes}">
+        <javac source="1.6" target="1.6" srcdir="${idl.src.java}:${fastrpc.src.java}" destdir="${build.classes}">
 			<classpath refid="build.classpath" />
 		</javac>
         <!--> Copy stringtemplates of fastrpc.<-->
 		<copy todir="${build.classes}">
-			<fileset dir="${src.dir}" includes="**/*.stg" />
+			<fileset dir="${fastrpc.src.dir}" includes="**/*.stg" />
 		</copy>
         <!--> Copy common stringtemplates with Fast Buffers.<-->
         <!--> TODO Quitar el overwrite<-->

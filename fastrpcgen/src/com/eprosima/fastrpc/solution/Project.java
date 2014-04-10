@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.eprosima.fastrpc.util.GUIDGenerator;
-import com.eprosima.fastrpc.util.Utils;
+import com.eprosima.idl.util.Util;
 
 public class Project
 {
@@ -115,7 +115,7 @@ public class Project
 		
 		for(int count = 0; count < array.size(); ++count)
 		{
-			array.set(count, Utils.getIDLFileNameOnly(array.get(count).toString()));
+			array.set(count, Util.getIDLFileNameOnly(array.get(count).toString()));
 		}
 		
 		return array;

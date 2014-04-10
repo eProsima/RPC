@@ -3,9 +3,9 @@ package com.eprosima.fastrpc.idl.grammar;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eprosima.fastrpc.tree.Interface;
-import com.eprosima.fastrpc.tree.Operation;
-import com.eprosima.fastrpc.tree.Param;
+import com.eprosima.idl.parser.tree.Interface;
+import com.eprosima.idl.parser.tree.Operation;
+import com.eprosima.idl.parser.tree.Param;
 
 public class PathTree {
 	private PathTree parent;
