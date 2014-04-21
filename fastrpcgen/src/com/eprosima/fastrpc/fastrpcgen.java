@@ -54,7 +54,6 @@ import com.eprosima.fastrpc.exceptions.BadArgumentException;
 import com.eprosima.fastrpc.idl.grammar.Context;
 import com.eprosima.fastrpc.solution.Project;
 import com.eprosima.fastrpc.solution.Solution;
-import com.eprosima.fastrpc.util.GUIDGenerator;
 import com.eprosima.fastrpc.util.Utils;
 import com.eprosima.fastrpc.util.VSConfiguration;
 import com.eprosima.fastrpc.wadl.grammar.WADLParser;
