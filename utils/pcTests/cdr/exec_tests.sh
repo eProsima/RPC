@@ -67,6 +67,9 @@ if [ $# -ge 1 ] && [ -n $1 ]; then
     fi
 fi
 
+# Set environment for FASTRPC
+. $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
+
 # Create symbolic link to EPROSIMADIR in the fastrpc folder.
 if [ ! -e "../../../include/fastrpc/eProsima_cpp" ]; then
     ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/fastrpc/eProsima_cpp
@@ -159,6 +162,9 @@ fi
 if [ -e ../../../include/fastrpc/eProsima_cpp ]; then
     rm ../../../include/fastrpc/eProsima_cpp
 fi
+
+# Restore environment for FASTRPC
+. $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then
     echo "TEST SUCCESSFULLY"
