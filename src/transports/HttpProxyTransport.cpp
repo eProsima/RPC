@@ -10,6 +10,7 @@
 #include "fastrpc/transports/messages/HttpMessage.h"
 #include "fastrpc/utils/Utilities.h"
 
+#include <string.h>
 #include <stdexcept>
 
 const size_t BUFFER_INITIAL_LENGTH = 1024;

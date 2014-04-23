@@ -29,6 +29,11 @@ public class Solution extends com.eprosima.solution.Solution
     {
         return ((m_protocol == fastrpcgen.PROTOCOL.DDS && m_types == fastrpcgen.DDS_TYPES.EPROSIMA) || m_protocol == fastrpcgen.PROTOCOL.FASTCDR);
     }
+
+    public boolean getNeedsRTI()
+    {
+        return (m_protocol == fastrpcgen.PROTOCOL.DDS);
+    }
 	
 	private boolean m_serverside = true;
 	private boolean m_clientside = true;

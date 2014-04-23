@@ -234,7 +234,7 @@ archMakeDefines() ::= <<
  -DRTI_LINUX -DRTI_UNIX
 >>
 
-inclMake() ::= <<
+rtiInclMake() ::= <<
  -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds
 >>
 
@@ -242,7 +242,7 @@ inclVS() ::= <<
 \$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(FASTRPCHOME)\include;
 >>
 
-libsMake(example, version) ::= <<
+rtiLibsMake(example, version) ::= <<
  -L\$(NDDSHOME)/lib/$example$ \
        -lnddsc -lnddscore -lnddscpp
 >>

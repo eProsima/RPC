@@ -12,6 +12,8 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/Transport.h"
 
+#include <cstddef>
+
 namespace eprosima
 {
     namespace fastrpc

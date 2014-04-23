@@ -7,7 +7,6 @@ $fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file conta
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
 
 #include "fastrpc/client/Proxy.h"
-#include "fastrpc/utils/dds/Middleware.h"
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"

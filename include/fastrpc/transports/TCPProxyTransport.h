@@ -1,10 +1,10 @@
 #ifndef _TRANSPORTS_TCPPROXYTRANSPORT_H_
 #define _TRANSPORTS_TCPPROXYTRANSPORT_H_
 
-#include "fastrpc/utils/dds/Middleware.h"
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/ProxyTransport.h"
-#include <string.h>
+
+#include <string>
 #include <iostream>
 
 namespace eprosima
