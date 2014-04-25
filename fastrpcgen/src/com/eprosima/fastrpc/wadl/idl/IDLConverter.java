@@ -118,7 +118,7 @@ public class IDLConverter {
 		writeln("@Annotation");
 		writeln("local interface " + name + " {");
 		writeln("\tattribute string value;");
-		writeln("}");
+		writeln("};");
 		writeln();
 	}
 
