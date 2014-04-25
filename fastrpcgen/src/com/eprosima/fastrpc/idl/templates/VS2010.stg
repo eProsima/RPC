@@ -18,7 +18,7 @@ EndGlobal
 
 >>
 
-project(project, example, configurations) ::= <<
+project(solution, project, example, configurations, local) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -55,8 +55,8 @@ project(project, example, configurations) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;FASTRPC_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$if(solution.needsFastcdr)$\$(FASTCDR)\include$endif$;\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -67,7 +67,7 @@ project(project, example, configurations) ::= <<
       <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$if(local)$$if(solution.needsFastcdr)$\$(FASTCDR)\lib\\$example$;$endif$$endif$$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -119,7 +119,7 @@ projectFiles(project) ::= <<
 </Project>
 >>
 
-projectClient(project, example, configurations) ::= <<
+projectClient(solution, project, example, configurations, local) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -156,8 +156,8 @@ projectClient(project, example, configurations) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;FASTRPC_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$if(solution.needsFastcdr)$\$(FASTCDR)\include$endif$;\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -168,7 +168,7 @@ projectClient(project, example, configurations) ::= <<
       <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$if(local)$$if(solution.needsFastcdr)$\$(FASTCDR)\lib\\$example$;$endif$$endif$$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -220,7 +220,7 @@ projectFilesClient(project) ::= <<
 </Project>
 >>
 
-projectClientExample(project, example, configurations) ::= <<
+projectClientExample(solution, project, example, configurations, local) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -257,7 +257,7 @@ projectClientExample(project, example, configurations) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$if(solution.needsFastcdr)$\$(FASTCDR)\include$endif$;\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -268,7 +268,7 @@ projectClientExample(project, example, configurations) ::= <<
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$if(local)$$if(solution.needsFastcdr)$\$(FASTCDR)\lib\\$example$;$endif$$endif$$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
@@ -301,7 +301,7 @@ projectFilesClientExample(project) ::= <<
 </Project>
 >>
 
-projectServer(project, example, configurations) ::= <<
+projectServer(solution, project, example, configurations, local) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -338,8 +338,8 @@ projectServer(project, example, configurations) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;FASTRPC_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$if(solution.needsFastcdr)$\$(FASTCDR)\include$endif$;\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -350,7 +350,7 @@ projectServer(project, example, configurations) ::= <<
       <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$if(local)$$if(solution.needsFastcdr)$\$(FASTCDR)\lib\\$example$;$endif$$endif$$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -402,7 +402,7 @@ projectFilesServer(project) ::= <<
 </Project>
 >>
 
-projectServerExample(project, example, configurations) ::= <<
+projectServerExample(solution, project, example, configurations, local) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -439,7 +439,7 @@ projectServerExample(project, example, configurations) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>$inclVS()$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$if(solution.needsFastcdr)$\$(FASTCDR)\include$endif$;\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -450,7 +450,7 @@ projectServerExample(project, example, configurations) ::= <<
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$libsVS(example=example)$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$if(local)$$if(solution.needsFastcdr)$\$(FASTCDR)\lib\\$example$;$endif$$endif$$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>

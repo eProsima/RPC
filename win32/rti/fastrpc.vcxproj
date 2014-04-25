@@ -36,7 +36,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F7D9B1F2-168C-422E-8680-D9C86C394CEE}</ProjectGuid>
-    <RootNamespace>rpcdds</RootNamespace>
+    <RootNamespace>fastrpc</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -153,20 +153,20 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">rpcddsd$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">rpcddsd$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">rpcdds$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">rpcdds$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">librpcddsd$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">librpcddsd$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">librpcdds$(VERSION)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">librpcdds$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">fastrpcd$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">fastrpcd$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">fastrpc$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">fastrpc$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">libfastrpcd$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libfastrpcd$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">libfastrpc$(VERSION)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libfastrpc$(VERSION)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;BOOST_ALL_DYN_LINK;RPCDDS_SOURCE;RPCDDS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -183,7 +183,7 @@
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(LIB_BOOST_PATH)\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(LIB_BOOST_PATH)\lib\i86;$(SolutionDir)..\..\..\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
@@ -195,7 +195,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;RPCDDS_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -204,8 +204,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;BOOST_ALL_DYN_LINK;RPCDDS_SOURCE;RPCDDS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -222,7 +222,7 @@
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(LIB_BOOST_PATH)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(LIB_BOOST_PATH)\lib\x64;$(SolutionDir)..\..\..\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
@@ -234,7 +234,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;RPCDDS_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -244,8 +244,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;RPCDDS_SOURCE;RPCDDS_DYN_LINK;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -261,7 +261,7 @@
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(LIB_BOOST_PATH)\lib\i86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(LIB_BOOST_PATH)\lib\i86;$(SolutionDir)..\..\..\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -271,7 +271,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;RPCDDS_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -281,8 +281,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;RPCDDS_SOURCE;RPCDDS_DYN_LINK;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -298,7 +298,7 @@
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(LIB_BOOST_PATH)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(LIB_BOOST_PATH)\lib\x64;$(SolutionDir)..\..\..\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -308,7 +308,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;RPCDDS_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -317,8 +317,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;RPCDDS_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -340,7 +340,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -349,8 +349,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;RPCDDS_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -371,7 +371,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -381,8 +381,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;RPCDDS_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -403,7 +403,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -413,8 +413,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;RPCDDS_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;$(EPROSIMADIR)\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\..\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -435,7 +435,7 @@
       <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
-      <PreprocessorDefinitions>RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include</AdditionalIncludeDirectories>
@@ -443,6 +443,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\client\Proxy.cpp" />
+    <ClCompile Include="..\..\src\exceptions\BadParamException.cpp" />
     <ClCompile Include="..\..\src\exceptions\ClientInternalException.cpp" />
     <ClCompile Include="..\..\src\exceptions\Exception.cpp" />
     <ClCompile Include="..\..\src\exceptions\IncompatibleException.cpp" />
@@ -452,6 +453,8 @@
     <ClCompile Include="..\..\src\exceptions\ServerTimeoutException.cpp" />
     <ClCompile Include="..\..\src\exceptions\SystemException.cpp" />
     <ClCompile Include="..\..\src\exceptions\UserException.cpp" />
+    <ClCompile Include="..\..\src\protocols\dds\MessageHeader.cpp" />
+    <ClCompile Include="..\..\src\protocols\dds\MessageHeaderPlugin.cpp" />
     <ClCompile Include="..\..\src\protocols\rest\FastBuffer.cpp" />
     <ClCompile Include="..\..\src\protocols\rest\HTTPEntities.cpp" />
     <ClCompile Include="..\..\src\protocols\rest\RESTSerializer.cpp" />
@@ -480,75 +483,74 @@
     <ClCompile Include="..\..\src\utils\Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\client\Proxy.h" />
-    <ClInclude Include="..\..\include\exceptions\ClientInternalException.h" />
-    <ClInclude Include="..\..\include\exceptions\Exception.h" />
-    <ClInclude Include="..\..\include\exceptions\Exceptions.h" />
-    <ClInclude Include="..\..\include\exceptions\IncompatibleException.h" />
-    <ClInclude Include="..\..\include\exceptions\InitializeException.h" />
-    <ClInclude Include="..\..\include\exceptions\ServerInternalException.h" />
-    <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h" />
-    <ClInclude Include="..\..\include\exceptions\ServerTimeoutException.h" />
-    <ClInclude Include="..\..\include\exceptions\SystemException.h" />
-    <ClInclude Include="..\..\include\exceptions\UserException.h" />
-    <ClInclude Include="..\..\include\protocols\Protocol.h" />
-    <ClInclude Include="..\..\include\protocols\rest\FastBuffer.h" />
-    <ClInclude Include="..\..\include\protocols\rest\HTTPEntities.h" />
-    <ClInclude Include="..\..\include\protocols\rest\RESTSerializer.h" />
-    <ClInclude Include="..\..\include\rpcdds_dll.h" />
-    <ClInclude Include="..\..\include\rpcdds_version.h" />
-    <ClInclude Include="..\..\include\server\Server.h" />
-    <ClInclude Include="..\..\include\strategies\ServerStrategy.h" />
-    <ClInclude Include="..\..\include\strategies\ServerStrategyImpl.h" />
-    <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h" />
-    <ClInclude Include="..\..\include\strategies\ThreadPerRequestStrategy.h" />
-    <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h" />
-    <ClInclude Include="..\..\include\transports\components\Endpoint.h" />
-    <ClInclude Include="..\..\include\transports\components\TCPEndpoint.h" />
-    <ClInclude Include="..\..\include\transports\dds\components\ProxyProcedureEndpoint.h" />
-    <ClInclude Include="..\..\include\transports\dds\components\ServerProcedureEndpoint.h" />
-    <ClInclude Include="..\..\include\transports\dds\ProxyTransport.h" />
-    <ClInclude Include="..\..\include\transports\dds\ServerTransport.h" />
-    <ClInclude Include="..\..\include\transports\dds\TCPProxyTransport.h" />
-    <ClInclude Include="..\..\include\transports\dds\TCPServerTransport.h" />
-    <ClInclude Include="..\..\include\transports\dds\Transport.h" />
-    <ClInclude Include="..\..\include\transports\dds\UDPProxyTransport.h" />
-    <ClInclude Include="..\..\include\transports\dds\UDPServerTransport.h" />
-    <ClInclude Include="..\..\include\transports\dds\DDSAsyncTask.h" />
-    <ClInclude Include="..\..\include\transports\dds\AsyncThread.h" />
-    <ClInclude Include="..\..\include\transports\AsyncTask.h" />
-    <ClInclude Include="..\..\include\transports\HttpProxyTransport.h" />
-    <ClInclude Include="..\..\include\transports\HttpServerTransport.h" />
-    <ClInclude Include="..\..\include\transports\messages\HttpMessage.h" />
-    <ClInclude Include="..\..\include\transports\ProxyTransport.h" />
-    <ClInclude Include="..\..\include\transports\ServerTransport.h" />
-    <ClInclude Include="..\..\include\transports\TCPProxyTransport.h" />
-    <ClInclude Include="..\..\include\transports\TCPServerTransport.h" />
-    <ClInclude Include="..\..\include\transports\TCPServerTransportImpl.h" />
-    <ClInclude Include="..\..\include\transports\Transport.h" />
-    <ClInclude Include="..\..\include\utils\dds\Middleware.h" />
-    <ClInclude Include="..\..\include\utils\GenericClientRPC.h" />
-    <ClInclude Include="..\..\include\utils\GenericServerRPC.h" />
-    <ClInclude Include="..\..\include\utils\Messages.h" />
-    <ClInclude Include="..\..\include\utils\Typedefs.h" />
-    <ClInclude Include="..\..\include\utils\Utilities.h" />
-    <ClInclude Include="..\..\include\utils\Version.h" />
+    <ClInclude Include="..\..\include\fastrpc\client\Proxy.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ClientInternalException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\Exception.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\Exceptions.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\IncompatibleException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\InitializeException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ServerInternalException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ServerNotFoundException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ServerTimeoutException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\SystemException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\UserException.h" />
+    <ClInclude Include="..\..\include\fastrpc\exceptions\BadParamException.h" />
+    <ClInclude Include="..\..\include\fastrpc\protocols\dds\MessageHeader.h" />
+    <ClInclude Include="..\..\include\fastrpc\protocols\dds\MessageHeaderPlugin.h" />
+    <ClInclude Include="..\..\include\fastrpc\protocols\Protocol.h" />
+    <ClInclude Include="..\..\include\fastrpc\protocols\rest\FastBuffer.h" />
+    <ClInclude Include="..\..\include\fastrpc\protocols\rest\HTTPEntities.h" />
+    <ClInclude Include="..\..\include\fastrpc\protocols\rest\RESTSerializer.h" />
+    <ClInclude Include="..\..\include\fastrpc\fastrpc_dll.h" />
+    <ClInclude Include="..\..\include\fastrpc\fastrpc_version.h" />
+    <ClInclude Include="..\..\include\fastrpc\server\Server.h" />
+    <ClInclude Include="..\..\include\fastrpc\strategies\ServerStrategy.h" />
+    <ClInclude Include="..\..\include\fastrpc\strategies\ServerStrategyImpl.h" />
+    <ClInclude Include="..\..\include\fastrpc\strategies\SingleThreadStrategy.h" />
+    <ClInclude Include="..\..\include\fastrpc\strategies\ThreadPerRequestStrategy.h" />
+    <ClInclude Include="..\..\include\fastrpc\strategies\ThreadPoolStrategy.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\components\Endpoint.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\components\TCPEndpoint.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ProxyProcedureEndpoint.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ServerProcedureEndpoint.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\ProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\ServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\Transport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\DDSAsyncTask.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\AsyncThread.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\AsyncTask.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\HttpProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\HttpServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\messages\HttpMessage.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\ProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\ServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\TCPProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\TCPServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\TCPServerTransportImpl.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\Transport.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\dds\Middleware.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\GenericClientRPC.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\GenericServerRPC.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\Messages.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\Typedefs.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\Utilities.h" />
+    <ClInclude Include="..\..\include\fastrpc\utils\Version.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\src\rpcdds.rc">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">RPCDDS_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    <ResourceCompile Include="..\..\src\fastrpc.rc">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\include\utils\GenericClientRPC.gen" />
-    <None Include="..\..\include\utils\GenericServerRPC.gen" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -63,7 +63,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
         {
             if(((int32_t*&)data)[0] == 0x46434452)
             {
-                cdrLength = ((int32_t*&)data)[1] + 8;
+                cdrLength = ((uint32_t*&)data)[1] + 8;
 
                 if(bufferUse < cdrLength)
                 {
@@ -167,7 +167,7 @@ void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t data
                 break;
             }
         }
-        while((bufferUse > 0) & (memmove(data, data + cdrLength, bufferUse) != NULL));
+        while((bufferUse > 0) & (memmove(data, (char*)data + cdrLength, bufferUse) != NULL));
     }
     else
     {
@@ -219,7 +219,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     
     char *buffer = serializeBuffer.getBuffer();
     ((int32_t*)buffer)[0] = 0x46434452;
-    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+    ((uint32_t*)buffer)[1] = (uint32_t)scdr.getSerializedDataLength() - 8;
     
     if(proxyTransport.connect())
     {
@@ -238,7 +238,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
             {
                 if(((int32_t*)response)[0] == 0x46434452)
                 {
-                    size_t cdrLength = ((int32_t*)response)[1] + 8;
+                    size_t cdrLength = ((uint32_t*)response)[1] + 8;
                     
                     if(responseBufferUse < cdrLength)
                     {   
@@ -412,7 +412,7 @@ try
     
     char *buffer = scdrBuffer.getBuffer();
     ((int32_t*)buffer)[0] = 0x46434452;
-    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+    ((uint32_t*)buffer)[1] = (uint32_t)scdr.getSerializedDataLength() - 8;
 
     dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
     $endif$
@@ -431,7 +431,7 @@ catch(const $exception.scopedname$ &ex)
     
     char *buffer = scdrBuffer.getBuffer();
     ((int32_t*)buffer)[0] = 0x46434452;
-    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+    ((uint32_t*)buffer)[1] = (uint32_t)scdr.getSerializedDataLength() - 8;
 
     dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
 }
@@ -447,7 +447,7 @@ catch(const ServerInternalException &ex)
 
     char *buffer = scdrBuffer.getBuffer();
     ((int32_t*)buffer)[0] = 0x46434452;
-    ((int32_t*)buffer)[1] = scdr.getSerializedDataLength() - 8;
+    ((uint32_t*)buffer)[1] = (uint32_t)scdr.getSerializedDataLength() - 8;
 
     dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
     $endif$

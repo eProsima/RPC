@@ -29,7 +29,7 @@ namespace eprosima
                  * @brief
                  * @ingroup $ctx.trimfilename$
                  */
-                class $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
+                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -57,7 +57,7 @@ namespace eprosima
                         eprosima::fastcdr::FastBuffer serializeBuffer;
                         eprosima::fastcdr::FastCdr scdr;
                 };
-            } // namespace dds
+            } // namespace fastcdr
         } // namespace protocol
     } // namespace fastrpc
 } // namespace eprosima

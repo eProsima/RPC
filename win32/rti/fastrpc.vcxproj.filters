@@ -88,6 +88,12 @@
     <Filter Include="Archivos de encabezado\utils\dds">
       <UniqueIdentifier>{6ae4ab66-2a5b-4da7-b292-c1a0059bcd95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\protocols\dds">
+      <UniqueIdentifier>{c49f907d-1cae-49f7-bee1-32df71b68dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\protocols\dds">
+      <UniqueIdentifier>{18298a7e-e0e7-44e3-8918-dd1dfc6c9f7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\server\Server.cpp">
@@ -198,179 +204,189 @@
     <ClCompile Include="..\..\src\protocols\rest\FastBuffer.cpp">
       <Filter>Archivos de código fuente\protocols\rest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\exceptions\BadParamException.cpp">
+      <Filter>Archivos de código fuente\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\protocols\dds\MessageHeader.cpp">
+      <Filter>Archivos de código fuente\protocols\dds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\protocols\dds\MessageHeaderPlugin.cpp">
+      <Filter>Archivos de código fuente\protocols\dds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\server\Server.h">
+    <ClInclude Include="..\..\include\fastrpc\server\Server.h">
       <Filter>Archivos de encabezado\server</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\Messages.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\Messages.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\GenericClientRPC.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\GenericClientRPC.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\GenericServerRPC.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\GenericServerRPC.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\Typedefs.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\Typedefs.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\Utilities.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\Utilities.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\Version.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\Version.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\Transport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\Transport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\strategies\SingleThreadStrategy.h">
+    <ClInclude Include="..\..\include\fastrpc\strategies\SingleThreadStrategy.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\strategies\ThreadPerRequestStrategy.h">
+    <ClInclude Include="..\..\include\fastrpc\strategies\ThreadPerRequestStrategy.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\strategies\ThreadPoolStrategy.h">
+    <ClInclude Include="..\..\include\fastrpc\strategies\ThreadPoolStrategy.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\Exception.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\Exception.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ServerNotFoundException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ServerNotFoundException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ServerTimeoutException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ServerTimeoutException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\Exceptions.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\Exceptions.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ClientInternalException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ClientInternalException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\InitializeException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\InitializeException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\ServerInternalException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\ServerInternalException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\SystemException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\SystemException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\rpcdds_dll.h">
+    <ClInclude Include="..\..\include\fastrpc\fastrpc_dll.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\rpcdds_version.h">
+    <ClInclude Include="..\..\include\fastrpc\fastrpc_version.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\client\Proxy.h">
+    <ClInclude Include="..\..\include\fastrpc\client\Proxy.h">
       <Filter>Archivos de encabezado\client</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\IncompatibleException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\IncompatibleException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\exceptions\UserException.h">
+    <ClInclude Include="..\..\include\fastrpc\exceptions\UserException.h">
       <Filter>Archivos de encabezado\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\protocols\rest\HTTPEntities.h">
+    <ClInclude Include="..\..\include\fastrpc\protocols\rest\HTTPEntities.h">
       <Filter>Archivos de encabezado\protocols\rest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\protocols\rest\RESTSerializer.h">
+    <ClInclude Include="..\..\include\fastrpc\protocols\rest\RESTSerializer.h">
       <Filter>Archivos de encabezado\protocols\rest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\protocols\Protocol.h">
+    <ClInclude Include="..\..\include\fastrpc\protocols\Protocol.h">
       <Filter>Archivos de encabezado\protocols</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\strategies\ServerStrategy.h">
+    <ClInclude Include="..\..\include\fastrpc\strategies\ServerStrategy.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\HttpProxyTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\HttpProxyTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\HttpServerTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\HttpServerTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\ProxyTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\ProxyTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\ServerTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\ServerTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\TCPProxyTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\TCPProxyTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\TCPServerTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\TCPServerTransport.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\AsyncTask.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\AsyncTask.h">
       <Filter>Archivos de encabezado\transports</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\components\Endpoint.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\components\Endpoint.h">
       <Filter>Archivos de encabezado\transports\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\components\TCPEndpoint.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\components\TCPEndpoint.h">
       <Filter>Archivos de encabezado\transports\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\ProxyTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\ProxyTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\ServerTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\ServerTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\TCPProxyTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPProxyTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\TCPServerTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPServerTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\Transport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\Transport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\UDPProxyTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPProxyTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\UDPServerTransport.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPServerTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\DDSAsyncTask.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\DDSAsyncTask.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\AsyncThread.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\AsyncThread.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\components\ProxyProcedureEndpoint.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ProxyProcedureEndpoint.h">
       <Filter>Archivos de encabezado\transports\dds\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\dds\components\ServerProcedureEndpoint.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ServerProcedureEndpoint.h">
       <Filter>Archivos de encabezado\transports\dds\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\messages\HttpMessage.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\messages\HttpMessage.h">
       <Filter>Archivos de encabezado\transports\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\utils\dds\Middleware.h">
+    <ClInclude Include="..\..\include\fastrpc\utils\dds\Middleware.h">
       <Filter>Archivos de encabezado\utils\dds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\protocols\rest\FastBuffer.h">
+    <ClInclude Include="..\..\include\fastrpc\protocols\rest\FastBuffer.h">
       <Filter>Archivos de encabezado\protocols\rest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\strategies\ServerStrategyImpl.h">
+    <ClInclude Include="..\..\include\fastrpc\strategies\ServerStrategyImpl.h">
       <Filter>Archivos de encabezado\strategies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\transports\TCPServerTransportImpl.h">
+    <ClInclude Include="..\..\include\fastrpc\transports\TCPServerTransportImpl.h">
       <Filter>Archivos de encabezado\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\exceptions\BadParamException.h">
+      <Filter>Archivos de encabezado\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\protocols\dds\MessageHeader.h">
+      <Filter>Archivos de encabezado\protocols\dds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\protocols\dds\MessageHeaderPlugin.h">
+      <Filter>Archivos de encabezado\protocols\dds</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\src\rpcdds.rc">
+    <ResourceCompile Include="..\..\src\fastrpc.rc">
       <Filter>Archivos de recursos</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\include\utils\GenericClientRPC.gen">
-      <Filter>Archivos de encabezado\utils</Filter>
-    </None>
-    <None Include="..\..\include\utils\GenericServerRPC.gen">
-      <Filter>Archivos de encabezado\utils</Filter>
-    </None>
   </ItemGroup>
 </Project>

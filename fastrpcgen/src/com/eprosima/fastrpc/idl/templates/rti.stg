@@ -238,8 +238,8 @@ rtiInclMake() ::= <<
  -I\$(NDDSHOME)/include -I\$(NDDSHOME)/include/ndds
 >>
 
-inclVS() ::= <<
-\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;\$(FASTRPCHOME)\include;
+rtiInclVS() ::= <<
+\$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;
 >>
 
 rtiLibsMake(example, version) ::= <<
@@ -247,8 +247,8 @@ rtiLibsMake(example, version) ::= <<
        -lnddsc -lnddscore -lnddscpp
 >>
 
-libsVS(example) ::= <<
-\$(NDDSHOME)\lib\\$example$;\$(FASTRPCHOME)\lib\\$example$
+rtiLibsVS(example) ::= <<
+\$(NDDSHOME)\lib\\$example$;
 >>
  
 preprocessorDefs(conf) ::= <<

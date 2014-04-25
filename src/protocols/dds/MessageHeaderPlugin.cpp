@@ -9,7 +9,7 @@ DDS_TypeCode* IdentificationPlugin::get_typecode()
 {
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member Identification_g_tc_members[4]
+    static DDS_TypeCode_Member Identification_g_tc_members[4] =
     {
         {
             (char *)"value_1",/* Member name */
@@ -118,7 +118,7 @@ DDS_TypeCode* RequestHeaderPlugin::get_typecode()
 
     static DDS_TypeCode RequestHeader_g_tc_remoteServiceName_string = DDS_INITIALIZE_STRING_TYPECODE(255);
 
-    static DDS_TypeCode_Member RequestHeader_g_tc_members[3]
+    static DDS_TypeCode_Member RequestHeader_g_tc_members[3] =
     {
         {
             (char *)"clientId",/* Member name */
@@ -210,7 +210,7 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
     static DDS_TypeCode ReplyHeader_g_tc_retMsg_string = DDS_INITIALIZE_STRING_TYPECODE(255);
     
 
-    static DDS_TypeCode_Member ReplyHeader_g_tc_members[4]
+    static DDS_TypeCode_Member ReplyHeader_g_tc_members[4] =
     {
         {
             (char *)"clientId",/* Member name */

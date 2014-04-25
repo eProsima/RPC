@@ -1,6 +1,8 @@
 #ifndef _PROTOCOLS_DDS_MESSAGEHEADERPLUGIN_H_
 #define _PROTOCOLS_DDS_MESSAGEHEADERPLUGIN_H_
 
+#include "fastrpc/fastrpc_dll.h"
+
 struct DDS_TypeCode;
 
 namespace eprosima
@@ -11,7 +13,7 @@ namespace eprosima
         {
             namespace dds
             {
-                class IdentificationPlugin
+                class FASTRPC_DllAPI IdentificationPlugin
                 {
                     public:
 
@@ -22,7 +24,7 @@ namespace eprosima
                             IdentificationPlugin(){}
                 };
 
-                class RequestHeaderPlugin
+                class FASTRPC_DllAPI RequestHeaderPlugin
                 {
                     public:
 
@@ -33,7 +35,7 @@ namespace eprosima
                             RequestHeaderPlugin(){}
                 };
 
-                class ReplyHeaderPlugin
+                class FASTRPC_DllAPI ReplyHeaderPlugin
                 {
                     public:
 

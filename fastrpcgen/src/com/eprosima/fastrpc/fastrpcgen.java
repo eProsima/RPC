@@ -1646,28 +1646,38 @@ public class fastrpcgen
             {
                 Project project = (Project)solution.getProjects().get(count);
                 
+                tproject.setAttribute("solution", solution);
                 tproject.setAttribute("project", project);
                 tproject.setAttribute("example", m_exampleOption);
+                tproject.setAttribute("local", m_local);
                  
                 tprojectFiles.setAttribute("project", project);
                 
+                tprojectClient.setAttribute("solution", solution);
                 tprojectClient.setAttribute("project", project);
                 tprojectClient.setAttribute("example", m_exampleOption);
+                tprojectClient.setAttribute("local", m_local);
                 
                 tprojectFilesClient.setAttribute("project", project);
                 
+                tprojectClientExample.setAttribute("solution", solution);
                 tprojectClientExample.setAttribute("project", project);
                 tprojectClientExample.setAttribute("example", m_exampleOption);
+                tprojectClientExample.setAttribute("local", m_local);
                 
                 tprojectFilesClientExample.setAttribute("project", project);
                 
+                tprojectServer.setAttribute("solution", solution);
                 tprojectServer.setAttribute("project", project);
                 tprojectServer.setAttribute("example", m_exampleOption);
+                tprojectServer.setAttribute("local", m_local);
                 
                 tprojectFilesServer.setAttribute("project", project);
                 
+                tprojectServerExample.setAttribute("solution", solution);
                 tprojectServerExample.setAttribute("project", project);
                 tprojectServerExample.setAttribute("example", m_exampleOption);
+                tprojectServerExample.setAttribute("local", m_local);
                 
                 tprojectFilesServerExample.setAttribute("project", project);
                 

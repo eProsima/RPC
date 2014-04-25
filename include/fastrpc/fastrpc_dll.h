@@ -43,7 +43,7 @@
 #endif // _WIN32
 
 // enabling user dynamic linking
-#if defined(_WIN32) && defined(FASTRPC_USER_DLL_EXPORT)
+#if defined(_WIN32) && defined(EPROSIMA_USER_DLL_EXPORT)
   #define FASTRPCUSERDllExport __declspec(dllexport)
 #else
   #define FASTRPCUSERDllExport

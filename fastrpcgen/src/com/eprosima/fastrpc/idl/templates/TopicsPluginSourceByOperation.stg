@@ -46,7 +46,7 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
 
     $exception.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
 
-    static DDS_TypeCode_Member $exception.name$_g_tc_members[$length(exception.members)$]
+    static DDS_TypeCode_Member $exception.name$_g_tc_members[$length(exception.members)$] =
     {
         $exception.members : { member |
         {
@@ -414,7 +414,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
 
     $operation.inputparam : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Request_g_tc_members[1 + $length(operation.inputparam)$]
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Request_g_tc_members[1 + $length(operation.inputparam)$] =
     {
         // TODO Add header.
         {
@@ -956,7 +956,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$Reply_stPlugi
 
     $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_st_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$]
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_st_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$] =
     {
         $[operation.outputparam, operation.rettypeparam] : { param |
         {
@@ -1007,7 +1007,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$Reply_unionPl
 {
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_union_g_tc_members[$if([operation.outputparam, operation.rettypeparam])$1 + $endif$$length(operation.exceptions)$]
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_union_g_tc_members[$if([operation.outputparam, operation.rettypeparam])$1 + $endif$$length(operation.exceptions)$] =
     {
         $if([operation.outputparam, operation.rettypeparam])$
         {
@@ -1089,7 +1089,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
     $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
     $endif$
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_g_tc_members[$if(operation.exceptions)$2$else$1 + $length([operation.outputparam, operation.rettypeparam])$$endif$]
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$Reply_g_tc_members[$if(operation.exceptions)$2$else$1 + $length([operation.outputparam, operation.rettypeparam])$$endif$] =
     {
         // TODO Add header.
         {
@@ -1391,7 +1391,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
 
     $struct.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
 
-    static DDS_TypeCode_Member $struct.name$_g_tc_members[$length(struct.members)$]
+    static DDS_TypeCode_Member $struct.name$_g_tc_members[$length(struct.members)$] =
     {
         $struct.members : { member |
         {
@@ -1447,7 +1447,7 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
 
     $union.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
 
-    static DDS_TypeCode_Member $union.name$_g_tc_members[$length(union.members)$]
+    static DDS_TypeCode_Member $union.name$_g_tc_members[$length(union.members)$] =
     {
         $union.members : { member |
         {
@@ -1500,7 +1500,7 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
 enum_type(ctx, enum) ::= <<
 DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$enum.name$Plugin::get_typecode()
 {
-    static DDS_TypeCode_Member $enum.name$_g_tc_members[$length(enum.members)$]
+    static DDS_TypeCode_Member $enum.name$_g_tc_members[$length(enum.members)$] =
     {
         $enum.members : { member |
         {
