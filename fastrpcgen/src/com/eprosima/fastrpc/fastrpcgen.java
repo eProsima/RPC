@@ -271,6 +271,8 @@ public class fastrpcgen
 
                     if(types.equalsIgnoreCase("rti"))
                         m_types = DDS_TYPES.RTI;
+                    else if(types.equalsIgnoreCase("c++11"))
+                        m_types = DDS_TYPES.EPROSIMA;
                     else
                         throw new BadArgumentException("Unknown value " + types + " for -types option");
                 }
@@ -1902,7 +1904,6 @@ public class fastrpcgen
         return outputfile;
     }
 
-    // TODO Review: -types and -topicGeneration.
     public static void printHelp()
     {
         System.out.println("fastrpcgen usage:");
@@ -1928,7 +1929,24 @@ public class fastrpcgen
         }
 
         System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
-        System.out.println("\tand the files must be WADL files or IDL files.");
+        System.out.println("\t\t-protocol <protocol>: defines the protocol to be implemented by the generated code.");
+        System.out.println("\t\t\tSupported protocols:");
+        System.out.println("\t\t\t* dds (Default)");
+        System.out.println("\t\t\t* rest");
+        System.out.println("");
+        System.out.println("\t\t-types <mapping>: selects the C++ mapping used for user types. Only supported in protocol dds.");
+        System.out.println("\t\t\tSupported C++ mapping:");
+        System.out.println("\t\t\t* c++11 (Default) - C++11 native types.");
+        System.out.println("\t\t\t* rti - RTI DDS types.");
+        System.out.println("");
+        System.out.println("\t\t" + TOPIC_GENERATION_OPTION + " <option>: defines how DDS topics are generated. Only supported in protocol dds.");
+        System.out.println("\t\t\tSupported topics generation:");
+        System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE + " (Default) - Generate a topic for each IDL interface.");
+        System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION + " - Generate a topic for each IDL operation.");
+        System.out.println("");
+        System.out.println("\tand the supported input files are:");
+        System.out.println("\t* IDL files for protocol dds.");
+        System.out.println("\t* WADL files for protocol rest.");
     }
     
     public static void main(String[] args) throws Exception

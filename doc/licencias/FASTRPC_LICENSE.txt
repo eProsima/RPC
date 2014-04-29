@@ -1,11 +1,11 @@
 Copyright (c) 2012 Proyectos y sistemas de Mantenimiento SL (eProsima). 
 All rights reserved.
 
-This copy of eProsima RPC is free software; you can redistribute it and/or modify 
+This copy of eProsima FastRPC is free software; you can redistribute it and/or modify 
 it under the terms of the GNU Lesser General Public License version 3 as published 
 by the Free Software Foundation.
 
-eProsima RPC is distributed in the hope that it will be useful, but WITHOUT 
+eProsima FastRPC is distributed in the hope that it will be useful, but WITHOUT 
 ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
 FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for 
 more details.
@@ -13,7 +13,7 @@ more details.
 You should have received a copy of the GNU Lesser General Public License version
 3 along with this program; if not, see http://www.gnu.org/licenses.
 
-Linking eProsima RPC statically or dynamically with other software
+Linking eProsima FastRPC statically or dynamically with other software
 (such as a library, module or application) is making a combined work based 
-on eProsima RPC. Thus, the terms and conditions of the GNU Lesser General 
+on eProsima FastRPC. Thus, the terms and conditions of the GNU Lesser General 
 Public License version 3 cover this combined work.
