@@ -1,4 +1,4 @@
-:: This script pack RPCDDS library for any platform in Windows.
+:: This script pack FastRPC library for any platform in Windows.
 ::
 :: This script needs the next environment variables to be run.
 :: - SVN_BIN_DIR: Directory with the subversion binaries.
@@ -30,24 +30,24 @@ cd "..\.."
 
 rd /S /Q "utils\doxygen\output"
 
-:: Compile RPCDDS library.
+:: Compile FastRPC library.
 rmdir /S /Q lib\i86Win32VS2010
 rmdir /S /Q lib\x64Win64VS2010
 cd "utils\scripts"
-call build_rpcdds.bat
+call build_fastrpc.bat
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd "..\..\"
 
-:: Get the current vesion of RPCDDS
-call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\rpcdds\rpcdds_version.h
+:: Get the current vesion of FastRPC
+call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :exit
 
-:: Update and compile RPCDDS application.
+:: Update and compile FastRPC application.
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-:: Compile RPCDDS for target.
-cd rpcddsgen
+:: Compile FastRPC for target.
+cd fastrpcgen
 rmdir /S /Q build
 call ant jar
 set errorstatus=%ERRORLEVEL%
@@ -99,25 +99,40 @@ copy %LIB_BOOST_PATH%\lib\x64\boost_system-vc100-mt-gd-1_53.dll lib\x64Win64VS20
 copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
 
-:: Execute DDS tests
-set RPCDDSHOME_OLD=%RPCDDSHOME%
-set RPCDDSHOME=%CD%
-cd utils/pcTests/rti
-call exec_tests.bat %package_targets%
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-cd "../../.."
-set RPCDDSHOME=%RPCDDSHOME_OLD%
+:: Copy fastcdr libraries needed in
+copy %FASTCDR%\lib\i86Win32VS2010\fastcdr-0.2.1.dll lib\i86Win32VS2010
+copy %FASTCDR%\lib\i86Win32VS2010\fastcdr-0.2.1.lib lib\i86Win32VS2010
+copy %FASTCDR%\lib\i86Win32VS2010\fastcdrd-0.2.1.dll lib\i86Win32VS2010
+copy %FASTCDR%\lib\i86Win32VS2010\fastcdrd-0.2.1.lib lib\i86Win32VS2010
+copy %FASTCDR%\lib\i86Win32VS2010\libfastcdr-0.2.1.lib lib\i86Win32VS2010
+copy %FASTCDR%\lib\i86Win32VS2010\libfastcdrd-0.2.1.lib lib\i86Win32VS2010
 
-:: Execute REST tests
-set RPCDDSHOME_OLD=%RPCDDSHOME%
-set RPCDDSHOME=%CD%
-cd utils/pcTests/restful
-call exec_tests.bat %package_targets%
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-cd "../../.."
-set RPCDDSHOME=%RPCDDSHOME_OLD%
+copy %FASTCDR%\lib\x64Win64VS2010\fastcdr-0.2.1.dll lib\x64Win64VS2010
+copy %FASTCDR%\lib\x64Win64VS2010\fastcdr-0.2.1.lib lib\x64Win64VS2010
+copy %FASTCDR%\lib\x64Win64VS2010\fastcdrd-0.2.1.dll lib\x64Win64VS2010
+copy %FASTCDR%\lib\x64Win64VS2010\fastcdrd-0.2.1.lib lib\x64Win64VS2010
+copy %FASTCDR%\lib\x64Win64VS2010\libfastcdr-0.2.1.lib lib\x64Win64VS2010
+copy %FASTCDR%\lib\x64Win64VS2010\libfastcdrd-0.2.1.lib lib\x64Win64VS2010
+
+:: :: Execute DDS tests
+:: set FASTRPCHOME_OLD=%FASTRPCHOME%
+:: set FASTRPCHOME=%CD%
+:: cd utils/pcTests/rti
+:: call exec_tests.bat %package_targets%
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
+:: cd "../../.."
+:: set FASTRPCHOME=%FASTRPCHOME_OLD%
+
+:: :: Execute REST tests
+:: set FASTRPCHOME_OLD=%FASTRPCHOME%
+:: set FASTRPCHOME=%CD%
+:: cd utils/pcTests/restful
+:: call exec_tests.bat %package_targets%
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
+:: cd "../../.."
+:: set FASTRPCHOME=%FASTRPCHOME_OLD%
 
 :: Create PDFS from documentation.
 cd "doc"
@@ -125,10 +140,10 @@ cd "doc"
 soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - Installation Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-:: User manual
-soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - REST - User Manual.odt,%VERSION%)"
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
+:: :: User manual
+:: soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - REST - User Manual.odt,%VERSION%)"
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
 soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - DDS - User Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
@@ -139,28 +154,28 @@ soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-:: Create doxygen information.
-:: Generate the examples
-:: DDS example
-call scripts\rpcdds_rti_pcTests.bat -replace -protocol dds -d utils\doxygen\examples\dds utils\doxygen\examples\dds\FooDDS.idl
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-:: REST example
-call scripts\rpcdds_rti_pcTests.bat -replace -protocol rest -d utils\doxygen\examples\restful utils\doxygen\examples\restful\FooREST.wadl
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-:: Export version
-set VERSION_DOX=%VERSION%
-mkdir output
-mkdir output\doxygen
-doxygen utils\doxygen\doxyfile
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-cd output\doxygen\latex
-call make.bat
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-cd ..\..\..
+:: :: Create doxygen information.
+:: :: Generate the examples
+:: :: DDS example
+:: call scripts\rpcdds_rti_pcTests.bat -replace -protocol dds -d utils\doxygen\examples\dds utils\doxygen\examples\dds\FooDDS.idl
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
+:: :: REST example
+:: call scripts\rpcdds_rti_pcTests.bat -replace -protocol rest -d utils\doxygen\examples\restful utils\doxygen\examples\restful\FooREST.wadl
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
+:: :: Export version
+:: set VERSION_DOX=%VERSION%
+:: mkdir output
+:: mkdir output\doxygen
+:: doxygen utils\doxygen\doxyfile
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
+:: cd output\doxygen\latex
+:: call make.bat
+:: set errorstatus=%ERRORLEVEL%
+:: if not %errorstatus%==0 goto :exit
+:: cd ..\..\..
 
 :: Create installers.
 cd utils\installers\rti\windows

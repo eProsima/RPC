@@ -121,12 +121,101 @@ goto :exit
 :: @param Name of the test
 :execTest
 ::Info about test
-echo "EXECUTING %3 for %1"
+echo "EXECUTING %3 for %1 using operations as topics"
 :: Clean output directory
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\fastrpc_rti_pcTests.bat -protocol dds -types rti -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\fastrpcgen.bat -local -protocol dds -types rti -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
+set errorstatus=%ERRORLEVEL%
+:: Copy backup to original files.
+:: Copy static test files into output directory
+copy %3\* output\
+if not %errorstatus%==0 goto :EOF
+
+:: Start executing tests in each configuration.
+
+:: Release DLL Configuration
+:: Clean the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+:: Build the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+copy output\lib\%1\*.dll output\bin\%1\
+:: Execute the server in other cmd.exe
+start output\bin\%1\%3ServerExample.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"output\bin\%1\%3ClientExample.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%3ServerExample.exe"
+if not %errorstatus%==0 goto :EOF
+
+:: Debug DLL Configuration
+:: Clean the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+:: Build the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+copy output\lib\%1\*.dll output\bin\%1\
+:: Execute the server in other cmd.exe
+start output\bin\%1\%3ServerExample.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"output\bin\%1\%3ClientExample.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%3ServerExample.exe"
+if not %errorstatus%==0 goto :EOF
+
+:: Release Configuration
+:: Clean the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+:: Build the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release" /p:Platform="%2"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Execute the server in other cmd.exe
+start output\bin\%1\%3ServerExample.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"output\bin\%1\%3ClientExample.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%3ServerExample.exe"
+if not %errorstatus%==0 goto :EOF
+
+:: Debug Configuration
+:: Clean the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+:: Build the visual solution
+msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug" /p:Platform="%2"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Execute the server in other cmd.exe
+start output\bin\%1\%3ServerExample.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"output\bin\%1\%3ClientExample.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "%3ServerExample.exe"
+if not %errorstatus%==0 goto :EOF
+
+::Info about test
+echo "EXECUTING %3 for %1 using interfaces as topics"
+:: Clean output directory
+if exist output rd /S /Q output
+mkdir output
+:: Generates the file with FASTRPC script
+call ..\..\..\scripts\fastrpcgen.bat -local -protocol dds -types rti -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory

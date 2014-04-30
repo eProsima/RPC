@@ -6,8 +6,8 @@ Var FirstTime
 
 Var Label
 
-Var CheckboxRPCDDSHOME
-Var CheckboxRPCDDSHOME_State
+Var CheckboxFASTRPCHOME
+Var CheckboxFASTRPCHOME_State
 
 Var CheckboxScripts
 Var CheckboxScripts_State
@@ -37,20 +37,20 @@ Function VariablesEntornoPage
     ${NSD_CreateLabel} 0 0 100% 20u "Check the environment variables you want to set and uncheck the environment variables you don't want to set. Click Next to continue."
     Pop $Label
 
-    ${NSD_CreateCheckbox} 10 20u 100% 12u "Set the RPCDDSHOME environment variable."
-    Pop $CheckboxRPCDDSHOME
-    ${If} $CheckboxRPCDDSHOME_State == ${BST_CHECKED}
-        ${NSD_Check} $CheckboxRPCDDSHOME
+    ${NSD_CreateCheckbox} 10 20u 100% 12u "Set the FASTRPCHOME environment variable."
+    Pop $CheckboxFASTRPCHOME
+    ${If} $CheckboxFASTRPCHOME_State == ${BST_CHECKED}
+        ${NSD_Check} $CheckboxFASTRPCHOME
     ${EndIf}
         
-    ${NSD_CreateCheckbox} 10 32u 100% 12u "&Add to the PATH environment variable the location of RPC scripts"
+    ${NSD_CreateCheckbox} 10 32u 100% 12u "&Add to the PATH environment variable the location of FastRPC scripts"
     Pop $CheckboxScripts
     ${If} $CheckboxScripts_State == ${BST_CHECKED}
         ${NSD_Check} $CheckboxScripts
     ${EndIf}
     
     ${If} ${RunningX64}
-        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of RPC target$\r$\nlibraries for platform x64"
+        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of FastRPC target$\r$\nlibraries for platform x64"
         Pop $CheckboxX64  
         ${If} ${SectionIsSelected} ${SEC_LIB_x64}
             ${If} $CheckboxX64_State == ${BST_CHECKED}
@@ -63,10 +63,10 @@ Function VariablesEntornoPage
         ### Fijamos los callbacks para cuando se haga click en los CheckBoxes
     ${NSD_OnClick} $CheckboxX64 ClickX64  
     
-        ${NSD_CreateCheckbox} 10 66u 100% 24u "&Add to the PATH environment variable the location of RPC target$\r$\nlibraries for platform i86"
+        ${NSD_CreateCheckbox} 10 66u 100% 24u "&Add to the PATH environment variable the location of FastRPC target$\r$\nlibraries for platform i86"
         Pop $CheckboxI86
     ${Else}
-        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of RPC target$\r$\nlibraries for platform i86"
+        ${NSD_CreateCheckbox} 10 44u 100% 24u "&Add to the PATH environment variable the location of FastRPC target$\r$\nlibraries for platform i86"
         Pop $CheckboxI86
     ${EndIf}
 
@@ -78,27 +78,27 @@ Function VariablesEntornoPage
         ${NSD_AddStyle} $CheckboxI86 ${WS_DISABLED}
     ${EndIf}
     
-    ### La primera vez que lanzamos el instalador, el checkbox de RPCDDSHOME
+    ### La primera vez que lanzamos el instalador, el checkbox de FASTRPCHOME
     ### y el de SCRIPTS deben estar marcados. 
     StrCmp $FirstTime "FirstTime" +5 0 ### Si son iguales las cadenas, GOTO +5, si no, GOTO 0
-        ${NSD_Check} $CheckboxRPCDDSHOME
+        ${NSD_Check} $CheckboxFASTRPCHOME
         ${NSD_Check} $CheckboxScripts
-        ${NSD_GetState} $CheckboxRPCDDSHOME $CheckboxRPCDDSHOME_State
+        ${NSD_GetState} $CheckboxFASTRPCHOME $CheckboxFASTRPCHOME_State
         ${NSD_GetState} $CheckboxScripts $CheckboxScripts_State
         StrCpy $FirstTime "FirstTime"
         
     ### Fijamos los callbacks para cuando se haga click en los CheckBoxes
-    ${NSD_OnClick} $CheckboxRPCDDSHOME ClickRPCDDSHOME 
+    ${NSD_OnClick} $CheckboxFASTRPCHOME ClickFASTRPCHOME 
     ${NSD_OnClick} $CheckboxScripts ClickScripts
     ${NSD_OnClick} $CheckboxI86 ClickI86  
 
     nsDialogs::Show
 FunctionEnd
 
-### Callback invocado cuando se pulsa el CheckBox RPCDDSHOME
+### Callback invocado cuando se pulsa el CheckBox FASTRPCHOME
 ### Guardamos el estado en la variable _state
-Function ClickRPCDDSHOME
-    ${NSD_GetState} $CheckboxRPCDDSHOME $CheckboxRPCDDSHOME_State
+Function ClickFASTRPCHOME
+    ${NSD_GetState} $CheckboxFASTRPCHOME $CheckboxFASTRPCHOME_State
 FunctionEnd
 
 ### Callback invocado cuando se pulsa el CheckBox Scripts
