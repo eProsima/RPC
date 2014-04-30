@@ -28,9 +28,9 @@ function installer
     # Copy documentation.
     mkdir -p tmp/$project/doc
     mkdir -p tmp/$project/doc/pdf
-##    cp "../../../../doc/RPC - Installation Manual.pdf" tmp/$project/doc/pdf
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+    cp "../../../../doc/RPC - Installation Manual.pdf" tmp/$project/doc/pdf
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
 ##    cp "../../../../doc/RPC - REST - User Manual.pdf" tmp/$project/doc/pdf
 ##    errorstatus=$?
 ##    if [ $errorstatus != 0 ]; then return; fi
@@ -44,10 +44,10 @@ function installer
 ##    errorstatus=$?
 ##    if [ $errorstatus != 0 ]; then return; fi
 
-##    # Copy README
-##    cp ../../../../README.html tmp/$project/doc
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+    # Copy README
+    cp ../../../../README.html tmp/$project/doc
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
 
     # Copy example.
     mkdir -p tmp/$project/examples

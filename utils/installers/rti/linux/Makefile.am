@@ -41,7 +41,7 @@ libfastrpc_la_SOURCES = src/client/Proxy.cpp \
 		    src/exceptions/BadParamException.cpp \
 			src/exceptions/UserException.cpp
 
-libfastrpc_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt -lnddscore -lnddsc -lnddscpp
+libfastrpc_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt
 
 AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/fastrpc -Iextra/threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 

@@ -81,10 +81,10 @@ function package
 
     # Create PDFS from documentation.
     cd doc
-##    # Installation manual
-##    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - Installation Manual.odt,$fastrpcversion)"
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+    # Installation manual
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - Installation Manual.odt,$fastrpcversion)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
 ##    # User manual
 ##    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - REST - User Manual.odt,$fastrpcversion)"
 ##    errorstatus=$?
@@ -94,10 +94,10 @@ function package
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
-##    # Create README
-##    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$fastrpcversion,./doc/,./)"
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+    # Create README
+    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$fastrpcversion,./doc/,./)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
 ##
 ##    # Create doxygen information.
 ##    # Generate the examples
