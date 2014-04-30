@@ -6,9 +6,9 @@ LDFLAGS= -m64
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I.   -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds 
+INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds 
 
-LIBS =  -lrpcdds  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
+LIBS =  -lfastrpc  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
        -lnddsc -lnddscore -lnddscpp  $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
@@ -44,11 +44,12 @@ Calculator_CLIENT_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/CalculatorClientExampl
 Calculator_SERVER_TARGET= lib/x64Linux2.6gcc4.4.5/libCalculatorServer.so
 Calculator_SERVER_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libCalculatorServer.a
 Calculator_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/CalculatorServerExample
-Calculator_COMMON_SRC_CXXFILES = Calculator.cxx \
-	CalculatorPlugin.cxx \
-	CalculatorSupport.cxx \
+Calculator_COMMON_SRC_CXXFILES = CalculatorExceptions.cxx \
 	CalculatorDDSProtocol.cxx \
 	CalculatorDDSAsyncSupport.cxx \
+	Calculator.cxx \
+	CalculatorPlugin.cxx \
+	CalculatorSupport.cxx \
 	CalculatorRequestReply.cxx \
 	CalculatorRequestReplyPlugin.cxx \
 	CalculatorRequestReplySupport.cxx

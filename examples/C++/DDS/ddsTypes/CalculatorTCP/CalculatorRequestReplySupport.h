@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReplySupport_540430896_h
-#define CalculatorRequestReplySupport_540430896_h
+#ifndef CalculatorRequestReplySupport_540431605_h
+#define CalculatorRequestReplySupport_540431605_h
 
 /* Uses */
 #include "CalculatorRequestReply.h"
@@ -57,17 +57,17 @@
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(Calculator_additionRequestTypeSupport, Calculator_additionRequest);
+DDS_TYPESUPPORT_CPP(CalculatorRequestTypeSupport, CalculatorRequest);
 
-DDS_DATAWRITER_CPP(Calculator_additionRequestDataWriter, Calculator_additionRequest);
-DDS_DATAREADER_CPP(Calculator_additionRequestDataReader, Calculator_additionRequestSeq, Calculator_additionRequest);
+DDS_DATAWRITER_CPP(CalculatorRequestDataWriter, CalculatorRequest);
+DDS_DATAREADER_CPP(CalculatorRequestDataReader, CalculatorRequestSeq, CalculatorRequest);
 
 
 #else
 
-DDS_TYPESUPPORT_C(Calculator_additionRequestTypeSupport, Calculator_additionRequest);
-DDS_DATAWRITER_C(Calculator_additionRequestDataWriter, Calculator_additionRequest);
-DDS_DATAREADER_C(Calculator_additionRequestDataReader, Calculator_additionRequestSeq, Calculator_additionRequest);
+DDS_TYPESUPPORT_C(CalculatorRequestTypeSupport, CalculatorRequest);
+DDS_DATAWRITER_C(CalculatorRequestDataWriter, CalculatorRequest);
+DDS_DATAREADER_C(CalculatorRequestDataReader, CalculatorRequestSeq, CalculatorRequest);
 
 #endif
 
@@ -109,121 +109,17 @@ DDS_DATAREADER_C(Calculator_additionRequestDataReader, Calculator_additionReques
 
 #ifdef __cplusplus
 
-DDS_TYPESUPPORT_CPP(Calculator_additionReplyTypeSupport, Calculator_additionReply);
+DDS_TYPESUPPORT_CPP(CalculatorReplyTypeSupport, CalculatorReply);
 
-DDS_DATAWRITER_CPP(Calculator_additionReplyDataWriter, Calculator_additionReply);
-DDS_DATAREADER_CPP(Calculator_additionReplyDataReader, Calculator_additionReplySeq, Calculator_additionReply);
-
-
-#else
-
-DDS_TYPESUPPORT_C(Calculator_additionReplyTypeSupport, Calculator_additionReply);
-DDS_DATAWRITER_C(Calculator_additionReplyDataWriter, Calculator_additionReply);
-DDS_DATAREADER_C(Calculator_additionReplyDataReader, Calculator_additionReplySeq, Calculator_additionReply);
-
-#endif
-
-#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
-  /* If the code is building on Windows, stop exporting symbols.
-   */
-  #undef NDDSUSERDllExport
-  #define NDDSUSERDllExport
-#endif
-
-        
-
-/* ========================================================================= */
-/**
-   Uses:     T
-
-   Defines:  TTypeSupport, TDataWriter, TDataReader
-
-   Organized using the well-documented "Generics Pattern" for
-   implementing generics in C and C++.
-*/
-
-#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
-  /* If the code is building on Windows, start exporting symbols.
-   */
-  #undef NDDSUSERDllExport
-  #define NDDSUSERDllExport __declspec(dllexport)
-
-#ifdef __cplusplus
-  /* If we're building on Windows, explicitly import the superclasses of
-   * the types declared below.
-   */        
-  class __declspec(dllimport) ::DDSTypeSupport;
-  class __declspec(dllimport) ::DDSDataWriter;
-  class __declspec(dllimport) ::DDSDataReader;
-#endif
-
-#endif
-
-#ifdef __cplusplus
-
-DDS_TYPESUPPORT_CPP(Calculator_subtractionRequestTypeSupport, Calculator_subtractionRequest);
-
-DDS_DATAWRITER_CPP(Calculator_subtractionRequestDataWriter, Calculator_subtractionRequest);
-DDS_DATAREADER_CPP(Calculator_subtractionRequestDataReader, Calculator_subtractionRequestSeq, Calculator_subtractionRequest);
+DDS_DATAWRITER_CPP(CalculatorReplyDataWriter, CalculatorReply);
+DDS_DATAREADER_CPP(CalculatorReplyDataReader, CalculatorReplySeq, CalculatorReply);
 
 
 #else
 
-DDS_TYPESUPPORT_C(Calculator_subtractionRequestTypeSupport, Calculator_subtractionRequest);
-DDS_DATAWRITER_C(Calculator_subtractionRequestDataWriter, Calculator_subtractionRequest);
-DDS_DATAREADER_C(Calculator_subtractionRequestDataReader, Calculator_subtractionRequestSeq, Calculator_subtractionRequest);
-
-#endif
-
-#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
-  /* If the code is building on Windows, stop exporting symbols.
-   */
-  #undef NDDSUSERDllExport
-  #define NDDSUSERDllExport
-#endif
-
-        
-
-/* ========================================================================= */
-/**
-   Uses:     T
-
-   Defines:  TTypeSupport, TDataWriter, TDataReader
-
-   Organized using the well-documented "Generics Pattern" for
-   implementing generics in C and C++.
-*/
-
-#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
-  /* If the code is building on Windows, start exporting symbols.
-   */
-  #undef NDDSUSERDllExport
-  #define NDDSUSERDllExport __declspec(dllexport)
-
-#ifdef __cplusplus
-  /* If we're building on Windows, explicitly import the superclasses of
-   * the types declared below.
-   */        
-  class __declspec(dllimport) ::DDSTypeSupport;
-  class __declspec(dllimport) ::DDSDataWriter;
-  class __declspec(dllimport) ::DDSDataReader;
-#endif
-
-#endif
-
-#ifdef __cplusplus
-
-DDS_TYPESUPPORT_CPP(Calculator_subtractionReplyTypeSupport, Calculator_subtractionReply);
-
-DDS_DATAWRITER_CPP(Calculator_subtractionReplyDataWriter, Calculator_subtractionReply);
-DDS_DATAREADER_CPP(Calculator_subtractionReplyDataReader, Calculator_subtractionReplySeq, Calculator_subtractionReply);
-
-
-#else
-
-DDS_TYPESUPPORT_C(Calculator_subtractionReplyTypeSupport, Calculator_subtractionReply);
-DDS_DATAWRITER_C(Calculator_subtractionReplyDataWriter, Calculator_subtractionReply);
-DDS_DATAREADER_C(Calculator_subtractionReplyDataReader, Calculator_subtractionReplySeq, Calculator_subtractionReply);
+DDS_TYPESUPPORT_C(CalculatorReplyTypeSupport, CalculatorReply);
+DDS_DATAWRITER_C(CalculatorReplyDataWriter, CalculatorReply);
+DDS_DATAREADER_C(CalculatorReplyDataReader, CalculatorReplySeq, CalculatorReply);
 
 #endif
 
@@ -236,4 +132,4 @@ DDS_DATAREADER_C(Calculator_subtractionReplyDataReader, Calculator_subtractionRe
 
 
 
-#endif  /* CalculatorRequestReplySupport_540430896_h */
+#endif  /* CalculatorRequestReplySupport_540431605_h */

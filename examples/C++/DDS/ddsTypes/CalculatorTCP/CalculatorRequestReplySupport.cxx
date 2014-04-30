@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'Calculator_additionRequest' support classes.
+   Configure and implement 'CalculatorRequest' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   Calculator_additionRequestTYPENAME
+#define TTYPENAME   CalculatorRequestTYPENAME
 
 /* Defines */
-#define TDataWriter Calculator_additionRequestDataWriter
-#define TData       ::Calculator_additionRequest
+#define TDataWriter CalculatorRequestDataWriter
+#define TData       ::CalculatorRequest
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   Calculator_additionRequestTYPENAME
+#define TTYPENAME   CalculatorRequestTYPENAME
 
 /* Defines */
-#define TDataReader Calculator_additionRequestDataReader
-#define TDataSeq    Calculator_additionRequestSeq
-#define TData       ::Calculator_additionRequest
+#define TDataReader CalculatorRequestDataReader
+#define TDataSeq    CalculatorRequestSeq
+#define TData       ::CalculatorRequest
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    Calculator_additionRequestTYPENAME
-#define TPlugin_new  ::Calculator_additionRequestPlugin_new
-#define TPlugin_delete  ::Calculator_additionRequestPlugin_delete
+#define TTYPENAME    CalculatorRequestTYPENAME
+#define TPlugin_new  ::CalculatorRequestPlugin_new
+#define TPlugin_delete  ::CalculatorRequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport Calculator_additionRequestTypeSupport
-#define TData        ::Calculator_additionRequest
-#define TDataReader  Calculator_additionRequestDataReader
-#define TDataWriter  Calculator_additionRequestDataWriter
+#define TTypeSupport CalculatorRequestTypeSupport
+#define TData        ::CalculatorRequest
+#define TDataReader  CalculatorRequestDataReader
+#define TDataWriter  CalculatorRequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'Calculator_additionReply' support classes.
+   Configure and implement 'CalculatorReply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   Calculator_additionReplyTYPENAME
+#define TTYPENAME   CalculatorReplyTYPENAME
 
 /* Defines */
-#define TDataWriter Calculator_additionReplyDataWriter
-#define TData       ::Calculator_additionReply
+#define TDataWriter CalculatorReplyDataWriter
+#define TData       ::CalculatorReply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   Calculator_additionReplyTYPENAME
+#define TTYPENAME   CalculatorReplyTYPENAME
 
 /* Defines */
-#define TDataReader Calculator_additionReplyDataReader
-#define TDataSeq    Calculator_additionReplySeq
-#define TData       ::Calculator_additionReply
+#define TDataReader CalculatorReplyDataReader
+#define TDataSeq    CalculatorReplySeq
+#define TData       ::CalculatorReply
 
 
 #ifdef __cplusplus
@@ -231,257 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    Calculator_additionReplyTYPENAME
-#define TPlugin_new  ::Calculator_additionReplyPlugin_new
-#define TPlugin_delete  ::Calculator_additionReplyPlugin_delete
+#define TTYPENAME    CalculatorReplyTYPENAME
+#define TPlugin_new  ::CalculatorReplyPlugin_new
+#define TPlugin_delete  ::CalculatorReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport Calculator_additionReplyTypeSupport
-#define TData        ::Calculator_additionReply
-#define TDataReader  Calculator_additionReplyDataReader
-#define TDataWriter  Calculator_additionReplyDataWriter
-#ifdef __cplusplus
-
-
-
-#include "dds_cpp/generic/dds_cpp_data_TTypeSupport.gen"
-
-
-
-#else
-#include "dds_c/generic/dds_c_data_TTypeSupport.gen"
-#endif
-#undef TTypeSupport
-#undef TData
-#undef TDataReader
-#undef TDataWriter
-
-#undef TTYPENAME
-#undef TPlugin_new
-#undef TPlugin_delete
-
-
-
-
-
-/* ========================================================================= */
-/**
-   <<IMPLEMENTATION>>
-
-   Defines:   TData,
-              TDataWriter,
-              TDataReader,
-              TTypeSupport
-
-   Configure and implement 'Calculator_subtractionRequest' support classes.
-
-   Note: Only the #defined classes get defined
-*/
-
-/* ----------------------------------------------------------------- */
-/* DDSDataWriter
-*/
-
-/**
-  <<IMPLEMENTATION >>
-
-   Defines:   TDataWriter, TData
-*/
-
-/* Requires */
-#define TTYPENAME   Calculator_subtractionRequestTYPENAME
-
-/* Defines */
-#define TDataWriter Calculator_subtractionRequestDataWriter
-#define TData       ::Calculator_subtractionRequest
-
-
-#ifdef __cplusplus
-#include "dds_cpp/generic/dds_cpp_data_TDataWriter.gen"
-#else
-#include "dds_c/generic/dds_c_data_TDataWriter.gen"
-#endif
-
-
-#undef TDataWriter
-#undef TData
-
-#undef TTYPENAME
-
-/* ----------------------------------------------------------------- */
-/* DDSDataReader
-*/
-
-/**
-  <<IMPLEMENTATION >>
-
-   Defines:   TDataReader, TDataSeq, TData
-*/
-
-/* Requires */
-#define TTYPENAME   Calculator_subtractionRequestTYPENAME
-
-/* Defines */
-#define TDataReader Calculator_subtractionRequestDataReader
-#define TDataSeq    Calculator_subtractionRequestSeq
-#define TData       ::Calculator_subtractionRequest
-
-
-#ifdef __cplusplus
-#include "dds_cpp/generic/dds_cpp_data_TDataReader.gen"
-#else
-#include "dds_c/generic/dds_c_data_TDataReader.gen"
-#endif
-
-
-#undef TDataReader
-#undef TDataSeq
-#undef TData
-
-#undef TTYPENAME
-
-/* ----------------------------------------------------------------- */
-/* TypeSupport
-
-  <<IMPLEMENTATION >>
-
-   Requires:  TTYPENAME,
-              TPlugin_new
-              TPlugin_delete
-   Defines:   TTypeSupport, TData, TDataReader, TDataWriter
-*/
-
-/* Requires */
-#define TTYPENAME    Calculator_subtractionRequestTYPENAME
-#define TPlugin_new  ::Calculator_subtractionRequestPlugin_new
-#define TPlugin_delete  ::Calculator_subtractionRequestPlugin_delete
-
-/* Defines */
-#define TTypeSupport Calculator_subtractionRequestTypeSupport
-#define TData        ::Calculator_subtractionRequest
-#define TDataReader  Calculator_subtractionRequestDataReader
-#define TDataWriter  Calculator_subtractionRequestDataWriter
-#ifdef __cplusplus
-
-
-
-#include "dds_cpp/generic/dds_cpp_data_TTypeSupport.gen"
-
-
-
-#else
-#include "dds_c/generic/dds_c_data_TTypeSupport.gen"
-#endif
-#undef TTypeSupport
-#undef TData
-#undef TDataReader
-#undef TDataWriter
-
-#undef TTYPENAME
-#undef TPlugin_new
-#undef TPlugin_delete
-
-
-
-
-
-/* ========================================================================= */
-/**
-   <<IMPLEMENTATION>>
-
-   Defines:   TData,
-              TDataWriter,
-              TDataReader,
-              TTypeSupport
-
-   Configure and implement 'Calculator_subtractionReply' support classes.
-
-   Note: Only the #defined classes get defined
-*/
-
-/* ----------------------------------------------------------------- */
-/* DDSDataWriter
-*/
-
-/**
-  <<IMPLEMENTATION >>
-
-   Defines:   TDataWriter, TData
-*/
-
-/* Requires */
-#define TTYPENAME   Calculator_subtractionReplyTYPENAME
-
-/* Defines */
-#define TDataWriter Calculator_subtractionReplyDataWriter
-#define TData       ::Calculator_subtractionReply
-
-
-#ifdef __cplusplus
-#include "dds_cpp/generic/dds_cpp_data_TDataWriter.gen"
-#else
-#include "dds_c/generic/dds_c_data_TDataWriter.gen"
-#endif
-
-
-#undef TDataWriter
-#undef TData
-
-#undef TTYPENAME
-
-/* ----------------------------------------------------------------- */
-/* DDSDataReader
-*/
-
-/**
-  <<IMPLEMENTATION >>
-
-   Defines:   TDataReader, TDataSeq, TData
-*/
-
-/* Requires */
-#define TTYPENAME   Calculator_subtractionReplyTYPENAME
-
-/* Defines */
-#define TDataReader Calculator_subtractionReplyDataReader
-#define TDataSeq    Calculator_subtractionReplySeq
-#define TData       ::Calculator_subtractionReply
-
-
-#ifdef __cplusplus
-#include "dds_cpp/generic/dds_cpp_data_TDataReader.gen"
-#else
-#include "dds_c/generic/dds_c_data_TDataReader.gen"
-#endif
-
-
-#undef TDataReader
-#undef TDataSeq
-#undef TData
-
-#undef TTYPENAME
-
-/* ----------------------------------------------------------------- */
-/* TypeSupport
-
-  <<IMPLEMENTATION >>
-
-   Requires:  TTYPENAME,
-              TPlugin_new
-              TPlugin_delete
-   Defines:   TTypeSupport, TData, TDataReader, TDataWriter
-*/
-
-/* Requires */
-#define TTYPENAME    Calculator_subtractionReplyTYPENAME
-#define TPlugin_new  ::Calculator_subtractionReplyPlugin_new
-#define TPlugin_delete  ::Calculator_subtractionReplyPlugin_delete
-
-/* Defines */
-#define TTypeSupport Calculator_subtractionReplyTypeSupport
-#define TData        ::Calculator_subtractionReply
-#define TDataReader  Calculator_subtractionReplyDataReader
-#define TDataWriter  Calculator_subtractionReplyDataWriter
+#define TTypeSupport CalculatorReplyTypeSupport
+#define TData        ::CalculatorReply
+#define TDataReader  CalculatorReplyDataReader
+#define TDataWriter  CalculatorReplyDataWriter
 #ifdef __cplusplus
 
 

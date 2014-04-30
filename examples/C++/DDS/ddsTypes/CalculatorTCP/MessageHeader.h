@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeader_953112507_h
-#define MessageHeader_953112507_h
+#ifndef MessageHeader_953112495_h
+#define MessageHeader_953112495_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -196,9 +196,9 @@ public:
 
     DDS_UnsignedLong  requestSequenceNumber;
 
-    DDS_Long  rpcddsRetCode;
+    DDS_Long  retCode;
 
-    char*  rpcddsRetMsg; /* maximum length = (255) */
+    char*  retMsg; /* maximum length = (255) */
 
             
 };                        
@@ -247,4 +247,4 @@ RTIBool ReplyHeader_copy(
 
 
 
-#endif /* MessageHeader_953112507_h */
+#endif /* MessageHeader_953112495_h */

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorSupport_1695586847_h
-#define CalculatorSupport_1695586847_h
+#ifndef CalculatorSupport_1695586844_h
+#define CalculatorSupport_1695586844_h
 
 /* Uses */
 #include "Calculator.h"
@@ -28,4 +28,4 @@
 
 
 
-#endif  /* CalculatorSupport_1695586847_h */
+#endif  /* CalculatorSupport_1695586844_h */

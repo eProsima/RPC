@@ -11,6 +11,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+        <ClCompile Include="CalculatorExceptions.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorDDSProtocol.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorDDSAsyncSupport.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
         <ClCompile Include="Calculator.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
@@ -20,14 +32,6 @@
         </ClCompile>
         
         <ClCompile Include="CalculatorSupport.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-        <ClCompile Include="CalculatorDDSProtocol.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-        <ClCompile Include="CalculatorDDSAsyncSupport.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
@@ -45,15 +49,7 @@
         
   </ItemGroup>
   <ItemGroup>
-        <ClInclude Include="Calculator.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
-        <ClInclude Include="CalculatorPlugin.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
-        <ClInclude Include="CalculatorSupport.h">
+        <ClInclude Include="CalculatorExceptions.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
@@ -70,6 +66,18 @@
         </ClInclude>
         
         <ClInclude Include="CalculatorDDSAsyncSupport.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="Calculator.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorPlugin.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorSupport.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         

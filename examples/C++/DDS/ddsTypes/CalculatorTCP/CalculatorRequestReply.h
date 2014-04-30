@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReply_540430896_h
-#define CalculatorRequestReply_540430896_h
+#ifndef CalculatorRequestReply_540431605_h
+#define CalculatorRequestReply_540431605_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -40,12 +40,6 @@ extern const char *Calculator_additionRequestTYPENAME;
 #ifdef __cplusplus
     struct Calculator_additionRequestSeq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    class Calculator_additionRequestTypeSupport;
-    class Calculator_additionRequestDataWriter;
-    class Calculator_additionRequestDataReader;
-#endif
-
 #endif
 
             
@@ -56,16 +50,8 @@ public:
 #ifdef __cplusplus
     typedef struct Calculator_additionRequestSeq Seq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    typedef Calculator_additionRequestTypeSupport TypeSupport;
-    typedef Calculator_additionRequestDataWriter DataWriter;
-    typedef Calculator_additionRequestDataReader DataReader;
-#endif
-
 #endif
     
-    RequestHeader  header;
-
     DDS_Long  value1;
 
     DDS_Long  value2;
@@ -124,12 +110,6 @@ extern const char *Calculator_additionReplyTYPENAME;
 #ifdef __cplusplus
     struct Calculator_additionReplySeq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    class Calculator_additionReplyTypeSupport;
-    class Calculator_additionReplyDataWriter;
-    class Calculator_additionReplyDataReader;
-#endif
-
 #endif
 
             
@@ -140,16 +120,8 @@ public:
 #ifdef __cplusplus
     typedef struct Calculator_additionReplySeq Seq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    typedef Calculator_additionReplyTypeSupport TypeSupport;
-    typedef Calculator_additionReplyDataWriter DataWriter;
-    typedef Calculator_additionReplyDataReader DataReader;
-#endif
-
 #endif
     
-    ReplyHeader  header;
-
     DDS_Long  addition_ret;
 
             
@@ -206,12 +178,6 @@ extern const char *Calculator_subtractionRequestTYPENAME;
 #ifdef __cplusplus
     struct Calculator_subtractionRequestSeq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    class Calculator_subtractionRequestTypeSupport;
-    class Calculator_subtractionRequestDataWriter;
-    class Calculator_subtractionRequestDataReader;
-#endif
-
 #endif
 
             
@@ -222,16 +188,8 @@ public:
 #ifdef __cplusplus
     typedef struct Calculator_subtractionRequestSeq Seq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    typedef Calculator_subtractionRequestTypeSupport TypeSupport;
-    typedef Calculator_subtractionRequestDataWriter DataWriter;
-    typedef Calculator_subtractionRequestDataReader DataReader;
-#endif
-
 #endif
     
-    RequestHeader  header;
-
     DDS_Long  value1;
 
     DDS_Long  value2;
@@ -290,12 +248,6 @@ extern const char *Calculator_subtractionReplyTYPENAME;
 #ifdef __cplusplus
     struct Calculator_subtractionReplySeq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    class Calculator_subtractionReplyTypeSupport;
-    class Calculator_subtractionReplyDataWriter;
-    class Calculator_subtractionReplyDataReader;
-#endif
-
 #endif
 
             
@@ -306,16 +258,8 @@ public:
 #ifdef __cplusplus
     typedef struct Calculator_subtractionReplySeq Seq;
 
-#ifndef NDDS_STANDALONE_TYPE
-    typedef Calculator_subtractionReplyTypeSupport TypeSupport;
-    typedef Calculator_subtractionReplyDataWriter DataWriter;
-    typedef Calculator_subtractionReplyDataReader DataReader;
-#endif
-
 #endif
     
-    ReplyHeader  header;
-
     DDS_Long  subtraction_ret;
 
             
@@ -364,5 +308,321 @@ RTIBool Calculator_subtractionReply_copy(
 #endif
 
 
+                
+extern const char *CalculatorRequest_unionTYPENAME;
 
-#endif /* CalculatorRequestReply_540430896_h */
+
+
+#ifdef __cplusplus
+    struct CalculatorRequest_unionSeq;
+
+#endif
+
+
+typedef struct CalculatorRequest_union {
+#ifdef __cplusplus
+    typedef struct CalculatorRequest_unionSeq Seq;
+
+#endif
+    DDS_Long _d;
+
+    struct CalculatorRequest_union_u
+
+    {
+    Calculator_additionRequest  addition;
+
+    Calculator_subtractionRequest  subtraction;
+
+
+    } _u;
+} CalculatorRequest_union;
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* CalculatorRequest_union_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(CalculatorRequest_unionSeq, CalculatorRequest_union);
+
+NDDSUSERDllExport
+RTIBool CalculatorRequest_union_initialize(
+        CalculatorRequest_union* self);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_union_initialize_ex(
+        CalculatorRequest_union* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+void CalculatorRequest_union_finalize(
+        CalculatorRequest_union* self);
+                        
+NDDSUSERDllExport
+void CalculatorRequest_union_finalize_ex(
+        CalculatorRequest_union* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_union_copy(
+        CalculatorRequest_union* dst,
+        const CalculatorRequest_union* src);
+        
+
+NDDSUSERDllExport
+DDS_UnsignedLong CalculatorRequest_union_getDefaultDiscriminator();
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+        
+extern const char *CalculatorRequestTYPENAME;
+        
+
+
+#ifdef __cplusplus
+    struct CalculatorRequestSeq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    class CalculatorRequestTypeSupport;
+    class CalculatorRequestDataWriter;
+    class CalculatorRequestDataReader;
+#endif
+
+#endif
+
+            
+    
+class CalculatorRequest                                        
+{
+public:            
+#ifdef __cplusplus
+    typedef struct CalculatorRequestSeq Seq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    typedef CalculatorRequestTypeSupport TypeSupport;
+    typedef CalculatorRequestDataWriter DataWriter;
+    typedef CalculatorRequestDataReader DataReader;
+#endif
+
+#endif
+    
+    RequestHeader  _header;
+
+    CalculatorRequest_union  unio;
+
+            
+};                        
+    
+                            
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* CalculatorRequest_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(CalculatorRequestSeq, CalculatorRequest);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_initialize(
+        CalculatorRequest* self);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_initialize_ex(
+        CalculatorRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+void CalculatorRequest_finalize(
+        CalculatorRequest* self);
+                        
+NDDSUSERDllExport
+void CalculatorRequest_finalize_ex(
+        CalculatorRequest* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_copy(
+        CalculatorRequest* dst,
+        const CalculatorRequest* src);
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+                
+extern const char *CalculatorReply_unionTYPENAME;
+
+
+
+#ifdef __cplusplus
+    struct CalculatorReply_unionSeq;
+
+#endif
+
+
+typedef struct CalculatorReply_union {
+#ifdef __cplusplus
+    typedef struct CalculatorReply_unionSeq Seq;
+
+#endif
+    DDS_Long _d;
+
+    struct CalculatorReply_union_u
+
+    {
+    Calculator_additionReply  addition;
+
+    Calculator_subtractionReply  subtraction;
+
+
+    } _u;
+} CalculatorReply_union;
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* CalculatorReply_union_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(CalculatorReply_unionSeq, CalculatorReply_union);
+
+NDDSUSERDllExport
+RTIBool CalculatorReply_union_initialize(
+        CalculatorReply_union* self);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_union_initialize_ex(
+        CalculatorReply_union* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+void CalculatorReply_union_finalize(
+        CalculatorReply_union* self);
+                        
+NDDSUSERDllExport
+void CalculatorReply_union_finalize_ex(
+        CalculatorReply_union* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_union_copy(
+        CalculatorReply_union* dst,
+        const CalculatorReply_union* src);
+        
+
+NDDSUSERDllExport
+DDS_UnsignedLong CalculatorReply_union_getDefaultDiscriminator();
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+        
+extern const char *CalculatorReplyTYPENAME;
+        
+
+
+#ifdef __cplusplus
+    struct CalculatorReplySeq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    class CalculatorReplyTypeSupport;
+    class CalculatorReplyDataWriter;
+    class CalculatorReplyDataReader;
+#endif
+
+#endif
+
+            
+    
+class CalculatorReply                                        
+{
+public:            
+#ifdef __cplusplus
+    typedef struct CalculatorReplySeq Seq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    typedef CalculatorReplyTypeSupport TypeSupport;
+    typedef CalculatorReplyDataWriter DataWriter;
+    typedef CalculatorReplyDataReader DataReader;
+#endif
+
+#endif
+    
+    ReplyHeader  _header;
+
+    CalculatorReply_union  unio;
+
+            
+};                        
+    
+                            
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* CalculatorReply_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(CalculatorReplySeq, CalculatorReply);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_initialize(
+        CalculatorReply* self);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_initialize_ex(
+        CalculatorReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+void CalculatorReply_finalize(
+        CalculatorReply* self);
+                        
+NDDSUSERDllExport
+void CalculatorReply_finalize_ex(
+        CalculatorReply* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_copy(
+        CalculatorReply* dst,
+        const CalculatorReply* src);
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+
+#endif /* CalculatorRequestReply_540431605_h */

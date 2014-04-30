@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderPlugin_953112507_h
-#define MessageHeaderPlugin_953112507_h
+#ifndef MessageHeaderPlugin_953112495_h
+#define MessageHeaderPlugin_953112495_h
 
 #include "MessageHeader.h"
 
@@ -555,4 +555,4 @@ ReplyHeaderPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* MessageHeaderPlugin_953112507_h */
+#endif /* MessageHeaderPlugin_953112495_h */
