@@ -435,11 +435,11 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 
         // Take a free query condition.
         // Its not a oneway function.
-        if(m_reader != NULL)
+        if(m_reader != NULL && reply != NULL)
             query = getFreeQueryFromPool();
         m_mutex->unlock();
 
-        if(m_reader == NULL || query != NULL)
+        if(m_reader == NULL || reply == NULL || query != NULL)
         {
             waitSet = new DDS::WaitSet();
 
@@ -452,7 +452,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                     if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS::RETCODE_OK)
                     {
                         // Its not a oneway function.
-                        if(m_reader != NULL)
+                        if(m_reader != NULL && reply != NULL)
                         {
                             DDS::StringSeq stringSeq(1);
 
