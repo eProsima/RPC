@@ -1,4 +1,4 @@
-AC_INIT([RPC over REST], [VERSION], [support@eprosima.com], [rpcdds], [http://eprosima.com/])
+AC_INIT([FastRPC], [VERSION], [support@eprosima.com], [fastrpc], [http://eprosima.com/])
 AC_PREREQ([2.59])
 AC_CHECK_HEADER([$NDDSHOME/include/ndds/ndds_version.h],
 	[AC_MSG_NOTICE([Found RTI DDS])],

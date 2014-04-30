@@ -1,10 +1,12 @@
 SUBDIRS = include
 
-lib_LTLIBRARIES = librpcdds.la
-librpcdds_la_SOURCES = src/client/Proxy.cpp \
+lib_LTLIBRARIES = libfastrpc.la
+libfastrpc_la_SOURCES = src/client/Proxy.cpp \
 			src/server/Server.cpp \
 			src/utils/Utilities.cpp \
 			src/utils/dds/Middleware.cpp \
+		    src/protocols/dds/MessageHeader.cpp \
+		    src/protocols/dds/MessageHeaderPlugin.cpp \
 			src/protocols/rest/FastBuffer.cpp \
 			src/protocols/rest/HTTPEntities.cpp \
 			src/protocols/rest/RESTSerializer.cpp \
@@ -36,24 +38,25 @@ librpcdds_la_SOURCES = src/client/Proxy.cpp \
 			src/exceptions/ServerNotFoundException.cpp \
 			src/exceptions/ServerTimeoutException.cpp \
 			src/exceptions/SystemException.cpp \
+		    src/exceptions/BadParamException.cpp \
 			src/exceptions/UserException.cpp
 
-librpcdds_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:0
+libfastrpc_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt -lnddscore -lnddsc -lnddscpp
 
-AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/rpcdds -Iextra/threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
+AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/fastrpc -Iextra/threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 
-rpcdds_licenciasdir = $(datadir)/doc/rpcdds
-rpcdds_licencias_DATA = RPC_LICENSE.txt LGPLv3_LICENSE.txt
+fastrpc_licenciasdir = $(datadir)/doc/fastrpc
+fastrpc_licencias_DATA = FASTRPC_LICENSE.txt LGPLv3_LICENSE.txt
 
-rpcdds_scriptdir = $(bindir)
-rpcdds_script_DATA = scripts/rpcddsgen.sh
+fastrpc_scriptdir = $(bindir)
+fastrpc_script_DATA = scripts/fastrpcgen.sh
 
 install-data-hook:
-	mkdir -p $(DESTDIR)$(datadir)/doc/rpcdds; \
-	cp -r doc/* $(DESTDIR)$(datadir)/doc/rpcdds; \
-	mkdir -p $(DESTDIR)$(datadir)/rpcdds; \
-	cp -r examples $(DESTDIR)$(datadir)/rpcdds/;
+	mkdir -p $(DESTDIR)$(datadir)/doc/fastrpc; \
+	cp -r doc/* $(DESTDIR)$(datadir)/doc/fastrpc; \
+	mkdir -p $(DESTDIR)$(datadir)/fastrpc; \
+	cp -r examples $(DESTDIR)$(datadir)/fastrpc/;
 
 uninstall-hook:
-	rm -r $(DESTDIR)$(datadir)/doc/rpcdds; \
-	rm -r $(DESTDIR)$(datadir)/rpcdds
+	rm -r $(DESTDIR)$(datadir)/doc/fastrpc; \
+	rm -r $(DESTDIR)$(datadir)/fastrpc

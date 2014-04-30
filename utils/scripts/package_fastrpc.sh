@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#: This script pack RPCDDS product for any platform in Linux.
+#: This script pack FastRPC product for any platform in Linux.
 #
 # This script needs the next programs to be run.
 # - subversion
@@ -27,13 +27,13 @@ function setPlatform
 
 function package
 {
-    # Get the current version of RPCDDS
-    . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP rpcddsversion include/rpcdds/rpcdds_version.h
+    # Get the current version of FastRPC
+    . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
-    # Compile RPCDDS library. Also set platform if is necessary.
-    # Compile RPCDDS library for i86.
+    # Compile FastRPC library. Also set platform if is necessary.
+    # Compile FastRPC library for i86.
     if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
@@ -45,7 +45,7 @@ function package
         . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
         if [ $errorstatus != 0 ]; then return; fi
     fi
-    # Compile RPCDDS library for x64.
+    # Compile FastRPC library for x64.
     if [ -z $package_targets ] || [ "$package_targets" == "x64" ]; then
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
@@ -57,75 +57,75 @@ function package
         if [ $errorstatus != 0 ]; then return; fi
     fi
 
-    # Compile RPCDDSGEN application.
-    cd rpcddsgen
+    # Compile fastrpcgen application.
+    cd fastrpcgen
     rm -rf build
     ant jar
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
-    # Execute DDS tests
-    cd utils/pcTests/rti
-    ./exec_tests.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
-
-    # Execute REST tests
-    cd utils/pcTests/restful
-    ./exec_tests.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
+##    # Execute DDS tests
+##    cd utils/pcTests/rti
+##    ./exec_tests.sh $package_targets
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../..
+##
+##    # Execute REST tests
+##    cd utils/pcTests/restful
+##    ./exec_tests.sh $package_targets
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../..
 
     # Create PDFS from documentation.
     cd doc
-    # Installation manual
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - Installation Manual.odt,$rpcddsversion)"
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    # User manual
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - REST - User Manual.odt,$rpcddsversion)"
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - DDS - User Manual.odt,$rpcddsversion)"
+##    # Installation manual
+##    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - Installation Manual.odt,$fastrpcversion)"
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    # User manual
+##    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - REST - User Manual.odt,$fastrpcversion)"
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - DDS - User Manual.odt,$fastrpcversion)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
-    # Create README
-    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$rpcddsversion,./doc/,./)"
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-
-    # Create doxygen information.
-    # Generate the examples
-    # DDS example
-    ./scripts/rpcdds_rti_pcTests.sh -replace -protocol dds -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    # REST example
-    ./scripts/rpcdds_rti_pcTests.sh -replace -protocol rest -d utils/doxygen/examples/restful utils/doxygen/examples/restful/FooREST.wadl
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    #Export version
-    export VERSION_DOX=$rpcddsversion
-    mkdir -p output
-    mkdir -p output/doxygen
-    doxygen utils/doxygen/doxyfile
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    # Compile the latex document
-    cd output/doxygen/latex
-    make
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../../
+##    # Create README
+##    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$fastrpcversion,./doc/,./)"
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##
+##    # Create doxygen information.
+##    # Generate the examples
+##    # DDS example
+##    ./scripts/fastrpcgen.sh -replace -protocol dds -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    # REST example
+##    ./scripts/fastrpcgen.sh -replace -protocol rest -d utils/doxygen/examples/restful utils/doxygen/examples/restful/FooREST.wadl
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    #Export version
+##    export VERSION_DOX=$fastrpcversion
+##    mkdir -p output
+##    mkdir -p output/doxygen
+##    doxygen utils/doxygen/doxyfile
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    # Compile the latex document
+##    cd output/doxygen/latex
+##    make
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../../
 
     # Create installers
     cd utils/installers/rti/linux
-    ./setup_linux.sh $rpcddsversion
+    ./setup_linux.sh $fastrpcversion
     errorstatus=$?
     cd ../../..
     if [ $errorstatus != 0 ]; then return; fi
