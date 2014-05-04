@@ -13,7 +13,7 @@
 # To create RPM in CentOs you have to follow this link:
 #   http://wiki.centos.org/HowTos/SetupRpmBuildEnvironment
 
-project="fastrpc"
+project="eProsimaRPC"
 
 function installer
 {
@@ -37,12 +37,12 @@ function installer
     cp "../../../../doc/RPC - DDS - User Manual.pdf" tmp/$project/doc/pdf
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-##    cp -r "../../../../output/doxygen/html" tmp/$project/doc
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
-##    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPC - API C++ Manual.pdf"
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+    cp -r "../../../../output/doxygen/html" tmp/$project/doc
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPC - API C++ Manual.pdf"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
 
     # Copy README
     cp ../../../../README.html tmp/$project/doc
