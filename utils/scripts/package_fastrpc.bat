@@ -154,28 +154,28 @@ soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-:: :: Create doxygen information.
-:: :: Generate the examples
-:: :: DDS example
-:: call scripts\rpcdds_rti_pcTests.bat -replace -protocol dds -d utils\doxygen\examples\dds utils\doxygen\examples\dds\FooDDS.idl
-:: set errorstatus=%ERRORLEVEL%
-:: if not %errorstatus%==0 goto :exit
+:: Create doxygen information.
+:: Generate the examples
+:: DDS example
+call scripts\fastrpcgen.bat -replace -protocol dds -d utils\doxygen\examples\dds utils\doxygen\examples\dds\FooDDS.idl
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 :: :: REST example
 :: call scripts\rpcdds_rti_pcTests.bat -replace -protocol rest -d utils\doxygen\examples\restful utils\doxygen\examples\restful\FooREST.wadl
 :: set errorstatus=%ERRORLEVEL%
 :: if not %errorstatus%==0 goto :exit
-:: :: Export version
-:: set VERSION_DOX=%VERSION%
-:: mkdir output
-:: mkdir output\doxygen
-:: doxygen utils\doxygen\doxyfile
-:: set errorstatus=%ERRORLEVEL%
-:: if not %errorstatus%==0 goto :exit
-:: cd output\doxygen\latex
-:: call make.bat
-:: set errorstatus=%ERRORLEVEL%
-:: if not %errorstatus%==0 goto :exit
-:: cd ..\..\..
+:: Export version
+set VERSION_DOX=%VERSION%
+mkdir output
+mkdir output\doxygen
+doxygen utils\doxygen\doxyfile
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+cd output\doxygen\latex
+call make.bat
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+cd ..\..\..
 
 :: Create installers.
 cd utils\installers\rti\windows

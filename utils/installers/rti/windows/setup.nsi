@@ -99,18 +99,16 @@ Section -post SEC0006
     SetShellVarContext all
     
     # Copy documentation.
-    
-    # Copy documentation.
     SetOutPath $INSTDIR\doc\pdf
     SetOverwrite on
     File "..\..\..\..\doc\RPC - Installation Manual.pdf"
     ## File "..\..\..\..\doc\RPC - REST - User Manual.pdf"
     File "..\..\..\..\doc\RPC - DDS - User Manual.pdf"
     # Copy doxygen documentation
-    ## File "/oname=RPC - API C++ Manual.pdf" "..\..\..\..\output\doxygen\latex\refman.pdf"
-    ## SetOutPath $INSTDIR\doc\html
-    ## SetOverwrite on
-    ## File /r "..\..\..\..\output\doxygen\html\*"
+    File "/oname=RPC - API C++ Manual.pdf" "..\..\..\..\output\doxygen\latex\refman.pdf"
+    SetOutPath $INSTDIR\doc\html
+    SetOverwrite on
+    File /r "..\..\..\..\output\doxygen\html\*"
     
     # TODO All examples
     # Copy examples.
