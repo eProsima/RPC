@@ -45,18 +45,18 @@ libfastrpc_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELE
 
 AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/fastrpc -Iextra/threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 
-fastrpc_licenciasdir = $(datadir)/doc/fastrpc
+fastrpc_licenciasdir = $(datadir)/doc/eProsimaRPC
 fastrpc_licencias_DATA = FASTRPC_LICENSE.txt LGPLv3_LICENSE.txt
 
 fastrpc_scriptdir = $(bindir)
 fastrpc_script_DATA = scripts/fastrpcgen.sh
 
 install-data-hook:
-	mkdir -p $(DESTDIR)$(datadir)/doc/fastrpc; \
-	cp -r doc/* $(DESTDIR)$(datadir)/doc/fastrpc; \
-	mkdir -p $(DESTDIR)$(datadir)/fastrpc; \
-	cp -r examples $(DESTDIR)$(datadir)/fastrpc/;
+	mkdir -p $(DESTDIR)$(datadir)/doc/eProsimaRPC; \
+	cp -r doc/* $(DESTDIR)$(datadir)/doc/eProsimaRPC; \
+	mkdir -p $(DESTDIR)$(datadir)/eProsimaRPC; \
+	cp -r examples $(DESTDIR)$(datadir)/eProsimaRPC/;
 
 uninstall-hook:
-	rm -r $(DESTDIR)$(datadir)/doc/fastrpc; \
-	rm -r $(DESTDIR)$(datadir)/fastrpc
+	rm -r $(DESTDIR)$(datadir)/doc/eProsimaRPC; \
+	rm -r $(DESTDIR)$(datadir)/eProsimaRPC
