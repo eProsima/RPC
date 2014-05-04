@@ -1,7 +1,6 @@
 library_includedir = $(includedir)
 nobase_library_include_HEADERS = fastrpc/fastrpc_dll.h \
 				 fastrpc/client/Proxy.h \
-				 fastrpc/utils/Version.h \
 				 fastrpc/utils/dds/Middleware.h \
 				 fastrpc/utils/Utilities.h \
 				 fastrpc/utils/Messages.h \

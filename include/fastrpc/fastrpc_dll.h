@@ -1,10 +1,11 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of FASTRPC is licensed to you under the terms described in the
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+
 #ifndef _CPP_FASTRPC_DLL_H_
 #define _CPP_FASTRPC_DLL_H_
 

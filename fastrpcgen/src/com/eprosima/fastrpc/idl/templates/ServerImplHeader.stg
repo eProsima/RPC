@@ -38,10 +38,10 @@ class $interface.name$ServerImpl
 {
     public:
 
-        /// \brief The default constructor.
+        //! @brief The default constructor.
         $interface.name$ServerImpl(){}
 
-        /// \brief The default destructor.
+        //! @brief Destructor.
         virtual ~$interface.name$ServerImpl(){}
 
         $export_list$;
@@ -56,7 +56,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-/// \brief Skeleton of the operation $operation.name$
+//! @brief Skeleton of the operation $operation.name$.
 virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
 
 >>

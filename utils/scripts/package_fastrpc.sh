@@ -98,30 +98,30 @@ function package
     soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$fastrpcversion,./doc/,./)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-##
-##    # Create doxygen information.
-##    # Generate the examples
-##    # DDS example
-##    ./scripts/fastrpcgen.sh -replace -protocol dds -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+
+    # Create doxygen information.
+    # Generate the examples
+    # DDS example
+    ./scripts/fastrpcgen.sh -replace -protocol dds -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
 ##    # REST example
 ##    ./scripts/fastrpcgen.sh -replace -protocol rest -d utils/doxygen/examples/restful utils/doxygen/examples/restful/FooREST.wadl
 ##    errorstatus=$?
 ##    if [ $errorstatus != 0 ]; then return; fi
-##    #Export version
-##    export VERSION_DOX=$fastrpcversion
-##    mkdir -p output
-##    mkdir -p output/doxygen
-##    doxygen utils/doxygen/doxyfile
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
-##    # Compile the latex document
-##    cd output/doxygen/latex
-##    make
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
-##    cd ../../../
+    #Export version
+    export VERSION_DOX=$fastrpcversion
+    mkdir -p output
+    mkdir -p output/doxygen
+    doxygen utils/doxygen/doxyfile
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    # Compile the latex document
+    cd output/doxygen/latex
+    make
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ../../../
 
     # Create installers
     cd utils/installers/rti/linux

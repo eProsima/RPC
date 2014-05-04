@@ -1,7 +1,7 @@
 group RTIExceptionsHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Exceptions.h"], description=["TODO This header file contains the declaration of common types in ", ctx.filename, ".idl"])$
+$fileHeader(file=[ctx.filename, "Exceptions.h"], description=["This header file contains the declaration of user exceptions in ", ctx.filename, ".idl"])$
 
 #ifndef _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
 #define _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
@@ -46,18 +46,39 @@ class FASTRPCUSERDllExport $exception.name$ : public eprosima::fastrpc::exceptio
 {
 public:
     
+    //! @brief Default constructor.
 	$exception.name$();
 
+    /*!
+     * @brief Copy constructor.
+     * @param ex Exception to be copied.
+     */
 	$exception.name$(const $exception.name$ &ex);
 
+    /*!
+     * @brief Copy constructor.
+     * @param ex Exception to be copied.
+     */
 	$exception.name$($exception.name$&& ex);
 
+    /*!
+     * @brief Copy assignment.
+     * @param ex Exception to be copied.
+     */
 	$exception.name$& operator=(const $exception.name$ &ex);
 
+    /*!
+     * @brief Copy assignment.
+     * @param ex Exception to be copied.
+     */
 	$exception.name$& operator=($exception.name$&& ex);
 	
+    /*!
+     * @brief Destructor.
+     */
 	virtual ~$exception.name$() throw();
 
+    //! @brief This function throws the object as exception.
 	virtual void raise() const;
 	
 	// Exception members

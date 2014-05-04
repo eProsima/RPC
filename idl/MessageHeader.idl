@@ -1,4 +1,12 @@
-/**
+/*************************************************************************
+ * Copyright (c) 2013 eProsima. All rights reserved.
+ *
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+/*!
  * @brief This structure is used to identify clients.
  */
 struct Identification
@@ -9,30 +17,30 @@ struct Identification
     unsigned long value_4;
 }; //@top-level false 
 
-/**
+/*!
  * @brief Header information used in all generated request topics.
  */
 struct RequestHeader
 {
-    /// @brief Identification of the client that sends the request.
+    //! @brief Identification of the client that sends the request.
     Identification clientId;
-    /// @brief The service's name of the server that has to take this request.
+    //! @brief The service's name of the server that has to take this request.
     string remoteServiceName;
-    /// @brief Sequence number of the request.
+    //! @brief Sequence number of the request.
     unsigned long requestSequenceNumber;
 }; //@top-level false 
 
-/**
+/*!
  * @brief Header information used in all generated reply topics.
  */
 struct ReplyHeader
 {
-    /// @brief Identification of the client that sends the associated request to this reply.
+    //! @brief Identification of the client that sends the associated request to this reply.
     Identification clientId;
-    /// @brief Sequence number of the associated request to this reply.
+    //! @brief Sequence number of the associated request to this reply.
     unsigned long requestSequenceNumber;
-    /// @brief Return message code. Informs of the successful in the operation.
+    //! @brief Return message code. Informs of the successful in the operation.
     long retCode;
-    /// @brief In case of exception this attribute has an error message.
+    //! @brief In case of exception this attribute has an error message.
     string retMsg;
 }; //@top-level false 

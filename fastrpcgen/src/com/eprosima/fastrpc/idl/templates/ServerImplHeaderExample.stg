@@ -37,7 +37,7 @@ class $interface.name$ServerImplExample : public $interface.scopedname$ServerImp
         //! @brief The default constructor.
         $interface.name$ServerImplExample(){}
 
-        //! @brief The default destructor.
+        //! @brief Destructor.
         virtual ~$interface.name$ServerImplExample(){}
 
         $export_list$;

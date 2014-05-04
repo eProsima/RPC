@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of FASTRPC is licensed to you under the terms described in the
  * FASTRPC_LICENSE file included in this distribution.
@@ -18,7 +18,8 @@ namespace eprosima
         namespace exception
         {
             /**
-             * @brief This class is thrown as an exception when there is an error initializating an object.
+             * @brief This class is thrown as an exception when there is some bad paremeter
+             * in a object.
              * @ingroup EXCEPTIONMODULE
              */
             class FASTRPC_DllAPI BadParamException : public SystemException

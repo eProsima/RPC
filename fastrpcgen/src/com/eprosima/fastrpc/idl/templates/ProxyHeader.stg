@@ -64,7 +64,7 @@ class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::fastrpc::pro
         $interface.name$Proxy(eprosima::fastrpc::transport::ProxyTransport &transport,
             eprosima::fastrpc::protocol::$ctx.filename$Protocol &protocol);
 
-        //! @brief The default destructor.
+        //! @brief Destructor.
         virtual ~$interface.name$Proxy();
         
         $export_list$
@@ -79,12 +79,12 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-//! @brief Proxy method for the operation $operation.name$
+//! @brief Proxy method for the operation $operation.name$.
 $paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
 $if(ctx.dds)$
 $if(!operation.oneway)$
-//! @brief Proxy asynchronous method for the operation $operation.name$
+//! @brief Proxy asynchronous method for the operation $operation.name$.
 void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
 
 $endif$

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of FASTRPC is licensed to you under the terms described in the
  * FASTRPC_LICENSE file included in this distribution.
@@ -49,13 +49,12 @@ interface(ctx, interface, export_list) ::= <<
 $export_list$
 
 /*!
- * @brief This class represents the union $interface.name$Request_union defined by the user in the IDL file.
+ * @brief This class represents the union used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup $ctx.trimfilename$
  */
 class $interface.name$Request_union
 {
 public:
-    // TODO  Doxygen
 
     /*!
      * @brief Default constructor.
@@ -63,7 +62,7 @@ public:
     $interface.name$Request_union();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$interface.name$Request_union();
     
@@ -112,16 +111,32 @@ public:
 
     $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="Request")$}; separator="\n"$
 
-    // TODO
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
@@ -133,7 +148,6 @@ private:
 /*!
  * @brief This class represents the structure $interface.name$Request that can be used to send/receive requests
  * for the interface $interface.name$.
- * 
  * @ingroup $ctx.trimfilename$
  */
 class user_cpp_DllExport $interface.name$Request
@@ -142,17 +156,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     $interface.name$Request();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$interface.name$Request();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*!
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$Request that will be copied.
      */
@@ -164,68 +176,116 @@ public:
      */
     $interface.name$Request($interface.name$Request &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
     $interface.name$Request& operator=(const $interface.name$Request &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
     $interface.name$Request& operator=($interface.name$Request &&x);
 
+    /*!
+     * @brief This method sets the request header information.
+     * @param __header Request header.
+     */
     inline void _header(const eprosima::fastrpc::protocol::dds::RequestHeader &__header)
     {
         m__header = __header;
     }
 
+    /*!
+     * @brief This method sets the request header information.
+     * @param __header Request header.
+     */
     inline void _header(eprosima::fastrpc::protocol::dds::RequestHeader &&__header)
     {
         m__header = std::move(__header);
     }
 
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
     inline const eprosima::fastrpc::protocol::dds::RequestHeader& _header() const
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
     inline eprosima::fastrpc::protocol::dds::RequestHeader& _header()
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio(const $interface.name$Request_union &_unio)
     {
         m_unio = _unio;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio($interface.name$Request_union &&_unio)
     {
         m_unio = std::move(_unio);
     }
 
+    /*!
+     * @brief This method returns the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline const $interface.name$Request_union& unio() const
     {
         return m_unio;
     }
 
+    /*!
+     * @brief This method returns the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline $interface.name$Request_union& unio()
     {
         return m_unio;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -236,13 +296,12 @@ private:
 };
 
 /*!
- * @brief This class represents the union $interface.name$Reply_union defined by the user in the IDL file.
+ * @brief This class represents the union used in the DDS topic to encapsulate the operations in reply samples.
  * @ingroup $ctx.trimfilename$
  */
 class $interface.name$Reply_union
 {
 public:
-    // TODO  Doxygen
 
     /*!
      * @brief Default constructor.
@@ -250,7 +309,7 @@ public:
     $interface.name$Reply_union();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$interface.name$Reply_union();
     
@@ -299,16 +358,32 @@ public:
 
     $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="Reply")$}; separator="\n"$
 
-    // TODO
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
@@ -320,7 +395,6 @@ private:
 /*!
  * @brief This class represents the structure $interface.name$Reply that can be used to send/receive replies
  * for the interface $interface.name$.
- * 
  * @ingroup $ctx.trimfilename$
  */
 class user_cpp_DllExport $interface.name$Reply
@@ -329,17 +403,14 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     $interface.name$Reply();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$interface.name$Reply();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$Reply that will be copied.
      */
@@ -351,68 +422,116 @@ public:
      */
     $interface.name$Reply($interface.name$Reply &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
     $interface.name$Reply& operator=(const $interface.name$Reply &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
     $interface.name$Reply& operator=($interface.name$Reply &&x);
 
+    /*!
+     * @brief This method sets the reply header information.
+     * @param __header Reply header.
+     */
     inline void _header(const eprosima::fastrpc::protocol::dds::ReplyHeader &__header)
     {
         m__header = __header;
     }
 
+    /*!
+     * @brief This method sets the reply header information.
+     * @param __header Reply header.
+     */
     inline void _header(eprosima::fastrpc::protocol::dds::ReplyHeader &&__header)
     {
         m__header = std::move(__header);
     }
 
+    /*!
+     * @brief This method returns the reply header information.
+     * @return Reply header.
+     */
     inline const eprosima::fastrpc::protocol::dds::ReplyHeader& _header() const
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method returns the reply header information.
+     * @return Reply header.
+     */
     inline eprosima::fastrpc::protocol::dds::ReplyHeader& _header()
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio(const $interface.name$Reply_union &_unio)
     {
         m_unio = _unio;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio($interface.name$Reply_union &&_unio)
     {
         m_unio = std::move(_unio);
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline const $interface.name$Reply_union& unio() const
     {
         return m_unio;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline $interface.name$Reply_union& unio()
     {
         return m_unio;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -433,7 +552,6 @@ operation(ctx, operation, param_list) ::= <<
 /*!
  * @brief This class represents the structure $operation.parent.name$_$operation.name$Request that can be used to send/receive requests
  * for the operation $operation.parent.name$::$operation.name$.
- * 
  * @ingroup $ctx.trimfilename$
  */
 class user_cpp_DllExport $operation.parent.name$_$operation.name$Request
@@ -442,17 +560,14 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     $operation.parent.name$_$operation.name$Request();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$operation.parent.name$_$operation.name$Request();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
      * @brief Copy constructor.
      * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
      */
@@ -464,13 +579,13 @@ public:
      */
     $operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
     $operation.parent.name$_$operation.name$Request& operator=(const $operation.parent.name$_$operation.name$Request &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
@@ -478,16 +593,32 @@ public:
 
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -497,22 +628,24 @@ private:
 
 $if(operation.exceptions)$
 $if([operation.outputparam, operation.rettype])$
+/*!
+ * @brief This class encapsulates output paramaters for operation $operation.parent.name$::$operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
 class $operation.parent.name$_$operation.name$Reply_st
 {
 public:
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     $operation.parent.name$_$operation.name$Reply_st();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$operation.parent.name$_$operation.name$Reply_st();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*!
      * @brief Copy constructor.
      * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
      */
@@ -524,13 +657,13 @@ public:
      */
     $operation.parent.name$_$operation.name$Reply_st($operation.parent.name$_$operation.name$Reply_st &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
     $operation.parent.name$_$operation.name$Reply_st& operator=(const $operation.parent.name$_$operation.name$Reply_st &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
@@ -538,16 +671,32 @@ public:
 
     $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -569,17 +718,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     $operation.parent.name$_$operation.name$Reply();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~$operation.parent.name$_$operation.name$Reply();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*!
      * @brief Copy constructor.
      * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
      */
@@ -591,13 +738,13 @@ public:
      */
     $operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
     $operation.parent.name$_$operation.name$Reply& operator=(const $operation.parent.name$_$operation.name$Reply &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
@@ -632,16 +779,32 @@ public:
     $[operation.outputparam, operation.rettypeparam]:{$public_parameters_declaration(it)$}; separator="\n"$
     $endif$
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -677,25 +840,25 @@ enum_type(ctx, enum) ::= <<>>
 
 /***** Utils *****/
 public_operations_declaration(operation, suffix) ::= <<
-/*! TODO
+/*!
  * @brief This function copies the value in member $operation.name$
  * @param _$operation.name$ New value to be copied in member $operation.name$
  */
 void $operation.name$(const $operation.parent.name$_$operation.name$$suffix$ &_$operation.name$);
 
-/*! TODO
+/*!
  * @brief This function moves the value in member $operation.name$
  * @param _$operation.name$ New value to be moved in member $operation.name$
  */
 void $operation.name$($operation.parent.name$_$operation.name$$suffix$ &&_$operation.name$);
 
-/*! TODO
+/*!
  * @brief This function returns a constant reference to member $operation.name$
  * @return Constant reference to member $operation.name$
  */
 const $operation.parent.name$_$operation.name$$suffix$& $operation.name$() const;
 
-/*! TODO
+/*!
  * @brief This function returns a reference to member $operation.name$
  * @return Reference to member $operation.name$
  */
@@ -704,7 +867,7 @@ $operation.parent.name$_$operation.name$$suffix$& $operation.name$();
 
 public_parameters_declaration(param) ::= <<
 $if(param.typecode.primitive)$
-/*! TODO
+/*!
  * @brief This function sets a value in member $param.name$
  * @param _$param.name$ New value for member $param.name$
  */
@@ -713,7 +876,7 @@ inline void $param.name$($param.typecode.cppTypename$ _$param.name$)
     m_$param.name$ = _$param.name$;
 }
 
-/*! TODO
+/*!
  * @brief This function returns the value of member $param.name$
  * @return Value of member $param.name$
  */
@@ -722,7 +885,7 @@ inline $param.typecode.cppTypename$ $param.name$() const
     return m_$param.name$;
 }
 
-/*! TODO
+/*!
  * @brief This function returns a reference to member $param.name$
  * @return Reference to member $param.name$
  */
@@ -731,7 +894,7 @@ inline $param.typecode.cppTypename$& $param.name$()
     return m_$param.name$;
 }
 $else$
-/*! TODO
+/*!
  * @brief This function copies the value in member $param.name$
  * @param _$param.name$ New value to be copied in member $param.name$
  */
@@ -740,7 +903,7 @@ inline void $param.name$(const $param.typecode.cppTypename$ &_$param.name$)
     m_$param.name$ = _$param.name$;
 }
 
-/*! TODO
+/*!
  * @brief This function moves the value in member $param.name$
  * @param _$param.name$ New value to be moved in member $param.name$
  */
@@ -749,7 +912,7 @@ inline void $param.name$($param.typecode.cppTypename$ &&_$param.name$)
     m_$param.name$ = std::move(_$param.name$);
 }
 
-/*! TODO
+/*!
  * @brief This function returns a constant reference to member $param.name$
  * @return Constant reference to member $param.name$
  */
@@ -758,7 +921,7 @@ inline const $param.typecode.cppTypename$& $param.name$() const
     return m_$param.name$;
 }
 
-/*! TODO
+/*!
  * @brief This function returns a reference to member $param.name$
  * @return Reference to member $param.name$
  */

@@ -18,7 +18,8 @@ namespace eprosima
         namespace exception
         {
             /**
-             * @brief This class is thrown as an exception when there is an error initializating an object.
+             * @brief This class is thrown as an exception when a selected protocol and transport
+             * are incompatible.
              * @ingroup EXCEPTIONMODULE
              */
             class FASTRPC_DllAPI IncompatibleException : public SystemException

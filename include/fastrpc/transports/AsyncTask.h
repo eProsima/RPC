@@ -23,8 +23,10 @@ namespace eprosima
             {
                 protected:
 
+                    //! Default constructor.
                     AsyncTask();
 
+                    //! Destructor.
                     virtual ~AsyncTask();
             };
         } // namespace transport

@@ -40,8 +40,8 @@ namespace eprosima
             {
                 /*!
                  * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
-                 *  It uses DDS.
-		 * @ingroup $ctx.trimfilename$
+                 * It uses DDS.
+		         * @ingroup $ctx.trimfilename$
                  */
                 class FASTRPCUSERDllExport  $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
                 {
@@ -53,7 +53,7 @@ namespace eprosima
                         $ctx.filename$Protocol();
                         
                        /*!
-                        * @brief Default destructor
+                        * @brief Destructor
                         */
                         virtual ~$ctx.filename$Protocol();
                     
@@ -64,6 +64,11 @@ namespace eprosima
                         */
                         virtual bool setTransport(eprosima::fastrpc::transport::Transport &transport);
                         
+                        /*!
+                         * @brief This function activates needed DDS entities to use an interface.
+                         * @param interfaceName Interface name.
+                         * @return Whether the activation works successfully.
+                         */
                         bool activateInterface(const char* interfaceName);
                         
                         $definitions; separator="\n"$
@@ -108,7 +113,11 @@ $export_list$
 
 $if(ctx.server)$
 /*!
- * @brief This method implements the server part of the protocol for the interface $interface.name$
+ * @brief This method implements the server part of the protocol for the interface $interface.name$.
+ * It is called when a request sample is received.
+ * @param protocol DDS protocol object that is in used.
+ * @param data Pointer to the received request sample. Cannot be NULL.
+ * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
  */
 static void $interface.formatedScopedname$_serve(eprosima::fastrpc::protocol::Protocol &protocol,
     void *data , eprosima::fastrpc::transport::Endpoint *endpoint);
@@ -125,11 +134,16 @@ exception(ctx, exception) ::= <<>>
 operation(ctx, operation, param_list) ::= <<
 $if(ctx.client)$
 /*!
- * @brief This method implements the proxy part of the protocol for the operation $operation.name$
+ * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
+ * It is called from the Proxy interface.
  */
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
 
 $if(!operation.oneway)$
+/*!
+ * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
+ * It is called from the Proxy interface.
+ */
 void $operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
 
 $endif$

@@ -26,7 +26,10 @@ $definitions; separator="\n"$
 interface(ctx, interface, export_list) ::= <<
 $export_list$
 
-// TODO
+/*!
+ * @brief This union is used in the DDS topic to encapsulate the operations in request samples.
+ * @ingroup $ctx.trimfilename$
+ */
 union $interface.name$Request_union switch (long)
 {
     $interface.operations : { operation |
@@ -36,7 +39,11 @@ union $interface.name$Request_union switch (long)
 }; $nolevelIDLdefine()$
 
 
-// TODO
+/*!
+ * @brief This structure is used to send/receive requests
+ * for the interface $interface.name$.
+ * @ingroup $ctx.trimfilename$
+ */
 struct $interface.name$Request
 {
     RequestHeader _header;
@@ -44,7 +51,10 @@ struct $interface.name$Request
 }; $levelIDLdefine()$
 
 
-// TODO
+/*!
+ * @brief This union is used in the DDS topic to encapsulate the operations in reply samples.
+ * @ingroup $ctx.trimfilename$
+ */
 union $interface.name$Reply_union switch (long)
 {
     $interface.operations : { operation |
@@ -54,7 +64,11 @@ union $interface.name$Reply_union switch (long)
 }; $nolevelIDLdefine()$
 
 
-// TODO
+/*!
+ * @brief This is can be used to send/receive replies
+ * for the interface $interface.name$.
+ * @ingroup $ctx.trimfilename$
+ */
 struct $interface.name$Reply
 {
     ReplyHeader _header;
@@ -73,7 +87,7 @@ operation(ctx, operation, param_list) ::= <<
 
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /*!
- * @brief Topic used to receive/send requests for the procedure $operation.name$.
+ * @brief Structure used to receive/send requests for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
 struct $operation.parent.name$_$operation.name$Request{
@@ -100,7 +114,7 @@ $endif$
 
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /*!
- * @brief Topic used to receive/send replies for the procedure $operation.name$.
+ * @brief Structure used to receive/send replies for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
 $if(operation.exceptions)$

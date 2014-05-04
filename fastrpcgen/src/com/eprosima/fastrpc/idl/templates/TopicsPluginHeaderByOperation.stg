@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This copy of FASTRPC is licensed to you under the terms described in the
  * FASTRPC_LICENSE file included in this distribution.
@@ -9,7 +9,7 @@
 group TopicsPluginHeaderByOperation;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "TopicsPlugin.h"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
+$fileHeader(file=[ctx.filename, "TopicsPlugin.h"], description=["This header file contains the declaration of used by DDS middleware."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
 #define _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
@@ -39,6 +39,9 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $interface.name$Plugin
 {
     public:
@@ -56,6 +59,9 @@ $exports; separator="\n"$
 >>
 
 exception(ctx, exception) ::= <<
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $exception.name$Plugin
 {
     public:
@@ -66,7 +72,9 @@ class $exception.name$Plugin
 >>
 
 operation(ctx, operation, param_list) ::= <<
-// Request operations 
+/*!
+ * @brief Request DataReader.
+ */
 class $operation.name$RequestDataReader : public DDSDataReader
 {
     public:
@@ -74,6 +82,9 @@ class $operation.name$RequestDataReader : public DDSDataReader
         $operation.name$RequestDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
 };
 
+/*!
+ * @brief Request DataWriter.
+ */
 class $operation.name$RequestDataWriter : public DDSDataWriter
 {
     public:
@@ -81,6 +92,9 @@ class $operation.name$RequestDataWriter : public DDSDataWriter
         $operation.name$RequestDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
 
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $operation.name$RequestPlugin : public DDSTypeSupport
 {
     public:
@@ -184,6 +198,9 @@ class $operation.name$RequestPlugin : public DDSTypeSupport
 
 // Reply operations 
 $if(!operation.oneway)$
+/*!
+ * @brief Reply DataReader.
+ */
 class $operation.name$ReplyDataReader : public DDSDataReader
 {
     public:
@@ -191,6 +208,9 @@ class $operation.name$ReplyDataReader : public DDSDataReader
         $operation.name$ReplyDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
 };
 
+/*!
+ * @brief Reply DataWriter.
+ */
 class $operation.name$ReplyDataWriter : public DDSDataWriter
 {
     public:
@@ -199,6 +219,9 @@ class $operation.name$ReplyDataWriter : public DDSDataWriter
 };
 
 $if(operation.exceptions)$
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $operation.name$Reply_stPlugin
 {
     public:
@@ -206,6 +229,9 @@ class $operation.name$Reply_stPlugin
         static DDS_TypeCode* get_typecode();
 };
 
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $operation.name$Reply_unionPlugin
 {
     public:
@@ -214,6 +240,9 @@ class $operation.name$Reply_unionPlugin
 };
 $endif$
 
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $operation.name$ReplyPlugin : public DDSTypeSupport
 {
     public:
@@ -323,6 +352,9 @@ const_decl(ctx, const) ::= <<>>
 
 typedef_decl(ctx, typedefs) ::= <<
 $typedefs : { typedef |
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $typedef.name$Plugin
 {
     public:
@@ -334,6 +366,9 @@ class $typedef.name$Plugin
 >>
 
 struct_type(ctx, struct) ::= <<
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $struct.name$Plugin
 {
     public:
@@ -344,6 +379,9 @@ class $struct.name$Plugin
 >>
 
 union_type(ctx, union) ::= <<
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $union.name$Plugin
 {
     public:
@@ -354,6 +392,9 @@ class $union.name$Plugin
 >>
 
 enum_type(ctx, enum) ::= <<
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
 class $enum.name$Plugin
 {
     public:
