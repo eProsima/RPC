@@ -27,6 +27,8 @@ cscope.out
 # Generated Java classes
 fastrpcgen/build/
 classes/fastrpcgen.jar
+classes/rpcddsgen.jar
+classes/rpcrestgen.jar
 
 # Generated Java source
 fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.java
@@ -40,3 +42,7 @@ utils/doxygen/examples/dds/*.cxx
 utils/doxygen/examples/restful/*.h
 utils/doxygen/examples/restful/*.cxx
 utils/doxygen/examples/restful/*.idl
+
+# Generated documentation
+README.html
+doc/*.pdf

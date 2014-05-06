@@ -6,10 +6,9 @@ LDFLAGS= -m32
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I. -I$(FASTRPCHOME)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
+INCLUDES= -I. -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(EPROSIMADIR)/code -I$(RPCDDSHOME)/include
 
-LIBS = -L$(FASTRPCHOME)/lib/i86Linux2.6gcc4.4.5 -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lfastrpc $(SYSLIBS)
+LIBS = -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lnddscore -lnddsc -lnddscpp -lfastrpc $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 
@@ -44,10 +43,12 @@ MultithreadTest_CLIENT_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/MultithreadTestCl
 MultithreadTest_SERVER_TARGET= lib/i86Linux2.6gcc4.4.5/libMultithreadTestServer.so
 MultithreadTest_SERVER_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libMultithreadTestServer.a
 MultithreadTest_SERVER_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/MultithreadTestServerExample
-MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTest.cxx \
+MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTestExceptions.cxx \
+	MultithreadTestDDSProtocol.cxx \
+	MultithreadTestDDSAsyncSupport.cxx \
+	MultithreadTest.cxx \
 	MultithreadTestPlugin.cxx \
 	MultithreadTestSupport.cxx \
-	MultithreadTestDDSProtocol.cxx \
 	MultithreadTestRequestReply.cxx \
 	MultithreadTestRequestReplyPlugin.cxx \
 	MultithreadTestRequestReplySupport.cxx
@@ -55,7 +56,6 @@ MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTest.cxx \
 MultithreadTest_COMMON_SRC_CPPFILES=
 
 MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx
-	#MultithreadTestAsyncSupport.cxx
 MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx
 MultithreadTest_COMMONOBJS    = $(MultithreadTest_COMMON_SRC_CXXFILES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o) $(MultithreadTest_COMMON_SRC_CPPFILES:%.cpp=output/i86Linux2.6gcc4.4.5/%.o)
 MultithreadTest_CLIENTOBJS    = $(MultithreadTest_CLIENTSOURCES:%.cxx=output/i86Linux2.6gcc4.4.5/%.o)

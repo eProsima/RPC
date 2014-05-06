@@ -80,7 +80,9 @@
 		<property name="build.src" value="${build.dir}${file.separator}src" />
 		<property name="build.classes" value="${build.dir}" />
 		<property name="build.javadocs" value="${basedir}${file.separator}docs${file.separator}api" />
-		<property name="build.jar" value="${lib.dir}${file.separator}${name}.jar" />
+		<property name="build.fastrpcgen.jar" value="${lib.dir}${file.separator}${name}.jar" />
+		<property name="build.rpcddsgen.jar" value="${lib.dir}${file.separator}rpcddsgen.jar" />
+		<property name="build.rpcrestgen.jar" value="${lib.dir}${file.separator}rpcrestgen.jar" />
 
 		<path id="build.classpath">
 			<fileset dir="${lib.dir}">
@@ -95,8 +97,6 @@
 				<include name="*.jar" />
 			</fileset>
 		</path>
-
-		<property name="build.dist" value="${build.dir}${file.separator}${name}-${version}" />
 
 		<property name="dist.basedir" value="${build.dir}" />
 		<property name="dist.includes" value="${name}${file.separator}**" />
@@ -131,7 +131,7 @@
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
         <javac source="1.6" target="1.6" srcdir="${idl.src.java}:${fastrpc.src.java}" destdir="${build.classes}">
-			<classpath refid="build.classpath" />
+			<classpath refid="build.classpath"/>
 		</javac>
         <!--> Copy stringtemplates of fastrpc.<-->
 		<copy todir="${build.classes}">
@@ -164,65 +164,22 @@
 	<!-- =================================================================== -->
 	<!-- Creates the jar archive                                             -->
 	<!-- =================================================================== -->
-	<target name="jar" depends="init,compile" description="Builds the library (.jar).">
-		<jar jarfile="${build.jar}" basedir="${build.classes}" manifest="manifest">
+	<target name="fastrpcgen_jar" depends="init,compile" description="Builds the fastrpcgen library (.jar).">
+		<jar jarfile="${build.fastrpcgen.jar}" basedir="${build.classes}" manifest="manifest">
 		</jar>
-
 	</target>
 
-	<!-- =================================================================== -->
-	<!-- install                                                             -->
-	<!-- =================================================================== -->
-	<target name="install" depends="init,compile,jar">
-		<mkdir dir="${env.NDDSHOME}/fastrpc" />
-
-		<copy todir="${env.NDDSHOME}/fastrpc/include" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="../include" excludes="**/.svn">
-				<include name="**/*.h" />
-				<include name="**/*.gen" />
-			</fileset>
-		</copy>
-		<copy todir="${env.NDDSHOME}/fastrpc/lib" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="../lib" includes="**/*" excludes="**/.svn" />
-		</copy>
-		<copy todir="${env.NDDSHOME}/scripts" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="../scripts" includes="*.bat" />
-		</copy>
-		<copy todir="${env.NDDSHOME}/fastrpc/classes" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="${lib.dir}" includes="*.jar" />
-		</copy>
+	<target name="rpcddsgen_jar" depends="init,compile" description="Builds the rpcddsgen library (.jar).">
+		<jar jarfile="${build.rpcddsgen.jar}" basedir="${build.classes}" manifest="manifest_rpcddsgen">
+		</jar>
 	</target>
 
-	<!-- =================================================================== -->
-	<!-- package                                                             -->
-	<!-- =================================================================== -->
-	<target name="package" depends="init,compile,jar">
-		<mkdir dir="${tmp.dir}/fastrpc" />
-		<delete file="../fastrpc.zip" />
-
-		<copy todir="${tmp.dir}/fastrpc" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." excludes="**/.svn">
-				<include name="include/**/*.h" />
-				<include name="include/**/*.gen" />
-			</fileset>
-		</copy>
-		<copy todir="${tmp.dir}/fastrpc" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." includes="lib/**/*" excludes="**/.svn" />
-		</copy>
-		<copy todir="${tmp.dir}/fastrpc" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." includes="doc/UserManual.doc" excludes="**/.svn" />
-		</copy>
-		<copy todir="${tmp.dir}" overwrite="yes" preservelastmodified="yes">
-			<fileset dir=".." includes="scripts/**/*" />
-		</copy>
-		<copy todir="${tmp.dir}/fastrpc/classes" overwrite="yes" preservelastmodified="yes">
-			<fileset dir="${lib.dir}" includes="*.jar" />
-		</copy>
-		<zip destfile="../fastrpc.zip" basedir="./tmp" compress="true">
-			<include name="**/*" />
-		</zip>
-		<delete dir="${tmp.dir}" />
+	<target name="rpcrestgen_jar" depends="init,compile" description="Builds the rpcrestgen library (.jar).">
+		<jar jarfile="${build.rpcrestgen.jar}" basedir="${build.classes}" manifest="manifest_rpcrestgen">
+		</jar>
 	</target>
+
+    <target name="jars" depends="fastrpcgen_jar,rpcddsgen_jar,rpcrestgen_jar" description="Builds all libraries (.jar)"/>
 
 	<!-- =================================================================== -->
 	<!-- Cleans up generated classes                                         -->
@@ -230,18 +187,5 @@
 	<target name="clean-classes" depends="init">
 		<delete dir="${build.classes}" />
 	</target>
-
-	<!-- =================================================================== -->
-	<!-- launch tests                                         -->
-	<!-- =================================================================== -->
-	<target name="test" depends="jar">
-		<java fork="true" classpathref="run.classpath" dir="${test.dir}" classname="com.eprosima.fastrpc.idl.fastrpcgen">
-			<jvmarg value="-DNDDSHOME=${env.NDDSHOME}" />
-			<arg value="-ppDisable" />
-			<arg value="-replace" />
-			<arg value="RateGen.idl" />
-		</java>
-	</target>
-
 </project>
 

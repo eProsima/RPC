@@ -141,7 +141,7 @@ $endif$
 
 $if(ctx.server)$
 /*!
- * @brief This method implements the server part of the protocol for the interface $interface.name$.
+ * @brief This method implements the server part of the protocol for the operation $operation.name$.
  * It is called when a request sample is received.
  * @param protocol DDS protocol object that is in used.
  * @param data Pointer to the received request sample. Cannot be NULL.
