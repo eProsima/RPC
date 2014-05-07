@@ -16,7 +16,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -246,7 +246,7 @@ namespace eprosima
                 };
             } //namespace rest
         } //namespace protocol
-    } //namespace fastrpc
+    } //namespace rpc
 } //namespace eProsima
 
 #endif //TCP_SERIALIZER_FASTBUFFER

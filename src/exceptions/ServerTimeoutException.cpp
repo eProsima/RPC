@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include <fastrpc/exceptions/ServerTimeoutException.h>
+#include "fastrpc/exceptions/ServerTimeoutException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 ServerTimeoutException::ServerTimeoutException(const std::string &message) : SystemException(message, 5)
 {

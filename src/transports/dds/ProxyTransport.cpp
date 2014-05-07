@@ -13,12 +13,12 @@
 
 #include <string>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport::dds;
 using namespace ::util::dds;
 using namespace ::exception;
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ProxyTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ProxyTransport";
 
 typedef struct encapsulation
 {

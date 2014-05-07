@@ -11,13 +11,13 @@
 #include "fastrpc/exceptions/ClientInternalException.h"
 #include "fastrpc/exceptions/ServerTimeoutException.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport::dds;
 using namespace ::exception;
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::DDSAsyncTask";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::DDSAsyncTask";
 
-DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::fastrpc::transport::AsyncTask()
+DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::rpc::transport::AsyncTask()
 {
 }
 

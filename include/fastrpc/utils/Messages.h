@@ -11,7 +11,7 @@
 
 namespace eprosima
 {
-	namespace fastrpc
+	namespace rpc
 	{
 		/**
 		 * \brief This enumeration type defines the success of an operation and
@@ -31,7 +31,7 @@ namespace eprosima
 			NO_SERVER
 		} ReturnMessage;
 
-	} // namespace fastrpc
+	} // namespace rpc
 } // namespace eprosima
 
 #endif // _UTILS_MESSAGES_H_

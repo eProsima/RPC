@@ -69,6 +69,8 @@ public class fastrpcgen
     
     /// Common options ///
     protected static String m_appName = "fastrpcgen";
+    protected static String m_appProduct = "fastrpc";
+    protected static String m_localAppProduct = "fastrpc";
     protected static String m_appEnv = "FASTRPCHOME";
     private static ArrayList<String> m_platforms = null;
     private String m_osOption = null;
@@ -422,6 +424,12 @@ public class fastrpcgen
             // Load IDL types for stringtemplates
             TypeCode.idltypesgr = StringTemplateGroup.loadGroup("idlTypes", DefaultTemplateLexer.class, null);
 
+            // In local for all products
+            if(m_local)
+                solution.addInclude("$(EPROSIMADIR)/code");
+            solution.addInclude("$(" + m_appEnv + ")/include");
+            solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
+
             if(m_protocol == PROTOCOL.DDS)
             {
                 // RTI types needs to generate the MessageHeader.idl file.
@@ -477,6 +485,9 @@ public class fastrpcgen
                 solution.addLibrary("nddscore");
                 solution.addLibrary("nddsc");
                 solution.addLibrary("nddscpp");
+
+                // Add product library.
+                solution.addLibrary("rpcdds");
             }
             else if(m_protocol == PROTOCOL.REST)
             {
@@ -486,6 +497,9 @@ public class fastrpcgen
 
                 solution.addLibrary("boost_system");
                 solution.addLibrary("boost_thread");
+
+                // Add product library.
+                solution.addLibrary("rpcrest");
             }
             else if(m_protocol == PROTOCOL.FASTCDR)
             {
@@ -501,14 +515,10 @@ public class fastrpcgen
                     solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
                 }
                 solution.addLibrary("fastcdr");
-            }
 
-            // In local for all products
-            if(m_local)
-                solution.addInclude("$(EPROSIMADIR)/code");
-            solution.addInclude("$(" + m_appEnv + ")/include");
-            solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
-            solution.addLibrary("fastrpc");
+                // Add product library.
+                solution.addLibrary("fastrpc");
+            }
 
             for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
             {
@@ -683,7 +693,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager();
@@ -853,7 +864,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
+            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
             
             // Create template manager
             TemplateManager tmanager = new TemplateManager();
@@ -1018,7 +1030,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager();

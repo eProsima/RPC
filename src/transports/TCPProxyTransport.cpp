@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace eprosima { namespace fastrpc { namespace transport {
+namespace eprosima { namespace rpc { namespace transport {
     class TCPProxyTransportBoost
     {
         public:
@@ -45,7 +45,7 @@ namespace eprosima { namespace fastrpc { namespace transport {
     };
 }}}
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport;
 
 TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress) : m_boostInfo(NULL)
@@ -100,7 +100,7 @@ bool TCPProxyTransport::connect()
 
         if (error)
         {
-            throw eprosima::fastrpc::exception::ServerNotFoundException("ERROR<TCPProxyTransport::connect>: "+error.message());
+            throw eprosima::rpc::exception::ServerNotFoundException("ERROR<TCPProxyTransport::connect>: "+error.message());
         }
     }
 	return true;

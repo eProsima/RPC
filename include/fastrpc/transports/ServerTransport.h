@@ -17,7 +17,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -39,7 +39,7 @@ namespace eprosima
              */
             class FASTRPC_DllAPI ServerTransport : public Transport
             {
-                typedef void (*ServerTransport_Callback)(eprosima::fastrpc::protocol::Protocol&, void*&, size_t, Endpoint*);
+                typedef void (*ServerTransport_Callback)(eprosima::rpc::protocol::Protocol&, void*&, size_t, Endpoint*);
 
                 public:
 
@@ -55,7 +55,7 @@ namespace eprosima
 					 * @param strategy Threading strategy.
 					 */
                     inline
-                        void setStrategy(eprosima::fastrpc::strategy::ServerStrategy &strategy)
+                        void setStrategy(eprosima::rpc::strategy::ServerStrategy &strategy)
                         {
                             m_strategy = &strategy;
                         }
@@ -65,7 +65,7 @@ namespace eprosima
 					 * @param protocol Communication protocol.
 					 */
                     inline
-                        void linkProtocol(eprosima::fastrpc::protocol::Protocol &protocol)
+                        void linkProtocol(eprosima::rpc::protocol::Protocol &protocol)
                         {
                             m_protocol = &protocol;
                         }
@@ -75,7 +75,7 @@ namespace eprosima
 					 * @return Communication protocol.
 					 */
                     inline
-                        eprosima::fastrpc::protocol::Protocol& getLinkedProtocol()
+                        eprosima::rpc::protocol::Protocol& getLinkedProtocol()
                         {
                             return *m_protocol;
                         }
@@ -85,7 +85,7 @@ namespace eprosima
 					 * @return Threading strategy.
 					 */
                     inline
-                        eprosima::fastrpc::strategy::ServerStrategy& getStrategy() const
+                        eprosima::rpc::strategy::ServerStrategy& getStrategy() const
                         {
                             return *m_strategy;
                         }
@@ -153,14 +153,14 @@ namespace eprosima
 
                 private:
 
-                    eprosima::fastrpc::strategy::ServerStrategy *m_strategy;
+                    eprosima::rpc::strategy::ServerStrategy *m_strategy;
 
-                    eprosima::fastrpc::protocol::Protocol *m_protocol;
+                    eprosima::rpc::protocol::Protocol *m_protocol;
 
                     ServerTransport_Callback m_callback;
             };
         }
         // namespace transport
-    }// namespace fastrpc
+    }// namespace rpc
 } // namespace eprosima
 #endif // _TRANSPORTS_SERVERTRANSPORT_H_

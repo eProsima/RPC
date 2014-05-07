@@ -14,7 +14,8 @@ import com.eprosima.idl.parser.typecode.StructTypeCode;
 public class Context extends com.eprosima.idl.context.Context
 {
     // TODO Remove middleware parameter. It is temporal while cdr and rest don't have async functions.
-    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode, fastrpcgen.PROTOCOL protocol, fastrpcgen.DDS_TYPES ddstypes)
+    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode,
+            String appProduct, fastrpcgen.PROTOCOL protocol, fastrpcgen.DDS_TYPES ddstypes)
     {
         super(filename, file, includePaths);
         
@@ -24,6 +25,7 @@ public class Context extends com.eprosima.idl.context.Context
         m_randomGenNames = new Stack<String>();
 
         // TODO Remove
+        m_appProduct = appProduct;
         m_protocol = protocol;
         m_ddstypes = ddstypes;
     }
@@ -89,6 +91,11 @@ public class Context extends com.eprosima.idl.context.Context
     }
 
     // TODO Remove
+    public String getProduct()
+    {
+        return m_appProduct;
+    }
+
     public boolean isDds()
     {
         if(m_protocol == fastrpcgen.PROTOCOL.DDS)
@@ -212,6 +219,7 @@ public class Context extends com.eprosima.idl.context.Context
     private boolean m_servercode = true;
 
     // TODO Remove
+    private String m_appProduct = null;
     private fastrpcgen.PROTOCOL m_protocol = null;
     private fastrpcgen.DDS_TYPES m_ddstypes = fastrpcgen.DDS_TYPES.EPROSIMA;
 }

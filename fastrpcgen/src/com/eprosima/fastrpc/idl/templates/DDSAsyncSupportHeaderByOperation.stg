@@ -1,13 +1,13 @@
 group AsyncSupportHeaderByOperation;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 #define _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 
-#include "fastrpc/transports/dds/DDSAsyncTask.h"
-#include "fastrpc/exceptions/UserException.h"
+#include "$ctx.product$/transports/dds/DDSAsyncTask.h"
+#include "$ctx.product$/exceptions/UserException.h"
 #include "$ctx.filename$AsyncCallbackHandlers.h"
 $if(!ctx.rtiTypes)$
 #include "$ctx.filename$Topics.h"
@@ -48,7 +48,7 @@ $if(!operation.oneway)$
  * @brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
  * @ingroup $ctx.trimfilename$
  */
-class $operation.parent.name$_$operation.name$Task : public eprosima::fastrpc::transport::dds::DDSAsyncTask
+class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::transport::dds::DDSAsyncTask
 {
     public:
 
@@ -75,7 +75,7 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::fastrpc::t
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::fastrpc::exception::SystemException &ex);        
+        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
 
         $if(operation.exceptions)$
         /*!
@@ -84,7 +84,7 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::fastrpc::t
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::fastrpc::exception::UserException &ex);
+        virtual void on_exception(const eprosima::rpc::exception::UserException &ex);
         $endif$
         
         /*!

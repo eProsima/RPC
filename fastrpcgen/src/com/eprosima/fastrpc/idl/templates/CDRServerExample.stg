@@ -1,19 +1,19 @@
 group ServiceExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
 
 #include "$ctx.filename$Server.h"
-#include "fastrpc/strategies/ThreadPoolStrategy.h"
+#include "$ctx.product$/strategies/ThreadPoolStrategy.h"
 #include "$ctx.filename$CDRProtocol.h"
-#include "fastrpc/transports/TCPServerTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-#include "fastrpc/utils/Utilities.h"
+#include "$ctx.product$/transports/TCPServerTransport.h"
+#include "$ctx.product$/exceptions/Exceptions.h"
+#include "$ctx.product$/utils/Utilities.h"
 #include "$ctx.filename$ServerImplExample.h"
 
 #include <iostream>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 using namespace ::strategy;
 using namespace ::transport;
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        eprosima::fastrpc::sleep(10000);
+        eprosima::rpc::sleep(10000);
     }
     
     // Stop and delete the server.

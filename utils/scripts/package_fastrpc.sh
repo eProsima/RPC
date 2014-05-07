@@ -37,7 +37,7 @@ function package
     if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-        rm -r lib/$NDDSTARGET
+        rm -rf lib/$NDDSTARGET
         make
         errorstatus=$?
         # Try to add platform
@@ -49,7 +49,7 @@ function package
     if [ -z $package_targets ] || [ "$package_targets" == "x64" ]; then
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
-        rm -r lib/$NDDSTARGET
+        rm -rf lib/$NDDSTARGET
         make
         errorstatus=$?
         . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
@@ -127,7 +127,7 @@ function package
     cd utils/installers/rti/linux
     ./setup_linux.sh $fastrpcversion
     errorstatus=$?
-    cd ../../..
+    cd ../../../..
     if [ $errorstatus != 0 ]; then return; fi
 
     # Remove the doxygen tmp directory

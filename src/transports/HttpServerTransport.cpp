@@ -16,7 +16,7 @@
 
 #include <boost/bind.hpp>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace transport;
 
 const char* const CLASS_NAME = "HttpServerTransport";

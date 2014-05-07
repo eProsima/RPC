@@ -16,7 +16,7 @@
 const size_t BUFFER_INITIAL_LENGTH = 1024;
 const size_t MAX_INT64_CHARS = 20;
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport;
 
 std::string getAddress(const std::string &serverAddress)

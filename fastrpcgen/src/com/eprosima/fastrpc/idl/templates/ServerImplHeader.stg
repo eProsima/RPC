@@ -1,12 +1,12 @@
 group ServerImplHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "ServerImpl.h"], description=["This header file contains the declaration of the skeleton for all interfaces."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImpl.h"], description=["This header file contains the declaration of the skeleton for all interfaces."])$
 
 #ifndef _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
 #define _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
 
-#include "fastrpc/utils/Messages.h"
+#include "$ctx.product$/utils/Messages.h"
 #include "$ctx.filename$.h"
 
 $definitions; separator="\n"$

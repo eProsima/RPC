@@ -21,6 +21,7 @@ public class rpcddsgen extends fastrpcgen
             {
                 rpcddsgen.m_protocol = PROTOCOL.DDS;
                 rpcddsgen.m_appName = "rpcddsgen";
+                rpcddsgen.m_appProduct = "rpcdds";
                 rpcddsgen.m_appEnv = "RPCDDSHOME";
                 rpcddsgen main = new rpcddsgen(args);
                 if(main.execute())

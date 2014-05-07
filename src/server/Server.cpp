@@ -15,9 +15,9 @@
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 
-static const char* const CLASS_NAME ="eprosima::fastrpc::server::Server";
+static const char* const CLASS_NAME ="eprosima::rpc::server::Server";
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::server;
 using namespace ::strategy;
 using namespace ::transport;

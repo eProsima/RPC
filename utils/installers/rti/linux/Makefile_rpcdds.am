@@ -1,0 +1,25 @@
+SUBDIRS = include
+
+lib_LTLIBRARIES = librpcdds.la
+librpcdds_la_SOURCES = RPCDDS_SOURCES
+
+librpcdds_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt
+
+AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/rpcdds -Iextra/threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
+
+rpcdds_licenciasdir = $(datadir)/doc/rpcdds
+rpcdds_licencias_DATA = RPCDDS_LICENSE.txt LGPLv3_LICENSE.txt
+
+rpcdds_scriptdir = $(bindir)
+rpcdds_script_DATA = scripts/rpcddsgen.sh
+
+install-data-hook:
+	mkdir -p $(DESTDIR)$(datadir)/doc/rpcdds; \
+	cp -r doc/* $(DESTDIR)$(datadir)/doc/rpcdds; \
+	mkdir -p $(DESTDIR)$(datadir)/rpcdds; \
+	cp -r examples $(DESTDIR)$(datadir)/rpcdds/;
+
+uninstall-hook:
+	rm -r $(DESTDIR)$(datadir)/doc/rpcdds; \
+	rm -r $(DESTDIR)$(datadir)/rpcdds
+

@@ -17,7 +17,7 @@ static const char* const CLASS_NAME = "ThreadPoolStrategy";
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace strategy
         {
@@ -69,10 +69,10 @@ namespace eprosima
                     boost::threadpool::pool *m_pool;
             };
         } // namespace strategy
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::strategy;
 using namespace ::transport;
 

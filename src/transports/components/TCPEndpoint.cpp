@@ -5,7 +5,7 @@
 #include <vector>
 #include <boost/bind.hpp>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport;
 
 const size_t BUFFER_INITIAL_LENGTH = 1024;

@@ -15,7 +15,7 @@ struct DDS_TypeCode;
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -79,7 +79,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace protocol
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _PROTOCOLS_DDS_MESSAGEHEADERPLUGIN_H_

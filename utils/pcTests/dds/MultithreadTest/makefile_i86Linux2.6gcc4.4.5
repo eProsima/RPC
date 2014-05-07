@@ -8,7 +8,7 @@ DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
 INCLUDES= -I. -I$(FASTCDR)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(EPROSIMADIR)/code -I$(RPCDDSHOME)/include
 
-LIBS = -L$(FASTCDR)/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lfastcdr -lnddscore -lnddsc -lnddscpp -lfastrpc $(SYSLIBS)
+LIBS = -L$(FASTCDR)/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lfastcdr -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 

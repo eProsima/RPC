@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include <fastrpc/exceptions/BadParamException.h>
+#include "fastrpc/exceptions/BadParamException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 BadParamException::BadParamException(const std::string &message) : SystemException(message, 6)
 {

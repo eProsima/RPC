@@ -16,7 +16,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace strategy
         {
@@ -55,7 +55,7 @@ namespace eprosima
                     ThreadPoolStrategyImpl *m_impl;
             };
         } // namespace strategy
-    } // namespace fastrpc
+    } // namespace rpc
 } //namespace eprosima
 
 #endif // _STRATEGIES_THREADPOOLSTRATEGY_H_

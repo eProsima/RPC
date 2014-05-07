@@ -1,7 +1,7 @@
 group ServerImplHeaderExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "ServerImplExample.h"], description=["This header file contains an example of the declaration of a servant."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImplExample.h"], description=["This header file contains an example of the declaration of a servant."])$
 
 #ifndef _$ctx.filename;format="toUpper"$SERVER_IMPL_EXAMPLE_H_
 #define _$ctx.filename;format="toUpper"$SERVER_IMPL_EXAMPLE_H_

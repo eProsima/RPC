@@ -21,6 +21,7 @@ public class rpcrestgen extends fastrpcgen
             {
                 rpcrestgen.m_protocol = PROTOCOL.REST;
                 rpcrestgen.m_appName = "rpcrestgen";
+                rpcrestgen.m_appProduct = "rpcrest";
                 rpcrestgen.m_appEnv = "RPCRESTHOME";
                 rpcrestgen main = new rpcrestgen(args);
                 if(main.execute())

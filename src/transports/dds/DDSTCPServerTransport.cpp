@@ -9,9 +9,9 @@
 #include "fastrpc/transports/dds/TCPServerTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::TCPServerTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPServerTransport";
 
-using namespace eprosima::fastrpc::transport::dds;
+using namespace eprosima::rpc::transport::dds;
 
 TCPServerTransport::TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId) :
     m_public_address(NULL), m_server_bind_port(NULL), ServerTransport(serviceName, domainId)

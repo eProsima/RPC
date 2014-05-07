@@ -1,12 +1,12 @@
 group ProxyHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Proxy.h"], description=["This header file contains the declaration of the proxy for all interfaces."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.h"], description=["This header file contains the declaration of the proxy for all interfaces."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_PROXY_H_
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
 
-#include "fastrpc/client/Proxy.h"
+#include "$ctx.product$/client/Proxy.h"
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"
@@ -14,7 +14,7 @@ $endif$
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -48,7 +48,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::fastrpc::proxy::Proxy
+class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy
 {
     public:
    
@@ -59,10 +59,10 @@ class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::fastrpc::pro
          *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
          * @param protocol The protocol used to send the information over the transport.
          *        This protocol's object is not deleted by this class in its destructor. Cannot be NULL.
-         * @exception eprosima::fastrpc::exception::InitializeException This exception is thrown when the initialization was wrong.
+         * @exception eprosima::rpc::exception::InitializeException This exception is thrown when the initialization was wrong.
          */
-        $interface.name$Proxy(eprosima::fastrpc::transport::ProxyTransport &transport,
-            eprosima::fastrpc::protocol::$ctx.filename$Protocol &protocol);
+        $interface.name$Proxy(eprosima::rpc::transport::ProxyTransport &transport,
+            eprosima::rpc::protocol::$ctx.filename$Protocol &protocol);
 
         //! @brief Destructor.
         virtual ~$interface.name$Proxy();

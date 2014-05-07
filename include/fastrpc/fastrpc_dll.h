@@ -58,13 +58,7 @@
 #include "fastrpc/fastrpc_version.h"
 
 // Set properties.
-#if defined(RTI_WIN32) || defined(RTI_LINUX)
 #define EPROSIMA_LIB_NAME fastrpc
-#elif defined(OPENDDS)
-#define EPROSIMA_LIB_NAME fastrpco
-#else
-#error Not defined any middleware. Define RTI or OPENDDS.
-#endif
 
 #if defined(EPROSIMA_ALL_DYN_LINK) || defined(FASTRPC_DYN_LINK)
 #define EPROSIMA_DYN_LINK

@@ -19,7 +19,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -34,7 +34,7 @@ namespace eprosima
                  * using DDS.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI ProxyTransport : public eprosima::fastrpc::transport::ProxyTransport, public Transport
+                class FASTRPC_DllAPI ProxyTransport : public eprosima::rpc::transport::ProxyTransport, public Transport
                 {
                     public:
 
@@ -76,7 +76,7 @@ namespace eprosima
                          * @return 0 if the function works. -1 in other case.
                          * TODO
                          */
-                        eprosima::fastrpc::transport::Endpoint*
+                        eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *readertypename, bool eprosima_types,
                                     Transport::Create_data create_data, Transport::Copy_data copy_data,
@@ -137,7 +137,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_DDS_PROXYTRANSPORT_H_

@@ -15,7 +15,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace exception
         {
@@ -69,7 +69,7 @@ namespace eprosima
                     Exception& operator=(Exception&&);
             };
         } // namespace exception
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _EXCEPTIONS_EXCEPTION_H_

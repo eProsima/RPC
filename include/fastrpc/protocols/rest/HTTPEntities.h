@@ -17,7 +17,7 @@ using namespace std;
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -639,7 +639,7 @@ namespace eprosima
 
             } //namespace rest
         } //namespace protocol
-    } //namespace fastrpc
+    } //namespace rpc
 } //namespace eprosima
 
 #endif //TCP_SERIALIZER_HTTPENTITIES

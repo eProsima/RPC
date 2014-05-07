@@ -1,17 +1,17 @@
 group ClientExample;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "ClientExample.cxx"], description=["This source file shows a simple example of how to create a proxy for an interface."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "ClientExample.cxx"], description=["This source file shows a simple example of how to create a proxy for an interface."])$
 
 #include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$.h"
 #include "$ctx.filename$CDRProtocol.h"
-#include "fastrpc/transports/TCPProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
+#include "$ctx.product$/transports/TCPProxyTransport.h"
+#include "$ctx.product$/exceptions/Exceptions.h"
 
 #include <iostream>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 using namespace ::transport;
 using namespace ::protocol::fastcdr;

@@ -1,15 +1,15 @@
 group CDRProtocolSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "CDRProtocol.cxx"], description=["This source file contains the definition of the protocol used to create CDR messages."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "CDRProtocol.cxx"], description=["This source file contains the definition of the protocol used to create CDR messages."])$
 
 #include "$ctx.filename$CDRProtocol.h"
-#include "fastrpc/transports/ProxyTransport.h"
-#include "fastrpc/transports/ServerTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-#include "fastrpc/utils/Messages.h"
+#include "$ctx.product$/transports/ProxyTransport.h"
+#include "$ctx.product$/transports/ServerTransport.h"
+#include "$ctx.product$/exceptions/Exceptions.h"
+#include "$ctx.product$/utils/Messages.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::protocol::fastcdr;
 using namespace ::transport;
 using namespace ::exception;
@@ -31,7 +31,7 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
         if(transport.getBehaviour() == SERVER_BEHAVIOUR)
         {
             // If this is a server transport, we set its callback
-            eprosima::fastrpc::transport::ServerTransport &serverTransport = dynamic_cast<eprosima::fastrpc::transport::ServerTransport&>(transport);
+            eprosima::rpc::transport::ServerTransport &serverTransport = dynamic_cast<eprosima::rpc::transport::ServerTransport&>(transport);
             serverTransport.setCallback(&$ctx.filename$Protocol::worker);
         }
         
@@ -52,7 +52,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
     return true;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::fastrpc::transport::Endpoint *endpoint) 
+void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint) 
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     size_t bufferUse = dataLength, cdrLength = 0;
@@ -207,7 +207,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     // TODO In DDS the initialization is not necessary. But in CDR it is, for example a union with a char* (string) needs to be initialized to NULL.
     $varDecl(variable=operation.rettypeparam)$
     
-    eprosima::fastrpc::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::fastrpc::transport::ProxyTransport&>(getTransport());
+    eprosima::rpc::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpc::transport::ProxyTransport&>(getTransport());
     
     scdr.jump(8);
     scdr.serialize((int32_t)0);

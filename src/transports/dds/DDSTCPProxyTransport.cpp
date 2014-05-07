@@ -9,9 +9,9 @@
 #include "fastrpc/transports/dds/TCPProxyTransport.h"
 #include "eProsima_cpp/eProsimaMacros.h"
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::TCPProxyTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPProxyTransport";
 
-using namespace eprosima::fastrpc::transport::dds;
+using namespace eprosima::rpc::transport::dds;
 
 TCPProxyTransport::TCPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId, long milliseconds) :
     m_to_connect(NULL), ProxyTransport(remoteServiceName, domainId, milliseconds)

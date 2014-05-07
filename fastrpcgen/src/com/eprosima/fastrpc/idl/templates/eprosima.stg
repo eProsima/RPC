@@ -237,7 +237,7 @@ $endif$scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name
 $if(object.typecode.maxsize)$
 else
 $if(ctx.fastrpcProduct)$
-    throw eprosima::fastrpc::exception::BadParamException(std::string("The maximum length was exceeded"));
+    throw eprosima::rpc::exception::BadParamException(std::string("The maximum length was exceeded"));
 $else$
     throw eprosima::fastcdr::exception::BadParamException(std::string("The maximum length was exceeded"));
 $endif$

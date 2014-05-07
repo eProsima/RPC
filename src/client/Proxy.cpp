@@ -11,9 +11,9 @@
 #include "fastrpc/transports/ProxyTransport.h"
 #include "fastrpc/protocols/Protocol.h"
 
-static const char* const CLASS_NAME ="eprosima::fastrpc::proxy::Proxy";
+static const char* const CLASS_NAME ="eprosima::rpc::proxy::Proxy";
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::proxy;
 using namespace ::transport;
 using namespace ::protocol;

@@ -18,7 +18,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace strategy
         {
@@ -49,7 +49,7 @@ namespace eprosima
 
                     /**
                      * \brief This function makes the server starts listening requests.
-                     * \exception eprosima::fastrpc::exception::InitializeException This exception is thrown when the initialization fails for any reason
+                     * \exception eprosima::rpc::exception::InitializeException This exception is thrown when the initialization fails for any reason
                      */
                     void serve();
 
@@ -65,7 +65,7 @@ namespace eprosima
 					 * @param data The request data.
 					 * @param endpoint The request endpoint.
 					 */
-                    static void process(Server &server, void *data, eprosima::fastrpc::transport::Endpoint &endpoint);
+                    static void process(Server &server, void *data, eprosima::rpc::transport::Endpoint &endpoint);
 
                 protected:
 
@@ -80,8 +80,8 @@ namespace eprosima
                      * \param domainId The domain id's value that the server proxy will set in the domain participant.
                      * \exception InitializeException This exception is thrown when the initialization was wrong.
                      */
-                    Server(eprosima::fastrpc::strategy::ServerStrategy &strategy, eprosima::fastrpc::transport::ServerTransport &transport,
-                            eprosima::fastrpc::protocol::Protocol &protocol);
+                    Server(eprosima::rpc::strategy::ServerStrategy &strategy, eprosima::rpc::transport::ServerTransport &transport,
+                            eprosima::rpc::protocol::Protocol &protocol);
 
                     /// \brief The default destructor.
                     virtual ~Server();
@@ -89,16 +89,16 @@ namespace eprosima
                 private:
 
 					/// \brief Pointer to the thread strategy this server uses.
-                    eprosima::fastrpc::strategy::ServerStrategy &m_strategy;
+                    eprosima::rpc::strategy::ServerStrategy &m_strategy;
 
                     /// \brief Pointer to the transport which this server's proxy uses.
-                    eprosima::fastrpc::transport::ServerTransport &m_transport;
+                    eprosima::rpc::transport::ServerTransport &m_transport;
 
 					/// \brief Pointer to the protocol this server uses.
-                    eprosima::fastrpc::protocol::Protocol &m_protocol;
+                    eprosima::rpc::protocol::Protocol &m_protocol;
             };
         } // namespace server
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _SERVER_SERVER_H_

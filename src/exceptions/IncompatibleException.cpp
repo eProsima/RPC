@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include <fastrpc/exceptions/IncompatibleException.h>
+#include "fastrpc/exceptions/IncompatibleException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 IncompatibleException::IncompatibleException(const std::string &message) : SystemException(message, 1)
 {

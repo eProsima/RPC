@@ -15,7 +15,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace exception
         {
@@ -121,7 +121,7 @@ namespace eprosima
                     int32_t m_minor;
             };
         } // namespace exception
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _EXCEPTIONS_SYSTEMEXCEPTION_H_

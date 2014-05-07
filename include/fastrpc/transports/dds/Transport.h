@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -38,8 +38,8 @@ namespace eprosima
                         typedef void* (*Create_data)(void);
                         typedef void (*Copy_data)(void *src, void *dst);
                         typedef void (*Destroy_data)(void *data);
-                        typedef void (*ProcessFunc)(eprosima::fastrpc::protocol::Protocol&, void*,
-                                eprosima::fastrpc::transport::Endpoint*);
+                        typedef void (*ProcessFunc)(eprosima::rpc::protocol::Protocol&, void*,
+                                eprosima::rpc::transport::Endpoint*);
 
                         /*!
                          * @brief Default destructor.
@@ -97,7 +97,7 @@ namespace eprosima
                          * @return 0 if the function ends successfully, -1 otherwise.
                          * TODO
                          */
-                        virtual eprosima::fastrpc::transport::Endpoint*
+                        virtual eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *readertypename, bool eprosima_types,
                                     Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
@@ -147,7 +147,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_DDS_TRANSPORT_H_

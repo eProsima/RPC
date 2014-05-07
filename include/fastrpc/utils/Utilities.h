@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
 		/**
 		 * \brief This function sleeps the current thread.
@@ -21,7 +21,7 @@ namespace eprosima
 		 * \param milliseconds Time in milliseconds that the thread will be sleeping.
 		 */
 		FASTRPC_DllAPI void sleep(unsigned int milliseconds);
-    }; // namespace fastrpc
+    }; // namespace rpc
 }; // namespace eprosima
 
 #endif // _UTILS_UTILITIES_H_

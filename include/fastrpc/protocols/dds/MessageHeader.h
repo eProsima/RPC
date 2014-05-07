@@ -21,7 +21,7 @@ namespace eprosima
         class Cdr;
     }
 
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -564,7 +564,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace protocol
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _PROTOCOLS_DDS_MESSAGEHEADER_H_

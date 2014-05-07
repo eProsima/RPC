@@ -14,7 +14,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -248,6 +248,6 @@ namespace eprosima
                     bool m_versionCompatible;
             };
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 #endif // _TRANSPORTS_MESSAGES_HTTPMESSAGE_H_

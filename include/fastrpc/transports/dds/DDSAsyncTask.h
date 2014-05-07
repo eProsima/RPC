@@ -16,7 +16,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -28,7 +28,7 @@ namespace eprosima
                  * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI DDSAsyncTask : public eprosima::fastrpc::transport::AsyncTask
+                class FASTRPC_DllAPI DDSAsyncTask : public eprosima::rpc::transport::AsyncTask
                 {
                     public:
 
@@ -91,7 +91,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_DDS_DDSASYNCTASK_H_

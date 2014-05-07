@@ -9,12 +9,12 @@
 group TopicsSourceInterface;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Topics.cpp"], description=["This source file contains the implementation of topics generated using operations in the IDL file."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This source file contains the implementation of topics generated using operations in the IDL file."])$
 
 #include "$ctx.filename$Topics.h"
 
 #include "fastcdr/Cdr.h"
-#include "fastrpc/exceptions/BadParamException.h"
+#include "$ctx.product$/exceptions/BadParamException.h"
 
 $definitions; separator="\n"$
 
@@ -103,7 +103,7 @@ void $interface.scopedname$Request_union::_d(int32_t __d)
 {
     if(m__d != __d)
     {
-        throw eprosima::fastrpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
     }
     
     m__d = __d;
@@ -135,7 +135,7 @@ void $interface.scopedname$Request_union::$operation.name$($operation.parent.sco
 const $operation.parent.scopedname$_$operation.name$Request& $interface.scopedname$Request_union::$operation.name$() const
 {
     if(m__d != $i$)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$operation.name$;
 }
@@ -143,7 +143,7 @@ const $operation.parent.scopedname$_$operation.name$Request& $interface.scopedna
 $operation.parent.scopedname$_$operation.name$Request& $interface.scopedname$Request_union::$operation.name$()
 {
     if(m__d != $i$)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$operation.name$;
 }
@@ -243,7 +243,7 @@ $interface.scopedname$Request& $interface.scopedname$Request::operator=($interfa
 size_t $interface.scopedname$Request::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align =  eprosima::fastrpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::rpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
     current_align = $interface.name$Request_union::getMaxCdrSerializedSize(current_align);
             
     return current_align;
@@ -341,7 +341,7 @@ void $interface.scopedname$Reply_union::_d(int32_t __d)
 {
     if(m__d != __d)
     {
-        throw eprosima::fastrpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
     }
     
     m__d = __d;
@@ -373,7 +373,7 @@ void $interface.scopedname$Reply_union::$operation.name$($operation.parent.scope
 const $operation.parent.scopedname$_$operation.name$Reply& $interface.scopedname$Reply_union::$operation.name$() const
 {
     if(m__d != $i$)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$operation.name$;
 }
@@ -381,7 +381,7 @@ const $operation.parent.scopedname$_$operation.name$Reply& $interface.scopedname
 $operation.parent.scopedname$_$operation.name$Reply& $interface.scopedname$Reply_union::$operation.name$()
 {
     if(m__d != $i$)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$operation.name$;
 }
@@ -481,7 +481,7 @@ $interface.scopedname$Reply& $interface.scopedname$Reply::operator=($interface.n
 size_t $interface.scopedname$Reply::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t current_align = current_alignment;
-    current_align =  eprosima::fastrpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
+    current_align =  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
     current_align = $interface.name$Reply_union::getMaxCdrSerializedSize(current_align);
             
     return current_align;
@@ -762,7 +762,7 @@ void $operation.parent.scopedname$_$operation.name$Reply::_d(int32_t __d)
 {
     if(m__d != __d)
     {
-        throw eprosima::fastrpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
     }
     
     m__d = __d;
@@ -794,7 +794,7 @@ void $operation.parent.scopedname$_$operation.name$Reply::st($operation.parent.s
 const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply::st() const
 {
     if(m__d != 0)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_st;
 }
@@ -802,7 +802,7 @@ const $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.
 $operation.parent.scopedname$_$operation.name$Reply_st& $operation.parent.scopedname$_$operation.name$Reply::st()
 {
     if(m__d != 0)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_st;
 }
@@ -1029,7 +1029,7 @@ void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$excep
 const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 {
     if(m__d != $label$)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
 }
@@ -1037,7 +1037,7 @@ const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 $exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
 {
     if(m__d != $label$)
-        throw eprosima::fastrpc::exception::BadParamException("This member is not been selected");
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
 }

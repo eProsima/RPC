@@ -2,7 +2,7 @@
 
 #include "ndds/ndds_cpp.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::protocol::dds;
 
 DDS_TypeCode* IdentificationPlugin::get_typecode()
@@ -192,7 +192,7 @@ DDS_TypeCode* RequestHeaderPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        RequestHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::IdentificationPlugin::get_typecode();
+        RequestHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::IdentificationPlugin::get_typecode();
         RequestHeader_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&RequestHeader_g_tc_remoteServiceName_string;
         RequestHeader_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
         
@@ -300,7 +300,7 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        ReplyHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::IdentificationPlugin::get_typecode();
+        ReplyHeader_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::IdentificationPlugin::get_typecode();
         ReplyHeader_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ulong;
         ReplyHeader_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long;
         ReplyHeader_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&ReplyHeader_g_tc_retMsg_string;
