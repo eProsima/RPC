@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#: This script pack RPCDDS product for any platform in Linux.
+#: This script pack RPCREST product for any platform in Linux.
 #
 # This script needs the next programs to be run.
 # - subversion
@@ -27,18 +27,18 @@ function setPlatform
 
 function package
 {
-    # Get the current version of RPCDDS
+    # Get the current version of RPCREST
     . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
-    # Compile RPCDDS library. Also set platform if is necessary.
-    # Compile RPCDDS library for i86.
+    # Compile RPCREST library. Also set platform if is necessary.
+    # Compile RPCREST library for i86.
     if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
         rm -rf lib/$NDDSTARGET
-        make rpcdds
+        make rpcrest
         errorstatus=$?
         # Try to add platform
         . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
@@ -50,29 +50,24 @@ function package
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
         rm -rf lib/$NDDSTARGET
-        make rpcdds
+        make rpcrest
         errorstatus=$?
         . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
         . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
         if [ $errorstatus != 0 ]; then return; fi
     fi
 
-    # Compile rpcddsgen application.
+    # Compile rpcrestgen application.
     cd fastrpcgen
     rm -rf build
-    ant rpcddsgen_jar
+    ant rpcrestgen_jar
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
     # Execute DDS tests
-    cd utils/pcTests/rti
+    cd utils/pcTests/restful
     ./exec_tests.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
-    cd utils/pcTests/dds
-    ./exec_test.sh $package_targets
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../..
@@ -80,48 +75,48 @@ function package
     # Create PDFS from documentation.
     cd doc
     # Installation manual
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPCDDS - Installation Manual.odt,$fastrpcversion)"
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPCREST - Installation Manual.odt,$fastrpcversion)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPCDDS - User Manual.odt,$fastrpcversion)"
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPCREST - User Manual.odt,$fastrpcversion)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
     # Create README
-    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README_rpcdds.odt,$fastrpcversion,./doc/,./)"
+    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README_rpcrest.odt,$fastrpcversion,./doc/,./)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    mv README_rpcdds.html README.html
+    mv README_rpcrest.html README.html
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
     # Prepare include files
-    mkdir -p includetmp/rpcdds
+    mkdir -p includetmp/rpcrest
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    includefiles=$(cat building/includes/rpcdds_includes)
+    includefiles=$(cat building/includes/rpcrest_includes)
     cd include/fastrpc
-    cp --parents $includefiles ../../includetmp/rpcdds
+    cp --parents $includefiles ../../includetmp/rpcrest
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../..
-    find includetmp/rpcdds -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcdds/' {} \;
+    find includetmp/rpcrest -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcrest/' {} \;
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcdds/' includetmp/rpcdds/fastrpc_dll.h
+    sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcrest/' includetmp/rpcrest/fastrpc_dll.h
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
     # Create doxygen information.
     # Generate the examples
     # DDS example
-    ./scripts/rpcddsgen.sh -replace -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
+    ./scripts/rpcrestgen.sh -replace -d utils/doxygen/examples/restful utils/doxygen/examples/restful/FooREST.wadl
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     #Export version
     export VERSION_DOX=$fastrpcversion
-    export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_rpcdds.dox includetmp utils/doxygen/examples/dds"
+    export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_rpcrest.dox includetmp utils/doxygen/examples/restful"
     mkdir -p output
     mkdir -p output/doxygen
     doxygen utils/doxygen/doxyfile
@@ -136,7 +131,7 @@ function package
 
     # Create installers
     cd utils/installers/rti/linux
-    ./setup_linux_rpcdds.sh $fastrpcversion
+    ./setup_linux_rpcrest.sh $fastrpcversion
     errorstatus=$?
     cd ../../../..
     if [ $errorstatus != 0 ]; then return; fi

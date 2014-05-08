@@ -1,7 +1,7 @@
 @Annotation
 local interface RESOURCES_BASE_URI {
 	attribute string value;
-}
+};
 
 @RESOURCES_BASE_URI("http://example.com/resources/")
 module Bank
@@ -9,17 +9,17 @@ module Bank
 	@Annotation
 	local interface PATH {
 		attribute string value;
-	}
+	};
 
 	@Annotation
 	local interface METHOD {
 		attribute string value;
-	}
+	};
 
 	@Annotation
 	local interface BODY {
 		attribute string value;
-	}
+	};
 
 	@PATH("account/{accountNumber}")
 	interface account_accountNumberResource

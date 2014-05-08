@@ -7,7 +7,7 @@ LN= g++
 AR=ar
 LDFLAGS= -m$arch$
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
-DEFINES= $archMakeDefines()$
+DEFINES= $solution.defines : {define | -D$define$};separator=" "$
 
 INCLUDES= -I. $solution.includes : {include | -I$include$};separator=" "$
 

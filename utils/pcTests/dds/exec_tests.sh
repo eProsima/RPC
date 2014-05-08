@@ -188,9 +188,9 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
-#rm -r output
+rm -r output
 
-# Restore environment for FASTRPC
+# Restore environment for RPCDDS
 . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then

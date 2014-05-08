@@ -9,8 +9,8 @@ FASTCDR_TARGET=$(shell $(EPROSIMADIR)/scripts/common_dds_functions.sh printEPROS
 RPCREST_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(RPCREST_OUTDIR_DEBUG))
 RPCREST_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(RPCREST_OUTDIR_RELEASE))
 
-RPCREST_LIBS_DEBUG= $(LIBS_DEBUG) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread
-RPCREST_LIBS= $(LIBS) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread
+RPCREST_LIBS_DEBUG= $(LIBS_DEBUG) -lboost_system -lboost_thread
+RPCREST_LIBS= $(LIBS) -lboost_system -lboost_thread
 
 RPCREST_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x
 RPCREST_CFLAGS= $(CFLAGS) -std=c++0x
@@ -48,7 +48,6 @@ RPCREST_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/$(RPCREST_TARGET_Z_FILE)
 
 RPCREST_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
-		    -I$(BASEDIR)/../fastcdr/include \
 		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 

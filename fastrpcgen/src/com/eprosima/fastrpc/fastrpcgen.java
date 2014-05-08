@@ -485,6 +485,15 @@ public class fastrpcgen
                 solution.addLibrary("nddscore");
                 solution.addLibrary("nddsc");
                 solution.addLibrary("nddscpp");
+                if(m_osOption.contains("Windows"))
+                {
+                    solution.addDefine("RTI_WIN32");
+                }
+                else if(m_osOption.contains("Linux"))
+                {
+                    solution.addDefine("RTI_LINUX");
+                    solution.addDefine("RTI_UNIX");
+                }
 
                 // Add product library.
                 solution.addLibrary("rpcdds");

@@ -4,12 +4,11 @@ LN= g++
 AR=ar
 LDFLAGS= -m32
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
-DEFINES=  -DRTI_LINUX -DRTI_UNIX
+DEFINES= 
 
-INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include 
+INCLUDES= -I. -I$(RPCRESTHOME)/include
 
-LIBS =  -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 \
-       -lrpcdds-0.2.0 -lnddsc -lnddscore -lnddscpp -lboost_system-mt $(SYSLIBS)
+LIBS = -L$(RPCRESTHOME)/lib/i86Linux2.6gcc4.4.5 -lboost_system -lboost_thread -lrpcrest $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 
@@ -25,8 +24,6 @@ Calculator_SERVER_TARGET= lib/i86Linux2.6gcc4.4.5/libCalculatorServer.so
 Calculator_SERVER_TARGET_Z= lib/i86Linux2.6gcc4.4.5/libCalculatorServer.a
 Calculator_SERVER_EXAMPLE_TARGET= bin/i86Linux2.6gcc4.4.5/CalculatorServerExample
 Calculator_COMMON_SRC_CXXFILES = Calculator.cxx \
-	CalculatorPlugin.cxx \
-	CalculatorSupport.cxx \
 	CalculatorRESTProtocol.cxx
 
 Calculator_COMMON_SRC_CPPFILES=
