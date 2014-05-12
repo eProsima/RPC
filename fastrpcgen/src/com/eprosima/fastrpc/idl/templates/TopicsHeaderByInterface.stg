@@ -411,6 +411,7 @@ public:
      */
     ~$interface.name$Reply();
     
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$Reply that will be copied.
      */
@@ -568,6 +569,7 @@ public:
      */
     ~$operation.parent.name$_$operation.name$Request();
     
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
      */
