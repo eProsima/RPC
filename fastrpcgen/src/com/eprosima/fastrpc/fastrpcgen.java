@@ -73,7 +73,7 @@ public class fastrpcgen
     protected static String m_localAppProduct = "fastrpc";
     protected static String m_appEnv = "FASTRPCHOME";
     private static ArrayList<String> m_platforms = null;
-    private String m_osOption = null;
+    private String m_os = null;
     private boolean m_servercode = true;
     private boolean m_clientcode = true;
     private String m_exampleOption = null;
@@ -149,7 +149,7 @@ public class fastrpcgen
 
         // Detect OS system
         // Detect OS
-        m_osOption = System.getProperty("os.name");
+        m_os = System.getProperty("os.name");
         
         m_idlFiles = new Vector<String>();
         
@@ -414,7 +414,7 @@ public class fastrpcgen
         if(returnedValue)
         {
             // Create new solution.
-            Solution solution = new Solution(m_servercode, m_clientcode);
+            Solution solution = new Solution(getVersion(), m_servercode, m_clientcode);
 
             // Load string templates
             System.out.println("Loading Templates...");     
@@ -475,7 +475,8 @@ public class fastrpcgen
                         solution.addInclude("$(FASTCDR)/include");
                         solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
                     }
-                    solution.addLibrary("fastcdr");
+		    if(!m_os.contains("Windows"))
+		        solution.addLibrary("fastcdr");
                 }
 
                 // Add dds middleware code dependencies
@@ -485,11 +486,12 @@ public class fastrpcgen
                 solution.addLibrary("nddscore");
                 solution.addLibrary("nddsc");
                 solution.addLibrary("nddscpp");
-                if(m_osOption.contains("Windows"))
+
+                if(m_os.contains("Windows"))
                 {
                     solution.addDefine("RTI_WIN32");
                 }
-                else if(m_osOption.contains("Linux"))
+                else if(m_os.contains("Linux"))
                 {
                     solution.addDefine("RTI_LINUX");
                     solution.addDefine("RTI_UNIX");
@@ -504,8 +506,11 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-                solution.addLibrary("boost_system");
-                solution.addLibrary("boost_thread");
+		if(m_os.equals("Linux"))
+		{
+		    solution.addLibrary("boost_system");
+		    solution.addLibrary("boost_thread");
+		}
 
                 // Add product library.
                 solution.addLibrary("rpcrest");
@@ -516,14 +521,19 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-                solution.addLibrary("boost_system");
-                solution.addLibrary("boost_thread");
+		if(m_os.equals("Linux"))
+		{
+                    solution.addLibrary("boost_system");
+                    solution.addLibrary("boost_thread");
+		}
+
                 if(m_local)
                 {
                     solution.addInclude("$(FASTCDR)/include");
                     solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
                 }
-                solution.addLibrary("fastcdr");
+		if(!m_os.contains("Windows"))
+                    solution.addLibrary("fastcdr");
 
                 // Add product library.
                 solution.addLibrary("fastrpc");
@@ -1322,7 +1332,7 @@ public class fastrpcgen
         // Set the temporary folder.
         if(m_tempDir == null)
         {
-        	if(m_osOption.contains("Windows"))
+        	if(m_os.contains("Windows"))
         	{
         		String tempPath = System.getenv("TEMP");
         		
@@ -1331,7 +1341,7 @@ public class fastrpcgen
         		
         		m_tempDir = tempPath;
         	}
-        	else if(m_osOption.contains("Linux"))
+        	else if(m_os.contains("Linux"))
         	{
         		m_tempDir = "/tmp/";
         	}
@@ -1353,9 +1363,9 @@ public class fastrpcgen
                 // Directory $NDDSHOME/scripts/rtiddsgen.bat
                 m_command = dds_root + File.separator + "scripts" + File.separator;
 
-                if(m_osOption.contains("Windows"))
+                if(m_os.contains("Windows"))
                     m_command += "rtiddsgen.bat";
-                else if(m_osOption.contains("Linux"))
+                else if(m_os.contains("Linux"))
                     m_command += "rtiddsgen";
 
                 // Add that creates file in the current directory.
@@ -1401,12 +1411,12 @@ public class fastrpcgen
             }
             else if(m_middleware.equals("opendds"))
             {       
-                if(m_osOption.contains("Windows"))
+                if(m_os.contains("Windows"))
                 {
                     m_command = "opendds_idl.exe";
                     m_extra_command = "tao_idl.exe";
                 }
-                else if(m_osOption.contains("Linux"))
+                else if(m_os.contains("Linux"))
                 {
                     m_command = "opendds_idl";
                     m_extra_command = "tao_idl";
@@ -1577,7 +1587,7 @@ public class fastrpcgen
 	            
 	    		if(lastBarraOccurrency == -1)
 	    		{
-	    			if(m_osOption.equals("Windows"))
+	    			if(m_os.equals("Windows"))
 	    			{
 	    				lastBarraOccurrency = file.lastIndexOf('\\');
 	    			}
@@ -1863,7 +1873,7 @@ public class fastrpcgen
         if(m_tempDir != null)
         	outputfile = m_tempDir + outputfile;
         
-        if(m_osOption.contains("Windows"))
+        if(m_os.contains("Windows"))
         {
         	try
             {
@@ -1881,11 +1891,11 @@ public class fastrpcgen
         
         if(ppPath == null)
         {
-        	if(m_osOption.contains("Windows"))
+        	if(m_os.contains("Windows"))
         	{
         		ppPath = "cl.exe";
         	}
-        	else if(m_osOption.contains("Linux"))
+        	else if(m_os.contains("Linux"))
         	{
         		ppPath = "cpp";
         	}
@@ -1897,13 +1907,13 @@ public class fastrpcgen
         // Add the include paths given as parameters.
         for(int i = 0; i < m_includePaths.size(); ++i)
         {
-        	if(m_osOption.contains("Windows"))
+        	if(m_os.contains("Windows"))
         		lineCommand.add(((String)m_includePaths.get(i)).replaceFirst("^-I", "/I"));
-        	else if(m_osOption.contains("Linux"))
+        	else if(m_os.contains("Linux"))
         		lineCommand.add(m_includePaths.get(i));
         }
         
-        if(m_osOption.contains("Windows"))
+        if(m_os.contains("Windows"))
         {
         	lineCommand.add("/E");
         	lineCommand.add("/C");
@@ -1912,7 +1922,7 @@ public class fastrpcgen
         // Add input file.
         lineCommand.add(idlFilename);
         
-        if(m_osOption.contains("Linux"))
+        if(m_os.contains("Linux"))
         {
         	// Add output file.
         	lineCommand.add(outputfile);

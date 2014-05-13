@@ -33,13 +33,24 @@ if %argC% geq 1 (
     )
 )
 
+:: Check environment variables
+if "%NDDSHOME%"=="" (
+    echo "NDDSHOME environment variable is not set."
+    exit /b -1
+)
+
+if "%EPROSIMADIR%"=="" (
+    echo "EPROSIMADIR environment variable is not set."
+    exit /b -1
+)
+
+if "%RPCDDSHOME%"=="" (
+    echo "RPCDDSHOME environment variable is not set."
+    exit /b -1
+)
+
 :: Set environment for FASTRPC
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
-
-:: Create symbolic link to EPROSIMADIR in this fastrpc folder.
-if not exist ..\..\..\include\fastrpc\eProsima_cpp mklink /J ..\..\..\include\fastrpc\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
 
 :: Find all directories.
 for /D %%D in ("*") do (
@@ -309,9 +320,6 @@ goto :EOF
 :exit
 :: Remove output directory
 rd /S /Q output
-
-:: Remove symbolic link from EPROSIMADIR
-if exist ..\..\..\include\fastrpc\eProsima_cpp rmdir /Q ..\..\..\include\fastrpc\eProsima_cpp
 
 :: Restore environment for FASTRPC
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTIversion

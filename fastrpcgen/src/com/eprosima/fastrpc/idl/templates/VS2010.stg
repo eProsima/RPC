@@ -55,8 +55,8 @@ project(solution, project, example, configurations, local) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -64,10 +64,19 @@ project(solution, project, example, configurations, local) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$if(it.dll)$
+                              $if(it.debug)$$solution.librariesDebug : {library |$library$.lib;}$
+                              $else$$solution.libraries : {library |$library$.lib;}$
+                              $endif$
+                              $else$
+                              $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
+                              $else$$solution.librariesStatic : {library |$library$.lib;}$
+                              $endif$
+                              $endif$
+                              $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -156,8 +165,8 @@ projectClient(solution, project, example, configurations, local) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -165,10 +174,19 @@ projectClient(solution, project, example, configurations, local) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$if(it.dll)$
+                              $if(it.debug)$$solution.librariesDebug : {library |$library$.lib;}$
+                              $else$$solution.libraries : {library |$library$.lib;}$
+                              $endif$
+                              $else$
+                              $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
+                              $else$$solution.librariesStatic : {library |$library$.lib;}$
+                              $endif$
+                              $endif$
+                              $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -257,8 +275,8 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -266,9 +284,18 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$if(it.dll)$
+                              $if(it.debug)$$solution.librariesDebug : {library |$library$.lib;}$
+                              $else$$solution.libraries : {library |$library$.lib;}$
+                              $endif$
+                              $else$
+                              $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
+                              $else$$solution.librariesStatic : {library |$library$.lib;}$
+                              $endif$
+                              $endif$
+                              $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
@@ -338,8 +365,8 @@ projectServer(solution, project, example, configurations, local) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -347,10 +374,19 @@ projectServer(solution, project, example, configurations, local) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$if(it.dll)$
+                              $if(it.debug)$$solution.librariesDebug : {library |$library$.lib;}$
+                              $else$$solution.libraries : {library |$library$.lib;}$
+                              $endif$
+                              $else$
+                              $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
+                              $else$$solution.librariesStatic : {library |$library$.lib;}$
+                              $endif$
+                              $endif$
+                              $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;%(AdditionalDependencies)</AdditionalDependencies>
       $if(it.dll)$
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\$(TargetDir)\$(TargetName).lib</ImportLibrary>
       $endif$   
     </Link>
@@ -439,8 +475,8 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
-      <AdditionalIncludeDirectories>\$(FASTRPCHOME)\include;$if(solution.needsRTI)$$rtiInclVS()$$endif$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -448,9 +484,18 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$dependencies(conf=it)$;$project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$if(it.dll)$
+                              $if(it.debug)$$solution.librariesDebug : {library |$library$.lib;}$
+                              $else$$solution.libraries : {library |$library$.lib;}$
+                              $endif$
+                              $else$
+                              $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
+                              $else$$solution.librariesStatic : {library |$library$.lib;}$
+                              $endif$
+                              $endif$
+                              $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$rtiLibsVS(example=example)$\$(FASTRPCHOME)\lib\\$example$;.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
