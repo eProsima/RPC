@@ -112,6 +112,7 @@ function package
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     #Export version
+    export PROJECT_DOX=RPCREST
     export VERSION_DOX=$fastrpcversion
     export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_rpcrest.dox includetmp utils/doxygen/examples/restful"
     mkdir -p output

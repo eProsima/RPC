@@ -117,6 +117,7 @@ function package
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     #Export version
+    export PROJECT_DOX=RPCDDS
     export VERSION_DOX=$fastrpcversion
     export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_rpcdds.dox includetmp utils/doxygen/examples/dds"
     mkdir -p output

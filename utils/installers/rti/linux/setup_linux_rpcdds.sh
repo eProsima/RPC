@@ -37,7 +37,7 @@ function installer
     cp -r "../../../../output/doxygen/html" tmp/$project/doc
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPC - API C++ Manual.pdf"
+    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPCDDS - API C++ Manual.pdf"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
