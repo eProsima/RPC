@@ -109,9 +109,6 @@ function package
     find includetmp/rpcdds -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcdds/' {} \;
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcdds/' includetmp/rpcdds/fastrpc_dll.h
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
 
     # Create doxygen information.
     # Generate the examples
