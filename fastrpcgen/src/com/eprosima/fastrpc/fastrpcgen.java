@@ -343,7 +343,7 @@ public class fastrpcgen
 
         if(m_idlFiles.isEmpty())
         {
-            throw new BadArgumentException("The program expects an IDL file");
+            throw new BadArgumentException("No input files given");
         }
     }
     
