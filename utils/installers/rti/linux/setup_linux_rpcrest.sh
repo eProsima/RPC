@@ -154,7 +154,7 @@ function installer
     find tmp/ -iname "*~" -exec rm -f {} \;
 
     cd tmp
-    tar cvzf "../eProsima_RPCREST-${version}-Linux-RTIDDS-5.0.0.tar.gz" $project
+    tar cvzf "../eProsima_RPCREST-${version}-Linux.gz" $project
     errorstatus=$?
     cd ..
     if [ $errorstatus != 0 ]; then return; fi

@@ -68,16 +68,16 @@ function package
     cd ..
 
     # Execute DDS tests
-    cd utils/pcTests/rti
-    ./exec_tests.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
-    cd utils/pcTests/dds
-    ./exec_test.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
+##    cd utils/pcTests/rti
+##    ./exec_tests.sh $package_targets
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../..
+##    cd utils/pcTests/dds
+##    ./exec_test.sh $package_targets
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../..
 
     # Create PDFS from documentation.
     cd doc
