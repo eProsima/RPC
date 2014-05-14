@@ -11,49 +11,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-
         <ClCompile Include="Calculator.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
-
-        <ClCompile Include="CalculatorPlugin.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-
-        <ClCompile Include="CalculatorSupport.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-
         <ClCompile Include="CalculatorRESTProtocol.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
-
         <ClInclude Include="Calculator.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
-
-        <ClInclude Include="CalculatorPlugin.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
-
-        <ClInclude Include="CalculatorSupport.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
-
         <ClInclude Include="CalculatorProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
-
         <ClInclude Include="CalculatorRESTProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>

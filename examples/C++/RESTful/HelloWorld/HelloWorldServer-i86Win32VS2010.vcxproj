@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>HelloWorldServer</ProjectName>
-    <ProjectGuid>{54E27858-A24F-DE95-000A-176BEE87ADEC}</ProjectGuid>
+    <ProjectGuid>{6E4889AA-121A-0496-D1AC-6515739C5A42}</ProjectGuid>
     <RootNamespace>HelloWorldServer</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,17 +88,18 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(RPCRESTHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscppd.lib; nddscd.lib; nddscored.lib;;HelloWorldd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>boost_systemd.lib;boost_threadd.lib;rpcrestd.lib;
+  ;HelloWorldd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(RPCDDSHOME)\lib\i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
@@ -106,17 +107,18 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;RPCDDS_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(RPCRESTHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscpp.lib; nddsc.lib; nddscore.lib;;HelloWorld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>boost_system.lib;boost_thread.lib;rpcrest.lib;
+  ;HelloWorld.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(RPCDDSHOME)\lib\i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
@@ -124,15 +126,16 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(RPCRESTHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscppzd.lib; nddsczd.lib; nddscorezd.lib;;libHelloWorldd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libboost_systemd.lib;libboost_threadd.lib;librpcrestd.lib;
+  ;libHelloWorldd.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -143,15 +146,16 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(RPCDDSHOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;RTI_WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(RPCRESTHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscppz.lib; nddscz.lib; nddscorez.lib;;libHelloWorld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libboost_system.lib;libboost_thread.lib;librpcrest.lib;
+  ;libHelloWorld.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>

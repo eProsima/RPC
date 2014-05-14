@@ -7,7 +7,7 @@ License: LGPLv3
 URL: http://www.eprosima.com
 Source0: %{name}_%{version}_rpm.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: autoconf automake libtool, antlr, stringtemplate, ant, boost-system, boost-thread
+BuildRequires: autoconf automake libtool, antlr, stringtemplate, ant, boost-system, boost-thread, fastcdr
 Requires: antlr, stringtemplate, boost-system, boost-thread, fastcdr
 
 %description

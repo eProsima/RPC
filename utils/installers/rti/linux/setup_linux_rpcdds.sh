@@ -245,10 +245,23 @@ function rpminstaller
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
 
+    # Install fastcdr for i686
+    cd ../RPMS/i686
+    sudo yum localinstall fastcdr-0.2.1-1.fc20.i686.rpm
+    cd -
+
 	# Build command for i686.
 	rpmbuild -bb --target i686 rpcdds.spec
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then cd -; return; fi
+
+    #Uinstall fastcdr i686
+    sudo yum remove fastcdr
+
+    # Install fastcdr for x64
+    cd ../RPMS/x86_64
+    sudo yum localinstall fastcdr-0.2.1-1.fc20.x86_64.rpm
+    cd -
 
 	# Build command for x86_64.
 	rpmbuild -bb --target x86_64 rpcdds.spec
@@ -256,6 +269,9 @@ function rpminstaller
 	# Return
 	cd -
 	if [ $errorstatus != 0 ]; then return; fi
+
+    #Uinstall fastcdr i686
+    sudo yum remove fastcdr
 }
 
 if [ $# -lt 1 ]; then

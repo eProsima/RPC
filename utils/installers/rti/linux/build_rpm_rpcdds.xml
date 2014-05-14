@@ -130,7 +130,7 @@
 		</copy>
         <!--> Copy version file.<-->
 		<copy todir="${build.classes}">
-			<fileset dir="${basedir}${file.separator}..${file.separator}include${file.separator}rpcrest">
+			<fileset dir="${basedir}${file.separator}..${file.separator}include${file.separator}rpcdds">
 				<include name="fastrpc_version.h" />
 			</fileset>
 		</copy>

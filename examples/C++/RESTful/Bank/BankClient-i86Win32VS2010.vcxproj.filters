@@ -11,14 +11,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-
         <ClCompile Include="BankProxy.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
-
         <ClInclude Include="BankProxy.h">
           <Filter>Header Files</Filter>
         </ClInclude>
