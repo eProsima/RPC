@@ -89,14 +89,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
         <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;NDDS_USER_DLL_EXPORT;;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_LINUX;RTI_UNIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;NDDS_USER_DLL_EXPORT;;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>fastcdrd.lib;nddscored.lib;nddscd.lib;nddscppd.lib;rpcddsd.lib;
+        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;rpcddsd-0.3.0.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -108,14 +108,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
         <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;NDDS_USER_DLL_EXPORT;;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_LINUX;RTI_UNIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;NDDS_USER_DLL_EXPORT;;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>fastcdr.lib;nddscore.lib;nddsc.lib;nddscpp.lib;rpcdds.lib;
+        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;rpcdds-0.3.0.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -127,14 +127,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
         <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;;RTI_LINUX;RTI_UNIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libfastcdrd.lib;nddscorezd.lib;nddsczd.lib;nddscppzd.lib;librpcddsd.lib;
+        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;librpcddsd-0.3.0.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
@@ -147,14 +147,14 @@
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
         <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;;RTI_LINUX;RTI_UNIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libfastcdr.lib;nddscorez.lib;nddscz.lib;nddscppz.lib;librpcdds.lib;
+        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;librpcdds-0.3.0.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>

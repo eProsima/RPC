@@ -96,7 +96,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>boost_systemd.lib;boost_threadd.lib;rpcrestd.lib;
+        <AdditionalDependencies>rpcrestd-0.3.0.lib;
   ;Bankd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -115,7 +115,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>boost_system.lib;boost_thread.lib;rpcrest.lib;
+        <AdditionalDependencies>rpcrest-0.3.0.lib;
   ;Bank.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -134,7 +134,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libboost_systemd.lib;libboost_threadd.lib;librpcrestd.lib;
+        <AdditionalDependencies>librpcrestd-0.3.0.lib;
   ;libBankd.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
@@ -154,7 +154,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libboost_system.lib;libboost_thread.lib;librpcrest.lib;
+        <AdditionalDependencies>librpcrest-0.3.0.lib;
   ;libBank.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
