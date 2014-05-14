@@ -89,6 +89,7 @@ public class fastrpcgen
     private Vector<String> m_idlFiles;
     //! Add information to use fastrpcgen internally. 
     private boolean m_local = false;
+    private boolean m_rpm = false;
 
     // Use to know the protocol
     public enum PROTOCOL
@@ -302,6 +303,10 @@ public class fastrpcgen
             else if(arg.equals("-local"))
             {
                 m_local = true;
+            }
+            else if(arg.equals("-rpm"))
+            {
+                m_rpm = true;
             }
             else if(arg.equals("-debug"))
             {
@@ -1284,7 +1289,34 @@ public class fastrpcgen
         // Set environment variables.
         String dds_root = null, tao_root = null, fastrpc_root = null;
         
-        if(m_protocol == PROTOCOL.DDS)
+        // Set the temporary folder.
+        if(m_tempDir == null)
+        {
+        	if(m_os.contains("Windows"))
+        	{
+        		String tempPath = System.getenv("TEMP");
+        		
+        		if(tempPath == null)
+        			tempPath = System.getenv("TMP");
+        		
+        		m_tempDir = tempPath;
+        	}
+        	else if(m_os.contains("Linux"))
+        	{
+        		m_tempDir = "/tmp/";
+        	}
+        }
+        if(m_tempDir.charAt(m_tempDir.length() - 1) != File.separatorChar)
+		{
+			m_tempDir += File.separator;
+		}
+        
+        // Set line command.
+        m_lineCommand = new ArrayList();
+        // Only needed by opendds in the case of using open_idl with the generated file <Interface>RequestReply.idl
+        m_lineCommandForWorkDirSet = new ArrayList();
+        
+        if(m_protocol == PROTOCOL.DDS && m_types != DDS_TYPES.EPROSIMA)
         {
             if(m_middleware.equals("rti"))
             {
@@ -1316,48 +1348,25 @@ public class fastrpcgen
 
                 tao_root = System.getenv("TAO_ROOT");
             }
-        }
-        
-        fastrpc_root = System.getenv(m_appEnv);
-        
-        if(fastrpc_root == null || fastrpc_root.equals(""))
-        {
-            System.out.println(ColorMessage.error() + "Cannot find the environment variable " + m_appEnv + ".");
-            System.out.println("Note: " + m_appEnv + " environment variable is not set in your system.");
-            System.out.println("      " + m_appName + " uses this environment variable to find its own resources.");
-            System.out.println("      See the User Manual document.");
-            return false;
-        }
-        
-        // Set the temporary folder.
-        if(m_tempDir == null)
-        {
-        	if(m_os.contains("Windows"))
-        	{
-        		String tempPath = System.getenv("TEMP");
-        		
-        		if(tempPath == null)
-        			tempPath = System.getenv("TMP");
-        		
-        		m_tempDir = tempPath;
-        	}
-        	else if(m_os.contains("Linux"))
-        	{
-        		m_tempDir = "/tmp/";
-        	}
-        }
-        if(m_tempDir.charAt(m_tempDir.length() - 1) != File.separatorChar)
-		{
-			m_tempDir += File.separator;
-		}
-        
-        // Set line command.
-        m_lineCommand = new ArrayList();
-        // Only needed by opendds in the case of using open_idl with the generated file <Interface>RequestReply.idl
-        m_lineCommandForWorkDirSet = new ArrayList();
-        
-        if(m_protocol == PROTOCOL.DDS && m_types != DDS_TYPES.EPROSIMA)
-        {
+
+            if(!m_rpm)
+            {
+                fastrpc_root = System.getenv(m_appEnv);
+
+                if(fastrpc_root == null || fastrpc_root.equals(""))
+                {
+                    System.out.println(ColorMessage.error() + "Cannot find the environment variable " + m_appEnv + ".");
+                    System.out.println("Note: " + m_appEnv + " environment variable is not set in your system.");
+                    System.out.println("      " + m_appName + " uses this environment variable to find its own resources.");
+                    System.out.println("      See the User Manual document.");
+                    return false;
+                }
+            }
+            else
+            {
+                fastrpc_root = "/usr/share/" + m_appProduct;
+            }
+
             if(m_middleware.equals("rti"))
             {
                 // Directory $NDDSHOME/scripts/rtiddsgen.bat

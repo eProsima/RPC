@@ -27,6 +27,8 @@ function setPlatform
 
 function package
 {
+    # TODO Que empaquete tambien fastcdr?
+
     # Get the current version of RPCDDS
     . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
