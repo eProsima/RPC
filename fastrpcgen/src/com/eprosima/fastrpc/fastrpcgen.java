@@ -433,7 +433,8 @@ public class fastrpcgen
             if(m_local)
                 solution.addInclude("$(EPROSIMADIR)/code");
             solution.addInclude("$(" + m_appEnv + ")/include");
-            solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
+            if(m_exampleOption != null)
+                solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
 
             if(m_protocol == PROTOCOL.DDS)
             {
@@ -480,23 +481,24 @@ public class fastrpcgen
                         solution.addInclude("$(FASTCDR)/include");
                         solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
                     }
-                    if(!m_exampleOption.contains("Win"))
+                    if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                         solution.addLibrary("fastcdr");
                 }
 
                 // Add dds middleware code dependencies
                 solution.addInclude("$(NDDSHOME)/include");
                 solution.addInclude("$(NDDSHOME)/include/ndds");
-                solution.addLibraryPath("$(NDDSHOME)/lib/" + m_exampleOption);
+                if(m_exampleOption != null)
+                    solution.addLibraryPath("$(NDDSHOME)/lib/" + m_exampleOption);
                 solution.addLibrary("nddscore");
                 solution.addLibrary("nddsc");
                 solution.addLibrary("nddscpp");
 
-                if(m_exampleOption.contains("Win"))
+                if(m_exampleOption != null && m_exampleOption.contains("Win"))
                 {
                     solution.addDefine("RTI_WIN32");
                 }
-                else if(m_exampleOption.contains("Linux"))
+                else if(m_exampleOption != null && m_exampleOption.contains("Linux"))
                 {
                     solution.addDefine("RTI_LINUX");
                     solution.addDefine("RTI_UNIX");
@@ -511,7 +513,7 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-                if(m_exampleOption.contains("Linux"))
+                if(m_exampleOption != null && m_exampleOption.contains("Linux"))
                 {
                     solution.addLibrary("boost_system");
                     solution.addLibrary("boost_thread");
@@ -526,7 +528,7 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-                if(m_exampleOption.contains("Linux"))
+                if(m_exampleOption != null && m_exampleOption.contains("Linux"))
                 {
                     solution.addLibrary("boost_system");
                     solution.addLibrary("boost_thread");
@@ -537,7 +539,7 @@ public class fastrpcgen
                     solution.addInclude("$(FASTCDR)/include");
                     solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
                 }
-                if(!m_exampleOption.contains("Win"))
+                if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                     solution.addLibrary("fastcdr");
 
                 // Add product library.
