@@ -160,7 +160,7 @@ function installer
     find tmp/ -iname "*~" -exec rm -f {} \;
 
     cd tmp
-    tar cvzf "../${project}_${version}-RTIDDS_5.0.0.tar.gz" $project
+    tar cvzf "../eProsima_${RPCDDS}-${version}-Linux-RTIDDS-5.0.0.tar.gz" $project
     errorstatus=$?
     cd ..
     if [ $errorstatus != 0 ]; then return; fi
