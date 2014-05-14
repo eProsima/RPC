@@ -511,7 +511,7 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-		if(m_os.equals("Linux"))
+		if(m_os.contains("Linux"))
 		{
 		    solution.addLibrary("boost_system");
 		    solution.addLibrary("boost_thread");
@@ -526,7 +526,7 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-		if(m_os.equals("Linux"))
+		if(m_os.contains("Linux"))
 		{
                     solution.addLibrary("boost_system");
                     solution.addLibrary("boost_thread");
@@ -1596,7 +1596,7 @@ public class fastrpcgen
 	            
 	    		if(lastBarraOccurrency == -1)
 	    		{
-	    			if(m_os.equals("Windows"))
+	    			if(m_os.contains("Windows"))
 	    			{
 	    				lastBarraOccurrency = file.lastIndexOf('\\');
 	    			}

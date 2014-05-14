@@ -34,7 +34,7 @@ public class Solution extends com.eprosima.solution.Solution
 
         for(int count = 0; count < libraries.size(); ++count)
         {
-            if(m_os.equals("Windows") && (libraries.get(count).startsWith("rpcdds") ||
+            if(m_os.contains("Windows") && (libraries.get(count).startsWith("rpcdds") ||
                     libraries.get(count).startsWith("rpcrest") ||
                     libraries.get(count).startsWith("fastrpc")))
                 ret.add(libraries.get(count) + "-" + m_version);
@@ -52,7 +52,7 @@ public class Solution extends com.eprosima.solution.Solution
 
         for(int count = 0; count < libraries.size(); ++count)
         {
-            if(m_os.equals("Windows") && (libraries.get(count).startsWith("rpcdds") ||
+            if(m_os.contains("Windows") && (libraries.get(count).startsWith("rpcdds") ||
                     libraries.get(count).startsWith("rpcrest") ||
                     libraries.get(count).startsWith("fastrpc")))
                 ret.add(libraries.get(count) + "d-" + m_version);
@@ -72,7 +72,7 @@ public class Solution extends com.eprosima.solution.Solution
         {
             if(libraries.get(count).startsWith("ndds"))
                 ret.add(libraries.get(count) + "z");
-            else if(m_os.equals("Windows") && (libraries.get(count).startsWith("rpcdds") ||
+            else if(m_os.contains("Windows") && (libraries.get(count).startsWith("rpcdds") ||
                     libraries.get(count).startsWith("rpcrest") ||
                     libraries.get(count).startsWith("fastrpc")))
                 ret.add("lib" + libraries.get(count) + "-" + m_version);
@@ -92,7 +92,7 @@ public class Solution extends com.eprosima.solution.Solution
         {
             if(libraries.get(count).startsWith("ndds"))
                 ret.add(libraries.get(count) + "zd");
-            else if(m_os.equals("Windows") && (libraries.get(count).startsWith("rpcdds") ||
+            else if(m_os.contains("Windows") && (libraries.get(count).startsWith("rpcdds") ||
                     libraries.get(count).startsWith("rpcrest") ||
                     libraries.get(count).startsWith("fastrpc")))
                 ret.add("lib" + libraries.get(count) + "d-" + m_version);
