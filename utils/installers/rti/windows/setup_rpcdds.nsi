@@ -19,7 +19,7 @@ RequestExecutionLevel admin
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "eProsima\rpcdds"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "eProsima\RPCDDS"
 
 # Included files
 !include Sections.nsh

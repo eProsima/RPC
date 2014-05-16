@@ -19,7 +19,7 @@ RequestExecutionLevel admin
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "eProsima\rpcrest"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "eProsima\RPCREST"
 
 # Included files
 !include Sections.nsh
