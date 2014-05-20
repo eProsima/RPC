@@ -39,7 +39,7 @@ namespace eprosima
 						 * @param remoteServiceName Name of the remote service
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
-                        TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId);
+                        TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId = 0);
 
 
                         //! @brief Default destructor.
