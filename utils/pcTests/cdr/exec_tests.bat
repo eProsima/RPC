@@ -134,7 +134,7 @@ echo "EXECUTING %3 for %1"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\fastrpcgen.bat -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\fastrpcgen.bat -local -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
