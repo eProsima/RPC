@@ -39,7 +39,7 @@ namespace eprosima
              */
             class FASTRPC_DllAPI ServerTransport : public Transport
             {
-                typedef void (*ServerTransport_Callback)(eprosima::rpc::protocol::Protocol&, void*&, size_t, Endpoint*);
+                typedef size_t (*ServerTransport_Callback)(eprosima::rpc::protocol::Protocol&, void*&, size_t&, size_t&, Endpoint*);
 
                 public:
 

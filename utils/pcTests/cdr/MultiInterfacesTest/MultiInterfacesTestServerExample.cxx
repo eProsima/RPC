@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 using namespace ::transport;
 using namespace ::protocol::fastcdr;
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
     
     while(1)
     {
-        eprosima::fastrpc::sleep(10000);
+        eprosima::rpc::sleep(10000);
     }
     
     // Stop and delete the server.

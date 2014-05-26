@@ -9,7 +9,7 @@ FASTCDR_TARGET=$(shell $(EPROSIMADIR)/scripts/common_dds_functions.sh printEPROS
 FASTRPC_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(FASTRPC_OUTDIR_DEBUG))
 FASTRPC_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(FASTRPC_OUTDIR_RELEASE))
 
-FASTRPC_LIBS_DEBUG= $(LIBS_DEBUG) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread
+FASTRPC_LIBS_DEBUG= $(LIBS_DEBUG) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdrd -lboost_system -lboost_thread
 FASTRPC_LIBS= $(LIBS) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread
 
 FASTRPC_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x
@@ -57,7 +57,7 @@ FASTRPC_SRC_COMMONFILES= $(shell cat building/makefiles/common_sources)
 FASTRPC_SRC_CPPFILES= $(shell cat building/makefiles/fastrpc_sources)
 
 # Project sources are copied to the current directory
-FASTRPC_SRCS= $(FASTRPC_SRC_CFILES) $(FASTRPC_SRC_CPPFILES)
+FASTRPC_SRCS= $(FASTRPC_SRC_COMMONFILES) $(FASTRPC_SRC_CPPFILES)
 
 # Source directories
 FASTRPC_SOURCES_DIRS_AUX= $(foreach srcdir, $(dir $(FASTRPC_SRCS)), $(srcdir))

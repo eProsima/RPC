@@ -198,7 +198,8 @@ void HttpServerTransport::worker(TCPEndpoint* connection)
                 if(retCode >= 0)
                 {
                     void *auxPtr = &httpMessage;
-                    getCallback()(getLinkedProtocol(), auxPtr, 0, connection);
+                    size_t bufferLength = 0, bufferSize = 0;
+                    getCallback()(getLinkedProtocol(), auxPtr, bufferLength, bufferSize, connection);
                     connection->refillReadBuffer();
                 }
             }

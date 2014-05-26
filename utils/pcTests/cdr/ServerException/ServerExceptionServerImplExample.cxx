@@ -15,7 +15,7 @@
 #include "ServerExceptionServerImplExample.h"
 #include "fastrpc/exceptions/ServerInternalException.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 
 void ServerExceptionServerImplExample::sendException() 

@@ -74,15 +74,17 @@ int $ctx.filename$Protocol::deserializeContentLength(char* buffer) {
     return 0;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint)
+size_t $ctx.filename$Protocol::worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpc::protocol::rest::$ctx.filename$Protocol &restProtocol = dynamic_cast<eprosima::rpc::protocol::rest::$ctx.filename$Protocol&>( protocol );
-    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
+    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(buffer);
 
     HttpMessage response = restProtocol.processRequest(*httpMessage);
     
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
+
+    return 1;
 }
 
 // Server

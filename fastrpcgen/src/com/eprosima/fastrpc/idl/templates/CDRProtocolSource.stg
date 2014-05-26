@@ -52,127 +52,128 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
     return true;
 }
 
-void $ctx.filename$Protocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint) 
+size_t $ctx.filename$Protocol::worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint) 
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
-    size_t bufferUse = dataLength, cdrLength = 0;
+    size_t cdrLength = 0;
     
-    if(dataLength > 0 && endpoint != NULL)
+    if(bufferLength > 0 && endpoint != NULL)
     {
-        do
+        if(((int32_t*&)buffer)[0] == 0x46434452)
         {
-            if(((int32_t*&)data)[0] == 0x46434452)
+            cdrLength = ((uint32_t*&)buffer)[1] + 8;
+
+            if(bufferLength < cdrLength)
             {
-                cdrLength = ((uint32_t*&)data)[1] + 8;
-
-                if(bufferUse < cdrLength)
+                if(bufferSize < cdrLength)
                 {
-                    data = realloc(data, cdrLength);
-
-                    size_t dataToRead = cdrLength - bufferUse;
-                    ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
-                    int retCode = serverTransport.receive(&((char*&)data)[bufferUse], cdrLength, dataToRead, endpoint);
-
-                    if(retCode >= 0)
-                    {
-                        bufferUse += dataToRead;
-
-                        if(bufferUse < cdrLength)
-                        {
-                            // TODO error
-                            printf("ERROR No se ha leido todos los datos necesarios\n");
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        // TODO error
-                        printf("ERROR Fallo leyendo\n");
-                        return;
-                    }
+                    buffer = realloc(buffer, cdrLength);
+                    bufferSize = cdrLength;
                 }
 
-                eprosima::fastcdr::FastBuffer cdrBuffer((char*)data, bufferUse);
-                eprosima::fastcdr::FastCdr dcdr(cdrBuffer);
+                size_t dataToRead = cdrLength - bufferLength;
+                ServerTransport &serverTransport = dynamic_cast<ServerTransport&>(_protocol.getTransport());
+                int retCode = serverTransport.receive(&((char*&)buffer)[bufferLength], bufferSize, dataToRead, endpoint);
 
-                dcdr.jump(8);
-                int32_t code = -2;
-                dcdr.deserialize(code);
-
-                if(code == 0)
+                if(retCode >= 0)
                 {
-                    std::string interface_name, operation_name;
-                    dcdr.deserialize(interface_name);
-                    dcdr.deserialize(operation_name);
+                    bufferLength += dataToRead;
 
-                    $if(first(ctx.interfaces))$
-                        if(interface_name.compare("$first(ctx.interfaces).scopedname$") == 0)
-                        {
-                            if(_protocol._$first(ctx.interfaces).formatedScopedname$_impl != NULL)
-                            {
-                                $if(first(first(ctx.interfaces).operations))$
-                                    if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
-                                    {
-                                        $operation_worker(ctx=ctx, operation=first(first(ctx.interfaces).operations))$
-                                    }
-                                $rest(first(ctx.interfaces).operations) : {operation |
-                                    else if(operation_name.compare("$operation.name$") == 0)
-                                    {
-                                        $operation_worker(ctx=ctx, operation=operation)$
-                                    }
-                                }$
-                                $endif$
-                            }
-                            else
-                            {
-                                // TODO Send system exception to client.
-                            }
-                        }
-                    $rest(ctx.interfaces) : {interface |
-                        else if(interface_name.compare("$interface.scopedname$") == 0)
-                        {
-                            if(_protocol._$interface.formatedScopedname$_impl != NULL)
-                            {
-                                $if(first(interface.operations))$
-                                    if(operation_name.compare("$first(interface.operations).name$") == 0)
-                                    {
-                                        $operation_worker(ctx=ctx, operation=first(interface.operations))$
-                                    }
-                                $rest(interface.operations) : {operation |
-                                    else if(operation_name.compare("$operation.name$") == 0)
-                                    {
-                                        $operation_worker(ctx=ctx, operation=operation)$
-                                    }
-                                }$
-                                $endif$
-                            }
-                            else
-                            {
-                                // TODO Send system exception to client.
-                            }
-                        }
-                    }$
-                    $endif$
+                    if(bufferLength < cdrLength)
+                    {
+                        // TODO error
+                        printf("ERROR No se ha leido todos los datos necesarios\n");
+                        return 0;
+                    }
                 }
                 else
                 {
-                    printf("ERROR: CDR message is not a request\n");
+                    // TODO error
+                    printf("ERROR Fallo leyendo\n");
+                    return 0;
                 }
+            }
 
-                bufferUse -= cdrLength;
+            eprosima::fastcdr::FastBuffer cdrBuffer((char*)buffer, bufferLength);
+            eprosima::fastcdr::FastCdr dcdr(cdrBuffer);
+
+            dcdr.jump(8);
+            int32_t code = -2;
+            dcdr.deserialize(code);
+
+            if(code == 0)
+            {
+                std::string interface_name, operation_name;
+                dcdr.deserialize(interface_name);
+                dcdr.deserialize(operation_name);
+
+                $if(first(ctx.interfaces))$
+                    if(interface_name.compare("$first(ctx.interfaces).scopedname$") == 0)
+                    {
+                        if(_protocol._$first(ctx.interfaces).formatedScopedname$_impl != NULL)
+                        {
+                            $if(first(first(ctx.interfaces).operations))$
+                                if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
+                                {
+                                    $operation_worker(ctx=ctx, operation=first(first(ctx.interfaces).operations))$
+                                }
+                            $rest(first(ctx.interfaces).operations) : {operation |
+                                else if(operation_name.compare("$operation.name$") == 0)
+                                {
+                                    $operation_worker(ctx=ctx, operation=operation)$
+                                }
+                            }$
+                            $endif$
+                        }
+                        else
+                        {
+                            // TODO Send system exception to client.
+                        }
+                    }
+                $rest(ctx.interfaces) : {interface |
+                    else if(interface_name.compare("$interface.scopedname$") == 0)
+                    {
+                        if(_protocol._$interface.formatedScopedname$_impl != NULL)
+                        {
+                            $if(first(interface.operations))$
+                                if(operation_name.compare("$first(interface.operations).name$") == 0)
+                                {
+                                    $operation_worker(ctx=ctx, operation=first(interface.operations))$
+                                }
+                            $rest(interface.operations) : {operation |
+                                else if(operation_name.compare("$operation.name$") == 0)
+                                {
+                                    $operation_worker(ctx=ctx, operation=operation)$
+                                }
+                            }$
+                            $endif$
+                        }
+                        else
+                        {
+                            // TODO Send system exception to client.
+                        }
+                    }
+                }$
+                $endif$
             }
             else
             {
-                // TODO Print error.
-                break;
+                printf("ERROR: CDR message is not a request\n");
             }
+
+            return cdrLength;
         }
-        while((bufferUse > 0) & (memmove(data, (char*)data + cdrLength, bufferUse) != NULL));
+        else
+        {
+            // TODO Print error.
+        }
     }
     else
     {
         //TODO Print error.
     }
+
+    return 0;
 }
 
 $definitions; separator="\n"$

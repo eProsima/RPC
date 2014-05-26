@@ -23,7 +23,7 @@
 #include <unistd.h>
 #endif
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 using namespace ::transport;
 using namespace ::protocol::fastcdr;

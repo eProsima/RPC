@@ -20,6 +20,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 
+#define DEFAULT_BUFFER_SIZE 2048
+
 namespace eprosima { namespace rpc { namespace transport {
     class TCPServerTransportBoost
     {
@@ -179,48 +181,35 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
 
     std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
-    do
+    // Create buffer for the thread.
+    size_t bufferSize = DEFAULT_BUFFER_SIZE, bufferLength = 0;
+    void *buffer = calloc(bufferSize, sizeof(char));
+
+    if(buffer != NULL)
     {
-        // TODO TIME OUT
-        size_t numData = 0;
-        while(!ec && (numData = connection->socket_->available(ec)) == 0);
+        do
+        {
+            // TODO TIME OUT
+            size_t bufferLength = connection->socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
 
-        if(ec != boost::asio::error::eof)
-        { 
+            if(ec != boost::asio::error::eof)
+            { 
+                size_t bytesUsed = 0;
 
-            // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-
-            if(numData > 0)
-            {
-                void *buffer = calloc(numData, sizeof(char));
-
-                if(buffer != NULL)
+                do
                 {
-                    size_t bytes_read = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, numData), ec);
-
-                    if(numData == bytes_read)
-                    {
-                        getCallback()(getLinkedProtocol(), buffer, numData, connection);
-                    }
-                    else
-                    {
-                        // TODO check ec == boost::asio::error::eof.
-                        // TODO print error.
-                    }
-
-                    free(buffer);
-                }
-                else
-                {
-                    // TODO print exception NULL.
-                }
+                    bytesUsed = getCallback()(getLinkedProtocol(), buffer, bufferLength, bufferSize, connection);
+                    bufferLength -= bytesUsed;
+                } while((bufferLength > 0) && (memmove(buffer, (char*)buffer + bytesUsed, bufferLength) != NULL));
             }
-            else
-            {
-                // TODO Print exception ec.
-            }
-        }
-    } while(ec != boost::asio::error::eof);
+        } while(ec != boost::asio::error::eof);
+
+        free(buffer);
+    }
+    else
+    {
+        std::cout << "ERROR<TCPServerTransport::worker>: Cannot allocate memory for buffer" << std::endl;
+    }
 
     std::cout << "Connection closed by proxy" << std::endl;
 }
