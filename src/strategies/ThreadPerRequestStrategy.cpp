@@ -16,7 +16,7 @@ static const char* const CLASS_NAME = "ThreadPerRequestStrategy";
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace strategy
         {
@@ -61,10 +61,10 @@ namespace eprosima
 					}
             };
         } // namespace strategy
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::strategy;
 using namespace ::transport;
 

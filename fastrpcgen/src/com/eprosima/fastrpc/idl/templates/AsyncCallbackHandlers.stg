@@ -1,13 +1,13 @@
 group AsyncCallbackHandlers;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "AsyncCallbackHandlers.h"], description=["This header file contains the declaration of callback handlers used in asynchronous calls."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncCallbackHandlers.h"], description=["This header file contains the declaration of callback handlers used in asynchronous calls."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_ASYNC_CALLBACK_HANDLERS_H_
 #define _$ctx.filename;format="toUpper"$_ASYNC_CALLBACK_HANDLERS_H_
 
-#include "fastrpc/exceptions/SystemException.h"
-#include "fastrpc/exceptions/UserException.h"
+#include "$ctx.product$/exceptions/SystemException.h"
+#include "$ctx.product$/exceptions/UserException.h"
 #include "$ctx.filename$.h"
 
 $definitions; separator="\n"$
@@ -63,7 +63,7 @@ class $operation.parent.name$_$operation.name$CallbackHandler
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::fastrpc::exception::SystemException &ex) = 0;
+        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex) = 0;
         $if(operation.exceptions)$
         /*!
          * @brief This function is called when a user exception occurs.
@@ -71,7 +71,7 @@ class $operation.parent.name$_$operation.name$CallbackHandler
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::fastrpc::exception::UserException &ex) = 0;
+        virtual void on_exception(const eprosima::rpc::exception::UserException &ex) = 0;
         $endif$
 };
 

@@ -16,9 +16,9 @@
 #include "dds/DCPS/DomainParticipantImpl.h"
 #endif
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::UDPServerTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPServerTransport";
 
-using namespace eprosima::fastrpc::transport::dds;
+using namespace eprosima::rpc::transport::dds;
 
 UDPServerTransport::UDPServerTransport(std::string serviceName, int domainId) : ServerTransport(serviceName, domainId)
 {

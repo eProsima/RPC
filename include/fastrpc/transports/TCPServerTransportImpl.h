@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -27,7 +27,7 @@ namespace eprosima
                     boost::function<void(TCPEndpoint*)> function;
             };
         } // namespace transport
-    }// namespace fastrpc
+    }// namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPSERVERTRANSPORTIMPL_H_

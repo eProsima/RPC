@@ -21,7 +21,7 @@ namespace boost
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -76,9 +76,9 @@ namespace eprosima
                          * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
                          *        The pointer can be NULL and this means that the RPC call is oneway.
 						 * @return Operation status
-                         * @throw eprosima::fastrpc::exception::ServerTimeoutException.
+                         * @throw eprosima::rpc::exception::ServerTimeoutException.
                          */
-                        eprosima::fastrpc::ReturnMessage send(void *request, void* reply);
+                        eprosima::rpc::ReturnMessage send(void *request, void* reply);
 
 						/*!
 						 * @brief This function sends an asynchronous RPC call.
@@ -90,7 +90,7 @@ namespace eprosima
 						 * @param task Object containing information of the asynchronous task.
 						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
 						 */
-                        eprosima::fastrpc::ReturnMessage send_async(void *request, DDSAsyncTask *task);
+                        eprosima::rpc::ReturnMessage send_async(void *request, DDSAsyncTask *task);
 
 						/*!
 						 * @brief Frees a DDS query condition. 
@@ -102,7 +102,7 @@ namespace eprosima
                         /*!
                          * @brief This function takes a sample from the datareader.
                          */
-                        eprosima::fastrpc::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
+                        eprosima::rpc::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
 
                     private:
 
@@ -192,6 +192,6 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 #endif // _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_

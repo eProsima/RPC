@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -47,7 +47,7 @@ namespace eprosima
                     virtual void schedule(boost::function<void()> callback) = 0;
             };
         } // namespace strategy
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _SERVER_SERVERSTRATEGYIMPL_H_

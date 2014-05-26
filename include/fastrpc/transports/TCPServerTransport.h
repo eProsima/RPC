@@ -32,7 +32,7 @@ namespace boost
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -121,7 +121,7 @@ namespace eprosima
             };
 
         } // namespace transport
-    }// namespace fastrpc
+    }// namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPSERVERTRANSPORT_H_

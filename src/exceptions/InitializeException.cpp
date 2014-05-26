@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include <fastrpc/exceptions/InitializeException.h>
+#include "fastrpc/exceptions/InitializeException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 InitializeException::InitializeException(const std::string &message) : SystemException(message, 1)
 {

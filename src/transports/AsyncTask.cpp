@@ -8,7 +8,7 @@
 
 #include "fastrpc/transports/AsyncTask.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport;
 
 AsyncTask::AsyncTask() 

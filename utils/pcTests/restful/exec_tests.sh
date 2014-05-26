@@ -1,12 +1,14 @@
 #!/bin/bash
 # This scripts run the unit tests. Supports two optional parameters.
 # @param The unit test to be run. If it isn't set, then all unit tests are run.
-# Second parameter is the used architecture. Supported i86 and x64. If it isn't set all architectures are used.
+# @param Second parameter is the used architecture. Supported i86 and x64. If it isn't set all architectures are used.
+# @param The rest of params will be to java application
 
 errorstatus=0
 test_selected=""
 # @default, all targets are used (i86 and x64)
 test_targets=""
+test_args=""
 
 # This function execute a test in a directory.
 # @param Plaform for Visual Studio.
@@ -18,7 +20,7 @@ function execTest
     # Info about test
     echo "EXECUTING $1 for $NDDSTARGET"
     # Generates the file with FASTRPC script
-    ../../../scripts/fastrpcgen.sh -local -d output -example $NDDSTARGET -protocol rest "$1/$1.wadl"
+    ../../../scripts/rpcrestgen.sh -local -d output -example $NDDSTARGET "$1/$1.wadl" $test_args
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Compile client and server example application
@@ -46,32 +48,35 @@ function execTest
 }
 
 # Get the optional parameter
-if [ $# -ge 1 ] && [ -n $1 ]; then
-    if [ "$1" == "i86" ] || [ "$1" == "x64" ]; then
-        test_targets=$1
-    else
-        test_selected=$1
-
-        if [ $# -ge 2 ] && [ -n $2 ]; then
-            if [ "$2" == "i86" ] || [ "$2" == "x64" ]; then
-                test_targets=$2
-            else
-                echo Error: Bad argument in second parameter. Valid values. i86, x64
-                exit -1;
-            fi
+while (( "$#" )); do
+    if [[ $1 != -* ]]; then
+        if [ $1 == "i86" ] || [ $1 == "x64" ]; then
+            test_targets=$1
+        else
+            test_selected=$1
+            echo TEST $test_selected
         fi
+    else
+        test_args=$*
+        break
     fi
+
+    shift
+done
+
+# Check environment variables
+if [ "$EPROSIMADIR" == "" ]; then
+    echo "EPROSIMADIR environment variables is not set."
+    exit -1
 fi
 
-# Set environment for RTPDDS
+if [ "$RPCRESTHOME" == "" ]; then
+    echo "RPCRESTHOME environment variables is not set."
+    exit -1
+fi
+
+# Set environment for RPCREST
 . $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
-
-# Create symbolic link to EPROSIMADIR in the fastrpc folder.
-if [ ! -e "../../../include/fastrpc/eProsima_cpp" ]; then
-    ln -s $EPROSIMADIR/code/eProsima_cpp ../../../include/fastrpc/eProsima_cpp
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-fi
 
 # Create output directory 
 if [ ! -d "output" ]; then
@@ -86,7 +91,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
                 if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
                     . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
-                    $dir/exec_test.sh
+                    $dir/exec_test.sh $test_args
                     errorstatus=$?
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
                     . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
@@ -97,7 +102,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
                 if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
                     . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
-                    $dir/exec_test.sh
+                    $dir/exec_test.sh $test_args
                     errorstatus=$?
                     . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
                     . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
@@ -136,12 +141,7 @@ done
 # Remove output directory
 rm -r output
 
-# Remove symbolic link
-if [ -e ../../../include/fastrpc/eProsima_cpp ]; then
-    rm ../../../include/fastrpc/eProsima_cpp
-fi
-
-# Restore environment for FASTRPC
+# Restore environment for RPCREST
 . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then

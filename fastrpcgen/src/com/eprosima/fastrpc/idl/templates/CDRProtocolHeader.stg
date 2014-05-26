@@ -1,7 +1,7 @@
 group CDRProtocolHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "CDRProtocol.h"], description=["This header file contains the declaration of the protocol used to create CDR messages."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "CDRProtocol.h"], description=["This header file contains the declaration of the protocol used to create CDR messages."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
 #define _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
@@ -12,7 +12,7 @@ $ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -29,7 +29,7 @@ namespace eprosima
                  * @brief
                  * @ingroup $ctx.trimfilename$
                  */
-                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
+                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -37,11 +37,11 @@ namespace eprosima
                         
                         virtual ~$ctx.filename$Protocol();
                     
-                        virtual bool setTransport(eprosima::fastrpc::transport::Transport &transport);
+                        virtual bool setTransport(eprosima::rpc::transport::Transport &transport);
                         
                         bool activateInterface(const char* interfaceName);
                         
-                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::fastrpc::transport::Endpoint *endpoint);
+                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint);
                         
                         $ctx.interfaces : { interface |
                         $interface.operations : { operation |
@@ -59,7 +59,7 @@ namespace eprosima
                 };
             } // namespace fastcdr
         } // namespace protocol
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_

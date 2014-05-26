@@ -8,7 +8,7 @@
 
 #include "fastrpc/exceptions/SystemException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 SystemException::SystemException(const std::string &message) : Exception(), m_message(message), m_minor(0)
 {

@@ -14,7 +14,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -25,7 +25,7 @@ namespace eprosima
         namespace protocol
         {
 			/*!
-			 * @brief This abstract class represents the protocol used by the RPCs. It serializes and deserializes the information and uses a eprosima::fastrpc::transport::Transport to send it and receive it.
+			 * @brief This abstract class represents the protocol used by the RPCs. It serializes and deserializes the information and uses a eprosima::rpc::transport::Transport to send it and receive it.
 			 * @ingroup PROTOCOLMODULE
 			 */
             class FASTRPC_DllAPI Protocol
@@ -33,10 +33,10 @@ namespace eprosima
                 public:
 
 					/*!
-					 * @brief This method sets a eprosima::fastrpc::transport::Transport object, used for the communications.
-					 * @param transport eprosima::fastrpc::transport::Transport to use for the communications.
+					 * @brief This method sets a eprosima::rpc::transport::Transport object, used for the communications.
+					 * @param transport eprosima::rpc::transport::Transport to use for the communications.
 					 */
-                    virtual bool setTransport(eprosima::fastrpc::transport::Transport &transport) = 0;
+                    virtual bool setTransport(eprosima::rpc::transport::Transport &transport) = 0;
 
                 protected:
 
@@ -51,27 +51,27 @@ namespace eprosima
                     virtual ~Protocol(){}
 
 					/*!
-					 * @brief This method returns the eprosima::fastrpc::transport::Transport object, used for the communications.
-					 * @return eprosima::fastrpc::transport::Transport used for the communications.
+					 * @brief This method returns the eprosima::rpc::transport::Transport object, used for the communications.
+					 * @return eprosima::rpc::transport::Transport used for the communications.
 					 */
                     inline
-                        eprosima::fastrpc::transport::Transport& getTransport() const {return *m_transport;}
+                        eprosima::rpc::transport::Transport& getTransport() const {return *m_transport;}
 
 					/*!
-					 * @brief This method sets a eprosima::fastrpc::transport::Transport object, used for the communications.
-					 * @param transport eprosima::fastrpc::transport::Transport to use for the communication.
+					 * @brief This method sets a eprosima::rpc::transport::Transport object, used for the communications.
+					 * @param transport eprosima::rpc::transport::Transport to use for the communication.
 					 */
                     inline
-                        void _setTransport(eprosima::fastrpc::transport::Transport &transport){m_transport = &transport;}
+                        void _setTransport(eprosima::rpc::transport::Transport &transport){m_transport = &transport;}
 
                 private:
 
 					/*!
-					 * @brief eprosima::fastrpc::transport::Transport object, used for the communication.
+					 * @brief eprosima::rpc::transport::Transport object, used for the communication.
 					 */
-                    eprosima::fastrpc::transport::Transport *m_transport;
+                    eprosima::rpc::transport::Transport *m_transport;
             };
         } // namespace protocol
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 #endif // _PROTOCOLS_PROTOCOL_H_

@@ -1,17 +1,17 @@
 group ServerHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Server.h"], description=["This header file contains the declaration of the server for all interfaces."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Server.h"], description=["This header file contains the declaration of the server for all interfaces."])$
 
 #ifndef _$ctx.filename;format="toUpper"$SERVER_H_
 #define _$ctx.filename;format="toUpper"$SERVER_H_
 
-#include "fastrpc/server/Server.h"
+#include "$ctx.product$/server/Server.h"
 #include "$ctx.filename$ServerImpl.h"
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -45,7 +45,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class implements a specific server for the defined interface $interface.name$ by user.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Server : public eprosima::fastrpc::server::Server
+class FASTRPCUSERDllExport $interface.name$Server : public eprosima::rpc::server::Server
 {
     public:
 
@@ -61,8 +61,8 @@ class FASTRPCUSERDllExport $interface.name$Server : public eprosima::fastrpc::se
          * @param servant Servant that the server will use to invoke user's functions.
          * @exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
-        $interface.name$Server(eprosima::fastrpc::strategy::ServerStrategy &strategy, eprosima::fastrpc::transport::ServerTransport &transport,
-            eprosima::fastrpc::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant);
+        $interface.name$Server(eprosima::rpc::strategy::ServerStrategy &strategy, eprosima::rpc::transport::ServerTransport &transport,
+            eprosima::rpc::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant);
 
         //! @brief Destructor.
         virtual ~$interface.name$Server();

@@ -12,9 +12,9 @@
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"
 #endif
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::util::dds::Middleware";
+static const char* const CLASS_NAME = "eprosima::rpc::util::dds::Middleware";
 
-void eprosima::fastrpc::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
+void eprosima::rpc::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     DDS::DataWriterQos wQos;
@@ -59,7 +59,7 @@ void eprosima::fastrpc::util::dds::get_guid(unsigned int *id, DDS::DataWriter *d
 #endif
 }
 
-void eprosima::fastrpc::util::dds::set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
+void eprosima::rpc::util::dds::set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     datareader->get_qos(rQos);
@@ -76,7 +76,7 @@ void eprosima::fastrpc::util::dds::set_redundant_feature(DDS::DataReader *datare
 #endif
 }
 
-void eprosima::fastrpc::util::dds::set_max_query_condition_filters(DDS::DataReaderQos &rQos)
+void eprosima::rpc::util::dds::set_max_query_condition_filters(DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     rQos.reader_resource_limits.max_query_condition_filters = 10;
@@ -86,7 +86,7 @@ void eprosima::fastrpc::util::dds::set_max_query_condition_filters(DDS::DataRead
 #endif
 }
 
-void eprosima::fastrpc::util::dds::set_datareader_protocol(DDS::DataReaderQos &rQos)
+void eprosima::rpc::util::dds::set_datareader_protocol(DDS::DataReaderQos &rQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     rQos.protocol.rtps_reliable_reader.max_heartbeat_response_delay.sec = 0;
@@ -98,7 +98,7 @@ void eprosima::fastrpc::util::dds::set_datareader_protocol(DDS::DataReaderQos &r
 #endif
 }
 
-void eprosima::fastrpc::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQos)
+void eprosima::rpc::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     wQos.protocol.rtps_reliable_writer.low_watermark = 0;
@@ -113,7 +113,7 @@ void eprosima::fastrpc::util::dds::set_datawriter_protocol(DDS::DataWriterQos &w
 #endif
 }
 
-void eprosima::fastrpc::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
+void eprosima::rpc::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     pQos.receiver_pool.buffer_size = 65536;
@@ -128,7 +128,7 @@ void eprosima::fastrpc::util::dds::increase_buffers(DDS::DomainParticipantQos &p
 #endif
 }
 
-DDS::DomainParticipantFactory* eprosima::fastrpc::util::dds::getFactory(int domainId)
+DDS::DomainParticipantFactory* eprosima::rpc::util::dds::getFactory(int domainId)
 {
     const char* const METHOD_NAME = "getFactory";
 

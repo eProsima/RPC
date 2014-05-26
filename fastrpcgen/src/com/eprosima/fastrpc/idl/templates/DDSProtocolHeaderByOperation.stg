@@ -1,13 +1,13 @@
 group DDSProtocolHeaderByOperation;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 #define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "fastrpc/utils/Messages.h"
+#include "$ctx.product$/utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 $if(ctx.rtiTypes)$
@@ -18,7 +18,7 @@ $endif$
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -43,7 +43,7 @@ namespace eprosima
                  *  It uses DDS.
 		         * @ingroup $ctx.trimfilename$
                  */
-                class FASTRPCUSERDllExport  $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
+                class FASTRPCUSERDllExport  $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -62,7 +62,7 @@ namespace eprosima
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
-                        virtual bool setTransport(eprosima::fastrpc::transport::Transport &transport);
+                        virtual bool setTransport(eprosima::rpc::transport::Transport &transport);
                         
                         /*!
                          * @brief This function activates needed DDS entities to use an interface.
@@ -75,18 +75,18 @@ namespace eprosima
                         
                     private:
                     
-                        eprosima::fastrpc::transport::dds::Transport *m_ddsTransport;
+                        eprosima::rpc::transport::dds::Transport *m_ddsTransport;
                     
                         $ctx.interfaces : { interface |
                         $interface.operations : { operation |
                         const char* const $interface.formatedScopedname$_$operation.name$_str;
                         
                         $if(ctx.client)$
-                        eprosima::fastrpc::transport::dds::ProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
+                        eprosima::rpc::transport::dds::ProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
                         $endif$
                         
                         $if(ctx.server)$
-                        eprosima::fastrpc::transport::dds::ServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
+                        eprosima::rpc::transport::dds::ServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
                         $endif$
                         
                         }; separator="\n"$
@@ -94,7 +94,7 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace protocol
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
@@ -141,14 +141,14 @@ $endif$
 
 $if(ctx.server)$
 /*!
- * @brief This method implements the server part of the protocol for the interface $interface.name$.
+ * @brief This method implements the server part of the protocol for the operation $operation.name$.
  * It is called when a request sample is received.
  * @param protocol DDS protocol object that is in used.
  * @param data Pointer to the received request sample. Cannot be NULL.
  * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
  */
-static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::fastrpc::protocol::Protocol &protocol,
-    void *data , eprosima::fastrpc::transport::Endpoint *endpoint);
+static void $operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpc::protocol::Protocol &protocol,
+    void *data , eprosima::rpc::transport::Endpoint *endpoint);
 $endif$
 
 >>

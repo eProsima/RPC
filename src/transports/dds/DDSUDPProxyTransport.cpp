@@ -16,9 +16,9 @@
 #include "dds/DCPS/DomainParticipantImpl.h"
 #endif
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::UDPProxyTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPProxyTransport";
 
-using namespace eprosima::fastrpc::transport::dds;
+using namespace eprosima::rpc::transport::dds;
 
 UDPProxyTransport::UDPProxyTransport(std::string remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
     ProxyTransport(remoteServiceName, domainId, milliseconds)

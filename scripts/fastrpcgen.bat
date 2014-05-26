@@ -26,6 +26,6 @@ if not %ERRORLEVEL%==0 (
    )
 )
 
-%java_exec% -jar "%dir%\..\classes\fastrpcgen.jar" "-I%dir%/../idl" %args%
+%java_exec% -jar "%dir%\..\classes\fastrpcgen.jar" %args%
 
 

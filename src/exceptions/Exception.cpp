@@ -8,7 +8,7 @@
 
 #include "fastrpc/exceptions/Exception.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 Exception::Exception()
 {

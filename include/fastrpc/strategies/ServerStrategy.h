@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace strategy
         {
@@ -41,7 +41,7 @@ namespace eprosima
                     virtual ServerStrategyImpl* getImpl() = 0;
             };
         } // namespace strategy
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _SERVER_SERVERSTRATEGY_H_

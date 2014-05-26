@@ -1,7 +1,7 @@
 @Annotation
 local interface RESOURCES_BASE_URI {
 	attribute string value;
-}
+};
 
 @RESOURCES_BASE_URI("http://example.com/resources/")
 module HelloWorld
@@ -9,17 +9,17 @@ module HelloWorld
 	@Annotation
 	local interface PATH {
 		attribute string value;
-	}
+	};
 
 	@Annotation
 	local interface METHOD {
 		attribute string value;
-	}
+	};
 
 	@Annotation
 	local interface BODY {
 		attribute string value;
-	}
+	};
 
 	@PATH("HelloWorld")
 	interface HelloWorldResource

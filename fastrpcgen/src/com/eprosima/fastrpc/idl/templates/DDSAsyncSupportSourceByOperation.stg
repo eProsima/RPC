@@ -1,11 +1,11 @@
 group AsyncSupportSourceByOperation;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
 
 #include "$ctx.filename$DDSAsyncSupport.h"
-#include "fastrpc/exceptions/ServerInternalException.h"
-#include "fastrpc/utils/Messages.h"
+#include "$ctx.product$/exceptions/ServerInternalException.h"
+#include "$ctx.product$/utils/Messages.h"
 $if(ctx.rtiTypes)$
 $ReqRepIncludes(filename=ctx.filename)$
 
@@ -14,7 +14,7 @@ $ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separat
 $endif$
 
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 
 $definitions; separator="\n"$

@@ -1,13 +1,13 @@
 group ServerSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
 
 #include "$ctx.filename$Server.h"
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/transports/ServerTransport.h"
+#include "$ctx.product$/strategies/ServerStrategy.h"
+#include "$ctx.product$/transports/ServerTransport.h"
 #include "$ctx.filename$Protocol.h"
-#include "fastrpc/exceptions/ServerInternalException.h"
+#include "$ctx.product$/exceptions/ServerInternalException.h"
 
 $if(ctx.rtiTypes)$
 $ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
@@ -35,8 +35,8 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-$interface.name$Server::$interface.name$Server(eprosima::fastrpc::strategy::ServerStrategy &strategy, eprosima::fastrpc::transport::ServerTransport &transport,
-            eprosima::fastrpc::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
+$interface.name$Server::$interface.name$Server(eprosima::rpc::strategy::ServerStrategy &strategy, eprosima::rpc::transport::ServerTransport &transport,
+            eprosima::rpc::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
     Server(strategy, transport, protocol), _impl(servant)
 {
    protocol.activateInterface("$interface.scopedname$");

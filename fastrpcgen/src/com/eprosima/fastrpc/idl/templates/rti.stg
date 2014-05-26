@@ -242,7 +242,7 @@ rtiInclVS() ::= <<
 \$(NDDSHOME)\include;\$(NDDSHOME)\include\ndds;
 >>
 
-rtiLibsMake(example, version) ::= <<
+rtiLibsMake(example) ::= <<
  -L\$(NDDSHOME)/lib/$example$ \
        -lnddsc -lnddscore -lnddscpp
 >>

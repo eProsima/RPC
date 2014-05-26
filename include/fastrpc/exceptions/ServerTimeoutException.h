@@ -9,11 +9,11 @@
 #ifndef _EXCEPTIONS_SERVERTIMEOUTEXCEPTION_H_
 #define _EXCEPTIONS_SERVERTIMEOUTEXCEPTION_H_
 
-#include <fastrpc/exceptions/SystemException.h>
+#include "fastrpc/exceptions/SystemException.h"
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace exception
         {
@@ -74,6 +74,6 @@ namespace eprosima
                     virtual void raise() const;
             };
         } // namespace exception
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 #endif // _EXCEPTIONS_SERVERTIMEOUTEXCEPTION_H_

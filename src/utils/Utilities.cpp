@@ -14,9 +14,9 @@
 #include <unistd.h>
 #endif
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::Utilities";
+static const char* const CLASS_NAME = "eprosima::rpc::Utilities";
 
-void eprosima::fastrpc::sleep(unsigned int milliseconds)
+void eprosima::rpc::sleep(unsigned int milliseconds)
 {
 #if defined(WIN32)
     Sleep(milliseconds);

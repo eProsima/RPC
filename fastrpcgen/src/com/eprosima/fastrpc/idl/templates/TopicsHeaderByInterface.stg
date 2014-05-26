@@ -9,13 +9,13 @@
 group TopicsHeaderByInterface;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_TOPICS_H_
 #define _$ctx.filename;format="toUpper"$_TOPICS_H_
 
 #include "$ctx.filename$.h"
-#include "fastrpc/protocols/dds/MessageHeader.h"
+#include "$ctx.product$/protocols/dds/MessageHeader.h"
 
 #include <cstddef>
 
@@ -93,7 +93,7 @@ public:
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
-     * @exception eprosima::fastrpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     void _d(int32_t __d);
     
@@ -192,7 +192,7 @@ public:
      * @brief This method sets the request header information.
      * @param __header Request header.
      */
-    inline void _header(const eprosima::fastrpc::protocol::dds::RequestHeader &__header)
+    inline void _header(const eprosima::rpc::protocol::dds::RequestHeader &__header)
     {
         m__header = __header;
     }
@@ -201,7 +201,7 @@ public:
      * @brief This method sets the request header information.
      * @param __header Request header.
      */
-    inline void _header(eprosima::fastrpc::protocol::dds::RequestHeader &&__header)
+    inline void _header(eprosima::rpc::protocol::dds::RequestHeader &&__header)
     {
         m__header = std::move(__header);
     }
@@ -210,7 +210,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline const eprosima::fastrpc::protocol::dds::RequestHeader& _header() const
+    inline const eprosima::rpc::protocol::dds::RequestHeader& _header() const
     {
         return m__header;
     }
@@ -219,7 +219,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline eprosima::fastrpc::protocol::dds::RequestHeader& _header()
+    inline eprosima::rpc::protocol::dds::RequestHeader& _header()
     {
         return m__header;
     }
@@ -290,7 +290,7 @@ public:
 
 private:
 
-    eprosima::fastrpc::protocol::dds::RequestHeader m__header;
+    eprosima::rpc::protocol::dds::RequestHeader m__header;
 
     $interface.name$Request_union m_unio;
 };
@@ -340,7 +340,7 @@ public:
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
-     * @exception eprosima::fastrpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     void _d(int32_t __d);
     
@@ -411,6 +411,7 @@ public:
      */
     ~$interface.name$Reply();
     
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$Reply that will be copied.
      */
@@ -438,7 +439,7 @@ public:
      * @brief This method sets the reply header information.
      * @param __header Reply header.
      */
-    inline void _header(const eprosima::fastrpc::protocol::dds::ReplyHeader &__header)
+    inline void _header(const eprosima::rpc::protocol::dds::ReplyHeader &__header)
     {
         m__header = __header;
     }
@@ -447,7 +448,7 @@ public:
      * @brief This method sets the reply header information.
      * @param __header Reply header.
      */
-    inline void _header(eprosima::fastrpc::protocol::dds::ReplyHeader &&__header)
+    inline void _header(eprosima::rpc::protocol::dds::ReplyHeader &&__header)
     {
         m__header = std::move(__header);
     }
@@ -456,7 +457,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline const eprosima::fastrpc::protocol::dds::ReplyHeader& _header() const
+    inline const eprosima::rpc::protocol::dds::ReplyHeader& _header() const
     {
         return m__header;
     }
@@ -465,7 +466,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline eprosima::fastrpc::protocol::dds::ReplyHeader& _header()
+    inline eprosima::rpc::protocol::dds::ReplyHeader& _header()
     {
         return m__header;
     }
@@ -536,7 +537,7 @@ public:
 
 private:
 
-    eprosima::fastrpc::protocol::dds::ReplyHeader m__header;
+    eprosima::rpc::protocol::dds::ReplyHeader m__header;
 
     $interface.name$Reply_union m_unio;
 };
@@ -568,6 +569,7 @@ public:
      */
     ~$operation.parent.name$_$operation.name$Request();
     
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
      */
@@ -754,7 +756,7 @@ public:
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
-     * @exception eprosima::fastrpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     void _d(int32_t __d);
     
@@ -948,14 +950,14 @@ void $name$($typename$ &&_$name$);
 /*!
  * @brief This function returns a constant reference to member $name$
  * @return Constant reference to member $name$
- * @exception eprosima::fastrpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
+ * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
  */
 const $typename$& $name$() const;
 
 /*!
  * @brief This function returns a reference to member $name$
  * @return Reference to member $name$
- * @exception eprosima::fastrpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
+ * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
  */
 $typename$& $name$();
 >>

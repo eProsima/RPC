@@ -1,18 +1,3 @@
-/* $Id$   *
- * (c) Copyright, eProsima, 2009.                                          *
- * All rights reserved.                                                    *    
- *                                                                         *
- * No duplications, whole or partial, manual or electronic, may be made    *
- * without express written permission.  Any such copies, or                *
- * revisions thereof, must display this notice unaltered.                  *
- * This code contains trade secrets of                                     *
- * eProsima (Proyectos y Sistemas de Mantenimiento S.L.)                   *
- *                                                                         *
- * modification history                                                    *
- * --------------------                                                    *
- * 1.0,29sep09,RodM Created                                                *
- * =====================================================================   *
- */
 package com.eprosima.fastrpc;
 
 import java.io.BufferedReader;
@@ -41,6 +26,8 @@ import com.javadude.antxr.RecognitionException;
 import com.javadude.antxr.TokenStreamException;
 import com.javadude.antxr.scanner.BasicCrimsonXMLTokenStream;
 
+import com.eprosima.log.ColorMessage;
+import com.eprosima.log.Log;
 import com.eprosima.idl.parser.grammar.IDLLexer;
 import com.eprosima.idl.parser.grammar.IDLParser;
 import com.eprosima.idl.parser.exception.ParseException;
@@ -70,20 +57,22 @@ public class fastrpcgen
     {  
         public void error(String arg0, Throwable arg1)
         {
-            System.out.println(arg0);
+            System.out.println(ColorMessage.error() + arg0);
             arg1.printStackTrace();
         }
     
         public void warning(String arg0)
         {
-            System.out.println(arg0);   
+            System.out.println(ColorMessage.warning() + arg0);   
         }   
     }
     
+    /// Common options ///
+    protected static String m_appName = "fastrpcgen";
+    protected static String m_appProduct = "fastrpc";
+    protected static String m_localAppProduct = "fastrpc";
+    protected static String m_appEnv = "FASTRPCHOME";
     private static ArrayList<String> m_platforms = null;
-    private static String m_middleware = "rti";
-    
-    // TODO Quitar los sistemas operativos. Cutre.
     private String m_osOption = null;
     private boolean m_servercode = true;
     private boolean m_clientcode = true;
@@ -91,9 +80,15 @@ public class fastrpcgen
     private String m_languageOption = "C++";
     private boolean m_ppDisable = false;
     private boolean m_replace = false;
+    private String m_ppPath = null;
+    private final String m_defaultOutputDir = "." + File.separator;
+    private String m_outputDir = m_defaultOutputDir;
+    private String m_tempDir = null;
+    // Array list of strings. Include paths
+    private ArrayList m_includePaths = new ArrayList();
+    private Vector<String> m_idlFiles;
     //! Add information to use fastrpcgen internally. 
     private boolean m_local = false;
-    private String m_ppPath = null;
 
     // Use to know the protocol
     public enum PROTOCOL
@@ -103,7 +98,11 @@ public class fastrpcgen
         FASTCDR
     };
 
-    private PROTOCOL m_protocol = PROTOCOL.DDS; // Default protocol -> DDS
+    protected static PROTOCOL m_protocol = PROTOCOL.FASTCDR; // Default protocol -> fastcdr
+
+
+    /// DDS options ///
+    private static String m_middleware = "rti";
 
     // Used to know who types generate in DDS case.
     public enum DDS_TYPES
@@ -122,13 +121,10 @@ public class fastrpcgen
     }
 
     private DDS_TOPIC_MODE m_mode = DDS_TOPIC_MODE.BY_INTERFACE; // Default DDS topic creation mode.
-    
-    private final String m_defaultOutputDir = "." + File.separator;
-    private String m_outputDir = m_defaultOutputDir;
-    private String m_tempDir = null;
-    // Array list of strings. Include paths
-    private ArrayList m_includePaths = new ArrayList();
-    private Vector<String> m_idlFiles;
+    private static final String TOPIC_GENERATION_OPTION = "-topicGeneration";
+    private static final String TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION = "byOperation";
+    private static final String TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE = "byInterface";
+
     private String m_command = null;
     private String m_extra_command = null;
     private ArrayList m_lineCommand = null;
@@ -137,6 +133,7 @@ public class fastrpcgen
     // Location of the MessageHeader.idl file
     private String m_messageHeaderFileName = "MessageHeader.idl";
     private String m_messageHeaderFileLocation = null;
+    // TODO Unused
     private String m_requestreplyIDLLocation = null;
 
     //TO_DO: external properties?
@@ -145,16 +142,11 @@ public class fastrpcgen
         new VSConfiguration("Debug", "Win32", true, false),
         new VSConfiguration("Release", "Win32", false, false)};
 
-    // Options
-    private static final String TOPIC_GENERATION_OPTION = "-topicGeneration";
-    private static final String TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION = "byOperation";
-    private static final String TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE = "byInterface";
-    
     public fastrpcgen(String[] args) throws BadArgumentException
     {
         int count = 0;
         String arg;
-        
+
         // Detect OS system
         // Detect OS
         m_osOption = System.getProperty("os.name");
@@ -221,6 +213,7 @@ public class fastrpcgen
                 else
                     throw new BadArgumentException("No URL after -d argument");
             }
+            /* OpenDDS version is obsolet.
             else if(arg.equals("-middleware"))
             {
                 if(count < args.length)
@@ -229,7 +222,7 @@ public class fastrpcgen
                 }
                 else
                     throw new BadArgumentException("No middleware after -middleware argument");
-            }
+            }*/
             else if(arg.equals("-t"))
             {
                 if(count < args.length)
@@ -239,6 +232,7 @@ public class fastrpcgen
                 else
                     throw new BadArgumentException("No URL after -t argument");
             }
+            /* Products splitted.
             else if(arg.equalsIgnoreCase("-protocol"))
             {
                 if(count < args.length)
@@ -262,8 +256,8 @@ public class fastrpcgen
                 }
                 else
                     throw new BadArgumentException("No protocol after -protocol argument");
-            }
-            else if(arg.equalsIgnoreCase("-types"))
+            }*/
+            else if(arg.equalsIgnoreCase("-types") && m_protocol == PROTOCOL.DDS)
             {
                 if(count < args.length)
                 {
@@ -279,7 +273,7 @@ public class fastrpcgen
                 else
                     throw new BadArgumentException("Any value after -types argument");
             }
-            else if(arg.equalsIgnoreCase(TOPIC_GENERATION_OPTION))
+            else if(arg.equalsIgnoreCase(TOPIC_GENERATION_OPTION) && m_protocol == PROTOCOL.DDS)
             {
                 if(count < args.length)
                 {
@@ -309,6 +303,10 @@ public class fastrpcgen
             {
                 m_local = true;
             }
+            else if(arg.equals("-debug"))
+            {
+                Log.m_level = Log.DEBUG;
+            }
             // Get include directories
             else if(arg.equals("-I"))
             {
@@ -322,7 +320,8 @@ public class fastrpcgen
             else if(arg.startsWith("-I"))
             {
                 m_includePaths.add(arg);
-            }/*
+            }
+            /* There are problems with those arguments.
             else if(arg.equals("--server"))
             {
                 m_servercode = false;
@@ -364,7 +363,7 @@ public class fastrpcgen
         }
         catch(Exception ex)
         {
-            System.out.println("ERROR: Getting platforms. " + ex.getMessage());
+            System.out.println(ColorMessage.error() + "Getting platforms. " + ex.getMessage());
         }
         
         return returnedValue;
@@ -384,7 +383,7 @@ public class fastrpcgen
         }
         catch(Exception ex)
         {
-            System.out.println("ERROR: Getting version. " + ex.getMessage());
+            System.out.println(ColorMessage.error() + "Getting version. " + ex.getMessage());
         }
     	
     	return "";
@@ -405,7 +404,7 @@ public class fastrpcgen
     		
     		if(!dir.exists())
     		{
-    			System.out.println("ERROR: The output directory doesn't exist");
+    			System.out.println(ColorMessage.error() + "The output directory doesn't exist");
     			return false;
     		}
     	}
@@ -415,7 +414,7 @@ public class fastrpcgen
         if(returnedValue)
         {
             // Create new solution.
-            Solution solution = new Solution(m_protocol, m_types, m_servercode, m_clientcode);
+            Solution solution = new Solution(m_servercode, m_clientcode);
 
             // Load string templates
             System.out.println("Loading Templates...");     
@@ -424,6 +423,12 @@ public class fastrpcgen
 
             // Load IDL types for stringtemplates
             TypeCode.idltypesgr = StringTemplateGroup.loadGroup("idlTypes", DefaultTemplateLexer.class, null);
+
+            // In local for all products
+            if(m_local)
+                solution.addInclude("$(EPROSIMADIR)/code");
+            solution.addInclude("$(" + m_appEnv + ")/include");
+            solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
 
             if(m_protocol == PROTOCOL.DDS)
             {
@@ -454,7 +459,7 @@ public class fastrpcgen
                     }
                     catch(Exception ex)
                     {
-                        System.out.println("Cannot generate MessageHeader.idl");
+                        System.out.println(ColorMessage.error() + "Cannot generate MessageHeader.idl");
                         return false;
                     }
                 }
@@ -465,8 +470,33 @@ public class fastrpcgen
                     TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                     TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
+                    if(m_local)
+                    {
+                        solution.addInclude("$(FASTCDR)/include");
+                        solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
+                    }
                     solution.addLibrary("fastcdr");
                 }
+
+                // Add dds middleware code dependencies
+                solution.addInclude("$(NDDSHOME)/include");
+                solution.addInclude("$(NDDSHOME)/include/ndds");
+                solution.addLibraryPath("$(NDDSHOME)/lib/" + m_exampleOption);
+                solution.addLibrary("nddscore");
+                solution.addLibrary("nddsc");
+                solution.addLibrary("nddscpp");
+                if(m_osOption.contains("Windows"))
+                {
+                    solution.addDefine("RTI_WIN32");
+                }
+                else if(m_osOption.contains("Linux"))
+                {
+                    solution.addDefine("RTI_LINUX");
+                    solution.addDefine("RTI_UNIX");
+                }
+
+                // Add product library.
+                solution.addLibrary("rpcdds");
             }
             else if(m_protocol == PROTOCOL.REST)
             {
@@ -476,6 +506,9 @@ public class fastrpcgen
 
                 solution.addLibrary("boost_system");
                 solution.addLibrary("boost_thread");
+
+                // Add product library.
+                solution.addLibrary("rpcrest");
             }
             else if(m_protocol == PROTOCOL.FASTCDR)
             {
@@ -483,10 +516,17 @@ public class fastrpcgen
                 TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                 TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-                solution.addInclude("$(FASTRPCHOME)/include/protocols/cdr");
                 solution.addLibrary("boost_system");
                 solution.addLibrary("boost_thread");
+                if(m_local)
+                {
+                    solution.addInclude("$(FASTCDR)/include");
+                    solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
+                }
                 solution.addLibrary("fastcdr");
+
+                // Add product library.
+                solution.addLibrary("fastrpc");
             }
 
             for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
@@ -503,7 +543,7 @@ public class fastrpcgen
             if(returnedValue && m_exampleOption != null)
             {
                 if((returnedValue = genSolution(solution)) == false)
-                    System.out.println("ERROR: While the solution was being generated");
+                    System.out.println(ColorMessage.error() + "While the solution was being generated");
             }
         }
         
@@ -512,8 +552,8 @@ public class fastrpcgen
     
     private String toIDL(String wadlFilename) throws IDLConverterException
     {    	
-    	if(!Utils.getFileExtension(wadlFilename).equals("wadl"))
-    		return wadlFilename; // Already an IDL file
+    	//if(!Utils.getFileExtension(wadlFilename).equals("wadl"))
+    	//	return wadlFilename; // Already an IDL file
     	
     	System.out.println("Converting WADL file to IDL ...");
     	
@@ -557,22 +597,21 @@ public class fastrpcgen
         Project project = null;
         System.out.println("Processing the file " + idlFilename + " ...");
         
-        // Ruben:
-        // If the input file is a WADL file, we first convert it to IDL
-        try {
-        	idlFilename = toIDL(idlFilename);
-		} catch (IDLConverterException e) {
-			System.out.println(e.getMessage());
-            System.out.println("ERROR: Cannot generate the files");
-            return null;
-		}
-        
         try
         {
             // If the selected protocol was REST, then the IDL file is parsed using REST and return.
             if(m_protocol == PROTOCOL.REST) 
             {
-                return parseIDLtoREST(idlFilename);
+                if(Utils.getFileExtension(idlFilename).equals("wadl"))
+                {
+                    idlFilename = toIDL(idlFilename);
+                    return parseIDLtoREST(idlFilename);
+                }
+                else
+                {
+                    System.out.println(ColorMessage.error() + idlFilename + " is not a WADL file extension.");
+                    return null;
+                }
             }
             // If the selected protocol was CDR, then the IDL file is parsed using CDR and return.
             else if(m_protocol == PROTOCOL.FASTCDR)
@@ -631,11 +670,16 @@ public class fastrpcgen
                 }
             }
         }
+        catch (IDLConverterException e)
+        {
+            System.out.println(ColorMessage.error() + "Cannot convert WADL file to IDL");
+			System.out.println(e.getMessage());
+		}
         catch(Exception ioe)
         {
+            System.out.println(ColorMessage.error() + "Cannot generate the files");
             if(!ioe.getMessage().equals(""))
                 System.out.println(ioe.getMessage());
-            System.out.println("ERROR: Cannot generate the files");
             //ioe.printStackTrace();
         }
         
@@ -658,7 +702,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager();
@@ -702,15 +747,15 @@ public class fastrpcgen
 	        }
 	        catch(FileNotFoundException ex)
 	        {
-	            System.out.println("ERROR<FileNotFoundException>: The file " + idlParseFileName + "was not found.");
+	            System.out.println(ColorMessage.error("FileNotFoundException") + "The file " + idlParseFileName + "was not found.");
 	        }
 	        catch(ParseException ex)
 	        {
-	        	System.out.println("ERROR<ParseException>: " + ex.getMessage());
+	        	System.out.println(ColorMessage.error("ParseException") + ex.getMessage());
 	        }
 	        catch(Exception ex)
 	        {
-	            System.out.println("ERROR<Exception>: " + ex.getMessage());
+	            System.out.println(ColorMessage.error("Exception") + ex.getMessage());
 	        }
 	        
 	        if(returnedValue)
@@ -828,7 +873,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
+            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
             
             // Create template manager
             TemplateManager tmanager = new TemplateManager();
@@ -869,15 +915,15 @@ public class fastrpcgen
             }
             catch(FileNotFoundException ex)
             {
-                System.out.println("ERROR<FileNotFoundException>: The file " + idlParseFileName + "was not found.");
+                System.out.println(ColorMessage.error("FileNotFoundException") + "The file " + idlParseFileName + "was not found.");
             }
             catch(ParseException ex)
             {
-                System.out.println("ERROR<ParseException>: " + ex.getMessage());
+                System.out.println(ColorMessage.error("ParseException") + ex.getMessage());
             }
             catch(Exception ex)
             {
-                System.out.println("ERROR<Exception>: " + ex.getMessage());
+                System.out.println(ColorMessage.error("Exception") + ex.getMessage());
             }
             
             if(returnedValue)
@@ -993,7 +1039,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
 	        // Create initial context.
-	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode, m_protocol, m_types);
+	        Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
 	        
 	        // Create template manager
 	        TemplateManager tmanager = new TemplateManager();
@@ -1058,15 +1105,15 @@ public class fastrpcgen
 	        }
 	        catch(FileNotFoundException ex)
 	        {
-	            System.out.println("ERROR<FileNotFoundException>: The file " + idlParseFileName + "was not found.");
+	            System.out.println(ColorMessage.error("FileNotFoundException") + "The file " + idlParseFileName + "was not found.");
 	        }
 	        catch(ParseException ex)
 	        {
-	        	System.out.println("ERROR<ParseException>: " + ex.getMessage());
+	        	System.out.println(ColorMessage.error("ParseException") + ex.getMessage());
 	        }
 	        catch(Exception ex)
 	        {
-	            System.out.println("ERROR<Exception>: " + ex.getMessage());
+	            System.out.println(ColorMessage.error("Exception") + ex.getMessage());
 	            ex.printStackTrace();
 	        }
 	        
@@ -1227,44 +1274,47 @@ public class fastrpcgen
         // Set environment variables.
         String dds_root = null, tao_root = null, fastrpc_root = null;
         
-        if(m_middleware.equals("rti"))
+        if(m_protocol == PROTOCOL.DDS)
         {
-            dds_root = System.getenv("NDDSHOME");
-            
-            if(dds_root == null || dds_root.equals(""))
+            if(m_middleware.equals("rti"))
             {
-                System.out.println("ERROR: Cannot find the environment variable NDDSHOME.");
-                System.out.println("Note: NDDSHOME environment variable is not set in your system.");
-                System.out.println("      fastrpcgen uses this environment variable to find the RTI DDS middleware.");
-                System.out.println("      This environment variable is used by the generated solutions too.");
-                System.out.println("      See the User Manual document.");
-                return false;
+                dds_root = System.getenv("NDDSHOME");
+
+                if(dds_root == null || dds_root.equals(""))
+                {
+                    System.out.println(ColorMessage.error() + "Cannot find the environment variable NDDSHOME.");
+                    System.out.println("Note: NDDSHOME environment variable is not set in your system.");
+                    System.out.println("      fastrpcgen uses this environment variable to find the RTI DDS middleware.");
+                    System.out.println("      This environment variable is used by the generated solutions too.");
+                    System.out.println("      See the User Manual document.");
+                    return false;
+                }
             }
-        }
-        else if(m_middleware.equals("opendds"))
-        {
-            dds_root = System.getenv("DDS_ROOT");
-            
-            if(dds_root == null || dds_root.equals(""))
+            else if(m_middleware.equals("opendds"))
             {
-                System.out.println("ERROR: Cannot find the environment variable DDS_ROOT.");
-                System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
-                System.out.println("      fastrpcgen uses this environment variable to find the OpenDDS middleware.");
-                System.out.println("      This environment variable is used by the generated solutions too.");
-                System.out.println("      See the User Manual document.");
-                return false;
+                dds_root = System.getenv("DDS_ROOT");
+
+                if(dds_root == null || dds_root.equals(""))
+                {
+                    System.out.println(ColorMessage.error() + "Cannot find the environment variable DDS_ROOT.");
+                    System.out.println("Note: DDS_ROOT environment variable is not set in your system.");
+                    System.out.println("      fastrpcgen uses this environment variable to find the OpenDDS middleware.");
+                    System.out.println("      This environment variable is used by the generated solutions too.");
+                    System.out.println("      See the User Manual document.");
+                    return false;
+                }
+
+                tao_root = System.getenv("TAO_ROOT");
             }
-            
-            tao_root = System.getenv("TAO_ROOT");
         }
         
-        fastrpc_root = System.getenv("FASTRPCHOME");
+        fastrpc_root = System.getenv(m_appEnv);
         
         if(fastrpc_root == null || fastrpc_root.equals(""))
         {
-            System.out.println("ERROR: Cannot find the environment variable FASTRPCHOME.");
-            System.out.println("Note: FASTRPCHOME environment variable is not set in your system.");
-            System.out.println("      fastrpcgen uses this environment variable to find its own resources.");
+            System.out.println(ColorMessage.error() + "Cannot find the environment variable " + m_appEnv + ".");
+            System.out.println("Note: " + m_appEnv + " environment variable is not set in your system.");
+            System.out.println("      " + m_appName + " uses this environment variable to find its own resources.");
             System.out.println("      See the User Manual document.");
             return false;
         }
@@ -1296,93 +1346,99 @@ public class fastrpcgen
         // Only needed by opendds in the case of using open_idl with the generated file <Interface>RequestReply.idl
         m_lineCommandForWorkDirSet = new ArrayList();
         
-        if(m_middleware.equals("rti"))
+        if(m_protocol == PROTOCOL.DDS && m_types != DDS_TYPES.EPROSIMA)
         {
-            // Directory $NDDSHOME/scripts/rtiddsgen.bat
-            m_command = dds_root + File.separator + "scripts" + File.separator;
-            
-            if(m_osOption.contains("Windows"))
-            	m_command += "rtiddsgen.bat";
-            else if(m_osOption.contains("Linux"))
-            	m_command += "rtiddsgen";
-            
-            // Add that creates file in the current directory.
-            
-            if(m_languageOption != null)
+            if(m_middleware.equals("rti"))
             {
-                m_lineCommand.add("-language");
-                m_lineCommand.add(m_languageOption);
-                m_lineCommandForWorkDirSet.add("-language");
-                m_lineCommandForWorkDirSet.add(m_languageOption);
-            }
+                // Directory $NDDSHOME/scripts/rtiddsgen.bat
+                m_command = dds_root + File.separator + "scripts" + File.separator;
 
-            if(m_ppDisable == true)
-            {
-                m_lineCommand.add("-ppDisable");
-                m_lineCommandForWorkDirSet.add("-ppDisable");
-            }
-            else
-            {
-                if(m_ppPath != null)
+                if(m_osOption.contains("Windows"))
+                    m_command += "rtiddsgen.bat";
+                else if(m_osOption.contains("Linux"))
+                    m_command += "rtiddsgen";
+
+                // Add that creates file in the current directory.
+
+                if(m_languageOption != null)
                 {
-
-                    m_lineCommand.add("-ppPath");
-                    m_lineCommand.add(m_ppPath);
-                    m_lineCommandForWorkDirSet.add("-ppPath");
-                    m_lineCommandForWorkDirSet.add(m_ppPath);
+                    m_lineCommand.add("-language");
+                    m_lineCommand.add(m_languageOption);
+                    m_lineCommandForWorkDirSet.add("-language");
+                    m_lineCommandForWorkDirSet.add(m_languageOption);
                 }
+
+                if(m_ppDisable == true)
+                {
+                    m_lineCommand.add("-ppDisable");
+                    m_lineCommandForWorkDirSet.add("-ppDisable");
+                }
+                else
+                {
+                    if(m_ppPath != null)
+                    {
+
+                        m_lineCommand.add("-ppPath");
+                        m_lineCommand.add(m_ppPath);
+                        m_lineCommandForWorkDirSet.add("-ppPath");
+                        m_lineCommandForWorkDirSet.add(m_ppPath);
+                    }
+                }
+
+                if(m_replace == true)
+                {
+                    m_lineCommand.add("-replace");
+                    m_lineCommandForWorkDirSet.add("-replace");
+                }
+
+                // Set the output directory to rtiddsgen.
+                m_lineCommand.add("-d");
+                m_lineCommand.add(m_outputDir);
+
+                // Set to create namespaces
+                m_lineCommand.add("-namespace");
+                m_lineCommandForWorkDirSet.add("-namespace");
+            }
+            else if(m_middleware.equals("opendds"))
+            {       
+                if(m_osOption.contains("Windows"))
+                {
+                    m_command = "opendds_idl.exe";
+                    m_extra_command = "tao_idl.exe";
+                }
+                else if(m_osOption.contains("Linux"))
+                {
+                    m_command = "opendds_idl";
+                    m_extra_command = "tao_idl";
+                }
+                m_spTemplate = "opendds";
+
+                m_lineCommand.add("-I" + dds_root);
+                m_lineCommand.add("-I" + tao_root);
+                m_lineCommandForWorkDirSet.add("-I" + dds_root);
+                m_lineCommandForWorkDirSet.add("-I" + tao_root);
+
+                // Add temporary directory.
+                if(m_tempDir != null)
+                {
+                    m_lineCommand.add("-t");
+                    m_lineCommand.add(m_tempDir);
+                    m_lineCommandForWorkDirSet.add("-t");
+                    m_lineCommandForWorkDirSet.add(m_tempDir);
+                }
+
+                // Set the output directory to opendds.
+                m_lineCommand.add("-o");
+                m_lineCommand.add(m_outputDir);
+                m_lineCommand.add("-I"+ m_outputDir);
             }
 
-            if(m_replace == true)
-            {
-                m_lineCommand.add("-replace");
-                m_lineCommandForWorkDirSet.add("-replace");
-            }
+            // Set the location of file MessageHeader.idl
+            m_messageHeaderFileLocation = fastrpc_root + File.separator + "idl" + File.separator + m_messageHeaderFileName;
+            m_lineCommand.add("-I" + fastrpc_root + File.separator + "idl");
 
-            // Set the output directory to rtiddsgen.
-            m_lineCommand.add("-d");
-            m_lineCommand.add(m_outputDir);
-            
-            // Set to create namespaces
-            m_lineCommand.add("-namespace");
-            m_lineCommandForWorkDirSet.add("-namespace");
+
         }
-        else if(m_middleware.equals("opendds"))
-        {       
-            if(m_osOption.contains("Windows"))
-            {
-                m_command = "opendds_idl.exe";
-                m_extra_command = "tao_idl.exe";
-            }
-            else if(m_osOption.contains("Linux"))
-            {
-                m_command = "opendds_idl";
-                m_extra_command = "tao_idl";
-            }
-            m_spTemplate = "opendds";
-            
-            m_lineCommand.add("-I" + dds_root);
-            m_lineCommand.add("-I" + tao_root);
-            m_lineCommandForWorkDirSet.add("-I" + dds_root);
-            m_lineCommandForWorkDirSet.add("-I" + tao_root);
-            
-            // Add temporary directory.
-            if(m_tempDir != null)
-            {
-                m_lineCommand.add("-t");
-                m_lineCommand.add(m_tempDir);
-                m_lineCommandForWorkDirSet.add("-t");
-                m_lineCommandForWorkDirSet.add(m_tempDir);
-            }
-            
-            // Set the output directory to opendds.
-            m_lineCommand.add("-o");
-            m_lineCommand.add(m_outputDir);
-            m_lineCommand.add("-I"+ m_outputDir);
-        }
-        
-        // Set the location of file MessageHeader.idl
-        m_messageHeaderFileLocation = fastrpc_root + File.separator + "idl" + File.separator + m_messageHeaderFileName;
         
         return true;
     }
@@ -1412,7 +1468,7 @@ public class fastrpcgen
         	}
         	catch(Exception ex)
         	{
-        		System.out.println("ERROR: Cannot get the canonical path of the idl file.");
+        		System.out.println(ColorMessage.error() + "Cannot get the canonical path of the idl file.");
         		return false;
         	}
         	idlLineCommandForWorkDirSet.add("-I"+canon);
@@ -1761,7 +1817,7 @@ public class fastrpcgen
         }
         else
         {
-            System.out.println("ERROR<" + METHOD_NAME + ">: Cannot load the template group VS2010");
+            System.out.println(ColorMessage.error(METHOD_NAME) + "Cannot load the template group VS2010");
         }
         
         return returnedValue;
@@ -1783,8 +1839,6 @@ public class fastrpcgen
             makecxx.setAttribute("solution", solution);
             makecxx.setAttribute("example", m_exampleOption);
     		makecxx.setAttribute("arch", arch);
-    		makecxx.setAttribute("version", getVersion());
-            makecxx.setAttribute("local", m_local);
             
             returnedValue = Utils.writeFile(m_outputDir + "makefile_" + m_exampleOption, makecxx, m_replace);
     	}
@@ -1797,6 +1851,7 @@ public class fastrpcgen
      */
     String callPreprocessor(String idlFilename)
     {
+        final String METHOD_NAME = "callPreprocessor";
     	// Set line command.
         ArrayList lineCommand = new ArrayList();
         String[] lineCommandArray = null;
@@ -1816,7 +1871,7 @@ public class fastrpcgen
             }
             catch(FileNotFoundException ex)
             {
-            	System.out.println("ERROR<callPreprocessor>: Cannot open file " + outputfile);
+            	System.out.println(ColorMessage.error(METHOD_NAME) + "Cannot open file " + outputfile);
             	return null;
             }
         }
@@ -1879,7 +1934,7 @@ public class fastrpcgen
         }
         catch(Exception ex)
         {
-        	System.out.println("Cannot execute the preprocessor. Reason: " + ex.getMessage());
+        	System.out.println(ColorMessage.error(METHOD_NAME) + "Cannot execute the preprocessor. Reason: " + ex.getMessage());
         	return null;
         }
         
@@ -1891,13 +1946,13 @@ public class fastrpcgen
         	}
         	catch(IOException ex)
         	{
-        		System.out.println("ERROR<callPreprocessor>: Cannot close file " + outputfile);
+        		System.out.println(ColorMessage.error(METHOD_NAME) + "Cannot close file " + outputfile);
         	}
         }
 
         if(exitVal != 0)
         {
-        	System.out.println("Preprocessor return an error " + exitVal);
+        	System.out.println(ColorMessage.error(METHOD_NAME) + "Preprocessor return an error " + exitVal);
         	return null;
         }
         
@@ -1906,8 +1961,8 @@ public class fastrpcgen
 
     public static void printHelp()
     {
-        System.out.println("fastrpcgen usage:");
-        System.out.println("\tfastrpcgen [options] <file> [<file> ...]");
+        System.out.println(m_appName + " usage:");
+        System.out.println("\t" + m_appName + " [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
         System.out.println("\t\t-help: shows this help");
         System.out.println("\t\t-version: shows the current version of eProsima RPC.");
@@ -1921,36 +1976,40 @@ public class fastrpcgen
         //        "   -language <C++>: Programming language (default: C++).\n" +
         System.out.println("\t\t-replace: replaces existing generated files.");
         System.out.println("\t\t-d <path>: sets an output directory for generated files.");
-        
-        if(m_middleware.equals("rti"))
-        {
-            System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
-            System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
-        }
-
+        System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
+        System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
         System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
+        /* Products splitted.
         System.out.println("\t\t-protocol <protocol>: defines the protocol to be implemented by the generated code.");
         System.out.println("\t\t\tSupported protocols:");
         System.out.println("\t\t\t* dds (Default)");
         System.out.println("\t\t\t* rest");
         System.out.println("");
-        System.out.println("\t\t-types <mapping>: selects the C++ mapping used for user types. Only supported in protocol dds.");
-        System.out.println("\t\t\tSupported C++ mapping:");
-        System.out.println("\t\t\t* c++11 (Default) - C++11 native types.");
-        System.out.println("\t\t\t* rti - RTI DDS types.");
-        System.out.println("");
-        System.out.println("\t\t" + TOPIC_GENERATION_OPTION + " <option>: defines how DDS topics are generated. Only supported in protocol dds.");
-        System.out.println("\t\t\tSupported topics generation:");
-        System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE + " (Default) - Generate a topic for each IDL interface.");
-        System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION + " - Generate a topic for each IDL operation.");
-        System.out.println("");
+        */
+        if(m_protocol == PROTOCOL.DDS)
+        {
+            System.out.println("\t\t-types <mapping>: selects the C++ mapping used for user types. Only supported in protocol dds.");
+            System.out.println("\t\t\tSupported C++ mapping:");
+            System.out.println("\t\t\t* c++11 (Default) - C++11 native types.");
+            System.out.println("\t\t\t* rti - RTI DDS types.");
+            System.out.println("");
+            System.out.println("\t\t" + TOPIC_GENERATION_OPTION + " <option>: defines how DDS topics are generated. Only supported in protocol dds.");
+            System.out.println("\t\t\tSupported topics generation:");
+            System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE + " (Default) - Generate a topic for each IDL interface.");
+            System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION + " - Generate a topic for each IDL operation.");
+            System.out.println("");
+        }
         System.out.println("\tand the supported input files are:");
-        System.out.println("\t* IDL files for protocol dds.");
-        System.out.println("\t* WADL files for protocol rest.");
+        if(m_protocol == PROTOCOL.DDS || m_protocol == PROTOCOL.FASTCDR)
+            System.out.println("\t* IDL files.");
+        else if(m_protocol == PROTOCOL.REST)
+            System.out.println("\t* WADL files.");
     }
     
     public static void main(String[] args) throws Exception
     {
+        ColorMessage.load();
+
         if(loadPlatforms())
         {
             try
@@ -1961,7 +2020,7 @@ public class fastrpcgen
             }
             catch(BadArgumentException ex)
             {
-                System.out.println("ERROR<BadArgumentException>: " + ex.getMessage());
+                System.out.println(ColorMessage.error("BadArgumentException") + ex.getMessage());
                 printHelp();
             }
         }

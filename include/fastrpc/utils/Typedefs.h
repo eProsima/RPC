@@ -13,7 +13,7 @@
 
 namespace eprosima
 {
-	namespace fastrpc
+	namespace rpc
 	{
         namespace transport
         {
@@ -25,7 +25,7 @@ namespace eprosima
 
 #define DDS_TIMEOUT_SET(name, duration) name.sec = duration.total_seconds(); \
         name.nanosec = static_cast<EPROSIMA_UINT32>(duration.fractional_seconds() * (1000000000 / boost::posix_time::time_duration::traits_type::res_adjust()));
-	} // namespace fastrpc
+	} // namespace rpc
 } // namespace eprosima
 
 #endif // _UTILS_TYPEDEFS_H_

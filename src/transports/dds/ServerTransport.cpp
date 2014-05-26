@@ -11,10 +11,10 @@
 #include "fastrpc/protocols/Protocol.h"
 #include "fastrpc/exceptions/InitializeException.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport::dds;
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ServerTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ServerTransport";
 
 ServerTransport::ServerTransport(std::string &serviceName, int domainId) :
     m_serviceName(serviceName), ::transport::ServerTransport(),

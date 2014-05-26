@@ -4,12 +4,11 @@ LN= g++
 AR=ar
 LDFLAGS= -m64
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
-DEFINES=  -DRTI_LINUX -DRTI_UNIX
+DEFINES= 
 
-INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(RPCDDSHOME)/include 
+INCLUDES= -I. -I$(RPCRESTHOME)/include
 
-LIBS =  -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 \
-       -lrpcdds-0.2.0 -lnddsc -lnddscore -lnddscpp -lboost_system-mt $(SYSLIBS)
+LIBS = -L$(RPCRESTHOME)/lib/x64Linux2.6gcc4.4.5 -lboost_system -lboost_thread -lrpcrest $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 
@@ -25,8 +24,6 @@ HelloWorld_SERVER_TARGET= lib/x64Linux2.6gcc4.4.5/libHelloWorldServer.so
 HelloWorld_SERVER_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libHelloWorldServer.a
 HelloWorld_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/HelloWorldServerExample
 HelloWorld_COMMON_SRC_CXXFILES = HelloWorld.cxx \
-	HelloWorldPlugin.cxx \
-	HelloWorldSupport.cxx \
 	HelloWorldRESTProtocol.cxx
 
 HelloWorld_COMMON_SRC_CPPFILES=

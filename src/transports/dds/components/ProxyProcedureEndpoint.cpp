@@ -16,11 +16,11 @@
 #include "boost/thread/mutex.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ProxyProcedureEndpoint";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ProxyProcedureEndpoint";
 
 #define QUERY_POOL_LENGTH 10
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport::dds;
 
 ProxyProcedureEndpoint::ProxyProcedureEndpoint(ProxyTransport &transport) : m_mutex(NULL), m_transport(transport), m_writerTopic(NULL),
@@ -397,14 +397,14 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
     char value[50];
     void *auxPointerToRequest = NULL;
     char **auxPointerToRemoteServiceName = NULL;
-    eprosima::fastrpc::protocol::dds::RequestHeader *requestHeader = NULL;
+    eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
         if(m_eprosima_types)
         {
-            requestHeader = reinterpret_cast<eprosima::fastrpc::protocol::dds::RequestHeader*>(request);
+            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
             requestHeader->clientId().value_1(m_proxyId[0]);
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);
@@ -558,14 +558,14 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     char value[50];
     void *auxPointerToRequest = NULL;
     char **auxPointerToRemoteServiceName = NULL;
-    eprosima::fastrpc::protocol::dds::RequestHeader *requestHeader = NULL;
+    eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
         if(m_eprosima_types)
         {
-            requestHeader = reinterpret_cast<eprosima::fastrpc::protocol::dds::RequestHeader*>(request);
+            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
             requestHeader->clientId().value_1(m_proxyId[0]);
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);

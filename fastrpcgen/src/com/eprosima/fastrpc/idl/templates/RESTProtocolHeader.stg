@@ -1,14 +1,14 @@
 group RESTProtocolHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "RESTProtocol.h"], description=["This header file contains the declaration of the protocol used to create REST messages."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "RESTProtocol.h"], description=["This header file contains the declaration of the protocol used to create REST messages."])$
 
 #ifndef _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
 #define _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "fastrpc/transports/messages/HttpMessage.h"
-#include "fastrpc/utils/Messages.h"
+#include "$ctx.product$/transports/messages/HttpMessage.h"
+#include "$ctx.product$/utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 $if(ctx.projectNeedTypes)$
 #include "$ctx.filename$T.h"
@@ -21,7 +21,7 @@ using namespace std;
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace protocol
         {
@@ -35,7 +35,7 @@ namespace eprosima
                  *  It uses a RESTful protocol.
 		 * @ingroup $ctx.trimfilename$
                  */
-                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::fastrpc::protocol::$ctx.filename$Protocol
+                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -55,7 +55,7 @@ namespace eprosima
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
-                        bool setTransport(eprosima::fastrpc::transport::Transport &transport);
+                        bool setTransport(eprosima::rpc::transport::Transport &transport);
                         
                        /*!
                         * @brief This method does not apply to this class
@@ -69,12 +69,12 @@ namespace eprosima
                         * @param dataLength received data length
                         * @param endpoint Proxy endpoint where the request came from
                         */
-                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::fastrpc::transport::Endpoint *endpoint);
+                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint);
                         
                         $definitions; separator="\n"$
                         
                         // Server
-                        eprosima::fastrpc::transport::HttpMessage processRequest(eprosima::fastrpc::transport::HttpMessage &httpMessage);
+                        eprosima::rpc::transport::HttpMessage processRequest(eprosima::rpc::transport::HttpMessage &httpMessage);
                         
                     private:
                     
@@ -85,7 +85,7 @@ namespace eprosima
                 };
             } // namespace rest
         } // namespace protocol
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
@@ -117,7 +117,7 @@ operation(ctx, operation, param_list) ::= <<
 /*!
  * @brief This method implements the server part of the protocol for the operation $operation.name$
  */
-eprosima::fastrpc::transport::HttpMessage deserialize_$operation.parent.name$_$operation.name$(RESTSerializer &restSerializer, eprosima::fastrpc::transport::HttpMessage &httpMessage);
+eprosima::rpc::transport::HttpMessage deserialize_$operation.parent.name$_$operation.name$(RESTSerializer &restSerializer, eprosima::rpc::transport::HttpMessage &httpMessage);
 
 $if(operation.parent.pathHasBrackets)$
 /*!

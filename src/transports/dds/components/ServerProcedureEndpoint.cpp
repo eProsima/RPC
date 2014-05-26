@@ -15,10 +15,10 @@
 #include "boost/thread/mutex.hpp"
 #include <boost/bind.hpp>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport::dds;
 
-const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::ServerProcedureEndpoint";
+const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ServerProcedureEndpoint";
 
 ServerProcedureEndpoint::ServerProcedureEndpoint(ServerTransport &transport) : m_transport(transport),
     m_writerTopic(NULL), m_readerTopic(NULL), m_writer(NULL), m_reader(NULL), m_create_data(NULL),

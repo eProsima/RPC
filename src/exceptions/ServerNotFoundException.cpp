@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include <fastrpc/exceptions/ServerNotFoundException.h>
+#include "fastrpc/exceptions/ServerNotFoundException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 ServerNotFoundException::ServerNotFoundException(const std::string &message) : SystemException(message, 4)
 {

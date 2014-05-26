@@ -14,9 +14,9 @@
 
 #include <stdio.h>
 
-static const char* const CLASS_NAME = "eprosima::fastrpc::transport::dds::AsyncThread";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::AsyncThread";
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport::dds;
 using namespace ::exception;
 

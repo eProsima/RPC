@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include <fastrpc/exceptions/ClientInternalException.h>
+#include "fastrpc/exceptions/ClientInternalException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 ClientInternalException::ClientInternalException(const std::string &message) : SystemException(message, 2)
 {

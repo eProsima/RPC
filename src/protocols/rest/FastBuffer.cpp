@@ -4,7 +4,7 @@
 
 #define BUFFER_START_LENGTH 200
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace protocol::rest;
 
 FastBuffer::FastBuffer() : m_buffer(NULL),

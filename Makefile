@@ -15,12 +15,12 @@ ifdef DDS_ROOT
 endif
 endif
 -include $(BASEDIR)/building/makefiles/fastrpc.mk
--include $(BASEDIR)/building/makefiles/doxygen.mk
--include $(BASEDIR)/building/makefiles/package.mk
+-include $(BASEDIR)/building/makefiles/rpcdds.mk
+-include $(BASEDIR)/building/makefiles/rpcrest.mk
 
-.PHONY: all doxygen
+.PHONY: all
 
-all: fastrpc doxygen package
+all: fastrpc rpcdds rpcrest
 
 clean:
 	@rm -f $(OBJS)

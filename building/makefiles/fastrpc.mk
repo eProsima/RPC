@@ -52,46 +52,9 @@ FASTRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 
-FASTRPC_SRC_CPPFILES= $(BASEDIR)/src/client/Proxy.cpp \
-		     $(BASEDIR)/src/server/Server.cpp \
-		     $(BASEDIR)/src/utils/Utilities.cpp \
-		     $(BASEDIR)/src/utils/dds/Middleware.cpp \
-		     $(BASEDIR)/src/protocols/dds/MessageHeader.cpp \
-		     $(BASEDIR)/src/protocols/dds/MessageHeaderPlugin.cpp \
-		     $(BASEDIR)/src/protocols/rest/FastBuffer.cpp \
-		     $(BASEDIR)/src/protocols/rest/HTTPEntities.cpp \
-		     $(BASEDIR)/src/protocols/rest/RESTSerializer.cpp \
-		     $(BASEDIR)/src/transports/components/TCPEndpoint.cpp \
-		     $(BASEDIR)/src/transports/TCPProxyTransport.cpp \
-		     $(BASEDIR)/src/transports/TCPServerTransport.cpp \
-		     $(BASEDIR)/src/transports/HttpProxyTransport.cpp \
-		     $(BASEDIR)/src/transports/HttpServerTransport.cpp \
-		     $(BASEDIR)/src/transports/AsyncTask.cpp \
-		     $(BASEDIR)/src/transports/dds/Transport.cpp \
-		     $(BASEDIR)/src/transports/dds/ProxyTransport.cpp \
-		     $(BASEDIR)/src/transports/dds/ServerTransport.cpp \
-		     $(BASEDIR)/src/transports/dds/DDSUDPProxyTransport.cpp \
-		     $(BASEDIR)/src/transports/dds/DDSUDPServerTransport.cpp \
-		     $(BASEDIR)/src/transports/dds/DDSTCPProxyTransport.cpp \
-		     $(BASEDIR)/src/transports/dds/DDSTCPServerTransport.cpp \
-		     $(BASEDIR)/src/transports/dds/DDSAsyncTask.cpp \
-		     $(BASEDIR)/src/transports/dds/AsyncThread.cpp \
-		     $(BASEDIR)/src/transports/dds/components/ProxyProcedureEndpoint.cpp \
-		     $(BASEDIR)/src/transports/dds/components/ServerProcedureEndpoint.cpp \
-		     $(BASEDIR)/src/strategies/ThreadPoolStrategy.cpp \
-		     $(BASEDIR)/src/strategies/SingleThreadStrategy.cpp \
-		     $(BASEDIR)/src/strategies/ThreadPerRequestStrategy.cpp \
-		     $(BASEDIR)/src/exceptions/Exception.cpp \
-		     $(BASEDIR)/src/exceptions/ClientInternalException.cpp \
-		     $(BASEDIR)/src/exceptions/InitializeException.cpp \
-		     $(BASEDIR)/src/exceptions/IncompatibleException.cpp \
-		     $(BASEDIR)/src/exceptions/ServerInternalException.cpp \
-		     $(BASEDIR)/src/exceptions/ServerNotFoundException.cpp \
-		     $(BASEDIR)/src/exceptions/ServerTimeoutException.cpp \
-		     $(BASEDIR)/src/exceptions/SystemException.cpp \
-		     $(BASEDIR)/src/exceptions/UserException.cpp \
-		     $(BASEDIR)/src/exceptions/BadParamException.cpp \
-		     $(SPECIFIC_SRC_CPPFILES)
+FASTRPC_SRC_COMMONFILES= $(shell cat building/makefiles/common_sources)
+
+FASTRPC_SRC_CPPFILES= $(shell cat building/makefiles/fastrpc_sources)
 
 # Project sources are copied to the current directory
 FASTRPC_SRCS= $(FASTRPC_SRC_CFILES) $(FASTRPC_SRC_CPPFILES)

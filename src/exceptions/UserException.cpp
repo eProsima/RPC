@@ -8,7 +8,7 @@
 
 #include "fastrpc/exceptions/UserException.h"
 
-using namespace eprosima::fastrpc::exception;
+using namespace eprosima::rpc::exception;
 
 UserException::UserException() : Exception()
 {

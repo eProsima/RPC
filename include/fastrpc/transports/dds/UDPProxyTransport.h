@@ -14,7 +14,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -65,6 +65,6 @@ namespace eprosima
                 };
             } // namespace dds
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 #endif // _TRANSPORT_DDS_UDPPROXYTRANSPORT_H_

@@ -20,7 +20,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace eprosima { namespace fastrpc { namespace transport {
+namespace eprosima { namespace rpc { namespace transport {
     class TCPServerTransportBoost
     {
         public:
@@ -46,7 +46,7 @@ namespace eprosima { namespace fastrpc { namespace transport {
     };
 }}}
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::transport;
 
 void TCPServerTransport::init(const std::string& address,

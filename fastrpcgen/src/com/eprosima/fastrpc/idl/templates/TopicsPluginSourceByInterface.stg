@@ -9,11 +9,11 @@
 group TopicsPluginSourceByInterface;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
 #include "$ctx.filename$TopicsPlugin.h"
-#include "fastrpc/protocols/dds/MessageHeaderPlugin.h"
-#include "fastrpc/exceptions/BadParamException.h"
+#include "$ctx.product$/protocols/dds/MessageHeaderPlugin.h"
+#include "$ctx.product$/exceptions/BadParamException.h"
 
 #include "fastcdr/Cdr.h"
 #include "fastcdr/exceptions/BadParamException.h"
@@ -284,9 +284,9 @@ $interface.scopedname$RequestPlugin::serialize(
         {
             scdr << *sample;
         }
-        catch(eprosima::fastrpc::exception::BadParamException ex)
+        catch(eprosima::rpc::exception::BadParamException ex)
         {
-            //printf("ERROR<eprosima::fastrpc::exception::BadParamException>: %s\n", ex.what());
+            //printf("ERROR<eprosima::rpc::exception::BadParamException>: %s\n", ex.what());
             return RTI_FALSE;
         }
         catch(eprosima::fastcdr::exception::BadParamException ex)
@@ -460,7 +460,7 @@ DDS_TypeCode* $interface.scopedname$RequestPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        $interface.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::RequestHeaderPlugin::get_typecode();
+        $interface.name$Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::RequestHeaderPlugin::get_typecode();
         $interface.name$Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.name$Request_unionPlugin::get_typecode();
         is_initialized = true;
     }
@@ -876,9 +876,9 @@ $interface.scopedname$ReplyPlugin::serialize(
         {
             scdr << *sample;
         }
-        catch(eprosima::fastrpc::exception::BadParamException ex)
+        catch(eprosima::rpc::exception::BadParamException ex)
         {
-            //printf("ERROR<eprosima::fastrpc::exception::BadParamException>: %s\n", ex.what());
+            //printf("ERROR<eprosima::rpc::exception::BadParamException>: %s\n", ex.what());
             return RTI_FALSE;
         }
         catch(eprosima::fastcdr::exception::BadParamException ex)
@@ -1050,7 +1050,7 @@ DDS_TypeCode* $interface.scopedname$ReplyPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        $interface.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::fastrpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
+        $interface.name$Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
         $interface.name$Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Reply_unionPlugin::get_typecode();
 
         is_initialized = true;

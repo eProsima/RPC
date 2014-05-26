@@ -43,7 +43,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace util
         {
@@ -64,7 +64,7 @@ namespace eprosima
                 DDS::DomainParticipantFactory* getFactory(int domainId);
             } //namespace dds
         } // namespace util
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _UTILS_DDS_MIDDLEWARE_H_

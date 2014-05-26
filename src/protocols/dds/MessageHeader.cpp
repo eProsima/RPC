@@ -2,7 +2,7 @@
 
 #include "fastcdr/Cdr.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::protocol::dds;
 
 Identification::Identification() :

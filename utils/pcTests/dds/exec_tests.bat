@@ -131,7 +131,7 @@ echo "EXECUTING %3 for %1 using operations as topics"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\fastrpcgen.bat -local -protocol dds -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcddsgen.bat -local -protocol dds -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -220,7 +220,7 @@ echo "EXECUTING %3 for %1 using interfaces as topics"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\fastrpcgen.bat -local -protocol dds -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcddsgen.bat -local -protocol dds -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory

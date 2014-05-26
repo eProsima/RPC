@@ -1,6 +1,6 @@
 #include "fastrpc/protocols/rest/RESTSerializer.h"
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::protocol::rest;
 
 RESTSerializer::RESTSerializer() : m_numQueryParameters(0), m_nextTemplateParameterPos(0)

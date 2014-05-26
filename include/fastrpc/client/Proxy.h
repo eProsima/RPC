@@ -16,7 +16,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -45,8 +45,8 @@ namespace eprosima
                      * @param protocol The protocol used to send information over the transport. This class doesn't delete this object in its destructor.
                      * @exception InitializeException This exception is thrown when the initialization went wrong.
                      */
-                    Proxy(eprosima::fastrpc::transport::ProxyTransport &transport,
-                            eprosima::fastrpc::protocol::Protocol &protocol);
+                    Proxy(eprosima::rpc::transport::ProxyTransport &transport,
+                            eprosima::rpc::protocol::Protocol &protocol);
 
                     //! @brief The default destructor.
                     virtual ~Proxy();
@@ -57,7 +57,7 @@ namespace eprosima
 					 * @return The protocol used to send information over the transport
 					 */
                     inline
-                        eprosima::fastrpc::protocol::Protocol& getProtocol() const
+                        eprosima::rpc::protocol::Protocol& getProtocol() const
                         {
                             return m_protocol;
                         }
@@ -68,7 +68,7 @@ namespace eprosima
 					 * @return The transport used used by the proxy
 					 */
                     inline
-                        eprosima::fastrpc::transport::ProxyTransport& getTransport() const
+                        eprosima::rpc::transport::ProxyTransport& getTransport() const
                         {
                             return m_transport;
                         }
@@ -76,13 +76,13 @@ namespace eprosima
                 private:
 
                     //! @brief Pointer to the transport that this server proxy uses.
-                    eprosima::fastrpc::transport::ProxyTransport &m_transport;
+                    eprosima::rpc::transport::ProxyTransport &m_transport;
 
                     //! @brief Pointer to the protocol that this server proxy uses.
-                    eprosima::fastrpc::protocol::Protocol &m_protocol;
+                    eprosima::rpc::protocol::Protocol &m_protocol;
             };
         } // namespace proxy
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _PROXY_PROXY_H_

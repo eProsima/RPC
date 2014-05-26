@@ -1,12 +1,12 @@
 group RTIExceptionsSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "Exceptions.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Exceptions.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
 
 #include "$ctx.filename$Exceptions.h"
 #include <string.h>
 
-using namespace eprosima::fastrpc;
+using namespace eprosima::rpc;
 using namespace ::exception;
 
 $definitions; separator="\n"$

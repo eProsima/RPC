@@ -11,7 +11,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -30,7 +30,7 @@ namespace eprosima
                     virtual ~AsyncTask();
             };
         } // namespace transport
-    } // namespace fastrpc
+    } // namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_ASYNCTASK_H_

@@ -9,7 +9,7 @@
 
 namespace eprosima
 {
-    namespace fastrpc
+    namespace rpc
     {
         namespace transport
         {
@@ -20,7 +20,7 @@ namespace eprosima
              * @ingroup TRANSPORTMODULE
 			 */
             class FASTRPC_DllAPI TCPProxyTransport:
-                public eprosima::fastrpc::transport::ProxyTransport
+                public eprosima::rpc::transport::ProxyTransport
             {
                 private:
                     std::string serverAddress_;
@@ -73,7 +73,7 @@ namespace eprosima
                     int receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
             };
         }// namespace transport
-    }// namespace fastrpc
+    }// namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPPROXYTRANSPORT_H_
