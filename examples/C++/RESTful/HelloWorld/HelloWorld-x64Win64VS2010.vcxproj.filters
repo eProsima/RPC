@@ -11,49 +11,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-
         <ClCompile Include="HelloWorld.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
-
-        <ClCompile Include="HelloWorldPlugin.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-
-        <ClCompile Include="HelloWorldSupport.cxx">
-          <Filter>Source Files</Filter>
-        </ClCompile>
-        
-
         <ClCompile Include="HelloWorldRESTProtocol.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
-
         <ClInclude Include="HelloWorld.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
-
-        <ClInclude Include="HelloWorldPlugin.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
-
-        <ClInclude Include="HelloWorldSupport.h">
-          <Filter>Header Files</Filter>
-        </ClInclude>
-        
-
         <ClInclude Include="HelloWorldProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
-
         <ClInclude Include="HelloWorldRESTProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>

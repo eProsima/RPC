@@ -37,7 +37,7 @@ function installer
     cp -r "../../../../output/doxygen/html" tmp/$project/doc
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPC - API C++ Manual.pdf"
+    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPCDDS - API C++ Manual.pdf"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -160,10 +160,118 @@ function installer
     find tmp/ -iname "*~" -exec rm -f {} \;
 
     cd tmp
-    tar cvzf "../${project}_${version}-RTIDDS_5.0.0.tar.gz" $project
+    tar cvzf "../eProsima_RPCDDS-${version}-Linux-RTIDDS-5.0.0.tar.gz" $project
     errorstatus=$?
     cd ..
     if [ $errorstatus != 0 ]; then return; fi
+}
+
+function rpminstaller
+{
+    rm tmp/$project/classes/antlr-2.7.7.jar
+    rm tmp/$project/classes/stringtemplate-3.2.1.jar
+    rm tmp/$project/classes/rpcddsgen.jar
+
+	# Change the script form local to general script.
+	cp ../../../../scripts/rpcddsgen_rpm.sh tmp/$project/scripts/rpcddsgen.sh
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+	chmod 755 tmp/$project/scripts/rpcddsgen.sh
+
+	# JAVA application
+	mkdir -p tmp/$project/fastrpcgen
+
+	# Copy the build.xml
+	if [ ${distroversion} == CentOS6.4 ]; then
+		cp build_rpm_rpcdds_centos.xml tmp/$project/fastrpcgen/build.xml
+	else
+		cp build_rpm_rpcdds.xml tmp/$project/fastrpcgen/build.xml
+	fi
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+	cp ../../../../fastrpcgen/manifest_rpcddsgen tmp/$project/fastrpcgen
+	errorstatus=$?
+
+	if [ $errorstatus != 0 ]; then return; fi
+	# Copy grammar
+	cp -r ../../../../../idl/grammars tmp/$project/fastrpcgen
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+
+	# Copy Java code
+	cp -r ../../../../fastrpcgen/src tmp/$project/fastrpcgen
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+	cp -r ../../../../../idl/src tmp/$project/fastrpcgen
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+    # TODO Warning Esto se hace en nuestro build.xml
+    cp ../../../../../FastBuffers/src/com/eprosima/fastbuffers/templates/Types.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+    cp ../../../../../FastBuffers/src/com/eprosima/fastbuffers/templates/TypesHeader.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+    cp ../../../../../FastBuffers/src/com/eprosima/fastbuffers/templates/TypesSource.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+    cp ../../../../src/platforms tmp/$project/src
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+
+	# Copy SPEC file
+	if [ ${distroversion} == CentOS6.4 ]; then
+		sed "s/VERSION/${version}/g" FastBuffers_centos.spec > ~/rpmbuild/SPECS/FastBuffers.spec
+	else
+		sed "s/VERSION/${version}/g" rpcdds.spec > ~/rpmbuild/SPECS/rpcdds.spec
+	fi
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+
+	# Create new source
+	cd tmp
+	tar cvzf "../${project}_${version}_rpm.tar.gz" $project
+	errorstatus=$?
+	cd ..
+	if [ $errorstatus != 0 ]; then return; fi
+
+	# Copy source
+	mv "${project}_${version}_rpm.tar.gz" ~/rpmbuild/SOURCES
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+
+	# Go to directory to build.
+	cd ~/rpmbuild/SPECS
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then return; fi
+
+    # Install fastcdr for i686
+    cd ../RPMS/i686
+    sudo yum localinstall fastcdr-0.2.1-1.fc20.i686.rpm
+    cd -
+
+	# Build command for i686.
+	rpmbuild -bb --target i686 rpcdds.spec
+	errorstatus=$?
+	if [ $errorstatus != 0 ]; then cd -; return; fi
+
+    #Uinstall fastcdr i686
+    sudo yum remove fastcdr
+
+    # Install fastcdr for x64
+    cd ../RPMS/x86_64
+    sudo yum localinstall fastcdr-0.2.1-1.fc20.x86_64.rpm
+    cd -
+
+	# Build command for x86_64.
+	rpmbuild -bb --target x86_64 rpcdds.spec
+	errorstatus=$?
+	# Return
+	cd -
+	if [ $errorstatus != 0 ]; then return; fi
+
+    #Uinstall fastcdr i686
+    sudo yum remove fastcdr
 }
 
 if [ $# -lt 1 ]; then
@@ -181,6 +289,9 @@ mkdir tmp
 mkdir tmp/$project
 
 installer
+
+# TODO Detect if the distro suport RPM
+[ $errorstatus == 0 ] && { rpminstaller; }
 
 # Remove temporaly directory
 rm -rf tmp

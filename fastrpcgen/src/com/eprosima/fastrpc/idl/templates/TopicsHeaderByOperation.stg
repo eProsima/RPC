@@ -20,7 +20,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header
 #include <cstddef>
 
 #if defined(_WIN32)
-#if defined(USER_CPP_DLL_EXPORT)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
 #define user_cpp_DllExport __declspec( dllexport )
 #else
 #define user_cpp_DllExport
@@ -179,7 +179,7 @@ $if([operation.outputparam, operation.rettype])$
  * @brief This class encapsulates output paramaters for operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-class $operation.parent.name$_$operation.name$Reply_st
+class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply_st
 {
 public:
     /*!
@@ -256,7 +256,7 @@ $endif$
  * @brief This class represents the union used in the DDS topic to encapsulate the operation parameters in reply samples.
  * @ingroup $ctx.trimfilename$
  */
-class $operation.parent.name$_$operation.name$Reply_union
+class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply_union
 {
 public:
 

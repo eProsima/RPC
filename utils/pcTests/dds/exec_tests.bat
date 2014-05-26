@@ -33,18 +33,29 @@ if %argC% geq 1 (
     )
 )
 
+:: Check environment variables
+if "%NDDSHOME%"=="" (
+    echo "NDDSHOME environment variable is not set."
+    exit /b -1
+)
+
+if "%EPROSIMADIR%"=="" (
+    echo "EPROSIMADIR environment variable is not set."
+    exit /b -1
+)
+
+if "%RPCDDSHOME%"=="" (
+    echo "RPCDDSHOME environment variable is not set."
+    exit /b -1
+)
+
+if "%FASTCDR%"=="" (
+    echo "FASTCDR environment variable is not set."
+    exit /b -1
+)
+
 :: Set environment for FASTRPC
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
-
-:: Create symbolic link to EPROSIMADIR in this fastrpc folder.
-if not exist ..\..\..\include\fastrpc\eProsima_cpp mklink /J ..\..\..\include\fastrpc\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-
-:: Create symbolic link to EPROSIMADIR in the fastcdr folder.
-if not exist ..\..\..\..\fastcdr\include\fastcdr\eProsima_cpp mklink /J ..\..\..\..\fastcdr\include\fastcdr\eProsima_cpp %EPROSIMADIR%\code\eProsima_cpp
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
 
 :: Find all directories.
 for /D %%D in ("*") do (
@@ -64,7 +75,7 @@ for /D %%D in ("*") do (
                 :: Set environtment
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
-                call "%%D\exec_test.bat" "Win32"
+                call "%%D\exec_test.bat" Win32
                 :: Restore environtment
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
@@ -77,7 +88,7 @@ for /D %%D in ("*") do (
             if !exec_target_bool!==2 (
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
-                call "%%D\exec_test.bat" "x64"
+                call "%%D\exec_test.bat" x64
                 :: Restore environtment
                 call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
                 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
@@ -131,7 +142,7 @@ echo "EXECUTING %3 for %1 using operations as topics"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\rpcddsgen.bat -local -protocol dds -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcddsgen.bat -local -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -220,7 +231,7 @@ echo "EXECUTING %3 for %1 using interfaces as topics"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\rpcddsgen.bat -local -protocol dds -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcddsgen.bat -local -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -314,10 +325,6 @@ goto :EOF
 :exit
 :: Remove output directory
 rd /S /Q output
-
-:: Remove symbolic link from EPROSIMADIR
-if exist ..\..\..\..\fastcdr\include\fastcdr\eProsima_cpp rmdir /Q ..\..\..\..\fastcdr\include\fastcdr\eProsima_cpp
-if exist ..\..\..\include\fastrpc\eProsima_cpp rmdir /Q ..\..\..\include\fastrpc\eProsima_cpp
 
 :: Restore environment for FASTRPC
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTIversion

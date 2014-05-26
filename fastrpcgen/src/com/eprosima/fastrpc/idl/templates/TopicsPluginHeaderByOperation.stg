@@ -22,6 +22,16 @@ $ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"};
 
 #include "ndds/ndds_cpp.h"
 
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#define user_cpp_DllExport __declspec( dllexport )
+#else
+#define user_cpp_DllExport
+#endif
+#else
+#define user_cpp_DllExport
+#endif
+
 $definitions; separator="\n"$
 
 #endif // _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
@@ -42,7 +52,7 @@ interface(ctx, interface, export_list) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $interface.name$Plugin
+class user_cpp_DllExport $interface.name$Plugin
 {
     public:
 
@@ -62,7 +72,7 @@ exception(ctx, exception) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $exception.name$Plugin
+class user_cpp_DllExport $exception.name$Plugin
 {
     public:
 
@@ -75,7 +85,7 @@ operation(ctx, operation, param_list) ::= <<
 /*!
  * @brief Request DataReader.
  */
-class $operation.name$RequestDataReader : public DDSDataReader
+class user_cpp_DllExport $operation.name$RequestDataReader : public DDSDataReader
 {
     public:
 
@@ -85,7 +95,7 @@ class $operation.name$RequestDataReader : public DDSDataReader
 /*!
  * @brief Request DataWriter.
  */
-class $operation.name$RequestDataWriter : public DDSDataWriter
+class user_cpp_DllExport $operation.name$RequestDataWriter : public DDSDataWriter
 {
     public:
 
@@ -95,7 +105,7 @@ class $operation.name$RequestDataWriter : public DDSDataWriter
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $operation.name$RequestPlugin : public DDSTypeSupport
+class user_cpp_DllExport $operation.name$RequestPlugin : public DDSTypeSupport
 {
     public:
 
@@ -201,7 +211,7 @@ $if(!operation.oneway)$
 /*!
  * @brief Reply DataReader.
  */
-class $operation.name$ReplyDataReader : public DDSDataReader
+class user_cpp_DllExport $operation.name$ReplyDataReader : public DDSDataReader
 {
     public:
 
@@ -211,7 +221,7 @@ class $operation.name$ReplyDataReader : public DDSDataReader
 /*!
  * @brief Reply DataWriter.
  */
-class $operation.name$ReplyDataWriter : public DDSDataWriter
+class user_cpp_DllExport $operation.name$ReplyDataWriter : public DDSDataWriter
 {
     public:
 
@@ -222,7 +232,7 @@ $if(operation.exceptions)$
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $operation.name$Reply_stPlugin
+class user_cpp_DllExport $operation.name$Reply_stPlugin
 {
     public:
 
@@ -232,7 +242,7 @@ class $operation.name$Reply_stPlugin
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $operation.name$Reply_unionPlugin
+class user_cpp_DllExport $operation.name$Reply_unionPlugin
 {
     public:
 
@@ -243,7 +253,7 @@ $endif$
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $operation.name$ReplyPlugin : public DDSTypeSupport
+class user_cpp_DllExport $operation.name$ReplyPlugin : public DDSTypeSupport
 {
     public:
 
@@ -355,7 +365,7 @@ $typedefs : { typedef |
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $typedef.name$Plugin
+class user_cpp_DllExport $typedef.name$Plugin
 {
     public:
 
@@ -369,7 +379,7 @@ struct_type(ctx, struct) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $struct.name$Plugin
+class user_cpp_DllExport $struct.name$Plugin
 {
     public:
 
@@ -382,7 +392,7 @@ union_type(ctx, union) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $union.name$Plugin
+class user_cpp_DllExport $union.name$Plugin
 {
     public:
 
@@ -395,7 +405,7 @@ enum_type(ctx, enum) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class $enum.name$Plugin
+class user_cpp_DllExport $enum.name$Plugin
 {
     public:
 

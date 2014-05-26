@@ -104,9 +104,6 @@ function package
     find includetmp/rpcrest -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcrest/' {} \;
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcrest/' includetmp/rpcrest/fastrpc_dll.h
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
 
     # Create doxygen information.
     # Generate the examples
@@ -115,6 +112,7 @@ function package
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     #Export version
+    export PROJECT_DOX=RPCREST
     export VERSION_DOX=$fastrpcversion
     export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_rpcrest.dox includetmp utils/doxygen/examples/restful"
     mkdir -p output

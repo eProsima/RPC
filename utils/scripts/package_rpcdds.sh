@@ -27,6 +27,8 @@ function setPlatform
 
 function package
 {
+    # TODO Que empaquete tambien fastcdr?
+
     # Get the current version of RPCDDS
     . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
@@ -66,16 +68,16 @@ function package
     cd ..
 
     # Execute DDS tests
-    cd utils/pcTests/rti
-    ./exec_tests.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
-    cd utils/pcTests/dds
-    ./exec_test.sh $package_targets
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cd ../../..
+##    cd utils/pcTests/rti
+##    ./exec_tests.sh $package_targets
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../..
+##    cd utils/pcTests/dds
+##    ./exec_test.sh $package_targets
+##    errorstatus=$?
+##    if [ $errorstatus != 0 ]; then return; fi
+##    cd ../../..
 
     # Create PDFS from documentation.
     cd doc
@@ -109,9 +111,6 @@ function package
     find includetmp/rpcdds -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcdds/' {} \;
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcdds/' includetmp/rpcdds/fastrpc_dll.h
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
 
     # Create doxygen information.
     # Generate the examples
@@ -120,6 +119,7 @@ function package
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     #Export version
+    export PROJECT_DOX=RPCDDS
     export VERSION_DOX=$fastrpcversion
     export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_rpcdds.dox includetmp utils/doxygen/examples/dds"
     mkdir -p output

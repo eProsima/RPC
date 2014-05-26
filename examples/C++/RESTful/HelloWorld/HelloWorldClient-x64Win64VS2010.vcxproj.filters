@@ -11,14 +11,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-
         <ClCompile Include="HelloWorldProxy.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
-
         <ClInclude Include="HelloWorldProxy.h">
           <Filter>Header Files</Filter>
         </ClInclude>
