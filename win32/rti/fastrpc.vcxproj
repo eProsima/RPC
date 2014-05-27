@@ -488,7 +488,7 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -527,7 +527,7 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -605,7 +605,7 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -644,7 +644,7 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -720,7 +720,7 @@
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -757,7 +757,7 @@
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -831,7 +831,7 @@
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -868,7 +868,7 @@
       <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;FASTRPC_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -937,7 +937,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -969,7 +969,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1032,7 +1032,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1063,7 +1063,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1126,7 +1126,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1158,7 +1158,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1222,7 +1222,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1254,7 +1254,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64VS2010</Command>
+      <Command>copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010</Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FASTRPC_SOURCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
