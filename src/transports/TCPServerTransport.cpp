@@ -192,7 +192,7 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
             // TODO TIME OUT
             size_t bufferLength = connection->socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
 
-            if(ec != boost::asio::error::eof)
+            if(ec != boost::asio::error::eof || ec.value() != 10054)
             { 
                 size_t bytesUsed = 0;
 
@@ -202,7 +202,7 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
                     bufferLength -= bytesUsed;
                 } while((bufferLength > 0) && (memmove(buffer, (char*)buffer + bytesUsed, bufferLength) != NULL));
             }
-        } while(ec != boost::asio::error::eof);
+        } while(ec != boost::asio::error::eof || ec.value() != 10054);
 
         free(buffer);
     }
@@ -267,7 +267,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
                 dataToRead = connection->socket_->read_some(boost::asio::buffer(buffer, bufferLength), ec);
             }
 
-            if(ec != boost::asio::error::eof)
+            if(ec != boost::asio::error::eof || ec.value() != 10054)
                 return 0;
             else
                 return 1;
