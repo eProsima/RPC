@@ -162,7 +162,7 @@ int TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &da
             dataToRead = m_boostInfo->socket_->read_some(boost::asio::buffer(buffer, bufferSize), ec);
         }
 
-        if(ec != boost::asio::error::eof)
+        if(ec != boost::asio::error::eof && ec.value() != 10054)
             return 0;
         else
             return 1;
