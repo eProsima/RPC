@@ -132,7 +132,7 @@ void TCPServerTransport::start_accept()
 {
     TCPEndpoint* new_endpoint = new TCPEndpoint();
     new_endpoint->master_io_service_ = m_boostInfo->io_service_;
-    std::cout << "Begin accept" << std::endl;
+    //std::cout << "Begin accept" << std::endl;
     m_boostInfo->acceptor_->async_accept(*new_endpoint->socket_,
             boost::bind(&TCPServerTransport::handle_accept, this, new_endpoint,
                 boost::asio::placeholders::error));
@@ -179,7 +179,7 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
     //boost::asio::socket_base::non_blocking_io make_non_blocking(true);
     //socket.io_control(make_non_blocking);
 
-    std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
+    //std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
     // Create buffer for the thread.
     size_t bufferSize = DEFAULT_BUFFER_SIZE, bufferLength = 0;
