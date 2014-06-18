@@ -79,6 +79,7 @@ void TCPServerTransport::init(const std::string& address,
         std::cerr << "Error binding to " << endpoint.address().to_string()
             << ":" << endpoint.port() << ": " << e.what() << std::endl;
         creationFailed = true;
+		return;
     }
 
     //Successful bind
@@ -102,6 +103,11 @@ TCPServerTransport::TCPServerTransport(const std::string &to_connect) : m_boostI
 
 TCPServerTransport::~TCPServerTransport()
 {
+	if(thread_ != NULL)
+	{
+		thread_->join();
+		delete thread_;
+	}
     if(m_boostInfo != NULL)
         delete m_boostInfo;
     if(onBossProcess != NULL)
@@ -140,12 +146,14 @@ void TCPServerTransport::start_accept()
 
 void TCPServerTransport::run()
 {
-    thread_ = new boost::thread(boost::bind(&boost::asio::io_service::run, m_boostInfo->io_service_));
+	if(m_boostInfo != NULL)
+		thread_ = new boost::thread(boost::bind(&boost::asio::io_service::run, m_boostInfo->io_service_));
 }
 
 void TCPServerTransport::stop()
 {
-    m_boostInfo->io_service_->stop();
+	if(m_boostInfo != NULL)
+		m_boostInfo->io_service_->stop();
 }
 
 void TCPServerTransport::handle_accept(TCPEndpoint* connection, const boost::system::error_code& e)
