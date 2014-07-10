@@ -27,6 +27,8 @@ function setPlatform
 
 function package
 {
+    # TODO Que empaquete tambien fastcdr?
+
     # Get the current version of FastRPC
     . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
@@ -38,7 +40,7 @@ function package
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
         rm -rf lib/$NDDSTARGET
-        make
+        make fastrpc
         errorstatus=$?
         # Try to add platform
         . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
@@ -50,7 +52,7 @@ function package
         rm -rf output
         . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
         rm -rf lib/$NDDSTARGET
-        make
+        make fastrpc
         errorstatus=$?
         . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
         . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
@@ -60,20 +62,13 @@ function package
     # Compile fastrpcgen application.
     cd fastrpcgen
     rm -rf build
-    ant jar
+    ant fastrpcgen_jar
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
-##    # Execute DDS tests
-##    cd utils/pcTests/rti
-##    ./exec_tests.sh $package_targets
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
-##    cd ../../..
-##
-##    # Execute REST tests
-##    cd utils/pcTests/restful
+##    # Execute FastCdr tests
+##    cd utils/pcTests/cdr
 ##    ./exec_tests.sh $package_targets
 ##    errorstatus=$?
 ##    if [ $errorstatus != 0 ]; then return; fi
@@ -82,35 +77,43 @@ function package
     # Create PDFS from documentation.
     cd doc
     # Installation manual
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - Installation Manual.odt,$fastrpcversion)"
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/FastRPC - Installation Manual.odt,$fastrpcversion)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-##    # User manual
-##    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - REST - User Manual.odt,$fastrpcversion)"
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
-    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/RPC - DDS - User Manual.odt,$fastrpcversion)"
+    soffice --headless "macro:///eProsima.documentation.changeVersion($PWD/FastRPC - User Manual.odt,$fastrpcversion)"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..
 
     # Create README
-    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README.odt,$fastrpcversion,./doc/,./)"
+    soffice --headless "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML($PWD/README_fastrpc.odt,$fastrpcversion,./doc/,./)"
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    mv README_fastrpc.html README.html
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
-    # Create doxygen information.
-    # Generate the examples
-    # DDS example
-    ./scripts/fastrpcgen.sh -replace -protocol dds -d utils/doxygen/examples/dds utils/doxygen/examples/dds/FooDDS.idl
+    # Prepare include files
+    mkdir -p includetmp/fastrpc
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-##    # REST example
-##    ./scripts/fastrpcgen.sh -replace -protocol rest -d utils/doxygen/examples/restful utils/doxygen/examples/restful/FooREST.wadl
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
+    includefiles=$(cat building/includes/fastrpc_includes)
+    cd include/fastrpc
+    cp --parents $includefiles ../../includetmp/fastrpc
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ../..
+
+    # Create doxygen information.
+    # Generate the examples
+    # Fastrpc example
+    ./scripts/fastrpcgen.sh -replace -d utils/doxygen/examples/fastrpc utils/doxygen/examples/fastrpc/FooFastRPC.idl
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
     #Export version
+    export PROJECT_DOX=FastRPC
     export VERSION_DOX=$fastrpcversion
+    export INPUT_DOX="utils/doxygen/doxygenfiles/mainpage_fastrpc.dox includetmp utils/doxygen/examples/fastrpc"
     mkdir -p output
     mkdir -p output/doxygen
     doxygen utils/doxygen/doxyfile
@@ -125,13 +128,10 @@ function package
 
     # Create installers
     cd utils/installers/rti/linux
-    ./setup_linux.sh $fastrpcversion
+    ./setup_linux_fastrpc.sh $fastrpcversion
     errorstatus=$?
     cd ../../../..
     if [ $errorstatus != 0 ]; then return; fi
-
-    # Remove the doxygen tmp directory
-    rm -rf output
 }
 
 # Check that the environment.sh script was run.
@@ -154,6 +154,12 @@ fi
 cd ../..
 
 package
+
+# Remove the doxygen tmp directory
+rm -rf output
+
+# Remove the include tmp directory
+rm -rf includetmp
 
 if [ $errorstatus == 0 ]; then
     echo "PACKAGING SUCCESSFULLY"

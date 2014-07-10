@@ -1,0 +1,86 @@
+CPP= g++
+CPPFLAGS = -c -Wall -fpic -m64 -std=c++0x
+LN= g++
+AR=ar
+LDFLAGS= -m64
+SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
+DEFINES= 
+
+INCLUDES= -I. -I$(FASTRPCHOME)/include
+
+LIBS = -L$(FASTRPCHOME)/lib/x64Linux2.6gcc4.4.5 -lboost_system -lboost_thread -lfastcdr -lfastrpc $(SYSLIBS)
+
+DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
+
+all: $(DIRECTORIES) Calculator  CalculatorClient CalculatorClientExample CalculatorServer CalculatorServerExample
+
+
+Calculator_TARGET= lib/x64Linux2.6gcc4.4.5/libCalculator.so
+Calculator_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libCalculator.a
+Calculator_CLIENT_TARGET= lib/x64Linux2.6gcc4.4.5/libCalculatorClient.so
+Calculator_CLIENT_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libCalculatorClient.a
+Calculator_CLIENT_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/CalculatorClientExample
+Calculator_SERVER_TARGET= lib/x64Linux2.6gcc4.4.5/libCalculatorServer.so
+Calculator_SERVER_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libCalculatorServer.a
+Calculator_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/CalculatorServerExample
+Calculator_COMMON_SRC_CXXFILES = Calculator.cxx \
+	CalculatorCDRProtocol.cxx
+
+Calculator_COMMON_SRC_CPPFILES=
+
+Calculator_CLIENTSOURCES = CalculatorProxy.cxx
+Calculator_SERVERSOURCES = CalculatorServer.cxx
+Calculator_COMMONOBJS    = $(Calculator_COMMON_SRC_CXXFILES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o) $(Calculator_COMMON_SRC_CPPFILES:%.cpp=output/x64Linux2.6gcc4.4.5/%.o)
+Calculator_CLIENTOBJS    = $(Calculator_CLIENTSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
+Calculator_SERVEROBJS    = $(Calculator_SERVERSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
+OBJS+= $(Calculator_COMMONOBJS) $(Calculator_CLIENTOBJS) $(Calculator_SERVEROBJS)
+
+$(Calculator_TARGET): $(Calculator_COMMONOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Calculator_TARGET) $(Calculator_COMMONOBJS) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 
+
+$(Calculator_TARGET_Z): $(Calculator_COMMONOBJS)
+	$(AR) -cru $(Calculator_TARGET_Z) $(Calculator_COMMONOBJS)
+$(Calculator_CLIENT_TARGET): $(Calculator_CLIENTOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Calculator_CLIENT_TARGET) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lCalculator $(Calculator_CLIENTOBJS)
+
+$(Calculator_CLIENT_TARGET_Z): $(Calculator_CLIENTOBJS)
+	$(AR) -cru $(Calculator_CLIENT_TARGET_Z) $(Calculator_CLIENTOBJS)
+	
+$(Calculator_SERVER_TARGET): $(Calculator_SERVEROBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Calculator_SERVER_TARGET) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lCalculator $(Calculator_SERVEROBJS)
+
+$(Calculator_SERVER_TARGET_Z): $(Calculator_COMMONOBJS) $(Calculator_SERVEROBJS)
+	$(AR) -cru $(Calculator_SERVER_TARGET_Z) $(Calculator_SERVEROBJS)
+CalculatorClient : $(Calculator_CLIENT_TARGET) $(Calculator_CLIENT_TARGET_Z)
+	
+CalculatorServer : $(Calculator_SERVER_TARGET) $(Calculator_SERVER_TARGET_Z)
+	
+$(Calculator_CLIENT_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/CalculatorClientExample.o lib/x64Linux2.6gcc4.4.5/libCalculatorClient.a lib/x64Linux2.6gcc4.4.5/libCalculator.a 
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/CalculatorClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lCalculatorClient -lCalculator  -Wl,-Bdynamic $(LIBS)
+	
+$(Calculator_SERVER_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/CalculatorServerExample.o output/x64Linux2.6gcc4.4.5/CalculatorServerImplExample.o lib/x64Linux2.6gcc4.4.5/libCalculatorServer.a lib/x64Linux2.6gcc4.4.5/libCalculator.a 
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/CalculatorServerImplExample.o output/x64Linux2.6gcc4.4.5/CalculatorServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lCalculatorServer -lCalculator  -Wl,-Bdynamic $(LIBS)
+	
+CalculatorClientExample : $(Calculator_CLIENT_EXAMPLE_TARGET)
+	
+CalculatorServerExample : $(Calculator_SERVER_EXAMPLE_TARGET)
+Calculator: $(Calculator_TARGET) $(Calculator_TARGET_Z) CalculatorClient CalculatorClientExample CalculatorServer CalculatorServerExample
+
+
+output/x64Linux2.6gcc4.4.5/%.o:%.cxx
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+output/x64Linux2.6gcc4.4.5/%.o:%.cpp
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+.PHONY: Calculator  CalculatorClient CalculatorClientExample CalculatorServer CalculatorServerExample
+
+clean:
+	@rm -f $(OBJS)
+
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

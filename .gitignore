@@ -42,6 +42,8 @@ utils/doxygen/examples/dds/*.cxx
 utils/doxygen/examples/restful/*.h
 utils/doxygen/examples/restful/*.cxx
 utils/doxygen/examples/restful/*.idl
+utils/doxygen/examples/fastrpc/*.h
+utils/doxygen/examples/fastrpc/*.cxx
 
 # Generated documentation
 README.html

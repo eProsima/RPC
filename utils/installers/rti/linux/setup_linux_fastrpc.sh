@@ -13,7 +13,7 @@
 # To create RPM in CentOs you have to follow this link:
 #   http://wiki.centos.org/HowTos/SetupRpmBuildEnvironment
 
-project="eProsimaRPC"
+project="fastrpc"
 
 function installer
 {
@@ -28,19 +28,16 @@ function installer
     # Copy documentation.
     mkdir -p tmp/$project/doc
     mkdir -p tmp/$project/doc/pdf
-    cp "../../../../doc/RPC - Installation Manual.pdf" tmp/$project/doc/pdf
+    cp "../../../../doc/FastRPC - Installation Manual.pdf" tmp/$project/doc/pdf
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-##    cp "../../../../doc/RPC - REST - User Manual.pdf" tmp/$project/doc/pdf
-##    errorstatus=$?
-##    if [ $errorstatus != 0 ]; then return; fi
-    cp "../../../../doc/RPC - DDS - User Manual.pdf" tmp/$project/doc/pdf
+    cp "../../../../doc/FastRPC - User Manual.pdf" tmp/$project/doc/pdf
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cp -r "../../../../output/doxygen/html" tmp/$project/doc
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/RPC - API C++ Manual.pdf"
+    cp "../../../../output/doxygen/latex/refman.pdf" "tmp/$project/doc/pdf/FastRPC - API C++ Manual.pdf"
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -50,16 +47,14 @@ function installer
     if [ $errorstatus != 0 ]; then return; fi
 
     # Copy example.
-    mkdir -p tmp/$project/examples
-    cp -r ../../../../examples tmp/$project
+    mkdir -p tmp/$project/examples/C++
+    cp -r ../../../../examples/C++/FastRPC tmp/$project/examples/C++
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-##TODO 
-    rm -r tmp/$project/examples/C++/RESTful 
 
-    # RPCDDS headers
+    # FastRPC headers
     mkdir -p tmp/$project/include
-    cp -r ../../../../include/fastrpc tmp/$project/include
+    cp -r ../../../../includetmp/fastrpc tmp/$project/include
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -78,16 +73,21 @@ function installer
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
-    # Copy RPCDDS sources
-    cp -r ../../../../src tmp/$project
+    # Copy FastRPC sources
+    cd ../../../..
+    cp --parents `cat building/makefiles/common_sources` utils/installers/rti/linux/tmp/$project
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
+    cp --parents `cat building/makefiles/fastrpc_sources` utils/installers/rti/linux/tmp/$project
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd utils/installers/rti/linux
 
     # Copy autoconf configuration files.
-    cp configure.ac tmp/$project
+    cp configure_fastrpc.ac tmp/$project/configure.ac
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    cp Makefile.am tmp/$project
+    cp Makefile_fastrpc.am tmp/$project/Makefile.am
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cp include_Makefile.am tmp/$project/include/Makefile.am
@@ -106,6 +106,18 @@ function installer
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     sed -i "s/VERSION_RELEASE/`echo ${version} | cut -d. -f3`/g" Makefile.am
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    sourcefiles=$(cat ../../../../../../building/makefiles/common_sources | sed -e ':a;N;$!ba;s/\n/ /g')
+    sourcefiles+=" "
+    sourcefiles+=$(cat ../../../../../../building/makefiles/fastrpc_sources | sed -e ':a;N;$!ba;s/\n/ /g')
+    sed -i -e "s#FASTRPC_SOURCES#$sourcefiles#" Makefile.am
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    includefiles=$(cat ../../../../../../building/includes/fastrpc_includes | sed -e 's#^#fastrpc/#')
+    includefiles=$(echo $includefiles | sed -e ':a;N;$!ba;s/\n/ /g')
+    includefiles+=" fastrpc/eProsima_cpp/eProsima_auto_link.h fastrpc/eProsima_cpp/eProsimaMacros.h"
+    sed -i -e "s#INCLUDE_FILES#$includefiles#" include/Makefile.am
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     autoreconf --force --install
@@ -137,17 +149,11 @@ function installer
     if [ $errorstatus != 0 ]; then return; fi
     chmod 755 tmp/$project/scripts/fastrpcgen.sh
 
-    # Copy MessageHeader.idl
-    mkdir -p tmp/$project/idl
-    cp ../../../../idl/MessageHeader.idl tmp/$project/idl
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-
     # Erase backup files from vim
     find tmp/ -iname "*~" -exec rm -f {} \;
 
     cd tmp
-    tar cvzf "../${project}_${version}-RTIDDS_5.0.0.tar.gz" $project
+    tar cvzf "../eProsima_FastRPC_${version}-Linux.tar.gz" $project
     errorstatus=$?
     cd ..
     if [ $errorstatus != 0 ]; then return; fi

@@ -1,9 +1,5 @@
-AC_INIT([eProsimaRPC], [VERSION], [support@eprosima.com], [eProsimaRPC], [http://eprosima.com/])
+AC_INIT([fastrpc], [VERSION], [support@eprosima.com], [fastrpc], [http://eprosima.com/])
 AC_PREREQ([2.59])
-AC_CHECK_HEADER([$NDDSHOME/include/ndds/ndds_version.h],
-	[AC_MSG_NOTICE([Found RTI DDS])],
-	[AC_MSG_ERROR([Could not find RTI DDS. Set NDDSHOME environment variable])],
-	[])
 AM_INIT_AUTOMAKE([1.10 no-define foreign])
 AC_PROG_CXX
 LT_INIT

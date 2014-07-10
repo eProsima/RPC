@@ -1,4 +1,4 @@
-Copyright (c) 2012 Proyectos y sistemas de Mantenimiento SL (eProsima). 
+Copyright (c) 2014 Proyectos y sistemas de Mantenimiento SL (eProsima). 
 All rights reserved.
 
 This copy of eProsima FastRPC is free software; you can redistribute it and/or modify 
