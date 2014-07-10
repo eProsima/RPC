@@ -179,6 +179,7 @@ function rpminstaller
 		cp build_rpm_fastrpc_centos.xml tmp/$project/fastrpcgen/build.xml
 	else
 		cp build_rpm_fastrpc.xml tmp/$project/fastrpcgen/build.xml
+	fi
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
 	cp ../../../../fastrpcgen/manifest tmp/$project/fastrpcgen
