@@ -49,7 +49,7 @@ if not %errorstatus%==0 goto :exit
 :: Compile FastRPC for target.
 cd fastrpcgen
 rmdir /S /Q build
-call ant jar
+call ant jars
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd ".."
@@ -114,20 +114,10 @@ copy %FASTCDR%\lib\x64Win64VS2010\fastcdrd-0.2.1.lib lib\x64Win64VS2010
 copy %FASTCDR%\lib\x64Win64VS2010\libfastcdr-0.2.1.lib lib\x64Win64VS2010
 copy %FASTCDR%\lib\x64Win64VS2010\libfastcdrd-0.2.1.lib lib\x64Win64VS2010
 
-:: :: Execute DDS tests
+:: :: Execute FastRPC tests
 :: set FASTRPCHOME_OLD=%FASTRPCHOME%
 :: set FASTRPCHOME=%CD%
-:: cd utils/pcTests/rti
-:: call exec_tests.bat %package_targets%
-:: set errorstatus=%ERRORLEVEL%
-:: if not %errorstatus%==0 goto :exit
-:: cd "../../.."
-:: set FASTRPCHOME=%FASTRPCHOME_OLD%
-
-:: :: Execute REST tests
-:: set FASTRPCHOME_OLD=%FASTRPCHOME%
-:: set FASTRPCHOME=%CD%
-:: cd utils/pcTests/restful
+:: cd utils/pcTests/cdr
 :: call exec_tests.bat %package_targets%
 :: set errorstatus=%ERRORLEVEL%
 :: if not %errorstatus%==0 goto :exit
@@ -137,35 +127,45 @@ copy %FASTCDR%\lib\x64Win64VS2010\libfastcdrd-0.2.1.lib lib\x64Win64VS2010
 :: Create PDFS from documentation.
 cd "doc"
 :: Installation manual
-soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - Installation Manual.odt,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\FastRPC - Installation Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-:: :: User manual
-:: soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - REST - User Manual.odt,%VERSION%)"
-:: set errorstatus=%ERRORLEVEL%
-:: if not %errorstatus%==0 goto :exit
-soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\RPC - DDS - User Manual.odt,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersion(%CD%\FastRPC - User Manual.odt,%VERSION%)"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
 cd ".."
 :: Create README
-soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%\README.odt,%VERSION%)"
+soffice.exe --headless "macro:///eProsima.documentation.changeVersionToHTML(%CD%\README_fastrpc.odt,%VERSION%)"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+move README_fastrpc.html README.html
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-:: Create doxygen information.
-:: Generate the examples
-:: DDS example
-call scripts\fastrpcgen.bat -replace -protocol dds -d utils\doxygen\examples\dds utils\doxygen\examples\dds\FooDDS.idl
+:: Prepare include files
+rd /S /Q "includetmp"
+mkdir includetmp\fastrpc
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-:: :: REST example
-:: call scripts\rpcdds_rti_pcTests.bat -replace -protocol rest -d utils\doxygen\examples\restful utils\doxygen\examples\restful\FooREST.wadl
-:: set errorstatus=%ERRORLEVEL%
-:: if not %errorstatus%==0 goto :exit
+cd include\fastrpc
+for /f "delims=" %%a in ('cat ../../building/includes/fastrpc_includes') do (
+    cp --parents %%a ../../includetmp/fastrpc
+    set errorstatus=%ERRORLEVEL%
+    if not %errorstatus%==0 goto :exit
+)
+cd ..\..
+
+:: Create doxygen information.
+:: Generate the examples
+:: FastRPC example
+call scripts\fastrpcgen.bat -replace -d utils\doxygen\examples\fastrpc utils\doxygen\examples\fastrpc\FooFastRPC.idl
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 :: Export version
+set PROJECT_DOX=FastRPC
 set VERSION_DOX=%VERSION%
+set INPUT_DOX=utils/doxygen/doxygenfiles/mainpage_fastrpc.dox includetmp utils/doxygen/examples/fastrpc
 mkdir output
 mkdir output\doxygen
 doxygen utils\doxygen\doxyfile
@@ -181,12 +181,14 @@ cd ..\..\..
 cd utils\installers\rti\windows
 
 :: Win installer.
-makensis.exe /DVERSION="%VERSION%" setup.nsi
+makensis.exe /DVERSION="%VERSION%" setup_fastrpc.nsi
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd "..\..\..\.."
 
 rd /S /Q "utils\doxygen\output"
+
+rd /S /Q "includetmp\fastrpc"
 
 rmdir /S /Q output
 

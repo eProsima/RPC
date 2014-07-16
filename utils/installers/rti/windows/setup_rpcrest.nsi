@@ -67,8 +67,7 @@ ReserveFile "${NSISDIR}\Plugins\newadvsplash.dll"
 Page custom VariablesEntornoPage
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
-var /GLOBAL RICHI_FINISH_MESSAGE
-!define MUI_FINISHPAGE_TEXT $RICHI_FINISH_MESSAGE
+!define MUI_FINISHPAGE_TEXT "eProsima RPCREST has been installed on your computer.$\n$\nClick Finish to close this wizard."
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\README.html
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -253,8 +252,6 @@ Function .onInit
     ${else}
        StrCpy '$INSTDIR' '$PROGRAMFILES\eProsima\rpcrest'
     ${EndIf}
-    ReadEnvStr $0 NDDSHOME
-    Strcpy $RICHI_FINISH_MESSAGE "eProsima RPCREST has been installed on your computer.$\n$\nClick Finish to close this wizard."
     InitPluginsDir
 	Push $R1
     File /oname=$PLUGINSDIR\spltmp.jpg "$%EPROSIMADIR%\logo\eProsimaLogoAndNameFinal_wBorder_460.jpg"
