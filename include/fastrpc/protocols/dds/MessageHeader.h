@@ -279,34 +279,18 @@ namespace eprosima
                          * @brief This function sets the server service name.
                          * @param _remoteServiceName Server service name.
                          */
-                        inline void remoteServiceName(const std::string &_remoteServiceName)
+                        inline void remoteServiceName(const char *_remoteServiceName)
                         {
-                            m_remoteServiceName = _remoteServiceName;
-                        }
-
-                        /*!
-                         * @brief This function sets the server service name.
-                         * @param _remoteServiceName Server service name.
-                         */
-                        inline void remoteServiceName(std::string &&_remoteServiceName)
-                        {
-                            m_remoteServiceName = std::move(_remoteServiceName);
+							if(m_remoteServiceName != NULL)
+								free(m_remoteServiceName);
+                            m_remoteServiceName = strdup(_remoteServiceName);
                         }
 
                         /*!
                          * @brief This function returns the server service name.
                          * @return Server service name.
                          */
-                        inline const std::string& remoteServiceName() const
-                        {
-                            return m_remoteServiceName;
-                        }
-
-                        /*!
-                         * @brief This function returns the server service name.
-                         * @return Server service name.
-                         */
-                        inline std::string& remoteServiceName()
+                        inline const char* remoteServiceName() const
                         {
                             return m_remoteServiceName;
                         }
@@ -362,7 +346,7 @@ namespace eprosima
 
                         Identification m_clientId;
 
-                        std::string m_remoteServiceName;
+                        char* m_remoteServiceName;
 
                         uint32_t m_requestSequenceNumber;
 

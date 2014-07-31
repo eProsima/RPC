@@ -66,30 +66,34 @@ void Identification::deserialize(eprosima::fastcdr::Cdr &cdr)
     cdr >> m_value_1 >> m_value_2 >> m_value_3 >> m_value_4;
 }
 
-RequestHeader::RequestHeader() : m_requestSequenceNumber(0)
+RequestHeader::RequestHeader() : m_remoteServiceName(NULL), m_requestSequenceNumber(0)
 {
 }
 
 RequestHeader::RequestHeader(const RequestHeader &header) :
-    m_clientId(header.m_clientId), m_remoteServiceName(header.m_remoteServiceName),
+    m_clientId(header.m_clientId), m_remoteServiceName(strdup(header.m_remoteServiceName)),
     m_requestSequenceNumber(header.m_requestSequenceNumber)
 {
 }
 
 RequestHeader::RequestHeader(RequestHeader &&header) :
-    m_clientId(std::move(header.m_clientId)), m_remoteServiceName(std::move(header.m_remoteServiceName)),
+    m_clientId(std::move(header.m_clientId)), m_remoteServiceName(strdup(header.m_remoteServiceName)),
     m_requestSequenceNumber(header.m_requestSequenceNumber)
 {
 }
 
 RequestHeader::~RequestHeader()
 {
+	if(m_remoteServiceName != NULL)
+		free(m_remoteServiceName);
 }
 
 RequestHeader& RequestHeader::operator=(const RequestHeader &header)
 {
     m_clientId = header.m_clientId;
-    m_remoteServiceName = header.m_remoteServiceName;
+	if(m_remoteServiceName != NULL)
+		free(m_remoteServiceName);
+    m_remoteServiceName = strdup(header.m_remoteServiceName);
     m_requestSequenceNumber = header.m_requestSequenceNumber;
 
     return *this;
@@ -98,7 +102,9 @@ RequestHeader& RequestHeader::operator=(const RequestHeader &header)
 RequestHeader& RequestHeader::operator=(RequestHeader &&header)
 {
     m_clientId = std::move(header.m_clientId);
-    m_remoteServiceName = std::move(header.m_remoteServiceName);
+    if(m_remoteServiceName != NULL)
+		free(m_remoteServiceName);
+    m_remoteServiceName = strdup(header.m_remoteServiceName);
     m_requestSequenceNumber = header.m_requestSequenceNumber;
 
     return *this;
@@ -108,8 +114,8 @@ unsigned int RequestHeader::getMaxCdrSerializedSize(unsigned int current_alignme
 {
     unsigned int initial_alignment = current_alignment;
 
-    current_alignment += Identification::getMaxCdrSerializedSize(current_alignment);
-    current_alignment += 255; // Max string length.
+    current_alignment = Identification::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 256; // Max string length + 1.
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;
@@ -170,10 +176,10 @@ unsigned int ReplyHeader::getMaxCdrSerializedSize(unsigned int current_alignment
 {
     unsigned int initial_alignment = current_alignment;
 
-    current_alignment += Identification::getMaxCdrSerializedSize(current_alignment);
+    current_alignment = Identification::getMaxCdrSerializedSize(current_alignment);
     // Optimization. First unsigned long has to be aligment but the other not.
     current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-    current_alignment += 255; // Max string length.
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 256; // Max string length + 1.
 
     return current_alignment - initial_alignment;
 }

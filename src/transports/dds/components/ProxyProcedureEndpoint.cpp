@@ -409,7 +409,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);
             requestHeader->clientId().value_4(m_proxyId[3]);
-            requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
+            requestHeader->remoteServiceName(m_transport.getRemoteServiceName().c_str());
         }
         else
         {
@@ -570,7 +570,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);
             requestHeader->clientId().value_4(m_proxyId[3]);
-            requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
+            requestHeader->remoteServiceName(m_transport.getRemoteServiceName().c_str());
         }
         else
         {
