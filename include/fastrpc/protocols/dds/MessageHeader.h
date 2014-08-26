@@ -12,6 +12,7 @@
 #include "fastrpc/fastrpc_dll.h"
 
 #include <stdint.h>
+#include <string.h>
 #include <string>
 
 namespace eprosima
