@@ -23,9 +23,9 @@ DDS_TypeCode* IdentificationPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -40,9 +40,9 @@ DDS_TypeCode* IdentificationPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -57,9 +57,9 @@ DDS_TypeCode* IdentificationPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -74,9 +74,9 @@ DDS_TypeCode* IdentificationPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         }
     };
@@ -132,9 +132,9 @@ DDS_TypeCode* RequestHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -149,9 +149,9 @@ DDS_TypeCode* RequestHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -166,9 +166,9 @@ DDS_TypeCode* RequestHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         }
         
@@ -224,9 +224,9 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -241,9 +241,9 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -258,9 +258,9 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         },
         {
@@ -275,9 +275,9 @@ DDS_TypeCode* ReplyHeaderPlugin::get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,/* Ignored */
             NULL/* Ignored */
         }
     };

@@ -36,7 +36,7 @@ namespace eprosima
                     public:
 
                         typedef void* (*Create_data)(void);
-                        typedef void (*Copy_data)(void *src, void *dst);
+                        typedef void (*Copy_data)(void *dst, void *src);
                         typedef void (*Destroy_data)(void *data);
                         typedef void (*ProcessFunc)(eprosima::rpc::protocol::Protocol&, void*,
                                 eprosima::rpc::transport::Endpoint*);

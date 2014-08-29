@@ -112,7 +112,7 @@ if [ "$RPCDDSHOME" == "" ]; then
 fi
 
 # Set environment for RPCDDS
-. $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
+#. $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
 
 # Create output directory 
 if [ ! -d "output" ]; then
@@ -186,7 +186,7 @@ done
 #rm -r output
 
 # Restore environment for FASTRPC
-. $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
+#. $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then
     echo "TEST SUCCESSFULLY"

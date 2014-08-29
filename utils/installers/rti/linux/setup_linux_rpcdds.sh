@@ -160,7 +160,7 @@ function installer
     find tmp/ -iname "*~" -exec rm -f {} \;
 
     cd tmp
-    tar cvzf "../eProsima_RPCDDS-${version}-Linux-RTIDDS-5.0.0.tar.gz" $project
+    tar cvzf "../eProsima_RPCDDS-${version}-Linux-RTIDDS-5.1.0.tar.gz" $project
     errorstatus=$?
     cd ..
     if [ $errorstatus != 0 ]; then return; fi
@@ -247,7 +247,7 @@ function rpminstaller
 
     # Install fastcdr for i686
     cd ../RPMS/i686
-    sudo yum localinstall fastcdr-0.2.1-1.fc20.i686.rpm
+    sudo yum localinstall fastcdr-0.2.2-1.fc20.i686.rpm
     cd -
 
 	# Build command for i686.
@@ -260,7 +260,7 @@ function rpminstaller
 
     # Install fastcdr for x64
     cd ../RPMS/x86_64
-    sudo yum localinstall fastcdr-0.2.1-1.fc20.x86_64.rpm
+    sudo yum localinstall fastcdr-0.2.2-1.fc20.x86_64.rpm
     cd -
 
 	# Build command for x86_64.
