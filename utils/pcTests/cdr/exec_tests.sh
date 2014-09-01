@@ -149,6 +149,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
+rm -r output
 
 if [ $errorstatus == 0 ]; then
     echo "TEST SUCCESSFULLY"
