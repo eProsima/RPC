@@ -55,7 +55,7 @@ if "%FASTCDR%"=="" (
 )
 
 :: Set environment for FASTRPC
-call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
+call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.1.0
 
 :: Find all directories.
 for /D %%D in ("*") do (

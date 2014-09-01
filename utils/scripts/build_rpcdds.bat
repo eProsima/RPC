@@ -10,7 +10,7 @@ call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONF
 if not %errorstatus%==0 goto :EOF
 
 :: Set environment for FASTRPC
-call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
+call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.1.0
 
 :: Set environment Win32
 call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
