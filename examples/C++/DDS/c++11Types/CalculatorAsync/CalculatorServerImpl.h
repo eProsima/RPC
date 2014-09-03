@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -26,16 +26,16 @@ class CalculatorServerImpl
 {
     public:
 
-        /// \brief The default constructor.
+        //! @brief The default constructor.
         CalculatorServerImpl(){}
 
-        /// \brief The default destructor.
+        //! @brief Destructor.
         virtual ~CalculatorServerImpl(){}
 
-        /// \brief Skeleton of the operation addition
+        //! @brief Skeleton of the operation addition.
         virtual int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
 
-        /// \brief Skeleton of the operation subtraction
+        //! @brief Skeleton of the operation subtraction.
         virtual int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
 ;
 };

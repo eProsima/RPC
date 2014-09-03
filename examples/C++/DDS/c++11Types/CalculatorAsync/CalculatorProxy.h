@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -49,19 +49,19 @@ class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy
         CalculatorProxy(eprosima::rpc::transport::ProxyTransport &transport,
             eprosima::rpc::protocol::CalculatorProtocol &protocol);
 
-        //! @brief The default destructor.
+        //! @brief Destructor.
         virtual ~CalculatorProxy();
         
-        //! @brief Proxy method for the operation addition
+        //! @brief Proxy method for the operation addition.
         int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
 
-        //! @brief Proxy asynchronous method for the operation addition
+        //! @brief Proxy asynchronous method for the operation addition.
         void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
 
-        //! @brief Proxy method for the operation subtraction
+        //! @brief Proxy method for the operation subtraction.
         int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
 
-        //! @brief Proxy asynchronous method for the operation subtraction
+        //! @brief Proxy asynchronous method for the operation subtraction.
         void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
 
 };

@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReply_540431605_h
-#define CalculatorRequestReply_540431605_h
+#ifndef CalculatorRequestReply_540432192_h
+#define CalculatorRequestReply_540432192_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -32,6 +32,7 @@
 #include "Calculator.h"
 
 
+#define Calculator_additionRequest_LAST_MEMBER_ID 1
         
 extern const char *Calculator_additionRequestTYPENAME;
         
@@ -79,7 +80,13 @@ RTIBool Calculator_additionRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool Calculator_additionRequest_initialize_ex(
-        Calculator_additionRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Calculator_additionRequest* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool Calculator_additionRequest_initialize_w_params(
+        Calculator_additionRequest* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void Calculator_additionRequest_finalize(
@@ -88,6 +95,15 @@ void Calculator_additionRequest_finalize(
 NDDSUSERDllExport
 void Calculator_additionRequest_finalize_ex(
         Calculator_additionRequest* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void Calculator_additionRequest_finalize_w_params(
+        Calculator_additionRequest* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void Calculator_additionRequest_finalize_optional_members(
+        Calculator_additionRequest* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool Calculator_additionRequest_copy(
@@ -102,6 +118,7 @@ RTIBool Calculator_additionRequest_copy(
 #endif
 
 
+#define Calculator_additionReply_LAST_MEMBER_ID 0
         
 extern const char *Calculator_additionReplyTYPENAME;
         
@@ -147,7 +164,13 @@ RTIBool Calculator_additionReply_initialize(
         
 NDDSUSERDllExport
 RTIBool Calculator_additionReply_initialize_ex(
-        Calculator_additionReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Calculator_additionReply* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool Calculator_additionReply_initialize_w_params(
+        Calculator_additionReply* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void Calculator_additionReply_finalize(
@@ -156,6 +179,15 @@ void Calculator_additionReply_finalize(
 NDDSUSERDllExport
 void Calculator_additionReply_finalize_ex(
         Calculator_additionReply* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void Calculator_additionReply_finalize_w_params(
+        Calculator_additionReply* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void Calculator_additionReply_finalize_optional_members(
+        Calculator_additionReply* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool Calculator_additionReply_copy(
@@ -170,6 +202,7 @@ RTIBool Calculator_additionReply_copy(
 #endif
 
 
+#define Calculator_subtractionRequest_LAST_MEMBER_ID 1
         
 extern const char *Calculator_subtractionRequestTYPENAME;
         
@@ -217,7 +250,13 @@ RTIBool Calculator_subtractionRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool Calculator_subtractionRequest_initialize_ex(
-        Calculator_subtractionRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Calculator_subtractionRequest* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool Calculator_subtractionRequest_initialize_w_params(
+        Calculator_subtractionRequest* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void Calculator_subtractionRequest_finalize(
@@ -226,6 +265,15 @@ void Calculator_subtractionRequest_finalize(
 NDDSUSERDllExport
 void Calculator_subtractionRequest_finalize_ex(
         Calculator_subtractionRequest* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void Calculator_subtractionRequest_finalize_w_params(
+        Calculator_subtractionRequest* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void Calculator_subtractionRequest_finalize_optional_members(
+        Calculator_subtractionRequest* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool Calculator_subtractionRequest_copy(
@@ -240,6 +288,7 @@ RTIBool Calculator_subtractionRequest_copy(
 #endif
 
 
+#define Calculator_subtractionReply_LAST_MEMBER_ID 0
         
 extern const char *Calculator_subtractionReplyTYPENAME;
         
@@ -285,7 +334,13 @@ RTIBool Calculator_subtractionReply_initialize(
         
 NDDSUSERDllExport
 RTIBool Calculator_subtractionReply_initialize_ex(
-        Calculator_subtractionReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Calculator_subtractionReply* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool Calculator_subtractionReply_initialize_w_params(
+        Calculator_subtractionReply* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void Calculator_subtractionReply_finalize(
@@ -294,6 +349,15 @@ void Calculator_subtractionReply_finalize(
 NDDSUSERDllExport
 void Calculator_subtractionReply_finalize_ex(
         Calculator_subtractionReply* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void Calculator_subtractionReply_finalize_w_params(
+        Calculator_subtractionReply* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void Calculator_subtractionReply_finalize_optional_members(
+        Calculator_subtractionReply* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool Calculator_subtractionReply_copy(
@@ -356,7 +420,13 @@ RTIBool CalculatorRequest_union_initialize(
         
 NDDSUSERDllExport
 RTIBool CalculatorRequest_union_initialize_ex(
-        CalculatorRequest_union* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        CalculatorRequest_union* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_union_initialize_w_params(
+        CalculatorRequest_union* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void CalculatorRequest_union_finalize(
@@ -367,13 +437,22 @@ void CalculatorRequest_union_finalize_ex(
         CalculatorRequest_union* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
+void CalculatorRequest_union_finalize_w_params(
+        CalculatorRequest_union* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+
+NDDSUSERDllExport
+void CalculatorRequest_union_finalize_optional_members(
+        CalculatorRequest_union* self, RTIBool deletePointers);      
+        
+NDDSUSERDllExport
 RTIBool CalculatorRequest_union_copy(
         CalculatorRequest_union* dst,
         const CalculatorRequest_union* src);
         
 
 NDDSUSERDllExport
-DDS_UnsignedLong CalculatorRequest_union_getDefaultDiscriminator();
+DDS_Long CalculatorRequest_union_getDefaultDiscriminator();
     
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -384,6 +463,7 @@ DDS_UnsignedLong CalculatorRequest_union_getDefaultDiscriminator();
 #endif
 
 
+#define CalculatorRequest_LAST_MEMBER_ID 1
         
 extern const char *CalculatorRequestTYPENAME;
         
@@ -443,7 +523,13 @@ RTIBool CalculatorRequest_initialize(
         
 NDDSUSERDllExport
 RTIBool CalculatorRequest_initialize_ex(
-        CalculatorRequest* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        CalculatorRequest* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool CalculatorRequest_initialize_w_params(
+        CalculatorRequest* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void CalculatorRequest_finalize(
@@ -452,6 +538,15 @@ void CalculatorRequest_finalize(
 NDDSUSERDllExport
 void CalculatorRequest_finalize_ex(
         CalculatorRequest* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void CalculatorRequest_finalize_w_params(
+        CalculatorRequest* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void CalculatorRequest_finalize_optional_members(
+        CalculatorRequest* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool CalculatorRequest_copy(
@@ -514,7 +609,13 @@ RTIBool CalculatorReply_union_initialize(
         
 NDDSUSERDllExport
 RTIBool CalculatorReply_union_initialize_ex(
-        CalculatorReply_union* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        CalculatorReply_union* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_union_initialize_w_params(
+        CalculatorReply_union* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void CalculatorReply_union_finalize(
@@ -525,13 +626,22 @@ void CalculatorReply_union_finalize_ex(
         CalculatorReply_union* self,RTIBool deletePointers);
         
 NDDSUSERDllExport
+void CalculatorReply_union_finalize_w_params(
+        CalculatorReply_union* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+
+NDDSUSERDllExport
+void CalculatorReply_union_finalize_optional_members(
+        CalculatorReply_union* self, RTIBool deletePointers);      
+        
+NDDSUSERDllExport
 RTIBool CalculatorReply_union_copy(
         CalculatorReply_union* dst,
         const CalculatorReply_union* src);
         
 
 NDDSUSERDllExport
-DDS_UnsignedLong CalculatorReply_union_getDefaultDiscriminator();
+DDS_Long CalculatorReply_union_getDefaultDiscriminator();
     
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -542,6 +652,7 @@ DDS_UnsignedLong CalculatorReply_union_getDefaultDiscriminator();
 #endif
 
 
+#define CalculatorReply_LAST_MEMBER_ID 1
         
 extern const char *CalculatorReplyTYPENAME;
         
@@ -601,7 +712,13 @@ RTIBool CalculatorReply_initialize(
         
 NDDSUSERDllExport
 RTIBool CalculatorReply_initialize_ex(
-        CalculatorReply* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        CalculatorReply* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool CalculatorReply_initialize_w_params(
+        CalculatorReply* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void CalculatorReply_finalize(
@@ -610,6 +727,15 @@ void CalculatorReply_finalize(
 NDDSUSERDllExport
 void CalculatorReply_finalize_ex(
         CalculatorReply* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void CalculatorReply_finalize_w_params(
+        CalculatorReply* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void CalculatorReply_finalize_optional_members(
+        CalculatorReply* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool CalculatorReply_copy(
@@ -625,4 +751,4 @@ RTIBool CalculatorReply_copy(
 
 
 
-#endif /* CalculatorRequestReply_540431605_h */
+#endif /* CalculatorRequestReply_540432192_h */

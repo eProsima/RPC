@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -27,6 +27,7 @@ using namespace ::transport;
 using namespace ::exception;
 
 CalculatorProtocol::CalculatorProtocol() : ::protocol::CalculatorProtocol(), m_ddsTransport(NULL)
+
 , Calculator_str("Calculator")
 , Calculator_pe(NULL), Calculator_se(NULL)
 {
@@ -63,7 +64,7 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
 
     if(m_ddsTransport != NULL)
     {
-        ::transport::TransportBehaviour behaviour = dynamic_cast<::transport::Transport*>(m_ddsTransport)->getBehaviour();
+        TransportBehaviour behaviour = dynamic_cast<Transport*>(m_ddsTransport)->getBehaviour();
         
         if(strcmp(interfaceName, "Calculator") == 0)
         {
@@ -83,7 +84,7 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
-                Calculator_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
+                Calculator_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
                 requesttypeName,
                 replytypeName,
                 true,
@@ -96,7 +97,7 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             }
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
             {
-                Calculator_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
+                Calculator_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
                     replytypeName,
                     requesttypeName,
 		            true,
@@ -268,6 +269,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
 
     switch(requestData.unio()._d())
     {
+
                 case 1:
                 {
                 int32_t  value1 = 0;
@@ -314,6 +316,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 }
                 break;
                 
+
                 case 2:
                 {
                 int32_t  value1 = 0;

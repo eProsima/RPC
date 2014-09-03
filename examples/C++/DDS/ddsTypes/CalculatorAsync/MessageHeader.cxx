@@ -60,15 +60,15 @@ DDS_TypeCode* Identification_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"value_2",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -77,15 +77,15 @@ DDS_TypeCode* Identification_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"value_3",/* Member name */
             {
-                0,/* Representation ID */
+                2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -94,15 +94,15 @@ DDS_TypeCode* Identification_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"value_4",/* Member name */
             {
-                0,/* Representation ID */
+                3,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -111,9 +111,9 @@ DDS_TypeCode* Identification_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -157,10 +157,24 @@ RTIBool Identification_initialize(
 RTIBool Identification_initialize_ex(
     Identification* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::Identification_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool Identification_initialize_w_params(
+        Identification* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     if (!RTICdrType_initUnsignedLong(&sample->value_1)) {
         return RTI_FALSE;
@@ -195,9 +209,46 @@ void Identification_finalize(
 void Identification_finalize_ex(
     Identification* sample,RTIBool deletePointers)
 {        
-    if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
 
+    if (sample) { } /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::Identification_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void Identification_finalize_w_params(
+        Identification* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+
+
+
+
+
+}
+
+void Identification_finalize_optional_members(
+    Identification* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
 
 
 
@@ -208,7 +259,7 @@ void Identification_finalize_ex(
 RTIBool Identification_copy(
     Identification* dst,
     const Identification* src)
-{        
+{
 
     if (!RTICdrType_copyUnsignedLong(
         &dst->value_1, &src->value_1)) {
@@ -248,8 +299,8 @@ RTIBool Identification_copy(
  */
 #define T Identification
 #define TSeq IdentificationSeq
-#define T_initialize_ex ::Identification_initialize_ex
-#define T_finalize_ex   ::Identification_finalize_ex
+#define T_initialize_w_params ::Identification_initialize_w_params
+#define T_finalize_w_params   ::Identification_finalize_w_params
 #define T_copy       ::Identification_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -265,8 +316,8 @@ RTIBool Identification_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -293,15 +344,15 @@ DDS_TypeCode* RequestHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"remoteServiceName",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -310,15 +361,15 @@ DDS_TypeCode* RequestHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"requestSequenceNumber",/* Member name */
             {
-                0,/* Representation ID */
+                2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -327,9 +378,9 @@ DDS_TypeCode* RequestHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -372,17 +423,31 @@ RTIBool RequestHeader_initialize(
 RTIBool RequestHeader_initialize_ex(
     RequestHeader* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::RequestHeader_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool RequestHeader_initialize_w_params(
+        RequestHeader* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
-    if (!Identification_initialize_ex(&sample->clientId,allocatePointers,allocateMemory)) {
+    if (!Identification_initialize_w_params(&sample->clientId,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (allocateMemory) {
+    if (allocParams->allocate_memory) {
         sample->remoteServiceName = DDS_String_alloc((255));
         if (sample->remoteServiceName == NULL) {
             return RTI_FALSE;
@@ -412,15 +477,56 @@ void RequestHeader_finalize(
 void RequestHeader_finalize_ex(
     RequestHeader* sample,RTIBool deletePointers)
 {        
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+
     if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::RequestHeader_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void RequestHeader_finalize_w_params(
+        RequestHeader* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientId,deletePointers);
+    Identification_finalize_w_params(&sample->clientId, deallocParams);
             
 
-    DDS_String_free(sample->remoteServiceName);                
+    if (sample->remoteServiceName != NULL) {    
+        DDS_String_free(sample->remoteServiceName);
+        sample->remoteServiceName = NULL;
+    }
             
+
+
+}
+
+void RequestHeader_finalize_optional_members(
+    RequestHeader* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
+
+    Identification_finalize_optional_members(&sample->clientId, deallocParams->delete_pointers);
+            
+
 
 
 }
@@ -428,7 +534,7 @@ void RequestHeader_finalize_ex(
 RTIBool RequestHeader_copy(
     RequestHeader* dst,
     const RequestHeader* src)
-{        
+{
 
     if (!Identification_copy(
         &dst->clientId, &src->clientId)) {
@@ -462,8 +568,8 @@ RTIBool RequestHeader_copy(
  */
 #define T RequestHeader
 #define TSeq RequestHeaderSeq
-#define T_initialize_ex ::RequestHeader_initialize_ex
-#define T_finalize_ex   ::RequestHeader_finalize_ex
+#define T_initialize_w_params ::RequestHeader_initialize_w_params
+#define T_finalize_w_params   ::RequestHeader_finalize_w_params
 #define T_copy       ::RequestHeader_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -479,8 +585,8 @@ RTIBool RequestHeader_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -507,15 +613,15 @@ DDS_TypeCode* ReplyHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"requestSequenceNumber",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -524,15 +630,15 @@ DDS_TypeCode* ReplyHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"retCode",/* Member name */
             {
-                0,/* Representation ID */
+                2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -541,15 +647,15 @@ DDS_TypeCode* ReplyHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"retMsg",/* Member name */
             {
-                0,/* Representation ID */
+                3,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -558,9 +664,9 @@ DDS_TypeCode* ReplyHeader_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -604,12 +710,26 @@ RTIBool ReplyHeader_initialize(
 RTIBool ReplyHeader_initialize_ex(
     ReplyHeader* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::ReplyHeader_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool ReplyHeader_initialize_w_params(
+        ReplyHeader* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
-    if (!Identification_initialize_ex(&sample->clientId,allocatePointers,allocateMemory)) {
+    if (!Identification_initialize_w_params(&sample->clientId,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -624,7 +744,7 @@ RTIBool ReplyHeader_initialize_ex(
     }                
             
 
-    if (allocateMemory) {
+    if (allocParams->allocate_memory) {
         sample->retMsg = DDS_String_alloc((255));
         if (sample->retMsg == NULL) {
             return RTI_FALSE;
@@ -649,24 +769,66 @@ void ReplyHeader_finalize(
 void ReplyHeader_finalize_ex(
     ReplyHeader* sample,RTIBool deletePointers)
 {        
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+
     if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::ReplyHeader_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void ReplyHeader_finalize_w_params(
+        ReplyHeader* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
 
 
-    Identification_finalize_ex(&sample->clientId,deletePointers);
+    Identification_finalize_w_params(&sample->clientId, deallocParams);
             
 
 
 
-    DDS_String_free(sample->retMsg);                
+    if (sample->retMsg != NULL) {    
+        DDS_String_free(sample->retMsg);
+        sample->retMsg = NULL;
+    }
             
+
+}
+
+void ReplyHeader_finalize_optional_members(
+    ReplyHeader* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
+
+    Identification_finalize_optional_members(&sample->clientId, deallocParams->delete_pointers);
+            
+
+
+
 
 }
 
 RTIBool ReplyHeader_copy(
     ReplyHeader* dst,
     const ReplyHeader* src)
-{        
+{
 
     if (!Identification_copy(
         &dst->clientId, &src->clientId)) {
@@ -706,8 +868,8 @@ RTIBool ReplyHeader_copy(
  */
 #define T ReplyHeader
 #define TSeq ReplyHeaderSeq
-#define T_initialize_ex ::ReplyHeader_initialize_ex
-#define T_finalize_ex   ::ReplyHeader_finalize_ex
+#define T_initialize_w_params ::ReplyHeader_initialize_w_params
+#define T_finalize_w_params   ::ReplyHeader_finalize_w_params
 #define T_copy       ::ReplyHeader_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -723,8 +885,8 @@ RTIBool ReplyHeader_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
