@@ -154,10 +154,10 @@ public class fastrpcgen
 
         m_idlFiles = new Vector<String>();
 		
-		// Variables with different value depending on the protocol
-		if(m_protocol == PROTOCOL.REST) {
-			m_ppDisable = true;
-		}
+        // Variables with different value depending on the protocol
+        if(m_protocol == PROTOCOL.REST) {
+            m_ppDisable = true;
+        }
 
         while(count < args.length)
         {
@@ -195,22 +195,18 @@ public class fastrpcgen
                 else
                     throw new BadArgumentException("No language after -language argument");
             }
-            
-			if(m_protocol != PROTOCOL.REST) {
-				if(arg.equals("-ppPath"))
-				{
-					if(count < args.length)
-						m_ppPath = args[count++];
-					else
-						throw new BadArgumentException("No URL after -ppPath argument");
-				}
-				else if(arg.equalsIgnoreCase("-ppDisable"))
-				{
-					m_ppDisable = true;
-				}
-			}
-			
-            if(arg.equalsIgnoreCase("-replace"))
+            else if(arg.equals("-ppPath"))
+            {
+                if(count < args.length)
+                    m_ppPath = args[count++];
+                else
+                    throw new BadArgumentException("No URL after -ppPath argument");
+            }
+            else if(arg.equalsIgnoreCase("-ppDisable"))
+            {
+                m_ppDisable = true;
+            }
+            else if(arg.equalsIgnoreCase("-replace"))
             {
                 m_replace = true;
             }
