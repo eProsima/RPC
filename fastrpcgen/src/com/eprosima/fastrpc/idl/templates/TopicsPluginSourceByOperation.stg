@@ -61,9 +61,9 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator=",\n"$
     };
@@ -429,9 +429,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }
         $operation.inputparam : { param |
@@ -448,9 +448,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$RequestPlugin
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator="\n"$
     };
@@ -972,9 +972,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$Reply_stPlugi
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator=",\n"$
     };
@@ -1024,9 +1024,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$Reply_unionPl
             1,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }
         ,
@@ -1044,9 +1044,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$Reply_unionPl
             1,
             $i$,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator=",\n"$
     };
@@ -1106,9 +1106,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }
         $if(operation.exceptions)$
@@ -1125,9 +1125,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }
         $else$
@@ -1145,9 +1145,9 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$ReplyPlugin::
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator="\n"$
         $endif$
@@ -1408,9 +1408,9 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator=",\n"$
     };
@@ -1464,9 +1464,9 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
             $length(member.labels)$,
             $first(member.labels)$,
             $union_member_labels_def(union=union, member=member)$,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator=",\n"$
     };
@@ -1517,9 +1517,9 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.pa
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }}; separator=",\n"$
     };

@@ -74,7 +74,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
 
     if(m_ddsTransport != NULL)
     {
-        ::transport::TransportBehaviour behaviour = dynamic_cast<::transport::Transport*>(m_ddsTransport)->getBehaviour();
+        TransportBehaviour behaviour = dynamic_cast<Transport*>(m_ddsTransport)->getBehaviour();
         
         $if(first(ctx.interfaces))$
         if(strcmp(interfaceName, "$first(ctx.interfaces).scopedname$") == 0)
@@ -99,7 +99,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $if(ctx.client)$
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
-                $first(ctx.interfaces).formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
+                $first(ctx.interfaces).formatedScopedname$_$operation.name$_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
                 requesttypeName,
                 $if(!operation.oneway)$replytypeName,
                 $eprosimaTypesBool()$,
@@ -114,7 +114,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $if(ctx.server)$
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
             {
-                $first(ctx.interfaces).formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
+                $first(ctx.interfaces).formatedScopedname$_$operation.name$_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_$operation.name$_str,
                     $if(operation.oneway)$NULL$else$replytypeName$endif$,
                     requesttypeName,
 		    $eprosimaTypesBool()$,
@@ -150,7 +150,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $if(ctx.client)$
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
-                $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
+                $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                 requesttypeName,
                 $if(!operation.oneway)$replytypeName,
                 $eprosimaTypesBool()$,
@@ -165,7 +165,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $if(ctx.server)$
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
             {
-                $interface.formatedScopedname$_$operation.name$_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
+                $interface.formatedScopedname$_$operation.name$_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                     $if(operation.oneway)$NULL$else$replytypeName$endif$,
                     requesttypeName,
 		    $eprosimaTypesBool()$,

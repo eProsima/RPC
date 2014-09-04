@@ -117,7 +117,7 @@ if [ "$FASTCDR" == "" ]; then
 fi
 
 # Set environment for RPCDDS
-. $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
+. $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.1.0
 
 # Create output directory 
 if [ ! -d "output" ]; then

@@ -96,7 +96,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>rpcrestd-0.3.0.lib;
+        <AdditionalDependencies>rpcrestd-0.3.2.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -115,7 +115,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>rpcrest-0.3.0.lib;
+        <AdditionalDependencies>rpcrest-0.3.2.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -134,7 +134,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>librpcrestd-0.3.0.lib;
+        <AdditionalDependencies>librpcrestd-0.3.2.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
@@ -154,7 +154,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>librpcrest-0.3.0.lib;
+        <AdditionalDependencies>librpcrest-0.3.2.lib;
   ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
