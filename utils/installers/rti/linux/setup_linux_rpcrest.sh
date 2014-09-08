@@ -163,8 +163,10 @@ function installer
 function rpminstaller
 {
     rm tmp/$project/classes/antlr-2.7.7.jar
-    rm tmp/$project/classes/stringtemplate-3.2.1.jar
     rm tmp/$project/classes/rpcrestgen.jar
+    if [[ "${distroversion}" == "Fedora"* ]]; then 
+        rm tmp/$project/classes/stringtemplate-3.2.1.jar
+    fi
 
 	# Change the script form local to general script.
 	cp ../../../../scripts/rpcrestgen_rpm.sh tmp/$project/scripts/rpcrestgen.sh
@@ -176,7 +178,7 @@ function rpminstaller
 	mkdir -p tmp/$project/fastrpcgen
 
 	# Copy the build.xml
-	if [ ${distroversion} == CentOS6.4 ]; then
+	if [[ "${distroversion}" == "CentOS6"* ]]; then
 		cp build_rpm_rpcrest_centos.xml tmp/$project/fastrpcgen/build.xml
 	else
 		cp build_rpm_rpcrest.xml tmp/$project/fastrpcgen/build.xml
@@ -214,8 +216,8 @@ function rpminstaller
 	if [ $errorstatus != 0 ]; then return; fi
 
 	# Copy SPEC file
-	if [ ${distroversion} == CentOS6.4 ]; then
-		sed "s/VERSION/${version}/g" FastBuffers_centos.spec > ~/rpmbuild/SPECS/FastBuffers.spec
+	if [[ "${distroversion}" == "CentOS6"* ]]; then
+		sed "s/VERSION/${version}/g" rpcrest_centos.spec > ~/rpmbuild/SPECS/rpcrest.spec
 	else
 		sed "s/VERSION/${version}/g" rpcrest.spec > ~/rpmbuild/SPECS/rpcrest.spec
 	fi
@@ -268,8 +270,11 @@ mkdir tmp/$project
 
 installer
 
-# TODO Detect if the distro suport RPM
-[ $errorstatus == 0 ] && { rpminstaller; }
+if [ $errorstatus == 0 ]; then
+    if [[ "${distroversion}" == "CentOS6"* ]] || [[ "${distroversion}" == "Fedora"* ]]; then
+        rpminstaller
+    fi
+fi
 
 # Remove temporaly directory
 rm -rf tmp
