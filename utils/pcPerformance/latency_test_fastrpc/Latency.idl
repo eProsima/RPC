@@ -1,0 +1,5 @@
+typedef string<8192> cadena;
+
+interface Latency {
+	cadena latency(in cadena param);
+};
