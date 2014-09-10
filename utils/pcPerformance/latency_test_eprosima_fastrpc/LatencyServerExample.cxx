@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new LatencyProtocol();
-        transport = new TCPServerTransport("127.0.0.1:8080");
+        transport = new TCPServerTransport("0.0.0.0:8080");
         server = new LatencyServer(*pool, *transport, *protocol, servant);
         server->serve();
     }
@@ -66,6 +66,5 @@ int main(int argc, char **argv)
     
     return 0;
 }
-
 
 
