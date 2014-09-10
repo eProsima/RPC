@@ -116,7 +116,8 @@ int main(int argc, char **argv)
     elm.att5(false);
     
 	if(bytes == 0) {
-		int bytessizes[] = {16,32,64,128,256,512,1024,2048,4096,8192};
+		//int bytessizes[] = {16,32,64,128,256,512,1024,2048,4096,8192};
+		int bytessizes[] = {1,2,4,8,16,32,64,128,256,512};
 		std::vector<int> v_bytes (bytessizes, bytessizes + sizeof(bytessizes) / sizeof(uint32_t) );
 		for(std::vector<int>::iterator it = v_bytes.begin();it!=v_bytes.end();++it) {
 
