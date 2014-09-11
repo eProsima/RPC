@@ -1,6 +1,6 @@
 
 CPP=c++
-CPP_FLAGS= --std=c++0x
+CPP_FLAGS= --std=c++0x -O2
 LIBS= -lthrift
 
 SOURCE_FILES= main.cpp ApacheClient.cpp LatencyTest.cpp ApacheServer.cpp Latency_types.cpp
