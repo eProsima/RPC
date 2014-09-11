@@ -30,7 +30,7 @@ function package
     # TODO Que empaquete tambien fastcdr?
 
     # Get the current version of RPCDDS
-    . $EPROSIMADIR/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
+    . ../../thirdparty/eProsima/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -38,24 +38,24 @@ function package
     # Compile RPCDDS library for i86.
     if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
         rm -rf output
-        . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
+        . ../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget i86
         rm -rf lib/$NDDSTARGET
         make rpcdds
         errorstatus=$?
         # Try to add platform
-        . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
-        . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+        . ../../thirdparty/eProsima/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
+        . ../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
         if [ $errorstatus != 0 ]; then return; fi
     fi
     # Compile FastRPC library for x64.
     if [ -z $package_targets ] || [ "$package_targets" == "x64" ]; then
         rm -rf output
-        . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
+        . ../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget x64
         rm -rf lib/$NDDSTARGET
         make rpcdds
         errorstatus=$?
-        . $EPROSIMADIR/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
-        . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+        . ../../thirdparty/eProsima/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
+        . ../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
         if [ $errorstatus != 0 ]; then return; fi
     fi
 
@@ -143,7 +143,7 @@ function package
 }
 
 # Check that the environment.sh script was run.
-if [ "$EPROSIMADIR" == "" ]; then
+if [ "$EPROSIMA_LIBRARY_PATH" == "" ]; then
     echo "environment.sh must to be run."
     exit -1
 fi

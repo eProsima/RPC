@@ -9,8 +9,8 @@ FASTCDR_TARGET=$(shell $(EPROSIMADIR)/scripts/common_dds_functions.sh printEPROS
 FASTRPC_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(FASTRPC_OUTDIR_DEBUG))
 FASTRPC_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(FASTRPC_OUTDIR_RELEASE))
 
-FASTRPC_LIBS_DEBUG= $(LIBS_DEBUG) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdrd -lboost_system -lboost_thread
-FASTRPC_LIBS= $(LIBS) -L../fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread
+FASTRPC_LIBS_DEBUG= $(LIBS_DEBUG) -Lthirdparty/fastcdr/lib/$(FASTCDR_TARGET) -lfastcdrd -lboost_system -lboost_thread
+FASTRPC_LIBS= $(LIBS) -Lthirdparty/fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread
 
 FASTRPC_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x
 FASTRPC_CFLAGS= $(CFLAGS) -std=c++0x
@@ -48,7 +48,7 @@ FASTRPC_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/$(FASTRPC_TARGET_Z_FILE)
 
 FASTRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
-		    -I$(BASEDIR)/../fastcdr/include \
+		    -I$(BASEDIR)/thirdparty/fastcdr/include \
 		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 

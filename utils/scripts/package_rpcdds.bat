@@ -19,11 +19,11 @@ setlocal EnableExpansion
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
 
-if "%EPROSIMADIR%"=="" (
-    echo "EPROSIMADIR environment variable has to be set"
-    set errorstatus=-1
-    goto :exit
-)
+::if "%EPROSIMADIR%"=="" (
+::    echo "EPROSIMADIR environment variable has to be set"
+::    set errorstatus=-1
+::    goto :exit
+::)
 
 :: Go to root directory
 cd "..\.."
@@ -40,7 +40,7 @@ if not %errorstatus%==0 goto :exit
 cd "..\..\"
 
 :: Get the current vesion of FastRPC
-call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
+call thirdparty\eProsima\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :exit
 
 :: Update and compile FastRPC application.
@@ -100,19 +100,19 @@ copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
 
 :: Copy fastcdr libraries needed in
-copy %FASTCDR%\lib\i86Win32VS2010\fastcdr-0.2.2.dll lib\i86Win32VS2010
-copy %FASTCDR%\lib\i86Win32VS2010\fastcdr-0.2.2.lib lib\i86Win32VS2010
-copy %FASTCDR%\lib\i86Win32VS2010\fastcdrd-0.2.2.dll lib\i86Win32VS2010
-copy %FASTCDR%\lib\i86Win32VS2010\fastcdrd-0.2.2.lib lib\i86Win32VS2010
-copy %FASTCDR%\lib\i86Win32VS2010\libfastcdr-0.2.2.lib lib\i86Win32VS2010
-copy %FASTCDR%\lib\i86Win32VS2010\libfastcdrd-0.2.2.lib lib\i86Win32VS2010
+copy ..\..\thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-0.2.2.dll lib\i86Win32VS2010
+copy ..\..\thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-0.2.2.lib lib\i86Win32VS2010
+copy ..\..\thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-0.2.2.dll lib\i86Win32VS2010
+copy ..\..\thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-0.2.2.lib lib\i86Win32VS2010
+copy ..\..\thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-0.2.2.lib lib\i86Win32VS2010
+copy ..\..\thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-0.2.2.lib lib\i86Win32VS2010
 
-copy %FASTCDR%\lib\x64Win64VS2010\fastcdr-0.2.2.dll lib\x64Win64VS2010
-copy %FASTCDR%\lib\x64Win64VS2010\fastcdr-0.2.2.lib lib\x64Win64VS2010
-copy %FASTCDR%\lib\x64Win64VS2010\fastcdrd-0.2.2.dll lib\x64Win64VS2010
-copy %FASTCDR%\lib\x64Win64VS2010\fastcdrd-0.2.2.lib lib\x64Win64VS2010
-copy %FASTCDR%\lib\x64Win64VS2010\libfastcdr-0.2.2.lib lib\x64Win64VS2010
-copy %FASTCDR%\lib\x64Win64VS2010\libfastcdrd-0.2.2.lib lib\x64Win64VS2010
+copy ..\..\thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-0.2.2.dll lib\x64Win64VS2010
+copy ..\..\thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-0.2.2.lib lib\x64Win64VS2010
+copy ..\..\thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-0.2.2.dll lib\x64Win64VS2010
+copy ..\..\thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-0.2.2.lib lib\x64Win64VS2010
+copy ..\..\thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-0.2.2.lib lib\x64Win64VS2010
+copy ..\..\thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-0.2.2.lib lib\x64Win64VS2010
 
 :: :: Execute DDS tests
 :: set RPCDDSHOME_OLD=%RPCDDSHOME%

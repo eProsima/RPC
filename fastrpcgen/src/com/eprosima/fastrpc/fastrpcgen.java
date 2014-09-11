@@ -430,8 +430,15 @@ public class fastrpcgen
             TypeCode.idltypesgr = StringTemplateGroup.loadGroup("idlTypes", DefaultTemplateLexer.class, null);
 
             // In local for all products
-            if(m_local)
-                solution.addInclude("$(EPROSIMADIR)/code");
+            if(m_local) {
+				if(m_protocol == PROTOCOL.FASTCDR) {
+					solution.addInclude("$(FASTRPCHOME)/thirdparty/eProsima/code");
+				} else if(m_protocol == PROTOCOL.DDS) {
+					solution.addInclude("$(RPCDDSHOME)/thirdparty/eProsima/code");
+				} else if(m_protocol == PROTOCOL.REST) {
+					solution.addInclude("$(RPCRESTHOME)/thirdparty/eProsima/code");
+				}				
+			}
             solution.addInclude("$(" + m_appEnv + ")/include");
             if(m_exampleOption != null)
                 solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
@@ -476,11 +483,24 @@ public class fastrpcgen
                     TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
                     TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
-                    if(m_local)
-                    {
-                        solution.addInclude("$(FASTCDR)/include");
-                        solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
-                    }
+	                if(m_local) {
+						solution.addInclude("$(RPCDDSHOME)/thirdparty/fastcdr/include");
+						
+						if(m_exampleOption != null)
+						{
+							if(!m_exampleOption.contains("Win"))
+							{
+								if(m_exampleOption.startsWith("i86Linux2.6gcc"))
+									solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
+								else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
+									solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
+							}
+							else
+							{
+								solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
+							}
+						}
+					}
                     if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                         solution.addLibrary("fastcdr");
                 }
@@ -536,8 +556,22 @@ public class fastrpcgen
 
                 if(m_local)
                 {
-                    solution.addInclude("$(FASTCDR)/include");
-                    solution.addLibraryPath("$(FASTCDR)/lib/$(EPROSIMA_TARGET)");
+	                solution.addInclude("$(FASTRPCHOME)/thirdparty/fastcdr/include");
+					
+					if(m_exampleOption != null)
+					{
+					    if(!m_exampleOption.contains("Win"))
+						{
+							if(m_exampleOption.startsWith("i86Linux2.6gcc"))
+								solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
+							else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
+								solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
+						}
+						else
+						{
+							solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
+						}
+					}
                 }
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                     solution.addLibrary("fastcdr");

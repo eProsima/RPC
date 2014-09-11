@@ -88,7 +88,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);$(EPROSIMADIR)/code;$(RPCDDSHOME)/include;$(FASTCDR)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -99,14 +99,14 @@
         <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;rpcddsd-0.3.2.lib;
   ;MultithreadTestd.lib;MultithreadTestClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(FASTCDR)/lib/$(EPROSIMA_TARGET);$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;../../../../thirdparty/fastcdr/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);$(EPROSIMADIR)/code;$(RPCDDSHOME)/include;$(FASTCDR)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -117,14 +117,14 @@
         <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;rpcdds-0.3.2.lib;
   ;MultithreadTest.lib;MultithreadTestClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(FASTCDR)/lib/$(EPROSIMA_TARGET);$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;../../../../thirdparty/fastcdr/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);$(EPROSIMADIR)/code;$(RPCDDSHOME)/include;$(FASTCDR)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -135,14 +135,14 @@
         <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;librpcddsd-0.3.2.lib;
   ;libMultithreadTestd.lib;libMultithreadTestClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(FASTCDR)/lib/$(EPROSIMA_TARGET);$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;../../../../thirdparty/fastcdr/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);$(EPROSIMADIR)/code;$(RPCDDSHOME)/include;$(FASTCDR)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -153,7 +153,7 @@
         <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;librpcdds-0.3.2.lib;
   ;libMultithreadTest.lib;libMultithreadTestClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(FASTCDR)/lib/$(EPROSIMA_TARGET);$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;../../../../thirdparty/fastcdr/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemGroup>

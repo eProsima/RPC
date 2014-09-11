@@ -6,9 +6,9 @@ LDFLAGS= -m64 -O2
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES= 
 
-INCLUDES= -I. -I../../../include -I$(FASTCDR)/include -I$(EPROSIMADIR)/code
+INCLUDES= -I. -I../../../include -I../../../thirdparty/fastcdr/include -I../../../thirdparty/eProsima/code
 
-LIBS = -L../../../lib/x64Linux2.6gcc4.4.5 -L$(FASTCDR)/lib/x64Linux2.6gcc -lboost_system -lboost_thread -lfastcdr -lfastrpc $(SYSLIBS)
+LIBS = -L../../../lib/x64Linux2.6gcc4.4.5 -L../../../thirdparty/fastcdr/lib/x64Linux2.6gcc -lboost_system -lboost_thread -lfastcdr -lfastrpc $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 

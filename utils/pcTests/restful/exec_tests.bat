@@ -34,10 +34,10 @@ if %argC% geq 1 (
 )
 
 :: Check environment variables
-if "%EPROSIMADIR%"=="" (
-    echo "EPROSIMADIR environment variable is not set."
-    exit /b -1
-)
+::if "%EPROSIMADIR%"=="" (
+::    echo "EPROSIMADIR environment variable is not set."
+::    exit /b -1
+::)
 
 if "%RPCRESTHOME%"=="" (
     echo "RPCRESTHOME environment variable is not set."
@@ -45,7 +45,7 @@ if "%RPCRESTHOME%"=="" (
 )
 
 :: Set environment for FASTRPC
-call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
+call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :setRTIversion ndds.5.0.0
 
 :: Find all directories.
 for /D %%D in ("*") do (
@@ -63,12 +63,12 @@ for /D %%D in ("*") do (
             if !exec_target_bool!==1 (
                 :: i86 target
                 :: Set environtment
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
                 call "%%D\exec_test.bat"
                 :: Restore environtment
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :restoreTargetPath
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :restoreRTItarget
             )
          )
 	 ::x64 target
@@ -76,12 +76,12 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="" set exec_target_bool=2
             if "%test_targets%"=="x64" set exec_target_bool=2
             if !exec_target_bool!==2 (
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
                 call "%%D\exec_test.bat"
                 :: Restore environtment
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :restoreTargetPath
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :restoreRTItarget
             )
          )
       ) else (
@@ -91,12 +91,12 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="i86" set exec_target_bool=3
             if !exec_target_bool!==3 (
                 :: Set environtment
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%LIB_BOOST_PATH%\lib\i86"
                 call :execTest i86Win32VS2010 Win32 %%D
                 :: Restore environtment
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :restoreTargetPath
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :restoreRTItarget
             )
          )
 	 ::x64 target
@@ -105,12 +105,12 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="x64" set exec_target_bool=4
             if !exec_target_bool!==4 (
                 :: Set environtment
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%LIB_BOOST_PATH%\lib\x64"
                 call :execTest x64Win64VS2010 x64 %%D
                 :: Restore environtment
-                call %EPROSIMADIR%\scripts\common_exectest_functions.bat :restoreTargetPath
-                call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTItarget
+                call ..\..\..\thirdparty\eProsima\scripts\common_exectest_functions.bat :restoreTargetPath
+                call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :restoreRTItarget
             )
          )
       )
@@ -228,7 +228,7 @@ goto :EOF
 rd /S /Q output
 
 :: Restore environment for FASTRPC
-call %EPROSIMADIR%\scripts\common_dds_functions.bat :restoreRTIversion
+call ..\..\..\thirdparty\eProsima\scripts\common_dds_functions.bat :restoreRTIversion
 
 if %errorstatus%==0 (echo "TEST SUCCESFULLY") else (echo "TEST FAILED")
 exit /b %errorstatus%

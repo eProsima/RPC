@@ -1,0 +1,12 @@
+[submodule "thirdparty/idl"]
+	path = thirdparty/idl
+	url = git@git.sambaserver.eprosima.com:eprosima-common/idl.git
+[submodule "thirdparty/fastbuffers"]
+	path = thirdparty/fastbuffers
+	url = git@git.sambaserver.eprosima.com:fastbuffers/fastbuffers.git
+[submodule "thirdparty/eProsima"]
+	path = thirdparty/eProsima
+	url = git@git.sambaserver.eprosima.com:eprosima-common/eprosima.git
+[submodule "thirdparty/fastcdr"]
+	path = thirdparty/fastcdr
+	url = git@git.sambaserver.eprosima.com:fastcdr/fastcdr.git

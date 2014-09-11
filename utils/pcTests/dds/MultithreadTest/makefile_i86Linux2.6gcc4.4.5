@@ -6,7 +6,7 @@ LDFLAGS= -m32
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I. -I$(FASTCDR)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I$(EPROSIMADIR)/code -I$(RPCDDSHOME)/include
+INCLUDES= -I. -I$(FASTCDR)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eProsima/code -I$(RPCDDSHOME)/include
 
 LIBS = -L$(FASTCDR)/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lfastcdr -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
 

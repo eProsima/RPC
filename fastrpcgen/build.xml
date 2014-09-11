@@ -66,7 +66,7 @@
 		<property name="fastrpc.src.dir" value="${fastrpc.dir}${file.separator}src" />
 		<property name="fastrpc.src.java" value="${fastrpc.src.dir}" />
 		<property name="fastrpc.grammar.dir" value="${fastrpc.dir}${file.separator}grammars" />
-        <property name="idl.dir" value="${basedir}${file.separator}..${file.separator}..${file.separator}idl" />
+        <property name="idl.dir" value="${basedir}${file.separator}..${file.separator}thirdparty${file.separator}idl" />
         <property name="idl.src.dir" value="${idl.dir}${file.separator}src" />
 		<property name="idl.src.java" value="${idl.src.dir}" />
 		<property name="idl.grammar.dir" value="${idl.dir}${file.separator}grammars" />
@@ -141,7 +141,7 @@
         <!--> TODO Quitar el overwrite<-->
         <copy todir="${build.classes}${file.separator}com${file.separator}eprosima${file.separator}fastrpc${file.separator}idl${file.separator}templates"
             overwrite="yes">
-            <fileset dir="${basedir}${file.separator}..${file.separator}..${file.separator}FastBuffers${file.separator}src${file.separator}com${file.separator}eprosima${file.separator}fastbuffers${file.separator}templates">
+            <fileset dir="${basedir}${file.separator}..${file.separator}thirdparty${file.separator}fastbuffers${file.separator}src${file.separator}com${file.separator}eprosima${file.separator}fastbuffers${file.separator}templates">
 				<include name="Types.stg" />
 				<include name="TypesHeader.stg" />
 				<include name="TypesSource.stg" />

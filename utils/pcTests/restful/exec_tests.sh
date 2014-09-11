@@ -65,10 +65,10 @@ while (( "$#" )); do
 done
 
 # Check environment variables
-if [ "$EPROSIMADIR" == "" ]; then
-    echo "EPROSIMADIR environment variables is not set."
-    exit -1
-fi
+#if [ "$EPROSIMADIR" == "" ]; then
+#    echo "EPROSIMADIR environment variables is not set."
+#    exit -1
+#fi
 
 if [ "$RPCRESTHOME" == "" ]; then
     echo "RPCRESTHOME environment variables is not set."
@@ -76,7 +76,7 @@ if [ "$RPCRESTHOME" == "" ]; then
 fi
 
 # Set environment for RPCREST
-. $EPROSIMADIR/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
+. ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
 
 # Create output directory 
 if [ ! -d "output" ]; then
@@ -89,44 +89,44 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
         if [ -e "$dir/exec_test.sh" ] ; then
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget i86
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                     $dir/exec_test.sh $test_args
                     errorstatus=$?
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
             # x64 target
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget x64
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                     $dir/exec_test.sh $test_args
                     errorstatus=$?
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
         else
             # i86 target
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "i86" ]; then
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget i86
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget i86
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                     execTest $dir
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
             # x64 target
             if [ $errorstatus == 0 ]; then
                 if [ -z $test_targets ] || [ "$test_targets" == "x64" ]; then
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh setRTItarget x64
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget x64
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh setTargetLibraryPath ../../../lib/$NDDSTARGET
                     execTest $dir
-                    . $EPROSIMADIR/scripts/common_exectest_functions.sh restoreTargetLibraryPath
-                    . $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTItarget
+                    . ../../../thirdparty/eProsima/scripts/common_exectest_functions.sh restoreTargetLibraryPath
+                    . ../../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
                 fi
             fi
         fi
@@ -142,7 +142,7 @@ done
 rm -r output
 
 # Restore environment for RPCREST
-. $EPROSIMADIR/scripts/common_dds_functions.sh restoreRTIversion
+. ../../../thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then
     echo "TEST SUCCESSFULLY"

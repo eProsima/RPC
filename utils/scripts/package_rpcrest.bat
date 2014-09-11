@@ -19,11 +19,11 @@ setlocal EnableExpansion
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
 
-if "%EPROSIMADIR%"=="" (
-    echo "EPROSIMADIR environment variable has to be set"
-    set errorstatus=-1
-    goto :exit
-)
+::if "%EPROSIMADIR%"=="" (
+::    echo "EPROSIMADIR environment variable has to be set"
+::    set errorstatus=-1
+::    goto :exit
+::)
 
 :: Go to root directory
 cd "..\.."
@@ -40,7 +40,7 @@ if not %errorstatus%==0 goto :exit
 cd "..\..\"
 
 :: Get the current vesion of FastRPC
-call %EPROSIMADIR%\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
+call thirdparty\eProsima\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :exit
 
 :: Update and compile FastRPC application.

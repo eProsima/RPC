@@ -6,6 +6,7 @@ LN=g++
 AR=ar
 CP=cp
 LNK=ln
+EPROSIMADIR=$(BASEDIR)/thirdparty/eProsima
 
 ifdef NDDSHOME
 -include $(EPROSIMADIR)/building/makefiles/dds.mk
