@@ -461,7 +461,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -500,7 +500,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -539,7 +539,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -578,7 +578,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -617,7 +617,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -656,7 +656,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -696,7 +696,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -733,7 +733,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -770,7 +770,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -807,7 +807,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -845,7 +845,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -882,7 +882,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -918,7 +918,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -950,7 +950,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -982,7 +982,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1014,7 +1014,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1045,7 +1045,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1076,7 +1076,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1108,7 +1108,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -1140,7 +1140,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -1172,7 +1172,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -1204,7 +1204,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -1236,7 +1236,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -1268,7 +1268,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);$(EPROSIMA_LIBRARY_PATH)\threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eProsima\code;$(LIB_BOOST_PATH);../../../../thirdparty/boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
