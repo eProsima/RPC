@@ -117,7 +117,7 @@ fi
 #fi
 
 # Set environment for RPCDDS
-. ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTIversion ndds.5.1.0
+. ../../../thirdparty/eProsima/scripts/common_dds_functions.sh setRTIversion ndds.5.0.0
 
 # Create output directory 
 if [ ! -d "output" ]; then

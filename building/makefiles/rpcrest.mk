@@ -48,7 +48,7 @@ RPCREST_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/$(RPCREST_TARGET_Z_FILE)
 
 RPCREST_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
-		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
+		    -I$(BASEDIR)/thirdparty/boost-threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 
 RPCREST_SRC_COMMONFILES = $(shell cat building/makefiles/common_sources)

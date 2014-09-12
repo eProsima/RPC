@@ -5,7 +5,7 @@ librpcdds_la_SOURCES = RPCDDS_SOURCES
 
 librpcdds_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt
 
-AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/rpcdds -Iextra/threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
+AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/rpcdds -Iextra/boost-threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 
 rpcdds_licenciasdir = $(datadir)/doc/rpcdds
 rpcdds_licencias_DATA = RPCDDS_LICENSE.txt LGPLv3_LICENSE.txt

@@ -69,7 +69,8 @@ function installer
 
     # Copy threadpool header files.
     mkdir -p tmp/$project/extra
-    cp -r $EPROSIMA_LIBRARY_PATH/threadpool-0_2_5-src/threadpool tmp/$project/extra
+    mkdir -p tmp/$project/extra/boost-threadpool
+    cp -r ../../../../thirdparty/boost-threadpool/* tmp/$project/extra/boost-threadpool
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -196,7 +197,7 @@ function rpminstaller
 
 	if [ $errorstatus != 0 ]; then return; fi
 	# Copy grammar
-	cp -r ../../../../../idl/grammars tmp/$project/fastrpcgen
+	cp -r ../../../../thirdparty/idl/grammars tmp/$project/fastrpcgen
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
 
@@ -204,17 +205,17 @@ function rpminstaller
 	cp -r ../../../../fastrpcgen/src tmp/$project/fastrpcgen
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
-	cp -r ../../../../../idl/src tmp/$project/fastrpcgen
+	cp -r ../../../../thirdparty/idl/src tmp/$project/fastrpcgen
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
     # TODO Warning Esto se hace en nuestro build.xml
-    cp ../../../../../FastBuffers/src/com/eprosima/fastbuffers/templates/Types.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+    cp ../../../../thirdparty/fastbuffers/src/com/eprosima/fastbuffers/templates/Types.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../../FastBuffers/src/com/eprosima/fastbuffers/templates/TypesHeader.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+    cp ../../../../thirdparty/fastbuffers/src/com/eprosima/fastbuffers/templates/TypesHeader.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../../FastBuffers/src/com/eprosima/fastbuffers/templates/TypesSource.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+    cp ../../../../thirdparty/fastbuffers/src/com/eprosima/fastbuffers/templates/TypesSource.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
     cp ../../../../src/platforms tmp/$project/src
