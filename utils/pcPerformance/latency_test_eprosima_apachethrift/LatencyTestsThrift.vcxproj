@@ -126,31 +126,31 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(EPROSIMA_LIBRARY_PATH)\boost_1_53_0;$(EPROSIMA_LIBRARY_PATH)\thrift-0.9.1\lib\cpp\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EPROSIMA_LIBRARY_PATH)\boost_1_53_0;$(EPROSIMA_LIBRARY_PATH)\thrift-0.9.1\lib\cpp\src;$(LIB_BOOST_PATH)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(EPROSIMA_LIBRARY_PATH)\boost_1_53_0\lib64-msvc-10.0;$(EPROSIMA_LIBRARY_PATH)\thrift-0.9.1\lib\cpp\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LIB_BOOST_PATH)\lib\x64;$(EPROSIMA_LIBRARY_PATH)\thrift-0.9.1\lib\cpp\x64\Release</AdditionalLibraryDirectories>
       <AdditionalDependencies>libthrift.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ApacheClient.cpp" />
-    <ClCompile Include="..\..\ApacheServer.cpp" />
-    <ClCompile Include="..\..\LatencyTest.cpp" />
-    <ClCompile Include="..\..\Latency_constants.cpp" />
-    <ClCompile Include="..\..\Latency_types.cpp" />
-    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="ApacheClient.cpp" />
+    <ClCompile Include="ApacheServer.cpp" />
+    <ClCompile Include="LatencyTest.cpp" />
+    <ClCompile Include="Latency_constants.cpp" />
+    <ClCompile Include="Latency_types.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ApacheClient.h" />
-    <ClInclude Include="..\..\ApacheServer.h" />
-    <ClInclude Include="..\..\LatencyTest.h" />
-    <ClInclude Include="..\..\Latency_constants.h" />
-    <ClInclude Include="..\..\Latency_types.h" />
+    <ClInclude Include="ApacheClient.h" />
+    <ClInclude Include="ApacheServer.h" />
+    <ClInclude Include="LatencyTest.h" />
+    <ClInclude Include="Latency_constants.h" />
+    <ClInclude Include="Latency_types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,39 +15,39 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ApacheServer.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="ApacheClient.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ApacheClient.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="LatencyTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Latency_constants.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="ApacheServer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Latency_types.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="Latency_constants.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\LatencyTest.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="Latency_types.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ApacheServer.h">
+    <ClInclude Include="ApacheServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ApacheClient.h">
+    <ClInclude Include="ApacheClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Latency_constants.h">
+    <ClInclude Include="Latency_constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Latency_types.h">
+    <ClInclude Include="Latency_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LatencyTest.h">
+    <ClInclude Include="LatencyTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

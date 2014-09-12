@@ -19,8 +19,13 @@
 #include "fastrpc/exceptions/Exceptions.h"
 
 #include <iostream>
-#include <chrono>
 #include <sstream>
+
+#ifdef _WIN32
+#include "boost/date_time/posix_time/posix_time.hpp"
+#else
+#include <chrono>
+#endif
 
 using namespace eprosima::rpc;
 using namespace ::exception;
@@ -80,6 +85,16 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
+#ifdef _WIN32
+	// Para calcular el tiempo
+	boost::posix_time::ptime m_t1;
+	boost::posix_time::ptime m_t2;
+
+	m_t1 = boost::posix_time::microsec_clock::local_time();
+	for(int i=0;i<1000;i++)
+		m_t2 = boost::posix_time::microsec_clock::local_time();
+	double m_overhead = (m_t2 - m_t1).total_microseconds() / 1001;
+#else
 	// Para calcular el tiempo
 	typedef std::chrono::high_resolution_clock Clock;
 	typedef std::chrono::microseconds microseconds;
@@ -91,7 +106,8 @@ int main(int argc, char **argv)
 	for(int i=0;i<1000;i++)
 		m_t2 = Clock::now();
 	double m_overhead = std::chrono::duration_cast<microseconds>(m_t2 - m_t1).count()/1001;
-	//
+
+#endif
     
     // Creation of the proxy for interface "Latency".
     try
@@ -127,8 +143,11 @@ int main(int argc, char **argv)
                 payload.push_back(elm);
 			}
 
-
+#ifdef _WIN32
+			m_t1 = boost::posix_time::microsec_clock::local_time();
+#else
 			m_t1 = Clock::now();
+#endif
 			int isam = 0;
 			for(isam = 0; isam<samples; ++isam) {
 			    // Call to remote procedure "latency".
@@ -139,11 +158,20 @@ int main(int argc, char **argv)
 			    }
 			}
 
+#ifdef _WIN32
+			m_t2 = boost::posix_time::microsec_clock::local_time();
+#else
 			m_t2 = Clock::now();
+#endif
 
 			double result = -1;
-			if(isam == samples) {
+			if(isam == samples)
+			{
+#ifdef _WIN32
+				result = ( (m_t2 - m_t1).total_microseconds() - m_overhead) / samples;
+#else
 				result = (std::chrono::duration_cast<microseconds>(m_t2 - m_t1).count() - m_overhead) / samples;
+#endif
 			}
 			printResult(samples, *it, result);
 		}
@@ -154,7 +182,12 @@ int main(int argc, char **argv)
             payload.push_back(elm);
 		}
 
+#ifdef _WIN32
+		m_t1 = boost::posix_time::microsec_clock::local_time();
+#else
 		m_t1 = Clock::now();
+#endif
+
 		int isam = 0;
 		for(isam = 0; isam<samples; ++isam) {
 		    // Call to remote procedure "latency".
@@ -164,11 +197,20 @@ int main(int argc, char **argv)
 			std::cout << ex.what() << std::endl;
 		    }
 		}
+
+#ifdef _WIN32
+		m_t2 = boost::posix_time::microsec_clock::local_time();
+#else
 		m_t2 = Clock::now();
+#endif
 
 		double result = -1;
 		if(isam == samples) {
+#ifdef _WIN32
+			result = ( (m_t2 - m_t1).total_microseconds() - m_overhead) / samples;
+#else
 			result = (std::chrono::duration_cast<microseconds>(m_t2 - m_t1).count() - m_overhead) / samples;
+#endif
 		}
 		printResult(samples, bytes, result);
 	}

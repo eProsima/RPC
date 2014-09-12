@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LatencyTestsThrift", "LatencyTestsThrift\LatencyTestsThrift.vcxproj", "{00CEA26E-4DAC-4CF7-A614-9E3EE480D547}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LatencyTestsThrift", "LatencyTestsThrift.vcxproj", "{00CEA26E-4DAC-4CF7-A614-9E3EE480D547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
