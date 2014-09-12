@@ -5,7 +5,7 @@ libfastrpc_la_SOURCES = FASTRPC_SOURCES
 
 libfastrpc_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt
 
-AM_CPPFLAGS = -std=c++0x -Iinclude -Iinclude/fastrpc -Iextra/threadpool
+AM_CPPFLAGS = -std=c++0x -Iinclude -Iinclude/fastrpc -Iextra/boost-threadpool
 
 fastrpc_licenciasdir = $(datadir)/doc/fastrpc
 fastrpc_licencias_DATA = FASTRPC_LICENSE.txt LGPLv3_LICENSE.txt

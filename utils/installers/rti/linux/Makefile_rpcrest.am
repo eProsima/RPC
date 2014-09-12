@@ -5,7 +5,7 @@ librpcrest_la_SOURCES = RPCREST_SOURCES
 
 librpcrest_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lboost_thread -lboost_system -lpthread -lrt
 
-AM_CPPFLAGS = -std=c++0x -Iinclude -Iinclude/rpcrest -Iextra/threadpool
+AM_CPPFLAGS = -std=c++0x -Iinclude -Iinclude/rpcrest -Iextra/boost-threadpool
 
 rpcrest_licenciasdir = $(datadir)/doc/rpcrest
 rpcrest_licencias_DATA = RPCREST_LICENSE.txt LGPLv3_LICENSE.txt

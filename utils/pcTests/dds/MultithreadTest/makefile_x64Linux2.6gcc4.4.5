@@ -6,9 +6,9 @@ LDFLAGS= -m64
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I. -I$(FASTCDR)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eProsima/code -I$(RPCDDSHOME)/include
+INCLUDES= -I. -I../../../../thirdparty/fastcdr/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eProsima/code -I$(RPCDDSHOME)/include
 
-LIBS = -L$(FASTCDR)/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lfastcdr -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
+LIBS = -L../../../../thirdparty/fastcdr/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lfastcdr -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 

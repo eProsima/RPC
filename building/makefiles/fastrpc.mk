@@ -49,7 +49,7 @@ FASTRPC_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/$(FASTRPC_TARGET_Z_FILE)
 FASTRPC_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(EPROSIMADIR)/code \
 		    -I$(BASEDIR)/thirdparty/fastcdr/include \
-		    -I$(EPROSIMA_LIBRARY_PATH)/threadpool-0_2_5-src/threadpool \
+		    -I$(BASEDIR)/thirdparty/boost-threadpool \
 		    $(SPECIFIC_INCLUDE_DIR)
 
 FASTRPC_SRC_COMMONFILES= $(shell cat building/makefiles/common_sources)
