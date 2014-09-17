@@ -60,15 +60,15 @@ DDS_TypeCode* Calculator_additionRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"value2",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -77,9 +77,9 @@ DDS_TypeCode* Calculator_additionRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -121,10 +121,24 @@ RTIBool Calculator_additionRequest_initialize(
 RTIBool Calculator_additionRequest_initialize_ex(
     Calculator_additionRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::Calculator_additionRequest_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool Calculator_additionRequest_initialize_w_params(
+        Calculator_additionRequest* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     if (!RTICdrType_initLong(&sample->value1)) {
         return RTI_FALSE;
@@ -149,9 +163,44 @@ void Calculator_additionRequest_finalize(
 void Calculator_additionRequest_finalize_ex(
     Calculator_additionRequest* sample,RTIBool deletePointers)
 {        
-    if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
 
+    if (sample) { } /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::Calculator_additionRequest_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void Calculator_additionRequest_finalize_w_params(
+        Calculator_additionRequest* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+
+
+
+}
+
+void Calculator_additionRequest_finalize_optional_members(
+    Calculator_additionRequest* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
 
 
 
@@ -160,7 +209,7 @@ void Calculator_additionRequest_finalize_ex(
 RTIBool Calculator_additionRequest_copy(
     Calculator_additionRequest* dst,
     const Calculator_additionRequest* src)
-{        
+{
 
     if (!RTICdrType_copyLong(
         &dst->value1, &src->value1)) {
@@ -188,8 +237,8 @@ RTIBool Calculator_additionRequest_copy(
  */
 #define T Calculator_additionRequest
 #define TSeq Calculator_additionRequestSeq
-#define T_initialize_ex ::Calculator_additionRequest_initialize_ex
-#define T_finalize_ex   ::Calculator_additionRequest_finalize_ex
+#define T_initialize_w_params ::Calculator_additionRequest_initialize_w_params
+#define T_finalize_w_params   ::Calculator_additionRequest_finalize_w_params
 #define T_copy       ::Calculator_additionRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -205,8 +254,8 @@ RTIBool Calculator_additionRequest_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -232,9 +281,9 @@ DDS_TypeCode* Calculator_additionReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -275,10 +324,24 @@ RTIBool Calculator_additionReply_initialize(
 RTIBool Calculator_additionReply_initialize_ex(
     Calculator_additionReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::Calculator_additionReply_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool Calculator_additionReply_initialize_w_params(
+        Calculator_additionReply* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     if (!RTICdrType_initLong(&sample->addition_ret)) {
         return RTI_FALSE;
@@ -298,9 +361,43 @@ void Calculator_additionReply_finalize(
 void Calculator_additionReply_finalize_ex(
     Calculator_additionReply* sample,RTIBool deletePointers)
 {        
-    if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
 
+    if (sample) { } /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::Calculator_additionReply_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void Calculator_additionReply_finalize_w_params(
+        Calculator_additionReply* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+
+
+}
+
+void Calculator_additionReply_finalize_optional_members(
+    Calculator_additionReply* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
 
 
 }
@@ -308,7 +405,7 @@ void Calculator_additionReply_finalize_ex(
 RTIBool Calculator_additionReply_copy(
     Calculator_additionReply* dst,
     const Calculator_additionReply* src)
-{        
+{
 
     if (!RTICdrType_copyLong(
         &dst->addition_ret, &src->addition_ret)) {
@@ -330,8 +427,8 @@ RTIBool Calculator_additionReply_copy(
  */
 #define T Calculator_additionReply
 #define TSeq Calculator_additionReplySeq
-#define T_initialize_ex ::Calculator_additionReply_initialize_ex
-#define T_finalize_ex   ::Calculator_additionReply_finalize_ex
+#define T_initialize_w_params ::Calculator_additionReply_initialize_w_params
+#define T_finalize_w_params   ::Calculator_additionReply_finalize_w_params
 #define T_copy       ::Calculator_additionReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -347,8 +444,8 @@ RTIBool Calculator_additionReply_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -374,15 +471,15 @@ DDS_TypeCode* Calculator_subtractionRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"value2",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -391,9 +488,9 @@ DDS_TypeCode* Calculator_subtractionRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -435,10 +532,24 @@ RTIBool Calculator_subtractionRequest_initialize(
 RTIBool Calculator_subtractionRequest_initialize_ex(
     Calculator_subtractionRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::Calculator_subtractionRequest_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool Calculator_subtractionRequest_initialize_w_params(
+        Calculator_subtractionRequest* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     if (!RTICdrType_initLong(&sample->value1)) {
         return RTI_FALSE;
@@ -463,9 +574,44 @@ void Calculator_subtractionRequest_finalize(
 void Calculator_subtractionRequest_finalize_ex(
     Calculator_subtractionRequest* sample,RTIBool deletePointers)
 {        
-    if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
 
+    if (sample) { } /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::Calculator_subtractionRequest_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void Calculator_subtractionRequest_finalize_w_params(
+        Calculator_subtractionRequest* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+
+
+
+}
+
+void Calculator_subtractionRequest_finalize_optional_members(
+    Calculator_subtractionRequest* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
 
 
 
@@ -474,7 +620,7 @@ void Calculator_subtractionRequest_finalize_ex(
 RTIBool Calculator_subtractionRequest_copy(
     Calculator_subtractionRequest* dst,
     const Calculator_subtractionRequest* src)
-{        
+{
 
     if (!RTICdrType_copyLong(
         &dst->value1, &src->value1)) {
@@ -502,8 +648,8 @@ RTIBool Calculator_subtractionRequest_copy(
  */
 #define T Calculator_subtractionRequest
 #define TSeq Calculator_subtractionRequestSeq
-#define T_initialize_ex ::Calculator_subtractionRequest_initialize_ex
-#define T_finalize_ex   ::Calculator_subtractionRequest_finalize_ex
+#define T_initialize_w_params ::Calculator_subtractionRequest_initialize_w_params
+#define T_finalize_w_params   ::Calculator_subtractionRequest_finalize_w_params
 #define T_copy       ::Calculator_subtractionRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -519,8 +665,8 @@ RTIBool Calculator_subtractionRequest_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -546,9 +692,9 @@ DDS_TypeCode* Calculator_subtractionReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -589,10 +735,24 @@ RTIBool Calculator_subtractionReply_initialize(
 RTIBool Calculator_subtractionReply_initialize_ex(
     Calculator_subtractionReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::Calculator_subtractionReply_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool Calculator_subtractionReply_initialize_w_params(
+        Calculator_subtractionReply* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     if (!RTICdrType_initLong(&sample->subtraction_ret)) {
         return RTI_FALSE;
@@ -612,9 +772,43 @@ void Calculator_subtractionReply_finalize(
 void Calculator_subtractionReply_finalize_ex(
     Calculator_subtractionReply* sample,RTIBool deletePointers)
 {        
-    if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
 
+    if (sample) { } /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::Calculator_subtractionReply_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void Calculator_subtractionReply_finalize_w_params(
+        Calculator_subtractionReply* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+
+
+}
+
+void Calculator_subtractionReply_finalize_optional_members(
+    Calculator_subtractionReply* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
 
 
 }
@@ -622,7 +816,7 @@ void Calculator_subtractionReply_finalize_ex(
 RTIBool Calculator_subtractionReply_copy(
     Calculator_subtractionReply* dst,
     const Calculator_subtractionReply* src)
-{        
+{
 
     if (!RTICdrType_copyLong(
         &dst->subtraction_ret, &src->subtraction_ret)) {
@@ -644,8 +838,8 @@ RTIBool Calculator_subtractionReply_copy(
  */
 #define T Calculator_subtractionReply
 #define TSeq Calculator_subtractionReplySeq
-#define T_initialize_ex ::Calculator_subtractionReply_initialize_ex
-#define T_finalize_ex   ::Calculator_subtractionReply_finalize_ex
+#define T_initialize_w_params ::Calculator_subtractionReply_initialize_w_params
+#define T_finalize_w_params   ::Calculator_subtractionReply_finalize_w_params
 #define T_copy       ::Calculator_subtractionReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -661,8 +855,8 @@ RTIBool Calculator_subtractionReply_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -679,7 +873,7 @@ DDS_TypeCode* CalculatorRequest_union_get_typecode()
         {
             (char *)"addition",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -688,15 +882,15 @@ DDS_TypeCode* CalculatorRequest_union_get_typecode()
             1, /* Number of labels */
             1, /* First label */
             NULL, /* Labels (it is NULL when there is only one label)*/
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_NONKEY_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"subtraction",/* Member name */
             {
-                0,/* Representation ID */
+                2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -705,9 +899,9 @@ DDS_TypeCode* CalculatorRequest_union_get_typecode()
             1, /* Number of labels */
             2, /* First label */
             NULL, /* Labels (it is NULL when there is only one label)*/
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_NONKEY_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -741,17 +935,16 @@ DDS_TypeCode* CalculatorRequest_union_get_typecode()
 
     return &CalculatorRequest_union_g_tc;
 }
-
-DDS_UnsignedLong CalculatorRequest_union_getDefaultDiscriminator()
+DDS_Long CalculatorRequest_union_getDefaultDiscriminator()
 {
 
-    DDS_UnsignedLong tmp = 1;
+    DDS_LongLong tmp = 1;
     
     if (tmp > 1) tmp = 1;
     
     if (tmp > 2) tmp = 2;
     
-    return tmp;
+    return (DDS_Long)tmp;
 
 }
         
@@ -764,19 +957,33 @@ RTIBool CalculatorRequest_union_initialize(
 RTIBool CalculatorRequest_union_initialize_ex(
     CalculatorRequest_union* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::CalculatorRequest_union_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool CalculatorRequest_union_initialize_w_params(
+        CalculatorRequest_union* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     sample->_d = CalculatorRequest_union_getDefaultDiscriminator();
 
-    if (!Calculator_additionRequest_initialize_ex(&sample->_u.addition,allocatePointers,allocateMemory)) {
+    if (!Calculator_additionRequest_initialize_w_params(&sample->_u.addition,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!Calculator_subtractionRequest_initialize_ex(&sample->_u.subtraction,allocatePointers,allocateMemory)) {
+    if (!Calculator_subtractionRequest_initialize_w_params(&sample->_u.subtraction,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -794,22 +1001,73 @@ void CalculatorRequest_union_finalize(
 void CalculatorRequest_union_finalize_ex(
     CalculatorRequest_union* sample,RTIBool deletePointers)
 {        
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+
     if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::CalculatorRequest_union_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void CalculatorRequest_union_finalize_w_params(
+        CalculatorRequest_union* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
 
 
-    Calculator_additionRequest_finalize_ex(&sample->_u.addition,deletePointers);
+    Calculator_additionRequest_finalize_w_params(&sample->_u.addition, deallocParams);
             
 
-    Calculator_subtractionRequest_finalize_ex(&sample->_u.subtraction,deletePointers);
+    Calculator_subtractionRequest_finalize_w_params(&sample->_u.subtraction, deallocParams);
             
 
+}
+
+void CalculatorRequest_union_finalize_optional_members(
+    CalculatorRequest_union* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
+
+    switch(sample->_d) {
+          case 1:
+        {                                    
+        
+    Calculator_additionRequest_finalize_optional_members(&sample->_u.addition, deallocParams->delete_pointers);
+            
+
+        } break;
+      case 2:
+        {                                    
+        
+    Calculator_subtractionRequest_finalize_optional_members(&sample->_u.subtraction, deallocParams->delete_pointers);
+            
+
+        } break;
+              
+    }
+      
 }
 
 RTIBool CalculatorRequest_union_copy(
     CalculatorRequest_union* dst,
     const CalculatorRequest_union* src)
-{        
+{
 
     if (!RTICdrType_copyLong(
         &dst->_d, &src->_d)) {
@@ -855,8 +1113,8 @@ RTIBool CalculatorRequest_union_copy(
  */
 #define T CalculatorRequest_union
 #define TSeq CalculatorRequest_unionSeq
-#define T_initialize_ex ::CalculatorRequest_union_initialize_ex
-#define T_finalize_ex   ::CalculatorRequest_union_finalize_ex
+#define T_initialize_w_params ::CalculatorRequest_union_initialize_w_params
+#define T_finalize_w_params   ::CalculatorRequest_union_finalize_w_params
 #define T_copy       ::CalculatorRequest_union_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -872,8 +1130,8 @@ RTIBool CalculatorRequest_union_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -899,15 +1157,15 @@ DDS_TypeCode* CalculatorRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"unio",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -916,9 +1174,9 @@ DDS_TypeCode* CalculatorRequest_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -960,17 +1218,31 @@ RTIBool CalculatorRequest_initialize(
 RTIBool CalculatorRequest_initialize_ex(
     CalculatorRequest* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::CalculatorRequest_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool CalculatorRequest_initialize_w_params(
+        CalculatorRequest* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
-    if (!RequestHeader_initialize_ex(&sample->_header,allocatePointers,allocateMemory)) {
+    if (!RequestHeader_initialize_w_params(&sample->_header,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!CalculatorRequest_union_initialize_ex(&sample->unio,allocatePointers,allocateMemory)) {
+    if (!CalculatorRequest_union_initialize_w_params(&sample->unio,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -988,14 +1260,53 @@ void CalculatorRequest_finalize(
 void CalculatorRequest_finalize_ex(
     CalculatorRequest* sample,RTIBool deletePointers)
 {        
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+
     if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::CalculatorRequest_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void CalculatorRequest_finalize_w_params(
+        CalculatorRequest* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
 
 
-    RequestHeader_finalize_ex(&sample->_header,deletePointers);
+    RequestHeader_finalize_w_params(&sample->_header, deallocParams);
             
 
-    CalculatorRequest_union_finalize_ex(&sample->unio,deletePointers);
+    CalculatorRequest_union_finalize_w_params(&sample->unio, deallocParams);
+            
+
+}
+
+void CalculatorRequest_finalize_optional_members(
+    CalculatorRequest* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
+
+    RequestHeader_finalize_optional_members(&sample->_header, deallocParams->delete_pointers);
+            
+
+    CalculatorRequest_union_finalize_optional_members(&sample->unio, deallocParams->delete_pointers);
             
 
 }
@@ -1003,7 +1314,7 @@ void CalculatorRequest_finalize_ex(
 RTIBool CalculatorRequest_copy(
     CalculatorRequest* dst,
     const CalculatorRequest* src)
-{        
+{
 
     if (!RequestHeader_copy(
         &dst->_header, &src->_header)) {
@@ -1031,8 +1342,8 @@ RTIBool CalculatorRequest_copy(
  */
 #define T CalculatorRequest
 #define TSeq CalculatorRequestSeq
-#define T_initialize_ex ::CalculatorRequest_initialize_ex
-#define T_finalize_ex   ::CalculatorRequest_finalize_ex
+#define T_initialize_w_params ::CalculatorRequest_initialize_w_params
+#define T_finalize_w_params   ::CalculatorRequest_finalize_w_params
 #define T_copy       ::CalculatorRequest_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -1048,8 +1359,8 @@ RTIBool CalculatorRequest_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -1066,7 +1377,7 @@ DDS_TypeCode* CalculatorReply_union_get_typecode()
         {
             (char *)"addition",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -1075,15 +1386,15 @@ DDS_TypeCode* CalculatorReply_union_get_typecode()
             1, /* Number of labels */
             1, /* First label */
             NULL, /* Labels (it is NULL when there is only one label)*/
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_NONKEY_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"subtraction",/* Member name */
             {
-                0,/* Representation ID */
+                2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -1092,9 +1403,9 @@ DDS_TypeCode* CalculatorReply_union_get_typecode()
             1, /* Number of labels */
             2, /* First label */
             NULL, /* Labels (it is NULL when there is only one label)*/
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_NONKEY_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -1128,17 +1439,16 @@ DDS_TypeCode* CalculatorReply_union_get_typecode()
 
     return &CalculatorReply_union_g_tc;
 }
-
-DDS_UnsignedLong CalculatorReply_union_getDefaultDiscriminator()
+DDS_Long CalculatorReply_union_getDefaultDiscriminator()
 {
 
-    DDS_UnsignedLong tmp = 1;
+    DDS_LongLong tmp = 1;
     
     if (tmp > 1) tmp = 1;
     
     if (tmp > 2) tmp = 2;
     
-    return tmp;
+    return (DDS_Long)tmp;
 
 }
         
@@ -1151,19 +1461,33 @@ RTIBool CalculatorReply_union_initialize(
 RTIBool CalculatorReply_union_initialize_ex(
     CalculatorReply_union* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::CalculatorReply_union_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool CalculatorReply_union_initialize_w_params(
+        CalculatorReply_union* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
     sample->_d = CalculatorReply_union_getDefaultDiscriminator();
 
-    if (!Calculator_additionReply_initialize_ex(&sample->_u.addition,allocatePointers,allocateMemory)) {
+    if (!Calculator_additionReply_initialize_w_params(&sample->_u.addition,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!Calculator_subtractionReply_initialize_ex(&sample->_u.subtraction,allocatePointers,allocateMemory)) {
+    if (!Calculator_subtractionReply_initialize_w_params(&sample->_u.subtraction,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -1181,22 +1505,73 @@ void CalculatorReply_union_finalize(
 void CalculatorReply_union_finalize_ex(
     CalculatorReply_union* sample,RTIBool deletePointers)
 {        
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+
     if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::CalculatorReply_union_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void CalculatorReply_union_finalize_w_params(
+        CalculatorReply_union* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
 
 
-    Calculator_additionReply_finalize_ex(&sample->_u.addition,deletePointers);
+    Calculator_additionReply_finalize_w_params(&sample->_u.addition, deallocParams);
             
 
-    Calculator_subtractionReply_finalize_ex(&sample->_u.subtraction,deletePointers);
+    Calculator_subtractionReply_finalize_w_params(&sample->_u.subtraction, deallocParams);
             
 
+}
+
+void CalculatorReply_union_finalize_optional_members(
+    CalculatorReply_union* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
+
+    switch(sample->_d) {
+          case 1:
+        {                                    
+        
+    Calculator_additionReply_finalize_optional_members(&sample->_u.addition, deallocParams->delete_pointers);
+            
+
+        } break;
+      case 2:
+        {                                    
+        
+    Calculator_subtractionReply_finalize_optional_members(&sample->_u.subtraction, deallocParams->delete_pointers);
+            
+
+        } break;
+              
+    }
+      
 }
 
 RTIBool CalculatorReply_union_copy(
     CalculatorReply_union* dst,
     const CalculatorReply_union* src)
-{        
+{
 
     if (!RTICdrType_copyLong(
         &dst->_d, &src->_d)) {
@@ -1242,8 +1617,8 @@ RTIBool CalculatorReply_union_copy(
  */
 #define T CalculatorReply_union
 #define TSeq CalculatorReply_unionSeq
-#define T_initialize_ex ::CalculatorReply_union_initialize_ex
-#define T_finalize_ex   ::CalculatorReply_union_finalize_ex
+#define T_initialize_w_params ::CalculatorReply_union_initialize_w_params
+#define T_finalize_w_params   ::CalculatorReply_union_finalize_w_params
 #define T_copy       ::CalculatorReply_union_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -1259,8 +1634,8 @@ RTIBool CalculatorReply_union_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 
@@ -1286,15 +1661,15 @@ DDS_TypeCode* CalculatorReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         },
         {
             (char *)"unio",/* Member name */
             {
-                0,/* Representation ID */
+                1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
@@ -1303,9 +1678,9 @@ DDS_TypeCode* CalculatorReply_get_typecode()
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
-            DDS_BOOLEAN_FALSE, /* Is a key? */
+            RTI_CDR_REQUIRED_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
-            0,/* Ignored */
+            1,
             NULL/* Ignored */
         }
     };
@@ -1347,17 +1722,31 @@ RTIBool CalculatorReply_initialize(
 RTIBool CalculatorReply_initialize_ex(
     CalculatorReply* sample,RTIBool allocatePointers,RTIBool allocateMemory)
 {
+    struct DDS_TypeAllocationParams_t allocParams =
+        DDS_TYPE_ALLOCATION_PARAMS_DEFAULT;
+        
+    allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
+    allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
+    
+    return ::CalculatorReply_initialize_w_params(
+        sample,&allocParams);
+}
+
+RTIBool CalculatorReply_initialize_w_params(
+        CalculatorReply* sample,
+        const struct DDS_TypeAllocationParams_t * allocParams)
+{
         
     
-    if (allocatePointers) {} /* To avoid warnings */
-    if (allocateMemory) {} /* To avoid warnings */
+    if (allocParams) {} /* To avoid warnings */
+        
 
-    if (!ReplyHeader_initialize_ex(&sample->_header,allocatePointers,allocateMemory)) {
+    if (!ReplyHeader_initialize_w_params(&sample->_header,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!CalculatorReply_union_initialize_ex(&sample->unio,allocatePointers,allocateMemory)) {
+    if (!CalculatorReply_union_initialize_w_params(&sample->unio,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -1375,14 +1764,53 @@ void CalculatorReply_finalize(
 void CalculatorReply_finalize_ex(
     CalculatorReply* sample,RTIBool deletePointers)
 {        
+    struct DDS_TypeDeallocationParams_t deallocParams =
+            DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+
     if (sample) { } /* To avoid warnings */
-    if (deletePointers) {} /* To avoid warnings */
+    
+    deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
+
+    ::CalculatorReply_finalize_w_params(
+        sample,&deallocParams);
+}
+
+void CalculatorReply_finalize_w_params(
+        CalculatorReply* sample,
+        const struct DDS_TypeDeallocationParams_t * deallocParams)
+{    
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
 
 
-    ReplyHeader_finalize_ex(&sample->_header,deletePointers);
+    ReplyHeader_finalize_w_params(&sample->_header, deallocParams);
             
 
-    CalculatorReply_union_finalize_ex(&sample->unio,deletePointers);
+    CalculatorReply_union_finalize_w_params(&sample->unio, deallocParams);
+            
+
+}
+
+void CalculatorReply_finalize_optional_members(
+    CalculatorReply* sample, RTIBool deletePointers)
+{
+    struct DDS_TypeDeallocationParams_t deallocParamsTmp =
+        DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
+    struct DDS_TypeDeallocationParams_t * deallocParams =
+        &deallocParamsTmp;
+    if (sample) { } /* To avoid warnings */
+    if (deallocParams) {} /* To avoid warnings */
+
+        
+
+    deallocParamsTmp.delete_pointers = (DDS_Boolean)deletePointers;
+    deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
+             
+
+    ReplyHeader_finalize_optional_members(&sample->_header, deallocParams->delete_pointers);
+            
+
+    CalculatorReply_union_finalize_optional_members(&sample->unio, deallocParams->delete_pointers);
             
 
 }
@@ -1390,7 +1818,7 @@ void CalculatorReply_finalize_ex(
 RTIBool CalculatorReply_copy(
     CalculatorReply* dst,
     const CalculatorReply* src)
-{        
+{
 
     if (!ReplyHeader_copy(
         &dst->_header, &src->_header)) {
@@ -1418,8 +1846,8 @@ RTIBool CalculatorReply_copy(
  */
 #define T CalculatorReply
 #define TSeq CalculatorReplySeq
-#define T_initialize_ex ::CalculatorReply_initialize_ex
-#define T_finalize_ex   ::CalculatorReply_finalize_ex
+#define T_initialize_w_params ::CalculatorReply_initialize_w_params
+#define T_finalize_w_params   ::CalculatorReply_finalize_w_params
 #define T_copy       ::CalculatorReply_copy
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -1435,8 +1863,8 @@ RTIBool CalculatorReply_copy(
 #endif
 
 #undef T_copy
-#undef T_finalize_ex
-#undef T_initialize_ex
+#undef T_finalize_w_params
+#undef T_initialize_w_params
 #undef TSeq
 #undef T
 

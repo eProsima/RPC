@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReplySupport_540431605_h
-#define CalculatorRequestReplySupport_540431605_h
+#ifndef CalculatorRequestReplySupport_540432192_h
+#define CalculatorRequestReplySupport_540432192_h
 
 /* Uses */
 #include "CalculatorRequestReply.h"
@@ -40,19 +40,9 @@
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, start exporting symbols.
-   */
+  */
   #undef NDDSUSERDllExport
   #define NDDSUSERDllExport __declspec(dllexport)
-
-#ifdef __cplusplus
-  /* If we're building on Windows, explicitly import the superclasses of
-   * the types declared below.
-   */        
-  class __declspec(dllimport) ::DDSTypeSupport;
-  class __declspec(dllimport) ::DDSDataWriter;
-  class __declspec(dllimport) ::DDSDataReader;
-#endif
-
 #endif
 
 #ifdef __cplusplus
@@ -92,19 +82,9 @@ DDS_DATAREADER_C(CalculatorRequestDataReader, CalculatorRequestSeq, CalculatorRe
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, start exporting symbols.
-   */
+  */
   #undef NDDSUSERDllExport
   #define NDDSUSERDllExport __declspec(dllexport)
-
-#ifdef __cplusplus
-  /* If we're building on Windows, explicitly import the superclasses of
-   * the types declared below.
-   */        
-  class __declspec(dllimport) ::DDSTypeSupport;
-  class __declspec(dllimport) ::DDSDataWriter;
-  class __declspec(dllimport) ::DDSDataReader;
-#endif
-
 #endif
 
 #ifdef __cplusplus
@@ -132,4 +112,4 @@ DDS_DATAREADER_C(CalculatorReplyDataReader, CalculatorReplySeq, CalculatorReply)
 
 
 
-#endif  /* CalculatorRequestReplySupport_540431605_h */
+#endif  /* CalculatorRequestReplySupport_540432192_h */

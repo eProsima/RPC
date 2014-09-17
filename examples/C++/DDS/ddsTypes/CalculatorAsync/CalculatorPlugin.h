@@ -8,11 +8,10 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorPlugin_1695586844_h
-#define CalculatorPlugin_1695586844_h
+#ifndef CalculatorPlugin_1695586845_h
+#define CalculatorPlugin_1695586845_h
 
 #include "Calculator.h"
-
 
 
 
@@ -39,4 +38,4 @@ struct RTICdrStream;
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* CalculatorPlugin_1695586844_h */
+#endif /* CalculatorPlugin_1695586845_h */

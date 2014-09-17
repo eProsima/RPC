@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -49,19 +49,19 @@ class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy
         CalculatorProxy(eprosima::rpc::transport::ProxyTransport &transport,
             eprosima::rpc::protocol::CalculatorProtocol &protocol);
 
-        //! @brief The default destructor.
+        //! @brief Destructor.
         virtual ~CalculatorProxy();
         
-        //! @brief Proxy method for the operation addition
+        //! @brief Proxy method for the operation addition.
         DDS_Long addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
-        //! @brief Proxy asynchronous method for the operation addition
+        //! @brief Proxy asynchronous method for the operation addition.
         void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
-        //! @brief Proxy method for the operation subtraction
+        //! @brief Proxy method for the operation subtraction.
         DDS_Long subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
-        //! @brief Proxy asynchronous method for the operation subtraction
+        //! @brief Proxy asynchronous method for the operation subtraction.
         void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
 };

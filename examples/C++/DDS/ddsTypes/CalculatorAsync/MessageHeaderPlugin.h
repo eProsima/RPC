@@ -8,11 +8,10 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderPlugin_953112495_h
-#define MessageHeaderPlugin_953112495_h
+#ifndef MessageHeaderPlugin_953112883_h
+#define MessageHeaderPlugin_953112883_h
 
 #include "MessageHeader.h"
-
 
 
 
@@ -31,10 +30,8 @@ struct RTICdrStream;
 #endif
 
 
-#define Identification_LAST_MEMBER_ID 0
 
-#define IdentificationPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define IdentificationPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define IdentificationPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define IdentificationPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define IdentificationPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -47,6 +44,10 @@ struct RTICdrStream;
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern Identification*
+IdentificationPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern Identification*
 IdentificationPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern Identification*
@@ -56,6 +57,11 @@ NDDSUSERDllExport extern RTIBool
 IdentificationPluginSupport_copy_data(
     Identification *out,
     const Identification *in);
+
+NDDSUSERDllExport extern void 
+IdentificationPluginSupport_destroy_data_w_params(
+    Identification *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 IdentificationPluginSupport_destroy_data_ex(
@@ -71,7 +77,7 @@ IdentificationPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 IdentificationPlugin_copy_sample(
@@ -203,10 +209,8 @@ IdentificationPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define RequestHeader_LAST_MEMBER_ID 0
 
-#define RequestHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define RequestHeaderPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define RequestHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define RequestHeaderPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define RequestHeaderPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -219,6 +223,10 @@ IdentificationPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RequestHeader*
+RequestHeaderPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern RequestHeader*
 RequestHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern RequestHeader*
@@ -228,6 +236,11 @@ NDDSUSERDllExport extern RTIBool
 RequestHeaderPluginSupport_copy_data(
     RequestHeader *out,
     const RequestHeader *in);
+
+NDDSUSERDllExport extern void 
+RequestHeaderPluginSupport_destroy_data_w_params(
+    RequestHeader *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 RequestHeaderPluginSupport_destroy_data_ex(
@@ -243,7 +256,7 @@ RequestHeaderPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 RequestHeaderPlugin_copy_sample(
@@ -375,10 +388,8 @@ RequestHeaderPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define ReplyHeader_LAST_MEMBER_ID 0
 
-#define ReplyHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define ReplyHeaderPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define ReplyHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define ReplyHeaderPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define ReplyHeaderPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -391,6 +402,10 @@ RequestHeaderPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern ReplyHeader*
+ReplyHeaderPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern ReplyHeader*
 ReplyHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern ReplyHeader*
@@ -400,6 +415,11 @@ NDDSUSERDllExport extern RTIBool
 ReplyHeaderPluginSupport_copy_data(
     ReplyHeader *out,
     const ReplyHeader *in);
+
+NDDSUSERDllExport extern void 
+ReplyHeaderPluginSupport_destroy_data_w_params(
+    ReplyHeader *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 ReplyHeaderPluginSupport_destroy_data_ex(
@@ -415,7 +435,7 @@ ReplyHeaderPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 ReplyHeaderPlugin_copy_sample(
@@ -555,4 +575,4 @@ ReplyHeaderPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* MessageHeaderPlugin_953112495_h */
+#endif /* MessageHeaderPlugin_953112883_h */

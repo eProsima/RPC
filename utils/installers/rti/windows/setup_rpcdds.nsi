@@ -78,7 +78,7 @@ var /GLOBAL RICHI_FINISH_MESSAGE
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile eProsima_RPCDDS-${VERSION}-Windows-RTIDDS-5.0.0.exe
+OutFile eProsima_RPCDDS-${VERSION}-Windows-RTIDDS-5.1.0.exe
 InstallDir "$PROGRAMFILES\eProsima\rpcdds"
 CRCCheck on
 XPStyle on
