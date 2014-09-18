@@ -115,7 +115,7 @@
 		<antxr base="${fastrpc.src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${fastrpc.grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
-        <javac source="1.6" target="1.6" srcdir="${idl.src.java}:${fastrpc.src.java}" destdir="${build.classes}">
+        <javac encoding="utf-8" source="1.6" target="1.6" srcdir="${idl.src.java}:${fastrpc.src.java}" destdir="${build.classes}">
 			<classpath refid="build.classpath"/>
 		</javac>
         <!--> Copy stringtemplates of fastrpc.<-->

@@ -219,7 +219,7 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
         std::cout << "ERROR<TCPServerTransport::worker>: Cannot allocate memory for buffer" << std::endl;
     }
 
-    std::cout << "Connection closed by proxy" << std::endl;
+    //std::cout << "Connection closed by proxy" << std::endl;
 }
 
 void TCPServerTransport::sendReply(void *data, size_t dataLength, Endpoint *connection)
