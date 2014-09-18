@@ -5,7 +5,7 @@
 
 # Configuration
 BASE_FLAGS=""
-BASE_JARS="antlr antxr stringtemplate rpcddsgen"
+BASE_JARS="antlr antxr stringtemplate fastrpcgen"
 BASE_OPTIONS=""
 MAIN_CLASS=com.eprosima.fastrpc.fastrpcgen
 
