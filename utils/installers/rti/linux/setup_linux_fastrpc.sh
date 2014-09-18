@@ -48,7 +48,7 @@ function installer
 
     # Copy example.
     mkdir -p tmp/$project/examples/C++
-    cp -r ../../../../examples/C++/FastRPC tmp/$project/examples/C++
+    cp -r ../../../../examples/C++/FastRPC/* tmp/$project/examples/C++
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
