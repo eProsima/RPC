@@ -153,6 +153,11 @@ public class fastrpcgen
         m_os = System.getProperty("os.name");
 
         m_idlFiles = new Vector<String>();
+		
+        // Variables with different value depending on the protocol
+        if(m_protocol == PROTOCOL.REST) {
+            m_ppDisable = true;
+        }
 
         while(count < args.length)
         {
@@ -397,7 +402,7 @@ public class fastrpcgen
     private void showVersion()
     {
         String version = getVersion();
-        System.out.println("fastrpcgen version " + version);
+		System.out.println(m_appName + " version " + version);
     }
 
     public boolean execute()
@@ -1986,7 +1991,11 @@ public class fastrpcgen
         System.out.println("\t" + m_appName + " [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
         System.out.println("\t\t-help: shows this help");
-        System.out.println("\t\t-version: shows the current version of eProsima RPC.");
+        System.out.print("\t\t-version: shows the current version of eProsima RPC");
+		if(m_protocol == PROTOCOL.REST) {
+			System.out.print(" over REST");			
+		}
+		System.out.println(".");
         //System.out.println("\t\t--server: disables the generation of source code for servers.");
         //System.out.println("\t\t--client: disables the generation of source code for clients.");
         System.out.println("\t\t-example <platform>: Generates a solution for a specific platform (example: x64Win64VS2010)");
@@ -1997,8 +2006,10 @@ public class fastrpcgen
         //        "   -language <C++>: Programming language (default: C++).\n" +
         System.out.println("\t\t-replace: replaces existing generated files.");
         System.out.println("\t\t-d <path>: sets an output directory for generated files.");
-        System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
-        System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
+		if(m_protocol != PROTOCOL.REST) {
+			System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
+			System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
+		}		
         System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
         /* Products splitted.
            System.out.println("\t\t-protocol <protocol>: defines the protocol to be implemented by the generated code.");

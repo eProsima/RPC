@@ -26,7 +26,7 @@ Function InstallRedistributables
     StrCmp $I86Needed "1" notinstall install
 
     install:
-    messageBox MB_YESNO|MB_ICONQUESTION "DynamicFastBuffers needs Visual Studio 2010 Redistributable packages.$\nDo you want to install it?" IDNO notinstall
+    messageBox MB_YESNO|MB_ICONQUESTION "$(^Name) needs Visual Studio 2010 Redistributable packages.$\nDo you want to install them?" IDNO notinstall
 
     ${If} $X64Needed != "1"
         ExecWait "$TEMP\vcredist_x64.exe"

@@ -155,7 +155,7 @@ int TCPProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &da
         if(dataToRead > 0)
         {
             // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-            dataToRead = boost::asio::read(*m_boostInfo->socket_, boost::asio::buffer(buffer, dataToRead), ec);
+            dataToRead = boost::asio::read(*m_boostInfo->socket_, boost::asio::buffer(buffer, dataToRead), boost::asio::transfer_all(), ec);
         }
         else
         {

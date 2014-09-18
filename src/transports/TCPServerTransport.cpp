@@ -268,7 +268,7 @@ int TCPServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataT
             if(dataToRead > 0)
             {
                 // TODO Chequear durante un tiempo hasta que numData sea mayor que cero. Podria ser que la primera llamada solo devolviera 0.
-                dataToRead = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, dataToRead), ec);
+                dataToRead = boost::asio::read(*connection->socket_, boost::asio::buffer(buffer, dataToRead), boost::asio::transfer_all(), ec);
             }
             else
             {

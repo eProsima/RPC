@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeader_953112495_h
-#define MessageHeader_953112495_h
+#ifndef MessageHeader_953112883_h
+#define MessageHeader_953112883_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -26,6 +26,7 @@
 #endif
 
 
+#define Identification_LAST_MEMBER_ID 3
         
 extern const char *IdentificationTYPENAME;
         
@@ -77,7 +78,13 @@ RTIBool Identification_initialize(
         
 NDDSUSERDllExport
 RTIBool Identification_initialize_ex(
-        Identification* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        Identification* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool Identification_initialize_w_params(
+        Identification* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void Identification_finalize(
@@ -86,6 +93,15 @@ void Identification_finalize(
 NDDSUSERDllExport
 void Identification_finalize_ex(
         Identification* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void Identification_finalize_w_params(
+        Identification* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void Identification_finalize_optional_members(
+        Identification* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool Identification_copy(
@@ -100,6 +116,7 @@ RTIBool Identification_copy(
 #endif
 
 
+#define RequestHeader_LAST_MEMBER_ID 2
         
 extern const char *RequestHeaderTYPENAME;
         
@@ -149,7 +166,13 @@ RTIBool RequestHeader_initialize(
         
 NDDSUSERDllExport
 RTIBool RequestHeader_initialize_ex(
-        RequestHeader* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        RequestHeader* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool RequestHeader_initialize_w_params(
+        RequestHeader* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void RequestHeader_finalize(
@@ -158,6 +181,15 @@ void RequestHeader_finalize(
 NDDSUSERDllExport
 void RequestHeader_finalize_ex(
         RequestHeader* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void RequestHeader_finalize_w_params(
+        RequestHeader* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void RequestHeader_finalize_optional_members(
+        RequestHeader* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool RequestHeader_copy(
@@ -172,6 +204,7 @@ RTIBool RequestHeader_copy(
 #endif
 
 
+#define ReplyHeader_LAST_MEMBER_ID 3
         
 extern const char *ReplyHeaderTYPENAME;
         
@@ -223,7 +256,13 @@ RTIBool ReplyHeader_initialize(
         
 NDDSUSERDllExport
 RTIBool ReplyHeader_initialize_ex(
-        ReplyHeader* self,RTIBool allocatePointers,RTIBool allocateMemory);
+        ReplyHeader* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool ReplyHeader_initialize_w_params(
+        ReplyHeader* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
 void ReplyHeader_finalize(
@@ -232,6 +271,15 @@ void ReplyHeader_finalize(
 NDDSUSERDllExport
 void ReplyHeader_finalize_ex(
         ReplyHeader* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void ReplyHeader_finalize_w_params(
+        ReplyHeader* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void ReplyHeader_finalize_optional_members(
+        ReplyHeader* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
 RTIBool ReplyHeader_copy(
@@ -247,4 +295,4 @@ RTIBool ReplyHeader_copy(
 
 
 
-#endif /* MessageHeader_953112495_h */
+#endif /* MessageHeader_953112883_h */

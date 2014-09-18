@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -21,7 +21,7 @@
 #include <cstddef>
 
 #if defined(_WIN32)
-#if defined(USER_CPP_DLL_EXPORT)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
 #define user_cpp_DllExport __declspec( dllexport )
 #else
 #define user_cpp_DllExport
@@ -33,7 +33,6 @@
 /*!
  * @brief This class represents the structure Calculator_additionRequest that can be used to send/receive requests
  * for the operation Calculator::addition.
- * 
  * @ingroup CALCULATOR
  */
 class user_cpp_DllExport Calculator_additionRequest
@@ -42,17 +41,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     Calculator_additionRequest();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~Calculator_additionRequest();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_additionRequest that will be copied.
      */
@@ -64,19 +61,19 @@ public:
      */
     Calculator_additionRequest(Calculator_additionRequest &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
     Calculator_additionRequest& operator=(const Calculator_additionRequest &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
     Calculator_additionRequest& operator=(Calculator_additionRequest &&x);
 
-    /*! TODO
+    /*!
      * @brief This function sets a value in member value1
      * @param _value1 New value for member value1
      */
@@ -85,7 +82,7 @@ public:
         m_value1 = _value1;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns the value of member value1
      * @return Value of member value1
      */
@@ -94,7 +91,7 @@ public:
         return m_value1;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member value1
      * @return Reference to member value1
      */
@@ -102,7 +99,7 @@ public:
     {
         return m_value1;
     }
-    /*! TODO
+    /*!
      * @brief This function sets a value in member value2
      * @param _value2 New value for member value2
      */
@@ -111,7 +108,7 @@ public:
         m_value2 = _value2;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns the value of member value2
      * @return Value of member value2
      */
@@ -120,7 +117,7 @@ public:
         return m_value2;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member value2
      * @return Reference to member value2
      */
@@ -129,16 +126,32 @@ public:
         return m_value2;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -159,17 +172,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     Calculator_additionReply();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~Calculator_additionReply();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_additionReply that will be copied.
      */
@@ -181,19 +192,19 @@ public:
      */
     Calculator_additionReply(Calculator_additionReply &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
     Calculator_additionReply& operator=(const Calculator_additionReply &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
     Calculator_additionReply& operator=(Calculator_additionReply &&x);
 
-    /*! TODO
+    /*!
      * @brief This function sets a value in member addition_ret
      * @param _addition_ret New value for member addition_ret
      */
@@ -202,7 +213,7 @@ public:
         m_addition_ret = _addition_ret;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns the value of member addition_ret
      * @return Value of member addition_ret
      */
@@ -211,7 +222,7 @@ public:
         return m_addition_ret;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member addition_ret
      * @return Reference to member addition_ret
      */
@@ -220,16 +231,32 @@ public:
         return m_addition_ret;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -240,7 +267,6 @@ private:
 /*!
  * @brief This class represents the structure Calculator_subtractionRequest that can be used to send/receive requests
  * for the operation Calculator::subtraction.
- * 
  * @ingroup CALCULATOR
  */
 class user_cpp_DllExport Calculator_subtractionRequest
@@ -249,17 +275,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     Calculator_subtractionRequest();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~Calculator_subtractionRequest();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_subtractionRequest that will be copied.
      */
@@ -271,19 +295,19 @@ public:
      */
     Calculator_subtractionRequest(Calculator_subtractionRequest &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
     Calculator_subtractionRequest& operator=(const Calculator_subtractionRequest &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
     Calculator_subtractionRequest& operator=(Calculator_subtractionRequest &&x);
 
-    /*! TODO
+    /*!
      * @brief This function sets a value in member value1
      * @param _value1 New value for member value1
      */
@@ -292,7 +316,7 @@ public:
         m_value1 = _value1;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns the value of member value1
      * @return Value of member value1
      */
@@ -301,7 +325,7 @@ public:
         return m_value1;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member value1
      * @return Reference to member value1
      */
@@ -309,7 +333,7 @@ public:
     {
         return m_value1;
     }
-    /*! TODO
+    /*!
      * @brief This function sets a value in member value2
      * @param _value2 New value for member value2
      */
@@ -318,7 +342,7 @@ public:
         m_value2 = _value2;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns the value of member value2
      * @return Value of member value2
      */
@@ -327,7 +351,7 @@ public:
         return m_value2;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member value2
      * @return Reference to member value2
      */
@@ -336,16 +360,32 @@ public:
         return m_value2;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -366,17 +406,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     Calculator_subtractionReply();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~Calculator_subtractionReply();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_subtractionReply that will be copied.
      */
@@ -388,19 +426,19 @@ public:
      */
     Calculator_subtractionReply(Calculator_subtractionReply &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
     Calculator_subtractionReply& operator=(const Calculator_subtractionReply &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
     Calculator_subtractionReply& operator=(Calculator_subtractionReply &&x);
 
-    /*! TODO
+    /*!
      * @brief This function sets a value in member subtraction_ret
      * @param _subtraction_ret New value for member subtraction_ret
      */
@@ -409,7 +447,7 @@ public:
         m_subtraction_ret = _subtraction_ret;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns the value of member subtraction_ret
      * @return Value of member subtraction_ret
      */
@@ -418,7 +456,7 @@ public:
         return m_subtraction_ret;
     }
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member subtraction_ret
      * @return Reference to member subtraction_ret
      */
@@ -427,16 +465,32 @@ public:
         return m_subtraction_ret;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -446,13 +500,12 @@ private:
 
 
 /*!
- * @brief This class represents the union CalculatorRequest_union defined by the user in the IDL file.
+ * @brief This class represents the union used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup CALCULATOR
  */
-class CalculatorRequest_union
+class user_cpp_DllExport CalculatorRequest_union
 {
 public:
-    // TODO  Doxygen
 
     /*!
      * @brief Default constructor.
@@ -460,7 +513,7 @@ public:
     CalculatorRequest_union();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~CalculatorRequest_union();
     
@@ -507,63 +560,79 @@ public:
      */
     int32_t& _d();
 
-    /*! TODO
+    /*!
      * @brief This function copies the value in member addition
      * @param _addition New value to be copied in member addition
      */
     void addition(const Calculator_additionRequest &_addition);
 
-    /*! TODO
+    /*!
      * @brief This function moves the value in member addition
      * @param _addition New value to be moved in member addition
      */
     void addition(Calculator_additionRequest &&_addition);
 
-    /*! TODO
+    /*!
      * @brief This function returns a constant reference to member addition
      * @return Constant reference to member addition
      */
     const Calculator_additionRequest& addition() const;
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member addition
      * @return Reference to member addition
      */
     Calculator_additionRequest& addition();
-    /*! TODO
+    /*!
      * @brief This function copies the value in member subtraction
      * @param _subtraction New value to be copied in member subtraction
      */
     void subtraction(const Calculator_subtractionRequest &_subtraction);
 
-    /*! TODO
+    /*!
      * @brief This function moves the value in member subtraction
      * @param _subtraction New value to be moved in member subtraction
      */
     void subtraction(Calculator_subtractionRequest &&_subtraction);
 
-    /*! TODO
+    /*!
      * @brief This function returns a constant reference to member subtraction
      * @return Constant reference to member subtraction
      */
     const Calculator_subtractionRequest& subtraction() const;
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member subtraction
      * @return Reference to member subtraction
      */
     Calculator_subtractionRequest& subtraction();
 
-    // TODO
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
@@ -576,7 +645,6 @@ private:
 /*!
  * @brief This class represents the structure CalculatorRequest that can be used to send/receive requests
  * for the interface Calculator.
- * 
  * @ingroup CALCULATOR
  */
 class user_cpp_DllExport CalculatorRequest
@@ -585,17 +653,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     CalculatorRequest();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~CalculatorRequest();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*!
      * @brief Copy constructor.
      * @param x Reference to the object CalculatorRequest that will be copied.
      */
@@ -607,68 +673,116 @@ public:
      */
     CalculatorRequest(CalculatorRequest &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
     CalculatorRequest& operator=(const CalculatorRequest &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
     CalculatorRequest& operator=(CalculatorRequest &&x);
 
+    /*!
+     * @brief This method sets the request header information.
+     * @param __header Request header.
+     */
     inline void _header(const eprosima::rpc::protocol::dds::RequestHeader &__header)
     {
         m__header = __header;
     }
 
+    /*!
+     * @brief This method sets the request header information.
+     * @param __header Request header.
+     */
     inline void _header(eprosima::rpc::protocol::dds::RequestHeader &&__header)
     {
         m__header = std::move(__header);
     }
 
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
     inline const eprosima::rpc::protocol::dds::RequestHeader& _header() const
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
     inline eprosima::rpc::protocol::dds::RequestHeader& _header()
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio(const CalculatorRequest_union &_unio)
     {
         m_unio = _unio;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio(CalculatorRequest_union &&_unio)
     {
         m_unio = std::move(_unio);
     }
 
+    /*!
+     * @brief This method returns the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline const CalculatorRequest_union& unio() const
     {
         return m_unio;
     }
 
+    /*!
+     * @brief This method returns the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline CalculatorRequest_union& unio()
     {
         return m_unio;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
@@ -679,13 +793,12 @@ private:
 };
 
 /*!
- * @brief This class represents the union CalculatorReply_union defined by the user in the IDL file.
+ * @brief This class represents the union used in the DDS topic to encapsulate the operations in reply samples.
  * @ingroup CALCULATOR
  */
-class CalculatorReply_union
+class user_cpp_DllExport CalculatorReply_union
 {
 public:
-    // TODO  Doxygen
 
     /*!
      * @brief Default constructor.
@@ -693,7 +806,7 @@ public:
     CalculatorReply_union();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~CalculatorReply_union();
     
@@ -740,63 +853,79 @@ public:
      */
     int32_t& _d();
 
-    /*! TODO
+    /*!
      * @brief This function copies the value in member addition
      * @param _addition New value to be copied in member addition
      */
     void addition(const Calculator_additionReply &_addition);
 
-    /*! TODO
+    /*!
      * @brief This function moves the value in member addition
      * @param _addition New value to be moved in member addition
      */
     void addition(Calculator_additionReply &&_addition);
 
-    /*! TODO
+    /*!
      * @brief This function returns a constant reference to member addition
      * @return Constant reference to member addition
      */
     const Calculator_additionReply& addition() const;
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member addition
      * @return Reference to member addition
      */
     Calculator_additionReply& addition();
-    /*! TODO
+    /*!
      * @brief This function copies the value in member subtraction
      * @param _subtraction New value to be copied in member subtraction
      */
     void subtraction(const Calculator_subtractionReply &_subtraction);
 
-    /*! TODO
+    /*!
      * @brief This function moves the value in member subtraction
      * @param _subtraction New value to be moved in member subtraction
      */
     void subtraction(Calculator_subtractionReply &&_subtraction);
 
-    /*! TODO
+    /*!
      * @brief This function returns a constant reference to member subtraction
      * @return Constant reference to member subtraction
      */
     const Calculator_subtractionReply& subtraction() const;
 
-    /*! TODO
+    /*!
      * @brief This function returns a reference to member subtraction
      * @return Reference to member subtraction
      */
     Calculator_subtractionReply& subtraction();
 
-    // TODO
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
@@ -809,7 +938,6 @@ private:
 /*!
  * @brief This class represents the structure CalculatorReply that can be used to send/receive replies
  * for the interface Calculator.
- * 
  * @ingroup CALCULATOR
  */
 class user_cpp_DllExport CalculatorReply
@@ -818,17 +946,15 @@ public:
 
     /*!
      * @brief Default constructor.
-     * @param initialize True value initializes all pointers using "new" operator. In the other case,
-     * all pointers will be NULL.
      */
     CalculatorReply();
     
     /*!
-     * @brief Default destructor.
+     * @brief Destructor.
      */
     ~CalculatorReply();
     
-    /*! TODO Cuidado, copia los punteros. Si el otro request es borrado, estos punteros son inválidos.
+    /*
      * @brief Copy constructor.
      * @param x Reference to the object CalculatorReply that will be copied.
      */
@@ -840,68 +966,116 @@ public:
      */
     CalculatorReply(CalculatorReply &&x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
     CalculatorReply& operator=(const CalculatorReply &x);
 
-    /*! TODO
+    /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
     CalculatorReply& operator=(CalculatorReply &&x);
 
+    /*!
+     * @brief This method sets the reply header information.
+     * @param __header Reply header.
+     */
     inline void _header(const eprosima::rpc::protocol::dds::ReplyHeader &__header)
     {
         m__header = __header;
     }
 
+    /*!
+     * @brief This method sets the reply header information.
+     * @param __header Reply header.
+     */
     inline void _header(eprosima::rpc::protocol::dds::ReplyHeader &&__header)
     {
         m__header = std::move(__header);
     }
 
+    /*!
+     * @brief This method returns the reply header information.
+     * @return Reply header.
+     */
     inline const eprosima::rpc::protocol::dds::ReplyHeader& _header() const
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method returns the reply header information.
+     * @return Reply header.
+     */
     inline eprosima::rpc::protocol::dds::ReplyHeader& _header()
     {
         return m__header;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio(const CalculatorReply_union &_unio)
     {
         m_unio = _unio;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _unio Union.
+     */
     inline void unio(CalculatorReply_union &&_unio)
     {
         m_unio = std::move(_unio);
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline const CalculatorReply_union& unio() const
     {
         return m_unio;
     }
 
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
+     */
     inline CalculatorReply_union& unio()
     {
         return m_unio;
     }
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
     static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
-    /*! TODO */
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
     size_t getSerializedSize(size_t current_alignment = 0) const;
 
-    // TODO
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
-    // TODO
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
     void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:

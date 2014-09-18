@@ -65,6 +65,24 @@
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+Identification*
+IdentificationPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Identification *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Identification);
+
+    if(sample != NULL) {
+        if (!::Identification_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 Identification *
 IdentificationPluginSupport_create_data_ex(RTIBool allocate_pointers){
     Identification *sample = NULL;
@@ -86,6 +104,17 @@ Identification *
 IdentificationPluginSupport_create_data(void)
 {
     return ::IdentificationPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+IdentificationPluginSupport_destroy_data_w_params(
+    Identification *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Identification_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -304,7 +333,9 @@ IdentificationPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -330,12 +361,23 @@ IdentificationPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::IdentificationPlugin_deserialize_sample( 
+    result = ::IdentificationPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -395,7 +437,9 @@ RTIBool IdentificationPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -701,10 +745,22 @@ RTIBool IdentificationPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::IdentificationPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::IdentificationPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -789,7 +845,9 @@ IdentificationPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -816,6 +874,24 @@ fin:
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+RequestHeader*
+RequestHeaderPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    RequestHeader *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, RequestHeader);
+
+    if(sample != NULL) {
+        if (!::RequestHeader_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 RequestHeader *
 RequestHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers){
     RequestHeader *sample = NULL;
@@ -837,6 +913,17 @@ RequestHeader *
 RequestHeaderPluginSupport_create_data(void)
 {
     return ::RequestHeaderPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+RequestHeaderPluginSupport_destroy_data_w_params(
+    RequestHeader *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::RequestHeader_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -1056,7 +1143,9 @@ RequestHeaderPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1082,12 +1171,23 @@ RequestHeaderPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::RequestHeaderPlugin_deserialize_sample( 
+    result = ::RequestHeaderPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -1146,7 +1246,9 @@ RTIBool RequestHeaderPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1441,10 +1543,22 @@ RTIBool RequestHeaderPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::RequestHeaderPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::RequestHeaderPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -1529,7 +1643,9 @@ RequestHeaderPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1556,6 +1672,24 @@ fin:
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+ReplyHeader*
+ReplyHeaderPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    ReplyHeader *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, ReplyHeader);
+
+    if(sample != NULL) {
+        if (!::ReplyHeader_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 ReplyHeader *
 ReplyHeaderPluginSupport_create_data_ex(RTIBool allocate_pointers){
     ReplyHeader *sample = NULL;
@@ -1577,6 +1711,17 @@ ReplyHeader *
 ReplyHeaderPluginSupport_create_data(void)
 {
     return ::ReplyHeaderPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+ReplyHeaderPluginSupport_destroy_data_w_params(
+    ReplyHeader *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::ReplyHeader_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -1811,7 +1956,9 @@ ReplyHeaderPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1837,12 +1984,23 @@ ReplyHeaderPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::ReplyHeaderPlugin_deserialize_sample( 
+    result = ::ReplyHeaderPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -1906,7 +2064,9 @@ RTIBool ReplyHeaderPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -2213,10 +2373,22 @@ RTIBool ReplyHeaderPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::ReplyHeaderPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::ReplyHeaderPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -2301,7 +2473,9 @@ ReplyHeaderPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 

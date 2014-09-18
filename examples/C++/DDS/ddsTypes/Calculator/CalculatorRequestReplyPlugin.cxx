@@ -65,6 +65,24 @@
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+Calculator_additionRequest*
+Calculator_additionRequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_additionRequest *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_additionRequest);
+
+    if(sample != NULL) {
+        if (!::Calculator_additionRequest_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 Calculator_additionRequest *
 Calculator_additionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
     Calculator_additionRequest *sample = NULL;
@@ -86,6 +104,17 @@ Calculator_additionRequest *
 Calculator_additionRequestPluginSupport_create_data(void)
 {
     return ::Calculator_additionRequestPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_additionRequestPluginSupport_destroy_data_w_params(
+    Calculator_additionRequest *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_additionRequest_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -274,7 +303,9 @@ Calculator_additionRequestPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -300,12 +331,23 @@ Calculator_additionRequestPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::Calculator_additionRequestPlugin_deserialize_sample( 
+    result = ::Calculator_additionRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -355,7 +397,9 @@ RTIBool Calculator_additionRequestPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -637,10 +681,22 @@ RTIBool Calculator_additionRequestPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::Calculator_additionRequestPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_additionRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -725,7 +781,9 @@ Calculator_additionRequestPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -752,6 +810,24 @@ fin:
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+Calculator_additionReply*
+Calculator_additionReplyPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_additionReply *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_additionReply);
+
+    if(sample != NULL) {
+        if (!::Calculator_additionReply_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 Calculator_additionReply *
 Calculator_additionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
     Calculator_additionReply *sample = NULL;
@@ -773,6 +849,17 @@ Calculator_additionReply *
 Calculator_additionReplyPluginSupport_create_data(void)
 {
     return ::Calculator_additionReplyPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_additionReplyPluginSupport_destroy_data_w_params(
+    Calculator_additionReply *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_additionReply_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -946,7 +1033,9 @@ Calculator_additionReplyPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -972,12 +1061,23 @@ Calculator_additionReplyPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::Calculator_additionReplyPlugin_deserialize_sample( 
+    result = ::Calculator_additionReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -1022,7 +1122,9 @@ RTIBool Calculator_additionReplyPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1292,10 +1394,22 @@ RTIBool Calculator_additionReplyPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::Calculator_additionReplyPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_additionReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -1380,7 +1494,9 @@ Calculator_additionReplyPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1407,6 +1523,24 @@ fin:
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+Calculator_subtractionRequest*
+Calculator_subtractionRequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_subtractionRequest *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_subtractionRequest);
+
+    if(sample != NULL) {
+        if (!::Calculator_subtractionRequest_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 Calculator_subtractionRequest *
 Calculator_subtractionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
     Calculator_subtractionRequest *sample = NULL;
@@ -1428,6 +1562,17 @@ Calculator_subtractionRequest *
 Calculator_subtractionRequestPluginSupport_create_data(void)
 {
     return ::Calculator_subtractionRequestPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_subtractionRequestPluginSupport_destroy_data_w_params(
+    Calculator_subtractionRequest *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_subtractionRequest_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -1616,7 +1761,9 @@ Calculator_subtractionRequestPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1642,12 +1789,23 @@ Calculator_subtractionRequestPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::Calculator_subtractionRequestPlugin_deserialize_sample( 
+    result = ::Calculator_subtractionRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -1697,7 +1855,9 @@ RTIBool Calculator_subtractionRequestPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -1979,10 +2139,22 @@ RTIBool Calculator_subtractionRequestPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::Calculator_subtractionRequestPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_subtractionRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -2067,7 +2239,9 @@ Calculator_subtractionRequestPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -2094,6 +2268,24 @@ fin:
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+Calculator_subtractionReply*
+Calculator_subtractionReplyPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_subtractionReply *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_subtractionReply);
+
+    if(sample != NULL) {
+        if (!::Calculator_subtractionReply_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 Calculator_subtractionReply *
 Calculator_subtractionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
     Calculator_subtractionReply *sample = NULL;
@@ -2115,6 +2307,17 @@ Calculator_subtractionReply *
 Calculator_subtractionReplyPluginSupport_create_data(void)
 {
     return ::Calculator_subtractionReplyPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_subtractionReplyPluginSupport_destroy_data_w_params(
+    Calculator_subtractionReply *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_subtractionReply_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -2288,7 +2491,9 @@ Calculator_subtractionReplyPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -2314,12 +2519,23 @@ Calculator_subtractionReplyPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::Calculator_subtractionReplyPlugin_deserialize_sample( 
+    result = ::Calculator_subtractionReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -2364,7 +2580,9 @@ RTIBool Calculator_subtractionReplyPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -2634,10 +2852,22 @@ RTIBool Calculator_subtractionReplyPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::Calculator_subtractionReplyPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_subtractionReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -2722,7 +2952,9 @@ Calculator_subtractionReplyPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -2749,6 +2981,24 @@ fin:
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+CalculatorRequest_union*
+CalculatorRequest_unionPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    CalculatorRequest_union *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, CalculatorRequest_union);
+
+    if(sample != NULL) {
+        if (!::CalculatorRequest_union_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 CalculatorRequest_union *
 CalculatorRequest_unionPluginSupport_create_data_ex(RTIBool allocate_pointers){
     CalculatorRequest_union *sample = NULL;
@@ -2770,6 +3020,17 @@ CalculatorRequest_union *
 CalculatorRequest_unionPluginSupport_create_data(void)
 {
     return ::CalculatorRequest_unionPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+CalculatorRequest_unionPluginSupport_destroy_data_w_params(
+    CalculatorRequest_union *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::CalculatorRequest_union_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -3046,12 +3307,23 @@ CalculatorRequest_unionPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::CalculatorRequest_unionPlugin_deserialize_sample( 
+    result = ::CalculatorRequest_unionPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -3431,10 +3703,22 @@ RTIBool CalculatorRequest_unionPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::CalculatorRequest_unionPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::CalculatorRequest_unionPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -3536,6 +3820,24 @@ CalculatorRequest_unionPlugin_serialized_sample_to_key(
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+CalculatorRequest*
+CalculatorRequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    CalculatorRequest *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, CalculatorRequest);
+
+    if(sample != NULL) {
+        if (!::CalculatorRequest_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 CalculatorRequest *
 CalculatorRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
     CalculatorRequest *sample = NULL;
@@ -3557,6 +3859,17 @@ CalculatorRequest *
 CalculatorRequestPluginSupport_create_data(void)
 {
     return ::CalculatorRequestPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+CalculatorRequestPluginSupport_destroy_data_w_params(
+    CalculatorRequest *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::CalculatorRequest_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -3717,6 +4030,20 @@ CalculatorRequestPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+
+
+void    
+CalculatorRequestPlugin_return_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    CalculatorRequest *sample,
+    void *handle)
+{
+    
+    CalculatorRequest_finalize_optional_members(sample, RTI_TRUE);
+           
+    PRESTypePluginDefaultEndpointData_returnSample(
+        endpoint_data, sample, handle);
+}
  
 
 
@@ -3861,7 +4188,9 @@ CalculatorRequestPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -3887,12 +4216,23 @@ CalculatorRequestPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::CalculatorRequestPlugin_deserialize_sample( 
+    result = ::CalculatorRequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -3950,7 +4290,9 @@ RTIBool CalculatorRequestPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -4234,10 +4576,22 @@ RTIBool CalculatorRequestPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::CalculatorRequestPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::CalculatorRequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -4322,7 +4676,9 @@ CalculatorRequestPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -4453,6 +4809,24 @@ CalculatorRequestPlugin_delete(struct PRESTypePlugin *plugin)
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+CalculatorReply_union*
+CalculatorReply_unionPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    CalculatorReply_union *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, CalculatorReply_union);
+
+    if(sample != NULL) {
+        if (!::CalculatorReply_union_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 CalculatorReply_union *
 CalculatorReply_unionPluginSupport_create_data_ex(RTIBool allocate_pointers){
     CalculatorReply_union *sample = NULL;
@@ -4474,6 +4848,17 @@ CalculatorReply_union *
 CalculatorReply_unionPluginSupport_create_data(void)
 {
     return ::CalculatorReply_unionPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+CalculatorReply_unionPluginSupport_destroy_data_w_params(
+    CalculatorReply_union *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::CalculatorReply_union_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -4750,12 +5135,23 @@ CalculatorReply_unionPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::CalculatorReply_unionPlugin_deserialize_sample( 
+    result = ::CalculatorReply_unionPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -5135,10 +5531,22 @@ RTIBool CalculatorReply_unionPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::CalculatorReply_unionPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::CalculatorReply_unionPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -5240,6 +5648,24 @@ CalculatorReply_unionPlugin_serialized_sample_to_key(
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
+CalculatorReply*
+CalculatorReplyPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    CalculatorReply *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, CalculatorReply);
+
+    if(sample != NULL) {
+        if (!::CalculatorReply_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
 CalculatorReply *
 CalculatorReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
     CalculatorReply *sample = NULL;
@@ -5261,6 +5687,17 @@ CalculatorReply *
 CalculatorReplyPluginSupport_create_data(void)
 {
     return ::CalculatorReplyPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+CalculatorReplyPluginSupport_destroy_data_w_params(
+    CalculatorReply *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::CalculatorReply_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
 }
 
 
@@ -5421,6 +5858,20 @@ CalculatorReplyPlugin_on_endpoint_detached(
 
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
+
+
+void    
+CalculatorReplyPlugin_return_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    CalculatorReply *sample,
+    void *handle)
+{
+    
+    CalculatorReply_finalize_optional_members(sample, RTI_TRUE);
+           
+    PRESTypePluginDefaultEndpointData_returnSample(
+        endpoint_data, sample, handle);
+}
  
 
 
@@ -5565,7 +6016,9 @@ CalculatorReplyPlugin_deserialize_sample(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -5591,12 +6044,23 @@ CalculatorReplyPlugin_deserialize(
     void *endpoint_plugin_qos)
 {
 
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
 
-    return ::CalculatorReplyPlugin_deserialize_sample( 
+    result = ::CalculatorReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
  
 }
 
@@ -5654,7 +6118,9 @@ RTIBool CalculatorReplyPlugin_skip(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
@@ -5938,10 +6404,22 @@ RTIBool CalculatorReplyPlugin_deserialize_key(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
+    RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
-    return ::CalculatorReplyPlugin_deserialize_key_sample(
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::CalculatorReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
 }
 
 
@@ -6026,7 +6504,9 @@ CalculatorReplyPlugin_serialized_sample_to_key(
 
     done = RTI_TRUE;
 fin:
-    if (done != RTI_TRUE && RTICdrStream_getRemainder(stream) >  0) {
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
         return RTI_FALSE;   
     }
 
