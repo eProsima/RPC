@@ -1,5 +1,9 @@
 AC_INIT([fastrpc], [VERSION], [support@eprosima.com], [fastrpc], [http://eprosima.com/])
 AC_PREREQ([2.59])
+AC_CHECK_HEADER([fastcdr/FastCdr_version.h],
+	[AC_MSG_NOTICE([Found eProsima fastcdr])],
+	[AC_MSG_ERROR([Could not find eProsima fastcdr])],
+	[])
 AM_INIT_AUTOMAKE([1.10 no-define foreign])
 AC_PROG_CXX
 LT_INIT

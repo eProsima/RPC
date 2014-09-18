@@ -162,8 +162,10 @@ function installer
 function rpminstaller
 {
     rm tmp/$project/classes/antlr-2.7.7.jar
-    rm tmp/$project/classes/stringtemplate-3.2.1.jar
-    rm tmp/$project/classes/rpcddsgen.jar
+    rm tmp/$project/classes/fastrpcgen.jar
+    if [[ "${distroversion}" == "Fedora"* ]]; then 
+        rm tmp/$project/classes/stringtemplate-3.2.1.jar
+    fi
 
 	# Change the script form local to general script.
 	cp ../../../../scripts/fastrpcgen_rpm.sh tmp/$project/scripts/fastrpcgen.sh
@@ -175,7 +177,7 @@ function rpminstaller
 	mkdir -p tmp/$project/fastrpcgen
 
 	# Copy the build.xml
-	if [ ${distroversion} == CentOS6.4 ]; then
+	if [[ "${distroversion}" == "CentOS6"* ]]; then
 		cp build_rpm_fastrpc_centos.xml tmp/$project/fastrpcgen/build.xml
 	else
 		cp build_rpm_fastrpc.xml tmp/$project/fastrpcgen/build.xml
@@ -213,8 +215,8 @@ function rpminstaller
 	if [ $errorstatus != 0 ]; then return; fi
 
 	# Copy SPEC file
-	if [ ${distroversion} == CentOS6.4 ]; then
-		sed "s/VERSION/${version}/g" FastBuffers_centos.spec > ~/rpmbuild/SPECS/FastBuffers.spec
+	if [[ "${distroversion}" == "CentOS6"* ]]; then
+		sed "s/VERSION/${version}/g" fastrpc_centos.spec > ~/rpmbuild/SPECS/fastrpc.spec
 	else
 		sed "s/VERSION/${version}/g" fastrpc.spec > ~/rpmbuild/SPECS/fastrpc.spec
 	fi
@@ -240,7 +242,11 @@ function rpminstaller
 
     # Install fastcdr for i686
     cd ../RPMS/i686
-    sudo yum localinstall fastcdr-0.2.2-1.fc20.i686.rpm
+    if [[ "${distroversion}" = "Fedora20" ]]; then
+        sudo yum localinstall fastcdr-0.2.2-1.fc20.i686.rpm
+    elif [[ "${distroversion}" = "CentOS6"* ]]; then
+        sudo yum localinstall fastcdr-0.2.2-1.el6.i686.rpm
+    fi
     cd -
 
 	# Build command for i686.
@@ -253,7 +259,11 @@ function rpminstaller
 
     # Install fastcdr for x64
     cd ../RPMS/x86_64
-    sudo yum localinstall fastcdr-0.2.2-1.fc20.x86_64.rpm
+    if [ "${distroversion}" = "Fedora20" ]; then
+        sudo yum localinstall fastcdr-0.2.2-1.fc20.x86_64.rpm
+    elif [[ "${distroversion}" = "CentOS6"* ]]; then
+        sudo yum localinstall fastcdr-0.2.2-1.el6.x86_64.rpm
+    fi
     cd -
 
 	# Build command for x86_64.
@@ -283,8 +293,11 @@ mkdir tmp/$project
 
 installer
 
-# TODO Detect if the distro suport RPM
-[ $errorstatus == 0 ] && { rpminstaller; }
+if [ $errorstatus == 0 ]; then
+    if [[ "${distroversion}" == "CentOS6"* ]] || [[ "${distroversion}" == "Fedora"* ]]; then
+        rpminstaller
+    fi
+fi
 
 # Remove temporaly directory
 rm -rf tmp
