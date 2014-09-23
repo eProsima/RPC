@@ -1,5 +1,5 @@
 #include "fastrpc/transports/components/TCPEndpoint.h"
-#include "eProsima_cpp/eProsimaMacros.h"
+#include "eProsima_c/macros/snprintf.h"
 
 #include <iostream>
 #include <vector>

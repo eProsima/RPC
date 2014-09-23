@@ -1,15 +1,15 @@
 [submodule "thirdparty/idl"]
 	path = thirdparty/idl
 	url = git@git.sambaserver.eprosima.com:eprosima-common/idl.git
-[submodule "thirdparty/fastbuffers"]
-	path = thirdparty/fastbuffers
-	url = git@git.sambaserver.eprosima.com:fastbuffers/fastbuffers.git
-[submodule "thirdparty/eProsima"]
-	path = thirdparty/eProsima
-	url = git@git.sambaserver.eprosima.com:eprosima-common/eprosima.git
 [submodule "thirdparty/fastcdr"]
 	path = thirdparty/fastcdr
 	url = git@git.sambaserver.eprosima.com:fastcdr/fastcdr.git
 [submodule "thirdparty/boost-threadpool"]
 	path = thirdparty/boost-threadpool
 	url = git@git.sambaserver.eprosima.com:eprosima-common/boost-threadpool.git
+[submodule "thirdparty/dev-env"]
+	path = thirdparty/dev-env
+	url = git@git.sambaserver.eprosima.com:eprosima-common/dev-env.git
+[submodule "thirdparty/eprosima-common-code"]
+	path = thirdparty/eprosima-common-code
+	url = git@git.sambaserver.eprosima.com:eprosima-common/eprosima-common-code.git

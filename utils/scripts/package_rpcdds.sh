@@ -27,10 +27,19 @@ function setPlatform
 
 function package
 {
-    # TODO Que empaquete tambien fastcdr?
+    cd thirdparty/fastcdr
+    # Get the current version of CDR
+    . ../dev-env/scripts/common_pack_functions.sh getVersionFromCPP cdrversion include/fastcdr/FastCdr_version.h
+
+    # Compile and packaging FastCDR library for all archictectures
+    cd utils/scripts
+    ./package_fastcdr.sh
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ../../../..
 
     # Get the current version of RPCDDS
-    . thirdparty/eProsima/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
+    . thirdparty/dev-env/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -38,24 +47,24 @@ function package
     # Compile RPCDDS library for i86.
     if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
         rm -rf output
-        . thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget i86
+        . thirdparty/dev-env/scripts/common_dds_functions.sh setRTItarget i86
         rm -rf lib/$NDDSTARGET
         make rpcdds
         errorstatus=$?
         # Try to add platform
-        . thirdparty/eProsima/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
-        . thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
+        . thirdparty/dev-env/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
+        . thirdparty/dev-env/scripts/common_dds_functions.sh restoreRTItarget
         if [ $errorstatus != 0 ]; then return; fi
     fi
     # Compile FastRPC library for x64.
     if [ -z $package_targets ] || [ "$package_targets" == "x64" ]; then
         rm -rf output
-        . thirdparty/eProsima/scripts/common_dds_functions.sh setRTItarget x64
+        . thirdparty/dev-env/scripts/common_dds_functions.sh setRTItarget x64
         rm -rf lib/$NDDSTARGET
         make rpcdds
         errorstatus=$?
-        . thirdparty/eProsima/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
-        . thirdparty/eProsima/scripts/common_dds_functions.sh restoreRTItarget
+        . thirdparty/dev-env/scripts/common_pack_functions.sh setPlatform "$NDDSTARGET"
+        . thirdparty/dev-env/scripts/common_dds_functions.sh restoreRTItarget
         if [ $errorstatus != 0 ]; then return; fi
     fi
 
@@ -136,17 +145,11 @@ function package
 
     # Create installers
     cd utils/installers/rti/linux
-    ./setup_linux_rpcdds.sh $fastrpcversion
+    ./setup_linux_rpcdds.sh $fastrpcversion $cdrversion
     errorstatus=$?
     cd ../../../..
     if [ $errorstatus != 0 ]; then return; fi
 }
-
-# Check that the environment.sh script was run.
-if [ "$EPROSIMA_LIBRARY_PATH" == "" ]; then
-    echo "environment.sh must to be run."
-    exit -1
-fi
 
 # Get the optional parameter
 if [ $# -ge 1 ] && [ -n $1 ]; then

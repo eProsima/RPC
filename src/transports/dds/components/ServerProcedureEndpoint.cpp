@@ -9,7 +9,7 @@
 #include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
 #include "fastrpc/strategies/ServerStrategy.h"
 #include "fastrpc/strategies/ServerStrategyImpl.h"
-#include "eProsima_cpp/eProsimaMacros.h"
+#include "eProsima_c/macros/snprintf.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"

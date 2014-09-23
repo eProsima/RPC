@@ -6,26 +6,34 @@ LN=g++
 AR=ar
 CP=cp
 LNK=ln
-EPROSIMADIR=$(BASEDIR)/thirdparty/eProsima
+EPROSIMA_TARGET=$(NDDSTARGET)
 
-ifdef NDDSHOME
--include $(EPROSIMADIR)/building/makefiles/dds.mk
-else
-ifdef DDS_ROOT
--include $(EPROSIMADIR)/building/makefiles/opendds.mk
-endif
-endif
+all: fastrpc rpcdds rpcrest
+
+-include $(BASEDIR)/thirdparty/dev-env/building/makefiles/eProsima.mk
 -include $(BASEDIR)/building/makefiles/fastrpc.mk
 -include $(BASEDIR)/building/makefiles/rpcdds.mk
 -include $(BASEDIR)/building/makefiles/rpcrest.mk
 
-.PHONY: all
+.PHONY: fastrpc rpcdds rpcrest all check-env
 
-all: fastrpc rpcdds rpcrest
+fastrpc: check-env _fastrpc
+
+rpcdds: check-env _rpcdds
+
+rpcrest: check-env _rpcrest
 
 clean:
 	@rm -f $(OBJS)
 	@rm -f $(DEPS)
+
+check-env:
+ifndef NDDSTARGET
+	$(error NDDSTARGET environment variable has to be set)
+endif
+ifndef NDDSVERSION
+	$(error NDDSVERSION environment variable has to be set)
+endif
 
 ifneq ($(MAKECMDGOALS), clean)
 -include $(DEPS)

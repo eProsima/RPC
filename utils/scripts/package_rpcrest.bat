@@ -4,7 +4,6 @@
 :: - SVN_BIN_DIR: Directory with the subversion binaries.
 :: - LIBREOFFICE_BIN_DIR: Directory with the LibreOffice binaries.
 :: - NSIS_BIN_DIR: Directory with the NSIS installer libraries.
-:: - EPROSIMADIR: URL to the directory with common sources of eProsima.
 :: - ANT_BIN_DIR: Directory with the ant binaries.
 :: - DOXYGEN_BIN_DIR: Directory with the doxygen binaries.
 :: - GRAPHVIZ_BIN_DIR: Directory with the graphviz binaries.
@@ -18,12 +17,6 @@ setlocal EnableExpansion
 
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
-
-::if "%EPROSIMADIR%"=="" (
-::    echo "EPROSIMADIR environment variable has to be set"
-::    set errorstatus=-1
-::    goto :exit
-::)
 
 :: Go to root directory
 cd "..\.."
@@ -40,7 +33,7 @@ if not %errorstatus%==0 goto :exit
 cd "..\..\"
 
 :: Get the current vesion of FastRPC
-call thirdparty\eProsima\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
+call thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :exit
 
 :: Update and compile FastRPC application.

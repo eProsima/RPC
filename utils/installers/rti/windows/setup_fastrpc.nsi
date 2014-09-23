@@ -133,17 +133,17 @@ Section -post SEC0006
     File /r ..\..\..\..\includetmp\*
 
     # Copy eProsima header files.
-    SetOutPath $INSTDIR\include\fastrpc\eProsima_cpp
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsima_auto_link.h"
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsimaMacros.h"
+    SetOutPath $INSTDIR\include\fastrpc\eProsima_cpp\config
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    SetOutPath $INSTDIR\include\fastrpc\eProsima_c\macros
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_c\macros\snprintf.h"
 
     # Copy fastcdr header files.
     SetOutPath $INSTDIR\include
     SetOverwrite on
     File /r ..\..\..\..\thirdparty\fastcdr\include\*
-    SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsima_auto_link.h"
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsimaMacros.h"
+    SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp\config
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
     
     # Copy licensies
     SetOutPath $INSTDIR
@@ -262,7 +262,7 @@ Function .onInit
     ${EndIf}
     InitPluginsDir
 	Push $R1
-    File /oname=$PLUGINSDIR\spltmp.jpg "..\..\..\..\thirdparty\eProsima\logo\eProsimaLogoAndNameFinal_wBorder_460.jpg"
+    File /oname=$PLUGINSDIR\spltmp.jpg "..\..\..\..\thirdparty\dev-env\logo\eProsimaLogoAndNameFinal_wBorder_460.jpg"
     newadvsplash::show 1000 600 400 -1 "$PLUGINSDIR\spltmp.jpg"
     Pop $R1
     Pop $R1

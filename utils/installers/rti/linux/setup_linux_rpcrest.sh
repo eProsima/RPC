@@ -59,11 +59,12 @@ function installer
     if [ $errorstatus != 0 ]; then return; fi
 
     # Copy eProsima header files
-    mkdir -p tmp/$project/include/rpcrest/eProsima_cpp
-    cp ../../../../thirdparty/eProsima/code/eProsima_cpp/eProsima_auto_link.h tmp/$project/include/rpcrest/eProsima_cpp
+    mkdir -p tmp/$project/include/rpcrest/eProsima_cpp/config
+    cp ../../../../thirdparty/eprosima-common-code/eProsima_cpp/config/eProsima_auto_link.h tmp/$project/include/rpcrest/eProsima_cpp/config
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../thirdparty/eProsima/code/eProsima_cpp/eProsimaMacros.h tmp/$project/include/rpcrest/eProsima_cpp
+    mkdir -p tmp/$project/include/rpcrest/eProsima_c/macros
+    cp ../../../../thirdparty/eprosima-common-code/eProsima_c/macros/snprintf.h tmp/$project/include/rpcrest/eProsima_c/macros
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
@@ -118,7 +119,7 @@ function installer
     if [ $errorstatus != 0 ]; then return; fi
     includefiles=$(cat ../../../../../../building/includes/rpcrest_includes | sed -e 's#^#rpcrest/#')
     includefiles=$(echo $includefiles | sed -e ':a;N;$!ba;s/\n/ /g')
-    includefiles+=" rpcrest/eProsima_cpp/eProsima_auto_link.h rpcrest/eProsima_cpp/eProsimaMacros.h"
+    includefiles+=" rpcrest/eProsima_cpp/config/eProsima_auto_link.h rpcrest/eProsima_c/macros/snprintf.h"
     sed -i -e "s#INCLUDE_FILES#$includefiles#" include/Makefile.am
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
@@ -201,13 +202,13 @@ function rpminstaller
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
     # TODO Warning Esto se hace en nuestro build.xml
-    cp ../../../../thirdparty/fastbuffers/src/com/eprosima/fastbuffers/templates/Types.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+    cp ../../../../thirdparty/fastcdr/src/java/com/eprosima/fastcdr/templates/Types.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../thirdparty/fastbuffers/src/com/eprosima/fastbuffers/templates/TypesHeader.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+    cp ../../../../thirdparty/fastcdr/src/java/com/eprosima/fastcdr/templates/TypesHeader.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../thirdparty/fastbuffers/src/com/eprosima/fastbuffers/templates/TypesSource.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
+    cp ../../../../thirdparty/fastcdr/src/java/com/eprosima/fastcdr/templates/TypesSource.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
     cp ../../../../src/platforms tmp/$project/src
@@ -261,7 +262,7 @@ fi
 version=$1
 
 # Get distro version
-. ../../../../thirdparty/eProsima/scripts/common_pack_functions.sh getDistroVersion
+. ../../../../thirdparty/dev-env/scripts/common_pack_functions.sh getDistroVersion
 
 # Create the temporaly directory.
 mkdir tmp

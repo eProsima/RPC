@@ -7,7 +7,7 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/UDPProxyTransport.h"
-#include "eProsima_cpp/eProsimaMacros.h"
+#include "eProsima_c/macros/snprintf.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/transport/framework/TransportRegistry.h"

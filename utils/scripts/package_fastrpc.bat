@@ -4,7 +4,6 @@
 :: - SVN_BIN_DIR: Directory with the subversion binaries.
 :: - LIBREOFFICE_BIN_DIR: Directory with the LibreOffice binaries.
 :: - NSIS_BIN_DIR: Directory with the NSIS installer libraries.
-:: - EPROSIMADIR: URL to the directory with common sources of eProsima.
 :: - ANT_BIN_DIR: Directory with the ant binaries.
 :: - DOXYGEN_BIN_DIR: Directory with the doxygen binaries.
 :: - GRAPHVIZ_BIN_DIR: Directory with the graphviz binaries.
@@ -19,14 +18,26 @@ setlocal EnableExpansion
 :: Initialize the returned value to 0 (all succesfully)
 set errorstatus=0
 
-::if "%EPROSIMA%"=="" (
-::   echo "EPROSIMADIR environment variable has to be set"
-::   set errorstatus=-1
-::    goto :exit
-::)
-
 :: Go to root directory
 cd "..\.."
+
+:: Compile FastCDR library.
+cd "thirdparty\fastcdr"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: Get the current vesion of FastCDR
+call ..\..\thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTCDR ..\..\include\fastcdr\FastCdr_version.h
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: Compile CDR library.
+rmdir /S /Q lib\i86Win32VS2010
+rmdir /S /Q lib\x64Win64VS2010
+cd "utils\scripts"
+call build_cdr.bat
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: Back to FastBuffers directory
+cd "..\..\..\.." 
 
 rd /S /Q "utils\doxygen\output"
 
@@ -100,19 +111,19 @@ copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
 copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
 
 :: Copy fastcdr libraries needed in
-copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-0.2.2.dll lib\i86Win32VS2010
-copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-0.2.2.lib lib\i86Win32VS2010
-copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-0.2.2.dll lib\i86Win32VS2010
-copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-0.2.2.lib lib\i86Win32VS2010
-copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-0.2.2.lib lib\i86Win32VS2010
-copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-0.2.2.lib lib\i86Win32VS2010
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.dll lib\i86Win32VS2010
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.dll lib\i86Win32VS2010
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 
-copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-0.2.2.dll lib\x64Win64VS2010
-copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-0.2.2.lib lib\x64Win64VS2010
-copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-0.2.2.dll lib\x64Win64VS2010
-copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-0.2.2.lib lib\x64Win64VS2010
-copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-0.2.2.lib lib\x64Win64VS2010
-copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-0.2.2.lib lib\x64Win64VS2010
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.dll lib\x64Win64VS2010
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.dll lib\x64Win64VS2010
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 
 :: :: Execute FastRPC tests
 :: set FASTRPCHOME_OLD=%FASTRPCHOME%

@@ -432,11 +432,11 @@ public class fastrpcgen
             // In local for all products
             if(m_local) {
 				if(m_protocol == PROTOCOL.FASTCDR) {
-					solution.addInclude("$(FASTRPCHOME)/thirdparty/eProsima/code");
+					solution.addInclude("$(FASTRPCHOME)/thirdparty/eprosima-common-code");
 				} else if(m_protocol == PROTOCOL.DDS) {
-					solution.addInclude("$(RPCDDSHOME)/thirdparty/eProsima/code");
+					solution.addInclude("$(RPCDDSHOME)/thirdparty/eprosima-common-code");
 				} else if(m_protocol == PROTOCOL.REST) {
-					solution.addInclude("$(RPCRESTHOME)/thirdparty/eProsima/code");
+					solution.addInclude("$(RPCRESTHOME)/thirdparty/eprosima-common-code");
 				}				
 			}
             solution.addInclude("$(" + m_appEnv + ")/include");

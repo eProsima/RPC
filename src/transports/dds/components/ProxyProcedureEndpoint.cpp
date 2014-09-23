@@ -9,7 +9,7 @@
 #include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "fastrpc/transports/dds/DDSAsyncTask.h"
 #include "fastrpc/protocols/dds/MessageHeader.h"
-#include "eProsima_cpp/eProsimaMacros.h"
+#include "eProsima_c/macros/snprintf.h"
 #include "fastrpc/utils/Typedefs.h"
 
 #include "boost/config/user.hpp"

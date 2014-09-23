@@ -140,16 +140,15 @@ Section -post SEC0006
 
     # Copy eProsima header files.
     SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsima_auto_link.h"
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsimaMacros.h"
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_c\macros\snprintf.h"
 
     # Copy fastcdr header files.
     SetOutPath $INSTDIR\include
     SetOverwrite on
     File /r ..\..\..\..\thirdparty\fastcdr\include\*
     SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsima_auto_link.h"
-    File "..\..\..\..\thirdparty\eProsima\code\eProsima_cpp\eProsimaMacros.h"
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
     
     # Copy licensies
     SetOutPath $INSTDIR
@@ -274,7 +273,7 @@ Function .onInit
     Strcpy $RICHI_FINISH_MESSAGE "eProsima RPCDDS has been installed on your computer.$\n$\nClick Finish to close this wizard."
     InitPluginsDir
 	Push $R1
-    File /oname=$PLUGINSDIR\spltmp.jpg "..\..\..\..\thirdparty\eProsima\logo\eProsimaLogoAndNameFinal_wBorder_460.jpg"
+    File /oname=$PLUGINSDIR\spltmp.jpg "..\..\..\..\thirdparty\dev-env\logo\eProsimaLogoAndNameFinal_wBorder_460.jpg"
     newadvsplash::show 1000 600 400 -1 "$PLUGINSDIR\spltmp.jpg"
     Pop $R1
     Pop $R1
