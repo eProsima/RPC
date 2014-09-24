@@ -51,7 +51,7 @@ if not %errorstatus%==0 goto :exit
 cd "..\..\"
 
 :: Get the current vesion of FastRPC
-call thirdparty\eProsima\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
+call thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSION include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :exit
 
 :: Update and compile FastRPC application.
@@ -199,7 +199,7 @@ cd "..\..\..\.."
 
 rd /S /Q "utils\doxygen\output"
 
-rd /S /Q "includetmp\fastrpc"
+rd /S /Q "includetmp"
 
 rmdir /S /Q output
 

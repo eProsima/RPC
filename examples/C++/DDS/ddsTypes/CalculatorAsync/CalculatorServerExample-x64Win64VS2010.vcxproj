@@ -96,8 +96,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;rpcddsd-0.3.2.lib;
-                                MessageHeaderd.lib;Calculatord.lib;CalculatorServerd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;MessageHeaderd.lib;Calculatord.lib;CalculatorServerd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -114,8 +113,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;rpcdds-0.3.2.lib;
-                                MessageHeader.lib;Calculator.lib;CalculatorServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;MessageHeader.lib;Calculator.lib;CalculatorServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -132,8 +130,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;librpcddsd-0.3.2.lib;
-                                libMessageHeaderd.lib;libCalculatord.lib;libCalculatorServerd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;libMessageHeaderd.lib;libCalculatord.lib;libCalculatorServerd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -150,8 +147,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;librpcdds-0.3.2.lib;
-                                libMessageHeader.lib;libCalculator.lib;libCalculatorServer.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;libMessageHeader.lib;libCalculator.lib;libCalculatorServer.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>

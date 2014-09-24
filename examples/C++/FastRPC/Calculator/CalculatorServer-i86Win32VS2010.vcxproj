@@ -96,8 +96,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>fastrpcd-0.3.2.lib;
-  ;Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(FASTRPCHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -115,8 +114,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>fastrpc-0.3.2.lib;
-  ;Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(FASTRPCHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -134,8 +132,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libfastrpcd-0.3.2.lib;
-  ;libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -154,8 +151,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libfastrpc-0.3.2.lib;
-  ;libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>

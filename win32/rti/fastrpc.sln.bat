@@ -1,7 +1,7 @@
 :: This script execute Visual Studio getting first the version of the product.
 
 :: Get the current vesion of RPCDDS
-call ..\..\thirdparty\eProsima\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTRPC ..\..\include\fastrpc\fastrpc_version.h
+call ..\..\thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTRPC ..\..\include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :EOF
 
 set VERSION=-%VERSIONFASTRPC%

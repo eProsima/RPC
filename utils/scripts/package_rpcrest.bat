@@ -136,6 +136,7 @@ for /f "delims=" %%a in ('cat ../../building/includes/rpcrest_includes') do (
 cd ..\..
 cd includetmp\rpcrest
 for /r %%F in ("*.h") do sed -i -e 's/#include "fastrpc/#include "rpcrest/' %%F
+sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcrest/' fastrpc_dll.h
 cd ..\..
 
 :: Create doxygen information.
@@ -170,7 +171,7 @@ cd "..\..\..\.."
 
 rd /S /Q "utils\doxygen\output"
 
-rd /S /Q "includetmp\rpcrest"
+rd /S /Q "includetmp"
 
 rmdir /S /Q output
 
