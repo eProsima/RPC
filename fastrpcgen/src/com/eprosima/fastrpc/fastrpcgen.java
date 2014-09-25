@@ -153,6 +153,11 @@ public class fastrpcgen
         m_os = System.getProperty("os.name");
 
         m_idlFiles = new Vector<String>();
+		
+        // Variables with different value depending on the protocol
+        if(m_protocol == PROTOCOL.REST) {
+            m_ppDisable = true;
+        }
 
         while(count < args.length)
         {
@@ -397,7 +402,7 @@ public class fastrpcgen
     private void showVersion()
     {
         String version = getVersion();
-        System.out.println("fastrpcgen version " + version);
+		System.out.println(m_appName + " version " + version);
     }
 
     public boolean execute()
@@ -419,7 +424,7 @@ public class fastrpcgen
         if(returnedValue)
         {
             // Create new solution.
-            Solution solution = new Solution(m_exampleOption, getVersion(), m_servercode, m_clientcode);
+            Solution solution = new Solution(m_protocol, m_exampleOption, m_servercode, m_clientcode);
 
             // Load string templates
             System.out.println("Loading Templates...");     
@@ -524,8 +529,11 @@ public class fastrpcgen
                     solution.addDefine("RTI_UNIX");
                 }
 
-                // Add product library.
-                solution.addLibrary("rpcdds");
+                if(m_exampleOption != null && !m_exampleOption.contains("Win"))
+		{
+                    // Add product library.
+                    solution.addLibrary("rpcdds");
+		}
             }
             else if(m_protocol == PROTOCOL.REST)
             {
@@ -539,8 +547,11 @@ public class fastrpcgen
                     solution.addLibrary("boost_thread");
                 }
 
-                // Add product library.
-                solution.addLibrary("rpcrest");
+                if(m_exampleOption != null && !m_exampleOption.contains("Win"))
+		{
+                    // Add product library.
+                    solution.addLibrary("rpcrest");
+		}
             }
             else if(m_protocol == PROTOCOL.FASTCDR)
             {
@@ -574,10 +585,11 @@ public class fastrpcgen
 					}
                 }
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
+		{
                     solution.addLibrary("fastcdr");
-
-                // Add product library.
-                solution.addLibrary("fastrpc");
+                    // Add product library.
+                    solution.addLibrary("fastrpc");
+		}
             }
 
             for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
@@ -2020,7 +2032,11 @@ public class fastrpcgen
         System.out.println("\t" + m_appName + " [options] <file> [<file> ...]");
         System.out.println("\twhere the options are:");
         System.out.println("\t\t-help: shows this help");
-        System.out.println("\t\t-version: shows the current version of eProsima RPC.");
+        System.out.print("\t\t-version: shows the current version of eProsima RPC");
+		if(m_protocol == PROTOCOL.REST) {
+			System.out.print(" over REST");			
+		}
+		System.out.println(".");
         //System.out.println("\t\t--server: disables the generation of source code for servers.");
         //System.out.println("\t\t--client: disables the generation of source code for clients.");
         System.out.println("\t\t-example <platform>: Generates a solution for a specific platform (example: x64Win64VS2010)");
@@ -2031,8 +2047,10 @@ public class fastrpcgen
         //        "   -language <C++>: Programming language (default: C++).\n" +
         System.out.println("\t\t-replace: replaces existing generated files.");
         System.out.println("\t\t-d <path>: sets an output directory for generated files.");
-        System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
-        System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
+		if(m_protocol != PROTOCOL.REST) {
+			System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
+			System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
+		}		
         System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
         /* Products splitted.
            System.out.println("\t\t-protocol <protocol>: defines the protocol to be implemented by the generated code.");

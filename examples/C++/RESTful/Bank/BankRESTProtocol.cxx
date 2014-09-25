@@ -78,15 +78,17 @@ int BankProtocol::deserializeContentLength(char* buffer) {
     return 0;
 }
 
-void BankProtocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint)
+size_t BankProtocol::worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpc::protocol::rest::BankProtocol &restProtocol = dynamic_cast<eprosima::rpc::protocol::rest::BankProtocol&>( protocol );
-    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
+    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(buffer);
 
     HttpMessage response = restProtocol.processRequest(*httpMessage);
     
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
+
+    return 1;
 }
 
 // Server
@@ -142,6 +144,7 @@ string BankProtocol::expandPath_getAccountDetails(string &&path, Bank::account_a
     
     restSerializer.beginSerializeTemplateParameters(std::move(path));
 
+
             // Expand accountNumber_
             stream << account_accountNumber.accountNumber_();
             restSerializer.serializeTemplateParameter(stream.str());
@@ -173,15 +176,21 @@ Bank::account_accountNumberResource::GetAccountDetailsResponse BankProtocol::Ban
      httpMessage.setHost("example.com");
      std::string uri(expandPath_getAccountDetails(std::string("/resources/account/{accountNumber}"), account_accountNumber)); 
      
-        std::string paramValue;stream << user;
+        std::string paramValue;
+        stream << user;
         paramValue = stream.str();
         stream.str(std::string());
         stream.clear();
-        restSerializer.serializeQueryParameter(uri, "user", paramValue);       
+        restSerializer.serializeQueryParameter(uri, "user", paramValue);
+
+               
 
      
      httpMessage.setUri(uri);
      
+
+
+
      // Serializing body parameter GetAccountDetailsRequest
      switch(GetAccountDetailsRequest._d())
      {
@@ -257,10 +266,18 @@ HttpMessage BankProtocol::deserialize_account_accountNumberResource_getAccountDe
     
     Bank::account_accountNumberResource::account_accountNumber account_accountNumber;
     deserializePath_getAccountDetails(restSerializer, account_accountNumber);
+
     // Deserialize user
     std::string user = restSerializer.getQueryParameter("user");
 
+
+
     
+
+
+
+
+
     // Deserializing body parameter GetAccountDetailsRequest
     Bank::account_accountNumberResource::GetAccountDetailsRequest GetAccountDetailsRequest;
     std::string mediaType = httpMessage.getBodyContentType();
@@ -278,6 +295,7 @@ HttpMessage BankProtocol::deserialize_account_accountNumberResource_getAccountDe
     }
         
     switch(discriminator) {
+
     case 1:
     GetAccountDetailsRequest.xmlRepresentation(httpMessage.getBodyData());
     break;

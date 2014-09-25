@@ -56,7 +56,7 @@ project(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -166,7 +166,7 @@ projectClient(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -276,7 +276,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -366,7 +366,7 @@ projectServer(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -476,7 +476,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>

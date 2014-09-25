@@ -8,10 +8,15 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReplyPlugin_540431605_h
-#define CalculatorRequestReplyPlugin_540431605_h
+#ifndef CalculatorRequestReplyPlugin_540432192_h
+#define CalculatorRequestReplyPlugin_540432192_h
 
 #include "CalculatorRequestReply.h"
+
+#include "MessageHeaderPlugin.h"
+
+
+#include "CalculatorPlugin.h"
 
 
 
@@ -31,16 +36,8 @@ struct RTICdrStream;
 #endif
 
 
-#include "MessageHeaderPlugin.h"
 
-
-#include "CalculatorPlugin.h"
-
-
-#define Calculator_additionRequest_LAST_MEMBER_ID 0
-
-#define Calculator_additionRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define Calculator_additionRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define Calculator_additionRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define Calculator_additionRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define Calculator_additionRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -53,6 +50,10 @@ struct RTICdrStream;
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern Calculator_additionRequest*
+Calculator_additionRequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern Calculator_additionRequest*
 Calculator_additionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern Calculator_additionRequest*
@@ -62,6 +63,11 @@ NDDSUSERDllExport extern RTIBool
 Calculator_additionRequestPluginSupport_copy_data(
     Calculator_additionRequest *out,
     const Calculator_additionRequest *in);
+
+NDDSUSERDllExport extern void 
+Calculator_additionRequestPluginSupport_destroy_data_w_params(
+    Calculator_additionRequest *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 Calculator_additionRequestPluginSupport_destroy_data_ex(
@@ -77,7 +83,7 @@ Calculator_additionRequestPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 Calculator_additionRequestPlugin_copy_sample(
@@ -209,10 +215,8 @@ Calculator_additionRequestPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define Calculator_additionReply_LAST_MEMBER_ID 0
 
-#define Calculator_additionReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define Calculator_additionReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define Calculator_additionReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define Calculator_additionReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define Calculator_additionReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -225,6 +229,10 @@ Calculator_additionRequestPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern Calculator_additionReply*
+Calculator_additionReplyPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern Calculator_additionReply*
 Calculator_additionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern Calculator_additionReply*
@@ -234,6 +242,11 @@ NDDSUSERDllExport extern RTIBool
 Calculator_additionReplyPluginSupport_copy_data(
     Calculator_additionReply *out,
     const Calculator_additionReply *in);
+
+NDDSUSERDllExport extern void 
+Calculator_additionReplyPluginSupport_destroy_data_w_params(
+    Calculator_additionReply *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 Calculator_additionReplyPluginSupport_destroy_data_ex(
@@ -249,7 +262,7 @@ Calculator_additionReplyPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 Calculator_additionReplyPlugin_copy_sample(
@@ -381,10 +394,8 @@ Calculator_additionReplyPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define Calculator_subtractionRequest_LAST_MEMBER_ID 0
 
-#define Calculator_subtractionRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define Calculator_subtractionRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define Calculator_subtractionRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define Calculator_subtractionRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define Calculator_subtractionRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -397,6 +408,10 @@ Calculator_additionReplyPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern Calculator_subtractionRequest*
+Calculator_subtractionRequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern Calculator_subtractionRequest*
 Calculator_subtractionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern Calculator_subtractionRequest*
@@ -406,6 +421,11 @@ NDDSUSERDllExport extern RTIBool
 Calculator_subtractionRequestPluginSupport_copy_data(
     Calculator_subtractionRequest *out,
     const Calculator_subtractionRequest *in);
+
+NDDSUSERDllExport extern void 
+Calculator_subtractionRequestPluginSupport_destroy_data_w_params(
+    Calculator_subtractionRequest *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 Calculator_subtractionRequestPluginSupport_destroy_data_ex(
@@ -421,7 +441,7 @@ Calculator_subtractionRequestPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 Calculator_subtractionRequestPlugin_copy_sample(
@@ -553,10 +573,8 @@ Calculator_subtractionRequestPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define Calculator_subtractionReply_LAST_MEMBER_ID 0
 
-#define Calculator_subtractionReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define Calculator_subtractionReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define Calculator_subtractionReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define Calculator_subtractionReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define Calculator_subtractionReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -569,6 +587,10 @@ Calculator_subtractionRequestPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern Calculator_subtractionReply*
+Calculator_subtractionReplyPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern Calculator_subtractionReply*
 Calculator_subtractionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern Calculator_subtractionReply*
@@ -578,6 +600,11 @@ NDDSUSERDllExport extern RTIBool
 Calculator_subtractionReplyPluginSupport_copy_data(
     Calculator_subtractionReply *out,
     const Calculator_subtractionReply *in);
+
+NDDSUSERDllExport extern void 
+Calculator_subtractionReplyPluginSupport_destroy_data_w_params(
+    Calculator_subtractionReply *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 Calculator_subtractionReplyPluginSupport_destroy_data_ex(
@@ -593,7 +620,7 @@ Calculator_subtractionReplyPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 Calculator_subtractionReplyPlugin_copy_sample(
@@ -725,10 +752,8 @@ Calculator_subtractionReplyPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define CalculatorRequest_union_LAST_MEMBER_ID 0
 
-#define CalculatorRequest_unionPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define CalculatorRequest_unionPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define CalculatorRequest_unionPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define CalculatorRequest_unionPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define CalculatorRequest_unionPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -741,6 +766,10 @@ Calculator_subtractionReplyPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern CalculatorRequest_union*
+CalculatorRequest_unionPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern CalculatorRequest_union*
 CalculatorRequest_unionPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern CalculatorRequest_union*
@@ -750,6 +779,11 @@ NDDSUSERDllExport extern RTIBool
 CalculatorRequest_unionPluginSupport_copy_data(
     CalculatorRequest_union *out,
     const CalculatorRequest_union *in);
+
+NDDSUSERDllExport extern void 
+CalculatorRequest_unionPluginSupport_destroy_data_w_params(
+    CalculatorRequest_union *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 CalculatorRequest_unionPluginSupport_destroy_data_ex(
@@ -765,7 +799,7 @@ CalculatorRequest_unionPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 CalculatorRequest_unionPlugin_copy_sample(
@@ -897,10 +931,8 @@ CalculatorRequest_unionPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define CalculatorRequest_LAST_MEMBER_ID 0
 
-#define CalculatorRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define CalculatorRequestPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define CalculatorRequestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define CalculatorRequestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define CalculatorRequestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -913,6 +945,10 @@ CalculatorRequest_unionPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern CalculatorRequest*
+CalculatorRequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern CalculatorRequest*
 CalculatorRequestPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern CalculatorRequest*
@@ -922,6 +958,11 @@ NDDSUSERDllExport extern RTIBool
 CalculatorRequestPluginSupport_copy_data(
     CalculatorRequest *out,
     const CalculatorRequest *in);
+
+NDDSUSERDllExport extern void 
+CalculatorRequestPluginSupport_destroy_data_w_params(
+    CalculatorRequest *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 CalculatorRequestPluginSupport_destroy_data_ex(
@@ -964,7 +1005,13 @@ CalculatorRequestPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 CalculatorRequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
+    
+NDDSUSERDllExport extern void    
+CalculatorRequestPlugin_return_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    CalculatorRequest *sample,
+    void *handle);    
+ 
 
 NDDSUSERDllExport extern RTIBool 
 CalculatorRequestPlugin_copy_sample(
@@ -1103,10 +1150,8 @@ CalculatorRequestPlugin_new(void);
 NDDSUSERDllExport extern void
 CalculatorRequestPlugin_delete(struct PRESTypePlugin *);
 
-#define CalculatorReply_union_LAST_MEMBER_ID 0
 
-#define CalculatorReply_unionPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define CalculatorReply_unionPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define CalculatorReply_unionPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define CalculatorReply_unionPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define CalculatorReply_unionPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -1119,6 +1164,10 @@ CalculatorRequestPlugin_delete(struct PRESTypePlugin *);
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern CalculatorReply_union*
+CalculatorReply_unionPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern CalculatorReply_union*
 CalculatorReply_unionPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern CalculatorReply_union*
@@ -1128,6 +1177,11 @@ NDDSUSERDllExport extern RTIBool
 CalculatorReply_unionPluginSupport_copy_data(
     CalculatorReply_union *out,
     const CalculatorReply_union *in);
+
+NDDSUSERDllExport extern void 
+CalculatorReply_unionPluginSupport_destroy_data_w_params(
+    CalculatorReply_union *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 CalculatorReply_unionPluginSupport_destroy_data_ex(
@@ -1143,7 +1197,7 @@ CalculatorReply_unionPluginSupport_print_data(
     const char *desc,
     unsigned int indent);
 
-
+ 
 
 NDDSUSERDllExport extern RTIBool 
 CalculatorReply_unionPlugin_copy_sample(
@@ -1275,10 +1329,8 @@ CalculatorReply_unionPlugin_serialized_sample_to_key(
     void *endpoint_plugin_qos);
 
 
-#define CalculatorReply_LAST_MEMBER_ID 0
 
-#define CalculatorReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-#define CalculatorReplyPlugin_return_sample PRESTypePluginDefaultEndpointData_returnSample 
+#define CalculatorReplyPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
 #define CalculatorReplyPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
 #define CalculatorReplyPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
@@ -1291,6 +1343,10 @@ CalculatorReply_unionPlugin_serialized_sample_to_key(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern CalculatorReply*
+CalculatorReplyPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern CalculatorReply*
 CalculatorReplyPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
 NDDSUSERDllExport extern CalculatorReply*
@@ -1300,6 +1356,11 @@ NDDSUSERDllExport extern RTIBool
 CalculatorReplyPluginSupport_copy_data(
     CalculatorReply *out,
     const CalculatorReply *in);
+
+NDDSUSERDllExport extern void 
+CalculatorReplyPluginSupport_destroy_data_w_params(
+    CalculatorReply *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
 CalculatorReplyPluginSupport_destroy_data_ex(
@@ -1342,7 +1403,13 @@ CalculatorReplyPlugin_on_endpoint_attached(
 NDDSUSERDllExport extern void 
 CalculatorReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data);
-
+    
+NDDSUSERDllExport extern void    
+CalculatorReplyPlugin_return_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    CalculatorReply *sample,
+    void *handle);    
+ 
 
 NDDSUSERDllExport extern RTIBool 
 CalculatorReplyPlugin_copy_sample(
@@ -1489,4 +1556,4 @@ CalculatorReplyPlugin_delete(struct PRESTypePlugin *);
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* CalculatorRequestReplyPlugin_540431605_h */
+#endif /* CalculatorRequestReplyPlugin_540432192_h */

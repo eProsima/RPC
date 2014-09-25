@@ -68,11 +68,12 @@ namespace eprosima
                        /*!
                         * @brief This callback receives the requests and calls the specific protocol to process them
                         * @param protocol Protocol that must process the request
-                        * @param data Received data
-                        * @param dataLength received data length
+                        * @param buffer Received buffer
+                        * @param bufferLength received data length
+                        * @param bufferSize Received buffer size
                         * @param endpoint Proxy endpoint where the request came from
                         */
-                        static void worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint);
+                        static size_t worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint);
                         
 
 

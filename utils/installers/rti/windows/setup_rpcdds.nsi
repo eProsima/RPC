@@ -78,7 +78,7 @@ var /GLOBAL RICHI_FINISH_MESSAGE
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile eProsima_RPCDDS-${VERSION}-Windows-RTIDDS-5.0.0.exe
+OutFile eProsima_RPCDDS-${VERSION}-Windows-RTIDDS-5.1.0.exe
 InstallDir "$PROGRAMFILES\eProsima\rpcdds"
 CRCCheck on
 XPStyle on
@@ -139,15 +139,16 @@ Section -post SEC0006
     File /r ..\..\..\..\includetmp\*
 
     # Copy eProsima header files.
-    SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp
+    SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp\config
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    SetOutPath $INSTDIR\include\rpcdds\eProsima_c\macros
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_c\macros\snprintf.h"
 
     # Copy fastcdr header files.
     SetOutPath $INSTDIR\include
     SetOverwrite on
     File /r ..\..\..\..\thirdparty\fastcdr\include\*
-    SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp
+    SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp\config
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
     
     # Copy licensies

@@ -6,7 +6,7 @@
 set errorstatus=0
 
 :: Get the current vesion of FASTRPC
-call ..\..\thirdparty\eProsima\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTRPC ..\..\include\fastrpc\fastrpc_version.h
+call ..\..\thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTRPC ..\..\include\fastrpc\fastrpc_version.h
 if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration

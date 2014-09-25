@@ -15,6 +15,7 @@
 #include "Bank.h"
 
 #include "rpcrest/exceptions/BadParamException.h"
+using namespace eprosima::rpc::exception;
 
 #include <utility>
 
@@ -223,7 +224,7 @@ void Bank::account_accountNumberResource::GetAccountDetailsResponse::_d(int32_t 
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -262,7 +263,7 @@ const Bank::account_accountNumberResource::EmptyGetAccountDetailsResponse& Bank:
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyGetAccountDetailsResponse;
 }
@@ -279,7 +280,7 @@ Bank::account_accountNumberResource::EmptyGetAccountDetailsResponse& Bank::accou
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyGetAccountDetailsResponse;
 }
@@ -307,7 +308,7 @@ const Bank::account_accountNumberResource::XMLGetAccountDetailsResponse& Bank::a
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlGetAccountDetailsResponse;
 }
@@ -324,7 +325,7 @@ Bank::account_accountNumberResource::XMLGetAccountDetailsResponse& Bank::account
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlGetAccountDetailsResponse;
 }
@@ -408,7 +409,7 @@ void Bank::account_accountNumberResource::GetAccountDetailsRequest::_d(int32_t _
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -441,7 +442,7 @@ std::string Bank::account_accountNumberResource::GetAccountDetailsRequest::xmlRe
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlRepresentation;
 }
@@ -458,7 +459,7 @@ std::string& Bank::account_accountNumberResource::GetAccountDetailsRequest::xmlR
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlRepresentation;
 }

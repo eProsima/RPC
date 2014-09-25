@@ -48,49 +48,129 @@ if not %errorstatus%==0 goto :exit
 cd ".."
 
 :: Copy BOOST libraries needed in 
-copy %LIB_BOOST_PATH%\lib\i86\libboost_chrono-vc100-mt-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_chrono-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_date_time-vc100-mt-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_date_time-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_regex-vc100-mt-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_regex-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_system-vc100-mt-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_system-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_thread-vc100-mt-1_53.lib lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\libboost_thread-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_chrono-vc100-mt-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_chrono-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_date_time-vc100-mt-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_date_time-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_regex-vc100-mt-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_regex-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_system-vc100-mt-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_system-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_thread-vc100-mt-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_thread-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 
-copy %LIB_BOOST_PATH%\lib\i86\boost_chrono-vc100-mt-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_chrono-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_date_time-vc100-mt-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_date_time-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_regex-vc100-mt-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_regex-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_system-vc100-mt-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_system-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_thread-vc100-mt-1_53.dll lib\i86Win32VS2010\
-copy %LIB_BOOST_PATH%\lib\i86\boost_thread-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_chrono-vc100-mt-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_chrono-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_date_time-vc100-mt-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_date_time-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_regex-vc100-mt-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_regex-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_system-vc100-mt-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_system-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_thread-vc100-mt-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_thread-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 
-copy %LIB_BOOST_PATH%\lib\x64\libboost_chrono-vc100-mt-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_chrono-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_date_time-vc100-mt-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_date_time-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_regex-vc100-mt-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_regex-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_system-vc100-mt-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_system-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_thread-vc100-mt-1_53.lib lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\libboost_thread-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_chrono-vc100-mt-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_chrono-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_date_time-vc100-mt-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_date_time-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_regex-vc100-mt-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_regex-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_system-vc100-mt-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_system-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_thread-vc100-mt-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_thread-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 
-copy %LIB_BOOST_PATH%\lib\x64\boost_chrono-vc100-mt-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_chrono-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_date_time-vc100-mt-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_date_time-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_regex-vc100-mt-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_regex-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_system-vc100-mt-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_system-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
-copy %LIB_BOOST_PATH%\lib\x64\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_chrono-vc100-mt-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_chrono-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_date_time-vc100-mt-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_date_time-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_regex-vc100-mt-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_regex-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_system-vc100-mt-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_system-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 
 :: :: Execute DDS tests
 :: set RPCRESTHOME_OLD=%RPCRESTHOME%

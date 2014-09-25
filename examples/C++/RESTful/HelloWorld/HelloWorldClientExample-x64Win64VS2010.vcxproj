@@ -96,8 +96,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>rpcrestd-0.3.2.lib;
-  ;HelloWorldd.lib;HelloWorldClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>HelloWorldd.lib;HelloWorldClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -114,8 +113,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>rpcrest-0.3.2.lib;
-  ;HelloWorld.lib;HelloWorldClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>HelloWorld.lib;HelloWorldClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -132,8 +130,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>librpcrestd-0.3.2.lib;
-  ;libHelloWorldd.lib;libHelloWorldClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libHelloWorldd.lib;libHelloWorldClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -150,8 +147,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>librpcrest-0.3.2.lib;
-  ;libHelloWorld.lib;libHelloWorldClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libHelloWorld.lib;libHelloWorldClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>

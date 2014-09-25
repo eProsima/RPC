@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -40,8 +40,8 @@ namespace eprosima
             {
                 /*!
                  * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
-                 *  It uses DDS.
-		 * @ingroup CALCULATOR
+                 * It uses DDS.
+		         * @ingroup CALCULATOR
                  */
                 class FASTRPCUSERDllExport  CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
                 {
@@ -53,7 +53,7 @@ namespace eprosima
                         CalculatorProtocol();
                         
                        /*!
-                        * @brief Default destructor
+                        * @brief Destructor
                         */
                         virtual ~CalculatorProtocol();
                     
@@ -64,26 +64,45 @@ namespace eprosima
                         */
                         virtual bool setTransport(eprosima::rpc::transport::Transport &transport);
                         
+                        /*!
+                         * @brief This function activates needed DDS entities to use an interface.
+                         * @param interfaceName Interface name.
+                         * @return Whether the activation works successfully.
+                         */
                         bool activateInterface(const char* interfaceName);
                         
                         /*!
-                         * @brief This method implements the proxy part of the protocol for the operation addition
+                         * @brief This method implements the proxy part of the protocol for the operation addition.
+                         * It is called from the Proxy interface.
                          */
                         DDS_Long Calculator_addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
+                        /*!
+                         * @brief This asynchronous method implements the proxy part of the protocol for the operation addition.
+                         * It is called from the Proxy interface.
+                         */
                         void Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
                         /*!
-                         * @brief This method implements the proxy part of the protocol for the operation subtraction
+                         * @brief This method implements the proxy part of the protocol for the operation subtraction.
+                         * It is called from the Proxy interface.
                          */
                         DDS_Long Calculator_subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
+                        /*!
+                         * @brief This asynchronous method implements the proxy part of the protocol for the operation subtraction.
+                         * It is called from the Proxy interface.
+                         */
                         void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
 
 
                         /*!
-                         * @brief This method implements the server part of the protocol for the interface Calculator
+                         * @brief This method implements the server part of the protocol for the interface Calculator.
+                         * It is called when a request sample is received.
+                         * @param protocol DDS protocol object that is in used.
+                         * @param data Pointer to the received request sample. Cannot be NULL.
+                         * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
                          */
                         static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
                             void *data , eprosima::rpc::transport::Endpoint *endpoint);
@@ -92,6 +111,7 @@ namespace eprosima
                     
                         eprosima::rpc::transport::dds::Transport *m_ddsTransport;
                     
+
                                                 const char* const Calculator_str;
                                                 
                                                 eprosima::rpc::transport::dds::ProxyProcedureEndpoint *Calculator_pe;

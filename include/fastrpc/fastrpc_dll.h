@@ -58,7 +58,9 @@
 #include "fastrpc/fastrpc_version.h"
 
 // Set properties.
+#if !defined(EPROSIMA_LIB_NAME )
 #define EPROSIMA_LIB_NAME fastrpc
+#endif
 
 #if defined(EPROSIMA_ALL_DYN_LINK) || defined(FASTRPC_DYN_LINK)
 #define EPROSIMA_DYN_LINK

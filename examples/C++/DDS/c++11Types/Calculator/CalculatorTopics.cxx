@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -296,10 +296,12 @@ CalculatorRequest_union::CalculatorRequest_union(const CalculatorRequest_union &
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = x.m_addition;
                     break;
                 
+
                 case 2:
                     m_subtraction = x.m_subtraction;
                     break;
@@ -313,10 +315,12 @@ CalculatorRequest_union::CalculatorRequest_union(CalculatorRequest_union &&x)
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = std::move(x.m_addition);
                     break;
                 
+
                 case 2:
                     m_subtraction = std::move(x.m_subtraction);
                     break;
@@ -330,10 +334,12 @@ CalculatorRequest_union& CalculatorRequest_union::operator=(const CalculatorRequ
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = x.m_addition;
                     break;
                 
+
                 case 2:
                     m_subtraction = x.m_subtraction;
                     break;
@@ -349,10 +355,12 @@ CalculatorRequest_union& CalculatorRequest_union::operator=(CalculatorRequest_un
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = std::move(x.m_addition);
                     break;
                 
+
                 case 2:
                     m_subtraction = std::move(x.m_subtraction);
                     break;
@@ -382,6 +390,7 @@ int32_t& CalculatorRequest_union::_d()
     return m__d;
 }
 
+
 void CalculatorRequest_union::addition(const Calculator_additionRequest &_addition)
 {
     m_addition = _addition;
@@ -409,6 +418,7 @@ Calculator_additionRequest& CalculatorRequest_union::addition()
     
     return m_addition;
 }
+
 
 void CalculatorRequest_union::subtraction(const Calculator_subtractionRequest &_subtraction)
 {
@@ -447,6 +457,7 @@ size_t CalculatorRequest_union::getMaxCdrSerializedSize(size_t current_alignment
 
     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
 
+
         reset_align = current_align;
 
         reset_align = Calculator_additionRequest::getMaxCdrSerializedSize(reset_align);
@@ -455,6 +466,7 @@ size_t CalculatorRequest_union::getMaxCdrSerializedSize(size_t current_alignment
             union_max_size_serialized = reset_align;
 
         
+
         reset_align = current_align;
 
         reset_align = Calculator_subtractionRequest::getMaxCdrSerializedSize(reset_align);
@@ -481,10 +493,12 @@ void CalculatorRequest_union::serialize(eprosima::fastcdr::Cdr &scdr) const
 
     switch(m__d)
     {
+
                 case 1:
                     scdr << m_addition;
                     break;
                 
+
                 case 2:
                     scdr << m_subtraction;
                     break;
@@ -498,10 +512,12 @@ void CalculatorRequest_union::deserialize(eprosima::fastcdr::Cdr &dcdr)
 
     switch(m__d)
     {
+
                 case 1:
                     dcdr >> m_addition;
                     break;
                 
+
                 case 2:
                     dcdr >> m_subtraction;
                     break;
@@ -586,10 +602,12 @@ CalculatorReply_union::CalculatorReply_union(const CalculatorReply_union &x)
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = x.m_addition;
                     break;
                 
+
                 case 2:
                     m_subtraction = x.m_subtraction;
                     break;
@@ -603,10 +621,12 @@ CalculatorReply_union::CalculatorReply_union(CalculatorReply_union &&x)
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = std::move(x.m_addition);
                     break;
                 
+
                 case 2:
                     m_subtraction = std::move(x.m_subtraction);
                     break;
@@ -620,10 +640,12 @@ CalculatorReply_union& CalculatorReply_union::operator=(const CalculatorReply_un
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = x.m_addition;
                     break;
                 
+
                 case 2:
                     m_subtraction = x.m_subtraction;
                     break;
@@ -639,10 +661,12 @@ CalculatorReply_union& CalculatorReply_union::operator=(CalculatorReply_union &&
     
     switch(m__d)
     {
+
                 case 1:
                     m_addition = std::move(x.m_addition);
                     break;
                 
+
                 case 2:
                     m_subtraction = std::move(x.m_subtraction);
                     break;
@@ -672,6 +696,7 @@ int32_t& CalculatorReply_union::_d()
     return m__d;
 }
 
+
 void CalculatorReply_union::addition(const Calculator_additionReply &_addition)
 {
     m_addition = _addition;
@@ -699,6 +724,7 @@ Calculator_additionReply& CalculatorReply_union::addition()
     
     return m_addition;
 }
+
 
 void CalculatorReply_union::subtraction(const Calculator_subtractionReply &_subtraction)
 {
@@ -737,6 +763,7 @@ size_t CalculatorReply_union::getMaxCdrSerializedSize(size_t current_alignment)
 
     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
 
+
         reset_align = current_align;
 
         reset_align = Calculator_additionReply::getMaxCdrSerializedSize(reset_align);
@@ -745,6 +772,7 @@ size_t CalculatorReply_union::getMaxCdrSerializedSize(size_t current_alignment)
             union_max_size_serialized = reset_align;
 
         
+
         reset_align = current_align;
 
         reset_align = Calculator_subtractionReply::getMaxCdrSerializedSize(reset_align);
@@ -771,10 +799,12 @@ void CalculatorReply_union::serialize(eprosima::fastcdr::Cdr &scdr) const
 
     switch(m__d)
     {
+
                 case 1:
                     scdr << m_addition;
                     break;
                 
+
                 case 2:
                     scdr << m_subtraction;
                     break;
@@ -788,10 +818,12 @@ void CalculatorReply_union::deserialize(eprosima::fastcdr::Cdr &dcdr)
 
     switch(m__d)
     {
+
                 case 1:
                     dcdr >> m_addition;
                     break;
                 
+
                 case 2:
                     dcdr >> m_subtraction;
                     break;

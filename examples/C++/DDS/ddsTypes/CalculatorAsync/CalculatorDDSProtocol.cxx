@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -20,6 +20,7 @@
 #include "rpcdds/transports/dds/ServerTransport.h"
 #include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
 #include "rpcdds/exceptions/Exceptions.h"
+#include "CalculatorRequestReplyPlugin.h"
 #include "CalculatorRequestReplySupport.h"
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
@@ -27,6 +28,7 @@ using namespace ::transport;
 using namespace ::exception;
 
 CalculatorProtocol::CalculatorProtocol() : ::protocol::CalculatorProtocol(), m_ddsTransport(NULL)
+
 , Calculator_str("Calculator")
 , Calculator_pe(NULL), Calculator_se(NULL)
 {
@@ -63,7 +65,7 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
 
     if(m_ddsTransport != NULL)
     {
-        ::transport::TransportBehaviour behaviour = dynamic_cast<::transport::Transport*>(m_ddsTransport)->getBehaviour();
+        TransportBehaviour behaviour = dynamic_cast<Transport*>(m_ddsTransport)->getBehaviour();
         
         if(strcmp(interfaceName, "Calculator") == 0)
         {
@@ -83,26 +85,26 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
-                Calculator_pe = dynamic_cast<::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
+                Calculator_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
                 requesttypeName,
                 replytypeName,
                 false,
-                (::transport::dds::Transport::Create_data)CalculatorReplyTypeSupport::create_data,
-                (::transport::dds::Transport::Copy_data)CalculatorReplyTypeSupport::copy_data,
-                (::transport::dds::Transport::Destroy_data)CalculatorReplyTypeSupport::delete_data,
+                (::transport::dds::Transport::Create_data)CalculatorReplyPluginSupport_create_data,
+                (::transport::dds::Transport::Copy_data)CalculatorReplyPluginSupport_copy_data,
+                (::transport::dds::Transport::Destroy_data)CalculatorReplyPluginSupport_destroy_data,
                 NULL,
                 sizeof(CalculatorReply)
                 ));
             }
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
             {
-                Calculator_se = dynamic_cast<::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
+                Calculator_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
                     replytypeName,
                     requesttypeName,
 		            false,
-                    (::transport::dds::Transport::Create_data)CalculatorRequestTypeSupport::create_data,
-                    (::transport::dds::Transport::Copy_data)CalculatorRequestTypeSupport::copy_data,
-                    (::transport::dds::Transport::Destroy_data)CalculatorRequestTypeSupport::delete_data,
+                    (::transport::dds::Transport::Create_data)CalculatorRequestPluginSupport_create_data,
+                    (::transport::dds::Transport::Copy_data)CalculatorRequestPluginSupport_copy_data,
+                    (::transport::dds::Transport::Destroy_data)CalculatorRequestPluginSupport_destroy_data,
                     CalculatorProtocol::Calculator_serve,
                     sizeof(CalculatorRequest)));
             }
@@ -268,6 +270,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
 
     switch(requestData.unio._d)
     {
+
                 case 1:
                 {
                 DDS_Long  value1 = 0;
@@ -317,6 +320,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 }
                 break;
                 
+
                 case 2:
                 {
                 DDS_Long  value1 = 0;

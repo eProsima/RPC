@@ -78,15 +78,17 @@ int HelloWorldProtocol::deserializeContentLength(char* buffer) {
     return 0;
 }
 
-void HelloWorldProtocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint)
+size_t HelloWorldProtocol::worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpc::protocol::rest::HelloWorldProtocol &restProtocol = dynamic_cast<eprosima::rpc::protocol::rest::HelloWorldProtocol&>( protocol );
-    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
+    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(buffer);
 
     HttpMessage response = restProtocol.processRequest(*httpMessage);
     
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
+
+    return 1;
 }
 
 // Server
@@ -147,7 +149,8 @@ HelloWorld::HelloWorldResource::HelloResponse HelloWorldProtocol::HelloWorld_Hel
      httpMessage.setHost("example.com");
      std::string uri("/resources/HelloWorld"); 
      
-        std::string paramValue;stream << name;
+        std::string paramValue;
+        stream << name;
         paramValue = stream.str();
         stream.str(std::string());
         stream.clear();
@@ -156,6 +159,9 @@ HelloWorld::HelloWorldResource::HelloResponse HelloWorldProtocol::HelloWorld_Hel
      
      httpMessage.setUri(uri);
      
+
+
+
      
      // HTTP connection
      // TODO Check connection error.
@@ -199,10 +205,13 @@ HttpMessage HelloWorldProtocol::deserialize_HelloWorldResource_hello(RESTSeriali
 {
     std::stringstream stream;
     
+
     // Deserialize name
     std::string name = restSerializer.getQueryParameter("name");
 
     
+
+
     
     // TODO Check implementation.
     HelloWorld::HelloWorldResource::HelloResponse HelloResponse = _HelloWorld_HelloWorldResource_impl->hello(  name.c_str()  );

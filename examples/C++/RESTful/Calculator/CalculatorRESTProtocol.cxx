@@ -78,15 +78,17 @@ int CalculatorProtocol::deserializeContentLength(char* buffer) {
     return 0;
 }
 
-void CalculatorProtocol::worker(Protocol& protocol, void *&data, size_t dataLength, eprosima::rpc::transport::Endpoint *endpoint)
+size_t CalculatorProtocol::worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint)
 {
     // TODO : Call the protocol
     eprosima::rpc::protocol::rest::CalculatorProtocol &restProtocol = dynamic_cast<eprosima::rpc::protocol::rest::CalculatorProtocol&>( protocol );
-    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(data);
+    HttpMessage *httpMessage = reinterpret_cast<HttpMessage*>(buffer);
 
     HttpMessage response = restProtocol.processRequest(*httpMessage);
     
     dynamic_cast<ServerTransport&>(restProtocol.getTransport()).sendReply(&response, 0, endpoint);
+
+    return 1;
 }
 
 // Server
@@ -180,11 +182,13 @@ Calculator::addResource::AddResponse CalculatorProtocol::Calculator_addResource_
      httpMessage.setHost("example.com");
      std::string uri("/calculator/add"); 
      
-        std::string paramValue;stream << a;
+        std::string paramValue;
+        stream << a;
         paramValue = stream.str();
         stream.str(std::string());
         stream.clear();
         restSerializer.serializeQueryParameter(uri, "a", paramValue);
+
         stream << b;
         paramValue = stream.str();
         stream.str(std::string());
@@ -194,6 +198,10 @@ Calculator::addResource::AddResponse CalculatorProtocol::Calculator_addResource_
      
      httpMessage.setUri(uri);
      
+
+
+
+
      
      // HTTP connection
      // TODO Check connection error.
@@ -237,12 +245,14 @@ HttpMessage CalculatorProtocol::deserialize_addResource_add(RESTSerializer &rest
 {
     std::stringstream stream;
     
+
     // Deserialize a
     int32_t  a = 0;
     stream << restSerializer.getQueryParameter("a");
     stream >> a;
     stream.str(std::string());
     stream.clear();
+
     // Deserialize b
     int32_t  b = 0;
     stream << restSerializer.getQueryParameter("b");
@@ -251,6 +261,10 @@ HttpMessage CalculatorProtocol::deserialize_addResource_add(RESTSerializer &rest
     stream.clear();
 
     
+
+
+
+
     
     // TODO Check implementation.
     Calculator::addResource::AddResponse AddResponse = _Calculator_addResource_impl->add(  a, b  );
@@ -301,11 +315,13 @@ Calculator::substractResource::SubstractResponse CalculatorProtocol::Calculator_
      httpMessage.setHost("example.com");
      std::string uri("/calculator/substract"); 
      
-        std::string paramValue;stream << a;
+        std::string paramValue;
+        stream << a;
         paramValue = stream.str();
         stream.str(std::string());
         stream.clear();
         restSerializer.serializeQueryParameter(uri, "a", paramValue);
+
         stream << b;
         paramValue = stream.str();
         stream.str(std::string());
@@ -315,6 +331,10 @@ Calculator::substractResource::SubstractResponse CalculatorProtocol::Calculator_
      
      httpMessage.setUri(uri);
      
+
+
+
+
      
      // HTTP connection
      // TODO Check connection error.
@@ -358,12 +378,14 @@ HttpMessage CalculatorProtocol::deserialize_substractResource_substract(RESTSeri
 {
     std::stringstream stream;
     
+
     // Deserialize a
     int32_t  a = 0;
     stream << restSerializer.getQueryParameter("a");
     stream >> a;
     stream.str(std::string());
     stream.clear();
+
     // Deserialize b
     int32_t  b = 0;
     stream << restSerializer.getQueryParameter("b");
@@ -372,6 +394,10 @@ HttpMessage CalculatorProtocol::deserialize_substractResource_substract(RESTSeri
     stream.clear();
 
     
+
+
+
+
     
     // TODO Check implementation.
     Calculator::substractResource::SubstractResponse SubstractResponse = _Calculator_substractResource_impl->substract(  a, b  );
@@ -422,11 +448,13 @@ Calculator::multiplyResource::MultiplyResponse CalculatorProtocol::Calculator_mu
      httpMessage.setHost("example.com");
      std::string uri("/calculator/multiply"); 
      
-        std::string paramValue;stream << a;
+        std::string paramValue;
+        stream << a;
         paramValue = stream.str();
         stream.str(std::string());
         stream.clear();
         restSerializer.serializeQueryParameter(uri, "a", paramValue);
+
         stream << b;
         paramValue = stream.str();
         stream.str(std::string());
@@ -436,6 +464,10 @@ Calculator::multiplyResource::MultiplyResponse CalculatorProtocol::Calculator_mu
      
      httpMessage.setUri(uri);
      
+
+
+
+
      
      // HTTP connection
      // TODO Check connection error.
@@ -479,12 +511,14 @@ HttpMessage CalculatorProtocol::deserialize_multiplyResource_multiply(RESTSerial
 {
     std::stringstream stream;
     
+
     // Deserialize a
     int32_t  a = 0;
     stream << restSerializer.getQueryParameter("a");
     stream >> a;
     stream.str(std::string());
     stream.clear();
+
     // Deserialize b
     int32_t  b = 0;
     stream << restSerializer.getQueryParameter("b");
@@ -493,6 +527,10 @@ HttpMessage CalculatorProtocol::deserialize_multiplyResource_multiply(RESTSerial
     stream.clear();
 
     
+
+
+
+
     
     // TODO Check implementation.
     Calculator::multiplyResource::MultiplyResponse MultiplyResponse = _Calculator_multiplyResource_impl->multiply(  a, b  );
@@ -543,11 +581,13 @@ Calculator::divideResource::DivideResponse CalculatorProtocol::Calculator_divide
      httpMessage.setHost("example.com");
      std::string uri("/calculator/divide"); 
      
-        std::string paramValue;stream << a;
+        std::string paramValue;
+        stream << a;
         paramValue = stream.str();
         stream.str(std::string());
         stream.clear();
         restSerializer.serializeQueryParameter(uri, "a", paramValue);
+
         stream << b;
         paramValue = stream.str();
         stream.str(std::string());
@@ -557,6 +597,10 @@ Calculator::divideResource::DivideResponse CalculatorProtocol::Calculator_divide
      
      httpMessage.setUri(uri);
      
+
+
+
+
      
      // HTTP connection
      // TODO Check connection error.
@@ -600,12 +644,14 @@ HttpMessage CalculatorProtocol::deserialize_divideResource_divide(RESTSerializer
 {
     std::stringstream stream;
     
+
     // Deserialize a
     int32_t  a = 0;
     stream << restSerializer.getQueryParameter("a");
     stream >> a;
     stream.str(std::string());
     stream.clear();
+
     // Deserialize b
     int32_t  b = 0;
     stream << restSerializer.getQueryParameter("b");
@@ -614,6 +660,10 @@ HttpMessage CalculatorProtocol::deserialize_divideResource_divide(RESTSerializer
     stream.clear();
 
     
+
+
+
+
     
     // TODO Check implementation.
     Calculator::divideResource::DivideResponse DivideResponse = _Calculator_divideResource_impl->divide(  a, b  );

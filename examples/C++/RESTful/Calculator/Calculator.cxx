@@ -15,6 +15,7 @@
 #include "Calculator.h"
 
 #include "rpcrest/exceptions/BadParamException.h"
+using namespace eprosima::rpc::exception;
 
 #include <utility>
 
@@ -189,7 +190,7 @@ void Calculator::addResource::AddResponse::_d(int32_t __d)
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -228,7 +229,7 @@ const Calculator::addResource::EmptyAddResponse& Calculator::addResource::AddRes
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyAddResponse;
 }
@@ -245,7 +246,7 @@ Calculator::addResource::EmptyAddResponse& Calculator::addResource::AddResponse:
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyAddResponse;
 }
@@ -273,7 +274,7 @@ const Calculator::addResource::XMLAddResponse& Calculator::addResource::AddRespo
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlAddResponse;
 }
@@ -290,7 +291,7 @@ Calculator::addResource::XMLAddResponse& Calculator::addResource::AddResponse::x
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlAddResponse;
 }
@@ -469,7 +470,7 @@ void Calculator::substractResource::SubstractResponse::_d(int32_t __d)
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -508,7 +509,7 @@ const Calculator::substractResource::EmptySubstractResponse& Calculator::substra
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptySubstractResponse;
 }
@@ -525,7 +526,7 @@ Calculator::substractResource::EmptySubstractResponse& Calculator::substractReso
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptySubstractResponse;
 }
@@ -553,7 +554,7 @@ const Calculator::substractResource::XMLSubstractResponse& Calculator::substract
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlSubstractResponse;
 }
@@ -570,7 +571,7 @@ Calculator::substractResource::XMLSubstractResponse& Calculator::substractResour
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlSubstractResponse;
 }
@@ -749,7 +750,7 @@ void Calculator::multiplyResource::MultiplyResponse::_d(int32_t __d)
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -788,7 +789,7 @@ const Calculator::multiplyResource::EmptyMultiplyResponse& Calculator::multiplyR
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyMultiplyResponse;
 }
@@ -805,7 +806,7 @@ Calculator::multiplyResource::EmptyMultiplyResponse& Calculator::multiplyResourc
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyMultiplyResponse;
 }
@@ -833,7 +834,7 @@ const Calculator::multiplyResource::XMLMultiplyResponse& Calculator::multiplyRes
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlMultiplyResponse;
 }
@@ -850,7 +851,7 @@ Calculator::multiplyResource::XMLMultiplyResponse& Calculator::multiplyResource:
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlMultiplyResponse;
 }
@@ -1029,7 +1030,7 @@ void Calculator::divideResource::DivideResponse::_d(int32_t __d)
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -1068,7 +1069,7 @@ const Calculator::divideResource::EmptyDivideResponse& Calculator::divideResourc
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyDivideResponse;
 }
@@ -1085,7 +1086,7 @@ Calculator::divideResource::EmptyDivideResponse& Calculator::divideResource::Div
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyDivideResponse;
 }
@@ -1113,7 +1114,7 @@ const Calculator::divideResource::XMLDivideResponse& Calculator::divideResource:
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlDivideResponse;
 }
@@ -1130,7 +1131,7 @@ Calculator::divideResource::XMLDivideResponse& Calculator::divideResource::Divid
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlDivideResponse;
 }

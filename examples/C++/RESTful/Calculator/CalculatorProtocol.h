@@ -47,6 +47,7 @@ namespace eprosima
                          */
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
+
                                        /*!
                                         * @brief This method links a specific servant with the protocol.
                                         * @param impl Servant implementation.
@@ -56,6 +57,7 @@ namespace eprosima
                                             _Calculator_addResource_impl = &impl;
                                         }
                                         
+
                                        /*!
                                         * @brief This method links a specific servant with the protocol.
                                         * @param impl Servant implementation.
@@ -65,6 +67,7 @@ namespace eprosima
                                             _Calculator_substractResource_impl = &impl;
                                         }
                                         
+
                                        /*!
                                         * @brief This method links a specific servant with the protocol.
                                         * @param impl Servant implementation.
@@ -74,6 +77,7 @@ namespace eprosima
                                             _Calculator_multiplyResource_impl = &impl;
                                         }
                                         
+
                                        /*!
                                         * @brief This method links a specific servant with the protocol.
                                         * @param impl Servant implementation.

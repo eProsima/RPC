@@ -47,6 +47,7 @@ namespace eprosima
                          */
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
+
                                        /*!
                                         * @brief This method links a specific servant with the protocol.
                                         * @param impl Servant implementation.

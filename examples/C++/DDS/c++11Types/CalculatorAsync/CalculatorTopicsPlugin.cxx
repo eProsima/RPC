@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -30,6 +30,7 @@ DDS_TypeCode* CalculatorPlugin::additionRequestPlugin::get_typecode()
 
     static DDS_TypeCode_Member Calculator_additionRequest_g_tc_members[2] =
     {
+
                 {
                     (char *)"value1",
                     {
@@ -42,11 +43,12 @@ DDS_TypeCode* CalculatorPlugin::additionRequestPlugin::get_typecode()
                     0,
                     0,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_REQUIRED_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 },
+
                 {
                     (char *)"value2",
                     {
@@ -59,9 +61,9 @@ DDS_TypeCode* CalculatorPlugin::additionRequestPlugin::get_typecode()
                     0,
                     0,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_REQUIRED_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 }
     };
@@ -101,6 +103,7 @@ DDS_TypeCode* CalculatorPlugin::additionReplyPlugin::get_typecode()
 
     static DDS_TypeCode_Member Calculator_additionReply_g_tc_members[1] =
     {
+
                 {
                     (char *)"addition_ret",
                     {
@@ -113,9 +116,9 @@ DDS_TypeCode* CalculatorPlugin::additionReplyPlugin::get_typecode()
                     0,
                     0,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_REQUIRED_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 }
     };
@@ -155,6 +158,7 @@ DDS_TypeCode* CalculatorPlugin::subtractionRequestPlugin::get_typecode()
 
     static DDS_TypeCode_Member Calculator_subtractionRequest_g_tc_members[2] =
     {
+
                 {
                     (char *)"value1",
                     {
@@ -167,11 +171,12 @@ DDS_TypeCode* CalculatorPlugin::subtractionRequestPlugin::get_typecode()
                     0,
                     0,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_REQUIRED_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 },
+
                 {
                     (char *)"value2",
                     {
@@ -184,9 +189,9 @@ DDS_TypeCode* CalculatorPlugin::subtractionRequestPlugin::get_typecode()
                     0,
                     0,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_REQUIRED_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 }
     };
@@ -226,6 +231,7 @@ DDS_TypeCode* CalculatorPlugin::subtractionReplyPlugin::get_typecode()
 
     static DDS_TypeCode_Member Calculator_subtractionReply_g_tc_members[1] =
     {
+
                 {
                     (char *)"subtraction_ret",
                     {
@@ -238,9 +244,9 @@ DDS_TypeCode* CalculatorPlugin::subtractionReplyPlugin::get_typecode()
                     0,
                     0,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_REQUIRED_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 }
     };
@@ -589,6 +595,7 @@ DDS_TypeCode* CalculatorRequest_unionPlugin::get_typecode()
 
     static DDS_TypeCode_Member CalculatorRequest_union_g_tc_members[2] =
     {
+
                 {
                     (char *)"addition",
                     {
@@ -601,11 +608,12 @@ DDS_TypeCode* CalculatorRequest_unionPlugin::get_typecode()
                     1,
                     1,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_NONKEY_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 },
+
                 {
                     (char *)"subtraction",
                     {
@@ -618,9 +626,9 @@ DDS_TypeCode* CalculatorRequest_unionPlugin::get_typecode()
                     1,
                     2,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_NONKEY_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 }
     };
@@ -673,9 +681,9 @@ DDS_TypeCode* CalculatorRequestPlugin::get_typecode()
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         },
         {
@@ -690,9 +698,9 @@ DDS_TypeCode* CalculatorRequestPlugin::get_typecode()
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }
     };
@@ -1196,6 +1204,7 @@ DDS_TypeCode* CalculatorReply_unionPlugin::get_typecode()
 
     static DDS_TypeCode_Member CalculatorReply_union_g_tc_members[2] =
     {
+
                 {
                     (char *)"addition",
                     {
@@ -1208,11 +1217,12 @@ DDS_TypeCode* CalculatorReply_unionPlugin::get_typecode()
                     1,
                     1,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_NONKEY_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 },
+
                 {
                     (char *)"subtraction",
                     {
@@ -1225,9 +1235,9 @@ DDS_TypeCode* CalculatorReply_unionPlugin::get_typecode()
                     1,
                     2,
                     NULL,
-                    DDS_BOOLEAN_FALSE,
+                    RTI_CDR_NONKEY_MEMBER,
                     DDS_PRIVATE_MEMBER,
-                    0,
+                    1,
                     NULL
                 }
     };
@@ -1280,9 +1290,9 @@ DDS_TypeCode* CalculatorReplyPlugin::get_typecode()
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         },
         {
@@ -1297,9 +1307,9 @@ DDS_TypeCode* CalculatorReplyPlugin::get_typecode()
             0,
             0,
             NULL,
-            DDS_BOOLEAN_FALSE,
+            RTI_CDR_REQUIRED_MEMBER,
             DDS_PRIVATE_MEMBER,
-            0,
+            1,
             NULL
         }
     };

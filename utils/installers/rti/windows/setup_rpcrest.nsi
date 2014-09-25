@@ -133,8 +133,9 @@ Section -post SEC0006
     File /r ..\..\..\..\includetmp\*
 
     # Copy eProsima header files.
-    SetOutPath $INSTDIR\include\rpcrest\eProsima_cpp
+    SetOutPath $INSTDIR\include\rpcrest\eProsima_cpp\config
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    SetOutPath $INSTDIR\include\fastrpc\eProsima_c\macros
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_c\macros\snprintf.h"
 
     # Copy licensies

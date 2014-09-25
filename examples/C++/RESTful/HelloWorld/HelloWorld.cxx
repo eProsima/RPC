@@ -15,6 +15,7 @@
 #include "HelloWorld.h"
 
 #include "rpcrest/exceptions/BadParamException.h"
+using namespace eprosima::rpc::exception;
 
 #include <utility>
 
@@ -189,7 +190,7 @@ void HelloWorld::HelloWorldResource::HelloResponse::_d(int32_t __d)
         break;
     }
     
-    if(!b) throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    if(!b) throw BadParamException("Discriminator doesn't correspond with the selected union member");
     
     m__d = __d;
 }
@@ -228,7 +229,7 @@ const HelloWorld::HelloWorldResource::EmptyHelloResponse& HelloWorld::HelloWorld
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyHelloResponse;
 }
@@ -245,7 +246,7 @@ HelloWorld::HelloWorldResource::EmptyHelloResponse& HelloWorld::HelloWorldResour
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_emptyHelloResponse;
 }
@@ -273,7 +274,7 @@ const HelloWorld::HelloWorldResource::XMLHelloResponse& HelloWorld::HelloWorldRe
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlHelloResponse;
 }
@@ -290,7 +291,7 @@ HelloWorld::HelloWorldResource::XMLHelloResponse& HelloWorld::HelloWorldResource
         default:
         break;
     }    
-    if(!b) throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    if(!b) throw BadParamException("This member is not been selected");
     
     return m_xmlHelloResponse;
 }

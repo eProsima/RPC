@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -27,30 +27,43 @@ class Calculator_additionTask : public eprosima::rpc::transport::dds::DDSAsyncTa
 {
     public:
 
-        /**
-         * \brief The default constructor.
+        /*!
+         * @brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that FASTRPC will call when
+         * @param obj Object that implements the callbacks that FastRPC will call when
          *            the reply will be received or and exception will be launched.
-         * \param client Pointer to the server's proxy. Cannot be NULL.
+         * @param client Pointer to the server's proxy. Cannot be NULL.
          */
         Calculator_additionTask(Calculator_additionCallbackHandler &obj);
 
-        /// \brief The default destructor.
+        //! @brief Destructor.
         virtual ~Calculator_additionTask();
         
+        /*!
+         * @brief This funcion is called when the reply sample is received.
+         */
         virtual void execute();
         
+        /*!
+         * @brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * @param ex The exception that will be launched.
+         */
         virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
 
         
-        /**
-         * \brief This function returns the object used by the task.
+        /*!
+         * @brief This function returns the object used by the task.
          *
-         * \return The object that implements the callbacks.
+         * @return The object that implements the callbacks.
          */
         Calculator_additionCallbackHandler& getObject();
 
+        /*!
+         * @brief This function returns the allocated reply sample.
+         * @return Pointer to the allocated reply sample.
+         */
         virtual void* getReplyInstance();
         
         private:
@@ -68,30 +81,43 @@ class Calculator_subtractionTask : public eprosima::rpc::transport::dds::DDSAsyn
 {
     public:
 
-        /**
-         * \brief The default constructor.
+        /*!
+         * @brief The default constructor.
          *
-         * \param obj Object that implements the callbacks that FASTRPC will call when
+         * @param obj Object that implements the callbacks that FastRPC will call when
          *            the reply will be received or and exception will be launched.
-         * \param client Pointer to the server's proxy. Cannot be NULL.
+         * @param client Pointer to the server's proxy. Cannot be NULL.
          */
         Calculator_subtractionTask(Calculator_subtractionCallbackHandler &obj);
 
-        /// \brief The default destructor.
+        //! @brief Destructor.
         virtual ~Calculator_subtractionTask();
         
+        /*!
+         * @brief This funcion is called when the reply sample is received.
+         */
         virtual void execute();
         
+        /*!
+         * @brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * @param ex The exception that will be launched.
+         */
         virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
 
         
-        /**
-         * \brief This function returns the object used by the task.
+        /*!
+         * @brief This function returns the object used by the task.
          *
-         * \return The object that implements the callbacks.
+         * @return The object that implements the callbacks.
          */
         Calculator_subtractionCallbackHandler& getObject();
 
+        /*!
+         * @brief This function returns the allocated reply sample.
+         * @return Pointer to the allocated reply sample.
+         */
         virtual void* getReplyInstance();
         
         private:

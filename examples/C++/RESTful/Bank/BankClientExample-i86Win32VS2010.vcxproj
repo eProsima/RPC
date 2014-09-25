@@ -96,8 +96,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>rpcrestd-0.3.2.lib;
-  ;Bankd.lib;BankClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>Bankd.lib;BankClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -114,8 +113,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>rpcrest-0.3.2.lib;
-  ;Bank.lib;BankClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>Bank.lib;BankClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -132,8 +130,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>librpcrestd-0.3.2.lib;
-  ;libBankd.lib;libBankClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libBankd.lib;libBankClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -150,8 +147,7 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>librpcrest-0.3.2.lib;
-  ;libBank.lib;libBankClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>libBank.lib;libBankClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
