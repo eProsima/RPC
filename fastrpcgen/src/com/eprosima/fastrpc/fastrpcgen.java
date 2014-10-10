@@ -38,7 +38,7 @@ import com.eprosima.idl.generator.manager.TemplateManager;
 import com.eprosima.idl.util.Util;
 
 import com.eprosima.fastrpc.exceptions.BadArgumentException;
-import com.eprosima.fastrpc.idl.grammar.Context;
+import com.eprosima.fastrpc.idl.grammar.*;
 import com.eprosima.fastrpc.solution.Project;
 import com.eprosima.fastrpc.solution.Solution;
 import com.eprosima.fastrpc.util.Utils;
@@ -765,8 +765,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
+            Context ctx = new RESTContext(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct));
 
             // Create template manager
             TemplateManager tmanager = new TemplateManager();
@@ -823,13 +823,12 @@ public class fastrpcgen
 
             if(returnedValue)
             {
-                // Check there were interfaces in the processed IDL file.
-                Interface ifc = ctx.getFirstInterface();
+                int numberOfInterfaces = ctx.getScopedInterfaces().size();
 
                 // Create information of project for solution.
                 project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
 
-                if(ifc != null)
+                if(numberOfInterfaces > 0)
                 {   // Set project as only one library.
                     project.setContainsInterfaces(true);
                 }
@@ -844,7 +843,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null)
+                if(returnedValue && numberOfInterfaces > 0)
                 {
                     System.out.println("Generating Utils Code...");
 
@@ -862,7 +861,7 @@ public class fastrpcgen
                     }         
                 }
 
-                if(returnedValue && ifc != null)
+                if(returnedValue && numberOfInterfaces > 0)
                 {
                     System.out.println("Generating Proxy Code...");
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.h", maintemplates.getTemplate("ProxyHeader"), m_replace))
@@ -886,7 +885,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null && m_servercode)
+                if(returnedValue && numberOfInterfaces > 0 && m_servercode)
                 {
                     System.out.println("Generating Server Code...");
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Server.h", maintemplates.getTemplate("ServerHeader"), m_replace))
@@ -936,8 +935,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
+            Context ctx = new FastContext(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct));
 
             // Create template manager
             TemplateManager tmanager = new TemplateManager();
@@ -991,13 +990,12 @@ public class fastrpcgen
 
             if(returnedValue)
             {
-                // Check there were interfaces in the processed IDL file.
-                Interface ifc = ctx.getFirstInterface();
+                int numberOfInterfaces = ctx.getScopedInterfaces().size();
 
                 // Create information of project for solution.
                 project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
 
-                if(ifc != null)
+                if(numberOfInterfaces > 0)
                 {   // Set project as only one library.
                     project.setContainsInterfaces(true);
                 }
@@ -1012,7 +1010,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null)
+                if(returnedValue && numberOfInterfaces > 0)
                 {
                     System.out.println("Generating Utils Code...");
 
@@ -1029,7 +1027,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null && m_clientcode)
+                if(returnedValue && numberOfInterfaces > 0 && m_clientcode)
                 {
                     System.out.println("Generating Proxy Code...");
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.h", maintemplates.getTemplate("ProxyHeader"), m_replace))
@@ -1053,7 +1051,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null && m_servercode)
+                if(returnedValue && numberOfInterfaces > 0 && m_servercode)
                 {
                     System.out.println("Generating Server Code...");
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Server.h", maintemplates.getTemplate("ServerHeader"), m_replace))
@@ -1102,8 +1100,8 @@ public class fastrpcgen
         if(idlParseFileName != null)
         {
             // Create initial context.
-            Context ctx = new Context(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    (!m_local ? m_appProduct : m_localAppProduct), m_protocol, m_types);
+            Context ctx = new DDSContext(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    (!m_local ? m_appProduct : m_localAppProduct), m_types);
 
             // Create template manager
             TemplateManager tmanager = new TemplateManager();
@@ -1182,10 +1180,10 @@ public class fastrpcgen
 
             if(returnedValue)
             {
-                // Check there were interfaces in the processed IDL file.
-                Interface ifc = ctx.getFirstInterface();
+                int numberOfInterfaces = ctx.getScopedInterfaces().size();
+
                 // Using rti types the MessageHeader.idl dependency has to be included in the context.
-                if(m_types == DDS_TYPES.RTI && ifc != null)
+                if(m_types == DDS_TYPES.RTI && numberOfInterfaces > 0)
                 {
                     // If there are interfaces, the project dependes in MessageHeader.idl project.
                     ctx.addDependency(m_messageHeaderFileLocation);
@@ -1194,7 +1192,7 @@ public class fastrpcgen
                 // Create information of project for solution.
                 project = new Project(onlyFileName, idlFilename, ctx.getDependencies());
 
-                if(ifc != null)
+                if(numberOfInterfaces > 0)
                 {   // Set project as only one library.
                     project.setContainsInterfaces(true);
                 }
@@ -1243,7 +1241,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null)
+                if(returnedValue && numberOfInterfaces > 0)
                 {
                     // Generate file using our types.
                     if(m_types == DDS_TYPES.EPROSIMA)
@@ -1283,7 +1281,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null && m_clientcode)
+                if(returnedValue && numberOfInterfaces > 0 && m_clientcode)
                 {
                     System.out.println("Generating Proxy Code...");
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Proxy.h", maintemplates.getTemplate("ProxyHeader"), m_replace))
@@ -1299,7 +1297,7 @@ public class fastrpcgen
                     }
                 }
 
-                if(returnedValue && ifc != null && m_servercode)
+                if(returnedValue && numberOfInterfaces > 0 && m_servercode)
                 {
                     System.out.println("Generating Server Code...");
                     if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Server.h", maintemplates.getTemplate("ServerHeader"), m_replace))

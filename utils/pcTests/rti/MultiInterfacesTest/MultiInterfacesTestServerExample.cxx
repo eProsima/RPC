@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new MultiInterfacesTestProtocol();
-        transport = new UDPServerTransport("MultiInterfacesTestService");
+        transport = new UDPServerTransport("MultiInterfacesTestService", "Instance");
         basicpool = new ThreadPoolStrategy(threadPoolSize);
         basicserver = new BasicTypes::BasicTypeTestServer(*basicpool, *transport, *protocol, bservant);
         basicserver->serve();

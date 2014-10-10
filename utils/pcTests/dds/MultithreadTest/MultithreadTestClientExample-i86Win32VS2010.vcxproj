@@ -88,7 +88,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -106,7 +106,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -124,7 +124,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -142,7 +142,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eProsima/code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(LIB_BOOST_PATH);../../../../thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;../../../../thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>

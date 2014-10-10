@@ -107,17 +107,17 @@ size_t $ctx.filename$Protocol::worker(Protocol& protocol, void *&buffer, size_t 
                 dcdr.deserialize(interface_name);
                 dcdr.deserialize(operation_name);
 
-                $if(first(ctx.interfaces))$
-                    if(interface_name.compare("$first(ctx.interfaces).scopedname$") == 0)
+                $if(first(ctx.scopedInterfaces))$
+                    if(interface_name.compare("$first(ctx.scopedInterfaces).scopedname$") == 0)
                     {
-                        if(_protocol._$first(ctx.interfaces).formatedScopedname$_impl != NULL)
+                        if(_protocol._$first(ctx.scopedInterfaces).formatedScopedname$_impl != NULL)
                         {
-                            $if(first(first(ctx.interfaces).operations))$
-                                if(operation_name.compare("$first(first(ctx.interfaces).operations).name$") == 0)
+                            $if(first(first(ctx.scopedInterfaces).operations))$
+                                if(operation_name.compare("$first(first(ctx.scopedInterfaces).operations).name$") == 0)
                                 {
-                                    $operation_worker(ctx=ctx, operation=first(first(ctx.interfaces).operations))$
+                                    $operation_worker(ctx=ctx, operation=first(first(ctx.scopedInterfaces).operations))$
                                 }
-                            $rest(first(ctx.interfaces).operations) : {operation |
+                            $rest(first(ctx.scopedInterfaces).operations) : {operation |
                                 else if(operation_name.compare("$operation.name$") == 0)
                                 {
                                     $operation_worker(ctx=ctx, operation=operation)$
@@ -130,7 +130,7 @@ size_t $ctx.filename$Protocol::worker(Protocol& protocol, void *&buffer, size_t 
                             // TODO Send system exception to client.
                         }
                     }
-                $rest(ctx.interfaces) : {interface |
+                $rest(ctx.scopedInterfaces) : {interface |
                     else if(interface_name.compare("$interface.scopedname$") == 0)
                     {
                         if(_protocol._$interface.formatedScopedname$_impl != NULL)

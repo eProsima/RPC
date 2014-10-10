@@ -39,7 +39,7 @@ void DDSAsyncTask::execute(DDS::QueryCondition *query)
     {
         ReturnMessage retCode = m_pe->takeReply(getReplyInstance(), query);
 
-        if(retCode == OPERATION_SUCCESSFUL)
+        if(retCode == OK)
         {
             this->execute();
         }
@@ -47,7 +47,7 @@ void DDSAsyncTask::execute(DDS::QueryCondition *query)
         {
             this->on_exception(ClientInternalException("Error taking the reply"));
         }
-        else if(retCode == SERVER_TIMEOUT)
+        else if(retCode == TIMEOUT)
         {
             this->on_exception(ServerTimeoutException("Error taking the reply"));
         }

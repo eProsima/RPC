@@ -57,82 +57,82 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 /*!
- * @brief This class represents the structure $operation.parent.name$_$operation.name$Request that can be used to send/receive requests
+ * @brief This class represents the structure $operation.parent.name$_$operation.name$_Request that can be used to send/receive requests
  * for the operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Request
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_Request
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Request();
+    $operation.parent.name$_$operation.name$_Request();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Request();
+    ~$operation.parent.name$_$operation.name$_Request();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Request that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request(const $operation.parent.name$_$operation.name$Request &x);
+    $operation.parent.name$_$operation.name$_Request(const $operation.parent.name$_$operation.name$_Request &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Request that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x);
+    $operation.parent.name$_$operation.name$_Request($operation.parent.name$_$operation.name$_Request &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request& operator=(const $operation.parent.name$_$operation.name$Request &x);
+    $operation.parent.name$_$operation.name$_Request& operator=(const $operation.parent.name$_$operation.name$_Request &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request& operator=($operation.parent.name$_$operation.name$Request &&x);
+    $operation.parent.name$_$operation.name$_Request& operator=($operation.parent.name$_$operation.name$_Request &&x);
 
     /*!
      * @brief This method sets the request header information.
-     * @param __header Request header.
+     * @param _header Request header.
      */
-    inline void _header(const eprosima::rpc::protocol::dds::RequestHeader &__header)
+    inline void header(const eprosima::rpc::protocol::dds::RequestHeader &_header)
     {
-        m__header = __header;
+        m_header = _header;
     }
 
     /*!
      * @brief This method sets the request header information.
-     * @param __header Request header.
+     * @param _header Request header.
      */
-    inline void _header(eprosima::rpc::protocol::dds::RequestHeader &&__header)
+    inline void header(eprosima::rpc::protocol::dds::RequestHeader &&_header)
     {
-        m__header = std::move(__header);
+        m_header = std::move(_header);
     }
 
     /*!
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline const eprosima::rpc::protocol::dds::RequestHeader& _header() const
+    inline const eprosima::rpc::protocol::dds::RequestHeader& header() const
     {
-        return m__header;
+        return m_header;
     }
 
     /*!
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline eprosima::rpc::protocol::dds::RequestHeader& _header()
+    inline eprosima::rpc::protocol::dds::RequestHeader& header()
     {
-        return m__header;
+        return m_header;
     }
     
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
@@ -167,7 +167,7 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::RequestHeader m__header;
+    eprosima::rpc::protocol::dds::RequestHeader m_header;
 
     $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
 };
@@ -179,42 +179,42 @@ $if([operation.outputparam, operation.rettype])$
  * @brief This class encapsulates output paramaters for operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply_st
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_Reply_st
 {
 public:
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Reply_st();
+    $operation.parent.name$_$operation.name$_Reply_st();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Reply_st();
+    ~$operation.parent.name$_$operation.name$_Reply_st();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply_st that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st(const $operation.parent.name$_$operation.name$Reply_st &x);
+    $operation.parent.name$_$operation.name$_Reply_st(const $operation.parent.name$_$operation.name$_Reply_st &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply_st that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st($operation.parent.name$_$operation.name$Reply_st &&x);
+    $operation.parent.name$_$operation.name$_Reply_st($operation.parent.name$_$operation.name$_Reply_st &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st& operator=(const $operation.parent.name$_$operation.name$Reply_st &x);
+    $operation.parent.name$_$operation.name$_Reply_st& operator=(const $operation.parent.name$_$operation.name$_Reply_st &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st& operator=($operation.parent.name$_$operation.name$Reply_st &&x);
+    $operation.parent.name$_$operation.name$_Reply_st& operator=($operation.parent.name$_$operation.name$_Reply_st &&x);
 
     $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
 
@@ -256,43 +256,43 @@ $endif$
  * @brief This class represents the union used in the DDS topic to encapsulate the operation parameters in reply samples.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply_union
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_Reply_union
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Reply_union();
+    $operation.parent.name$_$operation.name$_Reply_union();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Reply_union();
+    ~$operation.parent.name$_$operation.name$_Reply_union();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply_union that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_union(const $operation.parent.name$_$operation.name$Reply_union &x);
+    $operation.parent.name$_$operation.name$_Reply_union(const $operation.parent.name$_$operation.name$_Reply_union &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply_union that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_union($operation.parent.name$_$operation.name$Reply_union &&x);
+    $operation.parent.name$_$operation.name$_Reply_union($operation.parent.name$_$operation.name$_Reply_union &&x);
     
     /*!
      * @brief Copy assignment.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply_union that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_union& operator=(const $operation.parent.name$_$operation.name$Reply_union &x);
+    $operation.parent.name$_$operation.name$_Reply_union& operator=(const $operation.parent.name$_$operation.name$_Reply_union &x);
     
     /*!
      * @brief Move assignment.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_union that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply_union that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_union& operator=($operation.parent.name$_$operation.name$Reply_union &&x);
+    $operation.parent.name$_$operation.name$_Reply_union& operator=($operation.parent.name$_$operation.name$_Reply_union &&x);
     
     /*!
      * @brief This function sets the discriminator value.
@@ -314,7 +314,7 @@ public:
     int32_t& _d();
 
     $if([operation.outputparam, operation.rettype])$
-    $public_exception_union_member_declaration(typename=[operation.parent.name, "_", operation.name, "Reply_st"], name="st")$
+    $public_exception_union_member_declaration(typename=[operation.parent.name, "_", operation.name, "_Reply_st"], name="st")$
     $endif$
 
     $operation.exceptions : { exception |$public_exception_union_member_declaration(typename=exception.scopedname, name=[exception.formatedScopedname, "_ex"])$}; separator="\n"$
@@ -343,7 +343,7 @@ private:
     int32_t m__d;
 
     $if([operation.outputparam, operation.rettype])$
-    $operation.parent.name$_$operation.name$Reply_st m_st;
+    $operation.parent.name$_$operation.name$_Reply_st m_st;
     $endif$
 
     $operation.exceptions : { exception |$exception.scopedname$ m_$exception.formatedScopedname$_ex;}; separator="\n"$
@@ -352,82 +352,82 @@ private:
 $endif$
 
 /*!
- * @brief This class represents the structure $operation.parent.name$_$operation.name$Reply that can be used to send/receive replies
+ * @brief This class represents the structure $operation.parent.name$_$operation.name$_Reply that can be used to send/receive replies
  * for the operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_Reply
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Reply();
+    $operation.parent.name$_$operation.name$_Reply();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Reply();
+    ~$operation.parent.name$_$operation.name$_Reply();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x);
+    $operation.parent.name$_$operation.name$_Reply(const $operation.parent.name$_$operation.name$_Reply &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Reply that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x);
+    $operation.parent.name$_$operation.name$_Reply($operation.parent.name$_$operation.name$_Reply &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply& operator=(const $operation.parent.name$_$operation.name$Reply &x);
+    $operation.parent.name$_$operation.name$_Reply& operator=(const $operation.parent.name$_$operation.name$_Reply &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply& operator=($operation.parent.name$_$operation.name$Reply &&x);
+    $operation.parent.name$_$operation.name$_Reply& operator=($operation.parent.name$_$operation.name$_Reply &&x);
 
     /*!
      * @brief This method sets the reply header information.
-     * @param __header Reply header.
+     * @param _header Reply header.
      */
-    inline void _header(const eprosima::rpc::protocol::dds::ReplyHeader &__header)
+    inline void header(const eprosima::rpc::protocol::dds::ReplyHeader &_header)
     {
-        m__header = __header;
+        m_header = _header;
     }
 
     /*!
      * @brief This method sets the reply header information.
-     * @param __header Reply header.
+     * @param _header Reply header.
      */
-    inline void _header(eprosima::rpc::protocol::dds::ReplyHeader &&__header)
+    inline void header(eprosima::rpc::protocol::dds::ReplyHeader &&_header)
     {
-        m__header = std::move(__header);
+        m_header = std::move(_header);
     }
 
     /*!
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline const eprosima::rpc::protocol::dds::ReplyHeader& _header() const
+    inline const eprosima::rpc::protocol::dds::ReplyHeader& header() const
     {
-        return m__header;
+        return m_header;
     }
 
     /*!
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline eprosima::rpc::protocol::dds::ReplyHeader& _header()
+    inline eprosima::rpc::protocol::dds::ReplyHeader& header()
     {
-        return m__header;
+        return m_header;
     }
     
     $if(operation.exceptions)$
@@ -466,10 +466,10 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::ReplyHeader m__header;
+    eprosima::rpc::protocol::dds::ReplyHeader m_header;
 
     $if(operation.exceptions)$
-    $operation.parent.name$_$operation.name$Reply_union m_unio;
+    $operation.parent.name$_$operation.name$_Reply_union m_unio;
     $else$
     $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
     $endif$
@@ -566,7 +566,7 @@ public_exception_union_declaration(operation) ::= <<
  * @brief This function copies the value in member unio
  * @param _unio New value to be copied in member unio
  */
-inline void unio(const $operation.parent.name$_$operation.name$Reply_union &_unio)
+inline void unio(const $operation.parent.name$_$operation.name$_Reply_union &_unio)
 {
     m_unio = _unio;
 }
@@ -575,7 +575,7 @@ inline void unio(const $operation.parent.name$_$operation.name$Reply_union &_uni
  * @brief This function moves the value in member unio
  * @param _unio New value to be moved in member unio
  */
-inline void unio($operation.parent.name$_$operation.name$Reply_union &&_unio)
+inline void unio($operation.parent.name$_$operation.name$_Reply_union &&_unio)
 {
     m_unio = std::move(_unio);
 }
@@ -584,7 +584,7 @@ inline void unio($operation.parent.name$_$operation.name$Reply_union &&_unio)
  * @brief This function returns a constant reference to member unio
  * @return Constant reference to member unio
  */
-inline const $operation.parent.name$_$operation.name$Reply_union& unio() const
+inline const $operation.parent.name$_$operation.name$_Reply_union& unio() const
 {
     return m_unio;
 }
@@ -593,7 +593,7 @@ inline const $operation.parent.name$_$operation.name$Reply_union& unio() const
  * @brief This function returns a reference to member unio
  * @return Reference to member unio
  */
-inline $operation.parent.name$_$operation.name$Reply_union& unio()
+inline $operation.parent.name$_$operation.name$_Reply_union& unio()
 {
     return m_unio;
 }

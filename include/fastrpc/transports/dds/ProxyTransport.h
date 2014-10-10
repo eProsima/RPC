@@ -55,6 +55,8 @@ namespace eprosima
                          */
                         std::string& getRemoteServiceName();
 
+                        std::string& getInstanceName();
+
 						/*!
                          * @brief This function gets the timeout value.
 						 * @return Timeout value.
@@ -113,7 +115,7 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        ProxyTransport(std::string &remoteServiceName, int domainId = 0, long milliseconds = 10000L);
+                        ProxyTransport(std::string &remoteServiceName, std::string &instanceName, int domainId = 0, long milliseconds = 10000L);
 
                     private:
 
@@ -130,6 +132,8 @@ namespace eprosima
                         std::map<const char*, ProxyProcedureEndpoint*> m_procedureEndpoints;
 
                         std::string m_remoteServiceName;
+
+                        std::string m_instanceName;
 
                         long m_timeout;
 

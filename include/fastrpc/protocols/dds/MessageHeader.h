@@ -28,178 +28,168 @@ namespace eprosima
         {
             namespace dds
             {
-                /*!
-                 * @brief This class is used to identify clients.
-				 * @ingroup PROTOCOLMODULE
-                 */
-                class FASTRPC_DllAPI Identification
+                typedef uint8_t UnknownOperation;
+                typedef uint8_t UnknownException;
+
+                class FASTRPC_DllAPI GUID_t
                 {
                     public:
 
-                        //! @brief Default constructor
-                        Identification();
+                        GUID_t();
 
-                        /*!
-                         * @brief Copy constructor
-                         * @param id Identification object to be copied.
-                         */
-                        Identification(const Identification &id);
+                        GUID_t(const GUID_t &guid);
 
-                        /*!
-                         * @brief Copy constructor
-                         * @param id Identification object to be copied.
-                         */
-                        Identification(Identification &&id);
+                        ~GUID_t();
 
-                        //! @brief Destructor
-                        ~Identification();
+                        GUID_t& operator=(const GUID_t &guid);
 
-                        /*!
-                         * @brief Copy assignment
-                         * @param id Identification object to be copied.
-                         */
-                        Identification& operator=(const Identification &id);
-
-                        /*!
-                         * @brief Copy assignment
-                         * @param id Identification object to be copied.
-                         */
-                        Identification& operator=(Identification &&id);
-
-                        /*!
-                         * @brief This function sets the first value of the client identifier.
-                         * @param _value_1 First value of the client identifier.
-                         */
-                        inline void value_1(uint32_t _value_1)
+                        inline uint8_t* value()
                         {
-                            m_value_1 = _value_1;
+                            return m_value;
                         }
 
                         /*!
-                         * @brief This function returns the first value of the client identifier.
-                         * @return First value of the client identifier.
-                         */
-                        inline uint32_t value_1() const
-                        {
-                            return m_value_1;
-                        }
-
-                        /*!
-                         * @brief This function returns the first value of the client identifier.
-                         * @return First value of the client identifier.
-                         */
-                        inline uint32_t& value_1()
-                        {
-                            return m_value_1;
-                        }
-
-                        /*!
-                         * @brief This function sets the second value of the client identifier.
-                         * @param _value_2 Second value of the client identifier.
-                         */
-                        inline void value_2(uint32_t _value_2)
-                        {
-                            m_value_2 = _value_2;
-                        }
-
-                        /*!
-                         * @brief This function returns the second value of the client identifier.
-                         * @return Second value of the client identifier.
-                         */
-                        inline uint32_t value_2() const
-                        {
-                            return m_value_2;
-                        }
-
-                        /*!
-                         * @brief This function returns the second value of the client identifier.
-                         * @return Second value of the client identifier.
-                         */
-                        inline uint32_t& value_2()
-                        {
-                            return m_value_2;
-                        }
-
-                        /*!
-                         * @brief This function sets the third value of the client identifier.
-                         * @param _value_3 Third value of the client identifier.
-                         */
-                        inline void value_3(uint32_t _value_3)
-                        {
-                            m_value_3 = _value_3;
-                        }
-
-                        /*!
-                         * @brief This function returns the third value of the client identifier.
-                         * @return Third value of the client identifier.
-                         */
-                        inline uint32_t value_3() const
-                        {
-                            return m_value_3;
-                        }
-
-                        /*!
-                         * @brief This function returns the third value of the client identifier.
-                         * @return Third value of the client identifier.
-                         */
-                        inline uint32_t& value_3()
-                        {
-                            return m_value_3;
-                        }
-
-                        /*!
-                         * @brief This function sets the fourth value of the client identifier.
-                         * @param _value_4 Fourth value of the client identifier.
-                         */
-                        inline void value_4(uint32_t _value_4)
-                        {
-                            m_value_4 = _value_4;
-                        }
-
-                        /*!
-                         * @brief This function returns the fourth value of the client identifier.
-                         * @return Fourth value of the client identifier.
-                         */
-                        inline uint32_t value_4() const
-                        {
-                            return m_value_4;
-                        }
-
-                        /*!
-                         * @brief This function returns the fourth value of the client identifier.
-                         * @return Fourth value of the client identifier.
-                         */
-                        inline uint32_t& value_4()
-                        {
-                            return m_value_4;
-                        }
-
-                        /*!
-                         * @brief This function returns the maximum serialized size of a Identification object
+                         * @brief This function returns the maximum serialized size of a GUID_t object
                          * depending on the buffer alignment.
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
-                         * @brief This function serializes the Identification object using CDR serialization.
+                         * @brief This function serializes the GUID_t object using CDR serialization.
                          * @param cdr CDR serialization object.
                          */
                         void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
                         /*!
-                         * @brief This function deserializes the Identification object using CDR serialization.
+                         * @brief This function deserializes the GUID_t object using CDR serialization.
                          * @param cdr CDR serialization object.
                          */
                         void deserialize(eprosima::fastcdr::Cdr &cdr);
 
                     private:
 
-                        uint32_t m_value_1;
-                        uint32_t m_value_2;
-                        uint32_t m_value_3;
-                        uint32_t m_value_4;
+                        uint8_t m_value[16];
+                };
+
+                /*!
+                 * @brief This class is used to identify clients.
+				 * @ingroup PROTOCOLMODULE
+                 */
+                class FASTRPC_DllAPI SampleIdentity_t
+                {
+                    public:
+
+                        //! @brief Default constructor
+                        SampleIdentity_t();
+
+                        /*!
+                         * @brief Copy constructor
+                         * @param id SampleIdentity_t object to be copied.
+                         */
+                        SampleIdentity_t(const SampleIdentity_t &id);
+
+                        /*!
+                         * @brief Copy constructor
+                         * @param id SampleIdentity_t object to be copied.
+                         */
+                        SampleIdentity_t(SampleIdentity_t &&id);
+
+                        //! @brief Destructor
+                        ~SampleIdentity_t();
+
+                        /*!
+                         * @brief Copy assignment
+                         * @param id SampleIdentity_t object to be copied.
+                         */
+                        SampleIdentity_t& operator=(const SampleIdentity_t &id);
+
+                        /*!
+                         * @brief Copy assignment
+                         * @param id SampleIdentity_t object to be copied.
+                         */
+                        SampleIdentity_t& operator=(SampleIdentity_t &&id);
+
+                        inline void guid(const GUID_t &_guid)
+                        {
+                            m_guid = _guid;
+                        }
+
+                        inline void guid(GUID_t &&_guid)
+                        {
+                            m_guid = std::move(_guid);
+                        }
+
+                        /*!
+                         * @brief This function returns the client identifier.
+                         * @return Client identifier
+                         */
+                        inline const GUID_t& guid() const
+                        {
+                            return m_guid;
+                        }
+
+                        /*!
+                         * @brief This function returns the client identifier.
+                         * @return Client identifier
+                         */
+                        inline GUID_t& guid()
+                        {
+                            return m_guid;
+                        }
+
+                        /*!
+                         * @brief This function sets the fourth value of the client identifier.
+                         * @param _value_4 Fourth value of the client identifier.
+                         */
+                        inline void sequence_number(int64_t _sequence_number)
+                        {
+                            m_sequence_number = _sequence_number;
+                        }
+
+                        /*!
+                         * @brief This function returns the fourth value of the client identifier.
+                         * @return Fourth value of the client identifier.
+                         */
+                        inline int64_t sequence_number() const
+                        {
+                            return m_sequence_number;
+                        }
+
+                        /*!
+                         * @brief This function returns the fourth value of the client identifier.
+                         * @return Fourth value of the client identifier.
+                         */
+                        inline int64_t& sequence_number()
+                        {
+                            return m_sequence_number;
+                        }
+
+                        /*!
+                         * @brief This function returns the maximum serialized size of a SampleIdentity_t object
+                         * depending on the buffer alignment.
+                         * @param current_alignment Buffer alignment.
+                         * @return Maximum serialized size.
+                         */
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
+
+                        /*!
+                         * @brief This function serializes the SampleIdentity_t object using CDR serialization.
+                         * @param cdr CDR serialization object.
+                         */
+                        void serialize(eprosima::fastcdr::Cdr &cdr) const;
+
+                        /*!
+                         * @brief This function deserializes the SampleIdentity_t object using CDR serialization.
+                         * @param cdr CDR serialization object.
+                         */
+                        void deserialize(eprosima::fastcdr::Cdr &cdr);
+
+                    private:
+
+                        GUID_t m_guid;
+                        int64_t m_sequence_number;
                 };
 
                 /*!
@@ -244,83 +234,76 @@ namespace eprosima
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void clientId(const Identification &_clientId)
+                        inline void request_id(const SampleIdentity_t &_request_id)
                         {
-                            m_clientId = _clientId;
+                            m_request_id = _request_id;
                         }
 
                         /*!
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void clientId(Identification &&_clientId)
+                        inline void request_id(SampleIdentity_t &&_request_id)
                         {
-                            m_clientId = std::move(_clientId);
+                            m_request_id = std::move(_request_id);
                         }
 
                         /*!
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline const Identification& clientId() const
+                        inline const SampleIdentity_t& request_id() const
                         {
-                            return m_clientId;
+                            return m_request_id;
                         }
 
                         /*!
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline Identification& clientId()
+                        inline SampleIdentity_t& request_id()
                         {
-                            return m_clientId;
+                            return m_request_id;
                         }
 
                         /*!
                          * @brief This function sets the server service name.
                          * @param _remoteServiceName Server service name.
                          */
-                        inline void remoteServiceName(const char *_remoteServiceName)
+                        inline void remote_service_name(const char *_remote_service_name)
                         {
-							if(m_remoteServiceName != NULL)
-								free(m_remoteServiceName);
-                            m_remoteServiceName = strdup(_remoteServiceName);
+							if(m_remote_service_name != NULL)
+								free(m_remote_service_name);
+                            m_remote_service_name = strdup(_remote_service_name);
                         }
 
                         /*!
                          * @brief This function returns the server service name.
                          * @return Server service name.
                          */
-                        inline const char* remoteServiceName() const
+                        inline const char* remote_service_name() const
                         {
-                            return m_remoteServiceName;
+                            return m_remote_service_name;
                         }
 
                         /*!
-                         * @brief This function sets the request sequence number
-                         * @param _requestSequenceNumber Request sequence number
+                         * @brief This function sets the server service name.
+                         * @param _remoteServiceName Server service name.
                          */
-                        inline void requestSequenceNumber(uint32_t _requestSequenceNumber)
+                        inline void instance_name(const char *_instance_name)
                         {
-                            m_requestSequenceNumber = _requestSequenceNumber;
+							if(m_instance_name != NULL)
+								free(m_instance_name);
+                            m_instance_name = strdup(_instance_name);
                         }
 
                         /*!
-                         * @brief This function returns the request sequence number
-                         * @return Request sequence number
+                         * @brief This function returns the server service name.
+                         * @return Server service name.
                          */
-                        inline uint32_t requestSequenceNumber() const
+                        inline const char* instance_name() const
                         {
-                            return m_requestSequenceNumber;
-                        }
-
-                        /*!
-                         * @brief This function returns the request sequence number
-                         * @return Request sequence number
-                         */
-                        inline uint32_t& requestSequenceNumber()
-                        {
-                            return m_requestSequenceNumber;
+                            return m_instance_name;
                         }
 
                         /*!
@@ -329,7 +312,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the RequestHeader object using CDR serialization.
@@ -345,12 +328,11 @@ namespace eprosima
 
                     private:
 
-                        Identification m_clientId;
+                        SampleIdentity_t m_request_id;
 
-                        char* m_remoteServiceName;
+                        char* m_remote_service_name;
 
-                        uint32_t m_requestSequenceNumber;
-
+                        char* m_instance_name;
                 };
 
                 /*!
@@ -395,126 +377,36 @@ namespace eprosima
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void clientId(const Identification &_clientId)
+                        inline void request_id(const SampleIdentity_t &_request_id)
                         {
-                            m_clientId = _clientId;
+                            m_request_id = _request_id;
                         }
 
                         /*!
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void clientId(Identification &&_clientId)
+                        inline void request_id(SampleIdentity_t &&_request_id)
                         {
-                            m_clientId = std::move(_clientId);
+                            m_request_id = std::move(_request_id);
                         }
 
                         /*!
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline const Identification& clientId() const
+                        inline const SampleIdentity_t& request_id() const
                         {
-                            return m_clientId;
+                            return m_request_id;
                         }
 
                         /*!
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline Identification& clientId()
+                        inline SampleIdentity_t& request_id()
                         {
-                            return m_clientId;
-                        }
-
-                        /*!
-                         * @brief This function sets the request sequence number
-                         * @param _requestSequenceNumber Request sequence number
-                         */
-                        inline void requestSequenceNumber(uint32_t _requestSequenceNumber)
-                        {
-                            m_requestSequenceNumber = _requestSequenceNumber;
-                        }
-
-                        /*!
-                         * @brief This function returns the request sequence number
-                         * @return Request sequence number
-                         */
-                        inline uint32_t requestSequenceNumber() const
-                        {
-                            return m_requestSequenceNumber;
-                        }
-
-                        /*!
-                         * @brief This function returns the request sequence number
-                         * @return Request sequence number
-                         */
-                        inline uint32_t& requestSequenceNumber()
-                        {
-                            return m_requestSequenceNumber;
-                        }
-
-                        /*!
-                         * @brief This function sets the server return code
-                         * @param _retCode Server return code
-                         */
-                        inline void retCode(int32_t _retCode)
-                        {
-                            m_retCode = _retCode;
-                        }
-
-                        /*!
-                         * @brief This function returns the server return code
-                         * @return Server return code
-                         */
-                        inline int32_t retCode() const
-                        {
-                            return m_retCode;
-                        }
-
-                        /*!
-                         * @brief This function returns the server return code
-                         * @return Server return code
-                         */
-                        inline int32_t& retCode()
-                        {
-                            return m_retCode;
-                        }
-
-                        /*!
-                         * @brief This function sets the server return message.
-                         * @param _retMsg Server return message
-                         */
-                        inline void retMsg(const std::string &_retMsg)
-                        {
-                            m_retMsg = _retMsg;
-                        }
-
-                        /*!
-                         * @brief This function sets the server return message.
-                         * @param _retMsg Server return message
-                         */
-                        inline void retMsg(std::string &&_retMsg)
-                        {
-                            m_retMsg = std::move(_retMsg);
-                        }
-
-                        /*!
-                         * @brief This function returns the server return message.
-                         * @return Server return message
-                         */
-                        inline const std::string& retMsg() const
-                        {
-                            return m_retMsg;
-                        }
-
-                        /*!
-                         * @brief This function returns the server return message.
-                         * @return Server return message
-                         */
-                        inline std::string& retMsg()
-                        {
-                            return m_retMsg;
+                            return m_request_id;
                         }
 
                         /*!
@@ -523,7 +415,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the ReplyHeader object using CDR serialization.
@@ -539,13 +431,7 @@ namespace eprosima
 
                     private:
 
-                        Identification m_clientId;
-
-                        uint32_t m_requestSequenceNumber;
-
-                        int32_t m_retCode;
-
-                        std::string m_retMsg;
+                        SampleIdentity_t m_request_id;
                 };
             } // namespace dds
         } // namespace protocol

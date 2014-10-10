@@ -16,6 +16,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header
 
 #include "$ctx.filename$.h"
 #include "$ctx.product$/protocols/dds/MessageHeader.h"
+#include "$ctx.product$/utils/Messages.h"
 
 #include <cstddef>
 
@@ -52,43 +53,43 @@ $export_list$
  * @brief This class represents the union used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $interface.name$Request_union
+class user_cpp_DllExport $interface.name$_Call
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $interface.name$Request_union();
+    $interface.name$_Call();
     
     /*!
      * @brief Destructor.
      */
-    ~$interface.name$Request_union();
+    ~$interface.name$_Call();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $interface.name$Request_union that will be copied.
+     * @param x Reference to the object $interface.name$_Call that will be copied.
      */
-    $interface.name$Request_union(const $interface.name$Request_union &x);
+    $interface.name$_Call(const $interface.name$_Call &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $interface.name$Request_union that will be copied.
+     * @param x Reference to the object $interface.name$_Call that will be copied.
      */
-    $interface.name$Request_union($interface.name$Request_union &&x);
+    $interface.name$_Call($interface.name$_Call &&x);
     
     /*!
      * @brief Copy assignment.
-     * @param x Reference to the object $interface.name$Request_union that will be copied.
+     * @param x Reference to the object $interface.name$_Call that will be copied.
      */
-    $interface.name$Request_union& operator=(const $interface.name$Request_union &x);
+    $interface.name$_Call& operator=(const $interface.name$_Call &x);
     
     /*!
      * @brief Move assignment.
-     * @param x Reference to the object $interface.name$Request_union that will be copied.
+     * @param x Reference to the object $interface.name$_Call that will be copied.
      */
-    $interface.name$Request_union& operator=($interface.name$Request_union &&x);
+    $interface.name$_Call& operator=($interface.name$_Call &&x);
     
     /*!
      * @brief This function sets the discriminator value.
@@ -109,7 +110,13 @@ public:
      */
     int32_t& _d();
 
-    $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="Request")$}; separator="\n"$
+    void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
+
+    eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
+
+    eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
+
+    $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="_In")$}; separator="\n"$
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -142,122 +149,123 @@ public:
 private:
     int32_t m__d;
 
-    $interface.operations : { operation |$operation.parent.name$_$operation.name$Request m_$operation.name$;}; separator="\n"$
+    eprosima::rpc::protocol::dds::UnknownOperation m_unknown_operation;
+    $interface.operations : { operation |$operation.parent.name$_$operation.name$_In m_$operation.name$;}; separator="\n"$
 };
 
 /*!
- * @brief This class represents the structure $interface.name$Request that can be used to send/receive requests
+ * @brief This class represents the structure $interface.name$_Request that can be used to send/receive requests
  * for the interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $interface.name$Request
+class user_cpp_DllExport $interface.name$_Request
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $interface.name$Request();
+    $interface.name$_Request();
     
     /*!
      * @brief Destructor.
      */
-    ~$interface.name$Request();
+    ~$interface.name$_Request();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $interface.name$Request that will be copied.
+     * @param x Reference to the object $interface.name$_Request that will be copied.
      */
-    $interface.name$Request(const $interface.name$Request &x);
+    $interface.name$_Request(const $interface.name$_Request &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $interface.name$Request that will be copied.
+     * @param x Reference to the object $interface.name$_Request that will be copied.
      */
-    $interface.name$Request($interface.name$Request &&x);
+    $interface.name$_Request($interface.name$_Request &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
-    $interface.name$Request& operator=(const $interface.name$Request &x);
+    $interface.name$_Request& operator=(const $interface.name$_Request &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
-    $interface.name$Request& operator=($interface.name$Request &&x);
+    $interface.name$_Request& operator=($interface.name$_Request &&x);
 
     /*!
      * @brief This method sets the request header information.
-     * @param __header Request header.
+     * @param _header Request header.
      */
-    inline void _header(const eprosima::rpc::protocol::dds::RequestHeader &__header)
+    inline void header(const eprosima::rpc::protocol::dds::RequestHeader &_header)
     {
-        m__header = __header;
+        m_header = _header;
     }
 
     /*!
      * @brief This method sets the request header information.
-     * @param __header Request header.
+     * @param _header Request header.
      */
-    inline void _header(eprosima::rpc::protocol::dds::RequestHeader &&__header)
+    inline void header(eprosima::rpc::protocol::dds::RequestHeader &&_header)
     {
-        m__header = std::move(__header);
+        m_header = std::move(_header);
     }
 
     /*!
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline const eprosima::rpc::protocol::dds::RequestHeader& _header() const
+    inline const eprosima::rpc::protocol::dds::RequestHeader& header() const
     {
-        return m__header;
+        return m_header;
     }
 
     /*!
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline eprosima::rpc::protocol::dds::RequestHeader& _header()
+    inline eprosima::rpc::protocol::dds::RequestHeader& header()
     {
-        return m__header;
+        return m_header;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
-     * @param _unio Union.
+     * @param _request Union.
      */
-    inline void unio(const $interface.name$Request_union &_unio)
+    inline void request(const $interface.name$_Call &_request)
     {
-        m_unio = _unio;
+        m_request = _request;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
-     * @param _unio Union.
+     * @param _request Union.
      */
-    inline void unio($interface.name$Request_union &&_unio)
+    inline void request($interface.name$_Call &&_request)
     {
-        m_unio = std::move(_unio);
+        m_request = std::move(_request);
     }
 
     /*!
      * @brief This method returns the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline const $interface.name$Request_union& unio() const
+    inline const $interface.name$_Call& request() const
     {
-        return m_unio;
+        return m_request;
     }
 
     /*!
      * @brief This method returns the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline $interface.name$Request_union& unio()
+    inline $interface.name$_Call& request()
     {
-        return m_unio;
+        return m_request;
     }
 
     /*!
@@ -290,52 +298,52 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::RequestHeader m__header;
+    eprosima::rpc::protocol::dds::RequestHeader m_header;
 
-    $interface.name$Request_union m_unio;
+    $interface.name$_Call m_request;
 };
 
 /*!
  * @brief This class represents the union used in the DDS topic to encapsulate the operations in reply samples.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $interface.name$Reply_union
+class user_cpp_DllExport $interface.name$_Return
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $interface.name$Reply_union();
+    $interface.name$_Return();
     
     /*!
      * @brief Destructor.
      */
-    ~$interface.name$Reply_union();
+    ~$interface.name$_Return();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $interface.name$Reply_union that will be copied.
+     * @param x Reference to the object $interface.name$_Return that will be copied.
      */
-    $interface.name$Reply_union(const $interface.name$Reply_union &x);
+    $interface.name$_Return(const $interface.name$_Return &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $interface.name$Reply_union that will be copied.
+     * @param x Reference to the object $interface.name$_Return that will be copied.
      */
-    $interface.name$Reply_union($interface.name$Reply_union &&x);
+    $interface.name$_Return($interface.name$_Return &&x);
     
     /*!
      * @brief Copy assignment.
-     * @param x Reference to the object $interface.name$Reply_union that will be copied.
+     * @param x Reference to the object $interface.name$_Return that will be copied.
      */
-    $interface.name$Reply_union& operator=(const $interface.name$Reply_union &x);
+    $interface.name$_Return& operator=(const $interface.name$_Return &x);
     
     /*!
      * @brief Move assignment.
-     * @param x Reference to the object $interface.name$Reply_union that will be copied.
+     * @param x Reference to the object $interface.name$_Return that will be copied.
      */
-    $interface.name$Reply_union& operator=($interface.name$Reply_union &&x);
+    $interface.name$_Return& operator=($interface.name$_Return &&x);
     
     /*!
      * @brief This function sets the discriminator value.
@@ -356,7 +364,13 @@ public:
      */
     int32_t& _d();
 
-    $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="Reply")$}; separator="\n"$
+    void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
+
+    eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
+
+    eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
+
+    $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="_Result")$}; separator="\n"$
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -389,122 +403,124 @@ public:
 private:
     int32_t m__d;
 
-    $interface.operations : { operation |$operation.parent.name$_$operation.name$Reply m_$operation.name$;}; separator="\n"$
+    eprosima::rpc::protocol::dds::UnknownOperation m_unknown_operation;
+
+    $interface.operations : { operation |$operation.parent.name$_$operation.name$_Result m_$operation.name$;}; separator="\n"$
 };
 
 /*!
- * @brief This class represents the structure $interface.name$Reply that can be used to send/receive replies
+ * @brief This class represents the structure $interface.name$_Reply that can be used to send/receive replies
  * for the interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $interface.name$Reply
+class user_cpp_DllExport $interface.name$_Reply
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $interface.name$Reply();
+    $interface.name$_Reply();
     
     /*!
      * @brief Destructor.
      */
-    ~$interface.name$Reply();
+    ~$interface.name$_Reply();
     
     /*
      * @brief Copy constructor.
-     * @param x Reference to the object $interface.name$Reply that will be copied.
+     * @param x Reference to the object $interface.name$_Reply that will be copied.
      */
-    $interface.name$Reply(const $interface.name$Reply &x);
+    $interface.name$_Reply(const $interface.name$_Reply &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $interface.name$Reply that will be copied.
+     * @param x Reference to the object $interface.name$_Reply that will be copied.
      */
-    $interface.name$Reply($interface.name$Reply &&x);
+    $interface.name$_Reply($interface.name$_Reply &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
-    $interface.name$Reply& operator=(const $interface.name$Reply &x);
+    $interface.name$_Reply& operator=(const $interface.name$_Reply &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $interface.name$ that will be copied.
      */
-    $interface.name$Reply& operator=($interface.name$Reply &&x);
+    $interface.name$_Reply& operator=($interface.name$_Reply &&x);
 
     /*!
      * @brief This method sets the reply header information.
-     * @param __header Reply header.
+     * @param _header Reply header.
      */
-    inline void _header(const eprosima::rpc::protocol::dds::ReplyHeader &__header)
+    inline void header(const eprosima::rpc::protocol::dds::ReplyHeader &_header)
     {
-        m__header = __header;
+        m_header = _header;
     }
 
     /*!
      * @brief This method sets the reply header information.
-     * @param __header Reply header.
+     * @param _header Reply header.
      */
-    inline void _header(eprosima::rpc::protocol::dds::ReplyHeader &&__header)
+    inline void header(eprosima::rpc::protocol::dds::ReplyHeader &&_header)
     {
-        m__header = std::move(__header);
+        m_header = std::move(_header);
     }
 
     /*!
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline const eprosima::rpc::protocol::dds::ReplyHeader& _header() const
+    inline const eprosima::rpc::protocol::dds::ReplyHeader& header() const
     {
-        return m__header;
+        return m_header;
     }
 
     /*!
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline eprosima::rpc::protocol::dds::ReplyHeader& _header()
+    inline eprosima::rpc::protocol::dds::ReplyHeader& header()
     {
-        return m__header;
+        return m_header;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
-     * @param _unio Union.
+     * @param _reply Union.
      */
-    inline void unio(const $interface.name$Reply_union &_unio)
+    inline void reply(const $interface.name$_Return &_reply)
     {
-        m_unio = _unio;
+        m_reply = _reply;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
-     * @param _unio Union.
+     * @param _reply Union.
      */
-    inline void unio($interface.name$Reply_union &&_unio)
+    inline void reply($interface.name$_Return &&_reply)
     {
-        m_unio = std::move(_unio);
-    }
-
-    /*!
-     * @brief This method sets the union that encapsulates the interface operations.
-     * @return Union.
-     */
-    inline const $interface.name$Reply_union& unio() const
-    {
-        return m_unio;
+        m_reply = std::move(_reply);
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline $interface.name$Reply_union& unio()
+    inline const $interface.name$_Return& reply() const
     {
-        return m_unio;
+        return m_reply;
+    }
+
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
+     */
+    inline $interface.name$_Return& reply()
+    {
+        return m_reply;
     }
 
     /*!
@@ -537,9 +553,9 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::ReplyHeader m__header;
+    eprosima::rpc::protocol::dds::ReplyHeader m_header;
 
-    $interface.name$Reply_union m_unio;
+    $interface.name$_Return m_reply;
 };
 >>
 
@@ -551,49 +567,57 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 /*!
- * @brief This class represents the structure $operation.parent.name$_$operation.name$Request that can be used to send/receive requests
+ * @brief This class represents the structure $operation.parent.name$_$operation.name$_In that can be used to send/receive requests
  * for the operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Request
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_In
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Request();
+    $operation.parent.name$_$operation.name$_In();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Request();
+    ~$operation.parent.name$_$operation.name$_In();
     
     /*
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_In that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request(const $operation.parent.name$_$operation.name$Request &x);
+    $operation.parent.name$_$operation.name$_In(const $operation.parent.name$_$operation.name$_In &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Request that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_In that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request($operation.parent.name$_$operation.name$Request &&x);
+    $operation.parent.name$_$operation.name$_In($operation.parent.name$_$operation.name$_In &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request& operator=(const $operation.parent.name$_$operation.name$Request &x);
+    $operation.parent.name$_$operation.name$_In& operator=(const $operation.parent.name$_$operation.name$_In &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Request& operator=($operation.parent.name$_$operation.name$Request &&x);
+    $operation.parent.name$_$operation.name$_In& operator=($operation.parent.name$_$operation.name$_In &&x);
 
+    $if(operation.inputparam)$
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
+    $else$
+    void dummy(int32_t _dummy);
+
+    int32_t dummy();
+
+    int32_t& dummy();
+    $endif$
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -625,53 +649,63 @@ public:
 
 private:
 
+    $if(operation.inputparam)$
     $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
+    $else$
+    int32_t m_dummy;
+    $endif$
 };
 
-$if(operation.exceptions)$
-$if([operation.outputparam, operation.rettype])$
 /*!
  * @brief This class encapsulates output paramaters for operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply_st
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_Out
 {
 public:
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Reply_st();
+    $operation.parent.name$_$operation.name$_Out();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Reply_st();
+    ~$operation.parent.name$_$operation.name$_Out();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Out that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st(const $operation.parent.name$_$operation.name$Reply_st &x);
+    $operation.parent.name$_$operation.name$_Out(const $operation.parent.name$_$operation.name$_Out &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply_st that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Out that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st($operation.parent.name$_$operation.name$Reply_st &&x);
+    $operation.parent.name$_$operation.name$_Out($operation.parent.name$_$operation.name$_Out &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st& operator=(const $operation.parent.name$_$operation.name$Reply_st &x);
+    $operation.parent.name$_$operation.name$_Out& operator=(const $operation.parent.name$_$operation.name$_Out &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply_st& operator=($operation.parent.name$_$operation.name$Reply_st &&x);
+    $operation.parent.name$_$operation.name$_Out& operator=($operation.parent.name$_$operation.name$_Out &&x);
 
+    $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
+    $else$
+    void dummy(int32_t _dummy);
+
+    int32_t dummy();
+
+    int32_t& dummy();
+    $endif$
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -703,56 +737,57 @@ public:
 
 private:
 
+    $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
+    $else$
+    int32_t m_dummy;
+    $endif$
 };
-$endif$
-$endif$
 
 /*!
- * @brief This class represents the structure $operation.parent.name$_$operation.name$Reply that can be used to send/receive replies
+ * @brief This class represents the structure $operation.parent.name$_$operation.name$_Result that can be used to send/receive replies
  * for the operation $operation.parent.name$::$operation.name$.
  * 
  * @ingroup $ctx.trimfilename$
  */
-class user_cpp_DllExport $operation.parent.name$_$operation.name$Reply
+class user_cpp_DllExport $operation.parent.name$_$operation.name$_Result
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    $operation.parent.name$_$operation.name$Reply();
+    $operation.parent.name$_$operation.name$_Result();
     
     /*!
      * @brief Destructor.
      */
-    ~$operation.parent.name$_$operation.name$Reply();
+    ~$operation.parent.name$_$operation.name$_Result();
     
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Result that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply(const $operation.parent.name$_$operation.name$Reply &x);
+    $operation.parent.name$_$operation.name$_Result(const $operation.parent.name$_$operation.name$_Result &x);
     
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object $operation.parent.name$_$operation.name$Reply that will be copied.
+     * @param x Reference to the object $operation.parent.name$_$operation.name$_Result that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply($operation.parent.name$_$operation.name$Reply &&x);
+    $operation.parent.name$_$operation.name$_Result($operation.parent.name$_$operation.name$_Result &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply& operator=(const $operation.parent.name$_$operation.name$Reply &x);
+    $operation.parent.name$_$operation.name$_Result& operator=(const $operation.parent.name$_$operation.name$_Result &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object $operation.parent.name$_$operation.name$ that will be copied.
      */
-    $operation.parent.name$_$operation.name$Reply& operator=($operation.parent.name$_$operation.name$Reply &&x);
+    $operation.parent.name$_$operation.name$_Result& operator=($operation.parent.name$_$operation.name$_Result &&x);
 
-    $if(operation.exceptions)$
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
@@ -772,14 +807,21 @@ public:
      */
     int32_t& _d();
 
-    $if([operation.outputparam, operation.rettype])$
-    $public_exception_union_member_declaration(typename=[operation.parent.name, "_", operation.name, "Reply_st"], name="st")$
-    $endif$
+    void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
+
+    eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
+    
+    eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
+
+    $public_exception_union_member_declaration(typename=[operation.parent.name, "_", operation.name, "_Out"], name="out_")$
+
+    void sysx_(eprosima::rpc::ReturnMessage _sysx_);
+
+    eprosima::rpc::ReturnMessage sysx_() const;
+    
+    eprosima::rpc::ReturnMessage& sysx_();
 
     $operation.exceptions : { exception |$public_exception_union_member_declaration(typename=exception.scopedname, name=[exception.formatedScopedname, "_ex"])$}; separator="\n"$
-    $else$
-    $[operation.outputparam, operation.rettypeparam]:{$public_parameters_declaration(it)$}; separator="\n"$
-    $endif$
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -811,17 +853,15 @@ public:
 
 private:
 
-    $if(operation.exceptions)$
     int32_t m__d;
 
-    $if([operation.outputparam, operation.rettype])$
-    $operation.parent.name$_$operation.name$Reply_st m_st;
-    $endif$
+    eprosima::rpc::protocol::dds::UnknownException m_unknown_exception;
+
+    $operation.parent.name$_$operation.name$_Out m_out_;
+
+    eprosima::rpc::ReturnMessage m_sysx_;
 
     $operation.exceptions : { exception |$exception.scopedname$ m_$exception.formatedScopedname$_ex;}; separator="\n"$
-    $else$
-    $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
-    $endif$
 };
 
 >>

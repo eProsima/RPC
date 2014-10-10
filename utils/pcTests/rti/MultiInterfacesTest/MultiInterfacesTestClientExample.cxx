@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new MultiInterfacesTestProtocol();
-        transport = new UDPProxyTransport("MultiInterfacesTestService");
+        transport = new UDPProxyTransport("MultiInterfacesTestService", "Instance");
         basicproxy = new BasicTypes::BasicTypeTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

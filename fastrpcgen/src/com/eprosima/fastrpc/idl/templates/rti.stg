@@ -85,15 +85,15 @@ ddsIncludes() ::= <<
 >>
 
 reqrepCreation(type, reqrep, name, void, create) ::= <<
-$if(create)$$type$$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$$reqrep$PluginSupport_create_data();
+$if(create)$$type$_$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$_$reqrep$PluginSupport_create_data();
 >>
 
 reqrepDestruction(type, reqrep, name, void) ::= <<
-$type$$reqrep$PluginSupport_destroy_data($if(void)$($type$$reqrep$*)$endif$$name$);
+$type$_$reqrep$PluginSupport_destroy_data($if(void)$($type$_$reqrep$*)$endif$$name$);
 >>
 
 reqrepRefFinalize(type, reqrep, name) ::= <<
-$type$$reqrep$_finalize(&$name$);
+$type$_$reqrep$_finalize(&$name$);
 >>
 
 getTypenameOperation(operation, suffix, varname) ::= <<
@@ -148,18 +148,9 @@ $endif$
 
 addExceptionMemberToTopic(exception, member, varname) ::= <<
 $if(member.typecode.isType_f)$
-memcpy($varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
+memcpy($varname$.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
 $else$
-$varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
-$endif$
-$endif$
->>
-
-addExceptionMemberToTopicByInterface(operation, exception, member, varname) ::= <<
-$if(member.typecode.isType_f)$
-memcpy($varname$.unio._u.$operation.name$._u.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
-$else$
-$varname$.unio._u.$operation.name$._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
+$varname$.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
 $endif$
 $endif$
 >>
@@ -204,17 +195,9 @@ $endif$
 
 extractExceptionMemberFromTopic(exception, member, varname) ::= <<
 $if(member.typecode.isType_f)$
-memcpy(ex.$member.name$, $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
+memcpy(ex.$member.name$, $varname$.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
 $else$
-ex.$member.name$ = $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
-$endif$
->>
-
-extractExceptionMemberFromTopicByInterface(exception, member, varname) ::= <<
-$if(member.typecode.isType_f)$
-memcpy(ex.$member.name$, $varname$._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
-$else$
-ex.$member.name$ = $varname$._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
+ex.$member.name$ = $varname$.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
 >>
 
@@ -283,7 +266,7 @@ bigObjOption() ::= <<
 /*** END Inherate from OpenDDS ***/
 
 unsetReply() ::= <<
-memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - sizeof(replyData._header));
+memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
 >>
 
 /***** NEW OUR_TYPES *****/
@@ -335,53 +318,64 @@ $endif$
 >>
 
 copyHeaderInfo(reqvarname, repvarname) ::= <<
-$repvarname$._header.clientId.value_1 = $reqvarname$._header.clientId.value_1;
-$repvarname$._header.clientId.value_2 = $reqvarname$._header.clientId.value_2;
-$repvarname$._header.clientId.value_3 = $reqvarname$._header.clientId.value_3;
-$repvarname$._header.clientId.value_4 = $reqvarname$._header.clientId.value_4;
-$repvarname$._header.requestSequenceNumber = $reqvarname$._header.requestSequenceNumber;
+memcpy($repvarname$.header.request_id.guid.value, $reqvarname$.header.request_id.guid.value, sizeof($repvarname$.header.request_id.guid.value));
+$repvarname$.header.request_id.sequence_number = $reqvarname$.header.request_id.sequence_number;
 >>
 
-setHeaderSuccess(varname) ::= <<
-$varname$._header.retCode = OPERATION_SUCCESSFUL;
-$varname$._header.retMsg = $charCasting()$"";
+requestUnionByInterface(varname) ::= <<
+$varname$.request
 >>
 
-setHeaderServerInternalException(varname) ::= <<
-$varname$._header.retCode = SERVER_INTERNAL_ERROR;
-$varname$._header.retMsg = $charCasting()$ex.what();
+requestUnionDiscriminatorByInterface(varname) ::= <<
+$requestUnionByInterface(varname=varname)$._d
 >>
 
-getHeaderRetCode(varname) ::= <<
-$varname$._header.retCode
+requestUnionDataByInterface(varname) ::= <<
+$requestUnionByInterface(varname=varname)$._u
 >>
 
-getHeaderRetMsg(varname) ::= <<
-$varname$._header.retMsg
+requestOperationDataByOperation(operation, varname) ::= <<
+$varname$.$operation.name$
 >>
 
-interfaceUnionDiscriminator(varname) ::= <<
-$varname$.unio._d
+requestOperationDataByInterface(operation, varname) ::= <<
+$requestUnionDataByInterface(varname=varname)$.$operation.name$
 >>
 
-interfaceUnionOperation(operation, varname) ::= <<
-$varname$.unio._u.$operation.name$
+replyUnionByInterface(varname) ::= <<
+$varname$.reply
 >>
 
-replyUnionDiscriminator(varname) ::= <<
-$varname$.unio._d
+replyUnionDiscriminatorByInterface(varname) ::= <<
+$replyUnionByInterface(varname=varname)$._d
 >>
 
-replyUnionDiscriminatorByInterface(operation, varname) ::= <<
-$varname$.unio._u.$operation.name$._d
+replyUnionDataByInterface(varname) ::= <<
+$replyUnionByInterface(varname=varname)$._u
 >>
 
-replyUnionData(varname, dataname) ::= <<
-$varname$.unio._u.$dataname$
+replyOperationUnionDiscriminatorByInterface(operation, varname) ::= <<
+$varname$.reply._u.$operation.name$._d
 >>
 
-replyUnionDataByInterface(operation, varname, dataname) ::= <<
-$varname$.unio._u.$operation.name$._u.$dataname$
+replyOperationUnionDiscriminatorByOperation(operation, varname) ::= <<
+$varname$.$operation.name$._d
+>>
+
+replyOperationUnionDataByInterface(operation, varname) ::= <<
+$replyUnionDataByInterface(varname=varname)$.$operation.name$._u
+>>
+
+replyOperationUnionDataByOperation(operation, varname) ::= <<
+$varname$.$operation.name$._u
+>>
+
+replyOperationUnionDataAccessByInterface(operation, varname, dataname) ::= <<
+$replyOperationUnionDataByInterface(operation=operation, varname=varname)$.$dataname$
+>>
+
+replyOperationUnionDataAccessByOperation(operation, varname, dataname) ::= <<
+$replyOperationUnionDataByOperation(operation=operation, varname=varname)$.$dataname$
 >>
 
 eprosimaTypesBool() ::= <<false>>

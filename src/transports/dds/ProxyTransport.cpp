@@ -26,8 +26,8 @@ typedef struct encapsulation
     void *data;
 } encapsulation;
 
-ProxyTransport::ProxyTransport(std::string &remoteServiceName, int domainId, long milliseconds) :
-    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), m_asyncThread(NULL),
+ProxyTransport::ProxyTransport(std::string &remoteServiceName, std::string &instanceName, int domainId, long milliseconds) :
+    m_remoteServiceName(remoteServiceName), m_instanceName(instanceName), m_timeout(milliseconds), m_asyncThread(NULL),
     ::transport::ProxyTransport(), ::transport::dds::Transport(domainId)
 {
     const char* const METHOD_NAME = "ProxyTransport";
@@ -65,6 +65,11 @@ const char* ProxyTransport::getType() const
 std::string& ProxyTransport::getRemoteServiceName()
 {
     return m_remoteServiceName;
+}
+
+std::string& ProxyTransport::getInstanceName()
+{
+    return m_instanceName;
 }
 
 long ProxyTransport::getTimeout()

@@ -66,7 +66,7 @@ namespace eprosima
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        int start(std::string &serviceName);
+                        int start(std::string &serviceName, std::string &instanceName);
 
 						/*!
                          * @brief This method deletes the DDS entities needed to run this DDS Endpoint.
@@ -126,7 +126,7 @@ namespace eprosima
                          * @brief This function creates the DDS entities.
                          * @return A 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
-                        int createEntities(std::string &serviceName);
+                        int createEntities(std::string &serviceName, std::string &instanceName);
 
                         /*!
                          * @brief This function enables the DDS entities.

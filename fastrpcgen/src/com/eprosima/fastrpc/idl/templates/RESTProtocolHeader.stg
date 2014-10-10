@@ -10,10 +10,6 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "RESTProtocol.h"], description=["This 
 #include "$ctx.product$/transports/messages/HttpMessage.h"
 #include "$ctx.product$/utils/Messages.h"
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
-$if(ctx.projectNeedTypes)$
-#include "$ctx.filename$T.h"
-
-$endif$
 
 #include <string>
 

@@ -29,7 +29,7 @@ using namespace ::transport;
 using namespace ::exception;
 
 $ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol(), m_ddsTransport(NULL)
-$ctx.interfaces : { interface |
+$ctx.scopedInterfaces : { interface |
 , $interface.formatedScopedname$_str("$interface.formatedScopedname$")
 $if(ctx.client)$
 , $interface.formatedScopedname$_pe(NULL)
@@ -74,19 +74,19 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
     {
         TransportBehaviour behaviour = dynamic_cast<Transport*>(m_ddsTransport)->getBehaviour();
         
-        $if(first(ctx.interfaces))$
-        if(strcmp(interfaceName, "$first(ctx.interfaces).scopedname$") == 0)
+        $if(first(ctx.scopedInterfaces))$
+        if(strcmp(interfaceName, "$first(ctx.scopedInterfaces).scopedname$") == 0)
         {
-            $getTypenameInterface(interface=first(ctx.interfaces), suffix="Request", varname="requesttypeName")$
+            $getTypenameInterface(interface=first(ctx.scopedInterfaces), suffix="_Request", varname="requesttypeName")$
     
-            if($registerTypenameInterfaceAndCheck(interface=first(ctx.interfaces), suffix="Request", varname="requesttypeName")$)
+            if($registerTypenameInterfaceAndCheck(interface=first(ctx.scopedInterfaces), suffix="_Request", varname="requesttypeName")$)
             {
                 return false;
             }
             
-            $getTypenameInterface(interface=first(ctx.interfaces), suffix="Reply", varname="replytypeName")$
+            $getTypenameInterface(interface=first(ctx.scopedInterfaces), suffix="_Reply", varname="replytypeName")$
     
-            if($registerTypenameInterfaceAndCheck(interface=first(ctx.interfaces), suffix="Reply", varname="replytypeName")$)
+            if($registerTypenameInterfaceAndCheck(interface=first(ctx.scopedInterfaces), suffix="_Reply", varname="replytypeName")$)
             {
                 return false;
             }
@@ -94,46 +94,46 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             $if(ctx.client)$
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
-                $first(ctx.interfaces).formatedScopedname$_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_str,
+                $first(ctx.scopedInterfaces).formatedScopedname$_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.scopedInterfaces).formatedScopedname$_str,
                 requesttypeName,
                 replytypeName,
                 $eprosimaTypesBool()$,
-                $createDataCallbackInterface(interface=first(ctx.interfaces), suffix="Reply")$,
-                $copyDataCallbackInterface(interface=first(ctx.interfaces), suffix="Reply")$,
-                $destroyDataCallbackInterface(interface=first(ctx.interfaces), suffix="Reply")$,
+                $createDataCallbackInterface(interface=first(ctx.scopedInterfaces), suffix="_Reply")$,
+                $copyDataCallbackInterface(interface=first(ctx.scopedInterfaces), suffix="_Reply")$,
+                $destroyDataCallbackInterface(interface=first(ctx.scopedInterfaces), suffix="_Reply")$,
                 NULL,
-                sizeof($first(ctx.interfaces).scopedname$Reply)
+                sizeof($first(ctx.scopedInterfaces).scopedname$_Reply)
                 ));
             }
             $endif$
             $if(ctx.server)$
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
             {
-                $first(ctx.interfaces).formatedScopedname$_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.interfaces).formatedScopedname$_str,
+                $first(ctx.scopedInterfaces).formatedScopedname$_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.scopedInterfaces).formatedScopedname$_str,
                     replytypeName,
                     requesttypeName,
 		            $eprosimaTypesBool()$,
-                    $createDataCallbackInterface(interface=first(ctx.interfaces), suffix="Request")$,
-                    $copyDataCallbackInterface(interface=first(ctx.interfaces), suffix="Request")$,
-                    $destroyDataCallbackInterface(interface=first(ctx.interfaces), suffix="Request")$,
-                    $ctx.filename$Protocol::$first(ctx.interfaces).formatedScopedname$_serve,
-                    sizeof($first(ctx.interfaces).scopedname$Request)));
+                    $createDataCallbackInterface(interface=first(ctx.scopedInterfaces), suffix="_Request")$,
+                    $copyDataCallbackInterface(interface=first(ctx.scopedInterfaces), suffix="_Request")$,
+                    $destroyDataCallbackInterface(interface=first(ctx.scopedInterfaces), suffix="_Request")$,
+                    $ctx.filename$Protocol::$first(ctx.scopedInterfaces).formatedScopedname$_serve,
+                    sizeof($first(ctx.scopedInterfaces).scopedname$_Request)));
             }
             $endif$
         }
-        $rest(ctx.interfaces) : {interface |
+        $rest(ctx.scopedInterfaces) : {interface |
         else if(strcmp(interfaceName, "$interface.scopedname$") == 0)
         {
-            $getTypenameInterface(interface=interface, suffix="Request", varname="requesttypeName")$
+            $getTypenameInterface(interface=interface, suffix="_Request", varname="requesttypeName")$
     
-            if($registerTypenameInterfaceAndCheck(interface=interface, suffix="Request", varname="requesttypeName")$)
+            if($registerTypenameInterfaceAndCheck(interface=interface, suffix="_Request", varname="requesttypeName")$)
             {
                 return false;
             }
             
-            $getTypenameInterface(interface=interface, suffix="Reply", varname="replytypeName")$
+            $getTypenameInterface(interface=interface, suffix="_Reply", varname="replytypeName")$
     
-            if($registerTypenameInterfaceAndCheck(interface=interface, suffix="Reply", varname="replytypeName")$)
+            if($registerTypenameInterfaceAndCheck(interface=interface, suffix="_Reply", varname="replytypeName")$)
             {
                 return false;
             }
@@ -145,11 +145,11 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 requesttypeName,
                 replytypeName,
                 $eprosimaTypesBool()$,
-                $createDataCallbackInterface(interface=interface, suffix="Reply")$,
-                $copyDataCallbackInterface(interface=interface, suffix="Reply")$,
-                $destroyDataCallbackInterface(interface=interface, suffix="Reply")$,
+                $createDataCallbackInterface(interface=interface, suffix="_Reply")$,
+                $copyDataCallbackInterface(interface=interface, suffix="_Reply")$,
+                $destroyDataCallbackInterface(interface=interface, suffix="_Reply")$,
                 NULL,
-                sizeof($interface.scopedname$Reply)
+                sizeof($interface.scopedname$_Reply)
                 ));
             }
             $endif$
@@ -160,11 +160,11 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                     replytypeName,
                     requesttypeName,
 		            $eprosimaTypesBool()$,
-                    $createDataCallbackInterface(interface=interface, suffix="Request")$,
-                    $copyDataCallbackInterface(interface=interface, suffix="Request")$,
-                    $destroyDataCallbackInterface(interface=interface, suffix="Request")$,
+                    $createDataCallbackInterface(interface=interface, suffix="_Request")$,
+                    $copyDataCallbackInterface(interface=interface, suffix="_Request")$,
+                    $destroyDataCallbackInterface(interface=interface, suffix="_Request")$,
                     $ctx.filename$Protocol::$interface.formatedScopedname$_serve,
-                    sizeof($interface.scopedname$Request)));
+                    sizeof($interface.scopedname$_Request)));
             }
             $endif$
         }
@@ -201,25 +201,25 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
     void *data , eprosima::rpc::transport::Endpoint *endpoint)
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
-    $interface.scopedname$Request &requestData = *($interface.scopedname$Request*)data;
+    $interface.scopedname$_Request &requestData = *($interface.scopedname$_Request*)data;
 
-    switch($interfaceUnionDiscriminator(varname="requestData")$)
+    switch($requestUnionDiscriminatorByInterface(varname="requestData")$)
     {
         $interface.operations : { operation |
-        case $i$:
+        case $operation.md5$:
         {
         $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
         $varDecl(variable=operation.rettypeparam, create="yes")$   
         $if(!operation.oneway)$
-        $operation.parent.scopedname$Reply replyData;
+        $operation.parent.scopedname$_Reply replyData;
         $copyHeaderInfo(reqvarname="requestData", repvarname="replyData")$
 
-        $interfaceUnionDiscriminator(varname="replyData")$ = $operation.cardinal$;
+        $replyUnionDiscriminatorByInterface(varname="replyData")$ = $operation.md5$;
         $endif$
 
         $operation.inoutputparam : {param |$if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
 
-        $operation.inputparam : {param | $extractParamFromTopic(param=param, varname=interfaceUnionOperation(operation=operation, varname="requestData"))$};separator="\n"$
+        $operation.inputparam : {param | $extractParamFromTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="requestData"))$};separator="\n"$
 
         try
         {
@@ -228,15 +228,9 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
                 $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 
                 $if(!operation.oneway)$
-                $if(operation.exceptions)$$replyUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = 0;$endif$
+                $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = 0;
 
-                $if(operation.exceptions)$
-                $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyUnionDataByInterface(operation=operation, varname="replyData", dataname="st"))$};separator="\n"$
-                $else$
-                $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=interfaceUnionOperation(operation=operation, varname="replyData"))$};separator="\n"$
-                $endif$
-
-                $setHeaderSuccess(varname="replyData")$
+                $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="replyData", dataname="out_"))$};separator="\n"$
 
                 _protocol.$operation.parent.formatedScopedname$_se->sendReply(&replyData);
                 $endif$
@@ -247,15 +241,13 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
         catch(const $exception.scopedname$ &ex)
         {
             $if(!operation.oneway)$
-            $replyUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = $i$;
+            $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = $exception.md5$;
 
             $if(!ctx.rtiTypes)$
-            replyData.unio().$operation.name$().$exception.formatedScopedname$_ex(std::move(ex));
+            $replyOperationUnionDataByInterface(operation=operation, varname="replyData")$.$exception.formatedScopedname$_ex(std::move(ex));
             $else$
-            $exception.members : { member |$addExceptionMemberToTopicByInterface(operation=operation, exception=exception, member=member, varname="replyData")$}; separator="\n"$
+            $exception.members : { member |$addExceptionMemberToTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="replyData"))$}; separator="\n"$
             $endif$
-
-            $setHeaderSuccess(varname="replyData")$
 
             _protocol.$operation.parent.formatedScopedname$_se->sendReply(&replyData);
             $endif$
@@ -264,8 +256,10 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
         catch(const ServerInternalException &ex)
         {
             $if(!operation.oneway)$
-            $unsetReply()$
-            $setHeaderServerInternalException(varname="replyData")$
+            //TODO Quitar el unsetReply
+            //$unsetReply()$
+            $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = 1;
+            $replyOperationUnionDataAccessByInterface(operation=operation, varname="replyData", dataname="sysx_")$ = $if(ctx.rtiTypes)$(SystemExceptionCode)$endif$SERVER_INTERNAL_ERROR;
 
             _protocol.$operation.parent.formatedScopedname$_se->sendReply(&replyData);
             $endif$
@@ -296,53 +290,48 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $varDecl(variable=operation.rettypeparam)$
-    $operation.parent.scopedname$Request instance;
+    $operation.parent.scopedname$_Request instance;
     $if(!operation.oneway)$
-    $operation.parent.scopedname$Reply retInstance;
+    $operation.parent.scopedname$_Reply retInstance;
 
-    $varComplexInitializeT(typeName=[operation.parent.scopedname, "Reply"], name="retInstance")$
+    $varComplexInitializeT(typeName=[operation.parent.scopedname, "_Reply"], name="retInstance")$
     $endif$
 
-    $interfaceUnionDiscriminator(varname="instance")$ = $operation.cardinal$;
+    $requestUnionDiscriminatorByInterface(varname="instance")$ = $operation.md5$;
     
-    $operation.inputparam : { param |$addParamToTopic(param=param, varname=interfaceUnionOperation(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
+    $operation.inputparam : { param |$addParamToTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
 
     retcode = $operation.parent.formatedScopedname$_pe->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
     
     $if(!operation.oneway)$
-    if(retcode == OPERATION_SUCCESSFUL)
+    if(retcode == OK)
     {
-    
-    $if(operation.exceptions)$
-        switch ($replyUnionDiscriminatorByInterface(operation=operation, varname="retInstance")$)
+        switch ($replyOperationUnionDiscriminatorByInterface(operation=operation, varname="retInstance")$)
         {
             case 0:
-                retcode = (ReturnMessage)$getHeaderRetCode(varname="retInstance")$;
-		        $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyUnionDataByInterface(operation=operation, varname="retInstance", dataname="st"), isReply="yes")$};separator="\n"$
+		        $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="retInstance", dataname="out_"), isReply="yes")$};separator="\n"$
+                break;
+            case 1:
+                retcode = (eprosima::rpc::ReturnMessage)$replyOperationUnionDataAccessByInterface(operation=operation, varname="retInstance", dataname="sysx_")$;
                 break;
             $operation.exceptions : { exception |
-            case $i$:
+            case $exception.md5$:
                 {
                 $exception.scopedname$ ex;
                 // TODO No permite arrays.
                 $if(!ctx.rtiTypes)$
-                ex = retInstance.unio().$operation.name$().$exception.formatedScopedname$_ex();
+                ex = $replyOperationUnionDataByInterface(operation=operation, varname="retInstance")$.$exception.formatedScopedname$_ex();
                 $else$
-                $exception.members : { member |$extractExceptionMemberFromTopicByInterface(exception=exception, member=member, varname=interfaceUnionOperation(operation=operation, varname="retInstance"))$}; separator="\n"$
+                $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="retInstance"))$}; separator="\n"$
                 $endif$
                 
                 ex.raise();
                 }
+                break;
             }; separator="\n"$
             default:
                 throw ClientInternalException("Error extracting information from server");
         }
-        
-    $else$
-        retcode = (ReturnMessage)$getHeaderRetCode(varname="retInstance")$;
-        $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=interfaceUnionOperation(operation=operation, varname="retInstance"), isReply="yes")$};separator="\n"$
-    
-    $endif$
     }
     
     $endif$  
@@ -351,15 +340,15 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
         case CLIENT_INTERNAL_ERROR:
             throw ClientInternalException("Error in client side");
             break;
-        case NO_SERVER:
+        case SERVER_NOT_FOUND:
             throw ServerNotFoundException("Cannot connect to the server");
             break;
         $if(!operation.oneway)$
-        case SERVER_TIMEOUT:
+        case TIMEOUT:
             throw ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException($getHeaderRetMsg(varname="retInstance")$);
+            throw ServerInternalException("");
             break;
         $endif$
         default:
@@ -377,12 +366,12 @@ $if(!operation.oneway)$
 void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    $operation.parent.scopedname$Request instance;
+    $operation.parent.scopedname$_Request instance;
     $operation.parent.scopedname$_$operation.name$Task *task = new $operation.parent.scopedname$_$operation.name$Task(obj);
 
-    $interfaceUnionDiscriminator(varname="instance")$ = $operation.cardinal$;
+    $requestUnionDiscriminatorByInterface(varname="instance")$ = $operation.md5$;
     
-    $operation.inputparam : { param |$addParamToTopic(param=param, varname=interfaceUnionOperation(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
+    $operation.inputparam : { param |$addParamToTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
 
     retcode = $operation.parent.formatedScopedname$_pe->send_async(&instance, task);
     
@@ -391,7 +380,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
         case CLIENT_INTERNAL_ERROR:
             throw ClientInternalException("Error in client side");
             break;
-        case NO_SERVER:
+        case SERVER_NOT_FOUND:
             throw ServerNotFoundException("Cannot connect to the server");
             break;
         default:

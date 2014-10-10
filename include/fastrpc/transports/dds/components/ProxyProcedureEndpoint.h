@@ -185,10 +185,10 @@ namespace eprosima
                         int m_queriesInUseLimiter;
 
                         //! @brief The identifier used as proxy.
-                        unsigned int m_proxyId[4];
+                        uint8_t m_proxyId[16];
 
                         /// \brief The next sequence number for a request.
-                        unsigned int m_numSec;
+                        int64_t m_numSec;
                 };
             } // namespace dds
         } // namespace transport

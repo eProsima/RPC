@@ -20,7 +20,7 @@ function execTest
     # Info about test
     echo "EXECUTING $1 for $NDDSTARGET using operations as topics"
     # Generates the file with FASTRPC script
-    ../../../scripts/rpcddsgen.sh -local -topicGeneration byOperation -d output -example $NDDSTARGET "$1/$1.idl" $test_args
+    ../../../scripts/rpcddsgen.sh -local -topicGeneration byInterface -d output -example $NDDSTARGET "$1/$1.idl" $test_args
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     # Compile client and server example application
@@ -188,7 +188,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
-rm -r output
+#rm -r output
 
 # Restore environment for RPCDDS
 . ../../../thirdparty/dev-env/scripts/common_dds_functions.sh restoreRTIversion

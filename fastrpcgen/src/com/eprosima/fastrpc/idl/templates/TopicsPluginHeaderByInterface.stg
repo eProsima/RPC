@@ -14,7 +14,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.h"], description=["This 
 #ifndef _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
 #define _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
 
-$if(ctx.firstInterface)$
+$if(first(ctx.scopedInterfaces))$
 #include "$ctx.filename$Topics.h"
 $endif$
 
@@ -66,27 +66,27 @@ class user_cpp_DllExport $interface.name$Plugin
 /*!
  * @brief Request DataReader.
  */
-class user_cpp_DllExport $interface.name$RequestDataReader : public DDSDataReader
+class user_cpp_DllExport $interface.name$_RequestDataReader : public DDSDataReader
 {
     public:
 
-        $interface.name$RequestDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
+        $interface.name$_RequestDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
 };
 
 /*!
  * @brief Request DataWriter.
  */
-class user_cpp_DllExport $interface.name$RequestDataWriter : public DDSDataWriter
+class user_cpp_DllExport $interface.name$_RequestDataWriter : public DDSDataWriter
 {
     public:
 
-        $interface.name$RequestDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
+        $interface.name$_RequestDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $interface.name$Request_unionPlugin
+class user_cpp_DllExport $interface.name$_CallPlugin
 {
     public:
 
@@ -96,18 +96,18 @@ class user_cpp_DllExport $interface.name$Request_unionPlugin
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $interface.name$RequestPlugin : public DDSTypeSupport
+class user_cpp_DllExport $interface.name$_RequestPlugin : public DDSTypeSupport
 {
     public:
 
         static const char* get_typename();
 
-        static $interface.scopedname$Request* create_data(void);
+        static $interface.scopedname$_Request* create_data(void);
         
-        static void destroy_data($interface.scopedname$Request *sample);
+        static void destroy_data($interface.scopedname$_Request *sample);
         
-        static void copy_data($interface.scopedname$Request *dst,
-            const $interface.scopedname$Request *src);
+        static void copy_data($interface.scopedname$_Request *dst,
+            const $interface.scopedname$_Request *src);
         
         static unsigned int get_serialized_sample_max_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -120,7 +120,7 @@ class user_cpp_DllExport $interface.name$RequestPlugin : public DDSTypeSupport
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment,
-            const $interface.scopedname$Request * sample);
+            const $interface.scopedname$_Request * sample);
         
         static unsigned int get_serialized_sample_min_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -149,11 +149,11 @@ class user_cpp_DllExport $interface.name$RequestPlugin : public DDSTypeSupport
         
         static RTIBool copy_sample(
             PRESTypePluginEndpointData endpoint_data,
-            $interface.scopedname$Request *dst,
-            const $interface.scopedname$Request *src);
+            $interface.scopedname$_Request *dst,
+            const $interface.scopedname$_Request *src);
         
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
-            const $interface.scopedname$Request *sample, 
+            const $interface.scopedname$_Request *sample, 
             struct RTICdrStream *stream,    
             RTIBool serialize_encapsulation,
             RTIEncapsulationId encapsulation_id,
@@ -161,7 +161,7 @@ class user_cpp_DllExport $interface.name$RequestPlugin : public DDSTypeSupport
             void *endpoint_plugin_qos);
         
         static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
-            $interface.scopedname$Request **sample,
+            $interface.scopedname$_Request **sample,
             RTIBool * drop_sample,
             struct RTICdrStream *stream,   
             RTIBool deserialize_encapsulation,
@@ -200,27 +200,27 @@ class user_cpp_DllExport $interface.name$RequestPlugin : public DDSTypeSupport
 /*!
  * @brief Reply DataReader.
  */
-class user_cpp_DllExport $interface.name$ReplyDataReader : public DDSDataReader
+class user_cpp_DllExport $interface.name$_ReplyDataReader : public DDSDataReader
 {
     public:
 
-        $interface.name$ReplyDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
+        $interface.name$_ReplyDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
 };
 
 /*!
  * @brief Reply DataWriter.
  */
-class user_cpp_DllExport $interface.name$ReplyDataWriter : public DDSDataWriter
+class user_cpp_DllExport $interface.name$_ReplyDataWriter : public DDSDataWriter
 {
     public:
 
-        $interface.name$ReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
+        $interface.name$_ReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $interface.name$Reply_unionPlugin
+class user_cpp_DllExport $interface.name$_ReturnPlugin
 {
     public:
 
@@ -230,18 +230,18 @@ class user_cpp_DllExport $interface.name$Reply_unionPlugin
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $interface.name$ReplyPlugin : public DDSTypeSupport
+class user_cpp_DllExport $interface.name$_ReplyPlugin : public DDSTypeSupport
 {
     public:
 
         static const char* get_typename();
         
-        static $interface.scopedname$Reply* create_data(void);
+        static $interface.scopedname$_Reply* create_data(void);
         
-        static void destroy_data($interface.scopedname$Reply *sample);
+        static void destroy_data($interface.scopedname$_Reply *sample);
         
-        static void copy_data($interface.scopedname$Reply *dst,
-            const $interface.scopedname$Reply *src);
+        static void copy_data($interface.scopedname$_Reply *dst,
+            const $interface.scopedname$_Reply *src);
         
         static unsigned int get_serialized_sample_max_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -254,7 +254,7 @@ class user_cpp_DllExport $interface.name$ReplyPlugin : public DDSTypeSupport
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment,
-            const $interface.scopedname$Reply * sample);
+            const $interface.scopedname$_Reply * sample);
         
         static unsigned int get_serialized_sample_min_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -280,11 +280,11 @@ class user_cpp_DllExport $interface.name$ReplyPlugin : public DDSTypeSupport
         static void on_endpoint_detached(PRESTypePluginEndpointData endpoint_data);
         
         static RTIBool copy_sample(PRESTypePluginEndpointData endpoint_data,
-            $interface.scopedname$Reply *dst,
-            const $interface.scopedname$Reply *src);
+            $interface.scopedname$_Reply *dst,
+            const $interface.scopedname$_Reply *src);
         
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
-            const $interface.scopedname$Reply *sample, 
+            const $interface.scopedname$_Reply *sample, 
             struct RTICdrStream *stream,    
             RTIBool serialize_encapsulation,
             RTIEncapsulationId encapsulation_id,
@@ -292,7 +292,7 @@ class user_cpp_DllExport $interface.name$ReplyPlugin : public DDSTypeSupport
             void *endpoint_plugin_qos);
         
         static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
-            $interface.scopedname$Reply **sample,
+            $interface.scopedname$_Reply **sample,
             RTIBool * drop_sample,
             struct RTICdrStream *stream,   
             RTIBool deserialize_encapsulation,
@@ -350,30 +350,27 @@ operation(ctx, operation, param_list) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $operation.name$RequestPlugin
+class user_cpp_DllExport $operation.name$_InPlugin
 {
     public:
 
         static DDS_TypeCode* get_typecode();
 };
 
-$if(operation.exceptions)$
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $operation.name$Reply_stPlugin
+class user_cpp_DllExport $operation.name$_OutPlugin
 {
     public:
 
         static DDS_TypeCode* get_typecode();
 };
 
-$endif$
-
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $operation.name$ReplyPlugin : public DDSTypeSupport
+class user_cpp_DllExport $operation.name$_ResultPlugin : public DDSTypeSupport
 {
     public:
 

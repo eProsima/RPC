@@ -77,7 +77,7 @@ namespace eprosima
                     
                         eprosima::rpc::transport::dds::Transport *m_ddsTransport;
                     
-                        $ctx.interfaces : { interface |
+                        $ctx.scopedInterfaces : { interface |
                         const char* const $interface.formatedScopedname$_str;
                         
                         $if(ctx.client)$

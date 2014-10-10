@@ -6,16 +6,40 @@
  *
  *************************************************************************/
 
+typedef octet UnknownOperation;
+typedef octet UnknownException;
+
+enum SystemExceptionCode
+{
+    OK,
+    UNIMPLEMENTED,
+    BAD_PARAMETER,
+    PRECONDITION_NOT_MET,
+    OUT_OF_RESOURCES,
+    NOT_ENABLED,
+    ALREADY_DELETED,
+    ILLEGAL_OPERATION,
+    TIMEOUT,
+    INITIALIZE_ERROR,
+    CLIENT_INTERNAL_ERROR,
+    SERVER_INTERNAL_ERROR,
+    SERVER_NOT_FOUND,
+    UNKNOWN
+};
+
+struct GUID_t
+{
+    octet value[16];
+}; //@top-level false 
+
 /*!
  * @brief This structure is used to identify clients.
  */
-struct Identification
+struct SampleIdentity_t
 {
-    unsigned long value_1;
-    unsigned long value_2;
-    unsigned long value_3;
-    unsigned long value_4;
-}; //@top-level false 
+    GUID_t guid;
+    long long sequence_number;
+};
 
 /*!
  * @brief Header information used in all generated request topics.
@@ -23,11 +47,10 @@ struct Identification
 struct RequestHeader
 {
     //! @brief Identification of the client that sends the request.
-    Identification clientId;
+    SampleIdentity_t request_id;
     //! @brief The service's name of the server that has to take this request.
-    string remoteServiceName;
-    //! @brief Sequence number of the request.
-    unsigned long requestSequenceNumber;
+    string<255> remote_service_name;
+    string<255> instance_name;
 }; //@top-level false 
 
 /*!
@@ -36,11 +59,5 @@ struct RequestHeader
 struct ReplyHeader
 {
     //! @brief Identification of the client that sends the associated request to this reply.
-    Identification clientId;
-    //! @brief Sequence number of the associated request to this reply.
-    unsigned long requestSequenceNumber;
-    //! @brief Return message code. Informs of the successful in the operation.
-    long retCode;
-    //! @brief In case of exception this attribute has an error message.
-    string retMsg;
+    SampleIdentity_t request_id;
 }; //@top-level false 

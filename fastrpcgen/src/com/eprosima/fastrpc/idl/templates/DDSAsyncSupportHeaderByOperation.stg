@@ -104,7 +104,7 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
         
         $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
 
-        $operation.parent.name$_$operation.name$Reply m_reply;
+        $operation.parent.name$_$operation.name$_Reply m_reply;
 };
 
 $endif$

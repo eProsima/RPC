@@ -30,11 +30,13 @@ $export_list$
  * @brief This union is used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup $ctx.trimfilename$
  */
-union $interface.name$Request_union switch (long)
+union $interface.name$_Call switch (long)
 {
+    default:
+        UnknownOperation unknown_operation;
     $interface.operations : { operation |
-    case $i$:
-        $operation.parent.name$_$operation.name$Request $operation.name$;
+    case $operation.md5$:
+        $operation.parent.name$_$operation.name$_In $operation.name$;
     }; separator="\n"$
 }; $nolevelIDLdefine()$
 
@@ -44,10 +46,10 @@ union $interface.name$Request_union switch (long)
  * for the interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $interface.name$Request
+struct $interface.name$_Request
 {
-    RequestHeader _header;
-    $interface.name$Request_union unio;
+    RequestHeader header;
+    $interface.name$_Call request;
 }; $levelIDLdefine()$
 
 
@@ -55,11 +57,15 @@ struct $interface.name$Request
  * @brief This union is used in the DDS topic to encapsulate the operations in reply samples.
  * @ingroup $ctx.trimfilename$
  */
-union $interface.name$Reply_union switch (long)
+union $interface.name$_Return switch (long)
 {
+    default:
+        UnknownOperation unknown_operation;
     $interface.operations : { operation |
-    case $i$:
-        $operation.parent.name$_$operation.name$Reply $operation.name$;
+    $if(!operation.oneway)$
+    case $operation.md5$:
+        $operation.parent.name$_$operation.name$_Result $operation.name$;
+    $endif$
     }; separator="\n"$
 }; $nolevelIDLdefine()$
 
@@ -69,10 +75,10 @@ union $interface.name$Reply_union switch (long)
  * for the interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $interface.name$Reply
+struct $interface.name$_Reply
 {
-    ReplyHeader _header;
-    $interface.name$Reply_union unio;
+    ReplyHeader header;
+    $interface.name$_Return reply;
 }; $levelIDLdefine()$
 
 >>
@@ -90,54 +96,43 @@ $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
  * @brief Structure used to receive/send requests for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $operation.parent.name$_$operation.name$Request{
+struct $operation.parent.name$_$operation.name$_In
+{
     $if(operation.inputparam)$
     $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
     $else$
-    char dummy;
+    long dummy;
     $endif$
 }; $nolevelIDLdefine()$
 
-$if(operation.exceptions)$
-$if([operation.outputparam, operation.rettype])$
-/*!
- * @brief This structure encapsulates the output parameters.
- * @ingroup $ctx.trimfilename$
- */
-struct  $operation.parent.name$_$operation.name$Reply_st
+$if(!operation.oneway)$
+struct $operation.parent.name$_$operation.name$_Out
 {
+    $if([operation.outputparam, operation.rettype])$
+    $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
     $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
-    $if(operation.rettype)$$operation.rettype.idlTypename$ $operation.name$_ret;$endif$
+    $else$
+    long dummy;
+    $endif$
 }; $nolevelIDLdefine()$
-$endif$
-$endif$
 
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /*!
  * @brief Structure used to receive/send replies for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-$if(operation.exceptions)$
-union $operation.parent.name$_$operation.name$Reply switch (long)
+union $operation.parent.name$_$operation.name$_Result switch (long)
 {
-   $if([operation.outputparam, operation.rettype])$
-   case  0:
-      $operation.parent.name$_$operation.name$Reply_st st;
-   $endif$
+   default:
+      UnknownException unknown_exception;
+   case 0:
+      $operation.parent.name$_$operation.name$_Out out_;
+   case 1:
+      SystemExceptionCode sysx_;
    $operation.exceptions : { exception |
-   case $i$:
+   case $exception.md5$:
       $exception.scopedname$_t $exception.formatedScopedname$_ex;
    }; separator="\n"$
-}; $nolevelIDLdefine()$
-$else$
-struct $operation.parent.name$_$operation.name$Reply
-{
-    $if([operation.outputparam, operation.rettype])$
-    $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
-    $if(operation.rettype)$$operation.rettype.idlTypename$ $operation.name$_ret;$endif$
-    $else$
-    char dummy;
-    $endif$
 }; $nolevelIDLdefine()$
 $endif$
 

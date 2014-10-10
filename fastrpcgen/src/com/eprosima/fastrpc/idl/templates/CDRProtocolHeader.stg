@@ -43,7 +43,7 @@ namespace eprosima
                         
                         static size_t worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint);
                         
-                        $ctx.interfaces : { interface |
+                        $ctx.scopedInterfaces : { interface |
                         $interface.operations : { operation |
                         $if(ctx.client)$
                         $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);

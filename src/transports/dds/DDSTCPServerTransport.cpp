@@ -13,8 +13,8 @@ static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPServerT
 
 using namespace eprosima::rpc::transport::dds;
 
-TCPServerTransport::TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId) :
-    m_public_address(NULL), m_server_bind_port(NULL), ServerTransport(serviceName, domainId)
+TCPServerTransport::TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, std::string instanceName, int domainId) :
+    m_public_address(NULL), m_server_bind_port(NULL), ServerTransport(serviceName, instanceName, domainId)
 {
     m_public_address = strdup(public_address);
     m_server_bind_port = strdup(server_bind_port);

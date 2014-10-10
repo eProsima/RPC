@@ -49,7 +49,7 @@ namespace eprosima
         {
             namespace dds
             {
-                void get_guid(unsigned int *id, DDS::DataWriter *datawriter);
+                void get_guid(uint8_t (&id)[16], DDS::DataWriter *datawriter);
 
                 void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
 

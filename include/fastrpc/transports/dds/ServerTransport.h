@@ -112,7 +112,7 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        ServerTransport(std::string &serviceName, int domainId = 0);
+                        ServerTransport(std::string &serviceName, std::string &instanceName, int domainId = 0);
 
                     private:
 
@@ -124,6 +124,8 @@ namespace eprosima
                         std::map<const char*, ServerProcedureEndpoint*> m_procedureEndpoints;
 
                         std::string m_serviceName;
+
+                        std::string m_instanceName;
                 };
             } // namespace dds
         } // namespace transport

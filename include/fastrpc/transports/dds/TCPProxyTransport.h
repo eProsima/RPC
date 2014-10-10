@@ -37,7 +37,7 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        TCPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        TCPProxyTransport(const char *to_connect, std::string remoteServiceName, std::string instanceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
                         virtual ~TCPProxyTransport();

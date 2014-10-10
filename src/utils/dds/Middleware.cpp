@@ -14,27 +14,12 @@
 
 static const char* const CLASS_NAME = "eprosima::rpc::util::dds::Middleware";
 
-void eprosima::rpc::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
+void eprosima::rpc::util::dds::get_guid(uint8_t (&id)[16], DDS::DataWriter *datawriter)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     DDS::DataWriterQos wQos;
     datawriter->get_qos(wQos);
-    id[0] = ((wQos.protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[1] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[2] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[3] & 0xFF);
-    id[1] = ((wQos.protocol.virtual_guid.value[4] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[5] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[6] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[7] & 0xFF);
-    id[2] = ((wQos.protocol.virtual_guid.value[8] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[9] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[10] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[11] & 0xFF);
-    id[3] = ((wQos.protocol.virtual_guid.value[12] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[13] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[14] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[15] & 0xFF);
+    memcpy(id, wQos.protocol.virtual_guid.value, sizeof(id));
 #elif defined(OPENDDS)
     OpenDDS::DCPS::DataWriterImpl *wimpl = dynamic_cast<OpenDDS::DCPS::DataWriterImpl*>(datawriter);
     OpenDDS::DCPS::RepoId guid = wimpl->get_publication_id();

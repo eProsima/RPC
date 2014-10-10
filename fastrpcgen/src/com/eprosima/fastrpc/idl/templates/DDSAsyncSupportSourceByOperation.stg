@@ -5,6 +5,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.cxx"], description=["Thi
 
 #include "$ctx.filename$DDSAsyncSupport.h"
 #include "$ctx.product$/exceptions/ServerInternalException.h"
+#include "$ctx.product$/exceptions/ClientInternalException.h"
 #include "$ctx.product$/utils/Messages.h"
 $if(ctx.rtiTypes)$
 $ReqRepIncludes(filename=ctx.filename)$
@@ -47,12 +48,12 @@ $if(!operation.oneway)$
 $operation.parent.name$_$operation.name$Task::$operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj) :
     DDSAsyncTask(), m_obj(obj)
 {
-    $varComplexInitializeT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="m_reply")$
+    $varComplexInitializeT(typeName=[operation.parent.name, "_", operation.name, "_Reply"], name="m_reply")$
 }
 
 $operation.parent.name$_$operation.name$Task::~$operation.parent.name$_$operation.name$Task()
 {
-    $varComplexDelT(typeName=[operation.parent.name, "_", operation.name, "Reply"], name="m_reply")$
+    $varComplexDelT(typeName=[operation.parent.name, "_", operation.name, "_Reply"], name="m_reply")$
 }
 
 $operation.parent.name$_$operation.name$CallbackHandler& $operation.parent.name$_$operation.name$Task::getObject()
@@ -69,49 +70,33 @@ void $operation.parent.name$_$operation.name$Task::execute()
 {  
     $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
     $varDecl(variable=operation.rettypeparam)$
-    ReturnMessage retcode = OPERATION_SUCCESSFUL;
+    ReturnMessage retcode = eprosima::rpc::OK;
     
-    $if(operation.exceptions)$
-    switch ($replyUnionDiscriminator(varname="m_reply")$)
+    switch ($replyOperationUnionDiscriminatorByOperation(operation=operation, varname="m_reply")$)
     {
         case 0:
-            retcode = (ReturnMessage)$getHeaderRetCode(varname="m_reply")$;
-            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyUnionData(varname="m_reply", dataname="st"), isReply="yes")$};separator="\n"$
-            if(retcode == OPERATION_SUCCESSFUL)
-		    {
-		        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
-		    }
-		    else
-		    {
-		        if(retcode == SERVER_INTERNAL_ERROR)
-		            getObject().on_exception(ServerInternalException($getHeaderRetMsg(varname="m_reply")$));
-		    }
+            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="m_reply", dataname="out_"), isReply="yes")$};separator="\n"$
+            getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+            break;
+        case 1:
+            retcode = (eprosima::rpc::ReturnMessage)$replyOperationUnionDataAccessByOperation(operation=operation, varname="m_reply", dataname="sysx_")$;
+            if(retcode == eprosima::rpc::SERVER_INTERNAL_ERROR)
+		        getObject().on_exception(ServerInternalException(""));
             break;
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             {
             $exception.scopedname$ ex;
             // TODO No permite arrays
-            $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname="m_reply")$}; separator="\n"$
+            $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByOperation(operation=operation, varname="m_reply"))$}; separator="\n"$
 
             getObject().on_exception(ex);
             }
+            break;
         }; separator="\n"$
+        default:
+            getObject().on_exception(ClientInternalException("Error extracting information from server"));
     }
-    $else$
-    retcode = (ReturnMessage)$getHeaderRetCode(varname="m_reply")$;
-    $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname="m_reply", isReply="yes")$};separator="\n"$
-        
-    if(retcode == OPERATION_SUCCESSFUL)
-    {
-        getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
-    }
-    else
-    {
-        if(retcode == SERVER_INTERNAL_ERROR)
-            getObject().on_exception(ServerInternalException($getHeaderRetMsg(varname="m_reply")$));
-    }
-    $endif$
 }
 
 void $operation.parent.name$_$operation.name$Task::on_exception(const SystemException &ex)

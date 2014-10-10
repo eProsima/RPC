@@ -61,7 +61,7 @@ int ServerProcedureEndpoint::initialize(const char *name, const char *writertype
     return -1;
 }
 
-int ServerProcedureEndpoint::start(std::string &serviceName)
+int ServerProcedureEndpoint::start(std::string &serviceName, std::string &instanceName)
 {
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
@@ -69,7 +69,7 @@ int ServerProcedureEndpoint::start(std::string &serviceName)
     m_mutex->lock();
     if(m_started++ == 0)
     {
-        if(createEntities(serviceName) == 0)
+        if(createEntities(serviceName, instanceName) == 0)
         {
             if((returnedValue = enableEntities()) != 0)
             {
@@ -127,7 +127,7 @@ void ServerProcedureEndpoint::stop()
     m_mutex->unlock();
 }
 
-int ServerProcedureEndpoint::createEntities(std::string &serviceName)
+int ServerProcedureEndpoint::createEntities(std::string &serviceName, std::string &instanceName)
 {
     const char* const METHOD_NAME = "createEntities";
 
@@ -135,9 +135,9 @@ int ServerProcedureEndpoint::createEntities(std::string &serviceName)
     {
         DDS::StringSeq stringSeq(0);
         stringSeq.length(0);
-        char value[285];
+        char value[570];
 
-        SNPRINTF(value, 285, "_header.remoteServiceName = '%s'", serviceName.c_str());
+        SNPRINTF(value, 570, "header.remote_service_name = '%s' and header.instance_name = '%s'", serviceName.c_str(), instanceName.c_str());
 
         if((m_filter = m_transport.getParticipant()->create_contentfilteredtopic(m_name, m_readerTopic,
                         value, stringSeq)) != NULL)

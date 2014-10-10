@@ -36,10 +36,10 @@ namespace eprosima
                          *        The user has to configure his router for this purpose. For example: "218.18.3.133:7600"
                          * @param server_bind_port Port used by the server in his machine. This port will be used in the router for port forwarding
                          *        between the public port and this port.
-						 * @param remoteServiceName Name of the remote service
+						 * @param serviceName Name of the remote service
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
-                        TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, int domainId = 0);
+                        TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, std::string instanceName, int domainId = 0);
 
 
                         //! @brief Default destructor.

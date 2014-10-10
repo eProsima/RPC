@@ -34,7 +34,7 @@ namespace eprosima
 						 * @param remoteServiceName Name of the service
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        UDPServerTransport(std::string serviceName, int domainId = 0);
+                        UDPServerTransport(std::string serviceName, std::string instanceName, int domainId = 0);
 
                         //! @brief Default destructor.
                         virtual ~UDPServerTransport();

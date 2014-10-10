@@ -21,11 +21,7 @@ namespace eprosima
         {
             namespace dds
             {
-                /*!
-                 * @brief This class offers the functions needed by DDS middleware to use the class Identification.
-				 * @ingroup PROTOCOLMODULE
-                 */
-                class FASTRPC_DllAPI IdentificationPlugin
+                class FASTRPC_DllAPI UnknownOperationPlugin
                 {
                     public:
 
@@ -37,7 +33,67 @@ namespace eprosima
 
                     private:
 
-                            IdentificationPlugin(){}
+                            UnknownOperationPlugin(){}
+                };
+
+                class FASTRPC_DllAPI UnknownExceptionPlugin
+                {
+                    public:
+
+                        /*!
+                         * @brief This function returns the TypeCode.
+                         * @return The TypeCode.
+                         */
+                        static DDS_TypeCode* get_typecode();
+
+                    private:
+
+                            UnknownExceptionPlugin(){}
+                };
+
+                class FASTRPC_DllAPI SystemExceptionCodePlugin
+                {
+                    public:
+
+                        /*!
+                         * @brief This function returns the TypeCode.
+                         * @return The TypeCode.
+                         */
+                        static DDS_TypeCode* get_typecode();
+
+                    private:
+
+                            SystemExceptionCodePlugin(){}
+                };
+
+                class FASTRPC_DllAPI GUID_tPlugin
+                {
+                    public:
+
+                        /*!
+                         * @brief This function returns the TypeCode.
+                         * @return The TypeCode.
+                         */
+                        static DDS_TypeCode* get_typecode();
+
+                    private:
+
+                            GUID_tPlugin(){}
+                };
+
+                class FASTRPC_DllAPI SampleIdentity_tPlugin
+                {
+                    public:
+
+                        /*!
+                         * @brief This function returns the TypeCode.
+                         * @return The TypeCode.
+                         */
+                        static DDS_TypeCode* get_typecode();
+
+                    private:
+
+                            SampleIdentity_tPlugin(){}
                 };
 
                 /*!

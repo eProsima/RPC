@@ -25,16 +25,16 @@ int main(int argc, char **argv)
     ThreadPoolStrategy *pool = NULL;
     $ctx.filename$Protocol *protocol = NULL;
     TCPServerTransport *transport = NULL;
-    $ctx.firstInterface.scopedname$Server *server = NULL;
-    $ctx.firstInterface.name$ServerImplExample servant;
+    $first(ctx.scopedInterfaces).scopedname$Server *server = NULL;
+    $first(ctx.scopedInterfaces).name$ServerImplExample servant;
     
-    // Create and initialize the server for interface "$ctx.firstInterface.scopedname$".
+    // Create and initialize the server for interface "$first(ctx.scopedInterfaces).scopedname$".
     try
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new $ctx.filename$Protocol();
         transport = new TCPServerTransport("127.0.0.1:8080");
-        server = new $ctx.firstInterface.scopedname$Server(*pool, *transport, *protocol, servant);
+        server = new $first(ctx.scopedInterfaces).scopedname$Server(*pool, *transport, *protocol, servant);
         server->serve();
     }
     catch(InitializeException &ex)

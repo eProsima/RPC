@@ -35,62 +35,66 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 
+struct $operation.parent.name$_$operation.name$_In
+{
+    $if(operation.inputparam)$
+    $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+    $else$
+    long dummy;
+    $endif$
+}; $nolevelIDLdefine()$
+
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /*!
  * @brief Topic used to receive/send requests for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $operation.parent.name$_$operation.name$Request{
-    RequestHeader _header;
-    $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+struct $operation.parent.name$_$operation.name$_Request{
+    RequestHeader header;
+    $operation.parent.name$_$operation.name$_In $operation.name$;
 }; $levelIDLdefine()$
 
 $if(!operation.oneway)$
-$if(operation.exceptions)$
-$if([operation.outputparam, operation.rettype])$
 /*!
  * @brief This structure encapsulates the output parameters.
  * @ingroup $ctx.trimfilename$
  */
-struct  $operation.parent.name$_$operation.name$Reply_st
+struct $operation.parent.name$_$operation.name$_Out
 {
-   $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
-   $if(operation.rettype)$$operation.rettype.idlTypename$ $operation.name$_ret;$endif$
+    $if([operation.outputparam, operation.rettype])$
+    $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
+    $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+    $else$
+    long dummy;
+    $endif$
 }; $nolevelIDLdefine()$
-$endif$
 
 /*!
  * @brief This union is used to encapsulate output parameters and user exceptions.
  * @ingroup $ctx.trimfilename$
  */
-union $operation.parent.name$_$operation.name$Reply_union switch (long)
+union $operation.parent.name$_$operation.name$_Result switch (long)
 {
-$if([operation.outputparam, operation.rettype])$
-   case  0:
-      $operation.parent.name$_$operation.name$Reply_st st;
-$endif$
+   default:
+      UnknownException unknown_exception;
+   case 0:
+      $operation.parent.name$_$operation.name$_Out out_;
+   case 1:
+      SystemExceptionCode sysx_;
    $operation.exceptions : { exception |
-   case $i$:
+   case $exception.md5$:
       $exception.scopedname$_t $exception.formatedScopedname$_ex;
    }; separator="\n"$
 }; $nolevelIDLdefine()$
 
-$endif$
 $preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
 /*!
  * @brief Topic used to receive/send replies for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $operation.parent.name$_$operation.name$Reply{
-    ReplyHeader _header;
-$if(operation.exceptions)$
-    $operation.parent.name$_$operation.name$Reply_union unio;
-    
-$else$
-    $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
-    $if(operation.rettype)$$operation.rettype.idlTypename$ $operation.name$_ret;$endif$
-    
-$endif$
+struct $operation.parent.name$_$operation.name$_Reply{
+    ReplyHeader header;
+    $operation.parent.name$_$operation.name$_Result $operation.name$;
 }; $levelIDLdefine()$
 $endif$
 

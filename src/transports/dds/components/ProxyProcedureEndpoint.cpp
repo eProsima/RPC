@@ -135,15 +135,10 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                     {
                         if((m_readerTopic = m_transport.getParticipant()->create_topic(readertypename, readertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                         {
-                            DDS::StringSeq stringSeq(4);
-                            stringSeq.length(4);
-                            stringSeq[0] = strdup("0");
-                            stringSeq[1] = strdup("0");
-                            stringSeq[2] = strdup("0");
-                            stringSeq[3] = strdup("0");
+                            DDS::StringSeq stringSeq(0);
 
                             if((m_filter = m_transport.getParticipant()->create_contentfilteredtopic(name, m_readerTopic,
-                                            "_header.clientId.value_1 = %0 and _header.clientId.value_2 = %1 and _header.clientId.value_3 = %2 and _header.clientId.value_4 = %3",
+                                            "header.request_id.guid.value = &hex(00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00)",
                                             stringSeq)) != NULL)
                             {
                                 DDS::DataReaderQos rQos = DDS::DataReaderQos();
@@ -225,20 +220,14 @@ int ProxyProcedureEndpoint::enableEntities()
                 ::util::dds::get_guid(m_proxyId, m_writer);
 
                 // Set identifier to filter topic.
-                DDS::StringSeq stringSeq(4);
-                char value[50];
+                DDS::StringSeq stringSeq(0);
+                char value[150];
 
-                stringSeq.length(4);
-                SNPRINTF(value, 50, "%u", m_proxyId[0]);
-                stringSeq[0] = strdup(value);
-                SNPRINTF(value, 50, "%u", m_proxyId[1]);
-                stringSeq[1] = strdup(value);
-                SNPRINTF(value, 50, "%u", m_proxyId[2]);
-                stringSeq[2] = strdup(value);
-                SNPRINTF(value, 50, "%u", m_proxyId[3]);
-                stringSeq[3] = strdup(value);
+                SNPRINTF(value, 150, "header.request_id.guid.value = &hex(%02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX)",
+                        m_proxyId[0], m_proxyId[1], m_proxyId[2], m_proxyId[3], m_proxyId[4], m_proxyId[5], m_proxyId[6], m_proxyId[7],
+                        m_proxyId[8], m_proxyId[9], m_proxyId[10], m_proxyId[11], m_proxyId[12], m_proxyId[13], m_proxyId[14], m_proxyId[15]);
 
-                m_filter->set_expression_parameters(stringSeq);
+                m_filter->set_expression(value, stringSeq);
 
                 if(m_readerTopic->enable() == DDS::RETCODE_OK)
                 {
@@ -291,7 +280,7 @@ int ProxyProcedureEndpoint::initQueryPool()
     for(; count < QUERY_POOL_LENGTH; ++count)
     {
         DDS::QueryCondition *query = m_reader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                "_header.requestSequenceNumber = %0", stringSeq);
+                "header.request_id.sequence_number = %0", stringSeq);
         m_queryPool[count] = query;
 
         if(m_queryPool[count] == NULL)
@@ -395,7 +384,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
     boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
-    void *auxPointerToRequest = NULL;
+    char *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
     char **auxPointerToRemoteServiceName = NULL;
     eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
@@ -405,31 +394,32 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
         if(m_eprosima_types)
         {
             requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
-            requestHeader->clientId().value_1(m_proxyId[0]);
-            requestHeader->clientId().value_2(m_proxyId[1]);
-            requestHeader->clientId().value_3(m_proxyId[2]);
-            requestHeader->clientId().value_4(m_proxyId[3]);
-            requestHeader->remoteServiceName(m_transport.getRemoteServiceName().c_str());
+            memcpy(requestHeader->request_id().guid().value(), m_proxyId, sizeof(m_proxyId));
+            requestHeader->remote_service_name(m_transport.getRemoteServiceName().c_str());
+            requestHeader->instance_name(m_transport.getInstanceName().c_str());
         }
         else
         {
-            auxPointerToRequest = request;
-            *(unsigned int*)auxPointerToRequest = m_proxyId[0];
-            ((unsigned int*)auxPointerToRequest)[1] = m_proxyId[1];
-            ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
-            ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
-            auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+            auxPointerToRequest = (char*)request;
+            memcpy(auxPointerToRequest, m_proxyId, sizeof(m_proxyId));
+            auxPointerToRequest += sizeof(m_proxyId);
+            seqAuxPointer = auxPointerToRequest;
+            auxPointerToRequest += sizeof(m_numSec);
             *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
-            auxPointerToRequest = (char**)auxPointerToRequest + 1;
+            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
+            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName().c_str();
+            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
         }
 
+
         m_mutex->lock();
-        /* Thread safe num_Sec handling */
+        // Thread safe num_Sec handling
         if(m_eprosima_types)
-            requestHeader->requestSequenceNumber(m_numSec);
+            requestHeader->request_id().sequence_number(m_numSec);
         else
-            *(unsigned int*)auxPointerToRequest = m_numSec;
+            *(int64_t*)seqAuxPointer = m_numSec;
         numSec = m_numSec;
         ++m_numSec;
 
@@ -445,7 +435,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 
             if(waitSet != NULL)
             {
-                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OPERATION_SUCCESSFUL)
+                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OK)
                 {
                     DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
 
@@ -482,7 +472,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                                     else if(retCode == DDS::RETCODE_TIMEOUT)
                                     {
                                         printf("WARNING <%s::%s>: Time out expiration.\n", CLASS_NAME, METHOD_NAME);
-                                        returnedValue = SERVER_TIMEOUT;
+                                        returnedValue = TIMEOUT;
                                     }
 
                                     waitSet->detach_condition(query);
@@ -499,7 +489,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                         }
                         else
                         {
-                            returnedValue = OPERATION_SUCCESSFUL;
+                            returnedValue = OK;
                         }
                     }
                     else
@@ -510,7 +500,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                 else
                 {
                     printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
-                    returnedValue = NO_SERVER;
+                    returnedValue = SERVER_NOT_FOUND;
                 }
 
                 delete waitSet;
@@ -556,7 +546,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
-    void *auxPointerToRequest = NULL;
+    void *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
     char **auxPointerToRemoteServiceName = NULL;
     eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
@@ -566,31 +556,31 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
         if(m_eprosima_types)
         {
             requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
-            requestHeader->clientId().value_1(m_proxyId[0]);
-            requestHeader->clientId().value_2(m_proxyId[1]);
-            requestHeader->clientId().value_3(m_proxyId[2]);
-            requestHeader->clientId().value_4(m_proxyId[3]);
-            requestHeader->remoteServiceName(m_transport.getRemoteServiceName().c_str());
+            memcpy(requestHeader->request_id().guid().value(), m_proxyId, sizeof(m_proxyId));
+            requestHeader->remote_service_name(m_transport.getRemoteServiceName().c_str());
+            requestHeader->instance_name(m_transport.getInstanceName().c_str());
         }
         else
         {
-            auxPointerToRequest = request;
-            *(unsigned int*)auxPointerToRequest = m_proxyId[0];
-            ((unsigned int*)auxPointerToRequest)[1] = m_proxyId[1];
-            ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
-            ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
-            auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
+            auxPointerToRequest = (char*)request;
+            memcpy(auxPointerToRequest, m_proxyId, sizeof(m_proxyId));
+            auxPointerToRequest += sizeof(m_proxyId);
+            seqAuxPointer = auxPointerToRequest;
+            auxPointerToRequest += sizeof(m_numSec);
             *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
-            auxPointerToRequest = (char**)auxPointerToRequest + 1;
+            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
+            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName().c_str();
+            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
+            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
         }
 
         m_mutex->lock();
         /* Thread safe num_Sec handling */
         if(m_eprosima_types)
-            requestHeader->requestSequenceNumber(m_numSec);
+            requestHeader->request_id().sequence_number(m_numSec);
         else
-            *(unsigned int*)auxPointerToRequest = m_numSec;
+            *(int64_t*)seqAuxPointer = m_numSec;
         numSec = m_numSec;
         ++m_numSec;
 
@@ -604,7 +594,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
 
             if(waitSet != NULL)
             {
-                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OPERATION_SUCCESSFUL)
+                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OK)
                 {
                     DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
 
@@ -621,7 +611,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
                         {
                             task->setProcedureEndpoint(this);
                             if(m_transport.addAsyncTask(query, task, m_transport.getTimeout()) == 0)
-                                returnedValue = OPERATION_SUCCESSFUL;
+                                returnedValue = OK;
                             else
                                 printf("ERROR <%s::%s>: Cannot add asynchronous task\n", CLASS_NAME, METHOD_NAME);
                         }
@@ -638,7 +628,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
                 else
                 {
                     printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
-                    returnedValue = NO_SERVER;
+                    returnedValue = SERVER_NOT_FOUND;
                 }
 
                 delete waitSet;
@@ -649,7 +639,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
             }
 
             // If something was wrong.
-            if(returnedValue != OPERATION_SUCCESSFUL)
+            if(returnedValue != OK)
             {
                 m_mutex->lock();
                 returnUsedQueryToPool(query);
@@ -678,7 +668,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
 ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSet, long timeout)
 {
     const char* const METHOD_NAME = "checkServerConnection";
-    ReturnMessage returnedValue = OPERATION_SUCCESSFUL;
+    ReturnMessage returnedValue = OK;
     DDS::StatusCondition *statusCondition = NULL;
     DDS::ReturnCode_t retCode;
     boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(timeout);
@@ -692,7 +682,7 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
 
         if(pms.current_count < 1)
         {
-            returnedValue = NO_SERVER;
+            returnedValue = SERVER_NOT_FOUND;
             statusCondition = m_writer->get_statuscondition();
 
             if(statusCondition != NULL)
@@ -706,7 +696,7 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
                     retCode = waitSet->wait(conds, ddsTimeout);
 
                     if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
-                        returnedValue = OPERATION_SUCCESSFUL;
+                        returnedValue = OK;
 
                     waitSet->detach_condition(statusCondition);
                 }
@@ -717,7 +707,7 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
             }
         }
 
-        if(returnedValue == OPERATION_SUCCESSFUL && m_reader != NULL)
+        if(returnedValue == OK && m_reader != NULL)
         {
             // Detect reply datawriter from server.
             DDS::SubscriptionMatchedStatus sms;
@@ -725,7 +715,7 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
 
             if(sms.current_count < 1)
             {
-                returnedValue = NO_SERVER;
+                returnedValue = SERVER_NOT_FOUND;
                 statusCondition = m_reader->get_statuscondition();
 
                 if(statusCondition != NULL)
@@ -739,7 +729,7 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
 
                         if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
                         {
-                            returnedValue = OPERATION_SUCCESSFUL;
+                            returnedValue = OK;
                         }
 
                         waitSet->detach_condition(statusCondition);
@@ -792,7 +782,7 @@ ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition
                                 sampleArray, sampleCount, &infoSeq);
                     }
 
-                    returnedValue = OPERATION_SUCCESSFUL;
+                    returnedValue = OK;
                 }
             }
 		    else
@@ -803,7 +793,7 @@ ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition
 		else if(retCode == DDS::RETCODE_NO_DATA)
 		{
 			printf("ERROR<%s::%s>: no data.\n", CLASS_NAME, METHOD_NAME);
-			returnedValue = SERVER_TIMEOUT;
+			returnedValue = TIMEOUT;
 		}
 		else
 		{

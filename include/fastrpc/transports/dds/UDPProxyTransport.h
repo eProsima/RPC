@@ -35,7 +35,7 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        UDPProxyTransport(std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        UDPProxyTransport(std::string remoteServiceName, std::string instanceName, int domainId = 0, long timeout = 10000L);
 
                         /*!
                          * @brief Constructor for server's proxies.
@@ -45,7 +45,7 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        UDPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        UDPProxyTransport(const char *to_connect, std::string remoteServiceName, std::string instanceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
                         virtual ~UDPProxyTransport();

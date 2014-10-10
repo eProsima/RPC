@@ -16,7 +16,7 @@
  * =====================================================================   *
 -->
 
-<project name="fastrpcgen" default="jar" basedir=".">
+<project name="fastrpcgen" default="jars" basedir=".">
 
 	<macrodef name="antlr">
 		<attribute name="base" />
